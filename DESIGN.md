@@ -42,6 +42,26 @@ Guidelines:
   read at a glance from a distance, the way F-Zero GX tracks and PSO ruins
   do.
 
+### 2.1 Mood Reference (Night)
+
+Moodboard reference (fan-rendered fantasy night scenes, not owned assets —
+described here rather than embedded) pins down the night-time target from
+§4 concretely:
+
+- **Palette:** deep blue-violet ambient/moonlight dominates; a single warm
+  light source (campfire, glowing window, lit doorway) provides near-total
+  color contrast against it rather than a broad warm fill.
+- **Moon:** rendered large and graphic in the sky — a mood element, not a
+  realistically-scaled disc.
+- **Silhouettes:** pine forests, jagged peaks, and ruin architecture read
+  as near-black shapes against the blue sky; detail lives in the rim
+  light, not the shadow side.
+- **Accent glow:** POI light sources (windows, water, fungal/bioluminescent
+  flora) should match the cool ambient hue rather than reading as warm,
+  reserving warm light specifically for fire/hearth — this is what should
+  make campfires and tribal hearths pop as the "welcome" signal from a
+  distance at night.
+
 ## 3. World & Procedural Generation
 
 Minecraft-style **chunked procedural generation**: the world streams in
@@ -95,11 +115,34 @@ gradient" between dry land and water rather than a hard trench:
 Discoverable locations are the primary "content" of ambient exploration.
 Design principle: **every POI should be visible or hinted at from a
 distance (smoke, sound, light, silhouette) but require actual traversal
-effort to reach** (climbing, swimming, finding a hidden path).
+effort to reach** (climbing, swimming, finding a hidden path). A visible
+path, treeline break, or worn stone trail leading off toward a
+fog-shrouded landmark is the standard "lure" — the player follows the
+line before they know what's at the end of it.
 
 Examples called out by the concept: canopy tribes, waterfall-hidden tribes,
 cave-dwelling tribes, mountain tribes. Extend this pattern to each biome
 (see table above) rather than clustering all POIs in one biome type.
+
+Concrete architectural language per biome (moodboard-derived, see §2.1):
+
+- **Forest:** bulbous, organic hut clusters (mushroom-cap roofs read well
+  at low-poly) connected by simple wooden plank bridges at ground level or
+  in the canopy.
+- **Swamp:** structures on stilts above the waterline, reached via a raised
+  wooden boardwalk that threads through reeds/fog — the approach itself is
+  the traversal beat, not just the destination.
+- **Waterfall POIs (coastal/mountain):** water falling through worn,
+  moss-covered stone/ruin architecture (ties back to the PSO ruin
+  reference in §2); the waterfall and pool glow as the site's light
+  source at night.
+
+### 3.4 Rivers as Traversal, Not Just Scenery
+
+The river system in §3.2 doubles as a POI delivery mechanism: a
+navigable river is a natural through-line the player can follow by boat,
+so waterfall- and stilt-village POIs should bias toward spawning along or
+just off river/coastline paths rather than being purely landlocked.
 
 ## 4. Day/Night Cycle
 
@@ -114,9 +157,13 @@ cave-dwelling tribes, mountain tribes. Extend this pattern to each biome
 - **Lighting targets:**
   - Day: bright, saturated, high-key, minimal fog.
   - Dusk: warm oranges/reds, long shadows, rim-lighting on silhouettes.
-  - Night: cool blue/violet ambient, low-key, stars/moon visible, biome
-    accent lighting (bioluminescence in swamp, aurora in tundra, tribal
-    fires everywhere) becomes a primary light source.
+  - Night: cool blue/violet ambient, low-key, stars/moon visible (moon
+    rendered large/graphic rather than realistically scaled). Biome accent
+    lighting (bioluminescence in swamp, aurora in tundra) should read
+    *cool*, matching the ambient hue; warm light is reserved for
+    fire/hearths specifically, so a campfire or lit tribal window pops as
+    a clear "warmth/shelter" signal against the cold world rather than
+    blending into general ambient glow. See §2.1 for the full reference.
   - Dawn: cool-to-warm inverse of dusk.
 - Implementation should drive a single normalized `time_of_day` value
   (0.0–1.0 over the 120-minute cycle) that feeds sun/moon rotation, sky
