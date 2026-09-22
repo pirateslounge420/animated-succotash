@@ -61,6 +61,16 @@ described here rather than embedded) pins down the night-time target from
   reserving warm light specifically for fire/hearth — this is what should
   make campfires and tribal hearths pop as the "welcome" signal from a
   distance at night.
+- **Stars & moon:** a dense, visible star field at night, with the moon
+  (full or crescent) always rendered oversized/graphic per the point
+  above — both read as deliberate sky design, not realism.
+
+**Scope note:** several moodboard sources pull from a general dark-fantasy
+aesthetic that includes castles and plate-armored knights. Those are
+**excluded by §1.2** (no heavy armor, primal/tribal only) — only the
+lighting, color, and atmosphere from such shots apply here, never the
+architecture or character content. Don't reintroduce castle/knight
+content from future reference images without an explicit setting change.
 
 ## 3. World & Procedural Generation
 
@@ -156,7 +166,9 @@ just off river/coastline paths rather than being purely landlocked.
   on each transition for the ambient mood shift to read clearly.
 - **Lighting targets:**
   - Day: bright, saturated, high-key, minimal fog.
-  - Dusk: warm oranges/reds, long shadows, rim-lighting on silhouettes.
+  - Dusk: a vertical sky gradient band — cool blue at the zenith, through
+    violet/purple at mid-sky, down to warm orange/red hugging the horizon
+    — with long shadows and rim-lighting on silhouettes.
   - Night: cool blue/violet ambient, low-key, stars/moon visible (moon
     rendered large/graphic rather than realistically scaled). Biome accent
     lighting (bioluminescence in swamp, aurora in tundra) should read
