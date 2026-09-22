@@ -1,0 +1,26 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are meant to be set
+; by the editor UI and not by hand, though you can partially
+; feel free to edit them.
+
+config_version=5
+
+[application]
+
+config/name="Low-Poly Exploration Prototype"
+config/description="Ambient exploration, third-person, low-poly open world prototype. GameCube-era art direction (Melee / PSO Ep. I&II / F-Zero GX), procedurally generated biomes, 2-hour day/night cycle, primal tribal high fantasy setting."
+run/main_scene=""
+config/features=PackedStringArray("4.3", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+TimeOfDay="*res://scripts/autoload/time_of_day.gd"
+WorldGenConfig="*res://scripts/autoload/world_gen_config.gd"
+
+[rendering]
+
+renderer/rendering_method="forward_plus"
+anti_aliasing/quality/msaa_3d=2
+environment/defaults/default_clear_color=Color(0.470588, 0.678431, 0.807843, 1)
