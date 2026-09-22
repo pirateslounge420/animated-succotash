@@ -10,7 +10,7 @@ config_version=5
 
 config/name="Low-Poly Exploration Prototype"
 config/description="Ambient exploration, third-person, low-poly open world prototype. GameCube-era art direction (Melee / PSO Ep. I&II / F-Zero GX), procedurally generated biomes, 2-hour day/night cycle, primal tribal high fantasy setting."
-run/main_scene="res://scenes/world/plains_river_demo.tscn"
+run/main_scene="res://scenes/world/world_map_demo.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 

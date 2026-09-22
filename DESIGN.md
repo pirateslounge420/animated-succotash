@@ -154,6 +154,60 @@ navigable river is a natural through-line the player can follow by boat,
 so waterfall- and stilt-village POIs should bias toward spawning along or
 just off river/coastline paths rather than being purely landlocked.
 
+### 3.5 Implementation: The Generation Pipeline
+
+The world-gen core (as opposed to the single hand-tuned Plains+river
+chunk built earlier) is a seed-driven, ordered pass pipeline: **every
+value is derived, nothing is hand-placed**, and each pass reads only the
+outputs of the passes before it. Entry point:
+`scripts/procgen/world_map_generator.gd` (`WorldMapGenerator.generate()`),
+which runs, in order:
+
+1. **Height** — `scripts/procgen/passes/heightmap_pass.gd`. Layered
+   noise: a low-frequency layer shapes continents/oceans, a
+   ridged-fractal layer adds mountain ridges on top (masked so ridges
+   only appear where the continent is already high), plus a small detail
+   layer.
+2. **Water** — `scripts/procgen/passes/water_pass.gd`. Flood-fills
+   below-sea-level cells reachable from the map border as ocean;
+   below-sea-level cells *not* reachable from the border (enclosed
+   basins) become lakes. Rivers trace via steepest-descent from
+   high-elevation source cells until they reach the sea/a lake or hit a
+   local minimum.
+3. **Temperature** — `scripts/procgen/passes/temperature_pass.gd`.
+   Latitude band (distance from the map's equator row) minus a
+   height-based lapse rate, normalized 0–1.
+4. **Moisture** — `scripts/procgen/passes/moisture_pass.gd`. Two
+   components multiplied together: (a) distance-decay from every water
+   cell (multi-source BFS), and (b) a rain-shadow factor from marching
+   along a prevailing wind direction per row, tracking the tallest ridge
+   crossed so far — cells past a ridge (leeward) get shadowed, cells
+   still climbing toward one (windward) don't. `fog_chance` is derived
+   from moisture weighted by that same shadow factor, so fog is likelier
+   on the moist windward side than in a rain shadow. Verified: windward
+   cells average ~68% higher moisture than their leeward counterparts
+   across the same ridges.
+5. **Biome** — `scripts/procgen/passes/biome_pass.gd`. Whittaker-style
+   temperature/moisture lookup table (§3.1's roster), with water cells
+   forced to Ocean and very-high cells forced to Mountains regardless of
+   climate.
+6. **Foliage** — `scripts/procgen/passes/foliage_pass.gd` +
+   `scripts/procgen/foliage_type.gd`. Each `FoliageType` resource
+   declares its own temperature/moisture tolerance range independently
+   of the biome table (not a biome lookup — a plant just checks whether
+   the local climate is in its range), plus a per-cell spawn-chance
+   density; `scripts/procgen/default_foliage_types.gd` has six example
+   types spanning the climate space.
+
+`scripts/world/world_map_view.gd` is the validation renderer: a single
+vertex-colored greybox mesh over the whole generated region (no chunk
+streaming yet — that's roadmap item 6), with a runtime toggle (keys 1–5)
+between coloring by biome, height, temperature, moisture, or fog chance,
+plus `MultiMeshInstance3D` placeholder markers (colored boxes, not real
+models) for foliage spawns. `scenes/world/world_map_demo.tscn` is the
+scene to open/run to see it; `scripts/world/debug_fly_camera.gd` gives a
+free-fly inspection camera (right-click to look, WASD to move).
+
 ## 4. Day/Night Cycle
 
 - **Full cycle length:** 120 in-game minutes (real time), i.e. 2 hours.
@@ -237,10 +291,17 @@ tools, and stone or early bronze at the most advanced.
    with smooth (gradient) banks, per §3.2. ✅
 3. Boat entity with simple height-locked/current-driven physics. ✅
 4. `TimeOfDay` autoload + basic sky/lighting gradient driven by it. ✅
-5. Third-person character controller (ambient movement: walk/run/climb/swim).
-6. Chunk streaming — generalize the single demo chunk into a grid that
-   loads/unloads around the player.
-7. Biome blending — add a second and third biome, tune transitions using
-   the same smoothstep-mask approach as the river.
-8. First discoverable POI (e.g. a canopy village) as a hand-placed
+5. Core world-generation pipeline — height/water/temperature/moisture/
+   biome/foliage passes and the validation renderer, per §3.5. ✅
+6. Third-person character controller (ambient movement: walk/run/climb/swim).
+7. Chunk streaming — replace the single demo region in §3.5 with a grid
+   that loads/unloads around the player, each chunk querying the same
+   `WorldMapGenerator` passes rather than its own noise (this also
+   retires the standalone Plains+river prototype from item 2, folding
+   river generation into `WaterPass`).
+8. Biome blending — BiomePass currently assigns one discrete biome ID
+   per cell; add smoothstep cross-fading at biome borders (height,
+   vegetation density, palette), same technique as the river's
+   `river_mask` in §3.2.
+9. First discoverable POI (e.g. a canopy village) as a hand-placed
    prototype before POIs are procedurally scattered.
