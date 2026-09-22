@@ -41,13 +41,21 @@ const MOISTURE_WET := Color(0.15, 0.35, 0.75)
 
 func _ready() -> void:
 	_biome_colors = {
-		WorldGenConfig.Biome.FOREST: Color(0.25, 0.5, 0.22),
+		WorldGenConfig.Biome.OCEAN: Color(0.13, 0.32, 0.55),
+		WorldGenConfig.Biome.LAKE: Color(0.25, 0.55, 0.65),
 		WorldGenConfig.Biome.MOUNTAINS: Color(0.55, 0.53, 0.5),
-		WorldGenConfig.Biome.DESERT: Color(0.82, 0.68, 0.4),
-		WorldGenConfig.Biome.OCEAN: Color(0.15, 0.35, 0.55),
-		WorldGenConfig.Biome.PLAINS: Color(0.55, 0.68, 0.3),
 		WorldGenConfig.Biome.SNOW_TUNDRA: Color(0.85, 0.88, 0.92),
+		WorldGenConfig.Biome.DWARF_FOREST: Color(0.4, 0.48, 0.32),
+		WorldGenConfig.Biome.CLOUD_FOREST: Color(0.3, 0.55, 0.5),
+		WorldGenConfig.Biome.FOREST: Color(0.25, 0.5, 0.22),
+		WorldGenConfig.Biome.JUNGLE: Color(0.1, 0.42, 0.18),
+		WorldGenConfig.Biome.SAVANNA: Color(0.72, 0.63, 0.28),
+		WorldGenConfig.Biome.PRAIRIE: Color(0.58, 0.68, 0.32),
+		WorldGenConfig.Biome.DESERT: Color(0.82, 0.68, 0.4),
 		WorldGenConfig.Biome.SWAMP: Color(0.35, 0.4, 0.28),
+		WorldGenConfig.Biome.MARSH: Color(0.42, 0.52, 0.35),
+		WorldGenConfig.Biome.BOG: Color(0.38, 0.42, 0.36),
+		WorldGenConfig.Biome.BEACH: Color(0.87, 0.8, 0.6),
 	}
 
 	var foliage_types := DefaultFoliageTypes.get_all()

@@ -10,14 +10,29 @@ extends Node
 
 const CHUNK_SIZE: int = 64
 
+## Full biome roster (DESIGN.md section 3.1). Water bodies (OCEAN/LAKE)
+## and the four elevation-band biomes (MOUNTAINS/DWARF_FOREST/
+## CLOUD_FOREST + falling through to the lowland table below the
+## cloud-forest band) are assigned by altitude; everything else comes
+## from BiomePass's temperature/moisture lookup table. Caves are a
+## structural POI feature (DESIGN.md section 3.3), not a surface biome,
+## and don't appear here.
 enum Biome {
+	OCEAN, # salt water
+	LAKE, # fresh water
+	MOUNTAINS, # bare rock / alpine, above the treeline
+	SNOW_TUNDRA, # polar tundra, and permanent snow at high altitude
+	DWARF_FOREST, # subalpine/treeline: sparse, wind-stunted trees
+	CLOUD_FOREST, # moist montane band, below the treeline
 	FOREST,
-	MOUNTAINS,
+	JUNGLE,
+	SAVANNA,
+	PRAIRIE,
 	DESERT,
-	OCEAN,
-	PLAINS,
-	SNOW_TUNDRA,
-	SWAMP,
+	SWAMP, # hot, very wet wetland
+	MARSH, # temperate, very wet wetland (freshwater-adjacent)
+	BOG, # cold, very wet wetland
+	BEACH, # coastal strip next to salt water
 }
 
 ## World-space height (Y) that river water sits at. Land generally sits

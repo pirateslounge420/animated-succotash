@@ -78,21 +78,58 @@ Minecraft-style **chunked procedural generation**: the world streams in
 around the player in fixed-size chunks, generated from layered noise
 (heightmap, moisture, temperature) rather than hand-authored terrain.
 
-### 3.1 Biomes (initial set)
+### 3.1 Biomes
+
+Biome comes from height, temperature, and moisture together (§3.5), not
+a single axis. Two groups:
+
+**Lowland / climate table** (temperature × moisture, Whittaker-style):
 
 | Biome | Terrain character | Tribal presence hook |
 |---|---|---|
-| Forest | Rolling hills, dense canopy, clearings | Tribes living **in the canopy** (rope bridges, platform villages) |
-| Mountains | Sharp elevation, cliffs, alpine plateaus | Tribes carved **into the mountain** (terraced dwellings, cave-mouth entries) |
+| Forest | Rolling hills, temperate woodland, clearings | Tribes living **in the canopy** (rope bridges, platform villages) |
+| Jungle | Dense hot/wet rainforest, thick canopy | Deep-canopy tribes, more vertically layered than temperate Forest |
+| Savanna | Warm grassland, scattered trees | Semi-nomadic hunter camps, stone circles, migratory herds |
+| Prairie | Cooler/temperate open grassland | Semi-nomadic camps, similar to Savanna but cold-tolerant herds |
 | Desert | Dunes, mesas, sparse oases | Nomadic camps, sunken ruins half-buried in sand |
-| Ocean/Coast | Beaches, reefs, cliffs, sea caves | Tribes **behind waterfalls**, stilt villages over shallow water |
-| Plains | Open grassland, scattered groves | Semi-nomadic hunter camps, stone circles, migratory herds |
-| Snow Tundra | Frozen flats, ice formations, aurora skies at night | Sheltered enclaves in ice caves or wind-break ravines |
-| Swamp | Wetlands, mangroves, fog, bioluminescent flora | Stilt-and-vine villages, hidden bog shrines |
+| Swamp | Hot, very wet wetland, mangroves, bioluminescent flora | Stilt-and-vine villages, hidden shrines |
+| Marsh | Temperate, very wet wetland, reedy/open (freshwater-adjacent) | Reed-boat camps, fishing platforms |
+| Bog | Cold, very wet wetland, peat/moss | Sparse, isolated dwellings on drier hummocks |
+
+**Altitude zonation** (elevated land, keyed on temperature so a polar
+mountain snows over at a lower absolute height than an equatorial one —
+see §3.5): climbing from the base, a windward/moist mountain runs
+**base Forest/Jungle → Cloud Forest → Dwarf Forest → Mountains (bare
+alpine rock) → Snow Tundra (cap)**. A leeward/dry mountain skips Cloud
+Forest and goes straight from its (often Desert) base to Dwarf Forest,
+matching the rain-shadow behavior in §3.5.
+
+| Biome | Terrain character | Tribal presence hook |
+|---|---|---|
+| Cloud Forest | Moist montane forest, persistent mist, moss/epiphytes | Mist-shrouded tribes, hard to spot until close |
+| Dwarf Forest | Sparse, wind-stunted subalpine/treeline forest | Small, hardy enclaves; more shelter than settlement |
+| Mountains | Bare rock, cliffs, alpine plateaus, above the treeline | Tribes carved **into the mountain** (terraced dwellings, cave-mouth entries) |
+| Snow Tundra | Frozen flats (polar) or permanent snow cap (high alpine) | Sheltered enclaves in ice caves or wind-break ravines |
+
+**Water and coast:**
+
+| Biome | Notes |
+|---|---|
+| Ocean | Salt water. |
+| Lake | Fresh water (enclosed basin — see §3.5's flood-fill). |
+| Beach | Low-elevation strip specifically adjacent to Ocean (salt water), not any water body. |
+
+Rivers are fresh water too, but aren't a biome of their own — see §3.2.
+
+**Caves** are a structural/subsurface POI feature (§3.3: "cave-dwelling
+tribes"), not a surface biome — they can appear within Mountains or any
+other biome and aren't part of this height/temperature/moisture lookup.
 
 Biomes blend at their borders via noise-based interpolation (height,
 vegetation density, and palette all cross-fade) rather than hard edges, in
 the spirit of Minecraft's biome blending but tuned for a hand-painted look.
+The current implementation (§3.5) assigns one discrete biome ID per cell;
+smoothstepped cross-fading at borders is still open (roadmap item 8).
 
 ### 3.2 Rivers
 
@@ -187,10 +224,24 @@ which runs, in order:
    on the moist windward side than in a rain shadow. Verified: windward
    cells average ~68% higher moisture than their leeward counterparts
    across the same ridges.
-5. **Biome** — `scripts/procgen/passes/biome_pass.gd`. Whittaker-style
-   temperature/moisture lookup table (§3.1's roster), with water cells
-   forced to Ocean and very-high cells forced to Mountains regardless of
-   climate.
+5. **Biome** — `scripts/procgen/passes/biome_pass.gd`. Water cells become
+   Ocean/Lake directly (salt/fresh, per §3.1); low ocean-adjacent land
+   becomes Beach; elevated land (height >= a mountain-base threshold)
+   goes through an altitude ladder keyed on *temperature* (not raw
+   height) — snow cap, then bare alpine rock, then dwarf/subalpine
+   forest, then Cloud Forest if moist enough at that band (else it stays
+   Dwarf Forest, which is how a leeward/rain-shadowed mountain skips
+   Cloud Forest entirely) — and falls through to the same lowland
+   Whittaker table everything else uses once it's warm enough at that
+   elevation to be "the mountain's base." Keying the ladder on
+   temperature rather than height means a polar mountain hits its snow
+   line at a lower physical height than an equatorial one, for free,
+   since TemperaturePass already folds latitude into that value.
+   Verified directly: a moist (windward) mountain's synthetic hot→cold
+   sweep produces Jungle → Forest → Cloud Forest → Dwarf Forest →
+   Mountains → Snow Tundra in order; the same sweep at low moisture
+   (leeward) produces Desert → Dwarf Forest → Mountains → Snow Tundra,
+   skipping Cloud Forest as intended.
 6. **Foliage** — `scripts/procgen/passes/foliage_pass.gd` +
    `scripts/procgen/foliage_type.gd`. Each `FoliageType` resource
    declares its own temperature/moisture tolerance range independently
