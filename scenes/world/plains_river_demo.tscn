@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/procgen/plains_river_generator.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/world/boat.tscn" id="2"]
+[ext_resource type="Script" path="res://scripts/world/sky_controller.gd" id="3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1"]
 
@@ -11,16 +12,45 @@ sky_material = SubResource("ProceduralSkyMaterial_1")
 [sub_resource type="Environment" id="Environment_1"]
 background_mode = 2
 sky = SubResource("Sky_1")
+fog_enabled = true
+fog_light_color = Color(0.8, 0.87, 0.95, 1)
+fog_density = 0.01
+
+[sub_resource type="SphereMesh" id="SphereMesh_moon"]
+radius = 25.0
+height = 50.0
+radial_segments = 8
+rings = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_moon"]
+shading_mode = 0
+albedo_color = Color(0.85, 0.88, 1, 1)
+emission_enabled = true
+emission = Color(0.85, 0.88, 1, 1)
+emission_energy_multiplier = 1.5
 
 [node name="PlainsRiverDemo" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
+[node name="SunLight" type="DirectionalLight3D" parent="."]
 position = Vector3(0, 20, 0)
-rotation_degrees = Vector3(-45, -30, 0)
 shadow_enabled = true
+
+[node name="MoonPivot" type="Node3D" parent="."]
+
+[node name="MoonMesh" type="MeshInstance3D" parent="MoonPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -300)
+visible = false
+mesh = SubResource("SphereMesh_moon")
+surface_material_override/0 = SubResource("StandardMaterial3D_moon")
+
+[node name="SkyController" type="Node3D" parent="."]
+script = ExtResource("3")
+sun_light_path = NodePath("../SunLight")
+moon_pivot_path = NodePath("../MoonPivot")
+world_environment_path = NodePath("../WorldEnvironment")
 
 [node name="Terrain" type="Node3D" parent="."]
 script = ExtResource("1")

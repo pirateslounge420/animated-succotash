@@ -236,7 +236,7 @@ tools, and stone or early bronze at the most advanced.
 2. Plains biome, single chunk: noise heightmap + carved navigable river
    with smooth (gradient) banks, per §3.2. ✅
 3. Boat entity with simple height-locked/current-driven physics. ✅
-4. `TimeOfDay` autoload + basic sky/lighting gradient driven by it.
+4. `TimeOfDay` autoload + basic sky/lighting gradient driven by it. ✅
 5. Third-person character controller (ambient movement: walk/run/climb/swim).
 6. Chunk streaming — generalize the single demo chunk into a grid that
    loads/unloads around the player.
