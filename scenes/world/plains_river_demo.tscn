@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/procgen/plains_river_generator.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/world/boat.tscn" id="2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1"]
+
+[sub_resource type="Sky" id="Sky_1"]
+sky_material = SubResource("ProceduralSkyMaterial_1")
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 2
+sky = SubResource("Sky_1")
+
+[node name="PlainsRiverDemo" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+position = Vector3(0, 20, 0)
+rotation_degrees = Vector3(-45, -30, 0)
+shadow_enabled = true
+
+[node name="Terrain" type="Node3D" parent="."]
+script = ExtResource("1")
+
+[node name="Boat" parent="." instance=ExtResource("2")]
+position = Vector3(0, 1, 0)

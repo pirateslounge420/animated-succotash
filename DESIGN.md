@@ -64,7 +64,33 @@ Biomes blend at their borders via noise-based interpolation (height,
 vegetation density, and palette all cross-fade) rather than hard edges, in
 the spirit of Minecraft's biome blending but tuned for a hand-painted look.
 
-### 3.2 Points of Interest
+### 3.2 Rivers
+
+Rivers are a terrain-carving feature layered on top of a biome's base
+heightmap, not a biome of their own — this is what gives the "nice
+gradient" between dry land and water rather than a hard trench:
+
+- A **river mask** (0 = dry land, 1 = river centerline) is computed per
+  vertex, independent of the height noise, and smoothed with `smoothstep`
+  across a configurable band width so banks slope rather than cliff.
+- Final height = `lerp(land_height, riverbed_height, river_mask)`, where
+  `riverbed_height` sits below the world's fixed `water_level`.
+- A single flat water plane is placed at `water_level` per chunk; it's
+  invisible under normal land (terrain sits above it) and only becomes
+  visible where the carved riverbed dips below it — no per-river custom
+  geometry needed for the water surface itself.
+- **Navigability:** any river segment wide/deep enough (mask above a
+  navigability threshold) supports boat travel. Boats use simple,
+  Minecraft-esque physics — not real fluid/buoyancy simulation: the boat
+  is height-locked to the water surface, accelerates from paddle input,
+  drifts along a per-segment current-direction vector, and collides with
+  the banks. See `scripts/world/boat.gd`.
+- This same mask/blend approach is the template for biome-to-biome
+  blending in general (§3.1): a continuous weight per biome pair,
+  smoothstepped across a border band, rather than a hard biome ID lookup
+  per vertex.
+
+### 3.3 Points of Interest
 
 Discoverable locations are the primary "content" of ambient exploration.
 Design principle: **every POI should be visible or hinted at from a
@@ -122,21 +148,40 @@ tools, and stone or early bronze at the most advanced.
 - **Camera/controller:** third-person, ambient/exploration-focused (no
   target-lock combat camera needed for this prototype phase).
 
-## 7. Out of Scope (this prototype phase)
+## 7. Platform & Distribution
+
+- **Target:** Steam (Windows/Mac/Linux via Godot's native export
+  templates). No mobile/console target for this prototype phase.
+- Steamworks integration (achievements, cloud saves, rich presence) is
+  explicitly **out of scope** until the prototype phase is done — don't
+  couple gameplay code to a Steamworks SDK/GodotSteam wrapper yet.
+- Desktop-first render settings (MSAA, Forward+ renderer) are already the
+  default in `project.godot`; revisit only if a Steam Deck target is
+  confirmed later (would push toward the Mobile renderer or tighter
+  shadow/MSAA budgets).
+
+## 8. Out of Scope (this prototype phase)
 
 - Combat systems, guns/heavy armor (excluded by setting, not just
   unimplemented).
 - Multiplayer/networking.
 - Full biome roster beyond the seven listed in §3.1.
 - Final art assets — prototype uses greybox/primitive geometry first.
+- Realistic water/fluid simulation — rivers use the simplified
+  height-locked boat physics in §3.2, not a physics-based fluid sim.
+- Steamworks SDK integration (see §7).
 
-## 8. Roadmap (suggested next milestones)
+## 9. Roadmap (suggested next milestones)
 
-1. Repo/project scaffold (this pass).
-2. `TimeOfDay` autoload + basic sky/lighting gradient driven by it.
-3. Single-biome chunked terrain (start with Plains or Forest) with
-   noise-based heightmap.
-4. Third-person character controller (ambient movement: walk/run/climb/swim).
-5. Biome blending — add a second and third biome, tune transitions.
-6. First discoverable POI (e.g. a canopy village) as a hand-placed
+1. Repo/project scaffold. ✅
+2. Plains biome, single chunk: noise heightmap + carved navigable river
+   with smooth (gradient) banks, per §3.2. ✅
+3. Boat entity with simple height-locked/current-driven physics. ✅
+4. `TimeOfDay` autoload + basic sky/lighting gradient driven by it.
+5. Third-person character controller (ambient movement: walk/run/climb/swim).
+6. Chunk streaming — generalize the single demo chunk into a grid that
+   loads/unloads around the player.
+7. Biome blending — add a second and third biome, tune transitions using
+   the same smoothstep-mask approach as the river.
+8. First discoverable POI (e.g. a canopy village) as a hand-placed
    prototype before POIs are procedurally scattered.
