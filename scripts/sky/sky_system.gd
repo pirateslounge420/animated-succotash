@@ -23,7 +23,7 @@ extends Node3D
 const SKY_SHADER := preload("res://shaders/sky.gdshader")
 
 @export var moon_mode: Astro.MoonMode = Astro.MoonMode.ORBITAL
-@export var sun_max_energy := 0.9
+@export var sun_max_energy := 1.05
 @export var moon_max_energy := 0.5
 ## 0-1: how deep the viewer is inside a magical site (Landmarks sets it).
 var magic := 0.0
@@ -244,10 +244,13 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# never black: a starlight floor, lifted by the moon. The night fill is
 	# blue-lavender rather than pure blue, since leaves and soil reflect
 	# little blue and would otherwise go black.
-	var amb_day := zenith.lerp(horizon, 0.6).lerp(Color.WHITE, 0.35)
+	# Shadows are lit only by this fill, so it sets how dark and what color
+	# they are: low, and cool blue-violet, so shadow reads as colored depth
+	# against warm sunlit faces rather than a pale grey wash.
+	var amb_day := zenith.lerp(Color(0.42, 0.4, 0.95), 0.55).lerp(Color.WHITE, 0.12)
 	var amb_night := Color(0.3, 0.34, 0.85).lerp(Color(0.42, 0.46, 0.92), lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
-	environment.ambient_light_energy = lerpf(0.3 + 0.3 * lift, 0.4, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
+	environment.ambient_light_energy = lerpf(0.3 + 0.3 * lift, 0.22, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
 
 	# Fog and mist (drawn in bands by the world shaders, see Look): a
 	# light haze that gives depth to long daytime views; thicker at night
