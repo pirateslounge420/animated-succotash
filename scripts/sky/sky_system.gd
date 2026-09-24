@@ -259,9 +259,11 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# light haze that gives depth to long daytime views; thicker at night
 	# and in cloud forests, on coasts and in storms, with ground mist
 	# pooling in low places after dark.
-	var fog_color := horizon.lerp(zenith, 0.25)
+	# Atmospheric perspective: distance fades into blue haze by day and
+	# deep cobalt at night, so near, middle and far read as separate layers.
+	var fog_color := horizon.lerp(zenith, 0.5).lerp(Color(0.04, 0.07, 0.3), night * 0.55)
 	fog_color = fog_color.lerp(Color(0.015, 0.03, 0.12), dark_magic * 0.6)
-	var density := 0.0004 + fog_amount * 0.003 + storm * 0.002 + night * 0.0014
+	var density := 0.0008 + fog_amount * 0.003 + storm * 0.002 + night * 0.0012
 	var mist := clampf(0.35 * night + fog_amount * 0.6 + storm * 0.3, 0.0, 1.0)
 	environment.fog_light_color = fog_color
 	environment.fog_density = density
