@@ -182,17 +182,20 @@ void sky() {
 		}
 
 		// Clouds on a flat layer overhead; coverage comes from the weather.
+		// Big puffy cumulus: billowed noise, sampled on a coarse grid so the
+		// edges step in chunky, slightly pixelated blocks.
 		if (cloud_cover > 0.01 && h > 0.0) {
 			vec3 local = vec3(dot(d, east_dir), dot(d, north_dir), h);
-			vec2 uv = local.xy / (local.z + 0.12) * 1.6 + cloud_offset;
-			float n = fbm(uv);
+			vec2 uv = local.xy / (local.z + 0.12) * 0.75 + cloud_offset;
+			vec2 uvq = floor(uv * 40.0) / 40.0;
+			float n = fbm(uvq) * 0.72 + 0.28 * (1.0 - abs(2.0 * vnoise(uvq * 2.3 + 7.0) - 1.0));
 			float edge = 1.0 - cloud_cover;
-			float cover = smoothstep(edge, edge + 0.02, n);
-			// Three flat tones: shadowed undersides, mid body, lit tops. Even
-			// an overcast deck keeps its lumpy structure.
-			float body = fbm(uv * 1.9 + 4.0) * 0.7 + (n - edge) * 1.2;
+			float cover = step(edge, n);
+			// Three flat tones: shadowed undersides, mid body, bright tops.
+			// Deeper inside the cloud reads brighter (the puffy tops).
+			float body = fbm(uvq * 1.9 + 4.0) * 0.55 + (n - edge) * 2.2;
 			vec3 mid = mix(cloud_shadow, cloud_light, 0.55);
-			vec3 cloud = body < 0.42 ? cloud_shadow : (body < 0.62 ? mid : cloud_light);
+			vec3 cloud = body < 0.36 ? cloud_shadow : (body < 0.52 ? mid : cloud_light);
 			col = mix(col, cloud, cover * smoothstep(0.0, 0.12, h) * 0.92);
 		}
 	}

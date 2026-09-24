@@ -232,10 +232,12 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# Clouds: coverage from the live weather, drifting with the wind.
 	var wind: Vector3 = weather.get("wind", Vector3.ZERO)
 	_cloud_offset += Vector2(wind.dot(east), wind.dot(north)) * delta * 0.004
-	sky_material.set_shader_parameter("cloud_cover", clampf(0.1 + 0.55 * cloud + 0.35 * storm, 0.0, 0.95))
+	# Even a clear day carries big fair-weather cumulus (the references
+	# always have them); weather adds more.
+	sky_material.set_shader_parameter("cloud_cover", clampf(0.34 + 0.45 * cloud + 0.3 * storm, 0.0, 0.95))
 	sky_material.set_shader_parameter("cloud_offset", _cloud_offset)
 	var lit := sun_col * sun_up + moon_col * moon_up * 0.35 * illumination
-	sky_material.set_shader_parameter("cloud_light", (Color(0.1, 0.12, 0.2) + lit).clamp())
+	sky_material.set_shader_parameter("cloud_light", (Color(0.14, 0.16, 0.24) + lit * 1.1).clamp())
 	sky_material.set_shader_parameter("cloud_shadow", zenith.darkened(0.35).lerp(Color(0.3, 0.32, 0.38) * daylight, storm * 0.6))
 
 	# Ambient tracks the sky continuously.
