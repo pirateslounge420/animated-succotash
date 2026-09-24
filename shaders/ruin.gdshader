@@ -9,6 +9,8 @@ render_mode cull_disabled, diffuse_lambert, specular_disabled;
 #include "res://shaders/look.gdshaderinc"
 
 uniform sampler2D look_grain : filter_nearest, repeat_enable;
+uniform sampler2D look_tex_stone : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_tex_leaves : filter_nearest_mipmap, repeat_enable;
 
 varying vec3 world_pos;
 varying vec3 obj_pos;
@@ -24,7 +26,10 @@ void fragment() {
 	vec3 an = abs(obj_normal);
 	vec2 uv = an.y > 0.6 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
 	float g = texture(look_grain, uv * 0.3).r;
-	ALBEDO = COLOR.rgb * mix(0.72, 1.2, g);
+	// Mottled stone, turning leafy where moss grows (vertex alpha).
+	vec3 stone = texture(look_tex_stone, uv * 0.35).rgb;
+	vec3 moss = texture(look_tex_leaves, uv * 0.8).rgb;
+	ALBEDO = COLOR.rgb * mix(stone, moss, clamp(COLOR.a * 1.2, 0.0, 1.0)) * 2.0;
 	ROUGHNESS = 0.75; // shapes the rim only (see foliage.gdshader)
 	float patch = texture(look_grain, uv * 0.06).r; // moss patches ~0.5-2 m
 	float glow = look_site_glow(world_pos, 0.0) * COLOR.a * smoothstep(0.5, 0.68, patch);

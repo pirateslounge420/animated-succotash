@@ -27,6 +27,10 @@ static func mesh_for(sp: PlantSpecies) -> ArrayMesh:
 	var b := _Builder.new()
 	var leaf := sp.color
 	var wood := sp.accent
+	b.wood = wood
+	b.rng.seed = idx * 7919 + 11
+	if sp.shape == S.CACTUS:
+		b.wood = leaf # ribbed: the bark streaks read as cactus ribs
 	match sp.shape:
 		S.CONIFER:
 			b.cylinder(Vector3.ZERO, 0.035, 0.3, 5, wood, 0.0, 0.2)
@@ -143,17 +147,46 @@ class _Builder:
 	var v := PackedVector3Array()
 	var n := PackedVector3Array()
 	var c := PackedColorArray()
+	var uv := PackedVector2Array() # card texture coordinates
+	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card)
+	var wood := Color.BLACK # this species' wood color: cylinders/cones in it are bark
+	var mat := 1.0
+	var rng := RandomNumberGenerator.new()
 
 	func tri(a: Vector3, b: Vector3, d: Vector3, col: Color, sa: float, sb: float, sd: float) -> void:
 		var nrm := (b - a).cross(d - a).normalized()
 		v.append_array([a, b, d])
 		n.append_array([nrm, nrm, nrm])
 		c.append_array([Color(col, sa), Color(col, sb), Color(col, sd)])
+		uv.append_array([Vector2.ZERO, Vector2.ZERO, Vector2.ZERO])
+		var m := Vector2(mat, 0.0)
+		uv2.append_array([m, m, m])
+
+	## A leaf-cluster card (alpha cutout), square with half-size `s`, facing
+	## `facing`, spun randomly.
+	func card(center: Vector3, facing: Vector3, s: float, col: Color, sway: float) -> void:
+		var f := facing.normalized()
+		var t1 := f.cross(Vector3.UP if absf(f.y) < 0.9 else Vector3.RIGHT).normalized()
+		var t2 := f.cross(t1)
+		var spin := rng.randf() * TAU
+		var a1 := (t1 * cos(spin) + t2 * sin(spin)) * s
+		var a2 := (-t1 * sin(spin) + t2 * cos(spin)) * s
+		var p := [center - a1 - a2, center + a1 - a2, center + a1 + a2, center - a1 + a2]
+		var q := [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
+		var nrm := f
+		for idx in [[0, 1, 2], [0, 2, 3]]:
+			for k in idx:
+				v.append(p[k])
+				n.append(nrm)
+				c.append(Color(col, sway))
+				uv.append(q[k])
+				uv2.append(Vector2(2.0, 0.0))
 
 	func cylinder(base: Vector3, r: float, h: float, sides: int, col: Color, s0: float, s1: float, axis := Vector3.UP) -> void:
 		var side := axis.cross(Vector3.FORWARD if absf(axis.dot(Vector3.FORWARD)) < 0.9 else Vector3.RIGHT).normalized()
 		var side2 := axis.cross(side).normalized()
 		var top := base + axis * h
+		mat = 0.0 if col.is_equal_approx(wood) else 1.0
 		for k in sides:
 			var a0 := TAU * k / sides
 			var a1 := TAU * (k + 1) / sides
@@ -162,9 +195,12 @@ class _Builder:
 			var shade := col.darkened(0.12 * float(k % 2))
 			tri(base + o0, top + o1, base + o1, shade, s0, s1, s0)
 			tri(base + o0, top + o0, top + o1, shade, s0, s1, s1)
+		mat = 1.0
 
 	func cone(base: Vector3, r: float, h: float, sides: int, col: Color, s0: float, s1: float) -> void:
 		var tip := base + Vector3(0, h, 0)
+		var is_wood := col.is_equal_approx(wood)
+		mat = 0.0 if is_wood else 1.0
 		for k in sides:
 			var a0 := TAU * k / sides
 			var a1 := TAU * (k + 1) / sides
@@ -172,6 +208,15 @@ class _Builder:
 			var p1 := base + Vector3(cos(a1), 0, sin(a1)) * r
 			tri(p0, tip, p1, col.darkened(0.1 * float(k % 2)), s0, s1, s0)
 			tri(p1, base, p0, col.darkened(0.25), s0, s0, s0)
+		mat = 1.0
+		# Foliage cones get ragged leaf cards around their skirt.
+		if not is_wood and r > 0.1:
+			for k in 6:
+				var a := TAU * (k + rng.randf()) / 6.0
+				var out := Vector3(cos(a), 0.0, sin(a))
+				var y := rng.randf_range(0.1, 0.5) * h
+				var rr := r * (1.0 - y / h)
+				card(base + out * rr * 0.95 + Vector3(0, y, 0), out + Vector3(0, 0.6, 0), r * 0.42, col, lerpf(s0, s1, y / h))
 
 	## Low-poly ellipsoid (a squashed octahedron split once).
 	func blob(center: Vector3, radii: Vector3, col: Color, sway: float) -> void:
@@ -190,6 +235,14 @@ class _Builder:
 				var p2: Vector3 = center + t[2] * radii
 				var lit: float = 0.85 + 0.15 * ((p0 + p1 + p2 - center * 3.0) / 3.0).normalized().y
 				tri(p0, p1, p2, col * lit, sway, sway, sway)
+		# Leaf-cluster cards around the crown break up the round silhouette.
+		var mean_r := (radii.x + radii.y + radii.z) / 3.0
+		if mean_r >= 0.12:
+			var count := 10 if mean_r < 0.3 else 16
+			for i in count:
+				var d := Vector3(rng.randfn(), rng.randfn() * 0.8 + 0.25, rng.randfn()).normalized()
+				var lit := 0.85 + 0.15 * d.y
+				card(center + d * radii * 0.92, d, mean_r * 0.55, col * lit, sway)
 
 	## Flat leaf from `base` outward along `dir`, drooping at the tip.
 	func frond(base: Vector3, dir: Vector3, length: float, width: float, col: Color, sway: float) -> void:
@@ -249,6 +302,8 @@ class _Builder:
 		arrays[Mesh.ARRAY_VERTEX] = v
 		arrays[Mesh.ARRAY_NORMAL] = n
 		arrays[Mesh.ARRAY_COLOR] = c
+		arrays[Mesh.ARRAY_TEX_UV] = uv
+		arrays[Mesh.ARRAY_TEX_UV2] = uv2
 		var mesh := ArrayMesh.new()
 		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 		return mesh
