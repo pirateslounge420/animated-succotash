@@ -64,7 +64,13 @@ static func mat(c: Color, glow := 0.0) -> StandardMaterial3D:
 	# Flat period lighting: Lambert diffuse, no PBR specular.
 	m.diffuse_mode = BaseMaterial3D.DIFFUSE_LAMBERT
 	m.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
-	m.roughness = 1.0
+	# Rim light sells the silhouette against the ground. With specular off,
+	# roughness only sets the rim falloff ((1 - roughness) * 16; at 1.0 it
+	# would light the whole body).
+	m.roughness = 0.75
+	m.rim_enabled = true
+	m.rim = 0.45
+	m.rim_tint = 0.4
 	if glow > 0.0:
 		m.emission_enabled = true
 		m.emission = c
@@ -253,7 +259,7 @@ static func _swarm(b: Dictionary, sp: CreatureSpecies) -> void:
 	m.albedo_color = sp.color
 	m.emission_enabled = true
 	m.emission = sp.color
-	m.emission_energy_multiplier = 4.0
+	m.emission_energy_multiplier = 6.0
 	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	q.material = m
 	p.mesh = q
@@ -360,7 +366,7 @@ static func _goblin(b: Dictionary, sp: CreatureSpecies) -> void:
 
 
 static func _lantern(b: Dictionary, parent: Node3D, pos: Vector3, c: Color) -> void:
-	box(parent, Vector3(0.07, 0.09, 0.07), pos, c, 3.0)
+	box(parent, Vector3(0.07, 0.09, 0.07), pos, c, 6.0)
 	var light := OmniLight3D.new()
 	light.light_color = c
 	light.light_energy = 1.2

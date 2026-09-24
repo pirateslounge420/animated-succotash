@@ -1,6 +1,7 @@
 // Ruins (RuinBuilder): stacked stone blocks lit flat (Lambert, no
 // specular) with the shared low-res grain mapped per face, and the shared
-// banded fog. Vertex alpha is moss: at night, near glowing sites (every
+// banded fog, and a rim light on block edges (lit by sun and moon, plus a
+// moonlit edge after dark). Vertex alpha is moss: at night, near glowing sites (every
 // ruin is one), the moss patches shine teal/cobalt.
 shader_type spatial;
 render_mode cull_disabled, diffuse_lambert, specular_disabled;
@@ -24,8 +25,13 @@ void fragment() {
 	vec2 uv = an.y > 0.6 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
 	float g = texture(look_grain, uv * 0.3).r;
 	ALBEDO = COLOR.rgb * mix(0.72, 1.2, g);
-	ROUGHNESS = 1.0;
-	float glow = look_site_glow(world_pos, 0.0) * COLOR.a * smoothstep(0.35, 0.6, g);
-	EMISSION = look_glow_emission(world_pos, glow * 2.6);
+	ROUGHNESS = 0.75; // shapes the rim only (see foliage.gdshader)
+	float patch = texture(look_grain, uv * 0.06).r; // moss patches ~0.5-2 m
+	float glow = look_site_glow(world_pos, 0.0) * COLOR.a * smoothstep(0.5, 0.68, patch);
+	// Kept light: big flat faces (the motte top, wall faces) seen at grazing
+	// angles would otherwise flood with rim light.
+	RIM = 0.12;
+	RIM_TINT = 0.3;
+	EMISSION = look_glow_emission(world_pos, glow * 2.6) + look_rim(NORMAL, VIEW, 0.2);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }

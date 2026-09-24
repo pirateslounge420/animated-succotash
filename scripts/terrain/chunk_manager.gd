@@ -109,6 +109,7 @@ func update_around(player_dir: Vector3) -> void:
 func _compute_base(key: Vector3i) -> void:
 	var data := TerrainChunk.compute(key, map, rivers)
 	var trees := VegetationPlacer.compute_base(key, map, data)
+	TerrainChunk.bake_canopy_shade(data, trees.hosts)
 	data["plants"] = trees.plants
 	data["hosts"] = trees.hosts
 	_mutex.lock()

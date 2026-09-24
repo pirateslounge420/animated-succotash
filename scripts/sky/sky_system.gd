@@ -95,27 +95,62 @@ func _ready() -> void:
 	environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 	environment.fog_enabled = true
 	environment.fog_sky_affect = 0.0 # the sky shader draws its own banded haze
+	# Glow: punchy blown highlights on light sources (campfires, lanterns,
+	# glowing water and moss, the sun, glints on water), which are pushed
+	# well above the HDR threshold. No global bloom term, so ordinary
+	# daylight surfaces stay crisp.
 	environment.glow_enabled = true
-	environment.glow_intensity = 0.6
-	environment.glow_bloom = 0.08
-	environment.glow_hdr_threshold = 1.1
+	environment.glow_intensity = 1.0
+	environment.glow_strength = 1.1
+	environment.glow_bloom = 0.0
+	environment.glow_hdr_threshold = 1.0
+	environment.glow_hdr_scale = 2.5
+	environment.glow_blend_mode = Environment.GLOW_BLEND_MODE_SCREEN
+	for level in 7:
+		environment.set_glow_level(level, 1.0 if level >= 1 and level <= 4 else 0.0)
 	environment.adjustment_enabled = true
+	# Ambient occlusion (Forward+ only; the compatibility renderer ignores
+	# it): darkens crevices, the ground under canopy, trunk bases and the
+	# joints between ruin blocks, which the flat ambient fill otherwise
+	# leaves evenly lit. A little of it also dims direct light so it still
+	# reads in full sun.
+	environment.ssao_enabled = true
+	environment.ssao_radius = 2.0
+	environment.ssao_intensity = 3.0
+	environment.ssao_power = 1.8
+	environment.ssao_detail = 0.5
+	environment.ssao_horizon = 0.06
+	environment.ssao_sharpness = 0.98
+	environment.ssao_light_affect = 0.35
 
 	var world_env := WorldEnvironment.new()
 	world_env.environment = environment
 	add_child(world_env)
 
+	# Hard, crisp shadows (the GameCube look), not soft PCF penumbras:
+	# unfiltered shadow maps, a big atlas, and the shadow range pulled in so
+	# its resolution goes to what's near the player.
+	RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
+	RenderingServer.directional_shadow_atlas_set_size(4096, true)
+
 	sun = DirectionalLight3D.new()
 	sun.name = "Sun"
 	sun.shadow_enabled = true
-	sun.directional_shadow_max_distance = 250.0
 	add_child(sun)
 
 	moon = DirectionalLight3D.new()
 	moon.name = "Moon"
 	moon.shadow_enabled = false
-	moon.directional_shadow_max_distance = 200.0
 	add_child(moon)
+	for light in [sun, moon]:
+		light.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+		light.directional_shadow_max_distance = 160.0
+		light.shadow_blur = 0.0
+		light.light_angular_distance = 0.0
+		# Enough bias that hard, unfiltered maps don't streak lit ground
+		# with acne; mostly normal bias, so contact shadows stay tight.
+		light.shadow_bias = 0.06
+		light.shadow_normal_bias = 2.0
 
 
 ## up/east/north: the viewer's local frame. weather: WeatherSim.local_weather().
@@ -231,12 +266,14 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 		"look_up": up,
 		"look_night": night,
 		"look_glow": 1.0 - smoothstep(0.08, 0.55, daylight),
+		"look_rim_color": moon_col.lerp(Color(0.4, 0.5, 1.0), 0.5) * (0.35 + 0.65 * moonlight),
 	})
 	sky_material.set_shader_parameter("fog_color", fog_color)
 
-	# Grade: punchy and saturated by day, deeper and cooler at night.
+	# Grade: a punchy, crushed curve day and night (deep shadows, bright
+	# highlights, little midtone, like Melee or PSO), saturated by day.
 	environment.adjustment_saturation = lerpf(1.05, 1.18, daylight)
-	environment.adjustment_contrast = lerpf(1.12, 1.08, daylight)
+	environment.adjustment_contrast = lerpf(1.32, 1.28, daylight)
 
 
 func _aim(light: DirectionalLight3D, body_dir: Vector3, up: Vector3) -> void:

@@ -6,8 +6,9 @@
 // one material every plant shares (PlantMeshes.material()); its direction
 // sets which way crowns lean and its strength how far and how fast.
 //
-// Lit flat (Lambert, no specular) like the terrain. Near magical sites,
-// about half the plants glow at their tips at night.
+// Lit flat (Lambert, no specular) like the terrain, with a rim light on
+// silhouettes (lit by sun and moon, plus a moonlit edge after dark). Near
+// magical sites, about half the plants glow at their tips at night.
 shader_type spatial;
 render_mode world_vertex_coords, cull_disabled, diffuse_lambert, specular_disabled;
 
@@ -35,8 +36,13 @@ void vertex() {
 
 void fragment() {
 	ALBEDO = COLOR.rgb;
-	ROUGHNESS = 1.0;
+	// Specular is disabled, so roughness only shapes the rim: Godot's rim
+	// falloff exponent is (1 - roughness) * 16, and at 1.0 the "rim" would
+	// cover the whole surface.
+	ROUGHNESS = 0.75;
 	float glow = look_site_glow(world_pos, 0.25) * glow_pick * smoothstep(0.3, 0.9, sway_w);
-	EMISSION = look_glow_emission(world_pos, glow * 2.2);
+	RIM = 0.45;
+	RIM_TINT = 0.4;
+	EMISSION = look_glow_emission(world_pos, glow * 2.2) + look_rim(NORMAL, VIEW, 0.3);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }

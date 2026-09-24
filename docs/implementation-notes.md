@@ -188,7 +188,30 @@ Verified:
   - At night the ground gets a hard-edged toon highlight, for the wet
     look.
   - Creature and prop materials are Lambert with no specular too.
-- **Bioluminescent night** (the third palette): see Landmarks.
+- **Depth** (added because flat lighting alone read too flat):
+  - **Ambient occlusion**, in two layers:
+    - SSAO on the Environment, including a little on direct light
+      (Forward+ only);
+    - hard-edged AO baked into vertex colors, which works in every
+      renderer: terrain darkens in hollows and channels (up to 35%),
+      ground under tree crowns (30%), the base of every plant, and the
+      lowest courses of ruin walls.
+  - **Hard shadows:** unfiltered shadow maps, a 4096 atlas, and 2 splits
+    over a 160 m range, with enough normal bias that lit ground stays
+    free of acne.
+  - **Rim light:** Godot's light-driven RIM on plants, creatures and
+    (lightly) ruins, plus a moon-tinted emissive rim after dark.
+    Specular is off, so roughness 0.75 exists only to give the rim a
+    falloff: Godot's rim exponent is (1 − roughness) × 16, and at 1.0
+    the "rim" would light the whole surface.
+  - **Glow:** threshold 1.0, no global bloom, levels 1-4. Campfire
+    flames, lanterns, glowing water and moss, and the sun push above the
+    threshold and bloom; ordinary daylight surfaces don't.
+  - **Grade:** contrast 1.28 by day and 1.32 at night, for deep shadows
+    and bright highlights. The sky has 5 bands and the fog 6, both with
+    near-hard edges.
+- **Bioluminescent night** (the third palette): see Landmarks. Moss
+  glows in patches a few meters across.
 
 ## Landmarks
 
@@ -394,8 +417,10 @@ latest results:
   not built. Wolf dens mark where cave mouths will go.
 - **Interaction between species.** Creatures ignore each other; predator
   and prey behavior is the spec's noted future layer.
-- **Rendering.** Tested with the compatibility renderer; the Forward+
-  look (MSAA, shadows) should be checked on real hardware.
+- **Rendering.** Screenshots of the depth pass were rendered in Forward+
+  on a software Vulkan driver (lavapipe); real hardware should match but
+  hasn't been checked. SSAO exists only in Forward+. The compatibility
+  renderer still gets the baked AO, shadows, rim and grade.
 - **Foliage wind.** One wind vector (the local weather at the player)
   sways every plant in view. That's right at walking scale, but plants a
   few kilometers off don't feel their own local wind.

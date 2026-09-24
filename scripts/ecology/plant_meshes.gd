@@ -236,6 +236,14 @@ class _Builder:
 			tri(p0, top, p1, col.darkened(0.06 * float(k % 2)), sway, sway, sway)
 
 	func commit() -> ArrayMesh:
+		# Baked ambient occlusion: the base of each plant (trunk foot, grass
+		# roots) is darker, the way it would be in its own shadow. Hanging
+		# plants grow down from their origin (y < 0) and are left alone.
+		for i in v.size():
+			var y := v[i].y
+			if y >= 0.0 and y < 0.14:
+				var k := lerpf(0.58, 1.0, smoothstep(0.0, 0.14, y))
+				c[i] = Color(c[i].r * k, c[i].g * k, c[i].b * k, c[i].a)
 		var arrays := []
 		arrays.resize(Mesh.ARRAY_MAX)
 		arrays[Mesh.ARRAY_VERTEX] = v

@@ -707,8 +707,8 @@ func _campfire(d: Vector3, warm: Color) -> Node3D:
 	flames.name = "Flames"
 	flames.position = Vector3(0, 0.15, 0)
 	root.add_child(flames)
-	CreatureBodies.cone(flames, 0.28, 0.0, 0.7, Vector3(0, 0.35, 0), Color(1.0, 0.45, 0.12), 3.0)
-	CreatureBodies.cone(flames, 0.16, 0.0, 0.5, Vector3(0.06, 0.28, 0.04), Color(1.0, 0.85, 0.35), 4.0)
+	CreatureBodies.cone(flames, 0.28, 0.0, 0.7, Vector3(0, 0.35, 0), Color(1.0, 0.45, 0.12), 6.0)
+	CreatureBodies.cone(flames, 0.16, 0.0, 0.5, Vector3(0.06, 0.28, 0.04), Color(1.0, 0.85, 0.35), 8.0)
 	var light := OmniLight3D.new()
 	light.name = "Light"
 	light.light_color = warm.lerp(Color(1.0, 0.55, 0.2), 0.5)

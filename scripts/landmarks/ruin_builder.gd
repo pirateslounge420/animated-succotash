@@ -153,14 +153,16 @@ func box(xf: Transform3D, size: Vector3, col: Color, moss: float) -> void:
 
 
 ## A block at a position, its length (size.x) running along `dir`
-## (horizontal), with a little crumble.
-func block(center: Vector3, dir: Vector3, size: Vector3, moss: float, wobble := 0.04) -> void:
+## (horizontal), with a little crumble. `above` (m above the ground) bakes
+## ambient occlusion into the lowest courses.
+func block(center: Vector3, dir: Vector3, size: Vector3, moss: float, wobble := 0.04, above := 99.0) -> void:
 	var x := dir.normalized()
 	var z := x.cross(Vector3.UP).normalized()
 	var basis := Basis(x, Vector3.UP, z)
 	basis = basis.rotated(Vector3.UP, rng.randf_range(-wobble, wobble)).rotated(x, rng.randf_range(-wobble, wobble) * 0.5)
 	var col: Color = STONES[rng.randi() % STONES.size()]
 	col = col.lightened(rng.randf_range(-0.06, 0.06))
+	col = col.darkened(0.4 * exp(-maxf(above, 0.0) / 1.3))
 	box(Transform3D(basis, center), size, col, moss)
 
 
@@ -237,7 +239,7 @@ func wall(a: Vector2, b: Vector2, height: float, thick: float, breaches: Array, 
 				k += 1
 				continue
 			var moss := 0.15 + 0.5 * exp(-(y - g) / 1.5) + rng.randf_range(0.0, 0.2)
-			block(Vector3(p.x, y + COURSE_M * 0.5, p.y), dir3, Vector3(bw * 0.97, COURSE_M * 0.96, thick), moss)
+			block(Vector3(p.x, y + COURSE_M * 0.5, p.y), dir3, Vector3(bw * 0.97, COURSE_M * 0.96, thick), moss, 0.04, y - g)
 			y += COURSE_M
 			k += 1
 		if h > 1.0 and rng.randf() < ivy_chance:
@@ -273,7 +275,7 @@ func round_tower(center: Vector2, radius: float, height: float, door_angle: floa
 			var gap := (door and y < g + 2.4) or (course % window_row == 0 and course > 3 and rng.randf() < 0.35)
 			if not gap:
 				var moss := 0.12 + 0.5 * exp(-(y - g) / 1.5) + rng.randf_range(0.0, 0.2)
-				block(Vector3(p.x, y + COURSE_M * 0.5, p.y), tangent, Vector3(bw * 1.02, COURSE_M * 0.96, 1.3), moss)
+				block(Vector3(p.x, y + COURSE_M * 0.5, p.y), tangent, Vector3(bw * 1.02, COURSE_M * 0.96, 1.3), moss, 0.04, y - g)
 			y += COURSE_M
 		if h > 2.0 and rng.randf() < 0.35:
 			ivy(Vector3(p.x, g + h, p.y) + out * 0.65, out, rng.randf_range(2.0, minf(7.0, h)))
@@ -293,9 +295,9 @@ func mound(radius_top: float, radius_bottom: float, depth: float, rise: float) -
 		bot_pts.append(Vector3(cos(a) * radius_bottom, -depth, sin(a) * radius_bottom))
 	# Match the local ground so the motte reads as part of the hill.
 	var grass := TerrainChunk._biome_blend(map, up).lerp(GRASS, 0.15)
-	grass.a = 0.3
+	grass.a = 0.05 # hardly any glowing moss on the grassy motte
 	var earth := grass.darkened(0.3).lerp(EARTH, 0.4)
-	earth.a = 0.1
+	earth.a = 0.0
 	var c := Vector3(0, rise, 0)
 	var inside := Vector3(0, -depth * 0.5, 0)
 	for i in sides:
@@ -386,7 +388,7 @@ func _aqueduct() -> void:
 		var y := g - 0.4
 		while y < g + h:
 			var moss := 0.1 + 0.5 * exp(-(y - g) / 2.0) + rng.randf_range(0.0, 0.25)
-			block(Vector3(x, y + COURSE_M * 0.5, 0), along, Vector3(1.8, COURSE_M * 0.96, 2.2), moss, 0.03)
+			block(Vector3(x, y + COURSE_M * 0.5, 0), along, Vector3(1.8, COURSE_M * 0.96, 2.2), moss, 0.03, y - g)
 			y += COURSE_M
 		if both_fallen:
 			rubble(Vector3(x + rng.randf_range(-3, 3), 0, rng.randf_range(-3, 3)), 3.0, 8)

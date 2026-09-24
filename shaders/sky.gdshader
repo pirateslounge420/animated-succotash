@@ -18,7 +18,7 @@ uniform vec3 zenith_color : source_color = vec3(0.2, 0.5, 0.95);
 uniform vec3 horizon_color : source_color = vec3(0.6, 0.85, 1.0);
 uniform vec3 ground_color : source_color = vec3(0.2, 0.22, 0.25);
 uniform float horizon_sharpness = 2.5;
-uniform float sky_bands = 7.0;
+uniform float sky_bands = 5.0;
 uniform vec3 fog_color : source_color = vec3(0.6, 0.8, 1.0);
 
 uniform vec3 sun_dir = vec3(0.0, 1.0, 0.0);
@@ -101,7 +101,7 @@ void sky() {
 		float t = pow(h, 1.0 / horizon_sharpness);
 		float x = t * sky_bands;
 		float fl = floor(x);
-		t = (fl + smoothstep(0.45, 0.55, x - fl)) / sky_bands;
+		t = (fl + smoothstep(0.49, 0.51, x - fl)) / sky_bands; // near-hard band edges
 		col = mix(horizon_color, zenith_color, t);
 		// Haze band hugging the horizon, same color as the ground fog.
 		col = mix(col, fog_color, (1.0 - step(0.06, h)) * 0.6 + (1.0 - step(0.02, h)) * 0.3);

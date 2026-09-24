@@ -161,7 +161,58 @@ static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloa
 		if e < 0.0:
 			col = col.lerp(SEABED, smoothstep(0.0, -8.0, e))
 		out[i] = col
+	_bake_hollow_ao(h, out)
 	return out
+
+
+## Baked ambient occlusion for hollows: a vertex lower than the ring of
+## vertices around it (dips, gullies, river channels) is darkened, up to
+## 35% for a 6 m deep hollow. Hard per-face darkening that fits the flat
+## look and works in every renderer (SSAO is Forward+ only).
+static func _bake_hollow_ao(h: PackedFloat32Array, cols: PackedColorArray) -> void:
+	var n := QUADS + 1
+	for jj in n:
+		for ii in n:
+			var sum := 0.0
+			var cnt := 0
+			for dj in [-1, 0, 1]:
+				for di in [-1, 0, 1]:
+					var x: int = ii + di
+					var y: int = jj + dj
+					if (di != 0 or dj != 0) and x >= 0 and y >= 0 and x < n and y < n:
+						sum += h[y * n + x]
+						cnt += 1
+			var i := jj * n + ii
+			var depth := sum / cnt - h[i]
+			var k := 1.0 - clampf(depth / 6.0, 0.0, 1.0) * 0.35
+			var c := cols[i]
+			cols[i] = Color(c.r * k, c.g * k, c.b * k, c.a)
+
+
+## Baked canopy shade: ground under tree crowns is darkened (called after
+## the trees are placed, before the mesh is built). Worker-thread safe.
+static func bake_canopy_shade(data: Dictionary, hosts: Array) -> void:
+	var key: Vector3i = data.key
+	var cols: PackedColorArray = data.colors
+	var n := QUADS + 1
+	var quad_m := PlanetConst.CIRCUMFERENCE_M / 4.0 / CHUNKS_PER_FACE / QUADS
+	var shade := PackedFloat32Array()
+	shade.resize(n * n)
+	for host in hosts:
+		var uv := CubeSphere.face_uv(key.x, host[0])
+		var gx := (uv.x + 1.0) * 0.5 * CHUNKS_PER_FACE * QUADS - key.y * QUADS
+		var gy := (uv.y + 1.0) * 0.5 * CHUNKS_PER_FACE * QUADS - key.z * QUADS
+		var r: float = maxf(float(host[2]) * 0.3, 2.0) / quad_m # crown radius in quads
+		for y in range(maxi(0, int(gy - r)), mini(n, int(gy + r) + 2)):
+			for x in range(maxi(0, int(gx - r)), mini(n, int(gx + r) + 2)):
+				var d := Vector2(x - gx, y - gy).length() / r
+				if d < 1.0:
+					shade[y * n + x] = maxf(shade[y * n + x], 1.0 - d * d)
+	for i in n * n:
+		if shade[i] > 0.0:
+			var k := 1.0 - 0.3 * shade[i]
+			var c := cols[i]
+			cols[i] = Color(c.r * k, c.g * k, c.b * k, c.a)
 
 
 ## Bilinear blend of the four nearest blueprint cells' biome colors, so

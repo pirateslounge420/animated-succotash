@@ -23,6 +23,7 @@ uniform float look_night = 0.0;
 uniform vec3 look_glow_color : source_color = vec3(0.05, 1.0, 0.85);
 uniform vec3 look_glow_color_b : source_color = vec3(0.15, 0.35, 1.0);
 uniform float look_glow = 0.0; // 0 by day, 1 at night
+uniform vec3 look_rim_color : source_color = vec3(0.45, 0.55, 1.0); // moonlit edge
 uniform vec4 look_sites[8];
 uniform float look_site_kind[8];
 uniform int look_site_count = 0;
@@ -31,7 +32,7 @@ uniform int look_site_count = 0;
 float look_band(float f) {
 	float x = f * look_fog_bands;
 	float fl = floor(x);
-	return (fl + smoothstep(0.4, 0.6, x - fl)) / look_fog_bands;
+	return (fl + smoothstep(0.47, 0.53, x - fl)) / look_fog_bands;
 }
 
 vec4 look_fog(vec3 world_pos, vec3 cam_pos) {
@@ -50,6 +51,14 @@ vec3 look_glow_emission(vec3 world_pos, float amount) {
 	float drift = 0.5 + 0.5 * sin(dot(world_pos, vec3(0.07, 0.05, 0.06)) + TIME * 0.4);
 	float pulse = 0.8 + 0.2 * sin(TIME * 1.3 + dot(world_pos, vec3(0.3, 0.2, 0.25)));
 	return mix(look_glow_color, look_glow_color_b, drift) * amount * look_glow * pulse;
+}
+
+// Night edge light: silhouettes pick up a cool moonlit rim facing away
+// from the camera, the crunchy PS2-era edge definition. Daytime rim comes
+// from the lights themselves (RIM), so this only fades in after dark.
+vec3 look_rim(vec3 normal, vec3 view, float amount) {
+	float rim = pow(1.0 - clamp(dot(normal, view), 0.0, 1.0), 3.0);
+	return look_rim_color * rim * amount * look_night;
 }
 
 // 0-1 closeness to the nearest glowing site; `kind_weight` 1 counts every

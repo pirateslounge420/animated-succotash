@@ -26,7 +26,9 @@ void fragment() {
 	ROUGHNESS = mix(1.0, 0.55, wetness);
 	SPECULAR = 0.35 * wetness;
 	// Glowing moss creeps over the ground at magical places, in patches.
-	float glow = look_site_glow(world_pos, 0.3) * smoothstep(0.64, 0.8, g);
+	// Moss patches a few meters across (the grain sampled coarsely).
+	float patch = texture(look_grain, UV * 0.03).r;
+	float glow = look_site_glow(world_pos, 0.3) * smoothstep(0.6, 0.75, patch);
 	EMISSION = look_glow_emission(world_pos, glow * 0.55);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }
