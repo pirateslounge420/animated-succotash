@@ -40,6 +40,10 @@ void fragment() {
 	vec3 t = mix(texture(look_tex_dirt, UV * 0.6).rgb, texture(look_tex_grass, UV * 0.45).rgb, green);
 	t = mix(t, texture(look_tex_stone, UV * 0.2).rgb, rocky);
 	t = mix(t, vec3(0.5), snow * 0.7);
+	// Texture contrast fades with distance: chunky up close, calm far off,
+	// so fine detail never shimmers or rings (moire) toward the horizon.
+	float far = smoothstep(25.0, 140.0, distance(world_pos, CAMERA_POSITION_WORLD));
+	t = mix(t, vec3(0.5), far * 0.75);
 	ALBEDO = c * t * 2.0 * mix(0.92, 1.08, g);
 	ROUGHNESS = mix(1.0, 0.55, wetness);
 	SPECULAR = 0.35 * wetness;
