@@ -93,6 +93,7 @@ func _ready() -> void:
 	# Linear: keep colors as saturated as authored (filmic curves wash them
 	# toward realism).
 	environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR
+	environment.tonemap_exposure = 0.9 # a touch under, so nothing reads washed out
 	environment.fog_enabled = true
 	environment.fog_sky_affect = 0.0 # the sky shader draws its own banded haze
 	# Glow: punchy blown highlights on light sources (campfires, lanterns,
@@ -275,7 +276,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 
 	# Grade: a punchy, crushed curve day and night (deep shadows, bright
 	# highlights, little midtone, like Melee or PSO), saturated by day.
-	environment.adjustment_saturation = lerpf(1.05, 1.18, daylight)
+	environment.adjustment_saturation = lerpf(1.2, 1.42, daylight)
 	environment.adjustment_contrast = lerpf(1.32, 1.28, daylight)
 
 

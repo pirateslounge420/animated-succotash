@@ -41,6 +41,15 @@ void fragment() {
 	float gb = smoothstep(0.0, 0.2, max(col.g, col.b) - col.r);
 	col = mix(vec3(luma), col, 1.0 + vibrance * (1.0 - sat) * (0.25 + 0.75 * gb) * (1.0 - night * 0.5));
 
+	// Emerald: yellowish greens shift cooler and deeper (the references'
+	// greens are emerald, not lime).
+	float greenness = clamp((col.g - max(col.r, col.b)) * 4.0, 0.0, 1.0);
+	col.r *= 1.0 - 0.28 * greenness;
+	col.b *= 1.0 + 0.12 * greenness;
+
+	// Crush the blacks a little: deep shadows, not lifted grey ones.
+	col = max(col - 0.025, vec3(0.0)) * 1.03;
+
 	// Night: cool the shadows toward cobalt/violet without lifting the
 	// highlights, then crush.
 	luma = dot(col, vec3(0.299, 0.587, 0.114));
