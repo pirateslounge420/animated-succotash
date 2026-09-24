@@ -1,0 +1,21 @@
+{
+	"key": "ALPINE_TUNDRA",
+	"name": "Alpine tundra",
+	"group": "Polar/cold",
+	"size": "small",
+	"status": "empty",
+	"kind": "land",
+	"notes": "No plants yet. Add some below (see data/biomes/README.md).",
+	"climate": {
+		"temp_c": [-8, 0],
+		"moisture": [0.1, 1],
+		"altitude_m": [900, 6000]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

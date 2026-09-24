@@ -1,0 +1,33 @@
+{
+	"key": "SAGEBRUSH",
+	"name": "Sagebrush shrubland",
+	"group": "Grass & scrub",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [2, 17],
+		"moisture": [0.18, 0.32]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [
+			{
+				"name": "Sagebrush",
+				"shape": "shrub",
+				"temp_c": [2, 17],
+				"moisture": [0.14, 0.36],
+				"height_m": [0.5, 1.5],
+				"color": "#9ea894",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 1.4,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): sagebrush shrubland"
+			}
+		],
+		"ground": [],
+		"epiphyte": []
+	}
+}

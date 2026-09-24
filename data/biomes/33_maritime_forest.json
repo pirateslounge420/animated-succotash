@@ -1,0 +1,32 @@
+{
+	"key": "MARITIME_FOREST",
+	"name": "Maritime forest",
+	"group": "Coastal",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [4, 22],
+		"moisture": [0.45, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Wind-shaped live oak",
+				"shape": "gnarled",
+				"temp_c": [10, 24],
+				"moisture": [0.45, 0.95],
+				"height_m": [6, 12],
+				"color": "#336633",
+				"accent": "#807a70",
+				"needs": ["salt_water"],
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): maritime forest"
+			}
+		],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

@@ -1,0 +1,66 @@
+{
+	"key": "KRUMMHOLZ",
+	"name": "Forest-tundra / krummholz",
+	"group": "Polar/cold",
+	"size": "small",
+	"status": "researched",
+	"kind": "land",
+	"notes": "Species from the DESIGN.md research table.",
+	"climate": {
+		"temp_c": [-4, 6],
+		"moisture": [0.3, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Wind-stunted conifer",
+				"shape": "conifer",
+				"temp_c": [-4, 5],
+				"moisture": [0.3, 1],
+				"height_m": [0.8, 3],
+				"color": "#295742",
+				"accent": "#5c422e",
+				"source": "Krummholz / alpine dwarf shrub (Montana Field Guide EVAV0G316)"
+			}
+		],
+		"shrub": [
+			{
+				"name": "Heath",
+				"shape": "shrub",
+				"temp_c": [-7, 6],
+				"moisture": [0.35, 1],
+				"height_m": [0.2, 0.5],
+				"color": "#66594c",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"source": "Krummholz / alpine dwarf shrub (Montana Field Guide EVAV0G316)"
+			},
+			{
+				"name": "Dwarf willow",
+				"shape": "shrub",
+				"temp_c": [-9, 4],
+				"moisture": [0.55, 1],
+				"height_m": [0.1, 0.4],
+				"color": "#668c52",
+				"accent": "#5c422e",
+				"soil": "wet",
+				"source": "Krummholz / alpine dwarf shrub (Montana Field Guide EVAV0G316) (wetter spots)"
+			}
+		],
+		"ground": [
+			{
+				"name": "Mountain avens",
+				"shape": "cushion",
+				"temp_c": [-11, 3],
+				"moisture": [0.1, 0.6],
+				"height_m": [0.08, 0.2],
+				"color": "#e6e6d1",
+				"accent": "#4c7340",
+				"soil": "thin",
+				"source": "Krummholz / alpine dwarf shrub (Montana Field Guide EVAV0G316) (Dryas, dry ridges)"
+			}
+		],
+		"epiphyte": []
+	}
+}

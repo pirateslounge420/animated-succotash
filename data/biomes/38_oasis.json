@@ -1,0 +1,32 @@
+{
+	"key": "OASIS",
+	"name": "Oasis",
+	"group": "Freshwater",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [15, 35],
+		"moisture": [0, 0.3]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Date palm",
+				"shape": "palm",
+				"temp_c": [18, 33],
+				"moisture": [0.02, 1],
+				"height_m": [8, 18],
+				"color": "#4c8038",
+				"accent": "#5c422e",
+				"needs": ["river_bank"],
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): oasis"
+			}
+		],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

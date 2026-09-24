@@ -1,0 +1,20 @@
+{
+	"key": "LAGOON",
+	"name": "Lagoon",
+	"group": "Coastal",
+	"size": "small",
+	"status": "empty",
+	"kind": "water",
+	"notes": "No plants yet. Add some below (see data/biomes/README.md). Aquatic: plants listed here only grow where they can reach land or shallow water; an underwater/aquatic tier is not implemented yet.",
+	"climate": {
+		"temp_c": [5, 33],
+		"moisture": [0, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

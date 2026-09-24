@@ -1,0 +1,34 @@
+{
+	"key": "SALT_MARSH",
+	"name": "Salt marsh",
+	"group": "Wetlands",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [3, 21],
+		"moisture": [0.6, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Cordgrass",
+				"shape": "reed",
+				"temp_c": [3, 26],
+				"moisture": [0.3, 1],
+				"height_m": [0.5, 1.5],
+				"color": "#8c9959",
+				"accent": "#5c422e",
+				"needs": ["standing_water", "salt_water"],
+				"water_depth_m": [0, 0.8],
+				"density": 1.6,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): salt marsh"
+			}
+		],
+		"epiphyte": []
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"key": "COLD_DESERT",
+	"name": "Cold desert",
+	"group": "Desert",
+	"size": "mid",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [-2, 18],
+		"moisture": [0.02, 0.22]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [
+			{
+				"name": "Saltbush",
+				"shape": "shrub",
+				"temp_c": [-2, 18],
+				"moisture": [0.03, 0.26],
+				"height_m": [0.4, 1.2],
+				"color": "#999e85",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.6,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): cold desert"
+			}
+		],
+		"ground": [],
+		"epiphyte": []
+	}
+}

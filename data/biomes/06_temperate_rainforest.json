@@ -1,0 +1,43 @@
+{
+	"key": "TEMPERATE_RAINFOREST",
+	"name": "Temperate rainforest",
+	"group": "Forest",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [2, 16],
+		"moisture": [0.78, 1]
+	},
+	"plants": {
+		"emergent": [
+			{
+				"name": "Giant rainforest conifer",
+				"shape": "conifer",
+				"temp_c": [3, 14],
+				"moisture": [0.75, 1],
+				"height_m": [45, 70],
+				"color": "#1a4c33",
+				"accent": "#5c422e",
+				"density": 0.7,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): temperate rainforest"
+			}
+		],
+		"canopy": [
+			{
+				"name": "Hemlock",
+				"shape": "conifer",
+				"temp_c": [2, 14],
+				"moisture": [0.65, 1],
+				"height_m": [20, 35],
+				"color": "#245c40",
+				"accent": "#5c422e",
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): temperate rainforest"
+			}
+		],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

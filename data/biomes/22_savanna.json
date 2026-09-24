@@ -1,0 +1,46 @@
+{
+	"key": "SAVANNA",
+	"name": "Savanna",
+	"group": "Tropical",
+	"size": "vast",
+	"status": "researched",
+	"kind": "land",
+	"notes": "Species from the DESIGN.md research table.",
+	"climate": {
+		"temp_c": [18, 33],
+		"moisture": [0.26, 0.47]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Acacia",
+				"shape": "umbrella",
+				"temp_c": [20, 33],
+				"moisture": [0.2, 0.56],
+				"height_m": [5, 10],
+				"color": "#668033",
+				"accent": "#5c422e",
+				"density": 0.3,
+				"soil": "thin",
+				"source": "Savanna (DESIGN.md: scattered acacias)"
+			}
+		],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Savanna grass",
+				"shape": "grass",
+				"temp_c": [16, 33],
+				"moisture": [0.18, 0.6],
+				"height_m": [0.6, 1.4],
+				"color": "#c7b25c",
+				"accent": "#5c422e",
+				"density": 1.6,
+				"soil": "thin",
+				"source": "Savanna (DESIGN.md: grasses)"
+			}
+		],
+		"epiphyte": []
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"key": "MANGROVE",
+	"name": "Mangrove",
+	"group": "Coastal",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [20, 33],
+		"moisture": [0.48, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Red mangrove",
+				"shape": "mangrove",
+				"temp_c": [20, 33],
+				"moisture": [0.3, 1],
+				"height_m": [5, 12],
+				"color": "#336b42",
+				"accent": "#5c422e",
+				"needs": ["standing_water", "salt_water"],
+				"water_depth_m": [0.05, 1.8],
+				"soil_default": 0.8,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): mangrove"
+			}
+		],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

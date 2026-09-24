@@ -1,0 +1,43 @@
+{
+	"key": "JUNGLE",
+	"name": "Jungle",
+	"group": "Tropical",
+	"size": "mid",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [19, 33],
+		"moisture": [0.54, 0.7]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [
+			{
+				"name": "Bamboo thicket",
+				"shape": "reed",
+				"temp_c": [16, 33],
+				"moisture": [0.55, 0.92],
+				"height_m": [5, 12],
+				"color": "#739940",
+				"accent": "#5c422e",
+				"density": 0.8,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): jungle understory"
+			},
+			{
+				"name": "Heliconia",
+				"shape": "fern",
+				"temp_c": [20, 33],
+				"moisture": [0.55, 0.95],
+				"height_m": [1.5, 3.5],
+				"color": "#338533",
+				"accent": "#f26626",
+				"density": 1.2,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): jungle understory"
+			}
+		],
+		"ground": [],
+		"epiphyte": []
+	}
+}

@@ -1,0 +1,120 @@
+{
+	"key": "SWAMP",
+	"name": "Swamp / bayou",
+	"group": "Wetlands",
+	"size": "small",
+	"status": "researched",
+	"kind": "land",
+	"notes": "Species from the DESIGN.md research table.",
+	"climate": {
+		"temp_c": [16, 32],
+		"moisture": [0.66, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Bald cypress",
+				"shape": "cypress",
+				"temp_c": [12, 28],
+				"moisture": [0.6, 1],
+				"height_m": [18, 30],
+				"color": "#59804c",
+				"accent": "#807a70",
+				"needs": ["standing_water"],
+				"water_depth_m": [0.05, 2],
+				"soil": "wet",
+				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
+			},
+			{
+				"name": "Water tupelo",
+				"shape": "broadleaf",
+				"temp_c": [13, 28],
+				"moisture": [0.62, 1],
+				"height_m": [14, 24],
+				"color": "#387338",
+				"accent": "#807a70",
+				"needs": ["standing_water"],
+				"water_depth_m": [0.05, 1.5],
+				"soil": "wet",
+				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
+			},
+			{
+				"name": "Black willow",
+				"shape": "broadleaf",
+				"temp_c": [2, 26],
+				"moisture": [0.5, 1],
+				"height_m": [10, 18],
+				"color": "#598c4c",
+				"accent": "#807a70",
+				"needs": ["river_bank"],
+				"soil": "wet",
+				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
+			}
+		],
+		"shrub": [
+			{
+				"name": "Buttonbush",
+				"shape": "shrub",
+				"temp_c": [8, 28],
+				"moisture": [0.6, 1],
+				"height_m": [1.5, 3],
+				"color": "#408040",
+				"accent": "#5c422e",
+				"needs": ["river_bank"],
+				"soil": "wet",
+				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
+			},
+			{
+				"name": "Virginia willow",
+				"shape": "shrub",
+				"temp_c": [10, 27],
+				"moisture": [0.6, 1],
+				"height_m": [1.5, 3],
+				"color": "#4c8538",
+				"accent": "#5c422e",
+				"needs": ["river_bank"],
+				"soil": "wet",
+				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
+			},
+			{
+				"name": "Water elm",
+				"shape": "broadleaf",
+				"temp_c": [12, 28],
+				"moisture": [0.6, 1],
+				"height_m": [5, 9],
+				"color": "#3d7a38",
+				"accent": "#5c422e",
+				"soil": "wet",
+				"density": 0.7,
+				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
+			}
+		],
+		"ground": [
+			{
+				"name": "Cypress knees",
+				"shape": "knees",
+				"temp_c": [-50, 50],
+				"moisture": [-1, 1],
+				"height_m": [0.3, 0.7],
+				"color": "#807a70",
+				"accent": "#807a70",
+				"density": 0,
+				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana) (placed only around bald cypress in water)"
+			}
+		],
+		"epiphyte": [
+			{
+				"name": "Spanish moss",
+				"shape": "hanging_moss",
+				"temp_c": [14, 30],
+				"moisture": [0.6, 1],
+				"height_m": [2, 4],
+				"color": "#999e8c",
+				"accent": "#5c422e",
+				"density": 1.5,
+				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
+			}
+		]
+	}
+}

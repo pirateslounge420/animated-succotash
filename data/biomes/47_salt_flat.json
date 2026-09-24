@@ -1,0 +1,20 @@
+{
+	"key": "SALT_FLAT",
+	"name": "Salt flat",
+	"group": "Special",
+	"size": "small",
+	"status": "empty",
+	"kind": "land",
+	"notes": "No plants yet. Add some below (see data/biomes/README.md).",
+	"climate": {
+		"temp_c": [5, 35],
+		"moisture": [0, 0.3]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

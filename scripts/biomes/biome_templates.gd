@@ -1,9 +1,13 @@
 class_name BiomeTemplates
 ## The biome template list from DESIGN.md "Biome Templates": the real-world
 ## biome list with only near-identical biomes merged (e.g. Taiga +
-## Coniferous, Swamp + Bayou), 51 labels in all including a water label.
-## Caves are not here; they're a separate underground system (the karst
-## rock regions from GeologyPass mark where it would be densest).
+## Coniferous, Swamp + Bayou). 51 slots: 49 surface biomes, a fresh-water
+## label for rivers and lakes, and Karst/caves, which is reserved for the
+## separate underground system (not placed by BiomePass; GeologyPass's
+## karst rock marks where caves would be densest).
+##
+## Each slot has a matching plant data file in data/biomes/ (see the README
+## there), keyed by the names in KEYS.
 ##
 ## Per the spec, biomes are *labels* (map and hover readout). Plants don't
 ## read them: vegetation reads climate directly, so borders blend. The
@@ -28,8 +32,25 @@ enum {
 	SHELF_SEA, CORAL_REEF, KELP_FOREST, DEEP_OCEAN, SEA_ICE,
 	VOLCANIC_FIELD, BADLANDS, CANYON, SALT_FLAT, HOT_SPRING,
 	GLACIER,
+	CAVES,
 	COUNT,
 }
+
+## Enum names as strings, in enum order (data files use these as `key`).
+const KEYS: Array[String] = [
+	"ICE_SHEET", "TUNDRA", "ALPINE_TUNDRA", "KRUMMHOLZ",
+	"TAIGA", "TEMPERATE_DECIDUOUS", "TEMPERATE_RAINFOREST", "CLOUD_FOREST",
+	"TALLGRASS_PRAIRIE", "SHORTGRASS_PRAIRIE", "STEPPE", "SAGEBRUSH", "MEDITERRANEAN_SCRUB", "THORN_SCRUB",
+	"PARAMO", "PUNA", "ALPINE_MEADOW",
+	"COLD_DESERT", "HOT_DESERT",
+	"TROPICAL_RAINFOREST", "JUNGLE", "TROPICAL_DRY_FOREST", "SAVANNA",
+	"SWAMP", "FLOODPLAIN_FOREST", "FRESHWATER_MARSH", "WET_MEADOW", "SALT_MARSH", "BOG", "FEN",
+	"BEACH", "DUNES", "ROCKY_SHORE", "MARITIME_FOREST", "MANGROVE", "ESTUARY", "LAGOON",
+	"FRESHWATER", "OASIS",
+	"SHELF_SEA", "CORAL_REEF", "KELP_FOREST", "DEEP_OCEAN", "SEA_ICE",
+	"VOLCANIC_FIELD", "BADLANDS", "CANYON", "SALT_FLAT", "HOT_SPRING",
+	"GLACIER", "CAVES",
+]
 
 ## id -> [name, group, map color, size]
 const INFO := [
@@ -83,6 +104,7 @@ const INFO := [
 	["Salt flat", "Special", Color(0.95, 0.94, 0.9), Size.SMALL],
 	["Hot spring", "Special", Color(0.7, 0.62, 0.35), Size.SMALL],
 	["Glacier", "Glaciers", Color(0.8, 0.88, 0.96), Size.SMALL],
+	["Karst / caves", "Caves", Color(0.4, 0.36, 0.34), Size.SMALL],
 ]
 
 
@@ -100,6 +122,10 @@ static func color_of(id: int) -> Color:
 
 static func size_of(id: int) -> int:
 	return INFO[id][3]
+
+
+static func id_of_key(key: String) -> int:
+	return KEYS.find(key)
 
 
 static func is_ocean(id: int) -> bool:

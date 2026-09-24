@@ -1,0 +1,20 @@
+{
+	"key": "ICE_SHEET",
+	"name": "Ice sheet / polar desert",
+	"group": "Polar/cold",
+	"size": "mid",
+	"status": "empty",
+	"kind": "land",
+	"notes": "No plants yet. Add some below (see data/biomes/README.md).",
+	"climate": {
+		"temp_c": [-40, -10],
+		"moisture": [0, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

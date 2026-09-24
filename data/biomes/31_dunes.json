@@ -1,0 +1,34 @@
+{
+	"key": "DUNES",
+	"name": "Dunes",
+	"group": "Coastal",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [0, 33],
+		"moisture": [0, 0.45]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Marram grass",
+				"shape": "tussock",
+				"temp_c": [2, 27],
+				"moisture": [0.08, 0.7],
+				"height_m": [0.5, 1],
+				"color": "#b2b873",
+				"accent": "#5c422e",
+				"soil": "sand",
+				"soil_default": 0,
+				"density": 1.4,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): dunes"
+			}
+		],
+		"epiphyte": []
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"key": "WET_MEADOW",
+	"name": "Wet meadow",
+	"group": "Wetlands",
+	"size": "small",
+	"status": "empty",
+	"kind": "land",
+	"notes": "No plants yet. Add some below (see data/biomes/README.md).",
+	"climate": {
+		"temp_c": [3, 18],
+		"moisture": [0.62, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"key": "HOT_SPRING",
+	"name": "Hot spring",
+	"group": "Special",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [-10, 35],
+		"moisture": [0, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Thermophile mat",
+				"shape": "thermophile_mat",
+				"temp_c": [-10, 35],
+				"moisture": [0.2, 1],
+				"height_m": [0.02, 0.05],
+				"color": "#e68c26",
+				"accent": "#4c9959",
+				"needs": ["hot_ground"],
+				"density": 2,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): hot springs"
+			}
+		],
+		"epiphyte": []
+	}
+}

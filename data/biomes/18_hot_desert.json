@@ -1,0 +1,46 @@
+{
+	"key": "HOT_DESERT",
+	"name": "Hot desert",
+	"group": "Desert",
+	"size": "vast",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [18, 35],
+		"moisture": [0, 0.2]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Column cactus",
+				"shape": "cactus",
+				"temp_c": [17, 33],
+				"moisture": [0.02, 0.26],
+				"height_m": [3, 10],
+				"color": "#4c7a4c",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.35,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): hot desert"
+			}
+		],
+		"shrub": [
+			{
+				"name": "Creosote bush",
+				"shape": "shrub",
+				"temp_c": [15, 33],
+				"moisture": [0.02, 0.26],
+				"height_m": [0.8, 2],
+				"color": "#667340",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.5,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): hot desert"
+			}
+		],
+		"ground": [],
+		"epiphyte": []
+	}
+}

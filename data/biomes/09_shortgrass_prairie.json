@@ -1,0 +1,32 @@
+{
+	"key": "SHORTGRASS_PRAIRIE",
+	"name": "Shortgrass prairie",
+	"group": "Grass & scrub",
+	"size": "mid",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [4, 19],
+		"moisture": [0.28, 0.45]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Shortgrass",
+				"shape": "grass",
+				"temp_c": [2, 21],
+				"moisture": [0.22, 0.46],
+				"height_m": [0.15, 0.35],
+				"color": "#a8a861",
+				"accent": "#5c422e",
+				"density": 1.6,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): shortgrass prairie"
+			}
+		],
+		"epiphyte": []
+	}
+}

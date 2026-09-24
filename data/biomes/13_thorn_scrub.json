@@ -1,0 +1,33 @@
+{
+	"key": "THORN_SCRUB",
+	"name": "Thorn scrub",
+	"group": "Grass & scrub",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [18, 33],
+		"moisture": [0.16, 0.3]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [
+			{
+				"name": "Thorn shrub",
+				"shape": "shrub",
+				"temp_c": [18, 33],
+				"moisture": [0.14, 0.36],
+				"height_m": [1, 3],
+				"color": "#737340",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 1.2,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): thorn scrub"
+			}
+		],
+		"ground": [],
+		"epiphyte": []
+	}
+}

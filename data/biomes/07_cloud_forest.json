@@ -1,0 +1,68 @@
+{
+	"key": "CLOUD_FOREST",
+	"name": "Montane / cloud forest",
+	"group": "Forest",
+	"size": "small",
+	"status": "researched",
+	"kind": "land",
+	"notes": "Species from the DESIGN.md research table.",
+	"climate": {
+		"temp_c": [6, 21],
+		"moisture": [0.55, 1],
+		"altitude_m": [800, 3700]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Gnarled cloud-forest tree",
+				"shape": "gnarled",
+				"temp_c": [7, 22],
+				"moisture": [0.6, 1],
+				"height_m": [6, 14],
+				"color": "#296b4c",
+				"accent": "#807a70",
+				"altitude_m": [800, 3700],
+				"density": 1.2,
+				"source": "Cloud forest (en.wikipedia.org/wiki/Cloud_forest)"
+			}
+		],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Moss carpet",
+				"shape": "moss",
+				"temp_c": [-2, 26],
+				"moisture": [0.7, 1],
+				"height_m": [0.1, 0.2],
+				"color": "#4c8c33",
+				"accent": "#5c422e",
+				"soil": "wet",
+				"source": "Cloud forest (en.wikipedia.org/wiki/Cloud_forest)"
+			},
+			{
+				"name": "Filmy fern",
+				"shape": "fern",
+				"temp_c": [6, 24],
+				"moisture": [0.75, 1],
+				"height_m": [0.2, 0.5],
+				"color": "#599959",
+				"accent": "#5c422e",
+				"source": "Cloud forest (en.wikipedia.org/wiki/Cloud_forest)"
+			}
+		],
+		"epiphyte": [
+			{
+				"name": "Epiphytic moss and liverworts",
+				"shape": "hanging_moss",
+				"temp_c": [0, 24],
+				"moisture": [0.72, 1],
+				"height_m": [1.5, 3.5],
+				"color": "#4c8538",
+				"accent": "#5c422e",
+				"density": 1.4,
+				"source": "Cloud forest (en.wikipedia.org/wiki/Cloud_forest) (epiphytes can outweigh the host's leaves)"
+			}
+		]
+	}
+}

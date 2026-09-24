@@ -13,8 +13,15 @@ const SEA_LEVEL_M := 0.0
 ## altitude bands can use real-world numbers.
 const LAPSE_RATE_C_PER_M := 0.0065
 
-## 24 real minutes per in-game day (one real minute per in-game hour).
-const DAY_LENGTH_S := 24.0 * 60.0
+## 48 real minutes per in-game day (two real minutes per in-game hour).
+const DAY_LENGTH_S := 48.0 * 60.0
+
+## The sun counts as "up" once its center is this far below the horizon,
+## as on Earth, where refraction and the sun's own disc make it appear
+## risen before its center clears the horizon (-0.83 degrees there). It's
+## larger here for the stylized sun, so night comes out slightly shorter
+## than day: about 25 vs 23 real minutes at the equator.
+const SUNRISE_ELEVATION_DEG := -3.6
 const MOON_CYCLE_DAYS := 28
 
 ## Walking pace used for the spec's biome walk-across times.

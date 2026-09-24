@@ -1,0 +1,33 @@
+{
+	"key": "BADLANDS",
+	"name": "Badlands",
+	"group": "Special",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [0, 25],
+		"moisture": [0.05, 0.35]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Juniper",
+				"shape": "conifer",
+				"temp_c": [4, 21],
+				"moisture": [0.14, 0.46],
+				"height_m": [2, 6],
+				"color": "#406147",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.35,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): badlands, canyons"
+			}
+		],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

@@ -1,0 +1,62 @@
+{
+	"key": "TAIGA",
+	"name": "Taiga / coniferous forest",
+	"group": "Forest",
+	"size": "vast",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [-2, 8],
+		"moisture": [0.38, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Spruce",
+				"shape": "conifer",
+				"temp_c": [-5, 8],
+				"moisture": [0.4, 1],
+				"height_m": [15, 30],
+				"color": "#1f4c38",
+				"accent": "#5c422e",
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): taiga"
+			},
+			{
+				"name": "Fir",
+				"shape": "conifer",
+				"temp_c": [-3, 9],
+				"moisture": [0.5, 1],
+				"height_m": [15, 28],
+				"color": "#245742",
+				"accent": "#5c422e",
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): taiga"
+			},
+			{
+				"name": "Larch",
+				"shape": "conifer",
+				"temp_c": [-9, 5],
+				"moisture": [0.35, 0.9],
+				"height_m": [10, 22],
+				"color": "#668040",
+				"accent": "#5c422e",
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): taiga"
+			}
+		],
+		"shrub": [
+			{
+				"name": "Bilberry",
+				"shape": "shrub",
+				"temp_c": [-6, 10],
+				"moisture": [0.45, 1],
+				"height_m": [0.2, 0.5],
+				"color": "#406638",
+				"accent": "#5c422e",
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): taiga"
+			}
+		],
+		"ground": [],
+		"epiphyte": []
+	}
+}

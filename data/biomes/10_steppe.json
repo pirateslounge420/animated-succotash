@@ -1,0 +1,33 @@
+{
+	"key": "STEPPE",
+	"name": "Steppe",
+	"group": "Grass & scrub",
+	"size": "mid",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [-2, 18],
+		"moisture": [0.2, 0.4]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Feather grass",
+				"shape": "tussock",
+				"temp_c": [-3, 16],
+				"moisture": [0.17, 0.42],
+				"height_m": [0.4, 0.8],
+				"color": "#bfb880",
+				"accent": "#5c422e",
+				"density": 1.3,
+				"soil": "thin",
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): steppe"
+			}
+		],
+		"epiphyte": []
+	}
+}

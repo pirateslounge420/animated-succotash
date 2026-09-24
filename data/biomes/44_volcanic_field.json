@@ -1,0 +1,34 @@
+{
+	"key": "VOLCANIC_FIELD",
+	"name": "Volcanic field",
+	"group": "Special",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [-5, 30],
+		"moisture": [0, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [
+			{
+				"name": "Volcanic pioneer shrub",
+				"shape": "shrub",
+				"temp_c": [8, 30],
+				"moisture": [0.35, 1],
+				"height_m": [1, 4],
+				"color": "#4c7338",
+				"accent": "#e63326",
+				"soil": "volcanic",
+				"soil_default": 0.05,
+				"density": 1.3,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): volcanic field"
+			}
+		],
+		"ground": [],
+		"epiphyte": []
+	}
+}

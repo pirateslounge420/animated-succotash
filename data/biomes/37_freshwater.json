@@ -1,0 +1,20 @@
+{
+	"key": "FRESHWATER",
+	"name": "Fresh water (river, lake)",
+	"group": "Freshwater",
+	"size": "small",
+	"status": "empty",
+	"kind": "water",
+	"notes": "No plants yet. Add some below (see data/biomes/README.md). Aquatic: plants listed here only grow where they can reach land or shallow water; an underwater/aquatic tier is not implemented yet.",
+	"climate": {
+		"temp_c": [0, 33],
+		"moisture": [0, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

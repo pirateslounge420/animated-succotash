@@ -1,0 +1,46 @@
+{
+	"key": "MEDITERRANEAN_SCRUB",
+	"name": "Mediterranean scrub",
+	"group": "Grass & scrub",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [11, 19],
+		"moisture": [0.28, 0.56]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Holm oak",
+				"shape": "gnarled",
+				"temp_c": [11, 21],
+				"moisture": [0.26, 0.56],
+				"height_m": [6, 12],
+				"color": "#406133",
+				"accent": "#807a70",
+				"soil": "thin",
+				"density": 0.6,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): Mediterranean scrub"
+			}
+		],
+		"shrub": [
+			{
+				"name": "Maquis shrub",
+				"shape": "shrub",
+				"temp_c": [10, 22],
+				"moisture": [0.2, 0.56],
+				"height_m": [0.8, 2.5],
+				"color": "#597340",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 1.3,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): Mediterranean scrub"
+			}
+		],
+		"ground": [],
+		"epiphyte": []
+	}
+}

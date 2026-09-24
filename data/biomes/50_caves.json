@@ -1,0 +1,16 @@
+{
+	"key": "CAVES",
+	"name": "Karst / caves",
+	"group": "Caves",
+	"size": "small",
+	"status": "empty",
+	"kind": "underground",
+	"notes": "Underground: reserved for the cave system (DESIGN.md \"Caves\"), which is not built yet. Plants listed here are loaded but have nowhere to grow until caves exist.",
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

@@ -1,0 +1,122 @@
+{
+	"key": "TROPICAL_RAINFOREST",
+	"name": "Tropical rainforest",
+	"group": "Tropical",
+	"size": "vast",
+	"status": "researched",
+	"kind": "land",
+	"notes": "Species from the DESIGN.md research table.",
+	"climate": {
+		"temp_c": [20, 33],
+		"moisture": [0.62, 1]
+	},
+	"plants": {
+		"emergent": [
+			{
+				"name": "Rainforest emergent",
+				"shape": "emergent",
+				"temp_c": [21, 33],
+				"moisture": [0.6, 1],
+				"height_m": [40, 55],
+				"color": "#1a7329",
+				"accent": "#5c422e",
+				"altitude_m": [-50, 1300],
+				"density": 0.9,
+				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
+			}
+		],
+		"canopy": [
+			{
+				"name": "Buttressed broadleaf",
+				"shape": "broadleaf",
+				"temp_c": [20, 33],
+				"moisture": [0.55, 1],
+				"height_m": [22, 34],
+				"color": "#146624",
+				"accent": "#5c422e",
+				"altitude_m": [-50, 1500],
+				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
+			},
+			{
+				"name": "Rainforest palm",
+				"shape": "palm",
+				"temp_c": [20, 33],
+				"moisture": [0.55, 1],
+				"height_m": [12, 20],
+				"color": "#298033",
+				"accent": "#5c422e",
+				"altitude_m": [-50, 1200],
+				"density": 0.6,
+				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
+			}
+		],
+		"shrub": [
+			{
+				"name": "Tree fern",
+				"shape": "tree_fern",
+				"temp_c": [10, 30],
+				"moisture": [0.6, 1],
+				"height_m": [3, 7],
+				"color": "#338538",
+				"accent": "#5c422e",
+				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes); cloud forest (Wikipedia)"
+			},
+			{
+				"name": "Rainforest sapling",
+				"shape": "shrub",
+				"temp_c": [18, 33],
+				"moisture": [0.55, 1],
+				"height_m": [2, 5],
+				"color": "#24752e",
+				"accent": "#5c422e",
+				"density": 1.2,
+				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes) (shrub layer densest)"
+			}
+		],
+		"ground": [
+			{
+				"name": "Forest-floor fern",
+				"shape": "fern",
+				"temp_c": [8, 33],
+				"moisture": [0.55, 1],
+				"height_m": [0.4, 1],
+				"color": "#338038",
+				"accent": "#5c422e",
+				"density": 0.5,
+				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes) (floor dark, fairly bare)"
+			}
+		],
+		"epiphyte": [
+			{
+				"name": "Orchid",
+				"shape": "epiphyte_clump",
+				"temp_c": [14, 32],
+				"moisture": [0.6, 1],
+				"height_m": [0.3, 0.6],
+				"color": "#d973cc",
+				"accent": "#337333",
+				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
+			},
+			{
+				"name": "Bromeliad",
+				"shape": "epiphyte_clump",
+				"temp_c": [10, 32],
+				"moisture": [0.62, 1],
+				"height_m": [0.4, 0.8],
+				"color": "#cc4033",
+				"accent": "#408033",
+				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
+			},
+			{
+				"name": "Liana",
+				"shape": "liana",
+				"temp_c": [20, 33],
+				"moisture": [0.6, 1],
+				"height_m": [8, 16],
+				"color": "#336b29",
+				"accent": "#5c422e",
+				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"key": "FLOODPLAIN_FOREST",
+	"name": "Floodplain forest",
+	"group": "Wetlands",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [4, 26],
+		"moisture": [0.48, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Cottonwood",
+				"shape": "broadleaf",
+				"temp_c": [5, 24],
+				"moisture": [0.3, 1],
+				"height_m": [15, 25],
+				"color": "#598c40",
+				"accent": "#807a70",
+				"needs": ["river_bank"],
+				"soil": "wet",
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): floodplain forest, gallery forest"
+			}
+		],
+		"shrub": [],
+		"ground": [],
+		"epiphyte": []
+	}
+}

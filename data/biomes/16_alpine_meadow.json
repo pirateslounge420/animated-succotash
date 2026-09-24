@@ -1,0 +1,34 @@
+{
+	"key": "ALPINE_MEADOW",
+	"name": "Alpine meadow",
+	"group": "High-altitude",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [-2, 4],
+		"moisture": [0.35, 0.95],
+		"altitude_m": [900, 5000]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Alpine wildflowers",
+				"shape": "grass",
+				"temp_c": [-3, 8],
+				"moisture": [0.35, 0.95],
+				"height_m": [0.1, 0.3],
+				"color": "#73994c",
+				"accent": "#cc66e6",
+				"altitude_m": [1200, 4500],
+				"density": 1.4,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): alpine meadow"
+			}
+		],
+		"epiphyte": []
+	}
+}

@@ -1,0 +1,72 @@
+{
+	"key": "PUNA",
+	"name": "Puna",
+	"group": "High-altitude",
+	"size": "small",
+	"status": "researched",
+	"kind": "land",
+	"notes": "Species from the DESIGN.md research table.",
+	"climate": {
+		"temp_c": [-3, 5],
+		"moisture": [0.12, 0.55],
+		"altitude_m": [2500, 5000]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Queen of the Andes",
+				"shape": "spike_rosette",
+				"temp_c": [2, 11],
+				"moisture": [0.16, 0.52],
+				"height_m": [6, 10],
+				"color": "#738c73",
+				"accent": "#e6e6bf",
+				"altitude_m": [3000, 4900],
+				"density": 0.15,
+				"source": "Puna (Radford University biomes: puna) (Puya raimondii, rare)"
+			}
+		],
+		"shrub": [
+			{
+				"name": "Puna daisy shrub",
+				"shape": "shrub",
+				"temp_c": [0, 12],
+				"moisture": [0.14, 0.52],
+				"height_m": [0.3, 0.9],
+				"color": "#808559",
+				"accent": "#5c422e",
+				"altitude_m": [2500, 5000],
+				"soil": "thin",
+				"source": "Puna (Radford University biomes: puna)"
+			}
+		],
+		"ground": [
+			{
+				"name": "Bunch grass",
+				"shape": "tussock",
+				"temp_c": [-4, 14],
+				"moisture": [0.1, 0.52],
+				"height_m": [0.3, 0.7],
+				"color": "#b8a86b",
+				"accent": "#5c422e",
+				"altitude_m": [1800, 5200],
+				"density": 1.2,
+				"soil": "thin",
+				"source": "Puna (Radford University biomes: puna)"
+			},
+			{
+				"name": "Ground rosette",
+				"shape": "rosette",
+				"temp_c": [-6, 10],
+				"moisture": [0.08, 0.52],
+				"height_m": [0.1, 0.25],
+				"color": "#738c61",
+				"accent": "#5c422e",
+				"altitude_m": [2800, 5400],
+				"source": "Puna (Radford University biomes: puna)"
+			}
+		],
+		"epiphyte": []
+	}
+}

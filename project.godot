@@ -13,6 +13,10 @@ config/description="Ambient open-world exploration on a procedurally generated c
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+World="*res://scripts/core/world.gd"
+
 [rendering]
 
 renderer/rendering_method="forward_plus"

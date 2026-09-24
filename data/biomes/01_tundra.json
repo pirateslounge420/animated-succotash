@@ -1,0 +1,65 @@
+{
+	"key": "TUNDRA",
+	"name": "Tundra",
+	"group": "Polar/cold",
+	"size": "vast",
+	"status": "researched",
+	"kind": "land",
+	"notes": "Species from the DESIGN.md research table.",
+	"climate": {
+		"temp_c": [-12, -2],
+		"moisture": [0.2, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Sphagnum moss",
+				"shape": "moss",
+				"temp_c": [-12, 6],
+				"moisture": [0.55, 1],
+				"height_m": [0.08, 0.15],
+				"color": "#8c854c",
+				"accent": "#5c422e",
+				"soil": "peat",
+				"density": 1.3,
+				"source": "Tundra (LibreTexts, Kimball Biology 17.1C Biomes)"
+			},
+			{
+				"name": "Lichen",
+				"shape": "moss",
+				"temp_c": [-22, 4],
+				"moisture": [0.03, 0.8],
+				"height_m": [0.03, 0.08],
+				"color": "#9ea680",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"source": "Tundra (LibreTexts, Kimball Biology 17.1C Biomes)"
+			},
+			{
+				"name": "Tundra sedge",
+				"shape": "grass",
+				"temp_c": [-12, 4],
+				"moisture": [0.3, 1],
+				"height_m": [0.15, 0.35],
+				"color": "#8c9459",
+				"accent": "#5c422e",
+				"source": "Tundra (LibreTexts, Kimball Biology 17.1C Biomes)"
+			},
+			{
+				"name": "Arctic annuals",
+				"shape": "grass",
+				"temp_c": [-8, 4],
+				"moisture": [0.35, 0.9],
+				"height_m": [0.08, 0.2],
+				"color": "#738c4c",
+				"accent": "#f2d94c",
+				"density": 0.6,
+				"source": "Tundra (LibreTexts, Kimball Biology 17.1C Biomes)"
+			}
+		],
+		"epiphyte": []
+	}
+}

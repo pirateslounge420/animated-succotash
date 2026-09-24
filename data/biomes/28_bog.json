@@ -1,0 +1,46 @@
+{
+	"key": "BOG",
+	"name": "Bog",
+	"group": "Wetlands",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [-7, 5],
+		"moisture": [0.66, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [
+			{
+				"name": "Bog pine",
+				"shape": "conifer",
+				"temp_c": [-4, 10],
+				"moisture": [0.68, 1],
+				"height_m": [2, 6],
+				"color": "#2e573d",
+				"accent": "#5c422e",
+				"soil": "peat",
+				"density": 0.5,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): bog"
+			}
+		],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Cottongrass",
+				"shape": "grass",
+				"temp_c": [-9, 9],
+				"moisture": [0.62, 1],
+				"height_m": [0.2, 0.5],
+				"color": "#808c4c",
+				"accent": "#f7f7f2",
+				"soil": "peat",
+				"density": 1.2,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): bog, fen"
+			}
+		],
+		"epiphyte": []
+	}
+}

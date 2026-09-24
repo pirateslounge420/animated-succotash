@@ -1,0 +1,46 @@
+{
+	"key": "FRESHWATER_MARSH",
+	"name": "Freshwater marsh",
+	"group": "Wetlands",
+	"size": "small",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [3, 18],
+		"moisture": [0.66, 1]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Cattail",
+				"shape": "reed",
+				"temp_c": [2, 28],
+				"moisture": [0.35, 1],
+				"height_m": [1.2, 2.2],
+				"color": "#738c47",
+				"accent": "#66472e",
+				"needs": ["standing_water"],
+				"water_depth_m": [0, 1],
+				"density": 1.6,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): freshwater marsh"
+			},
+			{
+				"name": "Common reed",
+				"shape": "reed",
+				"temp_c": [0, 26],
+				"moisture": [0.35, 1],
+				"height_m": [1.5, 3],
+				"color": "#8c9459",
+				"accent": "#5c422e",
+				"needs": ["river_bank"],
+				"density": 1.2,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): freshwater marsh, lake shores"
+			}
+		],
+		"epiphyte": []
+	}
+}

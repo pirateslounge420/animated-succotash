@@ -1,0 +1,32 @@
+{
+	"key": "TALLGRASS_PRAIRIE",
+	"name": "Tallgrass prairie",
+	"group": "Grass & scrub",
+	"size": "mid",
+	"status": "placeholder",
+	"kind": "land",
+	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"climate": {
+		"temp_c": [6, 19],
+		"moisture": [0.4, 0.55]
+	},
+	"plants": {
+		"emergent": [],
+		"canopy": [],
+		"shrub": [],
+		"ground": [
+			{
+				"name": "Tallgrass",
+				"shape": "grass",
+				"temp_c": [6, 21],
+				"moisture": [0.38, 0.62],
+				"height_m": [1, 2],
+				"color": "#8c9e47",
+				"accent": "#5c422e",
+				"density": 1.8,
+				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): tallgrass prairie"
+			}
+		],
+		"epiphyte": []
+	}
+}
