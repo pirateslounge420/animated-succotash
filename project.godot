@@ -11,6 +11,7 @@ config_version=5
 config/name="Low-Poly Exploration"
 config/description="Ambient open-world exploration on a procedurally generated cube-sphere planet. GameCube-era low-poly look."
 config/features=PackedStringArray("4.3", "Forward Plus")
+run/main_scene="res://scenes/main.tscn"
 config/icon="res://icon.svg"
 
 [autoload]

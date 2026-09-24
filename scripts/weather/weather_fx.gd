@@ -17,6 +17,7 @@ const SNOW_MAX := 1500
 var rain: CPUParticles3D
 var snow: CPUParticles3D
 var local: Dictionary = {}
+var _level := {} # emitter -> intensity step currently applied
 
 
 func _ready() -> void:
@@ -83,7 +84,7 @@ func update_fx(camera_pos: Vector3, up: Vector3, weather: Dictionary) -> void:
 	var idle: CPUParticles3D = rain if cold else snow
 	idle.emitting = false
 	active.emitting = intensity > 0.05
-	active.amount_ratio = intensity
+	_set_intensity(active, RAIN_MAX if active == rain else SNOW_MAX, intensity)
 
 	# Fall along gravity plus the wind: the stronger the wind, the more the
 	# streaks lean.
@@ -96,6 +97,15 @@ func update_fx(camera_pos: Vector3, up: Vector3, weather: Dictionary) -> void:
 	active.gravity = -up * (2.0 if not cold else 0.2) + drift * 0.1
 
 	PlantMeshes.material().set_shader_parameter("wind_vector", wind)
+
+
+## CPUParticles3D has no amount_ratio in Godot 4.3, and changing `amount`
+## restarts the emitter, so intensity moves in eighths.
+func _set_intensity(p: CPUParticles3D, max_amount: int, intensity: float) -> void:
+	var step := clampi(int(round(intensity * 8.0)), 1, 8)
+	if _level.get(p, -1) != step:
+		_level[p] = step
+		p.amount = max_amount * step / 8
 
 
 static func _tangent(up: Vector3) -> Vector3:

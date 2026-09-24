@@ -42,7 +42,20 @@ func setup(p_world: Node) -> void:
 	map = world.planet
 	rivers = RiverNetwork.new(map)
 	SpeciesDB.all() # load plant data on the main thread before workers need it
+	BiomeTemplates.color_of(0) # same for the biome color table
+	CreatureSpecies.all() # and creature data (vegetation keeps folk camps clear)
 	TerrainChunk.materials()
+
+
+## Let running worker tasks finish before the scene goes away (they read
+## the planet data and would otherwise outlive it).
+func _exit_tree() -> void:
+	for task in _pending.values():
+		WorkerThreadPool.wait_for_task_completion(task)
+	for task in _pending_detail.values():
+		WorkerThreadPool.wait_for_task_completion(task)
+	_pending.clear()
+	_pending_detail.clear()
 
 
 static func chunk_size_m() -> float:

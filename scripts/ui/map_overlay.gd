@@ -9,7 +9,7 @@ extends CanvasLayer
 enum Mode { BIOME, ELEVATION, TEMPERATURE, RAINFALL, WEATHER }
 
 const RES := 72
-const RELIEF := 6.0 # vertical exaggeration of the globe
+const RELIEF := 1.0 # vertical scale of the globe relief (1 = true scale)
 
 var world: Node
 var mode := Mode.BIOME

@@ -24,6 +24,7 @@ class_name VegetationPlacer
 ##   dominance   - a slow noise field per species boosts a local favourite:
 ##                 one valley mostly spruce with some fir, the next flipped.
 ##   clumping    - a patch-scale noise mask, so plants grow in patches.
+##   clearings   - nothing grows on the campsites of mythical folk.
 ##   shade       - ground cover thins under heavy canopy.
 ## Then per plant: size and lean jitter. Epiphytes attach to trees already
 ## placed; cypress knees scatter around cypress standing in water.
@@ -82,6 +83,8 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 			var gx := (a + 0.5 + ctx.rng.randf_range(-0.3, 0.3)) / cells * TerrainChunk.QUADS
 			var gy := (b + 0.5 + ctx.rng.randf_range(-0.3, 0.3)) / cells * TerrainChunk.QUADS
 			var site := ctx.site(gx, gy)
+			if ctx.in_clearing(site.dir):
+				continue
 			if tier == T.CANOPY and ctx.near_emergent(site.dir):
 				continue
 			var total := 0.0
@@ -230,6 +233,7 @@ class _Context:
 	var _emergents := PackedVector3Array()
 	var _hot_center := Vector3.ZERO
 	var _hot_r := 0.0
+	var _camps := PackedVector3Array()
 
 	func _init(key: Vector3i, p_map: PlanetData, p_data: Dictionary, salt: int) -> void:
 		map = p_map
@@ -240,7 +244,15 @@ class _Context:
 		var hot := map.terrain.nearest_hotspot(data.center)
 		_hot_r = hot.radius_m
 		_hot_center = map.terrain.hotspot_dirs[hot.index]
+		_camps = Territories.camps_near(map, data.center, chunk_m * 0.75)
 		_filter_species()
+
+	## Mythical folk camps (Territories) are kept clear of plants.
+	func in_clearing(d: Vector3) -> bool:
+		for c in _camps:
+			if CubeSphere.surface_distance_m(c, d) < Territories.CLEARING_M:
+				return true
+		return false
 
 	func _sample_climate() -> void:
 		var dirs: PackedVector3Array = data.dirs

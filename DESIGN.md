@@ -2,7 +2,7 @@
 
 ## Overview
 
-An ambient open-world exploration game built in Summer Engine (Godot 4). No end goal: pure wandering at a tribal, pre-firearm tech level. Scope is stripped to terrain generation and ecology only; races, cultures, settlements, crafting and combat come later, built on top. The world is a walkable cube-sphere planet about 1/100th of Earth's size (\~400 km around). The day-night cycle runs 24 real minutes per in-game day, scaled down from 24 hours (one real minute per in-game hour).
+An ambient open-world exploration game built in Summer Engine (Godot 4). No end goal: pure wandering at a tribal, pre-firearm tech level. Scope is stripped to terrain generation and ecology only; races, cultures, settlements, crafting and combat come later, built on top. The world is a walkable cube-sphere planet about 1/100th of Earth's size (\~400 km around). The day-night cycle runs 48 real minutes per in-game day, scaled down from 24 hours (two real minutes per in-game hour). As on Earth, twilight is counted as day, so at the equator the lit part runs slightly longer than the night (about 25 minutes against 23).
 
 ## Visual & Tone References
 
@@ -12,7 +12,7 @@ GameCube-era low-poly look: Phantasy Star Online episodes 1 and 2, F-Zero GX, Su
 
 **Night: moonlit dark fairy tale.** Reference: ozavry\_ on Instagram. The world drowns in deep cobalt and violet moonlight under a huge moon, with fog, mist and reeds for depth. Warm light is rationed to one or two accents per scene (campfire, lit window, glowing doorway), and water glows as if lit from within. Surfaces read crunchy, over-sharpened and wet, like heavily graded PS2 or Oblivion-era 3D. Tone is cozy-eerie, quiet and a little melancholy: boardwalks over marsh, stilt shacks, mushroom villages, overgrown ruins, and folk like witches, goblins and trolls at rest rather than in combat. Night is the showpiece, not just the dark half.
 
-**The cycle bridges them.** The 24-minute day-night cycle blends from the bright day palette to the blue night palette through gradual dawn and dusk gradients.
+**The cycle bridges them.** The 48-minute day-night cycle blends from the bright day palette to the blue night palette through gradual dawn and dusk gradients.
 
 ## Creatures
 
@@ -20,9 +20,9 @@ Creatures are ambient and unscripted, with no quest framing. Species have varied
 
 ## Lighting & Day-Night Cycle
 
-Real light sources drive the cycle, not glow shaders. The sun is a DirectionalLight3D by day; the moon is a dimmer, blue-tinted DirectionalLight3D by night. Both sit on a single shared rotation axis, locked opposite each other — as the sun sets on one horizon, the moon is always rising on the other, and both genuinely arc across the sky rather than snapping on and off.
+Real light sources drive the cycle, not glow shaders. The sun is a DirectionalLight3D by day; the moon is a dimmer, blue-tinted DirectionalLight3D by night. The moon behaves as it does on Earth: it orbits once per 28-day phase cycle on a slightly tilted orbit (about 5°), so each day it rises later than the day before. A full moon rises as the sun sets and stays up all night, a new moon travels with the sun and is lost in its glare, and a quarter moon is up for half the day and half the night. Both lights genuinely arc across the sky rather than snapping on and off.
 
-**Elevation-based intensity**: each light's brightness and color temperature follow its angle above the horizon — dim and warm near the horizon, full strength near zenith, fading to nothing once below it. Because both lights share an axis, there's a natural dawn/dusk window where sun and moon are briefly above the horizon together, each casting its own color from opposite sides of the sky.
+**Elevation-based intensity**: each light's brightness and color temperature follow its angle above the horizon — dim and warm near the horizon, full strength near zenith, fading to nothing once below it. Around full moon there's a natural dawn/dusk window where sun and moon are briefly above the horizon together, each casting its own color from opposite sides of the sky; in other phases the moon can hang in the daytime sky.
 
 **Ambient light and sky color** track the active light's color and elevation continuously (not discrete keyframes) — warming and lengthening shadows near sunset, cooling into blue as the moon takes over.
 

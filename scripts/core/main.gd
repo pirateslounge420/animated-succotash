@@ -116,13 +116,14 @@ func _process(delta: float) -> void:
 	if _weather_timer <= 0.0:
 		_weather_timer = 0.25
 		_local_weather = world.weather.local_weather(d, elevation)
-	var fog := world.planet.sample(world.planet.fog, d)
+	var fog: float = world.planet.sample(world.planet.fog, d)
 	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), world.days, _local_weather, fog, delta)
 	var cam := player.camera()
 	fx.update_fx(cam.global_position, d, _local_weather)
 	TerrainChunk.terrain_material().set_shader_parameter("wetness", 1.0 - sky.daylight)
 	post.set_night(1.0 - sky.daylight)
 	creatures.update_creatures(delta, sky.daylight)
+	hud.set_prompt(creatures.prompt)
 	hud.update_readout(world, d, elevation, _local_weather, world.time_scale, player.swimming, delta)
 	map_overlay.update_map(d, delta)
 

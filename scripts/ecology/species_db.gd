@@ -162,7 +162,7 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	if not SOILS.has(soil):
 		push_warning("SpeciesDB: %s: '%s' has unknown soil '%s', using rich" % [path, p_name, soil])
 		soil = "rich"
-	sp.soils = SOILS[soil]
+	sp.soils = (SOILS[soil] as Dictionary).duplicate(true) # own copy: see BiomeTemplates._names
 	sp.soil_default = SOIL_DEFAULTS[soil]
 	for need in e.get("needs", []):
 		if NEEDS.has(need):

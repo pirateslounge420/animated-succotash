@@ -8,6 +8,7 @@ Edit or add entries; changes apply the next time you run the game.
 |---|---|
 | `name` | Unique name. |
 | `role` | `canopy` (lives on a specific tree), `ground`, `water_edge` (shore or open water), `swarm` (fireflies etc.), `insect` (hidden until you inspect a log), `pack` (den-tethered pack hunters), `mythical`. |
+| `body` | Placeholder model: `quadruped`, `rodent`, `deer`, `tortoise`, `bird`, `wader`, `duck`, `frog`, `swarm`, `beetle`. Mythical creatures use `shape` instead. |
 | `spawn` | `ambient` (around you all the time, spaced by `one_per_radius_m`), `interaction` (only when you inspect something), `long_range` (mythical: dormant far away, aware at mid range, visible close). |
 | `temp_c` | Mean annual temperature range, °C. |
 | `moisture` | 0-1 effective moisture range. |

@@ -108,20 +108,51 @@ const INFO := [
 ]
 
 
+# INFO is a nested constant array, and Godot 4.3 can corrupt such arrays
+# when several threads read them at once (chunks are built on worker
+# threads). Lookups go through these flat packed copies instead, built once
+# when the class loads.
+static var _names := _column_strings(0)
+static var _groups := _column_strings(1)
+static var _colors := _column_colors()
+static var _sizes := _column_sizes()
+
+
+static func _column_strings(col: int) -> PackedStringArray:
+	var out := PackedStringArray()
+	for row in INFO:
+		out.append(row[col])
+	return out
+
+
+static func _column_colors() -> PackedColorArray:
+	var out := PackedColorArray()
+	for row in INFO:
+		out.append(row[2])
+	return out
+
+
+static func _column_sizes() -> PackedInt32Array:
+	var out := PackedInt32Array()
+	for row in INFO:
+		out.append(row[3])
+	return out
+
+
 static func name_of(id: int) -> String:
-	return INFO[id][0]
+	return _names[id]
 
 
 static func group_of(id: int) -> String:
-	return INFO[id][1]
+	return _groups[id]
 
 
 static func color_of(id: int) -> Color:
-	return INFO[id][2]
+	return _colors[id]
 
 
 static func size_of(id: int) -> int:
-	return INFO[id][3]
+	return _sizes[id]
 
 
 static func id_of_key(key: String) -> int:

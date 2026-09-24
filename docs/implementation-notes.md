@@ -1,366 +1,279 @@
-# Implementation Notes (prototype as built)
+# Implementation notes
 
-> **Not the design spec.** The spec is [`/DESIGN.md`](../DESIGN.md). This
-> file was the original design doc and now records what the prototype
-> code actually does, which files do it, and how it was verified. Code
-> comments cite its section numbers. Where the two disagree (day length,
-> sun/moon lighting, flat map vs. planet, biome roster, climate model),
-> `DESIGN.md` wins and this file describes the older behavior still in
-> the code.
+How the code implements [`DESIGN.md`](../DESIGN.md): what each part does,
+where it lives, how it was checked, and what's still missing. The design
+spec is the source of truth; this file describes the prototype.
 
-An open-world, ambient-exploration, third-person game set in a low-polygon
-world of primal high fantasy. Built in Godot 4.x, developed collaboratively
-with Claude (and, on the desktop side, Summer Engine's Claude-native
-workflow).
+## Overview
 
-## 1. Core Pillars
+```
+World (autoload)       planet blueprint, clock, live weather, floating origin
+  PlanetGenerator      builds the blueprint once at startup (worker thread)
+main.gd                orchestrates the playable scene:
+  ChunkManager         terrain + water + plants streamed around the player
+  FarShell             coarse distant terrain and sea
+  SkySystem            sun, moon, sky shader, ambient, fog
+  WeatherFX            rain/snow particles, wind on foliage
+  PlanetPlayer         third-person explorer with planet gravity
+  CreatureSpawner      wildlife, wolf packs, mythical creatures, logs
+  Hud, MapOverlay, PostGrade
+```
 
-1. **Ambient exploration over objectives.** The world rewards wandering.
-   There is no HUD-driven quest funnel — discovery is its own payoff.
-2. **Primal high fantasy.** Tribal, hunter-gatherer societies. No guns, no
-   heavy armor, no gunpowder-era or industrial-age technology. Stone, wood,
-   bone, hide, fire, and early metalwork at most.
-3. **Low-poly, high-readability art.** Geometry stays simple; mood is
-   carried by lighting, color, and silhouette rather than surface detail.
-4. **A living, cyclical world.** Procedural biomes and a full day/night
-   cycle make the world feel like it continues without the player.
+Only the coarse blueprint is built for the whole planet, because the
+weather simulation and river network need global data. Everything at
+walking scale is computed on demand from pure functions of that
+blueprint, on worker threads, and thrown away when the player leaves.
+Going back to a place rebuilds it identically.
 
-## 2. Art Style
+## Planet
 
-Primary references: **Super Smash Bros. Melee** (GameCube-era character
-proportions and clean shading), **Phantasy Star Online Ep. I & II**
-(painterly skyboxes, ruin/nature blending, ambient sound-driven mood),
-**F-Zero GX** (bold, saturated lighting and strong silhouette design despite
-low geometry budgets).
+`scripts/planet/`
 
-Guidelines:
+- **Size.** Circumference 400 km, radius 63.66 km (`PlanetConst`). Y is
+  the spin axis.
+- **Cube-sphere addressing** (`CubeSphere`). Six faces with a tangent warp
+  (u, v → tan(u·π/4)), so cells are close to equal in area. It also
+  provides latitude/longitude, local east/north frames and great-circle
+  distance.
+- **Terrain** (`TerrainField`). One continuous 3D-noise height function,
+  so every consumer agrees on the height at any point:
+  - continents calibrated to 62% ocean;
+  - ridged mountain belts, continental shelves and 9 volcanic hotspots;
+  - a fine detail layer used only by walkable chunks.
+- **Blueprint** (`PlanetData`). 6 × 96² cells of about 1 km each. It is
+  built by `PlanetGenerator` in order:
+  1. `terrain_pass`: elevation and slope.
+  2. `hydrology_pass`: ocean basins (connected water areas of 300+
+     cells), lakes filled by priority-flood, flow directions, distance to
+     coast and to water.
+  3. Weather spin-up (see below). It produces the long-term climate.
+  4. `climate_pass`:
+     - temperature in °C (lapse rate 6.5 °C/km);
+     - precipitation in mm/year, wetter on windward slopes and drier in
+       rain shadows;
+     - fog;
+     - an aridity-based moisture index (0-1).
+  5. `hydrology_pass` rivers: discharge weighted by precipitation; the
+     top 3.5% of land flow becomes rivers. Also salt lakes in closed
+     basins and brackish river mouths.
+  6. `geology_pass`: 8 rock types (granite, basalt, karst, sandstone,
+     alluvium, coastal sand, clay/peat, glacial till).
+  7. `biome_pass`: one of 51 biome templates per cell, by priority rules.
 
-- **Geometry:** low vertex counts, flat or lightly beveled faces, no
-  high-frequency surface noise. Nature assets (trees, rocks) built from a
-  small number of reusable low-poly modules.
-- **Shading:** baked/vertex lighting feel — soft flat shading over PBR
-  roughness maps. Avoid modern PBR realism; favor GameCube-era toon-lit
-  gradients.
-- **Color:** biome-driven palettes, saturated but not neon. Strong
-  time-of-day color grading does most of the "wow" work (see §4).
-- **Texture budget:** small, tiling, low-resolution textures (64–256px) or
-  vertex-color-only surfaces where possible, to keep the GameCube-era
-  reference honest and keep asset production fast.
-- **Silhouette first:** every creature, tribe structure, and landmark should
-  read at a glance from a distance, the way F-Zero GX tracks and PSO ruins
-  do.
+  With seed 42 it takes about 6-8 s.
 
-### 2.1 Mood Reference (Night)
+## Weather
 
-Moodboard reference (fan-rendered fantasy night scenes, not owned assets —
-described here rather than embedded) pins down the night-time target from
-§4 concretely:
+`scripts/weather/weather_sim.gd`: a coarse causal simulation on
+6 × 10 × 10 cells.
 
-- **Palette:** deep blue-violet ambient/moonlight dominates; a single warm
-  light source (campfire, glowing window, lit doorway) provides near-total
-  color contrast against it rather than a broad warm fill.
-- **Moon:** rendered large and graphic in the sky — a mood element, not a
-  realistically-scaled disc.
-- **Silhouettes:** pine forests, jagged peaks, and ruin architecture read
-  as near-black shapes against the blue sky; detail lives in the rim
-  light, not the shadow side.
-- **Accent glow:** POI light sources (windows, water, fungal/bioluminescent
-  flora) should match the cool ambient hue rather than reading as warm,
-  reserving warm light specifically for fire/hearth — this is what should
-  make campfires and tribal hearths pop as the "welcome" signal from a
-  distance at night.
-- **Stars & moon:** a dense, visible star field at night, with the moon
-  (full or crescent) always rendered oversized/graphic per the point
-  above — both read as deliberate sky design, not realism.
+- **Wind:** from pressure gradients, turned by up to 80° with latitude
+  (Coriolis), plus prevailing trade-wind and westerly belts.
+- **Transport:** pressure and temperature anomalies and humidity are
+  carried downwind (semi-Lagrangian advection).
+- **Rising and sinking air:** rising air in lows cools and rains; sinking
+  air in highs warms and clears; mountains force air up (orographic lift).
+- **Storms:** latent heat deepens lows into storms, with a cap. Clouds
+  shade the ground.
+- **Stability:** pressure diffuses and total mass is conserved.
+- **Chaos:** the simulation is seeded and chaotic; a tiny nudge grows to a
+  2-3 hPa difference within days.
 
-**Scope note:** several moodboard sources pull from a general dark-fantasy
-aesthetic that includes castles and plate-armored knights. Those are
-**excluded by §1.2** (no heavy armor, primal/tribal only) — only the
-lighting, color, and atmosphere from such shots apply here, never the
-architecture or character content. Don't reintroduce castle/knight
-content from future reference images without an explicit setting change.
+Uses:
+- **Spin-up:** 8 in-game days of spin-up, then 12 days of averaging, give
+  the climate the biomes are built from. Precipitation is rescaled to a
+  1000 mm planet-wide mean.
+- **Live weather:** the same simulation keeps running during play, one
+  step per in-game quarter hour. `local_weather(dir, elevation)` returns
+  wind, rain rate, snow or not, temperature, storm and cloud cover at the
+  player.
+- **Effects:** `WeatherFX` turns that into rain or snow that leans with
+  the wind. The same wind vector sways all foliage.
 
-## 3. World & Procedural Generation
+Verified:
+- equator ~2000 mm/yr, subtropical deserts ~120 mm/yr;
+- storm belts stormy 13-29% of the time;
+- a windward coast at 2340 mm/yr against 1120 mm/yr in the rain shadow.
 
-Minecraft-style **chunked procedural generation**: the world streams in
-around the player in fixed-size chunks, generated from layered noise
-(heightmap, moisture, temperature) rather than hand-authored terrain.
+## Time, sun and moon
 
-### 3.1 Biomes
+`scripts/sky/`
 
-Biome comes from height, temperature, and moisture together (§3.5), not
-a single axis. Two groups:
+- **Day length.** One day is 48 real minutes (`PlanetConst.DAY_LENGTH_S`).
+  Sunrise and sunset are counted at a sun elevation of −3.6°, so twilight
+  counts as day and the lit part is slightly longer than the night: about
+  25 against 23 minutes at the equator. The planet has no axial tilt, so
+  there are no seasons yet.
+- **Earth-like moon** (`Astro.moon_dir`, `MoonMode.ORBITAL`, the default):
+  - it orbits once per 28-day phase cycle on an orbit tilted 5.1°;
+  - elongation from the sun sets the phase, so a full moon rises at
+    sunset, a new moon travels with the sun, and quarter moons are up
+    half the day;
+  - it rises about 51 minutes of game time later each day.
 
-**Lowland / climate table** (temperature × moisture, Whittaker-style):
+  `MoonMode.LOCKED_OPPOSITE` keeps the original always-opposite
+  behavior as an option.
+- **28 lunar mansions** (`LunarMansions`). The mansion follows the moon
+  around its orbit. Its star glyph is drawn next to the moon in the sky
+  shader, tinted by its guardian beast's color.
+- **Lighting** (`SkySystem`):
+  - two DirectionalLight3Ds (sun and moon), with intensity and color set
+    by elevation; the moon's also scales with phase;
+  - a continuous palette runs from Frutiger Aero day, through dusk, to a
+    cobalt/violet night;
+  - the sky shader draws the moon disc with a phase terminator, stars and
+    clouds from the live weather;
+  - ambient light and fog follow.
+- **Night grade** (`PostGrade`): sharpening and a violet tint on the
+  screen at night, for the crunchy look.
 
-| Biome | Terrain character | Tribal presence hook |
-|---|---|---|
-| Forest | Rolling hills, temperate woodland, clearings | Tribes living **in the canopy** (rope bridges, platform villages) |
-| Jungle | Dense hot/wet rainforest, thick canopy | Deep-canopy tribes, more vertically layered than temperate Forest |
-| Savanna | Warm grassland, scattered trees | Semi-nomadic hunter camps, stone circles, migratory herds |
-| Prairie | Cooler/temperate open grassland | Semi-nomadic camps, similar to Savanna but cold-tolerant herds |
-| Desert | Dunes, mesas, sparse oases | Nomadic camps, sunken ruins half-buried in sand |
-| Swamp | Hot, very wet wetland, mangroves, bioluminescent flora | Stilt-and-vine villages, hidden shrines |
-| Marsh | Temperate, very wet wetland, reedy/open (freshwater-adjacent) | Reed-boat camps, fishing platforms |
-| Bog | Cold, very wet wetland, peat/moss | Sparse, isolated dwellings on drier hummocks |
+## Walkable terrain
 
-**Altitude zonation** (elevated land, keyed on temperature so a polar
-mountain snows over at a lower absolute height than an equatorial one —
-see §3.5): climbing from the base, a windward/moist mountain runs
-**base Forest/Jungle → Cloud Forest → Dwarf Forest → Mountains (bare
-alpine rock) → Snow Tundra (cap)**. A leeward/dry mountain skips Cloud
-Forest and goes straight from its (often Desert) base to Dwarf Forest,
-matching the rain-shadow behavior in §3.5.
+`scripts/terrain/`
 
-| Biome | Terrain character | Tribal presence hook |
-|---|---|---|
-| Cloud Forest | Moist montane forest, persistent mist, moss/epiphytes | Mist-shrouded tribes, hard to spot until close |
-| Dwarf Forest | Sparse, wind-stunted subalpine/treeline forest | Small, hardy enclaves; more shelter than settlement |
-| Mountains | Bare rock, cliffs, alpine plateaus, above the treeline | Tribes carved **into the mountain** (terraced dwellings, cave-mouth entries) |
-| Snow Tundra | Frozen flats (polar) or permanent snow cap (high alpine) | Sheltered enclaves in ice caves or wind-break ravines |
+- **Chunks** (`TerrainChunk`). 384 per face edge, each about 260 m with
+  32 × 32 flat-shaded quads of about 8 m:
+  - heights come from `TerrainField` with the detail layer;
+  - rivers are carved in with water ribbons (`RiverNetwork`);
+  - lake, sea and wetland water tables are added;
+  - ground color blends nearby biomes, with sand at shores, rock on steep
+    faces and snow wherever it's below freezing at that height.
+- **Streaming** (`ChunkManager`):
+  - the view ring (3 chunks) gets ground, water and trees;
+  - the detail ring (1 chunk) adds undergrowth;
+  - geometry and plant placement are computed on WorkerThreadPool; nodes
+    are attached a few per frame;
+  - the loading screen blocks only for the detail ring.
+- **Floating origin** (`World`). The planet center is stored in double
+  precision and everything under `world_root` shifts when the player
+  gets 1.5 km from the origin.
+- **Far shell** (`FarShell`). A coarse sphere mesh for distant land and
+  sea, sunk slightly and hidden inside the chunk radius.
 
-**Water and coast:**
+Measured with the compatibility renderer:
+- blocking load of 13 chunks in about 5 s;
+- streaming to 50 chunks in about 3 s;
+- per chunk: terrain 18 ms, trees 51 ms, undergrowth ~330 ms, all on
+  worker threads.
 
-| Biome | Notes |
-|---|---|
-| Ocean | Salt water. |
-| Lake | Fresh water (enclosed basin — see §3.5's flood-fill). |
-| Beach | Low-elevation strip specifically adjacent to Ocean (salt water), not any water body. |
+**Thread safety note.** Godot 4.3 can corrupt nested constant arrays when
+several threads read them at once. Anything the chunk workers read is
+therefore a flat packed array (`BiomeTemplates._colors`) or a private
+copy.
 
-Rivers are fresh water too, but aren't a biome of their own — see §3.2.
+## Vegetation
 
-**Caves** are a structural/subsurface POI feature (§3.3: "cave-dwelling
-tribes"), not a surface biome — they can appear within Mountains or any
-other biome and aren't part of this height/temperature/moisture lookup.
+`scripts/ecology/` and `data/biomes/*.json`
 
-Biomes blend at their borders via noise-based interpolation (height,
-vegetation density, and palette all cross-fade) rather than hard edges, in
-the spirit of Minecraft's biome blending but tuned for a hand-painted look.
-The current implementation (§3.5) assigns one discrete biome ID per cell;
-smoothstepped cross-fading at borders is still open (roadmap item 8).
+- **Plants are data.** Each biome file lists plants per tier (emergent,
+  canopy, shrub, ground, epiphyte). A plant's default tolerance is its
+  biome's climate block (°C, moisture, altitude). Listing a plant in
+  several biomes gives it the union of their ranges. `SpeciesDB` loads
+  all files; currently 80 species, in 34 of the 51 files.
+- **Plants read climate, not biome names.** At each candidate site on a
+  jittered grid (spacing per tier), `VegetationPlacer` combines:
+  - temperature at the exact height, adjusted for aspect (equator-facing
+    slopes are warmer and drier);
+  - moisture boosted near water, so rivers get gallery forests;
+  - bell-shaped suitability bands;
+  - soil from rock type;
+  - special needs (standing water, river bank, salt, hot ground);
+  - per-species dominance over ~1.5 km (one valley spruce, the next
+    fir);
+  - patch clumping, and shade thinning the ground cover;
+  - size and lean jitter.
 
-### 3.2 Rivers
+  Epiphytes attach to placed trees; cypress knees ring cypresses standing
+  in water. Mythical folk campsites are kept clear.
+- **Rendering.** One MultiMesh per species. `PlantMeshes` builds 24
+  low-poly placeholder shapes; the foliage shader sways them with the
+  live wind.
 
-Rivers are a terrain-carving feature layered on top of a biome's base
-heightmap, not a biome of their own — this is what gives the "nice
-gradient" between dry land and water rather than a hard trench:
+## Creatures
 
-- A **river mask** (0 = dry land, 1 = river centerline) is computed per
-  vertex, independent of the height noise, and smoothed with `smoothstep`
-  across a configurable band width so banks slope rather than cliff.
-- Final height = `lerp(land_height, riverbed_height, river_mask)`, where
-  `riverbed_height` sits below the world's fixed `water_level`.
-- A single flat water plane is placed at `water_level` per chunk; it's
-  invisible under normal land (terrain sits above it) and only becomes
-  visible where the carved riverbed dips below it — no per-river custom
-  geometry needed for the water surface itself.
-- **Navigability:** any river segment wide/deep enough (mask above a
-  navigability threshold) supports boat travel. Boats use simple,
-  Minecraft-esque physics — not real fluid/buoyancy simulation: the boat
-  is height-locked to the water surface, accelerates from paddle input,
-  drifts along a per-segment current-direction vector, and collides with
-  the banks. See `scripts/world/boat.gd`.
-- This same mask/blend approach is the template for biome-to-biome
-  blending in general (§3.1): a continuous weight per biome pair,
-  smoothstepped across a border band, rather than a hard biome ID lookup
-  per vertex.
+`scripts/creatures/` and `data/creatures/creatures.json`
 
-### 3.3 Points of Interest
+Creatures read the terrain and the placed vegetation: temperature at the
+exact spot, moisture, ground cover, trees (canopy dwellers perch on
+actual placed trees) and water depth.
 
-Discoverable locations are the primary "content" of ambient exploration.
-Design principle: **every POI should be visible or hinted at from a
-distance (smoke, sound, light, silhouette) but require actual traversal
-effort to reach** (climbing, swimming, finding a hidden path). A visible
-path, treeline break, or worn stone trail leading off toward a
-fog-shrouded landmark is the standard "lure" — the player follows the
-line before they know what's at the end of it.
+Spawn tiers:
 
-Examples called out by the concept: canopy tribes, waterfall-hidden tribes,
-cave-dwelling tribes, mountain tribes. Extend this pattern to each biome
-(see table above) rather than clustering all POIs in one biome type.
+- **Interaction.** Fallen logs lie near trees in forests. Pressing E
+  within 2 m rolls a log over, revealing damp soil and, if the climate
+  suits, 6-12 beetles that scurry off and burrow.
+- **Ambient** (`CreatureSpawner`). Each species has a planet-wide
+  jittered grid with one candidate spot per circle of `one_per_radius_m`.
+  - Spots within 140 m whose habitat fits get a creature while its time
+    of day lasts; it fades out when you leave.
+  - The same spot always gives the same answer, so wildlife feels
+    persistent with no off-screen simulation.
+  - Behaviors by role:
+    - ground dwellers graze and bolt;
+    - canopy dwellers hop between crowns;
+    - waders step in the shallows and ducks paddle on open water, and
+      both take off when startled;
+    - fireflies drift.
+- **Pack hunters.** Wolf dens are cave mouths on steep, cold slopes,
+  found per grid cell.
+  - Packs rest by day and patrol their territory at night.
+  - They howl in call-and-response: members answer the leader, and
+    neighboring packs answer back.
+  - Once they notice you, they spread out and close in to about 9 m,
+    then drift home when you leave.
+- **Mythical** (`Territories`). At most one territory per 1.6 km cell,
+  chosen among the mythical species whose climate fits.
+  - **Dormant** beyond 1 km: nothing exists.
+  - **Aware** from 1 km: unseen but pacing and calling. Calls are
+    low-pass filtered and nearly mono far away, then sharpen with
+    distance.
+  - **Visible** within 220 m.
+  - Temperament decides what they do:
+    - hostile ones stalk at a distance and freeze while you look at them;
+    - neutral ones watch you, and wisps drift ahead, leading you on;
+    - friendly ones walk over to you.
+  - Folk (troll, witch, goblin) keep a campfire with a warm light: the
+    spec's warm "pop" against the blue night.
 
-Concrete architectural language per biome (moodboard-derived, see §2.1):
+Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
+howl, drone and whisper. Bodies are primitive low-poly placeholders
+(`CreatureBodies`).
 
-- **Forest:** bulbous, organic hut clusters (mushroom-cap roofs read well
-  at low-poly) connected by simple wooden plank bridges at ground level or
-  in the canopy.
-- **Swamp:** structures on stilts above the waterline, reached via a raised
-  wooden boardwalk that threads through reeds/fog — the approach itself is
-  the traversal beat, not just the destination.
-- **Waterfall POIs (coastal/mountain):** water falling through worn,
-  moss-covered stone/ruin architecture (ties back to the PSO ruin
-  reference in §2); the waterfall and pool glow as the site's light
-  source at night.
+## UI
 
-### 3.4 Rivers as Traversal, Not Just Scenery
+- **HUD:**
+  - time of day, moon phase and mansion;
+  - biome, temperature now and on average (°C), weather, rainfall, wind,
+    elevation and coordinates;
+  - a context prompt.
+- **Map (M):** a globe lit by the real sun, colored by biome, elevation,
+  temperature, rainfall or live weather.
 
-The river system in §3.2 doubles as a POI delivery mechanism: a
-navigable river is a natural through-line the player can follow by boat,
-so waterfall- and stilt-village POIs should bias toward spawning along or
-just off river/coastline paths rather than being purely landlocked.
+## How it was tested
 
-### 3.5 Implementation: The Generation Pipeline
+- **Headless.** The full game loop was run headless:
+  - loading;
+  - walking and fast travel with chunk streaming;
+  - midnight with night creatures;
+  - log interaction.
 
-The world-gen core (as opposed to the single hand-tuned Plains+river
-chunk built earlier) is a seed-driven, ordered pass pipeline: **every
-value is derived, nothing is hand-placed**, and each pass reads only the
-outputs of the passes before it. Entry point:
-`scripts/procgen/world_map_generator.gd` (`WorldMapGenerator.generate()`),
-which runs, in order:
+  No script errors.
+- **Rendered.** Screenshots were rendered under xvfb with the
+  compatibility renderer: day forest, dusk, night, rain, the map,
+  wildlife, a campfire camp and a wolf den.
+- **Climate checks.** Weather and climate checks cover the figures listed
+  above; 49-50 of the 50 surface templates appear on each tested seed.
 
-1. **Height** — `scripts/procgen/passes/heightmap_pass.gd`. Layered
-   noise: a low-frequency layer shapes continents/oceans, a
-   ridged-fractal layer adds mountain ridges on top (masked so ridges
-   only appear where the continent is already high), plus a small detail
-   layer.
-2. **Water** — `scripts/procgen/passes/water_pass.gd`. Flood-fills
-   below-sea-level cells reachable from the map border as ocean;
-   below-sea-level cells *not* reachable from the border (enclosed
-   basins) become lakes. Rivers trace via steepest-descent from
-   high-elevation source cells until they reach the sea/a lake or hit a
-   local minimum.
-3. **Temperature** — `scripts/procgen/passes/temperature_pass.gd`.
-   Latitude band (distance from the map's equator row) minus a
-   height-based lapse rate, normalized 0–1.
-4. **Moisture** — `scripts/procgen/passes/moisture_pass.gd`. Two
-   components multiplied together: (a) distance-decay from every water
-   cell (multi-source BFS), and (b) a rain-shadow factor from marching
-   along a prevailing wind direction per row, tracking the tallest ridge
-   crossed so far — cells past a ridge (leeward) get shadowed, cells
-   still climbing toward one (windward) don't. `fog_chance` is derived
-   from moisture weighted by that same shadow factor, so fog is likelier
-   on the moist windward side than in a rain shadow. Verified: windward
-   cells average ~68% higher moisture than their leeward counterparts
-   across the same ridges.
-5. **Biome** — `scripts/procgen/passes/biome_pass.gd`. Water cells become
-   Ocean/Lake directly (salt/fresh, per §3.1); low ocean-adjacent land
-   becomes Beach; elevated land (height >= a mountain-base threshold)
-   goes through an altitude ladder keyed on *temperature* (not raw
-   height) — snow cap, then bare alpine rock, then dwarf/subalpine
-   forest, then Cloud Forest if moist enough at that band (else it stays
-   Dwarf Forest, which is how a leeward/rain-shadowed mountain skips
-   Cloud Forest entirely) — and falls through to the same lowland
-   Whittaker table everything else uses once it's warm enough at that
-   elevation to be "the mountain's base." Keying the ladder on
-   temperature rather than height means a polar mountain hits its snow
-   line at a lower physical height than an equatorial one, for free,
-   since TemperaturePass already folds latitude into that value.
-   Verified directly: a moist (windward) mountain's synthetic hot→cold
-   sweep produces Jungle → Forest → Cloud Forest → Dwarf Forest →
-   Mountains → Snow Tundra in order; the same sweep at low moisture
-   (leeward) produces Desert → Dwarf Forest → Mountains → Snow Tundra,
-   skipping Cloud Forest as intended.
-6. **Foliage** — `scripts/procgen/passes/foliage_pass.gd` +
-   `scripts/procgen/foliage_type.gd`. Each `FoliageType` resource
-   declares its own temperature/moisture tolerance range independently
-   of the biome table (not a biome lookup — a plant just checks whether
-   the local climate is in its range), plus a per-cell spawn-chance
-   density; `scripts/procgen/default_foliage_types.gd` has six example
-   types spanning the climate space.
+## Known gaps and next steps
 
-`scripts/world/world_map_view.gd` is the validation renderer: a single
-vertex-colored greybox mesh over the whole generated region (no chunk
-streaming yet — that's roadmap item 6), with a runtime toggle (keys 1–5)
-between coloring by biome, height, temperature, moisture, or fog chance,
-plus `MultiMeshInstance3D` placeholder markers (colored boxes, not real
-models) for foliage spawns. `scenes/world/world_map_demo.tscn` is the
-scene to open/run to see it; `scripts/world/debug_fly_camera.gd` gives a
-free-fly inspection camera (right-click to look, WASD to move).
-
-## 4. Day/Night Cycle
-
-- **Full cycle length:** 120 in-game minutes (real time), i.e. 2 hours.
-- **Day:** 70 minutes.
-- **Night:** 50 minutes.
-- **Dawn/Dusk:** not separate fixed phases — they are the *gradient
-  transition* between day and night lighting states, so the color/light
-  interpolation itself is the transition period (sun angle driven). Target
-  a visually distinct golden-hour window of roughly 8–10 real-time minutes
-  on each transition for the ambient mood shift to read clearly.
-- **Lighting targets:**
-  - Day: bright, saturated, high-key, minimal fog.
-  - Dusk: a vertical sky gradient band — cool blue at the zenith, through
-    violet/purple at mid-sky, down to warm orange/red hugging the horizon
-    — with long shadows and rim-lighting on silhouettes.
-  - Night: cool blue/violet ambient, low-key, stars/moon visible (moon
-    rendered large/graphic rather than realistically scaled). Biome accent
-    lighting (bioluminescence in swamp, aurora in tundra) should read
-    *cool*, matching the ambient hue; warm light is reserved for
-    fire/hearths specifically, so a campfire or lit tribal window pops as
-    a clear "warmth/shelter" signal against the cold world rather than
-    blending into general ambient glow. See §2.1 for the full reference.
-  - Dawn: cool-to-warm inverse of dusk.
-- Implementation should drive a single normalized `time_of_day` value
-  (0.0–1.0 over the 120-minute cycle) that feeds sun/moon rotation, sky
-  gradient, fog color, and ambient light color — not separate hardcoded
-  lighting states.
-
-## 5. Setting & Tone
-
-High fantasy at a **primal/tribal technology level**: hunting, gathering,
-early agriculture, oral tradition, animism/spirit-based belief implied by
-environmental storytelling (totems, shrines, ritual sites) rather than
-exposition. No firearms, no plate armor — furs, woven fiber, bone/wood
-tools, and stone or early bronze at the most advanced.
-
-## 6. Technical Architecture (Godot 4.x)
-
-- **Engine:** Godot 4.x, 3D (Forward+ or Mobile renderer — evaluate for
-  low-poly performance vs. visual target once art pipeline is running).
-- **World streaming:** chunk-based, loaded/unloaded around the player using
-  a grid of chunk coordinates; each chunk owns its own terrain mesh +
-  scatter (vegetation, rocks, POIs).
-- **Terrain generation:** layered `FastNoiseLite` (or custom noise stack)
-  for heightmap, moisture, and temperature maps; biome selection derives
-  from moisture/temperature lookup (Whittaker-diagram style), height from
-  the heightmap, blended at borders.
-- **Time system:** a single autoload (`TimeOfDay`) driving the normalized
-  day/night clock described in §4, broadcast via signal so sky, lighting,
-  and gameplay systems can react without polling.
-- **Camera/controller:** third-person, ambient/exploration-focused (no
-  target-lock combat camera needed for this prototype phase).
-
-## 7. Platform & Distribution
-
-- **Target:** Steam (Windows/Mac/Linux via Godot's native export
-  templates). No mobile/console target for this prototype phase.
-- Steamworks integration (achievements, cloud saves, rich presence) is
-  explicitly **out of scope** until the prototype phase is done — don't
-  couple gameplay code to a Steamworks SDK/GodotSteam wrapper yet.
-- Desktop-first render settings (MSAA, Forward+ renderer) are already the
-  default in `project.godot`; revisit only if a Steam Deck target is
-  confirmed later (would push toward the Mobile renderer or tighter
-  shadow/MSAA budgets).
-
-## 8. Out of Scope (this prototype phase)
-
-- Combat systems, guns/heavy armor (excluded by setting, not just
-  unimplemented).
-- Multiplayer/networking.
-- Full biome roster beyond the seven listed in §3.1.
-- Final art assets — prototype uses greybox/primitive geometry first.
-- Realistic water/fluid simulation — rivers use the simplified
-  height-locked boat physics in §3.2, not a physics-based fluid sim.
-- Steamworks SDK integration (see §7).
-
-## 9. Roadmap (suggested next milestones)
-
-1. Repo/project scaffold. ✅
-2. Plains biome, single chunk: noise heightmap + carved navigable river
-   with smooth (gradient) banks, per §3.2. ✅
-3. Boat entity with simple height-locked/current-driven physics. ✅
-4. `TimeOfDay` autoload + basic sky/lighting gradient driven by it. ✅
-5. Core world-generation pipeline — height/water/temperature/moisture/
-   biome/foliage passes and the validation renderer, per §3.5. ✅
-6. Third-person character controller (ambient movement: walk/run/climb/swim).
-7. Chunk streaming — replace the single demo region in §3.5 with a grid
-   that loads/unloads around the player, each chunk querying the same
-   `WorldMapGenerator` passes rather than its own noise (this also
-   retires the standalone Plains+river prototype from item 2, folding
-   river generation into `WaterPass`).
-8. Biome blending — BiomePass currently assigns one discrete biome ID
-   per cell; add smoothstep cross-fading at biome borders (height,
-   vegetation density, palette), same technique as the river's
-   `river_mask` in §3.2.
-9. First discoverable POI (e.g. a canopy village) as a hand-placed
-   prototype before POIs are procedurally scattered.
+- **Placeholder content.** Mansion star patterns are approximate (the
+  star counts are right). Most plant and creature data is placeholder,
+  and so are all the models and sounds.
+- **Aquatic life.** There is no aquatic tier yet: no fish, coral or kelp
+  meshes, and ocean biomes have no underwater plants.
+- **Karst and caves.** The template is reserved, but the cave system is
+  not built. Wolf dens mark where cave mouths will go.
+- **Interaction between species.** Creatures ignore each other; predator
+  and prey behavior is the spec's noted future layer.
+- **Rendering.** Tested with the compatibility renderer; the Forward+
+  look (MSAA, shadows) should be checked on real hardware.

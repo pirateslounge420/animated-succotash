@@ -6,6 +6,7 @@ extends CanvasLayer
 var _left: Label
 var _right: Label
 var _hint: Label
+var _prompt: Label
 var _loading: Control
 var _loading_label: Label
 var _loading_bar: ProgressBar
@@ -14,20 +15,25 @@ var _hint_timer := 18.0
 
 func _ready() -> void:
 	layer = 10
-	_left = _label(Vector2(16, 12), HORIZONTAL_ALIGNMENT_LEFT)
-	_right = _label(Vector2(-16, 12), HORIZONTAL_ALIGNMENT_RIGHT)
-	_right.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_left = _label(HORIZONTAL_ALIGNMENT_LEFT)
+	_left.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE, 16)
+	_right = _label(HORIZONTAL_ALIGNMENT_RIGHT)
+	_right.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 16)
 	_right.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	_hint = _label(Vector2(16, -16), HORIZONTAL_ALIGNMENT_LEFT)
-	_hint.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
+	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 16)
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_hint.text = "WASD move · Shift run · Ctrl fast travel · Space jump · E inspect · M map · H hide HUD · [ ] time speed · click to look, Esc frees mouse"
+	_hint.text = "WASD move · Shift run · Ctrl fast travel · Space jump · E inspect\nM map · H hide HUD · [ ] time speed · click to look, Esc frees mouse"
+	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
+	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 70)
+	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_prompt.add_theme_font_size_override("font_size", 18)
 	_build_loading()
 
 
-func _label(pos: Vector2, align: HorizontalAlignment) -> Label:
+func _label(align: HorizontalAlignment) -> Label:
 	var l := Label.new()
-	l.position = pos
 	l.horizontal_alignment = align
 	l.add_theme_font_size_override("font_size", 15)
 	l.add_theme_color_override("font_color", Color(0.95, 0.97, 1.0))
@@ -69,6 +75,11 @@ func show_loading(step: String, fraction: float) -> void:
 
 func hide_loading() -> void:
 	_loading.visible = false
+
+
+## Context prompt near the bottom of the screen ("E: turn over the log").
+func set_prompt(text: String) -> void:
+	_prompt.text = text
 
 
 func toggle() -> void:
