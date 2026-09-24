@@ -43,7 +43,8 @@ const GLACIER_MAX_LAT := 0.96 # 55 degrees; closer to the poles high ice is ice 
 ## Largest patch, in ~1 km cells, for small specialty pockets. Linear
 ## coastal and river biomes (beach, dunes, mangrove, canyon, ...) are
 ## narrow strips, quick to cross however long, so they aren't capped; nor
-## are salt flats (salt lakes of any size) or glaciers.
+## are glaciers, nor salt flats (real ones like Bonneville and Uyuni are
+## vast, so a large one here is accurate).
 const PATCH_CAP := {
 	BiomeTemplates.HOT_SPRING: 1,
 	BiomeTemplates.OASIS: 2,

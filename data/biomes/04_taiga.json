@@ -3,9 +3,9 @@
 	"name": "Taiga / coniferous forest",
 	"group": "Forest",
 	"size": "vast",
-	"status": "placeholder",
+	"status": "researched",
 	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"notes": "Shrub and ground tiers researched (taiga understory sources per entry). The canopy entries (Spruce, Fir, Larch) and Bilberry are still placeholders.",
 	"climate": {
 		"temp_c": [-2, 8],
 		"moisture": [0.38, 1]
@@ -54,9 +54,103 @@
 				"color": "#406638",
 				"accent": "#5c422e",
 				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): taiga"
+			},
+			{
+				"name": "Labrador tea",
+				"shape": "shrub",
+				"temp_c": [-4, 8],
+				"moisture": [0.45, 1],
+				"height_m": [0.4, 1],
+				"color": "#4c664c",
+				"accent": "#5c422e",
+				"soil": "peat",
+				"density": 0.7,
+				"source": "Taiga understory (Britannica: taiga flora; What Plants Live In The Taiga)"
+			},
+			{
+				"name": "Dwarf birch",
+				"shape": "shrub",
+				"temp_c": [-6, 7],
+				"moisture": [0.4, 0.95],
+				"height_m": [0.5, 1.5],
+				"color": "#738059",
+				"accent": "#c9beac",
+				"density": 0.5,
+				"source": "Taiga understory (compagnie-des-sens.fr: Betula spp. as shrub in harsher zones)"
+			},
+			{
+				"name": "Taiga willow",
+				"shape": "shrub",
+				"temp_c": [-5, 9],
+				"moisture": [0.5, 1],
+				"height_m": [0.6, 2],
+				"color": "#668059",
+				"accent": "#5c422e",
+				"needs": ["river_bank"],
+				"density": 0.4,
+				"source": "Taiga understory (Britannica taiga flora: willows near wetlands/riverbanks)"
+			},
+			{
+				"name": "Juniper",
+				"shape": "conifer",
+				"temp_c": [-3, 9],
+				"moisture": [0.3, 0.85],
+				"height_m": [0.5, 1.5],
+				"color": "#40593d",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.3,
+				"source": "Taiga understory (compagnie-des-sens.fr taiga flora)"
 			}
 		],
-		"ground": [],
+		"ground": [
+			{
+				"name": "Reindeer lichen",
+				"shape": "moss",
+				"temp_c": [-9, 6],
+				"moisture": [0.15, 0.7],
+				"height_m": [0.05, 0.12],
+				"color": "#a6ab8c",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 1.5,
+				"source": "Taiga floor (Britannica taiga flora; Cladonia rangiferina, primary winter forage lichen)"
+			},
+			{
+				"name": "Sphagnum moss",
+				"shape": "moss",
+				"temp_c": [-8, 8],
+				"moisture": [0.6, 1],
+				"height_m": [0.08, 0.15],
+				"color": "#8c9166",
+				"accent": "#5c422e",
+				"soil": "peat",
+				"density": 1.4,
+				"source": "Taiga floor (Britannica taiga flora: peaty wetland accumulations)"
+			},
+			{
+				"name": "Lingonberry",
+				"shape": "shrub",
+				"temp_c": [-7, 8],
+				"moisture": [0.4, 0.9],
+				"height_m": [0.1, 0.25],
+				"color": "#4c664c",
+				"accent": "#a62626",
+				"density": 0.9,
+				"source": "Taiga understory (Britannica taiga flora: Vaccinium vitis-idaea, dominant ground species)"
+			},
+			{
+				"name": "Fireweed",
+				"shape": "grass",
+				"temp_c": [-5, 12],
+				"moisture": [0.3, 0.85],
+				"height_m": [0.5, 1.2],
+				"color": "#668052",
+				"accent": "#cc4d99",
+				"density": 0.25,
+				"source": "Taiga (Britannica taiga flora: Epilobium angustifolium, rapid colonizer of burned ground)"
+			}
+		],
 		"epiphyte": []
 	}
 }

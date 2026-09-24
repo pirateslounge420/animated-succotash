@@ -3,9 +3,9 @@
 	"name": "Hot desert",
 	"group": "Desert",
 	"size": "vast",
-	"status": "placeholder",
+	"status": "researched",
 	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
+	"notes": "Canopy, shrub and ground tiers researched (Sonoran/Mojave desert sources per entry). The original Column cactus entry is still a placeholder.",
 	"climate": {
 		"temp_c": [18, 35],
 		"moisture": [0, 0.2]
@@ -24,23 +24,132 @@
 				"soil": "thin",
 				"density": 0.35,
 				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): hot desert"
+			},
+			{
+				"name": "Saguaro cactus",
+				"shape": "cactus",
+				"temp_c": [18, 34],
+				"moisture": [0.02, 0.24],
+				"height_m": [3, 12],
+				"color": "#4c7a4c",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.15,
+				"source": "Sonoran Desert (NPS Sonoran Desert Network Ecosystems; Saguaro NP vegetation report)"
+			},
+			{
+				"name": "Yellow paloverde",
+				"shape": "umbrella",
+				"temp_c": [18, 35],
+				"moisture": [0.05, 0.26],
+				"height_m": [4, 8],
+				"color": "#7a9959",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.25,
+				"source": "Sonoran Desert (NPS SODN; Saguaro NP wooded shrubland association)"
+			},
+			{
+				"name": "Velvet mesquite",
+				"shape": "gnarled",
+				"temp_c": [18, 35],
+				"moisture": [0.06, 0.3],
+				"height_m": [4, 9],
+				"color": "#5c7a40",
+				"accent": "#5c422e",
+				"needs": ["river_bank"],
+				"density": 0.2,
+				"source": "Sonoran Desert (NPS SODN: phreatophytic shrub, co-dominant canopy species)"
 			}
 		],
 		"shrub": [
 			{
 				"name": "Creosote bush",
 				"shape": "shrub",
-				"temp_c": [15, 33],
+				"temp_c": [15, 35],
 				"moisture": [0.02, 0.26],
-				"height_m": [0.8, 2],
-				"color": "#667340",
+				"height_m": [1, 2.5],
+				"color": "#597340",
 				"accent": "#5c422e",
 				"soil": "thin",
-				"density": 0.5,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): hot desert"
+				"density": 0.8,
+				"source": "Sonoran/Mojave Desert (Desert Museum: Plant Ecology of the Sonoran Desert Region; UC Berkeley UCMP)"
+			},
+			{
+				"name": "Whitethorn acacia",
+				"shape": "shrub",
+				"temp_c": [17, 35],
+				"moisture": [0.05, 0.28],
+				"height_m": [1.5, 3],
+				"color": "#738040",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.35,
+				"source": "Sonoran Desert (Desert Museum: Plant Ecology of the Sonoran Desert Region)"
+			},
+			{
+				"name": "Catclaw acacia",
+				"shape": "shrub",
+				"temp_c": [16, 35],
+				"moisture": [0.04, 0.26],
+				"height_m": [1.5, 3],
+				"color": "#66803d",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.3,
+				"source": "Sonoran Desert (NPS SODN; CDFW Desert Scrub habitat description)"
+			},
+			{
+				"name": "Ocotillo",
+				"shape": "spike_rosette",
+				"temp_c": [16, 35],
+				"moisture": [0.03, 0.24],
+				"height_m": [2, 5],
+				"color": "#597340",
+				"accent": "#66472e",
+				"soil": "thin",
+				"density": 0.2,
+				"source": "Sonoran Desert (leafyplace.com desert plants; azstateparks.com)"
 			}
 		],
-		"ground": [],
+		"ground": [
+			{
+				"name": "Prickly pear",
+				"shape": "cactus",
+				"temp_c": [10, 35],
+				"moisture": [0.02, 0.3],
+				"height_m": [0.3, 1],
+				"color": "#4c8552",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.6,
+				"source": "Sonoran/Mojave Desert (azstateparks.com Desert Plants; leafyplace.com)"
+			},
+			{
+				"name": "Bursage",
+				"shape": "shrub",
+				"temp_c": [15, 35],
+				"moisture": [0.02, 0.22],
+				"height_m": [0.3, 0.6],
+				"color": "#8c9166",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.7,
+				"source": "Sonoran/Mojave Desert (UC Berkeley UCMP deserts; white bursage, Franseria dumosa)"
+			},
+			{
+				"name": "Barrel cactus",
+				"shape": "cactus",
+				"temp_c": [12, 33],
+				"moisture": [0.02, 0.3],
+				"height_m": [0.4, 1.2],
+				"color": "#597a4c",
+				"accent": "#5c422e",
+				"soil": "thin",
+				"density": 0.15,
+				"source": "Sonoran Desert (azstateparks.com Desert Plants in Arizona)"
+			}
+		],
 		"epiphyte": []
 	}
 }

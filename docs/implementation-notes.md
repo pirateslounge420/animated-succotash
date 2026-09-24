@@ -62,7 +62,9 @@ Going back to a place rebuilds it identically.
   7. `biome_pass`: one of 51 biome templates per cell, by priority rules.
      Small specialty pockets are then held to DESIGN.md's sizing (hot
      springs 1 km², oases 2, bogs and fens 5, cloud forest 12, ...):
-     oversized patches are eroded from the rim inward.
+     oversized patches are eroded from the rim inward. Salt flats are
+     deliberately left uncapped: real ones (Bonneville, Uyuni) are vast,
+     so a large one here is accurate.
 
   With seed 42 it takes about 7-8 s.
 - **Sampling** (`PlanetData.sample`, `weights_at`). Bilinear between cell
@@ -260,7 +262,8 @@ copy.
   canopy, shrub, ground, epiphyte). A plant's default tolerance is its
   biome's climate block (°C, moisture, altitude). Listing a plant in
   several biomes gives it the union of their ranges. `SpeciesDB` loads
-  all files; currently 80 species, in 34 of the 51 files.
+  all files; currently 95 species, in 34 of the 51 files (hot desert and
+  taiga researched; most others still placeholders).
 - **Plants read climate, not biome names.** At each candidate site on a
   jittered grid (spacing per tier), `VegetationPlacer` combines:
   - temperature at the exact height, adjusted for aspect (equator-facing
@@ -399,5 +402,4 @@ latest results:
 - **Weather grid.** The live grid is coarse (~10 km cells); breezes,
   gusts and showers are local detail added at the player, not simulated
   across the planet.
-- **Salt flats** aren't size-capped. They're salt lakes of any size, and
-  a few reach 50+ km².
+
