@@ -189,8 +189,10 @@ void sky() {
 		// edges step in chunky, slightly pixelated blocks.
 		if (cloud_cover > 0.01 && h > 0.0) {
 			vec3 local = vec3(dot(d, east_dir), dot(d, north_dir), h);
-			vec2 uv = local.xy / (local.z + 0.12) * 0.75 + cloud_offset;
-			vec2 uvq = floor(uv * 40.0) / 40.0;
+			// A domed layer (the +0.4) rather than a flat one: clouds keep a
+			// puffy shape toward the horizon instead of smearing into bands.
+			vec2 uv = local.xy / (local.z + 0.4) * 1.1 + cloud_offset;
+			vec2 uvq = floor(uv * 90.0) / 90.0;
 			float n = fbm(uvq) * 0.72 + 0.28 * (1.0 - abs(2.0 * vnoise(uvq * 2.3 + 7.0) - 1.0));
 			float edge = 1.0 - cloud_cover;
 			float cover = step(edge, n);
@@ -198,7 +200,7 @@ void sky() {
 			// Deeper inside the cloud reads brighter (the puffy tops).
 			float body = fbm(uvq * 1.9 + 4.0) * 0.55 + (n - edge) * 2.2;
 			vec3 mid = mix(cloud_shadow, cloud_light, 0.55);
-			vec3 cloud = body < 0.36 ? cloud_shadow : (body < 0.52 ? mid : cloud_light);
+			vec3 cloud = body < 0.16 ? cloud_shadow : (body < 0.3 ? mid : cloud_light);
 			col = mix(col, cloud, cover * smoothstep(0.0, 0.12, h) * 0.92);
 		}
 	}

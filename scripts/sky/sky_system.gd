@@ -238,7 +238,10 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	sky_material.set_shader_parameter("cloud_offset", _cloud_offset)
 	var lit := sun_col * sun_up + moon_col * moon_up * 0.35 * illumination
 	sky_material.set_shader_parameter("cloud_light", (Color(0.14, 0.16, 0.24) + lit * 1.1).clamp())
-	sky_material.set_shader_parameter("cloud_shadow", zenith.darkened(0.35).lerp(Color(0.3, 0.32, 0.38) * daylight, storm * 0.6))
+	# Fair-weather cumulus stay white with pale blue-grey undersides (not
+	# sky-blue shapes); storms darken them.
+	var cloud_under := Color(0.72, 0.78, 0.95).lerp(zenith, 0.25) * (0.35 + 0.65 * daylight)
+	sky_material.set_shader_parameter("cloud_shadow", cloud_under.lerp(Color(0.3, 0.32, 0.38) * daylight, storm * 0.6))
 
 	# Ambient tracks the sky continuously.
 	# By day the fill is sky-tinted (shadows go blue-ish, the colored-shadow
