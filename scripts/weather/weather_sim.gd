@@ -27,6 +27,19 @@ extends RefCounted
 ##     stormy when its pressure is low and its air nearly saturated;
 ##     clear skies are high pressure and dry air. Neither is scripted.
 ##   * Precipitation falls as snow below freezing, rain above.
+##   * Weather systems travel. The coarse grid alone settles into a steady
+##     state (its advection smooths anomalies away), so the sim also
+##     carries a handful of synoptic systems: mid-latitude lows born in the
+##     westerly belts, tropical cyclones over warm ocean, and broad highs.
+##     Each is seeded, steered by the simulated wind, grows and decays over
+##     a few days, and adds its pressure to the field. Everything else
+##     (wind from the gradient, rising air, rain, latent-heat storms,
+##     clearing under highs) responds to that pressure through the same
+##     rules, so a passing low backs the wind, clouds over, rains and
+##     clears again.
+##   * At the player, local_weather() adds what the 10 km grid can't
+##     resolve: land/sea breezes (onshore in the afternoon, offshore at
+##     night) and gusts.
 ##
 ## The starting state is seeded from the world seed. Rules never change;
 ## the chaos comes from the starting state.
@@ -70,6 +83,9 @@ const RISING_COOL_C_PER_HPA := 1.4
 const SINKING_WARM_C_PER_HPA := 0.6
 ## Global rescale so mean precipitation lands near Earth's ~1000 mm/yr.
 const TARGET_MEAN_PRECIP_MM := 1000.0
+const SYSTEM_COUNT := 11
+const SEA_BREEZE_MPS := 3.5
+const GUST := 0.3 # +-30% speed, and a direction wobble
 
 var world_seed: int
 var cells: int
@@ -93,6 +109,13 @@ var wind := PackedVector3Array() # m/s, tangent to the surface
 var precip_rate := PackedFloat32Array() # mm per in-game hour, last tick
 var rel_humidity := PackedFloat32Array()
 var storm := PackedByteArray()
+var storm_level := PackedFloat32Array() # 0-1 continuous storm intensity
+var synoptic := PackedFloat32Array() # hPa from traveling weather systems
+## Traveling systems: {dir, amp (hPa), radius_km, age_h, life_h, tropical}.
+var systems: Array = []
+var _sys_rng := RandomNumberGenerator.new()
+var _sun := Vector3.UP
+var toward_land := PackedVector3Array() # unit tangent from sea toward land (0 inland/offshore)
 var clear := PackedByteArray()
 var hours := 0.0 # simulated in-game hours since the start state
 
@@ -190,6 +213,16 @@ func _aggregate_terrain(planet: PlanetData) -> void:
 		var n := maxf(counts[w], 1.0)
 		elev_mean[w] /= n
 		water_frac[w] /= n
+	# Direction from sea toward land, for sea breezes: the gradient of land
+	# share, strongest along coasts.
+	toward_land.resize(cells)
+	for c in cells:
+		var grad := Vector3.ZERO
+		for k in 8:
+			var nb := nbr[c * 8 + k]
+			grad += nbr_tan[c * 8 + k] * (water_frac[c] - water_frac[nb]) / nbr_dist_km[c * 8 + k]
+		grad *= 0.25
+		toward_land[c] = grad.normalized() * clampf(grad.length() * 8.0, 0.0, 1.0) if grad.length() > 1e-4 else Vector3.ZERO
 
 
 func _seed_state() -> void:
@@ -203,6 +236,9 @@ func _seed_state() -> void:
 	rel_humidity.resize(cells)
 	storm.resize(cells)
 	clear.resize(cells)
+	storm_level.resize(cells)
+	synoptic.resize(cells)
+	_sys_rng.seed = world_seed * 97 + 3
 	for c in cells:
 		pressure[c] = _belt_pressure(lats[c]) + rng.randf_range(-6.0, 6.0)
 		temp[c] = base_temp(lats[c]) + rng.randf_range(-3.0, 3.0)
@@ -246,6 +282,8 @@ func surface_temp(c: int) -> float:
 
 ## One tick of dt_h in-game hours. sun is the planet-fixed sun direction.
 func step(dt_h: float, sun: Vector3) -> void:
+	_sun = sun
+	_update_systems(dt_h)
 	_update_wind()
 	_advect(dt_h)
 	_apply_physics(dt_h, sun)
@@ -280,7 +318,7 @@ func _update_wind() -> void:
 		var grad := Vector3.ZERO
 		for k in 8:
 			var n := nbr[c * 8 + k]
-			grad += nbr_tan[c * 8 + k] * (pressure[n] - pressure[c]) / nbr_dist_km[c * 8 + k]
+			grad += nbr_tan[c * 8 + k] * ((pressure[n] + synoptic[n]) - (pressure[c] + synoptic[c])) / nbr_dist_km[c * 8 + k]
 		grad *= 0.25 # 8 neighbors ~ 2 samples per axis
 		var w := -grad * WIND_PER_GRADIENT # high -> low
 		var turn := deg_to_rad(TURN_MAX_DEG) * sin(lats[c])
@@ -361,7 +399,7 @@ func _apply_physics(dt_h: float, sun: Vector3) -> void:
 		# Air rises in low pressure (cooling, so it can hold less water) and
 		# sinks in high pressure (warming, drying). This is what makes the
 		# equatorial and subpolar lows rainy and the subtropical highs desert.
-		var p := pressure[c]
+		var p := pressure[c] + synoptic[c]
 		var vertical := p * RISING_COOL_C_PER_HPA if p < 0.0 else p * SINKING_WARM_C_PER_HPA
 		var t_surf := surface_temp(c)
 		var q_sat := saturation(t_surf + vertical)
@@ -381,7 +419,8 @@ func _apply_physics(dt_h: float, sun: Vector3) -> void:
 			pressure[c] -= minf(condensed * latent_pressure, max_latent_drop_per_h * dt_h)
 		var rh := humidity[c] / maxf(q_sat, 0.01)
 		# Storms rain out extra moisture even below full saturation.
-		var stormy := pressure[c] - _belt_pressure(lat) < STORM_PRESSURE and rh > STORM_HUMIDITY
+		var anomaly := pressure[c] + synoptic[c] - _belt_pressure(lat)
+		var stormy := anomaly < STORM_PRESSURE and rh > STORM_HUMIDITY
 		if stormy:
 			var extra := humidity[c] * 0.04 * dt_h
 			humidity[c] -= extra
@@ -390,7 +429,10 @@ func _apply_physics(dt_h: float, sun: Vector3) -> void:
 		precip_rate[c] = rain / dt_h
 		rel_humidity[c] = minf(rh, 1.0)
 		storm[c] = 1 if stormy else 0
-		clear[c] = 1 if (pressure[c] - _belt_pressure(lat) > CLEAR_PRESSURE and rh < CLEAR_HUMIDITY) else 0
+		# Continuous intensity for effects: ramps in as pressure falls and
+		# the air saturates, so a storm builds and fades instead of switching.
+		storm_level[c] = (1.0 - smoothstep(STORM_PRESSURE * 1.7, STORM_PRESSURE * 0.8, anomaly)) * smoothstep(0.82, 0.97, rh)
+		clear[c] = 1 if (anomaly > CLEAR_PRESSURE and rh < CLEAR_HUMIDITY) else 0
 
 
 ## Runs the simulation long enough to settle, then averages. Both phases
@@ -465,7 +507,7 @@ func spin_up(settle_days := 8.0, average_days := 12.0, dt_h := 1.5) -> void:
 ## cell center reads that cell alone. A wide kernel here smears heat and
 ## moisture across the planet within days (numerical diffusion).
 func _kernel(d: Vector3, n: int, center: int) -> float:
-	var ang := acos(clampf(d.dot(dirs[n]), -1.0, 1.0))
+	var ang := CubeSphere.angle_between(d, dirs[n])
 	var t := maxf(0.0, 1.0 - ang / (spacing_rad[center] * 1.05))
 	return t * t + (1e-6 if n == center else 0.0)
 
@@ -503,12 +545,132 @@ func sample_vec(field: PackedVector3Array, d: Vector3) -> Vector3:
 func local_weather(d: Vector3, elevation_m: float) -> Dictionary:
 	var t_air := sample(temp, d) - maxf(elevation_m, 0.0) * PlanetConst.LAPSE_RATE_C_PER_M
 	var c := cell_at(d)
+	var w := sample_vec(wind, d)
+	# Land/sea breeze: sun-warmed land draws air in off the water by day;
+	# at night the land cools faster and the breeze turns offshore.
+	var sunlight := maxf(0.0, d.dot(_sun))
+	w += sample_vec(toward_land, d) * SEA_BREEZE_MPS * (sunlight * 1.6 - 0.45)
+	# Gusts: slow swells in speed and a wobble in direction, a few per
+	# in-game hour, never quite repeating.
+	var t := hours
+	var swell := sin(t * 5.1 + d.x * 40.0) * 0.6 + sin(t * 13.7 + d.z * 40.0) * 0.4
+	var wobble := deg_to_rad(14.0) * (sin(t * 3.3 + d.y * 50.0) * 0.7 + sin(t * 8.9) * 0.3)
+	w = w.rotated(d, wobble) * (1.0 + GUST * swell)
+	# Showers: the grid's rain rate is an average over ~10 km. Locally it
+	# falls from drifting shower cells covering part of the area, the more
+	# of it the heavier the rain (storms cover nearly everything), each
+	# raining harder so the long-run total is unchanged.
+	var areal := sample(precip_rate, d) * precip_scale
+	var storm_now := clampf(sample(storm_level, d), 0.0, 1.0)
+	var cover := clampf(areal / 2.5 + storm_now * 0.7, 0.06, 1.0)
+	var shower := _shower_mask(d, w, cover)
+	var cloud := smoothstep(0.55, 0.95, sample(rel_humidity, d))
 	return {
-		"wind": sample_vec(wind, d),
-		"rain_mm_h": sample(precip_rate, d) * precip_scale,
+		"wind": w,
+		"rain_mm_h": areal / cover * shower if areal > 0.02 else 0.0,
+		"shower": shower,
 		"snow": t_air < 0.0,
 		"temp_c": t_air,
-		"storm": float(storm[c]),
+		"storm": storm_now,
 		"clear": float(clear[c]),
-		"cloud": smoothstep(0.55, 0.95, sample(rel_humidity, d)),
+		"cloud": maxf(cloud, shower * minf(areal * 2.0, 1.0) * 0.95),
 	}
+
+
+var _shower_noise: FastNoiseLite
+var _shower_quantiles := PackedFloat32Array()
+var _shower_offset := Vector3.ZERO
+var _shower_hours := -1.0
+
+
+## 0-1: how much of a shower cell is over `d` right now, for a field where
+## `cover` (0-1) of the area is under showers. The cells drift downwind.
+func _shower_mask(d: Vector3, w: Vector3, cover: float) -> float:
+	if _shower_noise == null:
+		_shower_noise = FastNoiseLite.new()
+		_shower_noise.seed = world_seed + 404
+		_shower_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+		_shower_noise.frequency = 0.35 # per km: cells a few km across
+		_shower_noise.fractal_octaves = 2
+		# Calibrate: value above which a given share of the field lies.
+		var vals := PackedFloat32Array()
+		var rng := RandomNumberGenerator.new()
+		rng.seed = 11
+		for i in 4000:
+			vals.append(_shower_noise.get_noise_3d(rng.randf() * 500.0, rng.randf() * 500.0, rng.randf() * 500.0))
+		vals.sort()
+		for q in 21:
+			_shower_quantiles.append(vals[mini(int(q / 20.0 * vals.size()), vals.size() - 1)])
+	if _shower_hours >= 0.0:
+		_shower_offset += w * 3.6 * (hours - _shower_hours) # km
+	_shower_hours = hours
+	var p := d * (PlanetConst.RADIUS_M / 1000.0) - _shower_offset
+	var n := _shower_noise.get_noise_3d(p.x, p.y, p.z)
+	var qf := (1.0 - cover) * 20.0
+	var qi := mini(int(qf), 19)
+	var threshold := lerpf(_shower_quantiles[qi], _shower_quantiles[qi + 1], qf - qi)
+	return smoothstep(threshold - 0.03, threshold + 0.03, n)
+
+
+# --- Traveling weather systems -------------------------------------------------
+
+func _update_systems(dt_h: float) -> void:
+	var alive: Array = []
+	for sys in systems:
+		sys.age_h += dt_h
+		if sys.age_h >= sys.life_h:
+			continue
+		# Steered by the surrounding flow; tropical cyclones also drift
+		# poleward, like real ones recurving into the westerlies.
+		var d: Vector3 = sys.dir
+		var steer := sample_vec(wind, d) * 0.8
+		if sys.tropical:
+			steer += CubeSphere.north(d) * signf(d.y) * 2.0
+		if steer.length() < 2.0:
+			steer = CubeSphere.east(d) * _prevailing_east(asin(clampf(d.y, -1.0, 1.0))) + CubeSphere.north(d) * 0.5
+		sys.dir = (d + steer * 3600.0 * dt_h / PlanetConst.RADIUS_M).normalized()
+		alive.append(sys)
+	systems = alive
+	while systems.size() < SYSTEM_COUNT:
+		systems.append(_spawn_system())
+	synoptic.fill(0.0)
+	for sys in systems:
+		# Grow over the first fifth of its life, fade over the last third.
+		var f: float = sys.age_h / sys.life_h
+		var env := smoothstep(0.0, 0.2, f) * (1.0 - smoothstep(0.67, 1.0, f))
+		var r_rad: float = sys.radius_km * 1000.0 / PlanetConst.RADIUS_M
+		var min_dot := cos(r_rad * 2.5)
+		var center: Vector3 = sys.dir
+		var amp: float = sys.amp * env
+		for c in cells:
+			if dirs[c].dot(center) < min_dot:
+				continue
+			var ang := CubeSphere.angle_between(dirs[c], center)
+			synoptic[c] += amp * exp(-(ang / r_rad) * (ang / r_rad))
+
+
+func _spawn_system() -> Dictionary:
+	var rng := _sys_rng
+	for attempt in 200:
+		var d := Vector3(rng.randfn(), rng.randfn(), rng.randfn()).normalized()
+		var lat := absf(asin(clampf(d.y, -1.0, 1.0)))
+		var c := cell_at(d)
+		var roll := rng.randf()
+		if roll < 0.3:
+			# Broad high: subtropics and poles favored.
+			if rng.randf() > 0.4 + 0.6 * absf(sin(2.0 * lat)):
+				continue
+			return {"dir": d, "amp": rng.randf_range(4.0, 7.0), "radius_km": rng.randf_range(28.0, 45.0),
+				"age_h": rng.randf_range(0.0, 20.0), "life_h": rng.randf_range(72.0, 150.0), "tropical": false}
+		if roll < 0.42:
+			# Tropical cyclone: warm open ocean, 8-25 degrees.
+			if lat < 0.14 or lat > 0.44 or water_frac[c] < 0.8 or temp[c] < 25.0:
+				continue
+			return {"dir": d, "amp": rng.randf_range(-12.0, -8.0), "radius_km": rng.randf_range(14.0, 22.0),
+				"age_h": 0.0, "life_h": rng.randf_range(60.0, 130.0), "tropical": true}
+		# Mid-latitude low: the westerly storm tracks, 35-65 degrees.
+		if lat < 0.5 or lat > 1.2:
+			continue
+		return {"dir": d, "amp": rng.randf_range(-7.5, -4.0), "radius_km": rng.randf_range(20.0, 35.0),
+			"age_h": rng.randf_range(0.0, 10.0), "life_h": rng.randf_range(48.0, 110.0), "tropical": false}
+	return {"dir": Vector3.UP, "amp": 0.0, "radius_km": 20.0, "age_h": 0.0, "life_h": 24.0, "tropical": false}

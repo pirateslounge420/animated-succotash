@@ -79,5 +79,5 @@ func closest(seg: int, d: Vector3) -> Vector3:
 	var ab := pb - pa
 	var t := clampf((d - pa).dot(ab) / maxf(ab.length_squared(), 1e-12), 0.0, 1.0)
 	var p := (pa + ab * t).normalized()
-	var dist := acos(clampf(p.dot(d), -1.0, 1.0)) * PlanetConst.RADIUS_M
+	var dist := CubeSphere.surface_distance_m(p, d)
 	return Vector3(dist, t, lerpf(level_a[seg], level_b[seg], t))

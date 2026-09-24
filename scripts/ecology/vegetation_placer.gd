@@ -406,7 +406,7 @@ class _Context:
 		s.water_m = water_m
 		s.t = t + (e - s.h) * PlanetConst.LAPSE_RATE_C_PER_M + ASPECT_C * aspect
 		s.m = clampf(m + WATER_BOOST * exp(-water_m / WATER_BOOST_M) - ASPECT_MOISTURE * aspect, 0.0, 1.0)
-		s.hot = acos(clampf(s.dir.dot(_hot_center), -1.0, 1.0)) * PlanetConst.RADIUS_M < _hot_r * 0.45
+		s.hot = CubeSphere.surface_distance_m(s.dir, _hot_center) < _hot_r * 0.45
 
 	static func _bilerp(arr, k00: int, w: int, tx: float, ty: float) -> float:
 		return lerpf(lerpf(arr[k00], arr[k00 + 1], tx), lerpf(arr[k00 + w], arr[k00 + w + 1], tx), ty)

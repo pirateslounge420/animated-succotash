@@ -167,21 +167,14 @@ static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloa
 ## Bilinear blend of the four nearest blueprint cells' biome colors, so
 ## biome borders fade across the ground instead of snapping.
 static func _biome_blend(map: PlanetData, d: Vector3) -> Color:
-	var f := CubeSphere.face_of(d)
-	var uv := CubeSphere.face_uv(f, d)
-	var x := clampf((uv.x + 1.0) * 0.5 * map.res - 0.5, 0.0, map.res - 1.0)
-	var y := clampf((uv.y + 1.0) * 0.5 * map.res - 0.5, 0.0, map.res - 1.0)
-	var i0 := int(x)
-	var j0 := int(y)
-	var i1 := mini(i0 + 1, map.res - 1)
-	var j1 := mini(j0 + 1, map.res - 1)
-	var tx := x - i0
-	var ty := y - j0
-	var c00 := _ground_color(map, map.index(f, i0, j0))
-	var c10 := _ground_color(map, map.index(f, i1, j0))
-	var c01 := _ground_color(map, map.index(f, i0, j1))
-	var c11 := _ground_color(map, map.index(f, i1, j1))
-	return c00.lerp(c10, tx).lerp(c01.lerp(c11, tx), ty)
+	var w := map.weights_at(d)
+	var cells: PackedInt32Array = w[0]
+	var k: PackedFloat32Array = w[1]
+	var col := Color(0, 0, 0)
+	for i in cells.size():
+		col += _ground_color(map, cells[i]) * k[i]
+	col.a = 1.0
+	return col
 
 
 ## Ground color of a cell: its biome color, except water cells borrow a
@@ -240,7 +233,7 @@ static func _river_ribbons(center: Vector3, rivers: RiverNetwork, segs: PackedIn
 	for s in segs:
 		var pa := rivers.a[s]
 		var pb := rivers.b[s]
-		var length_m := acos(clampf(pa.dot(pb), -1.0, 1.0)) * PlanetConst.RADIUS_M
+		var length_m := CubeSphere.surface_distance_m(pa, pb)
 		var steps := maxi(2, int(length_m / 8.0))
 		var lefts := PackedVector3Array()
 		var rights := PackedVector3Array()
@@ -249,7 +242,7 @@ static func _river_ribbons(center: Vector3, rivers: RiverNetwork, segs: PackedIn
 		for k in steps + 1:
 			var t := float(k) / steps
 			var p := (pa + (pb - pa) * t).normalized()
-			if acos(clampf(p.dot(center), -1.0, 1.0)) > reach:
+			if CubeSphere.angle_between(p, center) > reach:
 				if lefts.size() >= 2:
 					out.append([lefts, rights, radii, rivers.width[s], rivers.salty[s]])
 				lefts = PackedVector3Array()

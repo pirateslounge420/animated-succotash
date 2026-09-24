@@ -106,22 +106,56 @@ func cell_at(d: Vector3) -> int:
 	return index(f, i, j)
 
 
-## Bilinear sample of a per-cell float array at any direction. Clamps at
-## face edges, which is fine for smoothly varying climate fields.
+## Smooth sample of a per-cell float array at any direction (see
+## weights_at), continuous across cube-face edges.
 func sample(arr: PackedFloat32Array, d: Vector3) -> float:
+	var w := weights_at(d)
+	var cells: PackedInt32Array = w[0]
+	var k: PackedFloat32Array = w[1]
+	var v := 0.0
+	for i in cells.size():
+		v += arr[cells[i]] * k[i]
+	return v
+
+
+## Interpolation weights at a surface direction: [cells, weights], weights
+## summing to 1. Bilinear between the four surrounding cell centers inside
+## a face. Within half a cell of a face edge there is no four-cell square
+## on one face, so it switches to a tent kernel over the containing cell
+## and its 8 neighbors (which cross the edge); the two agree along the
+## line where they meet, so values and colors run on seamlessly across
+## cube-face edges.
+func weights_at(d: Vector3) -> Array:
 	var f := CubeSphere.face_of(d)
 	var uv := CubeSphere.face_uv(f, d)
-	var x := clampf((uv.x + 1.0) * 0.5 * res - 0.5, 0.0, res - 1.0)
-	var y := clampf((uv.y + 1.0) * 0.5 * res - 0.5, 0.0, res - 1.0)
-	var i0 := int(x)
-	var j0 := int(y)
-	var i1 := mini(i0 + 1, res - 1)
-	var j1 := mini(j0 + 1, res - 1)
-	var tx := x - i0
-	var ty := y - j0
-	var a := lerpf(arr[index(f, i0, j0)], arr[index(f, i1, j0)], tx)
-	var b := lerpf(arr[index(f, i0, j1)], arr[index(f, i1, j1)], tx)
-	return lerpf(a, b, ty)
+	var x := (uv.x + 1.0) * 0.5 * res - 0.5
+	var y := (uv.y + 1.0) * 0.5 * res - 0.5
+	if x >= 0.0 and y >= 0.0 and x <= res - 1.0 and y <= res - 1.0:
+		var i0 := mini(int(x), res - 2)
+		var j0 := mini(int(y), res - 2)
+		var tx := x - i0
+		var ty := y - j0
+		return [
+			PackedInt32Array([index(f, i0, j0), index(f, i0 + 1, j0), index(f, i0, j0 + 1), index(f, i0 + 1, j0 + 1)]),
+			PackedFloat32Array([(1.0 - tx) * (1.0 - ty), tx * (1.0 - ty), (1.0 - tx) * ty, tx * ty]),
+		]
+	var c := cell_at(d)
+	var spacing := PI * 0.5 / res
+	var cells := PackedInt32Array([c])
+	var w := PackedFloat32Array([maxf(0.0, 1.0 - CubeSphere.angle_between(d, dir[c]) / spacing) + 1e-6])
+	var total := w[0]
+	for k in 8:
+		var n := neighbors[c * 8 + k]
+		if n < 0:
+			continue
+		var wn := maxf(0.0, 1.0 - CubeSphere.angle_between(d, dir[n]) / spacing)
+		if wn > 0.0:
+			cells.append(n)
+			w.append(wn)
+			total += wn
+	for i in w.size():
+		w[i] /= total
+	return [cells, w]
 
 
 func neighbor(cell: int, k: int) -> int:

@@ -179,6 +179,8 @@ func pick_spawn_dir() -> Vector3:
 			continue
 		var score := -absf(planet.coast_dist_km[c] - 2.0) - absf(rad_to_deg(planet.lat[c]) - 20.0) * 0.1
 		score += planet.moisture[c] * 3.0
+		# Mild and green: where the most day-active wildlife lives.
+		score -= absf(planet.temp_c[c] - 19.0) * 0.25
 		if planet.slope[c] > 0.15:
 			score -= 5.0
 		if score > best_score:

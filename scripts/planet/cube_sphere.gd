@@ -63,7 +63,14 @@ static func longitude(dir: Vector3) -> float:
 
 ## Great-circle distance in meters between two unit directions.
 static func surface_distance_m(a: Vector3, b: Vector3) -> float:
-	return acos(clampf(a.dot(b), -1.0, 1.0)) * PlanetConst.RADIUS_M
+	return angle_between(a, b) * PlanetConst.RADIUS_M
+
+
+## Angle in radians between two unit directions. Uses the chord length, not
+## acos(dot): Vector3 is 32-bit, and acos of a 32-bit dot product can't
+## resolve anything closer than ~20 m on this planet (it returns 0).
+static func angle_between(a: Vector3, b: Vector3) -> float:
+	return 2.0 * asin(clampf((a - b).length() * 0.5, 0.0, 1.0))
 
 
 ## Local east/north tangent frame at a direction (used for aspect, wind

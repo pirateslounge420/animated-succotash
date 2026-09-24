@@ -144,7 +144,7 @@ func _hotspot_height(dir: Vector3) -> float:
 		# Cheap reject: only points within ~0.12 rad can be inside a cone.
 		if cos_angle < 0.99:
 			continue
-		var dist := acos(clampf(cos_angle, -1.0, 1.0)) * PlanetConst.RADIUS_M
+		var dist := CubeSphere.surface_distance_m(dir, hotspot_dirs[i])
 		var r := hotspot_radii[i]
 		if dist >= r:
 			continue
@@ -169,6 +169,6 @@ func nearest_hotspot(dir: Vector3) -> Dictionary:
 			best = i
 	return {
 		"index": best,
-		"distance_m": acos(clampf(best_dot, -1.0, 1.0)) * PlanetConst.RADIUS_M,
+		"distance_m": CubeSphere.surface_distance_m(dir, hotspot_dirs[best]),
 		"radius_m": hotspot_radii[best],
 	}

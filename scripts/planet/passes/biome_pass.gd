@@ -19,6 +19,12 @@ class_name BiomePass
 ##      mountainsides montane/cloud forest.
 ##   7. Everything else: temperature x moisture climate table.
 ##
+## Then small specialty pockets are held to their DESIGN.md "Biome Sizing"
+## (under ~40 minutes to walk across, many under 5): any patch bigger than
+## its cap in PATCH_CAP is eroded from the outside in, its rim cells taking
+## the most common neighboring biome, so a rare landmark keeps its core
+## instead of spreading over a whole volcano or desert basin.
+##
 ## There are no seasons (no axial tilt), so the treeline and the
 ## boundaries use mean annual temperature, like the real tropics.
 ##
@@ -34,13 +40,108 @@ const GLACIER_MIN_M := 2200.0
 const GLACIER_MAX_LAT := 0.96 # 55 degrees; closer to the poles high ice is ice sheet
 
 
+## Largest patch, in ~1 km cells, for small specialty pockets. Linear
+## coastal and river biomes (beach, dunes, mangrove, canyon, ...) are
+## narrow strips, quick to cross however long, so they aren't capped; nor
+## are salt flats (salt lakes of any size) or glaciers.
+const PATCH_CAP := {
+	BiomeTemplates.HOT_SPRING: 1,
+	BiomeTemplates.OASIS: 2,
+	BiomeTemplates.BOG: 5,
+	BiomeTemplates.FEN: 5,
+	BiomeTemplates.FRESHWATER_MARSH: 8,
+	BiomeTemplates.SWAMP: 10,
+	BiomeTemplates.VOLCANIC_FIELD: 10,
+	BiomeTemplates.BADLANDS: 10,
+	BiomeTemplates.KRUMMHOLZ: 12,
+	BiomeTemplates.CLOUD_FOREST: 12,
+	BiomeTemplates.ALPINE_MEADOW: 12,
+	BiomeTemplates.PARAMO: 12,
+	BiomeTemplates.PUNA: 12,
+	BiomeTemplates.SAGEBRUSH: 12,
+	BiomeTemplates.MEDITERRANEAN_SCRUB: 12,
+}
+
+
 static func run(map: PlanetData) -> void:
 	var nbrs := map.neighbors
 	var biome := PackedInt32Array()
 	biome.resize(map.cell_count)
 	for c in map.cell_count:
 		biome[c] = classify(map, c, nbrs)
+	for id in PATCH_CAP:
+		_cap_patches(map, biome, id, PATCH_CAP[id])
 	map.biome = biome
+
+
+## Erode every patch of `id` larger than `cap` cells from its rim inward.
+static func _cap_patches(map: PlanetData, biome: PackedInt32Array, id: int, cap: int) -> void:
+	var seen := {}
+	for start in map.cell_count:
+		if biome[start] != id or seen.has(start):
+			continue
+		var patch := _flood(map, biome, start, id)
+		for c in patch:
+			seen[c] = true
+		for round in 30:
+			if patch.size() <= cap:
+				break
+			var rim: Array = []
+			var inner: Array = []
+			for c in patch:
+				var same := 0
+				for k in 8:
+					if biome[map.neighbors[c * 8 + k]] == id:
+						same += 1
+				(inner if same == 8 else rim).append([same, c])
+			if inner.size() < cap:
+				# Too thin to erode ring by ring: keep the best-connected cells.
+				rim.sort_custom(func(x, y): return x[0] > y[0])
+				rim = rim.slice(cap - inner.size())
+			for e in rim:
+				biome[e[1]] = _replacement(map, biome, e[1], id)
+			patch = []
+			for e in inner:
+				patch.append(e[1])
+			if inner.size() < cap:
+				break
+
+
+static func _flood(map: PlanetData, biome: PackedInt32Array, start: int, id: int) -> Array:
+	var out := [start]
+	var seen := {start: true}
+	var i := 0
+	while i < out.size():
+		var c: int = out[i]
+		i += 1
+		for k in 8:
+			var n := map.neighbors[c * 8 + k]
+			if biome[n] == id and not seen.has(n):
+				seen[n] = true
+				out.append(n)
+	return out
+
+
+## Most common neighboring land biome (lake cells become fresh water).
+static func _replacement(map: PlanetData, biome: PackedInt32Array, c: int, id: int) -> int:
+	if map.water[c] == PlanetData.Water.LAKE:
+		return BiomeTemplates.FRESHWATER
+	var votes := {}
+	for k in 8:
+		var b := biome[map.neighbors[c * 8 + k]]
+		if b == id or BiomeTemplates.is_ocean(b) or b in [BiomeTemplates.FRESHWATER, BiomeTemplates.OASIS, BiomeTemplates.LAGOON, BiomeTemplates.SALT_FLAT]:
+			continue
+		if PATCH_CAP.has(b):
+			votes[b] = votes.get(b, 0) + 0.5 # prefer ordinary surroundings
+		else:
+			votes[b] = votes.get(b, 0) + 1
+	var best := id
+	var best_v := 0.0
+	for b in votes:
+		if votes[b] > best_v:
+			best_v = votes[b]
+			best = b
+	return best
 
 
 static func classify(map: PlanetData, c: int, nbrs: PackedInt32Array) -> int:
