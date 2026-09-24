@@ -16,9 +16,11 @@ render_mode cull_back, diffuse_lambert, specular_toon;
 
 uniform float wetness = 0.0;
 uniform sampler2D look_grain : filter_nearest, repeat_enable;
-uniform sampler2D look_tex_grass : filter_nearest_mipmap, repeat_enable;
-uniform sampler2D look_tex_dirt : filter_nearest_mipmap, repeat_enable;
-uniform sampler2D look_tex_stone : filter_nearest_mipmap, repeat_enable;
+// Anisotropic: stays chunky up close without ring-shaped moire where the
+// ground is seen at a grazing angle.
+uniform sampler2D look_tex_grass : filter_nearest_mipmap_anisotropic, repeat_enable;
+uniform sampler2D look_tex_dirt : filter_nearest_mipmap_anisotropic, repeat_enable;
+uniform sampler2D look_tex_stone : filter_nearest_mipmap_anisotropic, repeat_enable;
 
 varying vec3 world_pos;
 

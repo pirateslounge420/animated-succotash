@@ -180,7 +180,7 @@ static func _bark(rng: RandomNumberGenerator) -> Image:
 ## dark gaps between. `card` = a ragged cluster on transparency.
 static func _leaves(rng: RandomNumberGenerator, card: bool) -> Image:
 	var img := Image.create(TEX, TEX, false, Image.FORMAT_RGBA8)
-	var bg := Color(0.3, 0.3, 0.3, 0.0 if card else 1.0)
+	var bg := Color(0.38, 0.38, 0.38, 0.0 if card else 1.0)
 	img.fill(bg)
 	var center := Vector2(TEX, TEX) * 0.5
 	var count := 900 if card else 330
@@ -194,7 +194,7 @@ static func _leaves(rng: RandomNumberGenerator, card: bool) -> Image:
 		var ang := rng.randf() * TAU
 		var w := rng.randf_range(2.0, 3.6) * (1.25 if card else 1.0)
 		var h := rng.randf_range(1.0, 1.8) * (1.25 if card else 1.0)
-		var v := rng.randf_range(0.42, 0.78) * (1.0 if not card else 1.05)
+		var v := rng.randf_range(0.5, 0.85)
 		var col := Color(v * rng.randf_range(0.94, 1.06), v, v * rng.randf_range(0.88, 1.0), 1.0)
 		var ax := Vector2(cos(ang), sin(ang))
 		var ay := Vector2(-ax.y, ax.x)

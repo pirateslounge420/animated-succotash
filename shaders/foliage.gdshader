@@ -67,6 +67,10 @@ void fragment() {
 	ALBEDO = COLOR.rgb * tex.rgb * 2.0;
 	ALPHA = mat_id > 1.5 ? tex.a : 1.0;
 	ALPHA_SCISSOR_THRESHOLD = 0.5;
+	// Leaves are translucent: light shining through from behind lights
+	// them too, so crowns seen from below stay green instead of black.
+	float leafy = step(0.5, mat_id);
+	BACKLIGHT = ALBEDO * 0.6 * leafy;
 	// Specular is disabled, so roughness only shapes the rim: Godot's rim
 	// falloff exponent is (1 - roughness) * 16, and at 1.0 the "rim" would
 	// cover the whole surface.
