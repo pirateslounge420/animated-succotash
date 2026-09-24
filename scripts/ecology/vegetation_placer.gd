@@ -34,7 +34,10 @@ class_name VegetationPlacer
 
 const T := PlantSpecies.Tier
 const SPACING_M := {0: 28.0, 1: 7.0, 2: 4.5, 3: 3.5}
-const FILL := {0: 0.55, 1: 0.9, 2: 0.65, 3: 0.9}
+const FILL := {0: 0.55, 1: 0.9, 2: 0.8, 3: 0.9}
+## Moist forest packs tighter (layered, view-framing woods like the
+## references): spacing per tier scales down this far at full moisture.
+const DENSE_SPACING := {0: 1.0, 1: 0.78, 2: 0.85, 3: 0.82}
 const ASPECT_C := 3.0 # °C warmer on a fully equator-facing steep slope
 const ASPECT_MOISTURE := 0.07
 const WATER_BOOST := 0.3
@@ -74,7 +77,7 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 	var candidates := ctx.species_for(tier)
 	if candidates.is_empty():
 		return
-	var spacing: float = SPACING_M[tier]
+	var spacing: float = SPACING_M[tier] * lerpf(1.0, DENSE_SPACING[tier], smoothstep(0.5, 0.75, ctx.mean_moisture))
 	var cells := maxi(1, int(ctx.chunk_m / spacing))
 	var weights := PackedFloat32Array()
 	weights.resize(candidates.size())
@@ -204,8 +207,10 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, plants: Dictionary,
 		mmi.material_override = PlantMeshes.material()
 		if sp.tier == T.GROUND or sp.tier == T.EPIPHYTE:
 			mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			mmi.visibility_range_end = 160.0
-			mmi.visibility_range_end_margin = 20.0
+			# Out to 300 m so the ground never reads bare (it only exists in
+			# the detail ring anyway, ~390 m).
+			mmi.visibility_range_end = 300.0
+			mmi.visibility_range_end_margin = 40.0
 			mmi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 		parent.add_child(mmi)
 
@@ -226,6 +231,7 @@ class _Context:
 	var _shade := PackedFloat32Array() # (G+1)^2
 	var _clim_t := PackedFloat32Array()
 	var _clim_m := PackedFloat32Array()
+	var mean_moisture := 0.0
 	var _clim_e := PackedFloat32Array()
 	var _clim_wd := PackedFloat32Array()
 	var _clim_coast := PackedFloat32Array()
@@ -269,6 +275,9 @@ class _Context:
 				_clim_wd.append(map.sample(map.water_dist_km, d) * 1000.0)
 				_clim_coast.append(map.sample(map.coast_dist_km, d))
 				_clim_rock.append(map.rock[map.cell_at(d)])
+		for v in _clim_m:
+			mean_moisture += v
+		mean_moisture /= _clim_m.size()
 
 	## Species whose bands could fit anywhere in this chunk, plus their
 	## dominance factor here (it varies over ~1.5 km, so one value per chunk).
