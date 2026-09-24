@@ -2,7 +2,7 @@ extends Node
 ## Drives the world's day/night clock.
 ##
 ## Full cycle = 120 in-game minutes: 70 minutes day, 50 minutes night,
-## with dawn/dusk as the gradient transition between the two (DESIGN.md
+## with dawn/dusk as the gradient transition between the two (docs/implementation-notes.md
 ## section 4) rather than fixed phases of their own — the transition
 ## emerges naturally from sun_elevation_deg() crossing the horizon, so
 ## nothing here hardcodes a separate "dawn"/"dusk" state.

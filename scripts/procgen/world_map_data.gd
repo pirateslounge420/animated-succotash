@@ -14,7 +14,7 @@ class_name WorldMapData
 
 ## OCEAN is salt water; LAKE and RIVER are fresh water. Nothing currently
 ## simulates salinity mechanically -- this distinction exists so biome/
-## foliage/POI rules (and the fresh-vs-salt cues in DESIGN.md, e.g. Beach
+## foliage/POI rules (and the fresh-vs-salt cues in docs/implementation-notes.md, e.g. Beach
 ## forms next to OCEAN specifically, not any water) can key off it.
 enum WaterType { NONE, OCEAN, LAKE, RIVER }
 

@@ -1,6 +1,6 @@
 extends Node3D
 ## Drives sky gradient, sun light, fog, and a simple low-poly visual moon
-## from TimeOfDay, targeting the lighting keys in DESIGN.md section 4 and
+## from TimeOfDay, targeting the lighting keys in docs/implementation-notes.md section 4 and
 ## the night mood reference in section 2.1 (deep blue-violet night, warm
 ## light reserved for fire/hearths, oversized graphic moon, blue-violet-
 ## to-orange dusk banding).

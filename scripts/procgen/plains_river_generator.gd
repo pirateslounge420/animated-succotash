@@ -1,10 +1,10 @@
 extends Node3D
-## Generates one Plains chunk with a carved, navigable river (DESIGN.md
+## Generates one Plains chunk with a carved, navigable river (docs/implementation-notes.md
 ## section 3.2) as its own greybox mesh + collision + water plane.
 ##
 ## Flat/faceted low-poly shading (no shared vertices between triangles)
 ## and vertex-color blending stand in for real art per the "prototype
-## uses greybox/primitive geometry" note in DESIGN.md section 8.
+## uses greybox/primitive geometry" note in docs/implementation-notes.md section 8.
 
 const LAND_COLOR := Color(0.35, 0.55, 0.25)
 const BANK_COLOR := Color(0.65, 0.55, 0.35)
@@ -48,7 +48,7 @@ func _generate_terrain() -> void:
 
 			# Two triangles per grid cell. Vertices are not shared between
 			# triangles/cells, so generate_normals() below produces flat,
-			# faceted shading (the low-poly look called for in DESIGN.md
+			# faceted shading (the low-poly look called for in docs/implementation-notes.md
 			# section 2) instead of smoothed terrain.
 			_add_vertex(st, x0, z0)
 			_add_vertex(st, x0, z1)

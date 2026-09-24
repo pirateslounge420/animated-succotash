@@ -4,7 +4,7 @@ class_name MoisturePass
 ## lake/river cells), decaying with distance, then gets reduced by a
 ## rain-shadow effect on the leeward side of mountain ridges relative to
 ## a prevailing wind direction -- this is what makes one side of a
-## mountain range moist and the other dry (DESIGN.md section 3).
+## mountain range moist and the other dry (docs/implementation-notes.md section 3).
 ## fog_chance rides along: high on the moist, windward (un-shadowed)
 ## side; low in a rain shadow even where some residual moisture remains.
 ##

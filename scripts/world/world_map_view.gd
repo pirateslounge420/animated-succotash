@@ -1,10 +1,10 @@
 extends Node3D
 ## Renders a generated WorldMapData for visual validation of the
-## world-gen pipeline (DESIGN.md section 3) -- a single flat mesh over
+## world-gen pipeline (docs/implementation-notes.md section 3) -- a single flat mesh over
 ## the whole generated region, vertex-colored by whichever display_mode
 ## is selected, plus placeholder foliage markers (MultiMesh boxes, not
 ## real models -- see FoliageType). This is a validation tool, not a
-## gameplay chunk: real gameplay will stream chunks (DESIGN.md roadmap
+## gameplay chunk: real gameplay will stream chunks (docs/implementation-notes.md roadmap
 ## item 6), querying the same WorldMapGenerator/passes.
 ##
 ## Press 1-5 at runtime to switch what the vertex color represents

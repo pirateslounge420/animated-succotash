@@ -1,7 +1,7 @@
 extends RefCounted
 class_name BiomePass
 ## Pass 5: looks up a biome from height, temperature, and moisture at
-## each cell (DESIGN.md section 3.1). Three layers, checked in order:
+## each cell (docs/implementation-notes.md section 3.1). Three layers, checked in order:
 ##
 ##  1. Water cells are Ocean (salt) or Lake (fresh) directly.
 ##  2. Low, ocean-adjacent land is Beach, regardless of climate.

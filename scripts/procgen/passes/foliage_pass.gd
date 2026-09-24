@@ -2,7 +2,7 @@ extends RefCounted
 class_name FoliagePass
 ## Pass 6: placeholder foliage spawn points. Each FoliageType declares
 ## the temperature/moisture range it tolerates (not a biome ID -- per
-## DESIGN.md, foliage responds to the underlying climate directly, kept
+## docs/implementation-notes.md, foliage responds to the underlying climate directly, kept
 ## independent from BiomePass's table so foliage rules can be tuned
 ## without touching biome classification, or vice versa). Never spawns
 ## on water or above the treeline.

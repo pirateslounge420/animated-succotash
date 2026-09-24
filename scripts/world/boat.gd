@@ -1,5 +1,5 @@
 extends CharacterBody3D
-## Simple, Minecraft-esque boat physics (DESIGN.md section 3.2).
+## Simple, Minecraft-esque boat physics (docs/implementation-notes.md section 3.2).
 ##
 ## Not a buoyancy/fluid simulation: the hull is height-locked to the
 ## river's water surface every physics tick, horizontal motion comes from

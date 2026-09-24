@@ -1,7 +1,7 @@
 extends Resource
 class_name FoliageType
 ## Declares the temperature/moisture range a plant type tolerates, per
-## DESIGN.md section 3 ("Foliage") -- FoliagePass spawns this type
+## docs/implementation-notes.md section 3 ("Foliage") -- FoliagePass spawns this type
 ## wherever a land cell's climate falls in range, independent of biome.
 
 @export var type_name: String = ""
@@ -13,7 +13,7 @@ class_name FoliageType
 ## in the "plants per square meter" sense, just a per-cell roll.
 @export var density: float = 0.1
 @export var marker_color: Color = Color.WHITE
-## Placeholder marker height; stands in for the real model (DESIGN.md
+## Placeholder marker height; stands in for the real model (docs/implementation-notes.md
 ## section 8: prototype uses greybox geometry, not final art).
 @export var marker_height: float = 1.0
 

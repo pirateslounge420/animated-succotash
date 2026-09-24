@@ -1,6 +1,6 @@
 extends RefCounted
 class_name WorldMapGenerator
-## Single entry point for the world-generation pipeline in DESIGN.md
+## Single entry point for the world-generation pipeline in docs/implementation-notes.md
 ## section 3: height -> water -> temperature -> moisture -> biome ->
 ## foliage, each pass reading only the outputs of the passes before it.
 ## Other systems (rendering, gameplay, future chunk streaming) should

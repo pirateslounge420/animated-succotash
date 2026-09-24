@@ -2,7 +2,7 @@ extends Node
 ## Shared procedural-generation configuration and math.
 ##
 ## Central source of truth for world seed, chunk size, and the noise/biome
-## parameters described in DESIGN.md section 3 (heightmap, moisture,
+## parameters described in docs/implementation-notes.md section 3 (heightmap, moisture,
 ## temperature -> biome lookup, plus river carving in 3.2). Terrain
 ## generation and gameplay systems (e.g. the boat) both read height/river
 ## queries from here so they never disagree about where dry land, banks,
@@ -10,12 +10,12 @@ extends Node
 
 const CHUNK_SIZE: int = 64
 
-## Full biome roster (DESIGN.md section 3.1). Water bodies (OCEAN/LAKE)
+## Full biome roster (docs/implementation-notes.md section 3.1). Water bodies (OCEAN/LAKE)
 ## and the four elevation-band biomes (MOUNTAINS/DWARF_FOREST/
 ## CLOUD_FOREST + falling through to the lowland table below the
 ## cloud-forest band) are assigned by altitude; everything else comes
 ## from BiomePass's temperature/moisture lookup table. Caves are a
-## structural POI feature (DESIGN.md section 3.3), not a surface biome,
+## structural POI feature (docs/implementation-notes.md section 3.3), not a surface biome,
 ## and don't appear here.
 enum Biome {
 	OCEAN, # salt water
