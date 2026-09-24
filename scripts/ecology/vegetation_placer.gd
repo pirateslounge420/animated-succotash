@@ -34,10 +34,11 @@ class_name VegetationPlacer
 
 const T := PlantSpecies.Tier
 const SPACING_M := {0: 28.0, 1: 7.0, 2: 4.5, 3: 3.5}
-const FILL := {0: 0.55, 1: 0.9, 2: 0.8, 3: 0.9}
+const FILL := {0: 0.55, 1: 0.9, 2: 0.65, 3: 0.95}
 ## Moist forest packs tighter (layered, view-framing woods like the
 ## references): spacing per tier scales down this far at full moisture.
-const DENSE_SPACING := {0: 1.0, 1: 0.78, 2: 0.85, 3: 0.82}
+## (Shrubs stay as they were: packed tighter they wall in the view.)
+const DENSE_SPACING := {0: 1.0, 1: 0.8, 2: 1.0, 3: 0.8}
 const ASPECT_C := 3.0 # °C warmer on a fully equator-facing steep slope
 const ASPECT_MOISTURE := 0.07
 const WATER_BOOST := 0.3
