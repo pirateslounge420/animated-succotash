@@ -1,6 +1,8 @@
 // Full-screen grade, the last step of the look.
 //
-// Always: PS1-style color depth. The image is quantized to 5 bits per
+// Always: crunchy sharpening (a tight unsharp mask plus a wider "clarity"
+// mask on luminance, so textures pop by day as well as at night), and
+// PS1-style color depth. The image is quantized to 5 bits per
 // channel (15-bit color) through a 4x4 ordered (Bayer) dither, the fine
 // crosshatch of the era, and greens and blues get a vibrance boost.
 //
@@ -14,7 +16,9 @@ shader_type canvas_item;
 uniform sampler2D screen_tex : hint_screen_texture, filter_linear_mipmap;
 uniform float night = 0.0;
 uniform float magic = 0.0;
-uniform float sharpen = 1.4;
+uniform float sharpen = 1.4; // night
+uniform float day_sharpen = 1.0;
+uniform float clarity = 0.5;
 uniform float color_levels = 32.0; // per channel: 5 bits
 uniform float vibrance = 0.3;
 
@@ -31,8 +35,17 @@ void fragment() {
 		+ texture(screen_tex, SCREEN_UV - vec2(px.x, 0.0)).rgb
 		+ texture(screen_tex, SCREEN_UV + vec2(0.0, px.y)).rgb
 		+ texture(screen_tex, SCREEN_UV - vec2(0.0, px.y)).rgb) * 0.25;
-	float amount = mix(0.3, sharpen, night);
+	float amount = mix(day_sharpen, sharpen, night);
 	vec3 col = c + (c - blur) * amount;
+	// Clarity: local contrast against a wider (3 px) blur, luminance only.
+	vec3 wide = vec3(0.0);
+	for (int i = 0; i < 8; i++) {
+		float a = float(i) * 0.785398;
+		wide += texture(screen_tex, SCREEN_UV + vec2(cos(a), sin(a)) * px * 3.0).rgb;
+	}
+	wide *= 0.125;
+	vec3 lw = vec3(0.299, 0.587, 0.114);
+	col += (dot(c, lw) - dot(wide, lw)) * clarity;
 
 	// Vibrance: saturate the less-saturated colors most (keeps already
 	// vivid ones from clipping), with extra push for greens and blues.
