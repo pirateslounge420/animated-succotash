@@ -24,7 +24,7 @@ const SKY_SHADER := preload("res://shaders/sky.gdshader")
 
 @export var moon_mode: Astro.MoonMode = Astro.MoonMode.ORBITAL
 @export var sun_max_energy := 1.05
-@export var moon_max_energy := 0.5
+@export var moon_max_energy := 0.8
 ## 0-1: how deep the viewer is inside a magical site (Landmarks sets it).
 var magic := 0.0
 
@@ -178,7 +178,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var sun_col := _sun_color(sun_elevation_deg)
 	sun.light_color = sun_col
 	sun.light_energy = sun_max_energy * sun_up * (1.0 - 0.55 * float(weather.get("cloud", 0.0)))
-	var moon_col := Color(0.75, 0.72, 0.86).lerp(Color(0.5, 0.62, 1.0), smoothstep(0.0, 25.0, moon_elevation_deg))
+	var moon_col := Color(0.7, 0.7, 0.9).lerp(Color(0.42, 0.56, 1.0), smoothstep(0.0, 25.0, moon_elevation_deg))
 	moon.light_color = moon_col
 	moon.light_energy = moon_max_energy * moonlight * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)
 	sun.shadow_enabled = sun.light_energy > 0.05
@@ -253,7 +253,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var amb_day := zenith.lerp(Color(0.42, 0.4, 0.95), 0.55).lerp(Color.WHITE, 0.12)
 	var amb_night := Color(0.3, 0.34, 0.85).lerp(Color(0.42, 0.46, 0.92), lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
-	environment.ambient_light_energy = lerpf(0.3 + 0.3 * lift, 0.22, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
+	environment.ambient_light_energy = lerpf(0.18 + 0.2 * lift, 0.22, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
 
 	# Fog and mist (drawn in bands by the world shaders, see Look): a
 	# light haze that gives depth to long daytime views; thicker at night

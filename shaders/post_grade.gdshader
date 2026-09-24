@@ -71,6 +71,10 @@ void fragment() {
 	float contrast = 1.0 + 0.1 * night + 0.25 * magic * night;
 	col = (col - 0.5) * contrast + 0.5 - 0.04 * magic * night;
 
+	// Night vignette frames the scene.
+	vec2 vc = SCREEN_UV - 0.5;
+	col *= mix(1.0, smoothstep(0.85, 0.3, length(vc * vec2(1.0, 0.8))), night * 0.55);
+
 	// 15-bit color through an ordered dither.
 	ivec2 p = ivec2(FRAGCOORD.xy) % 4;
 	float threshold = (BAYER[p.y * 4 + p.x] + 0.5) / 16.0 - 0.5;

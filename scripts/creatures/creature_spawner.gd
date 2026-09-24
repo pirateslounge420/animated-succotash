@@ -712,7 +712,7 @@ func _campfire(d: Vector3, warm: Color) -> Node3D:
 	var light := OmniLight3D.new()
 	light.name = "Light"
 	light.light_color = warm.lerp(Color(1.0, 0.55, 0.2), 0.5)
-	light.light_energy = 2.4
+	light.light_energy = 3.2
 	light.omni_range = 16.0
 	light.omni_attenuation = 1.4
 	light.position = Vector3(0, 1.0, 0)
@@ -727,7 +727,7 @@ func _flicker(camp: Node3D) -> void:
 	var f := _time * 9.0
 	var k := 0.85 + 0.1 * sin(f) + 0.07 * sin(f * 2.3 + 1.0) + 0.05 * sin(f * 5.1)
 	(camp.get_node("Flames") as Node3D).scale = Vector3(1.0, k, 1.0)
-	(camp.get_node("Light") as OmniLight3D).light_energy = 2.4 * k
+	(camp.get_node("Light") as OmniLight3D).light_energy = 3.2 * k
 
 
 ## Long-range calls: muffled and nearly mono far away, clear and properly

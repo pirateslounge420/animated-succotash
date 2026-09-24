@@ -27,7 +27,7 @@ uniform float sun_visible = 1.0;
 
 uniform vec3 moon_dir = vec3(0.0, -1.0, 0.0);
 uniform vec3 moon_tint : source_color = vec3(0.82, 0.88, 1.0);
-uniform float moon_radius = 0.075; // radians; deliberately huge
+uniform float moon_radius = 0.19; // radians (~11 degrees); deliberately huge, the night's centerpiece
 uniform float moon_phase = 3.14159; // elongation: 0 new, PI full
 uniform float moon_brightness = 1.0;
 
@@ -147,18 +147,21 @@ void sky() {
 				float lit = smoothstep(-0.04, 0.08, dot(n, l));
 				float maria = fbm(p * 2.6 + 3.0);
 				float albedo = mix(0.62, 1.0, smoothstep(0.35, 0.7, maria));
-				vec3 moon = moon_tint * albedo * (lit * 1.25 + 0.05) * moon_brightness;
+				// Bright enough to cross the glow threshold and bloom.
+				vec3 moon = moon_tint * albedo * (lit * 1.9 + 0.05) * moon_brightness;
 				float edge = smoothstep(1.0, 0.97, r);
 				col = mix(col, moon, edge * night_mask);
 			}
 			// Halo scales with how much of the disc is lit.
-			float halo = exp(-max(r - 1.0, 0.0) * 1.6) * 0.22 * moon_brightness * (1.0 - cos(moon_phase)) * 0.5;
+			float halo = (exp(-max(r - 1.0, 0.0) * 1.2) * 0.55 + exp(-max(r - 1.0, 0.0) * 0.35) * 0.18) * moon_brightness * (1.0 - cos(moon_phase)) * 0.5;
 			col += moon_tint * halo * night_mask;
 
 			// Today's mansion glyph beside the moon.
 			if (glyph_visibility > 0.001) {
-				vec2 origin = vec2(2.6, 0.8);
-				float scale = 1.4;
+				// In moon radii; kept to the same angular size as before the
+				// moon grew.
+				vec2 origin = vec2(1.75, 0.45);
+				float scale = 0.55;
 				vec2 q = p - origin;
 				if (length(q) < scale * 1.6) {
 					float glow = 0.0;

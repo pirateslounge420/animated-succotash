@@ -78,6 +78,6 @@ void fragment() {
 	float glow = look_site_glow(world_pos, 0.25) * glow_pick * smoothstep(0.3, 0.9, sway_w);
 	RIM = 0.45;
 	RIM_TINT = 0.4;
-	EMISSION = look_glow_emission(world_pos, glow * 1.0) + look_rim(NORMAL, VIEW, 0.3);
+	EMISSION = look_glow_emission(world_pos, glow * 1.0) + look_rim(NORMAL, VIEW, 0.45);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }
