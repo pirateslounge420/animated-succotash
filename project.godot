@@ -8,42 +8,12 @@ config_version=5
 
 [application]
 
-config/name="Low-Poly Exploration Prototype"
-config/description="Ambient exploration, third-person, low-poly open world prototype. GameCube-era art direction (Melee / PSO Ep. I&II / F-Zero GX), procedurally generated biomes, 2-hour day/night cycle, primal tribal high fantasy setting."
-run/main_scene="res://scenes/world/world_map_demo.tscn"
+config/name="Low-Poly Exploration"
+config/description="Ambient open-world exploration on a procedurally generated cube-sphere planet. GameCube-era low-poly look."
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
-
-[autoload]
-
-TimeOfDay="*res://scripts/autoload/time_of_day.gd"
-WorldGenConfig="*res://scripts/autoload/world_gen_config.gd"
-
-[input]
-
-boat_forward={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-]
-}
-boat_back={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":83,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-]
-}
-boat_turn_left={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-]
-}
-boat_turn_right={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-]
-}
 
 [rendering]
 
 renderer/rendering_method="forward_plus"
 anti_aliasing/quality/msaa_3d=2
-environment/defaults/default_clear_color=Color(0.470588, 0.678431, 0.807843, 1)
