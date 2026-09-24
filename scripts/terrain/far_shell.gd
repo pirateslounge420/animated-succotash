@@ -27,6 +27,8 @@ func build(world: Node) -> void:
 	_sea_mat.shader = preload("res://shaders/far_terrain.gdshader")
 	_sea_mat.set_shader_parameter("is_sea", true)
 	_sea_mat.set_shader_parameter("hide_radius", 600.0)
+	Look.register(_terrain_mat)
+	Look.register(_sea_mat)
 
 	var land := MeshInstance3D.new()
 	land.name = "FarTerrain"

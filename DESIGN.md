@@ -12,6 +12,12 @@ GameCube-era low-poly look: Phantasy Star Online episodes 1 and 2, F-Zero GX, Su
 
 **Night: moonlit dark fairy tale.** Reference: ozavry\_ on Instagram. The world drowns in deep cobalt and violet moonlight under a huge moon, with fog, mist and reeds for depth. Warm light is rationed to one or two accents per scene (campfire, lit window, glowing doorway), and water glows as if lit from within. Surfaces read crunchy, over-sharpened and wet, like heavily graded PS2 or Oblivion-era 3D. Tone is cozy-eerie, quiet and a little melancholy: boardwalks over marsh, stilt shacks, mushroom villages, overgrown ruins, and folk like witches, goblins and trolls at rest rather than in combat. Night is the showpiece, not just the dark half.
 
+**Glow: the third palette, for magical places.** At ruins, glow ponds and mythical creatures' territories, night turns bioluminescent: water, moss and some plant tips emit a saturated teal or cobalt light that actually lights the scene, and the surrounding moonlight falls away, so it reads like neon against black rather than ordinary moonlit night.
+
+**Grading.** Deep, near-cartoonish ultramarine overhead (over the aqua horizon band), punchy greens and water, N64/PS1-era color: flat bands instead of smooth gradients in the sky and the distance fog, 15-bit dithered color, intentionally low-res textures, flat Lambert lighting with no PBR sheen.
+
+**Ruins as set pieces.** Ivy-choked aqueducts, crumbling towers and lone castles on hills stand as distinct silhouettes that draw the wanderer toward them: moss and vines over the stone, walls partly collapsed into rubble.
+
 **The cycle bridges them.** The 48-minute day-night cycle blends from the bright day palette to the blue night palette through gradual dawn and dusk gradients.
 
 ## Creatures

@@ -1,6 +1,7 @@
 class_name PostGrade
 extends CanvasLayer
-## Full-screen night grade (shaders/post_grade.gdshader). Set `night` 0-1.
+## Full-screen grade (shaders/post_grade.gdshader): PS1-style 15-bit
+## dithered color always, plus the night grade. Set `night` and `magic` 0-1.
 
 var _rect: ColorRect
 
@@ -18,3 +19,7 @@ func _ready() -> void:
 
 func set_night(v: float) -> void:
 	(_rect.material as ShaderMaterial).set_shader_parameter("night", v)
+
+
+func set_magic(v: float) -> void:
+	(_rect.material as ShaderMaterial).set_shader_parameter("magic", v)

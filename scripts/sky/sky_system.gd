@@ -23,8 +23,10 @@ extends Node3D
 const SKY_SHADER := preload("res://shaders/sky.gdshader")
 
 @export var moon_mode: Astro.MoonMode = Astro.MoonMode.ORBITAL
-@export var sun_max_energy := 1.25
-@export var moon_max_energy := 0.62
+@export var sun_max_energy := 0.9
+@export var moon_max_energy := 0.5
+## 0-1: how deep the viewer is inside a magical site (Landmarks sets it).
+var magic := 0.0
 
 var sun: DirectionalLight3D
 var moon: DirectionalLight3D
@@ -44,18 +46,23 @@ var _horizon := Gradient.new()
 var _cloud_offset := Vector2.ZERO
 var _last_mansion := -1
 
-## Elevation (degrees) -> palette keys. Day is Frutiger Aero: saturated aqua.
+## Elevation (degrees) -> palette keys [elevation, zenith, horizon]. Day
+## is a deep, near-cartoon ultramarine overhead over a Frutiger Aero aqua
+## horizon band (N64/PS1-era punch rather than a pale realistic blue).
 ## Night is deep cobalt and violet.
 const _ELEV_MIN := -18.0
 const _ELEV_MAX := 40.0
 const _KEYS := [
-	[-18.0, Color(0.02, 0.035, 0.13), Color(0.07, 0.07, 0.24)],
-	[-8.0, Color(0.05, 0.06, 0.22), Color(0.26, 0.14, 0.36)],
-	[-2.0, Color(0.12, 0.16, 0.42), Color(0.75, 0.36, 0.32)],
-	[3.0, Color(0.22, 0.38, 0.72), Color(1.0, 0.62, 0.32)],
-	[12.0, Color(0.16, 0.5, 0.95), Color(0.62, 0.82, 0.98)],
-	[40.0, Color(0.08, 0.44, 0.98), Color(0.55, 0.86, 1.0)],
+	[-18.0, Color(0.01, 0.02, 0.09), Color(0.04, 0.05, 0.19)],
+	[-8.0, Color(0.03, 0.04, 0.2), Color(0.2, 0.09, 0.34)],
+	[-2.0, Color(0.08, 0.1, 0.42), Color(0.85, 0.3, 0.33)],
+	[3.0, Color(0.12, 0.24, 0.72), Color(1.0, 0.55, 0.22)],
+	[12.0, Color(0.06, 0.26, 0.84), Color(0.34, 0.78, 1.0)],
+	[40.0, Color(0.05, 0.19, 0.78), Color(0.28, 0.74, 1.0)],
 ]
+## Night magic: inside a glowing site the moonlight dims and the air goes
+## near-black so the bioluminescence reads like neon against black.
+const MAGIC_DARKEN := 0.6
 
 
 func _ready() -> void:
@@ -83,10 +90,11 @@ func _ready() -> void:
 	environment.sky = sky
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	environment.reflected_light_source = Environment.REFLECTION_SOURCE_SKY
-	environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
-	environment.tonemap_white = 6.0
+	# Linear: keep colors as saturated as authored (filmic curves wash them
+	# toward realism).
+	environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 	environment.fog_enabled = true
-	environment.fog_sky_affect = 0.35
+	environment.fog_sky_affect = 0.0 # the sky shader draws its own banded haze
 	environment.glow_enabled = true
 	environment.glow_intensity = 0.6
 	environment.glow_bloom = 0.08
@@ -126,6 +134,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var moon_up := smoothstep(-3.0, 8.0, moon_elevation_deg)
 	daylight = smoothstep(-6.0, 10.0, sun_elevation_deg)
 	moonlight = moon_up * (0.12 + 0.88 * illumination)
+	var dark_magic := magic * (1.0 - daylight)
 
 	# Lights.
 	_aim(sun, sun_dir, up)
@@ -135,7 +144,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	sun.light_energy = sun_max_energy * sun_up * (1.0 - 0.55 * float(weather.get("cloud", 0.0)))
 	var moon_col := Color(0.75, 0.72, 0.86).lerp(Color(0.5, 0.62, 1.0), smoothstep(0.0, 25.0, moon_elevation_deg))
 	moon.light_color = moon_col
-	moon.light_energy = moon_max_energy * moonlight * (1.0 - 0.5 * float(weather.get("cloud", 0.0)))
+	moon.light_energy = moon_max_energy * moonlight * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)
 	sun.shadow_enabled = sun.light_energy > 0.05
 	moon.shadow_enabled = not sun.shadow_enabled and moon.light_energy > 0.04
 	sun.visible = sun.light_energy > 0.001
@@ -156,6 +165,8 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	sky_material.set_shader_parameter("up_dir", up)
 	sky_material.set_shader_parameter("east_dir", east)
 	sky_material.set_shader_parameter("north_dir", north)
+	zenith = zenith.lerp(Color(0.0, 0.01, 0.04), dark_magic * 0.6)
+	horizon = horizon.lerp(Color(0.01, 0.03, 0.1), dark_magic * 0.5)
 	sky_material.set_shader_parameter("zenith_color", zenith)
 	sky_material.set_shader_parameter("horizon_color", horizon)
 	sky_material.set_shader_parameter("ground_color", horizon.darkened(0.6))
@@ -185,33 +196,47 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# Clouds: coverage from the live weather, drifting with the wind.
 	var wind: Vector3 = weather.get("wind", Vector3.ZERO)
 	_cloud_offset += Vector2(wind.dot(east), wind.dot(north)) * delta * 0.004
-	sky_material.set_shader_parameter("cloud_cover", clampf(0.12 + 0.75 * cloud + 0.3 * storm, 0.0, 0.98))
+	sky_material.set_shader_parameter("cloud_cover", clampf(0.1 + 0.55 * cloud + 0.35 * storm, 0.0, 0.95))
 	sky_material.set_shader_parameter("cloud_offset", _cloud_offset)
 	var lit := sun_col * sun_up + moon_col * moon_up * 0.35 * illumination
 	sky_material.set_shader_parameter("cloud_light", (Color(0.1, 0.12, 0.2) + lit).clamp())
 	sky_material.set_shader_parameter("cloud_shadow", zenith.darkened(0.35).lerp(Color(0.3, 0.32, 0.38) * daylight, storm * 0.6))
 
 	# Ambient tracks the sky continuously.
-	# By day ambient is a soft, near-white sky fill so materials keep their
-	# colors. At night the world should read as drowned in cobalt/violet,
-	# never black: even a moonless night keeps a starlight floor, and a full
-	# moon lifts it well above that.
-	# The night fill is a pale blue-lavender rather than a saturated blue:
-	# leaves and soil reflect little blue, so pure blue light would leave
-	# them black. (Colors are sRGB; the renderer converts them to linear.)
-	var amb_day := horizon.lerp(Color.WHITE, 0.45)
-	var amb_night := Color(0.42, 0.47, 0.82).lerp(Color(0.55, 0.6, 0.95), lift)
+	# By day the fill is sky-tinted (shadows go blue-ish, the colored-shadow
+	# look of the era) but kept low so sunlit colors stay saturated instead
+	# of clipping to white. At night the world is drowned in cobalt/violet,
+	# never black: a starlight floor, lifted by the moon. The night fill is
+	# blue-lavender rather than pure blue, since leaves and soil reflect
+	# little blue and would otherwise go black.
+	var amb_day := zenith.lerp(horizon, 0.6).lerp(Color.WHITE, 0.35)
+	var amb_night := Color(0.3, 0.34, 0.85).lerp(Color(0.42, 0.46, 0.92), lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
-	environment.ambient_light_energy = lerpf(1.0 + 0.8 * lift, 0.55, daylight)
+	environment.ambient_light_energy = lerpf(0.3 + 0.3 * lift, 0.4, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
 
-	# Fog: long views on clear days; mist on cloud forests, coasts, storms
-	# and a little at night for depth.
-	environment.fog_light_color = horizon
-	environment.fog_density = 0.00025 + fog_amount * 0.004 + storm * 0.0025 + night * 0.0007
+	# Fog and mist (drawn in bands by the world shaders, see Look): a
+	# light haze that gives depth to long daytime views; thicker at night
+	# and in cloud forests, on coasts and in storms, with ground mist
+	# pooling in low places after dark.
+	var fog_color := horizon.lerp(zenith, 0.25)
+	fog_color = fog_color.lerp(Color(0.015, 0.03, 0.12), dark_magic * 0.6)
+	var density := 0.0004 + fog_amount * 0.003 + storm * 0.002 + night * 0.0014
+	var mist := clampf(0.35 * night + fog_amount * 0.6 + storm * 0.3, 0.0, 1.0)
+	environment.fog_light_color = fog_color
+	environment.fog_density = density
+	Look.apply({
+		"look_fog_color": fog_color,
+		"look_fog_density": density,
+		"look_mist": mist,
+		"look_up": up,
+		"look_night": night,
+		"look_glow": 1.0 - smoothstep(0.08, 0.55, daylight),
+	})
+	sky_material.set_shader_parameter("fog_color", fog_color)
 
-	# Grade: glossy and saturated by day, deeper and cooler at night.
-	environment.adjustment_saturation = lerpf(1.15, 1.3, daylight)
-	environment.adjustment_contrast = lerpf(1.12, 1.03, daylight)
+	# Grade: punchy and saturated by day, deeper and cooler at night.
+	environment.adjustment_saturation = lerpf(1.05, 1.18, daylight)
+	environment.adjustment_contrast = lerpf(1.12, 1.08, daylight)
 
 
 func _aim(light: DirectionalLight3D, body_dir: Vector3, up: Vector3) -> void:

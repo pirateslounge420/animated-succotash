@@ -3,6 +3,11 @@
 // derives them continuously from the sun and moon elevation at the
 // player's position. Directions are in world space; `up_dir` is the
 // player's local up, since "up" changes as you walk around the planet.
+//
+// Drawn in flat color bands (N64/PS1 style) rather than a smooth
+// gradient: the zenith-to-horizon ramp is stepped, the haze near the
+// horizon matches the banded ground fog (fog_color), and clouds are
+// two-tone cel shapes with hard edges.
 shader_type sky;
 
 uniform vec3 up_dir = vec3(0.0, 1.0, 0.0);
@@ -13,6 +18,8 @@ uniform vec3 zenith_color : source_color = vec3(0.2, 0.5, 0.95);
 uniform vec3 horizon_color : source_color = vec3(0.6, 0.85, 1.0);
 uniform vec3 ground_color : source_color = vec3(0.2, 0.22, 0.25);
 uniform float horizon_sharpness = 2.5;
+uniform float sky_bands = 7.0;
+uniform vec3 fog_color : source_color = vec3(0.6, 0.8, 1.0);
 
 uniform vec3 sun_dir = vec3(0.0, 1.0, 0.0);
 uniform vec3 sun_color : source_color = vec3(1.0, 0.95, 0.85);
@@ -91,7 +98,13 @@ void sky() {
 	// Gradient, measured against the local horizon.
 	vec3 col;
 	if (h >= 0.0) {
-		col = mix(horizon_color, zenith_color, pow(h, 1.0 / horizon_sharpness));
+		float t = pow(h, 1.0 / horizon_sharpness);
+		float x = t * sky_bands;
+		float fl = floor(x);
+		t = (fl + smoothstep(0.45, 0.55, x - fl)) / sky_bands;
+		col = mix(horizon_color, zenith_color, t);
+		// Haze band hugging the horizon, same color as the ground fog.
+		col = mix(col, fog_color, (1.0 - step(0.06, h)) * 0.6 + (1.0 - step(0.02, h)) * 0.3);
 	} else {
 		col = mix(horizon_color, ground_color, clamp(-h * 4.0, 0.0, 1.0));
 	}
@@ -173,9 +186,13 @@ void sky() {
 			vec3 local = vec3(dot(d, east_dir), dot(d, north_dir), h);
 			vec2 uv = local.xy / (local.z + 0.12) * 1.6 + cloud_offset;
 			float n = fbm(uv);
-			float cover = smoothstep(1.0 - cloud_cover, 1.05 - cloud_cover * 0.6, n);
-			float shade = fbm(uv * 1.9 + 4.0);
-			vec3 cloud = mix(cloud_shadow, cloud_light, shade);
+			float edge = 1.0 - cloud_cover;
+			float cover = smoothstep(edge, edge + 0.02, n);
+			// Three flat tones: shadowed undersides, mid body, lit tops. Even
+			// an overcast deck keeps its lumpy structure.
+			float body = fbm(uv * 1.9 + 4.0) * 0.7 + (n - edge) * 1.2;
+			vec3 mid = mix(cloud_shadow, cloud_light, 0.55);
+			vec3 cloud = body < 0.42 ? cloud_shadow : (body < 0.62 ? mid : cloud_light);
 			col = mix(col, cloud, cover * smoothstep(0.0, 0.12, h) * 0.92);
 		}
 	}

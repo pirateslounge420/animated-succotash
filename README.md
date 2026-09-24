@@ -54,7 +54,11 @@ move on:
 - trees on those chunks, undergrowth only within ~400 m;
 - a coarse far shell draws distant mountains and sea;
 - wildlife within ~140 m, wolf packs near their dens, mythical creatures
-  heard from ~1 km and seen from ~220 m.
+  heard from ~1 km and seen from ~220 m;
+- ruins (crumbling towers, castles on hills, aqueducts) from ~2.6 km,
+  so their silhouettes rise out of the fog before you reach them. At
+  night they, some lakes and wetlands, and mythical territories glow
+  teal and cobalt.
 
 The floating origin keeps the player near (0,0,0), so precision holds
 anywhere on the planet.
@@ -81,9 +85,13 @@ scripts/
   ecology/                 Plant species, placement rules, meshes
   creatures/               Creature species, spawner, territories, bodies,
                            synthesized sounds
+  landmarks/               Ruins (towers, castles, aqueducts) and the
+                           glowing places of the bioluminescent night
   player/                  Third-person explorer with planet gravity
   ui/                      HUD, planet map, night post-grade
-shaders/                   Sky, water, terrain, foliage, far terrain, grade
+shaders/                   Sky, water, terrain, foliage, far terrain, ruins,
+                           grade; look.gdshaderinc holds the shared banded
+                           fog, mist and glow
 assets/                    Empty placeholders for models/textures/audio
 ```
 

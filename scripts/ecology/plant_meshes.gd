@@ -16,6 +16,7 @@ static func material() -> ShaderMaterial:
 	if not _material:
 		_material = ShaderMaterial.new()
 		_material.shader = preload("res://shaders/foliage.gdshader")
+		Look.register(_material)
 	return _material
 
 

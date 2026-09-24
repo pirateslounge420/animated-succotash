@@ -207,5 +207,7 @@ func _build_body() -> Node3D:
 static func _flat(c: Color) -> StandardMaterial3D:
 	var m := StandardMaterial3D.new()
 	m.albedo_color = c
-	m.roughness = 0.9
+	m.diffuse_mode = BaseMaterial3D.DIFFUSE_LAMBERT
+	m.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
+	m.roughness = 1.0
 	return m

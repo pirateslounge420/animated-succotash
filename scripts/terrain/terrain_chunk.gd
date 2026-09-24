@@ -272,12 +272,15 @@ static func materials() -> void:
 	_terrain_mat.shader = preload("res://shaders/terrain.gdshader")
 	_salt_mat = ShaderMaterial.new()
 	_salt_mat.shader = preload("res://shaders/water.gdshader")
-	_salt_mat.set_shader_parameter("deep_color", Color(0.02, 0.13, 0.3))
-	_salt_mat.set_shader_parameter("shallow_color", Color(0.07, 0.4, 0.52))
+	_salt_mat.set_shader_parameter("deep_color", Color(0.01, 0.12, 0.48))
+	_salt_mat.set_shader_parameter("shallow_color", Color(0.0, 0.6, 0.74))
 	_fresh_mat = ShaderMaterial.new()
 	_fresh_mat.shader = preload("res://shaders/water.gdshader")
-	_fresh_mat.set_shader_parameter("deep_color", Color(0.03, 0.18, 0.2))
-	_fresh_mat.set_shader_parameter("shallow_color", Color(0.12, 0.42, 0.36))
+	_fresh_mat.set_shader_parameter("deep_color", Color(0.02, 0.2, 0.36))
+	_fresh_mat.set_shader_parameter("shallow_color", Color(0.05, 0.58, 0.55))
+	Look.register(_terrain_mat)
+	Look.register(_salt_mat)
+	Look.register(_fresh_mat)
 
 
 static func terrain_material() -> ShaderMaterial:
@@ -312,6 +315,7 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 	var verts := PackedVector3Array()
 	var normals := PackedVector3Array()
 	var cols := PackedColorArray()
+	var uvs := PackedVector2Array()
 	var up := center_dir
 	for jj in QUADS:
 		for ii in QUADS:
@@ -319,14 +323,15 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 			var i10 := i00 + 1
 			var i01 := i00 + n
 			var i11 := i01 + 1
-			_tri(local, colors, i00, i11, i10, up, verts, normals, cols)
-			_tri(local, colors, i00, i01, i11, up, verts, normals, cols)
+			_tri(local, colors, i00, i11, i10, up, verts, normals, cols, uvs)
+			_tri(local, colors, i00, i01, i11, up, verts, normals, cols, uvs)
 
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = verts
 	arrays[Mesh.ARRAY_NORMAL] = normals
 	arrays[Mesh.ARRAY_COLOR] = cols
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	var mi := MeshInstance3D.new()
@@ -350,7 +355,7 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 ## Flat-shaded triangle; its color is the average of its corners, turned to
 ## bare rock when the face is steep.
 func _tri(p: PackedVector3Array, c: PackedColorArray, a: int, b: int, d: int, up: Vector3,
-		verts: PackedVector3Array, normals: PackedVector3Array, cols: PackedColorArray) -> void:
+		verts: PackedVector3Array, normals: PackedVector3Array, cols: PackedColorArray, uvs: PackedVector2Array) -> void:
 	var pa := p[a]
 	var pb := p[b]
 	var pd := p[d]
@@ -363,6 +368,10 @@ func _tri(p: PackedVector3Array, c: PackedColorArray, a: int, b: int, d: int, up
 	verts.append_array([pa, pb, pd])
 	normals.append_array([nrm, nrm, nrm])
 	cols.append_array([col, col, col])
+	# Texture coordinates in meters on the chunk's tangent plane.
+	var e := CubeSphere.east(up)
+	var n := CubeSphere.north(up)
+	uvs.append_array([Vector2(pa.dot(e), pa.dot(n)), Vector2(pb.dot(e), pb.dot(n)), Vector2(pd.dot(e), pd.dot(n))])
 
 
 func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) -> void:

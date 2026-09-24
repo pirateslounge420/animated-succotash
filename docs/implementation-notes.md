@@ -16,6 +16,7 @@ main.gd                orchestrates the playable scene:
   WeatherFX            rain/snow particles, wind on foliage
   PlanetPlayer         third-person explorer with planet gravity
   CreatureSpawner      wildlife, wolf packs, mythical creatures, logs
+  Landmarks            ruins and glowing places (bioluminescent night)
   Hud, MapOverlay, PostGrade
 ```
 
@@ -59,8 +60,18 @@ Going back to a place rebuilds it identically.
   6. `geology_pass`: 8 rock types (granite, basalt, karst, sandstone,
      alluvium, coastal sand, clay/peat, glacial till).
   7. `biome_pass`: one of 51 biome templates per cell, by priority rules.
+     Small specialty pockets are then held to DESIGN.md's sizing (hot
+     springs 1 km², oases 2, bogs and fens 5, cloud forest 12, ...):
+     oversized patches are eroded from the rim inward.
 
-  With seed 42 it takes about 6-8 s.
+  With seed 42 it takes about 7-8 s.
+- **Sampling** (`PlanetData.sample`, `weights_at`). Bilinear between cell
+  centers, switching to a neighbor-aware kernel within half a cell of a
+  cube-face edge, so climate and ground colors run on seamlessly across
+  face edges.
+- **Distances** (`CubeSphere.angle_between`). Use the chord length, not
+  `acos(dot)`: with 32-bit vectors, acos can't resolve anything under
+  ~20 m on this planet.
 
 ## Weather
 
@@ -78,6 +89,15 @@ Going back to a place rebuilds it identically.
 - **Stability:** pressure diffuses and total mass is conserved.
 - **Chaos:** the simulation is seeded and chaotic; a tiny nudge grows to a
   2-3 hPa difference within days.
+- **Traveling systems:** on its own the coarse grid settles into a steady
+  state, so 11 seeded synoptic systems ride on it:
+  - mid-latitude lows in the westerly belts;
+  - tropical cyclones over warm ocean, drifting poleward;
+  - broad highs.
+
+  Each is steered by the simulated wind, grows and decays over 2-6 days,
+  and adds its pressure to the field. Wind, rising air, rain, storms and
+  clearing all respond through the same rules.
 
 Uses:
 - **Spin-up:** 8 in-game days of spin-up, then 12 days of averaging, give
@@ -85,15 +105,28 @@ Uses:
   1000 mm planet-wide mean.
 - **Live weather:** the same simulation keeps running during play, one
   step per in-game quarter hour. `local_weather(dir, elevation)` returns
-  wind, rain rate, snow or not, temperature, storm and cloud cover at the
-  player.
+  wind, rain rate, snow or not, temperature, storm level (0-1,
+  continuous) and cloud cover at the player. It also adds what the 10 km
+  grid can't resolve:
+  - land/sea breezes, onshore by afternoon and offshore at night;
+  - gusts;
+  - drifting shower cells. The grid's rain rate is an areal average, so
+    it falls locally in showers whose coverage grows with intensity,
+    keeping the long-run totals.
 - **Effects:** `WeatherFX` turns that into rain or snow that leans with
   the wind. The same wind vector sways all foliage.
 
 Verified:
 - equator ~2000 mm/yr, subtropical deserts ~120 mm/yr;
-- storm belts stormy 13-29% of the time;
-- a windward coast at 2340 mm/yr against 1120 mm/yr in the rain shadow.
+- a windward coast at 2430 mm/yr against 1140 mm/yr in the rain shadow;
+- over one in-game day, the wind turns 28-31° in the steady tropical
+  trades and 40-100° at mid and high latitudes, with gusts;
+- storms form and dissipate everywhere (none persist for 5 days), and
+  the storm level at a spot builds and fades rather than switching;
+- rain is intermittent: 10-25% of hours in wet climates, with
+  occasional downpours above 2 mm/h;
+- precipitation falls as snow wherever the air at the player's height is
+  below freezing, including on mountains above rain-fed lowlands.
 
 ## Time, sun and moon
 
@@ -124,8 +157,66 @@ Verified:
   - the sky shader draws the moon disc with a phase terminator, stars and
     clouds from the live weather;
   - ambient light and fog follow.
-- **Night grade** (`PostGrade`): sharpening and a violet tint on the
-  screen at night, for the crunchy look.
+- **Grade** (`PostGrade`), always on:
+  - PS1-style 15-bit color through a 4×4 ordered dither;
+  - vibrance for greens and blues.
+
+  At night it adds sharpening, crushed contrast and a cobalt/violet push
+  in the shadows. Inside glowing sites it adds extra contrast.
+
+## Look
+
+`shaders/look.gdshaderinc`, `scripts/sky/look.gd`
+
+- **Day:** a deep ultramarine zenith over a Frutiger Aero aqua horizon
+  band, punchy greens, and saturated turquoise/ultramarine water. It uses
+  a linear tonemap, because filmic washes colors toward realism.
+- **Flat bands:**
+  - the sky gradient is stepped;
+  - clouds are three-tone cel shapes;
+  - distance fog is drawn by the world shaders in hard-edged bands
+    (N64-style) instead of the Environment's smooth fog.
+
+  Low ground below eye level fills with extra mist, strongest at night.
+- **Texture and lighting economy:**
+  - The world is vertex-colored, plus one deliberately low-res 32 px
+    nearest-filtered grain texture on the ground, far terrain and ruins.
+  - Lighting is flat: Lambert diffuse on face normals, with specular
+    disabled everywhere except water.
+  - At night the ground gets a hard-edged toon highlight, for the wet
+    look.
+  - Creature and prop materials are Lambert with no specular too.
+- **Bioluminescent night** (the third palette): see Landmarks.
+
+## Landmarks
+
+`scripts/landmarks/`
+
+- **Ruins** (`Ruins`, `RuinBuilder`). At most one per 3.2 km cell, placed
+  on the most prominent rise:
+  - castles on hills: a buried motte, an octagonal curtain wall with
+    breaches and a gate gap, corner towers, and a tall keep with a fallen
+    corner;
+  - lone towers 14-22 m tall;
+  - aqueducts striding level on tall piers, with some spans fallen.
+
+  All of it is stacked stone blocks, so collapse is jagged column tops,
+  V-shaped breaches, missing window blocks and rubble at the foot. Moss
+  greens the upward faces and low courses, and ivy hangs from broken
+  tops. Geometry is built on worker threads out to 2.6 km, beyond the
+  terrain chunks, so silhouettes rise out of the fog bands. Deep footings
+  keep them from floating over the coarser far terrain. Vegetation keeps
+  their footprints clear.
+- **Glowing places** (`MagicSites`, `Landmarks`): every ruin, every
+  mythical territory, and about a third of fresh lakes and wetland cells
+  (glow ponds).
+  - The nearest 8 go to every world shader. After dark, water there shines
+    from within, moss on ruins and ground glows in patches, and about half
+    the plants glow at their tips, in teal drifting to cobalt.
+  - A pool of 6 OmniLights near the player lets the glow light the scene.
+  - Standing inside a site at night dims the moonlight and ambient, pulls
+    the sky toward black and raises contrast, so it reads as neon against
+    black.
 
 ## Walkable terrain
 
@@ -184,7 +275,7 @@ copy.
   - size and lean jitter.
 
   Epiphytes attach to placed trees; cypress knees ring cypresses standing
-  in water. Mythical folk campsites are kept clear.
+  in water. Mythical folk campsites and ruins are kept clear.
 - **Rendering.** One MultiMesh per species. `PlantMeshes` builds 24
   low-poly placeholder shapes; the foliage shader sways them with the
   live wind.
@@ -251,6 +342,31 @@ howl, drone and whisper. Bodies are primitive low-poly placeholders
 
 ## How it was tested
 
+Verification scripts measure behavior rather than reading code; the
+latest results:
+
+- **Wind, storms, rain and snow:** see Weather above.
+- **Biome borders** blend over about 1 km, with no step larger than 0.006
+  in color per 25 m. Cube-face edges are seamless (a 0.78 color jump
+  before the fix).
+- **Walking between biomes:** tree species overlap strongly between
+  neighboring chunks, with lower overlap only at coasts.
+- **Clumping:** plant counts per 32 m quadrat have a variance/mean ratio
+  of 2-13, so plants are clumped rather than sprinkled evenly (1 would
+  be random).
+- **Gallery forests:** in dry country, trees stand at 46-56 per hectare
+  within 100 m of rivers against 12-13 farther out.
+- **Epiphytes:** 97% sit within their host's crown, on average about 4 m
+  from its trunk.
+- **Canopy dwellers:** all 56 in a temperate forest perched on tree
+  instances that exist in the loaded chunk, within 0.54 m of the crown
+  top, and still did after 40 s of hopping.
+- **Wolf packs** close in when the player approaches. When the player
+  leaves, the pack retreats and is home within about 16 m of the den.
+- **Mythical calls** go from low-pass 700 Hz with 0.05 stereo panning at
+  900 m to 20 kHz with full panning at 60 m.
+
+
 - **Headless.** The full game loop was run headless:
   - loading;
   - walking and fast travel with chunk streaming;
@@ -277,3 +393,11 @@ howl, drone and whisper. Bodies are primitive low-poly placeholders
   and prey behavior is the spec's noted future layer.
 - **Rendering.** Tested with the compatibility renderer; the Forward+
   look (MSAA, shadows) should be checked on real hardware.
+- **Foliage wind.** One wind vector (the local weather at the player)
+  sways every plant in view. That's right at walking scale, but plants a
+  few kilometers off don't feel their own local wind.
+- **Weather grid.** The live grid is coarse (~10 km cells); breezes,
+  gusts and showers are local detail added at the player, not simulated
+  across the planet.
+- **Salt flats** aren't size-capped. They're salt lakes of any size, and
+  a few reach 50+ km².

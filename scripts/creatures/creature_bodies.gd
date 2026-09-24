@@ -61,7 +61,10 @@ static func mat(c: Color, glow := 0.0) -> StandardMaterial3D:
 		return _mats[key]
 	var m := StandardMaterial3D.new()
 	m.albedo_color = c
-	m.roughness = 0.85
+	# Flat period lighting: Lambert diffuse, no PBR specular.
+	m.diffuse_mode = BaseMaterial3D.DIFFUSE_LAMBERT
+	m.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
+	m.roughness = 1.0
 	if glow > 0.0:
 		m.emission_enabled = true
 		m.emission = c

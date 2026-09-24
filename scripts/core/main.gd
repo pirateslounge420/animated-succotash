@@ -8,6 +8,7 @@ extends Node
 ##   SkySystem         sun, moon, sky, ambient, fog
 ##   WeatherFX         rain/snow and wind on plants
 ##   CreatureSpawner   ambient wildlife, packs, mythical creatures
+##   Landmarks         ruins, glowing places (the bioluminescent night)
 ##   PostGrade, Hud, MapOverlay
 ##
 ## Nothing is built for the planet as a whole except its coarse ~1 km
@@ -23,6 +24,7 @@ var sky: SkySystem
 var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
+var landmarks: Landmarks
 var post: PostGrade
 var hud: Hud
 var map_overlay: MapOverlay
@@ -54,6 +56,10 @@ func _on_planet_ready() -> void:
 	world.world_root = root
 
 	var spawn_dir: Vector3 = world.pick_spawn_dir()
+	# Start mid-afternoon wherever that is, so the first session soon sees
+	# sunset and then the night.
+	var local_start_h := 15.0
+	world.days = floor(world.days) + fposmod(local_start_h / 24.0 - CubeSphere.longitude(spawn_dir) / TAU, 1.0)
 	world.center_on(spawn_dir, PlanetConst.RADIUS_M + world.surface_elevation(spawn_dir))
 
 	chunks = ChunkManager.new()
@@ -90,6 +96,11 @@ func _on_planet_ready() -> void:
 	post = PostGrade.new()
 	add_child(post)
 
+	landmarks = Landmarks.new()
+	landmarks.name = "Landmarks"
+	add_child(landmarks)
+	landmarks.setup(world, chunks, player, sky, post)
+
 	map_overlay = MapOverlay.new()
 	add_child(map_overlay)
 	map_overlay.setup(world)
@@ -116,6 +127,7 @@ func _process(delta: float) -> void:
 	if _weather_timer <= 0.0:
 		_weather_timer = 0.25
 		_local_weather = world.weather.local_weather(d, elevation)
+	landmarks.update_landmarks(delta, sky.daylight)
 	var fog: float = world.planet.sample(world.planet.fog, d)
 	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), world.days, _local_weather, fog, delta)
 	var cam := player.camera()
@@ -123,7 +135,7 @@ func _process(delta: float) -> void:
 	TerrainChunk.terrain_material().set_shader_parameter("wetness", 1.0 - sky.daylight)
 	post.set_night(1.0 - sky.daylight)
 	creatures.update_creatures(delta, sky.daylight)
-	hud.set_prompt(creatures.prompt)
+	hud.set_prompt(creatures.prompt if creatures.prompt != "" else landmarks.nearby)
 	hud.update_readout(world, d, elevation, _local_weather, world.time_scale, player.swimming, delta)
 	map_overlay.update_map(d, delta)
 
