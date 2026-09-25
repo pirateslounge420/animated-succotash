@@ -145,6 +145,24 @@ func _attach_ruins() -> void:
 	_ruins[c] = node
 
 
+## Inside a camp shelter (a tepee or under a lean-to, RuinBuilder._camp)
+## at scene position `pos`? Keeps the rain off.
+func sheltered_at(pos: Vector3) -> bool:
+	for c in _ruins:
+		var node: Node3D = _ruins[c]
+		var shelters: Array = node.get_meta("shelters", [])
+		if shelters.is_empty():
+			continue
+		var local := node.global_transform.affine_inverse() * pos
+		for sh in shelters:
+			var center: Vector3 = sh[0]
+			var r: float = sh[1]
+			var h: float = sh[2]
+			if Vector2(local.x - center.x, local.z - center.z).length() < r * 0.85 and local.y > center.y - 1.0 and local.y < center.y + h * 0.8:
+				return true
+	return false
+
+
 ## Ruins (from the cache) within `radius` m of `d`.
 func ruins_near(d: Vector3, radius: float) -> Array:
 	var out: Array = []

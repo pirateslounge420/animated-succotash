@@ -26,6 +26,12 @@ const IVY_LIGHT := Color(0.2, 0.46, 0.16)
 const EARTH := Color(0.36, 0.3, 0.22)
 const GRASS := Color(0.3, 0.52, 0.2)
 
+## Share of ruins where survivors of the old civilization have camped:
+## tepees and lean-tos of poles and woven vines, and a cold fire ring.
+const CAMP_CHANCE := 0.35
+const WOOD := Color(0.4, 0.3, 0.2)
+const HIDE := Color(0.55, 0.42, 0.3)
+
 ## Distance where the drawn blocks give way to the plain-box LOD, and the
 ## hysteresis round it.
 const LOD_M := 150.0
@@ -54,6 +60,11 @@ var _cv := PackedVector3Array()
 var _lv := PackedVector3Array()
 var _ln := PackedVector3Array()
 var _lc := PackedColorArray()
+## Camp shelters, [local center (on the ground), radius, height]: standing
+## inside one keeps the rain off (Landmarks.sheltered_at).
+var _shelters: Array = []
+var _tower_r := 0.0
+var _stub_angle := 0.0
 
 
 static func material() -> ShaderMaterial:
@@ -85,8 +96,15 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._lone_tower()
 		Ruins.Kind.AQUEDUCT:
 			b._aqueduct()
+	# Its own roll, so a camp never changes the ruin itself.
+	var camp_rng := RandomNumberGenerator.new()
+	camp_rng.seed = hash([p_site.seed, "camp"])
+	if camp_rng.randf() < CAMP_CHANCE:
+		b.rng = camp_rng
+		b._camp(p_site.kind)
 	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "cv": b._cv,
-		"lv": b._lv, "ln": b._ln, "lc": b._lc, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e}
+		"lv": b._lv, "ln": b._ln, "lc": b._lc, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
+		"shelters": b._shelters}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -114,6 +132,7 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	var root := Node3D.new()
 	root.name = Ruins.KIND_NAMES[site.kind].replace(" ", "")
 	root.set_meta("site", site)
+	root.set_meta("shelters", data.get("shelters", []))
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = data.v
@@ -593,9 +612,11 @@ func _castle() -> void:
 
 func _lone_tower() -> void:
 	mound(6.0, 10.0, 14.0, 0.0)
-	round_tower(Vector2.ZERO, rng.randf_range(3.2, 4.2), rng.randf_range(14.0, 22.0), rng.randf() * TAU)
+	_tower_r = rng.randf_range(3.2, 4.2)
+	round_tower(Vector2.ZERO, _tower_r, rng.randf_range(14.0, 22.0), rng.randf() * TAU)
 	# A stump of an old wall running off from it.
 	var a := rng.randf() * TAU
+	_stub_angle = a
 	var end := Vector2(cos(a), sin(a)) * rng.randf_range(10.0, 16.0)
 	wall(Vector2(cos(a), sin(a)) * 3.8, end, rng.randf_range(2.0, 4.0), 1.2, [[0.5, 1.1]], 0.4)
 
@@ -672,3 +693,141 @@ func _aqueduct() -> void:
 				block(Vector3(cx, top + 0.55, sz * 1.0), along, Vector3(spacing * rng.randf_range(0.6, 1.0), 0.6, 0.4), 0.9, 0.05)
 			if rng.randf() < 0.55:
 				ivy(Vector3(cx + rng.randf_range(-2.5, 2.5), top + 0.2, sz * 1.25), Vector3(0, 0, sz), rng.randf_range(2.0, 6.0))
+
+
+# --- Camps ----------------------------------------------------------------------
+
+## Survivors' camp in the ruin: one to three shelters (tepees or lean-tos)
+## in a castle's courtyard, at a tower's foot (away from its wall stub) or
+## under an aqueduct's arches, and a cold fire ring.
+func _camp(kind: int) -> void:
+	var spots: Array[Vector2] = []
+	var count := rng.randi_range(1, 3)
+	match kind:
+		Ruins.Kind.CASTLE:
+			var a0 := rng.randf() * TAU
+			for i in count:
+				var a := a0 + i * rng.randf_range(0.7, 1.1)
+				spots.append(Vector2(cos(a), sin(a)) * rng.randf_range(11.5, 12.5))
+		Ruins.Kind.TOWER:
+			count = mini(count, 2)
+			for i in count:
+				var a := _stub_angle + PI + (i - 0.5 * (count - 1)) * 0.9
+				spots.append(Vector2(cos(a), sin(a)) * (_tower_r + 3.6))
+		Ruins.Kind.AQUEDUCT:
+			var length: float = site.length_m
+			var spacing := 7.5
+			var piers := int(length / spacing) + 1
+			var x0 := -spacing * (piers - 1) * 0.5
+			for i in mini(count, piers - 1):
+				var span := rng.randi() % (piers - 1)
+				spots.append(Vector2(x0 + (span + 0.5) * spacing, rng.randf_range(-1.0, 1.0)))
+	var floor_y := 0.35 if kind == Ruins.Kind.CASTLE else 0.0
+	for i in spots.size():
+		var p := spots[i]
+		if kind == Ruins.Kind.AQUEDUCT or rng.randf() < 0.65:
+			tepee(p, rng.randf_range(1.4, 1.8), rng.randf_range(2.8, 3.5), floor_y)
+		else:
+			lean_to(p, rng.randf() * TAU, floor_y)
+	# The cold fire ring beside the first shelter: along the courtyard or
+	# round the tower (clear of keep and walls), across the aqueduct's line
+	# (clear of the piers).
+	var s0 := spots[0]
+	var beside := Vector2(0.0, 2.8 * (1.0 if s0.y <= 0.0 else -1.0)) if kind == Ruins.Kind.AQUEDUCT else Vector2(-s0.y, s0.x).normalized() * 3.0
+	fire_ring(s0 + beside, floor_y)
+
+
+## A tepee: poles leaning in to a crossing at the top, covered in woven
+## vines and hide panels, with a door gap.
+func tepee(center: Vector2, r: float, h: float, floor_y := 0.0) -> void:
+	var g := maxf(ground(center.x, center.y), floor_y)
+	var apex := Vector3(center.x, g + h, center.y)
+	var poles := 7
+	var a0 := rng.randf() * TAU
+	var feet: Array[Vector3] = []
+	for i in poles:
+		var a := a0 + TAU * i / poles + rng.randf_range(-0.08, 0.08)
+		var foot := Vector3(center.x + cos(a) * r, 0.0, center.y + sin(a) * r)
+		foot.y = maxf(ground(foot.x, foot.z), floor_y) - 0.1
+		feet.append(foot)
+		var along := (apex - foot).normalized()
+		_pole(foot, apex + along * rng.randf_range(0.35, 0.6), 0.09)
+	# Cover: panels between neighboring poles up to near the top; one gap
+	# is the door.
+	var inside := Vector3(center.x, g + h * 0.4, center.y)
+	var start := _v.size()
+	var door := rng.randi() % poles
+	for i in poles:
+		if i == door:
+			continue
+		var a := feet[i]
+		var b := feet[(i + 1) % poles]
+		var ta := a.lerp(apex, 0.86)
+		var tb := b.lerp(apex, 0.86)
+		var vine := rng.randf() < 0.6
+		var col := IVY.lerp(IVY_LIGHT, rng.randf()) if vine else HIDE.lightened(rng.randf_range(-0.08, 0.08))
+		col.a = 0.75 if vine else 0.1
+		_face(a, b, tb, ta, col, inside)
+	_lv.append_array(_v.slice(start))
+	_ln.append_array(_n.slice(start))
+	_lc.append_array(_c.slice(start))
+	_collision_box(Transform3D(Basis.IDENTITY, Vector3(center.x, g + h * 0.3, center.y)), Vector3(r * 0.6, h * 0.3, r * 0.6))
+	_shelters.append([Vector3(center.x, g, center.y), r, h])
+
+
+## A lean-to: two forked uprights and a ridge pole, a roof of vine thatch
+## sloping down to the ground behind.
+func lean_to(center: Vector2, heading: float, floor_y := 0.0) -> void:
+	var fwd := Vector3(cos(heading), 0.0, sin(heading))
+	var side := Vector3(-fwd.z, 0.0, fwd.x)
+	var w := rng.randf_range(2.4, 3.2)
+	var hh := rng.randf_range(1.7, 2.1)
+	var depth := rng.randf_range(2.0, 2.6)
+	var c := Vector3(center.x, 0.0, center.y)
+	var tops: Array[Vector3] = []
+	for s: float in [-0.5, 0.5]:
+		var foot: Vector3 = c + side * w * s
+		foot.y = maxf(ground(foot.x, foot.z), floor_y) - 0.1
+		var top: Vector3 = foot + Vector3(0, hh + 0.1, 0)
+		_pole(foot, top + Vector3(0, 0.25, 0), 0.1)
+		tops.append(top)
+	_pole(tops[0] - side * 0.3, tops[1] + side * 0.3, 0.08)
+	var backs: Array[Vector3] = []
+	for t in tops:
+		var back := t - fwd * depth
+		back.y = maxf(ground(back.x, back.z), floor_y) - 0.05
+		backs.append(back)
+		_pole(t, back, 0.07)
+	var start := _v.size()
+	var col := IVY.lerp(IVY_LIGHT, rng.randf())
+	col.a = 0.75
+	_face(tops[0], tops[1], backs[1], backs[0], col, c + Vector3(0, -3.0, 0) - fwd * depth * 0.5)
+	_lv.append_array(_v.slice(start))
+	_ln.append_array(_n.slice(start))
+	_lc.append_array(_c.slice(start))
+	var mid := (tops[0] + tops[1] + backs[0] + backs[1]) * 0.25
+	_collision_box(Transform3D(Basis(side, Vector3.UP, side.cross(Vector3.UP)), mid), Vector3(w * 0.5, hh * 0.3, depth * 0.35))
+	var floor_c := c - fwd * depth * 0.5
+	floor_c.y = maxf(ground(floor_c.x, floor_c.z), floor_y)
+	_shelters.append([floor_c, maxf(w, depth) * 0.5, hh])
+
+
+## A straight pole (a thin, barely bevelled wooden block).
+func _pole(a: Vector3, b: Vector3, thick: float) -> void:
+	var y := (b - a).normalized()
+	var x := y.cross(Vector3.UP if absf(y.y) < 0.95 else Vector3.RIGHT).normalized()
+	var basis := Basis(x, y, x.cross(y))
+	var col := WOOD.lightened(rng.randf_range(-0.08, 0.08))
+	box(Transform3D(basis, (a + b) * 0.5), Vector3(thick, a.distance_to(b), thick), col, 0.1, 0.02, 0.01)
+
+
+## A ring of stones around old ash.
+func fire_ring(center: Vector2, floor_y := 0.0) -> void:
+	var g := maxf(ground(center.x, center.y), floor_y)
+	for i in 7:
+		var a := TAU * i / 7.0 + rng.randf_range(-0.15, 0.15)
+		var p := Vector3(center.x + cos(a) * 0.55, g + 0.08, center.y + sin(a) * 0.55)
+		boulder(p, Vector3(0.16, 0.11, 0.14), Basis.from_euler(Vector3(0, rng.randf() * TAU, 0)), STONES[rng.randi() % STONES.size()], 0.1)
+	var ash := Color(0.16, 0.15, 0.14)
+	ash.a = 0.0
+	box(Transform3D(Basis.IDENTITY, Vector3(center.x, g + 0.01, center.y)), Vector3(0.8, 0.04, 0.8), ash, 0.0, 0.01, 0.0)
