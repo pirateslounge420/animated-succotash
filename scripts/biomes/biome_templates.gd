@@ -13,9 +13,9 @@ class_name BiomeTemplates
 ## read them: vegetation reads climate directly, so borders blend. The
 ## `size` field is the spec's Biome Sizing class, used to check the
 ## generated planet against expectations:
-##   VAST  - 5.5 to 9 hours to walk across
-##   MID   - roughly 3 to 4 hours
-##   SMALL - specialty pockets, under 40 minutes
+##   VAST  - about 4 to 7 hours to walk across (at 6 km/h)
+##   MID   - roughly 2 to 3 hours
+##   SMALL - specialty pockets, under 30 minutes
 
 enum Size { VAST, MID, SMALL }
 

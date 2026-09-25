@@ -8,18 +8,23 @@ const DEFAULTS := {
 	"move_left": [KEY_A, KEY_LEFT],
 	"move_right": [KEY_D, KEY_RIGHT],
 	"jump": [KEY_SPACE],
-	"run": [KEY_SHIFT],
+	"crouch": [KEY_SHIFT],
+	# Sprint is a double-tap of move_forward, held (PlanetPlayer); this
+	# action is the gamepad's way in (click the left stick and hold).
+	"sprint": [],
 	"interact": [KEY_E],
 	"toggle_map": [KEY_M],
 	"toggle_hud": [KEY_H],
 	"release_mouse": [KEY_ESCAPE],
 }
 
-## Gamepad: left stick moves, A jumps, X interacts, B runs, Back opens the map.
+## Gamepad: left stick moves, A jumps, X interacts, B crouches, the left
+## stick held in sprints, Back opens the map.
 const PAD_BUTTONS := {
 	"jump": JOY_BUTTON_A,
 	"interact": JOY_BUTTON_X,
-	"run": JOY_BUTTON_B,
+	"crouch": JOY_BUTTON_B,
+	"sprint": JOY_BUTTON_LEFT_STICK,
 	"toggle_map": JOY_BUTTON_BACK,
 }
 const PAD_AXES := {

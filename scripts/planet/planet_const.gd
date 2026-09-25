@@ -40,5 +40,6 @@ const TWILIGHT_DEG := 10.0
 const SUNRISE_ELEVATION_DEG := -3.6
 const MOON_CYCLE_DAYS := 28
 
-## Walking pace used for the spec's biome walk-across times.
-const WALK_SPEED_MPS := 4.5 * 1000.0 / 3600.0
+## Walking pace (6 km/h, a brisk hike), also the pace DESIGN.md's biome
+## walk-across times assume.
+const WALK_SPEED_MPS := 6.0 * 1000.0 / 3600.0

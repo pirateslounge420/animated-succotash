@@ -20,7 +20,7 @@ class_name BiomePass
 ##   7. Everything else: temperature x moisture climate table.
 ##
 ## Then small specialty pockets are held to their DESIGN.md "Biome Sizing"
-## (under ~40 minutes to walk across, many under 5): any patch bigger than
+## (under ~30 minutes to walk across, many under 4): any patch bigger than
 ## its cap in PATCH_CAP is eroded from the outside in, its rim cells taking
 ## the most common neighboring biome, so a rare landmark keeps its core
 ## instead of spreading over a whole volcano or desert basin.

@@ -195,15 +195,15 @@ This brings the \~59 real-world biomes down to about 52 actual proc-gen content 
 
 ## Biome Sizing
 
-The planet is 1/100th of Earth's circumference (about 400 kilometers around), so linear distances scale by 1/100th — meaning area scales by 1/10,000, the square of the linear factor. Each biome's typical real-world area is scaled down by that factor and treated as a rough circle to get a walk-across time at a normal 4.5 kilometers per hour walking pace. This makes biome size and rarity fall out of real geography for free: biomes that are vast on Earth stay vast and common, and biomes that are naturally rare and small on Earth become rare, small landmarks in-game.
+The planet is 1/100th of Earth's circumference (about 400 kilometers around), so linear distances scale by 1/100th — meaning area scales by 1/10,000, the square of the linear factor. Each biome's typical real-world area is scaled down by that factor and treated as a rough circle to get a walk-across time at the game's walking pace of 6 kilometers per hour (a brisk hike). This makes biome size and rarity fall out of real geography for free: biomes that are vast on Earth stay vast and common, and biomes that are naturally rare and small on Earth become rare, small landmarks in-game.
 
-Vast biomes, five and a half to nine hours to walk across: taiga, hot desert, tropical rainforest, tundra, and savanna.
+Vast biomes, about four to seven hours to walk across: taiga, hot desert, tropical rainforest, tundra, and savanna.
 
-Mid-size biomes, roughly three to four hours: temperate deciduous and mixed forest, ice sheet and polar desert, cold desert, and prairie and steppe.
+Mid-size biomes, roughly two and a quarter to three hours: temperate deciduous and mixed forest, ice sheet and polar desert, cold desert, and prairie and steppe.
 
-Small specialty pockets, under forty minutes and many under five: sagebrush shrubland, Mediterranean scrub, cloud and montane forest, krummholz, alpine meadow, swamp and bayou, páramo and puna, mangrove, freshwater marsh, bog and fen, badlands, salt marsh, salt flats, karst and cave regions, volcanic fields, dune fields, beaches, oases, and hot springs.
+Small specialty pockets, under thirty minutes and many under four: sagebrush shrubland, Mediterranean scrub, cloud and montane forest, krummholz, alpine meadow, swamp and bayou, páramo and puna, mangrove, freshwater marsh, bog and fen, badlands, salt marsh, salt flats, karst and cave regions, volcanic fields, dune fields, beaches, oases, and hot springs.
 
-For scale, circling the entire planet on foot nonstop comes out to roughly 89 hours, or about 11 days at a realistic 8-hour walking day.
+For scale, circling the entire planet on foot nonstop comes out to roughly 67 hours, or about 8 days at a realistic 8-hour walking day.
 
 ## Creature Spawning
 

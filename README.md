@@ -25,9 +25,10 @@ loading screen), then you're dropped on a temperate or tropical coast.
 
 | Key | Action |
 |---|---|
-| WASD / arrows, left stick | Walk (4.5 km/h, the spec's walking pace) |
-| Shift, B | Run |
-| Space, A | Jump; hold to swim up |
+| WASD / arrows, left stick | Walk (6 km/h) |
+| W twice and hold, left stick click | Sprint, while forward stays held (loud: wildlife notices you sooner) |
+| Shift, B | Crouch (hold): slow and nearly silent |
+| Space, A | Jump (hold to keep jumping); hold to swim up |
 | Mouse, right stick | Look (click the window to capture the mouse, Esc frees it) |
 | E, X | Inspect: turn over a fallen log |
 | M, Back | Planet map (keys 1-5 switch biome / elevation / °C / rainfall / live weather; drag to turn, wheel to zoom) |
