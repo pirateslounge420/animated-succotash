@@ -3,6 +3,8 @@ extends CanvasLayer
 ## On-screen readout (DESIGN.md: biome names are labels for the map and
 ## hover readout only). Temperatures in °C.
 
+const READOUT_INTERVAL_S := 0.25
+var _readout_timer := 0.0
 var _left: Label
 var _right: Label
 var _hint: Label
@@ -89,6 +91,14 @@ func toggle() -> void:
 
 
 func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weather: Dictionary, swimming: bool, delta: float) -> void:
+	if _hint_timer > 0.0:
+		_hint_timer -= delta
+		_hint.modulate.a = clampf(_hint_timer / 3.0, 0.0, 1.0)
+	# The text only needs to change a few times a second.
+	_readout_timer -= delta
+	if _readout_timer > 0.0:
+		return
+	_readout_timer = READOUT_INTERVAL_S
 	var map: PlanetData = world.planet
 	var lon := CubeSphere.longitude(player_dir)
 	# Solar time: the sky's (warped) clock, so noon is when the sun peaks.
@@ -126,9 +136,6 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 		int(round(elevation_m)), absf(rad_to_deg(lat)), "N" if lat >= 0.0 else "S", absf(rad_to_deg(lon)), "E" if lon >= 0.0 else "W",
 		("\nSwimming" if swimming else "") + ("\nAbove the clouds · thin, cold air" if weather.get("above_clouds", false) else ""),
 	]
-	if _hint_timer > 0.0:
-		_hint_timer -= delta
-		_hint.modulate.a = clampf(_hint_timer / 3.0, 0.0, 1.0)
 
 
 static func _weather_word(w: Dictionary, fog: float) -> String:
