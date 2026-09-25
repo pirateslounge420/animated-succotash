@@ -155,24 +155,19 @@ func surface_elevation(dir: Vector3) -> float:
 	return planet.terrain.elevation(dir, true)
 
 
-## A pleasant spawn point: low coastal land in a temperate-to-tropical,
-## not-desert climate. Deterministic per seed.
+## Where a new game starts: one of the planet's few best first-camp spots
+## (Encampment.candidates: low coastal land, mild and green), picked at
+## random each game, or the `spawn_choice`-th one if that's set (>= 0).
+var spawn_choice := -1
+
+
 func pick_spawn_dir() -> Vector3:
-	var best := -1
-	var best_score := -INF
-	for c in planet.cell_count:
-		if planet.water[c] != PlanetData.Water.NONE:
-			continue
-		var e := planet.elevation[c]
-		if e < 5.0 * PlanetConst.HEIGHT_SCALE or e > 400.0 * PlanetConst.HEIGHT_SCALE:
-			continue
-		var score := -absf(planet.coast_dist_km[c] - 2.0) - absf(rad_to_deg(planet.lat[c]) - 20.0) * 0.1
-		score += planet.moisture[c] * 3.0
-		# Mild and green: where the most day-active wildlife lives.
-		score -= absf(planet.temp_c[c] - 19.0) * 0.25
-		if planet.slope[c] > 0.15:
-			score -= 5.0
-		if score > best_score:
-			best_score = score
-			best = c
-	return planet.dir[best] if best >= 0 else Vector3.UP
+	var pool := Encampment.candidates(planet)
+	if pool.is_empty():
+		return Vector3.UP
+	var i := spawn_choice
+	if i < 0:
+		var rng := RandomNumberGenerator.new()
+		rng.randomize()
+		i = rng.randi() % pool.size()
+	return pool[mini(i, pool.size() - 1)]

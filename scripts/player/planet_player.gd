@@ -140,6 +140,13 @@ func spawn_at(d: Vector3, look_toward := Vector3.ZERO) -> void:
 	_orient()
 
 
+## Point the camera: `pitch` (radians, negative looks down) and `yaw`
+## relative to where the body faces.
+func set_view(pitch: float, yaw: float) -> void:
+	_pitch = clampf(pitch, -1.3, 0.6)
+	_yaw = yaw
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

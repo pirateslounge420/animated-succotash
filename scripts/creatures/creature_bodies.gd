@@ -50,6 +50,8 @@ static func build(sp: CreatureSpecies) -> Dictionary:
 			_witch(b, sp)
 		"goblin":
 			_goblin(b, sp)
+		"tribal":
+			_tribal(b, sp)
 		_:
 			_quadruped(b, sp, 0.3, 0.5)
 	if kind != "swarm":
@@ -504,6 +506,47 @@ static func _goblin(b: Dictionary, sp: CreatureSpecies) -> void:
 		limb(b, r, Vector3(0.08 * s, 0.3, 0), 0.3, 0.08, c.darkened(0.2))
 		limb(b, r, Vector3(0.18 * s, 0.56, 0), 0.26, 0.06, c, "wings")
 	_lantern(b, r, Vector3(0.22, 0.32, -0.06), sp.accent)
+
+
+## Tribal person (the opening encampment's NPCs; size_m = height): hide
+## tunic and leggings, ochre face paint, hair, and a prop by `sp.shape`:
+## "elder" (feathered staff, cloak) or "hunter" (spear, quiver). Colors:
+## `color` skin, `accent` hide.
+static func _tribal(b: Dictionary, sp: CreatureSpecies) -> void:
+	var r: Node3D = b.root
+	var skin := sp.color
+	var hide := sp.accent
+	var ochre := Color(0.72, 0.3, 0.16)
+	for s in [-1.0, 1.0]:
+		limb(b, r, Vector3(0.055 * s, 0.5, 0.0), 0.48, 0.08, hide.darkened(0.25))
+	box(r, Vector3(0.2, 0.3, 0.13), Vector3(0, 0.68, 0), hide)
+	cone(r, 0.14, 0.11, 0.14, Vector3(0, 0.5, 0), hide.darkened(0.1)) # skirt of the tunic
+	box(r, Vector3(0.21, 0.035, 0.14), Vector3(0, 0.55, 0), ochre.darkened(0.3)) # belt
+	var head := Node3D.new()
+	head.name = "Head"
+	head.position = Vector3(0, 0.9, 0)
+	r.add_child(head)
+	ball(head, Vector3(0.062, 0.075, 0.068), Vector3.ZERO, skin)
+	ball(head, Vector3(0.07, 0.06, 0.07), Vector3(0, 0.03, 0.012), Color(0.12, 0.09, 0.07)) # hair
+	box(head, Vector3(0.1, 0.012, 0.02), Vector3(0, 0.005, -0.058), ochre) # paint stripe
+	eyes(head, Vector3(0, 0.012, -0.058), 0.022, 0.008)
+	box(r, Vector3(0.05, 0.05, 0.05), Vector3(0, 0.82, 0), skin) # neck
+	for s in [-1.0, 1.0]:
+		var arm := limb(b, r, Vector3(0.13 * s, 0.8, 0.0), 0.36, 0.055, skin, "wings")
+		arm.rotation.z = 0.1 * s
+	match sp.shape:
+		"elder":
+			cone(r, 0.17, 0.12, 0.42, Vector3(0, 0.62, 0.02), hide.lightened(0.15)) # cloak
+			var staff := cone(r, 0.012, 0.01, 1.05, Vector3(0.2, 0.52, -0.04), Color(0.4, 0.28, 0.16), 0.0, 5)
+			staff.rotation.z = 0.05
+			var feather := box(r, Vector3(0.015, 0.1, 0.03), Vector3(0.21, 1.07, -0.04), Color(0.9, 0.86, 0.75))
+			feather.rotation.z = -0.4
+		_:
+			var spear := cone(r, 0.01, 0.009, 1.15, Vector3(-0.19, 0.58, -0.02), Color(0.42, 0.3, 0.18), 0.0, 5)
+			spear.rotation.z = -0.06
+			cone(r, 0.02, 0.0, 0.1, Vector3(-0.22, 1.2, -0.02), Color(0.35, 0.36, 0.4), 0.0, 5) # stone head
+			var quiver := box(r, Vector3(0.06, 0.28, 0.06), Vector3(0.06, 0.72, 0.09), hide.darkened(0.2))
+			quiver.rotation.z = 0.35
 
 
 static func _lantern(b: Dictionary, parent: Node3D, pos: Vector3, c: Color) -> void:

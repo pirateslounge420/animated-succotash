@@ -27,6 +27,7 @@ var creatures: CreatureSpawner
 var landmarks: Landmarks
 var post: PostGrade
 var clouds: CloudLayers
+var camp: Encampment
 var sky_events: SkyEvents
 var hud: Hud
 var map_overlay: MapOverlay
@@ -63,7 +64,10 @@ func _on_planet_ready() -> void:
 	add_child(root)
 	world.world_root = root
 
-	var spawn_dir: Vector3 = world.pick_spawn_dir()
+	# The opening encampment: a campfire at one of the planet's best first
+	# camps (a different one each game); plants keep clear of it.
+	var spawn_dir := Encampment.site_near(world.planet, world.pick_spawn_dir())
+	Encampment.set_active(spawn_dir)
 	# Start mid-afternoon wherever that is, so the first session soon sees
 	# sunset and then the night.
 	var local_start_h := 15.0
@@ -98,7 +102,13 @@ func _on_planet_ready() -> void:
 	player.world = world
 	player.chunks = chunks
 	add_child(player)
-	player.spawn_at(spawn_dir)
+	camp = Encampment.new()
+	root.add_child(camp)
+	camp.build(world, chunks, spawn_dir)
+	# Waking on the mat, facing the fire; the camera looks down over a
+	# shoulder so the fire and the two by it are in view.
+	player.spawn_at(camp.player_spot, spawn_dir)
+	player.set_view(-0.42, 0.42)
 
 	fx = WeatherFX.new()
 	fx.name = "WeatherFX"
@@ -123,6 +133,9 @@ func _on_planet_ready() -> void:
 
 	hud.hide_loading()
 	_playing = true
+	# The opening lines, once, at the start of the game.
+	hud.say("Elder", "You're finally awake.", 1.2, 3.2)
+	hud.say("Hunter", "Be careful at night, don't let it get you...", 4.6, 4.8)
 
 
 func _process(delta: float) -> void:
@@ -146,6 +159,7 @@ func _process(delta: float) -> void:
 		if clouds.above_low(elevation):
 			_above_clouds(_local_weather)
 	landmarks.update_landmarks(delta, sky.daylight)
+	camp.update_camp(delta, player.global_position)
 	var fog: float = world.planet.sample(world.planet.fog, d)
 	Look.apply({"look_planet_center": world.planet_center(), "look_planet_radius": PlanetConst.RADIUS_M})
 	var sky_days := Astro.apparent_days(world.days, CubeSphere.longitude(d))

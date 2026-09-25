@@ -13,6 +13,9 @@ var _loading: Control
 var _loading_label: Label
 var _loading_bar: ProgressBar
 var _hint_timer := 18.0
+var _subtitle: Label
+var _lines: Array = [] # [start_s, speaker, text, seconds]
+var _clock := 0.0
 
 
 func _ready() -> void:
@@ -31,6 +34,11 @@ func _ready() -> void:
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_prompt.add_theme_font_size_override("font_size", 18)
+	_subtitle = _label(HORIZONTAL_ALIGNMENT_CENTER)
+	_subtitle.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 120)
+	_subtitle.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_subtitle.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_subtitle.add_theme_font_size_override("font_size", 20)
 	_build_loading()
 
 
@@ -77,6 +85,22 @@ func show_loading(step: String, fraction: float) -> void:
 
 func hide_loading() -> void:
 	_loading.visible = false
+
+
+## A spoken line as a subtitle ("Elder: You're finally awake."), shown
+## `delay` s from now for `seconds`.
+func say(speaker: String, text: String, delay: float, seconds: float) -> void:
+	_lines.append([_clock + delay, speaker, text, seconds])
+
+
+func _process(delta: float) -> void:
+	_clock += delta
+	var shown := ""
+	for l in _lines:
+		if _clock >= l[0] and _clock < l[0] + l[3]:
+			shown = "%s: %s" % [l[1], l[2]]
+	_subtitle.text = shown
+	_lines = _lines.filter(func(l): return _clock < l[0] + l[3])
 
 
 ## Context prompt near the bottom of the screen ("E: turn over the log").

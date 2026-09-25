@@ -353,9 +353,11 @@ class _Context:
 		for camp in Territories.camps_near(map, data.center, chunk_m * 0.75):
 			_clearings.append([camp, Territories.CLEARING_M])
 		_clearings.append_array(Ruins.clearings_near(map, data.center, chunk_m * 0.75))
+		_clearings.append_array(Encampment.clearings_near(data.center, chunk_m * 0.75))
 		_filter_species()
 
-	## Mythical folk camps (Territories) and ruins are kept clear of plants.
+	## Mythical folk camps (Territories), ruins and the opening encampment
+	## are kept clear of plants.
 	func in_clearing(d: Vector3) -> bool:
 		for c in _clearings:
 			if CubeSphere.surface_distance_m(c[0], d) < c[1]:
