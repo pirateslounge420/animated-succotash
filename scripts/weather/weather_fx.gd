@@ -14,31 +14,37 @@ extends Node3D
 const RAIN_MAX := 3000
 const SNOW_MAX := 1500
 
-var rain: CPUParticles3D
-var snow: CPUParticles3D
+var rain: GPUParticles3D
+var snow: GPUParticles3D
 var local: Dictionary = {}
-var _level := {} # emitter -> intensity step currently applied
 
 
 func _ready() -> void:
-	rain = _emitter(RAIN_MAX, _rain_mesh(), 1.1)
-	snow = _emitter(SNOW_MAX, _snow_mesh(), 7.0)
+	rain = _emitter(RAIN_MAX, _rain_mesh(), 1.1, true)
+	snow = _emitter(SNOW_MAX, _snow_mesh(), 7.0, false)
 	add_child(rain)
 	add_child(snow)
 
 
-func _emitter(amount: int, mesh: Mesh, lifetime: float) -> CPUParticles3D:
-	var p := CPUParticles3D.new()
+## GPU particles: intensity is `amount_ratio`, which changes how many
+## particles emit without restarting the emitter.
+func _emitter(amount: int, mesh: Mesh, lifetime: float, align: bool) -> GPUParticles3D:
+	var p := GPUParticles3D.new()
 	p.amount = amount
+	p.amount_ratio = 0.0
 	p.lifetime = lifetime
-	p.mesh = mesh
-	p.emission_shape = CPUParticles3D.EMISSION_SHAPE_BOX
-	p.emission_box_extents = Vector3(22, 1, 22)
+	p.draw_pass_1 = mesh
 	p.local_coords = false
-	p.particle_flag_align_y = true
-	p.direction = Vector3.DOWN
-	p.spread = 3.0
 	p.emitting = false
+	# Always drawn round the camera; never culled by its bounds.
+	p.visibility_aabb = AABB(Vector3(-40, -60, -40), Vector3(80, 80, 80))
+	var m := ParticleProcessMaterial.new()
+	m.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
+	m.emission_box_extents = Vector3(22, 1, 22)
+	m.direction = Vector3.DOWN
+	m.spread = 3.0
+	m.particle_flag_align_y = align
+	p.process_material = m
 	return p
 
 
@@ -80,32 +86,24 @@ func update_fx(camera_pos: Vector3, up: Vector3, weather: Dictionary) -> void:
 
 	for p in [rain, snow]:
 		p.global_transform = Transform3D(basis, origin)
-	var active: CPUParticles3D = snow if cold else rain
-	var idle: CPUParticles3D = rain if cold else snow
+	var active: GPUParticles3D = snow if cold else rain
+	var idle: GPUParticles3D = rain if cold else snow
 	idle.emitting = false
 	active.emitting = intensity > 0.05
-	_set_intensity(active, RAIN_MAX if active == rain else SNOW_MAX, intensity)
+	active.amount_ratio = intensity
 
 	# Fall along gravity plus the wind: the stronger the wind, the more the
 	# streaks lean.
 	var fall_speed := 9.0 if not cold else 1.2
 	var drift := wind * (0.6 if not cold else 0.35)
 	var velocity := -up * fall_speed + drift
-	active.direction = active.global_basis.inverse() * velocity.normalized()
-	active.initial_velocity_min = velocity.length() * 0.9
-	active.initial_velocity_max = velocity.length() * 1.1
-	active.gravity = -up * (2.0 if not cold else 0.2) + drift * 0.1
+	var m: ParticleProcessMaterial = active.process_material
+	m.direction = active.global_basis.inverse() * velocity.normalized()
+	m.initial_velocity_min = velocity.length() * 0.9
+	m.initial_velocity_max = velocity.length() * 1.1
+	m.gravity = -up * (2.0 if not cold else 0.2) + drift * 0.1
 
 	PlantMeshes.material().set_shader_parameter("wind_vector", wind)
-
-
-## CPUParticles3D has no amount_ratio in Godot 4.3, and changing `amount`
-## restarts the emitter, so intensity moves in eighths.
-func _set_intensity(p: CPUParticles3D, max_amount: int, intensity: float) -> void:
-	var step := clampi(int(round(intensity * 8.0)), 1, 8)
-	if _level.get(p, -1) != step:
-		_level[p] = step
-		p.amount = max_amount * step / 8
 
 
 static func _tangent(up: Vector3) -> Vector3:
