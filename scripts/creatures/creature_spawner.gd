@@ -156,7 +156,7 @@ func interact(pos: Vector3) -> void:
 			b.heading = off.normalized() if off.length() > 0.01 else b.heading
 			b.finished.connect(func(c: Creature) -> void:
 				_bugs.erase(c)
-				c.queue_free())
+				NodeRelease.free_later(c))
 			_bugs.append(b)
 		lg.bugs = false
 		_say("Beetles scatter from under the log")
@@ -227,7 +227,7 @@ func _refresh_ambient(sp_idx: int, pd: Vector3) -> void:
 func _on_ambient_finished(c: Creature, key: Vector4i) -> void:
 	if _ambient.get(key) == c:
 		_ambient.erase(key)
-	c.queue_free()
+	NodeRelease.free_later(c)
 
 
 ## Habitat check at a candidate spot. Returns {"dir", "host"?} or {}.
@@ -367,8 +367,8 @@ func _refresh_dens(pd: Vector3) -> void:
 		var den: Dictionary = _dens[key]
 		if CubeSphere.surface_distance_m(den.dir, pd) > DEN_SEARCH_M + 150.0:
 			for w in den.wolves:
-				w.queue_free()
-			den.prop.queue_free()
+				NodeRelease.free_later(w)
+			NodeRelease.free_later(den.prop)
 			_dens.erase(key)
 
 
@@ -466,7 +466,7 @@ func _update_packs(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 				den.wolves.append(w)
 		elif not den.wolves.is_empty() and home_dist > PACK_DESPAWN_M:
 			for w in den.wolves:
-				w.queue_free()
+				NodeRelease.free_later(w)
 			den.wolves = []
 			den.state = "home"
 
@@ -655,7 +655,7 @@ func _wake(t: Dictionary) -> void:
 	cr.mode = "rest"
 	cr.goal = cr.dir
 	cr.set_visible_body(false)
-	cr.finished.connect(func(c: Creature) -> void: c.queue_free())
+	cr.finished.connect(func(c: Creature) -> void: NodeRelease.free_later(c))
 	t.creature = cr
 	t.state = "aware"
 	if sp.campfire and t.camp == null:
@@ -664,10 +664,10 @@ func _wake(t: Dictionary) -> void:
 
 func _set_dormant(t: Dictionary) -> void:
 	if t.creature and is_instance_valid(t.creature):
-		t.creature.queue_free()
+		NodeRelease.free_later(t.creature)
 	t.creature = null
 	if t.camp:
-		t.camp.queue_free()
+		NodeRelease.free_later(t.camp)
 		t.camp = null
 	t.state = "dormant"
 

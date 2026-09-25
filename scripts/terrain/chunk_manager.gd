@@ -96,9 +96,9 @@ func update_around(player_dir: Vector3) -> void:
 		if not keep.has(key):
 			chunks.erase(key)
 			chunk_unloaded.emit(c)
-			c.queue_free()
+			NodeRelease.free_later(c)
 		elif not keep_detail.has(key) and c.detail_node:
-			c.detail_node.queue_free()
+			NodeRelease.free_later(c.detail_node)
 			c.detail_node = null
 		elif _wanted_detail.has(key) and c.detail_node == null and not _pending_detail.has(key):
 			_pending_detail[key] = WorkerThreadPool.add_task(_compute_detail.bind(key, c.data, c.hosts))

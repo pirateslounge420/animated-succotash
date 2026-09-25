@@ -117,7 +117,7 @@ func _refresh_ruins(pd: Vector3) -> void:
 	for c in _ruins.keys():
 		var site: Dictionary = _ruin_cells[c]
 		if CubeSphere.surface_distance_m(site.dir, pd) > DROP_M:
-			_ruins[c].queue_free()
+			NodeRelease.free_later(_ruins[c])
 			_ruins.erase(c)
 
 

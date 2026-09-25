@@ -33,6 +33,12 @@ var _local_weather := {}
 var _weather_timer := 0.0
 
 
+## Quitting frees everything at once; detach the meshes first (see
+## NodeRelease).
+func _exit_tree() -> void:
+	NodeRelease.detach_all(self)
+
+
 func _ready() -> void:
 	Controls.ensure()
 	world = get_node("/root/World")
