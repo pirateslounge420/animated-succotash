@@ -16,7 +16,9 @@ class_name RuinBuilder
 ## coarser far terrain.
 
 const COURSE_M := 0.85
-const STONES := [Color(0.62, 0.58, 0.5), Color(0.55, 0.53, 0.5), Color(0.66, 0.62, 0.52), Color(0.5, 0.48, 0.45), Color(0.6, 0.57, 0.56)]
+# Weathered grey-blue stone (the references' castles), darker than bare
+# rock so walls hold their shape in full sun.
+const STONES := [Color(0.48, 0.48, 0.47), Color(0.42, 0.43, 0.45), Color(0.52, 0.51, 0.47), Color(0.38, 0.39, 0.41), Color(0.47, 0.47, 0.5)]
 const MOSS := Color(0.2, 0.44, 0.14)
 const IVY := Color(0.1, 0.32, 0.12)
 const IVY_LIGHT := Color(0.2, 0.46, 0.16)
