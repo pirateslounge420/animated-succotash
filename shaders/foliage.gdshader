@@ -21,7 +21,7 @@
 // dark) and leaf translucency. Near
 // magical sites, about half the plants glow at their tips at night.
 shader_type spatial;
-render_mode world_vertex_coords, cull_disabled, diffuse_lambert, specular_disabled;
+render_mode world_vertex_coords, cull_disabled, diffuse_lambert;
 
 #include "res://shaders/look.gdshaderinc"
 
@@ -99,6 +99,8 @@ void fragment() {
 	// the rim falloff exponent is (1 - roughness) * 16, and at 1.0 the
 	// "rim" would cover the whole surface.
 	ROUGHNESS = 0.75;
+	// No reflections of the sky; the only highlight is light()'s sheen.
+	SPECULAR = 0.0;
 	float glow = look_site_glow(world_pos, 0.25) * glow_pick * smoothstep(0.3, 0.9, sway_w);
 	EMISSION = look_glow_emission(world_pos, glow * 1.0) + look_rim(NORMAL, VIEW, 0.45);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
@@ -110,4 +112,6 @@ void light() {
 	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
 	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, ROUGHNESS, 0.45, 0.4, ALBEDO);
 	DIFFUSE_LIGHT += look_backlight(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, BACKLIGHT);
+	// A waxy glint on leaves (none on bark).
+	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, 20.0, 0.1) * step(0.001, BACKLIGHT.g);
 }

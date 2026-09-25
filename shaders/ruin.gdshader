@@ -4,7 +4,7 @@
 // moonlit edge after dark). Vertex alpha is moss: at night, near glowing sites (every
 // ruin is one), the moss patches shine teal/cobalt.
 shader_type spatial;
-render_mode cull_disabled, diffuse_lambert, specular_disabled;
+render_mode cull_disabled, diffuse_lambert;
 
 #include "res://shaders/look.gdshaderinc"
 
@@ -31,6 +31,8 @@ void fragment() {
 	vec3 moss = texture(look_tex_leaves, uv * 0.8).rgb;
 	ALBEDO = COLOR.rgb * mix(stone, moss, clamp(COLOR.a * 1.2, 0.0, 1.0)) * 2.0;
 	ROUGHNESS = 0.75; // shapes the rim only (see foliage.gdshader)
+	// No reflections of the sky; the only highlight is light()'s sheen.
+	SPECULAR = 0.0;
 	float patch = texture(look_grain, uv * 0.06).r; // moss patches ~0.5-2 m
 	float glow = look_site_glow(world_pos, 0.0) * COLOR.a * smoothstep(0.5, 0.68, patch);
 	EMISSION = look_glow_emission(world_pos, glow * 2.6) + look_rim(NORMAL, VIEW, 0.2);
@@ -42,4 +44,6 @@ void fragment() {
 void light() {
 	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
 	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, ROUGHNESS, 0.12, 0.3, ALBEDO);
+	// Worn, slightly polished stone.
+	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, 16.0, 0.12);
 }

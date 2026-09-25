@@ -108,3 +108,11 @@ vec3 look_rim_light(vec3 n, vec3 v, vec3 light_color, float roughness, float rim
 vec3 look_backlight(vec3 n, vec3 l, vec3 light_color, float att, vec3 backlight) {
 	return light_color / PI * (1.0 - max(dot(n, l), 0.0)) / PI * backlight * att;
 }
+
+// A soft glossy sheen (Blinn-Phong), the GameCube-era highlight that makes
+// rounded forms read smooth and polished (F-Zero GX) rather than matte
+// low-poly: `power` sets its size, `amount` its strength.
+vec3 look_sheen(vec3 n, vec3 v, vec3 l, vec3 light_color, float att, float power, float amount) {
+	vec3 h = normalize(l + v);
+	return light_color / PI * att * pow(max(dot(n, h), 0.0), power) * amount * step(0.0, dot(n, l));
+}
