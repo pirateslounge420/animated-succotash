@@ -9,7 +9,12 @@
 // Textured (Look, 64 px nearest): bark streaks on trunks, a leafy surface
 // on crowns, and alpha-cutout leaf-cluster cards around the crowns so
 // silhouettes are ragged and dappled instead of round. The material
-// comes from UV2.x (0 bark, 1 leaves, 2 card); card UVs are in UV.
+// comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine); card UVs are in UV.
+//
+// Wet places (per plant, from the MultiMesh's custom data: r = moss,
+// g = vines): moss creeps over the bark, thickest low down and on upward
+// faces, and vines hang from the crown. Each vine strand has a 0-1 key in
+// UV2.y and shows only where the plant's vine amount is above it.
 //
 // Lit like the terrain (Lambert with colored shadows, no specular), with a
 // rim light on silhouettes (lit by sun and moon, plus a moonlit edge after
@@ -31,6 +36,7 @@ varying vec3 world_pos;
 varying vec3 obj_pos; // meters, in the plant's own frame
 varying vec3 obj_normal;
 varying float mat_id;
+varying float moss;
 
 void vertex() {
 	// Texture space: the plant's own frame (so textures ride with it),
@@ -40,6 +46,7 @@ void vertex() {
 	obj_pos = (inv * vec4(VERTEX, 1.0)).xyz * scale;
 	obj_normal = normalize((inv * vec4(NORMAL, 0.0)).xyz);
 	mat_id = UV2.x;
+	moss = INSTANCE_CUSTOM.r;
 	float sway = COLOR.a;
 	float speed = length(wind_vector);
 	vec3 dir = speed > 0.01 ? wind_vector / speed : vec3(0.0);
@@ -51,12 +58,19 @@ void vertex() {
 	sway_w = sway;
 	glow_pick = step(0.5, fract(sin(float(INSTANCE_ID) * 12.9898) * 43758.5453));
 	world_pos = VERTEX;
+	// Vine strands above this plant's vine amount collapse to a point.
+	if (mat_id > 2.5 && UV2.y >= INSTANCE_CUSTOM.g) {
+		VERTEX = MODEL_MATRIX[3].xyz;
+	}
 }
 
 void fragment() {
 	vec3 an = abs(obj_normal);
 	vec4 tex;
-	if (mat_id > 1.5) {
+	if (mat_id > 2.5) {
+		// Vines: the leafy texture running down the strand.
+		tex = texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 2.0);
+	} else if (mat_id > 1.5) {
 		tex = texture(look_tex_leaf_card, UV);
 	} else if (mat_id > 0.5) {
 		vec2 uv = an.y > 0.55 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
@@ -66,7 +80,16 @@ void fragment() {
 		tex = texture(look_tex_bark, vec2(uv.x * 1.6, uv.y * 0.5));
 	}
 	ALBEDO = COLOR.rgb * tex.rgb * 2.0;
-	ALPHA = mat_id > 1.5 ? tex.a : 1.0;
+	if (mat_id < 0.5 && moss > 0.01) {
+		// Moss on the bark: patchy, low down, on faces turned up and to one
+		// side (the damp side).
+		float n = texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 0.7).g;
+		float lowness = 1.0 - clamp(obj_pos.y / 5.0, 0.0, 1.0);
+		float m = smoothstep(0.45, 0.7, n * 0.9 + 0.3 * lowness + 0.25 * obj_normal.y + 0.15 * obj_normal.z + 0.4 * moss - 0.25);
+		vec3 moss_col = vec3(0.2, 0.38, 0.12) * texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3).rgb * 2.0;
+		ALBEDO = mix(ALBEDO, moss_col, m * moss);
+	}
+	ALPHA = (mat_id > 1.5 && mat_id < 2.5) ? tex.a : 1.0;
 	ALPHA_SCISSOR_THRESHOLD = 0.5;
 	// Leaves are translucent: light shining through from behind lights
 	// them too, so crowns seen from below stay green instead of black.

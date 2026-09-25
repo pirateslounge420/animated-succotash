@@ -32,6 +32,9 @@ var up: Vector3
 var ex: Vector3 # local +x
 var ez: Vector3 # local +z (right-handed with ex, up)
 var base_e := 0.0
+## 0-1 how damp the site is (blueprint moisture): dry ruins are bare
+## stone, wet ones are thick with moss and draped in ivy.
+var wet := 0.5
 
 var _v := PackedVector3Array()
 var _n := PackedVector3Array()
@@ -61,6 +64,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 	b.ex = CubeSphere.north(b.up) * cos(a) + CubeSphere.east(b.up) * sin(a)
 	b.ez = b.ex.cross(b.up).normalized()
 	b.base_e = p_map.terrain.elevation(b.up, true)
+	b.wet = smoothstep(0.2, 0.8, p_map.sample(p_map.moisture, b.up))
 	match p_site.kind:
 		Ruins.Kind.CASTLE:
 			b._castle()
@@ -313,11 +317,28 @@ func block(center: Vector3, dir: Vector3, size: Vector3, moss: float, wobble := 
 	# lower than the course, and nudged along it, so joints don't line up.
 	var sz := size * Vector3(rng.randf_range(0.82, 1.1), rng.randf_range(0.9, 1.0), rng.randf_range(0.92, 1.04))
 	var c := center + x * rng.randf_range(-0.12, 0.12) * size.x
-	box(Transform3D(basis, c), sz, col, moss, rng.randf_range(0.06, 0.13), rng.randf_range(0.02, 0.07))
+	box(Transform3D(basis, c), sz, col, _growth(moss), rng.randf_range(0.06, 0.13), rng.randf_range(0.02, 0.07))
 
 
-## An ivy strand hanging from `top` down a face with outward normal `out`.
+## Moss amount for this site: sparse where it's dry, thick where it's wet.
+func _growth(moss: float) -> float:
+	return clampf(moss * (0.3 + 1.1 * wet), 0.0, 1.0)
+
+
+## Ivy hanging from `top` down a face with outward normal `out`: often
+## missing on dry ruins, longer and doubled into curtains on wet ones.
 func ivy(top: Vector3, out: Vector3, length: float) -> void:
+	if rng.randf() > 0.3 + 0.7 * wet:
+		return
+	length *= 0.7 + 0.6 * wet
+	_ivy_strand(top, out, length)
+	var along := Vector3.UP.cross(out).normalized()
+	for k in 2:
+		if rng.randf() < wet * 0.6:
+			_ivy_strand(top + along * rng.randf_range(-1.2, 1.2), out, length * rng.randf_range(0.5, 1.0))
+
+
+func _ivy_strand(top: Vector3, out: Vector3, length: float) -> void:
 	var side := Vector3.UP.cross(out).normalized() * rng.randf_range(0.25, 0.45)
 	var o := out.normalized() * 0.08
 	var steps := maxi(1, int(length / 0.8))
@@ -354,9 +375,9 @@ func rubble(center: Vector3, spread: float, count: int) -> void:
 		var p := Vector3(x, ground(x, z) + size.y * 0.3, z)
 		if rng.randf() < 0.55:
 			# A tumbled block, edges knocked round.
-			box(Transform3D(basis, p), size, col, rng.randf_range(0.3, 0.9), 0.16, 0.1)
+			box(Transform3D(basis, p), size, col, _growth(rng.randf_range(0.3, 0.9)), 0.16, 0.1)
 		else:
-			boulder(p, size * 0.55, basis, col.darkened(0.05), rng.randf_range(0.3, 0.9))
+			boulder(p, size * 0.55, basis, col.darkened(0.05), _growth(rng.randf_range(0.3, 0.9)))
 
 
 # --- Walls and towers ------------------------------------------------------------

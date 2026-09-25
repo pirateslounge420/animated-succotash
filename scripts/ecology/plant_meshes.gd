@@ -85,25 +85,32 @@ static func mesh_for(sp: PlantSpecies, far := false) -> ArrayMesh:
 	match sp.shape:
 		S.CONIFER:
 			b.trunk(0.04, 0.3, 0.0, 0.2)
-			b.cone(Vector3(0, 0.15, 0), 0.3, 0.45, 8, leaf.darkened(0.1), 0.2, 0.6)
-			b.cone(Vector3(0, 0.4, 0), 0.23, 0.4, 8, leaf, 0.5, 0.85)
-			b.cone(Vector3(0, 0.65, 0), 0.15, 0.35, 8, leaf.lightened(0.08), 0.8, 1.0)
+			var cs := 6 if far else 8
+			b.cone(Vector3(0, 0.15, 0), 0.3, 0.45, cs, leaf.darkened(0.1), 0.2, 0.6)
+			b.cone(Vector3(0, 0.4, 0), 0.23, 0.4, cs, leaf, 0.5, 0.85)
+			b.cone(Vector3(0, 0.65, 0), 0.15, 0.35, cs, leaf.lightened(0.08), 0.8, 1.0)
+			# Old-man's-beard lichen in wet conifer forest.
+			b.vines(5, Color(0.55, 0.6, 0.45))
 		S.BROADLEAF:
 			b.trunk(0.05, 0.62, 0.04, 0.3)
 			b.branches(2, 0.36, 0.2, 0.62, 0.3)
 			b.crown(Vector3(0, 0.7, 0), Vector3(0.36, 0.3, 0.36), 5, leaf, 0.8)
+			b.vines(5, leaf.darkened(0.3))
 		S.GNARLED:
 			b.trunk(0.075, 0.42, 0.12, 0.2)
 			b.branches(3, 0.3, 0.26, 0.5, 0.25)
 			b.crown(Vector3(0.08, 0.66, 0), Vector3(0.42, 0.2, 0.34), 5, leaf, 0.8)
+			b.vines(6, leaf.darkened(0.3))
 		S.EMERGENT:
 			b.trunk(0.03, 0.9, 0.03, 0.5)
 			b.branches(2, 0.75, 0.16, 0.9, 0.5)
 			b.crown(Vector3(0, 0.91, 0), Vector3(0.26, 0.1, 0.26), 3, leaf, 1.0)
+			b.vines(4, leaf.darkened(0.3))
 		S.UMBRELLA:
 			b.trunk(0.045, 0.7, 0.06, 0.3)
 			b.branches(3, 0.55, 0.3, 0.8, 0.3)
 			b.crown(Vector3(0.04, 0.82, 0), Vector3(0.6, 0.1, 0.55), 5, leaf, 1.0)
+			b.vines(5, leaf.darkened(0.3))
 		S.PALM:
 			b.cylinder(Vector3.ZERO, 0.03, 0.92, 5, wood, 0.0, 0.6, Vector3(0.08, 1, 0).normalized())
 			for k in 7:
@@ -113,12 +120,14 @@ static func mesh_for(sp: PlantSpecies, far := false) -> ArrayMesh:
 			b.cone(Vector3.ZERO, 0.12, 0.25, 8, wood, 0.0, 0.1)
 			b.trunk(0.045, 0.62, 0.0, 0.4)
 			b.crown(Vector3(0, 0.72, 0), Vector3(0.17, 0.3, 0.17), 3, leaf, 0.9)
+			b.vines(4, Color(0.5, 0.55, 0.42))
 		S.MANGROVE:
 			for k in 5:
 				var a := TAU * k / 5.0
 				b.strut(Vector3(cos(a) * 0.3, 0, sin(a) * 0.3), Vector3(0, 0.3, 0), 0.02, wood)
 			b.cylinder(Vector3(0, 0.28, 0), 0.04, 0.4, 8, wood, 0.1, 0.4)
 			b.crown(Vector3(0, 0.75, 0), Vector3(0.4, 0.22, 0.4), 3, leaf, 0.9)
+			b.vines(5, leaf.darkened(0.3))
 		S.ROSETTE:
 			b.cylinder(Vector3.ZERO, 0.07, 0.75, 6, wood, 0.0, 0.3)
 			for k in 10:
@@ -206,6 +215,11 @@ class _Builder:
 	var parts := PackedInt32Array()
 	var part := 0
 	var far := false
+	## Vine strands: UV2.y holds each strand's 0-1 key; the foliage shader
+	## shows the strands whose key is under the plant's vine amount.
+	var strand_key := 0.0
+	## Where vines can hang from: [center, radii] per crown lobe or cone.
+	var hang_from: Array = []
 
 	func tri(a: Vector3, b: Vector3, d: Vector3, col: Color, sa: float, sb: float, sd: float) -> void:
 		tri3(a, b, d, col, col, col, sa, sb, sd)
@@ -216,7 +230,7 @@ class _Builder:
 		n.append_array([nrm, nrm, nrm])
 		c.append_array([Color(ca, sa), Color(cb, sb), Color(cd, sd)])
 		uv.append_array([Vector2.ZERO, Vector2.ZERO, Vector2.ZERO])
-		var m := Vector2(mat, 0.0)
+		var m := Vector2(mat, strand_key)
 		uv2.append_array([m, m, m])
 		parts.append_array([part, part, part])
 
@@ -274,6 +288,8 @@ class _Builder:
 			var a1 := TAU * (k + 1) / sides
 			tri(base + Vector3(cos(a1), 0, sin(a1)) * r, base, base + Vector3(cos(a0), 0, sin(a0)) * r, col.darkened(0.25), s0, s0, s0)
 		mat = 1.0
+		if not is_wood:
+			hang_from.append([base + Vector3(0, h * 0.2, 0), Vector3(r, h * 0.2, r)])
 		# Foliage cones get ragged leaf cards around their skirt.
 		if not is_wood and r > 0.1 and not far:
 			for k in 4:
@@ -386,6 +402,8 @@ class _Builder:
 			var dir := Vector3(cos(a), rng.randf_range(0.05, 0.45), sin(a)).normalized()
 			var tone := col.lightened(0.08) if k % 2 == 0 else col.darkened(0.06)
 			specs.append([center + dir * radii * 0.62, radii * rng.randf_range(0.5, 0.7), tone])
+		for sp in specs:
+			hang_from.append([sp[0], sp[1]])
 		for i in specs.size():
 			var others: Array = specs.duplicate()
 			others.remove_at(i)
@@ -427,6 +445,39 @@ class _Builder:
 			if ((p - (o[0] as Vector3)) / ((o[1] as Vector3) * 0.86)).length() < 1.0:
 				return true
 		return false
+
+	## Hanging vines (lianas, or beard lichen on conifers): `count` strands
+	## from under the crown toward the ground, each two crossed ribbons in
+	## three swaying segments. Hidden unless the site is wet (shader).
+	func vines(count: int, col: Color) -> void:
+		if far or hang_from.is_empty():
+			return
+		mat = 3.0
+		for k in count:
+			strand_key = (k + 0.5) / count
+			part += 1
+			var h: Array = hang_from[rng.randi() % hang_from.size()]
+			var c: Vector3 = h[0]
+			var rr: Vector3 = h[1]
+			var a := rng.randf() * TAU
+			var top := c + Vector3(cos(a) * rr.x * 0.75, -rr.y * 0.45, sin(a) * rr.z * 0.75)
+			var length := minf(rng.randf_range(0.25, 0.5), top.y - 0.06)
+			if length < 0.08:
+				continue
+			var w := 0.016
+			var prev := top
+			for seg in 3:
+				var t1 := float(seg + 1) / 3.0
+				var p := top + Vector3(sin(a + t1 * 2.0) * 0.03, -length * t1, cos(a + t1 * 2.0) * 0.03)
+				var s0 := lerpf(0.8, 1.0, float(seg) / 3.0)
+				var s1 := lerpf(0.8, 1.0, t1)
+				var tone := col.darkened(0.1 * seg)
+				for side in [Vector3(w, 0, 0), Vector3(0, 0, w)]:
+					tri(prev - side, p - side * 0.7, p + side * 0.7, tone, s0, s1, s1)
+					tri(prev - side, p + side * 0.7, prev + side, tone, s0, s1, s0)
+				prev = p
+		strand_key = 0.0
+		mat = 1.0
 
 	## Flat leaf from `base` outward along `dir`, drooping at the tip.
 	func frond(base: Vector3, dir: Vector3, length: float, width: float, col: Color, sway: float) -> void:

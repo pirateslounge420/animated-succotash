@@ -50,7 +50,7 @@ const CLUMP_M := 60.0
 const EPIPHYTE_RATE := 0.9
 
 ## Instance record layout in the per-species PackedFloat32Array.
-const STRIDE := 8 # dir.xyz, radius, yaw, lean_x, lean_z, height
+const STRIDE := 10 # dir.xyz, radius, yaw, lean_x, lean_z, height, moss, vines
 
 
 ## Trees. Returns {"plants": {species_index: PackedFloat32Array},
@@ -115,19 +115,24 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 			var sp: PlantSpecies = candidates[chosen]
 			var height := lerpf(sp.height_m.x, sp.height_m.y, pow(ctx.rng.randf(), 0.8))
 			var sp_idx := SpeciesDB.index_of(sp)
-			_emit(out, sp_idx, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, height)
+			# Wet sites mossy, wet and warm ones hung with vines (0-1 each,
+			# per plant; the foliage shader shows them).
+			var moss := smoothstep(0.45, 0.85, site.m)
+			var vines := smoothstep(0.62, 0.92, site.m) * smoothstep(4.0, 16.0, site.t)
+			_emit(out, sp_idx, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, height, 0.09, moss, vines)
 			if tier == T.EMERGENT or tier == T.CANOPY:
 				hosts.append([site.dir, PlanetConst.RADIUS_M + site.h, height, sp_idx, site.depth])
 				if tier == T.EMERGENT:
 					ctx.add_emergent(site.dir)
 
 
-static func _emit(out: Dictionary, sp_idx: int, d: Vector3, radius: float, rng: RandomNumberGenerator, height: float, lean_max := 0.09) -> void:
+static func _emit(out: Dictionary, sp_idx: int, d: Vector3, radius: float, rng: RandomNumberGenerator, height: float,
+		lean_max := 0.09, moss := 0.0, vines := 0.0) -> void:
 	if not out.has(sp_idx):
 		out[sp_idx] = PackedFloat32Array()
 	var arr: PackedFloat32Array = out[sp_idx]
 	arr.append_array([d.x, d.y, d.z, radius, rng.randf() * TAU,
-		rng.randf_range(-lean_max, lean_max), rng.randf_range(-lean_max, lean_max), height])
+		rng.randf_range(-lean_max, lean_max), rng.randf_range(-lean_max, lean_max), height, moss, vines])
 	out[sp_idx] = arr
 
 
@@ -190,6 +195,10 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, plants: Dictionary,
 		var count := arr.size() / STRIDE
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.use_custom_data = true # (moss, vines, 0, 0)
+		# Instance colors (all white) too: without them the compatibility
+		# renderer garbles vertex colors when custom data is on.
+		mm.use_colors = true
 		# Trees on the chunk start with their light far mesh; the chunk
 		# swaps in the full one near the player (TerrainChunk.set_fine).
 		var lod := parent == chunk
@@ -205,6 +214,8 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, plants: Dictionary,
 			basis = basis.rotated(up, arr[o + 4])
 			basis = basis.rotated(basis.x, arr[o + 5]).rotated(basis.z, arr[o + 6])
 			mm.set_instance_transform(i, Transform3D(basis.scaled(Vector3.ONE * arr[o + 7]), pos))
+			mm.set_instance_custom_data(i, Color(arr[o + 8], arr[o + 9], 0.0, 0.0))
+			mm.set_instance_color(i, Color.WHITE)
 			if sp.tier == T.EMERGENT or sp.tier == T.CANOPY:
 				chunk.trees.append([pos, arr[o + 7], sp_idx])
 		var mmi := MultiMeshInstance3D.new()
