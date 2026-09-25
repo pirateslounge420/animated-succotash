@@ -32,6 +32,8 @@ class_name VegetationPlacer
 ## Both compute functions are thread-safe (read-only planet data);
 ## build_nodes() makes one MultiMesh per species on the main thread.
 
+## Plants other than water plants keep this far above standing water.
+const WATERLINE_M := 0.3
 const T := PlantSpecies.Tier
 const SPACING_M := {0: 28.0, 1: 7.0, 2: 4.5, 3: 3.5}
 const FILL := {0: 0.55, 1: 0.9, 2: 0.65, 3: 0.95}
@@ -435,7 +437,14 @@ class _Context:
 		if sp.has_need(PlantSpecies.Needs.STANDING_WATER):
 			if not in_water or s.depth < sp.water_depth_m.x or s.depth > sp.water_depth_m.y:
 				return 0.0
-		elif in_water:
+		elif s.depth > -WATERLINE_M:
+			# Ground at or barely above the water: the drawn water (flat
+			# quads, waves) covers it, so a plant there stands in the sea.
+			return 0.0
+		# Beach sand (the band TerrainChunk colors as sand): salt-tolerant
+		# plants only.
+		if s.h < 3.0 and s.coast_km < 1.5 and smoothstep(3.0, 0.8, s.h) > 0.35 \
+				and not sp.has_need(PlantSpecies.Needs.SALT_WATER):
 			return 0.0
 		if sp.has_need(PlantSpecies.Needs.SALT_WATER):
 			if sp.has_need(PlantSpecies.Needs.STANDING_WATER):

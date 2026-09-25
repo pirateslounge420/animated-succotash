@@ -26,6 +26,7 @@
 				"soil": "sand",
 				"soil_default": 0,
 				"density": 1.4,
+				"needs": ["salt_water"],
 				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): dunes"
 			}
 		],
