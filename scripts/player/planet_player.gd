@@ -67,6 +67,7 @@ var anim_state := "idle"
 ## Context prompt ("E: climb the tree"), or "".
 var prompt := ""
 var trees: TreeContact
+var footsteps: Footsteps
 
 var _yaw := 0.0 # camera heading around local up, radians
 var _facing := Vector3.FORWARD # direction the body faces
@@ -115,6 +116,9 @@ func _ready() -> void:
 	trees = TreeContact.new()
 	trees.name = "TreeContact"
 	add_child(trees)
+	footsteps = Footsteps.new()
+	footsteps.name = "Footsteps"
+	add_child(footsteps)
 
 
 func camera() -> Camera3D:
@@ -221,6 +225,8 @@ func _physics_process(delta: float) -> void:
 		if body is CollisionObject3D and (body as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER:
 			trees.bumped(body, col.get_collider_shape_index(), horizontal.length())
 	trees.update_contact(delta, global_position, get_world_3d().direct_space_state)
+	var moved := get_real_velocity() - up * get_real_velocity().dot(up)
+	footsteps.step_update(self, moved.length() * delta, is_on_floor(), delta)
 
 	# Safety net: never fall through unloaded ground.
 	var ground := chunks.ground_height(surface_dir)

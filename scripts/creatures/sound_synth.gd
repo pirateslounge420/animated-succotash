@@ -12,6 +12,9 @@ class_name SoundSynth
 ##   whisper  breathy formant noise (wisps, witches)
 ##   meteor   a rising hiss as it streaks over, then a far rumble (sky events)
 ##   rustle   leaves shaken: a crackling burst of high filtered noise
+##   step_grass / _dirt / _sand / _stone / _snow / _wood / _water
+##            footsteps (Footsteps): a soft swish, a dull thud, a hiss, a
+##            sharp knock, a crunch, a hollow knock, a splash
 
 const RATE := 22050
 const VARIANTS := 3
@@ -45,6 +48,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _meteor(rng)
 		"rustle":
 			samples = _rustle(rng)
+		"step_grass", "step_dirt", "step_sand", "step_stone", "step_snow", "step_wood", "step_water":
+			samples = _step(kind.substr(5), rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -222,4 +227,52 @@ static func _rustle(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		# ... with clicks.
 		var click := (rng.randf_range(-1, 1) * 3.0) if rng.randf() < 0.004 * swell else 0.0
 		s[i] = (lp * 0.6 + click) * swell
+	return s
+
+
+## One footstep on `ground`: a thump (the heel) plus the surface's own
+## texture, each shaped by a few numbers.
+static func _step(ground: String, rng: RandomNumberGenerator) -> PackedFloat32Array:
+	# [length s, thump Hz, thump level, noise level, noise brightness (0-1
+	# one-pole cutoff), noise decay /s, click rate, resonance Hz]
+	var p: Array = {
+		"grass": [0.22, 70.0, 0.5, 0.7, 0.35, 16.0, 0.0, 0.0],
+		"dirt": [0.16, 85.0, 1.0, 0.45, 0.22, 22.0, 0.002, 0.0],
+		"sand": [0.24, 60.0, 0.35, 0.8, 0.12, 11.0, 0.0, 0.0],
+		"stone": [0.12, 140.0, 0.6, 0.35, 0.8, 45.0, 0.0, 950.0],
+		"snow": [0.24, 65.0, 0.4, 0.7, 0.3, 12.0, 0.03, 0.0],
+		"wood": [0.16, 180.0, 0.9, 0.2, 0.4, 30.0, 0.0, 260.0],
+		"water": [0.32, 55.0, 0.3, 0.9, 0.18, 8.0, 0.0, 0.0],
+	}[ground]
+	var length: float = p[0]
+	var thump_hz: float = p[1]
+	var thump_amp: float = p[2]
+	var noise_amp: float = p[3]
+	var bright: float = p[4]
+	var decay: float = p[5]
+	var clicks: float = p[6]
+	var res_hz: float = p[7]
+	var s := _buffer(length * rng.randf_range(0.9, 1.1))
+	var lp := 0.0
+	var phase := 0.0
+	var res_phase := 0.0
+	var bubble := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		phase += TAU * thump_hz * (1.0 - t * 2.0) / RATE
+		var thump := sin(phase) * exp(-t * 30.0) * thump_amp
+		lp = lerpf(lp, rng.randf_range(-1, 1), bright)
+		var attack := minf(t / 0.008, 1.0) if ground != "sand" and ground != "water" else minf(t / 0.03, 1.0)
+		var tex := lp * exp(-t * decay) * attack * noise_amp
+		if clicks > 0.0 and rng.randf() < clicks:
+			tex += rng.randf_range(-1, 1) * 1.5 * exp(-t * 8.0)
+		var knock := 0.0
+		if res_hz > 0.0:
+			res_phase += TAU * res_hz / RATE
+			knock = sin(res_phase) * exp(-t * 55.0) * 0.8
+		if ground == "water":
+			# A bubbly chirp rising under the splash.
+			bubble += TAU * (300.0 + 1400.0 * t) / RATE
+			tex += sin(bubble) * 0.25 * exp(-t * 14.0)
+		s[i] = thump + tex + knock
 	return s

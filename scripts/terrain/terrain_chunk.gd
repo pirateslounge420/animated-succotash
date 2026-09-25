@@ -899,6 +899,17 @@ func water_at(d: Vector3) -> float:
 	return lerpf(a, b, g.y - j0)
 
 
+## The ground's color at a surface direction inside this chunk (the
+## nearest coarse vertex: biome blend, sand, rock, snow; footsteps read
+## what's underfoot from it).
+func ground_color_at(d: Vector3) -> Color:
+	var cols: PackedColorArray = data.get("colors", PackedColorArray())
+	if cols.is_empty():
+		return Color(0.4, 0.5, 0.3)
+	var g := _grid(d)
+	return cols[roundi(g.y) * (QUADS + 1) + roundi(g.x)]
+
+
 ## Chunk grid coordinates (0..QUADS) of a surface direction.
 func _grid(d: Vector3) -> Vector2:
 	var uv := CubeSphere.face_uv(face, d)
