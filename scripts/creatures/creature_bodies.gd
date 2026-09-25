@@ -1,6 +1,9 @@
 class_name CreatureBodies
 ## Placeholder low-poly bodies for creatures, built from a handful of
-## primitive meshes with flat colors (the GameCube look). Every body faces
+## rounded, smooth-shaded primitives with flat colors (the GameCube look):
+## spheres and capsules of 12 sides by 6 rings for bodies and heads, 8 x 4
+## for eyes and other small bits, limbs as capsules that taper toward the
+## foot. Meshes are shared between all creatures. Every body faces
 ## -Z with +Y up. Ambient animals are scaled so `size_m` is roughly their
 ## length; mythical figures so `size_m` is their height.
 ##
@@ -9,6 +12,7 @@ class_name CreatureBodies
 ## pivots while it moves.
 
 static var _mats := {}
+static var _meshes := {}
 
 
 static func build(sp: CreatureSpecies) -> Dictionary:
@@ -89,45 +93,184 @@ static func _mi(parent: Node3D, mesh: Mesh, pos: Vector3, c: Color, glow := 0.0)
 	return mi
 
 
-static func box(parent: Node3D, size: Vector3, pos: Vector3, c: Color, glow := 0.0) -> MeshInstance3D:
-	var m := BoxMesh.new()
-	m.size = size
-	return _mi(parent, m, pos, c, glow)
+## Shared unit sphere (radius 0.5). Level 2: 12 sides x 6 rings (bodies,
+## heads); 1: 8 x 4 (snouts, tails); 0: 6 x 3 (eyes, noses).
+static func _sphere(level: int) -> SphereMesh:
+	var key := "sphere_%d" % level
+	if not _meshes.has(key):
+		var m := SphereMesh.new()
+		m.radius = 0.5
+		m.height = 1.0
+		m.radial_segments = [6, 8, 12][level]
+		m.rings = [3, 4, 6][level]
+		_meshes[key] = m
+	return _meshes[key]
+
+
+## Detail level for a part of this size (in body lengths).
+static func _level(size: float) -> int:
+	return 2 if size >= 0.15 else (1 if size >= 0.07 else 0)
+
+
+## Shared capsule of diameter 1 along Y, `length` long overall (>= 1):
+## 12 sides and 6 rings round the caps and shaft, or 8 and 4 for small
+## parts.
+static func _capsule(length: float, level: int) -> ArrayMesh:
+	var q := snappedf(maxf(length, 1.0), 0.25)
+	var key := "capsule_%.2f_%d" % [q, level]
+	if not _meshes.has(key):
+		var half := q * 0.5 - 0.5
+		var prof: Array = []
+		var cap_rings := 2 if level >= 2 else 1
+		for k in range(1, cap_rings + 1):
+			var a := PI * 0.5 * k / (cap_rings + 1)
+			prof.append([0.5 * sin(a), half + 0.5 * cos(a)])
+		prof.append([0.5, half])
+		if level >= 2:
+			prof.append([0.5, 0.0])
+		prof.append([0.5, -half])
+		for k in range(cap_rings, 0, -1):
+			var a := PI * 0.5 * k / (cap_rings + 1)
+			prof.append([0.5 * sin(a), -half - 0.5 * cos(a)])
+		_meshes[key] = _revolve(prof, half + 0.5, -half - 0.5, [6, 8, 12][level])
+	return _meshes[key]
+
+
+## A smooth closed surface of revolution around Y: `prof` is [radius, y]
+## rings from top to bottom, between poles at y = top and y = bottom.
+static func _revolve(prof: Array, top: float, bottom: float, radial: int) -> ArrayMesh:
+	var verts := PackedVector3Array()
+	var idx := PackedInt32Array()
+	verts.append(Vector3(0, top, 0))
+	for ring in prof:
+		for k in radial:
+			var a := TAU * k / radial
+			verts.append(Vector3(cos(a) * ring[0], ring[1], sin(a) * ring[0]))
+	verts.append(Vector3(0, bottom, 0))
+	var last := verts.size() - 1
+	for k in radial:
+		var k1 := (k + 1) % radial
+		idx.append_array([0, 1 + k, 1 + k1])
+		for r in prof.size() - 1:
+			var a0 := 1 + r * radial
+			var a1 := a0 + radial
+			idx.append_array([a0 + k, a1 + k1, a0 + k1, a0 + k, a1 + k, a1 + k1])
+		var lb := 1 + (prof.size() - 1) * radial
+		idx.append_array([lb + k, last, lb + k1])
+	var normals := PackedVector3Array()
+	normals.resize(verts.size())
+	for t in range(0, idx.size(), 3):
+		var fn := (verts[idx[t + 1]] - verts[idx[t]]).cross(verts[idx[t + 2]] - verts[idx[t]])
+		for q in 3:
+			normals[idx[t + q]] += fn
+	var mid := Vector3(0, (top + bottom) * 0.5, 0)
+	var out_sum := 0.0
+	for i in normals.size():
+		normals[i] = normals[i].normalized()
+		out_sum += normals[i].dot(verts[i] - mid)
+	if out_sum < 0.0:
+		# Wound inward: flip faces and normals so they face out.
+		for i in normals.size():
+			normals[i] = -normals[i]
+		for t in range(0, idx.size(), 3):
+			var tmp := idx[t + 1]
+			idx[t + 1] = idx[t + 2]
+			idx[t + 2] = tmp
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_INDEX] = idx
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return mesh
+
+
+## A rounded block filling `size`: a capsule along its long axis when it's
+## elongated, else an ellipsoid. Returns a pivot at `pos` (rotate that).
+static func box(parent: Node3D, size: Vector3, pos: Vector3, c: Color, glow := 0.0) -> Node3D:
+	var pivot := Node3D.new()
+	pivot.position = pos
+	parent.add_child(pivot)
+	var axis := 0
+	if size.y >= size.x and size.y >= size.z:
+		axis = 1
+	elif size.z >= size.x and size.z >= size.y:
+		axis = 2
+	var long := size[axis]
+	var a := size[(axis + 1) % 3]
+	var b := size[(axis + 2) % 3]
+	var thick := maxf(a, b)
+	var mi: MeshInstance3D
+	if long > thick * 1.4:
+		mi = _mi(pivot, _capsule(long / thick, _level(thick)), Vector3.ZERO, c, glow)
+		# Capsule space: long axis Y, cross-section X and Z; turned so Y
+		# runs along the block's long axis.
+		var basis := Basis.from_scale(Vector3(size.x, thick, size.z))
+		if axis == 0:
+			basis = Basis(Vector3(0, 0, 1), -PI * 0.5) * Basis.from_scale(Vector3(size.y, thick, size.z))
+		elif axis == 2:
+			basis = Basis(Vector3(1, 0, 0), PI * 0.5) * Basis.from_scale(Vector3(size.x, thick, size.y))
+		mi.basis = basis
+	else:
+		var big := maxf(size.x, maxf(size.y, size.z))
+		var level := _level(big)
+		if minf(size.x, minf(size.y, size.z)) < big * 0.25:
+			level = mini(level, 1) # flat (wings, brims): the outline is what shows
+		mi = _mi(pivot, _sphere(level), Vector3.ZERO, c, glow)
+		mi.scale = size
+	return pivot
 
 
 static func ball(parent: Node3D, radii: Vector3, pos: Vector3, c: Color, glow := 0.0) -> MeshInstance3D:
-	var m := SphereMesh.new()
-	m.radius = 0.5
-	m.height = 1.0
-	m.radial_segments = 7
-	m.rings = 4
-	var mi := _mi(parent, m, pos, c, glow)
+	var mi := _mi(parent, _sphere(_level(2.0 * maxf(radii.x, maxf(radii.y, radii.z)))), pos, c, glow)
 	mi.scale = radii * 2.0
 	return mi
 
 
-static func cone(parent: Node3D, r_bottom: float, r_top: float, h: float, pos: Vector3, c: Color, glow := 0.0) -> MeshInstance3D:
-	var m := CylinderMesh.new()
-	m.bottom_radius = r_bottom
-	m.top_radius = r_top
-	m.height = h
-	m.radial_segments = 6
-	m.rings = 1
-	return _mi(parent, m, pos, c, glow)
+static func cone(parent: Node3D, r_bottom: float, r_top: float, h: float, pos: Vector3, c: Color, glow := 0.0, sides := 0) -> MeshInstance3D:
+	if sides == 0:
+		sides = 12 if maxf(r_bottom, r_top) >= 0.08 else 6
+	var key := "cone_%.3f_%.3f_%.3f_%d" % [r_bottom, r_top, h, sides]
+	if not _meshes.has(key):
+		var m := CylinderMesh.new()
+		m.bottom_radius = r_bottom
+		m.top_radius = r_top
+		m.height = h
+		m.radial_segments = sides
+		m.rings = 1
+		m.cap_top = r_top > 0.0
+		_meshes[key] = m
+	return _mi(parent, _meshes[key], pos, c, glow)
 
 
-static func wedge(parent: Node3D, size: Vector3, pos: Vector3, c: Color) -> MeshInstance3D:
-	var m := PrismMesh.new()
-	m.size = size
-	return _mi(parent, m, pos, c)
+## Ears and the like: a flattened cone, point up. Returns a pivot.
+static func wedge(parent: Node3D, size: Vector3, pos: Vector3, c: Color) -> Node3D:
+	var pivot := Node3D.new()
+	pivot.position = pos
+	parent.add_child(pivot)
+	var mi := cone(pivot, 0.5, 0.0, 1.0, Vector3.ZERO, c, 0.0, 6)
+	mi.scale = size
+	return pivot
 
 
-## A limb hanging from a pivot, so rotating the pivot swings it.
+## A capsule tapering from radius r0 at the top (y = 0) to r1 at the
+## bottom (y = -length), smooth shaded, 6 sides: legs and arms.
+static func _limb_mesh(length: float, r0: float, r1: float) -> ArrayMesh:
+	var key := "limb_%.3f_%.3f_%.3f" % [length, r0, r1]
+	if not _meshes.has(key):
+		var prof := [[r0 * 0.7, r0 * 0.7], [r0, 0.0], [r1, -length], [r1 * 0.7, -length - r1 * 0.7]]
+		_meshes[key] = _revolve(prof, r0, -length - r1, 6)
+	return _meshes[key]
+
+
+## A limb hanging from a pivot, so rotating the pivot swings it; thick at
+## the hip, tapering to the foot.
 static func limb(b: Dictionary, parent: Node3D, hip: Vector3, length: float, thick: float, c: Color, key := "legs") -> Node3D:
 	var pivot := Node3D.new()
 	pivot.position = hip
 	parent.add_child(pivot)
-	box(pivot, Vector3(thick, length, thick), Vector3(0, -length * 0.5, 0), c)
+	_mi(pivot, _limb_mesh(snappedf(length, 0.01), snappedf(thick * 0.5, 0.005), snappedf(thick * 0.28, 0.005)), Vector3.ZERO, c)
 	b[key].append(pivot)
 	return pivot
 
