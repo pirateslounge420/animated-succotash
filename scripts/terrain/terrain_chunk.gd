@@ -1,10 +1,17 @@
 class_name TerrainChunk
 extends Node3D
-## One walkable patch of the planet surface (~260 m square, 32 x 32 quads
-## of ~8 m), smooth shaded like GameCube-era terrain: shared vertices with
-## normals averaged from the surrounding ground. Normals come from a height
-## grid padded one vertex past the chunk edge, so both chunks along an edge
-## compute the same normal there and no seam shows.
+## One walkable patch of the planet surface (~260 m square), smooth shaded
+## like GameCube-era terrain: shared vertices with normals averaged from
+## the surrounding ground.
+##
+## Two levels of detail from one fine height grid (64 x 64 quads of ~4 m):
+## chunks in the ring nearest the player show all of it, farther chunks
+## every other vertex (32 x 32 quads of ~8 m). Along chunk edges the fine
+## mesh's in-between vertices sit on the straight 8 m edge, so a fine chunk
+## meets a coarse neighbor without cracks. Normals come from the fine grid
+## padded one vertex past the chunk edge, so both chunks along an edge
+## compute the same normal there and no seam shows. Heights for placing
+## plants and creatures (height_at) and collision use the fine grid.
 ##
 ## Chunks tile the cube-sphere: face `face`, chunk (ci, cj) of
 ## CHUNKS_PER_FACE per face edge. Heights come from the same continuous
@@ -22,7 +29,8 @@ extends Node3D
 ## wherever it's below freezing at that exact height.
 
 const CHUNKS_PER_FACE := 384
-const QUADS := 32
+const QUADS := 32 # coarse quads per edge (~8 m); the data grids use these
+const FINE := QUADS * 2 # fine quads per edge (~4 m), for the near mesh
 const WATER_QUADS := 16
 const BANK_M := 12.0
 
@@ -37,9 +45,13 @@ var ci: int
 var cj: int
 var center_dir: Vector3
 var anchor_radius: float
-## Per-vertex data kept for vegetation and creature placement.
+## Per-vertex data kept for vegetation and creature placement (coarse
+## grid), and the fine heights the ground is drawn and walked on.
 var dirs := PackedVector3Array()
 var heights := PackedFloat32Array()
+var fine_heights := PackedFloat32Array()
+var _coarse_mesh: MeshInstance3D
+var _fine_mesh: MeshInstance3D
 ## Canopy and emergent trees on this chunk: [local_position, height,
 ## species_index]. Canopy-dwelling creatures attach to these.
 var trees: Array = []
@@ -67,6 +79,10 @@ static func _uv(chunk: int, q: int) -> float:
 	return -1.0 + 2.0 * float(chunk * QUADS + q) / float(CHUNKS_PER_FACE * QUADS)
 
 
+static func _uvf(chunk: int, q: int) -> float:
+	return -1.0 + 2.0 * float(chunk * FINE + q) / float(CHUNKS_PER_FACE * FINE)
+
+
 static func center_of(key: Vector3i) -> Vector3:
 	return CubeSphere.to_dir(key.x, _uv(key.y, QUADS / 2), _uv(key.z, QUADS / 2))
 
@@ -75,6 +91,7 @@ static func center_of(key: Vector3i) -> Vector3:
 ## build_nodes() and VegetationPlacer.
 static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dictionary:
 	var n := QUADS + 1
+	var nf := FINE + 1
 	var dirs_out := PackedVector3Array()
 	var h := PackedFloat32Array()
 	var river_dist := PackedFloat32Array()
@@ -85,21 +102,26 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 	river_dist.resize(n * n)
 	level.resize(n * n)
 	salt.resize(n * n)
+	var fine_d := PackedVector3Array()
+	var fine_h := PackedFloat32Array()
+	fine_d.resize(nf * nf)
+	fine_h.resize(nf * nf)
 	var center := center_of(key)
 	var segs := rivers.segments_near(map, map.cell_at(center))
-	# Heights on the grid padded by one vertex all round (for normals).
-	var pn := n + 2
+	# Fine heights on the grid padded by one vertex all round (for normals).
+	var pn := nf + 2
 	var pad_h := PackedFloat32Array()
 	var pad_d := PackedVector3Array()
 	pad_h.resize(pn * pn)
 	pad_d.resize(pn * pn)
 
-	for jj in range(-1, n + 1):
-		for ii in range(-1, n + 1):
-			var d := CubeSphere.to_dir(key.x, _uv(key.y, ii), _uv(key.z, jj))
+	for jj in range(-1, nf + 1):
+		for ii in range(-1, nf + 1):
+			var d := CubeSphere.to_dir(key.x, _uvf(key.y, ii), _uvf(key.z, jj))
 			var e := map.terrain.elevation(d, true)
-			var inside := ii >= 0 and jj >= 0 and ii < n and jj < n
-			var wl := _standing_water(map, d) if inside else Vector2.ZERO
+			var inside := ii >= 0 and jj >= 0 and ii < nf and jj < nf
+			var coarse := inside and ii % 2 == 0 and jj % 2 == 0
+			var wl := _standing_water(map, d) if coarse else Vector2.ZERO
 			var nearest := 1e6
 			for s in segs:
 				var info := rivers.closest(s, d)
@@ -115,27 +137,131 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 			pad_h[pi] = e
 			pad_d[pi] = d
 			if inside:
-				var i := jj * n + ii
+				fine_d[jj * nf + ii] = d
+				fine_h[jj * nf + ii] = e
+			if coarse:
+				var i := (jj / 2) * n + ii / 2
 				dirs_out[i] = d
 				h[i] = e
 				river_dist[i] = nearest
 				level[i] = wl.x
 				salt[i] = int(wl.y)
 
-	var normals := _smooth_normals(center, pad_d, pad_h, n)
+	var fine_n := _smooth_normals(center, pad_d, pad_h, nf)
+	_snap_edges(fine_h, fine_n, nf)
+	var normals := PackedVector3Array()
+	normals.resize(n * n)
+	for jj in n:
+		for ii in n:
+			normals[jj * n + ii] = fine_n[(jj * 2) * nf + ii * 2]
 	return {
 		"key": key,
 		"center": center,
 		"dirs": dirs_out,
 		"heights": h,
 		"normals": normals,
+		"fine_dirs": fine_d,
+		"fine_heights": fine_h,
+		"fine_normals": fine_n,
 		"river_dist": river_dist,
 		"water_level": level,
 		"salt": salt,
 		"colors": _vertex_colors(map, dirs_out, h, normals),
-		"water": _water_quads(key, dirs_out, h, level, salt),
+		"water": _water_quads(key, dirs_out, fine_h, level, salt),
 		"rivers": _river_ribbons(center, rivers, segs),
 	}
+
+
+## The fine grid's in-between vertices along the chunk edges move onto the
+## straight edge between their neighbors (height and normal), so the fine
+## mesh meets a coarse neighbor's 8 m edge exactly.
+static func _snap_edges(fh: PackedFloat32Array, fn: PackedVector3Array, nf: int) -> void:
+	for k in range(1, nf - 1, 2):
+		for idx in [[k, 0, 1, 0], [k, nf - 1, 1, 0], [0, k, 0, 1], [nf - 1, k, 0, 1]]:
+			var i: int = idx[1] * nf + idx[0]
+			var step: int = idx[2] + idx[3] * nf
+			fh[i] = (fh[i - step] + fh[i + step]) * 0.5
+			fn[i] = (fn[i - step] + fn[i + step]).normalized()
+
+
+## Mesh arrays for one level of detail, positions relative to the chunk's
+## anchor (center at `anchor_r` from the planet center). Worker-thread safe.
+static func mesh_arrays(data: Dictionary, fine: bool, anchor_r: float) -> Array:
+	var q := FINE if fine else QUADS
+	var n := q + 1
+	var d: PackedVector3Array = data.fine_dirs if fine else data.dirs
+	var hh: PackedFloat32Array = data.fine_heights if fine else data.heights
+	var nrm: PackedVector3Array = data.fine_normals if fine else data.normals
+	var center: Vector3 = data.center
+	var east := CubeSphere.east(center)
+	var north := CubeSphere.north(center)
+	var local := PackedVector3Array()
+	var uvs := PackedVector2Array()
+	local.resize(n * n)
+	uvs.resize(n * n)
+	for i in n * n:
+		var r := PlanetConst.RADIUS_M + hh[i]
+		# Differences in double precision before storing (float32 vectors).
+		var p := Vector3(d[i].x * r - center.x * anchor_r, d[i].y * r - center.y * anchor_r, d[i].z * r - center.z * anchor_r)
+		local[i] = p
+		# Texture coordinates in meters on the chunk's tangent plane.
+		uvs[i] = Vector2(p.dot(east), p.dot(north))
+	var colors: PackedColorArray = data.colors
+	if fine:
+		# The coarse colors (with baked shade), interpolated.
+		var cn := QUADS + 1
+		var fc := PackedColorArray()
+		fc.resize(n * n)
+		for jj in n:
+			for ii in n:
+				var i0 := mini(ii / 2, QUADS - 1)
+				var j0 := mini(jj / 2, QUADS - 1)
+				var tx := ii * 0.5 - i0
+				var ty := jj * 0.5 - j0
+				var a := colors[j0 * cn + i0].lerp(colors[j0 * cn + i0 + 1], tx)
+				var b := colors[(j0 + 1) * cn + i0].lerp(colors[(j0 + 1) * cn + i0 + 1], tx)
+				fc[jj * n + ii] = a.lerp(b, ty)
+		colors = fc
+	var indices := PackedInt32Array()
+	indices.resize(q * q * 6)
+	var k := 0
+	for jj in q:
+		for ii in q:
+			var i00 := jj * n + ii
+			var i01 := i00 + n
+			indices[k] = i00
+			indices[k + 1] = i01 + 1
+			indices[k + 2] = i00 + 1
+			indices[k + 3] = i00
+			indices[k + 4] = i01
+			indices[k + 5] = i01 + 1
+			k += 6
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = local
+	arrays[Mesh.ARRAY_NORMAL] = nrm
+	arrays[Mesh.ARRAY_COLOR] = colors
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_INDEX] = indices
+	return arrays
+
+
+## Both meshes' arrays and the (fine) collision faces, computed on the
+## worker after the canopy shade is baked into the colors.
+static func prepare_meshes(data: Dictionary) -> void:
+	var mid := (QUADS / 2) * (QUADS + 1) + QUADS / 2
+	var anchor_r := PlanetConst.RADIUS_M + (data.heights as PackedFloat32Array)[mid]
+	data["anchor_r"] = anchor_r
+	data["mesh_coarse"] = mesh_arrays(data, false, anchor_r)
+	var fine := mesh_arrays(data, true, anchor_r)
+	data["mesh_fine"] = fine
+	var local: PackedVector3Array = fine[Mesh.ARRAY_VERTEX]
+	var indices: PackedInt32Array = fine[Mesh.ARRAY_INDEX]
+	var faces := PackedVector3Array()
+	faces.resize(indices.size())
+	for k in indices.size():
+		faces[k] = local[indices[k]]
+	data["faces"] = faces
 
 
 ## Vertex normals from central differences on the padded grid (`pd`, `ph`
@@ -288,10 +414,11 @@ static func _ground_color(map: PlanetData, c: int) -> Color:
 ## Water surface quads (sea, lakes, wetland pools) wherever the ground dips
 ## below the local standing-water level. Each is [d00, d10, d11, d01,
 ## radius, salt].
-static func _water_quads(key: Vector3i, d: PackedVector3Array, h: PackedFloat32Array,
+static func _water_quads(key: Vector3i, d: PackedVector3Array, fine_h: PackedFloat32Array,
 		level: PackedFloat32Array, salt: PackedByteArray) -> Array:
 	var quads := []
 	var n := QUADS + 1
+	var nf := FINE + 1
 	var step := QUADS / WATER_QUADS
 	for wj in WATER_QUADS:
 		for wi in WATER_QUADS:
@@ -300,9 +427,9 @@ static func _water_quads(key: Vector3i, d: PackedVector3Array, h: PackedFloat32A
 			var mid := (jj + step / 2) * n + (ii + step / 2)
 			var wl := level[mid]
 			var lowest := INF
-			for dj in step + 1:
-				for di in step + 1:
-					lowest = minf(lowest, h[(jj + dj) * n + (ii + di)])
+			for dj in step * 2 + 1:
+				for di in step * 2 + 1:
+					lowest = minf(lowest, fine_h[(jj * 2 + dj) * nf + (ii * 2 + di)])
 			if lowest >= wl:
 				continue
 			quads.append([
@@ -399,62 +526,49 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 	center_dir = data.center
 	dirs = data.dirs
 	heights = data.heights
-	var n := QUADS + 1
-	var mid := (QUADS / 2) * n + QUADS / 2
-	anchor_radius = PlanetConst.RADIUS_M + heights[mid]
+	fine_heights = data.fine_heights
+	anchor_radius = data.anchor_r
 	var anchor: Vector3 = world.to_scene(center_dir, anchor_radius)
 	position = anchor
 
-	var local := PackedVector3Array()
-	local.resize(n * n)
-	for i in n * n:
-		local[i] = world.to_scene_relative(dirs[i], PlanetConst.RADIUS_M + heights[i], anchor)
+	_coarse_mesh = _ground_mesh(data.mesh_coarse, "Ground")
+	_fine_mesh = _ground_mesh(data.mesh_fine, "GroundFine")
+	_fine_mesh.visible = false
 
-	var colors: PackedColorArray = data.colors
-	var nrm: PackedVector3Array = data.normals
-	var east := CubeSphere.east(center_dir)
-	var north := CubeSphere.north(center_dir)
-	var uvs := PackedVector2Array()
-	uvs.resize(n * n)
-	for i in n * n:
-		# Texture coordinates in meters on the chunk's tangent plane.
-		uvs[i] = Vector2(local[i].dot(east), local[i].dot(north))
-	var indices := PackedInt32Array()
-	for jj in QUADS:
-		for ii in QUADS:
-			var i00 := jj * n + ii
-			var i01 := i00 + n
-			indices.append_array([i00, i01 + 1, i00 + 1, i00, i01, i01 + 1])
-
-	var arrays := []
-	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = local
-	arrays[Mesh.ARRAY_NORMAL] = nrm
-	arrays[Mesh.ARRAY_COLOR] = colors
-	arrays[Mesh.ARRAY_TEX_UV] = uvs
-	arrays[Mesh.ARRAY_INDEX] = indices
-	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var mi := MeshInstance3D.new()
-	mi.name = "Ground"
-	mi.mesh = mesh
-	mi.material_override = _terrain_mat
-	add_child(mi)
-
-	var faces := PackedVector3Array()
-	faces.resize(indices.size())
-	for k in indices.size():
-		faces[k] = local[indices[k]]
 	var body := StaticBody3D.new()
 	body.name = "Collision"
 	var shape := ConcavePolygonShape3D.new()
-	shape.set_faces(faces)
+	shape.set_faces(data.faces)
 	var cs := CollisionShape3D.new()
 	cs.shape = shape
 	body.add_child(cs)
 	add_child(body)
+	# Only needed once.
+	data.erase("mesh_coarse")
+	data.erase("mesh_fine")
+	data.erase("faces")
+	data.erase("fine_dirs")
+	data.erase("fine_normals")
 
 	_build_water(data.water, data.rivers, world, anchor)
+
+
+func _ground_mesh(arrays: Array, node_name: String) -> MeshInstance3D:
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var mi := MeshInstance3D.new()
+	mi.name = node_name
+	mi.mesh = mesh
+	mi.material_override = _terrain_mat
+	add_child(mi)
+	return mi
+
+
+## Show the 4 m ground (near the player) or the 8 m one.
+func set_fine(fine: bool) -> void:
+	if _fine_mesh and _fine_mesh.visible != fine:
+		_fine_mesh.visible = fine
+		_coarse_mesh.visible = not fine
 
 
 func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) -> void:
@@ -518,19 +632,24 @@ func _water_mesh(data: Dictionary, mat: ShaderMaterial, node_name: String) -> vo
 
 
 ## Terrain height at a surface direction inside this chunk, matching the
-## rendered triangle (each quad is split along its 00-11 diagonal), so
-## plants and creatures sit exactly on the ground.
+## drawn 4 m ground (each quad is split along its 00-11 diagonal), so
+## plants and creatures sit exactly on it.
 func height_at(d: Vector3) -> float:
-	var g := _grid(d)
-	var n := QUADS + 1
-	var i0 := int(g.x)
-	var j0 := int(g.y)
-	var tx := g.x - i0
-	var ty := g.y - j0
-	var h00 := heights[j0 * n + i0]
-	var h10 := heights[j0 * n + i0 + 1]
-	var h01 := heights[(j0 + 1) * n + i0]
-	var h11 := heights[(j0 + 1) * n + i0 + 1]
+	var g := _grid(d) * 2.0
+	return fine_height(fine_heights, g.x, g.y)
+
+
+## Height on a fine grid at fine-grid coordinates (0..FINE).
+static func fine_height(fh: PackedFloat32Array, fx: float, fy: float) -> float:
+	var n := FINE + 1
+	var i0 := clampi(int(fx), 0, FINE - 1)
+	var j0 := clampi(int(fy), 0, FINE - 1)
+	var tx := fx - i0
+	var ty := fy - j0
+	var h00 := fh[j0 * n + i0]
+	var h10 := fh[j0 * n + i0 + 1]
+	var h01 := fh[(j0 + 1) * n + i0]
+	var h11 := fh[(j0 + 1) * n + i0 + 1]
 	if tx > ty:
 		return h00 + (h10 - h00) * tx + (h11 - h10) * ty
 	return h00 + (h11 - h01) * tx + (h01 - h00) * ty

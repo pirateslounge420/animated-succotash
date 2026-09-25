@@ -367,10 +367,8 @@ class _Context:
 		var a11 := a01 + 1
 		var s := _Site.new()
 		s.dir = (dirs[a00].lerp(dirs[a10], tx)).lerp(dirs[a01].lerp(dirs[a11], tx), ty).normalized()
-		if tx > ty:
-			s.h = hs[a00] + (hs[a10] - hs[a00]) * tx + (hs[a11] - hs[a10]) * ty
-		else:
-			s.h = hs[a00] + (hs[a11] - hs[a01]) * tx + (hs[a01] - hs[a00]) * ty
+		# On the drawn 4 m ground, so plants sit on it exactly.
+		s.h = TerrainChunk.fine_height(data.fine_heights, gx * 2.0, gy * 2.0)
 		var wl: PackedFloat32Array = data.water_level
 		s.depth = lerpf(lerpf(wl[a00], wl[a10], tx), lerpf(wl[a01], wl[a11], tx), ty) - s.h
 		var salt: PackedByteArray = data.salt

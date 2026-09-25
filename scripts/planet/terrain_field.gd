@@ -19,6 +19,9 @@ extends RefCounted
 ##   hotspots   - a few seeded volcanic cones with craters (volcanic
 ##                fields, hot springs).
 ##   detail     - meter-scale roughness for walking; blueprint skips it.
+##   roll       - gentle ~60 m swells (a couple of meters) so slopes roll
+##                at walking scale; fades out near sea level so coastlines
+##                keep their shape. Blueprint skips it too.
 
 const MAX_MOUNTAIN_M := 4200.0
 const MAX_PLATEAU_M := 700.0
@@ -26,6 +29,7 @@ const HILLS_M := 170.0
 const MAX_DEPTH_M := 3800.0
 const SHELF_DEPTH_M := 140.0
 const DETAIL_M := 14.0
+const ROLL_M := 2.0
 
 const HOTSPOT_COUNT := 9
 const HOTSPOT_HEIGHT_M := Vector2(700.0, 2000.0)
@@ -47,6 +51,7 @@ var _ridges := FastNoiseLite.new()
 var _hills := FastNoiseLite.new()
 var _detail := FastNoiseLite.new()
 var _shore := FastNoiseLite.new()
+var _roll := FastNoiseLite.new()
 
 
 func _init(p_seed: int, p_ocean_fraction := 0.62) -> void:
@@ -59,6 +64,7 @@ func _init(p_seed: int, p_ocean_fraction := 0.62) -> void:
 	_setup(_hills, 3, 1.0 / 8000.0, 3)
 	_setup(_detail, 4, 1.0 / 180.0, 3)
 	_setup(_shore, 5, 1.0 / 900.0, 2)
+	_setup(_roll, 6, 1.0 / 60.0, 2)
 
 	_calibrate_sea_threshold()
 	_place_hotspots()
@@ -134,6 +140,7 @@ func elevation(dir: Vector3, detail := false) -> float:
 	if detail:
 		# Shore noise is small but wiggles the coastline at walking scale.
 		e += _detail.get_noise_3dv(p) * DETAIL_M + _shore.get_noise_3dv(p) * 6.0
+		e += _roll.get_noise_3dv(p) * ROLL_M * smoothstep(1.5, 6.0, absf(e))
 	return e
 
 

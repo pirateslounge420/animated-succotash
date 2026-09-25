@@ -3,8 +3,9 @@ extends Node
 ## Streams the walkable planet around the player; nothing beyond the view
 ## radius exists as geometry. Two rings:
 ##
-##   view ring   (view_radius_chunks)   ground, water and trees
-##   detail ring (detail_radius_chunks) plus shrubs, ground cover, epiphytes
+##   view ring   (view_radius_chunks)   ground (8 m quads), water and trees
+##   detail ring (detail_radius_chunks) 4 m ground, plus shrubs, ground
+##                                      cover and epiphytes
 ##
 ## A standing player's horizon on this planet is only ~465 m away, so a view
 ## radius of 3 chunks (~800 m) covers everything visible on flat ground;
@@ -101,6 +102,8 @@ func update_around(player_dir: Vector3) -> void:
 			c.detail_node = null
 		elif _wanted_detail.has(key) and c.detail_node == null and not _pending_detail.has(key):
 			_pending_detail[key] = WorkerThreadPool.add_task(_compute_detail.bind(key, c.data, c.hosts))
+		if chunks.has(key):
+			c.set_fine(_wanted_detail.has(key))
 
 	_attach_base(max_attach_per_frame)
 	_attach_detail(max_attach_per_frame)
@@ -110,6 +113,7 @@ func _compute_base(key: Vector3i) -> void:
 	var data := TerrainChunk.compute(key, map, rivers)
 	var trees := VegetationPlacer.compute_base(key, map, data)
 	TerrainChunk.bake_canopy_shade(data, trees.hosts)
+	TerrainChunk.prepare_meshes(data)
 	data["plants"] = trees.plants
 	data["hosts"] = trees.hosts
 	_mutex.lock()
@@ -144,6 +148,7 @@ func _attach_base(limit: int) -> void:
 		chunk.hosts = data.hosts
 		VegetationPlacer.build_nodes(chunk, chunk, data.plants, world)
 		world.world_root.add_child(chunk)
+		chunk.set_fine(_wanted_detail.has(key))
 		chunks[key] = chunk
 		chunk_loaded.emit(chunk)
 		attached += 1
