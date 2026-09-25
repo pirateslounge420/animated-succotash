@@ -418,10 +418,18 @@ func _den_prop(den: Dictionary) -> Node3D:
 		fwd = no - normal * no.dot(normal)
 	root.global_basis = Basis.looking_at(fwd.normalized(), normal)
 	var rock := Color(0.42, 0.42, 0.45)
-	# Two boulders and a lintel framing a dark hole in the slope.
-	CreatureBodies.box(root, Vector3(1.6, 2.6, 2.0), Vector3(-1.7, 1.0, 0.2), rock).rotation.z = 0.12
-	CreatureBodies.box(root, Vector3(1.5, 2.3, 2.0), Vector3(1.7, 0.9, 0.3), rock.darkened(0.1)).rotation.z = -0.15
-	CreatureBodies.box(root, Vector3(5.0, 1.1, 2.4), Vector3(0, 2.5, 0.4), rock.lightened(0.05)).rotation.x = 0.1
+	# Two boulders and a lintel slab framing a dark hole in the slope.
+	var stones := [[Vector3(1.9, 2.8, 2.2), Vector3(-1.7, 1.0, 0.2), Vector3(0, 0, 0.12), rock, false],
+		[Vector3(1.8, 2.5, 2.2), Vector3(1.7, 0.9, 0.3), Vector3(0, 0, -0.15), rock.darkened(0.1), false],
+		[Vector3(5.0, 1.1, 2.4), Vector3(0, 2.5, 0.4), Vector3(0.1, 0, 0), rock.lightened(0.05), true]]
+	for k in stones.size():
+		var st: Array = stones[k]
+		var mi := MeshInstance3D.new()
+		mi.mesh = RuinBuilder.rock_mesh(st[0], den.seed + k, st[3], st[4])
+		mi.material_override = RuinBuilder.material()
+		mi.position = st[1]
+		mi.rotation = st[2]
+		root.add_child(mi)
 	CreatureBodies.ball(root, Vector3(1.6, 1.3, 1.2), Vector3(0, 0.9, 0.6), Color(0.03, 0.03, 0.05))
 	CreatureBodies.box(root, Vector3(4.6, 0.25, 1.4), Vector3(0, 3.05, 0.4), Color(0.92, 0.94, 0.98))
 	var voice := AudioStreamPlayer3D.new()

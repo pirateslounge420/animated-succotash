@@ -1,7 +1,8 @@
 class_name RuinBuilder
 ## Builds a ruin (Ruins.find() site) as one low-poly mesh plus collision.
 ##
-## Everything is stacked stone blocks, so collapse comes for free: each
+## Everything is stacked stone blocks, bevelled, worn and irregular, so
+## collapse comes for free: each
 ## column of a wall or tower stops at its own jagged height, breaches drop
 ## whole stretches to stumps, window and door gaps are missing blocks, and
 ## fallen blocks lie in rubble at the foot. Moss creeps over every upward
@@ -35,6 +36,8 @@ var base_e := 0.0
 var _v := PackedVector3Array()
 var _n := PackedVector3Array()
 var _c := PackedColorArray()
+## Collision triangles: plain boxes, much cheaper than the drawn blocks.
+var _cv := PackedVector3Array()
 
 
 static func material() -> ShaderMaterial:
@@ -65,7 +68,26 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._lone_tower()
 		Ruins.Kind.AQUEDUCT:
 			b._aqueduct()
-	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e}
+	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "cv": b._cv, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e}
+
+
+## A lone rock mesh (den stones and the like): a boulder, or a bevelled
+## block when `block` is set. Drawn with the ruin material.
+static func rock_mesh(size: Vector3, p_seed: int, col: Color, block := false) -> ArrayMesh:
+	var b := RuinBuilder.new()
+	b.rng.seed = p_seed
+	if block:
+		b.box(Transform3D(), size, col, 0.2, 0.14, 0.08)
+	else:
+		b.boulder(Vector3.ZERO, size * 0.5, Basis(), col, 0.35)
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = b._v
+	arrays[Mesh.ARRAY_NORMAL] = b._n
+	arrays[Mesh.ARRAY_COLOR] = b._c
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return mesh
 
 
 ## Main thread: mesh and collision (see placement()).
@@ -87,7 +109,7 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	root.add_child(mi)
 	var body := StaticBody3D.new()
 	var shape := ConcavePolygonShape3D.new()
-	shape.set_faces(data.v)
+	shape.set_faces(data.cv)
 	var cs := CollisionShape3D.new()
 	cs.shape = shape
 	body.add_child(cs)
@@ -131,12 +153,13 @@ func _face(a: Vector3, b: Vector3, c: Vector3, d: Vector3, col: Color, inside: V
 
 
 ## A box. `moss` (0-1) greens the top face fully and the sides partly;
-## the same value goes to vertex alpha for the glow.
-func box(xf: Transform3D, size: Vector3, col: Color, moss: float) -> void:
+## the same value goes to vertex alpha for the glow. Edges are bevelled
+## by `bevel` m, and each chamfer's two sides keep their faces' normals,
+## so shading rolls smoothly over the edge like worn stone. Corners are
+## jittered by up to `wear` m.
+func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09, wear := 0.05) -> void:
 	var h := size * 0.5
-	var p := []
-	for i in 8:
-		p.append(xf * Vector3(h.x if i & 1 else -h.x, h.y if i & 2 else -h.y, h.z if i & 4 else -h.z))
+	var b := minf(bevel, minf(h.x, minf(h.y, h.z)) * 0.45)
 	var top := col.lerp(MOSS, moss)
 	top.a = moss
 	var side := col.lerp(MOSS, moss * 0.3)
@@ -144,12 +167,135 @@ func box(xf: Transform3D, size: Vector3, col: Color, moss: float) -> void:
 	var bottom := col.darkened(0.3)
 	bottom.a = 0.0
 	var o := xf.origin
-	_face(p[2], p[3], p[7], p[6], top, o) # +y
-	_face(p[0], p[4], p[5], p[1], bottom, o) # -y
-	_face(p[1], p[5], p[7], p[3], side, o) # +x
-	_face(p[0], p[2], p[6], p[4], side, o) # -x
-	_face(p[4], p[6], p[7], p[5], side, o) # +z
-	_face(p[0], p[1], p[3], p[2], side, o) # -z
+	var jit: Array[Vector3] = []
+	for i in 8:
+		jit.append(Vector3(rng.randf_range(-wear, wear), rng.randf_range(-wear, wear), rng.randf_range(-wear, wear)))
+	# Vertex (corner i, face axis a): the corner pulled in by b along the
+	# other two axes.
+	var vert := func(i: int, a: int) -> Vector3:
+		var sg := Vector3(1.0 if i & 1 else -1.0, 1.0 if i & 2 else -1.0, 1.0 if i & 4 else -1.0)
+		var p := sg * h + jit[i]
+		for k in 3:
+			if k != a:
+				p[k] -= sg[k] * b
+		return xf * p
+	var fnorm := func(i: int, a: int) -> Vector3:
+		var nv := Vector3.ZERO
+		nv[a] = 1.0 if (i >> a) & 1 else -1.0
+		return (xf.basis * nv).normalized()
+	var face_col := func(i: int, a: int) -> Color:
+		if a == 1:
+			return top if i & 2 else bottom
+		return side
+	# Faces.
+	for a in 3:
+		for sgn in [0, 1]:
+			# This face's 4 corners, in order round it.
+			var u := (a + 1) % 3
+			var w := (a + 2) % 3
+			var ring: Array[int] = []
+			for q in [[0, 0], [1, 0], [1, 1], [0, 1]]:
+				ring.append((sgn << a) | (q[0] << u) | (q[1] << w))
+			var ps: Array[Vector3] = []
+			var ns: Array[Vector3] = []
+			var cs: Array[Color] = []
+			for i in ring:
+				ps.append(vert.call(i, a))
+				ns.append(fnorm.call(i, a))
+				cs.append(face_col.call(i, a))
+			_quad_n(ps, ns, cs, o)
+	# Edge chamfers: between face (a, sa) and face (c, sc), along axis k.
+	for a in 3:
+		for c in range(a + 1, 3):
+			var k := 3 - a - c
+			for sa in [0, 1]:
+				for sc in [0, 1]:
+					var i0: int = (sa << a) | (sc << c)
+					var i1: int = i0 | (1 << k)
+					var ps: Array[Vector3] = [vert.call(i0, a), vert.call(i1, a), vert.call(i1, c), vert.call(i0, c)]
+					var ns: Array[Vector3] = [fnorm.call(i0, a), fnorm.call(i1, a), fnorm.call(i1, c), fnorm.call(i0, c)]
+					var cs: Array[Color] = [face_col.call(i0, a), face_col.call(i1, a), face_col.call(i1, c), face_col.call(i0, c)]
+					_quad_n(ps, ns, cs, o)
+	# Corner triangles.
+	for i in 8:
+		var ps: Array[Vector3] = [vert.call(i, 0), vert.call(i, 1), vert.call(i, 2)]
+		var ns: Array[Vector3] = [fnorm.call(i, 0), fnorm.call(i, 1), fnorm.call(i, 2)]
+		var cs: Array[Color] = [face_col.call(i, 0), face_col.call(i, 1), face_col.call(i, 2)]
+		_tri_n(ps[0], ps[1], ps[2], ns[0], ns[1], ns[2], cs[0], cs[1], cs[2], o)
+	_collision_box(xf, h)
+
+
+## A quad (4 corners in order round it) with per-vertex normals and
+## colors, wound to face away from `inside`.
+func _quad_n(ps: Array[Vector3], ns: Array[Vector3], cs: Array[Color], inside: Vector3) -> void:
+	_tri_n(ps[0], ps[1], ps[2], ns[0], ns[1], ns[2], cs[0], cs[1], cs[2], inside)
+	_tri_n(ps[0], ps[2], ps[3], ns[0], ns[2], ns[3], cs[0], cs[2], cs[3], inside)
+
+
+func _tri_n(a: Vector3, b: Vector3, c: Vector3, na: Vector3, nb: Vector3, nc: Vector3,
+		ca: Color, cb: Color, cc: Color, inside: Vector3) -> void:
+	if (b - a).cross(c - a).dot((a + b + c) / 3.0 - inside) < 0.0:
+		_v.append_array([a, c, b])
+		_n.append_array([na, nc, nb])
+		_c.append_array([ca, cc, cb])
+	else:
+		_v.append_array([a, b, c])
+		_n.append_array([na, nb, nc])
+		_c.append_array([ca, cb, cc])
+
+
+## Smooth shading for everything added since `start`: vertices at the
+## same spot share the average of their faces' normals.
+func _smooth_from(start: int) -> void:
+	var acc := {}
+	for t in range(start, _v.size(), 3):
+		var fn := (_v[t + 1] - _v[t]).cross(_v[t + 2] - _v[t])
+		for k in 3:
+			var key := Vector3i(_v[t + k] * 100.0)
+			acc[key] = acc.get(key, Vector3.ZERO) + fn
+	for i in range(start, _v.size()):
+		var sum: Vector3 = acc[Vector3i(_v[i] * 100.0)]
+		if sum.length_squared() > 1e-10:
+			_n[i] = sum.normalized()
+
+
+func _collision_box(xf: Transform3D, h: Vector3) -> void:
+	var p: Array[Vector3] = []
+	for i in 8:
+		p.append(xf * Vector3(h.x if i & 1 else -h.x, h.y if i & 2 else -h.y, h.z if i & 4 else -h.z))
+	for f in [[0, 1, 3, 2], [4, 6, 7, 5], [0, 4, 5, 1], [2, 3, 7, 6], [0, 2, 6, 4], [1, 5, 7, 3]]:
+		_cv.append_array([p[f[0]], p[f[1]], p[f[2]], p[f[0]], p[f[2]], p[f[3]]])
+
+
+## A rough stone: a noise-displaced icosphere, smooth shaded, mossy on top.
+func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: float) -> void:
+	var sphere: Array = PlantMeshes.icosphere(1)
+	var verts: PackedVector3Array = sphere[0]
+	var faces: PackedInt32Array = sphere[1]
+	var ph := Vector3(rng.randf() * TAU, rng.randf() * TAU, rng.randf() * TAU)
+	var pos := PackedVector3Array()
+	var nrm := PackedVector3Array()
+	nrm.resize(verts.size())
+	for u in verts:
+		var bump := 0.16 * sin(u.x * 2.3 + ph.x) * sin(u.z * 2.9 + ph.y) + 0.08 * sin(u.y * 5.1 + ph.z)
+		pos.append(center + basis * (u * radii * (1.0 + bump)))
+	for f in range(0, faces.size(), 3):
+		var fn := (pos[faces[f + 1]] - pos[faces[f]]).cross(pos[faces[f + 2]] - pos[faces[f]])
+		for k in 3:
+			nrm[faces[f + k]] += fn
+	var cols := PackedColorArray()
+	for i in verts.size():
+		nrm[i] = nrm[i].normalized()
+		var m := moss * smoothstep(0.1, 0.7, nrm[i].y)
+		var c := col.lerp(MOSS, m)
+		c.a = m
+		cols.append(c)
+	for f in range(0, faces.size(), 3):
+		var a := faces[f]
+		var b2 := faces[f + 1]
+		var d := faces[f + 2]
+		_tri_n(pos[a], pos[b2], pos[d], nrm[a], nrm[b2], nrm[d], cols[a], cols[b2], cols[d], center)
+	_collision_box(Transform3D(basis, center), radii * 0.8)
 
 
 ## A block at a position, its length (size.x) running along `dir`
@@ -163,7 +309,11 @@ func block(center: Vector3, dir: Vector3, size: Vector3, moss: float, wobble := 
 	var col: Color = STONES[rng.randi() % STONES.size()]
 	col = col.lightened(rng.randf_range(-0.06, 0.06))
 	col = col.darkened(0.4 * exp(-maxf(above, 0.0) / 1.3))
-	box(Transform3D(basis, center), size, col, moss)
+	# Irregular masonry: blocks a little longer or shorter, shallower or
+	# lower than the course, and nudged along it, so joints don't line up.
+	var sz := size * Vector3(rng.randf_range(0.82, 1.1), rng.randf_range(0.9, 1.0), rng.randf_range(0.92, 1.04))
+	var c := center + x * rng.randf_range(-0.12, 0.12) * size.x
+	box(Transform3D(basis, c), sz, col, moss, rng.randf_range(0.06, 0.13), rng.randf_range(0.02, 0.07))
 
 
 ## An ivy strand hanging from `top` down a face with outward normal `out`.
@@ -201,7 +351,12 @@ func rubble(center: Vector3, spread: float, count: int) -> void:
 		var size := Vector3(rng.randf_range(0.6, 1.4), rng.randf_range(0.4, 0.8), rng.randf_range(0.6, 1.2))
 		var basis := Basis.from_euler(Vector3(rng.randf_range(-0.5, 0.5), rng.randf() * TAU, rng.randf_range(-0.5, 0.5)))
 		var col: Color = STONES[rng.randi() % STONES.size()]
-		box(Transform3D(basis, Vector3(x, ground(x, z) + size.y * 0.3, z)), size, col, rng.randf_range(0.3, 0.9))
+		var p := Vector3(x, ground(x, z) + size.y * 0.3, z)
+		if rng.randf() < 0.55:
+			# A tumbled block, edges knocked round.
+			box(Transform3D(basis, p), size, col, rng.randf_range(0.3, 0.9), 0.16, 0.1)
+		else:
+			boulder(p, size * 0.55, basis, col.darkened(0.05), rng.randf_range(0.3, 0.9))
 
 
 # --- Walls and towers ------------------------------------------------------------
@@ -300,10 +455,13 @@ func mound(radius_top: float, radius_bottom: float, depth: float, rise: float) -
 	earth.a = 0.0
 	var c := Vector3(0, rise, 0)
 	var inside := Vector3(0, -depth * 0.5, 0)
+	var start := _v.size()
 	for i in sides:
 		var j := (i + 1) % sides
 		_face(c, top_pts[j], top_pts[i], top_pts[i], grass, inside)
 		_face(top_pts[i], top_pts[j], bot_pts[j], bot_pts[i], earth.lerp(grass, 0.25), inside)
+	_smooth_from(start)
+	_cv.append_array(_v.slice(start))
 
 
 # --- Structures -------------------------------------------------------------------
