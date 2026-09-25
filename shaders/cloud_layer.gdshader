@@ -59,10 +59,16 @@ float vnoise3(vec3 p) {
 		mix(mix(n001, n101, f.x), mix(n011, n111, f.x), f.y), f.z);
 }
 
+// Three octaves, plus the mean (1/32) the dropped fourth one added, so
+// cover reads the same. Sum is within [1/32, 29/32]; after the first
+// octave the rest add at most 3/8 (EARLY_REST).
+const float FBM_MEAN4 = 0.03125;
+const float EARLY_REST = 0.375;
+
 float fbm3(vec3 p) {
-	float v = 0.0;
+	float v = FBM_MEAN4;
 	float a = 0.5;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 3; i++) {
 		v += a * vnoise3(p);
 		p = p * 2.07 + vec3(17.0, 9.0, 23.0);
 		a *= 0.5;
@@ -77,26 +83,32 @@ void fragment() {
 	vec3 q = p / feature_m;
 	float edge = 1.0 - cover;
 	float n;
-	if (kind == 0) {
-		// Early out (exact): the first octave bounds the rest, so where it
-		// can't reach the cover threshold there's no cloud.
-		float v1 = vnoise3(q);
-		if (0.72 * (0.5 * v1 + 0.47) + 0.28 < edge) {
-			discard;
-		}
-	}
+	// Early outs (exact): the first octave bounds the fbm (the rest adds at
+	// most EARLY_REST, the extra term at most 1), so where it can't reach
+	// the cover threshold there's no cloud and the rest isn't worth
+	// computing.
 	if (kind == 2) {
 		// Cirrus: stretched along the wind into long thin streaks.
 		float along = dot(q, wind_axis);
 		vec3 across = q - wind_axis * along;
 		vec3 s = across * 3.0 + wind_axis * along * 0.35;
+		if (0.75 * (0.5 * vnoise3(s) + FBM_MEAN4 + EARLY_REST) + 0.25 < edge) {
+			discard;
+		}
 		n = fbm3(s) * 0.75 + 0.25 * (1.0 - abs(2.0 * vnoise3(s * 2.3 + 5.0) - 1.0));
 	} else if (kind == 1) {
-		// Altocumulus: small puffs, gathered into rafts by a coarse mask.
+		// Altocumulus: small puffs, gathered into rafts by a coarse mask
+		// (which scales them by at most 1.15).
+		if ((0.8 * (0.5 * vnoise3(q * 1.6) + FBM_MEAN4 + EARLY_REST) + 0.2) * 1.15 < edge) {
+			discard;
+		}
 		float raft = smoothstep(0.35, 0.7, fbm3(q * 0.25 + 11.0));
 		n = (fbm3(q * 1.6) * 0.8 + 0.2 * vnoise3(q * 4.0)) * (0.55 + 0.6 * raft);
 	} else {
 		// Cumulus: billowed fbm, big rounded heads.
+		if (0.72 * (0.5 * vnoise3(q) + FBM_MEAN4 + EARLY_REST) + 0.28 < edge) {
+			discard;
+		}
 		n = fbm3(q) * 0.72 + 0.28 * (1.0 - abs(2.0 * vnoise3(q * 2.3 + 7.0) - 1.0));
 	}
 	float body = n - edge;
