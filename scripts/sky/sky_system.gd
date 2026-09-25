@@ -24,7 +24,7 @@ const SKY_SHADER := preload("res://shaders/sky.gdshader")
 
 @export var moon_mode: Astro.MoonMode = Astro.MoonMode.ORBITAL
 @export var sun_max_energy := 1.05
-@export var moon_max_energy := 1.05
+@export var moon_max_energy := 0.95
 ## Moonlight never drops below this share of full (thin phases, playable nights).
 const MOON_FLOOR := 0.05
 ## 0-1: how deep the viewer is inside a magical site (Landmarks sets it).
@@ -184,7 +184,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var sun_col := _sun_color(sun_elevation_deg)
 	sun.light_color = sun_col
 	sun.light_energy = sun_max_energy * sun_up * (1.0 - 0.55 * float(weather.get("cloud", 0.0)))
-	var moon_col := Color(0.7, 0.7, 0.9).lerp(Color(0.42, 0.56, 1.0), smoothstep(0.0, 25.0, moon_elevation_deg))
+	# Pure deep blue (little green, so moonlit moss and leaves stay green
+	# instead of turning cyan).
+	var moon_col := Color(0.66, 0.66, 0.9).lerp(Color(0.4, 0.47, 1.0), smoothstep(0.0, 25.0, moon_elevation_deg))
 	moon.light_color = moon_col
 	# Moonlight is lost in daylight.
 	moon.light_energy = moon_max_energy * moonlight * (1.0 - daylight) * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)

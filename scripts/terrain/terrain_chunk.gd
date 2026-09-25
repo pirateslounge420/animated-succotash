@@ -663,8 +663,9 @@ func _build_falls(falls: Array, world: Node, anchor: Vector3) -> void:
 		for r in rows + 1:
 			var t := float(r) / rows
 			var radius := lerpf(top_r, bot_r, t)
-			# Arcs out over the lip, then falls nearly straight.
-			var out := down * minf(h, 12.0) * 0.18 * sin(t * PI * 0.5)
+			# Arcs out over the lip and lands clear of the cliff foot (the
+			# 4 m ground can only make a jagged ramp there).
+			var out := down * (1.0 + (2.0 + minf(h, 20.0) * 0.12) * sin(t * PI * 0.5))
 			for side in 2:
 				var d: Vector3 = f[side]
 				v.append(world.to_scene_relative(d, radius, anchor) + out)
@@ -710,12 +711,23 @@ func _mist(at: Vector3, up: Vector3, w: float, h: float) -> void:
 		m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
 		m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 		m.vertex_color_use_as_albedo = true
-		m.albedo_color = Color(0.85, 0.93, 1.0, 0.22)
+		m.albedo_color = Color(0.85, 0.93, 1.0, 0.3)
+		# Soft round puffs, not squares.
+		var g := Gradient.new()
+		g.colors = PackedColorArray([Color(1, 1, 1, 1), Color(1, 1, 1, 0)])
+		var tex := GradientTexture2D.new()
+		tex.gradient = g
+		tex.fill = GradientTexture2D.FILL_RADIAL
+		tex.fill_from = Vector2(0.5, 0.5)
+		tex.fill_to = Vector2(1.0, 0.5)
+		tex.width = 32
+		tex.height = 32
+		m.albedo_texture = tex
 		_mist_mesh.material = m
 	var p := CPUParticles3D.new()
 	p.name = "Mist"
 	p.mesh = _mist_mesh
-	p.amount = clampi(int(w * 1.5), 8, 40)
+	p.amount = clampi(int(w * 2.0), 12, 60)
 	p.lifetime = 3.0
 	p.preprocess = 3.0
 	p.emission_shape = CPUParticles3D.EMISSION_SHAPE_BOX
@@ -725,8 +737,8 @@ func _mist(at: Vector3, up: Vector3, w: float, h: float) -> void:
 	p.gravity = Vector3.ZERO
 	p.initial_velocity_min = 0.3
 	p.initial_velocity_max = 0.6 + h * 0.05
-	p.scale_amount_min = 1.5
-	p.scale_amount_max = 2.5 + minf(h, 20.0) * 0.12
+	p.scale_amount_min = 2.5
+	p.scale_amount_max = 4.0 + minf(h, 20.0) * 0.2
 	var ramp := Gradient.new()
 	ramp.colors = PackedColorArray([Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)])
 	ramp.offsets = PackedFloat32Array([0.0, 0.3, 1.0])

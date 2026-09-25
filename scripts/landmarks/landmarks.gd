@@ -98,7 +98,7 @@ func update_landmarks(delta: float, daylight: float) -> void:
 		if i < _anchors.size() and _glow > 0.02:
 			l.visible = true
 			l.light_color = _anchors[i][1]
-			l.light_energy = 1.8 * _glow * (0.85 + 0.15 * sin(Time.get_ticks_msec() * 0.0017 + i * 1.7))
+			l.light_energy = 0.9 * _glow * (0.85 + 0.15 * sin(Time.get_ticks_msec() * 0.0017 + i * 1.7))
 		else:
 			l.visible = false
 
