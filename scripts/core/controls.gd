@@ -12,8 +12,6 @@ const DEFAULTS := {
 	"interact": [KEY_E],
 	"toggle_map": [KEY_M],
 	"toggle_hud": [KEY_H],
-	"time_faster": [KEY_BRACKETRIGHT],
-	"time_slower": [KEY_BRACKETLEFT],
 	"release_mouse": [KEY_ESCAPE],
 }
 

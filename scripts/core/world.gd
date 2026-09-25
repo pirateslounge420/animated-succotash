@@ -5,8 +5,8 @@ extends Node
 ## Generation runs on a background thread (it takes several seconds), with
 ## generation_progress for a loading screen. After that:
 ##
-## * Clock: `days` advances at 48 real minutes per in-game day
-##   (PlanetConst.DAY_LENGTH_S), scaled by `time_scale`.
+## * Clock: `days` advances at 120 real minutes per in-game day
+##   (PlanetConst.DAY_LENGTH_S), always in real time.
 ## * Weather: the same WeatherSim that produced the long-term averages
 ##   keeps running live, one step per in-game quarter hour.
 ## * Floating origin: the planet is ~64 km in radius, so the scene keeps
@@ -24,8 +24,6 @@ const WEATHER_STEP_H := 0.25
 const REBASE_DISTANCE_M := 1500.0
 
 @export var world_seed := 42
-## 1.0 = the 48-minute day. Raise it to watch the cycle faster.
-@export var time_scale := 1.0
 
 var planet: PlanetData
 var weather: WeatherSim
@@ -89,7 +87,7 @@ func generate_now(p_seed: int) -> void:
 func _process(delta: float) -> void:
 	if not ready_to_play:
 		return
-	var game_hours := delta / PlanetConst.DAY_LENGTH_S * 24.0 * time_scale
+	var game_hours := delta / PlanetConst.DAY_LENGTH_S * 24.0
 	days += game_hours / 24.0
 	_weather_accum_h += game_hours
 	if _weather_accum_h >= WEATHER_STEP_H:

@@ -160,7 +160,7 @@ func _process(delta: float) -> void:
 	post.set_night(1.0 - sky.daylight)
 	creatures.update_creatures(delta, sky.daylight)
 	hud.set_prompt(creatures.prompt if creatures.prompt != "" else landmarks.nearby)
-	hud.update_readout(world, d, elevation, _local_weather, world.time_scale, player.swimming, delta)
+	hud.update_readout(world, d, elevation, _local_weather, player.swimming, delta)
 	map_overlay.update_map(d, delta)
 
 
@@ -184,9 +184,5 @@ func _unhandled_input(event: InputEvent) -> void:
 		map_overlay.toggle(player.surface_dir)
 	elif event.is_action_pressed("toggle_hud"):
 		hud.toggle()
-	elif event.is_action_pressed("time_faster"):
-		world.time_scale = minf(world.time_scale * 4.0, 256.0)
-	elif event.is_action_pressed("time_slower"):
-		world.time_scale = maxf(world.time_scale / 4.0, 1.0)
 	elif event.is_action_pressed("interact"):
 		creatures.interact(player.global_position)

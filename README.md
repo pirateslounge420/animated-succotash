@@ -32,7 +32,6 @@ loading screen), then you're dropped on a temperate or tropical coast.
 | E, X | Inspect: turn over a fallen log |
 | M, Back | Planet map (keys 1-5 switch biome / elevation / °C / rainfall / live weather; drag to turn, wheel to zoom) |
 | H | Hide the HUD |
-| `]` / `[` | Speed time up / slow it down (x4 steps, up to x256) |
 
 One in-game day is **120 real minutes** (12x faster than Earth), in four
 phases: dawn 15 minutes, day 50, dusk 15, night 40. The planet has no

@@ -23,7 +23,7 @@ func _ready() -> void:
 	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 16)
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_hint.text = "WASD move · Shift run · Space jump · E inspect\nM map · H hide HUD · [ ] time speed · click to look, Esc frees mouse"
+	_hint.text = "WASD move · Shift run · Space jump · E inspect\nM map · H hide HUD · click to look, Esc frees mouse"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 70)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -88,7 +88,7 @@ func toggle() -> void:
 	_hint.visible = _left.visible
 
 
-func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weather: Dictionary, time_scale: float, swimming: bool, delta: float) -> void:
+func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weather: Dictionary, swimming: bool, delta: float) -> void:
 	var map: PlanetData = world.planet
 	var lon := CubeSphere.longitude(player_dir)
 	# Solar time: the sky's (warped) clock, so noon is when the sun peaks.
@@ -107,9 +107,8 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 		part = "Dawn" if hours < 12.0 else "Dusk"
 	var mansion := Astro.mansion_index(days)
 	var moon_up := rad_to_deg(Astro.elevation(Astro.moon_dir(days), player_dir)) > 0.0
-	var speed := "" if is_equal_approx(time_scale, 1.0) else "   (time x%s)" % str(time_scale)
-	_left.text = "Day %d · %02d:%02d · %s%s\n%s (%d%% lit)%s\nMansion: %s · %s" % [
-		int(days) + 1, hh, mm, part, speed,
+	_left.text = "Day %d · %02d:%02d · %s\n%s (%d%% lit)%s\nMansion: %s · %s" % [
+		int(days) + 1, hh, mm, part,
 		Astro.phase_name(days), int(round(Astro.moon_illumination(days) * 100.0)),
 		" · moon up" if moon_up else "",
 		Astro.MANSION_NAMES[mansion], Astro.BEAST_NAMES[Astro.beast_index(mansion)],
