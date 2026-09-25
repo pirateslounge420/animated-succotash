@@ -10,8 +10,10 @@ extends RefCounted
 ## cell down to the downstream cell's (priority flood: never uphill),
 ## dropping wherever the terrain under it drops (a running minimum), so the
 ## water never floats above the land. Where the profile falls sharply
-## between two samples, the river pours over a waterfall. Width and depth
-## grow with discharge.
+## between two samples, the river pours over a waterfall; moderate slopes
+## are rapids. A tributary meeting a lower river, or a river meeting the
+## sea at a cliff, ends in a fall too (the profile must reach the level
+## downstream). Width and depth grow with discharge.
 
 const MIN_WIDTH_M := 7.0
 const MAX_WIDTH_M := 55.0
@@ -20,8 +22,9 @@ const SAMPLE_M := 6.0
 const STEEP_M := 1.5
 ## A drop at least this tall between samples is drawn as a waterfall.
 const FALL_MIN_M := 4.0
-## The tallest single fall; steeper reaches get a chain of them.
-const FALL_MAX_M := 35.0
+## The tallest single fall (each reach draws its own limit between 8 m
+## and this); steeper reaches get a chain of them.
+const FALL_MAX_M := 45.0
 
 var a := PackedVector3Array() # upstream end (unit dir)
 var b := PackedVector3Array() # downstream end
@@ -133,14 +136,16 @@ func profile(seg: int) -> PackedFloat32Array:
 	# of small ones: the water below drops straight to the reach's foot,
 	# and the channel (carved to follow it) cuts a gorge back into the
 	# slope, the way real falls retreat upstream.
-	# A long steep reach becomes a chain of falls, none taller than
-	# FALL_MAX_M.
+	# A long steep reach becomes a chain of falls, none taller than this
+	# reach's own limit: some rivers step down in cascades of short falls
+	# with pools between, others pour over single tall ones.
+	var fall_max := lerpf(FALL_MIN_M * 2.0, FALL_MAX_M, pow(float(posmod(hash(seg * 7919 + 13), 1000)) / 999.0, 1.5))
 	var i := 1
 	while i <= n:
 		if prof[i - 1] - prof[i] >= STEEP_M:
 			var top := prof[i - 1]
 			var j := i
-			while j < n and prof[j] - prof[j + 1] >= STEEP_M * 0.5 and top - prof[j + 1] <= FALL_MAX_M:
+			while j < n and prof[j] - prof[j + 1] >= STEEP_M * 0.5 and top - prof[j + 1] <= fall_max:
 				j += 1
 			for k in range(i, j + 1):
 				prof[k] = prof[j]
@@ -151,6 +156,27 @@ func profile(seg: int) -> PackedFloat32Array:
 	_profiles[seg] = prof
 	_mutex.unlock()
 	return prof
+
+
+## White water along a segment, 0-1 per profile sample: rapids where the
+## river runs down a moderate slope (not steep enough to fall), and the
+## churn below each fall.
+func rapids(seg: int) -> PackedFloat32Array:
+	var prof := profile(seg)
+	var n := prof.size() - 1
+	var out := PackedFloat32Array()
+	out.resize(n + 1)
+	for i in range(1, n + 1):
+		var drop := prof[i - 1] - prof[i]
+		if drop >= FALL_MIN_M:
+			# Plunge pool: churning for a few samples below the fall.
+			for k in 3:
+				if i + k <= n:
+					out[i + k] = maxf(out[i + k], 1.0 - 0.3 * k)
+		else:
+			out[i] = maxf(out[i], smoothstep(0.1, 1.0, drop))
+			out[i - 1] = maxf(out[i - 1], smoothstep(0.1, 1.0, drop) * 0.7)
+	return out
 
 
 ## Waterfalls on a segment: [[t, top_level, bottom_level], ...] where the

@@ -61,6 +61,19 @@ void fragment() {
 	// Lit from within: brightest looking down into it, rippling with the waves.
 	EMISSION = look_glow_emission(world_pos, glow * (1.1 + 1.0 * h) * (1.0 - 0.4 * fresnel));
 	ALPHA = mix(ALPHA, 0.9, glow * look_glow);
+	// White water (rivers: UV2.x): rapids and the churn below falls. Foam
+	// streaks race downstream (UV.y runs along the river, in meters) and
+	// glow a little at night.
+	float white = UV2.x;
+	if (white > 0.01) {
+		float y = UV.y * 0.45 - TIME * (2.5 + 3.5 * white);
+		float streak = noise(vec2(UV.x * 1.2, y * 0.5)) * 0.6 + noise(vec2(UV.x * 3.0, y * 1.6)) * 0.4;
+		float foam = smoothstep(0.66 - 0.32 * white, 0.82, streak) * smoothstep(0.0, 0.3, white);
+		ALBEDO = mix(ALBEDO, vec3(0.88, 0.95, 1.0), foam);
+		ALPHA = mix(ALPHA, 0.98, foam);
+		ROUGHNESS = mix(ROUGHNESS, 0.45, foam);
+		EMISSION += vec3(0.3, 0.65, 1.0) * foam * look_night * 0.8;
+	}
 	// All water glows faintly cobalt at night, lit from within.
 	EMISSION += vec3(0.06, 0.2, 0.75) * look_night * (0.45 + 0.35 * h) * (1.0 - 0.4 * fresnel);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
