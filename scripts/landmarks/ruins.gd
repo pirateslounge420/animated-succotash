@@ -35,7 +35,7 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 	var best_score := -INF
 	for i in 18:
 		var p := CreatureSpawner._offset(center, rng.randf() * TAU, sqrt(rng.randf()) * CELL_M * 0.35)
-		var e := map.terrain.elevation(p, true)
+		var e := map.terrain.elevation(p, true, false)
 		var cell := map.cell_at(p)
 		if e < 6.0 or map.water[cell] != PlanetData.Water.NONE:
 			continue
@@ -45,10 +45,10 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 		# Prominence: height above the ground 200 m around.
 		var ring := 0.0
 		for k in 6:
-			ring += map.terrain.elevation(CreatureSpawner._offset(p, k * TAU / 6.0, 200.0), true)
+			ring += map.terrain.elevation(CreatureSpawner._offset(p, k * TAU / 6.0, 200.0), true, false)
 		var prominence := e - ring / 6.0
 		# Too steep to build on?
-		var slope := absf(map.terrain.elevation(CreatureSpawner._offset(p, 0.0, 15.0), true) - map.terrain.elevation(CreatureSpawner._offset(p, PI, 15.0), true)) / 30.0
+		var slope := absf(map.terrain.elevation(CreatureSpawner._offset(p, 0.0, 15.0), true, false) - map.terrain.elevation(CreatureSpawner._offset(p, PI, 15.0), true, false)) / 30.0
 		if slope > 0.4:
 			continue
 		var score := prominence + rng.randf() * 4.0

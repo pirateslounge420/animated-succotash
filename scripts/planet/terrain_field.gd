@@ -117,7 +117,9 @@ func landness(dir: Vector3) -> float:
 	return _continent_value(dir) - sea_threshold
 
 
-func elevation(dir: Vector3, detail := false) -> float:
+## `roll` false leaves out the walking-scale roll layer (Ruins uses that to
+## pick sites, so ruins don't move with 2 m of noise).
+func elevation(dir: Vector3, detail := false, roll := true) -> float:
 	var p := dir * PlanetConst.RADIUS_M
 	var x := _continent.get_noise_3dv(p) - sea_threshold
 	var e: float
@@ -140,7 +142,8 @@ func elevation(dir: Vector3, detail := false) -> float:
 	if detail:
 		# Shore noise is small but wiggles the coastline at walking scale.
 		e += _detail.get_noise_3dv(p) * DETAIL_M + _shore.get_noise_3dv(p) * 6.0
-		e += _roll.get_noise_3dv(p) * ROLL_M * smoothstep(1.5, 6.0, absf(e))
+		if roll:
+			e += _roll.get_noise_3dv(p) * ROLL_M * smoothstep(1.5, 6.0, absf(e))
 	return e
 
 
