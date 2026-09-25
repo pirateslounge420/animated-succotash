@@ -25,6 +25,8 @@ const SKY_SHADER := preload("res://shaders/sky.gdshader")
 @export var moon_mode: Astro.MoonMode = Astro.MoonMode.ORBITAL
 @export var sun_max_energy := 1.05
 @export var moon_max_energy := 0.8
+## Moonlight never drops below this share of full (thin phases, playable nights).
+const MOON_FLOOR := 0.05
 ## 0-1: how deep the viewer is inside a magical site (Landmarks sets it).
 var magic := 0.0
 
@@ -171,7 +173,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var sun_up := smoothstep(rise, 6.0, sun_elevation_deg)
 	var moon_up := smoothstep(-3.0, 8.0, moon_elevation_deg)
 	daylight = smoothstep(-6.0, 10.0, sun_elevation_deg)
-	moonlight = moon_up * (0.12 + 0.88 * illumination)
+	# Steep, like the real moon (opposition surge): a half moon gives about
+	# a tenth of full moonlight; a floor keeps thin phases faintly lit.
+	moonlight = moon_up * maxf(pow(illumination, 3.3), MOON_FLOOR)
 	var dark_magic := magic * (1.0 - daylight)
 
 	# Lights.
@@ -214,6 +218,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	sky_material.set_shader_parameter("moon_dir", moon_dir)
 	sky_material.set_shader_parameter("moon_phase", phase)
 	sky_material.set_shader_parameter("moon_brightness", (0.35 + 0.65 * night) * (1.0 - cloud * 0.6))
+	sky_material.set_shader_parameter("day_amount", smoothstep(-2.0, 8.0, sun_elevation_deg))
 	var stars := (1.0 - smoothstep(-10.0, -2.0, sun_elevation_deg)) * (1.0 - cloud)
 	sky_material.set_shader_parameter("star_visibility", stars)
 	sky_material.set_shader_parameter("star_rotation", Astro.subsolar_longitude(days))
@@ -259,7 +264,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var amb_day := Color(0.8, 0.82, 0.85)
 	var amb_night := Color(0.3, 0.34, 0.85).lerp(Color(0.42, 0.46, 0.92), lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
-	environment.ambient_light_energy = lerpf(0.18 + 0.2 * lift, 0.26, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
+	environment.ambient_light_energy = lerpf(0.24 + 0.2 * lift, 0.26, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
 
 	# Fog and mist (drawn in bands by the world shaders, see Look): a
 	# light haze that gives depth to long daytime views; thicker at night

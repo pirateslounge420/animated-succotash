@@ -26,10 +26,11 @@ uniform vec3 sun_color : source_color = vec3(1.0, 0.95, 0.85);
 uniform float sun_visible = 1.0;
 
 uniform vec3 moon_dir = vec3(0.0, -1.0, 0.0);
-uniform vec3 moon_tint : source_color = vec3(0.82, 0.88, 1.0);
+uniform vec3 moon_tint : source_color = vec3(0.62, 0.76, 1.0); // blue-white, like the references
 uniform float moon_radius = 0.19; // radians (~11 degrees); deliberately huge, the night's centerpiece
 uniform float moon_phase = 3.14159; // elongation: 0 new, PI full
 uniform float moon_brightness = 1.0;
+uniform float day_amount = 0.0; // 0 at night, 1 in full day (a pale moon)
 
 uniform float star_visibility = 0.0; // 0 by day, 1 on a clear night
 uniform float star_rotation = 0.0; // subsolar longitude; stars turn with the sun
@@ -115,6 +116,7 @@ void sky() {
 
 	if (!AT_CUBEMAP_PASS) {
 		float night_mask = smoothstep(-0.02, 0.05, h);
+		vec3 sky_base = col; // before stars (the moon hides them)
 
 		// Stars, fixed to the celestial sphere so they wheel with the sun.
 		if (star_visibility > 0.001 && h > -0.05) {
@@ -141,20 +143,36 @@ void sky() {
 			vec3 sp = sun_dir - moon_dir * dot(sun_dir, moon_dir);
 			vec2 bright = vec2(dot(sp, t1), dot(sp, t2));
 			bright = length(bright) > 1e-3 ? normalize(bright) : vec2(1.0, 0.0);
+			float illum = (1.0 - cos(moon_phase)) * 0.5;
 			if (r < 1.0) {
 				vec3 n = vec3(p, sqrt(1.0 - r * r));
+				// Lit from the sun's direction on the sky, so the crescent
+				// tilts correctly for the viewer's latitude and hour.
 				vec3 l = vec3(bright * sin(moon_phase), -cos(moon_phase));
-				float lit = smoothstep(-0.04, 0.08, dot(n, l));
+				// A slightly rough terminator: highlands catch light first.
+				float rough = (fbm(p * 7.0 + 11.0) - 0.5) * 0.12;
+				float lit = smoothstep(-0.03, 0.06, dot(n, l) + rough);
+				// Dark maria against bright highlands, dimmer toward the limb.
 				float maria = fbm(p * 2.6 + 3.0);
-				float albedo = mix(0.62, 1.0, smoothstep(0.35, 0.7, maria));
-				// Bright enough to cross the glow threshold and bloom.
-				vec3 moon = moon_tint * albedo * (lit * 1.9 + 0.05) * moon_brightness;
+				float albedo = mix(0.5, 1.0, smoothstep(0.4, 0.6, maria)) * mix(0.68, 1.0, sqrt(n.z));
+				// Earthshine: a crescent's dark side faintly lit by the Earth,
+				// which is nearly full as seen from there.
+				float earthshine = 0.22 * pow(1.0 - illum, 2.0) * (1.0 - lit);
+				// The disc adds its light to the sky behind it (stars hidden),
+				// so the dark side reads as sky at dusk, not a black hole.
+				// At night the lit part is bright enough to cross the glow
+				// threshold and bloom; by day it's a pale ghost.
+				float lit_gain = mix(1.9, 0.4, day_amount);
+				vec3 disc = sky_base + moon_tint * albedo * (lit * lit_gain + earthshine * (1.0 - day_amount)) * moon_brightness;
 				float edge = smoothstep(1.0, 0.97, r);
-				col = mix(col, moon, edge * night_mask);
+				col = mix(col, disc, edge * night_mask);
 			}
-			// Halo scales with how much of the disc is lit.
-			float halo = (exp(-max(r - 1.0, 0.0) * 1.2) * 0.55 + exp(-max(r - 1.0, 0.0) * 0.35) * 0.18) * moon_brightness * (1.0 - cos(moon_phase)) * 0.5;
-			col += moon_tint * halo * night_mask;
+			// Halo: as bright as the lit area, and leaning toward the lit
+			// limb, so a crescent's glow follows the crescent.
+			float toward = r > 1e-3 ? dot(p / r, bright) : 0.0;
+			float shape = mix(1.0, smoothstep(-0.7, 0.9, toward), 1.0 - illum);
+			float halo = (exp(-max(r - 1.0, 0.0) * 1.2) * 0.55 + exp(-max(r - 1.0, 0.0) * 0.35) * 0.18) * moon_brightness * pow(illum, 1.3) * shape;
+			col += moon_tint * halo * night_mask * (1.0 - day_amount);
 
 			// Today's mansion glyph beside the moon.
 			if (glyph_visibility > 0.001) {
