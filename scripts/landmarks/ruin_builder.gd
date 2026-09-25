@@ -1,5 +1,6 @@
 class_name RuinBuilder
-## Builds a ruin (Ruins.find() site) as one low-poly mesh plus collision.
+## Builds a ruin (Ruins.find() site) as one low-poly mesh plus collision,
+## with a plain-box far LOD past LOD_M.
 ##
 ## Everything is stacked stone blocks, bevelled, worn and irregular, so
 ## collapse comes for free: each
@@ -25,6 +26,11 @@ const IVY_LIGHT := Color(0.2, 0.46, 0.16)
 const EARTH := Color(0.36, 0.3, 0.22)
 const GRASS := Color(0.3, 0.52, 0.2)
 
+## Distance where the drawn blocks give way to the plain-box LOD, and the
+## hysteresis round it.
+const LOD_M := 150.0
+const LOD_MARGIN_M := 15.0
+
 static var _material: ShaderMaterial
 
 var map: PlanetData
@@ -43,6 +49,11 @@ var _n := PackedVector3Array()
 var _c := PackedColorArray()
 ## Collision triangles: plain boxes, much cheaper than the drawn blocks.
 var _cv := PackedVector3Array()
+## Far LOD (past LOD_M): plain boxes too, in the blocks' face colors, and
+## the mound as is; no ivy.
+var _lv := PackedVector3Array()
+var _ln := PackedVector3Array()
+var _lc := PackedColorArray()
 
 
 static func material() -> ShaderMaterial:
@@ -74,7 +85,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._lone_tower()
 		Ruins.Kind.AQUEDUCT:
 			b._aqueduct()
-	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "cv": b._cv, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e}
+	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "cv": b._cv,
+		"lv": b._lv, "ln": b._ln, "lc": b._lc, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -112,7 +124,21 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	var mi := MeshInstance3D.new()
 	mi.mesh = mesh
 	mi.material_override = material()
+	mi.visibility_range_end = LOD_M
+	mi.visibility_range_end_margin = LOD_MARGIN_M
 	root.add_child(mi)
+	arrays[Mesh.ARRAY_VERTEX] = data.lv
+	arrays[Mesh.ARRAY_NORMAL] = data.ln
+	arrays[Mesh.ARRAY_COLOR] = data.lc
+	var far_mesh := ArrayMesh.new()
+	far_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var far := MeshInstance3D.new()
+	far.name = "FarLOD"
+	far.mesh = far_mesh
+	far.material_override = material()
+	far.visibility_range_begin = LOD_M
+	far.visibility_range_begin_margin = LOD_MARGIN_M
+	root.add_child(far)
 	var body := StaticBody3D.new()
 	var shape := ConcavePolygonShape3D.new()
 	shape.set_faces(data.cv)
@@ -229,6 +255,7 @@ func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09,
 		var cs: Array[Color] = [face_col.call(i, 0), face_col.call(i, 1), face_col.call(i, 2)]
 		_tri_n(ps[0], ps[1], ps[2], ns[0], ns[1], ns[2], cs[0], cs[1], cs[2], o)
 	_collision_box(xf, h)
+	_lod_box(xf, h, top, side, bottom)
 
 
 ## A quad (4 corners in order round it) with per-vertex normals and
@@ -273,6 +300,30 @@ func _collision_box(xf: Transform3D, h: Vector3) -> void:
 		_cv.append_array([p[f[0]], p[f[1]], p[f[2]], p[f[0]], p[f[2]], p[f[3]]])
 
 
+## A far-LOD box: 12 flat-shaded triangles, top/side/bottom colored.
+func _lod_box(xf: Transform3D, h: Vector3, top: Color, side: Color, bottom: Color) -> void:
+	var p: Array[Vector3] = []
+	for i in 8:
+		p.append(xf * Vector3(h.x if i & 1 else -h.x, h.y if i & 2 else -h.y, h.z if i & 4 else -h.z))
+	# Faces -z, +z, -y, +y, -x, +x.
+	var axes := [Vector3(0, 0, -1), Vector3(0, 0, 1), Vector3(0, -1, 0), Vector3(0, 1, 0), Vector3(-1, 0, 0), Vector3(1, 0, 0)]
+	var faces := [[0, 1, 3, 2], [4, 6, 7, 5], [0, 4, 5, 1], [2, 3, 7, 6], [0, 2, 6, 4], [1, 5, 7, 3]]
+	for k in 6:
+		var f: Array = faces[k]
+		var nrm: Vector3 = (xf.basis * axes[k]).normalized()
+		var col := top if k == 3 else (bottom if k == 2 else side)
+		for t in [[0, 1, 2], [0, 2, 3]]:
+			var a: Vector3 = p[f[t[0]]]
+			var b: Vector3 = p[f[t[1]]]
+			var c: Vector3 = p[f[t[2]]]
+			if (b - a).cross(c - a).dot(nrm) < 0.0:
+				_lv.append_array([a, c, b])
+			else:
+				_lv.append_array([a, b, c])
+			_ln.append_array([nrm, nrm, nrm])
+			_lc.append_array([col, col, col])
+
+
 ## A rough stone: a noise-displaced icosphere, smooth shaded, mossy on top.
 func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: float) -> void:
 	var sphere: Array = PlantMeshes.icosphere(1)
@@ -302,6 +353,11 @@ func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: fl
 		var d := faces[f + 2]
 		_tri_n(pos[a], pos[b2], pos[d], nrm[a], nrm[b2], nrm[d], cols[a], cols[b2], cols[d], center)
 	_collision_box(Transform3D(basis, center), radii * 0.8)
+	var top := col.lerp(MOSS, moss)
+	top.a = moss
+	var side := col.lerp(MOSS, moss * 0.2)
+	side.a = moss * 0.2
+	_lod_box(Transform3D(basis, center), radii * 0.85, top, side, col)
 
 
 ## A block at a position, its length (size.x) running along `dir`
@@ -485,6 +541,9 @@ func mound(radius_top: float, radius_bottom: float, depth: float, rise: float) -
 		_face(top_pts[i], top_pts[j], bot_pts[j], bot_pts[i], earth.lerp(grass, 0.25), inside)
 	_smooth_from(start)
 	_cv.append_array(_v.slice(start))
+	_lv.append_array(_v.slice(start))
+	_ln.append_array(_n.slice(start))
+	_lc.append_array(_c.slice(start))
 
 
 # --- Structures -------------------------------------------------------------------
