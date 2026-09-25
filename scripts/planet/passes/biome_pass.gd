@@ -305,19 +305,22 @@ static func _climate(map: PlanetData, c: int, t: float, m: float) -> int:
 
 
 ## Discharge above which a river is big enough to have a floodplain. Cached
-## per map since it's a percentile over river cells.
-static var _big_river_cache := {}
+## for the map being classified (a percentile over river cells); a new map
+## replaces the entry, so regenerating never grows it.
+static var _big_river_map_id := 0
+static var _big_river_value := INF
 
 
 static func _big_river(map: PlanetData) -> float:
 	var key := map.get_instance_id()
-	if _big_river_cache.has(key):
-		return _big_river_cache[key]
+	if key == _big_river_map_id:
+		return _big_river_value
 	var vals := PackedFloat32Array()
 	for c in map.cell_count:
 		if map.water[c] == PlanetData.Water.RIVER:
 			vals.append(map.flow_accum[c])
 	vals.sort()
 	var v: float = vals[int(vals.size() * 0.6)] if vals.size() > 0 else INF
-	_big_river_cache[key] = v
+	_big_river_map_id = key
+	_big_river_value = v
 	return v

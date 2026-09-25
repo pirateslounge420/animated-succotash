@@ -116,7 +116,9 @@ Uses:
     it falls locally in showers whose coverage grows with intensity,
     keeping the long-run totals.
 - **Effects:** `WeatherFX` turns that into rain or snow that leans with
-  the wind. The same wind vector sways all foliage.
+  the wind (GPU particles; intensity is `amount_ratio`, so it changes
+  smoothly without restarting the emitter). The same wind vector sways
+  all foliage.
 
 Verified:
 - equator ~2000 mm/yr, subtropical deserts ~120 mm/yr;
@@ -237,7 +239,10 @@ Verified:
   cirrus 5,000-13,000 m (8,500; 2x, jet stream). The ranges are Earth's
   (`height_scale` 1.0, since the terrain is at Earth's vertical scale).
   Peaks break through the low layer, and from above it's a sea of cloud.
-  Chunky, pixel-stepped edges and three flat tones. Standing above the
+  Chunky, pixel-stepped edges and three flat tones. The pattern is
+  three-octave value noise; each layer first checks whether its first
+  octave can reach the cover threshold at all and discards the pixel if
+  not, so clear sky costs one noise lookup. Standing above the
   low layer brings harsh alpine conditions (stronger wind, drier; HUD:
   "thin, cold air").
 - **Atmospheric perspective:** Environment fog plus the banded shader
@@ -295,7 +300,8 @@ Verified:
   icosphere boulders. Moss greens the upward faces and low courses, and
   ivy hangs from broken tops, both scaled by the site's moisture: dry
   ruins are bare stone, wet ones mossy all over and curtained in ivy.
-  Collision uses plain boxes. Sites are picked without the terrain's
+  Collision uses plain boxes, and so does the far level of detail past
+  150 m (12 triangles a block in its face colors, no ivy). Sites are picked without the terrain's
   roll layer, so 2 m of noise never moves a ruin. Geometry is built on worker threads out to 2.6 km, beyond the
   terrain chunks, so silhouettes rise out of the fog bands. Deep footings
   keep them from floating over the coarser far terrain. Vegetation keeps
@@ -344,8 +350,16 @@ Verified:
   - the view ring (3 chunks) gets ground, water and trees (light meshes);
   - the detail ring (1 chunk) switches to the 4 m ground and full trees,
     and adds undergrowth;
-  - geometry and plant placement are computed on WorkerThreadPool; nodes
-    are attached a few per frame;
+  - geometry and plant placement are computed on WorkerThreadPool, down
+    to each species' finished MultiMesh buffer (positions are relative
+    to the chunk's anchor, so they don't depend on the floating origin);
+    nodes are attached a few per frame;
+  - the rings are recomputed only when the player crosses into another
+    chunk, measured from that chunk's center;
+  - collision shapes are built on the main thread: in Godot 4.3 a
+    `set_faces` from a worker is only queued, and the physics server
+    builds the BVH on the main thread at its next call anyway (unless
+    physics runs on its own thread);
   - the loading screen blocks only for the detail ring.
 - **Floating origin** (`World`). The planet center is stored in double
   precision and everything under `world_root` shifts when the player

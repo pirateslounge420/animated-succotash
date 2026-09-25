@@ -18,7 +18,7 @@ GameCube-era low-poly look: Phantasy Star Online episodes 1 and 2, F-Zero GX, Su
 
 **Ruins as set pieces.** Ivy-choked aqueducts, crumbling towers and lone castles on hills stand as distinct silhouettes that draw the wanderer toward them: moss and vines over the stone, walls partly collapsed into rubble.
 
-**The cycle bridges them.** The 48-minute day-night cycle blends from the bright day palette to the blue night palette through gradual dawn and dusk gradients.
+**The cycle bridges them.** The 120-minute day-night cycle blends from the bright day palette to the blue night palette through gradual dawn and dusk gradients.
 
 ## Creatures
 

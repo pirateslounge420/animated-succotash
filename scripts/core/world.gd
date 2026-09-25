@@ -138,15 +138,6 @@ func radius_of(scene_pos: Vector3) -> float:
 	return sqrt(x * x + y * y + z * z)
 
 
-## Shift the world by -offset when the player gets too far from the origin.
-## Returns true if it shifted; the caller moves the player itself.
-func maybe_rebase(player_pos: Vector3) -> bool:
-	if player_pos.length() < REBASE_DISTANCE_M:
-		return false
-	rebase(player_pos)
-	return true
-
-
 func rebase(offset: Vector3) -> void:
 	_cx -= offset.x
 	_cy -= offset.y
