@@ -188,7 +188,10 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, plants: Dictionary,
 		var count := arr.size() / STRIDE
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
-		mm.mesh = PlantMeshes.mesh_for(sp)
+		# Trees on the chunk start with their light far mesh; the chunk
+		# swaps in the full one near the player (TerrainChunk.set_fine).
+		var lod := parent == chunk
+		mm.mesh = PlantMeshes.mesh_for(sp, lod)
 		mm.instance_count = count
 		for i in count:
 			var o := i * STRIDE
@@ -206,6 +209,8 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, plants: Dictionary,
 		mmi.name = sp.name.replace(" ", "_")
 		mmi.multimesh = mm
 		mmi.material_override = PlantMeshes.material()
+		if lod:
+			mmi.set_meta("species", sp_idx)
 		if sp.tier == T.GROUND or sp.tier == T.EPIPHYTE:
 			mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			# Out to 300 m so the ground never reads bare (it only exists in

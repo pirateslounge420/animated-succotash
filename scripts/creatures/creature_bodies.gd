@@ -94,14 +94,14 @@ static func _mi(parent: Node3D, mesh: Mesh, pos: Vector3, c: Color, glow := 0.0)
 
 
 ## Shared unit sphere (radius 0.5). Level 2: 12 sides x 6 rings (bodies,
-## heads); 1: 8 x 4 (snouts, tails); 0: 6 x 3 (eyes, noses).
+## heads); 1: 8 x 4 (snouts, tails); 0: 5 x 3 (eyes, noses).
 static func _sphere(level: int) -> SphereMesh:
 	var key := "sphere_%d" % level
 	if not _meshes.has(key):
 		var m := SphereMesh.new()
 		m.radius = 0.5
 		m.height = 1.0
-		m.radial_segments = [6, 8, 12][level]
+		m.radial_segments = [5, 8, 12][level]
 		m.rings = [3, 4, 6][level]
 		_meshes[key] = m
 	return _meshes[key]
@@ -126,8 +126,6 @@ static func _capsule(length: float, level: int) -> ArrayMesh:
 			var a := PI * 0.5 * k / (cap_rings + 1)
 			prof.append([0.5 * sin(a), half + 0.5 * cos(a)])
 		prof.append([0.5, half])
-		if level >= 2:
-			prof.append([0.5, 0.0])
 		prof.append([0.5, -half])
 		for k in range(cap_rings, 0, -1):
 			var a := PI * 0.5 * k / (cap_rings + 1)
@@ -249,18 +247,18 @@ static func wedge(parent: Node3D, size: Vector3, pos: Vector3, c: Color) -> Node
 	var pivot := Node3D.new()
 	pivot.position = pos
 	parent.add_child(pivot)
-	var mi := cone(pivot, 0.5, 0.0, 1.0, Vector3.ZERO, c, 0.0, 6)
+	var mi := cone(pivot, 0.5, 0.0, 1.0, Vector3.ZERO, c, 0.0, 5)
 	mi.scale = size
 	return pivot
 
 
 ## A capsule tapering from radius r0 at the top (y = 0) to r1 at the
-## bottom (y = -length), smooth shaded, 6 sides: legs and arms.
+## bottom (y = -length), smooth shaded, 5 sides: legs and arms.
 static func _limb_mesh(length: float, r0: float, r1: float) -> ArrayMesh:
 	var key := "limb_%.3f_%.3f_%.3f" % [length, r0, r1]
 	if not _meshes.has(key):
 		var prof := [[r0 * 0.7, r0 * 0.7], [r0, 0.0], [r1, -length], [r1 * 0.7, -length - r1 * 0.7]]
-		_meshes[key] = _revolve(prof, r0, -length - r1, 6)
+		_meshes[key] = _revolve(prof, r0, -length - r1, 5)
 	return _meshes[key]
 
 
@@ -314,9 +312,9 @@ static func _antlers(b: Dictionary, sp: CreatureSpecies) -> void:
 	var r: Node3D = b.root
 	var y := 0.55 + 0.13 + 0.22
 	for s in [-1.0, 1.0]:
-		var a := box(r, Vector3(0.025, 0.28, 0.025), Vector3(0.07 * s, y + 0.14, -0.36), Color(0.75, 0.68, 0.55))
+		var a := cone(r, 0.014, 0.006, 0.28, Vector3(0.07 * s, y + 0.14, -0.36), Color(0.75, 0.68, 0.55), 0.0, 5)
 		a.rotation.z = -0.4 * s
-		var tine := box(r, Vector3(0.02, 0.14, 0.02), Vector3(0.12 * s, y + 0.2, -0.42), Color(0.75, 0.68, 0.55))
+		var tine := cone(r, 0.011, 0.0, 0.14, Vector3(0.12 * s, y + 0.2, -0.42), Color(0.75, 0.68, 0.55), 0.0, 5)
 		tine.rotation.x = 0.5
 
 

@@ -564,11 +564,16 @@ func _ground_mesh(arrays: Array, node_name: String) -> MeshInstance3D:
 	return mi
 
 
-## Show the 4 m ground (near the player) or the 8 m one.
+## Near the player: the 4 m ground and full trees; farther out the 8 m
+## ground and light trees.
 func set_fine(fine: bool) -> void:
 	if _fine_mesh and _fine_mesh.visible != fine:
 		_fine_mesh.visible = fine
 		_coarse_mesh.visible = not fine
+		var all := SpeciesDB.all()
+		for ch in get_children():
+			if ch is MultiMeshInstance3D and ch.has_meta("species"):
+				ch.multimesh.mesh = PlantMeshes.mesh_for(all[ch.get_meta("species")], not fine)
 
 
 func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) -> void:

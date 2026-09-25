@@ -66,11 +66,16 @@ static func icosphere(level: int) -> Array:
 	return _ico[level]
 
 
-static func mesh_for(sp: PlantSpecies) -> ArrayMesh:
+## `far`: the light version for trees beyond the ring nearest the player
+## (once-subdivided lobes become icosahedra, trunks 5-sided, no branches
+## or leaf cards).
+static func mesh_for(sp: PlantSpecies, far := false) -> ArrayMesh:
 	var idx := SpeciesDB.index_of(sp)
-	if _cache.has(idx):
-		return _cache[idx]
+	var key := idx * 2 + int(far)
+	if _cache.has(key):
+		return _cache[key]
 	var b := _Builder.new()
+	b.far = far
 	var leaf := sp.color
 	var wood := sp.accent
 	b.wood = wood
@@ -94,11 +99,11 @@ static func mesh_for(sp: PlantSpecies) -> ArrayMesh:
 		S.EMERGENT:
 			b.trunk(0.03, 0.9, 0.03, 0.5)
 			b.branches(2, 0.75, 0.16, 0.9, 0.5)
-			b.crown(Vector3(0, 0.91, 0), Vector3(0.26, 0.1, 0.26), 4, leaf, 1.0)
+			b.crown(Vector3(0, 0.91, 0), Vector3(0.26, 0.1, 0.26), 3, leaf, 1.0)
 		S.UMBRELLA:
 			b.trunk(0.045, 0.7, 0.06, 0.3)
 			b.branches(3, 0.55, 0.3, 0.8, 0.3)
-			b.crown(Vector3(0.04, 0.82, 0), Vector3(0.6, 0.1, 0.55), 6, leaf, 1.0)
+			b.crown(Vector3(0.04, 0.82, 0), Vector3(0.6, 0.1, 0.55), 5, leaf, 1.0)
 		S.PALM:
 			b.cylinder(Vector3.ZERO, 0.03, 0.92, 5, wood, 0.0, 0.6, Vector3(0.08, 1, 0).normalized())
 			for k in 7:
@@ -113,7 +118,7 @@ static func mesh_for(sp: PlantSpecies) -> ArrayMesh:
 				var a := TAU * k / 5.0
 				b.strut(Vector3(cos(a) * 0.3, 0, sin(a) * 0.3), Vector3(0, 0.3, 0), 0.02, wood)
 			b.cylinder(Vector3(0, 0.28, 0), 0.04, 0.4, 8, wood, 0.1, 0.4)
-			b.crown(Vector3(0, 0.75, 0), Vector3(0.4, 0.22, 0.4), 4, leaf, 0.9)
+			b.crown(Vector3(0, 0.75, 0), Vector3(0.4, 0.22, 0.4), 3, leaf, 0.9)
 		S.ROSETTE:
 			b.cylinder(Vector3.ZERO, 0.07, 0.75, 6, wood, 0.0, 0.3)
 			for k in 10:
@@ -183,7 +188,7 @@ static func mesh_for(sp: PlantSpecies) -> ArrayMesh:
 		_:
 			b.blob(Vector3(0, 0.5, 0), Vector3(0.4, 0.5, 0.4), leaf, 0.8)
 	var mesh := b.commit()
-	_cache[idx] = mesh
+	_cache[key] = mesh
 	return mesh
 
 
@@ -200,6 +205,7 @@ class _Builder:
 	## at the same spot in the same part; -1 keeps the vertex's own normal.
 	var parts := PackedInt32Array()
 	var part := 0
+	var far := false
 
 	func tri(a: Vector3, b: Vector3, d: Vector3, col: Color, sa: float, sb: float, sd: float) -> void:
 		tri3(a, b, d, col, col, col, sa, sb, sd)
@@ -269,9 +275,9 @@ class _Builder:
 			tri(base + Vector3(cos(a1), 0, sin(a1)) * r, base, base + Vector3(cos(a0), 0, sin(a0)) * r, col.darkened(0.25), s0, s0, s0)
 		mat = 1.0
 		# Foliage cones get ragged leaf cards around their skirt.
-		if not is_wood and r > 0.1:
-			for k in 6:
-				var a := TAU * (k + rng.randf()) / 6.0
+		if not is_wood and r > 0.1 and not far:
+			for k in 4:
+				var a := TAU * (k + rng.randf()) / 4.0
 				var out := Vector3(cos(a), 0.0, sin(a))
 				var y := rng.randf_range(0.1, 0.5) * h
 				var rr := r * (1.0 - y / h)
@@ -313,14 +319,16 @@ class _Builder:
 	## sideways by `bend` at the top, with a flared foot. Sways from 0 at
 	## the ground to `s1` at the top.
 	func trunk(r: float, h: float, bend: float, s1: float, top_frac := 0.45) -> void:
-		var rings := [[0.0, 1.7], [0.05, 1.15], [0.35, 1.0], [0.7, 1.0], [1.0, 1.0]]
+		var rings := [[0.0, 1.7], [0.05, 1.15], [0.45, 1.0], [1.0, 1.0]]
+		if far:
+			rings = [[0.0, 1.5], [0.4, 1.0], [1.0, 1.0]]
 		var pts: Array = []
 		for ring in rings:
 			var t: float = ring[0]
 			var rr := r * lerpf(1.0, top_frac, t) * float(ring[1])
 			var off := Vector3(bend * t * t, 0, bend * 0.3 * t * t)
 			pts.append([Vector3(0, t * h, 0) + off, rr, lerpf(0.0, s1, t)])
-		tube(pts, 8, wood)
+		tube(pts, 5 if far else 8, wood)
 		trunk_top = pts[pts.size() - 1][0]
 		trunk_h = h
 		trunk_bend = bend
@@ -328,6 +336,8 @@ class _Builder:
 	## `count` branches leaving the trunk between heights y0 and y1, angled
 	## up and out, ending inside the crown.
 	func branches(count: int, y0: float, reach: float, y1: float, sway: float) -> void:
+		if far:
+			return
 		for k in count:
 			var a := TAU * (k + rng.randf_range(0.0, 0.5)) / count
 			var y := lerpf(y0, minf(y1, trunk_h * 0.9), rng.randf())
@@ -364,18 +374,26 @@ class _Builder:
 		mat = 1.0
 
 	## A crown of `lobes` overlapping, noise-displaced icospheres: one big
-	## lobe at `center`, the rest clustered around its upper half. Leaf
-	## cards sit on the outer surface to rag the silhouette.
+	## lobe at `center`, the rest clustered around its upper half. Faces
+	## buried inside another lobe are dropped (the triangles go to the
+	## silhouette). Leaf cards sit on the outer surface to rag the outline.
 	func crown(center: Vector3, radii: Vector3, lobes: int, col: Color, sway: float, subdiv := PlantMeshes.CROWN_SUBDIV) -> void:
-		lobe(center, radii, col, sway, subdiv)
+		if far:
+			subdiv = maxi(subdiv - 1, 0)
+		var specs: Array = [[center, radii, col]]
 		for k in lobes - 1:
 			var a := TAU * (k + rng.randf_range(-0.2, 0.2)) / maxf(lobes - 1, 1)
 			var dir := Vector3(cos(a), rng.randf_range(0.05, 0.45), sin(a)).normalized()
 			var tone := col.lightened(0.08) if k % 2 == 0 else col.darkened(0.06)
-			lobe(center + dir * radii * 0.55, radii * rng.randf_range(0.55, 0.75), tone, sway, subdiv)
+			specs.append([center + dir * radii * 0.62, radii * rng.randf_range(0.5, 0.7), tone])
+		for i in specs.size():
+			var others: Array = specs.duplicate()
+			others.remove_at(i)
+			lobe(specs[i][0], specs[i][1], specs[i][2], sway, subdiv, others)
 
-	## One icosphere lobe with a lumpy surface and top-lit vertex shading.
-	func lobe(center: Vector3, radii: Vector3, col: Color, sway: float, subdiv: int) -> void:
+	## One icosphere lobe with a lumpy surface and top-lit vertex shading;
+	## faces inside any of `others` ([center, radii, ...]) are skipped.
+	func lobe(center: Vector3, radii: Vector3, col: Color, sway: float, subdiv: int, others := []) -> void:
 		part += 1
 		var sphere: Array = PlantMeshes.icosphere(subdiv)
 		var verts: PackedVector3Array = sphere[0]
@@ -391,13 +409,24 @@ class _Builder:
 			var a := faces[f]
 			var b2 := faces[f + 1]
 			var d := faces[f + 2]
+			if _buried((disp[a] + disp[b2] + disp[d]) / 3.0, others):
+				continue
 			tri3(disp[a], disp[b2], disp[d], shade[a], shade[b2], shade[d], sway, sway, sway)
 		var mean_r := (radii.x + radii.y + radii.z) / 3.0
-		if mean_r >= 0.1:
-			for i in 5:
+		if mean_r >= 0.1 and not far:
+			for i in 3:
 				# Outward and mostly sideways or up: where the silhouette is.
 				var d := Vector3(rng.randfn(), rng.randfn() * 0.6 + 0.3, rng.randfn()).normalized()
-				card(center + d * radii * 0.95, d, mean_r * 0.5, col * (0.85 + 0.15 * d.y), sway)
+				var p := center + d * radii * 0.95
+				if not _buried(p, others):
+					card(p, d, mean_r * 0.55, col * (0.85 + 0.15 * d.y), sway)
+
+	## Inside one of the lobes in `others` (with a margin for the bumps)?
+	func _buried(p: Vector3, others: Array) -> bool:
+		for o in others:
+			if ((p - (o[0] as Vector3)) / ((o[1] as Vector3) * 0.86)).length() < 1.0:
+				return true
+		return false
 
 	## Flat leaf from `base` outward along `dir`, drooping at the tip.
 	func frond(base: Vector3, dir: Vector3, length: float, width: float, col: Color, sway: float) -> void:
