@@ -22,7 +22,8 @@ static func material() -> ShaderMaterial:
 
 
 ## Crown lobe detail: icosphere subdivisions (1: 80 triangles, 2: 320).
-const CROWN_SUBDIV := 2
+## Once keeps trees inside the PS2/GameCube budget (~150-400 each).
+const CROWN_SUBDIV := 1
 
 static var _ico := {}
 
