@@ -29,6 +29,7 @@ var post: PostGrade
 var clouds: CloudLayers
 var camp: Encampment
 var sky_events: SkyEvents
+var storm: StormFX
 var hud: Hud
 var map_overlay: MapOverlay
 var _playing := false
@@ -113,6 +114,10 @@ func _on_planet_ready() -> void:
 	fx = WeatherFX.new()
 	fx.name = "WeatherFX"
 	add_child(fx)
+	storm = StormFX.new()
+	storm.name = "Storms"
+	add_child(storm)
+	storm.setup(sky, player)
 
 	creatures = CreatureSpawner.new()
 	creatures.name = "Creatures"
@@ -168,8 +173,12 @@ func _process(delta: float) -> void:
 	var clear := 1.0 - float(_local_weather.get("cloud", 0.0))
 	sky_events.update_events(delta, d, CubeSphere.north(d), 1.0 - smoothstep(0.0, 0.25, sky.daylight), clear)
 	sky.event_flash(sky_events.flash, sky_events.flash_color)
-	clouds.update_clouds(delta, d, world.radius_of(cam.global_position) - PlanetConst.RADIUS_M, _local_weather, sky.cloud_light, sky.cloud_shade)
-	fx.update_fx(cam.global_position, d, _local_weather)
+	storm.update_storm(delta, d, _local_weather)
+	var cloud_light := sky.cloud_light.lerp(Color(0.95, 0.97, 1.0), storm.flash)
+	clouds.update_clouds(delta, d, world.radius_of(cam.global_position) - PlanetConst.RADIUS_M, _local_weather, cloud_light, sky.cloud_shade)
+	# Sheltered from the rain: under a tree's crown or in a camp shelter.
+	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position)
+	fx.update_fx(cam.global_position, d, _local_weather, sheltered)
 	TerrainChunk.terrain_material().set_shader_parameter("wetness", 1.0 - sky.daylight)
 	post.set_night(1.0 - sky.daylight)
 	creatures.update_creatures(delta, sky.daylight)

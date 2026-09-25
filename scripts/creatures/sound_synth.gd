@@ -15,6 +15,8 @@ class_name SoundSynth
 ##   step_grass / _dirt / _sand / _stone / _snow / _wood / _water
 ##            footsteps (Footsteps): a soft swish, a dull thud, a hiss, a
 ##            sharp knock, a crunch, a hollow knock, a splash
+##   rain_loop    steady rain, seamless 4 s loop (WeatherFX)
+##   thunder_near a crack and a heavy rumble; thunder_far a long low roll
 
 const RATE := 22050
 const VARIANTS := 3
@@ -50,9 +52,17 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _rustle(rng)
 		"step_grass", "step_dirt", "step_sand", "step_stone", "step_snow", "step_wood", "step_water":
 			samples = _step(kind.substr(5), rng)
+		"rain_loop":
+			samples = _rain_loop(rng)
+		"thunder_near", "thunder_far":
+			samples = _thunder(kind == "thunder_near", rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
+	if kind == "rain_loop":
+		wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		wav.loop_begin = 0
+		wav.loop_end = samples.size()
 	_cache[key] = wav
 	return wav
 
@@ -275,4 +285,57 @@ static func _step(ground: String, rng: RandomNumberGenerator) -> PackedFloat32Ar
 			bubble += TAU * (300.0 + 1400.0 * t) / RATE
 			tex += sin(bubble) * 0.25 * exp(-t * 14.0)
 		s[i] = thump + tex + knock
+	return s
+
+
+## Rain: a bed of soft filtered noise with pattering drops, cross-faded end
+## to start so it loops without a seam.
+static func _rain_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var n := int(4.0 * RATE)
+	var fade := int(0.3 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var lp1 := 0.0
+	var lp2 := 0.0
+	var drop := 0.0
+	for i in raw.size():
+		var x := rng.randf_range(-1, 1)
+		lp1 = lerpf(lp1, x, 0.35)
+		lp2 = lerpf(lp2, x, 0.06)
+		if rng.randf() < 0.012:
+			drop = rng.randf_range(0.4, 1.0)
+		drop *= 0.93
+		raw[i] = lp1 * 0.5 + lp2 * 0.9 + drop * rng.randf_range(-1, 1) * 0.8
+	var s := PackedFloat32Array()
+	s.resize(n)
+	for i in n:
+		s[i] = raw[i]
+	for i in fade:
+		var w := float(i) / fade
+		s[i] = lerpf(raw[n + i], raw[i], w)
+	return s
+
+
+## Thunder: near, a sharp crack then a heavy rolling rumble; far, only
+## the long low roll.
+static func _thunder(near: bool, rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(4.0, 6.0))
+	var lp := 0.0
+	var lp2 := 0.0
+	var hp_prev := 0.0
+	var hp := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var x := rng.randf_range(-1, 1)
+		lp = lerpf(lp, x, 0.02 if near else 0.008)
+		lp2 = lerpf(lp2, lp, 0.05)
+		# Rolling: slow swells as echoes arrive.
+		var roll := 0.6 + 0.4 * sin(t * 2.3 + sin(t * 0.9) * 2.0)
+		var env := minf(t / (0.05 if near else 0.6), 1.0) * exp(-t * (0.55 if near else 0.45))
+		var v := lp2 * 40.0 * roll * env
+		if near and t < 0.25:
+			hp = x - hp_prev + 0.9 * hp
+			hp_prev = x
+			v += hp * 1.6 * exp(-t * 14.0)
+		s[i] = v
 	return s

@@ -40,6 +40,7 @@ uniform vec3 streak_tail[3];
 uniform vec4 streak_color[3];
 uniform float streak_width[3];
 
+uniform float lightning = 0.0; // 0-1 a lightning flash (StormFX)
 uniform float star_visibility = 0.0; // 0 by day, 1 on a clear night
 uniform float star_rotation = 0.0; // subsolar longitude; stars turn with the sun
 
@@ -225,5 +226,7 @@ void sky() {
 		}
 	}
 
+	// Lightning lights the whole sky for an instant.
+	col = mix(col, vec3(0.8, 0.85, 1.0), lightning * 0.55);
 	COLOR = col;
 }

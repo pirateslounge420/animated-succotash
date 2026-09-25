@@ -555,6 +555,12 @@ static func terrain_material() -> ShaderMaterial:
 	return _terrain_mat
 
 
+## [salt water, fresh water] materials (StormFX sets rain on them).
+static func water_materials() -> Array[ShaderMaterial]:
+	materials()
+	return [_salt_mat, _fresh_mat]
+
+
 ## Turn compute() output into meshes, collision and water. `world` is the
 ## World autoload (floating origin).
 func build_nodes(data: Dictionary, world: Node) -> void:

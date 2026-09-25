@@ -21,7 +21,8 @@ Play. The main scene is `scenes/main.tscn`.
 ## Playing
 
 The planet is generated when the game starts (about 6-8 seconds behind a
-loading screen), then you're dropped on a temperate or tropical coast.
+loading screen), then you wake by a campfire in a small tribal camp on a
+temperate or tropical coast (a different one each game).
 
 | Key | Action |
 |---|---|
@@ -30,7 +31,7 @@ loading screen), then you're dropped on a temperate or tropical coast.
 | Shift, B | Crouch (hold): slow and nearly silent |
 | Space, A | Jump (hold to keep jumping); hold to swim up |
 | Mouse, right stick | Look (click the window to capture the mouse, Esc frees it) |
-| E, X | Inspect: turn over a fallen log |
+| E, X | Turn over a fallen log; else climb the tree in front of you (W/S up and down, A/D around the trunk, E or Space to let go) |
 | M, Back | Planet map (keys 1-5 switch biome / elevation / °C / rainfall / live weather; drag to turn, wheel to zoom) |
 | H | Hide the HUD |
 
@@ -57,9 +58,15 @@ move on:
 - wildlife within ~140 m, wolf packs near their dens, mythical creatures
   heard from ~1 km and seen from ~220 m;
 - ruins (crumbling towers, castles on hills, aqueducts) from ~2.6 km,
-  so their silhouettes rise out of the fog before you reach them. At
-  night they, some lakes and wetlands, and mythical territories glow
-  teal and cobalt.
+  so their silhouettes rise out of the fog before you reach them; about
+  a third hold a survivors' camp of tepees and lean-tos. At night they,
+  some lakes and wetlands, and mythical territories glow teal and cobalt.
+
+Wildlife hears you: crouched you can creep close, sprinting sends it
+running from far off, and a startled animal calms down if you keep still.
+Trees block your way and can be climbed; their crowns (and camp
+shelters) keep the rain off. Storms bring lightning and thunder, and
+heavy rain swells the rivers.
 
 The floating origin keeps the player near (0,0,0), so precision holds
 anywhere on the planet.

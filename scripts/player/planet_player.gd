@@ -85,6 +85,7 @@ var _climb_tree := -1
 var _climb_y := 0.0
 var _climb_out := Vector3.ZERO # unit, from the trunk's axis out to the player
 var _prompt_timer := 0.0
+var _shake := 0.0
 
 
 func _ready() -> void:
@@ -144,6 +145,12 @@ func spawn_at(d: Vector3, look_toward := Vector3.ZERO) -> void:
 	_orient()
 
 
+## Shake the camera (a close thunderclap); `amount` 0-1 fades over a
+## second.
+func shake(amount: float) -> void:
+	_shake = maxf(_shake, amount)
+
+
 ## Point the camera: `pitch` (radians, negative looks down) and `yaw`
 ## relative to where the body faces.
 func set_view(pitch: float, yaw: float) -> void:
@@ -179,6 +186,9 @@ func _physics_process(delta: float) -> void:
 	var cam_forward := _heading.rotated(up, _yaw)
 	var cam_right := cam_forward.cross(up)
 	_update_prompt(delta, cam_forward)
+	_shake = maxf(_shake - delta * 1.1, 0.0)
+	_camera.h_offset = randf_range(-1.0, 1.0) * _shake * 0.12
+	_camera.v_offset = randf_range(-1.0, 1.0) * _shake * 0.12
 	if climbing:
 		_climb_step(delta)
 		_orient()

@@ -6,7 +6,10 @@ extends Node3D
 ##     precipitation, rain above freezing and snow below;
 ##   * the local wind tilts the falling particles, so storm rain blows
 ##     sideways instead of falling straight down;
-##   * the same wind drives foliage sway (PlantMeshes' shared material).
+##   * the same wind drives foliage sway (PlantMeshes' shared material);
+##   * the sound of the rain, muffled (and the rain around you thinned)
+##     when you're sheltered: under a tree's crown or in a camp shelter.
+## Lightning, thunder and the water's answer to storms: StormFX.
 ##
 ## Keep this node at the scene origin (not under World.world_root); it
 ## moves its emitters to the camera each frame.
@@ -17,6 +20,8 @@ const SNOW_MAX := 1500
 var rain: GPUParticles3D
 var snow: GPUParticles3D
 var local: Dictionary = {}
+var _rain_audio: AudioStreamPlayer
+var _bus := -1
 
 
 func _ready() -> void:
@@ -24,6 +29,21 @@ func _ready() -> void:
 	snow = _emitter(SNOW_MAX, _snow_mesh(), 7.0, false)
 	add_child(rain)
 	add_child(snow)
+	# Rain sound on its own bus, with a low-pass for shelter.
+	_bus = AudioServer.get_bus_index("Rain")
+	if _bus < 0:
+		AudioServer.add_bus()
+		_bus = AudioServer.bus_count - 1
+		AudioServer.set_bus_name(_bus, "Rain")
+		AudioServer.set_bus_send(_bus, "Master")
+		var lpf := AudioEffectLowPassFilter.new()
+		lpf.cutoff_hz = 20000.0
+		AudioServer.add_bus_effect(_bus, lpf)
+	_rain_audio = AudioStreamPlayer.new()
+	_rain_audio.stream = SoundSynth.stream("rain_loop", 0)
+	_rain_audio.bus = "Rain"
+	_rain_audio.volume_db = -60.0
+	add_child(_rain_audio)
 
 
 ## GPU particles: intensity is `amount_ratio`, which changes how many
@@ -74,7 +94,8 @@ func _snow_mesh() -> Mesh:
 
 
 ## weather: WeatherSim.local_weather() at the player. up: local up.
-func update_fx(camera_pos: Vector3, up: Vector3, weather: Dictionary) -> void:
+## sheltered: under a crown or a camp shelter (rain muffled and thinned).
+func update_fx(camera_pos: Vector3, up: Vector3, weather: Dictionary, sheltered := false) -> void:
 	local = weather
 	var wind: Vector3 = weather.get("wind", Vector3.ZERO)
 	var rate: float = weather.get("rain_mm_h", 0.0)
@@ -90,7 +111,19 @@ func update_fx(camera_pos: Vector3, up: Vector3, weather: Dictionary) -> void:
 	var idle: GPUParticles3D = rain if cold else snow
 	idle.emitting = false
 	active.emitting = intensity > 0.05
-	active.amount_ratio = intensity
+	# Under cover the canopy or roof catches most of what falls around you.
+	active.amount_ratio = intensity * (0.3 if sheltered else 1.0)
+
+	# The rain's sound: louder with intensity, muffled under cover.
+	var hiss := 0.0 if cold else intensity
+	if hiss > 0.03:
+		if not _rain_audio.playing:
+			_rain_audio.play()
+		_rain_audio.volume_db = lerpf(-34.0, -4.0, sqrt(hiss)) - (5.0 if sheltered else 0.0)
+	elif _rain_audio.playing:
+		_rain_audio.stop()
+	var lpf := AudioServer.get_bus_effect(_bus, 0) as AudioEffectLowPassFilter
+	lpf.cutoff_hz = move_toward(lpf.cutoff_hz, 900.0 if sheltered else 20000.0, 20000.0 * get_process_delta_time())
 
 	# Fall along gravity plus the wind: the stronger the wind, the more the
 	# streaks lean.

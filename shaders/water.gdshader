@@ -14,8 +14,12 @@ render_mode blend_mix, depth_draw_opaque, cull_disabled, specular_schlick_ggx;
 #include "res://shaders/look.gdshaderinc"
 
 varying vec3 world_pos;
+// How far fresh water has risen in heavy rain, m (StormFX).
+uniform float water_rise = 0.0;
 
 void vertex() {
+	// Water meshes are flat with their normal up; heavy rain lifts them.
+	VERTEX += NORMAL * water_rise;
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 }
 
@@ -25,6 +29,10 @@ uniform float wave_scale = 0.08;
 uniform float wave_speed = 0.35;
 uniform float wave_strength = 0.35;
 uniform vec2 flow = vec2(0.0); // rivers drift along their current
+// Storms (StormFX): how soaked the land is (0-1: rivers and waves run
+// faster) and rain falling on the surface now (0-1: drops pock it).
+uniform float storm_flow = 0.0;
+uniform float rain_drops = 0.0;
 
 float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -43,12 +51,21 @@ float waves(vec2 p, float t) {
 
 void fragment() {
 	vec2 p = UV * wave_scale; // UV is in meters
-	float t = TIME * wave_speed;
+	float t = TIME * wave_speed * (1.0 + 1.5 * storm_flow);
 	float e = 0.05;
 	float h = waves(p, t);
 	float hx = waves(p + vec2(e, 0.0), t);
 	float hy = waves(p + vec2(0.0, e), t);
-	NORMAL_MAP = normalize(vec3((h - hx) / e * wave_strength, (h - hy) / e * wave_strength, 1.0)) * 0.5 + 0.5;
+	vec2 slope = vec2(h - hx, h - hy) / e * wave_strength;
+	if (rain_drops > 0.01) {
+		// Raindrops: small pocks flickering over the surface.
+		vec2 q = UV * 2.5;
+		float cell = floor(TIME * 9.0);
+		float d = noise(q + vec2(cell * 1.7, cell * 2.3)) - noise(q + vec2(0.13, 0.0) + vec2(cell * 1.7, cell * 2.3));
+		float d2 = noise(q + vec2(cell * 1.7, cell * 2.3)) - noise(q + vec2(0.0, 0.13) + vec2(cell * 1.7, cell * 2.3));
+		slope += vec2(d, d2) * 3.0 * rain_drops;
+	}
+	NORMAL_MAP = normalize(vec3(slope, 1.0)) * 0.5 + 0.5;
 
 	float facing = clamp(dot(NORMAL, VIEW), 0.0, 1.0);
 	float fresnel = pow(1.0 - facing, 4.0);
@@ -66,7 +83,7 @@ void fragment() {
 	// glow a little at night.
 	float white = UV2.x;
 	if (white > 0.01) {
-		float y = UV.y * 0.45 - TIME * (2.5 + 3.5 * white);
+		float y = UV.y * 0.45 - TIME * (2.5 + 3.5 * white) * (1.0 + storm_flow);
 		float streak = noise(vec2(UV.x * 1.2, y * 0.5)) * 0.6 + noise(vec2(UV.x * 3.0, y * 1.6)) * 0.4;
 		float foam = smoothstep(0.66 - 0.32 * white, 0.82, streak) * smoothstep(0.0, 0.3, white);
 		ALBEDO = mix(ALBEDO, vec3(0.88, 0.95, 1.0), foam);

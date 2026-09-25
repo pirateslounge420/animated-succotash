@@ -128,8 +128,20 @@ Uses:
     keeping the long-run totals.
 - **Effects:** `WeatherFX` turns that into rain or snow that leans with
   the wind (GPU particles; intensity is `amount_ratio`, so it changes
-  smoothly without restarting the emitter). The same wind vector sways
-  all foliage.
+  smoothly without restarting the emitter), and the sound of rain (a
+  synthesized loop on its own bus). Under a crown or a camp shelter the
+  rain around you thins to 30% and its sound is low-passed. The same
+  wind vector sways all foliage.
+- **Storms** (`StormFX`): above storm level 0.55, lightning every ~40 s
+  at the threshold down to ~7 s at full strength: a flickering third
+  directional light from a random bearing, flashing the sky, the cloud
+  tops and the ambient; thunder follows ~3 s per km of a made-up distance
+  (0.25-6 km, close strikes rarer): a crack and heavy rumble within
+  1.2 km, a long low roll farther off; within 0.8 km the camera shakes.
+  Heavy rain soaks the land (fills over ~2 minutes, drains over ~5):
+  rivers and waves run faster, drops pock the water, and fresh water
+  rises up to 0.3 m, visually only (swimming depth and the terrain don't
+  change).
 
 Verified:
 - equator ~2000 mm/yr, subtropical deserts ~120 mm/yr;
@@ -321,6 +333,14 @@ Verified:
   terrain chunks, so silhouettes rise out of the fog bands. Deep footings
   keep them from floating over the coarser far terrain. Vegetation keeps
   their footprints clear.
+- **Camps in ruins** (`RuinBuilder._camp`): about a third of ruins
+  (their own seeded roll) hold one to three shelters, in a castle's
+  courtyard, at a tower's foot or under an aqueduct's arches, and a cold
+  fire ring: tepees (seven leaning poles, woven-vine and hide panels, a
+  door gap) and lean-tos (forked uprights, a ridge pole, a vine-thatched
+  roof to the ground), built from the same block primitives, so they get
+  collision, the far LOD and the vines' night glow.
+  `Landmarks.sheltered_at()` tells when you're inside one.
 - **Glowing places** (`MagicSites`, `Landmarks`): every ruin, every
   mythical territory, and about a third of fresh lakes and wetland cells
   (glow ponds).
@@ -452,6 +472,14 @@ Creatures read the terrain and the placed vegetation: temperature at the
 exact spot, moisture, ground cover, trees (canopy dwellers perch on
 actual placed trees) and water depth.
 
+How close you get depends on how loud you are: a creature bolts at its
+`shy_m` times 0.35 (crouched and still) to 1.6 (sprinting), widened by
+its suspicion. A startled ground animal then stands wary, watching you,
+until the suspicion fades (about 6 s if you keep still nearby, slowly if
+you stay away). Now and then a grazer walks to open water within 45 m,
+drinks with its head down and wanders back. Wolf packs notice you by
+noise too.
+
 Spawn tiers:
 
 - **Interaction.** Fallen logs lie near trees in forests. Pressing E
@@ -498,6 +526,57 @@ foot, and flattened-cone ears, lit by `creature.gdshader` (colored
 shadows, rim, sheen). Meshes are shared by every creature: 336-820
 triangles each (deer ~900 and troll ~1,030 with antlers and mossy back).
 Wolf dens are framed by boulders and a bevelled slab.
+
+## The player
+
+`scripts/player/`
+
+- **Movement** (`PlanetPlayer`): walk 6 km/h; sprint 5.5 m/s by
+  double-tapping forward and holding it (or the pad's left stick held
+  in); crouch (hold Shift or pad B) lowers the capsule and camera to
+  1.05 m, slows to 0.8 m/s and stands back up only with headroom; holding
+  jump jumps again on each landing. `noise_level` (0 crouched and still ..
+  1 sprinting, eased) and `still_time` are what wildlife reads.
+  `anim_state` (idle, walk, sprint, crouch, crouch_walk, air, swim,
+  climb) is the hook for a future rigged model's animation tree, with the
+  `crouching` / `sprinting` / `climbing` flags; the body is still a
+  placeholder capsule.
+- **Trees** (`TerrainChunk` trunk colliders, `TreeContact`): canopy and
+  emergent trees in the detail ring get a cylinder collider each (one
+  static body per chunk, a shape owner per tree, sized from
+  `PlantMeshes.tree_dims`, on physics layer 2 as well as 1), about 160 a
+  frame. One sphere query a few times a second finds trunks near the
+  player: under a crown is `under_canopy` (rain shelter); walking through
+  a crown or bumping a trunk rustles it (a synthesized rustle and a crown
+  shiver through the MultiMesh custom data's b channel). A physics query
+  stands in for a trigger volume per tree, which would be thousands of
+  nodes.
+- **Climbing**: E facing a trunk (a ray on the tree layer) grabs it; W/S
+  climb at 1.1 m/s up to 90% of the tree's height, A/D circle it; E or
+  jump lets go (jump pushes off). E prefers a fallen log in reach.
+- **Footsteps** (`Footsteps`): one per stride (0.5 / 0.78 / 1.25 m
+  crouched / walking / sprinting), louder with speed, plus a landing.
+  The ground: shallow water; else the collider underfoot (ruin stone,
+  tree roots); else the terrain's vertex color classified like the
+  terrain shader's texture pick (grass, stone, snow, sand, dirt). Seven
+  synthesized sounds.
+
+## The opening encampment
+
+`scripts/landmarks/encampment.gd`, `campfire.gd`
+
+`Encampment.candidates()` scores every blueprint cell with the old spawn
+rule (low, mild, green land ~2 km from the coast) and keeps the best 12,
+at least 20 km apart; each new game picks one at random
+(`World.spawn_choice` pins one). `site_near()` finds a flat, dry spot
+there (off water, rivers and wetlands, level across the camp), plants
+keep a 12 m clearing, and the camp is a campfire (`Campfire`, shared with
+the mythical folk camps), the player's hide mat facing it, and an elder
+and a hunter (`CreatureBodies` tribal bodies) across the fire on log
+seats, who breathe and turn toward the player when near. At the start
+they speak once, as subtitles (`Hud.say`): "You're finally awake." /
+"Be careful at night, don't let it get you...". The camera opens over
+the player's shoulder so the fire is in view.
 
 ## UI
 
@@ -585,6 +664,18 @@ latest results:
   from 5.2-5.7 to 4.1-4.2 ms on average and from 7.4-8.9 to 6.0-6.7 ms
   at the 95th percentile, mostly from building plant buffers on the
   workers; attaching a chunk's undergrowth dropped from ~90 to ~20 ms.
+- **Player model (deferred).** The explorer and the camp's NPCs are
+  placeholder shapes. A rigged humanoid with an animation tree (idle,
+  walk, sprint, crouch, climb) needs an asset pipeline first (which tool
+  exports to Godot, who makes the model). The hooks are in place:
+  `PlanetPlayer.anim_state` plus the `crouching`, `sprinting` and
+  `climbing` flags; footsteps then should follow the animation's foot
+  contacts instead of the stride timer.
+- **Storm fakes.** Rain doesn't collide with crowns; under cover the
+  falling rain thins instead. Thunder's distance is made up per strike
+  (there is no bolt), and flooding is visual only.
+- **NPCs** speak their opening lines once and otherwise only watch you;
+  there's no dialogue or behavior beyond that yet.
 - **Waterfalls** have no sound yet, and the fine terrain grid (4 m) can't
   make a truly vertical cliff, so the gorge wall under a tall fall is a
   steep ramp.
