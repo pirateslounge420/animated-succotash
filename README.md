@@ -1,6 +1,6 @@
 # Low-Poly Exploration Prototype
 
-An ambient open-world exploration game in a GameCube-era low-poly style,
+An ambient open-world exploration game in a smooth-shaded GameCube style,
 set on a walkable, procedurally generated cube-sphere planet about 400 km
 around, at a tribal, pre-firearm tech level. No combat and no quests: you
 wander, watch the weather roll in, and find what lives where.
@@ -50,8 +50,10 @@ types, and one of the 51 biome templates per cell. Everything you can walk
 on, see up close or meet is **spawned around you** and dropped as you
 move on:
 
-- terrain chunks (~260 m, flat-shaded 8 m quads) within ~800 m;
-- trees on those chunks, undergrowth only within ~400 m;
+- terrain chunks (~260 m, smooth shaded; 4 m quads near you, 8 m beyond)
+  within ~800 m, with rivers that pour over waterfalls in the mountains;
+- trees on those chunks (mossy and vine-hung where it's wet), undergrowth
+  only within ~400 m;
 - a coarse far shell draws distant mountains and sea;
 - wildlife within ~140 m, wolf packs near their dens, mythical creatures
   heard from ~1 km and seen from ~220 m;

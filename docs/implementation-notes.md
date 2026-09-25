@@ -159,6 +159,15 @@ Verified:
   - the sky shader draws the moon disc with a phase terminator, stars and
     clouds from the live weather;
   - ambient light and fog follow.
+- **Moon phases.** Moonlight follows illumination^3.3 (a half moon gives
+  about a tenth of full), with a 5% floor and a night ambient floor so
+  thin-moon nights stay playable. The disc: earthshine on a crescent's
+  dark side, a slightly rough terminator, maria and limb darkening, a
+  halo as bright as the lit area and leaning toward the lit limb. The
+  disc adds its light to the sky behind it, so the dark side reads as sky
+  at dusk. By day it's a pale ghost. The phase is lit from the sun's real
+  direction projected on the sky, so a crescent tilts correctly for the
+  viewer's latitude and hour.
 - **Grade** (`PostGrade`), always on:
   - PS1-style 15-bit color through a 4×4 ordered dither;
   - vibrance for greens and blues, plus an emerald push (greens lose red
@@ -198,28 +207,32 @@ Verified:
     The material ID (bark, leaves, card) rides in UV2.x;
   - stone on ruins, turning to leaves where moss grows;
   - the 32 px grain for everything else.
-- **Lighting economy:**
-  - Lambert diffuse on face normals, with specular disabled everywhere
-    except water.
-  - Leaves are translucent (BACKLIGHT), so crowns lit from behind glow
-    instead of going black.
-  - At night the ground gets a hard-edged toon highlight, for the wet
-    look.
-  - Creature and prop materials are Lambert with no specular too.
-- **Shadows and ambient:** the day ambient is low (0.3, down from 0.4)
-  and tinted a cool lavender-blue, so shadows read dark and colored
-  instead of grey. A strong violet was tried and dropped: leaves reflect
-  almost no blue or red, so a shaded forest floor went black.
+- **Smooth shading, GameCube style** (the F-Zero GX / Melee / PSO look
+  rather than flat low poly): terrain, plants, rocks, ruins and creatures
+  have smoothed vertex normals; terrain normals come from a grid padded
+  past each chunk edge so chunks agree along every edge.
+- **Lighting** is a custom light() in every world shader (Look):
+  - Lambert, plus **colored shadows**: where the sun or moon is blocked
+    or faces away, a share of it comes back tinted teal by day and cobalt
+    at night, multiplying each surface's own color, so shaded forest
+    stays green. The day ambient is neutral (0.26); the tint carries the
+    color of shade.
+  - a soft glossy **sheen** (Blinn-Phong): strongest on creatures, lighter
+    on worn stone, a waxy glint on leaves. Sky reflections are off
+    everywhere except water.
+  - rim light, leaf translucency and the ground's wet toon highlight at
+    night, reimplemented because a custom light() replaces Godot's.
 - **Clouds:** big chunky cumulus, sampled on a domed projection (bigger
   overhead, smaller at the horizon) and quantized to a coarse grid for
   pixelated edges, in three flat tones. Baseline cover is higher (0.34
   on a clear day).
 - **Atmospheric perspective:** Environment fog plus the banded shader
   fog, blue by day and cobalt at night; distance ridges fade in steps.
-- **Night:** a moon about 2.5× the old size with a two-part halo that
-  blooms, brighter bluer moonlight with dark shadows, all water glowing
-  faintly cobalt, a moon-tinted rim on foliage and creatures, and
-  stronger emission on campfires and lanterns.
+- **Night** (the references' moonlit blue): a moon about 2.5× the old size
+  with a halo that blooms, bright blue moonlight and a saturated blue
+  ambient (never black), a luminous blue haze and thicker low mist, all
+  water glowing cobalt, a moon-tinted rim on foliage and creatures, and
+  strong emission on campfires and lanterns.
 - **Depth** (added because flat lighting alone read too flat):
   - **Ambient occlusion**, in two layers:
     - SSAO on the Environment, including a little on direct light
@@ -229,13 +242,13 @@ Verified:
       ground under tree crowns (30%), the base of every plant, and the
       lowest courses of ruin walls.
   - **Hard shadows:** unfiltered shadow maps, a 4096 atlas, and 2 splits
-    over a 160 m range, with enough normal bias that lit ground stays
-    free of acne.
-  - **Rim light:** Godot's light-driven RIM on plants, creatures and
-    (lightly) ruins, plus a moon-tinted emissive rim after dark.
-    Specular is off, so roughness 0.75 exists only to give the rim a
-    falloff: Godot's rim exponent is (1 − roughness) × 16, and at 1.0
-    the "rim" would light the whole surface.
+    over a 160 m range, with enough normal bias (5) that lit ground
+    stays free of acne.
+  - **Rim light:** a light-driven rim (in light()) on plants, creatures
+    and (lightly) ruins, plus a moon-tinted emissive rim after dark.
+    Roughness 0.75 gives the rim its falloff: the rim exponent is
+    (1 − roughness) × 16, and at 1.0 the "rim" would light the whole
+    surface.
   - **Glow:** threshold 1.0, no global bloom, levels 1-4. Campfire
     flames, lanterns, glowing water and moss, and the sun push above the
     threshold and bloom; ordinary daylight surfaces don't.
@@ -259,9 +272,15 @@ Verified:
   - aqueducts striding level on tall piers, with some spans fallen.
 
   All of it is stacked stone blocks, so collapse is jagged column tops,
-  V-shaped breaches, missing window blocks and rubble at the foot. Moss
-  greens the upward faces and low courses, and ivy hangs from broken
-  tops. Geometry is built on worker threads out to 2.6 km, beyond the
+  V-shaped breaches, missing window blocks and rubble at the foot. The
+  blocks are bevelled (each chamfer keeps its two faces' normals, so
+  light rolls over the edge like worn stone), jittered at the corners and
+  irregular in size; rubble mixes tumbled blocks with noise-displaced
+  icosphere boulders. Moss greens the upward faces and low courses, and
+  ivy hangs from broken tops, both scaled by the site's moisture: dry
+  ruins are bare stone, wet ones mossy all over and curtained in ivy.
+  Collision uses plain boxes. Sites are picked without the terrain's
+  roll layer, so 2 m of noise never moves a ruin. Geometry is built on worker threads out to 2.6 km, beyond the
   terrain chunks, so silhouettes rise out of the fog bands. Deep footings
   keep them from floating over the coarser far terrain. Vegetation keeps
   their footprints clear.
@@ -280,16 +299,31 @@ Verified:
 
 `scripts/terrain/`
 
-- **Chunks** (`TerrainChunk`). 384 per face edge, each about 260 m with
-  32 × 32 flat-shaded quads of about 8 m:
+- **Chunks** (`TerrainChunk`). 384 per face edge, each about 260 m,
+  smooth shaded, from one fine height grid of 64 × 64 quads (~4 m):
+  - chunks in the ring nearest the player draw it all; farther chunks
+    draw every other vertex (~8 m). The fine mesh's in-between edge
+    vertices sit on the 8 m edge, so levels meet without cracks.
+    Collision, height_at() and plant placement use the fine heights;
+  - a gentle roll layer (~60 m swells, ±2 m) makes slopes undulate,
+    fading out near sea level;
   - heights come from `TerrainField` with the detail layer;
-  - rivers are carved in with water ribbons (`RiverNetwork`);
+  - rivers are carved in with water ribbons (`RiverNetwork`). The water
+    follows the ground (a profile sampled every 6 m, a running minimum of
+    the terrain between the blueprint levels at each end), so it never
+    floats. Steep reaches pour over **waterfalls** (at most 35 m; longer
+    drops become chains) and the channel cuts a gorge back into the
+    slope: about 3,400 falls on ~680 km of large rivers, almost all in
+    the mountains. Each is a sheet arcing off the lip
+    (`waterfall.gdshader`: streaks sliding down, foam toward the pool,
+    frayed edges) with mist at the foot, glowing blue at night;
   - lake, sea and wetland water tables are added;
   - ground color blends nearby biomes, with sand at shores, rock on steep
     faces and snow wherever it's below freezing at that height.
 - **Streaming** (`ChunkManager`):
-  - the view ring (3 chunks) gets ground, water and trees;
-  - the detail ring (1 chunk) adds undergrowth;
+  - the view ring (3 chunks) gets ground, water and trees (light meshes);
+  - the detail ring (1 chunk) switches to the 4 m ground and full trees,
+    and adds undergrowth;
   - geometry and plant placement are computed on WorkerThreadPool; nodes
     are attached a few per frame;
   - the loading screen blocks only for the detail ring.
@@ -297,7 +331,8 @@ Verified:
   precision and everything under `world_root` shifts when the player
   gets 1.5 km from the origin.
 - **Far shell** (`FarShell`). A coarse sphere mesh for distant land and
-  sea, sunk slightly and hidden inside the chunk radius.
+  sea, sunk slightly and hidden inside the chunk radius, with slope
+  normals.
 
 Measured with the compatibility renderer:
 - blocking load of 13 chunks in about 5 s;
@@ -328,6 +363,8 @@ copy.
   - bell-shaped suitability bands;
   - soil from rock type;
   - special needs (standing water, river bank, salt, hot ground);
+    plants other than water plants keep 0.3 m above standing water, and
+    only salt-tolerant ones grow on beach sand;
   - per-species dominance over ~1.5 km (one valley spruce, the next
     fir);
   - patch clumping, and shade thinning the ground cover;
@@ -336,8 +373,20 @@ copy.
   Epiphytes attach to placed trees; cypress knees ring cypresses standing
   in water. Mythical folk campsites and ruins are kept clear.
 - **Rendering.** One MultiMesh per species. `PlantMeshes` builds 24
-  low-poly placeholder shapes, with leaf-cluster cards on the crowns; the
-  foliage shader sways them with the live wind.
+  placeholder shapes; the foliage shader sways them with the live wind.
+  Trees have crowns of 3-6 overlapping noise-displaced icospheres (faces
+  buried in a neighboring lobe are dropped, so triangles go to the
+  silhouette) with leaf cards on the outside, and 8-sided trunks that
+  taper, bend and flare, with branches into the crown. Near the player a
+  tree is 120-360 triangles, a shrub ~120; farther out trees swap to a
+  light mesh (icosahedron lobes, 5-sided trunk, no cards or vines).
+- **Moss and vines.** Each plant carries its site's moss (moisture) and
+  vine (moisture and warmth) amounts in the MultiMesh custom data: moss
+  creeps over the bark, and tree meshes' hanging vine strands (lianas;
+  beard lichen on conifers) show only where it's wet enough, so
+  rainforests are hung with them and dry woods have none. Instance
+  colors are on too (white): without them the compatibility renderer
+  garbles vertex colors when custom data is used.
 - **Density.** Wet forest (mean moisture above ~0.6) packs canopy trees
   and ground cover up to 20% closer; shrubs keep their spacing, because
   denser shrubs walled in the view. Ground cover and epiphytes draw out
@@ -390,8 +439,13 @@ Spawn tiers:
     spec's warm "pop" against the blue night.
 
 Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
-howl, drone and whisper. Bodies are primitive low-poly placeholders
-(`CreatureBodies`).
+howl, drone and whisper. Bodies are placeholders (`CreatureBodies`)
+built from smooth-shaded spheres and capsules (12 sides × 6 rings for
+bodies and heads, coarser for small parts), limbs that taper from hip to
+foot, and flattened-cone ears, lit by `creature.gdshader` (colored
+shadows, rim, sheen). Meshes are shared by every creature: 336-820
+triangles each (deer ~900 and troll ~1,030 with antlers and mossy back).
+Wolf dens are framed by boulders and a bevelled slab.
 
 ## UI
 
@@ -436,10 +490,15 @@ latest results:
   - midnight with night creatures;
   - log interaction.
 
-  No script errors.
-- **Rendered.** Screenshots were rendered under xvfb with the
-  compatibility renderer: day forest, dusk, night, rain, the map,
-  wildlife, a campfire camp and a wolf den.
+  No script errors, and no engine errors either: the headless (dummy)
+  renderer used to log `Parameter "m" is null` about 3,500 times per run
+  when meshes were freed with their nodes; `NodeRelease` detaches meshes
+  before streamed-out nodes are freed.
+- **Rendered.** Screenshots were rendered under xvfb, in Forward+ on a
+  software Vulkan driver (lavapipe) and in the compatibility renderer,
+  from fixed views: forest by day and night, a castle by day and at dusk,
+  a hilltop overlook, a creature close-up, a waterfall, a wet ruin and a
+  coast, plus a sheet of moon phases.
 - **Climate checks.** Weather and climate checks cover the figures listed
   above; 49-50 of the 50 surface templates appear on each tested seed.
 
@@ -454,10 +513,14 @@ latest results:
   not built. Wolf dens mark where cave mouths will go.
 - **Interaction between species.** Creatures ignore each other; predator
   and prey behavior is the spec's noted future layer.
-- **Rendering.** Screenshots of the depth pass were rendered in Forward+
-  on a software Vulkan driver (lavapipe); real hardware should match but
-  hasn't been checked. SSAO exists only in Forward+. The compatibility
-  renderer still gets the baked AO, shadows, rim and grade.
+- **Rendering.** Forward+ is the target; screenshots were rendered in it
+  on a software Vulkan driver (lavapipe), so real hardware should match
+  but hasn't been checked, and lavapipe frame times say little about a
+  GPU's. SSAO exists only in Forward+. The compatibility renderer gets
+  everything else and only needs not to break.
+- **Waterfalls** have no sound yet, and the fine terrain grid (4 m) can't
+  make a truly vertical cliff, so the gorge wall under a tall fall is a
+  steep ramp.
 - **Foliage wind.** One wind vector (the local weather at the player)
   sways every plant in view. That's right at walking scale, but plants a
   few kilometers off don't feel their own local wind.
