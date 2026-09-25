@@ -27,7 +27,6 @@ loading screen), then you're dropped on a temperate or tropical coast.
 |---|---|
 | WASD / arrows, left stick | Walk (4.5 km/h, the spec's walking pace) |
 | Shift, B | Run |
-| Ctrl | Fast travel (60 m/s, for testing) |
 | Space, A | Jump; hold to swim up |
 | Mouse, right stick | Look (click the window to capture the mouse, Esc frees it) |
 | E, X | Inspect: turn over a fallen log |
@@ -35,10 +34,10 @@ loading screen), then you're dropped on a temperate or tropical coast.
 | H | Hide the HUD |
 | `]` / `[` | Speed time up / slow it down (x4 steps, up to x256) |
 
-One in-game day is **48 real minutes**. Twilight counts as day, as on
-Earth, so at the equator the lit part runs about 25 minutes and the night
-about 23. The planet has no axial tilt (no seasons yet); toward the poles
-the sun crosses the horizon at a shallower angle, so twilight lasts longer.
+One in-game day is **120 real minutes** (12x faster than Earth), in four
+phases: dawn 15 minutes, day 50, dusk 15, night 40. The planet has no
+axial tilt (no seasons yet); toward the poles the sun crosses the horizon
+at a shallower angle, so dawn and dusk last longer there.
 Temperatures everywhere (HUD, map, data files) are in **°C**.
 
 ## How the world is built

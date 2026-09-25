@@ -23,7 +23,7 @@ func _ready() -> void:
 	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 16)
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_hint.text = "WASD move · Shift run · Ctrl fast travel · Space jump · E inspect\nM map · H hide HUD · [ ] time speed · click to look, Esc frees mouse"
+	_hint.text = "WASD move · Shift run · Space jump · E inspect\nM map · H hide HUD · [ ] time speed · click to look, Esc frees mouse"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 70)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -90,18 +90,21 @@ func toggle() -> void:
 
 func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weather: Dictionary, time_scale: float, swimming: bool, delta: float) -> void:
 	var map: PlanetData = world.planet
-	var days: float = world.days
 	var lon := CubeSphere.longitude(player_dir)
+	# Solar time: the sky's (warped) clock, so noon is when the sun peaks.
+	var days: float = Astro.apparent_days(world.days, lon)
 	var lat := CubeSphere.latitude(player_dir)
 	var hours := Astro.local_hours(days, lon)
 	var hh := int(hours)
 	var mm := int((hours - hh) * 60.0)
 	var sun_el := rad_to_deg(Astro.elevation(Astro.sun_dir(days), player_dir))
+	# The four phases: night, dawn and dusk (sun within TWILIGHT_DEG of the
+	# horizon), day.
 	var part := "Night"
-	if sun_el > PlanetConst.SUNRISE_ELEVATION_DEG:
+	if sun_el > PlanetConst.TWILIGHT_DEG:
 		part = "Morning" if hours < 11.0 else ("Afternoon" if hours > 13.0 else "Midday")
-		if sun_el < 6.0:
-			part = "Sunrise" if hours < 12.0 else "Sunset"
+	elif sun_el > -PlanetConst.TWILIGHT_DEG:
+		part = "Dawn" if hours < 12.0 else "Dusk"
 	var mansion := Astro.mansion_index(days)
 	var moon_up := rad_to_deg(Astro.elevation(Astro.moon_dir(days), player_dir)) > 0.0
 	var speed := "" if is_equal_approx(time_scale, 1.0) else "   (time x%s)" % str(time_scale)

@@ -39,6 +39,62 @@ static func time_of_day(days: float) -> float:
 	return fposmod(days, 1.0)
 
 
+## Phase breakpoints of the day at the equator, as [clock fraction, solar
+## fraction] pairs from midnight (0) to midnight (1). The clock runs
+## uniformly; the solar fraction (0.5 = sun highest) is where the sky
+## has turned to. Night 40 min (half each side of midnight), dawn 15, day
+## 50, dusk 15: the sky turns slowly through twilight (sun within
+## TWILIGHT_DEG of the horizon) and fast through the night.
+static func _phase_table() -> PackedVector2Array:
+	var total := PlanetConst.DAWN_MIN + PlanetConst.DAY_MIN + PlanetConst.DUSK_MIN + PlanetConst.NIGHT_MIN
+	var half_night := PlanetConst.NIGHT_MIN * 0.5
+	var edge := (90.0 + PlanetConst.TWILIGHT_DEG) / 360.0 # hour angle where night ends
+	var lit := (90.0 - PlanetConst.TWILIGHT_DEG) / 360.0 # where full day starts
+	var c1 := half_night / total
+	var c2 := c1 + PlanetConst.DAWN_MIN / total
+	var c3 := c2 + PlanetConst.DAY_MIN / total
+	var c4 := c3 + PlanetConst.DUSK_MIN / total
+	return PackedVector2Array([Vector2(0.0, 0.0), Vector2(c1, 0.5 - edge), Vector2(c2, 0.5 - lit),
+		Vector2(c3, 0.5 + lit), Vector2(c4, 0.5 + edge), Vector2(1.0, 1.0)])
+
+
+## Solar fraction for a clock fraction (both 0-1 from midnight).
+static func _warp(clock: float, table: PackedVector2Array) -> float:
+	for i in table.size() - 1:
+		var a := table[i]
+		var b := table[i + 1]
+		if clock <= b.x:
+			return lerpf(a.y, b.y, (clock - a.x) / maxf(b.x - a.x, 1e-9))
+	return clock
+
+
+## Clock fraction for a solar fraction (the inverse of _warp).
+static func _unwarp(solar: float, table: PackedVector2Array) -> float:
+	for i in table.size() - 1:
+		var a := table[i]
+		var b := table[i + 1]
+		if solar <= b.y:
+			return lerpf(a.x, b.x, (solar - a.y) / maxf(b.y - a.y, 1e-9))
+	return solar
+
+
+## The sky as seen at `longitude`: `days` shifted so the sun, moon and
+## stars stand where the phase timing puts them for that place (the
+## planet's apparent turning is warped per viewer; the weather keeps the
+## uniform clock). Pass the result to anything that draws or lights the
+## sky, or tells the time.
+static func apparent_days(days: float, longitude: float) -> float:
+	var clock := fposmod(time_of_day(days) + longitude / TAU, 1.0)
+	return days + _warp(clock, _phase_table()) - clock
+
+
+## The (uniform) days value at which `longitude` sees solar time
+## `local_h` (0-24, 12 = sun highest) on the day of `base_days`.
+static func days_at_solar_hour(base_days: float, local_h: float, longitude: float) -> float:
+	var clock := _unwarp(fposmod(local_h / 24.0, 1.0), _phase_table())
+	return floor(base_days) + fposmod(clock - longitude / TAU, 1.0)
+
+
 ## Local clock at a longitude, as hours 0-24 (noon = 12 when the sun is
 ## highest there).
 static func local_hours(days: float, longitude: float) -> float:

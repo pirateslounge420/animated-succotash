@@ -65,7 +65,7 @@ func _on_planet_ready() -> void:
 	# Start mid-afternoon wherever that is, so the first session soon sees
 	# sunset and then the night.
 	var local_start_h := 15.0
-	world.days = floor(world.days) + fposmod(local_start_h / 24.0 - CubeSphere.longitude(spawn_dir) / TAU, 1.0)
+	world.days = Astro.days_at_solar_hour(world.days, local_start_h, CubeSphere.longitude(spawn_dir))
 	world.center_on(spawn_dir, PlanetConst.RADIUS_M + world.surface_elevation(spawn_dir))
 
 	chunks = ChunkManager.new()
@@ -135,7 +135,8 @@ func _process(delta: float) -> void:
 		_local_weather = world.weather.local_weather(d, elevation)
 	landmarks.update_landmarks(delta, sky.daylight)
 	var fog: float = world.planet.sample(world.planet.fog, d)
-	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), world.days, _local_weather, fog, delta)
+	var sky_days := Astro.apparent_days(world.days, CubeSphere.longitude(d))
+	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), sky_days, _local_weather, fog, delta)
 	var cam := player.camera()
 	fx.update_fx(cam.global_position, d, _local_weather)
 	TerrainChunk.terrain_material().set_shader_parameter("wetness", 1.0 - sky.daylight)
