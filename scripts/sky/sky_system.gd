@@ -149,9 +149,11 @@ func _ready() -> void:
 		light.shadow_blur = 0.0
 		light.light_angular_distance = 0.0
 		# Enough bias that hard, unfiltered maps don't streak lit ground
-		# with acne; mostly normal bias, so contact shadows stay tight.
+		# with acne (at 2.0, flat sand under a high sun showed ring-shaped
+		# moire out to ~30 m); mostly normal bias, so contact shadows stay
+		# tight.
 		light.shadow_bias = 0.06
-		light.shadow_normal_bias = 2.0
+		light.shadow_normal_bias = 5.0
 
 
 ## up/east/north: the viewer's local frame. weather: WeatherSim.local_weather().
@@ -252,11 +254,13 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# little blue and would otherwise go black.
 	# Shadows are lit only by this fill, so it sets how dark and what color
 	# they are: low, and cool blue-violet, so shadow reads as colored depth
-	# against warm sunlit faces rather than a pale grey wash.
-	var amb_day := zenith.lerp(Color(0.42, 0.4, 0.95), 0.55).lerp(Color.WHITE, 0.12)
+	# against warm sunlit faces rather than a pale grey wash. Not a pure
+	# violet: leaves reflect almost no blue or red, so under a violet fill
+	# a shaded forest floor goes black instead of deep green.
+	var amb_day := zenith.lerp(Color(0.5, 0.58, 0.95), 0.6).lerp(Color.WHITE, 0.12)
 	var amb_night := Color(0.3, 0.34, 0.85).lerp(Color(0.42, 0.46, 0.92), lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
-	environment.ambient_light_energy = lerpf(0.18 + 0.2 * lift, 0.22, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
+	environment.ambient_light_energy = lerpf(0.18 + 0.2 * lift, 0.3, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
 
 	# Fog and mist (drawn in bands by the world shaders, see Look): a
 	# light haze that gives depth to long daytime views; thicker at night

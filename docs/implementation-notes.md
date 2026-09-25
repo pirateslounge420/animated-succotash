@@ -161,10 +161,14 @@ Verified:
   - ambient light and fog follow.
 - **Grade** (`PostGrade`), always on:
   - PS1-style 15-bit color through a 4×4 ordered dither;
-  - vibrance for greens and blues.
+  - vibrance for greens and blues, plus an emerald push (greens lose red
+    and gain a little blue, so foliage reads deep rather than lime);
+  - blacks crushed slightly;
+  - sharpening day and night, plus a wide (3 px) luminance clarity boost
+    that separates crowns, trunks and stones.
 
-  At night it adds sharpening, crushed contrast and a cobalt/violet push
-  in the shadows. Inside glowing sites it adds extra contrast.
+  At night it adds crushed contrast, a cobalt/violet push in the shadows
+  and a vignette. Inside glowing sites it adds extra contrast.
 
 ## Look
 
@@ -180,14 +184,42 @@ Verified:
     (N64-style) instead of the Environment's smooth fog.
 
   Low ground below eye level fills with extra mist, strongest at night.
-- **Texture and lighting economy:**
-  - The world is vertex-colored, plus one deliberately low-res 32 px
-    nearest-filtered grain texture on the ground, far terrain and ruins.
-  - Lighting is flat: Lambert diffuse on face normals, with specular
-    disabled everywhere except water.
+- **Textures.** A small procedural set, generated at startup by
+  `Look.texture()`: 64 px, nearest-filtered with mipmaps, centered on
+  0.5 so shaders multiply by 2 and keep the vertex color's hue.
+  - grass, dirt and stone on the ground, picked by the ground color
+    (green → grass, low saturation → stone, otherwise dirt), with their
+    contrast fading out between 25 and 140 m so distant ground doesn't
+    shimmer;
+  - bark and leaves on plants, mapped in object space (triplanar) and
+    scaled with the plant, so a big tree doesn't get bigger texels;
+  - a leaf-cluster card texture with alpha: foliage crowns carry
+    alpha-cutout cards (alpha scissor 0.5) that break up their outline.
+    The material ID (bark, leaves, card) rides in UV2.x;
+  - stone on ruins, turning to leaves where moss grows;
+  - the 32 px grain for everything else.
+- **Lighting economy:**
+  - Lambert diffuse on face normals, with specular disabled everywhere
+    except water.
+  - Leaves are translucent (BACKLIGHT), so crowns lit from behind glow
+    instead of going black.
   - At night the ground gets a hard-edged toon highlight, for the wet
     look.
   - Creature and prop materials are Lambert with no specular too.
+- **Shadows and ambient:** the day ambient is low (0.3, down from 0.4)
+  and tinted a cool lavender-blue, so shadows read dark and colored
+  instead of grey. A strong violet was tried and dropped: leaves reflect
+  almost no blue or red, so a shaded forest floor went black.
+- **Clouds:** big chunky cumulus, sampled on a domed projection (bigger
+  overhead, smaller at the horizon) and quantized to a coarse grid for
+  pixelated edges, in three flat tones. Baseline cover is higher (0.34
+  on a clear day).
+- **Atmospheric perspective:** Environment fog plus the banded shader
+  fog, blue by day and cobalt at night; distance ridges fade in steps.
+- **Night:** a moon about 2.5× the old size with a two-part halo that
+  blooms, brighter bluer moonlight with dark shadows, all water glowing
+  faintly cobalt, a moon-tinted rim on foliage and creatures, and
+  stronger emission on campfires and lanterns.
 - **Depth** (added because flat lighting alone read too flat):
   - **Ambient occlusion**, in two layers:
     - SSAO on the Environment, including a little on direct light
@@ -207,8 +239,9 @@ Verified:
   - **Glow:** threshold 1.0, no global bloom, levels 1-4. Campfire
     flames, lanterns, glowing water and moss, and the sun push above the
     threshold and bloom; ordinary daylight surfaces don't.
-  - **Grade:** contrast 1.28 by day and 1.32 at night, for deep shadows
-    and bright highlights. The sky has 5 bands and the fog 6, both with
+  - **Grade:** contrast 1.28 by day and 1.32 at night, saturation 1.42
+    by day (1.2 at night), exposure 0.9, for deep shadows and bright
+    highlights. The sky has 5 bands and the fog 6, both with
     near-hard edges.
 - **Bioluminescent night** (the third palette): see Landmarks. Moss
   glows in patches a few meters across.
@@ -303,8 +336,12 @@ copy.
   Epiphytes attach to placed trees; cypress knees ring cypresses standing
   in water. Mythical folk campsites and ruins are kept clear.
 - **Rendering.** One MultiMesh per species. `PlantMeshes` builds 24
-  low-poly placeholder shapes; the foliage shader sways them with the
-  live wind.
+  low-poly placeholder shapes, with leaf-cluster cards on the crowns; the
+  foliage shader sways them with the live wind.
+- **Density.** Wet forest (mean moisture above ~0.6) packs canopy trees
+  and ground cover up to 20% closer; shrubs keep their spacing, because
+  denser shrubs walled in the view. Ground cover and epiphytes draw out
+  to 300 m, which covers the whole detail ring.
 
 ## Creatures
 
