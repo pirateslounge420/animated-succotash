@@ -131,6 +131,11 @@ func update_creatures(delta: float, daylight: float) -> void:
 	_update_prompt(delta)
 
 
+## A fallen log within reach of `pos`?
+func log_in_reach(pos: Vector3) -> bool:
+	return not _nearest_log(pos).is_empty()
+
+
 ## Turn over (or roll back) the nearest fallen log within reach.
 func interact(pos: Vector3) -> void:
 	var lg := _nearest_log(pos)

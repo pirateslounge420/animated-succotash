@@ -23,6 +23,8 @@ signal chunk_unloaded(chunk: TerrainChunk)
 @export var view_radius_chunks := 3
 @export var detail_radius_chunks := 1
 @export var max_attach_per_frame := 2
+## Tree trunk colliders added per frame (detail ring only).
+@export var tree_colliders_per_frame := 160
 
 var world: Node
 var map: PlanetData
@@ -129,6 +131,20 @@ func update_around(player_dir: Vector3) -> void:
 
 	_attach_base(max_attach_per_frame)
 	_attach_detail(max_attach_per_frame)
+	_build_tree_colliders(tree_colliders_per_frame)
+
+
+## Trunk colliders for the detail ring, the player's own chunk first.
+func _build_tree_colliders(budget: int) -> void:
+	var here: TerrainChunk = chunks.get(_rings_key)
+	if here and here.wants_tree_colliders():
+		budget -= here.build_tree_colliders(budget)
+	for key in _wanted_detail:
+		if budget <= 0:
+			return
+		var c: TerrainChunk = chunks.get(key)
+		if c and c.wants_tree_colliders():
+			budget -= c.build_tree_colliders(budget)
 
 
 func _compute_base(key: Vector3i) -> void:
@@ -222,6 +238,7 @@ func load_blocking(d: Vector3) -> void:
 		WorkerThreadPool.wait_for_task_completion(_pending_detail[key])
 	_pending_detail.clear()
 	_attach_detail(1000)
+	_build_tree_colliders(1 << 30)
 
 
 ## Chunk containing a surface direction, if loaded.

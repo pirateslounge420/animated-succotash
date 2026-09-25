@@ -66,6 +66,44 @@ static func icosphere(level: int) -> Array:
 	return _ico[level]
 
 
+## A tree shape's proportions, as fractions of its height: Vector4(trunk
+## radius, trunk collider height, crown radius, crown bottom). Trunk
+## colliders, climbing, rain shelter and rustling read these; a crown
+## radius of 0 means no crown to shelter under or brush through.
+static func tree_dims(shape: int) -> Vector4:
+	match shape:
+		S.CONIFER:
+			return Vector4(0.04, 0.35, 0.28, 0.15)
+		S.BROADLEAF:
+			return Vector4(0.05, 0.6, 0.42, 0.45)
+		S.GNARLED:
+			return Vector4(0.075, 0.45, 0.5, 0.46)
+		S.EMERGENT:
+			return Vector4(0.03, 0.85, 0.3, 0.8)
+		S.UMBRELLA:
+			return Vector4(0.045, 0.7, 0.65, 0.72)
+		S.PALM:
+			return Vector4(0.03, 0.9, 0.42, 0.75)
+		S.CYPRESS:
+			return Vector4(0.06, 0.62, 0.22, 0.42)
+		S.MANGROVE:
+			return Vector4(0.2, 0.35, 0.5, 0.53)
+		S.BAMBOO:
+			return Vector4(0.06, 0.6, 0.2, 0.4)
+		S.ROSETTE:
+			return Vector4(0.07, 0.75, 0.25, 0.7)
+		S.SPIKE_ROSETTE:
+			return Vector4(0.2, 0.3, 0.0, 0.0)
+		S.CACTUS:
+			return Vector4(0.08, 1.0, 0.0, 0.0)
+	return Vector4(0.05, 0.5, 0.35, 0.4)
+
+
+## Can you climb it? Trees with a trunk and branches, not cacti or rosettes.
+static func climbable(shape: int) -> bool:
+	return shape in [S.CONIFER, S.BROADLEAF, S.GNARLED, S.EMERGENT, S.UMBRELLA, S.PALM, S.CYPRESS, S.MANGROVE, S.BAMBOO]
+
+
 ## `far`: the light version for trees beyond the ring nearest the player
 ## (once-subdivided lobes become icosahedra, trunks 5-sided, no branches
 ## or leaf cards).

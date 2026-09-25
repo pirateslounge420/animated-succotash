@@ -53,13 +53,25 @@ var fine_heights := PackedFloat32Array()
 var _coarse_mesh: MeshInstance3D
 var _fine_mesh: MeshInstance3D
 ## Canopy and emergent trees on this chunk: [local_position, height,
-## species_index]. Canopy-dwelling creatures attach to these.
+## species_index, instance]. Canopy-dwelling creatures attach to these.
 var trees: Array = []
+## species index -> the MultiMesh drawing that species' trees here.
+var tree_mm := {}
 ## Raw compute() output and tree hosts, kept so the undergrowth layer can
 ## be computed later when the player comes close.
 var data: Dictionary
 var hosts: Array = []
 var detail_node: Node3D
+
+## Physics layer (bit value) of tree trunks, besides the default layer 1,
+## so queries can look for trees alone.
+const TREE_LAYER := 2
+# Trunk colliders, only while the chunk is in the detail ring: one static
+# body, one cylinder shape owner per tree, built a few hundred per frame.
+var _tree_body: StaticBody3D
+var _tree_next := 0
+var _owner_tree := {} # shape owner id -> index in trees
+static var _cylinders := {}
 
 
 static func key_of(face_i: int, i: int, j: int) -> Vector3i:
@@ -600,10 +612,81 @@ func set_fine(fine: bool) -> void:
 	if _fine_mesh and _fine_mesh.visible != fine:
 		_fine_mesh.visible = fine
 		_coarse_mesh.visible = not fine
+		if not fine and _tree_body:
+			_tree_body.queue_free()
+			_tree_body = null
+			_tree_next = 0
+			_owner_tree.clear()
 		var all := SpeciesDB.all()
 		for ch in get_children():
 			if ch is MultiMeshInstance3D and ch.has_meta("species"):
 				ch.multimesh.mesh = PlantMeshes.mesh_for(all[ch.get_meta("species")], not fine)
+
+
+# --- Trees: trunk colliders and lookups -------------------------------------
+
+## True while trees in the detail ring still lack trunk colliders.
+func wants_tree_colliders() -> bool:
+	return _fine_mesh != null and _fine_mesh.visible and _tree_next < trees.size()
+
+
+## Give up to `budget` more trees a trunk collider (a cylinder sized from
+## the species' shape). Returns how many were added.
+func build_tree_colliders(budget: int) -> int:
+	if _tree_body == null:
+		_tree_body = StaticBody3D.new()
+		_tree_body.name = "Trunks"
+		_tree_body.collision_layer = 1 | TREE_LAYER
+		_tree_body.collision_mask = 0
+		add_child(_tree_body)
+	var all := SpeciesDB.all()
+	var used := 0
+	while _tree_next < trees.size() and used < budget:
+		var i := _tree_next
+		_tree_next += 1
+		used += 1
+		var t: Array = trees[i]
+		var h: float = t[1]
+		var dims := PlantMeshes.tree_dims((all[t[2]] as PlantSpecies).shape)
+		var r := clampf(dims.x * h * 0.85, 0.1, 1.6)
+		var ch := maxf(dims.y * h, 2.0)
+		var key := Vector2i(roundi(r * 20.0), roundi(ch * 2.0))
+		if not _cylinders.has(key):
+			var cyl := CylinderShape3D.new()
+			cyl.radius = key.x / 20.0
+			cyl.height = key.y / 2.0
+			_cylinders[key] = cyl
+		var upv := tree_up(i)
+		var x := upv.cross(Vector3.FORWARD if absf(upv.z) < 0.9 else Vector3.RIGHT).normalized()
+		var owner := _tree_body.create_shape_owner(_tree_body)
+		_tree_body.shape_owner_add_shape(owner, _cylinders[key])
+		_tree_body.shape_owner_set_transform(owner, Transform3D(Basis(x, upv, x.cross(upv)), (t[0] as Vector3) + upv * (ch * 0.5 - 0.3)))
+		_owner_tree[owner] = i
+	return used
+
+
+func has_tree_colliders() -> bool:
+	return _tree_body != null
+
+
+## Index in `trees` of the tree a trunk-collider shape belongs to, or -1.
+func tree_for_shape(body: Object, shape_idx: int) -> int:
+	if body != _tree_body or _tree_body == null:
+		return -1
+	return _owner_tree.get(_tree_body.shape_find_owner(shape_idx), -1)
+
+
+## A tree's foot in scene space, and its local up.
+func tree_base(i: int) -> Vector3:
+	return global_position + (trees[i][0] as Vector3)
+
+
+func tree_up(i: int) -> Vector3:
+	return (center_dir * anchor_radius + (trees[i][0] as Vector3)).normalized()
+
+
+func tree_species(i: int) -> PlantSpecies:
+	return SpeciesDB.all()[trees[i][2]]
 
 
 func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) -> void:

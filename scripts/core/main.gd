@@ -159,7 +159,10 @@ func _process(delta: float) -> void:
 	TerrainChunk.terrain_material().set_shader_parameter("wetness", 1.0 - sky.daylight)
 	post.set_night(1.0 - sky.daylight)
 	creatures.update_creatures(delta, sky.daylight)
-	hud.set_prompt(creatures.prompt if creatures.prompt != "" else landmarks.nearby)
+	var prompt: String = creatures.prompt
+	if prompt == "":
+		prompt = player.prompt if player.prompt != "" else landmarks.nearby
+	hud.set_prompt(prompt)
 	hud.update_readout(world, d, elevation, _local_weather, player.swimming, delta)
 	map_overlay.update_map(d, delta)
 
@@ -185,4 +188,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("toggle_hud"):
 		hud.toggle()
 	elif event.is_action_pressed("interact"):
-		creatures.interact(player.global_position)
+		# Let go of a tree; else a log within reach; else climb the tree
+		# in front of you.
+		if player.climbing:
+			player.stop_climb()
+		elif creatures.log_in_reach(player.global_position):
+			creatures.interact(player.global_position)
+		else:
+			player.try_climb()

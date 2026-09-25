@@ -11,6 +11,7 @@ class_name SoundSynth
 ##   drone    low beating rumble with breath noise (trolls, skinwalker)
 ##   whisper  breathy formant noise (wisps, witches)
 ##   meteor   a rising hiss as it streaks over, then a far rumble (sky events)
+##   rustle   leaves shaken: a crackling burst of high filtered noise
 
 const RATE := 22050
 const VARIANTS := 3
@@ -42,6 +43,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _whisper(rng)
 		"meteor":
 			samples = _meteor(rng)
+		"rustle":
+			samples = _rustle(rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -199,4 +202,24 @@ static func _meteor(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		if rt > 0.0:
 			rumble = rumble_lp2 * 30.0 * minf(rt / 0.05, 1.0) * exp(-rt * 1.6)
 		s[i] = hiss * 0.8 + rumble
+	return s
+
+
+static func _rustle(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(0.7, 1.1))
+	var hp := 0.0
+	var lp := 0.0
+	var prev := 0.0
+	# Leaf clicks: sparse crackle whose density swells and fades.
+	for i in s.size():
+		var t := float(i) / s.size()
+		var swell := sin(PI * t) * (0.7 + 0.3 * sin(t * 23.0 + rng.randf()))
+		var x := rng.randf_range(-1, 1)
+		# High-passed noise (leafy hiss) ...
+		hp = x - prev + 0.97 * hp
+		prev = x
+		lp = lerpf(lp, hp, 0.55)
+		# ... with clicks.
+		var click := (rng.randf_range(-1, 1) * 3.0) if rng.randf() < 0.004 * swell else 0.0
+		s[i] = (lp * 0.6 + click) * swell
 	return s

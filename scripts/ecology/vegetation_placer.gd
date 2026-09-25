@@ -221,7 +221,8 @@ static func _place_knees(ctx: _Context, out: Dictionary, hosts: Array) -> void:
 ## center at `anchor_r` from the planet center), which doesn't depend on
 ## the floating origin, so the whole buffer is built here and the main
 ## thread only hands it over. Returns sp_idx -> [buffer, count, trees],
-## trees being [local_position, height] of canopy and emergent plants.
+## trees being [local_position, height, instance] of canopy and emergent
+## plants.
 static func prepare(plants: Dictionary, center: Vector3, anchor_r: float) -> Dictionary:
 	var out := {}
 	var all := SpeciesDB.all()
@@ -269,7 +270,7 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float) -> Dic
 			buf[k + 16] = arr[o + 8]
 			buf[k + 17] = arr[o + 9]
 			if tall:
-				trees.append([pos, arr[o + 7]])
+				trees.append([pos, arr[o + 7], i])
 		out[sp_idx] = [buf, count, trees]
 	return out
 
@@ -295,7 +296,9 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 		mm.instance_count = entry[1]
 		mm.buffer = entry[0]
 		for t in entry[2]:
-			chunk.trees.append([t[0], t[1], sp_idx])
+			chunk.trees.append([t[0], t[1], sp_idx, t[2]])
+		if lod:
+			chunk.tree_mm[sp_idx] = mm
 		var mmi := MultiMeshInstance3D.new()
 		mmi.name = sp.name.replace(" ", "_")
 		mmi.multimesh = mm

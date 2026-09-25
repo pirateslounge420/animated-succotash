@@ -12,7 +12,13 @@ extends CharacterBody3D
 ##   crouch   hold crouch (Shift): lower, slower and nearly silent
 ##   jump     hold to keep jumping each time you land
 ##   swim     in water deeper than chest height
+##   climb    E facing a tree trunk: W/S up and down, A/D around it, E or
+##            jump to let go (capped just into the crown)
 ## There is no fast travel: the world is crossed on foot.
+##
+## Trees (TreeContact): trunks block you, crowns you brush through or
+## trunks you bump rustle, and standing under a crown is `under_canopy`
+## (rain shelter).
 ##
 ## `noise_level` (0 silent .. 1 sprinting) is what wildlife hears
 ## (CreatureSpawner scales how close creatures let you come by it), and
@@ -39,6 +45,8 @@ const STAND_HEIGHT := 1.7
 const CROUCH_HEIGHT := 1.05
 const CAMERA_Y := 1.5
 const CROUCH_CAMERA_Y := 0.95
+const CLIMB_SPEED := 1.1
+const CLIMB_REACH_M := 1.6
 const MOUSE_SENSITIVITY := 0.0025
 const STICK_SENSITIVITY := 2.6
 
@@ -56,6 +64,9 @@ var noise_level := 0.1
 var still_time := 0.0
 ## Current pose for animation (see the class notes).
 var anim_state := "idle"
+## Context prompt ("E: climb the tree"), or "".
+var prompt := ""
+var trees: TreeContact
 
 var _yaw := 0.0 # camera heading around local up, radians
 var _facing := Vector3.FORWARD # direction the body faces
@@ -68,6 +79,11 @@ var _shape: CapsuleShape3D
 var _shape_node: CollisionShape3D
 var _last_forward_ms := -100000
 var _sprint_latched := false
+var _climb_chunk: TerrainChunk
+var _climb_tree := -1
+var _climb_y := 0.0
+var _climb_out := Vector3.ZERO # unit, from the trunk's axis out to the player
+var _prompt_timer := 0.0
 
 
 func _ready() -> void:
@@ -96,6 +112,9 @@ func _ready() -> void:
 	_camera.fov = 70.0
 	_camera.current = true
 	_spring.add_child(_camera)
+	trees = TreeContact.new()
+	trees.name = "TreeContact"
+	add_child(trees)
 
 
 func camera() -> Camera3D:
@@ -148,6 +167,14 @@ func _physics_process(delta: float) -> void:
 		_heading = CubeSphere.north(up)
 	var cam_forward := _heading.rotated(up, _yaw)
 	var cam_right := cam_forward.cross(up)
+	_update_prompt(delta, cam_forward)
+	if climbing:
+		_climb_step(delta)
+		_orient()
+		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
+		_update_noise(delta, 0.0)
+		trees.update_contact(delta, global_position, get_world_3d().direct_space_state)
+		return
 
 	var radius: float = world.radius_of(global_position)
 	var water := chunks.water_level_at(surface_dir)
@@ -181,6 +208,12 @@ func _physics_process(delta: float) -> void:
 		vertical -= up * GRAVITY * delta
 	velocity = horizontal + vertical
 	move_and_slide()
+	for k in get_slide_collision_count():
+		var col := get_slide_collision(k)
+		var body := col.get_collider()
+		if body is CollisionObject3D and (body as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER:
+			trees.bumped(body, col.get_collider_shape_index(), horizontal.length())
+	trees.update_contact(delta, global_position, get_world_3d().direct_space_state)
 
 	# Safety net: never fall through unloaded ground.
 	var ground := chunks.ground_height(surface_dir)
@@ -193,6 +226,99 @@ func _physics_process(delta: float) -> void:
 	_orient()
 	_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
 	_update_noise(delta, horizontal.length())
+
+
+# --- Climbing ---------------------------------------------------------------
+
+## The climbable tree trunk right in front of the player: [chunk, index],
+## or [].
+func tree_ahead(forward: Vector3) -> Array:
+	var from := global_position + up * 1.1
+	var q := PhysicsRayQueryParameters3D.create(from, from + forward * CLIMB_REACH_M, TerrainChunk.TREE_LAYER)
+	var hit := get_world_3d().direct_space_state.intersect_ray(q)
+	if hit.is_empty() or not hit.collider is Node:
+		return []
+	var chunk := (hit.collider as Node).get_parent() as TerrainChunk
+	if chunk == null:
+		return []
+	var i := chunk.tree_for_shape(hit.collider, hit.shape)
+	if i < 0 or chunk.trees[i][1] < 3.0 or not PlantMeshes.climbable(chunk.tree_species(i).shape):
+		return []
+	return [chunk, i]
+
+
+## Start climbing the tree in front of you, if there is one.
+func try_climb() -> bool:
+	if climbing or swimming:
+		return false
+	var t := tree_ahead(_camera_forward())
+	if t.is_empty():
+		return false
+	_climb_chunk = t[0]
+	_climb_tree = t[1]
+	var base := _climb_chunk.tree_base(_climb_tree)
+	var tup := _climb_chunk.tree_up(_climb_tree)
+	var rel := global_position - base
+	_climb_y = maxf(rel.dot(tup), 0.3)
+	_climb_out = (rel - tup * rel.dot(tup)).normalized()
+	climbing = true
+	crouching = false
+	_set_crouch(false)
+	velocity = Vector3.ZERO
+	trees.rustle(_climb_chunk, _climb_tree, 0.6)
+	return true
+
+
+## Let go: drop straight down, or push off the trunk (jump).
+func stop_climb(push := false) -> void:
+	if not climbing:
+		return
+	climbing = false
+	velocity = (_climb_out * 2.5 + up * 2.5) if push else Vector3.ZERO
+	_climb_chunk = null
+	_climb_tree = -1
+
+
+func _climb_step(delta: float) -> void:
+	# The chunk streamed out or left the detail ring (no trunks to hold).
+	if not is_instance_valid(_climb_chunk) or not _climb_chunk.has_tree_colliders():
+		stop_climb()
+		return
+	var h: float = _climb_chunk.trees[_climb_tree][1]
+	var dims := PlantMeshes.tree_dims(_climb_chunk.tree_species(_climb_tree).shape)
+	var base := _climb_chunk.tree_base(_climb_tree)
+	var tup := _climb_chunk.tree_up(_climb_tree)
+	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
+	_climb_y += input.y * CLIMB_SPEED * delta
+	if _climb_y < 0.25 and input.y < 0.0:
+		stop_climb()
+		return
+	_climb_y = minf(_climb_y, h * 0.9)
+	var r := clampf(dims.x * h * 0.85, 0.1, 1.6) * lerpf(1.0, 0.6, clampf(_climb_y / h, 0.0, 1.0))
+	_climb_out = _climb_out.rotated(tup, -input.x * CLIMB_SPEED * delta / (r + 0.4))
+	_climb_out = (_climb_out - tup * _climb_out.dot(tup)).normalized()
+	global_position = base + tup * _climb_y + _climb_out * (r + 0.4)
+	velocity = Vector3.ZERO
+	_facing = -_climb_out
+	if Input.is_action_just_pressed("jump"):
+		stop_climb(true)
+
+
+func _camera_forward() -> Vector3:
+	return _heading.rotated(up, _yaw)
+
+
+func _update_prompt(delta: float, forward: Vector3) -> void:
+	_prompt_timer -= delta
+	if _prompt_timer > 0.0:
+		return
+	_prompt_timer = 0.2
+	if climbing:
+		prompt = "W/S climb · A/D around the trunk · E or Space let go"
+	elif not swimming and not tree_ahead(forward).is_empty():
+		prompt = "E: climb the tree"
+	else:
+		prompt = ""
 
 
 ## Sprint (double-tap forward, held; or the pad's sprint button) and crouch

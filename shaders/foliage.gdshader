@@ -56,6 +56,15 @@ void vertex() {
 	float lean = clamp(speed * 0.04, 0.0, 0.8) * gust;
 	float flutter = sin(TIME * 3.3 + phase * 2.1) * 0.05 * clamp(speed * 0.12, 0.0, 1.0);
 	VERTEX += dir * (lean + flutter) * sway;
+	// Rustled (brushed through or bumped, TreeContact): a quick shiver of
+	// the whole crown, a few tens of centimeters on a big tree.
+	float rustle = INSTANCE_CUSTOM.b;
+	if (rustle > 0.001) {
+		vec3 sx = normalize(MODEL_MATRIX[0].xyz);
+		vec3 sz = normalize(MODEL_MATRIX[2].xyz);
+		float amp = 0.012 * length(MODEL_MATRIX[1].xyz) * rustle * sway;
+		VERTEX += (sx * sin(TIME * 23.0 + phase) + sz * cos(TIME * 19.0 + phase * 1.3)) * amp;
+	}
 	sway_w = sway;
 	glow_pick = step(0.5, fract(sin(float(INSTANCE_ID) * 12.9898) * 43758.5453));
 	world_pos = VERTEX;
