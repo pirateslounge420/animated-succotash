@@ -6,7 +6,9 @@ extends Node3D
 ## perching in a tree crown or flying.
 ##
 ## Behavior by habitat role (DESIGN.md "Creature Spawning"):
-##   ground      wander near home, graze, bolt away when you get close
+##   ground      wander near home, graze, now and then walk to nearby
+##               water to drink; bolt away when you get close, then stay
+##               wary (standing, watching you) until it calms down
 ##   canopy      perch in one tree's crown; hop or fly to another tree
 ##   water_edge  waders stand and step in the shallows, ducks paddle on open
 ##               water; both take off when startled
@@ -16,6 +18,11 @@ extends Node3D
 ##   mythical    driven by CreatureSpawner's territory states; temperament
 ##               sets what "visible" means: hostile stalks at a distance and
 ##               freezes when looked at, neutral watches, friendly comes over
+## How close is "close" depends on how loud you are (the player's
+## noise_level: crouched and still, you can get within a third of a
+## creature's shy_m; sprinting, it bolts from half again as far) and on its
+## suspicion (1 after it's been startled). Suspicion fades while you keep
+## still near it (a few seconds) or stay well away (slowly).
 ## No creature attacks; there is no combat.
 
 signal finished(creature: Creature)
@@ -42,6 +49,8 @@ var voice_variant := 0
 var leaving := false
 var done := false
 var fly_off := false
+## 0-1: how wary it still is after being startled.
+var suspicion := 0.0
 
 var _parts := {}
 var _body: Node3D
@@ -138,13 +147,15 @@ func tick(delta: float, ctx: Dictionary) -> void:
 		if _life <= 0.0:
 			leave()
 
+	var shy := _shy_m(ctx)
+	_calm(delta, ctx, to_player, shy)
 	match species.role:
 		"ground":
-			_ground(delta, player_dir, to_player)
+			_ground(delta, player_dir, to_player, shy)
 		"canopy":
-			_canopy(delta, player_dir, to_player)
+			_canopy(delta, player_dir, to_player, shy)
 		"water_edge":
-			_water_edge(delta, player_dir, to_player)
+			_water_edge(delta, player_dir, to_player, shy)
 		"swarm":
 			_drift(delta)
 		"insect":
@@ -179,21 +190,53 @@ func _call_interval() -> float:
 
 # --- Roles ---------------------------------------------------------------------
 
-func _ground(delta: float, player_dir: Vector3, to_player: float) -> void:
-	if species.shy_m > 0.0 and to_player < species.shy_m and mode != "flee":
+## Flight distance now: shy_m scaled by the player's noise, widened by
+## suspicion.
+func _shy_m(ctx: Dictionary) -> float:
+	var noise: float = ctx.get("player_noise", 0.4)
+	return species.shy_m * (0.35 + 1.25 * noise) * (1.0 + suspicion)
+
+
+## Suspicion fades while the player keeps still nearby (it's watching you
+## and nothing happens), slowly when you're far off.
+func _calm(delta: float, ctx: Dictionary, to_player: float, shy: float) -> void:
+	if suspicion <= 0.0:
+		return
+	var still: float = ctx.get("player_still", 0.0)
+	if still > 1.5 and to_player < shy * 4.0 + 10.0:
+		suspicion -= delta / 6.0
+	elif to_player > shy * 3.0:
+		suspicion -= delta / 25.0
+	suspicion = maxf(suspicion, 0.0)
+
+
+func _ground(delta: float, player_dir: Vector3, to_player: float, shy: float) -> void:
+	if species.shy_m > 0.0 and to_player < shy and mode != "flee":
 		mode = "flee"
+		suspicion = 1.0
+		_body.rotation.x = 0.0
 		_timer = _rng.randf_range(3.0, 6.0)
 	match mode:
 		"flee":
 			var away := -_tangent_to(player_dir)
 			_walk(dir + away * 0.001, species.speed_mps, delta)
-			if _timer <= 0.0 or to_player > species.shy_m * 2.5:
-				mode = "idle"
+			if _timer <= 0.0 or to_player > shy * 2.5:
+				mode = "wary"
 				home = dir
 				_timer = _rng.randf_range(2.0, 6.0)
+		"wary":
+			# Stands and watches you until its suspicion has faded.
+			_speed_now = 0.0
+			var t := _tangent_to(player_dir)
+			heading = heading.slerp(t, clampf(delta * 3.0, 0.0, 1.0)).normalized()
+			if suspicion <= 0.0:
+				mode = "idle"
+				_timer = _rng.randf_range(1.0, 3.0)
 		"idle":
 			_speed_now = 0.0
 			if _timer <= 0.0:
+				if _rng.randf() < DRINK_CHANCE and _go_drink():
+					return
 				goal = _random_near(home, home_radius)
 				mode = "walk" if _is_dry(goal) else "idle"
 				_timer = _rng.randf_range(1.0, 3.0)
@@ -202,13 +245,57 @@ func _ground(delta: float, player_dir: Vector3, to_player: float) -> void:
 			if left < 0.5 or _timer < -20.0:
 				mode = "idle"
 				_timer = _rng.randf_range(2.0, 8.0)
+		"to_water":
+			var left := _walk(goal, species.speed_mps * 0.35, delta)
+			if left < 0.5:
+				mode = "drink"
+				_timer = _rng.randf_range(5.0, 9.0)
+			elif _timer < -25.0:
+				mode = "idle"
+				_timer = _rng.randf_range(2.0, 5.0)
+		"drink":
+			# Head down at the water's edge, then back to its usual ground.
+			_speed_now = 0.0
+			_body.rotation.x = lerpf(_body.rotation.x, -0.3, clampf(delta * 4.0, 0.0, 1.0))
+			if _timer <= 0.0:
+				_body.rotation.x = 0.0
+				goal = _random_near(home, home_radius * 0.5)
+				mode = "walk" if _is_dry(goal) else "idle"
+				_timer = _rng.randf_range(1.0, 3.0)
 
 
-func _canopy(delta: float, player_dir: Vector3, to_player: float) -> void:
+## Now and then a grazer wanders off to drink (flavor, not a needs
+## simulation): open water within DRINK_REACH_M, walking to the last dry
+## ground before it.
+const DRINK_CHANCE := 0.08
+const DRINK_REACH_M := 45.0
+
+
+func _go_drink() -> bool:
+	var a0 := _rng.randf() * TAU
+	for k in 12:
+		var a := a0 + k * TAU / 12.0
+		var prev := dir
+		for step in range(1, 7):
+			var p := CreatureSpawner._offset(dir, a, DRINK_REACH_M * step / 6.0)
+			if not _is_dry(p):
+				if step == 1:
+					break
+				goal = prev
+				mode = "to_water"
+				_timer = 0.0
+				return true
+			prev = p
+	return false
+
+
+func _canopy(delta: float, player_dir: Vector3, to_player: float, shy: float) -> void:
 	match mode:
 		"perch":
 			_speed_now = 0.0
-			var startled := species.shy_m > 0.0 and to_player < species.shy_m
+			var startled := species.shy_m > 0.0 and to_player < shy
+			if startled:
+				suspicion = 1.0
 			if startled or _timer <= 0.0:
 				var next: Dictionary = spawner.host_near(dir, 12.0 if not startled else 25.0, host, player_dir if startled else Vector3.ZERO)
 				if next.is_empty():
@@ -223,7 +310,7 @@ func _canopy(delta: float, player_dir: Vector3, to_player: float) -> void:
 				_timer = _rng.randf_range(6.0, 25.0)
 
 
-func _water_edge(delta: float, player_dir: Vector3, to_player: float) -> void:
+func _water_edge(delta: float, player_dir: Vector3, to_player: float, shy: float) -> void:
 	if fly_off:
 		# Took off: climb away and vanish.
 		lift += delta * 2.5
@@ -232,8 +319,9 @@ func _water_edge(delta: float, player_dir: Vector3, to_player: float) -> void:
 		if lift > 25.0:
 			leave()
 		return
-	if species.shy_m > 0.0 and to_player < species.shy_m:
-		if afloat and to_player > species.shy_m * 0.45:
+	if species.shy_m > 0.0 and to_player < shy:
+		suspicion = 1.0
+		if afloat and to_player > shy * 0.45:
 			mode = "flee"
 		else:
 			fly_off = true
@@ -243,7 +331,7 @@ func _water_edge(delta: float, player_dir: Vector3, to_player: float) -> void:
 	match mode:
 		"flee":
 			_walk(dir - _tangent_to(player_dir) * 0.001, species.speed_mps * 2.0, delta, true)
-			if to_player > species.shy_m * 1.5:
+			if to_player > shy * 1.5:
 				mode = "idle"
 		"idle":
 			_speed_now = 0.0

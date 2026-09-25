@@ -103,7 +103,10 @@ func update_creatures(delta: float, daylight: float) -> void:
 	_time += delta
 	_daylight = daylight
 	var pd := player.surface_dir
-	var ctx := {"player_dir": pd, "looking_at": _looked_at()}
+	# The player's noise and stillness (PlanetPlayer) set how close
+	# wildlife lets you come and how fast a startled animal calms down.
+	var ctx := {"player_dir": pd, "looking_at": _looked_at(),
+		"player_noise": player.noise_level, "player_still": player.still_time}
 
 	# One ambient species per frame (round robin), dens and territories a
 	# few times a second.
@@ -453,7 +456,9 @@ func _update_packs(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 		var sp: CreatureSpecies = den.species
 		var home_dist := CubeSphere.surface_distance_m(den.dir, pd)
 		var territory := sp.territory_m
-		var notice := float(sp.pack.get("notice_m", 60.0))
+		# Packs hear you too: crouched you can slip past, sprinting they
+		# pick you up from farther off.
+		var notice := float(sp.pack.get("notice_m", 60.0)) * (0.45 + 1.1 * player.noise_level)
 		_fidelity(den.voice, home_dist)
 
 		# Spawn the pack when you're near enough to meet it.
