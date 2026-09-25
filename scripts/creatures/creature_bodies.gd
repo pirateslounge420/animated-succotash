@@ -59,27 +59,27 @@ static func build(sp: CreatureSpecies) -> Dictionary:
 
 # --- Materials and primitive parts -------------------------------------------
 
-static func mat(c: Color, glow := 0.0) -> StandardMaterial3D:
+static func mat(c: Color, glow := 0.0) -> Material:
 	var key := "%s_%.2f" % [c.to_html(), glow]
 	if _mats.has(key):
 		return _mats[key]
-	var m := StandardMaterial3D.new()
-	m.albedo_color = c
-	# Flat period lighting: Lambert diffuse, no PBR specular.
-	m.diffuse_mode = BaseMaterial3D.DIFFUSE_LAMBERT
-	m.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
-	# Rim light sells the silhouette against the ground. With specular off,
-	# roughness only sets the rim falloff ((1 - roughness) * 16; at 1.0 it
-	# would light the whole body).
-	m.roughness = 0.75
-	m.rim_enabled = true
-	m.rim = 0.45
-	m.rim_tint = 0.4
+	var m: Material
 	if glow > 0.0:
-		m.emission_enabled = true
-		m.emission = c
-		m.emission_energy_multiplier = glow
-		m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		# Glowing parts (eyes, lanterns, wisps): unshaded emissive.
+		var sm := StandardMaterial3D.new()
+		sm.albedo_color = c
+		sm.emission_enabled = true
+		sm.emission = c
+		sm.emission_energy_multiplier = glow
+		sm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		m = sm
+	else:
+		# Lit like the world: colored shadows, rim light, moonlit edge.
+		var sh := ShaderMaterial.new()
+		sh.shader = preload("res://shaders/creature.gdshader")
+		sh.set_shader_parameter("albedo", c)
+		Look.register(sh)
+		m = sh
 	_mats[key] = m
 	return m
 

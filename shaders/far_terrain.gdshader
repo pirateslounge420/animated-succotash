@@ -32,3 +32,7 @@ void fragment() {
 	ROUGHNESS = 1.0;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }
+
+void light() {
+	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
+}

@@ -33,10 +33,13 @@ void fragment() {
 	ROUGHNESS = 0.75; // shapes the rim only (see foliage.gdshader)
 	float patch = texture(look_grain, uv * 0.06).r; // moss patches ~0.5-2 m
 	float glow = look_site_glow(world_pos, 0.0) * COLOR.a * smoothstep(0.5, 0.68, patch);
-	// Kept light: big flat faces (the motte top, wall faces) seen at grazing
-	// angles would otherwise flood with rim light.
-	RIM = 0.12;
-	RIM_TINT = 0.3;
 	EMISSION = look_glow_emission(world_pos, glow * 2.6) + look_rim(NORMAL, VIEW, 0.2);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+}
+
+// Lambert with colored shadows and a light rim (0.12: big flat faces seen
+// at grazing angles would otherwise flood with rim light).
+void light() {
+	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
+	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, ROUGHNESS, 0.12, 0.3, ALBEDO);
 }

@@ -75,3 +75,36 @@ float look_site_glow(vec3 world_pos, float kind_weight) {
 	}
 	return g;
 }
+
+// Colored shadows (every world shader's light() uses these; they replace
+// Godot's built-in Lambert). The ambient fill is neutral; the color of the
+// shade comes from here instead: wherever the sun or moon is blocked
+// (shadow) or faces away, a share of it comes back tinted teal/cool blue.
+// It multiplies the surface's own albedo like any light, so a leaf in
+// shade stays green and a stone stays stone, just cooler and darker.
+uniform vec3 look_shadow_tint : source_color = vec3(0.28, 0.62, 0.78);
+uniform float look_shadow_fill = 0.32;
+
+vec3 look_diffuse(vec3 n, vec3 l, vec3 light_color, float att, bool directional) {
+	float ndl = dot(n, l);
+	// LIGHT_COLOR carries a factor of PI (Godot's convention).
+	vec3 direct = light_color * max(ndl, 0.0) * att / PI;
+	if (!directional) {
+		return direct;
+	}
+	float lit = clamp(ndl * 3.0, 0.0, 1.0) * att;
+	float wrap = 0.55 + 0.45 * ndl;
+	return direct + light_color / PI * look_shadow_tint * look_shadow_fill * wrap * (1.0 - lit);
+}
+
+// Godot's rim light (lost with a custom light()): a silhouette edge lit by
+// each light; roughness sets its width.
+vec3 look_rim_light(vec3 n, vec3 v, vec3 light_color, float roughness, float rim, float tint, vec3 albedo) {
+	float r = pow(max(1e-4, 1.0 - dot(n, v)), max(0.0, (1.0 - roughness) * 16.0));
+	return r * rim * mix(vec3(1.0), albedo, tint) * light_color / PI;
+}
+
+// Godot's backlight (translucency), likewise.
+vec3 look_backlight(vec3 n, vec3 l, vec3 light_color, float att, vec3 backlight) {
+	return light_color / PI * (1.0 - max(dot(n, l), 0.0)) / PI * backlight * att;
+}

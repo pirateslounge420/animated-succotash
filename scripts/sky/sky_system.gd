@@ -252,15 +252,14 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# never black: a starlight floor, lifted by the moon. The night fill is
 	# blue-lavender rather than pure blue, since leaves and soil reflect
 	# little blue and would otherwise go black.
-	# Shadows are lit only by this fill, so it sets how dark and what color
-	# they are: low, and cool blue-violet, so shadow reads as colored depth
-	# against warm sunlit faces rather than a pale grey wash. Not a pure
-	# violet: leaves reflect almost no blue or red, so under a violet fill
-	# a shaded forest floor goes black instead of deep green.
-	var amb_day := zenith.lerp(Color(0.5, 0.58, 0.95), 0.6).lerp(Color.WHITE, 0.12)
+	# By day the fill is neutral: the color of shade comes from the world
+	# shaders' light() instead (Look: blocked or averted sun comes back
+	# tinted teal, multiplying each surface's own color, so forests stay
+	# green in shade instead of going grey or violet).
+	var amb_day := Color(0.8, 0.82, 0.85)
 	var amb_night := Color(0.3, 0.34, 0.85).lerp(Color(0.42, 0.46, 0.92), lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
-	environment.ambient_light_energy = lerpf(0.18 + 0.2 * lift, 0.3, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
+	environment.ambient_light_energy = lerpf(0.18 + 0.2 * lift, 0.26, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
 
 	# Fog and mist (drawn in bands by the world shaders, see Look): a
 	# light haze that gives depth to long daytime views; thicker at night
@@ -282,6 +281,8 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 		"look_night": night,
 		"look_glow": 1.0 - smoothstep(0.08, 0.55, daylight),
 		"look_rim_color": moon_col.lerp(Color(0.4, 0.5, 1.0), 0.5) * (0.35 + 0.65 * moonlight),
+		# Shade: teal under the sun, cobalt under the moon.
+		"look_shadow_tint": Color(0.28, 0.62, 0.78).lerp(Color(0.22, 0.34, 0.95), night),
 	})
 	sky_material.set_shader_parameter("fog_color", fog_color)
 

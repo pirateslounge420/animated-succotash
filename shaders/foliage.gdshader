@@ -11,8 +11,9 @@
 // silhouettes are ragged and dappled instead of round. The material
 // comes from UV2.x (0 bark, 1 leaves, 2 card); card UVs are in UV.
 //
-// Lit flat (Lambert, no specular) like the terrain, with a rim light on
-// silhouettes (lit by sun and moon, plus a moonlit edge after dark). Near
+// Lit like the terrain (Lambert with colored shadows, no specular), with a
+// rim light on silhouettes (lit by sun and moon, plus a moonlit edge after
+// dark) and leaf translucency. Near
 // magical sites, about half the plants glow at their tips at night.
 shader_type spatial;
 render_mode world_vertex_coords, cull_disabled, diffuse_lambert, specular_disabled;
@@ -71,13 +72,19 @@ void fragment() {
 	// them too, so crowns seen from below stay green instead of black.
 	float leafy = step(0.5, mat_id);
 	BACKLIGHT = ALBEDO * 0.6 * leafy;
-	// Specular is disabled, so roughness only shapes the rim: Godot's rim
-	// falloff exponent is (1 - roughness) * 16, and at 1.0 the "rim" would
-	// cover the whole surface.
+	// Specular is disabled, so roughness only shapes the rim (light()):
+	// the rim falloff exponent is (1 - roughness) * 16, and at 1.0 the
+	// "rim" would cover the whole surface.
 	ROUGHNESS = 0.75;
 	float glow = look_site_glow(world_pos, 0.25) * glow_pick * smoothstep(0.3, 0.9, sway_w);
-	RIM = 0.45;
-	RIM_TINT = 0.4;
 	EMISSION = look_glow_emission(world_pos, glow * 1.0) + look_rim(NORMAL, VIEW, 0.45);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+}
+
+// Lambert with colored shadows, plus the rim and leaf translucency that a
+// custom light() has to supply itself (RIM 0.45, tint 0.4).
+void light() {
+	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
+	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, ROUGHNESS, 0.45, 0.4, ALBEDO);
+	DIFFUSE_LIGHT += look_backlight(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, BACKLIGHT);
 }

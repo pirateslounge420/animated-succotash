@@ -11,6 +11,8 @@
 // magical sites, patches of moss glow at night.
 shader_type spatial;
 render_mode cull_back, diffuse_lambert, specular_toon;
+// light() below: Lambert with colored shadows (Look), plus the toon wet
+// highlight.
 
 #include "res://shaders/look.gdshaderinc"
 
@@ -53,4 +55,11 @@ void fragment() {
 	float glow = look_site_glow(world_pos, 0.3) * smoothstep(0.6, 0.75, patch);
 	EMISSION = look_glow_emission(world_pos, glow * 0.55);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+}
+
+void light() {
+	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
+	// Hard-edged toon highlight (wet ground at night).
+	float rv = dot(reflect(-LIGHT, NORMAL), VIEW);
+	SPECULAR_LIGHT += LIGHT_COLOR / PI * ATTENUATION * smoothstep(0.9, 0.93, rv) * SPECULAR_AMOUNT * 4.0;
 }
