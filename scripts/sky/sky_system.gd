@@ -24,7 +24,7 @@ const SKY_SHADER := preload("res://shaders/sky.gdshader")
 
 @export var moon_mode: Astro.MoonMode = Astro.MoonMode.ORBITAL
 @export var sun_max_energy := 1.05
-@export var moon_max_energy := 0.8
+@export var moon_max_energy := 1.05
 ## Moonlight never drops below this share of full (thin phases, playable nights).
 const MOON_FLOOR := 0.05
 ## 0-1: how deep the viewer is inside a magical site (Landmarks sets it).
@@ -262,7 +262,8 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# tinted teal, multiplying each surface's own color, so forests stay
 	# green in shade instead of going grey or violet).
 	var amb_day := Color(0.8, 0.82, 0.85)
-	var amb_night := Color(0.3, 0.34, 0.85).lerp(Color(0.42, 0.46, 0.92), lift)
+	# Saturated moonlit blue, never black (the references' nights).
+	var amb_night := Color(0.26, 0.34, 0.92).lerp(Color(0.38, 0.5, 1.0), lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
 	environment.ambient_light_energy = lerpf(0.24 + 0.2 * lift, 0.26, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
 
@@ -272,10 +273,12 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# pooling in low places after dark.
 	# Atmospheric perspective: distance fades into blue haze by day and
 	# deep cobalt at night, so near, middle and far read as separate layers.
-	var fog_color := horizon.lerp(zenith, 0.5).lerp(Color(0.04, 0.07, 0.3), night * 0.55)
+	# At night a luminous blue haze (lifted by the moon), so distance and
+	# low mist glow instead of fading to black.
+	var fog_color := horizon.lerp(zenith, 0.5).lerp(Color(0.07, 0.14, 0.46).lerp(Color(0.12, 0.24, 0.62), lift), night * 0.6)
 	fog_color = fog_color.lerp(Color(0.015, 0.03, 0.12), dark_magic * 0.6)
 	var density := 0.0008 + fog_amount * 0.003 + storm * 0.002 + night * 0.0012
-	var mist := clampf(0.35 * night + fog_amount * 0.6 + storm * 0.3, 0.0, 1.0)
+	var mist := clampf(0.5 * night + fog_amount * 0.6 + storm * 0.3, 0.0, 1.0)
 	environment.fog_light_color = fog_color
 	environment.fog_density = density
 	Look.apply({

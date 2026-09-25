@@ -62,6 +62,6 @@ void fragment() {
 	EMISSION = look_glow_emission(world_pos, glow * (1.1 + 1.0 * h) * (1.0 - 0.4 * fresnel));
 	ALPHA = mix(ALPHA, 0.9, glow * look_glow);
 	// All water glows faintly cobalt at night, lit from within.
-	EMISSION += vec3(0.05, 0.14, 0.55) * look_night * (0.35 + 0.25 * h) * (1.0 - 0.5 * fresnel);
+	EMISSION += vec3(0.06, 0.2, 0.75) * look_night * (0.45 + 0.35 * h) * (1.0 - 0.4 * fresnel);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }

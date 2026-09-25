@@ -34,8 +34,9 @@ void fragment() {
 	// No reflections of the sky; the only highlight is light()'s sheen.
 	SPECULAR = 0.0;
 	float patch = texture(look_grain, uv * 0.06).r; // moss patches ~0.5-2 m
-	float glow = look_site_glow(world_pos, 0.0) * COLOR.a * smoothstep(0.5, 0.68, patch);
-	EMISSION = look_glow_emission(world_pos, glow * 2.6) + look_rim(NORMAL, VIEW, 0.2);
+	// Patches only (heavy moss on wet ruins shouldn't light whole walls).
+	float glow = look_site_glow(world_pos, 0.0) * min(COLOR.a, 0.6) * smoothstep(0.58, 0.72, patch);
+	EMISSION = look_glow_emission(world_pos, glow * 2.0) + look_rim(NORMAL, VIEW, 0.2);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }
 
