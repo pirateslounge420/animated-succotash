@@ -134,11 +134,20 @@ Verified:
 
 `scripts/sky/`
 
-- **Day length.** One day is 48 real minutes (`PlanetConst.DAY_LENGTH_S`).
-  Sunrise and sunset are counted at a sun elevation of −3.6°, so twilight
-  counts as day and the lit part is slightly longer than the night: about
-  25 against 23 minutes at the equator. The planet has no axial tilt, so
-  there are no seasons yet.
+- **Day length.** One day is 120 real minutes (`PlanetConst.DAY_LENGTH_S`,
+  12x Earth), in four phases at the equator: dawn 15 minutes, day 50,
+  dusk 15, night 40 (dawn and dusk are the sun within 10° of the
+  horizon). The planet turns uniformly for the weather; what the viewer
+  sees is warped (`Astro.apparent_days`): the whole sky, sun, moon and
+  stars together, turns slowly through twilight and quickly through the
+  night, so each phase takes exactly its time (measured 40.0 / 15.0 /
+  50.0 / 15.0 min). Toward the poles twilight stretches (21-minute dawns
+  at 60°). The HUD clock is solar time. No axial tilt, so no seasons yet.
+- **Sky events** (`SkyEvents`, drawn in the sky shader): common shooting
+  stars (about two a minute on a dark night) and rare meteors, gated by
+  the I Ching (`IChing`: an all-changing hexagram, 1 in 4,096, cast every
+  5 s of darkness: about one in 8-9 nights), in six colors, with a flash
+  over the land and a hiss and rumble. Both frequencies are exported.
 - **Earth-like moon** (`Astro.moon_dir`, `MoonMode.ORBITAL`, the default):
   - it orbits once per 28-day phase cycle on an orbit tilted 5.1°;
   - elongation from the sun sets the phase, so a full moon rises at
@@ -222,12 +231,19 @@ Verified:
     everywhere except water.
   - rim light, leaf translucency and the ground's wet toon highlight at
     night, reimplemented because a custom light() replaces Godot's.
-- **Clouds:** big chunky cumulus, sampled on a domed projection (bigger
-  overhead, smaller at the horizon) and quantized to a coarse grid for
-  pixelated edges, in three flat tones. Baseline cover is higher (0.34
-  on a clear day).
+- **Clouds** (`CloudLayers`): three transparent shells round the planet,
+  each with a tunable altitude and speed multiplier: low cumulus 500-2,000
+  m (default 1,500; 4x), mid altocumulus 2,000-7,000 m (3,800; 3x), high
+  cirrus 5,000-13,000 m (8,500; 2x, jet stream). The ranges are Earth's
+  (`height_scale` 1.0, since the terrain is at Earth's vertical scale).
+  Peaks break through the low layer, and from above it's a sea of cloud.
+  Chunky, pixel-stepped edges and three flat tones. Standing above the
+  low layer brings harsh alpine conditions (stronger wind, drier; HUD:
+  "thin, cold air").
 - **Atmospheric perspective:** Environment fog plus the banded shader
   fog, blue by day and cobalt at night; distance ridges fade in steps.
+  The haze thins with altitude (an exponential atmosphere, 1.5 km scale
+  height), so valleys are hazy and summits clear.
 - **Night** (the references' moonlit blue): a moon about 2.5× the old size
   with a halo that blooms, bright blue moonlight and a saturated blue
   ambient (never black), a luminous blue haze and thicker low mist, all
@@ -314,7 +330,11 @@ Verified:
     floats. Steep reaches pour over **waterfalls** (at most 35 m; longer
     drops become chains) and the channel cuts a gorge back into the
     slope: about 3,400 falls on ~680 km of large rivers, almost all in
-    the mountains. Each is a sheet arcing off the lip
+    the mountains. Each reach draws its own tallest fall (8-45 m), so
+    some rivers descend in cascades and others in single plunges;
+    moderate slopes are rapids (white water racing down the ribbon), as
+    is the churn below each fall; tributaries meeting a lower river and
+    rivers meeting the sea at a cliff end in falls. Each is a sheet arcing off the lip
     (`waterfall.gdshader`: streaks sliding down, foam toward the pool,
     frayed edges) with mist at the foot, glowing blue at night;
   - lake, sea and wetland water tables are added;
@@ -353,7 +373,8 @@ copy.
   canopy, shrub, ground, epiphyte). A plant's default tolerance is its
   biome's climate block (°C, moisture, altitude). Listing a plant in
   several biomes gives it the union of their ranges. `SpeciesDB` loads
-  all files; currently 95 species, in 34 of the 51 files (hot desert and
+  all files; currently 107 species (12 of them bamboo), in 34 of the 51
+  files (hot desert and
   taiga researched; most others still placeholders).
 - **Plants read climate, not biome names.** At each candidate site on a
   jittered grid (spacing per tier), `VegetationPlacer` combines:
@@ -373,7 +394,8 @@ copy.
   Epiphytes attach to placed trees; cypress knees ring cypresses standing
   in water. Mythical folk campsites and ruins are kept clear.
 - **Rendering.** One MultiMesh per species. `PlantMeshes` builds 24
-  placeholder shapes; the foliage shader sways them with the live wind.
+  placeholder shapes (25 with bamboo: clumps of arching, node-ringed culms,
+  dwarf to 30 m giants); the foliage shader sways them with the live wind.
   Trees have crowns of 3-6 overlapping noise-displaced icospheres (faces
   buried in a neighboring lobe are dropped, so triangles go to the
   silhouette) with leaf cards on the outside, and 8-sided trunks that
@@ -486,7 +508,7 @@ latest results:
 
 - **Headless.** The full game loop was run headless:
   - loading;
-  - walking and fast travel with chunk streaming;
+  - walking, and a 2 km jump with chunk streaming;
   - midnight with night creatures;
   - log interaction.
 
