@@ -9,10 +9,11 @@ extends Node3D
 ##   high   cirrus (jet stream)          5,000-13,000 m     2x
 ##
 ## Altitudes are tunable per layer (clamped to the range), as are the
-## speed multipliers. The ranges follow real clouds times `height_scale`:
-## this world's terrain is at Earth's vertical scale (mountains to ~4.9
-## km, Earth's lapse rate), so 1.0; a world squashed to 1/10 height would
-## use 0.1 (50-200 m, 200-700 m, 500-1,300 m).
+## speed multipliers. The table is real clouds; in the world everything is
+## times `height_scale`, the terrain's vertical scale (PlanetConst:
+## 1/10), so the layers sit at 50-200 m, 200-700 m and 500-1,300 m. Cloud
+## sizes, pixel steps and drift scale with it too, so from the ground the
+## sky looks as it would under real clouds.
 ##
 ## Speeds: the local surface wind scaled to the layer's real-world speed
 ## (winds strengthen with height; the high layer rides the jet stream),
@@ -30,7 +31,7 @@ const LOW := 0
 const MID := 1
 const HIGH := 2
 
-@export var height_scale := 1.0
+@export var height_scale := PlanetConst.HEIGHT_SCALE
 ## [min, max] altitude per layer at height_scale 1, meters.
 const RANGES := [Vector2(500.0, 2000.0), Vector2(2000.0, 7000.0), Vector2(5000.0, 13000.0)]
 @export var altitude_m := PackedFloat32Array([1500.0, 3800.0, 8500.0])
@@ -40,8 +41,11 @@ const RANGES := [Vector2(500.0, 2000.0), Vector2(2000.0, 7000.0), Vector2(5000.0
 ## extra m/s along it (jet stream for the high layer).
 const WIND_FACTOR := [1.4, 2.0, 2.5]
 const WIND_EXTRA_MPS := [0.0, 4.0, 20.0]
+## Cloud size and edge pixel step at height_scale 1, meters.
 const FEATURE_M := [900.0, 700.0, 2600.0]
 const CELL_M := [45.0, 40.0, 110.0]
+## Haze on the clouds eases in between these distances at height_scale 1.
+const FOG_EASE_M := Vector2(3000.0, 30000.0)
 const MAX_ALPHA := [0.95, 0.85, 0.55]
 
 var world: Node
@@ -58,8 +62,9 @@ func build(p_world: Node) -> void:
 		var mat := ShaderMaterial.new()
 		mat.shader = preload("res://shaders/cloud_layer.gdshader")
 		mat.set_shader_parameter("kind", layer)
-		mat.set_shader_parameter("feature_m", FEATURE_M[layer])
-		mat.set_shader_parameter("cell_m", CELL_M[layer])
+		mat.set_shader_parameter("feature_m", FEATURE_M[layer] * height_scale)
+		mat.set_shader_parameter("cell_m", CELL_M[layer] * height_scale)
+		mat.set_shader_parameter("fog_ease_m", FOG_EASE_M * height_scale)
 		mat.set_shader_parameter("max_alpha", MAX_ALPHA[layer])
 		Look.register(mat)
 		var mi := MeshInstance3D.new()
@@ -103,7 +108,9 @@ func update_clouds(delta: float, up: Vector3, camera_alt: float, weather: Dictio
 	order.sort_custom(func(a, b): return absf(altitude(a) - camera_alt) > absf(altitude(b) - camera_alt))
 	for layer in 3:
 		var speed: float = wind.length() * WIND_FACTOR[layer] + WIND_EXTRA_MPS[layer]
-		_drift[layer] += dir * speed * speed_mult[layer] * delta
+		# Real wind at the layer, scaled with the cloud sizes: the same
+		# angular speed across the sky as real clouds at real altitude.
+		_drift[layer] += dir * speed * speed_mult[layer] * height_scale * delta
 		var mat := _mats[layer]
 		mat.set_shader_parameter("radius", PlanetConst.RADIUS_M + altitude(layer))
 		mat.set_shader_parameter("cover", covers[layer])

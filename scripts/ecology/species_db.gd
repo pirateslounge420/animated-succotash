@@ -125,7 +125,8 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	var p_name: String = e.name
 	var t := _range(e.get("temp_c", climate.get("temp_c")), Vector2(-50, 50))
 	var m := _range(e.get("moisture", climate.get("moisture")), Vector2(0, 1))
-	var alt := _range(e.get("altitude_m", climate.get("altitude_m")), Vector2(-INF, INF))
+	# Altitude bands are real-world meters in the data; scale to this world.
+	var alt := _range(e.get("altitude_m", climate.get("altitude_m")), Vector2(-INF, INF)) * PlanetConst.HEIGHT_SCALE
 	# Hard limits of the scales are inclusive: widen them slightly so the
 	# band's zero edge sits just outside them.
 	if m.x <= 0.0:

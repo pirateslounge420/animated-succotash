@@ -36,6 +36,16 @@ Going back to a place rebuilds it identically.
   (u, v → tan(u·π/4)), so cells are close to equal in area. It also
   provides latitude/longitude, local east/north frames and great-circle
   distance.
+- **Vertical scale** (`PlanetConst.HEIGHT_SCALE`, 1/10). Heights are a
+  tenth of Earth's (Everest would be ~900 m; this world's peaks reach
+  about 490 m), distances a hundredth. Rules and data keep real-world
+  numbers and multiply them by the scale: biome and geology thresholds,
+  species and creature altitude bands (data files stay in real meters),
+  cloud altitudes, the haze height. The lapse rate is Earth's per
+  Earth-equivalent kilometer (6.5 °C per 100 m here), so a 400 m summit
+  has the climate of a 4 km one, and the blueprint's slope is stored as
+  the Earth-equivalent rise over run. The walking-scale layers (detail,
+  shore wiggle, roll) aren't scaled: they're the feel of the ground.
 - **Terrain** (`TerrainField`). One continuous 3D-noise height function,
   so every consumer agrees on the height at any point:
   - continents calibrated to 62% ocean;
@@ -49,7 +59,8 @@ Going back to a place rebuilds it identically.
      coast and to water.
   3. Weather spin-up (see below). It produces the long-term climate.
   4. `climate_pass`:
-     - temperature in °C (lapse rate 6.5 °C/km);
+     - temperature in °C (lapse rate 6.5 °C per Earth-equivalent km,
+       i.e. per 100 m here);
      - precipitation in mm/year, wetter on windward slopes and drier in
        rain shadows;
      - fog;
@@ -236,8 +247,11 @@ Verified:
 - **Clouds** (`CloudLayers`): three transparent shells round the planet,
   each with a tunable altitude and speed multiplier: low cumulus 500-2,000
   m (default 1,500; 4x), mid altocumulus 2,000-7,000 m (3,800; 3x), high
-  cirrus 5,000-13,000 m (8,500; 2x, jet stream). The ranges are Earth's
-  (`height_scale` 1.0, since the terrain is at Earth's vertical scale).
+  cirrus 5,000-13,000 m (8,500; 2x, jet stream). Those are Earth's
+  numbers; in the world they're times `height_scale` (the terrain's
+  1/10), so 50-200, 200-700 and 500-1,300 m, and cloud sizes, pixel
+  steps and drift scale with them, so the sky looks the same from the
+  ground.
   Peaks break through the low layer, and from above it's a sea of cloud.
   Chunky, pixel-stepped edges and three flat tones. The pattern is
   three-octave value noise; each layer first checks whether its first
@@ -247,8 +261,9 @@ Verified:
   "thin, cold air").
 - **Atmospheric perspective:** Environment fog plus the banded shader
   fog, blue by day and cobalt at night; distance ridges fade in steps.
-  The haze thins with altitude (an exponential atmosphere, 1.5 km scale
-  height), so valleys are hazy and summits clear.
+  The haze thins with altitude (an exponential atmosphere, 150 m scale
+  height: 1.5 km at Earth's scale), so valleys are hazy and summits
+  clear.
 - **Night** (the references' moonlit blue): a moon about 2.5× the old size
   with a halo that blooms, bright blue moonlight and a saturated blue
   ambient (never black), a luminous blue haze and thicker low mist, all
@@ -333,10 +348,11 @@ Verified:
   - rivers are carved in with water ribbons (`RiverNetwork`). The water
     follows the ground (a profile sampled every 6 m, a running minimum of
     the terrain between the blueprint levels at each end), so it never
-    floats. Steep reaches pour over **waterfalls** (at most 35 m; longer
-    drops become chains) and the channel cuts a gorge back into the
-    slope: about 3,400 falls on ~680 km of large rivers, almost all in
-    the mountains. Each reach draws its own tallest fall (8-45 m), so
+    floats. Steep reaches (steeper than ~1:12) gather their drop into
+    **waterfalls** with pools between, and the channel cuts a gorge back
+    into the slope: on seed 42 about 740 falls (160 of them 10 m or
+    more, the tallest ~42 m) on ~680 km of large rivers, mostly in the
+    hills and mountains. Each reach draws its own tallest fall (8-45 m), so
     some rivers descend in cascades and others in single plunges;
     moderate slopes are rapids (white water racing down the ribbon), as
     is the churn below each fall; tributaries meeting a lower river and
@@ -559,9 +575,16 @@ latest results:
   4.88 → 4.95 s/frame (6.5 → 7.1 M triangles including shadow passes),
   the overlook unchanged (0.61 s), the castle view 1.36 → 2.32 s (2.2 →
   3.4 M triangles): bevelled blocks are 44 triangles instead of 12 and a
-  castle has thousands. Ruins have no level of detail yet; a plain-box
-  version for ruins beyond ~150 m would win that back. On a real GPU
-  these triangle counts are small, but it hasn't been measured there.
+  castle has thousands. On a real GPU these triangle counts are small,
+  but it hasn't been measured there.
+- **Frame cost of the review pass** (same setup): a castle 400 m off
+  1.63 → 1.43 s/frame with the plain-box LOD, the forest 7.2 → 6.9 s;
+  the other views within run-to-run noise (lavapipe spends its time on
+  geometry, so the cheaper cloud shader barely shows). On the CPU side
+  (headless, main thread only, a 30 s run through forest) frames went
+  from 5.2-5.7 to 4.1-4.2 ms on average and from 7.4-8.9 to 6.0-6.7 ms
+  at the 95th percentile, mostly from building plant buffers on the
+  workers; attaching a chunk's undergrowth dropped from ~90 to ~20 ms.
 - **Waterfalls** have no sound yet, and the fine terrain grid (4 m) can't
   make a truly vertical cliff, so the gorge wall under a tall fall is a
   steep ramp.

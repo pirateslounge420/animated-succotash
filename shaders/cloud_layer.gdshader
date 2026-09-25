@@ -26,6 +26,7 @@ uniform vec3 wind_axis = vec3(1.0, 0.0, 0.0); // planet frame, unit
 uniform vec3 light_color : source_color = vec3(1.0);
 uniform vec3 shade_color : source_color = vec3(0.7, 0.75, 0.9);
 uniform float camera_above = 0.0; // 1 when the viewer is above this layer
+uniform vec2 fog_ease_m = vec2(3000.0, 30000.0); // haze eases in over this range
 
 varying vec3 shell_pos;
 varying vec3 world_pos;
@@ -129,6 +130,6 @@ void fragment() {
 	// Haze (thinning with height, like everything's) but eased off nearby:
 	// a cloud a few km up or down shouldn't wash out.
 	vec4 fog = look_fog(world_pos, CAMERA_POSITION_WORLD);
-	fog.a *= smoothstep(3000.0, 30000.0, distance(world_pos, CAMERA_POSITION_WORLD));
+	fog.a *= smoothstep(fog_ease_m.x, fog_ease_m.y, distance(world_pos, CAMERA_POSITION_WORLD));
 	FOG = fog;
 }

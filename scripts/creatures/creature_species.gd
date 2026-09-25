@@ -79,7 +79,8 @@ static func _from(e: Dictionary) -> CreatureSpecies:
 	sp.spawn = e.get("spawn", sp.spawn)
 	sp.temp_c = _range(e.get("temp_c"), sp.temp_c)
 	sp.moisture = _range(e.get("moisture"), sp.moisture)
-	sp.altitude_m = _range(e.get("altitude_m"), sp.altitude_m)
+	# Real-world meters in the data; scaled to this world's heights.
+	sp.altitude_m = _range(e.get("altitude_m"), sp.altitude_m) * PlanetConst.HEIGHT_SCALE
 	sp.active = e.get("active", sp.active)
 	sp.one_per_radius_m = maxf(float(e.get("one_per_radius_m", sp.one_per_radius_m)), 5.0)
 	sp.needs = e.get("needs", {})

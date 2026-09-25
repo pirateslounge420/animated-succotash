@@ -45,7 +45,7 @@ static func _classify(map: PlanetData, c: int, nbrs: PackedInt32Array, karst: Fa
 	var elev := map.elevation[c]
 	var slope := map.slope[c]
 	if water == PlanetData.Water.OCEAN:
-		return PlanetData.Rock.COASTAL_SAND if elev > -60.0 else PlanetData.Rock.BASALT_VOLCANIC
+		return PlanetData.Rock.COASTAL_SAND if elev > -60.0 * PlanetConst.HEIGHT_SCALE else PlanetData.Rock.BASALT_VOLCANIC
 
 	var next_to_ocean := false
 	var next_to_fresh := false
@@ -56,7 +56,7 @@ static func _classify(map: PlanetData, c: int, nbrs: PackedInt32Array, karst: Fa
 		elif nw != PlanetData.Water.NONE:
 			next_to_fresh = true
 
-	if next_to_ocean and elev < 40.0 and slope < 0.12:
+	if next_to_ocean and elev < 40.0 * PlanetConst.HEIGHT_SCALE and slope < 0.12:
 		return PlanetData.Rock.COASTAL_SAND
 	if water != PlanetData.Water.NONE or (next_to_fresh and slope < 0.1):
 		return PlanetData.Rock.ALLUVIAL
@@ -64,7 +64,7 @@ static func _classify(map: PlanetData, c: int, nbrs: PackedInt32Array, karst: Fa
 		return PlanetData.Rock.CLAY_PEAT
 	if map.temp_c[c] < -1.0:
 		return PlanetData.Rock.GLACIAL_TILL
-	if karst.get_noise_3dv(d * PlanetConst.RADIUS_M) > KARST_THRESHOLD and elev < 2500.0:
+	if karst.get_noise_3dv(d * PlanetConst.RADIUS_M) > KARST_THRESHOLD and elev < 2500.0 * PlanetConst.HEIGHT_SCALE:
 		return PlanetData.Rock.LIMESTONE_KARST
 	if map.moisture[c] < 0.3:
 		return PlanetData.Rock.SANDSTONE

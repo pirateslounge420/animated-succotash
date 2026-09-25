@@ -18,8 +18,9 @@ extends RefCounted
 const MIN_WIDTH_M := 7.0
 const MAX_WIDTH_M := 55.0
 const SAMPLE_M := 6.0
-## A reach dropping this much in one sample (slope ~1:5) is steep.
-const STEEP_M := 1.5
+## A reach dropping this much in one sample (slope ~1:12) is steep: its
+## drop gathers into falls with pools between (pool-and-drop streams).
+const STEEP_M := 0.5
 ## A drop at least this tall between samples is drawn as a waterfall.
 const FALL_MIN_M := 4.0
 ## The tallest single fall (each reach draws its own limit between 8 m

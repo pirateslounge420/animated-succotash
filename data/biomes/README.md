@@ -36,7 +36,7 @@ moisture and altitude, and default size, shape and color for its tier.
 | `height_m` | `[18, 30]` | Height range in meters; each plant picks a size in it. |
 | `temp_c` | `[12, 28]` | Mean annual temperature range, **°C**. Densest in the middle, fading to zero at the edges. |
 | `moisture` | `[0.6, 1]` | Effective moisture, 0 = bone dry to 1 = waterlogged (~0.1 hyper-arid, ~0.3 semi-arid, ~0.5 subhumid, ~0.7 humid). |
-| `altitude_m` | `[800, 3700]` | Elevation range in meters. |
+| `altitude_m` | `[800, 3700]` | Elevation range in real-world meters; the game multiplies it by `PlanetConst.HEIGHT_SCALE` (1/10), like the terrain. |
 | `density` | `0.3` | Peak abundance relative to other plants (1 = normal, 0.1 = rare hero plant). |
 | `soil` | `"thin"` | `rich` (default), `thin` (rocky/karst/sandstone), `peat`, `sand` (coastal sand only), `wet` (alluvial/peat), `volcanic` (basalt only). |
 | `needs` | `["standing_water"]` | Special conditions: `standing_water`, `river_bank`, `salt_water`, `hot_ground`. |

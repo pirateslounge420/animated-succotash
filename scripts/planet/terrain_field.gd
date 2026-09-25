@@ -23,16 +23,20 @@ extends RefCounted
 ##                at walking scale; fades out near sea level so coastlines
 ##                keep their shape. Blueprint skips it too.
 
-const MAX_MOUNTAIN_M := 4200.0
-const MAX_PLATEAU_M := 700.0
-const HILLS_M := 170.0
-const MAX_DEPTH_M := 3800.0
-const SHELF_DEPTH_M := 140.0
+## Geographic layers are Earth-like heights times PlanetConst.HEIGHT_SCALE;
+## the walking-scale layers (detail, shore wiggle, roll) aren't scaled:
+## they're the feel of the ground underfoot, not geography.
+const H := PlanetConst.HEIGHT_SCALE
+const MAX_MOUNTAIN_M := 4200.0 * H
+const MAX_PLATEAU_M := 700.0 * H
+const HILLS_M := 170.0 * H
+const MAX_DEPTH_M := 3800.0 * H
+const SHELF_DEPTH_M := 140.0 * H
 const DETAIL_M := 14.0
 const ROLL_M := 2.0
 
 const HOTSPOT_COUNT := 9
-const HOTSPOT_HEIGHT_M := Vector2(700.0, 2000.0)
+const HOTSPOT_HEIGHT_M := Vector2(700.0, 2000.0) * H
 const HOTSPOT_RADIUS_M := Vector2(3500.0, 7000.0)
 
 var world_seed: int
@@ -125,7 +129,7 @@ func elevation(dir: Vector3, detail := false, roll := true) -> float:
 	var e: float
 	if x > 0.0:
 		var inland := smoothstep(0.0, 0.35, x)
-		var plateau := MAX_PLATEAU_M * pow(inland, 1.5) + 2.0
+		var plateau := MAX_PLATEAU_M * pow(inland, 1.5) + 2.0 * H
 		var belt := smoothstep(0.05, 0.4, _belts.get_noise_3dv(p))
 		# Soft absolute value rounds the ridge crest instead of a knife edge.
 		var rn := _ridges.get_noise_3dv(p)
@@ -137,7 +141,7 @@ func elevation(dir: Vector3, detail := false, roll := true) -> float:
 		# Shallow continental shelf near the coast, then the drop to the deep.
 		var shelf := SHELF_DEPTH_M * smoothstep(0.0, 0.06, -x)
 		var deep := (MAX_DEPTH_M - SHELF_DEPTH_M) * pow(smoothstep(0.05, 0.4, -x), 1.2)
-		e = -2.0 - shelf - deep
+		e = -2.0 * H - shelf - deep
 	e += _hotspot_height(dir)
 	if detail:
 		# Shore noise is small but wiggles the coastline at walking scale.

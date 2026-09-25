@@ -325,7 +325,7 @@ func _update_wind() -> void:
 		w = w * cos(turn) + w.cross(dirs[c]) * sin(turn)
 		w += CubeSphere.east(dirs[c]) * _prevailing_east(lats[c])
 		# Mountains slow the wind that has to climb them.
-		w *= 1.0 / (1.0 + elev_max[c] / 2500.0)
+		w *= 1.0 / (1.0 + elev_max[c] / (2500.0 * PlanetConst.HEIGHT_SCALE))
 		if w.length() > MAX_WIND:
 			w = w.normalized() * MAX_WIND
 		wind[c] = w

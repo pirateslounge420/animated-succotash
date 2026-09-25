@@ -31,12 +31,14 @@ class_name BiomePass
 ## Reads everything written before it. Writes biome.
 
 
-const MOUNTAIN_BASE_M := 900.0
+## Heights below are Earth's, times PlanetConst.HEIGHT_SCALE.
+const H := PlanetConst.HEIGHT_SCALE
+const MOUNTAIN_BASE_M := 900.0 * H
 const TREELINE_C := 3.0 # mean annual temperature at the tree line
 const KRUMMHOLZ_BAND_C := 3.0 # stunted trees within this many degrees above it
 const TROPICAL_LAT := 0.4363 # 25 degrees
 const VOLCANIC_CORE := 0.45 # share of a volcano's radius that is bare lava field
-const GLACIER_MIN_M := 2200.0
+const GLACIER_MIN_M := 2200.0 * H
 const GLACIER_MAX_LAT := 0.96 # 55 degrees; closer to the poles high ice is ice sheet
 
 
@@ -192,7 +194,7 @@ static func classify(map: PlanetData, c: int, nbrs: PackedInt32Array) -> int:
 		return BiomeTemplates.ICE_SHEET
 
 	# 3. Coast.
-	var coastal := ocean_nbrs > 0 and elev < 60.0
+	var coastal := ocean_nbrs > 0 and elev < 60.0 * H
 	if coastal:
 		if near_river and map.salinity[c] == PlanetData.Salinity.BRACKISH:
 			return BiomeTemplates.ESTUARY
@@ -205,7 +207,7 @@ static func classify(map: PlanetData, c: int, nbrs: PackedInt32Array) -> int:
 		if m < 0.3 or rock == PlanetData.Rock.SANDSTONE:
 			return BiomeTemplates.DUNES
 		return BiomeTemplates.BEACH
-	if map.coast_dist_km[c] < 2.0 and elev < 200.0 and m > 0.45 and t > 4.0 and t < 22.0:
+	if map.coast_dist_km[c] < 2.0 and elev < 200.0 * H and m > 0.45 and t > 4.0 and t < 22.0:
 		return BiomeTemplates.MARITIME_FOREST
 
 	# 4. Wetlands: flat, wet, and with water nearby or peat underfoot.
@@ -223,10 +225,10 @@ static func classify(map: PlanetData, c: int, nbrs: PackedInt32Array) -> int:
 			return BiomeTemplates.FEN if (near_river or near_lake) else BiomeTemplates.BOG
 
 	# 5. Rugged dry country.
-	if m < 0.35 and relief > 350.0:
+	if m < 0.35 and relief > 350.0 * H:
 		if near_river:
 			return BiomeTemplates.CANYON
-		if rock == PlanetData.Rock.SANDSTONE and elev < 2200.0:
+		if rock == PlanetData.Rock.SANDSTONE and elev < 2200.0 * H:
 			return BiomeTemplates.BADLANDS
 
 	# 6. Altitude zonation.
@@ -247,7 +249,7 @@ static func classify(map: PlanetData, c: int, nbrs: PackedInt32Array) -> int:
 
 
 static func _ocean(map: PlanetData, c: int, elev: float, sst: float, ocean_nbrs: int) -> int:
-	var depth := -elev
+	var depth := -elev / H # Earth-equivalent
 	if sst < -1.5:
 		return BiomeTemplates.SEA_ICE
 	if depth < 15.0 and ocean_nbrs <= 3:

@@ -169,9 +169,9 @@ func _recolor() -> void:
 			Mode.ELEVATION:
 				var e := map.elevation[c]
 				if ocean:
-					colors[i] = Color(0.05, 0.12, 0.3).lerp(Color(0.2, 0.45, 0.7), clampf(1.0 + e / 3000.0, 0.0, 1.0))
+					colors[i] = Color(0.05, 0.12, 0.3).lerp(Color(0.2, 0.45, 0.7), clampf(1.0 + e / (3000.0 * PlanetConst.HEIGHT_SCALE), 0.0, 1.0))
 				else:
-					colors[i] = _ramp([Color(0.25, 0.5, 0.25), Color(0.7, 0.65, 0.4), Color(0.55, 0.42, 0.32), Color(0.95, 0.95, 0.97)], e / 4500.0)
+					colors[i] = _ramp([Color(0.25, 0.5, 0.25), Color(0.7, 0.65, 0.4), Color(0.55, 0.42, 0.32), Color(0.95, 0.95, 0.97)], e / (4500.0 * PlanetConst.HEIGHT_SCALE))
 			Mode.TEMPERATURE:
 				colors[i] = _ramp([Color(0.2, 0.3, 0.85), Color(0.6, 0.8, 1.0), Color(0.95, 0.95, 0.85), Color(1.0, 0.65, 0.2), Color(0.85, 0.15, 0.1)], (map.temp_c[c] + 25.0) / 57.0)
 			Mode.RAINFALL:

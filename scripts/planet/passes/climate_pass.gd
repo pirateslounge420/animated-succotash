@@ -20,7 +20,7 @@ class_name ClimatePass
 
 const UPWIND_STEPS := 8
 const UPWIND_STEP_M := 2500.0
-const SHADOW_HEIGHT_M := 1800.0 # ridge height above you that halves your rain
+const SHADOW_HEIGHT_M := 1800.0 * PlanetConst.HEIGHT_SCALE # ridge height above you that halves your rain
 const MIN_SHADOW := 0.25
 const WINDWARD_GAIN := 1.6 # per unit of upslope along the wind
 const MAX_WINDWARD := 2.2
@@ -88,7 +88,8 @@ static func _terrain_factors(map: PlanetData, d: Vector3, elev: float, wind_dir:
 			first_upwind = e
 		barrier = maxf(barrier, e - elev)
 	var shadow := clampf(1.0 / (1.0 + barrier / SHADOW_HEIGHT_M), MIN_SHADOW, 1.0)
-	var upslope := (elev - first_upwind) / UPWIND_STEP_M
+	# Earth-equivalent slope, like the blueprint's.
+	var upslope := (elev - first_upwind) / UPWIND_STEP_M / PlanetConst.HEIGHT_SCALE
 	return Vector2(shadow, upslope)
 
 

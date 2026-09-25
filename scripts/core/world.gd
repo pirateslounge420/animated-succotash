@@ -164,7 +164,7 @@ func pick_spawn_dir() -> Vector3:
 		if planet.water[c] != PlanetData.Water.NONE:
 			continue
 		var e := planet.elevation[c]
-		if e < 5.0 or e > 400.0:
+		if e < 5.0 * PlanetConst.HEIGHT_SCALE or e > 400.0 * PlanetConst.HEIGHT_SCALE:
 			continue
 		var score := -absf(planet.coast_dist_km[c] - 2.0) - absf(rad_to_deg(planet.lat[c]) - 20.0) * 0.1
 		score += planet.moisture[c] * 3.0

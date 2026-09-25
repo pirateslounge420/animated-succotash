@@ -9,9 +9,16 @@ const RADIUS_M := CIRCUMFERENCE_M / TAU # ~63,662 m
 ## Elevation 0 is sea level; elevations are meters above/below it.
 const SEA_LEVEL_M := 0.0
 
-## Real-world environmental lapse rate. Kept at Earth's value so species
-## altitude bands can use real-world numbers.
-const LAPSE_RATE_C_PER_M := 0.0065
+## Vertical scale: heights are 1/10 of Earth's (Everest would stand ~900
+## m), while distances are 1/100. Data and rules keep real-world numbers
+## (species altitude bands, biome thresholds, cloud altitudes) and
+## multiply them by this, so a mountain that would be 4 km on Earth is
+## 400 m here and has the climate of a 4 km mountain.
+const HEIGHT_SCALE := 0.1
+
+## Earth's environmental lapse rate (6.5 °C/km) per scaled meter: climbing
+## 100 m here cools the air as much as 1 km on Earth.
+const LAPSE_RATE_C_PER_M := 0.0065 / HEIGHT_SCALE
 
 ## 120 real minutes per in-game day (12x faster than Earth: five real
 ## minutes per in-game hour), split into four phases at the equator:

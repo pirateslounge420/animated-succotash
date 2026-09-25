@@ -2,7 +2,7 @@
 
 ## Overview
 
-An ambient open-world exploration game built in Summer Engine (Godot 4). No end goal: pure wandering at a tribal, pre-firearm tech level. Scope is stripped to terrain generation and ecology only; races, cultures, settlements, crafting and combat come later, built on top. The world is a walkable cube-sphere planet about 1/100th of Earth's size (\~400 km around). The day-night cycle runs 120 real minutes (2 hours) per in-game day, a 12x compression of Earth's 24 hours, in four phases: dawn 15 minutes, day 50, dusk 15 and night 40. Daylight intentionally outlasts full darkness, mirroring how Earth's atmosphere and sun-disk size make daylight last slightly longer than true night even on an "even" day.
+An ambient open-world exploration game built in Summer Engine (Godot 4). No end goal: pure wandering at a tribal, pre-firearm tech level. Scope is stripped to terrain generation and ecology only; races, cultures, settlements, crafting and combat come later, built on top. The world is a walkable cube-sphere planet about 1/100th of Earth's size (\~400 km around), with heights at 1/10th of Earth's (Everest would stand \~900 m). The day-night cycle runs 120 real minutes (2 hours) per in-game day, a 12x compression of Earth's 24 hours, in four phases: dawn 15 minutes, day 50, dusk 15 and night 40. Daylight intentionally outlasts full darkness, mirroring how Earth's atmosphere and sun-disk size make daylight last slightly longer than true night even on an "even" day.
 
 ## Visual & Tone References
 

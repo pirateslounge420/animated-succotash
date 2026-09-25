@@ -12,7 +12,7 @@ Edit or add entries; changes apply the next time you run the game.
 | `spawn` | `ambient` (around you all the time, spaced by `one_per_radius_m`), `interaction` (only when you inspect something), `long_range` (mythical: dormant far away, aware at mid range, visible close). |
 | `temp_c` | Mean annual temperature range, °C. |
 | `moisture` | 0-1 effective moisture range. |
-| `altitude_m` | Optional elevation range. |
+| `altitude_m` | Optional elevation range in real-world meters (scaled by `PlanetConst.HEIGHT_SCALE`, 1/10, at load). |
 | `active` | `day`, `night` or `any`. |
 | `one_per_radius_m` | Ambient density: about one creature per circle of this radius (20-40 m common, a few hundred rare). |
 | `needs` | Optional: `ground_cover` (0-1 minimum undergrowth density), `water_within_m`, `shore` (wading depth), `open_water`, `salt` (brackish/salt water). |

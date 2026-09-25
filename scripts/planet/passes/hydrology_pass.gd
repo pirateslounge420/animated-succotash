@@ -22,8 +22,9 @@ class_name HydrologyPass
 
 ## Below-sea regions smaller than this many cells are inland basins, not sea.
 const OCEAN_MIN_CELLS := 300
-## A cell is lake if filling raised it more than this.
-const LAKE_MIN_DEPTH_M := 3.0
+## A cell is lake if filling raised it more than this (3 m on Earth's
+## scale).
+const LAKE_MIN_DEPTH_M := 3.0 * PlanetConst.HEIGHT_SCALE
 const FILL_EPSILON_M := 0.01
 ## Share of land cells that carry a river.
 const RIVER_LAND_FRACTION := 0.035

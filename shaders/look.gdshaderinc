@@ -22,7 +22,7 @@ uniform vec3 look_up = vec3(0.0, 1.0, 0.0); // viewer's local up
 // scene space, radius, and the haze's scale height.
 uniform vec3 look_planet_center = vec3(0.0, -63662.0, 0.0);
 uniform float look_planet_radius = 63662.0;
-uniform float look_haze_height = 1500.0;
+uniform float look_haze_height = 150.0; // 1.5 km times PlanetConst.HEIGHT_SCALE
 uniform float look_mist = 0.0; // 0-1 extra ground mist
 uniform float look_night = 0.0;
 uniform vec3 look_glow_color : source_color = vec3(0.05, 1.0, 0.85);
