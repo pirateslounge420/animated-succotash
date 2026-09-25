@@ -21,6 +21,50 @@ static func material() -> ShaderMaterial:
 	return _material
 
 
+## Crown lobe detail: icosphere subdivisions (1: 80 triangles, 2: 320).
+const CROWN_SUBDIV := 2
+
+static var _ico := {}
+
+
+## Unit icosphere [vertices, triangle indices], subdivided `level` times,
+## wound so (b - a) x (c - a) points outward like the other parts.
+static func icosphere(level: int) -> Array:
+	if _ico.has(level):
+		return _ico[level]
+	var t := (1.0 + sqrt(5.0)) / 2.0
+	var verts := PackedVector3Array()
+	for p in [Vector3(-1, t, 0), Vector3(1, t, 0), Vector3(-1, -t, 0), Vector3(1, -t, 0),
+			Vector3(0, -1, t), Vector3(0, 1, t), Vector3(0, -1, -t), Vector3(0, 1, -t),
+			Vector3(t, 0, -1), Vector3(t, 0, 1), Vector3(-t, 0, -1), Vector3(-t, 0, 1)]:
+		verts.append(p.normalized())
+	var faces := PackedInt32Array([0, 11, 5, 0, 5, 1, 0, 1, 7, 0, 7, 10, 0, 10, 11, 1, 5, 9, 5, 11, 4,
+		11, 10, 2, 10, 7, 6, 7, 1, 8, 3, 9, 4, 3, 4, 2, 3, 2, 6, 3, 6, 8, 3, 8, 9, 4, 9, 5,
+		2, 4, 11, 6, 2, 10, 8, 6, 7, 9, 8, 1])
+	for l in level:
+		var mid := {}
+		var next := PackedInt32Array()
+		for f in range(0, faces.size(), 3):
+			var m: Array[int] = []
+			for e in [[faces[f], faces[f + 1]], [faces[f + 1], faces[f + 2]], [faces[f + 2], faces[f]]]:
+				var key := Vector2i(mini(e[0], e[1]), maxi(e[0], e[1]))
+				if not mid.has(key):
+					mid[key] = verts.size()
+					verts.append((verts[e[0]] + verts[e[1]]).normalized())
+				m.append(mid[key])
+			next.append_array([faces[f], m[0], m[2], faces[f + 1], m[1], m[0], faces[f + 2], m[2], m[1], m[0], m[1], m[2]])
+		faces = next
+	# Wind every face outward.
+	for f in range(0, faces.size(), 3):
+		var a := verts[faces[f]]
+		if (verts[faces[f + 1]] - a).cross(verts[faces[f + 2]] - a).dot(a) < 0.0:
+			var tmp := faces[f + 1]
+			faces[f + 1] = faces[f + 2]
+			faces[f + 2] = tmp
+	_ico[level] = [verts, faces]
+	return _ico[level]
+
+
 static func mesh_for(sp: PlantSpecies) -> ArrayMesh:
 	var idx := SpeciesDB.index_of(sp)
 	if _cache.has(idx):
@@ -34,42 +78,41 @@ static func mesh_for(sp: PlantSpecies) -> ArrayMesh:
 		b.wood = leaf # ribbed: the bark streaks read as cactus ribs
 	match sp.shape:
 		S.CONIFER:
-			b.cylinder(Vector3.ZERO, 0.035, 0.3, 5, wood, 0.0, 0.2)
-			b.cone(Vector3(0, 0.15, 0), 0.3, 0.45, 7, leaf.darkened(0.1), 0.2, 0.6)
-			b.cone(Vector3(0, 0.4, 0), 0.23, 0.4, 7, leaf, 0.5, 0.85)
-			b.cone(Vector3(0, 0.65, 0), 0.15, 0.35, 7, leaf.lightened(0.08), 0.8, 1.0)
+			b.trunk(0.04, 0.3, 0.0, 0.2)
+			b.cone(Vector3(0, 0.15, 0), 0.3, 0.45, 8, leaf.darkened(0.1), 0.2, 0.6)
+			b.cone(Vector3(0, 0.4, 0), 0.23, 0.4, 8, leaf, 0.5, 0.85)
+			b.cone(Vector3(0, 0.65, 0), 0.15, 0.35, 8, leaf.lightened(0.08), 0.8, 1.0)
 		S.BROADLEAF:
-			b.cylinder(Vector3.ZERO, 0.045, 0.5, 6, wood, 0.0, 0.3)
-			b.blob(Vector3(0, 0.68, 0), Vector3(0.34, 0.3, 0.34), leaf, 0.8)
-			b.blob(Vector3(0.14, 0.8, 0.05), Vector3(0.22, 0.2, 0.22), leaf.lightened(0.1), 1.0)
-			b.blob(Vector3(-0.12, 0.76, -0.1), Vector3(0.2, 0.18, 0.2), leaf.darkened(0.08), 1.0)
+			b.trunk(0.05, 0.62, 0.04, 0.3)
+			b.branches(2, 0.36, 0.2, 0.62, 0.3)
+			b.crown(Vector3(0, 0.7, 0), Vector3(0.36, 0.3, 0.36), 5, leaf, 0.8)
 		S.GNARLED:
-			b.cylinder(Vector3.ZERO, 0.07, 0.3, 5, wood, 0.0, 0.2)
-			b.cylinder(Vector3(0.05, 0.28, 0), 0.05, 0.25, 5, wood, 0.2, 0.4, Vector3(0.3, 1, 0).normalized())
-			b.blob(Vector3(0.12, 0.7, 0), Vector3(0.38, 0.2, 0.32), leaf, 0.8)
-			b.blob(Vector3(-0.15, 0.62, 0.1), Vector3(0.25, 0.16, 0.25), leaf.darkened(0.1), 0.9)
+			b.trunk(0.075, 0.42, 0.12, 0.2)
+			b.branches(3, 0.3, 0.26, 0.5, 0.25)
+			b.crown(Vector3(0.08, 0.66, 0), Vector3(0.42, 0.2, 0.34), 5, leaf, 0.8)
 		S.EMERGENT:
-			b.cylinder(Vector3.ZERO, 0.025, 0.85, 6, wood, 0.0, 0.5)
-			b.blob(Vector3(0, 0.9, 0), Vector3(0.24, 0.1, 0.24), leaf, 1.0)
-			b.blob(Vector3(0.12, 0.93, 0.08), Vector3(0.16, 0.08, 0.16), leaf.lightened(0.08), 1.0)
+			b.trunk(0.03, 0.9, 0.03, 0.5)
+			b.branches(2, 0.75, 0.16, 0.9, 0.5)
+			b.crown(Vector3(0, 0.91, 0), Vector3(0.26, 0.1, 0.26), 4, leaf, 1.0)
 		S.UMBRELLA:
-			b.cylinder(Vector3.ZERO, 0.04, 0.6, 5, wood, 0.0, 0.3, Vector3(0.1, 1, 0).normalized())
-			b.blob(Vector3(0.05, 0.82, 0), Vector3(0.6, 0.1, 0.55), leaf, 1.0)
+			b.trunk(0.045, 0.7, 0.06, 0.3)
+			b.branches(3, 0.55, 0.3, 0.8, 0.3)
+			b.crown(Vector3(0.04, 0.82, 0), Vector3(0.6, 0.1, 0.55), 6, leaf, 1.0)
 		S.PALM:
 			b.cylinder(Vector3.ZERO, 0.03, 0.92, 5, wood, 0.0, 0.6, Vector3(0.08, 1, 0).normalized())
 			for k in 7:
 				var a := TAU * k / 7.0
 				b.frond(Vector3(0.07, 0.92, 0), Vector3(cos(a), -0.35, sin(a)), 0.45, 0.07, leaf, 1.0)
 		S.CYPRESS:
-			b.cone(Vector3.ZERO, 0.12, 0.25, 6, wood, 0.0, 0.1)
-			b.cylinder(Vector3(0, 0.2, 0), 0.04, 0.5, 6, wood, 0.1, 0.4)
-			b.blob(Vector3(0, 0.72, 0), Vector3(0.16, 0.3, 0.16), leaf, 0.9)
+			b.cone(Vector3.ZERO, 0.12, 0.25, 8, wood, 0.0, 0.1)
+			b.trunk(0.045, 0.62, 0.0, 0.4)
+			b.crown(Vector3(0, 0.72, 0), Vector3(0.17, 0.3, 0.17), 3, leaf, 0.9)
 		S.MANGROVE:
 			for k in 5:
 				var a := TAU * k / 5.0
 				b.strut(Vector3(cos(a) * 0.3, 0, sin(a) * 0.3), Vector3(0, 0.3, 0), 0.02, wood)
-			b.cylinder(Vector3(0, 0.28, 0), 0.04, 0.35, 5, wood, 0.1, 0.4)
-			b.blob(Vector3(0, 0.75, 0), Vector3(0.4, 0.22, 0.4), leaf, 0.9)
+			b.cylinder(Vector3(0, 0.28, 0), 0.04, 0.4, 8, wood, 0.1, 0.4)
+			b.crown(Vector3(0, 0.75, 0), Vector3(0.4, 0.22, 0.4), 4, leaf, 0.9)
 		S.ROSETTE:
 			b.cylinder(Vector3.ZERO, 0.07, 0.75, 6, wood, 0.0, 0.3)
 			for k in 10:
@@ -79,8 +122,7 @@ static func mesh_for(sp: PlantSpecies) -> ArrayMesh:
 			b.blob(Vector3(0, 0.12, 0), Vector3(0.22, 0.13, 0.22), leaf, 0.1)
 			b.cone(Vector3(0, 0.2, 0), 0.07, 0.8, 6, wood, 0.2, 0.6)
 		S.SHRUB:
-			b.blob(Vector3(0, 0.45, 0), Vector3(0.5, 0.45, 0.5), leaf, 0.6)
-			b.blob(Vector3(0.2, 0.6, 0.12), Vector3(0.32, 0.3, 0.32), leaf.lightened(0.08), 0.9)
+			b.crown(Vector3(0, 0.45, 0), Vector3(0.5, 0.45, 0.5), 2, leaf, 0.6, 1)
 		S.TUSSOCK:
 			for k in 9:
 				var a := TAU * k / 9.0
@@ -261,6 +303,100 @@ class _Builder:
 				var d := Vector3(rng.randfn(), rng.randfn() * 0.8 + 0.25, rng.randfn()).normalized()
 				var lit := 0.85 + 0.15 * d.y
 				card(center + d * radii * 0.92, d, mean_r * 0.55, col * lit, sway)
+
+	var trunk_top := Vector3.ZERO
+	var trunk_h := 0.5
+	var trunk_bend := 0.0
+
+	## Trunk: 8-sided, tapering to `top_frac` of the base radius, bending
+	## sideways by `bend` at the top, with a flared foot. Sways from 0 at
+	## the ground to `s1` at the top.
+	func trunk(r: float, h: float, bend: float, s1: float, top_frac := 0.45) -> void:
+		var rings := [[0.0, 1.7], [0.05, 1.15], [0.35, 1.0], [0.7, 1.0], [1.0, 1.0]]
+		var pts: Array = []
+		for ring in rings:
+			var t: float = ring[0]
+			var rr := r * lerpf(1.0, top_frac, t) * float(ring[1])
+			var off := Vector3(bend * t * t, 0, bend * 0.3 * t * t)
+			pts.append([Vector3(0, t * h, 0) + off, rr, lerpf(0.0, s1, t)])
+		tube(pts, 8, wood)
+		trunk_top = pts[pts.size() - 1][0]
+		trunk_h = h
+		trunk_bend = bend
+
+	## `count` branches leaving the trunk between heights y0 and y1, angled
+	## up and out, ending inside the crown.
+	func branches(count: int, y0: float, reach: float, y1: float, sway: float) -> void:
+		for k in count:
+			var a := TAU * (k + rng.randf_range(0.0, 0.5)) / count
+			var y := lerpf(y0, minf(y1, trunk_h * 0.9), rng.randf())
+			var tt := y / trunk_h
+			var start := Vector3(trunk_bend * tt * tt, y, trunk_bend * 0.3 * tt * tt)
+			var out := Vector3(cos(a), 0.0, sin(a))
+			var end := start + out * reach + Vector3(0, reach * rng.randf_range(0.7, 1.1), 0)
+			tube([[start, 0.022, sway * 0.6], [end, 0.01, sway]], 5, wood)
+
+	## A tube along a polyline: `pts` = [[center, radius, sway], ...].
+	func tube(pts: Array, sides: int, col: Color) -> void:
+		mat = 0.0 if col.is_equal_approx(wood) else 1.0
+		part += 1
+		var rings: Array = []
+		for i in pts.size():
+			var p: Vector3 = pts[i][0]
+			var next_p: Vector3 = pts[mini(i + 1, pts.size() - 1)][0]
+			var prev_p: Vector3 = pts[maxi(i - 1, 0)][0]
+			var axis := (next_p - prev_p).normalized()
+			var side := axis.cross(Vector3.FORWARD if absf(axis.dot(Vector3.FORWARD)) < 0.9 else Vector3.RIGHT).normalized()
+			var side2 := axis.cross(side).normalized()
+			var ring: Array = []
+			for k in sides:
+				var a := TAU * k / sides
+				ring.append(p + (side * cos(a) + side2 * sin(a)) * float(pts[i][1]))
+			rings.append(ring)
+		for i in pts.size() - 1:
+			var s0: float = pts[i][2]
+			var s1: float = pts[i + 1][2]
+			for k in sides:
+				var k1 := (k + 1) % sides
+				tri(rings[i][k], rings[i + 1][k1], rings[i][k1], col, s0, s1, s0)
+				tri(rings[i][k], rings[i + 1][k], rings[i + 1][k1], col, s0, s1, s1)
+		mat = 1.0
+
+	## A crown of `lobes` overlapping, noise-displaced icospheres: one big
+	## lobe at `center`, the rest clustered around its upper half. Leaf
+	## cards sit on the outer surface to rag the silhouette.
+	func crown(center: Vector3, radii: Vector3, lobes: int, col: Color, sway: float, subdiv := PlantMeshes.CROWN_SUBDIV) -> void:
+		lobe(center, radii, col, sway, subdiv)
+		for k in lobes - 1:
+			var a := TAU * (k + rng.randf_range(-0.2, 0.2)) / maxf(lobes - 1, 1)
+			var dir := Vector3(cos(a), rng.randf_range(0.05, 0.45), sin(a)).normalized()
+			var tone := col.lightened(0.08) if k % 2 == 0 else col.darkened(0.06)
+			lobe(center + dir * radii * 0.55, radii * rng.randf_range(0.55, 0.75), tone, sway, subdiv)
+
+	## One icosphere lobe with a lumpy surface and top-lit vertex shading.
+	func lobe(center: Vector3, radii: Vector3, col: Color, sway: float, subdiv: int) -> void:
+		part += 1
+		var sphere: Array = PlantMeshes.icosphere(subdiv)
+		var verts: PackedVector3Array = sphere[0]
+		var faces: PackedInt32Array = sphere[1]
+		var ph := Vector3(rng.randf() * TAU, rng.randf() * TAU, rng.randf() * TAU)
+		var disp := PackedVector3Array()
+		var shade := PackedColorArray()
+		for u in verts:
+			var bump := 0.11 * sin(u.x * 3.1 + ph.x) * sin(u.y * 2.7 + ph.y) + 0.07 * sin(u.z * 4.3 + u.x * 1.7 + ph.z)
+			disp.append(center + u * radii * (1.0 + bump))
+			shade.append(col * (0.82 + 0.18 * u.y))
+		for f in range(0, faces.size(), 3):
+			var a := faces[f]
+			var b2 := faces[f + 1]
+			var d := faces[f + 2]
+			tri3(disp[a], disp[b2], disp[d], shade[a], shade[b2], shade[d], sway, sway, sway)
+		var mean_r := (radii.x + radii.y + radii.z) / 3.0
+		if mean_r >= 0.1:
+			for i in 5:
+				# Outward and mostly sideways or up: where the silhouette is.
+				var d := Vector3(rng.randfn(), rng.randfn() * 0.6 + 0.3, rng.randfn()).normalized()
+				card(center + d * radii * 0.95, d, mean_r * 0.5, col * (0.85 + 0.15 * d.y), sway)
 
 	## Flat leaf from `base` outward along `dir`, drooping at the tip.
 	func frond(base: Vector3, dir: Vector3, length: float, width: float, col: Color, sway: float) -> void:
