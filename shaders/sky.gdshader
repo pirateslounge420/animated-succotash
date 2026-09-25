@@ -160,9 +160,10 @@ void sky() {
 				float earthshine = 0.22 * pow(1.0 - illum, 2.0) * (1.0 - lit);
 				// The disc adds its light to the sky behind it (stars hidden),
 				// so the dark side reads as sky at dusk, not a black hole.
-				// At night the lit part is bright enough to cross the glow
-				// threshold and bloom; by day it's a pale ghost.
-				float lit_gain = mix(1.9, 0.4, day_amount);
+				// At night the lit part just crosses the glow threshold (a
+				// soft bloom that keeps the maria visible); by day it's a
+				// pale ghost.
+				float lit_gain = mix(1.35, 0.4, day_amount);
 				vec3 disc = sky_base + moon_tint * albedo * (lit * lit_gain + earthshine * (1.0 - day_amount)) * moon_brightness;
 				float edge = smoothstep(1.0, 0.97, r);
 				col = mix(col, disc, edge * night_mask);
@@ -171,7 +172,7 @@ void sky() {
 			// limb, so a crescent's glow follows the crescent.
 			float toward = r > 1e-3 ? dot(p / r, bright) : 0.0;
 			float shape = mix(1.0, smoothstep(-0.7, 0.9, toward), 1.0 - illum);
-			float halo = (exp(-max(r - 1.0, 0.0) * 1.2) * 0.55 + exp(-max(r - 1.0, 0.0) * 0.35) * 0.18) * moon_brightness * pow(illum, 1.3) * shape;
+			float halo = (exp(-max(r - 1.0, 0.0) * 1.4) * 0.4 + exp(-max(r - 1.0, 0.0) * 0.35) * 0.14) * moon_brightness * pow(illum, 1.3) * shape;
 			col += moon_tint * halo * night_mask * (1.0 - day_amount);
 
 			// Today's mansion glyph beside the moon.

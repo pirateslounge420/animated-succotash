@@ -186,7 +186,8 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	sun.light_energy = sun_max_energy * sun_up * (1.0 - 0.55 * float(weather.get("cloud", 0.0)))
 	var moon_col := Color(0.7, 0.7, 0.9).lerp(Color(0.42, 0.56, 1.0), smoothstep(0.0, 25.0, moon_elevation_deg))
 	moon.light_color = moon_col
-	moon.light_energy = moon_max_energy * moonlight * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)
+	# Moonlight is lost in daylight.
+	moon.light_energy = moon_max_energy * moonlight * (1.0 - daylight) * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)
 	sun.shadow_enabled = sun.light_energy > 0.05
 	moon.shadow_enabled = not sun.shadow_enabled and moon.light_energy > 0.04
 	sun.visible = sun.light_energy > 0.001

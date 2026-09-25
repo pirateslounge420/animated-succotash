@@ -61,5 +61,5 @@ void light() {
 	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
 	// Hard-edged toon highlight (wet ground at night).
 	float rv = dot(reflect(-LIGHT, NORMAL), VIEW);
-	SPECULAR_LIGHT += LIGHT_COLOR / PI * ATTENUATION * smoothstep(0.985, 0.99, rv) * SPECULAR_AMOUNT * 0.35;
+	SPECULAR_LIGHT += LIGHT_COLOR / PI * ATTENUATION * smoothstep(0.985, 0.99, rv) * wetness * 0.12;
 }
