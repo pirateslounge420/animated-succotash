@@ -24,7 +24,7 @@ signal chunk_unloaded(chunk: TerrainChunk)
 @export var detail_radius_chunks := 1
 @export var max_attach_per_frame := 2
 ## Tree trunk colliders added per frame (detail ring only).
-@export var tree_colliders_per_frame := 160
+@export var tree_colliders_per_frame := 60
 
 var world: Node
 var map: PlanetData

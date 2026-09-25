@@ -544,8 +544,8 @@ Wolf dens are framed by boulders and a bevelled slab.
 - **Trees** (`TerrainChunk` trunk colliders, `TreeContact`): canopy and
   emergent trees in the detail ring get a cylinder collider each (one
   static body per chunk, a shape owner per tree, sized from
-  `PlantMeshes.tree_dims`, on physics layer 2 as well as 1), about 160 a
-  frame. One sphere query a few times a second finds trunks near the
+  `PlantMeshes.tree_dims`, on physics layer 2 as well as 1), 60 a frame
+  (~0.2 ms; all at once behind the loading screen). One sphere query a few times a second finds trunks near the
   player: under a crown is `under_canopy` (rain shelter); walking through
   a crown or bumping a trunk rustles it (a synthesized rustle and a crown
   shiver through the MultiMesh custom data's b channel). A physics query
@@ -676,6 +676,12 @@ latest results:
   (there is no bolt), and flooding is visual only.
 - **NPCs** speak their opening lines once and otherwise only watch you;
   there's no dialogue or behavior beyond that yet.
+- **Frame cost of the movement/storm batch** (headless, main thread, the
+  same 30 s run at the same speed): 4.1-4.2 → 4.5 ms on average, 6.5 →
+  6.7-6.9 ms at the 95th percentile, nearly all from the trunk colliders
+  (building them as chunks enter the detail ring, and the player
+  colliding with them); the contact scan, footsteps and shelter checks
+  are each under 0.02 ms.
 - **Waterfalls** have no sound yet, and the fine terrain grid (4 m) can't
   make a truly vertical cliff, so the gorge wall under a tall fall is a
   steep ramp.
