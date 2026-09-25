@@ -147,6 +147,7 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 				level[i] = wl.x
 				salt[i] = int(wl.y)
 
+	var falls := []
 	var fine_n := _smooth_normals(center, pad_d, pad_h, nf)
 	_snap_edges(fine_h, fine_n, nf)
 	var normals := PackedVector3Array()
@@ -168,7 +169,8 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 		"salt": salt,
 		"colors": _vertex_colors(map, dirs_out, h, normals),
 		"water": _water_quads(key, dirs_out, fine_h, level, salt),
-		"rivers": _river_ribbons(center, rivers, segs),
+		"rivers": _river_ribbons(key, center, rivers, segs, falls),
+		"falls": falls,
 	}
 
 
@@ -452,41 +454,62 @@ static func _lake_level_near(map: PlanetData, cell: int) -> float:
 
 
 ## River water ribbons crossing this chunk: array of
-## [left_dirs, right_dirs, radii, width, brackish].
-static func _river_ribbons(center: Vector3, rivers: RiverNetwork, segs: PackedInt32Array) -> Array:
+## [left_dirs, right_dirs, radii, width, brackish]; ribbons follow the
+## river's water profile (RiverNetwork) and break at waterfalls. Falls
+## inside the chunk go to `falls`: [left_dir, right_dir, top_radius,
+## bottom_radius, width, brackish, downstream_dir].
+static func _river_ribbons(key: Vector3i, center: Vector3, rivers: RiverNetwork, segs: PackedInt32Array, falls: Array) -> Array:
 	var out := []
 	var reach := (PlanetConst.CIRCUMFERENCE_M / 4.0 / CHUNKS_PER_FACE) * 0.85 / PlanetConst.RADIUS_M
 	for s in segs:
 		var pa := rivers.a[s]
 		var pb := rivers.b[s]
-		var length_m := CubeSphere.surface_distance_m(pa, pb)
-		var steps := maxi(2, int(length_m / 8.0))
-		var lefts := PackedVector3Array()
-		var rights := PackedVector3Array()
-		var radii := PackedFloat32Array()
+		var prof := rivers.profile(s)
+		var n := prof.size() - 1
 		var tangent := (pb - pa).normalized()
-		for k in steps + 1:
-			var t := float(k) / steps
-			var p := (pa + (pb - pa) * t).normalized()
+		var half := rivers.width[s] * 0.5 / PlanetConst.RADIUS_M
+		var rb := [PackedVector3Array(), PackedVector3Array(), PackedFloat32Array()]
+		var emit := func() -> void:
+			if (rb[0] as PackedVector3Array).size() >= 2:
+				out.append([rb[0], rb[1], rb[2], rivers.width[s], rivers.salty[s]])
+			rb[0] = PackedVector3Array()
+			rb[1] = PackedVector3Array()
+			rb[2] = PackedFloat32Array()
+		var add := func(t: float, level: float) -> void:
+			var p := pa.slerp(pb, t)
+			var side := tangent.cross(p).normalized() * half
+			(rb[0] as PackedVector3Array).append((p - side).normalized())
+			(rb[1] as PackedVector3Array).append((p + side).normalized())
+			(rb[2] as PackedFloat32Array).append(PlanetConst.RADIUS_M + level + 0.15)
+		for i in n + 1:
+			var t := float(i) / n
+			var p := pa.slerp(pb, t)
 			if CubeSphere.angle_between(p, center) > reach:
-				if lefts.size() >= 2:
-					out.append([lefts, rights, radii, rivers.width[s], rivers.salty[s]])
-				lefts = PackedVector3Array()
-				rights = PackedVector3Array()
-				radii = PackedFloat32Array()
+				emit.call()
 				continue
-			var side := tangent.cross(p).normalized() * (rivers.width[s] * 0.5 / PlanetConst.RADIUS_M)
-			lefts.append((p - side).normalized())
-			rights.append((p + side).normalized())
-			radii.append(PlanetConst.RADIUS_M + lerpf(rivers.level_a[s], rivers.level_b[s], t) + 0.15)
-		if lefts.size() >= 2:
-			out.append([lefts, rights, radii, rivers.width[s], rivers.salty[s]])
+			if i > 0 and prof[i - 1] - prof[i] >= RiverNetwork.FALL_MIN_M:
+				# Waterfall: the upper ribbon ends at its lip, the lower one
+				# starts at the plunge pool, and a falling sheet joins them.
+				var tm := (i - 0.5) / n
+				add.call(tm, prof[i - 1])
+				emit.call()
+				var pm := pa.slerp(pb, tm)
+				if key_at(pm) == key:
+					var side := tangent.cross(pm).normalized() * half
+					falls.append([(pm - side).normalized(), (pm + side).normalized(),
+						PlanetConst.RADIUS_M + prof[i - 1] + 0.15, PlanetConst.RADIUS_M + prof[i] + 0.15,
+						rivers.width[s], rivers.salty[s], (pb - pa).normalized()])
+				add.call(tm, prof[i])
+			add.call(t, prof[i])
+		emit.call()
 	return out
 
 
 # --- Main-thread node building --------------------------------------------
 
 static var _terrain_mat: ShaderMaterial
+static var _fall_mat: ShaderMaterial
+static var _mist_mesh: QuadMesh
 static var _salt_mat: ShaderMaterial
 static var _fresh_mat: ShaderMaterial
 
@@ -504,7 +527,10 @@ static func materials() -> void:
 	_fresh_mat.shader = preload("res://shaders/water.gdshader")
 	_fresh_mat.set_shader_parameter("deep_color", Color(0.02, 0.2, 0.36))
 	_fresh_mat.set_shader_parameter("shallow_color", Color(0.05, 0.58, 0.55))
+	_fall_mat = ShaderMaterial.new()
+	_fall_mat.shader = preload("res://shaders/waterfall.gdshader")
 	Look.register(_terrain_mat)
+	Look.register(_fall_mat)
 	Look.register(_salt_mat)
 	Look.register(_fresh_mat)
 
@@ -551,6 +577,7 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 	data.erase("fine_normals")
 
 	_build_water(data.water, data.rivers, world, anchor)
+	_build_falls(data.falls, world, anchor)
 
 
 func _ground_mesh(arrays: Array, node_name: String) -> MeshInstance3D:
@@ -612,6 +639,101 @@ func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) ->
 			along += seg_len
 	_water_mesh(salt, _salt_mat, "SaltWater")
 	_water_mesh(fresh, _fresh_mat, "FreshWater")
+
+
+## Waterfalls: a sheet of water arcing off the lip and falling to the
+## plunge pool, with drifting mist at its foot.
+func _build_falls(falls: Array, world: Node, anchor: Vector3) -> void:
+	if falls.is_empty():
+		return
+	var v := PackedVector3Array()
+	var uv := PackedVector2Array()
+	var uv2 := PackedVector2Array()
+	var idx := PackedInt32Array()
+	var rows := 6
+	for f in falls:
+		var top_r: float = f[2]
+		var bot_r: float = f[3] - 0.4
+		var h := top_r - bot_r
+		var w: float = f[4]
+		var mid_dir: Vector3 = ((f[0] as Vector3) + (f[1] as Vector3)).normalized()
+		var down: Vector3 = f[6]
+		down = (down - mid_dir * down.dot(mid_dir)).normalized()
+		var base := v.size()
+		for r in rows + 1:
+			var t := float(r) / rows
+			var radius := lerpf(top_r, bot_r, t)
+			# Arcs out over the lip, then falls nearly straight.
+			var out := down * minf(h, 12.0) * 0.18 * sin(t * PI * 0.5)
+			for side in 2:
+				var d: Vector3 = f[side]
+				v.append(world.to_scene_relative(d, radius, anchor) + out)
+				uv.append(Vector2(w * side, h * t))
+				uv2.append(Vector2(h, w))
+		for r in rows:
+			var i := base + r * 2
+			idx.append_array([i, i + 2, i + 1, i + 1, i + 2, i + 3])
+		_mist(world.to_scene_relative(mid_dir, bot_r + 0.6, anchor), mid_dir, w, h)
+	var normals := PackedVector3Array()
+	normals.resize(v.size())
+	normals.fill(Vector3.ZERO)
+	for t in range(0, idx.size(), 3):
+		var fn := (v[idx[t + 1]] - v[idx[t]]).cross(v[idx[t + 2]] - v[idx[t]])
+		for k in 3:
+			normals[idx[t + k]] += fn
+	for i in normals.size():
+		normals[i] = normals[i].normalized()
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = v
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_TEX_UV] = uv
+	arrays[Mesh.ARRAY_TEX_UV2] = uv2
+	arrays[Mesh.ARRAY_INDEX] = idx
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var mi := MeshInstance3D.new()
+	mi.name = "Waterfalls"
+	mi.mesh = mesh
+	mi.material_override = _fall_mat
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(mi)
+
+
+## Spray drifting up (along `up`, the local vertical) from a plunge pool.
+func _mist(at: Vector3, up: Vector3, w: float, h: float) -> void:
+	if _mist_mesh == null:
+		_mist_mesh = QuadMesh.new()
+		_mist_mesh.size = Vector2(1.0, 1.0)
+		var m := StandardMaterial3D.new()
+		m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+		m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		m.vertex_color_use_as_albedo = true
+		m.albedo_color = Color(0.85, 0.93, 1.0, 0.22)
+		_mist_mesh.material = m
+	var p := CPUParticles3D.new()
+	p.name = "Mist"
+	p.mesh = _mist_mesh
+	p.amount = clampi(int(w * 1.5), 8, 40)
+	p.lifetime = 3.0
+	p.preprocess = 3.0
+	p.emission_shape = CPUParticles3D.EMISSION_SHAPE_BOX
+	p.emission_box_extents = Vector3(w * 0.5, 0.3, w * 0.5)
+	p.direction = Vector3.UP
+	p.spread = 35.0
+	p.gravity = Vector3.ZERO
+	p.initial_velocity_min = 0.3
+	p.initial_velocity_max = 0.6 + h * 0.05
+	p.scale_amount_min = 1.5
+	p.scale_amount_max = 2.5 + minf(h, 20.0) * 0.12
+	var ramp := Gradient.new()
+	ramp.colors = PackedColorArray([Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)])
+	ramp.offsets = PackedFloat32Array([0.0, 0.3, 1.0])
+	p.color_ramp = ramp
+	var x := up.cross(Vector3.RIGHT if absf(up.x) < 0.9 else Vector3.FORWARD).normalized()
+	p.transform = Transform3D(Basis(x, up, x.cross(up)), at)
+	add_child(p)
 
 
 func _water_mesh(data: Dictionary, mat: ShaderMaterial, node_name: String) -> void:
