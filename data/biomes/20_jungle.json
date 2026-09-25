@@ -12,7 +12,23 @@
 	},
 	"plants": {
 		"emergent": [],
-		"canopy": [],
+		"canopy": [
+			{
+				"name": "Guadua bamboo",
+				"shape": "bamboo",
+				"temp_c": [18, 28],
+				"moisture": [0.55, 0.95],
+				"altitude_m": [0, 2000],
+				"height_m": [15, 28],
+				"color": "#467f2c",
+				"accent": "#6a8a3e",
+				"density": 1.3,
+				"source": "Guadua angustifolia, northern Andes lowland and valley forests: culms to ~30 m, 10-22 cm across with white bands at the nodes; forms guaduales along rivers"
+			},
+			{
+				"name": "Giant bamboo"
+			}
+		],
 		"shrub": [
 			{
 				"name": "Bamboo thicket",

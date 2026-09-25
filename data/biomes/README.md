@@ -52,7 +52,8 @@ canopy and emergent trees already placed.
 Shapes: `conifer`, `broadleaf`, `gnarled`, `emergent`, `umbrella`, `palm`,
 `cypress`, `mangrove`, `rosette`, `spike_rosette`, `shrub`, `tussock`,
 `grass`, `reed`, `fern`, `tree_fern`, `cactus`, `cushion`, `moss`,
-`hanging_moss`, `epiphyte_clump`, `liana`, `knees`, `thermophile_mat`.
+`hanging_moss`, `epiphyte_clump`, `liana`, `knees`, `thermophile_mat`,
+`bamboo` (a clump of culms; works from dwarf 1 m bamboo to 30 m giants).
 These are low-poly placeholders; real models replace them later.
 
 ## Biome file fields

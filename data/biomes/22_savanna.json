@@ -24,6 +24,18 @@
 				"density": 0.3,
 				"soil": "thin",
 				"source": "Savanna (DESIGN.md: scattered acacias)"
+			},
+			{
+				"name": "Savanna bamboo",
+				"shape": "bamboo",
+				"temp_c": [20, 30],
+				"moisture": [0.3, 0.55],
+				"altitude_m": [0, 1800],
+				"height_m": [5, 10],
+				"color": "#5a8034",
+				"accent": "#8a8a4c",
+				"density": 0.6,
+				"source": "Oxytenanthera abyssinica, African savanna woodland: a drought-tolerant solid-culmed bamboo, 6-12 m"
 			}
 		],
 		"shrub": [],

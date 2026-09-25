@@ -36,7 +36,32 @@
 				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): temperate rainforest"
 			}
 		],
-		"shrub": [],
+		"shrub": [
+			{
+				"name": "Colihue",
+				"shape": "bamboo",
+				"temp_c": [4, 14],
+				"moisture": [0.7, 1],
+				"altitude_m": [0, 2000],
+				"height_m": [3, 6],
+				"color": "#437a2e",
+				"accent": "#a8a24a",
+				"density": 1.1,
+				"source": "Chusquea culeou, Valdivian temperate rainforest (Chile, Argentina): solid-culmed bamboo thickets 4-6 m in the understory"
+			},
+			{
+				"name": "Kuril bamboo",
+				"shape": "bamboo",
+				"temp_c": [0, 12],
+				"moisture": [0.65, 1],
+				"altitude_m": [0, 1800],
+				"height_m": [1, 3],
+				"color": "#356c2a",
+				"accent": "#6e8a44",
+				"density": 1.0,
+				"source": "Sasa kurilensis, snowy maritime forests of northern Japan, Sakhalin and the Kurils: very cold-hardy dwarf bamboo, 1-3 m"
+			}
+		],
 		"ground": [],
 		"epiphyte": []
 	}

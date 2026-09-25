@@ -38,6 +38,18 @@
 				"accent": "#5c422e",
 				"altitude_m": [2400, 4900],
 				"source": "Paramo (ScienceDirect topic: paramo)"
+			},
+			{
+				"name": "Paramo dwarf bamboo",
+				"shape": "bamboo",
+				"temp_c": [2, 10],
+				"moisture": [0.6, 1],
+				"altitude_m": [3000, 4300],
+				"height_m": [1, 3],
+				"color": "#52743a",
+				"accent": "#a8a064",
+				"density": 1.2,
+				"source": "Chusquea tessellata, Colombian and Ecuadorian paramo: dense dwarf-bamboo stands (chuscales) 1-4 m on wet slopes"
 			}
 		],
 		"ground": [

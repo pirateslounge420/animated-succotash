@@ -48,6 +48,18 @@
 				"altitude_m": [-50, 1200],
 				"density": 0.6,
 				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
+			},
+			{
+				"name": "Giant bamboo",
+				"shape": "bamboo",
+				"temp_c": [20, 30],
+				"moisture": [0.6, 1],
+				"altitude_m": [0, 1200],
+				"height_m": [20, 30],
+				"color": "#3f7a2a",
+				"accent": "#5f7d4a",
+				"density": 1.2,
+				"source": "Dendrocalamus giganteus, SE Asian tropical forest: one of the largest bamboos, clumps of culms to ~30 m tall and 20-30 cm across"
 			}
 		],
 		"shrub": [

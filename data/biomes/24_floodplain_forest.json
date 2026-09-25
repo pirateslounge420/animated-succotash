@@ -26,7 +26,21 @@
 				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): floodplain forest, gallery forest"
 			}
 		],
-		"shrub": [],
+		"shrub": [
+			{
+				"name": "Giant river cane",
+				"shape": "bamboo",
+				"temp_c": [10, 22],
+				"moisture": [0.55, 1],
+				"altitude_m": [0, 800],
+				"height_m": [2, 8],
+				"color": "#3f7430",
+				"accent": "#8a9448",
+				"density": 1.2,
+				"needs": ["river_bank"],
+				"source": "Arundinaria gigantea, south-eastern US floodplains: forms canebrakes along rivers, 2-8 m"
+			}
+		],
 		"ground": [],
 		"epiphyte": []
 	}

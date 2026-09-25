@@ -9,7 +9,8 @@
 // Textured (Look, 64 px nearest): bark streaks on trunks, a leafy surface
 // on crowns, and alpha-cutout leaf-cluster cards around the crowns so
 // silhouettes are ragged and dappled instead of round. The material
-// comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine); card UVs are in UV.
+// comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine, 4 bamboo culm);
+// card UVs are in UV.
 //
 // Wet places (per plant, from the MultiMesh's custom data: r = moss,
 // g = vines): moss creeps over the bark, thickest low down and on upward
@@ -59,7 +60,7 @@ void vertex() {
 	glow_pick = step(0.5, fract(sin(float(INSTANCE_ID) * 12.9898) * 43758.5453));
 	world_pos = VERTEX;
 	// Vine strands above this plant's vine amount collapse to a point.
-	if (mat_id > 2.5 && UV2.y >= INSTANCE_CUSTOM.g) {
+	if (mat_id > 2.5 && mat_id < 3.5 && UV2.y >= INSTANCE_CUSTOM.g) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
 }
@@ -67,7 +68,14 @@ void vertex() {
 void fragment() {
 	vec3 an = abs(obj_normal);
 	vec4 tex;
-	if (mat_id > 2.5) {
+	if (mat_id > 3.5) {
+		// Bamboo culm: smooth, faintly streaked, ringed with a node every
+		// ~35 cm (a dark ridge with a pale band under it).
+		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
+		tex = texture(look_tex_bark, vec2(uv.x * 3.0, uv.y * 0.15)) * 0.35 + 0.33;
+		float node = fract(obj_pos.y / 0.35);
+		tex.rgb *= 1.0 - 0.45 * step(0.94, node) + 0.18 * step(0.86, node) * step(node, 0.94);
+	} else if (mat_id > 2.5) {
 		// Vines: the leafy texture running down the strand.
 		tex = texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 2.0);
 	} else if (mat_id > 1.5) {
@@ -93,7 +101,7 @@ void fragment() {
 	ALPHA_SCISSOR_THRESHOLD = 0.5;
 	// Leaves are translucent: light shining through from behind lights
 	// them too, so crowns seen from below stay green instead of black.
-	float leafy = step(0.5, mat_id);
+	float leafy = step(0.5, mat_id) * step(mat_id, 3.5);
 	BACKLIGHT = ALBEDO * 0.6 * leafy;
 	// Specular is disabled, so roughness only shapes the rim (light()):
 	// the rim falloff exponent is (1 - roughness) * 16, and at 1.0 the

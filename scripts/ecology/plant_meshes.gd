@@ -194,6 +194,8 @@ static func mesh_for(sp: PlantSpecies, far := false) -> ArrayMesh:
 		S.THERMOPHILE_MAT:
 			b.disc(Vector3(0, 0.3, 0), 40.0, 0.6, 9, leaf, 0.0)
 			b.disc(Vector3(0, 0.7, 0), 22.0, 0.6, 9, wood, 0.0)
+		S.BAMBOO:
+			b.bamboo(wood, leaf)
 		_:
 			b.blob(Vector3(0, 0.5, 0), Vector3(0.4, 0.5, 0.4), leaf, 0.8)
 	var mesh := b.commit()
@@ -478,6 +480,64 @@ class _Builder:
 				prev = p
 		strand_key = 0.0
 		mat = 1.0
+
+	## A bamboo clump: culms in a tight cluster (about an eighth of the
+	## height across), rising straight and arching outward near the top,
+	## each with feathery leaf sprays (cards) along its upper part. Culms
+	## are material 4: the foliage shader rings them with nodes. The whole
+	## clump sways, most at the tips.
+	func bamboo(culm: Color, leaf: Color) -> void:
+		var count := 4 if far else 7
+		var sides := 5
+		for k in count:
+			var a := TAU * (k + rng.randf_range(-0.3, 0.3)) / count
+			var r0 := rng.randf_range(0.015, 0.06)
+			var base := Vector3(cos(a) * r0, 0.0, sin(a) * r0)
+			var out := Vector3(cos(a), 0.0, sin(a))
+			var h := rng.randf_range(0.72, 1.0)
+			var lean := rng.randf_range(0.08, 0.2)
+			var radius := rng.randf_range(0.006, 0.009)
+			var pts: Array = []
+			var rings := [0.0, 0.5, 0.8, 1.0] if not far else [0.0, 0.6, 1.0]
+			for t in rings:
+				# Straight low down, arching out toward the tip.
+				var bend := out * lean * pow(t, 2.2) * h
+				pts.append([base + Vector3(0, t * h, 0) + bend - Vector3(0, lean * 0.4 * pow(t, 3.0) * h, 0), radius * lerpf(1.0, 0.55, t), lerpf(0.0, 1.0, t)])
+			mat = 4.0
+			part += 1
+			var rs: Array = []
+			for i in pts.size():
+				var p: Vector3 = pts[i][0]
+				var nxt: Vector3 = pts[mini(i + 1, pts.size() - 1)][0]
+				var prv: Vector3 = pts[maxi(i - 1, 0)][0]
+				var axis := (nxt - prv).normalized()
+				var s1 := axis.cross(Vector3.FORWARD if absf(axis.dot(Vector3.FORWARD)) < 0.9 else Vector3.RIGHT).normalized()
+				var s2 := axis.cross(s1).normalized()
+				var ring: Array = []
+				for j in sides:
+					var ang := TAU * j / sides
+					ring.append(p + (s1 * cos(ang) + s2 * sin(ang)) * float(pts[i][1]))
+				rs.append(ring)
+			for i in pts.size() - 1:
+				var sw0: float = pts[i][2]
+				var sw1: float = pts[i + 1][2]
+				for j in sides:
+					var j1 := (j + 1) % sides
+					tri(rs[i][j], rs[i + 1][j1], rs[i][j1], culm, sw0, sw1, sw0)
+					tri(rs[i][j], rs[i + 1][j], rs[i + 1][j1], culm, sw0, sw1, sw1)
+			mat = 1.0
+			# Feathery leaf sprays down the upper two-thirds of the culm,
+			# small and many, drooping outward.
+			var sprays := 2 if far else 5
+			for n in sprays:
+				var t := lerpf(0.38, 1.0, (n + rng.randf()) / sprays)
+				var seg := int(t * (pts.size() - 1))
+				var f := t * (pts.size() - 1) - seg
+				var c: Vector3 = (pts[seg][0] as Vector3).lerp(pts[mini(seg + 1, pts.size() - 1)][0], f)
+				var side := Vector3(rng.randfn(), 0.0, rng.randfn()).normalized()
+				var dir := (out * 0.8 + side * 0.7 + Vector3(0, rng.randf_range(-0.35, 0.15), 0)).normalized()
+				var size := h * rng.randf_range(0.045, 0.07) * (1.6 if far else 1.0)
+				card(c + dir * size * 0.8, dir, size, leaf * rng.randf_range(0.8, 1.05), t)
 
 	## Flat leaf from `base` outward along `dir`, drooping at the tip.
 	func frond(base: Vector3, dir: Vector3, length: float, width: float, col: Color, sway: float) -> void:

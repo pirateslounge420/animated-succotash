@@ -25,9 +25,34 @@
 				"altitude_m": [800, 3700],
 				"density": 1.2,
 				"source": "Cloud forest (en.wikipedia.org/wiki/Cloud_forest)"
+			},
+			{
+				"name": "Mountain bamboo",
+				"shape": "bamboo",
+				"temp_c": [9, 16],
+				"moisture": [0.6, 1],
+				"altitude_m": [2200, 3400],
+				"height_m": [8, 16],
+				"color": "#3f742c",
+				"accent": "#7a8a4a",
+				"density": 1.0,
+				"source": "Yushania alpina, East African montane bamboo zone (2,400-3,200 m): dense stands to ~20 m"
 			}
 		],
-		"shrub": [],
+		"shrub": [
+			{
+				"name": "Andean chusquea",
+				"shape": "bamboo",
+				"temp_c": [7, 18],
+				"moisture": [0.65, 1],
+				"altitude_m": [1500, 3500],
+				"height_m": [3, 8],
+				"color": "#44782e",
+				"accent": "#9a9a48",
+				"density": 1.2,
+				"source": "Chusquea spp., Andean montane cloud forest: arching climbing bamboos dominating the understory and gaps, 3-10 m"
+			}
+		],
 		"ground": [
 			{
 				"name": "Moss carpet",

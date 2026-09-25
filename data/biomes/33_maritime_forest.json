@@ -25,7 +25,11 @@
 				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): maritime forest"
 			}
 		],
-		"shrub": [],
+		"shrub": [
+			{
+				"name": "Kuril bamboo"
+			}
+		],
 		"ground": [],
 		"epiphyte": []
 	}

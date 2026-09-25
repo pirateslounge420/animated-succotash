@@ -62,6 +62,18 @@
 				"color": "#407a2e",
 				"accent": "#5c422e",
 				"source": "Temperate deciduous (UT Austin Bio213 biomes)"
+			},
+			{
+				"name": "Moso bamboo",
+				"shape": "bamboo",
+				"temp_c": [13, 21],
+				"moisture": [0.6, 0.95],
+				"altitude_m": [0, 1500],
+				"height_m": [10, 24],
+				"color": "#3e7a30",
+				"accent": "#6f8f52",
+				"density": 1.2,
+				"source": "Phyllostachys edulis, warm-temperate China and Japan: a running bamboo forming pure forests, culms to ~28 m and 10-20 cm across"
 			}
 		],
 		"shrub": [
@@ -87,6 +99,18 @@
 				"color": "#669947",
 				"accent": "#f2e680",
 				"source": "Temperate deciduous (UT Austin Bio213 biomes)"
+			},
+			{
+				"name": "Kuma bamboo grass",
+				"shape": "bamboo",
+				"temp_c": [3, 16],
+				"moisture": [0.6, 1],
+				"altitude_m": [0, 2200],
+				"height_m": [0.6, 1.8],
+				"color": "#2f6428",
+				"accent": "#5a7a3a",
+				"density": 1.2,
+				"source": "Sasa veitchii / S. senanensis, Japanese temperate forest: dwarf bamboo carpeting the forest floor, 0.5-2 m"
 			}
 		],
 		"epiphyte": []

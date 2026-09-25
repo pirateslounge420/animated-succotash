@@ -22,6 +22,18 @@
 				"color": "#738038",
 				"accent": "#5c422e",
 				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): tropical dry forest"
+			},
+			{
+				"name": "Common bamboo",
+				"shape": "bamboo",
+				"temp_c": [20, 32],
+				"moisture": [0.42, 0.8],
+				"altitude_m": [0, 1200],
+				"height_m": [8, 18],
+				"color": "#4f8a2e",
+				"accent": "#a8a83a",
+				"density": 1.0,
+				"source": "Bambusa vulgaris, pantropical: culms 10-20 m, tolerates a dry season; yellow-green culms"
 			}
 		],
 		"shrub": [],
