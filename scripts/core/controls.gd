@@ -9,7 +9,6 @@ const DEFAULTS := {
 	"move_right": [KEY_D, KEY_RIGHT],
 	"jump": [KEY_SPACE],
 	"run": [KEY_SHIFT],
-	"fast_travel": [KEY_CTRL],
 	"interact": [KEY_E],
 	"toggle_map": [KEY_M],
 	"toggle_hud": [KEY_H],

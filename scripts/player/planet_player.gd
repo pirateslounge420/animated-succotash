@@ -5,9 +5,9 @@ extends CharacterBody3D
 ## stand upright wherever it is.
 ##
 ## Speeds: walking uses the spec's 4.5 km/h pace (the one DESIGN.md's biome
-## walk-across times assume); hold run to jog; fast_travel is a debug
-## speed for crossing the prototype quickly. The player swims when in
-## water deeper than chest height.
+## walk-across times assume); hold run to jog. There is no fast travel:
+## the world is crossed on foot. The player swims when in water deeper
+## than chest height.
 ##
 ## Mouse or right stick turns the camera; click the game window to capture
 ## the mouse, press release_mouse (Esc) to free it.
@@ -15,7 +15,6 @@ extends CharacterBody3D
 const GRAVITY := 9.8
 const WALK_SPEED := PlanetConst.WALK_SPEED_MPS
 const RUN_SPEED := 4.2
-const FAST_TRAVEL_SPEED := 60.0
 const SWIM_SPEED := 1.6
 const JUMP_SPEED := 4.6
 const MOUSE_SENSITIVITY := 0.0025
@@ -112,14 +111,12 @@ func _physics_process(delta: float) -> void:
 	var speed := WALK_SPEED
 	if Input.is_action_pressed("run"):
 		speed = RUN_SPEED
-	if Input.is_action_pressed("fast_travel"):
-		speed = FAST_TRAVEL_SPEED
 
 	var radius: float = world.radius_of(global_position)
 	var water := chunks.water_level_at(surface_dir)
 	var depth := (PlanetConst.RADIUS_M + water) - radius
 	swimming = depth > 1.2
-	if swimming and not Input.is_action_pressed("fast_travel"):
+	if swimming:
 		speed = minf(speed, SWIM_SPEED)
 
 	var vertical := up * velocity.dot(up)
