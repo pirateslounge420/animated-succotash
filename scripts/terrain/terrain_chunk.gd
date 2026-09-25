@@ -1,7 +1,10 @@
 class_name TerrainChunk
 extends Node3D
-## One walkable patch of the planet surface (~260 m square, 32 x 32 flat-
-## shaded quads of ~8 m: the GameCube low-poly look).
+## One walkable patch of the planet surface (~260 m square, 32 x 32 quads
+## of ~8 m), smooth shaded like GameCube-era terrain: shared vertices with
+## normals averaged from the surrounding ground. Normals come from a height
+## grid padded one vertex past the chunk edge, so both chunks along an edge
+## compute the same normal there and no seam shows.
 ##
 ## Chunks tile the cube-sphere: face `face`, chunk (ci, cj) of
 ## CHUNKS_PER_FACE per face edge. Heights come from the same continuous
@@ -84,13 +87,19 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 	salt.resize(n * n)
 	var center := center_of(key)
 	var segs := rivers.segments_near(map, map.cell_at(center))
+	# Heights on the grid padded by one vertex all round (for normals).
+	var pn := n + 2
+	var pad_h := PackedFloat32Array()
+	var pad_d := PackedVector3Array()
+	pad_h.resize(pn * pn)
+	pad_d.resize(pn * pn)
 
-	for jj in n:
-		for ii in n:
-			var i := jj * n + ii
+	for jj in range(-1, n + 1):
+		for ii in range(-1, n + 1):
 			var d := CubeSphere.to_dir(key.x, _uv(key.y, ii), _uv(key.z, jj))
 			var e := map.terrain.elevation(d, true)
-			var wl := _standing_water(map, d)
+			var inside := ii >= 0 and jj >= 0 and ii < n and jj < n
+			var wl := _standing_water(map, d) if inside else Vector2.ZERO
 			var nearest := 1e6
 			for s in segs:
 				var info := rivers.closest(s, d)
@@ -102,24 +111,53 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 					e = lerpf(e, minf(e, bed) if info.x > half else bed, f)
 					if info.x < half:
 						wl = Vector2(maxf(wl.x, info.z), 1.0 if rivers.salty[s] == 1 else 0.0)
-			dirs_out[i] = d
-			h[i] = e
-			river_dist[i] = nearest
-			level[i] = wl.x
-			salt[i] = int(wl.y)
+			var pi := (jj + 1) * pn + ii + 1
+			pad_h[pi] = e
+			pad_d[pi] = d
+			if inside:
+				var i := jj * n + ii
+				dirs_out[i] = d
+				h[i] = e
+				river_dist[i] = nearest
+				level[i] = wl.x
+				salt[i] = int(wl.y)
 
+	var normals := _smooth_normals(center, pad_d, pad_h, n)
 	return {
 		"key": key,
 		"center": center,
 		"dirs": dirs_out,
 		"heights": h,
+		"normals": normals,
 		"river_dist": river_dist,
 		"water_level": level,
 		"salt": salt,
-		"colors": _vertex_colors(map, dirs_out, h),
+		"colors": _vertex_colors(map, dirs_out, h, normals),
 		"water": _water_quads(key, dirs_out, h, level, salt),
 		"rivers": _river_ribbons(center, rivers, segs),
 	}
+
+
+## Vertex normals from central differences on the padded grid (`pd`, `ph`
+## are (n + 2)^2). Neighboring chunks sample the same points along their
+## shared edge, so their normals there agree.
+static func _smooth_normals(center: Vector3, pd: PackedVector3Array, ph: PackedFloat32Array, n: int) -> PackedVector3Array:
+	var pn := n + 2
+	var pos := PackedVector3Array()
+	pos.resize(pn * pn)
+	for i in pn * pn:
+		# Relative to the chunk center, for float precision.
+		pos[i] = (pd[i] - center) * PlanetConst.RADIUS_M + pd[i] * ph[i]
+	var out := PackedVector3Array()
+	out.resize(n * n)
+	for jj in n:
+		for ii in n:
+			var c := (jj + 1) * pn + ii + 1
+			var nrm := (pos[c + 1] - pos[c - 1]).cross(pos[c + pn] - pos[c - pn]).normalized()
+			if nrm.dot(pd[c]) < 0.0:
+				nrm = -nrm
+			out[jj * n + ii] = nrm
+	return out
 
 
 ## Standing water surface over a point: (level_m, salt 1/0). Lakes use their
@@ -146,7 +184,7 @@ const WETLANDS := [
 ]
 
 
-static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloat32Array) -> PackedColorArray:
+static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloat32Array, normals: PackedVector3Array) -> PackedColorArray:
 	var out := PackedColorArray()
 	out.resize(d.size())
 	for i in d.size():
@@ -156,13 +194,23 @@ static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloa
 		# Snow wherever it's below freezing at this exact height.
 		var t := map.sample(map.temp_c, dir) + (map.sample(map.elevation, dir) - e) * PlanetConst.LAPSE_RATE_C_PER_M
 		col = col.lerp(SNOW, smoothstep(-0.5, -3.5, t))
-		if e < 3.0 and map.sample(map.coast_dist_km, dir) < 1.5:
-			col = col.lerp(SAND, smoothstep(3.0, 0.8, e))
+		col = col.lerp(SAND, sand_amount(map, dir, e))
 		if e < 0.0:
 			col = col.lerp(SEABED, smoothstep(0.0, -8.0, e))
+		# Bare rock on steep ground (not under snow).
+		var steep := 1.0 - normals[i].dot(dir)
+		col = col.lerp(ROCK, smoothstep(0.3, 0.5, steep) * (1.0 - smoothstep(0.85, 0.95, col.b)))
 		out[i] = col
 	_bake_hollow_ao(h, out)
 	return out
+
+
+## 0-1 how much the ground at `d` (height `e`) is beach sand: low ground
+## near the sea. VegetationPlacer keeps all but salt-tolerant plants off it.
+static func sand_amount(map: PlanetData, d: Vector3, e: float) -> float:
+	if e >= 3.0 or map.sample(map.coast_dist_km, d) >= 1.5:
+		return 0.0
+	return smoothstep(3.0, 0.8, e)
 
 
 ## Baked ambient occlusion for hollows: a vertex lower than the ring of
@@ -363,26 +411,28 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 		local[i] = world.to_scene_relative(dirs[i], PlanetConst.RADIUS_M + heights[i], anchor)
 
 	var colors: PackedColorArray = data.colors
-	var verts := PackedVector3Array()
-	var normals := PackedVector3Array()
-	var cols := PackedColorArray()
+	var nrm: PackedVector3Array = data.normals
+	var east := CubeSphere.east(center_dir)
+	var north := CubeSphere.north(center_dir)
 	var uvs := PackedVector2Array()
-	var up := center_dir
+	uvs.resize(n * n)
+	for i in n * n:
+		# Texture coordinates in meters on the chunk's tangent plane.
+		uvs[i] = Vector2(local[i].dot(east), local[i].dot(north))
+	var indices := PackedInt32Array()
 	for jj in QUADS:
 		for ii in QUADS:
 			var i00 := jj * n + ii
-			var i10 := i00 + 1
 			var i01 := i00 + n
-			var i11 := i01 + 1
-			_tri(local, colors, i00, i11, i10, up, verts, normals, cols, uvs)
-			_tri(local, colors, i00, i01, i11, up, verts, normals, cols, uvs)
+			indices.append_array([i00, i01 + 1, i00 + 1, i00, i01, i01 + 1])
 
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
-	arrays[Mesh.ARRAY_VERTEX] = verts
-	arrays[Mesh.ARRAY_NORMAL] = normals
-	arrays[Mesh.ARRAY_COLOR] = cols
+	arrays[Mesh.ARRAY_VERTEX] = local
+	arrays[Mesh.ARRAY_NORMAL] = nrm
+	arrays[Mesh.ARRAY_COLOR] = colors
 	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_INDEX] = indices
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	var mi := MeshInstance3D.new()
@@ -391,38 +441,20 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 	mi.material_override = _terrain_mat
 	add_child(mi)
 
+	var faces := PackedVector3Array()
+	faces.resize(indices.size())
+	for k in indices.size():
+		faces[k] = local[indices[k]]
 	var body := StaticBody3D.new()
 	body.name = "Collision"
 	var shape := ConcavePolygonShape3D.new()
-	shape.set_faces(verts)
+	shape.set_faces(faces)
 	var cs := CollisionShape3D.new()
 	cs.shape = shape
 	body.add_child(cs)
 	add_child(body)
 
 	_build_water(data.water, data.rivers, world, anchor)
-
-
-## Flat-shaded triangle; its color is the average of its corners, turned to
-## bare rock when the face is steep.
-func _tri(p: PackedVector3Array, c: PackedColorArray, a: int, b: int, d: int, up: Vector3,
-		verts: PackedVector3Array, normals: PackedVector3Array, cols: PackedColorArray, uvs: PackedVector2Array) -> void:
-	var pa := p[a]
-	var pb := p[b]
-	var pd := p[d]
-	var nrm := (pb - pa).cross(pd - pa).normalized()
-	if nrm.dot(up) < 0.0:
-		nrm = -nrm
-	var col := (c[a] + c[b] + c[d]) / 3.0
-	var steep := 1.0 - nrm.dot(up)
-	col = col.lerp(ROCK, smoothstep(0.3, 0.5, steep) * (1.0 - smoothstep(0.85, 0.95, col.b)))
-	verts.append_array([pa, pb, pd])
-	normals.append_array([nrm, nrm, nrm])
-	cols.append_array([col, col, col])
-	# Texture coordinates in meters on the chunk's tangent plane.
-	var e := CubeSphere.east(up)
-	var n := CubeSphere.north(up)
-	uvs.append_array([Vector2(pa.dot(e), pa.dot(n)), Vector2(pb.dot(e), pb.dot(n)), Vector2(pd.dot(e), pd.dot(n))])
 
 
 func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) -> void:

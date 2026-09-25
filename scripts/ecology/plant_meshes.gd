@@ -2,7 +2,8 @@ class_name PlantMeshes
 ## Low-poly placeholder meshes per plant shape (DESIGN.md: prototype uses
 ## greybox geometry; real models replace these). Each mesh is 1 unit tall
 ## (instances scale it to the species' height), grows along +Y from the
-## origin (hanging plants grow down along -Y), is flat shaded, and carries
+## origin (hanging plants grow down along -Y), is smooth shaded (normals
+## averaged within each part: a trunk, a crown lobe, a frond), and carries
 ## vertex color RGB plus a sway weight in alpha (0 at the roots, 1 at the
 ## crown) that shaders/foliage.gdshader uses for wind.
 
@@ -152,15 +153,23 @@ class _Builder:
 	var wood := Color.BLACK # this species' wood color: cylinders/cones in it are bark
 	var mat := 1.0
 	var rng := RandomNumberGenerator.new()
+	## Smoothing group of each vertex: normals are averaged over vertices
+	## at the same spot in the same part; -1 keeps the vertex's own normal.
+	var parts := PackedInt32Array()
+	var part := 0
 
 	func tri(a: Vector3, b: Vector3, d: Vector3, col: Color, sa: float, sb: float, sd: float) -> void:
+		tri3(a, b, d, col, col, col, sa, sb, sd)
+
+	func tri3(a: Vector3, b: Vector3, d: Vector3, ca: Color, cb: Color, cd: Color, sa: float, sb: float, sd: float) -> void:
 		var nrm := (b - a).cross(d - a).normalized()
 		v.append_array([a, b, d])
 		n.append_array([nrm, nrm, nrm])
-		c.append_array([Color(col, sa), Color(col, sb), Color(col, sd)])
+		c.append_array([Color(ca, sa), Color(cb, sb), Color(cd, sd)])
 		uv.append_array([Vector2.ZERO, Vector2.ZERO, Vector2.ZERO])
 		var m := Vector2(mat, 0.0)
 		uv2.append_array([m, m, m])
+		parts.append_array([part, part, part])
 
 	## A leaf-cluster card (alpha cutout), square with half-size `s`, facing
 	## `facing`, spun randomly.
@@ -181,33 +190,40 @@ class _Builder:
 				c.append(Color(col, sway))
 				uv.append(q[k])
 				uv2.append(Vector2(2.0, 0.0))
+				parts.append(-1)
 
 	func cylinder(base: Vector3, r: float, h: float, sides: int, col: Color, s0: float, s1: float, axis := Vector3.UP) -> void:
 		var side := axis.cross(Vector3.FORWARD if absf(axis.dot(Vector3.FORWARD)) < 0.9 else Vector3.RIGHT).normalized()
 		var side2 := axis.cross(side).normalized()
 		var top := base + axis * h
 		mat = 0.0 if col.is_equal_approx(wood) else 1.0
+		part += 1
 		for k in sides:
 			var a0 := TAU * k / sides
 			var a1 := TAU * (k + 1) / sides
 			var o0 := (side * cos(a0) + side2 * sin(a0)) * r
 			var o1 := (side * cos(a1) + side2 * sin(a1)) * r
-			var shade := col.darkened(0.12 * float(k % 2))
-			tri(base + o0, top + o1, base + o1, shade, s0, s1, s0)
-			tri(base + o0, top + o0, top + o1, shade, s0, s1, s1)
+			tri(base + o0, top + o1, base + o1, col, s0, s1, s0)
+			tri(base + o0, top + o0, top + o1, col, s0, s1, s1)
 		mat = 1.0
 
 	func cone(base: Vector3, r: float, h: float, sides: int, col: Color, s0: float, s1: float) -> void:
 		var tip := base + Vector3(0, h, 0)
 		var is_wood := col.is_equal_approx(wood)
 		mat = 0.0 if is_wood else 1.0
+		part += 1
 		for k in sides:
 			var a0 := TAU * k / sides
 			var a1 := TAU * (k + 1) / sides
 			var p0 := base + Vector3(cos(a0), 0, sin(a0)) * r
 			var p1 := base + Vector3(cos(a1), 0, sin(a1)) * r
-			tri(p0, tip, p1, col.darkened(0.1 * float(k % 2)), s0, s1, s0)
-			tri(p1, base, p0, col.darkened(0.25), s0, s0, s0)
+			tri(p0, tip, p1, col, s0, s1, s0)
+		# The underside is its own flat part (a hard edge at the skirt).
+		part += 1
+		for k in sides:
+			var a0 := TAU * k / sides
+			var a1 := TAU * (k + 1) / sides
+			tri(base + Vector3(cos(a1), 0, sin(a1)) * r, base, base + Vector3(cos(a0), 0, sin(a0)) * r, col.darkened(0.25), s0, s0, s0)
 		mat = 1.0
 		# Foliage cones get ragged leaf cards around their skirt.
 		if not is_wood and r > 0.1:
@@ -220,6 +236,7 @@ class _Builder:
 
 	## Low-poly ellipsoid (a squashed octahedron split once).
 	func blob(center: Vector3, radii: Vector3, col: Color, sway: float) -> void:
+		part += 1
 		var pts := [Vector3(1, 0, 0), Vector3(-1, 0, 0), Vector3(0, 1, 0), Vector3(0, -1, 0), Vector3(0, 0, 1), Vector3(0, 0, -1)]
 		var faces := [[0, 2, 4], [4, 2, 1], [1, 2, 5], [5, 2, 0], [4, 3, 0], [1, 3, 4], [5, 3, 1], [0, 3, 5]]
 		for f in faces:
@@ -230,11 +247,12 @@ class _Builder:
 			var bd := (b2 + d).normalized()
 			var da := (d + a).normalized()
 			for t in [[a, ab, da], [ab, b2, bd], [da, bd, d], [ab, bd, da]]:
-				var p0: Vector3 = center + t[0] * radii
-				var p1: Vector3 = center + t[1] * radii
-				var p2: Vector3 = center + t[2] * radii
-				var lit: float = 0.85 + 0.15 * ((p0 + p1 + p2 - center * 3.0) / 3.0).normalized().y
-				tri(p0, p1, p2, col * lit, sway, sway, sway)
+				var u0: Vector3 = t[0]
+				var u1: Vector3 = t[1]
+				var u2: Vector3 = t[2]
+				# Lighter toward the top, per vertex (a smooth gradient).
+				tri3(center + u0 * radii, center + u1 * radii, center + u2 * radii,
+					col * (0.85 + 0.15 * u0.y), col * (0.85 + 0.15 * u1.y), col * (0.85 + 0.15 * u2.y), sway, sway, sway)
 		# Leaf-cluster cards around the crown break up the round silhouette.
 		var mean_r := (radii.x + radii.y + radii.z) / 3.0
 		if mean_r >= 0.12:
@@ -246,6 +264,7 @@ class _Builder:
 
 	## Flat leaf from `base` outward along `dir`, drooping at the tip.
 	func frond(base: Vector3, dir: Vector3, length: float, width: float, col: Color, sway: float) -> void:
+		part += 1
 		var d := dir.normalized()
 		var side := d.cross(Vector3.UP)
 		if side.length() < 0.01:
@@ -258,6 +277,7 @@ class _Builder:
 
 	## Thin grass blade from base to tip.
 	func blade(base: Vector3, tip: Vector3, width: float, col: Color, sway: float) -> void:
+		part += 1
 		var side := (tip - base).cross(Vector3.FORWARD).normalized() * width
 		if side.length() < 1e-4:
 			side = Vector3(width, 0, 0)
@@ -270,6 +290,7 @@ class _Builder:
 
 	## Hanging strand from `top` down by `length`, sways fully.
 	func strand(top: Vector3, length: float, width: float, col: Color) -> void:
+		part += 1
 		var bottom := top + Vector3(0, -length, 0)
 		var s := Vector3(width, 0, 0)
 		var s2 := Vector3(0, 0, width)
@@ -278,6 +299,7 @@ class _Builder:
 
 	## Flat irregular patch on the ground.
 	func disc(center: Vector3, r: float, h: float, sides: int, col: Color, sway: float) -> void:
+		part += 1
 		var top := center + Vector3(0, h, 0)
 		for k in sides:
 			var a0 := TAU * k / sides
@@ -286,7 +308,7 @@ class _Builder:
 			var r1 := r * (0.75 + 0.25 * sin(a1 * 3.0))
 			var p0 := center + Vector3(cos(a0) * r0, 0, sin(a0) * r0)
 			var p1 := center + Vector3(cos(a1) * r1, 0, sin(a1) * r1)
-			tri(p0, top, p1, col.darkened(0.06 * float(k % 2)), sway, sway, sway)
+			tri(p0, top, p1, col, sway, sway, sway)
 
 	func commit() -> ArrayMesh:
 		# Baked ambient occlusion: the base of each plant (trunk foot, grass
@@ -297,6 +319,7 @@ class _Builder:
 			if y >= 0.0 and y < 0.14:
 				var k := lerpf(0.58, 1.0, smoothstep(0.0, 0.14, y))
 				c[i] = Color(c[i].r * k, c[i].g * k, c[i].b * k, c[i].a)
+		_smooth()
 		var arrays := []
 		arrays.resize(Mesh.ARRAY_MAX)
 		arrays[Mesh.ARRAY_VERTEX] = v
@@ -307,3 +330,26 @@ class _Builder:
 		var mesh := ArrayMesh.new()
 		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 		return mesh
+
+	## Smooth shading: every vertex of a part gets the area-weighted mean
+	## of the face normals meeting at its position in that part.
+	func _smooth() -> void:
+		var acc := {}
+		var keys: Array = []
+		keys.resize(v.size())
+		for t in range(0, v.size(), 3):
+			var fn := (v[t + 1] - v[t]).cross(v[t + 2] - v[t])
+			for k in 3:
+				var i := t + k
+				if parts[i] < 0:
+					continue
+				var q := Vector3i(v[i] * 20000.0)
+				var key := Vector4i(parts[i], q.x, q.y, q.z)
+				keys[i] = key
+				acc[key] = acc.get(key, Vector3.ZERO) + fn
+		for i in v.size():
+			if parts[i] < 0:
+				continue
+			var sum: Vector3 = acc[keys[i]]
+			if sum.length_squared() > 1e-12:
+				n[i] = sum.normalized()

@@ -66,6 +66,8 @@ func _sphere_mesh(map: PlanetData, terrain: bool) -> ArrayMesh:
 			for i in RES:
 				var a := base + j * n + i
 				indices.append_array([a, a + n + 1, a + 1, a, a + n, a + n + 1])
+	if terrain:
+		normals = _smooth_normals(verts, indices)
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = verts
@@ -76,3 +78,24 @@ func _sphere_mesh(map: PlanetData, terrain: bool) -> ArrayMesh:
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	return mesh
+
+
+## Smooth vertex normals: each vertex averages the (area-weighted) normals
+## of the triangles around it, so distant slopes shade instead of reading
+## as one flat radial tone.
+static func _smooth_normals(verts: PackedVector3Array, indices: PackedInt32Array) -> PackedVector3Array:
+	var out := PackedVector3Array()
+	out.resize(verts.size())
+	for k in range(0, indices.size(), 3):
+		var a := indices[k]
+		var b := indices[k + 1]
+		var c := indices[k + 2]
+		var fn := (verts[b] - verts[a]).cross(verts[c] - verts[a])
+		if fn.dot(verts[a]) < 0.0:
+			fn = -fn
+		out[a] += fn
+		out[b] += fn
+		out[c] += fn
+	for i in out.size():
+		out[i] = out[i].normalized() if out[i].length_squared() > 0.0 else verts[i].normalized()
+	return out
