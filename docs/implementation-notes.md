@@ -518,6 +518,14 @@ latest results:
   but hasn't been checked, and lavapipe frame times say little about a
   GPU's. SSAO exists only in Forward+. The compatibility renderer gets
   everything else and only needs not to break.
+- **Frame cost of the organic pass** (Forward+ on lavapipe, a CPU
+  renderer, 640 × 360, same views before and after): the forest view
+  4.88 → 4.95 s/frame (6.5 → 7.1 M triangles including shadow passes),
+  the overlook unchanged (0.61 s), the castle view 1.36 → 2.32 s (2.2 →
+  3.4 M triangles): bevelled blocks are 44 triangles instead of 12 and a
+  castle has thousands. Ruins have no level of detail yet; a plain-box
+  version for ruins beyond ~150 m would win that back. On a real GPU
+  these triangle counts are small, but it hasn't been measured there.
 - **Waterfalls** have no sound yet, and the fine terrain grid (4 m) can't
   make a truly vertical cliff, so the gorge wall under a tall fall is a
   steep ramp.
