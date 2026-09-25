@@ -36,6 +36,12 @@ var _done_detail: Array = []
 var _mutex := Mutex.new()
 var _wanted := {}
 var _wanted_detail := {}
+## Rings around the chunk the player is in, cached per chunk.
+var _rings_key := Vector3i(-1, -1, -1)
+var _ring_view := {}
+var _ring_detail := {}
+var _ring_keep := {}
+var _ring_keep_detail := {}
 
 
 func setup(p_world: Node) -> void:
@@ -46,6 +52,11 @@ func setup(p_world: Node) -> void:
 	BiomeTemplates.color_of(0) # same for the biome color table
 	CreatureSpecies.all() # and creature data (vegetation keeps folk camps clear)
 	TerrainChunk.materials()
+	# Shared caches the worker threads read (RuinBuilder's boulders, plant
+	# crowns): fill them here so no two threads race to write them.
+	for level in 3:
+		PlantMeshes.icosphere(level)
+	VegetationPlacer.warm(map.terrain.world_seed)
 
 
 ## Let running worker tasks finish before the scene goes away (they read
@@ -83,14 +94,25 @@ static func keys_around(d: Vector3, radius: int) -> Dictionary:
 
 
 func update_around(player_dir: Vector3) -> void:
-	_wanted = keys_around(player_dir, view_radius_chunks)
-	_wanted_detail = keys_around(player_dir, detail_radius_chunks)
+	# The rings only change when the player crosses into another chunk;
+	# they're measured from that chunk's center, so they're recomputed only
+	# then.
+	var here := TerrainChunk.key_at(player_dir)
+	if here != _rings_key:
+		_rings_key = here
+		var c := TerrainChunk.center_of(here)
+		_ring_view = keys_around(c, view_radius_chunks)
+		_ring_detail = keys_around(c, detail_radius_chunks)
+		_ring_keep = keys_around(c, view_radius_chunks + 1)
+		_ring_keep_detail = keys_around(c, detail_radius_chunks + 1)
+	_wanted = _ring_view
+	_wanted_detail = _ring_detail
 	for key in _wanted:
 		if not chunks.has(key) and not _pending.has(key):
 			_pending[key] = WorkerThreadPool.add_task(_compute_base.bind(key))
 
-	var keep := keys_around(player_dir, view_radius_chunks + 1)
-	var keep_detail := keys_around(player_dir, detail_radius_chunks + 1)
+	var keep := _ring_keep
+	var keep_detail := _ring_keep_detail
 	for key in chunks.keys():
 		var c: TerrainChunk = chunks[key]
 		if not keep.has(key):
@@ -114,7 +136,7 @@ func _compute_base(key: Vector3i) -> void:
 	var trees := VegetationPlacer.compute_base(key, map, data)
 	TerrainChunk.bake_canopy_shade(data, trees.hosts)
 	TerrainChunk.prepare_meshes(data)
-	data["plants"] = trees.plants
+	data["plants"] = VegetationPlacer.prepare(trees.plants, data.center, data.anchor_r)
 	data["hosts"] = trees.hosts
 	_mutex.lock()
 	_done.append(data)
@@ -122,7 +144,7 @@ func _compute_base(key: Vector3i) -> void:
 
 
 func _compute_detail(key: Vector3i, data: Dictionary, hosts: Array) -> void:
-	var plants := VegetationPlacer.compute_detail(key, map, data, hosts)
+	var plants := VegetationPlacer.prepare(VegetationPlacer.compute_detail(key, map, data, hosts), data.center, data.anchor_r)
 	_mutex.lock()
 	_done_detail.append([key, plants])
 	_mutex.unlock()
@@ -146,7 +168,7 @@ func _attach_base(limit: int) -> void:
 		chunk.build_nodes(data, world)
 		chunk.data = data
 		chunk.hosts = data.hosts
-		VegetationPlacer.build_nodes(chunk, chunk, data.plants, world)
+		VegetationPlacer.build_nodes(chunk, chunk, data.plants)
 		world.world_root.add_child(chunk)
 		chunk.set_fine(_wanted_detail.has(key))
 		chunks[key] = chunk
@@ -172,7 +194,7 @@ func _attach_detail(limit: int) -> void:
 		chunk.detail_node = Node3D.new()
 		chunk.detail_node.name = "Undergrowth"
 		chunk.add_child(chunk.detail_node)
-		VegetationPlacer.build_nodes(chunk.detail_node, chunk, item[1], world)
+		VegetationPlacer.build_nodes(chunk.detail_node, chunk, item[1])
 		attached += 1
 
 
@@ -183,6 +205,7 @@ func load_blocking(d: Vector3) -> void:
 	var inner := keys_around(d, detail_radius_chunks)
 	_wanted = keys_around(d, view_radius_chunks)
 	_wanted_detail = inner
+	_rings_key = Vector3i(-1, -1, -1) # the next update rebuilds the rings
 	for key in inner:
 		if not _pending.has(key) and not chunks.has(key):
 			_pending[key] = WorkerThreadPool.add_task(_compute_base.bind(key))

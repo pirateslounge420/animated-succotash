@@ -51,6 +51,41 @@ const EPIPHYTE_RATE := 0.9
 
 ## Instance record layout in the per-species PackedFloat32Array.
 const STRIDE := 10 # dir.xyz, radius, yaw, lean_x, lean_z, height, moss, vines
+const MM_STRIDE := 20 # MultiMesh buffer floats per instance: 3x4 transform, color, custom
+
+## Built once on the main thread (warm()) and only read by the chunk
+## workers: per-species dominance noise, per-tier clump noise, and the
+## species cypress knees need.
+static var _dominance_noise: Array[FastNoiseLite] = []
+static var _clump_noise: Array[FastNoiseLite] = []
+static var _cypress: PlantSpecies
+static var _knees: PlantSpecies
+static var _warm_seed := -1
+
+
+## Call on the main thread before any chunk is computed (and again if the
+## world seed changes).
+static func warm(world_seed: int) -> void:
+	if _warm_seed == world_seed:
+		return
+	_warm_seed = world_seed
+	_dominance_noise.clear()
+	for i in SpeciesDB.all().size():
+		var nz := FastNoiseLite.new()
+		nz.seed = world_seed * 97 + i * 13
+		nz.frequency = 1.0 / DOMINANCE_M
+		_dominance_noise.append(nz)
+	_clump_noise.clear()
+	for tier in 5:
+		var nz := FastNoiseLite.new()
+		nz.seed = world_seed * 31 + tier
+		nz.frequency = 1.0 / CLUMP_M
+		_clump_noise.append(nz)
+	_cypress = SpeciesDB.find("Bald cypress")
+	_knees = null
+	for sp in SpeciesDB.all():
+		if sp.shape == PlantSpecies.Shape.KNEES:
+			_knees = sp
 
 
 ## Trees. Returns {"plants": {species_index: PackedFloat32Array},
@@ -162,11 +197,8 @@ static func _place_epiphytes(ctx: _Context, out: Dictionary, hosts: Array) -> vo
 
 ## Cypress knees scatter around bald cypress standing in water.
 static func _place_knees(ctx: _Context, out: Dictionary, hosts: Array) -> void:
-	var cypress := SpeciesDB.find("Bald cypress")
-	var knees: PlantSpecies = null
-	for sp in SpeciesDB.all():
-		if sp.shape == PlantSpecies.Shape.KNEES:
-			knees = sp
+	var cypress := _cypress
+	var knees := _knees
 	if knees == null or cypress == null:
 		return
 	var cypress_idx := SpeciesDB.index_of(cypress)
@@ -184,15 +216,72 @@ static func _place_knees(ctx: _Context, out: Dictionary, hosts: Array) -> void:
 			_emit(out, SpeciesDB.index_of(knees), pd, PlanetConst.RADIUS_M + site.h, ctx.rng, size, 0.05)
 
 
-## Main thread: one MultiMeshInstance3D per species under `parent`.
-## Records trees on the chunk for canopy-dwelling creatures.
-static func build_nodes(parent: Node3D, chunk: TerrainChunk, plants: Dictionary, world: Node) -> void:
-	var anchor := chunk.position
+## Worker thread: turn compute_base/compute_detail output into ready
+## MultiMesh buffers. Positions are relative to the chunk's anchor (its
+## center at `anchor_r` from the planet center), which doesn't depend on
+## the floating origin, so the whole buffer is built here and the main
+## thread only hands it over. Returns sp_idx -> [buffer, count, trees],
+## trees being [local_position, height] of canopy and emergent plants.
+static func prepare(plants: Dictionary, center: Vector3, anchor_r: float) -> Dictionary:
+	var out := {}
 	var all := SpeciesDB.all()
+	var cx := center.x * anchor_r
+	var cy := center.y * anchor_r
+	var cz := center.z * anchor_r
 	for sp_idx in plants:
 		var sp: PlantSpecies = all[sp_idx]
 		var arr: PackedFloat32Array = plants[sp_idx]
 		var count := arr.size() / STRIDE
+		var buf := PackedFloat32Array()
+		buf.resize(count * MM_STRIDE)
+		var trees: Array = []
+		var tall := sp.tier == T.EMERGENT or sp.tier == T.CANOPY
+		for i in count:
+			var o := i * STRIDE
+			var d := Vector3(arr[o], arr[o + 1], arr[o + 2])
+			var r: float = arr[o + 3]
+			var pos := Vector3(d.x * r - cx, d.y * r - cy, d.z * r - cz)
+			var up := d
+			var fwd := up.cross(Vector3.RIGHT if absf(up.x) < 0.9 else Vector3.FORWARD).normalized()
+			var basis := Basis(fwd.cross(up), up, fwd).orthonormalized()
+			basis = basis.rotated(up, arr[o + 4])
+			basis = basis.rotated(basis.x, arr[o + 5]).rotated(basis.z, arr[o + 6])
+			basis = basis.scaled(Vector3.ONE * arr[o + 7])
+			var k := i * MM_STRIDE
+			# Transform as the rows of its 3x4 matrix, then color (white),
+			# then custom data (moss, vines, 0, 0): Godot's MultiMesh layout.
+			buf[k] = basis.x.x
+			buf[k + 1] = basis.y.x
+			buf[k + 2] = basis.z.x
+			buf[k + 3] = pos.x
+			buf[k + 4] = basis.x.y
+			buf[k + 5] = basis.y.y
+			buf[k + 6] = basis.z.y
+			buf[k + 7] = pos.y
+			buf[k + 8] = basis.x.z
+			buf[k + 9] = basis.y.z
+			buf[k + 10] = basis.z.z
+			buf[k + 11] = pos.z
+			buf[k + 12] = 1.0
+			buf[k + 13] = 1.0
+			buf[k + 14] = 1.0
+			buf[k + 15] = 1.0
+			buf[k + 16] = arr[o + 8]
+			buf[k + 17] = arr[o + 9]
+			if tall:
+				trees.append([pos, arr[o + 7]])
+		out[sp_idx] = [buf, count, trees]
+	return out
+
+
+## Main thread: one MultiMeshInstance3D per species under `parent`, from
+## prepare()'s buffers. Records trees on the chunk for canopy-dwelling
+## creatures.
+static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionary) -> void:
+	var all := SpeciesDB.all()
+	for sp_idx in prepared:
+		var sp: PlantSpecies = all[sp_idx]
+		var entry: Array = prepared[sp_idx]
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
 		mm.use_custom_data = true # (moss, vines, 0, 0)
@@ -203,21 +292,10 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, plants: Dictionary,
 		# swaps in the full one near the player (TerrainChunk.set_fine).
 		var lod := parent == chunk
 		mm.mesh = PlantMeshes.mesh_for(sp, lod)
-		mm.instance_count = count
-		for i in count:
-			var o := i * STRIDE
-			var d := Vector3(arr[o], arr[o + 1], arr[o + 2])
-			var pos: Vector3 = world.to_scene_relative(d, arr[o + 3], anchor)
-			var up := d
-			var fwd := up.cross(Vector3.RIGHT if absf(up.x) < 0.9 else Vector3.FORWARD).normalized()
-			var basis := Basis(fwd.cross(up), up, fwd).orthonormalized()
-			basis = basis.rotated(up, arr[o + 4])
-			basis = basis.rotated(basis.x, arr[o + 5]).rotated(basis.z, arr[o + 6])
-			mm.set_instance_transform(i, Transform3D(basis.scaled(Vector3.ONE * arr[o + 7]), pos))
-			mm.set_instance_custom_data(i, Color(arr[o + 8], arr[o + 9], 0.0, 0.0))
-			mm.set_instance_color(i, Color.WHITE)
-			if sp.tier == T.EMERGENT or sp.tier == T.CANOPY:
-				chunk.trees.append([pos, arr[o + 7], sp_idx])
+		mm.instance_count = entry[1]
+		mm.buffer = entry[0]
+		for t in entry[2]:
+			chunk.trees.append([t[0], t[1], sp_idx])
 		var mmi := MultiMeshInstance3D.new()
 		mmi.name = sp.name.replace(" ", "_")
 		mmi.multimesh = mm
@@ -321,10 +399,7 @@ class _Context:
 				if sp.altitude_m.y < hmin or sp.altitude_m.x > hmax:
 					continue
 				list.append(sp)
-				var nz := FastNoiseLite.new()
-				nz.seed = map.terrain.world_seed * 97 + SpeciesDB.index_of(sp) * 13
-				nz.frequency = 1.0 / DOMINANCE_M
-				var v := nz.get_noise_3dv(center * PlanetConst.RADIUS_M)
+				var v := VegetationPlacer._dominance_noise[SpeciesDB.index_of(sp)].get_noise_3dv(center * PlanetConst.RADIUS_M)
 				dominance[sp] = 0.35 + 1.3 * smoothstep(-0.2, 0.5, v)
 			_species[tier] = list
 
@@ -336,9 +411,7 @@ class _Context:
 	## Clumping mask (0.15-1), sampled on a 16 m grid and interpolated.
 	func clump_at(tier: int, gx: float, gy: float) -> float:
 		if not _clump.has(tier):
-			var nz := FastNoiseLite.new()
-			nz.seed = map.terrain.world_seed * 31 + tier
-			nz.frequency = 1.0 / CLUMP_M
+			var nz: FastNoiseLite = VegetationPlacer._clump_noise[tier]
 			var grid := PackedFloat32Array()
 			var dirs: PackedVector3Array = data.dirs
 			var n := TerrainChunk.QUADS + 1
