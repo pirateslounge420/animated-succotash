@@ -55,7 +55,8 @@ func _ready() -> void:
 	_spring.add_excluded_object(get_rid())
 	add_child(_spring)
 	_camera = Camera3D.new()
-	_camera.far = 30000.0
+	# Far enough for the high cloud layer to reach the horizon (~35 km).
+	_camera.far = 60000.0
 	_camera.near = 0.1
 	_camera.fov = 70.0
 	_camera.current = true

@@ -26,6 +26,8 @@ var player: PlanetPlayer
 var creatures: CreatureSpawner
 var landmarks: Landmarks
 var post: PostGrade
+var clouds: CloudLayers
+var sky_events: SkyEvents
 var hud: Hud
 var map_overlay: MapOverlay
 var _playing := false
@@ -78,10 +80,18 @@ func _on_planet_ready() -> void:
 	shell.name = "FarShell"
 	root.add_child(shell)
 	shell.build(world)
+	clouds = CloudLayers.new()
+	clouds.name = "Clouds"
+	root.add_child(clouds)
+	clouds.build(world)
 
 	sky = SkySystem.new()
 	sky.name = "Sky"
 	add_child(sky)
+	sky_events = SkyEvents.new()
+	sky_events.name = "SkyEvents"
+	add_child(sky_events)
+	sky_events.setup(sky)
 
 	player = PlanetPlayer.new()
 	player.name = "Player"
@@ -133,11 +143,18 @@ func _process(delta: float) -> void:
 	if _weather_timer <= 0.0:
 		_weather_timer = 0.25
 		_local_weather = world.weather.local_weather(d, elevation)
+		if clouds.above_low(elevation):
+			_above_clouds(_local_weather)
 	landmarks.update_landmarks(delta, sky.daylight)
 	var fog: float = world.planet.sample(world.planet.fog, d)
+	Look.apply({"look_planet_center": world.planet_center(), "look_planet_radius": PlanetConst.RADIUS_M})
 	var sky_days := Astro.apparent_days(world.days, CubeSphere.longitude(d))
 	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), sky_days, _local_weather, fog, delta)
 	var cam := player.camera()
+	var clear := 1.0 - float(_local_weather.get("cloud", 0.0))
+	sky_events.update_events(delta, d, CubeSphere.north(d), 1.0 - smoothstep(0.0, 0.25, sky.daylight), clear)
+	sky.event_flash(sky_events.flash, sky_events.flash_color)
+	clouds.update_clouds(delta, d, world.radius_of(cam.global_position) - PlanetConst.RADIUS_M, _local_weather, sky.cloud_light, sky.cloud_shade)
 	fx.update_fx(cam.global_position, d, _local_weather)
 	TerrainChunk.terrain_material().set_shader_parameter("wetness", 1.0 - sky.daylight)
 	post.set_night(1.0 - sky.daylight)
@@ -145,6 +162,19 @@ func _process(delta: float) -> void:
 	hud.set_prompt(creatures.prompt if creatures.prompt != "" else landmarks.nearby)
 	hud.update_readout(world, d, elevation, _local_weather, world.time_scale, player.swimming, delta)
 	map_overlay.update_map(d, delta)
+
+
+## Standing above the low cloud layer: the harsh alpine / puna conditions
+## (the temperature already falls with height). The air is exposed, so the
+## wind is stronger and gustier; the low clouds and their rain are below,
+## so it's clearer and drier unless a storm towers through; the HUD says
+## so (thin, cold air).
+func _above_clouds(w: Dictionary) -> void:
+	var storm := float(w.get("storm", 0.0))
+	w["wind"] = (w.get("wind", Vector3.ZERO) as Vector3) * 1.7
+	w["cloud"] = float(w.get("cloud", 0.0)) * 0.35
+	w["rain_mm_h"] = float(w.get("rain_mm_h", 0.0)) * storm
+	w["above_clouds"] = true
 
 
 func _unhandled_input(event: InputEvent) -> void:

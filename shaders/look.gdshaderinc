@@ -18,6 +18,11 @@ uniform float look_fog_density = 0.0004; // per meter
 uniform float look_fog_bands = 6.0;
 uniform float look_fog_max = 0.96;
 uniform vec3 look_up = vec3(0.0, 1.0, 0.0); // viewer's local up
+// Haze thins with altitude (an exponential atmosphere): planet center in
+// scene space, radius, and the haze's scale height.
+uniform vec3 look_planet_center = vec3(0.0, -63662.0, 0.0);
+uniform float look_planet_radius = 63662.0;
+uniform float look_haze_height = 1500.0;
 uniform float look_mist = 0.0; // 0-1 extra ground mist
 uniform float look_night = 0.0;
 uniform vec3 look_glow_color : source_color = vec3(0.05, 1.0, 0.85);
@@ -41,7 +46,13 @@ vec4 look_fog(vec3 world_pos, vec3 cam_pos) {
 	// Ground below eye level sits in mist; peaks rise out of it.
 	float height = dot(rel, look_up);
 	float mist = look_mist * exp(-max(height + 4.0, 0.0) / 14.0);
-	float f = 1.0 - exp(-dist * look_fog_density * (1.0 + 2.5 * mist));
+	// Haze along the ray through air that thins with height: sea-level
+	// density times the mean of exp(-altitude / H) between the two ends.
+	float hc = max(length(cam_pos - look_planet_center) - look_planet_radius, 0.0);
+	float hp = length(world_pos - look_planet_center) - look_planet_radius;
+	float k = (hp - hc) / look_haze_height;
+	float thin = exp(-hc / look_haze_height) * (abs(k) < 1e-3 ? 1.0 : (1.0 - exp(-k)) / k);
+	float f = 1.0 - exp(-dist * look_fog_density * min(thin, 1.5) * (1.0 + 2.5 * mist));
 	f = min(look_band(f), look_fog_max);
 	return vec4(look_fog_color, f);
 }

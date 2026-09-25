@@ -45,7 +45,9 @@ var moonlight := 0.0 # 0-1, includes phase
 
 var _zenith := Gradient.new()
 var _horizon := Gradient.new()
-var _cloud_offset := Vector2.ZERO
+## Cloud tones (lit tops, shaded undersides) for CloudLayers.
+var cloud_light := Color.WHITE
+var cloud_shade := Color(0.7, 0.75, 0.9)
 var _last_mansion := -1
 
 ## Elevation (degrees) -> palette keys [elevation, zenith, horizon]. Day
@@ -239,19 +241,12 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 		sky_material.set_shader_parameter("glyph_count", pattern.size())
 		sky_material.set_shader_parameter("glyph_color", LunarMansions.tint(mansion))
 
-	# Clouds: coverage from the live weather, drifting with the wind.
-	var wind: Vector3 = weather.get("wind", Vector3.ZERO)
-	_cloud_offset += Vector2(wind.dot(east), wind.dot(north)) * delta * 0.004
-	# Even a clear day carries big fair-weather cumulus (the references
-	# always have them); weather adds more.
-	sky_material.set_shader_parameter("cloud_cover", clampf(0.34 + 0.45 * cloud + 0.3 * storm, 0.0, 0.95))
-	sky_material.set_shader_parameter("cloud_offset", _cloud_offset)
+	# Cloud tones for CloudLayers: lit by sun and moon; fair-weather clouds
+	# stay white with pale blue-grey undersides, storms darken them.
 	var lit := sun_col * sun_up + moon_col * moon_up * 0.35 * illumination
-	sky_material.set_shader_parameter("cloud_light", (Color(0.14, 0.16, 0.24) + lit * 1.1).clamp())
-	# Fair-weather cumulus stay white with pale blue-grey undersides (not
-	# sky-blue shapes); storms darken them.
+	cloud_light = (Color(0.14, 0.16, 0.24) + lit * 1.1).clamp()
 	var cloud_under := Color(0.72, 0.78, 0.95).lerp(zenith, 0.25) * (0.35 + 0.65 * daylight)
-	sky_material.set_shader_parameter("cloud_shadow", cloud_under.lerp(Color(0.3, 0.32, 0.38) * daylight, storm * 0.6))
+	cloud_shade = cloud_under.lerp(Color(0.3, 0.32, 0.38) * daylight, storm * 0.6)
 
 	# Ambient tracks the sky continuously.
 	# By day the fill is sky-tinted (shadows go blue-ish, the colored-shadow
@@ -316,3 +311,11 @@ static func _sun_color(elev_deg: float) -> Color:
 	if elev_deg < 10.0:
 		return low.lerp(mid, smoothstep(-2.0, 10.0, elev_deg))
 	return mid.lerp(high, smoothstep(10.0, 30.0, elev_deg))
+
+
+## A meteor's flash (SkyEvents): a brief tint of its color over the land,
+## added to the ambient on top of what update_sky() set this frame.
+func event_flash(amount: float, color: Color) -> void:
+	if amount > 0.001:
+		environment.ambient_light_color = environment.ambient_light_color.lerp(color, amount * 0.6)
+		environment.ambient_light_energy += amount * 0.5

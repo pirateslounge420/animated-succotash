@@ -10,6 +10,7 @@ class_name SoundSynth
 ##   howl     long rising-falling glide with vibrato (wolves, yeti)
 ##   drone    low beating rumble with breath noise (trolls, skinwalker)
 ##   whisper  breathy formant noise (wisps, witches)
+##   meteor   a rising hiss as it streaks over, then a far rumble (sky events)
 
 const RATE := 22050
 const VARIANTS := 3
@@ -39,6 +40,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _drone(rng)
 		"whisper":
 			samples = _whisper(rng)
+		"meteor":
+			samples = _meteor(rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -172,4 +175,28 @@ static func _whisper(rng: RandomNumberGenerator) -> PackedFloat32Array:
 			y += v * 0.02
 		var t := float(i) / RATE
 		s[i] = _env(i, s.size(), 0.3, 0.6) * y * (0.55 + 0.45 * sin(TAU * syl * t))
+	return s
+
+
+static func _meteor(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(5.0)
+	var hiss_lp := 0.0
+	var rumble_lp := 0.0
+	var rumble_lp2 := 0.0
+	var boom_at := rng.randf_range(2.6, 3.2)
+	for i in s.size():
+		var t := float(i) / RATE
+		var x := rng.randf_range(-1, 1)
+		# Hiss: noise swelling as it passes, brightening then dulling.
+		var cutoff := lerpf(0.08, 0.35, smoothstep(0.0, 1.4, t)) * (1.0 - smoothstep(1.6, 2.6, t) * 0.8)
+		hiss_lp = lerpf(hiss_lp, x, cutoff)
+		var hiss := hiss_lp * smoothstep(0.0, 0.9, t) * (1.0 - smoothstep(1.6, 2.6, t))
+		# Rumble: very low filtered noise, a soft thump and a long tail.
+		rumble_lp = lerpf(rumble_lp, x, 0.01)
+		rumble_lp2 = lerpf(rumble_lp2, rumble_lp, 0.02)
+		var rt := t - boom_at
+		var rumble := 0.0
+		if rt > 0.0:
+			rumble = rumble_lp2 * 30.0 * minf(rt / 0.05, 1.0) * exp(-rt * 1.6)
+		s[i] = hiss * 0.8 + rumble
 	return s

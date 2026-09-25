@@ -6,8 +6,8 @@
 //
 // Drawn in flat color bands (N64/PS1 style) rather than a smooth
 // gradient: the zenith-to-horizon ramp is stepped, the haze near the
-// horizon matches the banded ground fog (fog_color), and clouds are
-// two-tone cel shapes with hard edges.
+// horizon matches the banded ground fog (fog_color). Clouds are separate
+// layers at altitude (CloudLayers).
 shader_type sky;
 
 uniform vec3 up_dir = vec3(0.0, 1.0, 0.0);
@@ -32,6 +32,14 @@ uniform float moon_phase = 3.14159; // elongation: 0 new, PI full
 uniform float moon_brightness = 1.0;
 uniform float day_amount = 0.0; // 0 at night, 1 in full day (a pale moon)
 
+// Shooting stars and meteors (SkyEvents): streaks from tail to head, in
+// the viewer's sky; color alpha is brightness.
+uniform int streak_count = 0;
+uniform vec3 streak_head[3];
+uniform vec3 streak_tail[3];
+uniform vec4 streak_color[3];
+uniform float streak_width[3];
+
 uniform float star_visibility = 0.0; // 0 by day, 1 on a clear night
 uniform float star_rotation = 0.0; // subsolar longitude; stars turn with the sun
 
@@ -40,10 +48,6 @@ uniform int glyph_count = 0;
 uniform vec3 glyph_color : source_color = vec3(0.4, 0.7, 1.0);
 uniform float glyph_visibility = 0.0;
 
-uniform float cloud_cover = 0.3;
-uniform vec3 cloud_light : source_color = vec3(1.0);
-uniform vec3 cloud_shadow : source_color = vec3(0.6, 0.65, 0.75);
-uniform vec2 cloud_offset = vec2(0.0);
 
 float hash13(vec3 p) {
 	p = fract(p * 0.1031);
@@ -202,25 +206,22 @@ void sky() {
 				}
 			}
 		}
-
-		// Clouds on a flat layer overhead; coverage comes from the weather.
-		// Big puffy cumulus: billowed noise, sampled on a coarse grid so the
-		// edges step in chunky, slightly pixelated blocks.
-		if (cloud_cover > 0.01 && h > 0.0) {
-			vec3 local = vec3(dot(d, east_dir), dot(d, north_dir), h);
-			// A domed layer (the +0.4) rather than a flat one: clouds keep a
-			// puffy shape toward the horizon instead of smearing into bands.
-			vec2 uv = local.xy / (local.z + 0.4) * 1.1 + cloud_offset;
-			vec2 uvq = floor(uv * 90.0) / 90.0;
-			float n = fbm(uvq) * 0.72 + 0.28 * (1.0 - abs(2.0 * vnoise(uvq * 2.3 + 7.0) - 1.0));
-			float edge = 1.0 - cloud_cover;
-			float cover = step(edge, n);
-			// Three flat tones: shadowed undersides, mid body, bright tops.
-			// Deeper inside the cloud reads brighter (the puffy tops).
-			float body = fbm(uvq * 1.9 + 4.0) * 0.55 + (n - edge) * 2.2;
-			vec3 mid = mix(cloud_shadow, cloud_light, 0.55);
-			vec3 cloud = body < 0.16 ? cloud_shadow : (body < 0.3 ? mid : cloud_light);
-			col = mix(col, cloud, cover * smoothstep(0.0, 0.12, h) * 0.92);
+		// Shooting stars and meteors: a tapering trail brightest at the
+		// head, with a glowing head (meteors bloom).
+		for (int i = 0; i < 3; i++) {
+			if (i >= streak_count) {
+				break;
+			}
+			vec3 hd = streak_head[i];
+			vec3 tl = streak_tail[i];
+			vec3 seg = hd - tl;
+			float along = clamp(dot(d - tl, seg) / max(dot(seg, seg), 1e-8), 0.0, 1.0);
+			// Back onto the sky sphere (the chord sags inside it).
+			float dist = length(d - normalize(tl + seg * along));
+			float w = streak_width[i] * (0.35 + 0.65 * along);
+			float trail = smoothstep(w, 0.0, dist) * along * along;
+			float head = exp(-length(d - hd) / (streak_width[i] * 1.6));
+			col += streak_color[i].rgb * streak_color[i].a * (trail + head * 1.5) * night_mask;
 		}
 	}
 

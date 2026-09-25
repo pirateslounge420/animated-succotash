@@ -125,7 +125,7 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 		_weather_word(weather, map.sample(map.fog, player_dir)), int(map.sample(map.precip_mm, player_dir)),
 		int(round(wind.length())), _compass(-wind, player_dir),
 		int(round(elevation_m)), absf(rad_to_deg(lat)), "N" if lat >= 0.0 else "S", absf(rad_to_deg(lon)), "E" if lon >= 0.0 else "W",
-		"\nSwimming" if swimming else "",
+		("\nSwimming" if swimming else "") + ("\nAbove the clouds · thin, cold air" if weather.get("above_clouds", false) else ""),
 	]
 	if _hint_timer > 0.0:
 		_hint_timer -= delta
