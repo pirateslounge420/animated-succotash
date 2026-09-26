@@ -25,10 +25,11 @@ extends CharacterBody3D
 ## `still_time` how long you've stood still (wary animals calm down).
 ##
 ## Animation hook: `anim_state` names the current pose ("idle", "walk",
-## "sprint", "crouch", "crouch_walk", "air", "swim", "climb"). The body is
-## a placeholder; a rigged model's animation tree would read this (and
-## `crouching`, `sprinting`, `climbing`) instead of the state being
-## re-derived.
+## "sprint", "crouch", "crouch_walk", "air", "swim", "climb"). The body
+## (PlayerBody, an elf in a robe) is still unrigged placeholder geometry
+## with Head and ArmL/ArmR pivots; a rigged model's animation tree would
+## read this (and `crouching`, `sprinting`, `climbing`) instead of the
+## state being re-derived.
 ##
 ## Mouse or right stick turns the camera; click the game window to capture
 ## the mouse, press release_mouse (Esc) to free it.
@@ -75,7 +76,7 @@ var _pitch := -0.25
 var _heading := Vector3.FORWARD # tangent direction the camera faces
 var _spring: SpringArm3D
 var _camera: Camera3D
-var _body: Node3D
+var _body: PlayerBody
 var _shape: CapsuleShape3D
 var _shape_node: CollisionShape3D
 var _last_forward_ms := -100000
@@ -98,7 +99,7 @@ func _ready() -> void:
 	_shape_node.shape = _shape
 	_shape_node.position = Vector3(0, STAND_HEIGHT * 0.5, 0)
 	add_child(_shape_node)
-	_body = _build_body()
+	_body = PlayerBody.new()
 	add_child(_body)
 
 	_spring = SpringArm3D.new()
@@ -402,6 +403,8 @@ func _update_noise(delta: float, move_speed: float) -> void:
 	else:
 		anim_state = "idle"
 	noise_level = lerpf(noise_level, target, clampf(delta * (6.0 if target > noise_level else 1.5), 0.0, 1.0))
+	# Robe and hair trail behind as you go.
+	_body.set_motion(move_speed / SPRINT_SPEED, delta)
 
 
 func _face(dir: Vector3, delta: float) -> void:
@@ -423,45 +426,3 @@ func _yaw_relative_to_body(cam_forward: Vector3) -> float:
 	var body_fwd := -global_basis.z
 	return atan2(body_fwd.cross(cam_forward).dot(up), body_fwd.dot(cam_forward))
 
-
-## Simple low-poly explorer: tunic, head, hood. Placeholder for a real model.
-func _build_body() -> Node3D:
-	var root := Node3D.new()
-	root.name = "Body"
-	var tunic := MeshInstance3D.new()
-	var cm := CapsuleMesh.new()
-	cm.radius = 0.3
-	cm.height = 1.2
-	cm.radial_segments = 6
-	cm.rings = 2
-	tunic.mesh = cm
-	tunic.position = Vector3(0, 0.75, 0)
-	tunic.material_override = _flat(Color(0.55, 0.35, 0.22))
-	root.add_child(tunic)
-	var head := MeshInstance3D.new()
-	var sm := SphereMesh.new()
-	sm.radius = 0.19
-	sm.height = 0.38
-	sm.radial_segments = 6
-	sm.rings = 3
-	head.mesh = sm
-	head.position = Vector3(0, 1.5, 0)
-	head.material_override = _flat(Color(0.85, 0.66, 0.5))
-	root.add_child(head)
-	var pack := MeshInstance3D.new()
-	var bm := BoxMesh.new()
-	bm.size = Vector3(0.35, 0.45, 0.2)
-	pack.mesh = bm
-	pack.position = Vector3(0, 1.0, 0.3)
-	pack.material_override = _flat(Color(0.35, 0.28, 0.2))
-	root.add_child(pack)
-	return root
-
-
-static func _flat(c: Color) -> StandardMaterial3D:
-	var m := StandardMaterial3D.new()
-	m.albedo_color = c
-	m.diffuse_mode = BaseMaterial3D.DIFFUSE_LAMBERT
-	m.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
-	m.roughness = 1.0
-	return m

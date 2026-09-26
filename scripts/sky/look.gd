@@ -14,6 +14,8 @@ class_name Look
 ##   leaves     a dense leafy surface for crowns
 ##   leaf_card  a ragged leaf cluster with alpha, for cutout cards
 ##   stone      mottled, cracked blocks (ruins, rock faces)
+##   weave      woven plant fiber, over-under strands (the player's robe)
+##   fur        soft short strokes hanging down (fur trim and mantles)
 
 static var _materials: Array[ShaderMaterial] = []
 static var _params := {}
@@ -89,6 +91,10 @@ static func texture(name: String) -> ImageTexture:
 			img = _leaves(rng, false)
 		"leaf_card":
 			img = _leaves(rng, true)
+		"weave":
+			img = _weave(rng)
+		"fur":
+			img = _fur(rng)
 		_:
 			img = _stone(rng)
 	img.generate_mipmaps()
@@ -228,4 +234,54 @@ static func _stone(rng: RandomNumberGenerator) -> Image:
 			if e < -0.93:
 				v *= 0.62
 			img.set_pixel(x, y, Color(v, v * 0.99, v * 0.97))
+	return img
+
+
+## Woven plant fiber: strands 4 px wide going over and under in a basket
+## weave, each strand a slightly different shade, with a few stray fibers.
+static func _weave(rng: RandomNumberGenerator) -> Image:
+	var img := Image.create(TEX, TEX, false, Image.FORMAT_RGBA8)
+	var mottle := _noise(51, 0.15)
+	var shade: Array[float] = []
+	for i in TEX / 4:
+		shade.append(rng.randf_range(-0.05, 0.05))
+	for y in TEX:
+		for x in TEX:
+			var cx := x / 4
+			var cy := y / 4
+			var over := (cx + cy) % 2 == 0
+			# Along the strand a soft ridge; the gaps between strands dark.
+			var across := (y % 4) if over else (x % 4)
+			var v := 0.52 + shade[cy if over else cx] + 0.05 * _torus(mottle, x, y)
+			v += 0.06 if across == 1 or across == 2 else -0.08
+			if not over:
+				v -= 0.04
+			img.set_pixel(x, y, Color(v * 1.02, v, v * 0.93))
+	for i in 14:
+		var x := rng.randf() * TEX
+		var y := rng.randf() * TEX
+		var ang := rng.randf() * TAU
+		for k in rng.randi_range(4, 8):
+			_put(img, int(x + cos(ang) * k), int(y + sin(ang) * k), Color(0.64, 0.62, 0.55))
+	return img
+
+
+## Fur: a soft mottled base under short strokes hanging mostly downward,
+## light tips over dark roots.
+static func _fur(rng: RandomNumberGenerator) -> Image:
+	var img := Image.create(TEX, TEX, false, Image.FORMAT_RGBA8)
+	var soft := _noise(61, 0.14)
+	for y in TEX:
+		for x in TEX:
+			var v := 0.45 + 0.08 * _torus(soft, x, y)
+			img.set_pixel(x, y, Color(v, v * 0.98, v * 0.95))
+	for i in 700:
+		var x := rng.randf() * TEX
+		var y := rng.randf() * TEX
+		var ang := PI * 0.5 + rng.randf_range(-0.45, 0.45)
+		var length := rng.randi_range(3, 7)
+		var v := rng.randf_range(0.3, 0.72)
+		for k in length:
+			var t := float(k) / length
+			_put(img, int(x + cos(ang) * k), int(y + sin(ang) * k), Color(v, v * 0.97, v * 0.93).lightened(0.12 * t))
 	return img

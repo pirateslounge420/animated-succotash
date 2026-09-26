@@ -237,7 +237,9 @@ Verified:
   - bark and leaves on plants, mapped in object space (triplanar) and
     scaled with the plant, so a big tree doesn't get bigger texels;
   - a leaf-cluster card texture with alpha: foliage crowns carry
-    alpha-cutout cards (alpha scissor 0.5) that break up their outline.
+    alpha-cutout cards (alpha scissor 0.5) that break up their outline;
+  - weave (over-under strands) and fur (short strokes hanging down) for
+    the player's robe, mantle and hair.
     The material ID (bark, leaves, card) rides in UV2.x;
   - stone on ruins, turning to leaves where moss grows;
   - the 32 px grain for everything else.
@@ -525,7 +527,10 @@ bodies and heads, coarser for small parts), limbs that taper from hip to
 foot, and flattened-cone ears, lit by `creature.gdshader` (colored
 shadows, rim, sheen). Meshes are shared by every creature: 336-820
 triangles each (deer ~900 and troll ~1,030 with antlers and mossy back).
-Wolf dens are framed by boulders and a bevelled slab.
+Wolf dens are framed by boulders and a bevelled slab. (The capsules and
+limbs were wound inside out, so their near side was culled and the far
+side's inside showed through, lit backwards. `_revolve` now winds them
+the way Godot draws a front face.)
 
 ## The player
 
@@ -539,8 +544,23 @@ Wolf dens are framed by boulders and a bevelled slab.
   1 sprinting, eased) and `still_time` are what wildlife reads.
   `anim_state` (idle, walk, sprint, crouch, crouch_walk, air, swim,
   climb) is the hook for a future rigged model's animation tree, with the
-  `crouching` / `sprinting` / `climbing` flags; the body is still a
-  placeholder capsule.
+  `crouching` / `sprinting` / `climbing` flags.
+- **Body** (`PlayerBody`, `shaders/player.gdshader`): an elf wanderer,
+  still unrigged placeholder geometry. He has long chestnut hair with two
+  locks down the chest, pointed ears angled out and back, and a leather
+  headband with a feather. His ankle-length robe is woven plant fiber,
+  with pleats that deepen toward a leather hem and creases painted darker
+  in the vertex colors. A fur mantle carries bone and wooden beads with a
+  tooth pendant. A hide belt with a bone toggle holds a satchel. Every
+  part is a smooth surface of revolution with its color, material and
+  sway baked per vertex. The parts merge into four meshes, so four draw
+  calls and about 2,070 triangles: the robe and gear, then Head at the
+  neck and ArmL/ArmR at the shoulders (pivots for later animation). The
+  shader lights him like the creatures and gives each material one of
+  `Look`'s chunky 64 px textures, including the new `weave` and `fur`.
+  The hem, sleeve ends and hair trail behind and flutter with
+  `set_motion()` (the player's speed). Crouching still squashes the body
+  vertically.
 - **Trees** (`TerrainChunk` trunk colliders, `TreeContact`): canopy and
   emergent trees in the detail ring get a cylinder collider each (one
   static body per chunk, a shape owner per tree, sized from
@@ -664,8 +684,8 @@ latest results:
   from 5.2-5.7 to 4.1-4.2 ms on average and from 7.4-8.9 to 6.0-6.7 ms
   at the 95th percentile, mostly from building plant buffers on the
   workers; attaching a chunk's undergrowth dropped from ~90 to ~20 ms.
-- **Player model (deferred).** The explorer and the camp's NPCs are
-  placeholder shapes. A rigged humanoid with an animation tree (idle,
+- **Player model (rig deferred).** The elf (`PlayerBody`) and the camp's
+  NPCs are unrigged placeholder shapes. A rigged humanoid with an animation tree (idle,
   walk, sprint, crouch, climb) needs an asset pipeline first (which tool
   exports to Godot, who makes the model). The hooks are in place:
   `PlanetPlayer.anim_state` plus the `crouching`, `sprinting` and
