@@ -67,8 +67,37 @@ static func _start(key: String, kind: String, base: Color) -> void:
 	_mutex.unlock()
 
 
+## Collect finished builds (a worker task must be waited on once it's
+## done, or it's left dangling at exit). CreatureSpawner calls this now
+## and then.
+static func collect() -> void:
+	_mutex.lock()
+	var done: Array = []
+	for key in _pending:
+		if WorkerThreadPool.is_task_completed(_pending[key]):
+			done.append(key)
+	var ids: Array = []
+	for key in done:
+		ids.append(_pending[key])
+		_pending.erase(key)
+	_mutex.unlock()
+	for id in ids:
+		WorkerThreadPool.wait_for_task_completion(id)
+
+
+## Wait for every build still running (at shutdown).
+static func finish() -> void:
+	_mutex.lock()
+	var ids: Array = _pending.values()
+	_pending.clear()
+	_mutex.unlock()
+	for id in ids:
+		WorkerThreadPool.wait_for_task_completion(id)
+
+
 ## Is this species' mesh ready (building it if it isn't)?
 static func ready(sp: CreatureSpecies) -> bool:
+	collect()
 	var key := key_for(sp)
 	_mutex.lock()
 	var ok := _cache.has(key)

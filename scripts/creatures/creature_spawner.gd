@@ -108,6 +108,10 @@ func setup(p_world: Node, p_chunks: ChunkManager, p_player: PlanetPlayer) -> voi
 		_add_logs(c)
 
 
+func _exit_tree() -> void:
+	SculptedBodies.finish()
+
+
 func update_creatures(delta: float, daylight: float) -> void:
 	if player == null:
 		return
@@ -131,6 +135,7 @@ func update_creatures(delta: float, daylight: float) -> void:
 		_slow = 0.5
 		_refresh_dens(pd)
 		_refresh_territories(pd)
+		SculptedBodies.collect()
 		if _checked.size() > 30000:
 			_checked.clear()
 
