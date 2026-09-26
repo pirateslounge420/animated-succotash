@@ -42,7 +42,7 @@ const RANGES := [Vector2(500.0, 2000.0), Vector2(2000.0, 7000.0), Vector2(5000.0
 const WIND_FACTOR := [1.4, 2.0, 2.5]
 const WIND_EXTRA_MPS := [0.0, 4.0, 20.0]
 ## Cloud size at height_scale 1, meters.
-const FEATURE_M := [900.0, 700.0, 2600.0]
+const FEATURE_M := [650.0, 700.0, 2600.0]
 ## Haze on the clouds eases in between these distances at height_scale 1.
 const FOG_EASE_M := Vector2(3000.0, 30000.0)
 const MAX_ALPHA := [0.95, 0.85, 0.55]
@@ -96,9 +96,10 @@ func update_clouds(delta: float, up: Vector3, camera_alt: float, weather: Dictio
 	var cloud := float(weather.get("cloud", 0.0))
 	var storm := float(weather.get("storm", 0.0))
 	var dir := wind.normalized() if wind.length() > 0.1 else CubeSphere.east(up)
-	# Cover: low clouds follow the local weather (with a fair-weather
-	# baseline of cumulus); mid and high are patchier and thinner.
-	var covers := [clampf(0.3 + 0.5 * cloud + 0.3 * storm, 0.0, 0.95),
+	# Cover: low clouds follow the local weather (fair weather keeps a
+	# scatter of separate small puffs); mid and high are patchier and
+	# thinner.
+	var covers := [clampf(0.2 + 0.6 * cloud + 0.3 * storm, 0.0, 0.95),
 		clampf(0.12 + 0.35 * cloud + 0.2 * storm, 0.0, 0.9),
 		clampf(0.2 + 0.2 * cloud, 0.0, 0.7)]
 	# Farther layers draw first (they sort as one object at the planet

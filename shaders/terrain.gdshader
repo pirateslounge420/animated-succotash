@@ -59,12 +59,20 @@ void fragment() {
 	vec3 t = mix(untiled(look_tex_dirt, UV * 0.7, mixer), untiled(look_tex_sand, UV * 0.4, mixer), sandy);
 	t = mix(t, untiled(look_tex_grass, UV * 0.55, mixer), green);
 	t = mix(t, untiled(look_tex_stone, UV * 0.3, mixer), rocky);
-	t = mix(t, vec3(0.5), snow * 0.7);
+	// Snow: just under white, with a faint crag grain so it reads as snow
+	// on rock, not blank white.
+	vec3 snow_t = mix(vec3(0.44), texture(look_tex_stone, UV * 0.15).rgb * 0.88, 0.35);
+	t = mix(t, snow_t, snow * 0.85);
 	// Texture contrast eases off far away, so fine detail doesn't shimmer
 	// toward the horizon, but the ground stays textured well into the
 	// middle distance.
-	float far = smoothstep(60.0, 450.0, distance(world_pos, CAMERA_POSITION_WORLD));
+	float dist = distance(world_pos, CAMERA_POSITION_WORLD);
+	float far = smoothstep(60.0, 450.0, dist);
 	t = mix(t, vec3(0.5), far * 0.55);
+	// Far off, rock turns to crags meters across (as on the far shell), so
+	// distant cliffs read crunchy instead of flat.
+	vec3 crags = texture(look_tex_stone, UV / 90.0).rgb * 0.65 + texture(look_tex_stone, UV / 380.0 + 0.3).rgb * 0.35;
+	t = mix(t, crags, rocky * smoothstep(200.0, 900.0, dist) * 0.9);
 	// Painterly light and dark: grass drifts a little warmer in the light
 	// patches and cooler in the dark ones.
 	float dapple = (patch_s - 0.5) * 0.5 + (patch_l - 0.5) * 0.6;
