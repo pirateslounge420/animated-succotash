@@ -34,6 +34,15 @@ var level_b := PackedFloat32Array()
 var width := PackedFloat32Array()
 var depth := PackedFloat32Array()
 var salty := PackedByteArray() # brackish mouths
+## For drawing the water ribbons seamlessly (TerrainChunk): each segment's
+## distance (m) from its upstream end to where its river ends (the sea, a
+## lake, or a river running out), so "meters downstream" is one continuous
+## coordinate along the whole river, through every segment joint; the
+## segment the water flows on into (-1 at the end); and the widest segment
+## flowing into this one (-1 at a source).
+var to_end_m := PackedFloat64Array()
+var down_seg := PackedInt32Array()
+var up_seg := PackedInt32Array()
 
 ## blueprint cell -> segment indices touching it (either end)
 var _by_cell := {}
@@ -67,6 +76,46 @@ func _init(map: PlanetData) -> void:
 		salty.append(1 if map.salinity[c] == PlanetData.Salinity.BRACKISH else 0)
 		_add(c, i)
 		_add(t, i)
+	_link_segments(map)
+
+
+## to_end_m, down_seg and up_seg (see their notes). Each river cell has one
+## outgoing segment, so following them downstream is a simple chain.
+func _link_segments(map: PlanetData) -> void:
+	var from_cell := {} # upstream cell -> its segment
+	var src := PackedInt32Array()
+	for s in a.size():
+		src.append(-1)
+	for c in map.cell_count:
+		if map.water[c] == PlanetData.Water.RIVER and map.flow_to[c] >= 0:
+			from_cell[c] = from_cell.size()
+			src[from_cell[c]] = c
+	var n := a.size()
+	down_seg.resize(n)
+	up_seg.resize(n)
+	up_seg.fill(-1)
+	to_end_m.resize(n)
+	to_end_m.fill(-1.0)
+	for s in n:
+		down_seg[s] = from_cell.get(map.flow_to[src[s]], -1)
+	for s in n:
+		var d := down_seg[s]
+		if d >= 0 and (up_seg[d] < 0 or width[s] > width[up_seg[d]]):
+			up_seg[d] = s
+	for s in n:
+		if to_end_m[s] >= 0.0:
+			continue
+		# Walk down to a known distance (or the end), then fill back up.
+		var chain := PackedInt32Array()
+		var k := s
+		while k >= 0 and to_end_m[k] < 0.0 and chain.size() < n:
+			chain.append(k)
+			k = down_seg[k]
+		var dist := to_end_m[k] if k >= 0 and to_end_m[k] >= 0.0 else 0.0
+		for i in range(chain.size() - 1, -1, -1):
+			var c := chain[i]
+			dist += CubeSphere.surface_distance_m(a[c], b[c])
+			to_end_m[c] = dist
 
 
 func _add(cell: int, seg: int) -> void:

@@ -24,9 +24,11 @@ func build(world: Node) -> void:
 	_terrain_mat = ShaderMaterial.new()
 	_terrain_mat.shader = preload("res://shaders/far_terrain.gdshader")
 	_sea_mat = ShaderMaterial.new()
-	_sea_mat.shader = preload("res://shaders/far_terrain.gdshader")
-	_sea_mat.set_shader_parameter("is_sea", true)
+	# The sea has its own shader, in the near water's palette (flat day
+	# blue, the same night glow), so the two meet without a band.
+	_sea_mat.shader = preload("res://shaders/far_sea.gdshader")
 	_sea_mat.set_shader_parameter("hide_radius", 600.0)
+	_sea_mat.set_shader_parameter("water_color", TerrainChunk.WATER)
 	Look.register(_terrain_mat)
 	Look.register(_sea_mat)
 
