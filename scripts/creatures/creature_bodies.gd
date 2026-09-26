@@ -168,10 +168,14 @@ static func _revolve(prof: Array, top: float, bottom: float, radial: int) -> Arr
 	for i in normals.size():
 		normals[i] = normals[i].normalized()
 		out_sum += normals[i].dot(verts[i] - mid)
+	# Normals point out. Godot draws a triangle whose (v1 - v0) x (v2 - v0)
+	# points away from the camera, so the faces must be wound the other way
+	# from the normals (else the near side is culled and the far side's
+	# inside shows).
 	if out_sum < 0.0:
-		# Wound inward: flip faces and normals so they face out.
 		for i in normals.size():
 			normals[i] = -normals[i]
+	else:
 		for t in range(0, idx.size(), 3):
 			var tmp := idx[t + 1]
 			idx[t + 1] = idx[t + 2]
@@ -528,7 +532,7 @@ static func _tribal(b: Dictionary, sp: CreatureSpecies) -> void:
 	r.add_child(head)
 	ball(head, Vector3(0.062, 0.075, 0.068), Vector3.ZERO, skin)
 	ball(head, Vector3(0.07, 0.06, 0.07), Vector3(0, 0.03, 0.012), Color(0.12, 0.09, 0.07)) # hair
-	box(head, Vector3(0.1, 0.012, 0.02), Vector3(0, 0.005, -0.058), ochre) # paint stripe
+	box(head, Vector3(0.09, 0.006, 0.006), Vector3(0, -0.008, -0.062), ochre) # paint stripe under the eyes
 	eyes(head, Vector3(0, 0.012, -0.058), 0.022, 0.008)
 	box(r, Vector3(0.05, 0.05, 0.05), Vector3(0, 0.82, 0), skin) # neck
 	for s in [-1.0, 1.0]:
