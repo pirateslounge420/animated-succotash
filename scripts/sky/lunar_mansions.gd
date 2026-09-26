@@ -1,6 +1,7 @@
 class_name LunarMansions
 ## Star glyphs for the 28 Chinese lunar mansions (er shi ba xiu), drawn
-## beside the moon and advancing one mansion per in-game day (DESIGN.md
+## beside the moon; the moon walks through all 28 once per 29.5-day
+## phase cycle, about one a day (Astro.mansion_index; DESIGN.md
 ## "Moon phase and mansions").
 ##
 ## Star counts follow the traditional asterisms. The layouts are

@@ -17,8 +17,14 @@ extends Node3D
 ##   elevation (a smooth gradient, no discrete keyframe switching), with
 ##   moonlight lifting the night palette in proportion to the moon's phase
 ##   and height.
-## * The moon's brightness follows its 28-day phase, and today's mansion
-##   glyph is drawn beside it in its guardian beast's color.
+## * The moon's brightness follows its 29.5-day phase, and the glyph of
+##   the mansion it stands in is drawn beside it in its guardian beast's
+##   color; when the moon moves into the next mansion the glyph fades out
+##   and the new one fades in.
+## * Nothing snaps: the sky's turning speed eases between phases
+##   (DayCycle), the weather arriving here is eased (main.gd), the lights
+##   fade to exactly zero before they're switched off, and the clouds'
+##   light turns from the sun to the moon over a band of sun elevations.
 
 const SKY_SHADER := preload("res://shaders/sky.gdshader")
 
@@ -40,6 +46,9 @@ var sun_dir := Vector3.UP
 var moon_dir := Vector3.DOWN
 var sun_elevation_deg := 45.0
 var moon_elevation_deg := -45.0
+## Direction the clouds are lit from: the sun's, turning to the moon's as
+## the sun sets (DayCycle.cloud_light_band), and back at sunrise.
+var cloud_light_dir := Vector3.UP
 var daylight := 1.0 # 0 at night, 1 in full day
 var moonlight := 0.0 # 0-1, includes phase
 
@@ -52,7 +61,8 @@ var grade_contrast := Vector2(1.32, 1.28)
 
 var cloud_light := Color.WHITE
 var cloud_shade := Color(0.7, 0.75, 0.9)
-var _last_mansion := -1
+var _shown_mansion := -1
+var _glyph_fade := 1.0 # 0-1, dips to 0 while the glyph changes mansion
 
 ## Elevation (degrees) -> palette keys [elevation, zenith, horizon]. Day
 ## is a deep, near-cartoon ultramarine overhead over a Frutiger Aero aqua
@@ -166,8 +176,10 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	moon.light_color = moon_col
 	# Moonlight is lost in daylight.
 	moon.light_energy = moon_max_energy * moonlight * (1.0 - daylight) * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)
-	sun.visible = sun.light_energy > 0.001
-	moon.visible = moon.light_energy > 0.001
+	# Both energies fall smoothly to exactly zero (the smoothsteps above)
+	# before the light is switched off, so switching never shows.
+	sun.visible = sun.light_energy > 0.0
+	moon.visible = moon.light_energy > 0.0
 
 	# Palette: continuous in sun elevation, lifted by moonlight at night.
 	var t := inverse_lerp(_ELEV_MIN, _ELEV_MAX, clampf(sun_elevation_deg, _ELEV_MIN, _ELEV_MAX))
@@ -199,19 +211,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var stars := (1.0 - smoothstep(-10.0, -2.0, sun_elevation_deg)) * (1.0 - cloud)
 	sky_material.set_shader_parameter("star_visibility", stars)
 	sky_material.set_shader_parameter("star_rotation", Astro.subsolar_longitude(days))
-	sky_material.set_shader_parameter("glyph_visibility", stars * smoothstep(-2.0, 5.0, moon_elevation_deg))
-
-	var mansion := Astro.mansion_index(days)
-	if mansion != _last_mansion:
-		_last_mansion = mansion
-		var pattern: Array = LunarMansions.stars(mansion)
-		var packed := PackedVector2Array()
-		packed.resize(LunarMansions.MAX_STARS)
-		for i in pattern.size():
-			packed[i] = pattern[i]
-		sky_material.set_shader_parameter("glyph_stars", packed)
-		sky_material.set_shader_parameter("glyph_count", pattern.size())
-		sky_material.set_shader_parameter("glyph_color", LunarMansions.tint(mansion))
+	_update_glyph(days, stars * smoothstep(-2.0, 5.0, moon_elevation_deg), delta)
 
 	# Cloud tones for CloudLayers: lit by sun and moon; fair-weather clouds
 	# stay white with pale blue-grey undersides, storms darken them.
@@ -219,6 +219,18 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	cloud_light = (Color(0.14, 0.16, 0.24) + lit * 1.1).clamp()
 	var cloud_under := Color(0.72, 0.78, 0.95).lerp(zenith, 0.25) * (0.35 + 0.65 * daylight)
 	cloud_shade = cloud_under.lerp(Color(0.3, 0.32, 0.38) * daylight, storm * 0.6)
+	# Their light's direction turns from the moon to the sun across the
+	# band, at an even pace. The two can point nearly opposite (a full
+	# moon), so it swings over through the local up: moon -> up -> sun.
+	var band := DayCycle.cloud_light_band()
+	var to_sun := smoothstep(band.x, band.y, sun_elevation_deg)
+	var a_moon := moon_dir.angle_to(up)
+	var a_sun := up.angle_to(sun_dir)
+	var split := a_moon / maxf(a_moon + a_sun, 1e-4)
+	if to_sun < split:
+		cloud_light_dir = _turn(moon_dir, up, to_sun / maxf(split, 1e-4))
+	else:
+		cloud_light_dir = _turn(up, sun_dir, (to_sun - split) / maxf(1.0 - split, 1e-4))
 
 	# Ambient: one strong flat fill, the vertex-lit consoles' way of keeping
 	# the side away from the sun clearly readable (Phantasy Star Online's
@@ -257,6 +269,48 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# highlights, little midtone), saturated by day.
 	environment.adjustment_saturation = lerpf(grade_saturation.x, grade_saturation.y, daylight)
 	environment.adjustment_contrast = lerpf(grade_contrast.x, grade_contrast.y, daylight)
+
+
+## The mansion glyph beside the moon. When the moon enters the next
+## mansion the old glyph fades out, the new one is swapped in unseen and
+## fades in (DayCycle.glyph_fade_s each way); if the glyph isn't showing
+## at that moment it simply swaps.
+func _update_glyph(days: float, visibility: float, delta: float) -> void:
+	var want := Astro.mansion_index(days)
+	var step := delta / DayCycle.glyph_fade_s()
+	if want != _shown_mansion:
+		if _shown_mansion < 0 or visibility * _glyph_fade < 0.002:
+			_set_glyph(want)
+		else:
+			_glyph_fade = move_toward(_glyph_fade, 0.0, step)
+			if _glyph_fade <= 0.0:
+				_set_glyph(want)
+	else:
+		_glyph_fade = move_toward(_glyph_fade, 1.0, step)
+	sky_material.set_shader_parameter("glyph_visibility", visibility * smoothstep(0.0, 1.0, _glyph_fade))
+
+
+func _set_glyph(mansion: int) -> void:
+	_shown_mansion = mansion
+	var pattern: Array = LunarMansions.stars(mansion)
+	var packed := PackedVector2Array()
+	packed.resize(LunarMansions.MAX_STARS)
+	for i in pattern.size():
+		packed[i] = pattern[i]
+	sky_material.set_shader_parameter("glyph_stars", packed)
+	sky_material.set_shader_parameter("glyph_count", pattern.size())
+	sky_material.set_shader_parameter("glyph_color", LunarMansions.tint(mansion))
+
+
+## From `a` toward `b` by `t` (0-1) along the great circle, evenly.
+static func _turn(a: Vector3, b: Vector3, t: float) -> Vector3:
+	var angle := a.angle_to(b)
+	if angle < 1e-4:
+		return b
+	var axis := a.cross(b)
+	if axis.length() < 1e-4: # opposite: any perpendicular will do
+		axis = a.cross(Vector3.RIGHT if absf(a.x) < 0.9 else Vector3.FORWARD)
+	return a.rotated(axis.normalized(), angle * clampf(t, 0.0, 1.0))
 
 
 func _aim(light: DirectionalLight3D, body_dir: Vector3, up: Vector3) -> void:

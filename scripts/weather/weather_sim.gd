@@ -577,6 +577,28 @@ func local_weather(d: Vector3, elevation_m: float) -> Dictionary:
 	}
 
 
+## Eases a copy of the local weather (`current`, updated in place) toward
+## a newer sample (`target`), so what the viewer sees never jumps when the
+## weather is resampled or steps: numbers and vectors move a fraction
+## 1 - exp(-delta / tau_s) of the way each frame (about two-thirds in
+## tau_s seconds, whatever the frame rate); flags are copied as they are.
+## An empty `current` takes the target at once.
+static func ease_toward(current: Dictionary, target: Dictionary, delta: float, tau_s: float) -> void:
+	var k := 1.0 if tau_s <= 0.0 or current.is_empty() else 1.0 - exp(-delta / tau_s)
+	for key in target:
+		var v = target[key]
+		var had = current.get(key)
+		if v is float and had is float and not is_nan(had):
+			current[key] = lerpf(had, v, k)
+		elif v is Vector3 and had is Vector3:
+			current[key] = (had as Vector3).lerp(v, k)
+		else:
+			current[key] = v
+	for key in current.keys():
+		if not target.has(key):
+			current.erase(key)
+
+
 var _shower_noise: FastNoiseLite
 var _shower_quantiles := PackedFloat32Array()
 var _shower_offset := Vector3.ZERO

@@ -1,0 +1,6 @@
+{
+	"dev_mode": true,
+	"day_length_min": 20,
+	"seed": 42,
+	"spawn_choice": 0
+}
