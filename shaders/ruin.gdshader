@@ -8,7 +8,7 @@ render_mode cull_disabled, diffuse_lambert;
 
 #include "res://shaders/look.gdshaderinc"
 
-uniform sampler2D look_grain : filter_nearest, repeat_enable;
+uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_stone : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D look_tex_leaves : filter_nearest_mipmap, repeat_enable;
 
@@ -25,15 +25,17 @@ void vertex() {
 void fragment() {
 	vec3 an = abs(obj_normal);
 	vec2 uv = an.y > 0.6 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
-	float g = texture(look_grain, uv * 0.3).r;
-	// Mottled stone, turning leafy where moss grows (vertex alpha).
-	vec3 stone = texture(look_tex_stone, uv * 0.35).rgb;
-	vec3 moss = texture(look_tex_leaves, uv * 0.8).rgb;
-	ALBEDO = COLOR.rgb * mix(stone, moss, clamp(COLOR.a * 1.2, 0.0, 1.0)) * 2.0;
+	// Mottled stone (texels about 1.5 cm), turning leafy where moss grows
+	// (vertex alpha), with soft weathering: patches of light and dark a
+	// meter or two across.
+	vec3 stone = texture(look_tex_stone, uv * 0.55).rgb;
+	vec3 moss = texture(look_tex_leaves, uv * 1.1).rgb;
+	float weather = texture(look_grain_soft, uv * 0.12 + 0.5).r - 0.5;
+	ALBEDO = COLOR.rgb * mix(stone, moss, clamp(COLOR.a * 1.2, 0.0, 1.0)) * 2.0 * (1.0 + weather * 0.45);
 	ROUGHNESS = 0.75; // shapes the rim only (see foliage.gdshader)
 	// No reflections of the sky; the only highlight is light()'s sheen.
 	SPECULAR = 0.0;
-	float patch = texture(look_grain, uv * 0.06).r; // moss patches ~0.5-2 m
+	float patch = texture(look_grain_soft, uv * 0.06).r; // moss patches ~0.5-2 m
 	// Patches only (heavy moss on wet ruins shouldn't light whole walls).
 	float glow = look_site_glow(world_pos, 0.0) * min(COLOR.a, 0.6) * smoothstep(0.58, 0.72, patch);
 	EMISSION = look_glow_emission(world_pos, glow * 1.3) + look_rim(NORMAL, VIEW, 0.2);

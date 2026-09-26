@@ -3,9 +3,12 @@ class_name Look
 ## look.gdshaderinc): banded fog and mist, and the bioluminescent glow.
 ## Materials register once; SkySystem pushes new values each frame.
 ##
-## Also owns the world's textures, all generated here at startup and all
-## deliberately low-res (32-64 px) and nearest-filtered: chunky, hand-
-## painted PS2-era surfaces, not realism. They modulate the vertex colors
+## Also owns the world's textures, all generated here at startup: 128 px
+## and nearest-filtered, so texels stay crisp, but dense with painted
+## detail (hundreds of grass blades, leaves, pebbles per tile), like
+## hand-painted N64/PS2-era surfaces rather than realism. The shaders add
+## the large-scale light and dark over them with the grain, smoothly
+## filtered. They modulate the vertex colors
 ## (0.5 = unchanged, so one texture serves every species and biome color):
 ##   grain      32 px blotchy grain (general crunch, glow-moss patches)
 ##   grass      streaky blades, light and dark
@@ -32,6 +35,8 @@ static func register(mat: ShaderMaterial) -> ShaderMaterial:
 		for k in _params:
 			mat.set_shader_parameter(k, _params[k])
 		mat.set_shader_parameter("look_grain", grain())
+		# The same grain, smoothly filtered: large-scale light and dark.
+		mat.set_shader_parameter("look_grain_soft", grain())
 		for name in ["grass", "dirt", "bark", "leaves", "leaf_card", "stone"]:
 			mat.set_shader_parameter("look_tex_" + name, texture(name))
 	return mat
@@ -66,11 +71,14 @@ static func grain() -> ImageTexture:
 			var n := noise.get_noise_3d(cos(a) * 8.0, sin(a) * 8.0 + cos(b) * 8.0, sin(b) * 8.0)
 			var v := 0.5 + 0.35 * n + rng.randf_range(-0.08, 0.08)
 			img.set_pixel(x, y, Color(v, v, v))
+	img.generate_mipmaps()
 	_grain = ImageTexture.create_from_image(img)
 	return _grain
 
 
-const TEX := 64
+const TEX := 128
+## Detail counts are tuned per 64 x 64 px; scaled by area to TEX.
+const AREA := (TEX * TEX) / (64 * 64)
 
 
 ## One of the named world textures (see the class notes), built on first use.
@@ -130,11 +138,11 @@ static func _grass(rng: RandomNumberGenerator) -> Image:
 			var v := 0.46 + 0.07 * _torus(base, x, y)
 			img.set_pixel(x, y, Color(v, v, v * 0.97))
 	# Blades: short strokes leaning mostly upward, light tips and dark gaps.
-	for i in 520:
+	for i in 520 * AREA:
 		var x := rng.randf() * TEX
 		var y := rng.randf() * TEX
 		var ang := -PI * 0.5 + rng.randf_range(-0.3, 0.3)
-		var length := rng.randi_range(4, 10)
+		var length := rng.randi_range(5, 14)
 		var light := rng.randf() < 0.58
 		var v := rng.randf_range(0.58, 0.74) if light else rng.randf_range(0.26, 0.38)
 		var col := Color(v * 1.04, v, v * 0.9) if light else Color(v * 0.95, v, v * 1.05)
@@ -151,14 +159,32 @@ static func _dirt(rng: RandomNumberGenerator) -> Image:
 		for x in TEX:
 			var v := 0.48 + 0.09 * _torus(clods, x, y) + 0.06 * _torus(soft, x, y)
 			img.set_pixel(x, y, Color(v * 1.03, v, v * 0.94))
-	# Pebbles: a lit top pixel over a shadowed one.
-	for i in 90:
-		var x := rng.randi() % TEX
-		var y := rng.randi() % TEX
-		var v := rng.randf_range(0.6, 0.72)
-		_put(img, x, y, Color(v, v * 0.98, v * 0.92))
-		_put(img, x + 1, y, Color(v * 0.9, v * 0.88, v * 0.84))
-		_put(img, x, y + 1, Color(0.3, 0.29, 0.28))
+	# Pebbles of a few sizes, lit on top and shadowed underneath, and dark
+	# crumbs and twigs between them.
+	for i in 65 * AREA:
+		var cx := rng.randf() * TEX
+		var cy := rng.randf() * TEX
+		var r := rng.randf_range(0.5, 1.6) if rng.randf() < 0.9 else rng.randf_range(1.6, 2.8)
+		var v := rng.randf_range(0.56, 0.74)
+		var tone := Color(v, v * 0.98, v * 0.92)
+		var ri := int(ceil(r)) + 1
+		for dy in range(-ri, ri + 1):
+			for dx in range(-ri, ri + 1):
+				var d := Vector2(dx, dy).length()
+				if d > r:
+					if d < r + 1.0 and dy > 0:
+						_put(img, int(cx) + dx, int(cy) + dy, Color(0.3, 0.29, 0.27)) # shadow
+					continue
+				# Lit from the upper left.
+				var lit := clampf(0.5 - (dx + dy) / (2.0 * r + 0.01) * 0.5, 0.0, 1.0)
+				_put(img, int(cx) + dx, int(cy) + dy, tone.darkened(0.25 * (1.0 - lit)).lightened(0.1 * lit))
+	for i in 40 * AREA:
+		var x := rng.randf() * TEX
+		var y := rng.randf() * TEX
+		var ang := rng.randf() * TAU
+		var dark := Color(0.27, 0.24, 0.21)
+		for k in rng.randi_range(1, 6):
+			_put(img, int(x + cos(ang) * k), int(y + sin(ang) * k), dark)
 	return img
 
 
@@ -178,7 +204,7 @@ static func _bark(rng: RandomNumberGenerator) -> Image:
 			x += rng.randf_range(-0.6, 0.6)
 			_put(img, int(x), y, Color(0.22, 0.2, 0.19))
 			_put(img, int(x) + 1, y, Color(0.66, 0.63, 0.58))
-		x0 += rng.randf_range(5.0, 10.0)
+		x0 += rng.randf_range(7.0, 14.0)
 	return img
 
 
@@ -189,7 +215,7 @@ static func _leaves(rng: RandomNumberGenerator, card: bool) -> Image:
 	var bg := Color(0.38, 0.38, 0.38, 0.0 if card else 1.0)
 	img.fill(bg)
 	var center := Vector2(TEX, TEX) * 0.5
-	var count := 900 if card else 330
+	var count := (900 if card else 330) * AREA
 	for i in count:
 		var p := Vector2(rng.randf() * TEX, rng.randf() * TEX)
 		if card:
@@ -257,7 +283,7 @@ static func _weave(rng: RandomNumberGenerator) -> Image:
 			if not over:
 				v -= 0.04
 			img.set_pixel(x, y, Color(v * 1.02, v, v * 0.93))
-	for i in 14:
+	for i in 14 * AREA:
 		var x := rng.randf() * TEX
 		var y := rng.randf() * TEX
 		var ang := rng.randf() * TAU
@@ -275,7 +301,7 @@ static func _fur(rng: RandomNumberGenerator) -> Image:
 		for x in TEX:
 			var v := 0.45 + 0.08 * _torus(soft, x, y)
 			img.set_pixel(x, y, Color(v, v * 0.98, v * 0.95))
-	for i in 700:
+	for i in 700 * AREA:
 		var x := rng.randf() * TEX
 		var y := rng.randf() * TEX
 		var ang := PI * 0.5 + rng.randf_range(-0.45, 0.45)
