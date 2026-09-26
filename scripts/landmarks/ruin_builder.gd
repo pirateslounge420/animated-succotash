@@ -22,10 +22,14 @@ class_name RuinBuilder
 ## coarser far terrain.
 
 const COURSE_M := 0.85
-# Weathered grey-blue stone (the references' castles), darker than bare
-# rock so walls hold their shape in full sun.
-const STONES := [Color(0.48, 0.48, 0.47), Color(0.42, 0.43, 0.45), Color(0.52, 0.51, 0.47), Color(0.38, 0.39, 0.41), Color(0.47, 0.47, 0.5)]
+# Weathered blue-grey stone (the references' castles; R1a #6F7A8A on
+# screen by day, cooled toward #3E4C8C at night by the ruin shader),
+# darker than bare rock so walls hold their shape in full sun. Five tones
+# so walls stay mottled.
+const STONES := [Color(0.44, 0.46, 0.49), Color(0.39, 0.41, 0.45), Color(0.48, 0.5, 0.52), Color(0.35, 0.37, 0.41), Color(0.43, 0.45, 0.5)]
 const MOSS := Color(0.2, 0.44, 0.14)
+## Lamp-gold tomb light: R1a lantern #FFC040.
+const LAMP := Color("#ffc040")
 const IVY := Color(0.1, 0.32, 0.12)
 const IVY_LIGHT := Color(0.2, 0.46, 0.16)
 const EARTH := Color(0.36, 0.3, 0.22)
@@ -1783,7 +1787,7 @@ func _pyramid_chamber(hs: float, h: float, y0: float) -> void:
 		box(Transform3D(Basis.IDENTITY, Vector3(0.0, y_f + courses * ch + 0.3, -chz + (i + 0.5) * chz * 2.0 / 3.0)), Vector3(chx * 2.0, 0.6, chz * 2.0 / 3.0), palette[rng.randi() % palette.size()], 0.0, 0.06, 0.02)
 	_sarcophagus(Vector3(0.0, y_f, 1.4), 0.0, Color(0.36, 0.3, 0.3))
 	_grave_goods(Vector3(0.0, y_f, -1.2), 1.6, 6)
-	_glow(Vector3(0.0, y_f + 3.0, 0.0), Color(1.0, 0.72, 0.4), 8.0, 0.28)
+	_glow(Vector3(0.0, y_f + 3.0, 0.0), LAMP, 8.0, 0.28)
 	_glow(Vector3(0.0, y_f + 2.0, (z_in + z_out) * 0.5), Color(0.45, 0.85, 0.8), 7.0, 0.12)
 	_shelters.append([Vector3(0.0, y_f, 0.0), 3.0, courses * ch])
 	var zs := z_in
@@ -2341,7 +2345,7 @@ func _barrow_passage(l: float) -> void:
 	var gc := ground(0.0, ze + 1.6)
 	_sarcophagus(Vector3(0.0, gc - 0.1, ze + 1.9), PI * 0.5, palette[3])
 	_grave_goods(Vector3(0.0, gc, ze + 0.8), 1.2, 4)
-	_glow(Vector3(0.0, gc + 1.8, ze + 1.6), Color(1.0, 0.72, 0.4), 6.5, 0.24)
+	_glow(Vector3(0.0, gc + 1.8, ze + 1.6), LAMP, 6.5, 0.24)
 	_glow(Vector3(0.0, ground(0.0, (z0 + ze) * 0.5) + 1.8, (z0 + ze) * 0.5), Color(0.45, 0.85, 0.8), 5.0, 0.12)
 	var zs := z0 + 1.0
 	while zs < ze + 3.0:
@@ -2412,7 +2416,7 @@ func _mastaba() -> void:
 	_sarcophagus(Vector3(0.0, floor_y, hz * 0.25), PI * 0.5, palette[3])
 	for sx: float in [-1.0, 1.0]:
 		_grave_goods(Vector3(sx * (hx - thick) * 0.55, floor_y, -hz * 0.2), 1.2, 3)
-	_glow(Vector3(0.0, floor_y + 2.5, 0.0), Color(1.0, 0.72, 0.4), 7.0, 0.21)
+	_glow(Vector3(0.0, floor_y + 2.5, 0.0), LAMP, 7.0, 0.21)
 	_shelters.append([Vector3(0.0, floor_y, 0.0), minf(hx, hz) - thick, h])
 	shade = 0.0
 	for k in 3:

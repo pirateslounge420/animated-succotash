@@ -2,14 +2,19 @@
 // up axis, the fire's up on the planet) drawn additively, so tongues
 // overlapping build a hot core. The shape is a teardrop, round at the
 // base and drawn to a point, licked sideways and torn at the top by grain
-// scrolling up; color runs from a white-yellow heart through orange to a
-// deep red edge.
+// scrolling up; color runs from the R1a fire core (#FFB020) through the
+// coals' orange (#FF4A00) to a deep red edge, with only a small gold
+// heart, so the fire reads orange-gold rather than white.
 shader_type spatial;
 render_mode unshaded, blend_add, depth_draw_never, cull_disabled, shadows_disabled, fog_disabled;
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform float phase = 0.0; // so tongues don't move together
-uniform float strength = 2.2;
+uniform float strength = 0.3;
+uniform vec3 edge_color : source_color = vec3(0.6, 0.1, 0.0);
+uniform vec3 coal_color : source_color = vec3(1.0, 0.29, 0.0); // #FF4A00
+uniform vec3 core_color : source_color = vec3(1.0, 0.69, 0.125); // #FFB020
+uniform vec3 heart_color : source_color = vec3(1.0, 0.74, 0.24);
 
 void vertex() {
 	vec3 up = MODEL_MATRIX[1].xyz;
@@ -37,9 +42,9 @@ void fragment() {
 	// Torn tip: flecks of flame break off toward the top.
 	body *= smoothstep(0.0, 0.35, width + n2 * 0.3);
 	float heat = clamp((1.0 - d) * (1.1 - y * 0.8), 0.0, 1.0);
-	vec3 col = mix(vec3(0.55, 0.06, 0.01), vec3(1.0, 0.36, 0.04), smoothstep(0.0, 0.35, heat));
-	col = mix(col, vec3(1.0, 0.78, 0.3), smoothstep(0.35, 0.7, heat));
-	col = mix(col, vec3(1.0, 0.97, 0.82), smoothstep(0.72, 0.95, heat));
+	vec3 col = mix(edge_color, coal_color, smoothstep(0.0, 0.35, heat));
+	col = mix(col, core_color, smoothstep(0.35, 0.7, heat));
+	col = mix(col, heart_color, smoothstep(0.8, 0.98, heat));
 	ALBEDO = col * strength;
 	ALPHA = body;
 }

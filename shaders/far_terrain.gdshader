@@ -8,10 +8,14 @@
 // texel, plus big strata, and snow a faint glittering grain. It's mapped
 // in the planet's own frame (the shell sits at the planet center), so it
 // doesn't slide when the floating origin moves.
+//
+// Colors follow the R1a palette exactly as on the near terrain
+// (palette.gdshaderinc), so the two meet without a change of hue.
 shader_type spatial;
 render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/palette.gdshaderinc"
 
 uniform float hide_radius = 700.0;
 uniform bool is_sea = false;
@@ -55,6 +59,18 @@ void fragment() {
 		float steep = 1.0 - dot(normalize(planet_normal), normalize(planet_pos));
 		float rock = max(1.0 - smoothstep(0.04, 0.12, sat), smoothstep(0.12, 0.3, steep));
 		float snow = (1.0 - smoothstep(0.03, 0.09, sat)) * smoothstep(0.72, 0.88, hi);
+		// R1a palette, as on the near terrain (terrain.gdshader).
+		float green = pal_greenness(c) * (1.0 - rock);
+		float sandy = smoothstep(0.05, 0.14, c.r - c.b) * smoothstep(0.45, 0.62, hi) * (1.0 - green);
+		float dirt_w = (1.0 - green) * (1.0 - rock) * (1.0 - snow) * (1.0 - sandy);
+		c = pal_pull(c, pal_grass, 0.75 * green);
+		c = pal_pull(c, pal_dirt, 0.55 * dirt_w);
+		c = pal_pull(c, pal_stone, 0.85 * rock * (1.0 - snow));
+		c = pal_pull(c, pal_snow, 0.9 * snow);
+		float nk = look_night;
+		c = pal_pull(c, pal_grass_night, 0.8 * nk * green);
+		c = pal_pull(c, pal_bark_night, 0.6 * nk * dirt_w);
+		c = pal_pull(c, pal_stone_night, 0.75 * nk * rock * (1.0 - snow));
 		// Crags a few meters per texel, over strata tens of meters apart.
 		vec3 t = crag(1.0 / 90.0) * 0.65 + crag(1.0 / 380.0) * 0.35;
 		float strata = texture(look_grain_soft, vec2(length(planet_pos) / 55.0, dot(planet_pos, vec3(0.3, 0.5, 0.8)) / 900.0)).r;

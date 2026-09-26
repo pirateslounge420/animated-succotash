@@ -204,6 +204,7 @@ func _process(delta: float) -> void:
 	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position)
 	fx.update_fx(cam.global_position, d, weather, sheltered)
 	post.set_night(1.0 - sky.daylight)
+	Campfire.night = 1.0 - sky.daylight
 	creatures.update_creatures(delta, sky.daylight)
 	var prompt: String = creatures.prompt
 	if prompt == "":

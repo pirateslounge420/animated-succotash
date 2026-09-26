@@ -9,11 +9,16 @@
 // and smooth, painterly light and dark patches plus a slight hue drift
 // run over meters to tens of meters, like sun-dappled grass.
 //
+// Colors follow the R1a palette (palette.gdshaderinc): grass, dirt, stone
+// and snow are pulled toward their targets by day and cooled toward their
+// night targets as night falls.
+//
 // Near magical sites, patches of moss glow at night.
 shader_type spatial;
 render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/palette.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 // Anisotropic: stays clear where the ground is seen at a grazing angle,
@@ -73,6 +78,18 @@ void fragment() {
 	float dapple = (patch_s - 0.5) * 0.5 + (patch_l - 0.5) * 0.6;
 	vec3 tint = mix(vec3(0.94, 0.98, 1.08), vec3(1.07, 1.03, 0.9), smoothstep(-0.2, 0.2, dapple));
 	c *= mix(vec3(1.0), tint, green * 0.8);
+	// R1a palette: pull each kind of ground toward its target (the
+	// classification above reads the raw vertex color, so footsteps and
+	// textures don't change), then cool it toward its night target.
+	float dirt_w = (1.0 - green) * (1.0 - rocky) * (1.0 - snow) * (1.0 - sandy);
+	c = pal_pull(c, pal_grass, 0.75 * green);
+	c = pal_pull(c, pal_dirt, 0.55 * dirt_w);
+	c = pal_pull(c, pal_stone, 0.85 * rocky);
+	c = pal_pull(c, pal_snow, 0.9 * snow);
+	float nk = look_night;
+	c = pal_pull(c, pal_grass_night, 0.8 * nk * green);
+	c = pal_pull(c, pal_bark_night, 0.6 * nk * dirt_w);
+	c = pal_pull(c, pal_stone_night, 0.75 * nk * rocky);
 	ALBEDO = c * t * 2.0 * (1.0 + dapple * 0.35);
 	ROUGHNESS = 1.0;
 	// Glowing moss creeps over the ground at magical places, in patches a

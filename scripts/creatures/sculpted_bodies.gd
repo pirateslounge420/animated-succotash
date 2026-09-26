@@ -274,7 +274,7 @@ static func _attach_extras(b: Dictionary, kind: String, sp: CreatureSpecies) -> 
 		"goblin":
 			CreatureBodies.eyes(head, Vector3(0, 0.79, -0.125) - hp, 0.05, 0.022, Color(1.0, 0.85, 0.3), 1.5)
 			var arm: Node3D = b.wings[1] if b.wings.size() > 1 else root
-			CreatureBodies._lantern(b, arm, Vector3(0.18, 0.24, -0.06) - arm.position, sp.accent)
+			CreatureBodies._lantern(b, arm, Vector3(0.18, 0.24, -0.06) - arm.position)
 		"tribal", "elder":
 			CreatureBodies.eyes(head, Vector3(0, 0.903, -0.054) - hp, 0.021, 0.0085, Color(0.07, 0.05, 0.04))
 			CreatureBodies.tribal_gear(b, sp)
