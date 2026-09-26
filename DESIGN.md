@@ -2,7 +2,7 @@
 
 ## Overview
 
-An ambient open-world exploration game built in Summer Engine (Godot 4). No end goal: pure wandering at a tribal, pre-firearm tech level. Scope is stripped to terrain generation and ecology only; races, cultures, settlements, crafting and combat come later, built on top. The world is a walkable cube-sphere planet about 1/100th of Earth's size (\~400 km around), with heights at 1/10th of Earth's (Everest would stand \~900 m). The day-night cycle runs 120 real minutes (2 hours) per in-game day, a 12x compression of Earth's 24 hours, in four phases: dawn 15 minutes, day 50, dusk 15 and night 40. Daylight intentionally outlasts full darkness, mirroring how Earth's atmosphere and sun-disk size make daylight last slightly longer than true night even on an "even" day.
+An ambient open-world exploration game built in Summer Engine (Godot 4). No end goal: pure wandering at a tribal, pre-firearm tech level. Scope is stripped to terrain generation and ecology only; races, cultures, settlements, crafting and combat come later, built on top. The world is a walkable cube-sphere planet about 1/100th of Earth's size (\~400 km around), with heights at 1/10th of Earth's (Everest would stand \~900 m). The day-night cycle runs 120 real minutes (2 hours) per in-game day, a 12x compression of Earth's 24 hours, in four phases: day 45 minutes, dusk 20, night 35 and dawn 20 (docs/WORLD_SYSTEMS_SPEC.md, which wins over this file). Long, slow dawns and dusks give the day-to-night palette shift room to play out.
 
 ## Visual & Tone References
 
@@ -26,7 +26,7 @@ Creatures are ambient and unscripted, with no quest framing. Species have varied
 
 ## Lighting & Day-Night Cycle
 
-Real light sources drive the cycle, not glow shaders. The sun is a DirectionalLight3D by day; the moon is a dimmer, blue-tinted DirectionalLight3D by night. The moon behaves as it does on Earth: it orbits once per 28-day phase cycle on a slightly tilted orbit (about 5°), so each day it rises later than the day before. A full moon rises as the sun sets and stays up all night, a new moon travels with the sun and is lost in its glare, and a quarter moon is up for half the day and half the night. Both lights genuinely arc across the sky rather than snapping on and off.
+Real light sources drive the cycle, not glow shaders. The sun is a DirectionalLight3D by day; the moon is a dimmer, blue-tinted DirectionalLight3D by night. The moon behaves as it does on Earth: it orbits once per ~29.5-day phase cycle on a slightly tilted orbit (about 5°), so each day it rises later than the day before. A full moon rises as the sun sets and stays up all night, a new moon travels with the sun and is lost in its glare, and a quarter moon is up for half the day and half the night. Both lights genuinely arc across the sky rather than snapping on and off.
 
 **Elevation-based intensity**: each light's brightness and color temperature follow its angle above the horizon — dim and warm near the horizon, full strength near zenith, fading to nothing once below it. Around full moon there's a natural dawn/dusk window where sun and moon are briefly above the horizon together, each casting its own color from opposite sides of the sky; in other phases the moon can hang in the daytime sky.
 
@@ -38,14 +38,14 @@ Real light sources drive the cycle, not glow shaders. The sun is a DirectionalLi
 
 ### Moon phase and mansions
 
-The moon cycles through a real 28-day phase cycle, modeled on the Chinese 28 lunar mansions (er shi ba xiu) rather than the 27-mansion Indian nakshatra system. The 28 mansions group into four sets of seven, each tied to a cardinal direction, season, and guardian beast:
+The moon cycles through a ~29.5-day phase cycle (Earth's), read against the Chinese 28 lunar mansions (er shi ba xiu) rather than the 27-mansion Indian nakshatra system. The 28 mansions group into four sets of seven, each tied to a cardinal direction, season, and guardian beast:
 
 - **Azure Dragon** (east, spring, wood): Jiao, Kang, Di, Fang, Xin, Wei, Ji
 - **Black Tortoise** (north, winter, water): Dou, Niu, Nu, Xu, Wei, Shi, Bi
 - **White Tiger** (west, autumn, metal): Kui, Lou, Wei, Mao, Bi, Zi, Shen
 - **Vermilion Bird** (south, summer, fire): Jing, Gui, Liu, Xing, Zhang, Yi, Zhen
 
-Each mansion corresponds to a real historical Chinese asterism (a small pattern of 2–10 stars). As the moon phase advances one mansion per in-game day, a small constellation glyph tracing that mansion's actual star pattern appears near the moon, tinted by its beast group's color — doubling as a phase indicator and a loose in-game calendar a player could learn to read.
+Each mansion corresponds to a real historical Chinese asterism (a small pattern of 2–10 stars). As the moon advances one mansion about every 1.05 in-game days (28 mansions per 29.5-day cycle), a small constellation glyph tracing that mansion's actual star pattern appears near the moon, tinted by its beast group's color — doubling as a phase indicator and a loose in-game calendar a player could learn to read.
 
 Moon brightness and light intensity scale with phase — a full moon lights the night meaningfully more than a new moon or thin crescent.
 
