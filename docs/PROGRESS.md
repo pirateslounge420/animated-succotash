@@ -4,6 +4,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-27 — Spec update: R6, Phases 6–11 (docs only, nothing built)
+- Added Appendix R6 (simulation tiers and living-world rules), replaced Phases 6–8 with 6 Ecology core, 7 Living populations, 8 Disturbance and living water; old Camp life is now Phase 9 (plus culture), new Phase 10 Memory and lore, old Persistence is now Phase 11 (plus tick_region catch-up). Part F gained four checks.
+- D3 gained: world.events, fauna.genome_mean, fauna.sex_ratio, soil.carcass, flora.burn_scar, terrain.water_level (seasonal), society[camp].culture, creature.memory[] (NEAR only). Owners inferred from the phase cards — designer to confirm.
+- Cross-references renumbered: R4 inventory built in Phase 9; R5 out of scope until Phase 11.
+- Still in Phase 0 (awaiting sign-off). Phase 1 ripple + Night Rider + Pond Crawler agents (started on the designer's "GO") are still working in their copies; not merged.
+
 ## 2026-09-27 — Phase 0 session 2 (commits 35fdd3a → a213f49) — awaiting sign-off
 - Changed: spec R1 replaced + R1a palette added; DESIGN.md matches spec (45/20/35/20, 29.5-day moon). Merged: painted sky (ultramarine night, dense stars, big moon, day #1436FF→#4C7CFF, night fog #1E30C0), flat water (no reflections, no white net, seam line fixed, rivers now flow), R1a ground/stone/fire palette with firelight pool, 1/4 ordered dither, ultramarine haze. Postage-stamp planet (40 km, every band, 3.1 s) ON in data/dev.json; full planet via "postage_stamp": false.
 - Verified: tools/p0_timelapse.gd PASS, tools/stamp_check.gd PASS, gl_compatibility no shader errors. Dusk river re-shoot on the full planet: /tmp/shots/p0final_river_{12.0,17.5,18.5,23.0}.png (sent to designer).

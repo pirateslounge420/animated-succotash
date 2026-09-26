@@ -116,6 +116,14 @@ soil.fertility[]                                 NEW soil pass
 flora.biomass[region][stratum]                   vegetation_placer (NEW field)
 fauna.pop[region][species]                       NEW ecology ledger
 society[camp].pop/food/roles                     camps (NEW fields)
+world.events                                     NEW ecology/events: append-only log, any system adds records (R6.6)
+fauna.genome_mean[region][species][gene]         NEW ecology ledger (Phase 7)
+fauna.sex_ratio[region][species]                 NEW ecology ledger (Phase 7)
+soil.carcass[region]                             NEW ecology ledger (Phase 7)
+flora.burn_scar[region]                          NEW ecology ledger, fire (Phase 8)
+terrain.water_level[region] (seasonal)           NEW ecology ledger, living water (Phase 8)
+society[camp].culture{fish, hunt, forage, wary, range}   camps (Phase 9)
+creature.memory[]  (NEAR only; persisted as a region delta)   creature (Phase 10)
 ```
 
 ### D4. Data schemas (extend existing files; don't rename)
@@ -184,27 +192,43 @@ See Part C.
 - Tag every plant with a **stratum**; ensure each biome has canopy / understory / ground per Appendix R2. Small counts.
 - **Done when:** a fertility overlay explains why a valley is lush and a ridge is bare; walking the stamp shows the right plant sizes in the right places.
 
-## Phase 6 — Ecology ledger & food web  (the big one)
-- **Touches:** NEW `ecology/ledger`, `creature_spawner`, `creature`, `creatures.json`, `territories`.
-- **Regional population ledger:** per region, per species, a count. The spawner *reads the ledger* to decide what appears near the player, instead of rolling from nothing.
-- **Food web** (Appendix R3): insects (beetles, worms, caterpillars→butterflies) and seeds → birds and small rodents → cats and small canines → apex (big cats, wolves, bears; sharks and big fish in water; cichlids in warm lakes/rivers). Each species has a `diet`; predators are capped by prey counts; prey by flora biomass; scavengers return biomass to soil.
-- **Every creature has the same loop:** seek food → drink → rest/perch → reproduce (`reproduce_days`) → build/maintain `nest` per its habits (ground, tree, cliff, burrow, reed). Nests are real objects in the world.
-- **Warm start:** at generation, run the ledger forward N in-game days so the world spawns *already running* — nests built, territories settled, populations at a plausible balance. This is the same code Phase 8 uses for catch-up. Build it once.
-- Night danger, mythic per biome (`biome_lock` + distance-scaled cue), full-moon hunters, rare variants — as in R3.
-- **Do not build:** combat balancing, inventory, camp economy.
-- **Done when:** population overlay shows a region balancing over several dev days; a bird visibly returns to a nest; a cat takes a rodent; a wolf pack shows up where deer are; a new world already has nests in the trees.
-- **Prompt A:**
-> Phase 6. Audit creature_spawner, creature behaviors, territories, and creatures.json. Propose the ledger structure (region size, tick rate), how the spawner will read it, the diet/capping rule, the nest object, and the warm-start. Draft a first roster from Appendix R3 — insects, birds, rodents, cats, canines, deer, wolf, bear, fish, shark. Wait.
+## Phase 6 — Ecology core
+- **Touches:** NEW `ecology/ledger`, `ecology/events`, `tools/eco_sim.gd`, `creature_spawner`, `creatures.json`.
+- Build R6 rules 1–7 first, then the ledger, food web (R3), diet caps, nests, warm start, and the harness: a headless run of N years on the stamp at max speed, outputting CSV plus PNG charts (population by species and region, camp food, events timeline), fixed seed with a multi-seed flag.
+- **Do not build:** genetics, migration, fire, camps.
+- **Done when:** the harness shows a stable 100-year run, a new world already has nests, the population overlay balances over dev days, a cat takes a rodent, a wolf pack shows up where deer are.
 
-## Phase 7 — Camp life
+## Phase 7 — Living populations
+- **Touches:** ledger, `creature`, creature shader, `creatures.json`.
+- **(a) Genetics:** 8–15 genes per creature in 0–1; the species table maps each gene to a visible trait (size, coat, marking, leg length, speed, temperament bias) with a clamped range; newborns take each gene from either parent plus small mutation; the shader reads tint, pattern, and scale from genes; the rare variant is a gene past normal range and is heritable. Sex is one bit; the species table has male and female rows for range, nest-tending, and aggression; breeding needs both in a region.
+- **(b) Migration:** food location shifts with season; herbivores follow food downhill and warmward, predators follow prey — no new behaviour, only seasonal food.
+- **(c) Carcass chain:** any death leaves a carcass record {region, position, mass, day}; scavengers seek it, predators are drawn by it, it decays into soil fertility over days.
+- **Done when:** the harness shows genome means drifting apart between separated regions, herds visibly move in winter on the stamp, and a carcass draws a scavenger and leaves a green patch.
+
+## Phase 8 — Disturbance and living water
+- **Touches:** `weather_sim`, ledger, soil, `vegetation_placer`, `river_network`, `terrain_chunk` water.
+- **(a) Fire:** lightning or a camp fire, plus dryness and flora density, ignites; spreads per region by wind and dryness; consumes flora biomass, adds fertility, writes `burn_scar`; NEAR shows burning trees, smoke, blackened ground; scars regrow in stages (grass → shrub → young trees) over years.
+- **(b) Flood:** storm plus swollen river floods low regions; flattens ground flora, deposits fertility, drowns burrow nests.
+- **(c) Living water:** lake level and river width follow season and recent rain; boats read width for passability; the water mesh height updates when a chunk streams.
+- **Done when:** on the stamp a dry-season strike burns a patch that comes back as meadow, the harness shows fires as bounded pulses, and a river you could paddle in spring is a rocky bed in late summer.
+
+## Phase 9 — Camp life and culture
 - **Touches:** `camps`, `encampment`, `campfire`, `player/*`, light inventory.
 - **Player loop:** fish (rivers/lakes/coast, by water temp), forage (berries/fruit/roots by biome), hunt (bow/spear) → carry a few things (Appendix R4) → bring to a campfire → **cook at night with the camp folk**. Cooked food restores health; the fire is the ambient social moment.
 - **Camp folk loop:** foragers/hunters/fishers go out by day, gather from the ledger and flora, return by dusk; food surplus → camp grows → more pressure on nearby prey → range farther or shrink. Background camp-to-camp trade. **Do not script outcomes.**
 - Camps are night safe zones. Interaction proximity-based; no dialogue trees.
-- **Done when:** you catch a fish, bring it to the opening camp, cook it at dusk with the folk, and the camp's own hunters are seen leaving and returning.
+- **Culture:** each camp holds culture sliders {fish, hunt, forage, wary, range} seeded from biome and moved by events — a wolf raid raises wary, a rich river raises fish. Goods, chatter, and how folk react to the player read from the sliders.
+- **Done when:** you catch a fish, bring it to the opening camp, cook it at dusk with the folk, and the camp's own hunters are seen leaving and returning; plus two camps with different histories visibly behave differently.
 
-## Phase 8 — Persistence
+## Phase 10 — Memory and lore
+- **Touches:** `creature` (NEAR), `camps`, scrolls, HUD place names.
+- **(a) Creature memory:** each NEAR creature keeps up to ~5 memories {what, where, when, good or bad} that decay over days; a wolf that lost packmates near the campfire avoids it, a fed fox returns.
+- **(b) Lore:** place names, scroll text, and camp chatter are generated from `world.events` — "the meadow where the herd died," "the ridge fire of year 12" — so the world's story is what actually happened in this seed.
+- **Done when:** a creature visibly changes behaviour toward the player after an encounter, and a camp folk mentions an event the harness log shows really happened nearby.
+
+## Phase 11 — Persistence
 - Elapsed-time catch-up on login using the Phase 6 warm-start code. **Done when:** log out, wait, log in — crops/nests/populations/moon advanced, nothing exploded.
+- Catch-up runs `tick_region` and applies region deltas (ledger, nests, carcasses, scars, memories, culture).
 
 ---
 
@@ -216,6 +240,10 @@ The designer should be **surprised**. If any of these had to be hard-coded, the 
 - Full-moon nights are noticeably worse than new-moon nights.
 - Birds nest in different places for different reasons, without anyone placing a nest.
 - A cat's territory sits where the rodents are, and moves when they do.
+- A fire scar is where the berries are.
+- The wolves of the far valley are darker than the near ones.
+- A camp that got raided is wary of you.
+- The river you rowed up in spring is unrowable in late summer.
 
 ---
 
@@ -281,11 +309,22 @@ Rules: generalists (wolf, deer, bear, hawk, cats, rats) span many bands; cold-bl
 
 Nesting habits (examples for `nest.site`): tree-fork, cavity, cliff-ledge, ground-scrape, reed-bed, burrow. Different birds pick different sites; that's the whole rule.
 
-## R4. Inventory principle (built in Phase 7, kept tiny)
+## R4. Inventory principle (built in Phase 9, kept tiny)
 - A **handful** of items; visibly overburdened — slower, worse climbing, louder — past a low threshold. No grid.
 - Every carried item changes a decision (torch, spear, tonight's food, one trade good).
 - Equipment slot-based: one equipped + two spares per slot (rings: two worn + two spares).
 - Weight felt in movement, never read in a menu.
 
-## R5. Out of scope until Phase 8 is stable
+## R5. Out of scope until Phase 11 is stable
 Werewolf/vampire transformation, grappling hook, underwater exploration/breath meter, player-founded tribes, advanced tech tiers (rail carts, forges), crafting quality tiers, combat damage balancing, any weapon beyond bow and spear. All remain in the long-term design.
+
+## R6. Simulation tiers and living-world rules
+1. **Three tiers by distance to the player.** NEAR (loaded chunks): individual creatures, physics, animation, memory. MID (regions within a radius set in `data/sim.json`, start ~10 km on the stamp): ledger only — per-region counts and fields, ticked every in-game hour. FAR: frozen; caught up with the warm-start code when the player approaches or logs in. Nothing far away ever has a node.
+2. **One simulation function.** `tick_region(region, dt)` is the only place ecology advances. Live play, warm start, login catch-up, and the headless harness all call it. If it exists twice, it's wrong.
+3. **Time-sliced.** The sim gets a fixed per-frame budget (start at 2 ms); regions tick round-robin, never all at once. A region that falls behind catches up on its next slice.
+4. **Flat data.** Region fields are packed arrays indexed by region id, not objects. Creatures, nests, carcasses, and fire become scene nodes only in NEAR.
+5. **Deterministic.** RNG for any region and day is seeded from (world seed, region id, day), so regenerated detail matches and harness runs repeat exactly.
+6. **Events, not polling.** Anything notable writes one record to `world.events` — {day, region, kind, params}. Systems read the log; they never watch each other. Per region: a ring buffer of the last ~50 events plus a permanent compact summary (count per kind, first and last day).
+7. **Every rate lives in `data/sim.json`.** The designer tunes; code never hard-codes a number.
+8. **Merge gate:** a system merges only when `eco_sim` shows, across 3 seeds and 100 years, no species at zero, none above 3× baseline, and every older chart unchanged in shape.
+9. **World age** is random at generation (warm start 50–200 years), so worlds differ in how much history they carry.
