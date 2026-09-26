@@ -11,7 +11,10 @@ class_name RuinBuilder
 ## vertex alpha marks moss for the night glow (shaders/ruin.gdshader).
 ##
 ## Silhouettes carry: castles ring a hilltop with a tall keep, towers stand
-## 14-22 m, aqueducts stride level across the ground on tall piers. Ruins
+## 14-22 m, aqueducts stride level across the ground on tall piers.
+## Other countries have their own (Ruins): igloo clusters in snow, a
+## treehouse village of platforms and rope bridges on giant jungle trees,
+## a boardwalk on stilts out to a cabin in the marsh. Ruins
 ## are built up to ~2.6 km out, beyond the terrain chunks, so their bases
 ## run down into a buried mound or deep footings and never float over the
 ## coarser far terrain.
@@ -31,11 +34,26 @@ const GRASS := Color(0.3, 0.52, 0.2)
 const CAMP_CHANCE := 0.35
 const WOOD := Color(0.4, 0.3, 0.2)
 const HIDE := Color(0.55, 0.42, 0.3)
+const OLD_WOOD := Color(0.36, 0.32, 0.26) # weathered grey-brown planks
+const BARK := Color(0.34, 0.3, 0.24)
+const JUNGLE_LEAF := Color(0.16, 0.42, 0.16)
+const THATCH := Color(0.55, 0.47, 0.28)
+const SNOW := Color(0.86, 0.9, 0.95)
+const ROPE := Color(0.42, 0.36, 0.24)
 
 ## Distance where the drawn blocks give way to the plain-box LOD, and the
 ## hysteresis round it.
 const LOD_M := 150.0
 const LOD_MARGIN_M := 15.0
+
+## Surface materials (vertex UV.x; shaders/ruin.gdshader picks the
+## texture): set `mat` before adding a part.
+const STONE_M := 0
+const WOOD_M := 1
+const SNOW_M := 2
+const THATCH_M := 3
+const LEAF_M := 4
+const HIDE_M := 5
 
 static var _material: ShaderMaterial
 
@@ -53,6 +71,9 @@ var wet := 0.5
 var _v := PackedVector3Array()
 var _n := PackedVector3Array()
 var _c := PackedColorArray()
+var _m := PackedVector2Array() # material per vertex (x)
+## The material new geometry gets.
+var mat := STONE_M
 ## Collision triangles: plain boxes, much cheaper than the drawn blocks.
 var _cv := PackedVector3Array()
 ## Far LOD (past LOD_M): plain boxes too, in the blocks' face colors, and
@@ -60,11 +81,15 @@ var _cv := PackedVector3Array()
 var _lv := PackedVector3Array()
 var _ln := PackedVector3Array()
 var _lc := PackedColorArray()
+var _lm := PackedVector2Array()
 ## Camp shelters, [local center (on the ground), radius, height]: standing
 ## inside one keeps the rain off (Landmarks.sheltered_at).
 var _shelters: Array = []
 var _tower_r := 0.0
 var _stub_angle := 0.0
+## Where a living camp's fire goes (local, on the ground or floor), if the
+## ruin is inhabited (Ruins.inhabited()); Camps builds it.
+var _camp_spot := Vector3.ZERO
 
 
 static func material() -> ShaderMaterial:
@@ -96,15 +121,25 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._lone_tower()
 		Ruins.Kind.AQUEDUCT:
 			b._aqueduct()
-	# Its own roll, so a camp never changes the ruin itself.
+		Ruins.Kind.IGLOO:
+			b._igloos()
+		Ruins.Kind.TREEHOUSE:
+			b._treehouse()
+		Ruins.Kind.BOARDWALK:
+			b._boardwalk()
+	# Its own roll, so a camp never changes the ruin itself. (Only the stone
+	# ruins: the others are dwellings already.)
 	var camp_rng := RandomNumberGenerator.new()
 	camp_rng.seed = hash([p_site.seed, "camp"])
-	if camp_rng.randf() < CAMP_CHANCE:
+	var survivors: bool = p_site.kind <= Ruins.Kind.AQUEDUCT and camp_rng.randf() < CAMP_CHANCE
+	if survivors:
 		b.rng = camp_rng
 		b._camp(p_site.kind)
-	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "cv": b._cv,
-		"lv": b._lv, "ln": b._ln, "lc": b._lc, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
-		"shelters": b._shelters}
+	elif p_site.kind <= Ruins.Kind.AQUEDUCT:
+		b._stone_camp_spot()
+	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv,
+		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
+		"shelters": b._shelters, "camp_spot": b._camp_spot}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -121,6 +156,7 @@ static func rock_mesh(size: Vector3, p_seed: int, col: Color, block := false) ->
 	arrays[Mesh.ARRAY_VERTEX] = b._v
 	arrays[Mesh.ARRAY_NORMAL] = b._n
 	arrays[Mesh.ARRAY_COLOR] = b._c
+	arrays[Mesh.ARRAY_TEX_UV] = b._m
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	return mesh
@@ -133,11 +169,13 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	root.name = Ruins.KIND_NAMES[site.kind].replace(" ", "")
 	root.set_meta("site", site)
 	root.set_meta("shelters", data.get("shelters", []))
+	root.set_meta("camp_spot", data.get("camp_spot", Vector3.ZERO))
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = data.v
 	arrays[Mesh.ARRAY_NORMAL] = data.n
 	arrays[Mesh.ARRAY_COLOR] = data.c
+	arrays[Mesh.ARRAY_TEX_UV] = data.m
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	var mi := MeshInstance3D.new()
@@ -149,6 +187,7 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	arrays[Mesh.ARRAY_VERTEX] = data.lv
 	arrays[Mesh.ARRAY_NORMAL] = data.ln
 	arrays[Mesh.ARRAY_COLOR] = data.lc
+	arrays[Mesh.ARRAY_TEX_UV] = data.lm
 	var far_mesh := ArrayMesh.new()
 	far_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	var far := MeshInstance3D.new()
@@ -187,6 +226,7 @@ func _tri(a: Vector3, b: Vector3, c: Vector3, col: Color) -> void:
 	_v.append_array([a, b, c])
 	_n.append_array([nrm, nrm, nrm])
 	_c.append_array([col, col, col])
+	_add_mat()
 
 
 func _quad(a: Vector3, b: Vector3, c: Vector3, d: Vector3, col: Color) -> void:
@@ -294,6 +334,12 @@ func _tri_n(a: Vector3, b: Vector3, c: Vector3, na: Vector3, nb: Vector3, nc: Ve
 		_v.append_array([a, b, c])
 		_n.append_array([na, nb, nc])
 		_c.append_array([ca, cb, cc])
+	_add_mat()
+
+
+func _add_mat() -> void:
+	var m := Vector2(mat, 0.0)
+	_m.append_array([m, m, m])
 
 
 ## Smooth shading for everything added since `start`: vertices at the
@@ -341,6 +387,7 @@ func _lod_box(xf: Transform3D, h: Vector3, top: Color, side: Color, bottom: Colo
 				_lv.append_array([a, b, c])
 			_ln.append_array([nrm, nrm, nrm])
 			_lc.append_array([col, col, col])
+			_lm.append_array([Vector2(mat, 0.0), Vector2(mat, 0.0), Vector2(mat, 0.0)])
 
 
 ## A rough stone: a noise-displaced icosphere, smooth shaded, mossy on top.
@@ -563,6 +610,7 @@ func mound(radius_top: float, radius_bottom: float, depth: float, rise: float) -
 	_lv.append_array(_v.slice(start))
 	_ln.append_array(_n.slice(start))
 	_lc.append_array(_c.slice(start))
+	_lm.append_array(_m.slice(start))
 
 
 # --- Structures -------------------------------------------------------------------
@@ -697,6 +745,29 @@ func _aqueduct() -> void:
 
 # --- Camps ----------------------------------------------------------------------
 
+## Where a living camp would sit in a stone ruin without a survivors'
+## camp: in a castle's courtyard, at a tower's foot away from its wall
+## stub, under one of an aqueduct's arches.
+func _stone_camp_spot() -> void:
+	var p := Vector2.ZERO
+	var floor_y := 0.0
+	match site.kind:
+		Ruins.Kind.CASTLE:
+			var a := rng.randf() * TAU
+			p = Vector2(cos(a), sin(a)) * 10.5
+			floor_y = 0.35
+		Ruins.Kind.TOWER:
+			var a := _stub_angle + PI + rng.randf_range(-0.8, 0.8)
+			p = Vector2(cos(a), sin(a)) * (_tower_r + 4.5)
+		Ruins.Kind.AQUEDUCT:
+			var length: float = site.length_m
+			var spacing := 7.5
+			var piers := int(length / spacing) + 1
+			var x0 := -spacing * (piers - 1) * 0.5
+			p = Vector2(x0 + (rng.randi() % (piers - 1) + 0.5) * spacing, 0.0)
+	_camp_spot = Vector3(p.x, maxf(ground(p.x, p.y), floor_y), p.y)
+
+
 ## Survivors' camp in the ruin: one to three shelters (tepees or lean-tos)
 ## in a castle's courtyard, at a tower's foot (away from its wall stub) or
 ## under an aqueduct's arches, and a cold fire ring.
@@ -734,7 +805,12 @@ func _camp(kind: int) -> void:
 	# (clear of the piers).
 	var s0 := spots[0]
 	var beside := Vector2(0.0, 2.8 * (1.0 if s0.y <= 0.0 else -1.0)) if kind == Ruins.Kind.AQUEDUCT else Vector2(-s0.y, s0.x).normalized() * 3.0
-	fire_ring(s0 + beside, floor_y)
+	var fire := s0 + beside
+	_camp_spot = Vector3(fire.x, maxf(ground(fire.x, fire.y), floor_y), fire.y)
+	# An inhabited ruin gets a burning fire there (Camps); otherwise the
+	# old ring of stones round cold ash.
+	if not Ruins.inhabited(site):
+		fire_ring(fire, floor_y)
 
 
 ## A tepee: poles leaning in to a crossing at the top, covered in woven
@@ -767,10 +843,13 @@ func tepee(center: Vector2, r: float, h: float, floor_y := 0.0) -> void:
 		var vine := rng.randf() < 0.6
 		var col := IVY.lerp(IVY_LIGHT, rng.randf()) if vine else HIDE.lightened(rng.randf_range(-0.08, 0.08))
 		col.a = 0.75 if vine else 0.1
+		mat = LEAF_M if vine else HIDE_M
 		_face(a, b, tb, ta, col, inside)
+	mat = STONE_M
 	_lv.append_array(_v.slice(start))
 	_ln.append_array(_n.slice(start))
 	_lc.append_array(_c.slice(start))
+	_lm.append_array(_m.slice(start))
 	_collision_box(Transform3D(Basis.IDENTITY, Vector3(center.x, g + h * 0.3, center.y)), Vector3(r * 0.6, h * 0.3, r * 0.6))
 	_shelters.append([Vector3(center.x, g, center.y), r, h])
 
@@ -801,10 +880,13 @@ func lean_to(center: Vector2, heading: float, floor_y := 0.0) -> void:
 	var start := _v.size()
 	var col := IVY.lerp(IVY_LIGHT, rng.randf())
 	col.a = 0.75
+	mat = LEAF_M
 	_face(tops[0], tops[1], backs[1], backs[0], col, c + Vector3(0, -3.0, 0) - fwd * depth * 0.5)
+	mat = STONE_M
 	_lv.append_array(_v.slice(start))
 	_ln.append_array(_n.slice(start))
 	_lc.append_array(_c.slice(start))
+	_lm.append_array(_m.slice(start))
 	var mid := (tops[0] + tops[1] + backs[0] + backs[1]) * 0.25
 	_collision_box(Transform3D(Basis(side, Vector3.UP, side.cross(Vector3.UP)), mid), Vector3(w * 0.5, hh * 0.3, depth * 0.35))
 	var floor_c := c - fwd * depth * 0.5
@@ -818,7 +900,10 @@ func _pole(a: Vector3, b: Vector3, thick: float) -> void:
 	var x := y.cross(Vector3.UP if absf(y.y) < 0.95 else Vector3.RIGHT).normalized()
 	var basis := Basis(x, y, x.cross(y))
 	var col := WOOD.lightened(rng.randf_range(-0.08, 0.08))
+	var was := mat
+	mat = WOOD_M
 	box(Transform3D(basis, (a + b) * 0.5), Vector3(thick, a.distance_to(b), thick), col, 0.1, 0.02, 0.01)
+	mat = was
 
 
 ## A ring of stones around old ash.
@@ -831,3 +916,574 @@ func fire_ring(center: Vector2, floor_y := 0.0) -> void:
 	var ash := Color(0.16, 0.15, 0.14)
 	ash.a = 0.0
 	box(Transform3D(Basis.IDENTITY, Vector3(center.x, g + 0.01, center.y)), Vector3(0.8, 0.04, 0.8), ash, 0.0, 0.01, 0.0)
+
+
+# --- Snow country: igloos ---------------------------------------------------------
+
+## One to three igloos, some fallen in, a windbreak of snow blocks and a
+## drying rack of poles and hides.
+func _igloos() -> void:
+	var spots: Array[Vector2] = [Vector2.ZERO]
+	for i in rng.randi_range(0, 2):
+		var a := rng.randf() * TAU
+		spots.append(Vector2(cos(a), sin(a)) * rng.randf_range(6.5, 8.0))
+	var doors: Array[float] = []
+	for p in spots:
+		doors.append(rng.randf() * TAU)
+		igloo(p, rng.randf_range(2.1, 2.7), doors[-1], rng.randf() < 0.45)
+	# The camp fire: 4.8 m out from the middle igloo, as far as can be from
+	# the others and clear of its entrance tunnel.
+	var best_a := 0.0
+	var best_clear := -INF
+	for k in 12:
+		var a := TAU * k / 12.0
+		if absf(angle_difference(a, doors[0])) < 0.6:
+			continue
+		var q := Vector2(cos(a), sin(a)) * 4.8
+		var clear := INF
+		for p in spots.slice(1):
+			clear = minf(clear, q.distance_to(p))
+		if clear > best_clear:
+			best_clear = clear
+			best_a = a
+	var fire := Vector2(cos(best_a), sin(best_a)) * 4.8
+	_camp_spot = Vector3(fire.x, ground(fire.x, fire.y), fire.y)
+	# Windbreak: a low curved wall on one side.
+	var wa := rng.randf() * TAU
+	mat = SNOW_M
+	for k in 9:
+		var a := wa + (k - 4) * 0.15
+		var p := Vector2(cos(a), sin(a)) * 10.0
+		var g := ground(p.x, p.y)
+		var tangent := Vector3(-sin(a), 0, cos(a))
+		for j in rng.randi_range(1, 3):
+			var basis := Basis(tangent, Vector3.UP, tangent.cross(Vector3.UP)).rotated(Vector3.UP, rng.randf_range(-0.08, 0.08))
+			box(Transform3D(basis, Vector3(p.x, g + 0.2 + j * 0.42, p.y)), Vector3(1.4, 0.42, 0.5), SNOW.darkened(rng.randf_range(0.0, 0.08)), 0.0, 0.05, 0.04)
+	mat = STONE_M
+	# Drying rack: two posts and a bar, hides hung over it.
+	var ra := best_a + PI * 0.5 + rng.randf_range(-0.3, 0.3)
+	var rc := Vector2(cos(ra), sin(ra)) * 7.5
+	var side := Vector2(-sin(ra), cos(ra))
+	var ends: Array[Vector3] = []
+	for s in [-1.0, 1.0]:
+		var q: Vector2 = rc + side * 1.1 * s
+		var g := ground(q.x, q.y)
+		_pole(Vector3(q.x, g - 0.3, q.y), Vector3(q.x, g + 1.7, q.y), 0.1)
+		ends.append(Vector3(q.x, g + 1.6, q.y))
+	_pole(ends[0], ends[1], 0.07)
+	mat = HIDE_M
+	for k in 2:
+		var t := 0.3 + 0.4 * k
+		var top := ends[0].lerp(ends[1], t)
+		var col := HIDE.lightened(rng.randf_range(-0.1, 0.1))
+		col.a = 0.0
+		var w := Vector3(side.x, 0, side.y) * 0.35
+		var drop := Vector3(0, -rng.randf_range(0.9, 1.3), 0)
+		var fwd := Vector3(cos(ra), 0, sin(ra)) * 0.12
+		_face(top - w, top + w, top + w + drop + fwd, top - w + drop + fwd, col, top - fwd * 4.0)
+		_face(top - w, top + w, top + w + drop - fwd, top - w + drop - fwd, col, top + fwd * 4.0)
+	mat = STONE_M
+
+
+## A dome of snow-block rings leaning in, with a door and an entrance
+## tunnel (crouch height). `fallen`: the cap has caved in.
+func igloo(center: Vector2, r: float, door_a: float, fallen: bool) -> void:
+	mat = SNOW_M
+	var g := ground(center.x, center.y) - 0.15
+	var c3 := Vector3(center.x, g, center.y)
+	var rings := 6
+	var arc := r * PI * 0.5 / rings
+	var cap_a := rng.randf() * TAU
+	var tumbled := 0
+	for k in rings:
+		var phi := (k + 0.5) * PI * 0.5 / (rings + 0.3)
+		var rr := r * cos(phi)
+		var y := r * sin(phi)
+		var n := maxi(4, int(TAU * rr / 0.75))
+		var off := rng.randf() * TAU
+		for i in n:
+			var a := off + TAU * i / n
+			if absf(angle_difference(a, door_a)) < 0.42 and y < 1.35:
+				continue
+			if fallen and k >= rings - 3 and absf(angle_difference(a, cap_a)) < 1.0 + 0.35 * (k - rings + 3):
+				tumbled += 1
+				continue
+			var out := Vector3(cos(a), 0, sin(a))
+			var tangent := Vector3(-sin(a), 0, cos(a))
+			var normal := (out * cos(phi) + Vector3.UP * sin(phi)).normalized()
+			var basis := Basis(tangent, normal, tangent.cross(normal)).orthonormalized()
+			var col := SNOW.darkened(rng.randf_range(0.0, 0.07))
+			col.a = 0.0
+			box(Transform3D(basis, c3 + out * rr + Vector3(0, y, 0)), Vector3(TAU * rr / n * 0.96, 0.38, arc * 0.95), col, 0.0, 0.05, 0.03)
+	if not fallen:
+		box(Transform3D(Basis.IDENTITY, c3 + Vector3(0, r * 0.98, 0)), Vector3(0.9, 0.3, 0.9), SNOW, 0.0, 0.08, 0.02)
+	# Entrance tunnel: arches of blocks out from the door.
+	var outd := Vector3(cos(door_a), 0, sin(door_a))
+	var side := Vector3(-sin(door_a), 0, cos(door_a))
+	for t in 3:
+		var dist := r + 0.25 + t * 0.52
+		for j in 7:
+			var ang := PI * j / 6.0
+			var radial := side * cos(ang) + Vector3.UP * sin(ang)
+			var p := c3 + outd * dist + radial * 1.1 + Vector3(0, 0.15, 0)
+			var basis := Basis(outd, radial, outd.cross(radial)).orthonormalized()
+			box(Transform3D(basis, p), Vector3(0.5, 0.3, 0.5), SNOW.darkened(rng.randf_range(0.0, 0.06)), 0.0, 0.05, 0.03)
+	# Fallen blocks inside and round the foot.
+	for i in mini(tumbled, 10):
+		var a := cap_a + rng.randf_range(-1.0, 1.0)
+		var d := rng.randf_range(0.0, r + 1.2)
+		var p := Vector3(center.x + cos(a) * d, 0, center.y + sin(a) * d)
+		p.y = ground(p.x, p.z) + 0.1
+		var basis := Basis.from_euler(Vector3(rng.randf_range(-0.6, 0.6), rng.randf() * TAU, rng.randf_range(-0.6, 0.6)))
+		box(Transform3D(basis, p), Vector3(0.7, 0.36, 0.5), SNOW.darkened(0.05), 0.0, 0.07, 0.05)
+	mat = STONE_M
+	if not fallen:
+		_shelters.append([Vector3(center.x, g + 0.15, center.y), r, r])
+
+
+# --- Jungle: treehouses -----------------------------------------------------------
+
+## Three or four giant trees in a ring, each with a plank platform high up
+## (two with huts), joined by sagging rope bridges (one sometimes snapped),
+## and a ramp spiralling up round the first from the ground.
+func _treehouse() -> void:
+	var n := rng.randi_range(3, 4)
+	var trees: Array = [] # [pos 2D, trunk r, deck y, deck r, ground y]
+	var a0 := rng.randf() * TAU
+	for i in n:
+		var a := a0 + TAU * i / n + rng.randf_range(-0.2, 0.2)
+		var p := Vector2(cos(a), sin(a)) * rng.randf_range(8.0, 10.0)
+		var tr := rng.randf_range(1.0, 1.35)
+		var g := ground(p.x, p.y)
+		giant_tree(Vector3(p.x, g, p.y), tr, rng.randf_range(26.0, 34.0))
+		trees.append([p, tr, g + rng.randf_range(8.0, 11.0), tr + rng.randf_range(2.2, 2.7), g])
+	# Where bridges and the ramp meet each deck (angles, for the railings).
+	var openings: Array = []
+	for i in n:
+		openings.append([])
+	var broken := rng.randi() % n if rng.randf() < 0.5 else -1
+	for i in n:
+		var j := (i + 1) % n
+		if n == 3 and i == 2 and rng.randf() < 0.5:
+			continue
+		var pa: Vector2 = trees[i][0]
+		var pb: Vector2 = trees[j][0]
+		var d := (pb - pa).normalized()
+		openings[i].append(d.angle())
+		openings[j].append((-d).angle())
+		var sa: Vector2 = pa + d * float(trees[i][3])
+		var sb: Vector2 = pb - d * float(trees[j][3])
+		rope_bridge(Vector3(sa.x, trees[i][2], sa.y), Vector3(sb.x, trees[j][2], sb.y), i == broken)
+	# The ramp arrives on the first deck's outer side.
+	var p0: Vector2 = trees[0][0]
+	var out_a := p0.angle()
+	# The camp fire on the ground in the middle, a little away from the
+	# ramp's tree.
+	var fire := -p0.normalized() * 2.0
+	_camp_spot = Vector3(fire.x, ground(fire.x, fire.y), fire.y)
+	openings[0].append(out_a)
+	spiral_ramp(p0, float(trees[0][3]) + 0.75, float(trees[0][2]), float(trees[0][4]), out_a)
+	for i in n:
+		var t: Array = trees[i]
+		platform(t[0], t[1], t[2], t[3], openings[i])
+		if i == 1 or (i == 2 and rng.randf() < 0.6):
+			# A hut on the deck, away from the bridges.
+			var ha := (t[0] as Vector2).angle() + PI + rng.randf_range(-0.5, 0.5)
+			hut(t[0], t[1], t[2], ha)
+
+
+## A huge buttressed trunk with limbs, a leafy crown and hanging vines.
+func giant_tree(base: Vector3, r: float, h: float) -> void:
+	mat = WOOD_M
+	var sides := 12
+	var rings: Array = [] # [y, radius]
+	for k in 9:
+		var t := float(k) / 8.0
+		var y := h * 0.78 * t
+		var rad := r * (1.0 - 0.45 * t) * (1.0 + 0.7 * exp(-y / 1.2))
+		rings.append([y, rad])
+	var col := BARK.lightened(rng.randf_range(-0.05, 0.05))
+	col.a = 0.3 # mossy
+	var start := _v.size()
+	var tw := rng.randf() * TAU
+	for k in rings.size() - 1:
+		var y0: float = rings[k][0]
+		var y1: float = rings[k + 1][0]
+		var r0: float = rings[k][1]
+		var r1: float = rings[k + 1][1]
+		for i in sides:
+			var a := TAU * i / sides + tw
+			var b := TAU * (i + 1) / sides + tw
+			var ps: Array[Vector3] = [base + Vector3(cos(a) * r0, y0, sin(a) * r0), base + Vector3(cos(b) * r0, y0, sin(b) * r0),
+				base + Vector3(cos(b) * r1, y1, sin(b) * r1), base + Vector3(cos(a) * r1, y1, sin(a) * r1)]
+			_face(ps[0], ps[1], ps[2], ps[3], col, base + Vector3(0, (y0 + y1) * 0.5, 0))
+	_smooth_from(start)
+	_lv.append_array(_v.slice(start))
+	_ln.append_array(_n.slice(start))
+	_lc.append_array(_c.slice(start))
+	_lm.append_array(_m.slice(start))
+	for k in 3:
+		var yk := h * 0.26 * k
+		_collision_box(Transform3D(Basis.IDENTITY, base + Vector3(0, yk + h * 0.13, 0)), Vector3(r, h * 0.13, r) * (1.0 - 0.15 * k))
+	# Buttress roots.
+	for k in rng.randi_range(4, 5):
+		var a := TAU * k / 5.0 + rng.randf_range(-0.3, 0.3)
+		var out := Vector3(cos(a), 0, sin(a))
+		var basis := Basis(out, Vector3.UP, out.cross(Vector3.UP)).rotated(out.cross(Vector3.UP), -0.35)
+		box(Transform3D(Basis(out, Vector3.UP, out.cross(Vector3.UP)), base + out * (r + 0.9) + Vector3(0, 0.6, 0)), Vector3(2.2, 1.4, 0.3), col, 0.4, 0.1, 0.05)
+	# Limbs and the crown.
+	var top := base + Vector3(0, h * 0.78, 0)
+	for k in rng.randi_range(3, 4):
+		var a := rng.randf() * TAU
+		var from := base + Vector3(0, h * rng.randf_range(0.6, 0.75), 0)
+		var to := from + Vector3(cos(a) * h * 0.22, h * 0.14, sin(a) * h * 0.22)
+		_limb(from, to, r * 0.32)
+		_crown_blob(to + Vector3(0, 1.5, 0), rng.randf_range(4.0, 5.5))
+	_crown_blob(top + Vector3(0, 2.5, 0), rng.randf_range(6.0, 7.5))
+	mat = STONE_M
+	# Vines hanging from the limbs.
+	for k in 4:
+		var a := rng.randf() * TAU
+		var p := base + Vector3(cos(a) * r * 2.5, h * rng.randf_range(0.55, 0.7), sin(a) * r * 2.5)
+		_ivy_strand(p, Vector3(cos(a), 0, sin(a)), rng.randf_range(5.0, 11.0))
+
+
+func _limb(a: Vector3, b: Vector3, thick: float) -> void:
+	var y := (b - a).normalized()
+	var x := y.cross(Vector3.UP if absf(y.y) < 0.95 else Vector3.RIGHT).normalized()
+	var col := BARK.darkened(0.05)
+	col.a = 0.3
+	box(Transform3D(Basis(x, y, x.cross(y)), (a + b) * 0.5), Vector3(thick, a.distance_to(b), thick), col, 0.3, 0.12, 0.05)
+
+
+func _crown_blob(c: Vector3, radius: float) -> void:
+	var was := mat
+	mat = LEAF_M
+	var col := JUNGLE_LEAF.lightened(rng.randf_range(-0.06, 0.08))
+	boulder(c, Vector3(radius, radius * 0.6, radius), Basis.from_euler(Vector3(0, rng.randf() * TAU, 0)), col, 0.0)
+	mat = was
+
+
+## A round deck of planks round a trunk at height y, with knee braces
+## below and a post-and-rope railing, open at `openings` (angles).
+func platform(p: Vector2, tr: float, y: float, pr: float, openings: Array) -> void:
+	mat = WOOD_M
+	var rot := rng.randf() * PI
+	var ax := Vector3(cos(rot), 0, sin(rot))
+	var az := Vector3(-sin(rot), 0, cos(rot))
+	var c := Vector3(p.x, y, p.y)
+	var o := -pr + 0.18
+	while o < pr:
+		var half := sqrt(maxf(pr * pr - o * o, 0.0))
+		var hole := sqrt(maxf((tr + 0.05) * (tr + 0.05) - o * o, 0.0))
+		var spans: Array = [[-half, half]] if hole <= 0.0 else [[-half, -hole], [hole, half]]
+		for sp in spans:
+			var l: float = sp[1] - sp[0]
+			if l < 0.3 or rng.randf() < 0.05:
+				continue
+			var mid: float = (sp[0] + sp[1]) * 0.5
+			var col := OLD_WOOD.lightened(rng.randf_range(-0.08, 0.06))
+			box(Transform3D(Basis(ax, Vector3.UP, ax.cross(Vector3.UP)), c + ax * mid + az * o), Vector3(l, 0.08, 0.32), col, 0.15, 0.02, 0.01)
+		o += 0.36
+	# Knee braces from the trunk to the rim.
+	for k in 4:
+		var a := rot + TAU * k / 4.0 + PI * 0.25
+		var dirv := Vector3(cos(a), 0, sin(a))
+		_pole(c + dirv * tr + Vector3(0, -2.6, 0), c + dirv * (pr - 0.3) + Vector3(0, -0.1, 0), 0.16)
+	# Railing.
+	var posts := maxi(6, int(TAU * pr / 1.5))
+	var prev := Vector3.ZERO
+	var prev_ok := false
+	for k in posts + 1:
+		var a := TAU * k / posts
+		var open := false
+		for oa in openings:
+			if absf(angle_difference(a, float(oa))) < 0.45:
+				open = true
+		var q := c + Vector3(cos(a), 0, sin(a)) * (pr - 0.1)
+		if open:
+			prev_ok = false
+			continue
+		if k < posts:
+			_pole(q, q + Vector3(0, 1.05, 0), 0.08)
+		var top := q + Vector3(0, 0.95, 0)
+		if prev_ok:
+			_rope(prev, top)
+		prev = top
+		prev_ok = true
+	mat = STONE_M
+	_shelters.append([c, pr, 0.0]) # a place, not a roof (height 0: no shelter)
+
+
+## A thatched hut on a deck, against the trunk.
+func hut(p: Vector2, tr: float, y: float, a: float) -> void:
+	mat = WOOD_M
+	var out := Vector3(cos(a), 0, sin(a))
+	var side := Vector3(-sin(a), 0, cos(a))
+	var c := Vector3(p.x, y, p.y) + out * (tr + 1.3)
+	var hw := 1.1
+	var hd := 0.9
+	var wall_h := 1.9
+	# Board walls on three sides, the door side (outward) half open.
+	for s in [-1.0, 1.0]:
+		var n := 6
+		for k in n:
+			var t := (k + 0.5) / n * 2.0 - 1.0
+			var bpos: Vector3 = c + side * hw * s + out * hd * t + Vector3(0, wall_h * 0.5, 0)
+			if rng.randf() < 0.1:
+				continue
+			box(Transform3D(Basis(out, Vector3.UP, out.cross(Vector3.UP)), bpos), Vector3(0.28, wall_h, 0.06), OLD_WOOD.lightened(rng.randf_range(-0.08, 0.05)), 0.1, 0.01, 0.01)
+	for k in 7:
+		var t := (k + 0.5) / 7.0 * 2.0 - 1.0
+		if absf(t) < 0.35:
+			continue # the doorway
+		var bpos: Vector3 = c + out * hd + side * hw * t + Vector3(0, wall_h * 0.5, 0)
+		box(Transform3D(Basis(side, Vector3.UP, side.cross(Vector3.UP)), bpos), Vector3(0.28, wall_h, 0.06), OLD_WOOD.lightened(rng.randf_range(-0.08, 0.05)), 0.1, 0.01, 0.01)
+	# Thatched roof: two slopes meeting over the middle.
+	mat = THATCH_M
+	var ridge := c + Vector3(0, wall_h + 0.8, 0)
+	var tc := THATCH.lightened(rng.randf_range(-0.06, 0.06))
+	tc.a = 0.2
+	for s in [-1.0, 1.0]:
+		var eave: Vector3 = c + side * (hw + 0.35) * s + Vector3(0, wall_h - 0.1, 0)
+		var mid: Vector3 = (ridge + eave) * 0.5
+		var slope_dir: Vector3 = (eave - ridge).normalized()
+		var basis := Basis(out, slope_dir.cross(out).normalized() * (-1.0 if s < 0.0 else 1.0), slope_dir).orthonormalized()
+		box(Transform3D(Basis(out, slope_dir.cross(out).normalized(), slope_dir), mid), Vector3((hd + 0.4) * 2.0, 0.14, ridge.distance_to(eave) + 0.2), tc, 0.0, 0.05, 0.04)
+	mat = STONE_M
+	_shelters.append([c, hw, wall_h])
+
+
+## A sagging rope bridge from deck edge `a` to deck edge `b`: planks on
+## two ropes, a rope rail each side. `snapped`: it has broken in the
+## middle and the halves hang down.
+func rope_bridge(a: Vector3, b: Vector3, snapped: bool) -> void:
+	mat = WOOD_M
+	var flat := Vector3(b.x - a.x, 0, b.z - a.z)
+	var length := flat.length()
+	var dir := flat / length
+	var side := Vector3(-dir.z, 0, dir.x)
+	var sag := 0.08 * length
+	var n := int(length / 0.42)
+	var deck := func(t: float) -> Vector3:
+		return a.lerp(b, t) + Vector3(0, -sag * 4.0 * t * (1.0 - t), 0)
+	var prev_rail: Array = []
+	for k in n + 1:
+		var t := float(k) / n
+		var p: Vector3 = deck.call(t)
+		if snapped and absf(t - 0.5) < 0.12:
+			continue
+		if snapped:
+			# Each half hangs from its own deck, swinging down.
+			var h := clampf((0.5 - absf(t - 0.5)) / 0.38, 0.0, 1.0)
+			var anchor := a if t < 0.5 else b
+			var reach := absf(t - (0.0 if t < 0.5 else 1.0)) * length
+			p = anchor + dir * (reach * (1.0 - h) * (1.0 if t < 0.5 else -1.0)) + Vector3(0, -reach * h, 0)
+		var next: Vector3 = deck.call(minf(t + 0.01, 1.0))
+		var along := (next - p).normalized() if not snapped else dir
+		if rng.randf() > 0.06:
+			var col := OLD_WOOD.lightened(rng.randf_range(-0.08, 0.06))
+			box(Transform3D(Basis(side, along.cross(side).normalized() * -1.0, along).orthonormalized(), p), Vector3(1.2, 0.07, 0.26), col, 0.1, 0.02, 0.01)
+		# Rope rails: posts of rope every few planks.
+		var rails: Array = [p + side * 0.62 + Vector3(0, 0.95, 0), p - side * 0.62 + Vector3(0, 0.95, 0)]
+		if not prev_rail.is_empty() and not snapped:
+			_rope(prev_rail[0], rails[0])
+			_rope(prev_rail[1], rails[1])
+			if k % 3 == 0:
+				_rope(p + side * 0.6, rails[0])
+				_rope(p - side * 0.6, rails[1])
+		prev_rail = rails
+	mat = STONE_M
+
+
+## A ramp of planks spiralling round a deck from the ground up to it,
+## arriving at angle `end_a` (radius `ramp_r` from the trunk), on posts.
+func spiral_ramp(p: Vector2, ramp_r: float, deck_y: float, g: float, end_a: float) -> void:
+	mat = WOOD_M
+	var slope := 0.42
+	var length := (deck_y - g) / slope
+	var step := 0.55
+	var n := int(length / step)
+	var c := Vector3(p.x, 0, p.y)
+	for k in n:
+		var d0 := length - k * step
+		var d1 := length - (k + 1) * step
+		var a0 := end_a - d0 / ramp_r
+		var a1 := end_a - d1 / ramp_r
+		var q0 := c + Vector3(cos(a0) * ramp_r, deck_y - d0 * slope, sin(a0) * ramp_r)
+		var q1 := c + Vector3(cos(a1) * ramp_r, deck_y - d1 * slope, sin(a1) * ramp_r)
+		var along := (q1 - q0).normalized()
+		var out := Vector3(cos((a0 + a1) * 0.5), 0, sin((a0 + a1) * 0.5))
+		var up2 := along.cross(out).normalized()
+		if up2.y < 0.0:
+			up2 = -up2
+		var col := OLD_WOOD.lightened(rng.randf_range(-0.08, 0.06))
+		box(Transform3D(Basis(out, up2, out.cross(up2)).orthonormalized(), (q0 + q1) * 0.5), Vector3(1.2, 0.08, step * 1.08), col, 0.1, 0.02, 0.01)
+		if k % 4 == 2:
+			var foot := (q0 + q1) * 0.5 + out * 0.5
+			var fg := ground(foot.x, foot.z)
+			if foot.y - fg > 0.8:
+				_pole(Vector3(foot.x, fg - 0.3, foot.z), foot + Vector3(0, -0.05, 0), 0.12)
+	mat = STONE_M
+
+
+## A thin rope segment.
+func _rope(a: Vector3, b: Vector3) -> void:
+	var was := mat
+	mat = WOOD_M
+	var y := (b - a).normalized()
+	var x := y.cross(Vector3.UP if absf(y.y) < 0.95 else Vector3.RIGHT).normalized()
+	var col := ROPE
+	col.a = 0.0
+	_tri_box(Transform3D(Basis(x, y, x.cross(y)), (a + b) * 0.5), Vector3(0.04, a.distance_to(b), 0.04), col)
+	mat = was
+
+
+## A plain box with no bevel, collision or LOD (ropes and the like).
+func _tri_box(xf: Transform3D, size: Vector3, col: Color) -> void:
+	var h := size * 0.5
+	var p: Array[Vector3] = []
+	for i in 8:
+		p.append(xf * Vector3(h.x if i & 1 else -h.x, h.y if i & 2 else -h.y, h.z if i & 4 else -h.z))
+	for f in [[0, 1, 3, 2], [4, 6, 7, 5], [0, 4, 5, 1], [2, 3, 7, 6], [0, 2, 6, 4], [1, 5, 7, 3]]:
+		_face(p[f[0]], p[f[1]], p[f[2]], p[f[3]], col, xf.origin)
+
+
+# --- Marsh: boardwalk and cabin ---------------------------------------------------
+
+## A plank walk on posts wandering across the marsh, planks missing and one
+## stretch sunk under the water, dead snags beside it, and a stilt cabin
+## at the far end.
+func _boardwalk() -> void:
+	var length: float = site.length_m
+	var n := int(length / 1.6)
+	var pts: Array[Vector2] = []
+	var z := 0.0
+	var dz := 0.0
+	for i in n + 1:
+		dz = clampf(dz + rng.randf_range(-0.2, 0.2), -0.35, 0.35)
+		z = clampf(z + dz, -2.2, 2.2)
+		if absf(z) >= 2.2:
+			dz = -dz * 0.5
+		pts.append(Vector2(-length * 0.5 + i * length / n, z))
+	var deck_y := -INF
+	for q in pts:
+		deck_y = maxf(deck_y, ground(q.x, q.y))
+	deck_y += 0.45
+	# The camp fire on the dry ground where the walk begins.
+	var fire := pts[0] + Vector2(-4.0, 0.0)
+	_camp_spot = Vector3(fire.x, ground(fire.x, fire.y), fire.y)
+	var sunk0 := rng.randi_range(int(n * 0.3), int(n * 0.6))
+	var sunk1 := sunk0 + rng.randi_range(2, 4)
+	mat = WOOD_M
+	for i in n:
+		var a := pts[i]
+		var b := pts[i + 1]
+		var ga := ground(a.x, a.y)
+		# Up from the ground at the start, level after, dipping where sunk.
+		var ya := minf(deck_y, ga + 0.1 + i * 0.25)
+		var yb := minf(deck_y, ground(b.x, b.y) + 0.1 + (i + 1) * 0.25)
+		if i >= sunk0 and i < sunk1:
+			ya = minf(ya, ga - 0.12)
+			yb = minf(yb, ground(b.x, b.y) - 0.12)
+		var a3 := Vector3(a.x, ya, a.y)
+		var b3 := Vector3(b.x, yb, b.y)
+		var along := (b3 - a3).normalized()
+		var flat := Vector3(along.x, 0, along.z).normalized()
+		var side := Vector3(-flat.z, 0, flat.x)
+		var up2 := along.cross(side).normalized() * -1.0
+		if up2.y < 0.0:
+			up2 = -up2
+		var planks := int(a3.distance_to(b3) / 0.34)
+		for k in planks:
+			if rng.randf() < 0.08:
+				continue
+			var t := (k + 0.5) / planks
+			var col := OLD_WOOD.lightened(rng.randf_range(-0.1, 0.06))
+			col.a = 0.25
+			var basis := Basis(side, up2, side.cross(up2)).rotated(up2, rng.randf_range(-0.05, 0.05))
+			box(Transform3D(basis, a3.lerp(b3, t)), Vector3(1.5, 0.07, 0.28), col, 0.25, 0.02, 0.015)
+		# Stringers under the planks.
+		for s in [-0.5, 0.5]:
+			var off: Vector3 = side * s + Vector3(0, -0.1, 0)
+			box(Transform3D(Basis(side, up2, side.cross(up2)), (a3 + b3) * 0.5 + off), Vector3(0.14, 0.12, a3.distance_to(b3)), OLD_WOOD.darkened(0.15), 0.3, 0.02, 0.01)
+		# Posts every other point, a few standing proud of the deck.
+		if i % 2 == 0:
+			for s in [-0.72, 0.72]:
+				var q: Vector3 = a3 + side * s
+				var extra := rng.randf_range(0.2, 0.9) if rng.randf() < 0.4 else 0.1
+				_pole(Vector3(q.x, ground(q.x, q.z) - 0.8, q.z), q + Vector3(0, extra, 0), 0.17)
+	mat = STONE_M
+	# Dead snags standing in the marsh.
+	for k in rng.randi_range(3, 6):
+		var t := rng.randf()
+		var q: Vector2 = pts[int(t * n)] + Vector2(0, rng.randf_range(3.0, 6.0) * (1.0 if rng.randf() < 0.5 else -1.0))
+		var g := ground(q.x, q.y)
+		var col := OLD_WOOD.darkened(0.25)
+		_limb(Vector3(q.x, g - 0.5, q.y), Vector3(q.x + rng.randf_range(-0.4, 0.4), g + rng.randf_range(2.5, 6.0), q.y + rng.randf_range(-0.4, 0.4)), rng.randf_range(0.25, 0.4))
+	# The cabin at the end.
+	var e := pts[n]
+	var d := (pts[n] - pts[n - 1]).normalized()
+	cabin(e + d * 2.6, d.angle(), deck_y + 0.1)
+
+
+## A plank cabin on stilts, the door facing back along `heading`, a
+## window, boards missing and part of the thatch fallen in.
+func cabin(center: Vector2, heading: float, floor_y: float) -> void:
+	mat = WOOD_M
+	var fwd := Vector3(cos(heading), 0, sin(heading))
+	var side := Vector3(-fwd.z, 0, fwd.x)
+	var c := Vector3(center.x, floor_y, center.y)
+	var hl := 2.2 # half length (along fwd)
+	var hw := 1.7
+	var wall_h := 2.2
+	# Stilts and floor.
+	for sx in [-1.0, 0.0, 1.0]:
+		for sz in [-1.0, 1.0]:
+			var q: Vector3 = c + fwd * hl * 0.9 * sx + side * hw * 0.9 * sz
+			_pole(Vector3(q.x, ground(q.x, q.z) - 0.8, q.z), q + Vector3(0, -0.05, 0), 0.2)
+	var o := -hw + 0.17
+	while o < hw:
+		box(Transform3D(Basis(fwd, Vector3.UP, fwd.cross(Vector3.UP)), c + side * o), Vector3(hl * 2.0, 0.08, 0.32), OLD_WOOD.lightened(rng.randf_range(-0.08, 0.05)), 0.2, 0.02, 0.01)
+		o += 0.34
+	# Walls: vertical boards; the doorway faces back along the walk, a
+	# window in one side, some boards gone.
+	var slump := rng.randi() % 4
+	for w in 4:
+		var normal := [-fwd, fwd, side, -side][w] as Vector3
+		var tangent := normal.cross(Vector3.UP)
+		var half := hw if w < 2 else hl
+		var reach := hl if w < 2 else hw
+		var boards := int(half * 2.0 / 0.3)
+		for k in boards:
+			var t := ((k + 0.5) / boards * 2.0 - 1.0) * half
+			if w == 0 and absf(t) < 0.45:
+				continue # doorway
+			if rng.randf() < 0.08:
+				continue
+			var h := wall_h * (0.55 if w == slump and t > 0.0 else 1.0) * rng.randf_range(0.92, 1.0)
+			var base := c + normal * reach + tangent * t
+			var col := OLD_WOOD.lightened(rng.randf_range(-0.1, 0.05))
+			col.a = 0.2
+			if w == 2 and absf(t) < 0.5:
+				# Window: a gap between a low and a high board.
+				box(Transform3D(Basis(tangent, Vector3.UP, normal), base + Vector3(0, 0.5, 0)), Vector3(0.28, 1.0, 0.06), col, 0.2, 0.01, 0.01)
+				box(Transform3D(Basis(tangent, Vector3.UP, normal), base + Vector3(0, 1.9, 0)), Vector3(0.28, 0.6, 0.06), col, 0.2, 0.01, 0.01)
+				continue
+			box(Transform3D(Basis(tangent, Vector3.UP, normal), base + Vector3(0, h * 0.5, 0)), Vector3(0.28, h, 0.06), col, 0.2, 0.01, 0.01)
+	# Roof: two thatch slopes along the length, one fallen in at one end.
+	mat = THATCH_M
+	var ridge := c + Vector3(0, wall_h + 1.1, 0)
+	for s in [-1.0, 1.0]:
+		var eave: Vector3 = c + side * (hw + 0.4) * s + Vector3(0, wall_h - 0.05, 0)
+		var slope_dir: Vector3 = (eave - ridge).normalized()
+		var basis := Basis(fwd, slope_dir.cross(fwd).normalized(), slope_dir).orthonormalized()
+		var tc := THATCH.darkened(rng.randf_range(0.0, 0.15))
+		tc.a = 0.35
+		for part in 3:
+			if s > 0.0 and part == 2 and rng.randf() < 0.7:
+				continue # caved in
+			var t := (part - 1.0) * (hl + 0.4) * 2.0 / 3.0
+			box(Transform3D(basis, (ridge + eave) * 0.5 + fwd * t), Vector3((hl + 0.4) * 2.0 / 3.0, 0.14, ridge.distance_to(eave) + 0.25), tc, 0.0, 0.05, 0.04)
+	mat = STONE_M
+	_shelters.append([c, minf(hl, hw), wall_h])
