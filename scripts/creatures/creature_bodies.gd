@@ -16,7 +16,14 @@ static var _meshes := {}
 
 
 static func build(sp: CreatureSpecies) -> Dictionary:
-	# A sculpted body (SculptedBodies) when this kind has one and it's built.
+	# An imported model (ModelLibrary: assets/models/<name>.glb) first.
+	var model := ModelLibrary.load_model(ModelLibrary.name_for(sp.name), true)
+	if model:
+		model.scale = Vector3.ONE * sp.size_m
+		var animator: ModelAnimator = model.get_node_or_null("Animator")
+		return {"root": model, "legs": [], "wings": [], "tail": null, "light": null, "animator": animator}
+	# Then a sculpted body (SculptedBodies) when this kind has one and it's
+	# built.
 	var sculpted := SculptedBodies.build(sp)
 	if not sculpted.is_empty():
 		if sp.body != "swarm":

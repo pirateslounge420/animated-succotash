@@ -26,10 +26,10 @@ extends CharacterBody3D
 ##
 ## Animation hook: `anim_state` names the current pose ("idle", "walk",
 ## "sprint", "crouch", "crouch_walk", "air", "swim", "climb"). The body
-## (PlayerBody, an elf in a robe) is still unrigged placeholder geometry
-## with Head and ArmL/ArmR pivots; a rigged model's animation tree would
-## read this (and `crouching`, `sprinting`, `climbing`) instead of the
-## state being re-derived.
+## (PlayerBody, an elf in a robe) is unrigged placeholder geometry with
+## Head and ArmL/ArmR pivots. Drop a rigged model in as
+## assets/models/player.glb (ModelLibrary) and it replaces the elf, its
+## clips playing by this state (ModelAnimator).
 ##
 ## Mouse or right stick turns the camera; click the game window to capture
 ## the mouse, press release_mouse (Esc) to free it.
@@ -76,7 +76,10 @@ var _pitch := -0.25
 var _heading := Vector3.FORWARD # tangent direction the camera faces
 var _spring: SpringArm3D
 var _camera: Camera3D
-var _body: PlayerBody
+## The body: an imported model (ModelLibrary "player") if there is one,
+## else the elf (PlayerBody).
+var _body: Node3D
+var _animator: ModelAnimator
 var _shape: CapsuleShape3D
 var _shape_node: CollisionShape3D
 var _last_forward_ms := -100000
@@ -99,7 +102,13 @@ func _ready() -> void:
 	_shape_node.shape = _shape
 	_shape_node.position = Vector3(0, STAND_HEIGHT * 0.5, 0)
 	add_child(_shape_node)
-	_body = PlayerBody.new()
+	var model := ModelLibrary.load_model("player")
+	if model:
+		model.name = "Body"
+		_body = model
+		_animator = model.get_node_or_null("Animator")
+	else:
+		_body = PlayerBody.new()
 	add_child(_body)
 
 	_spring = SpringArm3D.new()
@@ -403,8 +412,15 @@ func _update_noise(delta: float, move_speed: float) -> void:
 	else:
 		anim_state = "idle"
 	noise_level = lerpf(noise_level, target, clampf(delta * (6.0 if target > noise_level else 1.5), 0.0, 1.0))
-	# Robe and hair trail behind as you go.
-	_body.set_motion(move_speed / SPRINT_SPEED, delta)
+	# Robe and hair trail behind as you go (the elf); an imported model
+	# plays the clip for the pose.
+	if _body is PlayerBody:
+		(_body as PlayerBody).set_motion(move_speed / SPRINT_SPEED, delta)
+	elif _animator:
+		var rate := 1.0
+		if anim_state == "walk" or anim_state == "sprint" or anim_state == "crouch_walk":
+			rate = clampf(move_speed / (SPRINT_SPEED if anim_state == "sprint" else WALK_SPEED), 0.6, 1.6)
+		_animator.set_state(anim_state, rate)
 
 
 func _face(dir: Vector3, delta: float) -> void:

@@ -517,6 +517,11 @@ func _place(delta: float) -> void:
 func _animate(delta: float) -> void:
 	var moving := _speed_now > 0.05
 	_anim += delta * (4.0 + _speed_now * 3.0 / maxf(species.size_m, 0.2))
+	# An imported model plays its own clips.
+	var animator: ModelAnimator = _parts.get("animator")
+	if animator:
+		var fast := _speed_now > species.speed_mps * 0.7
+		animator.set_state("sprint" if fast else ("walk" if moving else "idle"), clampf(0.6 + _speed_now / maxf(species.speed_mps, 0.1), 0.6, 1.8))
 	var swing := sin(_anim) * (0.6 if moving else 0.0)
 	var legs: Array = _parts.legs
 	for i in legs.size():

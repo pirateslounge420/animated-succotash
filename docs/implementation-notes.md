@@ -609,6 +609,33 @@ Spawn tiers:
   living camps (rock shelters in mild country, a fifth of inhabited
   stone ruins), lanterns and all.
 
+- **Sculpted bodies** (`SculptedBodies`, `SculptRig`,
+  `creature_sculpt.gdshader`): wolf, deer and goblin are one seamless,
+  skinned mesh each instead of glued primitives.
+  - The body is signed-distance shapes (tapered capsules, ellipsoids)
+    blended with a smooth minimum, meshed with surface nets on a worker
+    thread at startup and cached per species.
+  - Normals come from the field. Creases get baked occlusion, and colors
+    blend across the joins, with paint shapes for bellies, muzzles,
+    socks, hooves and the goblin's loincloth.
+  - Vertices are skinned to the bones of the nearby shapes, and SculptRig
+    copies the joint pivots onto a Skeleton3D, so Creature's leg, arm and
+    tail swings bend the body at the hip and shoulder.
+  - Triplanar fur or skin grain, a glossier sheen and rim, and a coarse
+    LOD past 45 m.
+  - Triangles (near / far): wolf 2,604 / 416, deer 3,596 / 660, goblin
+    4,388 / 820. Built in 0.6-1.1 s each on a worker; no measurable frame
+    time change.
+  - The rest of the bodies are still primitives, pending a verdict on
+    these three.
+- **Imported models** (`ModelLibrary`, `ModelAnimator`,
+  `shaders/model.gdshader`; see `assets/models/README.md`): a `.glb` in
+  assets/models/ named `player` or after a species or NPC replaces that
+  body. It's scaled and placed, relit with the world's lighting on its own
+  textures, and its clips play by state. Tested with a rigged stand-in
+  exported to a real .glb: read raw at runtime, scaled to its sidecar
+  height, relit, Idle and Walk switching as the player moved.
+
 Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
 howl, drone and whisper. Bodies are placeholders (`CreatureBodies`)
 built from smooth-shaded spheres and capsules (12 sides × 6 rings for

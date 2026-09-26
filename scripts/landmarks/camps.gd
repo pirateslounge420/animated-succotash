@@ -328,6 +328,11 @@ func _sitter(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -
 		(leg as Node3D).rotation.x = 1.05
 	for arm in b.wings:
 		(arm as Node3D).rotation.x = 0.55
+	# An imported model sits with its own clip (and sits on its own feet).
+	var animator: ModelAnimator = b.get("animator")
+	if animator:
+		body.position.y = 0.0
+		animator.set_state("sit")
 	holder.set_meta("arms", b.wings)
 	holder.set_meta("head", body.get_node_or_null("Head"))
 	holder.set_meta("speaker", sp.name)
