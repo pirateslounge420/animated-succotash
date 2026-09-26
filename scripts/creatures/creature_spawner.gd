@@ -742,7 +742,7 @@ func _wake(t: Dictionary) -> void:
 	t.creature = cr
 	t.state = "aware"
 	if sp.campfire and t.camp == null:
-		t.camp = Campfire.build(_root, world, chunks, camp_dir, sp.accent)
+		t.camp = Campfire.build(_root, world, chunks, camp_dir)
 
 
 func _set_dormant(t: Dictionary) -> void:

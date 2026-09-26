@@ -17,6 +17,12 @@
 // faces, and vines hang from the crown. Each vine strand has a 0-1 key in
 // UV2.y and shows only where the plant's vine amount is above it.
 //
+// Colors follow the R1a palette (palette.gdshaderinc): green leaves are
+// pulled part of the way toward the grass target (species keep their own
+// shade; flowers and autumn colors, not being green, are left alone), bark
+// toward the warm dirt/bark brown, moss toward the moss green, and all of
+// them cool toward their night targets after dark.
+//
 // Vertex-lit like the terrain (Lambert, no specular, Look), with Godot's
 // own leaf translucency (BACKLIGHT). Near magical sites, about half the
 // plants glow at their tips at night.
@@ -24,6 +30,7 @@ shader_type spatial;
 render_mode world_vertex_coords, cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/palette.gdshaderinc"
 
 uniform vec3 wind_vector = vec3(0.0);
 uniform sampler2D look_tex_bark : filter_linear_mipmap, repeat_enable;
@@ -95,14 +102,24 @@ void fragment() {
 		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
 		tex = texture(look_tex_bark, vec2(uv.x * 1.6, uv.y * 0.5));
 	}
-	ALBEDO = COLOR.rgb * tex.rgb * 2.0;
+	// R1a palette: leaves toward grass green, bark toward the warm brown.
+	vec3 base = COLOR.rgb;
+	float gw = pal_greenness(base);
+	float nk = look_night;
+	if (mat_id < 0.5) {
+		base = pal_pull(base, pal_dirt, 0.7 * (1.0 - gw));
+		base = pal_pull(base, pal_bark_night, 0.6 * nk * (1.0 - gw));
+	}
+	base = pal_pull(base, pal_grass, 0.45 * gw);
+	base = pal_pull(base, pal_grass_night, 0.7 * nk * gw);
+	ALBEDO = base * tex.rgb * 2.0;
 	if (mat_id < 0.5 && moss > 0.01) {
 		// Moss on the bark: patchy, low down, on faces turned up and to one
 		// side (the damp side).
 		float n = texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 0.7).g;
 		float lowness = 1.0 - clamp(obj_pos.y / 5.0, 0.0, 1.0);
 		float m = smoothstep(0.45, 0.7, n * 0.9 + 0.3 * lowness + 0.25 * obj_normal.y + 0.15 * obj_normal.z + 0.4 * moss - 0.25);
-		vec3 moss_col = vec3(0.2, 0.38, 0.12) * texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3).rgb * 2.0;
+		vec3 moss_col = pal_pull(pal_moss, pal_grass_night, 0.7 * nk) * texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3).rgb * 2.0;
 		ALBEDO = mix(ALBEDO, moss_col, m * moss);
 	}
 	ALPHA = (mat_id > 1.5 && mat_id < 2.5) ? tex.a : 1.0;

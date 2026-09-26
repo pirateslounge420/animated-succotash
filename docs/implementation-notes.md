@@ -230,16 +230,23 @@ Verified:
   at dusk. By day it's a pale ghost. The phase is lit from the sun's real
   direction projected on the sky, so a crescent tilts correctly for the
   viewer's latitude and hour.
-- **Grade** (`PostGrade`), always on:
-  - PS1-style 15-bit color through a 4×4 ordered dither;
+- **Grade** (`PostGrade`, `shaders/post_grade.gdshader`), always on:
+  - slight color bleed (color, not brightness, averaged sideways, like
+    composite video);
   - vibrance for greens and blues, plus an emerald push (greens lose red
     and gain a little blue, so foliage reads deep rather than lime);
-  - blacks crushed slightly;
-  - no sharpening or clarity (both removed with the 2001-2004 console
-    lighting pass: the era's image is soft).
+  - an ultramarine haze over the darks (spec R1a: nothing pure black,
+    blue rather than grey), thicker and bluer at night;
+  - faint moving film grain;
+  - a light ordered dither (spec R1, optional): each channel rounded to 5
+    bits through a 4×4 Bayer pattern and mixed in at a quarter strength
+    (`dither` uniform, `PostGrade.set_dither(0)` turns it off);
+  - no sharpening, clarity or bloom (the era's image is soft).
 
-  At night it adds crushed contrast, a cobalt/violet push in the shadows
-  and a vignette. Inside glowing sites it adds extra contrast.
+  At night it cools the shadows toward cobalt (warm, firelit pixels are
+  left warm, so fire stays the one warm accent) and adds a vignette,
+  which the haze then lifts to deep blue. Inside glowing sites it adds
+  extra contrast.
 
 ## Look
 
@@ -259,8 +266,8 @@ Verified:
   Low ground below eye level fills with extra mist, strongest at night.
 - **Textures.** A small procedural set (`LookTextures`), painted at
   startup on a worker thread while the planet generates (~0.4 s):
-  256 px, nearest-filtered with mipmaps (anisotropic on the ground) so
-  texels stay crisp, and centered on 0.5 so shaders multiply by 2 and
+  256 px, linear-filtered with mipmaps (anisotropic on the ground), and
+  centered on 0.5 so shaders multiply by 2 and
   keep the vertex color's hue. They're dense with painted detail: grass is 2,200
   tapered, bowed blades in light and dark, leaves are pointed shaded
   leaves with a midrib, dirt is smooth mottling with soft pebbles and
@@ -355,7 +362,9 @@ Verified:
 - **Night** (the references' moonlit blue): a moon about 2.5× the old size
   with a halo, bright blue moonlight and a saturated blue ambient (never
   black), a luminous blue haze and thicker low mist, all water glowing
-  cobalt, and strong emission on campfires and lanterns.
+  cobalt, and strong emission on campfires and lanterns. The one warm
+  accent is fire: #FF7A2A light and a pool of firelight on the ground
+  round every campfire, which the night grade leaves warm.
 - **Depth**, the era's way: nothing screen-space.
   - **Baked ambient occlusion** in vertex colors, which works in every
     renderer: terrain darkens in hollows and channels (up to 35%),
@@ -370,6 +379,28 @@ Verified:
     exposure 0.9, for deep shadows and bright
     highlights. Sky and fog are smooth gradients (they were stepped in 5
     and 6 flat bands).
+- **Palette (spec R1a):** `shaders/palette.gdshaderinc`, included by the
+  terrain, far terrain, plant and ruin shaders, pulls each surface's own
+  color toward its R1a target rather than replacing it (hue and
+  saturation most of the way, half of its brightness variety kept, so
+  biomes and species still differ):
+  - grass (green ground, 75%) toward #3FA83A on screen by day, green
+    leaves (45%) the same way, bark (70%) and dirt (55%) toward the warm
+    brown #6B4A2E-#A07A4A, rock faces (85%) toward blue-grey #6F7A8A,
+    snow toward #C8D8F0, moss toward #3F7A3A. Flowers and autumn leaves
+    aren't green, so they're left alone;
+  - as night falls (`look_night`) a second pull lands grass on teal-blue
+    (#1E4A6A), stone on slate (#3E4C8C) and bark on deep blue. These
+    night targets are albedos tuned by sampling renders: the moon and the
+    night ambient are already deep blue, so they hold green and red back
+    rather than adding blue;
+  - the classification (grass/dirt/sand/stone/snow) still reads the raw
+    vertex color, so textures and footsteps don't change; biome and
+    species tables keep their own colors;
+  - ruin stone (`RuinBuilder.STONES`) is blue-grey; tomb lamps and the
+    goblin's and witch's lanterns are lantern gold #FFC040; campfires are
+    R1a fire (Landmarks: the opening encampment). There are no lit
+    windows yet (#FF3A2A is unused).
 - **Bioluminescent night** (the third palette): see Landmarks. Moss
   glows in patches a few meters across.
 
@@ -906,9 +937,16 @@ hunter (sculpted bodies) across the fire on log seats, who breathe and
 turn toward the player when near. The fire is a ring of stones and
 crossed logs on a bed of glowing coals under four tongues of flame
 (`shaders/flame.gdshader`): cards that turn to face the camera, drawn
-additively so they build a hot white-yellow core with orange and a deep
-red edge, licked and torn by grain scrolling up, each on its own phase,
-and bright at the core. At the start
+additively so they build an orange-gold core (R1a #FFB020) through the
+coals' orange (#FF4A00) to a deep red edge, licked and torn by grain
+scrolling up, each on its own phase. The fire's light is R1a fire-light
+orange (#FF7A2A, 14 m) for every camp: energy 7 at night, easing to 45%
+of that in full daylight, when the sun drowns it. After dark a flat disc
+5.5 m across pools firelight on the ground: drawn once multiplied, to
+filter the ground under it warm (`shaders/fire_glow_warm.gdshader`), then
+added in the same orange, flickering with the flames
+(`shaders/fire_glow.gdshader`), since blue-green night grass under an
+orange light alone goes olive, not orange. At the start
 they speak once, as subtitles (`Hud.say`): "You're finally awake." /
 "Be careful at night, don't let it get you...". The camera opens over
 the player's shoulder so the fire is in view.

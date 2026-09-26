@@ -3,10 +3,14 @@
 // face. UV.x is the material (RuinBuilder: 0 stone, 1 wood, 2 snow,
 // 3 thatch, 4 leaves, 5 hide). Vertex alpha is moss: at night, near
 // glowing sites (every ruin is one), the moss patches shine teal/cobalt.
+// Stone colors come from RuinBuilder's palettes (R1a: blue-grey #6F7A8A);
+// after dark stone, timber and moss cool toward their R1a night targets
+// (palette.gdshaderinc).
 shader_type spatial;
 render_mode cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
+#include "res://shaders/palette.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_stone : filter_linear_mipmap, repeat_enable;
@@ -49,7 +53,19 @@ void fragment() {
 	}
 	vec3 moss = texture(look_tex_leaves, uv * 1.1).rgb;
 	float weather = texture(look_grain_soft, uv * 0.12 + 0.5).r - 0.5;
-	ALBEDO = COLOR.rgb * mix(surface, moss, clamp(COLOR.a * 1.2, 0.0, 1.0) * (kind == 0 || kind == 1 ? 1.0 : 0.0)) * 2.0 * (1.0 + weather * 0.45);
+	// R1a: greens toward moss; at night stone to slate, timber to deep blue,
+	// moss to teal.
+	vec3 col = COLOR.rgb;
+	float gw = pal_greenness(col);
+	float nk = look_night;
+	col = pal_pull(col, pal_moss, 0.5 * gw); // moss, ivy and turf toward R1a moss
+	if (kind == 0) {
+		col = pal_pull(col, pal_stone_night, 0.75 * nk * (1.0 - gw));
+	} else if (kind == 1) {
+		col = pal_pull(col, pal_bark_night, 0.6 * nk * (1.0 - gw));
+	}
+	col = pal_pull(col, pal_grass_night, 0.7 * nk * gw);
+	ALBEDO = col * mix(surface, moss, clamp(COLOR.a * 1.2, 0.0, 1.0) * (kind == 0 || kind == 1 ? 1.0 : 0.0)) * 2.0 * (1.0 + weather * 0.45);
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
 	float patch = texture(look_grain_soft, uv * 0.06).r; // moss patches ~0.5-2 m

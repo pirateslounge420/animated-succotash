@@ -34,19 +34,19 @@ const NOTICE_M := 12.0
 const TALK_M := 5.0
 
 const FOLK := {
-	"tribal": {"names": ["Hunter", "Elder", "Gatherer", "Scout"], "warm": Color(1.0, 0.62, 0.3),
+	"tribal": {"names": ["Hunter", "Elder", "Gatherer", "Scout"],
 		"lines": ["Sit. The fire's warm.", "The rivers run high this season.", "Stay near the light after dark.",
 			"We saw something moving on the ridge last night.", "Eat, if you're hungry. There's enough."]},
-	"north": {"names": ["Northerner", "Trapper", "Old one"], "warm": Color(1.0, 0.7, 0.4),
+	"north": {"names": ["Northerner", "Trapper", "Old one"],
 		"lines": ["Cold tonight. Colder tomorrow.", "Keep your hands near the flame.",
 			"The ice sings when the moon is full.", "Don't wander past the drifts after dark."]},
-	"marsh": {"names": ["Marsh-dweller", "Reed-cutter", "Hooded one"], "warm": Color(0.9, 0.8, 0.45),
+	"marsh": {"names": ["Marsh-dweller", "Reed-cutter", "Hooded one"],
 		"lines": ["Mind the planks. Some are rotten.", "Things drift up out of the water at night.",
 			"The frogs go quiet before it comes.", "Stay on the boards, stranger."]},
-	"goblin": {"names": ["Goblin", "Goblin", "Old goblin"], "warm": Color(1.0, 0.6, 0.25),
+	"goblin": {"names": ["Goblin", "Goblin", "Old goblin"],
 		"lines": ["Shinies? You got shinies?", "Hehe. The big one's back.", "Don't touch the pot!",
 			"We saw you coming. We always see.", "Sit, sit. Nobody bites. Much."]},
-	"dead": {"names": ["Skeleton", "Hooded one", "Old bones"], "warm": Color(1.0, 0.55, 0.25),
+	"dead": {"names": ["Skeleton", "Hooded one", "Old bones"],
 		"lines": ["...we were kings here, once.", "Sit, wanderer. We have all the time there is.",
 			"The fire remembers us.", "Don't mind us. We're only resting.", "Is it night again? It's always night."]},
 }
@@ -206,13 +206,12 @@ func _refresh() -> void:
 func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
-	var info: Dictionary = FOLK[folk]
 	var d: Vector3 = world.dir_of(at)
 	var root := Node3D.new()
 	root.name = "Camp"
 	_root.add_child(root)
 	root.global_transform = Transform3D(Basis.looking_at(CubeSphere.north(d), d), at)
-	var fire := Campfire.build(root, world, chunks, d, info.warm, false)
+	var fire := Campfire.build(root, world, chunks, d, false)
 	fire.global_position = at
 	root.set_meta("fire", fire)
 	root.set_meta("folk", folk)

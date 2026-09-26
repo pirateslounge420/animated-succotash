@@ -517,7 +517,7 @@ static func _witch(b: Dictionary, sp: CreatureSpecies) -> void:
 	hat.rotation.x = 0.25
 	for s in [-1.0, 1.0]:
 		limb(b, r, Vector3(0.15 * s, 0.58, 0), 0.3, 0.05, c, "wings")
-	_lantern(b, r, Vector3(0.2, 0.3, -0.08), sp.accent)
+	_lantern(b, r, Vector3(0.2, 0.3, -0.08))
 
 
 ## Goblin: small, big head, huge ears, a lantern.
@@ -536,7 +536,7 @@ static func _goblin(b: Dictionary, sp: CreatureSpecies) -> void:
 		ear.rotation.z = -1.2 * s
 		limb(b, r, Vector3(0.08 * s, 0.3, 0), 0.3, 0.08, c.darkened(0.2))
 		limb(b, r, Vector3(0.18 * s, 0.56, 0), 0.26, 0.06, c, "wings")
-	_lantern(b, r, Vector3(0.22, 0.32, -0.06), sp.accent)
+	_lantern(b, r, Vector3(0.22, 0.32, -0.06))
 
 
 ## Tribal person (camp folk; size_m = height), until SculptedBodies'
@@ -725,10 +725,15 @@ static func _robed(b: Dictionary, sp: CreatureSpecies) -> void:
 		ball(arm, Vector3.ONE * 0.025, Vector3(0, -0.38, 0), bone) # hand
 
 
-static func _lantern(b: Dictionary, parent: Node3D, pos: Vector3, c: Color) -> void:
-	box(parent, Vector3(0.07, 0.09, 0.07), pos, c, 6.0)
+## A lantern: always R1a lantern gold (#FFC040), whatever the carrier's
+## accent color.
+const LANTERN := Color("#ffc040")
+
+
+static func _lantern(b: Dictionary, parent: Node3D, pos: Vector3) -> void:
+	box(parent, Vector3(0.07, 0.09, 0.07), pos, LANTERN, 3.0)
 	var light := OmniLight3D.new()
-	light.light_color = c
+	light.light_color = LANTERN
 	light.light_energy = 1.2
 	light.omni_range = 6.0
 	light.position = pos

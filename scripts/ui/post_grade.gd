@@ -1,8 +1,9 @@
 class_name PostGrade
 extends CanvasLayer
 ## Full-screen grade (shaders/post_grade.gdshader): slight color bleed,
-## mild haze and faint film grain always, plus the night grade. Set
-## `night` and `magic` 0-1.
+## mild ultramarine haze, faint film grain and a light ordered dither
+## always, plus the night grade. Set `night` and `magic` 0-1; set_dither(0)
+## turns the dither off (default 0.25, a quarter strength).
 
 var _rect: ColorRect
 
@@ -24,3 +25,7 @@ func set_night(v: float) -> void:
 
 func set_magic(v: float) -> void:
 	(_rect.material as ShaderMaterial).set_shader_parameter("magic", v)
+
+
+func set_dither(v: float) -> void:
+	(_rect.material as ShaderMaterial).set_shader_parameter("dither", v)
