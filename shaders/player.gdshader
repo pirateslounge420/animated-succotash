@@ -12,10 +12,10 @@ render_mode vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 
-uniform sampler2D look_grain : filter_nearest, repeat_enable;
-uniform sampler2D look_tex_weave : filter_nearest_mipmap, repeat_enable;
-uniform sampler2D look_tex_fur : filter_nearest_mipmap, repeat_enable;
-uniform sampler2D look_tex_bark : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_grain : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_weave : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_fur : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_bark : filter_linear_mipmap, repeat_enable;
 uniform float motion = 0.0; // 0 still .. 1 sprinting
 
 varying vec3 world_pos;

@@ -1,7 +1,8 @@
 class_name PostGrade
 extends CanvasLayer
-## Full-screen grade (shaders/post_grade.gdshader): PS1-style 15-bit
-## dithered color always, plus the night grade. Set `night` and `magic` 0-1.
+## Full-screen grade (shaders/post_grade.gdshader): slight color bleed,
+## mild haze and faint film grain always, plus the night grade. Set
+## `night` and `magic` 0-1.
 
 var _rect: ColorRect
 

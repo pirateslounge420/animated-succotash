@@ -14,7 +14,7 @@ render_mode vertex_lighting, diffuse_lambert, specular_disabled;
 #include "res://shaders/look.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_fur : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_tex_fur : filter_linear_mipmap, repeat_enable;
 uniform vec3 skin_color = vec3(0.0);
 uniform vec3 hide_color = vec3(0.0);
 

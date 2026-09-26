@@ -4,8 +4,8 @@ class_name Look
 ## Materials register once; SkySystem pushes new values each frame.
 ##
 ## Also owns the world's textures, painted at startup on a worker thread
-## (LookTextures: 256 px, dense with painted detail, drawn nearest-
-## filtered with mipmaps so texels stay crisp). The
+## (LookTextures: 256 px, painted, drawn linear-filtered with mipmaps so
+## they're gently soft, never pixel-art). The
 ## shaders add the large-scale light and dark over them with the grain.
 ## They modulate the vertex colors (0.5 = unchanged, so one texture serves
 ## every species and biome color):

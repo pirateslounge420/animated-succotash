@@ -1,8 +1,8 @@
 // Ground. Low-poly faces colored per vertex (TerrainChunk), vertex-lit:
 // Lambert diffuse and no specular, like GameCube-era terrain. The
 // surface is texture-led, like the hand-painted ground of GameCube-era
-// games: Look's 256 px textures, crisp (nearest-filtered) but dense (grass
-// texels about 0.7 cm), picked by the vertex color: streaky grass on green ground,
+// games: Look's 256 px painted textures, gently soft (linear-filtered with
+// mipmaps; grass texels about 0.7 cm), picked by the vertex color: streaky grass on green ground,
 // rippled sand on bright warm ground, pebbly dirt on soil, mottled stone
 // on grey rock faces, just a faint grain on snow. Each is sampled twice (a second, turned and
 // rescaled copy) and blended by a slow noise so the tiling doesn't show,
@@ -16,12 +16,12 @@ render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 #include "res://shaders/look.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-// Anisotropic: stays chunky up close without ring-shaped moire where the
-// ground is seen at a grazing angle.
-uniform sampler2D look_tex_grass : filter_nearest_mipmap_anisotropic, repeat_enable;
-uniform sampler2D look_tex_dirt : filter_nearest_mipmap_anisotropic, repeat_enable;
-uniform sampler2D look_tex_sand : filter_nearest_mipmap_anisotropic, repeat_enable;
-uniform sampler2D look_tex_stone : filter_nearest_mipmap_anisotropic, repeat_enable;
+// Anisotropic: stays clear where the ground is seen at a grazing angle,
+// without ring-shaped moire.
+uniform sampler2D look_tex_grass : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D look_tex_dirt : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D look_tex_sand : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D look_tex_stone : filter_linear_mipmap_anisotropic, repeat_enable;
 
 varying vec3 world_pos;
 

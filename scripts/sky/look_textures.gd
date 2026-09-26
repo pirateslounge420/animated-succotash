@@ -1,8 +1,8 @@
 class_name LookTextures
 ## The world's textures, painted at startup (Look.texture() hands them
 ## out): 256 px, dense with painted detail (blades, leaves, pebbles,
-## cracks drawn as shaded sprites), drawn nearest-filtered with mipmaps so
-## texels stay crisp. Each
+## cracks drawn as shaded sprites), drawn linear-filtered with mipmaps so
+## they're gently soft (docs/WORLD_SYSTEMS_SPEC.md R1). Each
 ## is centered on mid-grey (0.5 = no change: the shaders multiply them
 ## by the vertex colors, so one texture serves every species and biome).
 ##

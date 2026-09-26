@@ -9,10 +9,10 @@ render_mode cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 #include "res://shaders/look.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_stone : filter_nearest_mipmap, repeat_enable;
-uniform sampler2D look_tex_leaves : filter_nearest_mipmap, repeat_enable;
-uniform sampler2D look_tex_bark : filter_nearest_mipmap, repeat_enable;
-uniform sampler2D look_tex_grass : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_tex_stone : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_leaves : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_bark : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_grass : filter_linear_mipmap, repeat_enable;
 
 varying vec3 world_pos;
 varying vec3 obj_pos;

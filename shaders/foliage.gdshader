@@ -6,7 +6,7 @@
 // one material every plant shares (PlantMeshes.material()); its direction
 // sets which way crowns lean and its strength how far and how fast.
 //
-// Textured (Look, crisp nearest-filtered): bark streaks on trunks,
+// Textured (Look, painted, linear-filtered): bark streaks on trunks,
 // a leafy surface on crowns, and alpha-cutout leaf-cluster cards around
 // the crowns so silhouettes are ragged and dappled instead of round. The material
 // comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine, 4 bamboo culm);
@@ -26,9 +26,9 @@ render_mode world_vertex_coords, cull_disabled, vertex_lighting, diffuse_lambert
 #include "res://shaders/look.gdshaderinc"
 
 uniform vec3 wind_vector = vec3(0.0);
-uniform sampler2D look_tex_bark : filter_nearest_mipmap, repeat_enable;
-uniform sampler2D look_tex_leaves : filter_nearest_mipmap, repeat_enable;
-uniform sampler2D look_tex_leaf_card : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_tex_bark : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_leaves : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_leaf_card : filter_linear_mipmap, repeat_enable;
 
 varying float sway_w;
 varying float glow_pick;

@@ -16,9 +16,9 @@ render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 uniform float hide_radius = 700.0;
 uniform bool is_sea = false;
 uniform vec3 sea_color : source_color = vec3(0.02, 0.3, 0.62);
-uniform sampler2D look_grain : filter_nearest, repeat_enable;
+uniform sampler2D look_grain : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_stone : filter_nearest_mipmap_anisotropic, repeat_enable;
+uniform sampler2D look_tex_stone : filter_linear_mipmap_anisotropic, repeat_enable;
 
 varying vec3 world_pos;
 varying vec3 planet_pos;
