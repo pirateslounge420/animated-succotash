@@ -127,11 +127,13 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 	var river_dist := PackedFloat32Array()
 	var level := PackedFloat32Array()
 	var salt := PackedByteArray()
+	var in_river := PackedByteArray() # 1 where the water level is a river's
 	dirs_out.resize(n * n)
 	h.resize(n * n)
 	river_dist.resize(n * n)
 	level.resize(n * n)
 	salt.resize(n * n)
+	in_river.resize(n * n)
 	var fine_d := PackedVector3Array()
 	var fine_h := PackedFloat32Array()
 	fine_d.resize(nf * nf)
@@ -149,6 +151,7 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 		for ii in range(-1, nf + 1):
 			var d := CubeSphere.to_dir(key.x, _uvf(key.y, ii), _uvf(key.z, jj))
 			var e := map.terrain.elevation(d, true)
+			var in_river_here := 0
 			var inside := ii >= 0 and jj >= 0 and ii < nf and jj < nf
 			var coarse := inside and ii % 2 == 0 and jj % 2 == 0
 			var wl := _standing_water(map, d) if coarse else Vector2.ZERO
@@ -167,6 +170,7 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 					e = lerpf(e, minf(e, bed) if dt.x > half else bed, f)
 					if dt.x < half:
 						wl = Vector2(maxf(wl.x, lvl), 1.0 if rivers.salty[s] == 1 else 0.0)
+						in_river_here = 1
 			var pi := (jj + 1) * pn + ii + 1
 			pad_h[pi] = e
 			pad_d[pi] = d
@@ -180,6 +184,7 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 				river_dist[i] = nearest
 				level[i] = wl.x
 				salt[i] = int(wl.y)
+				in_river[i] = in_river_here
 
 	var falls := []
 	var fine_n := _smooth_normals(center, pad_d, pad_h, nf)
@@ -202,7 +207,7 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 		"water_level": level,
 		"salt": salt,
 		"colors": _vertex_colors(map, dirs_out, h, normals),
-		"water": _water_quads(key, dirs_out, fine_h, level, salt),
+		"water": _water_quads(key, dirs_out, fine_h, level, salt, in_river),
 		"rivers": _river_ribbons(key, center, rivers, segs, falls),
 		"falls": falls,
 	}
@@ -457,13 +462,25 @@ static func _ground_color(map: PlanetData, c: int) -> Color:
 
 ## Water surface quads (sea, lakes, wetland pools) wherever the ground dips
 ## below the local standing-water level. Each is [d00, d10, d11, d01,
-## radius, salt].
+## corner radii, salt, corner UVs].
+##
+## Corners take the water level at that corner, so neighboring quads share
+## their edges and the surface is one unbroken sheet (a quad at its own flat
+## level left a hairline step to the next one, and the ground showed
+## through it as a thin light line across the water). Only where the level
+## really jumps (a lake's rim, a river dropping into the sea) does a quad
+## keep its own flat level.
+##
+## UVs are meters on the cube face (the same everywhere on the face, so the
+## water texture runs on unbroken from chunk to chunk), wrapped per quad by
+## WATER_UV_WRAP_M, a whole number of the water shader's texture repeats.
 static func _water_quads(key: Vector3i, d: PackedVector3Array, fine_h: PackedFloat32Array,
-		level: PackedFloat32Array, salt: PackedByteArray) -> Array:
+		level: PackedFloat32Array, salt: PackedByteArray, in_river: PackedByteArray) -> Array:
 	var quads := []
 	var n := QUADS + 1
 	var nf := FINE + 1
 	var step := QUADS / WATER_QUADS
+	var cell_m := PlanetConst.CIRCUMFERENCE_M / 4.0 / float(CHUNKS_PER_FACE * QUADS)
 	for wj in WATER_QUADS:
 		for wi in WATER_QUADS:
 			var ii := wi * step
@@ -476,13 +493,39 @@ static func _water_quads(key: Vector3i, d: PackedVector3Array, fine_h: PackedFlo
 					lowest = minf(lowest, fine_h[(jj * 2 + dj) * nf + (ii * 2 + di)])
 			if lowest >= wl:
 				continue
-			quads.append([
-				d[jj * n + ii], d[jj * n + ii + step],
-				d[(jj + step) * n + ii + step], d[(jj + step) * n + ii],
-				PlanetConst.RADIUS_M + wl,
-				salt[mid] == 1,
-			])
+			var idx := [jj * n + ii, jj * n + ii + step, (jj + step) * n + ii + step, (jj + step) * n + ii]
+			# A river pool reaching over a waterfall (a corner well below):
+			# left out, or its flat edge would hang out over the fall and
+			# hide the crest. The river's own ribbon covers the water there.
+			var over_fall := false
+			if in_river[mid] == 1:
+				for k in 4:
+					if level[idx[k]] < wl - RiverNetwork.FALL_MIN_M * 0.5:
+						over_fall = true
+			if over_fall:
+				continue
+			var grid := [Vector2i(0, 0), Vector2i(step, 0), Vector2i(step, step), Vector2i(0, step)]
+			var radii := PackedFloat32Array()
+			var uvs := PackedVector2Array()
+			var gx0 := float(key.y * QUADS + ii) * cell_m
+			var gy0 := float(key.z * QUADS + jj) * cell_m
+			var wrap := Vector2(floorf(gx0 / WATER_UV_WRAP_M), floorf(gy0 / WATER_UV_WRAP_M)) * WATER_UV_WRAP_M
+			for k in 4:
+				var cl: float = level[idx[k]]
+				radii.append(PlanetConst.RADIUS_M + (cl if absf(cl - wl) < WATER_BLEND_M else wl))
+				var g: Vector2i = grid[k]
+				uvs.append(Vector2(gx0 + g.x * cell_m, gy0 + g.y * cell_m) - wrap)
+			quads.append([d[idx[0]], d[idx[1]], d[idx[2]], d[idx[3]], radii, salt[mid] == 1, uvs])
 	return quads
+
+
+## Water corners within this of their quad's own level join the smooth
+## sheet (see _water_quads).
+const WATER_BLEND_M := 0.75
+## Water UVs wrap every this many meters: 50 repeats of the water shader's
+## 6 m layer and 40 of its 7.5 m layer (turned 3-4-5, so 24 x 32 of them),
+## so the wrap never shows.
+const WATER_UV_WRAP_M := 300.0
 
 
 static func _lake_level_near(map: PlanetData, cell: int) -> float:
@@ -496,13 +539,24 @@ static func _lake_level_near(map: PlanetData, cell: int) -> float:
 
 
 ## River water ribbons crossing this chunk: array of [left_dirs,
-## right_dirs, radii, width, brackish, white_water]; ribbons follow the
-## river's water profile (RiverNetwork) and break at waterfalls. Falls
-## inside the chunk go to `falls`: [left_dir, right_dir, top_radius,
-## bottom_radius, width, brackish, downstream_dir].
-static func _river_ribbons(key: Vector3i, center: Vector3, rivers: RiverNetwork, segs: PackedInt32Array, falls: Array) -> Array:
+## right_dirs, radii, half_widths, brackish, white_water, along_m];
+## ribbons follow the river's water profile (RiverNetwork) and break at
+## waterfalls. Falls inside the chunk go to `falls`: [left_dir, right_dir,
+## top_radius, bottom_radius, width, brackish, downstream_dir].
+##
+## Drawn so no seam shows across the river:
+## - each ~6 m stretch belongs to exactly one chunk (the one its middle is
+##   in), so neighboring chunks' ribbons meet end to end instead of
+##   overlapping (two see-through layers read as a band across the water);
+## - where two segments meet, both ribbon ends share one edge (the average
+##   of the two directions and widths), so there's no wedge gap or overlap
+##   at a bend;
+## - along_m is meters downstream measured from the river's end
+##   (RiverNetwork.to_end_m), one continuous coordinate through chunks and
+##   segment joints, wrapped per ribbon by WATER_UV_WRAP_M so it stays
+##   precise.
+static func _river_ribbons(key: Vector3i, _center: Vector3, rivers: RiverNetwork, segs: PackedInt32Array, falls: Array) -> Array:
 	var out := []
-	var reach := (PlanetConst.CIRCUMFERENCE_M / 4.0 / CHUNKS_PER_FACE) * 0.85 / PlanetConst.RADIUS_M
 	for s in segs:
 		var pa := rivers.a[s]
 		var pb := rivers.b[s]
@@ -510,42 +564,72 @@ static func _river_ribbons(key: Vector3i, center: Vector3, rivers: RiverNetwork,
 		var white := rivers.rapids(s)
 		var n := prof.size() - 1
 		var tangent := (pb - pa).normalized()
-		var half := rivers.width[s] * 0.5 / PlanetConst.RADIUS_M
-		var rb := [PackedVector3Array(), PackedVector3Array(), PackedFloat32Array(), PackedFloat32Array()]
+		var half := rivers.width[s] * 0.5
+		var seg_m := CubeSphere.surface_distance_m(pa, pb)
+		var start_m := -rivers.to_end_m[s] # meters downstream at pa
+		# Shared joint edges with the segments upstream and downstream.
+		var joint := func(other: int, at: Vector3) -> Array:
+			if other < 0:
+				return [tangent.cross(at).normalized(), half]
+			var ot := (rivers.b[other] - rivers.a[other]).normalized()
+			return [(tangent + ot).cross(at).normalized(), (half + rivers.width[other] * 0.5) * 0.5]
+		var j0: Array = joint.call(rivers.up_seg[s], pa)
+		var j1: Array = joint.call(rivers.down_seg[s], pb)
+		# Plain Arrays while building: a packed array read back out of an
+		# Array is a copy, so appending to it there is lost (why ribbons
+		# used to come out empty and rivers showed only their flat pools).
+		var rb := [[], [], [], [], [], []]
+		var wrap := [0.0]
 		var emit := func() -> void:
-			if (rb[0] as PackedVector3Array).size() >= 2:
-				out.append([rb[0], rb[1], rb[2], rivers.width[s], rivers.salty[s], rb[3]])
-			rb[0] = PackedVector3Array()
-			rb[1] = PackedVector3Array()
-			rb[2] = PackedFloat32Array()
-			rb[3] = PackedFloat32Array()
+			if (rb[0] as Array).size() >= 2:
+				out.append([PackedVector3Array(rb[0]), PackedVector3Array(rb[1]), PackedFloat32Array(rb[2]),
+					PackedFloat32Array(rb[3]), rivers.salty[s], PackedFloat32Array(rb[4]), PackedFloat32Array(rb[5])])
+			for k in rb.size():
+				(rb[k] as Array).clear()
 		var add := func(t: float, level: float, foam: float) -> void:
 			var p := pa.slerp(pb, t)
-			var side := tangent.cross(p).normalized() * half
-			(rb[0] as PackedVector3Array).append((p - side).normalized())
-			(rb[1] as PackedVector3Array).append((p + side).normalized())
-			(rb[2] as PackedFloat32Array).append(PlanetConst.RADIUS_M + level + 0.15)
-			(rb[3] as PackedFloat32Array).append(foam)
-		for i in n + 1:
-			var t := float(i) / n
-			var p := pa.slerp(pb, t)
-			if CubeSphere.angle_between(p, center) > reach:
+			var side: Vector3
+			var h: float
+			if t <= 0.0:
+				side = j0[0]
+				h = j0[1]
+			elif t >= 1.0:
+				side = j1[0]
+				h = j1[1]
+			else:
+				side = tangent.cross(p).normalized()
+				h = half
+			var off := side * h / PlanetConst.RADIUS_M
+			var m := start_m + t * seg_m
+			if (rb[0] as Array).is_empty():
+				wrap[0] = floorf(m / WATER_UV_WRAP_M) * WATER_UV_WRAP_M
+			(rb[0] as Array).append((p - off).normalized())
+			(rb[1] as Array).append((p + off).normalized())
+			(rb[2] as Array).append(PlanetConst.RADIUS_M + level + 0.15)
+			(rb[3] as Array).append(h)
+			(rb[4] as Array).append(foam)
+			(rb[5] as Array).append(m - wrap[0])
+		for i in range(1, n + 1):
+			var t0 := float(i - 1) / n
+			var t1 := float(i) / n
+			if key_at(pa.slerp(pb, (t0 + t1) * 0.5)) != key:
 				emit.call()
 				continue
-			if i > 0 and prof[i - 1] - prof[i] >= RiverNetwork.FALL_MIN_M:
+			if (rb[0] as Array).is_empty():
+				add.call(t0, prof[i - 1], white[i - 1])
+			if prof[i - 1] - prof[i] >= RiverNetwork.FALL_MIN_M:
 				# Waterfall: the upper ribbon ends at its lip, the lower one
 				# starts at the plunge pool, and a falling sheet joins them.
 				var tm := (i - 0.5) / n
 				add.call(tm, prof[i - 1], white[i - 1])
 				emit.call()
 				var pm := pa.slerp(pb, tm)
-				if key_at(pm) == key:
-					var side := tangent.cross(pm).normalized() * half
-					falls.append([(pm - side).normalized(), (pm + side).normalized(),
-						PlanetConst.RADIUS_M + prof[i - 1] + 0.15, PlanetConst.RADIUS_M + prof[i] + 0.15,
-						rivers.width[s], rivers.salty[s], (pb - pa).normalized()])
+				var side := tangent.cross(pm).normalized() * half / PlanetConst.RADIUS_M
+				falls.append([(pm - side).normalized(), (pm + side).normalized(),
+					PlanetConst.RADIUS_M + prof[i - 1] + 0.15, PlanetConst.RADIUS_M + prof[i] + 0.15,
+					rivers.width[s], rivers.salty[s], (pb - pa).normalized()])
 				add.call(tm, prof[i], 1.0)
-			add.call(t, prof[i], white[i])
+			add.call(t1, prof[i], white[i])
 		emit.call()
 	return out
 
@@ -557,6 +641,11 @@ static var _fall_mat: ShaderMaterial
 static var _mist_mesh: QuadMesh
 static var _salt_mat: ShaderMaterial
 static var _fresh_mat: ShaderMaterial
+## Day water (docs/WORLD_SYSTEMS_SPEC.md R1a): bright saturated blue, lands
+## near #1667FF on screen, between the day sky's zenith and horizon. Sea
+## and fresh water share it: two blues met in a hard 16 m staircase at
+## every river mouth.
+const WATER := Color("#3B78FF")
 
 
 static func materials() -> void:
@@ -566,12 +655,11 @@ static func materials() -> void:
 	_terrain_mat.shader = preload("res://shaders/terrain.gdshader")
 	_salt_mat = ShaderMaterial.new()
 	_salt_mat.shader = preload("res://shaders/water.gdshader")
-	_salt_mat.set_shader_parameter("deep_color", Color(0.01, 0.12, 0.48))
-	_salt_mat.set_shader_parameter("shallow_color", Color(0.0, 0.6, 0.74))
+	# Night colors are the shader's own (R1a).
+	_salt_mat.set_shader_parameter("water_color", WATER)
 	_fresh_mat = ShaderMaterial.new()
 	_fresh_mat.shader = preload("res://shaders/water.gdshader")
-	_fresh_mat.set_shader_parameter("deep_color", Color(0.02, 0.2, 0.36))
-	_fresh_mat.set_shader_parameter("shallow_color", Color(0.05, 0.58, 0.55))
+	_fresh_mat.set_shader_parameter("water_color", WATER)
 	_fall_mat = ShaderMaterial.new()
 	_fall_mat.shader = preload("res://shaders/waterfall.gdshader")
 	Look.register(_terrain_mat)
@@ -773,44 +861,46 @@ func tree_species(i: int) -> PlantSpecies:
 
 
 func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) -> void:
-	# uv2.x: white water (rapids), 0 on still water.
+	# uv: meters (standing water: across the cube face; rivers: across from
+	# the centerline, and downstream). uv2.x: white water (rapids), 0 on
+	# still water; uv2.y: on rivers, the ribbon's half width (m; the water
+	# runs downstream and the edges fade into the pool beneath), else 0.
 	var salt := {"v": PackedVector3Array(), "uv": PackedVector2Array(), "uv2": PackedVector2Array()}
 	var fresh := {"v": PackedVector3Array(), "uv": PackedVector2Array(), "uv2": PackedVector2Array()}
-	var east := CubeSphere.east(center_dir)
-	var north := CubeSphere.north(center_dir)
 	for q in quads:
 		var target: Dictionary = salt if q[5] else fresh
-		var r: float = q[4]
+		var radii: PackedFloat32Array = q[4]
+		var quv: PackedVector2Array = q[6]
 		var corners := []
 		for k in 4:
-			corners.append(world.to_scene_relative(q[k], r, anchor))
+			corners.append(world.to_scene_relative(q[k], radii[k], anchor))
 		for idx in [0, 2, 1, 0, 3, 2]:
-			var v: Vector3 = corners[idx]
-			target.v.append(v)
-			target.uv.append(Vector2(v.dot(east), v.dot(north)))
+			target.v.append(corners[idx])
+			target.uv.append(quv[idx])
 			target.uv2.append(Vector2.ZERO)
 	for rb in ribbons:
 		var lefts: PackedVector3Array = rb[0]
 		var rights: PackedVector3Array = rb[1]
 		var radii: PackedFloat32Array = rb[2]
-		var w: float = rb[3]
+		var halves: PackedFloat32Array = rb[3]
 		var target: Dictionary = salt if rb[4] == 1 else fresh
-		var along := 0.0
+		var foam: PackedFloat32Array = rb[5]
+		var along: PackedFloat32Array = rb[6]
 		for k in lefts.size() - 1:
-			var l0: Vector3 = world.to_scene_relative(lefts[k], radii[k], anchor)
-			var r0: Vector3 = world.to_scene_relative(rights[k], radii[k], anchor)
-			var l1: Vector3 = world.to_scene_relative(lefts[k + 1], radii[k + 1], anchor)
-			var r1: Vector3 = world.to_scene_relative(rights[k + 1], radii[k + 1], anchor)
-			var seg_len := l0.distance_to(l1)
-			var quad := [l0, r0, r1, l1]
-			var uvs := [Vector2(0, along), Vector2(w, along), Vector2(w, along + seg_len), Vector2(0, along + seg_len)]
-			var foam: PackedFloat32Array = rb[5]
-			var uv2s := [Vector2(foam[k], 1), Vector2(foam[k], 1), Vector2(foam[k + 1], 1), Vector2(foam[k + 1], 1)]
+			var quad := [
+				world.to_scene_relative(lefts[k], radii[k], anchor),
+				world.to_scene_relative(rights[k], radii[k], anchor),
+				world.to_scene_relative(rights[k + 1], radii[k + 1], anchor),
+				world.to_scene_relative(lefts[k + 1], radii[k + 1], anchor),
+			]
+			var uvs := [Vector2(-halves[k], along[k]), Vector2(halves[k], along[k]),
+				Vector2(halves[k + 1], along[k + 1]), Vector2(-halves[k + 1], along[k + 1])]
+			var uv2s := [Vector2(foam[k], halves[k]), Vector2(foam[k], halves[k]),
+				Vector2(foam[k + 1], halves[k + 1]), Vector2(foam[k + 1], halves[k + 1])]
 			for idx in [0, 2, 1, 0, 3, 2]:
 				target.v.append(quad[idx])
 				target.uv.append(uvs[idx])
 				target.uv2.append(uv2s[idx])
-			along += seg_len
 	_water_mesh(salt, _salt_mat, "SaltWater")
 	_water_mesh(fresh, _fresh_mat, "FreshWater")
 

@@ -303,7 +303,7 @@ Verified:
 `shaders/look.gdshaderinc`, `scripts/sky/look.gd`
 
 - **Day:** pure saturated blue sky (#1436FF overhead to #4C7CFF at the
-  horizon), punchy greens, and saturated turquoise/ultramarine water. It
+  horizon), punchy greens, and bright saturated blue water. It
   uses a linear tonemap, because filmic washes colors toward realism.
 - **Painted skybox** (the 2001-2004 console look), `shaders/sky.gdshader`,
   `SkyPaint`:
@@ -354,9 +354,23 @@ Verified:
     meters) paint over them, with grass warmer in the light and cooler in
     the dark. Contrast eases off between 60 and 450 m so distant ground
     doesn't shimmer;
-  - water: a net of caustic lines over a mottled base. The water shader
-    drifts two copies across each other (with the current on rivers), for
-    darker mottles and bright cyan flecks where the lines cross;
+  - water (`water.gdshader`): flat, painted early-2000s console water
+    with no reflections at all (no sky or sun mirrored, no specular,
+    fresnel tint or normal map), under the same vertex Lambert as
+    everything else. The texture holds a soft mottled body (red) and soft
+    highlight blobs (green), no lines (the old caustic net read as a
+    white net over the water). Two copies (6 m and 7.5 m repeats, one
+    turned) scroll across each other: still water wanders slowly, rivers
+    run downstream at 0.5 and 0.75 m/s, and highlights show where the
+    two layers' blobs overlap. Day: #3B78FF, sea and fresh water alike,
+    landing near #1667FF on screen. Night: near self-lit, #1B3CFF with
+    #7FB0FF highlights (R1a; `night_glow` 0.6 lands there through the
+    grade). Slightly see-through looking down. Rapids streak white foam
+    downstream; rain pocks it. UVs are meters (TerrainChunk: across the
+    cube face for standing water, across and downstream for rivers)
+    wrapped by 300 m, a whole number of both layers' repeats, so no
+    chunk or segment seam shows; the far sea (`far_sea.gdshader`) wears
+    the same flat day blue and night glow;
   - bark and leaves on plants, mapped in object space (triplanar) and
     scaled with the plant, so a big tree doesn't get bigger texels;
   - a leaf-cluster card texture with alpha: foliage crowns carry
@@ -663,9 +677,26 @@ Verified:
     moderate slopes are rapids (white water racing down the ribbon), as
     is the churn below each fall; tributaries meeting a lower river and
     rivers meeting the sea at a cliff end in falls. Each is a sheet arcing off the lip
-    (`waterfall.gdshader`: streaks sliding down, foam toward the pool,
-    frayed edges) with mist at the foot, glowing blue at night;
-  - lake, sea and wetland water tables are added;
+    (`waterfall.gdshader`: near-white at the crest, the water texture's
+    streaks sliding down, foam toward the pool, frayed edges) with mist
+    at the foot, glowing blue with pale streaks at night;
+  - river ribbons (the flowing surface, 0.15 m over the still pool that
+    fills the carved channel, its last 2.5 m each side fading into it)
+    are drawn seamlessly: each 6 m stretch belongs to the one chunk its
+    middle is in (no overlapping see-through layers at chunk edges),
+    segment ends share one mitred edge at every joint, and the downstream
+    coordinate is continuous along the whole river
+    (`RiverNetwork.to_end_m`). Until the water pass they came out empty
+    (points were appended to copies of packed arrays), so rivers showed
+    only the still pool, with no current and no rapids foam;
+  - lake, sea and wetland water tables are added. Each 16 m water quad
+    takes the water level at its corners (unless the level jumps more
+    than 0.75 m, e.g. a lake rim), so neighboring quads share edges: a
+    quad at its own flat level left a hairline step where a river's
+    level met the sea's, and the ground showed through as a thin light
+    line across the water. River pool quads reaching over a waterfall's
+    lip are left out (their flat edge hung out over the fall and hid the
+    crest);
   - ground color blends nearby biomes, with sand at shores, rock on steep
     faces and snow wherever it's below freezing at that height.
 - **Streaming** (`ChunkManager`):

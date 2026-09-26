@@ -403,14 +403,22 @@ static func _fur(rng: RandomNumberGenerator) -> Image:
 	return img
 
 
-## Water: soft bright caustic lines where cells of noise meet, over a
-## gently mottled base.
+## Water: two soft layers in one texture, read by water.gdshader. Red is
+## a mottled body (broad darker and lighter patches with a little fine
+## grain, centered on 0.5); green is soft highlight blobs (0 over most of
+## the tile, easing up to 1 in rounded patches). No sharp lines: a caustic
+## net of bright lines read as a white net laid over the water.
 static func _water(rng: RandomNumberGenerator) -> Image:
-	var cells := _field(81, 7.0, 1, FastNoiseLite.TYPE_CELLULAR, FastNoiseLite.RETURN_DISTANCE2_SUB)
-	var mottle := _field(82, 4.0)
-	var v := PackedFloat32Array()
-	v.resize(TEX * TEX)
+	var broad := _field(82, 3.0)
+	var fine := _field(85, 10.0, 2)
+	var glint := _field(86, 6.0, 2)
+	var bytes := PackedByteArray()
+	bytes.resize(TEX * TEX * 4)
 	for i in TEX * TEX:
-		var line := 1.0 - smoothstep(0.0, 0.14, cells[i])
-		v[i] = 0.4 + 0.12 * (mottle[i] - 0.5) + 0.32 * line + rng.randf_range(-0.01, 0.01)
-	return _image(v)
+		var body := 0.5 + 0.75 * (broad[i] - 0.5) + 0.3 * (fine[i] - 0.5) + rng.randf_range(-0.012, 0.012)
+		var hl := smoothstep(0.58, 0.9, glint[i])
+		bytes[i * 4] = int(clampf(body, 0.0, 1.0) * 255.0)
+		bytes[i * 4 + 1] = int(clampf(hl, 0.0, 1.0) * 255.0)
+		bytes[i * 4 + 2] = 0
+		bytes[i * 4 + 3] = 255
+	return Image.create_from_data(TEX, TEX, false, Image.FORMAT_RGBA8, bytes)
