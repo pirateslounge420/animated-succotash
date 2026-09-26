@@ -9,7 +9,7 @@ class_name PlantMeshes
 
 const S := PlantSpecies.Shape
 
-static var _cache := {} # species index * 2 + far -> ArrayMesh (main thread)
+static var _cache := {} # species index * 3 + lod -> ArrayMesh (main thread)
 ## The same keys -> mesh arrays, built by workers (warm()) or on demand;
 ## and the icosphere cache. Both behind _mutex: chunk workers build plant
 ## geometry (and ruins, boulders) in parallel.
@@ -26,9 +26,18 @@ static func material() -> ShaderMaterial:
 	return _material
 
 
-## Crown lobe detail: icosphere subdivisions (1: 80 triangles, 2: 320).
-## Once keeps trees inside the PS2/GameCube budget (~150-400 each).
-const CROWN_SUBDIV := 1
+## Detail levels. HERO, for the chunks right around the player: crown
+## lobes are geodesic spheres of 180 triangles (not 80), round parts
+## (trunks, branches, stems, cones) have half as many sides again, so
+## silhouettes up close are round and smooth like GameCube-era models
+## rather than faceted. NEAR, the rest of the detail ring: 80-triangle
+## lobes. FAR, beyond it: 80-triangle lobes, trunks 5-sided, no branches
+## or leaf cards.
+const LOD_HERO := 0
+const LOD_NEAR := 1
+const LOD_FAR := 2
+## Crown lobe detail at each level (geosphere() frequency).
+const CROWN_FREQ := [3, 2, 2]
 
 static var _ico := {}
 
@@ -78,6 +87,57 @@ static func icosphere(level: int) -> Array:
 	return out
 
 
+## Unit geodesic sphere [vertices, triangle indices]: each icosahedron
+## face split into `freq`² triangles (20 × freq² in all). Powers of two
+## are icosphere()'s.
+static func geosphere(freq: int) -> Array:
+	if freq == 1 or freq == 2 or freq == 4:
+		return icosphere([0, 0, 1, 1, 2][freq])
+	_mutex.lock()
+	var cached = _ico.get(-freq)
+	_mutex.unlock()
+	if cached != null:
+		return cached
+	var base: Array = icosphere(0)
+	var corners: PackedVector3Array = base[0]
+	var tris: PackedInt32Array = base[1]
+	var verts := PackedVector3Array()
+	var faces := PackedInt32Array()
+	var index := {}
+	for f in range(0, tris.size(), 3):
+		var a := corners[tris[f]]
+		var b := corners[tris[f + 1]]
+		var c := corners[tris[f + 2]]
+		# Grid points a + (b - a) i/n + (c - a) j/n, shared along edges.
+		var ids := {}
+		for i in freq + 1:
+			for j in freq + 1 - i:
+				var p := (a + (b - a) * i / freq + (c - a) * j / freq).normalized()
+				var key := Vector3i((p * 100000.0).round())
+				if not index.has(key):
+					index[key] = verts.size()
+					verts.append(p)
+				ids[Vector2i(i, j)] = index[key]
+		for i in freq:
+			for j in freq - i:
+				faces.append_array([ids[Vector2i(i, j)], ids[Vector2i(i + 1, j)], ids[Vector2i(i, j + 1)]])
+				if i + j < freq - 1:
+					faces.append_array([ids[Vector2i(i + 1, j)], ids[Vector2i(i + 1, j + 1)], ids[Vector2i(i, j + 1)]])
+	# Wind every face outward.
+	for f in range(0, faces.size(), 3):
+		var p0 := verts[faces[f]]
+		if (verts[faces[f + 1]] - p0).cross(verts[faces[f + 2]] - p0).dot(p0) < 0.0:
+			var tmp := faces[f + 1]
+			faces[f + 1] = faces[f + 2]
+			faces[f + 2] = tmp
+	_mutex.lock()
+	if not _ico.has(-freq):
+		_ico[-freq] = [verts, faces]
+	var out: Array = _ico[-freq]
+	_mutex.unlock()
+	return out
+
+
 ## A tree shape's proportions, as fractions of its height: Vector4(trunk
 ## radius, trunk collider height, crown radius, crown bottom). Trunk
 ## colliders, climbing, rain shelter and rustling read these; a crown
@@ -116,40 +176,38 @@ static func climbable(shape: int) -> bool:
 	return shape in [S.CONIFER, S.BROADLEAF, S.GNARLED, S.EMERGENT, S.UMBRELLA, S.PALM, S.CYPRESS, S.MANGROVE, S.BAMBOO]
 
 
-## `far`: the light version for trees beyond the ring nearest the player
-## (once-subdivided lobes become icosahedra, trunks 5-sided, no branches
-## or leaf cards).
-static func mesh_for(sp: PlantSpecies, far := false) -> ArrayMesh:
+## A species' mesh at detail level `lod` (LOD_HERO, LOD_NEAR, LOD_FAR).
+static func mesh_for(sp: PlantSpecies, lod := LOD_NEAR) -> ArrayMesh:
 	var idx := SpeciesDB.index_of(sp)
-	var key := idx * 2 + int(far)
+	var key := idx * 3 + lod
 	if _cache.has(key):
 		return _cache[key]
 	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays_for(sp, far))
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays_for(sp, lod))
 	_cache[key] = mesh
 	return mesh
 
 
-## Build the geometry of these species (indices), both versions, ahead of
+## Build the geometry of these species (indices), every level, ahead of
 ## need: chunk workers call it for the plants they place, so the main
 ## thread only uploads meshes (mesh_for) instead of building them.
 static func warm(species_indices: Array) -> void:
 	var all := SpeciesDB.all()
 	for idx in species_indices:
-		arrays_for(all[idx], false)
-		arrays_for(all[idx], true)
+		for lod in 3:
+			arrays_for(all[idx], lod)
 
 
 ## A species' mesh arrays (thread-safe; built once and shared).
-static func arrays_for(sp: PlantSpecies, far := false) -> Array:
+static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR) -> Array:
 	var idx := SpeciesDB.index_of(sp)
-	var key := idx * 2 + int(far)
+	var key := idx * 3 + lod
 	_mutex.lock()
 	var cached = _arrays.get(key)
 	_mutex.unlock()
 	if cached != null:
 		return cached
-	var built := _build(sp, idx, far)
+	var built := _build(sp, idx, lod)
 	_mutex.lock()
 	if not _arrays.has(key):
 		_arrays[key] = built
@@ -158,9 +216,12 @@ static func arrays_for(sp: PlantSpecies, far := false) -> Array:
 	return out
 
 
-static func _build(sp: PlantSpecies, idx: int, far: bool) -> Array:
+static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 	var b := _Builder.new()
-	b.far = far
+	b.far = lod == LOD_FAR
+	b.hero = lod == LOD_HERO
+	b.freq = CROWN_FREQ[lod]
+	var far := b.far
 	var leaf := sp.color
 	var wood := sp.accent
 	b.wood = wood
@@ -170,7 +231,7 @@ static func _build(sp: PlantSpecies, idx: int, far: bool) -> Array:
 	match sp.shape:
 		S.CONIFER:
 			b.trunk(0.04, 0.3, 0.0, 0.2)
-			var cs := 6 if far else 8
+			var cs := 6 if far else (12 if b.hero else 8)
 			b.cone(Vector3(0, 0.15, 0), 0.3, 0.45, cs, leaf.darkened(0.1), 0.2, 0.6)
 			b.cone(Vector3(0, 0.4, 0), 0.23, 0.4, cs, leaf, 0.5, 0.85)
 			b.cone(Vector3(0, 0.65, 0), 0.15, 0.35, cs, leaf.lightened(0.08), 0.8, 1.0)
@@ -222,7 +283,7 @@ static func _build(sp: PlantSpecies, idx: int, far: bool) -> Array:
 			b.blob(Vector3(0, 0.12, 0), Vector3(0.22, 0.13, 0.22), leaf, 0.1)
 			b.cone(Vector3(0, 0.2, 0), 0.07, 0.8, 6, wood, 0.2, 0.6)
 		S.SHRUB:
-			b.crown(Vector3(0, 0.45, 0), Vector3(0.5, 0.45, 0.5), 2, leaf, 0.6, 1)
+			b.crown(Vector3(0, 0.45, 0), Vector3(0.5, 0.45, 0.5), 2, leaf, 0.6)
 		S.TUSSOCK:
 			for k in 9:
 				var a := TAU * k / 9.0
@@ -300,6 +361,8 @@ class _Builder:
 	var parts := PackedInt32Array()
 	var part := 0
 	var far := false
+	var hero := false
+	var freq := 2 # crown lobe detail (PlantMeshes.geosphere())
 	## Vine strands: UV2.y holds each strand's 0-1 key; the foliage shader
 	## shows the strands whose key is under the plant's vine amount.
 	var strand_key := 0.0
@@ -340,7 +403,13 @@ class _Builder:
 				uv2.append(Vector2(2.0, 0.0))
 				parts.append(-1)
 
-	func cylinder(base: Vector3, r: float, h: float, sides: int, col: Color, s0: float, s1: float, axis := Vector3.UP) -> void:
+	## Round parts get half as many sides again right around the player:
+	## smooth silhouettes up close, light meshes farther off.
+	func sides(n: int) -> int:
+		return int(ceil(n * 1.5)) if hero else n
+
+	func cylinder(base: Vector3, r: float, h: float, sides_n: int, col: Color, s0: float, s1: float, axis := Vector3.UP) -> void:
+		var sides := sides(sides_n)
 		var side := axis.cross(Vector3.FORWARD if absf(axis.dot(Vector3.FORWARD)) < 0.9 else Vector3.RIGHT).normalized()
 		var side2 := axis.cross(side).normalized()
 		var top := base + axis * h
@@ -355,7 +424,8 @@ class _Builder:
 			tri(base + o0, top + o0, top + o1, col, s0, s1, s1)
 		mat = 1.0
 
-	func cone(base: Vector3, r: float, h: float, sides: int, col: Color, s0: float, s1: float) -> void:
+	func cone(base: Vector3, r: float, h: float, sides_n: int, col: Color, s0: float, s1: float) -> void:
+		var sides := sides(sides_n) if sides_n < 12 else sides_n
 		var tip := base + Vector3(0, h, 0)
 		var is_wood := col.is_equal_approx(wood)
 		mat = 0.0 if is_wood else 1.0
@@ -384,25 +454,21 @@ class _Builder:
 				var rr := r * (1.0 - y / h)
 				card(base + out * rr * 0.95 + Vector3(0, y, 0), out + Vector3(0, 0.6, 0), r * 0.42, col, lerpf(s0, s1, y / h))
 
-	## Low-poly ellipsoid (a squashed octahedron split once).
+	## A smooth ellipsoid: an icosphere, subdivided like crown lobes (just
+	## an icosahedron when it's small: seed heads, buds).
 	func blob(center: Vector3, radii: Vector3, col: Color, sway: float) -> void:
 		part += 1
-		var pts := [Vector3(1, 0, 0), Vector3(-1, 0, 0), Vector3(0, 1, 0), Vector3(0, -1, 0), Vector3(0, 0, 1), Vector3(0, 0, -1)]
-		var faces := [[0, 2, 4], [4, 2, 1], [1, 2, 5], [5, 2, 0], [4, 3, 0], [1, 3, 4], [5, 3, 1], [0, 3, 5]]
-		for f in faces:
-			var a: Vector3 = pts[f[0]]
-			var b2: Vector3 = pts[f[1]]
-			var d: Vector3 = pts[f[2]]
-			var ab := (a + b2).normalized()
-			var bd := (b2 + d).normalized()
-			var da := (d + a).normalized()
-			for t in [[a, ab, da], [ab, b2, bd], [da, bd, d], [ab, bd, da]]:
-				var u0: Vector3 = t[0]
-				var u1: Vector3 = t[1]
-				var u2: Vector3 = t[2]
-				# Lighter toward the top, per vertex (a smooth gradient).
-				tri3(center + u0 * radii, center + u1 * radii, center + u2 * radii,
-					col * (0.85 + 0.15 * u0.y), col * (0.85 + 0.15 * u1.y), col * (0.85 + 0.15 * u2.y), sway, sway, sway)
+		var small := (radii.x + radii.y + radii.z) / 3.0 < 0.12
+		var sphere: Array = PlantMeshes.geosphere(1 if small else freq)
+		var verts: PackedVector3Array = sphere[0]
+		var faces: PackedInt32Array = sphere[1]
+		for f in range(0, faces.size(), 3):
+			var u0 := verts[faces[f]]
+			var u1 := verts[faces[f + 1]]
+			var u2 := verts[faces[f + 2]]
+			# Lighter toward the top, per vertex (a smooth gradient).
+			tri3(center + u0 * radii, center + u1 * radii, center + u2 * radii,
+				col * (0.85 + 0.15 * u0.y), col * (0.85 + 0.15 * u1.y), col * (0.85 + 0.15 * u2.y), sway, sway, sway)
 		# Leaf-cluster cards around the crown break up the round silhouette.
 		var mean_r := (radii.x + radii.y + radii.z) / 3.0
 		if mean_r >= 0.12:
@@ -416,12 +482,15 @@ class _Builder:
 	var trunk_h := 0.5
 	var trunk_bend := 0.0
 
-	## Trunk: 8-sided, tapering to `top_frac` of the base radius, bending
-	## sideways by `bend` at the top, with a flared foot. Sways from 0 at
-	## the ground to `s1` at the top.
+	## Trunk: 12-sided right around the player (8 in the rest of the detail
+	## ring, 5 beyond), tapering to `top_frac` of the base radius, bending
+	## sideways by `bend` at the top, with a flared foot (rounded in more
+	## rings up close). Sways from 0 at the ground to `s1` at the top.
 	func trunk(r: float, h: float, bend: float, s1: float, top_frac := 0.45) -> void:
 		var rings := [[0.0, 1.7], [0.05, 1.15], [0.45, 1.0], [1.0, 1.0]]
-		if far:
+		if hero:
+			rings = [[0.0, 1.75], [0.03, 1.3], [0.08, 1.08], [0.25, 1.0], [0.5, 1.0], [0.75, 1.0], [1.0, 1.0]]
+		elif far:
 			rings = [[0.0, 1.5], [0.4, 1.0], [1.0, 1.0]]
 		var pts: Array = []
 		for ring in rings:
@@ -429,7 +498,7 @@ class _Builder:
 			var rr := r * lerpf(1.0, top_frac, t) * float(ring[1])
 			var off := Vector3(bend * t * t, 0, bend * 0.3 * t * t)
 			pts.append([Vector3(0, t * h, 0) + off, rr, lerpf(0.0, s1, t)])
-		tube(pts, 5 if far else 8, wood)
+		tube(pts, 5 if far else (12 if hero else 8), wood)
 		trunk_top = pts[pts.size() - 1][0]
 		trunk_h = h
 		trunk_bend = bend
@@ -446,7 +515,11 @@ class _Builder:
 			var start := Vector3(trunk_bend * tt * tt, y, trunk_bend * 0.3 * tt * tt)
 			var out := Vector3(cos(a), 0.0, sin(a))
 			var end := start + out * reach + Vector3(0, reach * rng.randf_range(0.7, 1.1), 0)
-			tube([[start, 0.022, sway * 0.6], [end, 0.01, sway]], 5, wood)
+			if hero:
+				var mid := start.lerp(end, 0.5) + Vector3(0, reach * 0.08, 0)
+				tube([[start, 0.022, sway * 0.6], [mid, 0.016, sway * 0.8], [end, 0.01, sway]], 8, wood)
+			else:
+				tube([[start, 0.022, sway * 0.6], [end, 0.01, sway]], 5, wood)
 
 	## A tube along a polyline: `pts` = [[center, radius, sway], ...].
 	func tube(pts: Array, sides: int, col: Color) -> void:
@@ -478,9 +551,7 @@ class _Builder:
 	## lobe at `center`, the rest clustered around its upper half. Faces
 	## buried inside another lobe are dropped (the triangles go to the
 	## silhouette). Leaf cards sit on the outer surface to rag the outline.
-	func crown(center: Vector3, radii: Vector3, lobes: int, col: Color, sway: float, subdiv := PlantMeshes.CROWN_SUBDIV) -> void:
-		if far:
-			subdiv = maxi(subdiv - 1, 0)
+	func crown(center: Vector3, radii: Vector3, lobes: int, col: Color, sway: float) -> void:
 		var specs: Array = [[center, radii, col]]
 		for k in lobes - 1:
 			var a := TAU * (k + rng.randf_range(-0.2, 0.2)) / maxf(lobes - 1, 1)
@@ -492,13 +563,13 @@ class _Builder:
 		for i in specs.size():
 			var others: Array = specs.duplicate()
 			others.remove_at(i)
-			lobe(specs[i][0], specs[i][1], specs[i][2], sway, subdiv, others)
+			lobe(specs[i][0], specs[i][1], specs[i][2], sway, freq, others)
 
 	## One icosphere lobe with a lumpy surface and top-lit vertex shading;
 	## faces inside any of `others` ([center, radii, ...]) are skipped.
-	func lobe(center: Vector3, radii: Vector3, col: Color, sway: float, subdiv: int, others := []) -> void:
+	func lobe(center: Vector3, radii: Vector3, col: Color, sway: float, detail: int, others := []) -> void:
 		part += 1
-		var sphere: Array = PlantMeshes.icosphere(subdiv)
+		var sphere: Array = PlantMeshes.geosphere(detail)
 		var verts: PackedVector3Array = sphere[0]
 		var faces: PackedInt32Array = sphere[1]
 		var ph := Vector3(rng.randf() * TAU, rng.randf() * TAU, rng.randf() * TAU)
@@ -658,7 +729,8 @@ class _Builder:
 		tri(top - s2, bottom, top + s2, col.darkened(0.1), 0.4, 1.0, 0.4)
 
 	## Flat irregular patch on the ground.
-	func disc(center: Vector3, r: float, h: float, sides: int, col: Color, sway: float) -> void:
+	func disc(center: Vector3, r: float, h: float, sides_n: int, col: Color, sway: float) -> void:
+		var sides := sides(sides_n)
 		part += 1
 		var top := center + Vector3(0, h, 0)
 		for k in sides:

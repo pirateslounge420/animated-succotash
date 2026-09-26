@@ -8,7 +8,7 @@
 // shallows, ultramarine depths). The body is painted, like old-console
 // water: two copies of Look's water texture (caustic lines over a
 // mottled base) drift across each other at different speeds and angles,
-// with the current on rivers, so the surface shimmers with chunky
+// with the current on rivers, so the surface shimmers with soft
 // darker mottles and bright cyan flecks where the lines cross. At glow ponds and other magical sites the
 // water itself emits a teal/cobalt glow at night, bright enough to light
 // the banks (Landmarks adds lights there too).

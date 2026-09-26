@@ -25,6 +25,9 @@ signal chunk_unloaded(chunk: TerrainChunk)
 @export var max_attach_per_frame := 2
 ## Tree trunk colliders added per frame (detail ring only).
 @export var tree_colliders_per_frame := 60
+## Chunks within this of the player draw their plants at their smoothest
+## (PlantMeshes.LOD_HERO); the rest of the detail ring a step lighter.
+const HERO_M := 120.0
 
 var world: Node
 var map: PlanetData
@@ -48,6 +51,9 @@ var _ring_view := {}
 var _ring_detail := {}
 var _ring_keep := {}
 var _ring_keep_detail := {}
+## The chunks within HERO_M of the player, and where that was measured.
+var _hero := {}
+var _hero_at := Vector3.ZERO
 
 
 func setup(p_world: Node) -> void:
@@ -62,6 +68,7 @@ func setup(p_world: Node) -> void:
 	# crowns): fill them here so no two threads race to write them.
 	for level in 3:
 		PlantMeshes.icosphere(level)
+	PlantMeshes.geosphere(3)
 	VegetationPlacer.warm(map.terrain.world_seed)
 
 
@@ -99,6 +106,21 @@ static func keys_around(d: Vector3, radius: int) -> Dictionary:
 	return out
 
 
+## Chunks overlapping the disc of HERO_M around `d` (sampled every
+## 60 m).
+static func _hero_keys(d: Vector3) -> Dictionary:
+	var out := {}
+	var east := CubeSphere.east(d)
+	var north := CubeSphere.north(d)
+	for a in range(-2, 3):
+		for b in range(-2, 3):
+			var off := Vector2(a, b) * (HERO_M * 0.5)
+			if off.length() > HERO_M + 1.0:
+				continue
+			out[TerrainChunk.key_at((d + (east * off.x + north * off.y) / PlanetConst.RADIUS_M).normalized())] = true
+	return out
+
+
 func update_around(player_dir: Vector3) -> void:
 	# The rings only change when the player crosses into another chunk;
 	# they're measured from that chunk's center, so they're recomputed only
@@ -113,6 +135,9 @@ func update_around(player_dir: Vector3) -> void:
 		_ring_keep_detail = keys_around(c, detail_radius_chunks + 1)
 	_wanted = _ring_view
 	_wanted_detail = _ring_detail
+	if _hero_at == Vector3.ZERO or _hero_at.distance_to(player_dir) * PlanetConst.RADIUS_M > 15.0:
+		_hero_at = player_dir
+		_hero = _hero_keys(player_dir)
 	for key in _wanted:
 		if not chunks.has(key) and not _pending.has(key):
 			_pending[key] = WorkerThreadPool.add_task(_compute_base.bind(key))
@@ -131,7 +156,7 @@ func update_around(player_dir: Vector3) -> void:
 		elif _wanted_detail.has(key) and c.detail_node == null and not _pending_detail.has(key):
 			_pending_detail[key] = WorkerThreadPool.add_task(_compute_detail.bind(key, c.data, c.hosts))
 		if chunks.has(key):
-			c.set_fine(_wanted_detail.has(key))
+			c.set_fine(_wanted_detail.has(key), _hero.has(key))
 
 	_attach_base(max_attach_per_frame)
 	_attach_detail(max_attach_per_frame)
@@ -229,7 +254,7 @@ func _attach_base(limit: int) -> void:
 		chunk.hosts = data.hosts
 		VegetationPlacer.build_nodes(chunk, chunk, data.plants)
 		world.world_root.add_child(chunk)
-		chunk.set_fine(_wanted_detail.has(key))
+		chunk.set_fine(_wanted_detail.has(key), _hero.has(key))
 		chunks[key] = chunk
 		chunk_loaded.emit(chunk)
 		attached += 1
@@ -269,6 +294,8 @@ func load_blocking(d: Vector3) -> void:
 	var inner := keys_around(d, detail_radius_chunks)
 	_wanted = keys_around(d, view_radius_chunks)
 	_wanted_detail = inner
+	_hero_at = d
+	_hero = _hero_keys(d)
 	_rings_key = Vector3i(-1, -1, -1) # the next update rebuilds the rings
 	# Work still queued for where the player was is abandoned (those tasks
 	# skip it), and the chunks needed now jump the queue.

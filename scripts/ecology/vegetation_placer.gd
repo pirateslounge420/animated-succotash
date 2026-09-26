@@ -320,10 +320,10 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 		# Instance colors (all white) too: without them the compatibility
 		# renderer garbles vertex colors when custom data is on.
 		mm.use_colors = true
-		# Trees on the chunk start with their light far mesh; the chunk
-		# swaps in the full one near the player (TerrainChunk.set_fine).
+		# Each at the chunk's current detail level; the chunk swaps meshes
+		# as the player comes and goes (TerrainChunk.set_fine).
 		var lod := parent == chunk
-		mm.mesh = PlantMeshes.mesh_for(sp, lod)
+		mm.mesh = PlantMeshes.mesh_for(sp, chunk.plant_lod(parent))
 		mm.instance_count = entry[1]
 		mm.buffer = entry[0]
 		for t in entry[2]:
@@ -334,8 +334,7 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 		mmi.name = sp.name.replace(" ", "_")
 		mmi.multimesh = mm
 		mmi.material_override = PlantMeshes.material()
-		if lod:
-			mmi.set_meta("species", sp_idx)
+		mmi.set_meta("species", sp_idx)
 		if sp.tier == T.GROUND or sp.tier == T.EPIPHYTE:
 			mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			# Out to 300 m so the ground never reads bare (it only exists in

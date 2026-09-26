@@ -229,17 +229,19 @@ Verified:
     Environment's fog.
 
   Low ground below eye level fills with extra mist, strongest at night.
-- **Textures.** A small procedural set, generated at startup by
-  `Look.texture()` (~0.2 s): 128 px, nearest-filtered with mipmaps, and
-  centered on 0.5 so shaders multiply by 2 and keep the vertex color's
-  hue. Texels stay crisp but are dense with painted detail (thousands
-  of grass blades, lit and shadowed pebbles of several sizes), for a
-  texture-led look like the hand-painted references rather than big
-  blocky texels.
+- **Textures.** A small procedural set (`LookTextures`), painted at
+  startup on a worker thread while the planet generates (~0.4 s):
+  256 px, nearest-filtered with mipmaps (anisotropic on the ground) so
+  texels stay crisp, and centered on 0.5 so shaders multiply by 2 and
+  keep the vertex color's hue. They're dense with painted detail: grass is 2,200
+  tapered, bowed blades in light and dark, leaves are pointed shaded
+  leaves with a midrib, dirt is smooth mottling with soft pebbles and
+  crumbs, sand has wind ripples, stone has cells and cracks, bark has
+  fibers and grooves.
   - grass, dirt, sand and stone on the ground, picked by the ground color
     (green → grass, bright warm → sand, low saturation → stone, otherwise
-    dirt). Texels are about 1.4 cm for grass, 1.1 cm for dirt, 2 cm for
-    sand and 2.6 cm for stone. Each is sampled twice (a turned, rescaled
+    dirt). Texels are about 0.7 cm for grass, 0.55 cm for dirt, 1 cm for
+    sand and 1.3 cm for stone. Each is sampled twice (a turned, rescaled
     copy blended in by slow noise) so the tiling doesn't show. Smooth
     light and dark patches at two scales (a few meters, a few tens of
     meters) paint over them, with grass warmer in the light and cooler in
@@ -255,24 +257,33 @@ Verified:
   - weave (over-under strands) and fur (short strokes hanging down) for
     the player's robe, mantle and hair.
     The material ID (bark, leaves, card) rides in UV2.x;
-  - stone on ruins (texels about 1.5 cm), turning to leaves where moss
-    grows, with soft weathering patches;
-  - the 32 px grain: bound twice, crisp for small-scale grit and smoothly
-    filtered (`look_grain_soft`) for large-scale variation, so broad
-    patches never come out as blocks.
-- **Smooth shading, GameCube style** (the F-Zero GX / Melee / PSO look
-  rather than flat low poly): terrain, plants, rocks, ruins and creatures
-  have smoothed vertex normals; terrain normals come from a grid padded
-  past each chunk edge so chunks agree along every edge.
+  - stone on ruins, turning to leaves where moss grows, with soft
+    weathering patches;
+  - the 64 px grain (soft noise with a little cellular clumping), for
+    large-scale light and dark: broad patches never come out as blocks.
+- **Smooth shading and round models, GameCube style** (the F-Zero GX /
+  Melee / Beyond Good & Evil look rather than faceted low poly):
+  terrain, plants, rocks, ruins and creatures have smoothed vertex
+  normals; terrain normals come from a grid padded past each chunk edge
+  so chunks agree along every edge. Silhouettes are round where they
+  show: trees near the player get 180-triangle crown lobes and 12-sided
+  trunks (Vegetation), boulders are 320-triangle spheres, creature parts
+  28-sided spheres and capsules, and camp folk, wolves, deer and goblins
+  are one-piece sculpted bodies (Creatures).
 - **Lighting** is a custom light() in every world shader (Look):
   - Lambert, plus **colored shadows**: where the sun or moon is blocked
     or faces away, a share of it comes back tinted teal by day and cobalt
     at night, multiplying each surface's own color, so shaded forest
     stays green. The day ambient is neutral (0.26); the tint carries the
     color of shade.
-  - a soft glossy **sheen** (Blinn-Phong): strongest on creatures, lighter
-    on worn stone, a waxy glint on leaves. Sky reflections are off
-    everywhere except water.
+  - a glossy **sheen** (Blinn-Phong, energy-normalized so a tight
+    highlight is bright and a broad one soft): strongest on creatures
+    (horn, hooves and leather most), lighter on worn stone, a waxy glint
+    on leaves;
+  - a **sky gloss**: surfaces seen edge-on pick up the sky's color
+    (`look_sky_color`, the horizon toward the zenith, dimming at night),
+    the glassy rim of GameCube-era models: most on horn and leather, some
+    on skin, a little on fur and stone.
   - rim light, leaf translucency and the ground's wet toon highlight at
     night, reimplemented because a custom light() replaces Godot's.
 - **Clouds** (`CloudLayers`): three transparent shells round the planet,
@@ -324,7 +335,8 @@ Verified:
     flames, lanterns, glowing water and moss, and the sun push above the
     threshold and bloom; ordinary daylight surfaces don't.
   - **Grade:** contrast 1.28 by day and 1.32 at night, saturation 1.42
-    by day (1.2 at night), exposure 0.9, for deep shadows and bright
+    by day (1.2 at night; `SkySystem.grade_saturation`, `grade_contrast`),
+    exposure 0.9, for deep shadows and bright
     highlights. Sky and fog are smooth gradients (they were stepped in 5
     and 6 flat bands).
 - **Bioluminescent night** (the third palette): see Landmarks. Moss
@@ -612,12 +624,18 @@ copy.
 - **Rendering.** One MultiMesh per species. `PlantMeshes` builds 24
   placeholder shapes (25 with bamboo: clumps of arching, node-ringed culms,
   dwarf to 30 m giants); the foliage shader sways them with the live wind.
-  Trees have crowns of 3-6 overlapping noise-displaced icospheres (faces
+  Trees have crowns of 3-6 overlapping noise-displaced spheres (faces
   buried in a neighboring lobe are dropped, so triangles go to the
-  silhouette) with leaf cards on the outside, and 8-sided trunks that
-  taper, bend and flare, with branches into the crown. Near the player a
-  tree is 120-360 triangles, a shrub ~120; farther out trees swap to a
-  light mesh (icosahedron lobes, 5-sided trunk, no cards or vines).
+  silhouette) with leaf cards on the outside, and trunks that taper, bend
+  and flare, with branches into the crown. Three detail levels
+  (`PlantMeshes.LOD_*`), swapped per chunk (`TerrainChunk.set_fine`):
+  - hero, the chunks within 120 m of the player: round crown lobes
+    (180-triangle geodesic spheres), 12-sided trunks with a rounded
+    flare, curved branches; a tree is 300-820 triangles, a shrub ~270;
+  - near, the rest of the detail ring: 80-triangle lobes, 8-sided trunks;
+    120-370 triangles;
+  - far, beyond it: 80-triangle lobes, 5-sided trunks, no branches,
+    cards or vines; 56-230 triangles.
 - **Moss and vines.** Each plant carries its site's moss (moisture) and
   vine (moisture and warmth) amounts in the MultiMesh custom data: moss
   creeps over the bark, and tree meshes' hanging vine strands (lianas;
@@ -697,8 +715,9 @@ Spawn tiers:
   stone ruins), lanterns and all.
 
 - **Sculpted bodies** (`SculptedBodies`, `SculptRig`,
-  `creature_sculpt.gdshader`): wolf, deer and goblin are one seamless,
-  skinned mesh each instead of glued primitives.
+  `creature_sculpt.gdshader`): wolf, deer, goblin and the camp folk
+  ("tribal" and "elder") are one seamless, skinned mesh each instead of
+  glued primitives.
   - The body is signed-distance shapes (tapered capsules, ellipsoids)
     blended with a smooth minimum, meshed with surface nets on a worker
     thread at startup and cached per species.
@@ -710,11 +729,26 @@ Spawn tiers:
     tail swings bend the body at the hip and shoulder.
   - Triplanar fur or skin grain, a glossier sheen and rim, and a coarse
     LOD past 45 m.
+  - Camp folk come in every shade of skin (people also of hide), so the
+    tribal, elder and goblin meshes carry skin and hide as tint channels:
+    each vertex's weight of each (with its shade and occlusion) in UV2,
+    the person's colors in a material shared by everyone within a shade
+    of them. One mesh per kind, not one per person (goblins used to start
+    a new one-second build for every camp goblin's green, and never got
+    to use it).
+  - People: lean and long-limbed, a hide tunic to mid-thigh with a belt
+    and dark hem, bare arms with leather bracers, leggings, wrapped feet,
+    dark hair tied back, ochre paint under the eyes; the elder has a fur
+    mantle, a drape down the back, grey hair and a beard. Their gear
+    (spear, bow, quivers, staff) is `CreatureBodies.tribal_gear()`, shared
+    with the primitive body, which stands in until the mesh is built.
+    They start building with the planet (`prewarm_folk()`), and the
+    opening camp waits for them.
+  - Colors are sRGB, converted to linear when baked, like the primitive
+    bodies' (they were baked raw, so sculpted coats came out paler).
   - Triangles (near / far): wolf 2,604 / 416, deer 3,596 / 660, goblin
     4,388 / 820. Built in 0.6-1.1 s each on a worker; no measurable frame
     time change.
-  - The rest of the bodies are still primitives, pending a verdict on
-    these three.
 - **Imported models** (`ModelLibrary`, `ModelAnimator`,
   `shaders/model.gdshader`; see `assets/models/README.md`): a `.glb` in
   assets/models/ named `player` or after a species or NPC replaces that
@@ -725,10 +759,11 @@ Spawn tiers:
 
 Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
 howl, drone and whisper. Bodies are placeholders (`CreatureBodies`)
-built from smooth-shaded spheres and capsules (12 sides × 6 rings for
-bodies and heads, coarser for small parts), limbs that taper from hip to
-foot, and flattened-cone ears, lit by `creature.gdshader` (colored
-shadows, rim, sheen). Meshes are shared by every creature: 336-820
+built from smooth-shaded spheres and capsules (28 sides × 14 rings for
+bodies and heads, 16 × 8 for snouts and tails, coarser for eyes and
+noses), limbs that taper from hip to foot (12 sides), and
+flattened-cone ears, lit by `creature.gdshader` (colored shadows, rim,
+sheen, sky gloss). Meshes are shared by every creature: 336-820
 triangles each (deer ~900 and troll ~1,030 with antlers and mossy back).
 Wolf dens are framed by boulders and a bevelled slab. (The capsules and
 limbs were wound inside out, so their near side was culled and the far
@@ -756,11 +791,13 @@ the way Godot draws a front face.)
   in the vertex colors. A fur mantle carries bone and wooden beads with a
   tooth pendant. A hide belt with a bone toggle holds a satchel. Every
   part is a smooth surface of revolution with its color, material and
-  sway baked per vertex. The parts merge into four meshes, so four draw
-  calls and about 2,070 triangles: the robe and gear, then Head at the
-  neck and ArmL/ArmR at the shoulders (pivots for later animation). The
-  shader lights him like the creatures and gives each material one of
-  `Look`'s chunky 64 px textures, including the new `weave` and `fur`.
+  sway baked per vertex, and about twice as many sides around as he had
+  (30 round the robe, 36 round the ragged mantle, 22 × 13 for the head
+  and hair), so his outline is smooth. The parts merge into four meshes,
+  so four draw calls: the robe and gear, then Head at the neck and
+  ArmL/ArmR at the shoulders (pivots for later animation). The shader
+  lights him like the creatures and gives each material one of `Look`'s
+  painterly textures, including `weave` and `fur`.
   The hem, sleeve ends and hair trail behind and flutter with
   `set_motion()` (the player's speed). Crouching still squashes the body
   vertically.
@@ -833,9 +870,14 @@ at least 20 km apart; each new game picks one at random
 (`World.spawn_choice` pins one). `site_near()` finds a flat, dry spot
 there (off water, rivers and wetlands, level across the camp), plants
 keep a 12 m clearing, and the camp is a campfire (`Campfire`, shared with
-the mythical folk camps), the player's hide mat facing it, and an elder
-and a hunter (`CreatureBodies` tribal bodies) across the fire on log
-seats, who breathe and turn toward the player when near. At the start
+the other camps), the player's hide mat facing it, and an elder and a
+hunter (sculpted bodies) across the fire on log seats, who breathe and
+turn toward the player when near. The fire is a ring of stones and
+crossed logs on a bed of glowing coals under four tongues of flame
+(`shaders/flame.gdshader`): cards that turn to face the camera, drawn
+additively so they build a hot white-yellow core with orange and a deep
+red edge, licked and torn by grain scrolling up, each on its own phase,
+and bright enough to bloom. At the start
 they speak once, as subtitles (`Hud.say`): "You're finally awake." /
 "Be careful at night, don't let it get you...". The camera opens over
 the player's shoulder so the fire is in view.

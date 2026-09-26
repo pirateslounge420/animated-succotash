@@ -111,3 +111,7 @@ look_shadow_tint={
 "type": "vec3",
 "value": Vector3(0.06372, 0.34239, 0.57048)
 }
+look_sky_color={
+"type": "vec3",
+"value": Vector3(0.3, 0.5, 0.9)
+}

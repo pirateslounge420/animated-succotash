@@ -6,9 +6,9 @@
 // one material every plant shares (PlantMeshes.material()); its direction
 // sets which way crowns lean and its strength how far and how fast.
 //
-// Textured (Look, 64 px nearest): bark streaks on trunks, a leafy surface
-// on crowns, and alpha-cutout leaf-cluster cards around the crowns so
-// silhouettes are ragged and dappled instead of round. The material
+// Textured (Look, crisp nearest-filtered): bark streaks on trunks,
+// a leafy surface on crowns, and alpha-cutout leaf-cluster cards around
+// the crowns so silhouettes are ragged and dappled instead of round. The material
 // comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine, 4 bamboo culm);
 // card UVs are in UV.
 //
@@ -130,5 +130,5 @@ void light() {
 	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, ROUGHNESS, 0.45, 0.4, ALBEDO);
 	DIFFUSE_LIGHT += look_backlight(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, BACKLIGHT);
 	// A waxy glint on leaves (none on bark).
-	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, 20.0, 0.1) * step(0.001, BACKLIGHT.g);
+	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, 16.0, 0.16) * step(0.001, BACKLIGHT.g);
 }

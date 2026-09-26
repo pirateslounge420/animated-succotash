@@ -35,12 +35,12 @@ void fragment() {
 	}
 	ROUGHNESS = 0.6;
 	SPECULAR = 0.0;
-	EMISSION = emission_color * emission_energy + look_rim(NORMAL, VIEW, 0.45);
+	EMISSION = emission_color * emission_energy + look_rim(NORMAL, VIEW, 0.45) + look_gloss(NORMAL, VIEW, 0.14);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }
 
 void light() {
 	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
 	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, ROUGHNESS, 0.5, 0.4, ALBEDO);
-	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, 32.0, 0.4);
+	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, 24.0, 0.5);
 }

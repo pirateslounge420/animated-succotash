@@ -1,8 +1,8 @@
 // Ground. Low-poly faces colored per vertex (TerrainChunk), lit flat:
 // Lambert diffuse and no PBR specular, like GameCube-era terrain. The
-// surface is texture-led, like hand-painted N64/PS2-era ground: Look's
-// 128 px textures, crisp (nearest-filtered) but dense (grass texels about
-// 1.4 cm), picked by the vertex color: streaky grass on green ground,
+// surface is texture-led, like the hand-painted ground of GameCube-era
+// games: Look's 256 px textures, crisp (nearest-filtered) but dense (grass
+// texels about 0.7 cm), picked by the vertex color: streaky grass on green ground,
 // rippled sand on bright warm ground, pebbly dirt on soil, mottled stone
 // on grey rock faces, just a faint grain on snow. Each is sampled twice (a second, turned and
 // rescaled copy) and blended by a slow noise so the tiling doesn't show,

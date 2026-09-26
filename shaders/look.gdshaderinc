@@ -137,9 +137,21 @@ vec3 look_backlight(vec3 n, vec3 l, vec3 light_color, float att, vec3 backlight)
 }
 
 // A soft glossy sheen (Blinn-Phong), the GameCube-era highlight that makes
-// rounded forms read smooth and polished (F-Zero GX) rather than matte
-// low-poly: `power` sets its size, `amount` its strength.
+// rounded forms read smooth and polished (Melee's figures, F-Zero GX)
+// rather than matte low-poly: `power` sets its size, `amount` its
+// strength. Normalized so a tight highlight is brighter, as it would be;
+// it fades in over the terminator instead of switching on.
 vec3 look_sheen(vec3 n, vec3 v, vec3 l, vec3 light_color, float att, float power, float amount) {
 	vec3 h = normalize(l + v);
-	return light_color / PI * att * pow(max(dot(n, h), 0.0), power) * amount * step(0.0, dot(n, l));
+	float norm = (power + 8.0) / 40.0;
+	return light_color / PI * att * pow(max(dot(n, h), 0.0), power) * norm * amount * smoothstep(0.0, 0.2, dot(n, l));
+}
+
+// The sky seen in a glossy surface at grazing angles (fresnel): the
+// environment-mapped gloss of the era's characters and machines. Added
+// as emission; `look_sky_color` follows the sky through the day.
+global uniform vec3 look_sky_color;
+vec3 look_gloss(vec3 n, vec3 v, float amount) {
+	float f = pow(1.0 - clamp(dot(n, v), 0.0, 1.0), 4.0);
+	return look_sky_color * f * amount;
 }

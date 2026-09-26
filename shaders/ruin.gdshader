@@ -28,7 +28,7 @@ void vertex() {
 void fragment() {
 	vec3 an = abs(obj_normal);
 	vec2 uv = an.y > 0.6 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
-	// Mottled stone (texels about 1.5 cm), turning leafy where moss grows
+	// Mottled stone (texels under a centimeter), turning leafy where moss grows
 	// (vertex alpha), with soft weathering: patches of light and dark a
 	// meter or two across.
 	int kind = int(round(UV.x));

@@ -21,31 +21,44 @@ class_name SculptedBodies
 ## tail swings drive the bones unchanged. Until a kind's mesh is ready
 ## (or with `enabled` off) CreatureBodies builds the old body.
 ##
-## Kinds so far (the first three test subjects): "wolf", "deer",
-## "goblin". A near mesh and a coarser far one (past FAR_M).
+## Kinds: "wolf", "deer", "goblin", and people: "tribal" (the camps'
+## hunters and archers) and "elder" (a fur mantle, grey hair, a beard).
+## A near mesh and a coarser far one (past FAR_M).
+##
+## Camp folk come in every shade of skin (and people of hide), so their
+## meshes carry those two as tint channels instead of colors (the weight
+## of each at every vertex, occlusion included, in UV2): one mesh per
+## kind, and each one's own colors in a material (_tinted()). Other kinds
+## are built once per coat color. Colors are sRGB like CreatureBodies'.
 
-const KINDS := ["wolf", "deer", "goblin"]
+const KINDS := ["wolf", "deer", "goblin", "tribal", "elder"]
+const TINTED := ["tribal", "elder", "goblin"]
 const FAR_M := 45.0
 
 ## Off: every body the old way (for comparisons).
 static var enabled := true
 
-static var _cache := {} # key (kind:color) -> {"arrays", "far_arrays", "bones", "tris", "ms"} once built
+static var _cache := {} # key (key_for()) -> {"arrays", "far_arrays", "bones", "tris", "ms"} once built
 static var _meshes := {} # key -> [ArrayMesh near, ArrayMesh far, Skin]
 static var _pending := {} # key -> task id
 static var _mutex := Mutex.new()
 static var _material: ShaderMaterial
+static var _tints := {} # skin + hide colors -> ShaderMaterial
 
 
 ## The sculpted kind for a species, or "".
 static func kind_for(sp: CreatureSpecies) -> String:
 	var k := sp.shape if sp.role == "mythical" else sp.body
+	if k == "tribal" and sp.shape.begins_with("elder"):
+		k = "elder"
 	return k if k in KINDS else ""
 
 
-## Cache key: the kind and the species' coat color.
+## Cache key: the kind and the species' coat color (just the kind for
+## camp folk: their colors are tints).
 static func key_for(sp: CreatureSpecies) -> String:
-	return kind_for(sp) + ":" + sp.color.to_html(false)
+	var kind := kind_for(sp)
+	return kind if kind in TINTED else kind + ":" + sp.color.to_html(false)
 
 
 ## Start building every sculpted species' body in the background.
@@ -53,6 +66,13 @@ static func prewarm(species: Array[CreatureSpecies]) -> void:
 	for sp in species:
 		if kind_for(sp) != "":
 			_start(key_for(sp), kind_for(sp), sp.color)
+
+
+## Start building the camp folk's bodies (call early: the opening camp
+## needs them in its first frame).
+static func prewarm_folk() -> void:
+	for kind in TINTED:
+		_start(kind, kind, Color.WHITE)
 
 
 static func _start(key: String, kind: String, base: Color) -> void:
@@ -107,6 +127,20 @@ static func ready(sp: CreatureSpecies) -> bool:
 	return ok
 
 
+## Wait until this species' mesh is built (building it now if need be),
+## for bodies that must look right from their first frame.
+static func wait_ready(sp: CreatureSpecies) -> void:
+	if not enabled or kind_for(sp) == "" or ready(sp):
+		return
+	var key := key_for(sp)
+	_mutex.lock()
+	var id: int = _pending.get(key, -1)
+	_pending.erase(key)
+	_mutex.unlock()
+	if id >= 0:
+		WorkerThreadPool.wait_for_task_completion(id)
+
+
 ## The body for `sp`, or {} if it has no sculpted kind or isn't ready yet.
 static func build(sp: CreatureSpecies) -> Dictionary:
 	if not enabled:
@@ -137,7 +171,7 @@ static func build(sp: CreatureSpecies) -> Dictionary:
 		mi.name = "Near" if f == 0 else "Far"
 		mi.mesh = res[f]
 		mi.skin = res[2]
-		mi.material_override = material()
+		mi.material_override = _tinted(sp) if kind in TINTED else material()
 		if f == 0:
 			mi.visibility_range_end = FAR_M
 		else:
@@ -179,6 +213,26 @@ static func material() -> ShaderMaterial:
 	return _material
 
 
+## A camp folk's material: the shared one with their skin and hide colors
+## (shared in turn by everyone within a shade of them), taken linear.
+static func _tinted(sp: CreatureSpecies) -> ShaderMaterial:
+	var skin := _snap(sp.color)
+	var hide := _snap(sp.accent)
+	var key := skin.to_html(false) + hide.to_html(false)
+	if not _tints.has(key):
+		var m := material().duplicate() as ShaderMaterial
+		var sl := skin.srgb_to_linear()
+		var hl := hide.srgb_to_linear()
+		m.set_shader_parameter("skin_color", Vector3(sl.r, sl.g, sl.b))
+		m.set_shader_parameter("hide_color", Vector3(hl.r, hl.g, hl.b))
+		_tints[key] = m
+	return _tints[key]
+
+
+static func _snap(c: Color) -> Color:
+	return Color(snappedf(c.r, 1.0 / 64.0), snappedf(c.g, 1.0 / 64.0), snappedf(c.b, 1.0 / 64.0))
+
+
 static func _make_meshes(key: String) -> void:
 	var data: Dictionary = _cache[key]
 	var out: Array = []
@@ -194,8 +248,8 @@ static func _make_meshes(key: String) -> void:
 	_meshes[key] = out
 
 
-## Eyes, antlers, the goblin's lantern: small separate parts on the head
-## pivot (or the root).
+## Eyes, antlers, the goblin's lantern, people's gear: small separate
+## parts on the head pivot (or the root).
 static func _attach_extras(b: Dictionary, kind: String, sp: CreatureSpecies) -> void:
 	var root: Node3D = b.root
 	var head: Node3D = root.get_node_or_null("Head")
@@ -221,6 +275,9 @@ static func _attach_extras(b: Dictionary, kind: String, sp: CreatureSpecies) -> 
 			CreatureBodies.eyes(head, Vector3(0, 0.79, -0.125) - hp, 0.05, 0.022, Color(1.0, 0.85, 0.3), 1.5)
 			var arm: Node3D = b.wings[1] if b.wings.size() > 1 else root
 			CreatureBodies._lantern(b, arm, Vector3(0.18, 0.24, -0.06) - arm.position, sp.accent)
+		"tribal", "elder":
+			CreatureBodies.eyes(head, Vector3(0, 0.903, -0.054) - hp, 0.021, 0.0085, Color(0.07, 0.05, 0.04))
+			CreatureBodies.tribal_gear(b, sp)
 
 
 # --- The shapes ----------------------------------------------------------------
@@ -240,6 +297,10 @@ class Prim:
 	var color := Color.WHITE
 	var mat := 1 # 0 skin, 1 fur, 2 horn/hoof
 	var paint := false # color only, no geometry
+	## Tint channel: 0 its own color, 1 skin, 2 hide (the person's colors
+	## times `shade`).
+	var channel := 0
+	var shade := 1.0
 	var soft := 0.02 # paint edge
 	var bound_c := Vector3.ZERO
 	var bound_r := 1.0
@@ -327,7 +388,7 @@ class Spec:
 		return p
 
 	## A color-only ellipsoid: tints what's inside it (soft edge).
-	func paint(c: Vector3, r: Vector3, col: Color, soft := 0.02, basis := Basis.IDENTITY, mat := -1) -> void:
+	func paint(c: Vector3, r: Vector3, col: Color, soft := 0.02, basis := Basis.IDENTITY, mat := -1) -> Prim:
 		var p := Prim.new()
 		p.type = 1
 		p.center = c
@@ -339,6 +400,19 @@ class Spec:
 		p.mat = mat
 		p.setup()
 		paints.append(p)
+		return p
+
+	## A person's shape (or paint) in their own skin or hide color, times
+	## `shade`, instead of its own.
+	func skin(p: Prim, shade := 1.0) -> Prim:
+		p.channel = 1
+		p.shade = shade
+		return p
+
+	func hide(p: Prim, shade := 1.0) -> Prim:
+		p.channel = 2
+		p.shade = shade
+		return p
 
 	func mirror(v: Vector3, s: float) -> Vector3:
 		return Vector3(v.x * s, v.y, v.z)
@@ -352,7 +426,16 @@ static func _spec(kind: String, base: Color) -> Spec:
 		"deer":
 			_deer(s, base)
 		"goblin":
-			_goblin(s, base)
+			_goblin(s)
+		"tribal":
+			_person(s, false)
+		"elder":
+			_person(s, true)
+	# Colors are authored in sRGB, like CreatureBodies' (the shader takes
+	# them linear).
+	for pr in s.prims + s.paints:
+		if pr.channel == 0:
+			pr.color = pr.color.srgb_to_linear()
 	return s
 
 
@@ -445,49 +528,119 @@ static func _deer(s: Spec, base: Color) -> void:
 
 ## Goblin (unit = height ~1, standing): a pot belly on skinny legs with
 ## big feet, long arms to knobbly hands, a big head with a heavy brow,
-## cheekbones, a long hooked nose and a wide jaw, huge pointed ears. Green
-## skin, a leather loincloth and belt.
-static func _goblin(s: Spec, base: Color) -> void:
+## cheekbones, a long hooked nose and a wide jaw, huge pointed ears. The
+## skin (a tint: camp goblins come in many greens), darker over the scalp
+## and back; a leather loincloth and belt.
+static func _goblin(s: Spec) -> void:
 	s.cell = 0.019
-	var skin := base
+	var W := Color.WHITE
 	var leather := Color(0.36, 0.25, 0.15)
 	var root := s.bone("Root", -1, Vector3(0, 0.34, 0))
 	var head := s.bone("Head", root, Vector3(0, 0.62, -0.01), "head")
-	s.ell(Vector3(0, 0.34, 0.0), Vector3(0.1, 0.075, 0.08), root, skin, 0.04, Basis.IDENTITY, 0) # pelvis
-	s.ell(Vector3(0, 0.43, -0.03), Vector3(0.11, 0.1, 0.1), root, skin, 0.05, Basis.IDENTITY, 0) # belly
-	s.cap(Vector3(0, 0.42, 0.01), Vector3(0, 0.55, 0.0), 0.095, 0.11, root, skin, 0.05, 0) # chest
-	s.ell(Vector3(0, 0.54, 0.0), Vector3(0.14, 0.05, 0.07), root, skin, 0.04, Basis.IDENTITY, 0) # shoulders
-	s.cap(Vector3(0, 0.56, 0.0), Vector3(0, 0.66, -0.01), 0.045, 0.05, head, skin, 0.03, 0) # neck
-	s.ell(Vector3(0, 0.77, -0.02), Vector3(0.12, 0.115, 0.115), head, skin, 0.04, Basis.IDENTITY, 0) # skull
-	s.ell(Vector3(0, 0.8, -0.1), Vector3(0.095, 0.025, 0.035), head, skin, 0.03, Basis.IDENTITY, 0) # brow
-	s.ell(Vector3(0, 0.69, -0.06), Vector3(0.09, 0.05, 0.08), head, skin, 0.035, Basis.IDENTITY, 0) # jaw
+	s.skin(s.ell(Vector3(0, 0.34, 0.0), Vector3(0.1, 0.075, 0.08), root, W, 0.04, Basis.IDENTITY, 0)) # pelvis
+	s.skin(s.ell(Vector3(0, 0.43, -0.03), Vector3(0.11, 0.1, 0.1), root, W, 0.05, Basis.IDENTITY, 0)) # belly
+	s.skin(s.cap(Vector3(0, 0.42, 0.01), Vector3(0, 0.55, 0.0), 0.095, 0.11, root, W, 0.05, 0)) # chest
+	s.skin(s.ell(Vector3(0, 0.54, 0.0), Vector3(0.14, 0.05, 0.07), root, W, 0.04, Basis.IDENTITY, 0)) # shoulders
+	s.skin(s.cap(Vector3(0, 0.56, 0.0), Vector3(0, 0.66, -0.01), 0.045, 0.05, head, W, 0.03, 0)) # neck
+	s.skin(s.ell(Vector3(0, 0.77, -0.02), Vector3(0.12, 0.115, 0.115), head, W, 0.04, Basis.IDENTITY, 0)) # skull
+	s.skin(s.ell(Vector3(0, 0.8, -0.1), Vector3(0.095, 0.025, 0.035), head, W, 0.03, Basis.IDENTITY, 0)) # brow
+	s.skin(s.ell(Vector3(0, 0.69, -0.06), Vector3(0.09, 0.05, 0.08), head, W, 0.035, Basis.IDENTITY, 0)) # jaw
 	for sd: float in [-1.0, 1.0]:
-		s.ell(Vector3(0.06 * sd, 0.74, -0.1), Vector3(0.03, 0.025, 0.025), head, skin, 0.025, Basis.IDENTITY, 0) # cheekbone
+		s.skin(s.ell(Vector3(0.06 * sd, 0.74, -0.1), Vector3(0.03, 0.025, 0.025), head, W, 0.025, Basis.IDENTITY, 0)) # cheekbone
 		var ear_b := Basis(Vector3.BACK, 0.25 * sd) * Basis(Vector3.UP, -0.25 * sd)
-		s.ell(Vector3(0.18 * sd, 0.8, 0.0), Vector3(0.1, 0.04, 0.026), head, skin, 0.025, ear_b, 0) # ear
+		s.skin(s.ell(Vector3(0.18 * sd, 0.8, 0.0), Vector3(0.1, 0.04, 0.026), head, W, 0.025, ear_b, 0)) # ear
 		s.paint(Vector3(0.19 * sd, 0.8, -0.02), Vector3(0.07, 0.022, 0.02), Color(0.62, 0.42, 0.3), 0.01, ear_b) # inner ear
-	s.cap(Vector3(0, 0.77, -0.12), Vector3(0, 0.71, -0.2), 0.028, 0.012, head, skin, 0.02, 0) # hooked nose
+	s.skin(s.cap(Vector3(0, 0.77, -0.12), Vector3(0, 0.71, -0.2), 0.028, 0.012, head, W, 0.02, 0)) # hooked nose
 	# Legs (left, right), then arms (left, right).
 	for sd: float in [-1.0, 1.0]:
 		var x := 0.06 * sd
 		var leg := s.bone("Leg" + ("L" if sd < 0.0 else "R"), root, Vector3(x, 0.32, 0.0), "leg")
-		s.cap(Vector3(x, 0.32, 0.0), Vector3(x * 1.15, 0.18, -0.02), 0.045, 0.032, leg, skin, 0.03, 0)
-		s.ell(Vector3(x * 1.15, 0.18, -0.025), Vector3(0.034, 0.03, 0.032), leg, skin, 0.015, Basis.IDENTITY, 0) # knee
-		s.cap(Vector3(x * 1.15, 0.18, -0.02), Vector3(x * 1.2, 0.05, 0.0), 0.03, 0.024, leg, skin, 0.015, 0)
-		s.ell(Vector3(x * 1.2, 0.028, -0.045), Vector3(0.042, 0.026, 0.075), leg, skin, 0.02, Basis.IDENTITY, 0) # foot
+		s.skin(s.cap(Vector3(x, 0.32, 0.0), Vector3(x * 1.15, 0.18, -0.02), 0.045, 0.032, leg, W, 0.03, 0))
+		s.skin(s.ell(Vector3(x * 1.15, 0.18, -0.025), Vector3(0.034, 0.03, 0.032), leg, W, 0.015, Basis.IDENTITY, 0)) # knee
+		s.skin(s.cap(Vector3(x * 1.15, 0.18, -0.02), Vector3(x * 1.2, 0.05, 0.0), 0.03, 0.024, leg, W, 0.015, 0))
+		s.skin(s.ell(Vector3(x * 1.2, 0.028, -0.045), Vector3(0.042, 0.026, 0.075), leg, W, 0.02, Basis.IDENTITY, 0)) # foot
 	for sd: float in [-1.0, 1.0]:
 		var x := 0.13 * sd
 		var arm := s.bone("Arm" + ("L" if sd < 0.0 else "R"), root, Vector3(x, 0.54, 0.0), "arm")
-		s.cap(Vector3(x, 0.54, 0.0), Vector3(x * 1.3, 0.41, -0.02), 0.04, 0.03, arm, skin, 0.03, 0)
-		s.ell(Vector3(x * 1.3, 0.41, -0.02), Vector3(0.028, 0.028, 0.028), arm, skin, 0.012, Basis.IDENTITY, 0) # elbow
-		s.cap(Vector3(x * 1.3, 0.41, -0.02), Vector3(x * 1.38, 0.29, -0.04), 0.027, 0.024, arm, skin, 0.012, 0)
-		s.ell(Vector3(x * 1.4, 0.255, -0.05), Vector3(0.032, 0.04, 0.026), arm, skin, 0.015, Basis.IDENTITY, 0) # hand
+		s.skin(s.cap(Vector3(x, 0.54, 0.0), Vector3(x * 1.3, 0.41, -0.02), 0.04, 0.03, arm, W, 0.03, 0))
+		s.skin(s.ell(Vector3(x * 1.3, 0.41, -0.02), Vector3(0.028, 0.028, 0.028), arm, W, 0.012, Basis.IDENTITY, 0)) # elbow
+		s.skin(s.cap(Vector3(x * 1.3, 0.41, -0.02), Vector3(x * 1.38, 0.29, -0.04), 0.027, 0.024, arm, W, 0.012, 0))
+		s.skin(s.ell(Vector3(x * 1.4, 0.255, -0.05), Vector3(0.032, 0.04, 0.026), arm, W, 0.015, Basis.IDENTITY, 0)) # hand
 		for f in 3:
-			s.cap(Vector3(x * 1.4 + (f - 1) * 0.014, 0.23, -0.05), Vector3(x * 1.4 + (f - 1) * 0.018, 0.19, -0.06), 0.009, 0.006, arm, skin, 0.006, 0) # fingers
+			s.skin(s.cap(Vector3(x * 1.4 + (f - 1) * 0.014, 0.23, -0.05), Vector3(x * 1.4 + (f - 1) * 0.018, 0.19, -0.06), 0.009, 0.006, arm, W, 0.006, 0)) # fingers
 	s.paint(Vector3(0, 0.3, 0.0), Vector3(0.13, 0.07, 0.11), leather, 0.01, Basis.IDENTITY, 2) # loincloth
 	s.paint(Vector3(0, 0.38, 0.0), Vector3(0.13, 0.018, 0.12), leather.darkened(0.3), 0.004, Basis.IDENTITY, 2) # belt
-	s.paint(Vector3(0, 0.83, 0.03), Vector3(0.11, 0.06, 0.1), skin.darkened(0.2), 0.04) # darker scalp
-	s.paint(Vector3(0, 0.45, 0.07), Vector3(0.1, 0.12, 0.05), skin.darkened(0.15), 0.04) # darker back
+	s.skin(s.paint(Vector3(0, 0.83, 0.03), Vector3(0.11, 0.06, 0.1), W, 0.04), 0.8) # darker scalp
+	s.skin(s.paint(Vector3(0, 0.45, 0.07), Vector3(0.1, 0.12, 0.05), W, 0.04), 0.85) # darker back
+
+
+## A person (unit = height, standing, facing -Z): the camps' folk and the
+## opening camp's two. Lean and long-limbed: a hide tunic to mid-thigh
+## with a belt and a dark hem, bare arms with leather bracers, leggings
+## and wrapped feet, dark hair tied back, a stripe of ochre under the
+## eyes. An `elder` wears a fur mantle and a drape down
+## the back, and has grey hair and a beard. Skin and hide are the
+## person's own colors (tint channels); hair, paint and trim are fixed.
+## Joints where CreatureBodies' tribal body has them, so its gear fits.
+static func _person(s: Spec, elder: bool) -> void:
+	s.cell = 0.0135
+	var W := Color.WHITE
+	var hair := Color(0.6, 0.58, 0.54) if elder else Color(0.12, 0.09, 0.07)
+	var ochre := Color(0.72, 0.3, 0.16)
+	var root := s.bone("Root", -1, Vector3(0, 0.52, 0))
+	var head := s.bone("Head", root, Vector3(0, 0.8, 0), "head")
+	# Legs first (left, right), so the tunic's hem blends onto them only
+	# a little: leggings, knees, calves, wrapped feet.
+	for sd: float in [-1.0, 1.0]:
+		var x := 0.064 * sd
+		var leg := s.bone("Leg" + ("L" if sd < 0.0 else "R"), root, Vector3(x, 0.5, 0.0), "leg")
+		s.hide(s.cap(Vector3(x, 0.49, 0.0), Vector3(x, 0.28, -0.004), 0.05, 0.037, leg, W, 0.02, 3), 0.72) # thigh
+		s.hide(s.ell(Vector3(x, 0.276, -0.01), Vector3(0.035, 0.033, 0.035), leg, W, 0.014, Basis.IDENTITY, 3), 0.72) # knee
+		s.hide(s.ell(Vector3(x, 0.2, 0.01), Vector3(0.035, 0.068, 0.037), leg, W, 0.02, Basis.IDENTITY, 3), 0.72) # calf
+		s.hide(s.cap(Vector3(x, 0.27, -0.004), Vector3(x * 1.02, 0.05, 0.004), 0.034, 0.025, leg, W, 0.014, 3), 0.72) # shin
+		s.hide(s.ell(Vector3(x * 1.03, 0.024, -0.026), Vector3(0.033, 0.025, 0.068), leg, W, 0.02, Basis.IDENTITY, 3), 0.5) # foot
+		s.hide(s.paint(Vector3(x, 0.08, 0.0), Vector3(0.045, 0.035, 0.045), W, 0.008), 0.5) # ankle wraps
+	# The tunic: hips and skirt, waist, chest, shoulders.
+	s.hide(s.ell(Vector3(0, 0.465, 0.004), Vector3(0.118, 0.065, 0.094), root, W, 0.015, Basis.IDENTITY, 3)) # skirt
+	s.hide(s.ell(Vector3(0, 0.53, 0.0), Vector3(0.104, 0.08, 0.08), root, W, 0.04, Basis.IDENTITY, 3)) # hips
+	s.hide(s.cap(Vector3(0, 0.54, 0.0), Vector3(0, 0.65, -0.004), 0.088, 0.098, root, W, 0.05, 3)) # waist
+	s.hide(s.ell(Vector3(0, 0.69, -0.01), Vector3(0.108, 0.088, 0.07), root, W, 0.05, Basis.IDENTITY, 3)) # chest
+	s.hide(s.ell(Vector3(0, 0.765, 0.004), Vector3(0.14, 0.04, 0.06), root, W, 0.04, Basis.IDENTITY, 3)) # shoulders
+	if elder:
+		s.hide(s.ell(Vector3(0, 0.75, 0.012), Vector3(0.165, 0.08, 0.1), root, W, 0.03, Basis.IDENTITY, 1), 1.25) # fur mantle
+		s.hide(s.ell(Vector3(0, 0.56, 0.062), Vector3(0.12, 0.22, 0.032), root, W, 0.025, Basis.IDENTITY, 1), 1.2) # drape down the back
+	# Neck and head: skull, face and jaw, chin, brow, cheekbones, nose,
+	# ears; the hair over the crown and back, a tail tied at the nape.
+	s.skin(s.cap(Vector3(0, 0.77, 0.004), Vector3(0, 0.86, -0.004), 0.036, 0.031, head, W, 0.03, 0))
+	s.skin(s.ell(Vector3(0, 0.915, 0.006), Vector3(0.057, 0.066, 0.064), head, W, 0.03, Basis.IDENTITY, 0))
+	s.skin(s.ell(Vector3(0, 0.878, -0.02), Vector3(0.044, 0.04, 0.044), head, W, 0.03, Basis.IDENTITY, 0))
+	s.skin(s.ell(Vector3(0, 0.852, -0.042), Vector3(0.02, 0.016, 0.016), head, W, 0.02, Basis.IDENTITY, 0))
+	s.skin(s.ell(Vector3(0, 0.921, -0.047), Vector3(0.046, 0.013, 0.017), head, W, 0.02, Basis.IDENTITY, 0))
+	for sd: float in [-1.0, 1.0]:
+		s.skin(s.ell(Vector3(0.03 * sd, 0.896, -0.042), Vector3(0.018, 0.014, 0.014), head, W, 0.02, Basis.IDENTITY, 0))
+		s.skin(s.ell(Vector3(0.058 * sd, 0.9, 0.006), Vector3(0.009, 0.019, 0.013), head, W, 0.008, Basis.IDENTITY, 0))
+	s.skin(s.cap(Vector3(0, 0.912, -0.06), Vector3(0, 0.889, -0.069), 0.009, 0.012, head, W, 0.012, 0), 0.97)
+	s.ell(Vector3(0, 0.93, 0.016), Vector3(0.063, 0.058, 0.066), head, hair, 0.012, Basis.IDENTITY, 1)
+	s.cap(Vector3(0, 0.93, 0.07), Vector3(0, 0.78, 0.095), 0.02, 0.011, head, hair, 0.012, 1)
+	if elder:
+		s.ell(Vector3(0, 0.858, -0.04), Vector3(0.036, 0.042, 0.024), head, hair, 0.015, Basis.IDENTITY, 1) # beard
+		s.ell(Vector3(0, 0.88, -0.058), Vector3(0.027, 0.008, 0.01), head, hair, 0.008, Basis.IDENTITY, 1) # moustache
+	# Arms (left, right), hanging a little out from the sides: shoulder,
+	# upper arm, elbow, forearm, hand and thumb.
+	for sd: float in [-1.0, 1.0]:
+		var arm := s.bone("Arm" + ("L" if sd < 0.0 else "R"), root, Vector3(0.14 * sd, 0.775, 0.0), "arm")
+		s.skin(s.ell(Vector3(0.145 * sd, 0.752, 0.0), Vector3(0.04, 0.048, 0.042), arm, W, 0.025, Basis.IDENTITY, 0))
+		s.skin(s.cap(Vector3(0.145 * sd, 0.755, 0.0), Vector3(0.163 * sd, 0.6, 0.012), 0.034, 0.027, arm, W, 0.02, 0))
+		s.skin(s.ell(Vector3(0.164 * sd, 0.598, 0.014), Vector3(0.026, 0.026, 0.026), arm, W, 0.012, Basis.IDENTITY, 0))
+		s.skin(s.ell(Vector3(0.166 * sd, 0.56, 0.008), Vector3(0.029, 0.045, 0.029), arm, W, 0.015, Basis.IDENTITY, 0))
+		s.skin(s.cap(Vector3(0.164 * sd, 0.598, 0.014), Vector3(0.17 * sd, 0.452, -0.002), 0.027, 0.02, arm, W, 0.012, 0))
+		s.skin(s.ell(Vector3(0.173 * sd, 0.416, -0.006), Vector3(0.017, 0.036, 0.027), arm, W, 0.012, Basis.IDENTITY, 0))
+		s.skin(s.cap(Vector3(0.166 * sd, 0.44, -0.028), Vector3(0.163 * sd, 0.405, -0.035), 0.008, 0.007, arm, W, 0.006, 0))
+		s.hide(s.paint(Vector3(0.169 * sd, 0.49, 0.003), Vector3(0.032, 0.036, 0.032), W, 0.004, Basis.IDENTITY, 2), 0.55) # bracer
+	# Belt, hem, face paint across the cheekbones.
+	s.paint(Vector3(0, 0.575, -0.002), Vector3(0.13, 0.016, 0.105), ochre.darkened(0.3), 0.004, Basis.IDENTITY, 2)
+	s.hide(s.paint(Vector3(0, 0.405, 0.004), Vector3(0.15, 0.03, 0.12), W, 0.01), 0.7)
+	s.paint(Vector3(0, 0.884, -0.05), Vector3(0.052, 0.008, 0.03), ochre, 0.003)
 
 
 # --- Meshing ---------------------------------------------------------------------
@@ -630,14 +783,16 @@ static func _mesh_arrays(s: Spec, cell: float) -> Dictionary:
 			var tmp := idx[t + 1]
 			idx[t + 1] = idx[t + 2]
 			idx[t + 2] = tmp
-	# Colors (blended across joins, then paint), baked occlusion, material,
-	# bone weights.
+	# Colors (blended across joins, then paint; a person's skin and hide
+	# as weights in UV2), baked occlusion, material, bone weights.
 	var colors := PackedColorArray()
 	var uvs := PackedVector2Array()
+	var tints := PackedVector2Array()
 	var bone_ids := PackedInt32Array()
 	var weights := PackedFloat32Array()
 	colors.resize(verts.size())
 	uvs.resize(verts.size())
+	tints.resize(verts.size())
 	bone_ids.resize(verts.size() * 4)
 	weights.resize(verts.size() * 4)
 	for vi in verts.size():
@@ -650,6 +805,7 @@ static func _mesh_arrays(s: Spec, cell: float) -> Dictionary:
 			ds[pi] = d
 			dmin = minf(dmin, d)
 		var col := Color(0, 0, 0)
+		var tint := Vector2.ZERO
 		var wsum := 0.0
 		var mat := 1
 		var best := INF
@@ -660,7 +816,10 @@ static func _mesh_arrays(s: Spec, cell: float) -> Dictionary:
 			var w := maxf(0.0, 1.0 - (d - dmin) / maxf(pr.k, 0.01))
 			w *= w
 			if w > 0.0:
-				col += pr.color * w
+				if pr.channel == 0:
+					col += pr.color * w
+				else:
+					tint[pr.channel - 1] += pr.shade * w
 				wsum += w
 			if d < best:
 				best = d
@@ -670,11 +829,15 @@ static func _mesh_arrays(s: Spec, cell: float) -> Dictionary:
 			if sw > 0.01:
 				bw[pr.bone] = bw.get(pr.bone, 0.0) + sw
 		col = col / maxf(wsum, 1e-6)
+		tint /= maxf(wsum, 1e-6)
 		for pp in s.paints:
 			var d := pp.dist(p)
 			var amt := 1.0 - smoothstep(-pp.soft, pp.soft, d)
 			if amt > 0.0:
-				col = col.lerp(pp.color, amt)
+				col = col.lerp(pp.color if pp.channel == 0 else Color(0, 0, 0), amt)
+				tint *= 1.0 - amt
+				if pp.channel > 0:
+					tint[pp.channel - 1] += pp.shade * amt
 				if pp.mat >= 0 and amt > 0.5:
 					mat = pp.mat
 		# Occlusion: how much the field closes in along the normal.
@@ -685,6 +848,7 @@ static func _mesh_arrays(s: Spec, cell: float) -> Dictionary:
 			occ += (h - _sdf(s, p + nrm * h)) / h / pow(2.0, step)
 		var ao := clampf(1.0 - occ * 0.9, 0.45, 1.0)
 		colors[vi] = Color(col.r * ao, col.g * ao, col.b * ao, 1.0)
+		tints[vi] = tint * ao
 		uvs[vi] = Vector2(mat, 0.0)
 		var ranked: Array = []
 		for bi in bw:
@@ -706,6 +870,7 @@ static func _mesh_arrays(s: Spec, cell: float) -> Dictionary:
 	arrays[Mesh.ARRAY_NORMAL] = normals
 	arrays[Mesh.ARRAY_COLOR] = colors
 	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_TEX_UV2] = tints
 	arrays[Mesh.ARRAY_BONES] = bone_ids
 	arrays[Mesh.ARRAY_WEIGHTS] = weights
 	arrays[Mesh.ARRAY_INDEX] = idx

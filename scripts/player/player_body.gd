@@ -57,7 +57,8 @@ const ROBE_RINGS := [
 	[0.29, 0.25, 0.03, 0.05, 1.0],
 ]
 const PLEATS := 5.0
-const HEAD_RINGS := 7
+const HEAD_RINGS := 13
+const HEAD_RADIAL := 22
 
 var head: Node3D
 var arms: Array[Node3D] = []
@@ -105,7 +106,7 @@ func _build_torso() -> void:
 	# The robe: pleats deepen toward the hem, creases painted darker, a
 	# wrap seam down the front, shade under the mantle and belt.
 	var robe_ys: Array[float] = [1.5, 1.46, 1.39, 1.27, 1.12, 1.0, 0.88, 0.62, 0.36, 0.14]
-	_lathe(g, robe_ys.size(), 14, func(i: int, a: float) -> Array:
+	_lathe(g, robe_ys.size(), 30, func(i: int, a: float) -> Array:
 		var y := robe_ys[i]
 		var p := _robe_at(y, a, 1.0)
 		var sway: float = p[1]
@@ -122,7 +123,7 @@ func _build_torso() -> void:
 		WEAVE_K, Vector3(0, 1.52, 0), Vector3(0, 0.12, 0.03))
 	# Leather hem band, just outside the robe's last rings.
 	var hem_ys: Array[float] = [0.2, 0.12, 0.045]
-	_lathe(g, hem_ys.size(), 14, func(i: int, a: float) -> Array:
+	_lathe(g, hem_ys.size(), 30, func(i: int, a: float) -> Array:
 		var p := _robe_at(hem_ys[i], a, 1.03)
 		var crease := 0.5 - 0.5 * sin(PLEATS * a + 0.8 * float(p[1]) + 0.4)
 		return [p[0], HIDE * (1.0 - 0.22 * crease) * (0.85 if i == 2 else 1.0), p[1]],
@@ -130,7 +131,7 @@ func _build_torso() -> void:
 	# Fur mantle over the shoulders, ragged at its lower edge and hanging
 	# a little lower front and back.
 	var mantle := [[0.085, 0.08, 1.555], [0.17, 0.14, 1.51], [0.25, 0.18, 1.44], [0.275, 0.195, 1.36], [0.255, 0.185, 1.29]]
-	_lathe(g, mantle.size(), 14, func(i: int, a: float) -> Array:
+	_lathe(g, mantle.size(), 36, func(i: int, a: float) -> Array:
 		var m: Array = mantle[i]
 		var r := 1.0
 		var y: float = m[2]
@@ -142,27 +143,27 @@ func _build_torso() -> void:
 		FUR_K, Vector3(0, 1.57, 0.01), Vector3(0, 1.28, 0.01))
 	# Belt, its bone toggle and two hanging ends.
 	var belt := [[0.157, 0.111, 1.03], [0.165, 0.118, 1.0], [0.157, 0.111, 0.97]]
-	_lathe(g, belt.size(), 14, func(i: int, a: float) -> Array:
+	_lathe(g, belt.size(), 28, func(i: int, a: float) -> Array:
 		var b: Array = belt[i]
 		return [Vector3(cos(a) * b[0], b[2], sin(a) * b[1]), DARK_HIDE, 0.0],
 		LEATHER_K, Vector3(0, 1.035, 0), Vector3(0, 0.965, 0))
-	_ellipsoid(g, Vector3(0.035, 1.0, -0.122), Vector3(0.03, 0.011, 0.011), BONE, BONE_K, 5, 2)
-	_ellipsoid(g, Vector3(0.05, 0.91, -0.118), Vector3(0.016, 0.075, 0.006), DARK_HIDE, LEATHER_K, 4, 2, Basis(Vector3.FORWARD, 0.12), 0.25)
-	_ellipsoid(g, Vector3(0.075, 0.92, -0.112), Vector3(0.014, 0.065, 0.006), DARK_HIDE, LEATHER_K, 4, 2, Basis(Vector3.FORWARD, -0.1), 0.25)
+	_ellipsoid(g, Vector3(0.035, 1.0, -0.122), Vector3(0.03, 0.011, 0.011), BONE, BONE_K, 10, 4)
+	_ellipsoid(g, Vector3(0.05, 0.91, -0.118), Vector3(0.016, 0.075, 0.006), DARK_HIDE, LEATHER_K, 8, 4, Basis(Vector3.FORWARD, 0.12), 0.25)
+	_ellipsoid(g, Vector3(0.075, 0.92, -0.112), Vector3(0.014, 0.065, 0.006), DARK_HIDE, LEATHER_K, 8, 4, Basis(Vector3.FORWARD, -0.1), 0.25)
 	# Satchel on the right hip, slightly behind.
 	var out := Vector3(0.92, 0, 0.4).normalized()
 	var sb := Basis(Vector3.UP.cross(out).normalized(), Vector3.UP, out)
-	_ellipsoid(g, out * 0.215 + Vector3(0, 0.86, 0.01), Vector3(0.075, 0.085, 0.035), HIDE.darkened(0.08), LEATHER_K, 8, 3, sb, 0.15)
-	_ellipsoid(g, out * 0.245 + Vector3(0, 0.905, 0.01), Vector3(0.07, 0.035, 0.012), HIDE.darkened(0.25), LEATHER_K, 6, 2, sb, 0.15)
+	_ellipsoid(g, out * 0.215 + Vector3(0, 0.86, 0.01), Vector3(0.075, 0.085, 0.035), HIDE.darkened(0.08), LEATHER_K, 16, 7, sb, 0.15)
+	_ellipsoid(g, out * 0.245 + Vector3(0, 0.905, 0.01), Vector3(0.07, 0.035, 0.012), HIDE.darkened(0.25), LEATHER_K, 12, 4, sb, 0.15)
 	# Necklace on the mantle: bone and wood beads and a tooth.
 	var beads := [[-0.058, 1.415, BONE], [0.058, 1.415, BONE], [-0.03, 1.375, WOOD], [0.03, 1.375, WOOD]]
 	for b: Array in beads:
 		var c: Color = b[2]
-		_ellipsoid(g, Vector3(b[0], b[1], -0.19), Vector3.ONE * 0.013, c, BONE_K, 5, 2)
-	_cone(g, Vector3(0, 1.365, -0.195), Vector3(0, -1, -0.15), 0.05, Vector3(0.012, 0, 0.008), BONE, BONE_K, 4, Vector3.FORWARD)
+		_ellipsoid(g, Vector3(b[0], b[1], -0.19), Vector3.ONE * 0.013, c, BONE_K, 8, 4)
+	_cone(g, Vector3(0, 1.365, -0.195), Vector3(0, -1, -0.15), 0.05, Vector3(0.012, 0, 0.008), BONE, BONE_K, 8, Vector3.FORWARD)
 	# Boot toes under the hem.
 	for s: float in [-1.0, 1.0]:
-		_ellipsoid(g, Vector3(0.085 * s, 0.035, -0.19), Vector3(0.048, 0.036, 0.075), DARK_HIDE, LEATHER_K, 6, 3)
+		_ellipsoid(g, Vector3(0.085 * s, 0.035, -0.19), Vector3(0.048, 0.036, 0.075), DARK_HIDE, LEATHER_K, 14, 7)
 	_add(self, g, "Robe")
 
 
@@ -170,28 +171,28 @@ func _build_head() -> void:
 	var g := Geo.new()
 	# Neck, mostly hidden by the mantle.
 	var neck := [[0.043, 0.041, 0.06], [0.046, 0.044, -0.06]]
-	_lathe(g, 2, 8, func(i: int, a: float) -> Array:
+	_lathe(g, 2, 16, func(i: int, a: float) -> Array:
 		var n: Array = neck[i]
 		return [Vector3(cos(a) * n[0], n[2], sin(a) * n[1]), SKIN * 0.82, 0.0],
 		SKIN_K, Vector3(0, 0.06, 0), Vector3(0, -0.06, 0))
 	# The head: an egg narrowing to a long jaw and a pointed chin.
-	_lathe(g, HEAD_RINGS, 12, func(i: int, a: float) -> Array:
+	_lathe(g, HEAD_RINGS, HEAD_RADIAL, func(i: int, a: float) -> Array:
 		var p := _head_at(i, a)
 		return [p, SKIN * (1.0 - 0.1 * clampf((0.12 - p.y) / 0.115, 0.0, 1.0)), 0.0],
 		SKIN_K, Vector3(0, 0.237, 0), Vector3(0, 0.014, -0.026))
 	# Slanted eyes, brows, a small nose, ochre paint on the cheeks.
 	for s: float in [-1.0, 1.0]:
 		var eb := Basis(Vector3.FORWARD, 0.22 * s)
-		_ellipsoid(g, Vector3(0.032 * s, 0.132, -0.088), Vector3(0.019, 0.01, 0.007), EYE_WHITE, SKIN_K, 6, 2, eb)
-		_ellipsoid(g, Vector3(0.03 * s, 0.132, -0.093), Vector3(0.009, 0.0095, 0.005), EYE, SKIN_K, 5, 2, eb)
-		_ellipsoid(g, Vector3(0.034 * s, 0.153, -0.091), Vector3(0.021, 0.004, 0.007), HAIR, HAIR_K, 4, 2, Basis(Vector3.FORWARD, 0.3 * s))
-		_ellipsoid(g, Vector3(0.047 * s, 0.1, -0.078), Vector3(0.018, 0.0045, 0.006), OCHRE, SKIN_K, 4, 2, Basis(Vector3.UP, -0.55 * s))
-	_cone(g, Vector3(0, 0.133, -0.093), Vector3(0, -0.55, -1), 0.032, Vector3(0.012, 0, 0.01), SKIN * 0.95, SKIN_K, 4, Vector3.UP)
+		_ellipsoid(g, Vector3(0.032 * s, 0.132, -0.088), Vector3(0.019, 0.01, 0.007), EYE_WHITE, SKIN_K, 10, 4, eb)
+		_ellipsoid(g, Vector3(0.03 * s, 0.132, -0.093), Vector3(0.009, 0.0095, 0.005), EYE, SKIN_K, 8, 4, eb)
+		_ellipsoid(g, Vector3(0.034 * s, 0.153, -0.091), Vector3(0.021, 0.004, 0.007), HAIR, HAIR_K, 8, 3, Basis(Vector3.FORWARD, 0.3 * s))
+		_ellipsoid(g, Vector3(0.047 * s, 0.1, -0.078), Vector3(0.018, 0.0045, 0.006), OCHRE, SKIN_K, 8, 3, Basis(Vector3.UP, -0.55 * s))
+	_cone(g, Vector3(0, 0.133, -0.093), Vector3(0, -0.55, -1), 0.032, Vector3(0.012, 0, 0.01), SKIN * 0.95, SKIN_K, 8, Vector3.UP)
 	# Hair: a shell over the head, tucked under the skin where the face
 	# and jaw show (the surfaces' crossing draws the hairline), a long fall
 	# down the back to the shoulder blades, a leather headband and a
 	# feather tied at the back.
-	_lathe(g, HEAD_RINGS, 12, func(i: int, a: float) -> Array:
+	_lathe(g, HEAD_RINGS, HEAD_RADIAL, func(i: int, a: float) -> Array:
 		var p := _head_at(i, a)
 		var front := -sin(a)
 		var face := clampf((front - 0.3) / 0.3, 0.0, 1.0) * clampf((0.19 - p.y) / 0.02, 0.0, 1.0)
@@ -200,8 +201,8 @@ func _build_head() -> void:
 		var c := Vector3(0, 0.12, 0)
 		return [c + (p - c) * grow + Vector3(0, 0.006, 0.004), HAIR, 0.0],
 		HAIR_K, Vector3(0, 0.25, 0.004), Vector3(0, 0.03, 0.01))
-	var fall := 5
-	_lathe(g, fall, 8, func(i: int, a: float) -> Array:
+	var fall := 9
+	_lathe(g, fall, 16, func(i: int, a: float) -> Array:
 		var t := float(i) / (fall - 1)
 		var c := Vector3(0, 0.12 - 0.46 * t, 0.07 + 0.19 * pow(t, 0.8))
 		var strand := 1.0 + 0.1 * sin(4.0 * a) * t
@@ -209,13 +210,13 @@ func _build_head() -> void:
 		return [p, HAIR * (1.0 - 0.15 * t), t],
 		HAIR_K, Vector3(0, 0.16, 0.06), Vector3(0, -0.36, 0.265))
 	var band := [[0.073, 0.087, 0.197], [0.079, 0.093, 0.185], [0.075, 0.089, 0.173]]
-	_lathe(g, band.size(), 12, func(i: int, a: float) -> Array:
+	_lathe(g, band.size(), HEAD_RADIAL, func(i: int, a: float) -> Array:
 		var b: Array = band[i]
 		return [Vector3(cos(a) * b[0], b[2], sin(a) * b[1] + 0.004), DARK_HIDE, 0.0],
 		LEATHER_K, Vector3(0, 0.2, 0.004), Vector3(0, 0.17, 0.004))
 	var fb := Basis(Vector3.RIGHT, 0.5) * Basis(Vector3.BACK, -0.3)
-	_ellipsoid(g, Vector3(-0.06, 0.1, 0.115), Vector3(0.004, 0.055, 0.014), BONE, BONE_K, 4, 3, fb, 0.6)
-	_ellipsoid(g, Vector3(-0.047, 0.052, 0.14), Vector3(0.0045, 0.014, 0.011), HAIR, HAIR_K, 4, 2, fb, 0.8)
+	_ellipsoid(g, Vector3(-0.06, 0.1, 0.115), Vector3(0.004, 0.055, 0.014), BONE, BONE_K, 8, 5, fb, 0.6)
+	_ellipsoid(g, Vector3(-0.047, 0.052, 0.14), Vector3(0.0045, 0.014, 0.011), HAIR, HAIR_K, 8, 3, fb, 0.8)
 	# Two long locks from the temples, over the mantle, down the chest.
 	for s: float in [-1.0, 1.0]:
 		_lock(g, s)
@@ -231,7 +232,7 @@ func _lock(g: Geo, s: float) -> void:
 	var path: Array[Vector3] = [Vector3(0.078, 0.11, -0.035), Vector3(0.1, 0.02, -0.08),
 		Vector3(0.125, -0.08, -0.148), Vector3(0.13, -0.19, -0.178), Vector3(0.126, -0.3, -0.182),
 		Vector3(0.118, -0.42, -0.16)]
-	_lathe(g, path.size(), 6, func(i: int, a: float) -> Array:
+	_lathe(g, path.size(), 10, func(i: int, a: float) -> Array:
 		var t := float(i) / (path.size() - 1)
 		var c := path[i] * Vector3(s, 1, 1)
 		var w := 0.04 * (1.0 - 0.45 * t)
@@ -257,7 +258,7 @@ func _ear(g: Geo, s: float) -> void:
 	var length := 0.09
 	var basis := _basis_y(dir, Vector3(s, 0, -0.35))
 	var prof := [[0.024, 0.0], [0.03, 0.3], [0.014, 0.72]]
-	_lathe(g, prof.size(), 5, func(i: int, a: float) -> Array:
+	_lathe(g, prof.size(), 10, func(i: int, a: float) -> Array:
 		var p: Array = prof[i]
 		return [base + basis * Vector3(cos(a) * p[0], float(p[1]) * length, sin(a) * 0.008), SKIN * (0.9 if i == 0 else 1.0), 0.0],
 		SKIN_K, base + basis * Vector3(0, length, 0), base - basis * Vector3(0, 0.01, 0))
@@ -267,14 +268,14 @@ func _build_arm(arm: Node3D) -> void:
 	var g := Geo.new()
 	# A long sleeve widening to a bell at the wrist.
 	var sleeve := [[0.058, 0.055, 0.02, 0.0], [0.062, 0.06, -0.12, 0.0], [0.068, 0.066, -0.3, 0.1], [0.1, 0.095, -0.47, 0.5], [0.112, 0.105, -0.55, 1.0]]
-	_lathe(g, sleeve.size(), 10, func(i: int, a: float) -> Array:
+	_lathe(g, sleeve.size(), 20, func(i: int, a: float) -> Array:
 		var sl: Array = sleeve[i]
 		var sway: float = sl[3]
 		var crease := 0.5 - 0.5 * sin(3.0 * a + 1.0)
 		var shade := (1.0 - 0.25 * sway * crease) * (0.85 if i == 0 else 1.0)
 		return [Vector3(cos(a) * sl[0], sl[2], sin(a) * sl[1]), ROBE * shade, sway],
 		WEAVE_K, Vector3(0, 0.06, 0), Vector3(0, -0.51, 0))
-	_ellipsoid(g, Vector3(0, -0.6, -0.005), Vector3(0.036, 0.052, 0.042), SKIN, SKIN_K, 6, 3)
+	_ellipsoid(g, Vector3(0, -0.6, -0.005), Vector3(0.036, 0.052, 0.042), SKIN, SKIN_K, 14, 7)
 	_add(arm, g, "Sleeve")
 
 

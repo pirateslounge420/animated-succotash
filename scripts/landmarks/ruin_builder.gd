@@ -494,9 +494,10 @@ func _lod_box(xf: Transform3D, h: Vector3, top: Color, side: Color, bottom: Colo
 			_lm.append_array([Vector2(mat, 0.0), Vector2(mat, 0.0), Vector2(mat, 0.0)])
 
 
-## A rough stone: a noise-displaced icosphere, smooth shaded, mossy on top.
+## A rough stone: a noise-displaced icosphere (320 triangles, so its
+## outline is round, not faceted), smooth shaded, mossy on top.
 func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: float) -> void:
-	var sphere: Array = PlantMeshes.icosphere(1)
+	var sphere: Array = PlantMeshes.icosphere(2)
 	var verts: PackedVector3Array = sphere[0]
 	var faces: PackedInt32Array = sphere[1]
 	var ph := Vector3(rng.randf() * TAU, rng.randf() * TAU, rng.randf() * TAU)

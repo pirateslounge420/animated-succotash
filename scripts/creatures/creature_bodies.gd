@@ -118,16 +118,17 @@ static func _mi(parent: Node3D, mesh: Mesh, pos: Vector3, c: Color, glow := 0.0)
 	return mi
 
 
-## Shared unit sphere (radius 0.5). Level 2: 12 sides x 6 rings (bodies,
-## heads); 1: 8 x 4 (snouts, tails); 0: 5 x 3 (eyes, noses).
+## Shared unit sphere (radius 0.5). Level 2: 28 sides x 14 rings (bodies,
+## heads); 1: 16 x 8 (snouts, tails); 0: 8 x 5 (eyes, noses). Round,
+## smooth silhouettes like GameCube-era models, not faceted shapes.
 static func _sphere(level: int) -> SphereMesh:
 	var key := "sphere_%d" % level
 	if not _meshes.has(key):
 		var m := SphereMesh.new()
 		m.radius = 0.5
 		m.height = 1.0
-		m.radial_segments = [5, 8, 12][level]
-		m.rings = [3, 4, 6][level]
+		m.radial_segments = [8, 16, 28][level]
+		m.rings = [5, 8, 14][level]
 		_meshes[key] = m
 	return _meshes[key]
 
@@ -138,15 +139,15 @@ static func _level(size: float) -> int:
 
 
 ## Shared capsule of diameter 1 along Y, `length` long overall (>= 1):
-## 12 sides and 6 rings round the caps and shaft, or 8 and 4 for small
-## parts.
+## 28 sides and 5 rings round each cap for body parts, fewer for small
+## ones.
 static func _capsule(length: float, level: int) -> ArrayMesh:
 	var q := snappedf(maxf(length, 1.0), 0.25)
 	var key := "capsule_%.2f_%d" % [q, level]
 	if not _meshes.has(key):
 		var half := q * 0.5 - 0.5
 		var prof: Array = []
-		var cap_rings := 2 if level >= 2 else 1
+		var cap_rings: int = [1, 3, 5][level]
 		for k in range(1, cap_rings + 1):
 			var a := PI * 0.5 * k / (cap_rings + 1)
 			prof.append([0.5 * sin(a), half + 0.5 * cos(a)])
@@ -155,7 +156,7 @@ static func _capsule(length: float, level: int) -> ArrayMesh:
 		for k in range(cap_rings, 0, -1):
 			var a := PI * 0.5 * k / (cap_rings + 1)
 			prof.append([0.5 * sin(a), -half - 0.5 * cos(a)])
-		_meshes[key] = _revolve(prof, half + 0.5, -half - 0.5, [6, 8, 12][level])
+		_meshes[key] = _revolve(prof, half + 0.5, -half - 0.5, [10, 16, 28][level])
 	return _meshes[key]
 
 
@@ -257,7 +258,7 @@ static func ball(parent: Node3D, radii: Vector3, pos: Vector3, c: Color, glow :=
 
 static func cone(parent: Node3D, r_bottom: float, r_top: float, h: float, pos: Vector3, c: Color, glow := 0.0, sides := 0) -> MeshInstance3D:
 	if sides == 0:
-		sides = 12 if maxf(r_bottom, r_top) >= 0.08 else 6
+		sides = 24 if maxf(r_bottom, r_top) >= 0.08 else 12
 	var key := "cone_%.3f_%.3f_%.3f_%d" % [r_bottom, r_top, h, sides]
 	if not _meshes.has(key):
 		var m := CylinderMesh.new()
@@ -276,18 +277,20 @@ static func wedge(parent: Node3D, size: Vector3, pos: Vector3, c: Color) -> Node
 	var pivot := Node3D.new()
 	pivot.position = pos
 	parent.add_child(pivot)
-	var mi := cone(pivot, 0.5, 0.0, 1.0, Vector3.ZERO, c, 0.0, 5)
+	var mi := cone(pivot, 0.5, 0.0, 1.0, Vector3.ZERO, c, 0.0, 12)
 	mi.scale = size
 	return pivot
 
 
 ## A capsule tapering from radius r0 at the top (y = 0) to r1 at the
-## bottom (y = -length), smooth shaded, 5 sides: legs and arms.
+## bottom (y = -length), smooth shaded, 12 sides with rounded ends and a
+## slight swell above the middle: legs and arms.
 static func _limb_mesh(length: float, r0: float, r1: float) -> ArrayMesh:
 	var key := "limb_%.3f_%.3f_%.3f" % [length, r0, r1]
 	if not _meshes.has(key):
-		var prof := [[r0 * 0.7, r0 * 0.7], [r0, 0.0], [r1, -length], [r1 * 0.7, -length - r1 * 0.7]]
-		_meshes[key] = _revolve(prof, r0, -length - r1, 5)
+		var prof := [[r0 * 0.5, r0 * 0.86], [r0 * 0.87, r0 * 0.5], [r0, 0.0], [lerpf(r0, r1, 0.3) * 1.04, -length * 0.3],
+			[lerpf(r0, r1, 0.65), -length * 0.65], [r1, -length], [r1 * 0.87, -length - r1 * 0.5], [r1 * 0.5, -length - r1 * 0.86]]
+		_meshes[key] = _revolve(prof, r0, -length - r1, 12)
 	return _meshes[key]
 
 
@@ -536,10 +539,10 @@ static func _goblin(b: Dictionary, sp: CreatureSpecies) -> void:
 	_lantern(b, r, Vector3(0.22, 0.32, -0.06), sp.accent)
 
 
-## Tribal person (the opening encampment's NPCs; size_m = height): hide
-## tunic and leggings, ochre face paint, hair, and a prop by `sp.shape`:
-## "elder" (feathered staff, cloak) or "hunter" (spear, quiver). Colors:
-## `color` skin, `accent` hide.
+## Tribal person (camp folk; size_m = height), until SculptedBodies'
+## smooth one is built: hide tunic and leggings, ochre face paint, hair,
+## an elder's cloak, and their gear (tribal_gear()). Colors: `color`
+## skin, `accent` hide.
 static func _tribal(b: Dictionary, sp: CreatureSpecies) -> void:
 	var r: Node3D = b.root
 	var skin := sp.color
@@ -562,16 +565,23 @@ static func _tribal(b: Dictionary, sp: CreatureSpecies) -> void:
 	for s in [-1.0, 1.0]:
 		var arm := limb(b, r, Vector3(0.13 * s, 0.8, 0.0), 0.36, 0.055, skin, "wings")
 		arm.rotation.z = 0.1 * s
-	# Shapes: "elder" (cloak, feathered staff), "hunter" (spear, quiver),
-	# "archer" (bow, quiver); "<shape>_seated" leaves the weapon out (camp
-	# folk lay theirs by the fire).
+	if sp.shape.trim_suffix("_seated") == "elder":
+		cone(r, 0.17, 0.12, 0.42, Vector3(0, 0.62, 0.02), hide.lightened(0.15)) # cloak
+	tribal_gear(b, sp)
+
+
+## A tribal person's gear by `sp.shape`: "elder" a feathered staff,
+## "hunter" a spear and a quiver, "archer" a bow and a quiver;
+## "<shape>_seated" leaves the weapon out (camp folk lay theirs by the
+## fire). The sculpted body (SculptedBodies) wears the same.
+static func tribal_gear(b: Dictionary, sp: CreatureSpecies) -> void:
+	var r: Node3D = b.root
+	var hide := sp.accent
 	var seated := sp.shape.ends_with("_seated")
-	var role := sp.shape.trim_suffix("_seated")
-	match role:
+	match sp.shape.trim_suffix("_seated"):
 		"elder":
-			cone(r, 0.17, 0.12, 0.42, Vector3(0, 0.62, 0.02), hide.lightened(0.15)) # cloak
 			if not seated:
-				var staff := cone(r, 0.012, 0.01, 1.05, Vector3(0.2, 0.52, -0.04), Color(0.4, 0.28, 0.16), 0.0, 5)
+				var staff := cone(r, 0.012, 0.01, 1.05, Vector3(0.2, 0.52, -0.04), Color(0.4, 0.28, 0.16), 0.0, 8)
 				staff.rotation.z = 0.05
 				var feather := box(r, Vector3(0.015, 0.1, 0.03), Vector3(0.21, 1.07, -0.04), Color(0.9, 0.86, 0.75))
 				feather.rotation.z = -0.4
@@ -590,9 +600,9 @@ static func _tribal(b: Dictionary, sp: CreatureSpecies) -> void:
 			var quiver := box(r, Vector3(0.06, 0.28, 0.06), Vector3(0.06, 0.72, 0.09), hide.darkened(0.2))
 			quiver.rotation.z = 0.35
 			if not seated:
-				var spear := cone(r, 0.01, 0.009, 1.15, Vector3(-0.19, 0.58, -0.02), Color(0.42, 0.3, 0.18), 0.0, 5)
+				var spear := cone(r, 0.01, 0.009, 1.15, Vector3(-0.19, 0.58, -0.02), Color(0.42, 0.3, 0.18), 0.0, 8)
 				spear.rotation.z = -0.06
-				cone(r, 0.02, 0.0, 0.1, Vector3(-0.22, 1.2, -0.02), Color(0.35, 0.36, 0.4), 0.0, 5) # stone head
+				cone(r, 0.02, 0.0, 0.1, Vector3(-0.22, 1.2, -0.02), Color(0.35, 0.36, 0.4), 0.0, 6) # stone head
 
 
 ## Unicorn (size_m = height at the head): a slender white horse, a raised

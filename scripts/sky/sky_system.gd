@@ -46,6 +46,10 @@ var moonlight := 0.0 # 0-1, includes phase
 var _zenith := Gradient.new()
 var _horizon := Gradient.new()
 ## Cloud tones (lit tops, shaded undersides) for CloudLayers.
+## The grade: saturation and contrast at night (x) and by day (y).
+var grade_saturation := Vector2(1.2, 1.42)
+var grade_contrast := Vector2(1.32, 1.28)
+
 var cloud_light := Color.WHITE
 var cloud_shade := Color(0.7, 0.75, 0.9)
 var _last_mansion := -1
@@ -132,9 +136,9 @@ func _ready() -> void:
 	world_env.environment = environment
 	add_child(world_env)
 
-	# Hard, crisp shadows (the GameCube look), not soft PCF penumbras:
-	# unfiltered shadow maps, a big atlas, and the shadow range pulled in so
-	# its resolution goes to what's near the player.
+	# Hard, crisp shadows, not soft PCF penumbras: unfiltered shadow maps,
+	# a big atlas, and the shadow range pulled in so its resolution goes to
+	# what's near the player.
 	RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
 	RenderingServer.directional_shadow_atlas_set_size(4096, true)
 
@@ -289,13 +293,15 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 		"look_rim_color": moon_col.lerp(Color(0.4, 0.5, 1.0), 0.5) * (0.35 + 0.65 * moonlight),
 		# Shade: teal under the sun, cobalt under the moon.
 		"look_shadow_tint": Color(0.28, 0.62, 0.78).lerp(Color(0.22, 0.34, 0.95), night),
+		# What glossy surfaces reflect at grazing angles: the sky low down.
+		"look_sky_color": horizon.lerp(zenith, 0.35) * (0.25 + 0.75 * daylight),
 	})
 	sky_material.set_shader_parameter("fog_color", fog_color)
 
 	# Grade: a punchy, crushed curve day and night (deep shadows, bright
-	# highlights, little midtone, like Melee or PSO), saturated by day.
-	environment.adjustment_saturation = lerpf(1.2, 1.42, daylight)
-	environment.adjustment_contrast = lerpf(1.32, 1.28, daylight)
+	# highlights, little midtone), saturated by day.
+	environment.adjustment_saturation = lerpf(grade_saturation.x, grade_saturation.y, daylight)
+	environment.adjustment_contrast = lerpf(grade_contrast.x, grade_contrast.y, daylight)
 
 
 func _aim(light: DirectionalLight3D, body_dir: Vector3, up: Vector3) -> void:

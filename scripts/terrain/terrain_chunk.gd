@@ -52,6 +52,8 @@ var heights := PackedFloat32Array()
 var fine_heights := PackedFloat32Array()
 var _coarse_mesh: MeshInstance3D
 var _fine_mesh: MeshInstance3D
+## What the plants are drawn at (PlantMeshes.LOD_*): trees start light.
+var _plant_lod := PlantMeshes.LOD_FAR
 ## Ground collision (build_collision_part): triangles not yet built into
 ## it, the body, and how many strips it has.
 const COLLISION_PARTS := 4
@@ -656,8 +658,9 @@ func _ground_mesh(arrays: Array, node_name: String) -> MeshInstance3D:
 
 
 ## Near the player: the 4 m ground and full trees; farther out the 8 m
-## ground and light trees.
-func set_fine(fine: bool) -> void:
+## ground and light trees. `hero`: one of the chunks right around the
+## player, whose trees and undergrowth get their smoothest meshes.
+func set_fine(fine: bool, hero := false) -> void:
 	if _fine_mesh and _fine_mesh.visible != fine:
 		_fine_mesh.visible = fine
 		_coarse_mesh.visible = not fine
@@ -666,10 +669,31 @@ func set_fine(fine: bool) -> void:
 			_tree_body = null
 			_tree_next = 0
 			_owner_tree.clear()
-		var all := SpeciesDB.all()
-		for ch in get_children():
-			if ch is MultiMeshInstance3D and ch.has_meta("species"):
-				ch.multimesh.mesh = PlantMeshes.mesh_for(all[ch.get_meta("species")], not fine)
+	var lod := PlantMeshes.LOD_FAR
+	if fine:
+		lod = PlantMeshes.LOD_HERO if hero else PlantMeshes.LOD_NEAR
+	if lod != _plant_lod:
+		_plant_lod = lod
+		_swap_plants(self)
+		if detail_node:
+			_swap_plants(detail_node)
+
+
+## The plant detail level (PlantMeshes.LOD_*) for plants under `parent`:
+## the chunk's own trees, or its undergrowth (never the far level: it's
+## only there in the detail ring).
+func plant_lod(parent: Node) -> int:
+	if parent == self:
+		return _plant_lod
+	return PlantMeshes.LOD_HERO if _plant_lod == PlantMeshes.LOD_HERO else PlantMeshes.LOD_NEAR
+
+
+func _swap_plants(parent: Node) -> void:
+	var all := SpeciesDB.all()
+	var lod := plant_lod(parent)
+	for ch in parent.get_children():
+		if ch is MultiMeshInstance3D and ch.has_meta("species"):
+			ch.multimesh.mesh = PlantMeshes.mesh_for(all[ch.get_meta("species")], lod)
 
 
 # --- Trees: trunk colliders and lookups -------------------------------------

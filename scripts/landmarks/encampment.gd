@@ -136,6 +136,9 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 		sp.color = people[i][2]
 		sp.accent = people[i][3]
 		sp.size_m = 1.72 if i == 0 else 1.8
+		# The first thing the player sees: the smooth body, not the
+		# stand-in (its build started with the planet's).
+		SculptedBodies.wait_ready(sp)
 		# An unscaled holder turns; the scaled body under it breathes.
 		var holder := Node3D.new()
 		holder.name = sp.name

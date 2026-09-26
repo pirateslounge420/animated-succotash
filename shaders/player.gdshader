@@ -1,7 +1,7 @@
 // The player's body (PlayerBody): the creature shader's lighting (Lambert
 // with colored shadows, rim light, sheen, moonlit edge) over vertex colors
 // that carry each part's color and its painted-in folds, modulated by one
-// of the world's chunky low-res textures per part.
+// of the world's painterly textures per part.
 //
 // Per-vertex UV: x = material (0 skin, 1 woven fiber, 2 fur, 3 leather,
 // 4 bone/wood, 5 hair), y = how freely it hangs (0 fixed .. 1 the robe's
@@ -70,14 +70,29 @@ void fragment() {
 		k = 0.25;
 	}
 	ALBEDO = COLOR.rgb * mix(vec3(1.0), t * 2.0, k);
-	ROUGHNESS = 0.75;
+	// Roughness carries each material's gloss to light(): woven cloth and
+	// fur nearly matte, skin soft, hair and leather glossier.
+	float rough = 0.55;
+	if (kind == 1) {
+		rough = 0.82;
+	} else if (kind == 2) {
+		rough = 0.88;
+	} else if (kind == 3) {
+		rough = 0.42;
+	} else if (kind == 4) {
+		rough = 0.6;
+	} else if (kind == 5) {
+		rough = 0.45;
+	}
+	ROUGHNESS = rough;
 	SPECULAR = 0.0;
-	EMISSION = look_rim(NORMAL, VIEW, 0.45);
+	EMISSION = look_rim(NORMAL, VIEW, 0.45) + look_gloss(NORMAL, VIEW, 0.22 * (1.0 - rough));
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }
 
 void light() {
 	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
-	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, ROUGHNESS, 0.45, 0.4, ALBEDO);
-	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, 28.0, 0.35);
+	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, 0.75, 0.45, 0.4, ALBEDO);
+	float gl = 1.0 - ROUGHNESS;
+	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, mix(8.0, 40.0, gl), gl * 0.85);
 }

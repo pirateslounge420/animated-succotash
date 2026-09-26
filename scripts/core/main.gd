@@ -42,10 +42,16 @@ var _weather_timer := 0.0
 ## NodeRelease).
 func _exit_tree() -> void:
 	NodeRelease.detach_all(self)
+	Look.finish()
+	SculptedBodies.finish()
 
 
 func _ready() -> void:
 	Controls.ensure()
+	# The world's textures paint on a worker while the planet generates,
+	# and the camp folk's sculpted bodies build.
+	Look.prepare()
+	SculptedBodies.prewarm_folk()
 	world = get_node("/root/World")
 	hud = Hud.new()
 	add_child(hud)
