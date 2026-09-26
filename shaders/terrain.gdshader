@@ -3,8 +3,8 @@
 // surface is texture-led, like hand-painted N64/PS2-era ground: Look's
 // 128 px textures, crisp (nearest-filtered) but dense (grass texels about
 // 1.4 cm), picked by the vertex color: streaky grass on green ground,
-// pebbly dirt on sand and soil, mottled stone on grey rock faces, just a
-// faint grain on snow. Each is sampled twice (a second, turned and
+// rippled sand on bright warm ground, pebbly dirt on soil, mottled stone
+// on grey rock faces, just a faint grain on snow. Each is sampled twice (a second, turned and
 // rescaled copy) and blended by a slow noise so the tiling doesn't show,
 // and smooth, painterly light and dark patches plus a slight hue drift
 // run over meters to tens of meters, like sun-dappled grass.
@@ -25,6 +25,7 @@ uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 // ground is seen at a grazing angle.
 uniform sampler2D look_tex_grass : filter_nearest_mipmap_anisotropic, repeat_enable;
 uniform sampler2D look_tex_dirt : filter_nearest_mipmap_anisotropic, repeat_enable;
+uniform sampler2D look_tex_sand : filter_nearest_mipmap_anisotropic, repeat_enable;
 uniform sampler2D look_tex_stone : filter_nearest_mipmap_anisotropic, repeat_enable;
 
 varying vec3 world_pos;
@@ -52,8 +53,11 @@ void fragment() {
 	float green = smoothstep(0.0, 0.07, c.g - max(c.r, c.b) * 0.92);
 	float rocky = (1.0 - smoothstep(0.03, 0.09, sat)) * (1.0 - smoothstep(0.72, 0.88, hi));
 	float snow = (1.0 - smoothstep(0.03, 0.09, sat)) * smoothstep(0.72, 0.88, hi);
-	// UV is in meters: grass tiles every ~1.8 m, dirt ~1.4 m, stone ~3.3 m.
-	vec3 t = mix(untiled(look_tex_dirt, UV * 0.7, mixer), untiled(look_tex_grass, UV * 0.55, mixer), green);
+	float sandy = smoothstep(0.05, 0.14, c.r - c.b) * smoothstep(0.45, 0.62, hi) * (1.0 - green);
+	// UV is in meters: grass tiles every ~1.8 m, dirt ~1.4 m, sand ~2.5 m,
+	// stone ~3.3 m.
+	vec3 t = mix(untiled(look_tex_dirt, UV * 0.7, mixer), untiled(look_tex_sand, UV * 0.4, mixer), sandy);
+	t = mix(t, untiled(look_tex_grass, UV * 0.55, mixer), green);
 	t = mix(t, untiled(look_tex_stone, UV * 0.3, mixer), rocky);
 	t = mix(t, vec3(0.5), snow * 0.7);
 	// Texture contrast eases off far away, so fine detail doesn't shimmer

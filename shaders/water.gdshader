@@ -5,7 +5,11 @@
 // cobalt night sky is what makes water read as lit from within.
 //
 // Day colors are pushed saturated (Frutiger Aero: shiny turquoise
-// shallows, ultramarine depths). At glow ponds and other magical sites the
+// shallows, ultramarine depths). The body is painted, like old-console
+// water: two copies of Look's water texture (caustic lines over a
+// mottled base) drift across each other at different speeds and angles,
+// with the current on rivers, so the surface shimmers with chunky
+// darker mottles and bright cyan flecks where the lines cross. At glow ponds and other magical sites the
 // water itself emits a teal/cobalt glow at night, bright enough to light
 // the banks (Landmarks adds lights there too).
 shader_type spatial;
@@ -33,6 +37,7 @@ uniform vec2 flow = vec2(0.0); // rivers drift along their current
 // faster) and rain falling on the surface now (0-1: drops pock it).
 uniform float storm_flow = 0.0;
 uniform float rain_drops = 0.0;
+uniform sampler2D look_tex_water : filter_nearest_mipmap_anisotropic, repeat_enable;
 
 float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -70,6 +75,16 @@ void fragment() {
 	float facing = clamp(dot(NORMAL, VIEW), 0.0, 1.0);
 	float fresnel = pow(1.0 - facing, 4.0);
 	ALBEDO = mix(shallow_color, deep_color, 0.55 + 0.45 * fresnel);
+	// The painted body: two drifting layers of caustics, the wave height
+	// nudging them so they wobble.
+	vec2 drift = flow * t * 0.6;
+	vec2 wob = slope * 0.05;
+	float ta = texture(look_tex_water, UV * 0.3 + drift + vec2(t * 0.06, t * 0.02) + wob).r;
+	float tb = texture(look_tex_water, mat2(vec2(0.6, -0.8), vec2(0.8, 0.6)) * UV * 0.23 + drift * 0.8 - vec2(t * 0.03, t * 0.05) - wob).r;
+	float paint = 1.0 - fresnel * 0.8; // calm toward the horizon, where it mirrors the sky
+	ALBEDO *= mix(1.0, 0.72 + 0.56 * (ta + tb) * 0.5, paint);
+	float fleck = smoothstep(0.62, 0.78, min(ta, tb) + 0.5 * max(ta, tb) - 0.25);
+	ALBEDO = mix(ALBEDO, vec3(0.45, 0.95, 1.0), fleck * 0.55 * paint);
 	ROUGHNESS = 0.04;
 	METALLIC = 0.0;
 	SPECULAR = 0.65;

@@ -12,7 +12,9 @@ class_name Look
 ## (0.5 = unchanged, so one texture serves every species and biome color):
 ##   grain      32 px blotchy grain (general crunch, glow-moss patches)
 ##   grass      streaky blades, light and dark
-##   dirt       pebbles and clods (sand, soil, paths)
+##   dirt       pebbles and clods (soil, paths)
+##   sand       fine grains in soft wind ripples (beaches, deserts)
+##   water      a net of bright caustic lines over a mottled base
 ##   bark       vertical streaks and dark grooves
 ##   leaves     a dense leafy surface for crowns
 ##   leaf_card  a ragged leaf cluster with alpha, for cutout cards
@@ -37,7 +39,7 @@ static func register(mat: ShaderMaterial) -> ShaderMaterial:
 		mat.set_shader_parameter("look_grain", grain())
 		# The same grain, smoothly filtered: large-scale light and dark.
 		mat.set_shader_parameter("look_grain_soft", grain())
-		for name in ["grass", "dirt", "bark", "leaves", "leaf_card", "stone"]:
+		for name in ["grass", "dirt", "sand", "bark", "leaves", "leaf_card", "stone", "water"]:
 			mat.set_shader_parameter("look_tex_" + name, texture(name))
 	return mat
 
@@ -93,6 +95,10 @@ static func texture(name: String) -> ImageTexture:
 			img = _grass(rng)
 		"dirt":
 			img = _dirt(rng)
+		"sand":
+			img = _sand(rng)
+		"water":
+			img = _water(rng)
 		"bark":
 			img = _bark(rng)
 		"leaves":
@@ -310,4 +316,40 @@ static func _fur(rng: RandomNumberGenerator) -> Image:
 		for k in length:
 			var t := float(k) / length
 			_put(img, int(x + cos(ang) * k), int(y + sin(ang) * k), Color(v, v * 0.97, v * 0.93).lightened(0.12 * t))
+	return img
+
+
+## Sand: fine light and dark grains over soft wind ripples (wavy bands of
+## light and shade, lit on one flank).
+static func _sand(rng: RandomNumberGenerator) -> Image:
+	var img := Image.create(TEX, TEX, false, Image.FORMAT_RGBA8)
+	var warp := _noise(71, 0.08)
+	var soft := _noise(72, 0.2)
+	for y in TEX:
+		for x in TEX:
+			# Ripples: 8 bands per tile, bent by the warp noise.
+			var ph := TAU * (8.0 * y / TEX + 0.6 * _torus(warp, x, y))
+			var ripple := sin(ph) + 0.35 * sin(2.0 * ph + 1.0)
+			# Centered a little under 0.5: bright sand would clip otherwise.
+			var v := 0.45 + 0.085 * ripple + 0.04 * _torus(soft, x, y) + rng.randf_range(-0.035, 0.035)
+			img.set_pixel(x, y, Color(v * 1.02, v, v * 0.95))
+	for i in 160 * AREA:
+		var v := rng.randf_range(0.62, 0.72) if rng.randf() < 0.6 else rng.randf_range(0.3, 0.4)
+		_put(img, rng.randi() % TEX, rng.randi() % TEX, Color(v * 1.02, v, v * 0.94))
+	return img
+
+
+## Water: a net of bright caustic lines (where cells of noise meet) over
+## a softly mottled base, the painted look of old-console water.
+static func _water(rng: RandomNumberGenerator) -> Image:
+	var img := Image.create(TEX, TEX, false, Image.FORMAT_RGBA8)
+	var cells := _noise(81, 0.07, FastNoiseLite.TYPE_CELLULAR)
+	cells.cellular_return_type = FastNoiseLite.RETURN_DISTANCE2_SUB
+	var mottle := _noise(82, 0.12)
+	for y in TEX:
+		for x in TEX:
+			var e := _torus(cells, x, y) # -1 on the cell borders .. up inside
+			var line := 1.0 - smoothstep(-0.97, -0.8, e)
+			var v := 0.44 + 0.08 * _torus(mottle, x, y) + 0.34 * line + rng.randf_range(-0.02, 0.02)
+			img.set_pixel(x, y, Color(v, v, v))
 	return img
