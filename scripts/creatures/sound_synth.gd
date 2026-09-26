@@ -19,7 +19,7 @@ class_name SoundSynth
 ##   thunder_near a crack and a heavy rumble; thunder_far a long low roll
 
 const RATE := 22050
-const VARIANTS := 3
+const VARIANTS := 5
 
 static var _cache := {}
 

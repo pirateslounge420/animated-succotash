@@ -449,8 +449,8 @@ func _den_prop(den: Dictionary) -> Node3D:
 	CreatureBodies.box(root, Vector3(4.6, 0.25, 1.4), Vector3(0, 3.05, 0.4), Color(0.92, 0.94, 0.98))
 	var voice := AudioStreamPlayer3D.new()
 	voice.stream = SoundSynth.stream("howl", den.seed)
-	voice.unit_size = 40.0
-	voice.max_distance = 1500.0
+	voice.unit_size = 30.0
+	voice.max_distance = 350.0
 	voice.position = Vector3(0, 1.5, -1.0)
 	root.add_child(voice)
 	den.voice = voice
@@ -540,18 +540,18 @@ func _update_packs(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 			w.tick(delta, ctx)
 
 
+## A pack howls, members joining in, and nearby packs answer. Only packs
+## that are out (spawned near the player) howl: an empty den is silent.
 func _howl(key: Vector4i) -> void:
 	var den: Dictionary = _dens[key]
 	var wolves: Array = den.wolves
 	if wolves.is_empty():
-		den.voice.play()
-	else:
-		wolves[0].say()
-		for i in range(1, wolves.size()):
-			_calls.append([_time + randf_range(1.2, 4.5) * i * 0.6, wolves[i]])
-	# Neighboring packs answer.
+		return
+	wolves[0].say()
+	for i in range(1, wolves.size()):
+		_calls.append([_time + randf_range(1.2, 4.5) * i * 0.6, wolves[i]])
 	for other in _dens:
-		if other != key and CubeSphere.surface_distance_m(_dens[other].dir, den.dir) < 2500.0 and randf() < 0.7:
+		if other != key and not (_dens[other].wolves as Array).is_empty() and randf() < 0.7:
 			_calls.append([_time + randf_range(5.0, 10.0), other])
 
 
@@ -567,9 +567,7 @@ func _run_calls() -> void:
 		if target is Vector4i:
 			if _dens.has(target):
 				var den: Dictionary = _dens[target]
-				if den.wolves.is_empty():
-					den.voice.play()
-				else:
+				if not den.wolves.is_empty():
 					den.wolves[0].say()
 		elif is_instance_valid(target):
 			target.say()
@@ -621,10 +619,13 @@ func _update_territories(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 		if t.camp:
 			Campfire.flicker(t.camp, _time)
 		_fidelity(cr.voice, cr.distance_to(pd))
+		# Calls only when it's close enough to be seen (not from a kilometer
+		# off while it's only "aware" of you).
 		t.call_t -= delta
 		if t.call_t <= 0.0:
-			t.call_t = randf_range(12.0, 35.0)
-			cr.say()
+			t.call_t = randf_range(20.0, 50.0)
+			if want == "visible":
+				cr.say()
 		if sp.shape == "unicorn" and want == "visible":
 			_hoofprints(t, cr)
 		if want != t.state:

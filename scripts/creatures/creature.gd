@@ -65,6 +65,11 @@ var _hop_t := 0.0
 var _hop_len := 1.0
 var _fade := 0.0
 var _call_timer := 0.0
+## Ambient creatures call only within this many meters of the player.
+const CALL_M := 40.0
+## And no two calls of the same kind within this long of each other.
+const SAME_CALL_GAP_MS := 4000
+static var _last_call := {}
 var _life := -1.0
 
 
@@ -87,8 +92,10 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 		voice_variant = _rng.randi_range(0, SoundSynth.VARIANTS - 1)
 		voice.stream = SoundSynth.stream(sp.sound, voice_variant)
 		voice.pitch_scale = clampf(0.9 / pow(maxf(sp.size_m, 0.05), 0.15), 0.6, 1.6) * _rng.randf_range(0.93, 1.07)
-		voice.unit_size = 8.0 if sp.role != "mythical" and sp.role != "pack" else 40.0
-		voice.max_distance = 180.0 if sp.role != "mythical" and sp.role != "pack" else 1400.0
+		# Heard about as far as it can be found: small wildlife within a
+		# stone's throw, the big and mythical a few hundred meters off.
+		voice.unit_size = 8.0 if sp.role != "mythical" and sp.role != "pack" else 30.0
+		voice.max_distance = 60.0 if sp.role != "mythical" and sp.role != "pack" else 350.0
 		voice.volume_db = -6.0
 		voice.position = Vector3(0, sp.size_m * 0.6, 0)
 		add_child(voice)
@@ -127,8 +134,15 @@ func set_visible_body(v: bool) -> void:
 
 
 func say() -> void:
-	if voice and voice.stream and not voice.playing:
-		voice.play()
+	if voice == null or voice.stream == null or voice.playing:
+		return
+	# The same kind of call never overlaps itself from two creatures: a
+	# chorus of identical chirps reads as a loop, not as wildlife.
+	var now := Time.get_ticks_msec()
+	if now < int(_last_call.get(species.sound, 0)) + SAME_CALL_GAP_MS:
+		return
+	_last_call[species.sound] = now
+	voice.play()
 
 
 func distance_to(d: Vector3) -> float:
@@ -163,12 +177,13 @@ func tick(delta: float, ctx: Dictionary) -> void:
 		"pack", "mythical":
 			_driven(delta, ctx)
 
-	# Occasional calls while active and not fleeing.
+	# Occasional calls while active and not fleeing, and only close enough
+	# to spot the caller.
 	if voice and species.role != "pack" and species.role != "mythical":
 		_call_timer -= delta
 		if _call_timer <= 0.0:
 			_call_timer = _call_interval()
-			if mode != "flee" and not leaving:
+			if mode != "flee" and not leaving and distance_to(ctx.player_dir) < CALL_M:
 				say()
 
 	_fade = move_toward(_fade, 0.0 if leaving else 1.0, delta * 1.5)
@@ -182,10 +197,10 @@ func tick(delta: float, ctx: Dictionary) -> void:
 func _call_interval() -> float:
 	match species.sound:
 		"croak":
-			return _rng.randf_range(2.5, 8.0)
+			return _rng.randf_range(6.0, 16.0)
 		"chirp":
-			return _rng.randf_range(5.0, 18.0)
-	return _rng.randf_range(10.0, 30.0)
+			return _rng.randf_range(8.0, 22.0)
+	return _rng.randf_range(15.0, 40.0)
 
 
 # --- Roles ---------------------------------------------------------------------
