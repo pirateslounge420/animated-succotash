@@ -175,7 +175,9 @@ func _process(delta: float) -> void:
 	sky.event_flash(sky_events.flash, sky_events.flash_color)
 	storm.update_storm(delta, d, _local_weather)
 	var cloud_light := sky.cloud_light.lerp(Color(0.95, 0.97, 1.0), storm.flash)
-	clouds.update_clouds(delta, d, world.radius_of(cam.global_position) - PlanetConst.RADIUS_M, _local_weather, cloud_light, sky.cloud_shade)
+	# Lit from the sun, or the moon once the sun is well down.
+	var cloud_lit_by := sky.sun_dir if sky.sun_elevation_deg > -4.0 else sky.moon_dir
+	clouds.update_clouds(delta, d, world.radius_of(cam.global_position) - PlanetConst.RADIUS_M, _local_weather, cloud_light, sky.cloud_shade, cloud_lit_by)
 	# Sheltered from the rain: under a tree's crown or in a camp shelter.
 	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position)
 	fx.update_fx(cam.global_position, d, _local_weather, sheltered)

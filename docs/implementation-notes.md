@@ -263,12 +263,16 @@ Verified:
   m (default 1,500; 4x), mid altocumulus 2,000-7,000 m (3,800; 3x), high
   cirrus 5,000-13,000 m (8,500; 2x, jet stream). Those are Earth's
   numbers; in the world they're times `height_scale` (the terrain's
-  1/10), so 50-200, 200-700 and 500-1,300 m, and cloud sizes, pixel
-  steps and drift scale with them, so the sky looks the same from the
-  ground.
+  1/10), so 50-200, 200-700 and 500-1,300 m, and cloud sizes and drift
+  scale with them, so the sky looks the same from the ground.
   Peaks break through the low layer, and from above it's a sea of cloud.
-  Chunky, pixel-stepped edges and three flat tones. The pattern is
-  three-octave value noise; each layer first checks whether its first
+  Soft and painterly, not pixel-stepped. Edges feather out, more so far
+  off where a sharp edge would shimmer, and a fine octave frays them into
+  wisps. Thick cores shade toward the blue-grey underside color. One
+  extra noise tap toward the sun (or the moon once the sun is down)
+  brightens the sides facing it, and thin edges catch a silver lining.
+  The pattern is three-octave value noise, each octave turned as well as
+  scaled so the lattice doesn't show; each layer first checks whether its first
   octave can reach the cover threshold at all and discards the pixel if
   not, so clear sky costs one noise lookup. Standing above the
   low layer brings harsh alpine conditions (stronger wind, drier; HUD:
