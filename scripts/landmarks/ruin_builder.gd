@@ -43,7 +43,7 @@ const THATCH := Color(0.55, 0.47, 0.28)
 const SNOW := Color(0.7, 0.77, 0.86) # packed snow blocks, cooler than a snowfield so they read
 const ROPE := Color(0.42, 0.36, 0.24)
 # Desert pyramids: warm sandstone; jungle temples: pale limestone.
-const SANDSTONE := [Color(0.78, 0.66, 0.46), Color(0.72, 0.6, 0.42), Color(0.82, 0.71, 0.5), Color(0.75, 0.64, 0.47), Color(0.69, 0.57, 0.4)]
+const SANDSTONE := [Color(0.64, 0.54, 0.38), Color(0.59, 0.49, 0.34), Color(0.67, 0.58, 0.41), Color(0.62, 0.52, 0.38), Color(0.56, 0.47, 0.33)]
 const BONE := Color(0.82, 0.78, 0.66)
 const CLAY := Color(0.52, 0.32, 0.2)
 const GOLD := Color(0.95, 0.75, 0.25)
@@ -87,6 +87,10 @@ var palette: Array = STONES
 ## Off: box() and boulder() add no collision (stair steps, which a ramp
 ## stands in for; grave mounds and things on a tomb's floor).
 var solid := true
+## 0-1 darkening for stone that's only ever seen from inside (a barrow's
+## passage, the pyramid's corridor and chamber): the flat ambient light
+## reaches in regardless, so the shade is baked into the stone.
+var shade := 0.0
 ## Lights inside tombs: [local position, color, range m, energy]
 ## (make_node() adds an OmniLight3D for each).
 var _lights: Array = []
@@ -290,6 +294,7 @@ func _face(a: Vector3, b: Vector3, c: Vector3, d: Vector3, col: Color, inside: V
 ## so shading rolls smoothly over the edge like worn stone. Corners are
 ## jittered by up to `wear` m.
 func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09, wear := 0.05) -> void:
+	col = col.darkened(shade)
 	var h := size * 0.5
 	var b := minf(bevel, minf(h.x, minf(h.y, h.z)) * 0.45)
 	var top := col.lerp(MOSS, moss)
@@ -1706,6 +1711,7 @@ func _pyramid_chamber(hs: float, h: float, y0: float) -> void:
 	var t := 0.13
 	var y_f := y0 + h * t - 0.3
 	var z_in := -hs * (1.0 - t) + 2.1 # the portal's back
+	shade = 0.45
 	var chx := 3.4
 	var chz := 4.3
 	var z_out := -chz
@@ -1728,13 +1734,14 @@ func _pyramid_chamber(hs: float, h: float, y0: float) -> void:
 		box(Transform3D(Basis.IDENTITY, Vector3(0.0, y_f + courses * ch + 0.3, -chz + (i + 0.5) * chz * 2.0 / 3.0)), Vector3(chx * 2.0, 0.6, chz * 2.0 / 3.0), palette[rng.randi() % palette.size()], 0.0, 0.06, 0.02)
 	_sarcophagus(Vector3(0.0, y_f, 1.4), 0.0, Color(0.36, 0.3, 0.3))
 	_grave_goods(Vector3(0.0, y_f, -1.2), 1.6, 6)
-	_glow(Vector3(0.0, y_f + 3.0, 0.0), Color(1.0, 0.72, 0.4), 8.0, 0.8)
-	_glow(Vector3(0.0, y_f + 2.0, (z_in + z_out) * 0.5), Color(0.45, 0.85, 0.8), 7.0, 0.35)
+	_glow(Vector3(0.0, y_f + 3.0, 0.0), Color(1.0, 0.72, 0.4), 8.0, 0.28)
+	_glow(Vector3(0.0, y_f + 2.0, (z_in + z_out) * 0.5), Color(0.45, 0.85, 0.8), 7.0, 0.12)
 	_shelters.append([Vector3(0.0, y_f, 0.0), 3.0, courses * ch])
 	var zs := z_in
 	while zs < z_out:
 		_shelters.append([Vector3(0.0, y_f, zs), 1.3, 2.5])
 		zs += 2.0
+	shade = 0.0
 
 
 ## A stepped pyramid: `tiers` tiers of big blocks narrowing to the top
@@ -1945,6 +1952,8 @@ func _glow(p: Vector3, col: Color, range_m: float, energy: float) -> void:
 ## bones and a skull, and a glint of gold. No collision.
 func _grave_goods(c: Vector3, spread: float, count: int) -> void:
 	solid = false
+	var was_shade := shade
+	shade = 0.0 # the gold should still glint
 	for i in count:
 		var p := c + Vector3(rng.randf_range(-spread, spread), 0.0, rng.randf_range(-spread, spread))
 		match rng.randi() % 4:
@@ -1960,6 +1969,7 @@ func _grave_goods(c: Vector3, spread: float, count: int) -> void:
 			_:
 				for k in 4:
 					box(Transform3D(Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), p + Vector3(rng.randf_range(-0.2, 0.2), 0.02 + k * 0.03, rng.randf_range(-0.2, 0.2))), Vector3(0.12, 0.025, 0.12), GOLD, 0.0, 0.01, 0.005)
+	shade = was_shade
 	solid = true
 
 
@@ -1990,7 +2000,7 @@ func _shrine(y: float, zc: float, fallen: bool) -> void:
 		# An altar within, offerings round it, and a glow.
 		box(Transform3D(Basis.IDENTITY, Vector3(0.0, yb + 0.45, zc + 0.9)), Vector3(1.6, 0.9, 0.8), palette[3], _growth(0.4))
 		_grave_goods(Vector3(0.0, yb, zc + 0.2), 1.3, 3)
-		_glow(Vector3(0.0, yb + 2.0, zc), Color(0.45, 0.9, 0.75), 6.0, 0.7)
+		_glow(Vector3(0.0, yb + 2.0, zc), Color(0.45, 0.9, 0.75), 6.0, 0.24)
 		_shelters.append([Vector3(0.0, yb, zc), 2.0, courses * ch])
 	else:
 		for i in rng.randi_range(3, 5):
@@ -2156,7 +2166,7 @@ func _mausoleum(c: Vector2, hx: float, hz: float) -> void:
 	_lm.append_array(_m.slice(start))
 	_sarcophagus(Vector3(c.x, floor_y, c.y + hz * 0.2), 0.0, palette[3])
 	_grave_goods(Vector3(c.x, floor_y, c.y - hz * 0.3), maxf(hx - 1.2, 0.5), 3)
-	_glow(Vector3(c.x, floor_y + 2.0, c.y), Color(0.45, 0.85, 0.8), 6.0, 0.6)
+	_glow(Vector3(c.x, floor_y + 2.0, c.y), Color(0.45, 0.85, 0.8), 6.0, 0.21)
 	_shelters.append([Vector3(c.x, floor_y, c.y), minf(hx, hz), courses * ch])
 
 
@@ -2252,6 +2262,7 @@ func _barrow() -> void:
 ## side cells opening off it left and right twice, an end chamber, all
 ## upright slabs under capstones on the natural floor.
 func _barrow_passage(l: float) -> void:
+	shade = 0.45
 	var z0 := -l
 	var z1 := -l + 2.0 * l * 0.28
 	var z2 := -l + 2.0 * l * 0.45
@@ -2281,12 +2292,13 @@ func _barrow_passage(l: float) -> void:
 	var gc := ground(0.0, ze + 1.6)
 	_sarcophagus(Vector3(0.0, gc - 0.1, ze + 1.9), PI * 0.5, palette[3])
 	_grave_goods(Vector3(0.0, gc, ze + 0.8), 1.2, 4)
-	_glow(Vector3(0.0, gc + 1.8, ze + 1.6), Color(1.0, 0.72, 0.4), 6.5, 0.7)
-	_glow(Vector3(0.0, ground(0.0, (z0 + ze) * 0.5) + 1.8, (z0 + ze) * 0.5), Color(0.45, 0.85, 0.8), 5.0, 0.35)
+	_glow(Vector3(0.0, gc + 1.8, ze + 1.6), Color(1.0, 0.72, 0.4), 6.5, 0.24)
+	_glow(Vector3(0.0, ground(0.0, (z0 + ze) * 0.5) + 1.8, (z0 + ze) * 0.5), Color(0.45, 0.85, 0.8), 5.0, 0.12)
 	var zs := z0 + 1.0
 	while zs < ze + 3.0:
 		_shelters.append([Vector3(0.0, ground(0.0, zs), zs), 1.2, 2.2])
 		zs += 1.6
+	shade = 0.0
 
 
 ## Upright slabs from a to b (local xz), up to 2.2 m above the ground
@@ -2348,7 +2360,7 @@ func _mastaba() -> void:
 	_sarcophagus(Vector3(0.0, floor_y, hz * 0.25), PI * 0.5, palette[3])
 	for sx: float in [-1.0, 1.0]:
 		_grave_goods(Vector3(sx * (hx - thick) * 0.55, floor_y, -hz * 0.2), 1.2, 3)
-	_glow(Vector3(0.0, floor_y + 2.5, 0.0), Color(1.0, 0.72, 0.4), 7.0, 0.6)
+	_glow(Vector3(0.0, floor_y + 2.5, 0.0), Color(1.0, 0.72, 0.4), 7.0, 0.21)
 	_shelters.append([Vector3(0.0, floor_y, 0.0), minf(hx, hz) - thick, h])
 	for k in 3:
 		var a := rng.randf_range(0.3, PI - 0.3)
