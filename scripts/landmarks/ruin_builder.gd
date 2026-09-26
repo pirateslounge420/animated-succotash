@@ -2334,6 +2334,9 @@ func _mastaba() -> void:
 	var hz: float = site.half_l
 	var h: float = site.height_m
 	mound(maxf(hx, hz) + 1.5, maxf(hx, hz) + 30.0, 22.0, 0.25)
+	# Its walls are seen from inside as well as out, so a moderate shade for
+	# the whole house (it stands in the desert glare anyway).
+	shade = 0.3
 	var gr := _ground_range(Vector2.ZERO, maxf(hx, hz))
 	var floor_y := maxf(gr.y, 0.25) + 0.2
 	var base_y := gr.x - 1.0
@@ -2362,6 +2365,7 @@ func _mastaba() -> void:
 		_grave_goods(Vector3(sx * (hx - thick) * 0.55, floor_y, -hz * 0.2), 1.2, 3)
 	_glow(Vector3(0.0, floor_y + 2.5, 0.0), Color(1.0, 0.72, 0.4), 7.0, 0.21)
 	_shelters.append([Vector3(0.0, floor_y, 0.0), minf(hx, hz) - thick, h])
+	shade = 0.0
 	for k in 3:
 		var a := rng.randf_range(0.3, PI - 0.3)
 		rubble(Vector3(cos(a) * (hx + 2.0), 0.0, sin(a) * (hz + 2.0)), 2.0, 4)
