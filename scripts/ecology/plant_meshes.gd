@@ -9,7 +9,12 @@ class_name PlantMeshes
 
 const S := PlantSpecies.Shape
 
-static var _cache := {} # species index -> ArrayMesh
+static var _cache := {} # species index * 2 + far -> ArrayMesh (main thread)
+## The same keys -> mesh arrays, built by workers (warm()) or on demand;
+## and the icosphere cache. Both behind _mutex: chunk workers build plant
+## geometry (and ruins, boulders) in parallel.
+static var _arrays := {}
+static var _mutex := Mutex.new()
 static var _material: ShaderMaterial
 
 
@@ -31,8 +36,11 @@ static var _ico := {}
 ## Unit icosphere [vertices, triangle indices], subdivided `level` times,
 ## wound so (b - a) x (c - a) points outward like the other parts.
 static func icosphere(level: int) -> Array:
-	if _ico.has(level):
-		return _ico[level]
+	_mutex.lock()
+	var cached = _ico.get(level)
+	_mutex.unlock()
+	if cached != null:
+		return cached
 	var t := (1.0 + sqrt(5.0)) / 2.0
 	var verts := PackedVector3Array()
 	for p in [Vector3(-1, t, 0), Vector3(1, t, 0), Vector3(-1, -t, 0), Vector3(1, -t, 0),
@@ -62,8 +70,12 @@ static func icosphere(level: int) -> Array:
 			var tmp := faces[f + 1]
 			faces[f + 1] = faces[f + 2]
 			faces[f + 2] = tmp
-	_ico[level] = [verts, faces]
-	return _ico[level]
+	_mutex.lock()
+	if not _ico.has(level):
+		_ico[level] = [verts, faces]
+	var out: Array = _ico[level]
+	_mutex.unlock()
+	return out
 
 
 ## A tree shape's proportions, as fractions of its height: Vector4(trunk
@@ -112,6 +124,41 @@ static func mesh_for(sp: PlantSpecies, far := false) -> ArrayMesh:
 	var key := idx * 2 + int(far)
 	if _cache.has(key):
 		return _cache[key]
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays_for(sp, far))
+	_cache[key] = mesh
+	return mesh
+
+
+## Build the geometry of these species (indices), both versions, ahead of
+## need: chunk workers call it for the plants they place, so the main
+## thread only uploads meshes (mesh_for) instead of building them.
+static func warm(species_indices: Array) -> void:
+	var all := SpeciesDB.all()
+	for idx in species_indices:
+		arrays_for(all[idx], false)
+		arrays_for(all[idx], true)
+
+
+## A species' mesh arrays (thread-safe; built once and shared).
+static func arrays_for(sp: PlantSpecies, far := false) -> Array:
+	var idx := SpeciesDB.index_of(sp)
+	var key := idx * 2 + int(far)
+	_mutex.lock()
+	var cached = _arrays.get(key)
+	_mutex.unlock()
+	if cached != null:
+		return cached
+	var built := _build(sp, idx, far)
+	_mutex.lock()
+	if not _arrays.has(key):
+		_arrays[key] = built
+	var out: Array = _arrays[key]
+	_mutex.unlock()
+	return out
+
+
+static func _build(sp: PlantSpecies, idx: int, far: bool) -> Array:
 	var b := _Builder.new()
 	b.far = far
 	var leaf := sp.color
@@ -236,9 +283,7 @@ static func mesh_for(sp: PlantSpecies, far := false) -> ArrayMesh:
 			b.bamboo(wood, leaf)
 		_:
 			b.blob(Vector3(0, 0.5, 0), Vector3(0.4, 0.5, 0.4), leaf, 0.8)
-	var mesh := b.commit()
-	_cache[key] = mesh
-	return mesh
+	return b.commit_arrays()
 
 
 class _Builder:
@@ -626,6 +671,11 @@ class _Builder:
 			tri(p0, top, p1, col, sway, sway, sway)
 
 	func commit() -> ArrayMesh:
+		var mesh := ArrayMesh.new()
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, commit_arrays())
+		return mesh
+
+	func commit_arrays() -> Array:
 		# Baked ambient occlusion: the base of each plant (trunk foot, grass
 		# roots) is darker, the way it would be in its own shadow. Hanging
 		# plants grow down from their origin (y < 0) and are left alone.
@@ -642,9 +692,7 @@ class _Builder:
 		arrays[Mesh.ARRAY_COLOR] = c
 		arrays[Mesh.ARRAY_TEX_UV] = uv
 		arrays[Mesh.ARRAY_TEX_UV2] = uv2
-		var mesh := ArrayMesh.new()
-		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-		return mesh
+		return arrays
 
 	## Smooth shading: every vertex of a part gets the area-weighted mean
 	## of the face normals meeting at its position in that part.

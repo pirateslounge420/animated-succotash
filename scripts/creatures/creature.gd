@@ -88,6 +88,23 @@ static var _last_call := {}
 var _life := -1.0
 
 
+var _ground_q := Vector3.INF
+var _ground_h := 0.0
+var _water_q := Vector3.INF
+var _water_h := 0.0
+## What the body was last placed from ([dir, lift, heading]) and scaled
+## to, so a still animal isn't moved again every tick.
+var _placed: Array = [Vector3.ZERO, 0.0, Vector3.ZERO]
+var _replace_t := 0.0
+var _scaled := -1.0
+var _legs_moving := true
+## Time skipped by the spawner's level of detail (far animals tick less
+## often), handed to the next tick; and which frame of the cycle this one
+## ticks on.
+var lod_delta := 0.0
+var lod_phase := 0
+
+
 func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner: Node, d: Vector3, seed_value: int) -> void:
 	species = sp
 	world = p_world
@@ -97,6 +114,7 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 	dir = d
 	home = d
 	_rng.seed = seed_value
+	lod_phase = seed_value & 3
 	name = sp.name.replace(" ", "_")
 	heading = CubeSphere.north(d).rotated(d, _rng.randf() * TAU)
 	_parts = CreatureBodies.build(sp)
@@ -586,30 +604,56 @@ func _random_near(center: Vector3, radius: float) -> Vector3:
 
 
 func _is_dry(d: Vector3) -> bool:
-	return chunks.water_level_at(d) < chunks.ground_height(d) + 0.08
+	return _water_at(d) < _ground_at(d) + 0.08
 
 
 ## Water creatures: waders need 5-60 cm of water, swimmers at least 40 cm.
 func _water_ok(d: Vector3) -> bool:
-	var depth := chunks.water_level_at(d) - chunks.ground_height(d)
+	var depth := _water_at(d) - _ground_at(d)
 	if afloat:
 		return depth > 0.4
 	return depth > 0.03 and depth < 0.6
 
 
+## Ground and water height at `d`, remembering the last spot asked about:
+## a step is checked (_is_dry) and then stood on (_place) at the same spot.
+func _ground_at(d: Vector3) -> float:
+	if d != _ground_q:
+		_ground_q = d
+		_ground_h = chunks.ground_height(d)
+	return _ground_h
+
+
+func _water_at(d: Vector3) -> float:
+	if d != _water_q:
+		_water_q = d
+		_water_h = chunks.water_level_at(d)
+	return _water_h
+
+
 func _place(delta: float) -> void:
-	var ground := chunks.ground_height(dir)
-	var base := ground
-	if afloat:
-		base = maxf(ground, chunks.water_level_at(dir))
-	global_position = world.to_scene(dir, PlanetConst.RADIUS_M + base + lift)
-	var fwd := heading - dir * heading.dot(dir)
-	if fwd.length_squared() < 1e-6:
-		fwd = CubeSphere.north(dir)
-	global_basis = Basis.looking_at(fwd.normalized(), dir)
+	# Standing still (most of the time), nothing needs moving: skip the
+	# ground lookup and the transform, except for a refresh now and then
+	# (the ground under it may have loaded in finer).
+	_replace_t -= delta
+	if dir != _placed[0] or lift != _placed[1] or heading != _placed[2] or _replace_t <= 0.0:
+		_replace_t = 0.5
+		_placed = [dir, lift, heading]
+		var ground := _ground_at(dir)
+		var base := ground
+		if afloat:
+			base = maxf(ground, _water_at(dir))
+		global_position = world.to_scene(dir, PlanetConst.RADIUS_M + base + lift)
+		var fwd := heading - dir * heading.dot(dir)
+		if fwd.length_squared() < 1e-6:
+			fwd = CubeSphere.north(dir)
+		global_basis = Basis.looking_at(fwd.normalized(), dir)
 	var size := 1.0 if species.role == "swarm" else species.size_m
 	_flash = maxf(_flash - delta * 5.0, 0.0)
-	_body.scale = Vector3.ONE * size * maxf(_fade, 0.001) * (1.0 + 0.12 * _flash)
+	var scale_now := size * maxf(_fade, 0.001) * (1.0 + 0.12 * _flash)
+	if scale_now != _scaled:
+		_scaled = scale_now
+		_body.scale = Vector3.ONE * scale_now
 	if dead:
 		# Topples onto its side.
 		_body.rotation.z = lerpf(_body.rotation.z, PI * 0.5, clampf(delta * 5.0, 0.0, 1.0))
@@ -626,10 +670,16 @@ func _animate(delta: float) -> void:
 		animator.set_state("sprint" if fast else ("walk" if moving else "idle"), clampf(0.6 + _speed_now / maxf(species.speed_mps, 0.1), 0.6, 1.8))
 	var swing := sin(_anim) * (0.6 if moving else 0.0)
 	var legs: Array = _parts.legs
-	for i in legs.size():
-		var leg: Node3D = legs[i]
-		var target := swing * (1.0 if i % 2 == 0 else -1.0)
-		leg.rotation.x = lerpf(leg.rotation.x, target, clampf(delta * 10.0, 0.0, 1.0))
+	# Legs at rest stay put (no transform to update).
+	if moving or _legs_moving:
+		_legs_moving = false
+		for i in legs.size():
+			var leg: Node3D = legs[i]
+			var target := swing * (1.0 if i % 2 == 0 else -1.0)
+			var x := lerpf(leg.rotation.x, target, clampf(delta * 10.0, 0.0, 1.0))
+			if absf(x - target) > 0.002:
+				_legs_moving = true
+			leg.rotation.x = x
 	var flying := mode == "hop" and species.body in ["bird", "wader", "duck"] or fly_off
 	var wings: Array = _parts.wings
 	for i in wings.size():
@@ -641,6 +691,8 @@ func _animate(delta: float) -> void:
 		elif flying:
 			w.rotation.z = sin(_anim * 3.0) * 0.9 * s
 		else:
-			w.rotation.z = lerpf(w.rotation.z, -1.2 * s if species.body != "bird" else -1.35 * s, clampf(delta * 6.0, 0.0, 1.0))
+			var folded := -1.2 * s if species.body != "bird" else -1.35 * s
+			if absf(w.rotation.z - folded) > 0.002:
+				w.rotation.z = lerpf(w.rotation.z, folded, clampf(delta * 6.0, 0.0, 1.0))
 	if _parts.tail:
 		(_parts.tail as Node3D).rotation.y = sin(_anim * 0.7) * 0.25

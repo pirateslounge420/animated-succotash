@@ -136,17 +136,38 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 				continue
 			if tier == T.CANOPY and ctx.near_emergent(site.dir):
 				continue
+			# Most cells come to nothing, so decide that cheaply first: is
+			# anything viable here at all (the chance is only drawn then), and
+			# does the draw beat the best chance the cell could have (the
+			# same product with min(total, 1) at its largest, 1, multiplied
+			# in the same order, so it can't round below the real one)?
+			# Only then weigh every species. Same draws, same plants.
+			var viable := false
+			for k in candidates.size():
+				if ctx.weight(candidates[k], site) > 0.0:
+					viable = true
+					break
+			if not viable:
+				continue
+			var clump := ctx.clump_at(tier, gx, gy)
+			var shade_f := 1.0
+			if tier == T.GROUND:
+				shade_f = 1.0 - 0.7 * clampf(ctx.shade_at(gx, gy), 0.0, 1.0)
+			var p_max := clump * 1.0 * float(FILL[tier])
+			if tier == T.GROUND:
+				p_max *= shade_f
+			var roll := ctx.rng.randf()
+			if roll >= p_max:
+				continue
 			var total := 0.0
 			for k in candidates.size():
 				var w := ctx.weight(candidates[k], site)
 				weights[k] = w
 				total += w
-			if total <= 0.0:
-				continue
-			var p := ctx.clump_at(tier, gx, gy) * minf(total, 1.0) * float(FILL[tier])
+			var p := clump * minf(total, 1.0) * float(FILL[tier])
 			if tier == T.GROUND:
-				p *= 1.0 - 0.7 * clampf(ctx.shade_at(gx, gy), 0.0, 1.0)
-			if ctx.rng.randf() >= p:
+				p *= shade_f
+			if roll >= p:
 				continue
 			var pick := ctx.rng.randf() * total
 			var chosen := candidates.size() - 1
@@ -523,18 +544,20 @@ class _Context:
 		s.t = t + (e - s.h) * PlanetConst.LAPSE_RATE_C_PER_M + ASPECT_C * aspect
 		s.m = clampf(m + WATER_BOOST * exp(-water_m / WATER_BOOST_M) - ASPECT_MOISTURE * aspect, 0.0, 1.0)
 		s.hot = CubeSphere.surface_distance_m(s.dir, _hot_center) < _hot_r * 0.45
+		s.beach = s.h < 3.0 and s.coast_km < 1.5 and smoothstep(3.0, 0.8, s.h) > 0.35
 
 	static func _bilerp(arr, k00: int, w: int, tx: float, ty: float) -> float:
 		return lerpf(lerpf(arr[k00], arr[k00 + 1], tx), lerpf(arr[k00 + w], arr[k00 + w + 1], tx), ty)
 
 	## Species weight at a site: climate bands x soil x needs x dominance.
+	## The site checks that rule a species out come first (they're cheap and
+	## most failures are these); the product is the same.
 	func weight(sp: PlantSpecies, s: _Site) -> float:
-		var w := sp.suitability(s.t, s.m, s.h, s.rock)
-		if w <= 0.0:
-			return 0.0
-		var in_water := s.depth > 0.05
-		if sp.has_need(PlantSpecies.Needs.STANDING_WATER):
-			if not in_water or s.depth < sp.water_depth_m.x or s.depth > sp.water_depth_m.y:
+		var bits := sp.need_bits()
+		var standing := bits & (1 << PlantSpecies.Needs.STANDING_WATER) != 0
+		var salty := bits & (1 << PlantSpecies.Needs.SALT_WATER) != 0
+		if standing:
+			if s.depth <= 0.05 or s.depth < sp.water_depth_m.x or s.depth > sp.water_depth_m.y:
 				return 0.0
 		elif s.depth > -WATERLINE_M:
 			# Ground at or barely above the water: the drawn water (flat
@@ -542,19 +565,19 @@ class _Context:
 			return 0.0
 		# Beach sand (the band TerrainChunk colors as sand): salt-tolerant
 		# plants only.
-		if s.h < 3.0 and s.coast_km < 1.5 and smoothstep(3.0, 0.8, s.h) > 0.35 \
-				and not sp.has_need(PlantSpecies.Needs.SALT_WATER):
+		if s.beach and not salty:
 			return 0.0
-		if sp.has_need(PlantSpecies.Needs.SALT_WATER):
-			if sp.has_need(PlantSpecies.Needs.STANDING_WATER):
-				if not s.salt:
-					return 0.0
-			else:
-				w *= 1.0 - smoothstep(0.3, 1.0, s.coast_km)
-		if sp.has_need(PlantSpecies.Needs.RIVER_BANK):
+		if salty and standing and not s.salt:
+			return 0.0
+		if bits & (1 << PlantSpecies.Needs.HOT_GROUND) != 0 and not s.hot:
+			return 0.0
+		var w := sp.suitability(s.t, s.m, s.h, s.rock)
+		if w <= 0.0:
+			return 0.0
+		if salty and not standing:
+			w *= 1.0 - smoothstep(0.3, 1.0, s.coast_km)
+		if bits & (1 << PlantSpecies.Needs.RIVER_BANK) != 0:
 			w *= 1.0 - smoothstep(25.0, 70.0, s.water_m)
-		if sp.has_need(PlantSpecies.Needs.HOT_GROUND) and not s.hot:
-			return 0.0
 		return w * dominance.get(sp, 1.0)
 
 	func add_emergent(d: Vector3) -> void:
@@ -579,3 +602,4 @@ class _Site:
 	var water_m: float # distance to nearest water
 	var coast_km: float
 	var hot: bool
+	var beach: bool # on the sand band by the sea

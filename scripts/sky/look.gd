@@ -30,12 +30,11 @@ static var _textures := {}
 const GRAIN_SIZE := 32
 
 
-## Add a material to the shared look (call on the main thread).
+## Add a material to the shared look (call on the main thread): its
+## textures. The per-frame values are global shader uniforms (apply()).
 static func register(mat: ShaderMaterial) -> ShaderMaterial:
 	if not _materials.has(mat):
 		_materials.append(mat)
-		for k in _params:
-			mat.set_shader_parameter(k, _params[k])
 		mat.set_shader_parameter("look_grain", grain())
 		# The same grain, smoothly filtered: large-scale light and dark.
 		mat.set_shader_parameter("look_grain_soft", grain())
@@ -44,12 +43,33 @@ static func register(mat: ShaderMaterial) -> ShaderMaterial:
 	return mat
 
 
-## Set some of the shared uniforms (others keep their last values).
+## Set some of the shared values (others keep their last ones). They're
+## global shader uniforms (project settings, [shader_globals]), so each is
+## one write however many materials there are. Colors go in linear (the
+## shaders read them as plain vec3s); "look_sites" (8 Vector4: scene
+## position, radius) and "look_site_kind" (8 floats) are unpacked into
+## look_site_0..7 and look_site_kind_a/b.
 static func apply(params: Dictionary) -> void:
 	_params.merge(params, true)
-	for mat in _materials:
-		for k in params:
-			mat.set_shader_parameter(k, params[k])
+	for k in params:
+		var v = params[k]
+		match k:
+			"look_sites":
+				var sites: PackedVector4Array = v
+				for i in 8:
+					RenderingServer.global_shader_parameter_set("look_site_%d" % i, sites[i] if i < sites.size() else Vector4.ZERO)
+			"look_site_kind":
+				var kinds: PackedFloat32Array = v
+				var kk := PackedFloat32Array([0, 0, 0, 0, 0, 0, 0, 0])
+				for i in mini(kinds.size(), 8):
+					kk[i] = kinds[i]
+				RenderingServer.global_shader_parameter_set("look_site_kind_a", Vector4(kk[0], kk[1], kk[2], kk[3]))
+				RenderingServer.global_shader_parameter_set("look_site_kind_b", Vector4(kk[4], kk[5], kk[6], kk[7]))
+			_:
+				if v is Color:
+					var c := (v as Color).srgb_to_linear()
+					v = Vector3(c.r, c.g, c.b)
+				RenderingServer.global_shader_parameter_set(k, v)
 
 
 ## 32 x 32 grayscale grain around 1.0: blotchy 2-4 px clusters of lighter

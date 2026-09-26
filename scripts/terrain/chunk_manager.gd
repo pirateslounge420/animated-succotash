@@ -37,6 +37,10 @@ var _done: Array = []
 var _done_detail: Array = []
 var _mutex := Mutex.new()
 var _wanted := {}
+## Chunks whose queued work was abandoned when the player jumped elsewhere
+## (load_blocking): their tasks skip it. Guarded by _mutex.
+var _abandoned := {}
+var _abandoned_detail := {}
 var _wanted_detail := {}
 ## Rings around the chunk the player is in, cached per chunk.
 var _rings_key := Vector3i(-1, -1, -1)
@@ -131,7 +135,25 @@ func update_around(player_dir: Vector3) -> void:
 
 	_attach_base(max_attach_per_frame)
 	_attach_detail(max_attach_per_frame)
+	_build_collision(1)
 	_build_tree_colliders(tree_colliders_per_frame)
+
+
+## Ground collision for the chunks near the player (the detail ring), the
+## player's own chunk first: `budget` strips this frame. Farther chunks
+## never need it (creatures use heights, arrows fall short of them).
+func _build_collision(budget: int) -> void:
+	var here: TerrainChunk = chunks.get(_rings_key)
+	while budget > 0 and here and here.wants_collision():
+		here.build_collision_part()
+		budget -= 1
+	for key in _wanted_detail:
+		if budget <= 0:
+			return
+		var c: TerrainChunk = chunks.get(key)
+		while budget > 0 and c and c.wants_collision():
+			c.build_collision_part()
+			budget -= 1
 
 
 ## Trunk colliders for the detail ring, the player's own chunk first.
@@ -147,22 +169,40 @@ func _build_tree_colliders(budget: int) -> void:
 			budget -= c.build_tree_colliders(budget)
 
 
+## Worker: everything a chunk needs before its nodes can be built (not
+## its collision: see TerrainChunk.build_collision_part). Work abandoned
+## when the player jumped elsewhere (load_blocking) is skipped.
 func _compute_base(key: Vector3i) -> void:
+	_mutex.lock()
+	var skip := _abandoned.has(key)
+	if skip:
+		_done.append({"key": key, "skipped": true})
+	_mutex.unlock()
+	if skip:
+		return
 	var data := TerrainChunk.compute(key, map, rivers)
 	var trees := VegetationPlacer.compute_base(key, map, data)
 	TerrainChunk.bake_canopy_shade(data, trees.hosts)
 	TerrainChunk.prepare_meshes(data)
 	data["plants"] = VegetationPlacer.prepare(trees.plants, data.center, data.anchor_r)
 	data["hosts"] = trees.hosts
+	# The trees' meshes, if this is the first time a species shows up.
+	PlantMeshes.warm(data.plants.keys())
 	_mutex.lock()
 	_done.append(data)
 	_mutex.unlock()
 
 
 func _compute_detail(key: Vector3i, data: Dictionary, hosts: Array) -> void:
-	var plants := VegetationPlacer.prepare(VegetationPlacer.compute_detail(key, map, data, hosts), data.center, data.anchor_r)
 	_mutex.lock()
-	_done_detail.append([key, plants])
+	var skip := _abandoned_detail.has(key)
+	_mutex.unlock()
+	var plants := {}
+	if not skip:
+		plants = VegetationPlacer.prepare(VegetationPlacer.compute_detail(key, map, data, hosts), data.center, data.anchor_r)
+		PlantMeshes.warm(plants.keys())
+	_mutex.lock()
+	_done_detail.append([key, plants, skip])
 	_mutex.unlock()
 
 
@@ -178,7 +218,10 @@ func _attach_base(limit: int) -> void:
 		if _pending.has(key):
 			WorkerThreadPool.wait_for_task_completion(_pending[key])
 			_pending.erase(key)
-		if not _wanted.has(key) or chunks.has(key):
+		_mutex.lock()
+		_abandoned.erase(key)
+		_mutex.unlock()
+		if data.get("skipped", false) or not _wanted.has(key) or chunks.has(key):
 			continue
 		var chunk := TerrainChunk.new()
 		chunk.build_nodes(data, world)
@@ -204,6 +247,11 @@ func _attach_detail(limit: int) -> void:
 		if _pending_detail.has(key):
 			WorkerThreadPool.wait_for_task_completion(_pending_detail[key])
 			_pending_detail.erase(key)
+		_mutex.lock()
+		_abandoned_detail.erase(key)
+		_mutex.unlock()
+		if item[2]:
+			continue
 		var chunk: TerrainChunk = chunks.get(key)
 		if chunk == null or chunk.detail_node != null or not _wanted_detail.has(key):
 			continue
@@ -222,9 +270,19 @@ func load_blocking(d: Vector3) -> void:
 	_wanted = keys_around(d, view_radius_chunks)
 	_wanted_detail = inner
 	_rings_key = Vector3i(-1, -1, -1) # the next update rebuilds the rings
+	# Work still queued for where the player was is abandoned (those tasks
+	# skip it), and the chunks needed now jump the queue.
+	_mutex.lock()
+	for key in _pending:
+		if not _wanted.has(key):
+			_abandoned[key] = true
+	for key in _pending_detail:
+		if not inner.has(key):
+			_abandoned_detail[key] = true
+	_mutex.unlock()
 	for key in inner:
 		if not _pending.has(key) and not chunks.has(key):
-			_pending[key] = WorkerThreadPool.add_task(_compute_base.bind(key))
+			_pending[key] = WorkerThreadPool.add_task(_compute_base.bind(key), true)
 	for key in inner:
 		if _pending.has(key):
 			WorkerThreadPool.wait_for_task_completion(_pending[key])
@@ -233,11 +291,12 @@ func load_blocking(d: Vector3) -> void:
 	for key in inner:
 		var c: TerrainChunk = chunks.get(key)
 		if c and c.detail_node == null:
-			_pending_detail[key] = WorkerThreadPool.add_task(_compute_detail.bind(key, c.data, c.hosts))
+			_pending_detail[key] = WorkerThreadPool.add_task(_compute_detail.bind(key, c.data, c.hosts), true)
 	for key in _pending_detail.keys():
 		WorkerThreadPool.wait_for_task_completion(_pending_detail[key])
 	_pending_detail.clear()
 	_attach_detail(1000)
+	_build_collision(1 << 30)
 	_build_tree_colliders(1 << 30)
 
 

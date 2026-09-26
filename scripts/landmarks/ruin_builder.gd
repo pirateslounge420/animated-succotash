@@ -234,14 +234,40 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 		o.distance_fade_begin = 50.0
 		o.distance_fade_length = 20.0
 		root.add_child(o)
+	# Collision comes later, in pieces, once the player is near
+	# (build_collision_part): a castle's ~18k faces take a trimesh BVH far
+	# too slow to build in one frame, and ruins are built kilometers out.
 	var body := StaticBody3D.new()
+	body.name = "Collision"
+	root.add_child(body)
+	root.set_meta("collision_faces", data.cv)
+	root.set_meta("collision_next", 0)
+	return root
+
+
+## Faces per collision piece: ~1.5 ms of BVH each.
+const COLLISION_PIECE := 2500
+
+
+## Does this ruin node still lack some of its collision?
+static func wants_collision(node: Node3D) -> bool:
+	return int(node.get_meta("collision_next", 0)) < (node.get_meta("collision_faces", PackedVector3Array()) as PackedVector3Array).size()
+
+
+## Add the next piece of a ruin node's collision (make_node leaves it out).
+static func build_collision_part(node: Node3D) -> void:
+	var faces: PackedVector3Array = node.get_meta("collision_faces")
+	var from: int = node.get_meta("collision_next")
+	var to := mini(from + COLLISION_PIECE * 3, faces.size())
 	var shape := ConcavePolygonShape3D.new()
-	shape.set_faces(data.cv)
+	shape.set_faces(faces.slice(from, to))
 	var cs := CollisionShape3D.new()
 	cs.shape = shape
-	body.add_child(cs)
-	root.add_child(body)
-	return root
+	node.get_node("Collision").add_child(cs)
+	node.set_meta("collision_next", to)
+	if to >= faces.size():
+		node.set_meta("collision_faces", PackedVector3Array())
+		node.set_meta("collision_next", 0)
 
 
 ## Where the node goes, in scene space (set it after adding the node to
@@ -307,61 +333,69 @@ func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09,
 	var jit: Array[Vector3] = []
 	for i in 8:
 		jit.append(Vector3(rng.randf_range(-wear, wear), rng.randf_range(-wear, wear), rng.randf_range(-wear, wear)))
-	# Vertex (corner i, face axis a): the corner pulled in by b along the
-	# other two axes.
-	var vert := func(i: int, a: int) -> Vector3:
+	# Worked out once per box (it's built of many quads that share them):
+	# vertex (corner i, face axis a) at vs[i * 3 + a], the corner pulled in
+	# by b along the other two axes; the face normal of axis a, side s
+	# (0 minus, 1 plus) at ns[a * 2 + s]; the color of (i, a) at cs[...].
+	var vs := PackedVector3Array()
+	vs.resize(24)
+	var cs := PackedColorArray()
+	cs.resize(24)
+	for i in 8:
 		var sg := Vector3(1.0 if i & 1 else -1.0, 1.0 if i & 2 else -1.0, 1.0 if i & 4 else -1.0)
-		var p := sg * h + jit[i]
-		for k in 3:
-			if k != a:
-				p[k] -= sg[k] * b
-		return xf * p
-	var fnorm := func(i: int, a: int) -> Vector3:
-		var nv := Vector3.ZERO
-		nv[a] = 1.0 if (i >> a) & 1 else -1.0
-		return (xf.basis * nv).normalized()
-	var face_col := func(i: int, a: int) -> Color:
-		if a == 1:
-			return top if i & 2 else bottom
-		return side
-	# Faces.
+		for a in 3:
+			var p := sg * h + jit[i]
+			for k in 3:
+				if k != a:
+					p[k] -= sg[k] * b
+			vs[i * 3 + a] = xf * p
+			cs[i * 3 + a] = (top if i & 2 else bottom) if a == 1 else side
+	var ns := PackedVector3Array()
+	ns.resize(6)
 	for a in 3:
-		for sgn in [0, 1]:
-			# This face's 4 corners, in order round it.
-			var u := (a + 1) % 3
-			var w := (a + 2) % 3
-			var ring: Array[int] = []
-			for q in [[0, 0], [1, 0], [1, 1], [0, 1]]:
-				ring.append((sgn << a) | (q[0] << u) | (q[1] << w))
-			var ps: Array[Vector3] = []
-			var ns: Array[Vector3] = []
-			var cs: Array[Color] = []
-			for i in ring:
-				ps.append(vert.call(i, a))
-				ns.append(fnorm.call(i, a))
-				cs.append(face_col.call(i, a))
-			_quad_n(ps, ns, cs, o)
+		for sgn in 2:
+			var nv := Vector3.ZERO
+			nv[a] = 1.0 if sgn == 1 else -1.0
+			ns[a * 2 + sgn] = (xf.basis * nv).normalized()
+	# Faces: each face's 4 corners, in order round it.
+	for a in 3:
+		var u := (a + 1) % 3
+		var w := (a + 2) % 3
+		for sgn in 2:
+			var i0 := (sgn << a)
+			var i1 := (sgn << a) | (1 << u)
+			var i2 := (sgn << a) | (1 << u) | (1 << w)
+			var i3 := (sgn << a) | (1 << w)
+			var n := ns[a * 2 + sgn]
+			_quad_i(vs[i0 * 3 + a], vs[i1 * 3 + a], vs[i2 * 3 + a], vs[i3 * 3 + a], n, n, n, n,
+				cs[i0 * 3 + a], cs[i1 * 3 + a], cs[i2 * 3 + a], cs[i3 * 3 + a], o)
 	# Edge chamfers: between face (a, sa) and face (c, sc), along axis k.
 	for a in 3:
 		for c in range(a + 1, 3):
 			var k := 3 - a - c
-			for sa in [0, 1]:
-				for sc in [0, 1]:
+			for sa in 2:
+				for sc in 2:
 					var i0: int = (sa << a) | (sc << c)
 					var i1: int = i0 | (1 << k)
-					var ps: Array[Vector3] = [vert.call(i0, a), vert.call(i1, a), vert.call(i1, c), vert.call(i0, c)]
-					var ns: Array[Vector3] = [fnorm.call(i0, a), fnorm.call(i1, a), fnorm.call(i1, c), fnorm.call(i0, c)]
-					var cs: Array[Color] = [face_col.call(i0, a), face_col.call(i1, a), face_col.call(i1, c), face_col.call(i0, c)]
-					_quad_n(ps, ns, cs, o)
+					var na := ns[a * 2 + sa]
+					var nc := ns[c * 2 + sc]
+					_quad_i(vs[i0 * 3 + a], vs[i1 * 3 + a], vs[i1 * 3 + c], vs[i0 * 3 + c], na, na, nc, nc,
+						cs[i0 * 3 + a], cs[i1 * 3 + a], cs[i1 * 3 + c], cs[i0 * 3 + c], o)
 	# Corner triangles.
 	for i in 8:
-		var ps: Array[Vector3] = [vert.call(i, 0), vert.call(i, 1), vert.call(i, 2)]
-		var ns: Array[Vector3] = [fnorm.call(i, 0), fnorm.call(i, 1), fnorm.call(i, 2)]
-		var cs: Array[Color] = [face_col.call(i, 0), face_col.call(i, 1), face_col.call(i, 2)]
-		_tri_n(ps[0], ps[1], ps[2], ns[0], ns[1], ns[2], cs[0], cs[1], cs[2], o)
+		_tri_n(vs[i * 3], vs[i * 3 + 1], vs[i * 3 + 2],
+			ns[(i & 1)], ns[2 + ((i >> 1) & 1)], ns[4 + ((i >> 2) & 1)],
+			cs[i * 3], cs[i * 3 + 1], cs[i * 3 + 2], o)
 	if solid:
 		_collision_box(xf, h)
 	_lod_box(xf, h, top, side, bottom)
+
+
+## _quad_n without the arrays: corners p0..p3 in order round the quad.
+func _quad_i(p0: Vector3, p1: Vector3, p2: Vector3, p3: Vector3, n0: Vector3, n1: Vector3, n2: Vector3, n3: Vector3,
+		c0: Color, c1: Color, c2: Color, c3: Color, inside: Vector3) -> void:
+	_tri_n(p0, p1, p2, n0, n1, n2, c0, c1, c2, inside)
+	_tri_n(p0, p2, p3, n0, n2, n3, c0, c2, c3, inside)
 
 
 ## A quad (4 corners in order round it) with per-vertex normals and
@@ -374,19 +408,33 @@ func _quad_n(ps: Array[Vector3], ns: Array[Vector3], cs: Array[Color], inside: V
 func _tri_n(a: Vector3, b: Vector3, c: Vector3, na: Vector3, nb: Vector3, nc: Vector3,
 		ca: Color, cb: Color, cc: Color, inside: Vector3) -> void:
 	if (b - a).cross(c - a).dot((a + b + c) / 3.0 - inside) < 0.0:
-		_v.append_array([a, c, b])
-		_n.append_array([na, nc, nb])
-		_c.append_array([ca, cc, cb])
+		_v.append(a)
+		_v.append(c)
+		_v.append(b)
+		_n.append(na)
+		_n.append(nc)
+		_n.append(nb)
+		_c.append(ca)
+		_c.append(cc)
+		_c.append(cb)
 	else:
-		_v.append_array([a, b, c])
-		_n.append_array([na, nb, nc])
-		_c.append_array([ca, cb, cc])
+		_v.append(a)
+		_v.append(b)
+		_v.append(c)
+		_n.append(na)
+		_n.append(nb)
+		_n.append(nc)
+		_c.append(ca)
+		_c.append(cb)
+		_c.append(cc)
 	_add_mat()
 
 
 func _add_mat() -> void:
 	var m := Vector2(mat, 0.0)
-	_m.append_array([m, m, m])
+	_m.append(m)
+	_m.append(m)
+	_m.append(m)
 
 
 ## Smooth shading for everything added since `start`: vertices at the

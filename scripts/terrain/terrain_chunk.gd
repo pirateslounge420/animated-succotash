@@ -52,6 +52,12 @@ var heights := PackedFloat32Array()
 var fine_heights := PackedFloat32Array()
 var _coarse_mesh: MeshInstance3D
 var _fine_mesh: MeshInstance3D
+## Ground collision (build_collision_part): triangles not yet built into
+## it, the body, and how many strips it has.
+const COLLISION_PARTS := 4
+var _col_faces := PackedVector3Array()
+var _col_body: StaticBody3D
+var _col_parts := 0
 ## Canopy and emergent trees on this chunk: [local_position, height,
 ## species_index, instance]. Canopy-dwelling creatures attach to these.
 var trees: Array = []
@@ -136,17 +142,19 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 			var wl := _standing_water(map, d) if coarse else Vector2.ZERO
 			var nearest := 1e6
 			for s in segs:
-				var info := rivers.closest(s, d)
-				nearest = minf(nearest, info.x)
+				# Distance first; the water level only where it matters.
+				var dt := rivers.closest_dt(s, d)
+				nearest = minf(nearest, dt.x)
 				var half := rivers.width[s] * 0.5
-				if info.x < half + BANK_M:
-					var bed := info.z - rivers.depth[s]
+				if dt.x < half + BANK_M:
+					var lvl := rivers.level_at(s, dt.y)
+					var bed := lvl - rivers.depth[s]
 					# Through high ground the banks steepen into gorge walls.
 					var bank := lerpf(BANK_M, 3.0, smoothstep(4.0, 14.0, e - bed))
-					var f := 1.0 - smoothstep(half, half + bank, info.x)
-					e = lerpf(e, minf(e, bed) if info.x > half else bed, f)
-					if info.x < half:
-						wl = Vector2(maxf(wl.x, info.z), 1.0 if rivers.salty[s] == 1 else 0.0)
+					var f := 1.0 - smoothstep(half, half + bank, dt.x)
+					e = lerpf(e, minf(e, bed) if dt.x > half else bed, f)
+					if dt.x < half:
+						wl = Vector2(maxf(wl.x, lvl), 1.0 if rivers.salty[s] == 1 else 0.0)
 			var pi := (jj + 1) * pn + ii + 1
 			pad_h[pi] = e
 			pad_d[pi] = d
@@ -331,12 +339,14 @@ static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloa
 	out.resize(d.size())
 	for i in d.size():
 		var dir := d[i]
-		var col := _biome_blend(map, dir)
+		# One set of interpolation weights for every per-cell value here.
+		var w := map.weights_at(dir)
+		var col := _biome_blend(map, dir, w)
 		var e := h[i]
 		# Snow wherever it's below freezing at this exact height.
-		var t := map.sample(map.temp_c, dir) + (map.sample(map.elevation, dir) - e) * PlanetConst.LAPSE_RATE_C_PER_M
+		var t := map.sample_w(map.temp_c, w) + (map.sample_w(map.elevation, w) - e) * PlanetConst.LAPSE_RATE_C_PER_M
 		col = col.lerp(SNOW, smoothstep(-0.5, -3.5, t))
-		col = col.lerp(SAND, sand_amount(map, dir, e))
+		col = col.lerp(SAND, _sand_from(e, map.sample_w(map.coast_dist_km, w)) if e < 3.0 else 0.0)
 		if e < 0.0:
 			col = col.lerp(SEABED, smoothstep(0.0, -8.0, e))
 		# Bare rock on steep ground (not under snow).
@@ -350,7 +360,13 @@ static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloa
 ## 0-1 how much the ground at `d` (height `e`) is beach sand: low ground
 ## near the sea. VegetationPlacer keeps all but salt-tolerant plants off it.
 static func sand_amount(map: PlanetData, d: Vector3, e: float) -> float:
-	if e >= 3.0 or map.sample(map.coast_dist_km, d) >= 1.5:
+	if e >= 3.0:
+		return 0.0
+	return _sand_from(e, map.sample(map.coast_dist_km, d))
+
+
+static func _sand_from(e: float, coast_km: float) -> float:
+	if e >= 3.0 or coast_km >= 1.5:
 		return 0.0
 	return smoothstep(3.0, 0.8, e)
 
@@ -407,8 +423,8 @@ static func bake_canopy_shade(data: Dictionary, hosts: Array) -> void:
 
 ## Bilinear blend of the four nearest blueprint cells' biome colors, so
 ## biome borders fade across the ground instead of snapping.
-static func _biome_blend(map: PlanetData, d: Vector3) -> Color:
-	var w := map.weights_at(d)
+static func _biome_blend(map: PlanetData, d: Vector3, weights: Array = []) -> Color:
+	var w := weights if not weights.is_empty() else map.weights_at(d)
 	var cells: PackedInt32Array = w[0]
 	var k: PackedFloat32Array = w[1]
 	var col := Color(0, 0, 0)
@@ -584,14 +600,11 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 	_fine_mesh = _ground_mesh(data.mesh_fine, "GroundFine")
 	_fine_mesh.visible = false
 
-	var body := StaticBody3D.new()
-	body.name = "Collision"
-	var shape := ConcavePolygonShape3D.new()
-	shape.set_faces(data.faces)
-	var cs := CollisionShape3D.new()
-	cs.shape = shape
-	body.add_child(cs)
-	add_child(body)
+	# Ground collision comes later, a strip at a time and only near the
+	# player (build_collision_part): a trimesh's BVH is slow to build, and
+	# Godot's physics server builds it on the main thread even when asked
+	# from a worker.
+	_col_faces = data.faces
 	# Only needed once.
 	data.erase("mesh_coarse")
 	data.erase("mesh_fine")
@@ -601,6 +614,34 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 
 	_build_water(data.water, data.rivers, world, anchor)
 	_build_falls(data.falls, world, anchor)
+
+
+## Collision still to build (ChunkManager builds it for chunks near the
+## player)?
+func wants_collision() -> bool:
+	return not _col_faces.is_empty()
+
+
+## Build the next strip of the ground's collision: COLLISION_PARTS of them,
+## one a frame, each a ConcavePolygonShape3D of a share of the fine
+## triangles (~1.5 ms each instead of ~6 ms for the lot).
+func build_collision_part() -> void:
+	if _col_body == null:
+		_col_body = StaticBody3D.new()
+		_col_body.name = "Collision"
+		add_child(_col_body)
+	var tris := _col_faces.size() / 3
+	var per := int(ceil(float(tris) / COLLISION_PARTS))
+	var from := _col_parts * per * 3
+	var to := mini((_col_parts + 1) * per * 3, _col_faces.size())
+	var shape := ConcavePolygonShape3D.new()
+	shape.set_faces(_col_faces.slice(from, to))
+	var cs := CollisionShape3D.new()
+	cs.shape = shape
+	_col_body.add_child(cs)
+	_col_parts += 1
+	if _col_parts >= COLLISION_PARTS or to >= _col_faces.size():
+		_col_faces = PackedVector3Array()
 
 
 func _ground_mesh(arrays: Array, node_name: String) -> MeshInstance3D:

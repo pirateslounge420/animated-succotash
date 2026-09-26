@@ -36,6 +36,7 @@ var density := 1.0 # peak relative abundance
 var soils := {} # PlanetData.Rock -> factor; rocks not listed use soil_default
 var soil_default := 0.6
 var needs: Array[Needs] = []
+var _need_bits := -1
 var height_m := Vector2(1.0, 2.0) # size range for jitter
 var color := Color(0.3, 0.5, 0.25)
 var accent := Color(0.35, 0.25, 0.15) # trunk/stem/flower
@@ -62,6 +63,16 @@ func soil_factor(rock: int) -> float:
 
 func has_need(n: Needs) -> bool:
 	return needs.has(n)
+
+
+## The needs as bits (1 << Needs value), worked out once: placement asks
+## for several of them per candidate site.
+func need_bits() -> int:
+	if _need_bits < 0:
+		_need_bits = 0
+		for n in needs:
+			_need_bits |= 1 << n
+	return _need_bits
 
 
 ## Climate suitability at a site, before clumping and dominance.

@@ -92,6 +92,17 @@ func segments_near(map: PlanetData, cell: int) -> PackedInt32Array:
 	return out
 
 
+## Distance (m) and position t along the segment (0 upstream .. 1) of the
+## segment's closest point to a surface direction: closest() without the
+## water level (which needs the segment's profile, behind a lock).
+func closest_dt(seg: int, d: Vector3) -> Vector2:
+	var pa := a[seg]
+	var ab := b[seg] - pa
+	var t := clampf((d - pa).dot(ab) / maxf(ab.length_squared(), 1e-12), 0.0, 1.0)
+	var p := (pa + ab * t).normalized()
+	return Vector2(CubeSphere.surface_distance_m(p, d), t)
+
+
 ## Closest point info for a surface direction against one segment:
 ## Vector3(distance_m, t along segment, water level at that t).
 func closest(seg: int, d: Vector3) -> Vector3:

@@ -80,6 +80,7 @@ func update_landmarks(delta: float, daylight: float) -> void:
 		_refresh_ruins(pd)
 		_refresh_sites(pd)
 	_attach_ruins()
+	_build_ruin_collision(pd)
 
 	# How deep inside a site the player is (ponds count a bit less).
 	magic = 0.0
@@ -143,6 +144,22 @@ func _attach_ruins() -> void:
 	_root.add_child(node)
 	node.global_transform = RuinBuilder.placement(item[1], world)
 	_ruins[c] = node
+
+
+## Collision for ruins the player is near (COLLIDE_M), a piece a frame
+## (RuinBuilder.build_collision_part).
+const COLLIDE_M := 400.0
+
+
+func _build_ruin_collision(pd: Vector3) -> void:
+	for c in _ruins:
+		var node: Node3D = _ruins[c]
+		if not RuinBuilder.wants_collision(node):
+			continue
+		var site: Dictionary = node.get_meta("site")
+		if CubeSphere.surface_distance_m(site.dir, pd) < COLLIDE_M + float(site.footprint_m):
+			RuinBuilder.build_collision_part(node)
+			return
 
 
 ## The ruins built right now: grid cell -> node (meta "site",

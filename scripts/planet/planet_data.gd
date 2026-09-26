@@ -118,6 +118,17 @@ func sample(arr: PackedFloat32Array, d: Vector3) -> float:
 	return v
 
 
+## sample() with weights already found (weights_at): several values at
+## one spot for the price of one lookup.
+func sample_w(arr: PackedFloat32Array, w: Array) -> float:
+	var cells: PackedInt32Array = w[0]
+	var k: PackedFloat32Array = w[1]
+	var v := 0.0
+	for i in cells.size():
+		v += arr[cells[i]] * k[i]
+	return v
+
+
 ## Interpolation weights at a surface direction: [cells, weights], weights
 ## summing to 1. Bilinear between the four surrounding cell centers inside
 ## a face. Within half a cell of a face edge there is no four-cell square

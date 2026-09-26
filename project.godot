@@ -24,3 +24,90 @@ renderer/rendering_method="forward_plus"
 anti_aliasing/quality/msaa_3d=2
 lights_and_shadows/directional_shadow/size=4096
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
+
+[shader_globals]
+
+look_fog_color={
+"type": "vec3",
+"value": Vector3(0.26327, 0.60383, 1)
+}
+look_fog_density={
+"type": "float",
+"value": 0.0004
+}
+look_up={
+"type": "vec3",
+"value": Vector3(0, 1, 0)
+}
+look_planet_center={
+"type": "vec3",
+"value": Vector3(0, -63662, 0)
+}
+look_planet_radius={
+"type": "float",
+"value": 63662.0
+}
+look_mist={
+"type": "float",
+"value": 0.0
+}
+look_night={
+"type": "float",
+"value": 0.0
+}
+look_glow={
+"type": "float",
+"value": 0.0
+}
+look_rim_color={
+"type": "vec3",
+"value": Vector3(0.17064, 0.26327, 1)
+}
+look_site_0={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+look_site_1={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+look_site_2={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+look_site_3={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+look_site_4={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+look_site_5={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+look_site_6={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+look_site_7={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+look_site_kind_a={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+look_site_kind_b={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+look_site_count={
+"type": "int",
+"value": 0
+}
+look_shadow_tint={
+"type": "vec3",
+"value": Vector3(0.06372, 0.34239, 0.57048)
+}

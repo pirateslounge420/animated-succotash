@@ -29,6 +29,10 @@ extends Node
 
 const ACTIVE_RADIUS_M := 140.0
 const DESPAWN_RADIUS_M := 175.0
+## Ambient animals farther than this think every other frame, and past
+## LOD_FAR_M every fourth.
+const LOD_NEAR_M := 40.0
+const LOD_FAR_M := 90.0
 const MAX_AMBIENT := 70
 const DEN_SEARCH_M := 900.0
 const PACK_SPAWN_M := 420.0
@@ -63,6 +67,8 @@ var _logs: Array = [] # {"node", "dir", "bugs", "flipped", "chunk"}
 var _bugs: Array[Creature] = []
 var _calls: Array = [] # pending howls: [time, Creature or den key]
 var _time := 0.0
+var _frame := 0
+var _prompt_t := 0.0
 ## Pack dens and mythical territories whose creatures were killed, key ->
 ## time they come back.
 var _slain := {}
@@ -139,11 +145,22 @@ func update_creatures(delta: float, daylight: float) -> void:
 		if _checked.size() > 30000:
 			_checked.clear()
 
+	# Far animals think less often (LOD_NEAR_M, LOD_FAR_M), catching up the
+	# time they skipped; anything running, flying or angry stays at full
+	# rate so it never visibly stutters.
+	_frame += 1
 	for key in _ambient.keys():
 		var c: Creature = _ambient[key]
-		if not c.leaving and (c.distance_to(pd) > DESPAWN_RADIUS_M or not c.species.active_now(daylight)):
+		var dist := c.distance_to(pd)
+		if not c.leaving and (dist > DESPAWN_RADIUS_M or not c.species.active_now(daylight)):
 			c.leave()
-		c.tick(delta, ctx)
+		c.lod_delta += delta
+		var stride := 1
+		if dist > LOD_NEAR_M and c.angry <= 0.0 and c.mode != "flee" and c.mode != "hop" and not c.fly_off:
+			stride = 2 if dist < LOD_FAR_M else 4
+		if (_frame + c.lod_phase) % stride == 0:
+			c.tick(c.lod_delta, ctx)
+			c.lod_delta = 0.0
 	for b in _bugs.duplicate():
 		b.tick(delta, ctx)
 	_update_packs(delta, pd, ctx)
@@ -867,6 +884,11 @@ func _update_prompt(delta: float) -> void:
 		_message_t -= delta
 		prompt = _message
 		return
+	# The nearest log a few times a second is plenty for a prompt.
+	_prompt_t -= delta
+	if _prompt_t > 0.0:
+		return
+	_prompt_t = 0.12
 	var lg := _nearest_log(player.global_position)
 	if lg.is_empty():
 		prompt = ""

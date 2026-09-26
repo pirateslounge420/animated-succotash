@@ -12,24 +12,38 @@
 // mythical ground, where moss and plants glow too; lower = glow ponds,
 // mostly the water itself); look_glow scales everything with darkness.
 
-uniform vec3 look_fog_color : source_color = vec3(0.55, 0.8, 1.0);
-uniform float look_fog_density = 0.0004; // per meter
-uniform float look_fog_max = 0.96;
-uniform vec3 look_up = vec3(0.0, 1.0, 0.0); // viewer's local up
+// Shared per-frame values are global shader uniforms (project settings,
+// [shader_globals]): Look sets each once a frame, however many materials
+// use them. Colors arrive already linear (Look converts them).
+global uniform vec3 look_fog_color;
+global uniform float look_fog_density; // per meter
+const float look_fog_max = 0.96;
+global uniform vec3 look_up; // viewer's local up
 // Haze thins with altitude (an exponential atmosphere): planet center in
 // scene space, radius, and the haze's scale height.
-uniform vec3 look_planet_center = vec3(0.0, -63662.0, 0.0);
-uniform float look_planet_radius = 63662.0;
-uniform float look_haze_height = 150.0; // 1.5 km times PlanetConst.HEIGHT_SCALE
-uniform float look_mist = 0.0; // 0-1 extra ground mist
-uniform float look_night = 0.0;
-uniform vec3 look_glow_color : source_color = vec3(0.05, 1.0, 0.85);
-uniform vec3 look_glow_color_b : source_color = vec3(0.15, 0.35, 1.0);
-uniform float look_glow = 0.0; // 0 by day, 1 at night
-uniform vec3 look_rim_color : source_color = vec3(0.45, 0.55, 1.0); // moonlit edge
-uniform vec4 look_sites[8];
-uniform float look_site_kind[8];
-uniform int look_site_count = 0;
+global uniform vec3 look_planet_center;
+global uniform float look_planet_radius;
+const float look_haze_height = 150.0; // 1.5 km times PlanetConst.HEIGHT_SCALE
+global uniform float look_mist; // 0-1 extra ground mist
+global uniform float look_night;
+// Teal and cobalt (sRGB (0.05, 1.0, 0.85) and (0.15, 0.35, 1.0)), linear.
+const vec3 look_glow_color = vec3(0.00394, 1.0, 0.69207);
+const vec3 look_glow_color_b = vec3(0.01961, 0.10048, 1.0);
+global uniform float look_glow; // 0 by day, 1 at night
+global uniform vec3 look_rim_color; // moonlit edge
+// The nearest glowing sites: xyz scene position, w radius; their kinds
+// packed four to a vec4.
+global uniform vec4 look_site_0;
+global uniform vec4 look_site_1;
+global uniform vec4 look_site_2;
+global uniform vec4 look_site_3;
+global uniform vec4 look_site_4;
+global uniform vec4 look_site_5;
+global uniform vec4 look_site_6;
+global uniform vec4 look_site_7;
+global uniform vec4 look_site_kind_a;
+global uniform vec4 look_site_kind_b;
+global uniform int look_site_count;
 
 // Haze thickens smoothly with distance (it used to step in flat bands).
 float look_band(float f) {
@@ -71,13 +85,19 @@ vec3 look_rim(vec3 normal, vec3 view, float amount) {
 // 0-1 closeness to the nearest glowing site; `kind_weight` 1 counts every
 // site fully, 0 counts only ruins/mythical sites (kind 1).
 float look_site_glow(vec3 world_pos, float kind_weight) {
+	if (look_site_count <= 0) {
+		return 0.0;
+	}
+	vec4 sites[8] = vec4[8](look_site_0, look_site_1, look_site_2, look_site_3, look_site_4, look_site_5, look_site_6, look_site_7);
+	float kinds[8] = float[8](look_site_kind_a.x, look_site_kind_a.y, look_site_kind_a.z, look_site_kind_a.w,
+		look_site_kind_b.x, look_site_kind_b.y, look_site_kind_b.z, look_site_kind_b.w);
 	float g = 0.0;
 	for (int i = 0; i < 8; i++) {
 		if (i >= look_site_count) {
 			break;
 		}
-		vec4 s = look_sites[i];
-		float k = mix(step(0.99, look_site_kind[i]), 1.0, kind_weight);
+		vec4 s = sites[i];
+		float k = mix(step(0.99, kinds[i]), 1.0, kind_weight);
 		g = max(g, smoothstep(s.w, s.w * 0.35, distance(world_pos, s.xyz)) * k);
 	}
 	return g;
@@ -89,8 +109,8 @@ float look_site_glow(vec3 world_pos, float kind_weight) {
 // (shadow) or faces away, a share of it comes back tinted teal/cool blue.
 // It multiplies the surface's own albedo like any light, so a leaf in
 // shade stays green and a stone stays stone, just cooler and darker.
-uniform vec3 look_shadow_tint : source_color = vec3(0.28, 0.62, 0.78);
-uniform float look_shadow_fill = 0.32;
+global uniform vec3 look_shadow_tint;
+const float look_shadow_fill = 0.32;
 
 vec3 look_diffuse(vec3 n, vec3 l, vec3 light_color, float att, bool directional) {
 	float ndl = dot(n, l);

@@ -547,11 +547,19 @@ Verified:
     nodes are attached a few per frame;
   - the rings are recomputed only when the player crosses into another
     chunk, measured from that chunk's center;
-  - collision shapes are built on the main thread: in Godot 4.3 a
-    `set_faces` from a worker is only queued, and the physics server
-    builds the BVH on the main thread at its next call anyway (unless
-    physics runs on its own thread);
-  - the loading screen blocks only for the detail ring.
+  - ground collision exists only for the detail ring (nothing farther
+    needs it: creatures read heights, arrows fall short) and is built a
+    quarter-chunk strip per frame, the player's chunk first
+    (`TerrainChunk.build_collision_part`, ~1.5 ms each). It's built on
+    the main thread on purpose: in Godot 4.3 a `set_faces` from a worker
+    is only queued, and the physics server builds the BVH on the main
+    thread at its next call anyway (unless physics runs on its own
+    thread), all at once;
+  - plant geometry is built by the chunk workers for the species they
+    place (`PlantMeshes.warm`), so the main thread only uploads meshes;
+  - the loading screen blocks only for the detail ring; its chunks jump
+    the worker queue, and work still queued for where the player was
+    before a jump is abandoned.
 - **Floating origin** (`World`). The planet center is stored in double
   precision and everything under `world_root` shifts when the player
   gets 1.5 km from the origin.
@@ -559,11 +567,9 @@ Verified:
   sea, sunk slightly and hidden inside the chunk radius, with slope
   normals.
 
-Measured with the compatibility renderer:
-- blocking load of 13 chunks in about 5 s;
-- streaming to 50 chunks in about 3 s;
-- per chunk: terrain 18 ms, trees 51 ms, undergrowth ~330 ms, all on
-  worker threads.
+Measured headless (see Performance): per chunk on a worker, terrain
+~40 ms and vegetation ~210 ms (trees and undergrowth); the loading
+screen's blocking load about 5 s.
 
 **Thread safety note.** Godot 4.3 can corrupt nested constant arrays when
 several threads read them at once. Anything the chunk workers read is
@@ -843,6 +849,46 @@ the player's shoulder so the fire is in view.
   - a context prompt.
 - **Map (M):** a globe lit by the real sun, colored by biome, elevation,
   temperature, rainfall or live weather.
+
+## Performance
+
+Profiled headless with a fixed 1/60 s step (`--fixed-fps 60`, and the
+headless frame sleep off, which otherwise pads every frame to 6.9 ms),
+sprinting a fixed path, before and after:
+
+| | before | after |
+|---|---|---|
+| frame, mean | 3.81 ms | 2.58 ms |
+| frame, 99th percentile | 8.33 ms | 4.89 ms |
+| worst frame sprinting | 20.7 ms | 8.9 ms |
+| worst frame standing still | 33-51 ms | 8.5 ms |
+| loading screen after a 5 km jump | 11.8 s | 5.2 s |
+
+- **Shared shader values are global uniforms** (`[shader_globals]` in
+  project settings; `Look.apply` writes each once). They used to be set
+  on every registered material each frame: 139 materials, ~0.3 ms.
+- **Creatures think less far away.** Ambient animals past 40 m tick every
+  other frame and past 90 m every fourth, catching up the skipped time;
+  anything fleeing, flying or angry stays at full rate. A still animal
+  isn't moved, scaled or its legs set again, and its ground lookup is
+  shared between the step check and the placement; sculpted bodies only
+  set bones that moved. The creature update went from 2.5 to ~1.1 ms a
+  frame with ~90 animals about.
+- **Collision near the player only, in strips** (above), and ruins'
+  collision only within 400 m, 2,500 faces a frame (a castle has ~18k):
+  a new chunk used to cost 5-9 ms of BVH on attach, two a frame.
+- **Chunk workers:** river distances no longer take the river profile's
+  lock per vertex per segment (the water level is looked up only where
+  it's needed), vertex colors find their planet interpolation weights
+  once instead of four times, and vegetation decides most grid cells
+  cheaply: the cheap site checks run before the climate bands, and a
+  cell's acceptance roll is compared with the most it could be before
+  every species is weighed. The draws and results are unchanged (a hash
+  of 30 chunks' output, terrain and plants, matches bit for bit).
+  Terrain 58 → 40 ms, vegetation 350 → 210 ms per chunk.
+- **Ruins build 3x faster** (127 → 43 ms each on a worker): a block's
+  24 vertices, 6 normals and colors are worked out once instead of by
+  ~300 lambda calls. Output matches bit for bit (hashed over 32 ruins).
 
 ## How it was tested
 
