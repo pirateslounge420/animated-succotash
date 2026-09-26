@@ -44,10 +44,10 @@ func setup(p: PlanetPlayer) -> void:
 	_view = Node3D.new()
 	_view.name = "BowView"
 	p.camera().add_child(_view)
-	var vb := BowMesh.build(1.1)
+	var vb := BowMesh.build(0.62)
 	vb.name = "Bow"
 	_view.add_child(vb)
-	_nocked = BowMesh.arrow(0.7)
+	_nocked = BowMesh.arrow(0.42)
 	vb.add_child(_nocked)
 	_voice = AudioStreamPlayer3D.new()
 	_voice.unit_size = 4.0
@@ -133,16 +133,18 @@ func _carry() -> void:
 	if fp:
 		# In view: low left at rest, raised to the middle and canted when
 		# drawn, the string (and arrow) coming back toward you.
-		var rest := Vector3(-0.2, -0.3, -0.5)
-		var aim := Vector3(-0.04, -0.1, -0.42)
+		# Held in the left hand: low left at rest, lifted toward the middle
+		# and canted a little when drawn, the string toward you.
+		var rest := Vector3(-0.3, -0.26, -0.62)
+		var aim := Vector3(-0.1, -0.08, -0.6)
 		var k := 1.0 if drawing else 0.0
 		_view.position = rest.lerp(aim, k)
-		_view.rotation = Vector3(0.0, 0.2 * (1.0 - k) - 0.05, 0.35 * (1.0 - k) + 0.3 * k)
+		_view.rotation = Vector3(0.0, 0.12 * (1.0 - k), 0.3 * (1.0 - k) + 0.18 * k)
 		var vb: Node3D = _view.get_node("Bow")
 		BowMesh.set_draw(vb, d)
 		_nocked.visible = drawing
 		var nock: Vector3 = vb.get_meta("nock")
-		_nocked.position = nock + Vector3(0, 0, -0.7)
+		_nocked.position = nock + Vector3(0, 0, -0.42)
 	else:
 		if drawing:
 			_bow.position = Vector3(0.12, 1.35, -0.55)
