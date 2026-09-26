@@ -1,10 +1,9 @@
 // Shared look for every world material (terrain, far terrain, plants,
 // water, ruins). SkySystem sets these uniforms each frame through Look.
 //
-// Fog is done here rather than by the Environment: N64/PS1-style fog comes
-// in flat bands (a few hard-edged steps of haze instead of a smooth PBR
-// gradient), and valleys and low ground fill with extra mist, most of all
-// at night. Writing FOG replaces the Environment's fog for the material.
+// Fog is done here rather than by the Environment: smooth distance haze
+// that thins with altitude, and valleys and low ground fill with extra
+// mist, most of all at night. Writing FOG replaces the Environment's fog for the material.
 //
 // Glow is the bioluminescent night palette: at magical places (ruins,
 // glow ponds, mythical territories) water, moss and plant tips emit a
@@ -15,7 +14,6 @@
 
 uniform vec3 look_fog_color : source_color = vec3(0.55, 0.8, 1.0);
 uniform float look_fog_density = 0.0004; // per meter
-uniform float look_fog_bands = 6.0;
 uniform float look_fog_max = 0.96;
 uniform vec3 look_up = vec3(0.0, 1.0, 0.0); // viewer's local up
 // Haze thins with altitude (an exponential atmosphere): planet center in
@@ -33,11 +31,9 @@ uniform vec4 look_sites[8];
 uniform float look_site_kind[8];
 uniform int look_site_count = 0;
 
-// Stepped haze: flat bands with a narrow soft edge between them.
+// Haze thickens smoothly with distance (it used to step in flat bands).
 float look_band(float f) {
-	float x = f * look_fog_bands;
-	float fl = floor(x);
-	return (fl + smoothstep(0.47, 0.53, x - fl)) / look_fog_bands;
+	return f;
 }
 
 vec4 look_fog(vec3 world_pos, vec3 cam_pos) {

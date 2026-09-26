@@ -14,7 +14,7 @@ GameCube-era low-poly look: Phantasy Star Online episodes 1 and 2, F-Zero GX, Su
 
 **Glow: the third palette, for magical places.** At ruins, glow ponds and mythical creatures' territories, night turns bioluminescent: water, moss and some plant tips emit a saturated teal or cobalt light that actually lights the scene, and the surrounding moonlight falls away, so it reads like neon against black rather than ordinary moonlit night.
 
-**Grading.** Deep, near-cartoonish ultramarine overhead (over the aqua horizon band), punchy greens and water, N64/PS1-era color: flat bands instead of smooth gradients in the sky and the distance fog, 15-bit dithered color, intentionally low-res textures, flat Lambert lighting with no PBR sheen.
+**Grading.** Deep, near-cartoonish ultramarine overhead (over the aqua horizon band), punchy greens and water, N64/PS1-era color: smooth, saturated gradients in the sky and the distance haze (like the ozavry references), 15-bit dithered color, intentionally low-res textures, flat Lambert lighting with no PBR sheen.
 
 **Ruins as set pieces.** Ivy-choked aqueducts, crumbling towers and lone castles on hills stand as distinct silhouettes that draw the wanderer toward them: moss and vines over the stone, walls partly collapsed into rubble.
 

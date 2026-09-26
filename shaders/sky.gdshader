@@ -4,10 +4,11 @@
 // player's position. Directions are in world space; `up_dir` is the
 // player's local up, since "up" changes as you walk around the planet.
 //
-// Drawn in flat color bands (N64/PS1 style) rather than a smooth
-// gradient: the zenith-to-horizon ramp is stepped, the haze near the
-// horizon matches the banded ground fog (fog_color). Clouds are separate
-// layers at altitude (CloudLayers).
+// A smooth gradient, deep ultramarine overhead easing to a pale horizon,
+// with soft haze hugging the horizon in the ground fog's color
+// (fog_color) and a warm glow along the horizon on the sun's side. The
+// screen grade's 15-bit dither keeps it from looking too clean. Clouds
+// are separate layers at altitude (CloudLayers).
 shader_type sky;
 
 uniform vec3 up_dir = vec3(0.0, 1.0, 0.0);
@@ -18,7 +19,6 @@ uniform vec3 zenith_color : source_color = vec3(0.2, 0.5, 0.95);
 uniform vec3 horizon_color : source_color = vec3(0.6, 0.85, 1.0);
 uniform vec3 ground_color : source_color = vec3(0.2, 0.22, 0.25);
 uniform float horizon_sharpness = 2.5;
-uniform float sky_bands = 5.0;
 uniform vec3 fog_color : source_color = vec3(0.6, 0.8, 1.0);
 
 uniform vec3 sun_dir = vec3(0.0, 1.0, 0.0);
@@ -105,12 +105,15 @@ void sky() {
 	vec3 col;
 	if (h >= 0.0) {
 		float t = pow(h, 1.0 / horizon_sharpness);
-		float x = t * sky_bands;
-		float fl = floor(x);
-		t = (fl + smoothstep(0.49, 0.51, x - fl)) / sky_bands; // near-hard band edges
-		col = mix(horizon_color, zenith_color, t);
-		// Haze band hugging the horizon, same color as the ground fog.
-		col = mix(col, fog_color, (1.0 - step(0.06, h)) * 0.6 + (1.0 - step(0.02, h)) * 0.3);
+		col = mix(horizon_color, zenith_color, smoothstep(0.0, 1.0, t));
+		// Soft haze hugging the horizon, the same color as the ground fog.
+		col = mix(col, fog_color, (1.0 - smoothstep(0.0, 0.12, h)) * 0.85);
+		// Warm glow low on the sun's side (strongest near sunrise/sunset).
+		vec3 flat_d = normalize(d - up_dir * h + up_dir * 1e-4);
+		vec3 flat_sun = normalize(sun_dir - up_dir * dot(sun_dir, up_dir) + up_dir * 1e-4);
+		float side = max(dot(flat_d, flat_sun), 0.0);
+		float low_sun = 1.0 - smoothstep(0.0, 0.5, abs(dot(sun_dir, up_dir)));
+		col += sun_color * sun_visible * pow(side, 3.0) * (1.0 - smoothstep(0.0, 0.35, h)) * (0.08 + 0.22 * low_sun);
 	} else {
 		col = mix(horizon_color, ground_color, clamp(-h * 4.0, 0.0, 1.0));
 	}
