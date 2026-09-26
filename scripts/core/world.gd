@@ -11,10 +11,19 @@ extends Node
 ##   its "day_length_min" (20), "seed" (42) and "spawn_choice" (0: always
 ##   the same first camp) replace the game's, so before/after views match.
 ##   A missing file, or dev_mode false, means the game's own settings.
+## * Dev postage stamp (spec A4): in dev mode, "postage_stamp": true builds
+##   a small scale model of the planet instead of the full 400 km one:
+##   the same seed and passes, with the geography shrunk to
+##   "stamp"."circumference_km" around on a coarser "grid_res" blueprint,
+##   so every climate band is a short walk apart and it generates in a
+##   few seconds (PlanetConst explains the scale model). Missing, or false:
+##   the full planet. Settings are read before the first generation, even
+##   when a tool generates before this node's _ready.
 ## * Weather: the same WeatherSim that produced the long-term averages
 ##   keeps running live, one step per in-game quarter hour.
-## * Floating origin: the planet is ~64 km in radius, so the scene keeps
-##   the player near (0,0,0) and moves the planet instead. The planet's
+## * Floating origin: the planet is ~64 km in radius (~6 km for the dev
+##   postage stamp), so the scene keeps the player near (0,0,0) and moves
+##   the planet instead. The planet's
 ##   center in scene coordinates is held in double precision (GDScript
 ##   floats are 64-bit; Vector3 is only 32-bit), and rebase() shifts
 ##   everything registered under `world_root` when the player strays too
@@ -35,6 +44,11 @@ var day_length_s := 7200.0
 ## True when data/dev.json turned dev mode on; `dev` holds its fields.
 var dev_mode := false
 var dev := {}
+## True while the dev postage stamp is the planet being built.
+var postage_stamp := false
+## Blueprint cells per cube-face edge for the next generation.
+var planet_res := PlanetGenerator.DEFAULT_RES
+var _dev_loaded := false
 
 var planet: PlanetData
 var weather: WeatherSim
@@ -59,11 +73,14 @@ var _weather_accum_h := 0.0
 
 
 func _ready() -> void:
-	day_length_s = DayCycle.day_length_min() * 60.0
 	_load_dev_settings()
 
 
 func _load_dev_settings() -> void:
+	if _dev_loaded:
+		return
+	_dev_loaded = true
+	day_length_s = DayCycle.day_length_min() * 60.0
 	if not FileAccess.file_exists(DEV_PATH):
 		return
 	var parsed = JSON.parse_string(FileAccess.get_file_as_string(DEV_PATH))
@@ -80,26 +97,44 @@ func _load_dev_settings() -> void:
 		world_seed = int(dev.seed)
 	if dev.has("spawn_choice"):
 		spawn_choice = int(dev.spawn_choice)
-	print("[World] dev mode (data/dev.json): %.0f-minute day, seed %d, spawn %d" % [day_length_s / 60.0, world_seed, spawn_choice])
+	use_postage_stamp(bool(dev.get("postage_stamp", false)))
+	print("[World] dev mode (data/dev.json): %.0f-minute day, seed %d, spawn %d, %s" % [day_length_s / 60.0, world_seed, spawn_choice,
+		"postage stamp %.0f km around, %d cells per face edge" % [PlanetConst.CIRCUMFERENCE_M / 1000.0, planet_res] if postage_stamp else "full planet"])
+
+
+## Build the dev postage stamp (true) or the full planet (false) from the
+## next generation on; data/dev.json's "stamp" gives the stamp's size.
+## Resizes the planet constants (PlanetConst.set_circumference).
+func use_postage_stamp(on: bool) -> void:
+	postage_stamp = on
+	var stamp: Dictionary = dev.get("stamp", {})
+	if on:
+		PlanetConst.set_circumference(float(stamp.get("circumference_km", 40.0)) * 1000.0)
+		planet_res = int(stamp.get("grid_res", 48))
+	else:
+		PlanetConst.set_circumference(PlanetConst.FULL_CIRCUMFERENCE_M)
+		planet_res = PlanetGenerator.DEFAULT_RES
 
 
 ## The seed a new game uses: the dev seed in dev mode, else `default_seed`.
 func startup_seed(default_seed: int) -> int:
+	_load_dev_settings()
 	return world_seed if dev_mode and dev.has("seed") else default_seed
 
 
 func generate(p_seed: int) -> void:
+	_load_dev_settings()
 	world_seed = p_seed
 	ready_to_play = false
 	_thread = Thread.new()
-	_thread.start(_generate_threaded.bind(p_seed))
+	_thread.start(_generate_threaded.bind(p_seed, planet_res))
 
 
-func _generate_threaded(p_seed: int) -> void:
+func _generate_threaded(p_seed: int, res: int) -> void:
 	var gen := PlanetGenerator.new()
 	gen.progress.connect(func(step: String, f: float) -> void:
 		call_deferred("_emit_progress", step, f))
-	gen.generate(p_seed)
+	gen.generate(p_seed, res)
 	planet = gen.planet
 	weather = gen.weather
 	call_deferred("_finish_generation")
@@ -118,9 +153,10 @@ func _finish_generation() -> void:
 
 ## Generate synchronously (tests, tools).
 func generate_now(p_seed: int) -> void:
+	_load_dev_settings()
 	world_seed = p_seed
 	var gen := PlanetGenerator.new()
-	gen.generate(p_seed)
+	gen.generate(p_seed, planet_res)
 	planet = gen.planet
 	weather = gen.weather
 	ready_to_play = true

@@ -40,7 +40,6 @@ const PACK_DESPAWN_M := 520.0
 const AWARE_M := 1000.0
 const VISIBLE_M := 220.0
 const LOG_REACH_M := 2.3
-const FACE_M := PlanetConst.CIRCUMFERENCE_M / 4.0
 
 var world: Node
 var chunks: ChunkManager
@@ -324,7 +323,7 @@ static func _ground_cover(t: float, m: float) -> float:
 
 
 func _water_within(d: Vector3, r: float) -> bool:
-	if map.sample(map.water_dist_km, d) * 1000.0 < r * 0.5:
+	if map.sample(map.water_dist_km, d) * 1000.0 * PlanetConst.GEO_SCALE < r * 0.5:
 		return true
 	for ring in [0.35, 0.7, 1.0]:
 		for k in 10:
@@ -344,8 +343,13 @@ func _salty(d: Vector3) -> bool:
 
 # --- Planet-wide spawn grids ---------------------------------------------------
 
+## Length of a cube-face edge in meters.
+static func face_m() -> float:
+	return PlanetConst.CIRCUMFERENCE_M / 4.0
+
+
 static func _cells_per_face(cell_m: float) -> int:
-	return maxi(1, int(round(FACE_M / cell_m)))
+	return maxi(1, int(round(face_m() / cell_m)))
 
 
 ## Grid cells (face, i, j) within `radius` of `d`, crossing cube-face edges.

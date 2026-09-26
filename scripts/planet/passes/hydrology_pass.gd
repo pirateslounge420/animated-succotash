@@ -20,13 +20,16 @@ class_name HydrologyPass
 ##   * Distance to any water, used by vegetation ("water gradient") and
 ##     biome rules.
 
-## Below-sea regions smaller than this many cells are inland basins, not sea.
+## Below-sea regions smaller than this many default ~1 km cells are inland
+## basins, not sea (PlanetData.cells_for converts for a coarser blueprint).
 const OCEAN_MIN_CELLS := 300
 ## A cell is lake if filling raised it more than this (3 m on Earth's
 ## scale).
 const LAKE_MIN_DEPTH_M := 3.0 * PlanetConst.HEIGHT_SCALE
 const FILL_EPSILON_M := 0.01
-## Share of land cells that carry a river.
+## Share of land cells that carry a river, at the default ~1 km cells (a
+## coarser blueprint's wider cells carry proportionally more, so rivers are
+## as long per area).
 const RIVER_LAND_FRACTION := 0.035
 const SALT_LAKE_MAX_PRECIP_MM := 350.0
 const SALT_LAKE_MIN_TEMP_C := 8.0
@@ -138,7 +141,7 @@ static func _mark_oceans(map: PlanetData, water: PackedByteArray) -> void:
 				if comp_seen[nb] == 0 and elev[nb] < PlanetConst.SEA_LEVEL_M:
 					comp_seen[nb] = 1
 					members.append(nb)
-		if members.size() >= OCEAN_MIN_CELLS:
+		if members.size() >= map.cells_for(OCEAN_MIN_CELLS):
 			for c in members:
 				water[c] = PlanetData.Water.OCEAN
 
@@ -153,13 +156,15 @@ static func rivers(map: PlanetData) -> void:
 	var order := map.flow_order
 	var nbrs := map.neighbors
 
-	# Discharge: each cell's own rainfall (m/yr per cell) plus everything
-	# upstream of it. Walk from the headwaters down (reverse flood order).
+	# Discharge: each cell's own rainfall (m/yr per default ~1 km cell of
+	# area) plus everything upstream of it. Walk from the headwaters down
+	# (reverse flood order).
+	var cell_area := map.cell_scale() * map.cell_scale()
 	var accum := PackedFloat32Array()
 	accum.resize(n)
 	for c in n:
 		if water[c] != PlanetData.Water.OCEAN:
-			accum[c] = maxf(map.precip_mm[c], 0.0) / 1000.0
+			accum[c] = maxf(map.precip_mm[c], 0.0) / 1000.0 * cell_area
 	for idx in range(order.size() - 1, -1, -1):
 		var c := order[idx]
 		var t := flow_to[c]
@@ -173,7 +178,8 @@ static func rivers(map: PlanetData) -> void:
 	land_accum.sort()
 	var threshold := INF
 	if not land_accum.is_empty():
-		threshold = land_accum[int((1.0 - RIVER_LAND_FRACTION) * (land_accum.size() - 1))]
+		var share := minf(RIVER_LAND_FRACTION * map.cell_scale(), 0.5)
+		threshold = land_accum[int((1.0 - share) * (land_accum.size() - 1))]
 
 	for c in n:
 		if water[c] == PlanetData.Water.NONE and accum[c] >= threshold:

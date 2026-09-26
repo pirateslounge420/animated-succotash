@@ -66,6 +66,14 @@ static func surface_distance_m(a: Vector3, b: Vector3) -> float:
 	return angle_between(a, b) * PlanetConst.RADIUS_M
 
 
+## The same in geographic meters (PlanetConst.GEO_RADIUS_M): how far apart
+## two places are on the map the geography was laid out on. Equal to
+## surface_distance_m on the full planet; on the dev postage stamp it
+## measures the scale model at its full size.
+static func geo_distance_m(a: Vector3, b: Vector3) -> float:
+	return angle_between(a, b) * PlanetConst.GEO_RADIUS_M
+
+
 ## Angle in radians between two unit directions. Uses the chord length, not
 ## acos(dot): Vector3 is 32-bit, and acos of a 32-bit dot product can't
 ## resolve anything closer than ~20 m on this planet (it returns 0).

@@ -2,9 +2,37 @@ class_name PlanetConst
 ## Planet-wide constants from DESIGN.md "Overview" and "Biome Sizing".
 ## Distances are meters, temperatures °C, time in real seconds.
 
-## 1/100th of Earth's circumference.
-const CIRCUMFERENCE_M := 400000.0
-const RADIUS_M := CIRCUMFERENCE_M / TAU # ~63,662 m
+## The full planet: 1/100th of Earth's circumference.
+const FULL_CIRCUMFERENCE_M := 400000.0
+
+## Geography (continents, mountain belts, volcanoes, rock regions, the
+## weather grid, the blueprint's distances and slopes) is always laid out
+## on a planet of this size. The full planet is that size; the dev
+## postage stamp (data/dev.json, World) is a scale model of it: the same
+## geography shrunk sideways by GEO_SCALE, heights unchanged, with
+## everything at walking scale (ground detail, plants, creatures, the
+## player, ruins) at its real size. Geographic code measures with
+## GEO_RADIUS_M (CubeSphere.geo_distance_m); scene and walking code with
+## RADIUS_M. On the full planet the two are equal.
+const GEO_CIRCUMFERENCE_M := FULL_CIRCUMFERENCE_M
+const GEO_RADIUS_M := GEO_CIRCUMFERENCE_M / TAU # ~63,662 m
+
+## The planet actually built: FULL_CIRCUMFERENCE_M unless the dev postage
+## stamp is on (set_circumference, before generation). These are static
+## vars, not consts, for that reason; nothing else may write them.
+static var CIRCUMFERENCE_M := FULL_CIRCUMFERENCE_M
+static var RADIUS_M := CIRCUMFERENCE_M / TAU
+## Real meters per geographic meter (1 on the full planet).
+static var GEO_SCALE := 1.0
+
+
+## Size the planet (meters around). Call before generating; everything
+## sized from it (chunk grid, walking-scale grids) follows.
+static func set_circumference(circumference_m: float) -> void:
+	CIRCUMFERENCE_M = circumference_m
+	RADIUS_M = CIRCUMFERENCE_M / TAU
+	GEO_SCALE = CIRCUMFERENCE_M / GEO_CIRCUMFERENCE_M
+	TerrainChunk.fit_to_planet()
 
 ## Elevation 0 is sea level; elevations are meters above/below it.
 const SEA_LEVEL_M := 0.0

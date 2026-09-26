@@ -7,7 +7,8 @@ extends Node3D
 ## Where: candidates() scores every blueprint cell for a pleasant first
 ## camp (low, mild, green land a couple of km from the coast; the old
 ## spawn rule) and keeps the best few, spread at least MIN_SEPARATION_M
-## apart. World.pick_spawn_dir() picks one of them at random each new
+## apart (geographic meters, so the dev postage stamp spreads them the
+## same way). World.pick_spawn_dir() picks one of them at random each new
 ## game, and site_near() finds a flat, dry spot there for the fire.
 ## set_active() clears the camp of trees and undergrowth (VegetationPlacer
 ## reads `clearings` on its worker threads, so it's set before any chunk is
@@ -62,7 +63,7 @@ static func candidates(map: PlanetData) -> PackedVector3Array:
 		var d: Vector3 = map.dir[s[1]]
 		var ok := true
 		for o in out:
-			if CubeSphere.surface_distance_m(o, d) < MIN_SEPARATION_M:
+			if CubeSphere.geo_distance_m(o, d) < MIN_SEPARATION_M:
 				ok = false
 				break
 		if ok:
@@ -82,7 +83,7 @@ static func site_near(map: PlanetData, d: Vector3) -> Vector3:
 		var cell := map.cell_at(p)
 		if map.water[cell] != PlanetData.Water.NONE or map.biome[cell] in TerrainChunk.WETLANDS:
 			continue
-		if map.sample(map.water_dist_km, p) < 0.3:
+		if map.sample(map.water_dist_km, p) < 0.3 * map.cell_scale():
 			continue
 		var e := map.terrain.elevation(p, true)
 		if e < 2.5:

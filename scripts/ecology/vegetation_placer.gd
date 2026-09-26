@@ -404,7 +404,8 @@ class _Context:
 				_clim_t.append(map.sample(map.temp_c, d))
 				_clim_m.append(map.sample(map.moisture, d))
 				_clim_e.append(map.sample(map.elevation, d))
-				_clim_wd.append(map.sample(map.water_dist_km, d) * 1000.0)
+				# The blueprint measures geographic km; plants want real meters.
+				_clim_wd.append(map.sample(map.water_dist_km, d) * 1000.0 * PlanetConst.GEO_SCALE)
 				_clim_coast.append(map.sample(map.coast_dist_km, d))
 				_clim_rock.append(map.rock[map.cell_at(d)])
 		for v in _clim_m:
@@ -542,7 +543,7 @@ class _Context:
 		s.water_m = water_m
 		s.t = t + (e - s.h) * PlanetConst.LAPSE_RATE_C_PER_M + ASPECT_C * aspect
 		s.m = clampf(m + WATER_BOOST * exp(-water_m / WATER_BOOST_M) - ASPECT_MOISTURE * aspect, 0.0, 1.0)
-		s.hot = CubeSphere.surface_distance_m(s.dir, _hot_center) < _hot_r * 0.45
+		s.hot = CubeSphere.geo_distance_m(s.dir, _hot_center) < _hot_r * 0.45
 		s.beach = s.h < 3.0 and s.coast_km < 1.5 and smoothstep(3.0, 0.8, s.h) > 0.35
 
 	static func _bilerp(arr, k00: int, w: int, tx: float, ty: float) -> float:

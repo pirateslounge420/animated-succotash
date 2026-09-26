@@ -34,6 +34,14 @@ extends RefCounted
 ## Geographic layers are Earth-like heights times PlanetConst.HEIGHT_SCALE;
 ## the walking-scale layers (detail, shore wiggle, roll) aren't scaled:
 ## they're the feel of the ground underfoot, not geography.
+##
+## Sideways, the geographic layers (continents, belts, ridges, hills,
+## hotspots, and the masks that say which regions have escarpments and
+## ravines) are laid out at PlanetConst.GEO_RADIUS_M; the walking-scale
+## layers (detail, shore, roll, the escarpment and ravine lines
+## themselves) at the real radius. The same on the full planet; on the dev
+## postage stamp the geography is a shrunk copy while the ground underfoot
+## keeps its real grain.
 const H := PlanetConst.HEIGHT_SCALE
 const MAX_MOUNTAIN_M := 4200.0 * H
 const MAX_PLATEAU_M := 700.0 * H
@@ -130,7 +138,7 @@ static func _random_dir(rng: RandomNumberGenerator) -> Vector3:
 
 
 func _continent_value(dir: Vector3) -> float:
-	var p := dir * PlanetConst.RADIUS_M
+	var p := dir * PlanetConst.GEO_RADIUS_M
 	return _continent.get_noise_3dv(p)
 
 
@@ -142,7 +150,7 @@ func landness(dir: Vector3) -> float:
 ## `roll` false leaves out the walking-scale roll layer (Ruins uses that to
 ## pick sites, so ruins don't move with 2 m of noise).
 func elevation(dir: Vector3, detail := false, roll := true) -> float:
-	var p := dir * PlanetConst.RADIUS_M
+	var p := dir * PlanetConst.GEO_RADIUS_M
 	var x := _continent.get_noise_3dv(p) - sea_threshold
 	var e: float
 	if x > 0.0:
@@ -162,26 +170,28 @@ func elevation(dir: Vector3, detail := false, roll := true) -> float:
 		e = -2.0 * H - shelf - deep
 	e += _hotspot_height(dir)
 	if detail:
+		var pw := dir * PlanetConst.RADIUS_M # walking scale
 		# Shore noise is small but wiggles the coastline at walking scale.
-		e += _detail.get_noise_3dv(p) * DETAIL_M + _shore.get_noise_3dv(p) * 6.0
+		e += _detail.get_noise_3dv(pw) * DETAIL_M + _shore.get_noise_3dv(pw) * 6.0
 		if roll:
-			e += _roll.get_noise_3dv(p) * ROLL_M * smoothstep(1.5, 6.0, absf(e))
+			e += _roll.get_noise_3dv(pw) * ROLL_M * smoothstep(1.5, 6.0, absf(e))
 		if x > 0.06:
-			e += _cliffs(p, x, e)
+			e += _cliffs(p, pw, x, e)
 	return e
 
 
 ## Escarpments and ravines (see the class notes): the height to add at
-## `p` (scene-scale point on the sphere), `x` inland-ness, `e` so far.
-func _cliffs(p: Vector3, x: float, e: float) -> float:
+## `p` (geographic point on the sphere) / `pw` (walking-scale point), `x`
+## inland-ness, `e` so far.
+func _cliffs(p: Vector3, pw: Vector3, x: float, e: float) -> float:
 	var inland := smoothstep(0.06, 0.2, x)
 	var add := 0.0
 	var em := smoothstep(0.1, 0.35, _escarp_mask.get_noise_3dv(p)) * inland
 	if em > 0.0:
-		add += ESCARP_M * em * smoothstep(-0.0012, 0.0012, _escarp.get_noise_3dv(p))
+		add += ESCARP_M * em * smoothstep(-0.0012, 0.0012, _escarp.get_noise_3dv(pw))
 	var rm := smoothstep(0.05, 0.3, _ravine_mask.get_noise_3dv(p)) * inland * smoothstep(6.0, 14.0, e)
 	if rm > 0.0:
-		var n := absf(_ravine.get_noise_3dv(p))
+		var n := absf(_ravine.get_noise_3dv(pw))
 		if n < 0.012:
 			add -= minf(RAVINE_M, e - 3.0) * rm * smoothstep(0.0105, 0.0065, n)
 	return add
@@ -194,7 +204,7 @@ func _hotspot_height(dir: Vector3) -> float:
 		# Cheap reject: only points within ~0.12 rad can be inside a cone.
 		if cos_angle < 0.99:
 			continue
-		var dist := CubeSphere.surface_distance_m(dir, hotspot_dirs[i])
+		var dist := CubeSphere.geo_distance_m(dir, hotspot_dirs[i])
 		var r := hotspot_radii[i]
 		if dist >= r:
 			continue
@@ -208,7 +218,8 @@ func _hotspot_height(dir: Vector3) -> float:
 	return total
 
 
-## Unit direction of the nearest hotspot and its distance in meters.
+## Unit direction of the nearest hotspot and its distance in geographic
+## meters (like its radius; CubeSphere.geo_distance_m).
 func nearest_hotspot(dir: Vector3) -> Dictionary:
 	var best := -1
 	var best_dot := -2.0
@@ -219,6 +230,6 @@ func nearest_hotspot(dir: Vector3) -> Dictionary:
 			best = i
 	return {
 		"index": best,
-		"distance_m": CubeSphere.surface_distance_m(dir, hotspot_dirs[best]),
+		"distance_m": CubeSphere.geo_distance_m(dir, hotspot_dirs[best]),
 		"radius_m": hotspot_radii[best],
 	}

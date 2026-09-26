@@ -9,7 +9,11 @@ extends CanvasLayer
 enum Mode { BIOME, ELEVATION, TEMPERATURE, RAINFALL, WEATHER }
 
 const RES := 72
-const RELIEF := 1.0 # vertical scale of the globe relief (1 = true scale)
+## Vertical scale of the globe relief: 1 = true scale for the full planet.
+## Heights are drawn against the geography's full-size radius, so the dev
+## postage stamp (a shrunk copy, ten times steeper) reads like the full
+## planet's map instead of a lumpy ball.
+const RELIEF := 1.0
 
 var world: Node
 var mode := Mode.BIOME
@@ -136,7 +140,7 @@ func _build_mesh() -> void:
 				var d := CubeSphere.to_dir(f, -1.0 + 2.0 * i / RES, -1.0 + 2.0 * j / RES)
 				var e := maxf(map.terrain.elevation(d, false), 0.0)
 				_dirs.append(d)
-				verts.append(d * (1.0 + e / PlanetConst.RADIUS_M * RELIEF))
+				verts.append(d * (1.0 + e / PlanetConst.GEO_RADIUS_M * RELIEF))
 		for j in RES:
 			for i in RES:
 				var a := base + j * n + i

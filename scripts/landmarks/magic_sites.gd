@@ -30,9 +30,12 @@ static func near(map: PlanetData, d: Vector3, radius: float, ruins = null) -> Ar
 		var t := Territories.find(map, c)
 		if not t.is_empty() and CubeSphere.surface_distance_m(t.dir, d) < radius + MYTHIC_RADIUS_M:
 			out.append({"dir": t.dir, "radius_m": MYTHIC_RADIUS_M, "kind": 1.0, "type": "mythical"})
-	for c in _cells_within(map, d, radius + POND_RADIUS_M):
+	# A pond glows over about its own blueprint cell (smaller cells on the
+	# dev postage stamp).
+	var pond_r := POND_RADIUS_M * map.cell_scale() * PlanetConst.GEO_SCALE
+	for c in _cells_within(map, d, radius + pond_r):
 		if is_glow_pond(map, c):
-			out.append({"dir": map.dir[c], "radius_m": POND_RADIUS_M, "kind": POND_KIND, "type": "pond"})
+			out.append({"dir": map.dir[c], "radius_m": pond_r, "kind": POND_KIND, "type": "pond"})
 	return out
 
 
@@ -48,7 +51,7 @@ static func _cells_within(map: PlanetData, d: Vector3, radius: float) -> Array:
 	var out: Array = []
 	var seen := {start: true}
 	var frontier := [start]
-	var rings := int(ceil(radius / (map.cell_km() * 1000.0))) + 1
+	var rings := int(ceil(radius / map.cell_m())) + 1
 	for r in rings:
 		var next: Array = []
 		for c in frontier:

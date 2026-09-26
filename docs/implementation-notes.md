@@ -77,7 +77,8 @@ Going back to a place rebuilds it identically.
      deliberately left uncapped: real ones (Bonneville, Uyuni) are vast,
      so a large one here is accurate.
 
-  With seed 42 it takes about 7-8 s.
+  With seed 42 it takes about 6 s (5.9 s measured headless); the dev
+  postage stamp (below) about 3 s.
 - **Sampling** (`PlanetData.sample`, `weights_at`). Bilinear between cell
   centers, switching to a neighbor-aware kernel within half a cell of a
   cube-face edge, so climate and ground colors run on seamlessly across
@@ -85,6 +86,58 @@ Going back to a place rebuilds it identically.
 - **Distances** (`CubeSphere.angle_between`). Use the chord length, not
   `acos(dot)`: with 32-bit vectors, acos can't resolve anything under
   ~20 m on this planet.
+
+### Dev postage stamp
+
+Spec A4: a fixed-seed mini-planet with one of every major biome band,
+used while developing (the full planet is for milestone checks). On
+when `data/dev.json` has `"dev_mode": true` and `"postage_stamp": true`
+(`World.use_postage_stamp`); its `"stamp"` block sizes it
+(`circumference_km`, default 40; `grid_res`, blueprint cells per face
+edge, default 48). Missing or false: the full planet, unchanged (the
+blueprint, weather and chunk output hash the same as before the stamp
+existed).
+
+- **A scale model, not a different planet.** The stamp runs the same
+  seed through the same passes. Its *geography* is the full planet's,
+  shrunk sideways by `PlanetConst.GEO_SCALE` (0.1 at 40 km) with heights
+  unchanged: continents, mountain belts, hills, volcanoes, rock regions
+  and the escarpment/ravine regions sample their noise at
+  `PlanetConst.GEO_RADIUS_M` (the full radius), and the passes measure
+  slopes, upwind ridges and coast/water distances in geographic meters
+  (`CubeSphere.geo_distance_m`, `PlanetData.cell_km`). The weather grid
+  too, so winds, storms and the climate averages behave exactly as at
+  full size. Latitude bands exist on any sphere, so every band is there
+  by construction; the land/sea layout decides how much of each.
+- **Walking scale stays real.** The ground's grain (detail, roll, shore
+  wiggle, the escarpment and ravine lines), chunks (still ~260 m:
+  `TerrainChunk.CHUNKS_PER_FACE` follows the planet size, 38 per face on
+  the stamp), plants, creatures, the player, ruins (one per 3.2 km grid
+  cell), mythical territories (1.6 km), river widths and all scene
+  placement use the real radius, `PlanetConst.RADIUS_M`. Consumers that
+  read a blueprint distance at walking scale convert it (plants' and
+  animals' distance to water) or scale with the cell (glow ponds, the
+  camp-beside-water test).
+- **Coarser blueprint.** 48 cells per face edge (~208 m real, ~2 km
+  geographic). Rules counted in default ~1 km cells scale with the cell
+  (`PlanetData.cell_scale`, `cells_for`): the minimum sea size, biome
+  patch caps, the relief that makes canyons and badlands, the share of
+  land carrying rivers, and river discharge (so widths match).
+- **Consequences on screen.** The stamp is 40 km around (radius 6.4 km):
+  10 km from equator to pole, about 1.7 hours on foot, so bands are a
+  short walk apart. Slopes are ten times steeper than at full size
+  (mountains keep their height over a tenth of the width) and the
+  horizon is closer (~160 m for a standing player instead of ~500 m).
+  The first camp still comes from the same candidate scoring. The
+  planet map (M) draws relief against the geography's full-size radius,
+  so the stamp's globe reads like the full planet's rather than a lumpy
+  ball (on the full planet nothing changes).
+- **Checked by** `tools/stamp_check.gd`: generation time, cells per band
+  (the bands and the minimum are in `data/dev.json`, `"stamp"."bands"`),
+  what the walkable world holds, and, with a display, the planet map in
+  four modes and a ground shot at the first camp. With seed 42: 3.1 s
+  against 5.9 s for the full planet, all 14 bands present, 48 of the 50
+  surface templates.
 
 ## Weather
 

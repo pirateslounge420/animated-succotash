@@ -51,6 +51,21 @@ first camp (`spawn_choice` 0), so before/after screenshots match. Set
 `dev_mode` to false (or delete the file) for the game's own settings.
 `tools/p0_timelapse.gd` checks the day cycle for snapping and renders a
 time-lapse contact sheet (how to run it is at the top of the file).
+
+**Postage stamp.** With `"postage_stamp": true` (on while developing)
+the dev game runs on a small scale model of the planet instead of the
+full 400 km one: 40 km around, so the equator is 10 km from the pole and
+every climate band (rainforest, savanna, desert, temperate rainforest and
+forest, grassland, scrub, taiga, tundra, alpine, plus sea, coast, rivers
+and lakes) is a short walk from the next. It's the same seed and the same
+world-building rules with the geography shrunk; the ground underfoot,
+plants, animals and ruins keep their real size. It builds in about 3 s
+instead of 6. Set it to false (or leave it out) for the full planet, for
+milestone checks. The `"stamp"` block sets its size (`circumference_km`)
+and blueprint detail (`grid_res`), and lists the bands it must contain.
+`tools/stamp_check.gd` checks that they're all there and draws the
+stamp's map and a ground view at the first camp (how to run it is at the
+top of the file).
 Temperatures everywhere (HUD, map, data files) are in **°C**.
 
 ## How the world is built

@@ -44,6 +44,12 @@ extends RefCounted
 ## The starting state is seeded from the world seed. Rules never change;
 ## the chaos comes from the starting state.
 ##
+## Distances here (grid spacing, how far air moves, the size of weather
+## systems) are geographic (PlanetConst.GEO_RADIUS_M), so on the dev
+## postage stamp, a shrunk copy of the planet, the weather runs exactly as
+## it would at full size and winds keep their real speeds. Only the local
+## shower cells at the player are laid out at walking scale.
+##
 ## Use:
 ##   spin_up() runs many simulated days and records long-term averages
 ##   (ClimatePass classifies biomes from them). After that, step() keeps
@@ -185,13 +191,13 @@ func _build_grid() -> void:
 					var d := dirs[c]
 					var to_n := dirs[n] - d * dirs[n].dot(d)
 					nbr_tan[c * 8 + k] = to_n.normalized()
-					nbr_dist_km[c * 8 + k] = CubeSphere.surface_distance_m(d, dirs[n]) / 1000.0
+					nbr_dist_km[c * 8 + k] = CubeSphere.geo_distance_m(d, dirs[n]) / 1000.0
 	spacing_rad.resize(cells)
 	for c in cells:
 		var m := INF
 		for k in 4:
 			m = minf(m, nbr_dist_km[c * 8 + k])
-		spacing_rad[c] = m * 1000.0 / PlanetConst.RADIUS_M
+		spacing_rad[c] = m * 1000.0 / PlanetConst.GEO_RADIUS_M
 
 
 func _aggregate_terrain(planet: PlanetData) -> void:
@@ -352,7 +358,7 @@ func _advect(dt_h: float) -> void:
 		var dist_m := w.length() * 3600.0 * dt_h
 		var s := Vector3(anom_p[c], anom_t[c], humidity[c])
 		if dist_m >= 1.0:
-			var back := (dirs[c] - w.normalized() * (dist_m / PlanetConst.RADIUS_M)).normalized()
+			var back := (dirs[c] - w.normalized() * (dist_m / PlanetConst.GEO_RADIUS_M)).normalized()
 			s = _sample_anomalies(back, anom_p, anom_t)
 		new_p[c] = _belt_pressure(lats[c]) + s.x
 		new_t[c] = base_temp(lats[c]) + s.y
@@ -650,7 +656,7 @@ func _update_systems(dt_h: float) -> void:
 			steer += CubeSphere.north(d) * signf(d.y) * 2.0
 		if steer.length() < 2.0:
 			steer = CubeSphere.east(d) * _prevailing_east(asin(clampf(d.y, -1.0, 1.0))) + CubeSphere.north(d) * 0.5
-		sys.dir = (d + steer * 3600.0 * dt_h / PlanetConst.RADIUS_M).normalized()
+		sys.dir = (d + steer * 3600.0 * dt_h / PlanetConst.GEO_RADIUS_M).normalized()
 		alive.append(sys)
 	systems = alive
 	while systems.size() < SYSTEM_COUNT:
@@ -660,7 +666,7 @@ func _update_systems(dt_h: float) -> void:
 		# Grow over the first fifth of its life, fade over the last third.
 		var f: float = sys.age_h / sys.life_h
 		var env := smoothstep(0.0, 0.2, f) * (1.0 - smoothstep(0.67, 1.0, f))
-		var r_rad: float = sys.radius_km * 1000.0 / PlanetConst.RADIUS_M
+		var r_rad: float = sys.radius_km * 1000.0 / PlanetConst.GEO_RADIUS_M
 		var min_dot := cos(r_rad * 2.5)
 		var center: Vector3 = sys.dir
 		var amp: float = sys.amp * env
