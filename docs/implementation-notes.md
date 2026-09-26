@@ -13,6 +13,7 @@ main.gd                orchestrates the playable scene:
   ChunkManager         terrain + water + plants streamed around the player
   FarShell             coarse distant terrain and sea
   SkySystem            sun, moon, sky shader, ambient, fog
+    SkyPaint           painted cloud and star panoramas, baked at startup
   WeatherFX            rain/snow particles, wind on foliage
   PlanetPlayer         third-person explorer with planet gravity
   CreatureSpawner      wildlife, wolf packs, mythical creatures, logs
@@ -269,10 +270,13 @@ Verified:
 - **Lighting** (`SkySystem`):
   - two DirectionalLight3Ds (sun and moon), with intensity and color set
     by elevation; the moon's also scales with phase;
-  - a continuous palette runs from Frutiger Aero day, through dusk, to a
-    cobalt/violet night;
-  - the sky shader draws the moon disc with a phase terminator, stars and
-    clouds from the live weather;
+  - a continuous palette runs from a pure saturated blue day, through a
+    dusk with a warm band low under an ultramarine sky, to a bright
+    ultramarine night (the R1a hex values, `SkySystem.DAY_ZENITH` etc.);
+    `_scene_color()` undoes the exposure and adjustment so they read true
+    on screen before the post grade;
+  - the sky shader draws the moon disc with a phase terminator, the
+    baked starfield and the painted clouds (see Look);
   - ambient light and fog follow.
 - **Moon phases.** Moonlight follows illumination^3.3 (a half moon gives
   about a tenth of full), with a 5% floor and a night ambient floor so
@@ -298,14 +302,36 @@ Verified:
 
 `shaders/look.gdshaderinc`, `scripts/sky/look.gd`
 
-- **Day:** a deep ultramarine zenith over a Frutiger Aero aqua horizon
-  band, punchy greens, and saturated turquoise/ultramarine water. It uses
-  a linear tonemap, because filmic washes colors toward realism.
+- **Day:** pure saturated blue sky (#1436FF overhead to #4C7CFF at the
+  horizon), punchy greens, and saturated turquoise/ultramarine water. It
+  uses a linear tonemap, because filmic washes colors toward realism.
+- **Painted skybox** (the 2001-2004 console look), `shaders/sky.gdshader`,
+  `SkyPaint`:
+  - a smooth gradient (above; night #0A14A0 overhead to #1B2ED8, never
+    black or grey; at dusk and dawn the gradient hugs the horizon, so the
+    warm band stays low), soft haze at the horizon in the fog's color and
+    a warm glow on the sun's side;
+  - two panoramas painted once at startup on the GPU (a SubViewport drawn
+    once with `sky_paint.gdshader`, ~12 MB), so the per-frame sky is two
+    texture reads:
+    - clouds (2048 x 512, azimuth x elevation in the viewer's sky):
+      brushy banks piled over the horizon and long wispy streaks higher
+      up. Stored as densities and shading, so the shader thresholds them
+      by the eased weather (a few banks when fair, overcast in a storm)
+      and colors them for the hour (white by day, rose at dusk, moonlit
+      ultramarine at night, glowing near the sun or moon). Both fade out
+      above ~60 degrees, where the panorama pinches to a point (it used
+      to paint a smeared starburst at the zenith). They drift round the
+      viewer (a turn every ~50 minutes in a light wind);
+    - stars (2048 x 1024 equirectangular, celestial frame, turned with
+      the sun): three sizes, blue-white to orange, the brightest with a
+      small glint, and a milky band with dark rifts. Over it the shader
+      adds a dense per-pixel speckle of faint stars (~0.3 degree grid,
+      denser in the band). No twinkle;
+  - the moon is a big disc (~11 degrees) with phases.
 - **Flat bands:**
-  - the sky is a smooth gradient (deep ultramarine overhead, soft haze
-    at the horizon, a warm glow on the sun's side); it used to be
-    stepped in flat bands;
-  - clouds are soft, shaded puffs;
+  - the sky is smooth (it used to be stepped in flat bands);
+  - weather clouds are soft, shaded puffs;
   - distance fog is drawn by the world shaders, smooth, instead of the
     Environment's fog.
 
@@ -366,9 +392,11 @@ Verified:
     (Gouraud) shading, with no change here. With smooth normals, no
     specular and no shadow maps the two look nearly the same.
   - a strong flat **ambient** (`SkySystem.AMBIENT_DAY` 0.5, a soft cool
-    white; `AMBIENT_NIGHT` 0.34 moonlit blue, lifted by the moon), so the
-    side away from the sun is plainly readable, never black; the sun
-    (0.85) is the one clear light direction, the moon at night.
+    white; `AMBIENT_NIGHT` 0.42 ultramarine #3A4CFF, lifted by the moon
+    toward #6480FF and 0.6), so the side away from the sun is plainly
+    readable, never black; the sun (0.85) is the one clear light
+    direction, the moon (periwinkle #8FA8FF, up to 1.25, greyer when
+    low) at night.
   - **no shadow maps**: sun and moon cast none, so trees and ruins cast
     no shadows. Characters get **blob shadows** (`BlobShadow`,
     `shaders/blob_shadow.gdshader`): a soft dark disc (alpha 0.8 in
@@ -381,7 +409,10 @@ Verified:
     the character jumps, hops or climbs, is gone afloat or above 3 m, and
     fades out 35-60 m away and in haze. One mesh and one material serve
     them all.
-- **Clouds** (`CloudLayers`): three transparent shells round the planet,
+- **Clouds** (`CloudLayers`): the weather's clouds (fair-weather
+  cloudiness is painted into the sky, above; on a fair day the shells
+  are nearly empty and they fill in as it clouds over), three
+  transparent shells round the planet,
   each with a tunable altitude and speed multiplier: low cumulus 500-2,000
   m (default 1,500; 4x), mid altocumulus 2,000-7,000 m (3,800; 3x), high
   cirrus 5,000-13,000 m (8,500; 2x, jet stream). Those are Earth's
@@ -400,15 +431,19 @@ Verified:
   not, so clear sky costs one noise lookup. Standing above the
   low layer brings harsh alpine conditions (stronger wind, drier; HUD:
   "thin, cold air").
-- **Atmospheric perspective:** Environment fog plus the shader fog,
-  blue by day and cobalt at night; distance ridges fade smoothly.
+- **Atmospheric perspective:** Environment fog plus the shader fog. By
+  day distance fades into the sky's own horizon blue (deeper at dusk, so
+  the warm band stays in the sky); at night into the R1a night fog
+  #1E30C0 (`SkySystem.NIGHT_FOG`, density +0.0017/m: ~40% at 200 m), so
+  distance dissolves to blue. Distance ridges fade smoothly.
   The haze thins with altitude (an exponential atmosphere, 150 m scale
   height: 1.5 km at Earth's scale), so valleys are hazy and summits
   clear.
-- **Night** (the references' moonlit blue): a moon about 2.5× the old size
-  with a halo, bright blue moonlight and a saturated blue ambient (never
-  black), a luminous blue haze and thicker low mist, all water glowing
-  cobalt, and strong emission on campfires and lanterns.
+- **Night** (R1: saturated dark fantasy): a bright ultramarine sky
+  with dense speckled stars and a big moon with a halo, periwinkle
+  moonlight and a strong ultramarine fill (never black), an ultramarine
+  haze and thicker low mist, all water glowing cobalt, and strong
+  emission on campfires and lanterns.
 - **Depth**, the era's way: nothing screen-space.
   - **Baked ambient occlusion** in vertex colors, which works in every
     renderer: terrain darkens in hollows and channels (up to 35%),

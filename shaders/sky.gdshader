@@ -4,11 +4,26 @@
 // player's position. Directions are in world space; `up_dir` is the
 // player's local up, since "up" changes as you walk around the planet.
 //
-// A smooth gradient, deep ultramarine overhead easing to a pale horizon,
-// with soft haze hugging the horizon in the ground fog's color
-// (fog_color) and a warm glow along the horizon on the sun's side. The
-// screen grade's 15-bit dither keeps it from looking too clean. Clouds
-// are separate layers at altitude (CloudLayers).
+// A painted panoramic skybox in the manner of 2001-2004 console games
+// (docs/WORLD_SYSTEMS_SPEC.md R1/R1a): a smooth gradient (pure saturated
+// blue by day, #1436FF overhead to #4C7CFF at the horizon; bright
+// ultramarine at night, #0A14A0 to #1B2ED8; at dusk a warm band held low
+// by horizon_sharpness under an ultramarine sky), soft haze hugging the
+// horizon in the ground fog's color (fog_color) and a warm glow on the
+// sun's side. SkySystem sends these already corrected for the exposure
+// and adjustment, so they read true on screen.
+// Over it, two panoramas painted once at startup (SkyPaint,
+// sky_paint.gdshader):
+//   * clouds, in the viewer's sky: brushy banks piled over the horizon
+//     and long white streaks higher up (none near the zenith, where the
+//     panorama pinches), turning slowly round the viewer (cloud_scroll),
+//     thresholded by the weather's cover and colored for the hour (lit
+//     tops, blue bellies, warm near the sun). They sit in front of the
+//     sun, moon and stars and go into the radiance cubemap too;
+//   * a fixed starfield with a milky band, turned with the sun, plus a
+//     dense speckle of faint stars drawn per pixel (denser in the band).
+// The moon is a big disc (~11 degrees) with phases, the night's centerpiece.
+// Weather clouds overhead are separate layers at altitude (CloudLayers).
 shader_type sky;
 
 uniform vec3 up_dir = vec3(0.0, 1.0, 0.0);
@@ -44,21 +59,36 @@ uniform float lightning = 0.0; // 0-1 a lightning flash (StormFX)
 uniform float star_visibility = 0.0; // 0 by day, 1 on a clear night
 uniform float star_rotation = 0.0; // subsolar longitude; stars turn with the sun
 
+// The painted panoramas (SkyPaint). Clouds: R bank density, G bank
+// shading, B streak density; u azimuth from east, v elevation. Stars:
+// R brightness, G warmth, B milky band; equirectangular, celestial frame.
+uniform sampler2D cloud_pano : filter_linear, repeat_enable;
+uniform sampler2D star_pano : filter_linear, repeat_enable;
+uniform float cloud_scroll = 0.0; // turns; the painted clouds drift round
+uniform float bank_cover = 0.4; // 0-1, from the weather
+uniform float streak_cover = 0.4; // 0-1
+uniform vec3 cloud_lit : source_color = vec3(1.0);
+uniform vec3 cloud_shade : source_color = vec3(0.7, 0.78, 0.95);
+uniform vec3 band_color : source_color = vec3(0.3, 0.42, 0.85);
+uniform float star_gain = 1.6;
+uniform float speckle_gain = 0.9; // the faint per-pixel speckle
+uniform float band_gain = 0.3;
+
 uniform vec2 glyph_stars[24];
 uniform int glyph_count = 0;
 uniform vec3 glyph_color : source_color = vec3(0.4, 0.7, 1.0);
 uniform float glyph_visibility = 0.0;
 
 
+vec3 hash33(vec3 p) {
+	p = vec3(dot(p, vec3(127.1, 311.7, 74.7)), dot(p, vec3(269.5, 183.3, 246.1)), dot(p, vec3(113.5, 271.9, 124.6)));
+	return fract(sin(p) * 43758.5453);
+}
+
 float hash13(vec3 p) {
 	p = fract(p * 0.1031);
 	p += dot(p, p.zyx + 31.32);
 	return fract((p.x + p.y) * p.z);
-}
-
-vec3 hash33(vec3 p) {
-	p = vec3(dot(p, vec3(127.1, 311.7, 74.7)), dot(p, vec3(269.5, 183.3, 246.1)), dot(p, vec3(113.5, 271.9, 124.6)));
-	return fract(sin(p) * 43758.5453);
 }
 
 float vnoise(vec2 p) {
@@ -126,16 +156,26 @@ void sky() {
 		float night_mask = smoothstep(-0.02, 0.05, h);
 		vec3 sky_base = col; // before stars (the moon hides them)
 
-		// Stars, fixed to the celestial sphere so they wheel with the sun.
+		// The baked starfield, fixed to the celestial sphere so it wheels
+		// with the sun: blue-white to orange stars and the milky band.
 		if (star_visibility > 0.001 && h > -0.05) {
-			vec3 sd3 = rotate_y(d, -star_rotation) * 110.0;
-			vec3 cell = floor(sd3);
-			float pick = hash13(cell);
-			if (pick > 0.93) {
-				vec3 center = cell + hash33(cell);
-				float dist = length(sd3 - center);
-				float twinkle = 0.6 + 0.4 * sin(TIME * (1.5 + pick * 4.0) + pick * 40.0);
-				col += vec3(0.9, 0.93, 1.0) * smoothstep(0.24, 0.0, dist) * star_visibility * twinkle * (pick - 0.93) * 22.0 * night_mask;
+			vec3 c = rotate_y(d, -star_rotation);
+			vec2 suv = vec2(atan(c.x, c.z) / TAU + 0.5, acos(clamp(c.y, -1.0, 1.0)) / PI);
+			vec3 st = textureLod(star_pano, suv, 0.0).rgb;
+			vec3 tint = mix(vec3(0.78, 0.86, 1.0), vec3(1.0, 0.76, 0.48), st.g);
+			col += (tint * st.r * star_gain + band_color * st.b * band_gain) * star_visibility * night_mask;
+			// Dense speckle: a faint star in a share of the cells of a
+			// grid ~0.3 degrees apart (more in the milky band), each
+			// pulled onto the sphere and about a pixel and a half wide.
+			vec3 sp = c * 190.0;
+			vec3 cell = floor(sp);
+			float pick = hash13(cell + 71.0);
+			float dens = 0.07 + 0.14 * st.b;
+			if (pick < dens) {
+				vec3 center = normalize(cell + 0.25 + 0.5 * hash33(cell)) * 190.0;
+				float mag = pick / dens;
+				float b = smoothstep(0.45, 0.0, length(sp - center)) * (0.2 + 0.8 * mag * mag * mag);
+				col += vec3(0.85, 0.9, 1.0) * b * speckle_gain * star_visibility * night_mask;
 			}
 		}
 
@@ -180,8 +220,13 @@ void sky() {
 			// limb, so a crescent's glow follows the crescent.
 			float toward = r > 1e-3 ? dot(p / r, bright) : 0.0;
 			float shape = mix(1.0, smoothstep(-0.7, 0.9, toward), 1.0 - illum);
-			float halo = (exp(-max(r - 1.0, 0.0) * 1.4) * 0.4 + exp(-max(r - 1.0, 0.0) * 0.35) * 0.14) * moon_brightness * pow(illum, 1.3) * shape;
-			col += moon_tint * halo * night_mask * (1.0 - day_amount);
+			// A tight blue-white glow, and a wider one in ultramarine so the
+			// sky round the moon brightens without going grey.
+			float halo_amt = moon_brightness * pow(illum, 1.3) * shape;
+			vec3 halo = moon_tint * exp(-max(r - 1.0, 0.0) * 1.4) * 0.4
+				+ vec3(0.12, 0.2, 1.0) * exp(-max(r - 1.0, 0.0) * 0.6) * 0.08;
+			// (Faded out well before the tangent frame ends at 90 degrees.)
+			col += halo * halo_amt * night_mask * (1.0 - day_amount) * smoothstep(0.0, 0.35, mc);
 
 			// Today's mansion glyph beside the moon.
 			if (glyph_visibility > 0.001) {
@@ -227,6 +272,35 @@ void sky() {
 			float head = exp(-length(d - hd) / (streak_width[i] * 1.6));
 			col += streak_color[i].rgb * streak_color[i].a * (trail + head * 1.5) * night_mask;
 		}
+	}
+
+	// The painted clouds, over everything above the horizon.
+	if (h > -0.01) {
+		float el = asin(clamp(h, 0.0, 1.0));
+		float az = atan(dot(d, north_dir), dot(d, east_dir));
+		// (v stops half a texel short of the top row: it would otherwise
+		// wrap and blend the zenith with the horizon.)
+		vec3 cp = textureLod(cloud_pano, vec2(az / TAU + cloud_scroll, min(el / (0.5 * PI), 1.0 - 1.0 / 1024.0)), 0.0).rgb;
+		float be = mix(0.8, 0.22, bank_cover);
+		float bank_a = smoothstep(be - 0.06, be + 0.08, cp.r);
+		float se = mix(0.86, 0.3, streak_cover);
+		float streak_a = smoothstep(se - 0.08, se + 0.22, cp.b) * 0.65;
+		float thick = smoothstep(be, be + 0.3, cp.r);
+		// Near the sun (or the moon, at night) they glow, the thin parts
+		// most.
+		float sdc = max(dot(d, sun_dir), 0.0);
+		float mdc = max(dot(d, moon_dir), 0.0);
+		vec3 glow = sun_color * sun_visible * (pow(sdc, 8.0) * 0.45 + pow(sdc, 64.0) * 0.9)
+			+ moon_tint * moon_brightness * (1.0 - day_amount) * pow(mdc, 24.0) * 0.5 * (1.0 - cos(moon_phase));
+		vec3 bank_col = mix(cloud_shade, cloud_lit, cp.g) + glow * (1.1 - thick);
+		vec3 streak_col = mix(cloud_shade, cloud_lit, 0.85) + glow;
+		// Low, far clouds sink into the horizon haze.
+		float haze = (1.0 - smoothstep(0.0, 0.1, h)) * 0.55;
+		bank_col = mix(bank_col, fog_color, haze);
+		streak_col = mix(streak_col, fog_color, haze);
+		float fade = smoothstep(-0.01, 0.015, h);
+		col = mix(col, streak_col, streak_a * fade);
+		col = mix(col, bank_col, bank_a * fade);
 	}
 
 	// Lightning lights the whole sky for an instant.

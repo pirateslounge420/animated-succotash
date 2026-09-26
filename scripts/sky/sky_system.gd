@@ -21,6 +21,15 @@ extends Node3D
 ##   the mansion it stands in is drawn beside it in its guardian beast's
 ##   color; when the moon moves into the next mansion the glyph fades out
 ##   and the new one fades in.
+## * The sky is a painted skybox (SkyPaint bakes its cloud and star
+##   panoramas once): this feeds it the cloud cover from the (eased)
+##   weather, the clouds' colors for the hour and their slow drift.
+## * Colors are the R1a palette (docs/WORLD_SYSTEMS_SPEC.md) as they
+##   should read on screen: pure saturated blue by day, bright ultramarine
+##   at night (never black or grey), night fog that dissolves distance to
+##   blue, and a strong ultramarine fill with periwinkle moonlight.
+##   _scene_color() undoes the environment's exposure and adjustment so
+##   the hex values land on screen (before the post grade).
 ## * Nothing snaps: the sky's turning speed eases between phases
 ##   (DayCycle), the weather arriving here is eased (main.gd), the lights
 ##   fade to exactly zero before they're switched off, and the clouds'
@@ -30,7 +39,7 @@ const SKY_SHADER := preload("res://shaders/sky.gdshader")
 
 @export var moon_mode: Astro.MoonMode = Astro.MoonMode.ORBITAL
 @export var sun_max_energy := 0.85
-@export var moon_max_energy := 0.95
+@export var moon_max_energy := 1.25
 ## Moonlight never drops below this share of full (thin phases, playable nights).
 const MOON_FLOOR := 0.05
 ## 0-1: how deep the viewer is inside a magical site (Landmarks sets it).
@@ -64,26 +73,46 @@ var cloud_shade := Color(0.7, 0.75, 0.9)
 var _shown_mansion := -1
 var _glyph_fade := 1.0 # 0-1, dips to 0 while the glyph changes mansion
 
-## Elevation (degrees) -> palette keys [elevation, zenith, horizon]. Day
-## is a deep, near-cartoon ultramarine overhead over a Frutiger Aero aqua
-## horizon band (N64/PS1-era punch rather than a pale realistic blue).
-## Night is deep cobalt and violet.
+## The R1a palette (docs/WORLD_SYSTEMS_SPEC.md), as it should read on
+## screen: day sky zenith -> horizon, night sky zenith -> horizon, night
+## fog, and the moonlight's color.
+const DAY_ZENITH := Color("#1436FF")
+const DAY_HORIZON := Color("#4C7CFF")
+const NIGHT_ZENITH := Color("#0A14A0")
+const NIGHT_HORIZON := Color("#1B2ED8")
+const NIGHT_FOG := Color("#1E30C0")
+const MOONLIGHT := Color("#8FA8FF")
+## The night fill: ultramarine, lifted a little by the moon.
+const FILL_NIGHT := Color("#3A4CFF")
+const FILL_MOON := Color("#6480FF")
+
+## Elevation (degrees) -> palette keys [elevation, zenith, horizon], as
+## seen on screen. Day is pure saturated blue; at dusk and dawn a warm
+## band (rose, then orange) stays low on the horizon while the sky above
+## goes ultramarine; night is bright ultramarine.
 const _ELEV_MIN := -18.0
 const _ELEV_MAX := 40.0
 const _KEYS := [
-	[-18.0, Color(0.01, 0.02, 0.09), Color(0.04, 0.05, 0.19)],
-	[-8.0, Color(0.03, 0.04, 0.2), Color(0.2, 0.09, 0.34)],
-	[-2.0, Color(0.08, 0.1, 0.42), Color(0.85, 0.3, 0.33)],
-	[3.0, Color(0.12, 0.24, 0.72), Color(1.0, 0.55, 0.22)],
-	[12.0, Color(0.06, 0.26, 0.84), Color(0.34, 0.78, 1.0)],
-	[40.0, Color(0.05, 0.19, 0.78), Color(0.28, 0.74, 1.0)],
+	[-18.0, NIGHT_ZENITH, NIGHT_HORIZON],
+	[-8.0, Color("#0E1AB4"), Color("#2C34DC")],
+	[-2.0, Color("#1428C8"), Color("#D84C60")],
+	[3.0, Color("#1432E8"), Color("#FF8C3A")],
+	[12.0, DAY_ZENITH, DAY_HORIZON],
+	[40.0, DAY_ZENITH, DAY_HORIZON],
 ]
+## Turns per second the painted clouds drift round the viewer, at rest
+## and per m/s of wind.
+const CLOUD_TURN := Vector2(0.0002, 0.00006)
+var _cloud_scroll := 0.0
 ## Night magic: inside a glowing site the moonlight dims and the air goes
 ## near-black so the bioluminescence reads like neon against black.
 const MAGIC_DARKEN := 0.6
 ## Flat ambient energy by day and at night (before moonlight lifts it).
 const AMBIENT_DAY := 0.5
-const AMBIENT_NIGHT := 0.34
+const AMBIENT_NIGHT := 0.42
+## Night fog density (per meter) added to the day's haze: about 40% at
+## 200 m, so the middle distance goes blue and the far distance dissolves.
+const FOG_NIGHT := 0.0017
 
 
 func _ready() -> void:
@@ -101,6 +130,13 @@ func _ready() -> void:
 
 	sky_material = ShaderMaterial.new()
 	sky_material.shader = SKY_SHADER
+	# The painted clouds and starfield, baked once on the GPU.
+	var paint := SkyPaint.new()
+	paint.name = "SkyPaint"
+	add_child(paint)
+	paint.bake()
+	sky_material.set_shader_parameter("cloud_pano", paint.clouds)
+	sky_material.set_shader_parameter("star_pano", paint.stars)
 	var sky := Sky.new()
 	sky.sky_material = sky_material
 	sky.radiance_size = Sky.RADIANCE_SIZE_64
@@ -170,9 +206,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var sun_col := _sun_color(sun_elevation_deg)
 	sun.light_color = sun_col
 	sun.light_energy = sun_max_energy * sun_up * (1.0 - 0.55 * float(weather.get("cloud", 0.0)))
-	# Pure deep blue (little green, so moonlit moss and leaves stay green
-	# instead of turning cyan).
-	var moon_col := Color(0.66, 0.66, 0.9).lerp(Color(0.4, 0.47, 1.0), smoothstep(0.0, 25.0, moon_elevation_deg))
+	# Periwinkle (R1a: moonlit stone and snow read #8FA8FF), paler and
+	# greyer when the moon is low.
+	var moon_col := Color(0.7, 0.72, 0.92).lerp(MOONLIGHT, smoothstep(0.0, 25.0, moon_elevation_deg))
 	moon.light_color = moon_col
 	# Moonlight is lost in daylight.
 	moon.light_energy = moon_max_energy * moonlight * (1.0 - daylight) * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)
@@ -181,26 +217,37 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	sun.visible = sun.light_energy > 0.0
 	moon.visible = moon.light_energy > 0.0
 
-	# Palette: continuous in sun elevation, lifted by moonlight at night.
+	# Grade: a punchy curve day and night, saturated by day. Set first:
+	# _scene_color() reads it.
+	environment.adjustment_saturation = lerpf(grade_saturation.x, grade_saturation.y, daylight)
+	environment.adjustment_contrast = lerpf(grade_contrast.x, grade_contrast.y, daylight)
+
+	# Palette: continuous in sun elevation, lifted a little by moonlight at
+	# night. Worked out as screen colors, then turned into scene colors.
 	var t := inverse_lerp(_ELEV_MIN, _ELEV_MAX, clampf(sun_elevation_deg, _ELEV_MIN, _ELEV_MAX))
 	var zenith := _zenith.sample(t)
 	var horizon := _horizon.sample(t)
 	var night := 1.0 - daylight
 	var lift := moonlight * night
-	zenith += Color(0.03, 0.05, 0.16) * lift
-	horizon += Color(0.04, 0.05, 0.15) * lift
+	zenith += Color(0.01, 0.02, 0.06) * lift
+	horizon += Color(0.01, 0.02, 0.05) * lift
 	var storm := float(weather.get("storm", 0.0))
 	var cloud := float(weather.get("cloud", 0.0))
-	zenith = zenith.lerp(Color(0.45, 0.48, 0.55) * (0.15 + 0.85 * daylight), storm * 0.7)
+	# Storms grey the day sky; at night they deepen it, still blue.
+	zenith = zenith.lerp(Color(0.45, 0.48, 0.55).lerp(Color(0.07, 0.1, 0.4), night), storm * 0.7)
+	# Dusk and dawn: the gradient hugs the horizon, so the warm band stays
+	# low and the sky above goes ultramarine.
+	var warm_band := smoothstep(-12.0, -4.0, sun_elevation_deg) * (1.0 - smoothstep(4.0, 12.0, sun_elevation_deg))
+	sky_material.set_shader_parameter("horizon_sharpness", lerpf(2.5, 5.0, warm_band))
 
 	sky_material.set_shader_parameter("up_dir", up)
 	sky_material.set_shader_parameter("east_dir", east)
 	sky_material.set_shader_parameter("north_dir", north)
 	zenith = zenith.lerp(Color(0.0, 0.01, 0.04), dark_magic * 0.6)
 	horizon = horizon.lerp(Color(0.01, 0.03, 0.1), dark_magic * 0.5)
-	sky_material.set_shader_parameter("zenith_color", zenith)
-	sky_material.set_shader_parameter("horizon_color", horizon)
-	sky_material.set_shader_parameter("ground_color", horizon.darkened(0.6))
+	sky_material.set_shader_parameter("zenith_color", _scene_color(zenith))
+	sky_material.set_shader_parameter("horizon_color", _scene_color(horizon))
+	sky_material.set_shader_parameter("ground_color", _scene_color(horizon.darkened(0.6)))
 	sky_material.set_shader_parameter("sun_dir", sun_dir)
 	sky_material.set_shader_parameter("sun_color", sun_col)
 	sky_material.set_shader_parameter("sun_visible", smoothstep(-2.0, 1.0, sun_elevation_deg) * (1.0 - cloud * 0.8))
@@ -219,6 +266,22 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	cloud_light = (Color(0.14, 0.16, 0.24) + lit * 1.1).clamp()
 	var cloud_under := Color(0.72, 0.78, 0.95).lerp(zenith, 0.25) * (0.35 + 0.65 * daylight)
 	cloud_shade = cloud_under.lerp(Color(0.3, 0.32, 0.38) * daylight, storm * 0.6)
+
+	# The painted clouds: fair weather keeps a few banks and streaks;
+	# cloud and storm grow them to an overcast. By night their bellies
+	# sink toward the sky's ultramarine.
+	var wind: Vector3 = weather.get("wind", Vector3.ZERO)
+	_cloud_scroll = fposmod(_cloud_scroll + delta * (CLOUD_TURN.x + CLOUD_TURN.y * wind.length()), 1.0)
+	sky_material.set_shader_parameter("cloud_scroll", _cloud_scroll)
+	sky_material.set_shader_parameter("bank_cover", clampf(0.25 + 0.6 * cloud + 0.25 * storm, 0.0, 1.0))
+	sky_material.set_shader_parameter("streak_cover", clampf(0.3 + 0.35 * cloud, 0.0, 1.0))
+	# In twilight the sun still paints them rose after it's down; storms
+	# grey them.
+	var twilight := smoothstep(-12.0, -3.0, sun_elevation_deg) * (1.0 - smoothstep(-1.0, 6.0, sun_elevation_deg))
+	var painted_lit := cloud_light.lerp(Color(1.0, 0.5, 0.55), twilight * 0.8)
+	painted_lit = painted_lit.lerp(Color(0.62, 0.65, 0.72) * (0.3 + 0.7 * daylight), storm * 0.7)
+	sky_material.set_shader_parameter("cloud_lit", painted_lit)
+	sky_material.set_shader_parameter("cloud_shade", cloud_shade.lerp(_scene_color(zenith) * 1.3, night * 0.9))
 	# Their light's direction turns from the moon to the sun across the
 	# band, at an even pace. The two can point nearly opposite (a full
 	# moon), so it swings over through the local up: moon -> up -> sun.
@@ -235,23 +298,22 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# Ambient: one strong flat fill, the vertex-lit consoles' way of keeping
 	# the side away from the sun clearly readable (Phantasy Star Online's
 	# bright shade), never a black shadow. By day a soft cool white; at
-	# night a moonlit blue, lifted by the moon.
+	# night a strong ultramarine (R1), lifted by the moon.
 	var amb_day := Color(0.86, 0.9, 1.0)
-	var amb_night := Color(0.3, 0.38, 0.92).lerp(Color(0.42, 0.52, 1.0), lift)
+	var amb_night := FILL_NIGHT.lerp(FILL_MOON, lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
-	environment.ambient_light_energy = lerpf(AMBIENT_NIGHT + 0.2 * lift, AMBIENT_DAY, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
+	environment.ambient_light_energy = lerpf(AMBIENT_NIGHT + 0.18 * lift, AMBIENT_DAY, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
 
-	# Fog and mist (drawn in bands by the world shaders, see Look): a
-	# light haze that gives depth to long daytime views; thicker at night
-	# and in cloud forests, on coasts and in storms, with ground mist
-	# pooling in low places after dark.
-	# Atmospheric perspective: distance fades into blue haze by day and
-	# deep cobalt at night, so near, middle and far read as separate layers.
-	# At night a luminous blue haze (lifted by the moon), so distance and
-	# low mist glow instead of fading to black.
-	var fog_color := horizon.lerp(zenith, 0.5).lerp(Color(0.07, 0.14, 0.46).lerp(Color(0.12, 0.24, 0.62), lift), night * 0.6)
-	fog_color = fog_color.lerp(Color(0.015, 0.03, 0.12), dark_magic * 0.6)
-	var density := 0.0008 + fog_amount * 0.003 + storm * 0.002 + night * 0.0012
+	# Fog and mist (drawn by the world shaders, see Look): a light haze
+	# that gives depth to long daytime views; thicker at night and in cloud
+	# forests, on coasts and in storms, with ground mist pooling in low
+	# places after dark. Atmospheric perspective: by day distance fades
+	# into the sky's own horizon blue (a little deeper at dusk, so the
+	# warm band stays in the sky); at night into the R1a night fog, a
+	# bright ultramarine, so distance dissolves to blue, never black.
+	var fog_color := horizon.lerp(zenith, 0.5 * warm_band).lerp(NIGHT_FOG, night)
+	fog_color = _scene_color(fog_color).lerp(Color(0.015, 0.03, 0.12), dark_magic * 0.6)
+	var density := 0.0008 + fog_amount * 0.003 + storm * 0.002 + night * FOG_NIGHT
 	var mist := clampf(0.5 * night + fog_amount * 0.6 + storm * 0.3, 0.0, 1.0)
 	environment.fog_light_color = fog_color
 	environment.fog_density = density
@@ -265,10 +327,21 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	})
 	sky_material.set_shader_parameter("fog_color", fog_color)
 
-	# Grade: a punchy, crushed curve day and night (deep shadows, bright
-	# highlights, little midtone), saturated by day.
-	environment.adjustment_saturation = lerpf(grade_saturation.x, grade_saturation.y, daylight)
-	environment.adjustment_contrast = lerpf(grade_contrast.x, grade_contrast.y, daylight)
+
+## The scene color that comes out on screen as `c` (sRGB): undoes the
+## environment's adjustment (saturation about the mean, then contrast
+## about mid-grey, applied to the sRGB image) and its exposure, so the
+## palette's hex values read true on screen before the post grade.
+func _scene_color(c: Color) -> Color:
+	var s := environment.adjustment_saturation
+	var k := environment.adjustment_contrast
+	var m := (c.r + c.g + c.b) / 3.0
+	var v := Vector3(c.r, c.g, c.b)
+	v = Vector3(m, m, m) + (v - Vector3(m, m, m)) / s
+	v = Vector3(0.5, 0.5, 0.5) + (v - Vector3(0.5, 0.5, 0.5)) / k
+	var lin := Color(clampf(v.x, 0.0, 1.0), clampf(v.y, 0.0, 1.0), clampf(v.z, 0.0, 1.0)).srgb_to_linear()
+	var e := environment.tonemap_exposure
+	return Color(lin.r / e, lin.g / e, lin.b / e).linear_to_srgb()
 
 
 ## The mansion glyph beside the moon. When the moon enters the next

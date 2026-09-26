@@ -1,7 +1,9 @@
 class_name CloudLayers
 extends Node3D
 ## Three cloud layers as transparent shells around the planet (see
-## shaders/cloud_layer.gdshader), each with its own altitude and speed:
+## shaders/cloud_layer.gdshader), each with its own altitude and speed.
+## They carry the weather's clouds (fair-weather banks and streaks are
+## painted into the sky dome, SkyPaint), filling in as it clouds over:
 ##
 ##   layer  kind                         altitude range     speed x real
 ##   low    cumulus / stratus            500-2,000 m        4x
@@ -96,12 +98,14 @@ func update_clouds(delta: float, up: Vector3, camera_alt: float, weather: Dictio
 	var cloud := float(weather.get("cloud", 0.0))
 	var storm := float(weather.get("storm", 0.0))
 	var dir := wind.normalized() if wind.length() > 0.1 else CubeSphere.east(up)
-	# Cover: low clouds follow the local weather (fair weather keeps a
-	# scatter of separate small puffs); mid and high are patchier and
+	# Cover: these are the weather's clouds. Fair-weather cloudiness is
+	# painted into the sky itself (SkyPaint), so on a fair day the shells
+	# stay nearly empty; as the weather clouds over they fill in (low
+	# clouds most, the storm's deck); mid and high are patchier and
 	# thinner.
-	var covers := [clampf(0.2 + 0.6 * cloud + 0.3 * storm, 0.0, 0.95),
-		clampf(0.12 + 0.35 * cloud + 0.2 * storm, 0.0, 0.9),
-		clampf(0.2 + 0.2 * cloud, 0.0, 0.7)]
+	var covers := [clampf(0.05 + 0.75 * cloud + 0.3 * storm, 0.0, 0.95),
+		clampf(0.4 * cloud + 0.2 * storm, 0.0, 0.9),
+		clampf(0.08 + 0.3 * cloud, 0.0, 0.7)]
 	# Farther layers draw first (they sort as one object at the planet
 	# center, so order them by hand).
 	var order := [0, 1, 2]
