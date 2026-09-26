@@ -82,6 +82,8 @@ func setup(p_world: Node, p_chunks: ChunkManager, p_player: PlanetPlayer) -> voi
 	_root.name = "Creatures"
 	world.world_root.add_child(_root)
 	_species = CreatureSpecies.all()
+	# Sculpted bodies build on worker threads meanwhile (SculptedBodies).
+	SculptedBodies.prewarm(_species)
 	for i in _species.size():
 		var sp := _species[i]
 		match sp.role:

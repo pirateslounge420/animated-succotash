@@ -16,9 +16,17 @@ static var _meshes := {}
 
 
 static func build(sp: CreatureSpecies) -> Dictionary:
+	# A sculpted body (SculptedBodies) when this kind has one and it's built.
+	var sculpted := SculptedBodies.build(sp)
+	if not sculpted.is_empty():
+		if sp.body != "swarm":
+			(sculpted.root as Node3D).scale = Vector3.ONE * sp.size_m
+		return sculpted
 	var b := {"root": Node3D.new(), "legs": [], "wings": [], "tail": null, "light": null}
 	var kind := sp.shape if sp.role == "mythical" else sp.body
 	match kind:
+		"wolf":
+			_quadruped(b, sp, 0.36, 0.55)
 		"quadruped":
 			_quadruped(b, sp, 0.32, 0.55)
 		"rodent":
