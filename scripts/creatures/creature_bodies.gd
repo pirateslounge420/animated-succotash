@@ -52,6 +52,10 @@ static func build(sp: CreatureSpecies) -> Dictionary:
 			_goblin(b, sp)
 		"tribal":
 			_tribal(b, sp)
+		"skeleton":
+			_skeleton(b, sp)
+		"robed":
+			_robed(b, sp)
 		_:
 			_quadruped(b, sp, 0.3, 0.5)
 	if kind != "swarm":
@@ -551,6 +555,60 @@ static func _tribal(b: Dictionary, sp: CreatureSpecies) -> void:
 			cone(r, 0.02, 0.0, 0.1, Vector3(-0.22, 1.2, -0.02), Color(0.35, 0.36, 0.4), 0.0, 5) # stone head
 			var quiver := box(r, Vector3(0.06, 0.28, 0.06), Vector3(0.06, 0.72, 0.09), hide.darkened(0.2))
 			quiver.rotation.z = 0.35
+
+
+## Skeleton (the restless dead at ruin fires; size_m = height): skull with
+## dark sockets, a spine and ribs, bare bone limbs. `color` is the bone.
+static func _skeleton(b: Dictionary, sp: CreatureSpecies) -> void:
+	var r: Node3D = b.root
+	var bone := sp.color
+	var dark := Color(0.08, 0.07, 0.06)
+	for s in [-1.0, 1.0]:
+		limb(b, r, Vector3(0.05 * s, 0.5, 0.0), 0.48, 0.035, bone)
+	box(r, Vector3(0.16, 0.06, 0.08), Vector3(0, 0.52, 0), bone) # pelvis
+	for k in 5:
+		ball(r, Vector3.ONE * 0.018, Vector3(0, 0.56 + k * 0.05, 0.02), bone) # spine
+	for k in 4:
+		var y := 0.66 + k * 0.045
+		var w := 0.09 - absf(k - 1.5) * 0.008
+		box(r, Vector3(w * 2.0, 0.018, 0.1), Vector3(0, y, -0.005), bone) # ribs
+	box(r, Vector3(0.24, 0.03, 0.05), Vector3(0, 0.84, 0), bone) # collarbones
+	var head := Node3D.new()
+	head.name = "Head"
+	head.position = Vector3(0, 0.92, 0)
+	r.add_child(head)
+	ball(head, Vector3(0.06, 0.068, 0.068), Vector3.ZERO, bone)
+	box(head, Vector3(0.07, 0.03, 0.05), Vector3(0, -0.05, -0.025), bone) # jaw
+	eyes(head, Vector3(0, 0.005, -0.058), 0.024, 0.016, dark)
+	ball(head, Vector3(0.008, 0.012, 0.006), Vector3(0, -0.02, -0.064), dark) # nose hole
+	for s in [-1.0, 1.0]:
+		var arm := limb(b, r, Vector3(0.12 * s, 0.82, 0.0), 0.36, 0.03, bone, "wings")
+		arm.rotation.z = 0.1 * s
+
+
+## Robed, hooded figure (keeps company with the dead): a long robe, a deep
+## hood with a pale skull face in its shadow, bony hands. `color` is the
+## robe, `accent` the face and hands.
+static func _robed(b: Dictionary, sp: CreatureSpecies) -> void:
+	var r: Node3D = b.root
+	var c := sp.color
+	var bone := sp.accent
+	for s in [-1.0, 1.0]:
+		limb(b, r, Vector3(0.055 * s, 0.5, 0.0), 0.48, 0.08, c.darkened(0.3))
+	cone(r, 0.2, 0.12, 0.55, Vector3(0, 0.3, 0), c) # skirt of the robe
+	box(r, Vector3(0.24, 0.34, 0.16), Vector3(0, 0.7, 0), c)
+	var head := Node3D.new()
+	head.name = "Head"
+	head.position = Vector3(0, 0.92, 0)
+	r.add_child(head)
+	ball(head, Vector3(0.085, 0.1, 0.095), Vector3(0, 0.01, 0.01), c.darkened(0.1)) # hood
+	cone(head, 0.06, 0.0, 0.1, Vector3(0, 0.1, 0.03), c.darkened(0.1)) # hood point
+	ball(head, Vector3(0.05, 0.058, 0.04), Vector3(0, -0.005, -0.05), bone) # face
+	eyes(head, Vector3(0, 0.005, -0.085), 0.02, 0.013, Color(0.05, 0.05, 0.05))
+	for s in [-1.0, 1.0]:
+		var arm := limb(b, r, Vector3(0.14 * s, 0.8, 0.0), 0.36, 0.07, c, "wings")
+		arm.rotation.z = 0.1 * s
+		ball(arm, Vector3.ONE * 0.025, Vector3(0, -0.38, 0), bone) # hand
 
 
 static func _lantern(b: Dictionary, parent: Node3D, pos: Vector3, c: Color) -> void:

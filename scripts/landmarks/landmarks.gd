@@ -145,6 +145,12 @@ func _attach_ruins() -> void:
 	_ruins[c] = node
 
 
+## The ruins built right now: grid cell -> node (meta "site",
+## "shelters", "camp_spot").
+func built_ruins() -> Dictionary:
+	return _ruins
+
+
 ## Inside a camp shelter (a tepee or under a lean-to, RuinBuilder._camp)
 ## at scene position `pos`? Keeps the rain off.
 func sheltered_at(pos: Vector3) -> bool:

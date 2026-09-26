@@ -25,6 +25,7 @@ var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
 var landmarks: Landmarks
+var camps: Camps
 var post: PostGrade
 var clouds: CloudLayers
 var camp: Encampment
@@ -131,6 +132,10 @@ func _on_planet_ready() -> void:
 	landmarks.name = "Landmarks"
 	add_child(landmarks)
 	landmarks.setup(world, chunks, player, sky, post)
+	camps = Camps.new()
+	camps.name = "Camps"
+	add_child(camps)
+	camps.setup(world, chunks, player, landmarks, hud)
 
 	map_overlay = MapOverlay.new()
 	add_child(map_overlay)
@@ -164,6 +169,7 @@ func _process(delta: float) -> void:
 		if clouds.above_low(elevation):
 			_above_clouds(_local_weather)
 	landmarks.update_landmarks(delta, sky.daylight)
+	camps.update_camps(delta)
 	camp.update_camp(delta, player.global_position)
 	var fog: float = world.planet.sample(world.planet.fog, d)
 	Look.apply({"look_planet_center": world.planet_center(), "look_planet_radius": PlanetConst.RADIUS_M})
