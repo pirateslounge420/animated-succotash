@@ -61,7 +61,7 @@ void fragment() {
 	t = mix(t, untiled(look_tex_stone, UV * 0.3, mixer), rocky);
 	// Snow: just under white, with a faint crag grain so it reads as snow
 	// on rock, not blank white.
-	vec3 snow_t = mix(vec3(0.44), texture(look_tex_stone, UV * 0.15).rgb * 0.88, 0.35);
+	vec3 snow_t = mix(vec3(0.4), texture(look_tex_stone, UV * 0.15).rgb * 0.8, 0.35);
 	t = mix(t, snow_t, snow * 0.85);
 	// Texture contrast eases off far away, so fine detail doesn't shimmer
 	// toward the horizon, but the ground stays textured well into the

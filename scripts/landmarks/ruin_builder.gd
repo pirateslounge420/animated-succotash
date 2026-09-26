@@ -38,7 +38,7 @@ const OLD_WOOD := Color(0.36, 0.32, 0.26) # weathered grey-brown planks
 const BARK := Color(0.34, 0.3, 0.24)
 const JUNGLE_LEAF := Color(0.16, 0.42, 0.16)
 const THATCH := Color(0.55, 0.47, 0.28)
-const SNOW := Color(0.86, 0.9, 0.95)
+const SNOW := Color(0.7, 0.77, 0.86) # packed snow blocks, cooler than a snowfield so they read
 const ROPE := Color(0.42, 0.36, 0.24)
 
 ## Distance where the drawn blocks give way to the plain-box LOD, and the
@@ -1103,7 +1103,7 @@ func giant_tree(base: Vector3, r: float, h: float) -> void:
 		var rad := r * (1.0 - 0.45 * t) * (1.0 + 0.7 * exp(-y / 1.2))
 		rings.append([y, rad])
 	var col := BARK.lightened(rng.randf_range(-0.05, 0.05))
-	col.a = 0.3 # mossy
+	col.a = 0.1 # a hint of moss
 	var start := _v.size()
 	var tw := rng.randf() * TAU
 	for k in rings.size() - 1:
@@ -1129,7 +1129,6 @@ func giant_tree(base: Vector3, r: float, h: float) -> void:
 	for k in rng.randi_range(4, 5):
 		var a := TAU * k / 5.0 + rng.randf_range(-0.3, 0.3)
 		var out := Vector3(cos(a), 0, sin(a))
-		var basis := Basis(out, Vector3.UP, out.cross(Vector3.UP)).rotated(out.cross(Vector3.UP), -0.35)
 		box(Transform3D(Basis(out, Vector3.UP, out.cross(Vector3.UP)), base + out * (r + 0.9) + Vector3(0, 0.6, 0)), Vector3(2.2, 1.4, 0.3), col, 0.4, 0.1, 0.05)
 	# Limbs and the crown.
 	var top := base + Vector3(0, h * 0.78, 0)
@@ -1152,7 +1151,7 @@ func _limb(a: Vector3, b: Vector3, thick: float) -> void:
 	var y := (b - a).normalized()
 	var x := y.cross(Vector3.UP if absf(y.y) < 0.95 else Vector3.RIGHT).normalized()
 	var col := BARK.darkened(0.05)
-	col.a = 0.3
+	col.a = 0.1
 	box(Transform3D(Basis(x, y, x.cross(y)), (a + b) * 0.5), Vector3(thick, a.distance_to(b), thick), col, 0.3, 0.12, 0.05)
 
 
