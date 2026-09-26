@@ -23,9 +23,16 @@ extends Node3D
 ## creature's shy_m; sprinting, it bolts from half again as far) and on its
 ## suspicion (1 after it's been startled). Suspicion fades while you keep
 ## still near it (a few seconds) or stay well away (slowly).
-## No creature attacks; there is no combat.
+##
+## Arrows hurt them (hurt()): hit points by size (CreatureSpecies.hp_max()).
+## Prey bolts; pack hunters and hostile creatures turn on you (`angry`:
+## chase and bite, CreatureSpawner.player_hit()); at 0 they die, tip over
+## and fade after a while.
 
 signal finished(creature: Creature)
+## Hit by the player (CreatureSpawner reacts: the pack turns on you, a
+## mythical vanishes or fights).
+signal hurt_by_player(creature: Creature, killed: bool)
 
 var species: CreatureSpecies
 var world: Node
@@ -51,6 +58,14 @@ var done := false
 var fly_off := false
 ## 0-1: how wary it still is after being startled.
 var suspicion := 0.0
+var hp := 1.0
+var dead := false
+## Seconds it keeps hunting you (chase and bite); 0 = not attacking.
+var angry := 0.0
+var _bite_cd := 0.0
+var _dead_t := 0.0
+var _flash := 0.0
+var _panic := 0.0 # seconds it keeps bolting after being hit, however far
 
 var _parts := {}
 var _body: Node3D
@@ -78,6 +93,7 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 	world = p_world
 	chunks = p_chunks
 	spawner = p_spawner
+	hp = sp.hp_max()
 	dir = d
 	home = d
 	_rng.seed = seed_value
@@ -161,6 +177,23 @@ func tick(delta: float, ctx: Dictionary) -> void:
 		if _life <= 0.0:
 			leave()
 
+	if dead:
+		_dead_t += delta
+		_speed_now = 0.0
+		if _dead_t > 14.0 and not leaving:
+			leave()
+		_fade = move_toward(_fade, 0.0 if leaving else 1.0, delta * 1.0)
+		if leaving and _fade <= 0.0:
+			done = true
+			finished.emit(self)
+			return
+		_place(delta)
+		return
+	if angry > 0.0:
+		_attack(delta, ctx, to_player)
+		_place(delta)
+		return
+
 	var shy := _shy_m(ctx)
 	_calm(delta, ctx, to_player, shy)
 	match species.role:
@@ -192,6 +225,55 @@ func tick(delta: float, ctx: Dictionary) -> void:
 		finished.emit(self)
 		return
 	_place(delta)
+
+
+## Hit for `amount` (an arrow from the player at scene position
+## `from_pos`).
+func hurt(amount: float, from_pos: Vector3) -> void:
+	if dead or done:
+		return
+	hp -= amount
+	_flash = 1.0
+	suspicion = 1.0
+	if hp <= 0.0:
+		dead = true
+		angry = 0.0
+		mode = "dead"
+		lift = 0.0
+		if voice and voice.stream:
+			voice.pitch_scale *= 0.8
+			voice.play()
+		hurt_by_player.emit(self, true)
+		return
+	if species.bite > 0.0:
+		angry = 40.0
+	elif species.role != "mythical":
+		# Prey bolts, from where the arrow came.
+		mode = "flee"
+		fly_off = species.role == "canopy" or species.role == "water_edge"
+		_timer = 6.0
+		_panic = 5.0
+	hurt_by_player.emit(self, false)
+
+
+## Chase the player and bite when in reach; give up when they're far.
+func _attack(delta: float, ctx: Dictionary, to_player: float) -> void:
+	angry -= delta
+	_bite_cd -= delta
+	var pd: Vector3 = ctx.player_dir
+	if to_player > 70.0:
+		angry = 0.0
+		return
+	var reach := 0.9 + species.size_m * 0.45
+	if to_player > reach:
+		mode = "go"
+		_walk(pd, species.speed_mps * 1.15, delta)
+	else:
+		_speed_now = 0.0
+		heading = _tangent_to(pd)
+		if _bite_cd <= 0.0:
+			_bite_cd = 1.3
+			spawner.player_hit(species.bite, global_position)
 
 
 func _call_interval() -> float:
@@ -235,7 +317,8 @@ func _ground(delta: float, player_dir: Vector3, to_player: float, shy: float) ->
 		"flee":
 			var away := -_tangent_to(player_dir)
 			_walk(dir + away * 0.001, species.speed_mps, delta)
-			if _timer <= 0.0 or to_player > shy * 2.5:
+			_panic -= delta
+			if (_timer <= 0.0 or to_player > shy * 2.5) and _panic <= 0.0:
 				mode = "wary"
 				home = dir
 				_timer = _rng.randf_range(2.0, 6.0)
@@ -525,7 +608,11 @@ func _place(delta: float) -> void:
 		fwd = CubeSphere.north(dir)
 	global_basis = Basis.looking_at(fwd.normalized(), dir)
 	var size := 1.0 if species.role == "swarm" else species.size_m
-	_body.scale = Vector3.ONE * size * maxf(_fade, 0.001)
+	_flash = maxf(_flash - delta * 5.0, 0.0)
+	_body.scale = Vector3.ONE * size * maxf(_fade, 0.001) * (1.0 + 0.12 * _flash)
+	if dead:
+		# Topples onto its side.
+		_body.rotation.z = lerpf(_body.rotation.z, PI * 0.5, clampf(delta * 5.0, 0.0, 1.0))
 	_animate(delta)
 
 

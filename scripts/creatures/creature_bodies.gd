@@ -562,19 +562,37 @@ static func _tribal(b: Dictionary, sp: CreatureSpecies) -> void:
 	for s in [-1.0, 1.0]:
 		var arm := limb(b, r, Vector3(0.13 * s, 0.8, 0.0), 0.36, 0.055, skin, "wings")
 		arm.rotation.z = 0.1 * s
-	match sp.shape:
+	# Shapes: "elder" (cloak, feathered staff), "hunter" (spear, quiver),
+	# "archer" (bow, quiver); "<shape>_seated" leaves the weapon out (camp
+	# folk lay theirs by the fire).
+	var seated := sp.shape.ends_with("_seated")
+	var role := sp.shape.trim_suffix("_seated")
+	match role:
 		"elder":
 			cone(r, 0.17, 0.12, 0.42, Vector3(0, 0.62, 0.02), hide.lightened(0.15)) # cloak
-			var staff := cone(r, 0.012, 0.01, 1.05, Vector3(0.2, 0.52, -0.04), Color(0.4, 0.28, 0.16), 0.0, 5)
-			staff.rotation.z = 0.05
-			var feather := box(r, Vector3(0.015, 0.1, 0.03), Vector3(0.21, 1.07, -0.04), Color(0.9, 0.86, 0.75))
-			feather.rotation.z = -0.4
+			if not seated:
+				var staff := cone(r, 0.012, 0.01, 1.05, Vector3(0.2, 0.52, -0.04), Color(0.4, 0.28, 0.16), 0.0, 5)
+				staff.rotation.z = 0.05
+				var feather := box(r, Vector3(0.015, 0.1, 0.03), Vector3(0.21, 1.07, -0.04), Color(0.9, 0.86, 0.75))
+				feather.rotation.z = -0.4
+		"archer":
+			var quiver := box(r, Vector3(0.06, 0.28, 0.06), Vector3(-0.06, 0.72, 0.09), hide.darkened(0.2))
+			quiver.rotation.z = -0.35
+			for k in 3:
+				cone(r, 0.004, 0.004, 0.08, Vector3(-0.1 + k * 0.012, 0.9, 0.1), Color(0.88, 0.86, 0.8), 0.0, 3) # fletchings
+			if not seated:
+				# Bow held upright in the left hand.
+				var bow := BowMesh.build(1.25 / maxf(sp.size_m, 0.1))
+				r.add_child(bow)
+				bow.position = Vector3(-0.2, 0.5, -0.06)
+				bow.rotation = Vector3(0.0, PI * 0.5, 0.08)
 		_:
-			var spear := cone(r, 0.01, 0.009, 1.15, Vector3(-0.19, 0.58, -0.02), Color(0.42, 0.3, 0.18), 0.0, 5)
-			spear.rotation.z = -0.06
-			cone(r, 0.02, 0.0, 0.1, Vector3(-0.22, 1.2, -0.02), Color(0.35, 0.36, 0.4), 0.0, 5) # stone head
 			var quiver := box(r, Vector3(0.06, 0.28, 0.06), Vector3(0.06, 0.72, 0.09), hide.darkened(0.2))
 			quiver.rotation.z = 0.35
+			if not seated:
+				var spear := cone(r, 0.01, 0.009, 1.15, Vector3(-0.19, 0.58, -0.02), Color(0.42, 0.3, 0.18), 0.0, 5)
+				spear.rotation.z = -0.06
+				cone(r, 0.02, 0.0, 0.1, Vector3(-0.22, 1.2, -0.02), Color(0.35, 0.36, 0.4), 0.0, 5) # stone head
 
 
 ## Unicorn (size_m = height at the head): a slender white horse, a raised

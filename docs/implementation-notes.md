@@ -388,7 +388,10 @@ Verified:
   huts and the cabin count too).
 - **Living camps** (`Camps`): a fire burning and two to four folk seated
   round it on logs (stones among the dead), built within 220 m of the
-  player. They look round at each other, gesture as they talk, turn to
+  player. Tribal and northern folk keep their weapons at hand: a spear
+  leaning on the log or a bow laid by it. One or two guards stand at the
+  edge of the firelight with a spear or a bow (the `archer` tribal
+  shape), facing out and turning to watch you come. They look round at each other, gesture as they talk, turn to
   watch you come within 12 m (never further than over a shoulder), and
   one says a line when you step into the firelight. Found:
   - in about half the ruins (`Ruins.inhabited()`), at the spot the
@@ -696,6 +699,45 @@ the way Godot draws a front face.)
   tree roots); else the terrain's vertex color classified like the
   terrain shader's texture pick (grass, stone, snow, sand, dirt). Seven
   synthesized sounds.
+
+## Health, the bow and the view
+
+- **Health** (`PlanetPlayer`): 100 HP, shown as ten hearts (half hearts
+  too) at the bottom left (`StatusHud`), shivering when low, with a red
+  flash at the screen's edge on a hit.
+  - Falls faster than 11 m/s (about a 6 m drop) hurt 7 HP per extra m/s:
+    15 m costs about 43.
+  - Bites: a pack that turns on you (you shot one, or walked into them at
+    night) and werewolves on full-moon nights chase and bite, knocking you
+    back. Anything hostile that you shoot fights back.
+  - After 8 s without a hit, health returns at 2 HP/s.
+  - At 0 you slump, the screen goes dark ("You died"), and you wake by the
+    opening camp's fire with full health and 3 s of grace.
+- **Creatures can be hurt** (`Creature.hurt`): hit points by size
+  (`CreatureSpecies.hp_max`, or `hp` in the data). A hare dies to one
+  arrow, a deer takes two, mythical creatures several. Prey bolts from the
+  shot. Hunters (`bite` > 0: packs and hostile mythicals) turn on you
+  until you're 70 m off. Neutral mythicals vanish for five minutes. The
+  dead topple and fade after 14 s; a killed pack or mythical stays gone
+  half an hour.
+- **The bow** (`Bow`, `Arrow`, `BowMesh`), as simple as Minecraft's: hold
+  the left mouse button (or the pad's right trigger) to draw, release to
+  loose.
+  - Power is Minecraft's curve on a one-second draw, (t² + 2t) / 3,
+    capped at 1. A full draw flies at 55 m/s for 30 damage, with a chance
+    of a critical hit up to half again; under 0.1, nothing is loosed.
+  - Walking slows to under half pace while drawing. Third person closes in
+    over the shoulder, and a full draw zooms a little.
+  - Arrows aim at whatever is under the crosshair, fall with the planet's
+    gravity and stick in the ground, trees and ruins (60 s, at most 40
+    about), ride in a creature they hit, and sink in water. Camp folk you
+    hit complain.
+  - In test, a full draw landed 103 m away after 1.9 s, and one arrow
+    killed a hare.
+- **First person** (V, F5, the right stick click): the camera at eye
+  height (1.6 m, 0.98 crouched), wider pitch, your body hidden from the
+  camera (its own visual layer) but still casting its shadow, and the bow
+  in view, its string coming back as you draw.
 
 ## The opening encampment
 

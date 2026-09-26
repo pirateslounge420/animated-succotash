@@ -239,8 +239,71 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 		holder.set_meta("base_yaw", holder.rotation.y)
 		holder.set_meta("phase", rng.randf() * TAU)
 		sitters.append(holder)
+		# Tribal and northern folk keep their weapons at hand: a spear
+		# leaning on the log, or a bow laid by it.
+		if folk == "tribal" or folk == "north":
+			var side := Vector3(-sin(a), 0, cos(a)) * 0.75
+			if i % 3 == 2:
+				var bow := BowMesh.build(1.2)
+				root.add_child(bow)
+				bow.position = seat_pos * 1.25 + side + Vector3(0, 0.05, 0)
+				bow.rotation = Vector3(PI * 0.5, -a, 0.0)
+			else:
+				_spear(root, seat_pos * 1.3 + side, Vector3(cos(a), 0, sin(a)), 1.9)
 	root.set_meta("sitters", sitters)
+	# Guards: tribal and northern camps post one or two on their feet at
+	# the edge of the firelight, spear or bow in hand, watching the dark.
+	var guards: Array[Node3D] = []
+	if folk == "tribal" or folk == "north":
+		for g in rng.randi_range(1, 2):
+			var a := a0 + TAU * (g + 0.5) / count + PI / count
+			var at_pos := Vector3(cos(a), 0, sin(a)) * rng.randf_range(4.5, 5.5)
+			var guard := _guard(root, folk, g, rng)
+			guard.position = at_pos
+			# Facing outward, away from the fire.
+			guard.basis = Basis.looking_at(at_pos.normalized(), Vector3.UP)
+			guard.set_meta("base_yaw", guard.rotation.y)
+			guard.set_meta("phase", rng.randf() * TAU)
+			guards.append(guard)
+	root.set_meta("guards", guards)
 	return root
+
+
+## A spear leaning out from `base` (camp space) along `lean`, `length` m.
+func _spear(parent: Node3D, base: Vector3, lean: Vector3, length: float) -> void:
+	var shaft := CreatureBodies.cone(parent, 0.018, 0.015, length, Vector3.ZERO, Color(0.42, 0.3, 0.18), 0.0, 5)
+	var dirv := (Vector3.UP + lean * 0.35).normalized()
+	var x := dirv.cross(Vector3.FORWARD if absf(dirv.z) < 0.9 else Vector3.RIGHT).normalized()
+	shaft.transform = Transform3D(Basis(x, dirv, x.cross(dirv)), base + dirv * length * 0.5)
+	var head := CreatureBodies.cone(parent, 0.035, 0.0, 0.16, Vector3.ZERO, Color(0.34, 0.35, 0.38), 0.0, 4)
+	head.transform = Transform3D(Basis(x, dirv, x.cross(dirv)), base + dirv * (length + 0.08))
+
+
+## A standing guard: a hunter with a spear or an archer with a bow.
+func _guard(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -> Node3D:
+	var sp := CreatureSpecies.new()
+	sp.name = "Guard"
+	sp.body = "tribal"
+	sp.shape = "archer" if i % 2 == 1 or rng.randf() < 0.4 else "hunter"
+	sp.size_m = rng.randf_range(1.72, 1.85)
+	if folk == "north":
+		sp.color = Color(0.78, 0.62, 0.5).darkened(rng.randf_range(0.0, 0.15))
+		sp.accent = Color(0.82, 0.8, 0.76).darkened(rng.randf_range(0.0, 0.25))
+	else:
+		sp.color = Color(0.62, 0.44, 0.32).darkened(rng.randf_range(-0.1, 0.25))
+		sp.accent = Color(0.55, 0.4, 0.26).lightened(rng.randf_range(-0.1, 0.1))
+	var b := CreatureBodies.build(sp)
+	var holder := Node3D.new()
+	holder.name = sp.name
+	parent.add_child(holder)
+	var body: Node3D = b.root
+	body.name = "Body"
+	holder.add_child(body)
+	holder.set_meta("arms", b.wings)
+	holder.set_meta("head", body.get_node_or_null("Head"))
+	holder.set_meta("speaker", "Guard")
+	holder.set_meta("standing", true)
+	return holder
 
 
 ## A rock shelter over a cliff camp: a great slab jutting out from the
@@ -306,12 +369,12 @@ func _sitter(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -
 			sp.accent = Color(0.72, 0.58, 0.46)
 		"north":
 			sp.body = "tribal"
-			sp.shape = "elder" if i % 2 == 0 else "hunter"
+			sp.shape = "elder_seated" if i % 2 == 0 else "hunter_seated"
 			sp.color = Color(0.78, 0.62, 0.5).darkened(rng.randf_range(0.0, 0.15))
 			sp.accent = Color(0.82, 0.8, 0.76).darkened(rng.randf_range(0.0, 0.25)) # pale furs
 		_:
 			sp.body = "tribal"
-			sp.shape = "elder" if i % 2 == 0 else "hunter"
+			sp.shape = "elder_seated" if i % 2 == 0 else "hunter_seated"
 			sp.color = Color(0.62, 0.44, 0.32).darkened(rng.randf_range(-0.1, 0.25))
 			sp.accent = Color(0.55, 0.4, 0.26).lightened(rng.randf_range(-0.1, 0.1))
 	var b := CreatureBodies.build(sp)
@@ -365,9 +428,57 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 		var head: Node3D = s.get_meta("head")
 		if head:
 			head.rotation.y = 0.4 * sin(_time * 0.45 + ph)
+	for g in camp.get_meta("guards", []):
+		var gn: Node3D = g
+		var ph: float = gn.get_meta("phase")
+		var yaw: float = gn.get_meta("base_yaw")
+		var target := yaw + 0.7 * sin(_time * 0.2 + ph)
+		var to := gn.global_transform.affine_inverse() * pp
+		if gn.global_position.distance_to(pp) < 20.0:
+			target = gn.rotation.y + atan2(-to.x, -to.z)
+		gn.rotation.y = lerp_angle(gn.rotation.y, target, clampf(delta * 1.2, 0.0, 1.0))
 	if near < TALK_M and not camp.get_meta("talked"):
 		camp.set_meta("talked", true)
 		var folk: String = camp.get_meta("folk")
 		var lines: Array = FOLK[folk].lines
 		var s0: Node3D = sitters[0]
 		hud.say(s0.get_meta("speaker"), lines[randi() % lines.size()], 0.2, 4.0)
+
+
+## The camp folk (seated or on guard) an arrow flying from `a` to `b` hits
+## first: [holder, fraction along a..b], or [].
+func folk_on_segment(a: Vector3, b: Vector3) -> Array:
+	var best: Array = []
+	var best_t := INF
+	var ab := b - a
+	var l2 := maxf(ab.length_squared(), 1e-6)
+	for key in _camps:
+		var camp: Node3D = _camps[key]
+		if camp.global_position.distance_to(a) > 60.0:
+			continue
+		var folk: Array = camp.get_meta("sitters", [])
+		folk = folk + camp.get_meta("guards", [])
+		for f in folk:
+			var n: Node3D = f
+			var up: Vector3 = world.dir_of(n.global_position)
+			var center := n.global_position + up * (0.9 if n.get_meta("standing", false) else 0.55)
+			var t := clampf((center - a).dot(ab) / l2, 0.0, 1.0)
+			if (a + ab * t).distance_to(center) < 0.45 and t < best_t:
+				best_t = t
+				best = [n, t]
+	return best
+
+
+const SHOT_LINES := ["Hey! Watch where you shoot!", "Oi! Put that bow down!", "Are you trying to get yourself killed?", "Aim at the deer, not at us!"]
+const SHOT_LINES_DEAD := ["...that tickles.", "You can't kill what's already dead, wanderer.", "Rude."]
+var _shot_cd := 0.0
+
+
+## An arrow struck one of the camp folk: they don't take kindly to it.
+func shot_at(folk: Node3D) -> void:
+	if _time < _shot_cd:
+		return
+	_shot_cd = _time + 3.0
+	var dead := String(folk.get_meta("speaker", "")) in ["Skeleton", "Hooded one"]
+	var lines := SHOT_LINES_DEAD if dead else SHOT_LINES
+	hud.say(folk.get_meta("speaker", "?"), lines[randi() % lines.size()], 0.0, 3.0)

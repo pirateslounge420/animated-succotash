@@ -34,6 +34,11 @@ var campfire := false
 ## Mythical: weight when a territory picks among the species that fit
 ## (1 = as common as any; unicorns and werewolves are rarer).
 var rarity := 1.0
+## Hit points (the data's "hp", else from size and role: hp_max()).
+var hp := 0.0
+## Damage a bite or blow does to the player, 0 = never attacks. Pack
+## hunters and hostile mythicals default to one by size ("bite").
+var bite := 0.0
 
 ## 0-1 how full the moon is right now (CreatureSpawner sets it), for
 ## `active: full_moon`.
@@ -103,6 +108,9 @@ static func _from(e: Dictionary) -> CreatureSpecies:
 	sp.shape = e.get("shape", "")
 	sp.campfire = bool(e.get("campfire", false))
 	sp.rarity = float(e.get("rarity", 1.0))
+	sp.hp = float(e.get("hp", 0.0))
+	var hunter := sp.role == "pack" or sp.temperament == "hostile"
+	sp.bite = float(e.get("bite", (6.0 + 5.0 * sp.size_m) if hunter else 0.0))
 	return sp
 
 
@@ -110,6 +118,16 @@ static func _range(v, fallback: Vector2) -> Vector2:
 	if v is Array and v.size() == 2:
 		return Vector2(float(v[0]), float(v[1]))
 	return fallback
+
+
+## Hit points: the data's, else small game dies to one good arrow, big
+## animals take two or three, mythical creatures several.
+func hp_max() -> float:
+	if hp > 0.0:
+		return hp
+	if role == "mythical":
+		return 30.0 + 30.0 * size_m
+	return maxf(6.0, 26.0 * size_m)
 
 
 ## Climate filter: temperature (°C at the exact spot), moisture 0-1 and

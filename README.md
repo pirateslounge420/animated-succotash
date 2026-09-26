@@ -31,6 +31,8 @@ temperate or tropical coast (a different one each game).
 | Shift, B | Crouch (hold): slow and nearly silent |
 | Space, A | Jump (hold to keep jumping); hold to swim up |
 | Mouse, right stick | Look (click the window to capture the mouse, Esc frees it) |
+| Left mouse (hold, release), right trigger | Draw the bow and loose an arrow: the longer you hold (up to a second), the farther and harder it flies |
+| V or F5, right stick click | First / third person |
 | E, X | Turn over a fallen log; else climb the tree in front of you (W/S up and down, A/D around the trunk, E or Space to let go) |
 | M, Back | Planet map (keys 1-5 switch biome / elevation / °C / rainfall / live weather; drag to turn, wheel to zoom) |
 | H | Hide the HUD |

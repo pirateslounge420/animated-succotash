@@ -48,11 +48,37 @@ const CAMERA_Y := 1.5
 const CROUCH_CAMERA_Y := 0.95
 const CLIMB_SPEED := 1.1
 const CLIMB_REACH_M := 1.6
+## First person: eye height standing and crouched.
+const EYE_Y := 1.6
+const CROUCH_EYE_Y := 0.98
+## Hit points; falls faster than FALL_SAFE_MPS (about a 6 m drop) hurt.
+const MAX_HP := 100.0
+const FALL_SAFE_MPS := 11.0
+const FALL_DAMAGE_PER_MPS := 7.0
+## After a hit, health comes back at REGEN_PER_S once REGEN_DELAY_S pass.
+const REGEN_DELAY_S := 8.0
+const REGEN_PER_S := 2.0
+## Visual layer of the player's own body: hidden from the camera in first
+## person (lights still see it, so it still casts its shadow).
+const BODY_LAYER := 1 << 10
 const MOUSE_SENSITIVITY := 0.0025
 const STICK_SENSITIVITY := 2.6
 
+signal hurt(amount: float)
+signal died
+
 var world: Node
 var chunks: ChunkManager
+## Set by main: who arrows can hit.
+var spawner: CreatureSpawner
+var camps: Camps
+var hp := MAX_HP
+var dead := false
+var first_person := false
+var bow: Bow
+var _since_hit := 99.0
+var _invulnerable := 0.0
+var _fall_speed := 0.0
 var up := Vector3.UP
 var surface_dir := Vector3.UP
 var swimming := false
@@ -90,6 +116,8 @@ var _climb_y := 0.0
 var _climb_out := Vector3.ZERO # unit, from the trunk's axis out to the player
 var _prompt_timer := 0.0
 var _shake := 0.0
+var _knock := Vector3.ZERO
+var _aim_blend := 0.0
 
 
 func _ready() -> void:
@@ -110,6 +138,7 @@ func _ready() -> void:
 	else:
 		_body = PlayerBody.new()
 	add_child(_body)
+	_set_layers(_body)
 
 	_spring = SpringArm3D.new()
 	_spring.spring_length = 4.5
@@ -130,6 +159,12 @@ func _ready() -> void:
 	footsteps = Footsteps.new()
 	footsteps.name = "Footsteps"
 	add_child(footsteps)
+	bow = Bow.new()
+	bow.name = "Bow"
+	add_child(bow)
+	bow.setup(self)
+	_set_layers(bow)
+	_apply_view()
 
 
 func camera() -> Camera3D:
@@ -171,18 +206,23 @@ func set_view(pitch: float, yaw: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		# The click that takes the mouse doesn't also draw the bow.
+		bow.block_until_release()
 	elif event.is_action_pressed("release_mouse"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	elif event.is_action_pressed("toggle_view"):
+		first_person = not first_person
+		_apply_view()
 	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		_yaw -= event.relative.x * MOUSE_SENSITIVITY
-		_pitch = clampf(_pitch - event.relative.y * MOUSE_SENSITIVITY, -1.3, 0.6)
+		_pitch = clampf(_pitch - event.relative.y * MOUSE_SENSITIVITY, -_pitch_limit(), 0.6 if not first_person else 1.45)
 
 
 func _physics_process(delta: float) -> void:
 	var stick := Vector2(Input.get_joy_axis(0, JOY_AXIS_RIGHT_X), Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y))
 	if stick.length() > 0.15:
 		_yaw -= stick.x * STICK_SENSITIVITY * delta
-		_pitch = clampf(_pitch - stick.y * STICK_SENSITIVITY * delta, -1.3, 0.6)
+		_pitch = clampf(_pitch - stick.y * STICK_SENSITIVITY * delta, -_pitch_limit(), 0.6 if not first_person else 1.45)
 
 	surface_dir = world.dir_of(global_position)
 	up = surface_dir
@@ -196,9 +236,13 @@ func _physics_process(delta: float) -> void:
 	var cam_forward := _heading.rotated(up, _yaw)
 	var cam_right := cam_forward.cross(up)
 	_update_prompt(delta, cam_forward)
-	_shake = maxf(_shake - delta * 1.1, 0.0)
-	_camera.h_offset = randf_range(-1.0, 1.0) * _shake * 0.12
-	_camera.v_offset = randf_range(-1.0, 1.0) * _shake * 0.12
+	_update_health(delta)
+	bow.update_bow(delta)
+	_update_camera(delta)
+	if dead:
+		_dead_step(delta)
+		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
+		return
 	if climbing:
 		_climb_step(delta)
 		_orient()
@@ -218,8 +262,11 @@ func _physics_process(delta: float) -> void:
 	var speed := WALK_SPEED
 	if crouching:
 		speed = CROUCH_SPEED
-	elif sprinting:
+	elif sprinting and not bow.drawing:
 		speed = SPRINT_SPEED
+	if bow.drawing:
+		# Drawing a bow, you creep (as in Minecraft).
+		speed = minf(speed, WALK_SPEED * 0.45)
 	if swimming:
 		speed = minf(speed, SWIM_SPEED)
 
@@ -232,12 +279,17 @@ func _physics_process(delta: float) -> void:
 			vertical += up * 1.5
 	elif is_on_floor():
 		vertical = Vector3.ZERO
+		_land()
 		# Held jump keeps jumping each time you land.
 		if Input.is_action_pressed("jump") and not crouching:
 			vertical = up * JUMP_SPEED
 	else:
 		vertical -= up * GRAVITY * delta
-	velocity = horizontal + vertical
+		_fall_speed = maxf(_fall_speed, -vertical.dot(up))
+	if swimming:
+		_fall_speed = 0.0
+	velocity = horizontal + vertical + _knock
+	_knock = _knock.move_toward(Vector3.ZERO, delta * 12.0)
 	move_and_slide()
 	for k in get_slide_collision_count():
 		var col := get_slide_collision(k)
@@ -254,7 +306,10 @@ func _physics_process(delta: float) -> void:
 		global_position = world.to_scene(surface_dir, PlanetConst.RADIUS_M + ground + 0.5)
 		velocity = Vector3.ZERO
 
-	if wish.length() > 0.1:
+	if first_person or bow.drawing:
+		# Aiming (or seeing through your own eyes): face where you look.
+		_face(cam_forward, delta * 2.0)
+	elif wish.length() > 0.1:
 		_face(wish.normalized(), delta)
 	_orient()
 	_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
@@ -317,6 +372,7 @@ func _climb_step(delta: float) -> void:
 	if not is_instance_valid(_climb_chunk) or not _climb_chunk.has_tree_colliders():
 		stop_climb()
 		return
+	_fall_speed = 0.0
 	var h: float = _climb_chunk.trees[_climb_tree][1]
 	var dims := PlantMeshes.tree_dims(_climb_chunk.tree_species(_climb_tree).shape)
 	var base := _climb_chunk.tree_base(_climb_tree)
@@ -376,8 +432,121 @@ func _set_crouch(on: bool) -> void:
 	var h := CROUCH_HEIGHT if on else STAND_HEIGHT
 	_shape.height = h
 	_shape_node.position = Vector3(0, h * 0.5, 0)
-	_spring.position = Vector3(0, CROUCH_CAMERA_Y if on else CAMERA_Y, 0)
+	_apply_view()
 	_body.scale = Vector3(1.0, h / STAND_HEIGHT, 1.0)
+
+
+# --- Health -----------------------------------------------------------------
+
+## Hit for `amount` by something at scene position `from_pos` (a bite, a
+## blow): knocked back a little, and the camera jolts.
+func take_hit(amount: float, from_pos: Vector3) -> void:
+	if dead or _invulnerable > 0.0:
+		return
+	var away := global_position - from_pos
+	away = (away - up * away.dot(up)).normalized()
+	_knock = away * 5.0 + up * 2.5
+	_damage(amount)
+
+
+func _damage(amount: float) -> void:
+	if dead or _invulnerable > 0.0:
+		return
+	hp = maxf(hp - amount, 0.0)
+	_since_hit = 0.0
+	shake(clampf(amount / 30.0, 0.2, 0.8))
+	footsteps.stream = SoundSynth.stream("hurt", randi())
+	footsteps.play()
+	hurt.emit(amount)
+	if hp <= 0.0:
+		dead = true
+		bow.drawing = false
+		stop_climb()
+		died.emit()
+
+
+## Back on your feet at full health (main.respawn()); a few seconds'
+## grace before anything can hurt you again.
+func revive() -> void:
+	dead = false
+	hp = MAX_HP
+	_since_hit = 99.0
+	_invulnerable = 3.0
+	_fall_speed = 0.0
+	_knock = Vector3.ZERO
+	_body.rotation = Vector3.ZERO
+
+
+func _update_health(delta: float) -> void:
+	_invulnerable = maxf(_invulnerable - delta, 0.0)
+	_since_hit += delta
+	if not dead and _since_hit > REGEN_DELAY_S and hp < MAX_HP:
+		hp = minf(hp + REGEN_PER_S * delta, MAX_HP)
+
+
+## Landing: a hard enough fall hurts.
+func _land() -> void:
+	if _fall_speed > FALL_SAFE_MPS:
+		_damage((_fall_speed - FALL_SAFE_MPS) * FALL_DAMAGE_PER_MPS)
+	_fall_speed = 0.0
+
+
+## Dead: you slump to the ground and lie still (main respawns you).
+func _dead_step(delta: float) -> void:
+	velocity = -up * GRAVITY * 0.5 if not is_on_floor() else Vector3.ZERO
+	move_and_slide()
+	_body.rotation.x = lerpf(_body.rotation.x, -PI * 0.5, clampf(delta * 3.0, 0.0, 1.0))
+	_orient()
+
+
+# --- View ---------------------------------------------------------------------
+
+## Third person (the camera on a spring arm behind you) or first person
+## (at your eyes, your own body hidden from the camera but still casting
+## its shadow).
+func _apply_view() -> void:
+	if _spring == null:
+		return
+	if first_person:
+		_spring.spring_length = 0.0
+		_spring.position = Vector3(0, CROUCH_EYE_Y if crouching else EYE_Y, 0)
+		_camera.cull_mask &= ~BODY_LAYER
+		_pitch = clampf(_pitch, -_pitch_limit(), 1.45)
+	else:
+		_spring.spring_length = 4.5
+		_spring.position = Vector3(0, CROUCH_CAMERA_Y if crouching else CAMERA_Y, 0)
+		_camera.cull_mask |= BODY_LAYER
+		_pitch = clampf(_pitch, -_pitch_limit(), 0.6)
+
+
+func _pitch_limit() -> float:
+	return 1.45 if first_person else 1.3
+
+
+## Per frame: shake, and in third person the over-the-shoulder aim while
+## drawing (the camera closes in and steps right); a slight zoom at full
+## draw.
+func _update_camera(delta: float) -> void:
+	_shake = maxf(_shake - delta * 1.1, 0.0)
+	var aiming := bow.drawing and not first_person
+	_aim_blend = move_toward(_aim_blend, 1.0 if aiming else 0.0, delta * 5.0)
+	if not first_person:
+		_spring.spring_length = lerpf(4.5, 2.4, _aim_blend)
+	_camera.h_offset = 0.55 * _aim_blend + randf_range(-1.0, 1.0) * _shake * 0.12
+	_camera.v_offset = randf_range(-1.0, 1.0) * _shake * 0.12
+	_camera.fov = lerpf(70.0, 60.0, bow.power() if bow.drawing else 0.0)
+	# The elf raises both arms to aim (an imported model has its own clips).
+	if _body is PlayerBody:
+		for arm in (_body as PlayerBody).arms:
+			arm.rotation.x = lerpf(arm.rotation.x, 1.35 if bow.drawing else 0.06, clampf(delta * 10.0, 0.0, 1.0))
+
+
+## Put a body (and all it holds) on the player's own visual layer.
+static func _set_layers(n: Node) -> void:
+	if n is VisualInstance3D:
+		(n as VisualInstance3D).layers = BODY_LAYER
+	for c in n.get_children():
+		_set_layers(c)
 
 
 ## Room to stand up (nothing solid over a crouched player's head)?

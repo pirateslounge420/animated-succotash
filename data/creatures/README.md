@@ -20,7 +20,9 @@ Edit or add entries; changes apply the next time you run the game.
 | `shy_m` | Flees when you come this close (0 = never). |
 | `sound` | `chirp`, `call`, `croak`, `howl`, `drone`, `whisper` or `none` (synthesized placeholders). |
 | `pack` | For `role: pack`: `size` [min, max], `den` (`cave_mouth`: steep cold slopes, where the cave system will meet the surface), `territory_m`, `notice_m`. |
-| `temperament` | For mythical creatures: `hostile` (stalks at a distance), `neutral` (watches you), `friendly` (comes over). None of them attack; there is no combat. |
+| `temperament` | For mythical creatures: `hostile` (stalks at a distance, fights back if shot; werewolves close in and attack), `neutral` (watches you), `friendly` (comes over). Neutral and friendly ones vanish when shot. |
+| `hp` | Hit points (default by size: small game ~6-15, a deer ~40, mythical 30 + 30 × size_m). |
+| `bite` | Damage per bite or blow to the player (default 6 + 5 × size_m for pack hunters and hostile creatures, else 0: it never attacks). |
 | `territory_m` | Mythical territory size. |
 | `shape` | Mythical silhouette: `stalker`, `wisp`, `troll`, `witch`, `goblin`, `unicorn` (glowing horn; leaves glowing hoofprints), `werewolf`. |
 | `rarity` | Mythical: weight when a territory picks among the species whose climate fits (default 1; unicorns 0.3, werewolves 0.5). |

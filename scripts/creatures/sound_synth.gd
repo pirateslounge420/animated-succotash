@@ -17,6 +17,10 @@ class_name SoundSynth
 ##            sharp knock, a crunch, a hollow knock, a splash
 ##   rain_loop    steady rain, seamless 4 s loop (WeatherFX)
 ##   thunder_near a crack and a heavy rumble; thunder_far a long low roll
+##   bow_draw     a creak of wood and string as the bow bends
+##   bow_release  the string's twang and the arrow's whoosh
+##   arrow_hit    a dull thunk of an arrow biting into wood or earth
+##   hurt         a blunt thump and a gasp of breath (the player hit)
 
 const RATE := 22050
 const VARIANTS := 5
@@ -56,6 +60,14 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _rain_loop(rng)
 		"thunder_near", "thunder_far":
 			samples = _thunder(kind == "thunder_near", rng)
+		"bow_draw":
+			samples = _bow_draw(rng)
+		"bow_release":
+			samples = _bow_release(rng)
+		"arrow_hit":
+			samples = _arrow_hit(rng)
+		"hurt":
+			samples = _hurt(rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -338,4 +350,58 @@ static func _thunder(near: bool, rng: RandomNumberGenerator) -> PackedFloat32Arr
 			hp_prev = x
 			v += hp * 1.6 * exp(-t * 14.0)
 		s[i] = v
+	return s
+
+
+## Creaking wood: slow irregular clicks under a low tension hum.
+static func _bow_draw(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.7)
+	var ph := 0.0
+	var lp := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var env := smoothstep(0.0, 0.1, t) * (1.0 - smoothstep(0.55, 0.7, t))
+		ph += TAU * (70.0 + 40.0 * t) / RATE
+		var click := rng.randf_range(-1, 1) * 2.0 if rng.randf() < 0.002 else 0.0
+		lp = lerpf(lp, rng.randf_range(-1, 1), 0.08)
+		s[i] = (sin(ph) * 0.25 + lp * 0.6 + click) * env * 0.5
+	return s
+
+
+## A plucked string (decaying harmonics) and a short airy whoosh.
+static func _bow_release(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.45)
+	var f := rng.randf_range(150.0, 185.0)
+	var lp := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var twang := 0.0
+		for h in 4:
+			twang += sin(TAU * f * (h + 1) * t) * exp(-t * (14.0 + h * 9.0)) / (h + 1)
+		lp = lerpf(lp, rng.randf_range(-1, 1), 0.3)
+		var whoosh := lp * exp(-pow((t - 0.08) / 0.05, 2.0)) * 0.8
+		s[i] = twang * 0.8 + whoosh
+	return s
+
+
+## A thunk: a low knock that dies fast, with a little splinter noise.
+static func _arrow_hit(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.22)
+	var f := rng.randf_range(120.0, 170.0)
+	for i in s.size():
+		var t := float(i) / RATE
+		s[i] = sin(TAU * f * t) * exp(-t * 30.0) + rng.randf_range(-1, 1) * exp(-t * 60.0) * 0.4
+	return s
+
+
+## The player hit: a blunt body thump and a short gasp.
+static func _hurt(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.4)
+	var lp := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var thump := sin(TAU * (90.0 - 60.0 * t) * t) * exp(-t * 18.0)
+		lp = lerpf(lp, rng.randf_range(-1, 1), 0.25)
+		var gasp := lp * smoothstep(0.03, 0.08, t) * exp(-t * 9.0) * 0.7
+		s[i] = thump + gasp
 	return s

@@ -16,6 +16,7 @@ var _hint_timer := 18.0
 var _subtitle: Label
 var _lines: Array = [] # [start_s, speaker, text, seconds]
 var _clock := 0.0
+var _status: StatusHud
 
 
 func _ready() -> void:
@@ -28,7 +29,7 @@ func _ready() -> void:
 	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 16)
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_hint.text = "WASD move · W W sprint · Shift crouch · Space jump · E inspect\nM map · H hide HUD · click to look, Esc frees mouse"
+	_hint.text = "WASD move · W W sprint · Shift crouch · Space jump · E inspect\nHold left click: draw the bow, release to shoot · V first person\nM map · H hide HUD · click to look, Esc frees mouse"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 70)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -39,6 +40,9 @@ func _ready() -> void:
 	_subtitle.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_subtitle.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_subtitle.add_theme_font_size_override("font_size", 20)
+	_status = StatusHud.new()
+	add_child(_status)
+	move_child(_status, 0)
 	_build_loading()
 
 
@@ -104,6 +108,27 @@ func _process(delta: float) -> void:
 
 
 ## Context prompt near the bottom of the screen ("E: turn over the log").
+## Hearts, crosshair and bow draw from the player, every frame.
+func update_status(player: PlanetPlayer) -> void:
+	_status.hp = player.hp
+	_status.max_hp = PlanetPlayer.MAX_HP
+	_status.aiming = player.bow.drawing
+	_status.draw_power = player.bow.power() if player.bow.drawing else 0.0
+	_status.show_crosshair = player.first_person or player.bow.drawing
+
+
+func flash_hurt() -> void:
+	_status.flash_hurt()
+
+
+func show_death() -> void:
+	_status.set_dead(true)
+
+
+func hide_death() -> void:
+	_status.set_dead(false)
+
+
 func set_prompt(text: String) -> void:
 	_prompt.text = text
 

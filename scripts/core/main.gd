@@ -136,6 +136,10 @@ func _on_planet_ready() -> void:
 	camps.name = "Camps"
 	add_child(camps)
 	camps.setup(world, chunks, player, landmarks, hud)
+	player.spawner = creatures
+	player.camps = camps
+	player.died.connect(_on_player_died)
+	player.hurt.connect(func(_amount: float) -> void: hud.flash_hurt())
 
 	map_overlay = MapOverlay.new()
 	add_child(map_overlay)
@@ -195,6 +199,7 @@ func _process(delta: float) -> void:
 		prompt = player.prompt if player.prompt != "" else landmarks.nearby
 	hud.set_prompt(prompt)
 	hud.update_readout(world, d, elevation, _local_weather, player.swimming, delta)
+	hud.update_status(player)
 	map_overlay.update_map(d, delta)
 
 
@@ -209,6 +214,26 @@ func _above_clouds(w: Dictionary) -> void:
 	w["cloud"] = float(w.get("cloud", 0.0)) * 0.35
 	w["rain_mm_h"] = float(w.get("rain_mm_h", 0.0)) * storm
 	w["above_clouds"] = true
+
+
+## Dead: a moment on the ground, then you wake again by the camp fire
+## where the game began.
+func _on_player_died() -> void:
+	hud.show_death()
+	await get_tree().create_timer(3.5).timeout
+	hud.show_loading("You wake by the fire again...", 0.5)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var d: Vector3 = camp.player_spot
+	var offset: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + world.surface_elevation(d))
+	world.rebase(offset)
+	player.global_position -= offset
+	chunks.load_blocking(d)
+	player.spawn_at(d, camp.site)
+	player.set_view(-0.3, 0.3)
+	player.revive()
+	hud.hide_death()
+	hud.hide_loading()
 
 
 func _unhandled_input(event: InputEvent) -> void:

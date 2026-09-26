@@ -63,6 +63,12 @@ var _logs: Array = [] # {"node", "dir", "bugs", "flipped", "chunk"}
 var _bugs: Array[Creature] = []
 var _calls: Array = [] # pending howls: [time, Creature or den key]
 var _time := 0.0
+## Pack dens and mythical territories whose creatures were killed, key ->
+## time they come back.
+var _slain := {}
+## The dead, lying where they fell until they fade.
+var _corpses: Array[Creature] = []
+
 ## Glowing hoofprints a unicorn leaves: [node, time left].
 var _prints: Array = []
 const PRINT_LIFE_S := 20.0
@@ -137,6 +143,9 @@ func update_creatures(delta: float, daylight: float) -> void:
 		b.tick(delta, ctx)
 	_update_packs(delta, pd, ctx)
 	_update_territories(delta, pd, ctx)
+	for c in _corpses.duplicate():
+		if is_instance_valid(c):
+			c.tick(delta, ctx)
 	_run_calls()
 	_update_prompt(delta)
 
@@ -469,7 +478,7 @@ func _update_packs(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 		_fidelity(den.voice, home_dist)
 
 		# Spawn the pack when you're near enough to meet it.
-		if den.wolves.is_empty() and home_dist < PACK_SPAWN_M:
+		if den.wolves.is_empty() and home_dist < PACK_SPAWN_M and _time >= float(_slain.get(key, 0.0)):
 			var rng := RandomNumberGenerator.new()
 			rng.seed = den.seed
 			var size: Array = sp.pack.get("size", [3, 5])
@@ -480,6 +489,7 @@ func _update_packs(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 				w.mode = "rest"
 				w.goal = w.dir
 				w.ring_offset = i * TAU / 5.0
+				w.hurt_by_player.connect(_on_wolf_hurt.bind(key))
 				den.wolves.append(w)
 		elif not den.wolves.is_empty() and home_dist > PACK_DESPAWN_M:
 			for w in den.wolves:
@@ -514,7 +524,24 @@ func _update_packs(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 					den.state = "close_in"
 					den.keep_away = 26.0
 					_howl(key)
+			"hunt":
+				# They've turned on you (you shot one, or walked into them at
+				# night): each wolf chases and bites until it gives up.
+				var any := false
+				for w in wolves:
+					any = any or w.angry > 0.0
+				if not any:
+					den.state = "retreat"
+					for w in wolves:
+						w.goal = _offset(den.dir, randf() * TAU, randf_range(3.0, 10.0))
+						w.goal_speed = sp.speed_mps * 0.5
+						w.mode = "go"
 			"close_in":
+				if _daylight < 0.3 and nearest < 6.0:
+					den.state = "hunt"
+					for w in wolves:
+						w.angry = 30.0
+					_howl(key)
 				den.keep_away = maxf(9.0, den.keep_away - delta * 0.8)
 				for i in wolves.size():
 					var w: Creature = wolves[i]
@@ -594,6 +621,7 @@ func _refresh_territories(pd: Vector3) -> void:
 		t.call_t = randf_range(3.0, 10.0)
 		t.pace_t = 0.0
 		t.hidden_until = 0.0
+		t.key = key
 		_territories[key] = t
 	for key in _territories.keys():
 		var t: Dictionary = _territories[key]
@@ -608,7 +636,8 @@ func _update_territories(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 		var sp: CreatureSpecies = t.species
 		var dist := CubeSphere.surface_distance_m(t.dir, pd)
 		var want := "dormant"
-		if sp.active_now(_daylight) and dist < AWARE_M and _time >= t.hidden_until:
+		var alive := _time >= float(_slain.get(key, 0.0))
+		if sp.active_now(_daylight) and dist < AWARE_M and _time >= t.hidden_until and alive:
 			want = "visible" if dist < VISIBLE_M else "aware"
 		if want == "dormant":
 			_set_dormant(t)
@@ -618,6 +647,13 @@ func _update_territories(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 		var cr: Creature = t.creature
 		if t.camp:
 			Campfire.flicker(t.camp, _time)
+		# On the attack: chase and bite (Creature), nothing else.
+		if cr.angry > 0.0:
+			if t.state != "visible":
+				t.state = "visible"
+				cr.set_visible_body(true)
+			cr.tick(delta, ctx)
+			continue
 		_fidelity(cr.voice, cr.distance_to(pd))
 		# Calls only when it's close enough to be seen (not from a kilometer
 		# off while it's only "aware" of you).
@@ -641,6 +677,10 @@ func _update_territories(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 					# gone if you get close.
 					cr.mode = "stalk"
 					cr.keep_away_m = 38.0
+					if sp.bite > 0.0 and sp.shape == "werewolf" and to_player < 28.0:
+						# The werewolf doesn't stalk for long.
+						cr.angry = 40.0
+						continue
 					if to_player < 12.0:
 						_set_dormant(t)
 						t.hidden_until = _time + 40.0
@@ -676,6 +716,7 @@ func _wake(t: Dictionary) -> void:
 	cr.goal = cr.dir
 	cr.set_visible_body(false)
 	cr.finished.connect(func(c: Creature) -> void: NodeRelease.free_later(c))
+	cr.hurt_by_player.connect(_on_mythic_hurt.bind(t.key))
 	t.creature = cr
 	t.state = "aware"
 	if sp.campfire and t.camp == null:
@@ -857,3 +898,78 @@ func _fade_prints(delta: float) -> void:
 		mark.scale = (mark.get_meta("size") as Vector3) * clampf(p[1] / PRINT_LIFE_S * 1.5, 0.0, 1.0)
 		keep.append(p)
 	_prints = keep
+
+
+# --- Combat --------------------------------------------------------------------
+
+## A creature bit or struck the player (Creature._attack).
+func player_hit(amount: float, from_pos: Vector3) -> void:
+	player.take_hit(amount, from_pos)
+
+
+## The live creature an arrow flying from `a` to `b` (scene positions)
+## hits first: [creature, fraction along a..b], or [].
+func creature_on_segment(a: Vector3, b: Vector3) -> Array:
+	var best: Array = []
+	var best_t := INF
+	var all: Array = _ambient.values()
+	for key in _dens:
+		all.append_array(_dens[key].wolves)
+	for key in _territories:
+		var t: Dictionary = _territories[key]
+		if t.creature and is_instance_valid(t.creature) and t.state == "visible":
+			all.append(t.creature)
+	var ab := b - a
+	var l2 := maxf(ab.length_squared(), 1e-6)
+	for c in all:
+		var cr := c as Creature
+		if cr == null or cr.dead or cr.done or cr.species.role == "swarm":
+			continue
+		var sz := cr.species.size_m
+		var tall := cr.species.role == "mythical"
+		var up: Vector3 = world.dir_of(cr.global_position)
+		var center := cr.global_position + up * sz * (0.5 if tall else 0.33)
+		var radius := maxf(0.18, sz * (0.28 if tall else 0.3))
+		var t := clampf((center - a).dot(ab) / l2, 0.0, 1.0)
+		if (a + ab * t).distance_to(center) < radius and t < best_t:
+			best_t = t
+			best = [cr, t]
+	return best
+
+
+func _adopt_corpse(c: Creature) -> void:
+	if not _corpses.has(c):
+		_corpses.append(c)
+		c.finished.connect(func(x: Creature) -> void:
+			_corpses.erase(x)
+			NodeRelease.free_later(x), CONNECT_ONE_SHOT)
+
+
+## A wolf was shot: the pack turns on you. Killed, it's out of the pack;
+## the last one down leaves the den empty for half an hour.
+func _on_wolf_hurt(c: Creature, killed: bool, key: Vector4i) -> void:
+	if not _dens.has(key):
+		return
+	var den: Dictionary = _dens[key]
+	if killed:
+		(den.wolves as Array).erase(c)
+		_adopt_corpse(c)
+		if (den.wolves as Array).is_empty():
+			_slain[key] = _time + 1800.0
+	den.state = "hunt"
+	for w in den.wolves:
+		w.angry = 40.0
+
+
+## A mythical creature was shot: killed, it's gone for half an hour (and
+## lies where it fell); hurt, the ones that fight back fight (Creature),
+## the rest vanish for a while.
+func _on_mythic_hurt(c: Creature, killed: bool, key: Vector4i) -> void:
+	var t: Dictionary = _territories.get(key, {})
+	if killed:
+		_slain[key] = _time + 1800.0
+		if not t.is_empty() and t.creature == c:
+			t.creature = null
+		_adopt_corpse(c)
+	elif c.species.bite <= 0.0 and not t.is_empty():
+		t.hidden_until = _time + 300.0
