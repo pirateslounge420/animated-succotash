@@ -69,9 +69,9 @@ func _on_planet_ready() -> void:
 	# camps (a different one each game); plants keep clear of it.
 	var spawn_dir := Encampment.site_near(world.planet, world.pick_spawn_dir())
 	Encampment.set_active(spawn_dir)
-	# Start mid-afternoon wherever that is, so the first session soon sees
-	# sunset and then the night.
-	var local_start_h := 15.0
+	# Start late afternoon wherever that is, the sun low and dusk a minute
+	# or two off, so the first session opens on sunset and then the night.
+	var local_start_h := 17.0
 	world.days = Astro.days_at_solar_hour(world.days, local_start_h, CubeSphere.longitude(spawn_dir))
 	world.center_on(spawn_dir, PlanetConst.RADIUS_M + world.surface_elevation(spawn_dir))
 

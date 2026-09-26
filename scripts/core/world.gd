@@ -30,8 +30,9 @@ var weather: WeatherSim
 var ready_to_play := false
 
 ## In-game days since the start; fraction is time of day (0.5 = noon at
-## longitude 0). Starts on a mid-afternoon near full moon so a first session
-## soon sees sunset, then the night the spec treats as the showpiece.
+## longitude 0). Starts near full moon; main.gd then sets the clock to late
+## afternoon at the spawn so a first session opens on sunset, then the
+## night the spec treats as the showpiece.
 var days := 13.62
 
 ## Scene node whose direct children get shifted on rebase (terrain chunks,
