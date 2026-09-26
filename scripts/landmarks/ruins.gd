@@ -140,8 +140,9 @@ static func inhabited(site: Dictionary) -> bool:
 	return rng.randf() < INHABITED
 
 
-## Who sits at an inhabited ruin's fire: "dead" (skeletons and a hooded
-## one, at about half the stone ruins), "north", "tribal" or "marsh".
+## Who sits at an inhabited ruin's fire: at stone ruins "dead" (skeletons
+## and a hooded one, 45%), "goblin" (20%) or "tribal"; "north" at igloos,
+## "tribal" under treehouses, "marsh" by boardwalks.
 static func camp_folk(site: Dictionary) -> String:
 	match int(site.kind):
 		Kind.IGLOO:
@@ -152,7 +153,8 @@ static func camp_folk(site: Dictionary) -> String:
 			return "marsh"
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([site.seed, "folk"])
-	return "dead" if rng.randf() < 0.45 else "tribal"
+	var roll := rng.randf()
+	return "dead" if roll < 0.45 else ("goblin" if roll < 0.65 else "tribal")
 
 
 ## Ruins whose footprint comes within `radius` m of `d`.

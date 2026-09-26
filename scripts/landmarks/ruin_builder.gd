@@ -219,6 +219,14 @@ func ground(x: float, z: float) -> float:
 	return map.terrain.elevation(d, true) - base_e
 
 
+## The higher of the ground and any standing water (marsh pools, lakes)
+## at local (x, z), relative to the ruin's origin.
+func surface(x: float, z: float) -> float:
+	var d := (up + (ex * x + ez * z) / PlanetConst.RADIUS_M).normalized()
+	var w := TerrainChunk._standing_water(map, d).x - base_e
+	return maxf(map.terrain.elevation(d, true) - base_e, w)
+
+
 # --- Primitives ----------------------------------------------------------------
 
 func _tri(a: Vector3, b: Vector3, c: Vector3, col: Color) -> void:
@@ -1365,26 +1373,43 @@ func _boardwalk() -> void:
 		if absf(z) >= 2.2:
 			dz = -dz * 0.5
 		pts.append(Vector2(-length * 0.5 + i * length / n, z))
+	# Level just above the ground or the water, whichever is higher.
 	var deck_y := -INF
 	for q in pts:
-		deck_y = maxf(deck_y, ground(q.x, q.y))
+		deck_y = maxf(deck_y, surface(q.x, q.y))
 	deck_y += 0.45
-	# The camp fire on the dry ground where the walk begins.
+	# The camp fire where the walk begins: on the ground if it's dry, else
+	# on a plank landing.
 	var fire := pts[0] + Vector2(-4.0, 0.0)
-	_camp_spot = Vector3(fire.x, ground(fire.x, fire.y), fire.y)
+	var fg := ground(fire.x, fire.y)
+	if surface(fire.x, fire.y) > fg + 0.05:
+		fg = deck_y
+		mat = WOOD_M
+		var o := -2.4
+		while o < 2.4:
+			box(Transform3D(Basis.IDENTITY, Vector3(fire.x + o, deck_y, fire.y)), Vector3(0.32, 0.08, 5.0), OLD_WOOD.lightened(rng.randf_range(-0.08, 0.05)), 0.2, 0.02, 0.01)
+			o += 0.36
+		for sx in [-2.0, 2.0]:
+			for sz in [-2.0, 2.0]:
+				var q := Vector3(fire.x + sx, deck_y, fire.y + sz)
+				_pole(Vector3(q.x, ground(q.x, q.z) - 0.8, q.z), q, 0.17)
+		mat = STONE_M
+	_camp_spot = Vector3(fire.x, fg, fire.y)
 	var sunk0 := rng.randi_range(int(n * 0.3), int(n * 0.6))
 	var sunk1 := sunk0 + rng.randi_range(2, 4)
 	mat = WOOD_M
 	for i in n:
 		var a := pts[i]
 		var b := pts[i + 1]
-		var ga := ground(a.x, a.y)
-		# Up from the ground at the start, level after, dipping where sunk.
-		var ya := minf(deck_y, ga + 0.1 + i * 0.25)
-		var yb := minf(deck_y, ground(b.x, b.y) + 0.1 + (i + 1) * 0.25)
+		var sa := surface(a.x, a.y)
+		var sb := surface(b.x, b.y)
+		# Up from the ground at the start, level after, dipping just under
+		# the water where it's sunk.
+		var ya := minf(deck_y, sa + 0.1 + i * 0.25)
+		var yb := minf(deck_y, sb + 0.1 + (i + 1) * 0.25)
 		if i >= sunk0 and i < sunk1:
-			ya = minf(ya, ga - 0.12)
-			yb = minf(yb, ground(b.x, b.y) - 0.12)
+			ya = minf(ya, sa - 0.12)
+			yb = minf(yb, sb - 0.12)
 		var a3 := Vector3(a.x, ya, a.y)
 		var b3 := Vector3(b.x, yb, b.y)
 		var along := (b3 - a3).normalized()

@@ -597,6 +597,18 @@ Spawn tiers:
   - Folk (troll, witch, goblin) keep a campfire with a warm light: the
     spec's warm "pop" against the blue night.
 
+- **Rare creatures:** unicorns (night, moist temperate forest and
+  meadow, a white horse with a raised neck, silver-lilac mane and a
+  glowing spiral horn; they watch you and leave a trail of glowing
+  hoofprints that fade over 20 s) and werewolves (cool forests; a
+  hunched, dark-furred wolf-man with icy glowing eyes and long clawed
+  arms; they walk only on the nights round the full moon, `active:
+  full_moon`, and stalk like the skinwalker). Territories weight species
+  by `rarity`: with seed 42, 101 unicorn and 400 werewolf territories
+  against ~300-1,100 of each other mythical. Goblins also squat at some
+  living camps (rock shelters in mild country, a fifth of inhabited
+  stone ruins), lanterns and all.
+
 Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
 howl, drone and whisper. Bodies are placeholders (`CreatureBodies`)
 built from smooth-shaded spheres and capsules (12 sides × 6 rings for

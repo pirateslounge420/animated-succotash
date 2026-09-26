@@ -13,8 +13,9 @@ extends Node
 ##     under a great slab of rock jutting out overhead.
 ## Who sits there depends on the place (Ruins.camp_folk(), country()):
 ## tribal folk in most land, fur-clad northerners in snow, hooded marsh
-## folk, and at about half the stone ruins the restless dead, skeletons
-## and a hooded one keeping them company.
+## folk, goblins squatting round the fire with their lanterns (some rock
+## shelters and stone ruins), and at some stone ruins the restless dead,
+## skeletons and a hooded one keeping them company.
 ##
 ## Built when the player comes within BUILD_M, freed past DROP_M. The
 ## folk are placeholder bodies (CreatureBodies), seated by bending the
@@ -42,6 +43,9 @@ const FOLK := {
 	"marsh": {"names": ["Marsh-dweller", "Reed-cutter", "Hooded one"], "warm": Color(0.9, 0.8, 0.45),
 		"lines": ["Mind the planks. Some are rotten.", "Things drift up out of the water at night.",
 			"The frogs go quiet before it comes.", "Stay on the boards, stranger."]},
+	"goblin": {"names": ["Goblin", "Goblin", "Old goblin"], "warm": Color(1.0, 0.6, 0.25),
+		"lines": ["Shinies? You got shinies?", "Hehe. The big one's back.", "Don't touch the pot!",
+			"We saw you coming. We always see.", "Sit, sit. Nobody bites. Much."]},
 	"dead": {"names": ["Skeleton", "Hooded one", "Old bones"], "warm": Color(1.0, 0.55, 0.25),
 		"lines": ["...we were kings here, once.", "Sit, wanderer. We have all the time there is.",
 			"The fire remembers us.", "Don't mind us. We're only resting.", "Is it night again? It's always night."]},
@@ -132,6 +136,9 @@ static func cliff_site(map: PlanetData, c: Vector3i) -> Dictionary:
 				continue
 			var land := Ruins.country(map, fire)
 			var folk := "north" if land == "snow" else ("marsh" if land == "marsh" else "tribal")
+			# Goblins hole up under rocks in milder country.
+			if land == "" and map.sample(map.temp_c, fire) > 8.0 and rng.randf() < 0.45:
+				folk = "goblin"
 			return {"dir": fire, "cliff": a, "height": wall, "folk": folk, "seed": hash([c, "cliff"])}
 	return {}
 
@@ -216,8 +223,10 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 	for i in count:
 		var a := a0 + TAU * i / count + rng.randf_range(-0.25, 0.25)
 		var seat_pos := Vector3(cos(a), 0, sin(a)) * SEAT_R
-		# Seat: a log across, or a flat stone among the dead.
-		if folk == "dead":
+		# Seat: a log across, a flat stone among the dead; goblins squat.
+		if folk == "goblin":
+			pass
+		elif folk == "dead":
 			var stone := CreatureBodies.box(root, Vector3(0.6, 0.4, 0.5), seat_pos + Vector3(0, 0.2, 0), Color(0.42, 0.42, 0.44))
 			stone.rotation.y = -a
 		else:
@@ -286,6 +295,11 @@ func _sitter(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -
 				sp.body = "skeleton"
 				sp.color = Color(0.86, 0.82, 0.68).darkened(rng.randf_range(0.0, 0.12))
 				sp.name = "Skeleton"
+		"goblin":
+			sp.body = "goblin"
+			sp.size_m = rng.randf_range(0.85, 1.05)
+			sp.color = Color(0.43, 0.54, 0.23).lightened(rng.randf_range(-0.1, 0.1))
+			sp.accent = Color(1.0, 0.54, 0.16)
 		"marsh":
 			sp.body = "robed"
 			sp.color = Color(0.28, 0.34, 0.26).lightened(rng.randf_range(-0.05, 0.08))
@@ -309,7 +323,7 @@ func _sitter(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -
 	holder.add_child(body)
 	# Sitting: hips down to seat height, legs forward and down, arms
 	# forward to rest on the knees.
-	body.position.y = 0.4 - 0.5 * sp.size_m
+	body.position.y = (0.05 - 0.3 * sp.size_m) if folk == "goblin" else (0.4 - 0.5 * sp.size_m)
 	for leg in b.legs:
 		(leg as Node3D).rotation.x = 1.05
 	for arm in b.wings:

@@ -63,6 +63,9 @@ var _logs: Array = [] # {"node", "dir", "bugs", "flipped", "chunk"}
 var _bugs: Array[Creature] = []
 var _calls: Array = [] # pending howls: [time, Creature or den key]
 var _time := 0.0
+## Glowing hoofprints a unicorn leaves: [node, time left].
+var _prints: Array = []
+const PRINT_LIFE_S := 20.0
 var _slow := 0.0
 var _daylight := 1.0
 var _message := ""
@@ -101,7 +104,9 @@ func update_creatures(delta: float, daylight: float) -> void:
 	if player == null:
 		return
 	_time += delta
+	_fade_prints(delta)
 	_daylight = daylight
+	CreatureSpecies.moon_full = Astro.moon_illumination(world.days)
 	var pd := player.surface_dir
 	# The player's noise and stillness (PlanetPlayer) set how close
 	# wildlife lets you come and how fast a startled animal calms down.
@@ -618,6 +623,8 @@ func _update_territories(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 		if t.call_t <= 0.0:
 			t.call_t = randf_range(12.0, 35.0)
 			cr.say()
+		if sp.shape == "unicorn" and want == "visible":
+			_hoofprints(t, cr)
 		if want != t.state:
 			t.state = want
 			cr.set_visible_body(want == "visible")
@@ -816,3 +823,34 @@ func _update_prompt(delta: float) -> void:
 		prompt = ""
 	else:
 		prompt = "E: roll the log back" if lg.flipped else "E: turn over the log"
+
+
+## A unicorn leaves a faint glowing print every stride it walks.
+func _hoofprints(t: Dictionary, cr: Creature) -> void:
+	var pos := cr.global_position
+	var last: Vector3 = t.get("last_print", Vector3.INF)
+	if last != Vector3.INF and last.distance_to(pos) < 0.9:
+		return
+	t.last_print = pos
+	var up: Vector3 = world.dir_of(pos)
+	var side := up.cross(CubeSphere.north(up)).normalized() * (0.2 if _prints.size() % 2 == 0 else -0.2)
+	var mark := CreatureBodies.ball(_root, Vector3(0.07, 0.01, 0.09), Vector3.ZERO, t.species.accent, 2.5)
+	mark.global_transform = Transform3D(Basis.looking_at(CubeSphere.north(up), up), pos + side + up * 0.02)
+	mark.set_meta("size", Vector3(0.14, 0.02, 0.18))
+	_prints.append([mark, PRINT_LIFE_S])
+
+
+func _fade_prints(delta: float) -> void:
+	if _prints.is_empty():
+		return
+	var keep: Array = []
+	for p in _prints:
+		p[1] -= delta
+		var mark: Node3D = p[0]
+		if p[1] <= 0.0 or not is_instance_valid(mark):
+			if is_instance_valid(mark):
+				mark.queue_free()
+			continue
+		mark.scale = (mark.get_meta("size") as Vector3) * clampf(p[1] / PRINT_LIFE_S * 1.5, 0.0, 1.0)
+		keep.append(p)
+	_prints = keep

@@ -34,12 +34,22 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 		var t := map.sample(map.temp_c, p) + (map.sample(map.elevation, p) - e) * PlanetConst.LAPSE_RATE_C_PER_M
 		var m := map.sample(map.moisture, p)
 		var fits: Array[CreatureSpecies] = []
+		var total := 0.0
 		for sp in CreatureSpecies.all():
 			if sp.role == "mythical" and sp.climate_ok(t, m, e):
 				fits.append(sp)
+				total += sp.rarity
 		if fits.is_empty():
 			return {}
-		return {"species": fits[rng.randi() % fits.size()], "dir": p, "seed": hash(key)}
+		# Weighted by rarity (unicorns and werewolves turn up less often).
+		var pick := rng.randf() * total
+		var chosen := fits[fits.size() - 1]
+		for sp in fits:
+			pick -= sp.rarity
+			if pick <= 0.0:
+				chosen = sp
+				break
+		return {"species": chosen, "dir": p, "seed": hash(key)}
 	return {}
 
 

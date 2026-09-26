@@ -31,6 +31,13 @@ var temperament := "neutral"
 var territory_m := 200.0
 var shape := ""
 var campfire := false
+## Mythical: weight when a territory picks among the species that fit
+## (1 = as common as any; unicorns and werewolves are rarer).
+var rarity := 1.0
+
+## 0-1 how full the moon is right now (CreatureSpawner sets it), for
+## `active: full_moon`.
+static var moon_full := 0.0
 
 static var _all: Array[CreatureSpecies] = []
 
@@ -95,6 +102,7 @@ static func _from(e: Dictionary) -> CreatureSpecies:
 	sp.territory_m = float(e.get("territory_m", sp.pack.get("territory_m", sp.territory_m)))
 	sp.shape = e.get("shape", "")
 	sp.campfire = bool(e.get("campfire", false))
+	sp.rarity = float(e.get("rarity", 1.0))
 	return sp
 
 
@@ -119,4 +127,7 @@ func active_now(daylight: float) -> bool:
 			return daylight > 0.3
 		"night":
 			return daylight < 0.3
+		"full_moon":
+			# Only on the nights round the full moon.
+			return daylight < 0.3 and moon_full > 0.85
 	return true

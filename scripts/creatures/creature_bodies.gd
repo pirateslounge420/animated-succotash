@@ -52,6 +52,10 @@ static func build(sp: CreatureSpecies) -> Dictionary:
 			_goblin(b, sp)
 		"tribal":
 			_tribal(b, sp)
+		"unicorn":
+			_unicorn(b, sp)
+		"werewolf":
+			_werewolf(b, sp)
 		"skeleton":
 			_skeleton(b, sp)
 		"robed":
@@ -299,6 +303,7 @@ static func _quadruped(b: Dictionary, sp: CreatureSpecies, leg: float, tail: flo
 	var y := leg + body_h * 0.5
 	box(r, Vector3(0.26, body_h, 0.62), Vector3(0, y, 0), c)
 	var head := Node3D.new()
+	head.name = "Head"
 	head.position = Vector3(0, y + 0.14, -0.36)
 	r.add_child(head)
 	box(head, Vector3(0.18, 0.17, 0.2), Vector3.ZERO, c)
@@ -555,6 +560,72 @@ static func _tribal(b: Dictionary, sp: CreatureSpecies) -> void:
 			cone(r, 0.02, 0.0, 0.1, Vector3(-0.22, 1.2, -0.02), Color(0.35, 0.36, 0.4), 0.0, 5) # stone head
 			var quiver := box(r, Vector3(0.06, 0.28, 0.06), Vector3(0.06, 0.72, 0.09), hide.darkened(0.2))
 			quiver.rotation.z = 0.35
+
+
+## Unicorn (size_m = height at the head): a slender white horse, a raised
+## neck and a flowing mane, and a spiral horn that glows (`accent`).
+static func _unicorn(b: Dictionary, sp: CreatureSpecies) -> void:
+	_quadruped(b, sp, 0.58, 0.5)
+	var r: Node3D = b.root
+	var c := sp.color
+	var head: Node3D = r.get_node("Head")
+	# Lift the head on a neck.
+	head.position += Vector3(0, 0.2, -0.06)
+	var neck := box(r, Vector3(0.12, 0.3, 0.13), Vector3(0, head.position.y - 0.15, -0.34), c)
+	neck.rotation.x = 0.55
+	# Mane down the neck and a forelock, silver-lilac.
+	var mane := c.lerp(sp.accent, 0.35)
+	for k in 5:
+		var t := k / 4.0
+		var m := box(r, Vector3(0.05, 0.12, 0.06), Vector3(0, head.position.y + 0.02 - t * 0.28, -0.31 + t * 0.1), mane)
+		m.rotation.x = 0.5
+	box(head, Vector3(0.06, 0.08, 0.04), Vector3(0, 0.1, -0.04), mane)
+	# The horn: a glowing spiral (a stack of tapering rings).
+	var horn := Node3D.new()
+	horn.position = Vector3(0, 0.1, -0.08)
+	horn.rotation.x = -0.55
+	head.add_child(horn)
+	cone(horn, 0.022, 0.0, 0.22, Vector3(0, 0.11, 0), sp.accent, 3.0)
+	for k in 3:
+		var ring := cone(horn, 0.024 - k * 0.006, 0.02 - k * 0.006, 0.015, Vector3(0, 0.04 + k * 0.05, 0), sp.accent.lightened(0.3), 4.0)
+		ring.rotation.y = k * 0.6
+	# A tuft at each hoof.
+	for leg in b.legs:
+		ball(leg as Node3D, Vector3(0.035, 0.03, 0.035), Vector3(0, -0.6, 0), mane)
+
+
+## Werewolf (size_m = height, hunched): a dark-furred wolf's head with
+## glowing eyes, a heavy chest over a lean waist, long clawed arms and
+## digitigrade legs, ragged fur at the shoulders.
+static func _werewolf(b: Dictionary, sp: CreatureSpecies) -> void:
+	var r: Node3D = b.root
+	var c := sp.color
+	var fur := c.lightened(0.12)
+	for s in [-1.0, 1.0]:
+		var leg := limb(b, r, Vector3(0.08 * s, 0.46, 0.04), 0.46, 0.1, c)
+		leg.rotation.x = -0.15
+	var chest := box(r, Vector3(0.34, 0.3, 0.22), Vector3(0, 0.7, -0.06), c)
+	chest.rotation.x = -0.45
+	box(r, Vector3(0.22, 0.22, 0.16), Vector3(0, 0.5, 0.0), c.darkened(0.1)) # waist
+	for s in [-1.0, 1.0]:
+		var tuft := wedge(r, Vector3(0.08, 0.14, 0.05), Vector3(0.14 * s, 0.86, -0.04), fur)
+		tuft.rotation.z = -0.6 * s
+	var head := Node3D.new()
+	head.name = "Head"
+	head.position = Vector3(0, 0.86, -0.2)
+	r.add_child(head)
+	ball(head, Vector3(0.1, 0.09, 0.1), Vector3.ZERO, c)
+	box(head, Vector3(0.08, 0.07, 0.16), Vector3(0, -0.03, -0.12), c.lightened(0.05)) # muzzle
+	box(head, Vector3(0.04, 0.03, 0.03), Vector3(0, -0.01, -0.21), Color(0.05, 0.05, 0.06)) # nose
+	eyes(head, Vector3(0, 0.025, -0.08), 0.045, 0.016, sp.accent, 5.0)
+	for s in [-1.0, 1.0]:
+		var ear := wedge(head, Vector3(0.05, 0.12, 0.03), Vector3(0.06 * s, 0.1, 0.02), c)
+		ear.rotation.z = -0.25 * s
+		var arm := limb(b, r, Vector3(0.19 * s, 0.8, -0.1), 0.6, 0.08, c, "wings")
+		arm.rotation = Vector3(-0.25, 0.0, 0.12 * s)
+		for k in 3:
+			var claw := cone(arm, 0.012, 0.0, 0.07, Vector3((k - 1) * 0.02, -0.64, -0.02), Color(0.85, 0.82, 0.75))
+			claw.rotation.x = PI
 
 
 ## Skeleton (the restless dead at ruin fires; size_m = height): skull with
