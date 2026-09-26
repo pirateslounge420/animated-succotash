@@ -36,11 +36,21 @@ temperate or tropical coast (a different one each game).
 | E, X | Turn over a fallen log; else climb the tree in front of you (W/S up and down, A/D around the trunk, E or Space to let go) |
 | M, Back | Planet map (keys 1-5 switch biome / elevation / °C / rainfall / live weather; drag to turn, wheel to zoom) |
 | H | Hide the HUD |
+| F3 | Debug overlay: clock, day phase (dawn / day / dusk / night and how far into it), sky speed, sun and moon elevation, moon age and phase, mansion |
 
 One in-game day is **120 real minutes** (12x faster than Earth), in four
-phases: dawn 15 minutes, day 50, dusk 15, night 40. The planet has no
-axial tilt (no seasons yet); toward the poles the sun crosses the horizon
-at a shallower angle, so dawn and dusk last longer there.
+phases: day 45 minutes, dusk 20, night 35, dawn 20. The sky eases between
+phases, never jumping. The moon's cycle is 29.5 days. The numbers live in
+`data/sky/day_cycle.json`. The planet has no axial tilt (no seasons yet);
+toward the poles the sun crosses the horizon at a shallower angle, so dawn
+and dusk last longer there.
+
+**Dev settings.** While `data/dev.json` has `"dev_mode": true` the game
+uses its settings instead: a 20-minute day, seed 42 and always the same
+first camp (`spawn_choice` 0), so before/after screenshots match. Set
+`dev_mode` to false (or delete the file) for the game's own settings.
+`tools/p0_timelapse.gd` checks the day cycle for snapping and renders a
+time-lapse contact sheet (how to run it is at the top of the file).
 Temperatures everywhere (HUD, map, data files) are in **°C**.
 
 ## How the world is built
@@ -113,6 +123,8 @@ assets/                    Empty placeholders for models/textures/audio
   enough; the plant then grows anywhere on the planet whose climate
   matches that biome's. See `data/biomes/README.md` for size, shape,
   color, soil and special needs.
+- **Day cycle:** phase lengths, day length, moon cycle and transition
+  timings in `data/sky/day_cycle.json`. See `data/sky/README.md`.
 - **Creatures:** add entries to `data/creatures/creatures.json`: habitat
   role, climate range, density, activity time, needs, looks and sound.
   See `data/creatures/README.md`.

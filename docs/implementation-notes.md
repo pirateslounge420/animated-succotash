@@ -159,32 +159,60 @@ Verified:
 
 `scripts/sky/`
 
-- **Day length.** One day is 120 real minutes (`PlanetConst.DAY_LENGTH_S`,
-  12x Earth), in four phases at the equator: dawn 15 minutes, day 50,
-  dusk 15, night 40 (dawn and dusk are the sun within 10° of the
-  horizon). The planet turns uniformly for the weather; what the viewer
-  sees is warped (`Astro.apparent_days`): the whole sky, sun, moon and
-  stars together, turns slowly through twilight and quickly through the
-  night, so each phase takes exactly its time (measured 40.0 / 15.0 /
-  50.0 / 15.0 min). Toward the poles twilight stretches (21-minute dawns
-  at 60°). The HUD clock is solar time. No axial tilt, so no seasons yet.
+- **Day length.** One day is 120 real minutes (12x Earth), in four
+  phases at the equator: day 45 minutes, dusk 20, night 35, dawn 20
+  (dawn and dusk are the sun within 10° of the horizon). All of it is
+  data: `data/sky/day_cycle.json`, read by `DayCycle`. The planet turns
+  uniformly for the weather; what the viewer sees is warped
+  (`Astro.apparent_days`, `DayCycle.warp`): the whole sky, sun, moon and
+  stars together, turns slowly through twilight (0.19x uniform speed),
+  faster by day (1.24x) and fastest at night (1.62x). The speed is
+  constant within a phase and eases from one to the next over 12 minutes
+  centered on each boundary (a smoothstep), so it never jumps; the four
+  speeds are solved so each phase still takes exactly its time (measured
+  45.0 / 20.0 / 35.0 / 20.0 min). `DayCycle.unwarp` is the exact inverse
+  (bisection), so the game still opens at 17:00 solar time at the camp.
+  Toward the poles twilight stretches (24-minute dawns at 50°). The HUD
+  clock is solar time. No axial tilt, so no seasons yet.
+- **Dev settings** (`data/dev.json`, read by `World`, spec A4): with
+  `dev_mode` true, a 20-minute day (every phase scales with it), seed 42
+  and the first camp fixed (`spawn_choice` 0). A missing file means the
+  game's own settings. F3 shows a debug overlay (`Hud.debug_text`):
+  clock, solar time, phase and minutes into it, sky speed, sun and moon
+  elevation, moon age, phase and mansion, eased cloud cover.
+- **No snapping.** Besides the smooth warp: the local weather is
+  resampled four times a second and steps every in-game quarter hour,
+  so `main.gd` eases a copy of it (`WeatherSim.ease_toward`, time
+  constant 5 s) and everything on screen reads the eased copy (sun
+  energy, stars, sun disc, clouds, rain); the sun and moon lights fade
+  to exactly zero before they're switched off; the clouds' light
+  direction turns from the moon to the sun (through the zenith, at an
+  even pace) while the sun climbs from -10° to +4° instead of switching
+  at -4°. `tools/p0_timelapse.gd` steps the dev clock at 30 fps through
+  the sky and fails on any per-frame jump above its limits.
 - **Sky events** (`SkyEvents`, drawn in the sky shader): common shooting
   stars (about two a minute on a dark night) and rare meteors, gated by
   the I Ching (`IChing`: an all-changing hexagram, 1 in 4,096, cast every
   5 s of darkness: about one in 8-9 nights), in six colors, with a flash
   over the land and a hiss and rumble. Both frequencies are exported.
 - **Earth-like moon** (`Astro.moon_dir`, `MoonMode.ORBITAL`, the default):
-  - it orbits once per 28-day phase cycle on an orbit tilted 5.1°;
+  - it orbits once per 29.5-day phase cycle (`moon_cycle_days`) on an
+    orbit tilted 5.1°;
   - elongation from the sun sets the phase, so a full moon rises at
     sunset, a new moon travels with the sun, and quarter moons are up
     half the day;
-  - it rises about 51 minutes of game time later each day.
+  - it rises about 49 minutes of game time later each day.
 
   `MoonMode.LOCKED_OPPOSITE` keeps the original always-opposite
   behavior as an option.
 - **28 lunar mansions** (`LunarMansions`). The mansion follows the moon
-  around its orbit. Its star glyph is drawn next to the moon in the sky
-  shader, tinted by its guardian beast's color.
+  around its orbit: the stars turn with the sun here, so the moon's place
+  among them is its elongation, and it walks through all 28 once per
+  29.5-day cycle (a new mansion every 1.05 days, Jiao at new moon;
+  `Astro.mansion_index`). Its star glyph is drawn next to the moon in the
+  sky shader, tinted by its guardian beast's color; when the moon enters
+  the next mansion the glyph fades out, swaps unseen and fades back in
+  (2.5 s each way), or just swaps if it isn't showing.
 - **Lighting** (`SkySystem`):
   - two DirectionalLight3Ds (sun and moon), with intensity and color set
     by elevation; the moon's also scales with phase;
@@ -889,6 +917,7 @@ the player's shoulder so the fire is in view.
 
 - **HUD:**
   - time of day, moon phase and mansion;
+  - F3: the debug overlay (see Dev settings);
   - biome, temperature now and on average (°C), weather, rainfall, wind,
     elevation and coordinates;
   - a context prompt.

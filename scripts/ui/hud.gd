@@ -17,6 +17,10 @@ var _subtitle: Label
 var _lines: Array = [] # [start_s, speaker, text, seconds]
 var _clock := 0.0
 var _status: StatusHud
+## Debug overlay (F3, spec A4): the clock, the day's phase and the sun and
+## moon, for checking the day cycle.
+var _debug: Label
+var debug_visible := false
 
 
 func _ready() -> void:
@@ -29,7 +33,7 @@ func _ready() -> void:
 	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 16)
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_hint.text = "WASD move · W W sprint · Shift crouch · Space jump · E inspect\nHold left click: draw the bow, release to shoot · V first person\nM map · H hide HUD · click to look, Esc frees mouse"
+	_hint.text = "WASD move · W W sprint · Shift crouch · Space jump · E inspect\nHold left click: draw the bow, release to shoot · V first person\nM map · H hide HUD · F3 debug · click to look, Esc frees mouse"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 70)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -40,6 +44,11 @@ func _ready() -> void:
 	_subtitle.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_subtitle.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_subtitle.add_theme_font_size_override("font_size", 20)
+	_debug = _label(HORIZONTAL_ALIGNMENT_LEFT)
+	_debug.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT, Control.PRESET_MODE_MINSIZE, 16)
+	_debug.grow_vertical = Control.GROW_DIRECTION_BOTH
+	_debug.add_theme_color_override("font_color", Color(1.0, 0.93, 0.6))
+	_debug.visible = false
 	_status = StatusHud.new()
 	add_child(_status)
 	move_child(_status, 0)
@@ -142,6 +151,12 @@ func set_prompt(text: String) -> void:
 	_prompt.text = text
 
 
+func toggle_debug() -> void:
+	debug_visible = not debug_visible
+	_debug.visible = debug_visible
+	_readout_timer = 0.0
+
+
 func toggle() -> void:
 	_left.visible = not _left.visible
 	_right.visible = _left.visible
@@ -169,9 +184,9 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 	# The four phases: night, dawn and dusk (sun within TWILIGHT_DEG of the
 	# horizon), day.
 	var part := "Night"
-	if sun_el > PlanetConst.TWILIGHT_DEG:
+	if sun_el > DayCycle.twilight_deg():
 		part = "Morning" if hours < 11.0 else ("Afternoon" if hours > 13.0 else "Midday")
-	elif sun_el > -PlanetConst.TWILIGHT_DEG:
+	elif sun_el > -DayCycle.twilight_deg():
 		part = "Dawn" if hours < 12.0 else "Dusk"
 	var mansion := Astro.mansion_index(days)
 	var moon_up := rad_to_deg(Astro.elevation(Astro.moon_dir(days), player_dir)) > 0.0
@@ -181,6 +196,9 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 		" · moon up" if moon_up else "",
 		Astro.MANSION_NAMES[mansion], Astro.BEAST_NAMES[Astro.beast_index(mansion)],
 	]
+
+	if debug_visible:
+		_debug.text = debug_text(world, player_dir, weather)
 
 	var c := map.cell_at(player_dir)
 	var now_c: float = weather.get("temp_c", NAN)
@@ -194,6 +212,35 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 		int(round(elevation_m)), absf(rad_to_deg(lat)), "N" if lat >= 0.0 else "S", absf(rad_to_deg(lon)), "E" if lon >= 0.0 else "W",
 		("\nSwimming" if swimming else "") + ("\nAbove the clouds · thin, cold air" if weather.get("above_clouds", false) else ""),
 	]
+
+
+## The debug overlay's text: real and solar clock, the phase and how far
+## into it (real minutes at the running day length), the sky's turning
+## speed, sun and moon elevation, the moon's age and phase, the mansion
+## and the eased cloud cover.
+static func debug_text(world: Node, player_dir: Vector3, weather: Dictionary) -> String:
+	var lon := CubeSphere.longitude(player_dir)
+	var clock := fposmod(Astro.time_of_day(world.days) + lon / TAU, 1.0)
+	var days: float = Astro.apparent_days(world.days, lon)
+	var solar_h := Astro.local_hours(days, lon)
+	var day_min: float = world.day_length_s / 60.0
+	var ph := DayCycle.phase_at(clock)
+	var sun_el := rad_to_deg(Astro.elevation(Astro.sun_dir(days), player_dir))
+	var moon_el := rad_to_deg(Astro.elevation(Astro.moon_dir(days), player_dir))
+	var mansion := Astro.mansion_index(days)
+	return "DEBUG (F3)%s\nClock %s · solar %s · %.0f-min day\n%s %.1f / %.1f min · sky speed x%.2f\nSun %+.1f° · Moon %+.1f°\nMoon day %.1f of %.1f · %s · %d%% lit\nMansion %d %s · cloud %.2f" % [
+		" · dev mode" if world.dev_mode else "",
+		_hhmm(clock * 24.0), _hhmm(solar_h), day_min,
+		String(ph.name).capitalize(), float(ph.into) * day_min, float(ph.length) * day_min, DayCycle.turn_rate(clock),
+		sun_el, moon_el,
+		Astro.moon_age_days(days), DayCycle.moon_cycle_days(), Astro.phase_name(days), int(round(Astro.moon_illumination(days) * 100.0)),
+		mansion + 1, Astro.MANSION_NAMES[mansion], float(weather.get("cloud", 0.0)),
+	]
+
+
+static func _hhmm(hours: float) -> String:
+	var h := fposmod(hours, 24.0)
+	return "%02d:%02d" % [int(h), int((h - int(h)) * 60.0)]
 
 
 static func _weather_word(w: Dictionary, fog: float) -> String:

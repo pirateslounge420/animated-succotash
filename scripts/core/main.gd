@@ -34,7 +34,11 @@ var storm: StormFX
 var hud: Hud
 var map_overlay: MapOverlay
 var _playing := false
+## The latest local weather sample (a few times a second), and the eased
+## copy everything on screen follows (WeatherSim.ease_toward), so a new
+## sample or a weather step never makes the light or clouds jump.
 var _local_weather := {}
+var _weather_eased := {}
 var _weather_timer := 0.0
 
 
@@ -59,7 +63,8 @@ func _ready() -> void:
 	world.generation_progress.connect(func(step: String, f: float) -> void:
 		hud.show_loading(step, f * 0.85))
 	world.generation_finished.connect(_on_planet_ready)
-	world.generate(world_seed)
+	# data/dev.json's seed wins in dev mode (World).
+	world.generate(world.startup_seed(world_seed))
 
 
 func _on_planet_ready() -> void:
@@ -178,32 +183,33 @@ func _process(delta: float) -> void:
 		_local_weather = world.weather.local_weather(d, elevation)
 		if clouds.above_low(elevation):
 			_above_clouds(_local_weather)
+	WeatherSim.ease_toward(_weather_eased, _local_weather, delta, DayCycle.weather_smoothing_s())
+	var weather := _weather_eased
 	landmarks.update_landmarks(delta, sky.daylight)
 	camps.update_camps(delta)
 	camp.update_camp(delta, player.global_position)
 	var fog: float = world.planet.sample(world.planet.fog, d)
 	Look.apply({"look_planet_center": world.planet_center(), "look_planet_radius": PlanetConst.RADIUS_M})
 	var sky_days := Astro.apparent_days(world.days, CubeSphere.longitude(d))
-	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), sky_days, _local_weather, fog, delta)
+	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), sky_days, weather, fog, delta)
 	var cam := player.camera()
-	var clear := 1.0 - float(_local_weather.get("cloud", 0.0))
+	var clear := 1.0 - float(weather.get("cloud", 0.0))
 	sky_events.update_events(delta, d, CubeSphere.north(d), 1.0 - smoothstep(0.0, 0.25, sky.daylight), clear)
 	sky.event_flash(sky_events.flash, sky_events.flash_color)
-	storm.update_storm(delta, d, _local_weather)
+	storm.update_storm(delta, d, weather)
 	var cloud_light := sky.cloud_light.lerp(Color(0.95, 0.97, 1.0), storm.flash)
-	# Lit from the sun, or the moon once the sun is well down.
-	var cloud_lit_by := sky.sun_dir if sky.sun_elevation_deg > -4.0 else sky.moon_dir
-	clouds.update_clouds(delta, d, world.radius_of(cam.global_position) - PlanetConst.RADIUS_M, _local_weather, cloud_light, sky.cloud_shade, cloud_lit_by)
+	# Lit from the sun, turning to the moon as the sun sets (a crossfade).
+	clouds.update_clouds(delta, d, world.radius_of(cam.global_position) - PlanetConst.RADIUS_M, weather, cloud_light, sky.cloud_shade, sky.cloud_light_dir)
 	# Sheltered from the rain: under a tree's crown or in a camp shelter.
 	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position)
-	fx.update_fx(cam.global_position, d, _local_weather, sheltered)
+	fx.update_fx(cam.global_position, d, weather, sheltered)
 	post.set_night(1.0 - sky.daylight)
 	creatures.update_creatures(delta, sky.daylight)
 	var prompt: String = creatures.prompt
 	if prompt == "":
 		prompt = player.prompt if player.prompt != "" else landmarks.nearby
 	hud.set_prompt(prompt)
-	hud.update_readout(world, d, elevation, _local_weather, player.swimming, delta)
+	hud.update_readout(world, d, elevation, weather, player.swimming, delta)
 	hud.update_status(player)
 	map_overlay.update_map(d, delta)
 
@@ -248,6 +254,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		map_overlay.toggle(player.surface_dir)
 	elif event.is_action_pressed("toggle_hud"):
 		hud.toggle()
+	elif event.is_action_pressed("toggle_debug"):
+		hud.toggle_debug()
 	elif event.is_action_pressed("interact"):
 		# Let go of a tree; else a log within reach; else climb the tree
 		# in front of you.

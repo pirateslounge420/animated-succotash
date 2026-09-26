@@ -1,0 +1,15 @@
+{
+	"day_length_min": 120,
+	"phase_min": {
+		"day": 45,
+		"dusk": 20,
+		"night": 35,
+		"dawn": 20
+	},
+	"twilight_deg": 10,
+	"rate_blend_min": 12,
+	"moon_cycle_days": 29.5,
+	"weather_smoothing_s": 5,
+	"cloud_light_band_deg": [-10, 4],
+	"glyph_fade_s": 2.5
+}

@@ -5,8 +5,12 @@ extends Node
 ## Generation runs on a background thread (it takes several seconds), with
 ## generation_progress for a loading screen. After that:
 ##
-## * Clock: `days` advances at 120 real minutes per in-game day
-##   (PlanetConst.DAY_LENGTH_S), always in real time.
+## * Clock: `days` advances at `day_length_s` real seconds per in-game
+##   day (120 minutes, data/sky/day_cycle.json), always in real time.
+## * Dev settings: data/dev.json (spec A4). When its "dev_mode" is true,
+##   its "day_length_min" (20), "seed" (42) and "spawn_choice" (0: always
+##   the same first camp) replace the game's, so before/after views match.
+##   A missing file, or dev_mode false, means the game's own settings.
 ## * Weather: the same WeatherSim that produced the long-term averages
 ##   keeps running live, one step per in-game quarter hour.
 ## * Floating origin: the planet is ~64 km in radius, so the scene keeps
@@ -22,8 +26,15 @@ signal origin_shifted(offset: Vector3)
 
 const WEATHER_STEP_H := 0.25
 const REBASE_DISTANCE_M := 1500.0
+const DEV_PATH := "res://data/dev.json"
 
 @export var world_seed := 42
+
+## Real seconds per in-game day (the dev clock may shorten it).
+var day_length_s := 7200.0
+## True when data/dev.json turned dev mode on; `dev` holds its fields.
+var dev_mode := false
+var dev := {}
 
 var planet: PlanetData
 var weather: WeatherSim
@@ -45,6 +56,36 @@ var _cy := 0.0
 var _cz := 0.0
 var _thread: Thread
 var _weather_accum_h := 0.0
+
+
+func _ready() -> void:
+	day_length_s = DayCycle.day_length_min() * 60.0
+	_load_dev_settings()
+
+
+func _load_dev_settings() -> void:
+	if not FileAccess.file_exists(DEV_PATH):
+		return
+	var parsed = JSON.parse_string(FileAccess.get_file_as_string(DEV_PATH))
+	if not parsed is Dictionary:
+		push_warning("World: %s is not valid JSON, ignored" % DEV_PATH)
+		return
+	dev = parsed
+	dev_mode = bool(dev.get("dev_mode", false))
+	if not dev_mode:
+		return
+	if dev.has("day_length_min"):
+		day_length_s = maxf(float(dev.day_length_min), 0.1) * 60.0
+	if dev.has("seed"):
+		world_seed = int(dev.seed)
+	if dev.has("spawn_choice"):
+		spawn_choice = int(dev.spawn_choice)
+	print("[World] dev mode (data/dev.json): %.0f-minute day, seed %d, spawn %d" % [day_length_s / 60.0, world_seed, spawn_choice])
+
+
+## The seed a new game uses: the dev seed in dev mode, else `default_seed`.
+func startup_seed(default_seed: int) -> int:
+	return world_seed if dev_mode and dev.has("seed") else default_seed
 
 
 func generate(p_seed: int) -> void:
@@ -88,7 +129,7 @@ func generate_now(p_seed: int) -> void:
 func _process(delta: float) -> void:
 	if not ready_to_play:
 		return
-	var game_hours := delta / PlanetConst.DAY_LENGTH_S * 24.0
+	var game_hours := delta / day_length_s * 24.0
 	days += game_hours / 24.0
 	_weather_accum_h += game_hours
 	if _weather_accum_h >= WEATHER_STEP_H:
@@ -158,7 +199,8 @@ func surface_elevation(dir: Vector3) -> float:
 
 ## Where a new game starts: one of the planet's few best first-camp spots
 ## (Encampment.candidates: low coastal land, mild and green), picked at
-## random each game, or the `spawn_choice`-th one if that's set (>= 0).
+## random each game, or the `spawn_choice`-th one if that's set (>= 0;
+## data/dev.json sets it in dev mode).
 var spawn_choice := -1
 
 
