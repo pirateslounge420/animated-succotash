@@ -284,7 +284,7 @@ func _build_arm(arm: Node3D) -> void:
 class Geo:
 	var verts := PackedVector3Array()
 	var colors := PackedColorArray()
-	var uv2 := PackedVector2Array()
+	var uv := PackedVector2Array()
 	var idx := PackedInt32Array()
 
 
@@ -355,7 +355,7 @@ static func _vert(g: Geo, p: Vector3, c: Color, kind: int, sway: float) -> void:
 	g.verts.append(p)
 	# Vertex colors reach the shader as they are: pass them linear.
 	g.colors.append(c.srgb_to_linear())
-	g.uv2.append(Vector2(kind, sway))
+	g.uv.append(Vector2(kind, sway))
 
 
 static func _ellipsoid(g: Geo, c: Vector3, r: Vector3, col: Color, kind: int, radial: int, rings: int, basis := Basis(), sway := 0.0) -> void:
@@ -397,7 +397,7 @@ func _add(parent: Node3D, g: Geo, part: String) -> void:
 	arrays[Mesh.ARRAY_VERTEX] = g.verts
 	arrays[Mesh.ARRAY_NORMAL] = normals
 	arrays[Mesh.ARRAY_COLOR] = g.colors
-	arrays[Mesh.ARRAY_TEX_UV2] = g.uv2
+	arrays[Mesh.ARRAY_TEX_UV] = g.uv
 	arrays[Mesh.ARRAY_INDEX] = g.idx
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)

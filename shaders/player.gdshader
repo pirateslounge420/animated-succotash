@@ -3,7 +3,7 @@
 // that carry each part's color and its painted-in folds, modulated by one
 // of the world's chunky low-res textures per part.
 //
-// Per-vertex UV2: x = material (0 skin, 1 woven fiber, 2 fur, 3 leather,
+// Per-vertex UV: x = material (0 skin, 1 woven fiber, 2 fur, 3 leather,
 // 4 bone/wood, 5 hair), y = how freely it hangs (0 fixed .. 1 the robe's
 // hem and the ends of the hair), which `motion` swings back as the player
 // moves and a slow flutter keeps alive at rest.
@@ -23,7 +23,7 @@ varying vec3 obj_pos;
 varying vec3 obj_normal;
 
 void vertex() {
-	float w = UV2.y * UV2.y;
+	float w = UV.y * UV.y;
 	// Trail behind (+Z is the back) and flutter a little.
 	float flutter = sin(TIME * 2.1 + VERTEX.y * 5.0 + VERTEX.x * 7.0) + 0.5 * sin(TIME * 3.7 + VERTEX.x * 11.0);
 	VERTEX.z += w * (motion * 0.13 + flutter * 0.01 * (0.5 + motion));
@@ -44,7 +44,7 @@ vec3 tri(sampler2D tex, float scale) {
 }
 
 void fragment() {
-	int kind = int(round(UV2.x));
+	int kind = int(round(UV.x));
 	// Textures are gray around 0.5 (no change); `k` is how strongly each
 	// material shows its texture.
 	vec3 t;
