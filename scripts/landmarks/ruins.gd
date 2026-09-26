@@ -27,17 +27,30 @@ class_name Ruins
 ##   * elsewhere: a broad grey ziggurat with a stair and an obelisk.
 ## Pyramids want level ground, like the dwellings.
 ##
+## Otherwise, on a roll of its own (TOMB_CHANCE), the place of the dead:
+##   * a graveyard: a low wall with a gate and breaches, rows of
+##     headstones (slabs, crosses, little obelisks, some tilted or
+##     fallen) over grave mounds, dead trees, and a mausoleum you can walk
+##     into, a sarcophagus inside;
+##   * a barrow: a long earth mound (snowed over in snow country) with a
+##     dry-stone facade and standing stones, a stone passage running in
+##     past side cells to an end chamber of grave goods;
+##   * in the desert, a tomb: a sandstone mastaba with a burial room.
+## Tombs, mausoleums and the desert pyramid's chamber are explorable: a
+## doorway, a way in, and a faint glow inside.
+##
 ## A planet-wide grid with at most one ruin per CELL_M cell. Pure functions
 ## of the planet data (thread-safe), so every visit finds the same ruin and
 ## vegetation can keep the footprint clear.
 
-enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID }
+enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW }
 
 const CELL_M := 3200.0
 const CHANCE := 0.5
 const SALT := 555
 const KIND_NAMES := ["Ruined tower", "Ruined castle", "Ruined aqueduct",
-	"Abandoned igloos", "Abandoned treehouses", "Old boardwalk", "Ancient pyramid"]
+	"Abandoned igloos", "Abandoned treehouses", "Old boardwalk", "Ancient pyramid", "Old graveyard",
+	"Barrow tomb"]
 const SNOWY := [BiomeTemplates.ICE_SHEET, BiomeTemplates.TUNDRA, BiomeTemplates.ALPINE_TUNDRA, BiomeTemplates.GLACIER]
 const JUNGLY := [BiomeTemplates.TROPICAL_RAINFOREST, BiomeTemplates.JUNGLE, BiomeTemplates.CLOUD_FOREST]
 const SNOW_C := -3.0
@@ -47,6 +60,9 @@ const DESERTY := [BiomeTemplates.HOT_DESERT, BiomeTemplates.COLD_DESERT, BiomeTe
 	BiomeTemplates.BADLANDS, BiomeTemplates.CANYON, BiomeTemplates.SALT_FLAT]
 const PYRAMID_NAMES := {"desert": "Desert pyramid", "jungle": "Temple pyramid", "stone": "Step pyramid",
 	"snow": "Frozen pyramid", "marsh": "Sunken pyramid"}
+## Share of the ruins that aren't pyramids that are [graveyards, barrows],
+## by pyramid_style() (the country).
+const TOMB_CHANCE := {"stone": [0.12, 0.12], "desert": [0.08, 0.15], "snow": [0.06, 0.1], "marsh": [0.1, 0.06], "jungle": [0.0, 0.0]}
 ## A stair on a stepped pyramid climbs at this angle (under the player's
 ## steepest walkable slope, 50 degrees).
 const STAIR_DEG := 44.0
@@ -79,9 +95,28 @@ static func pyramid_style(map: PlanetData, p: Vector3, land: String) -> String:
 
 ## A ruin's name (the glowing site's label).
 static func site_name(site: Dictionary) -> String:
-	if int(site.kind) == Kind.PYRAMID:
-		return PYRAMID_NAMES[site.style]
+	match int(site.kind):
+		Kind.PYRAMID:
+			return PYRAMID_NAMES[site.style]
+		Kind.BARROW:
+			if site.style == "desert":
+				return "Desert tomb"
+		Kind.GRAVEYARD:
+			if site.style == "marsh":
+				return "Sunken graveyard"
+			if site.style == "snow":
+				return "Snowbound graveyard"
 	return KIND_NAMES[site.kind]
+
+
+## The direction of the point (x, z) m in a site's own frame (RuinBuilder's
+## local axes: x across the heading, z along it).
+static func local_dir(site: Dictionary, x: float, z: float) -> Vector3:
+	var d: Vector3 = site.dir
+	var a: float = site.heading + PI * 0.5
+	var ex := CubeSphere.north(d) * cos(a) + CubeSphere.east(d) * sin(a)
+	var ez := ex.cross(d).normalized()
+	return (d + (ex * x + ez * z) / PlanetConst.RADIUS_M).normalized()
 
 
 ## The ruin in grid cell `c`, or {}:
@@ -100,9 +135,21 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 	var prng := RandomNumberGenerator.new()
 	prng.seed = hash([key, "pyramid"])
 	var style := pyramid_style(map, center, land)
+	var country_style := style
 	if prng.randf() >= PYRAMID_CHANCE[style]:
 		style = ""
-	var level := land != "" or style != ""
+	# Or a graveyard or barrow: a roll of its own again.
+	var trng := RandomNumberGenerator.new()
+	trng.seed = hash([key, "tomb"])
+	var tomb := ""
+	if style == "":
+		var odds: Array = TOMB_CHANCE[country_style]
+		var roll := trng.randf()
+		if roll < odds[0]:
+			tomb = "graveyard"
+		elif roll < odds[0] + odds[1]:
+			tomb = "barrow"
+	var level := land != "" or style != "" or tomb != ""
 	var best := {}
 	var best_score := -INF
 	for i in 18:
@@ -120,7 +167,7 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 		var prominence := e - ring / 6.0
 		# Too steep to build on?
 		var slope := absf(map.terrain.elevation(CreatureSpawner._offset(p, 0.0, 15.0), true, false) - map.terrain.elevation(CreatureSpawner._offset(p, PI, 15.0), true, false)) / 30.0
-		if slope > (0.1 if style != "" else (0.15 if land != "" else 0.4)):
+		if slope > (0.1 if style != "" else (0.15 if land != "" or tomb != "" else 0.4)):
 			continue
 		# Stone ruins on the most prominent rise; the rest on the flattest.
 		var score := (-slope * 40.0 if level else prominence) + rng.randf() * 4.0
@@ -144,11 +191,17 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 				kind = Kind.AQUEDUCT
 	if style != "":
 		kind = Kind.PYRAMID
+	elif tomb == "graveyard":
+		kind = Kind.GRAVEYARD
+	elif tomb == "barrow":
+		kind = Kind.BARROW
 	var heading := rng.randf() * TAU
 	var site := {"dir": best.dir, "kind": kind, "seed": hash(key), "heading": heading}
 	match kind:
 		Kind.PYRAMID:
 			_pyramid_site(site, style, prng)
+		Kind.GRAVEYARD, Kind.BARROW:
+			_tomb_site(site, country_style, trng)
 		Kind.CASTLE:
 			site.footprint_m = 28.0
 			site.clear = [[best.dir, 30.0]]
@@ -224,6 +277,36 @@ static func _pyramid_site(site: Dictionary, style: String, prng: RandomNumberGen
 	site.clear = clear
 
 
+## A graveyard's or barrow's measurements and clearing. Graveyard:
+## {"half_m"} (half the walled square; the gate on -z, the camp just
+## inside it). Barrow: {"half_w", "half_l", "height_m"} (the mound; the
+## facade on -z, the camp off its front corner); in the desert a mastaba,
+## {"half_w", "half_l", "height_m"} of the building (door on -z, camp on
+## +x).
+static func _tomb_site(site: Dictionary, style: String, trng: RandomNumberGenerator) -> void:
+	site.style = style
+	var d: Vector3 = site.dir
+	if int(site.kind) == Kind.GRAVEYARD:
+		var hm := trng.randf_range(12.0, 15.5)
+		site.half_m = hm
+		site.footprint_m = hm * 1.42 + 2.0
+		site.clear = [[d, hm * 1.42 + 2.0]]
+		return
+	if style == "desert":
+		site.half_w = trng.randf_range(7.0, 9.0)
+		site.half_l = trng.randf_range(5.0, 6.5)
+		site.height_m = trng.randf_range(4.2, 5.2)
+		var r := Vector2(site.half_w, site.half_l).length()
+		site.footprint_m = r + 3.0
+		site.clear = [[d, r + 3.0], [local_dir(site, site.half_w + 6.0, 0.0), 7.0]]
+		return
+	site.half_w = trng.randf_range(6.0, 7.5)
+	site.half_l = trng.randf_range(10.0, 13.0)
+	site.height_m = trng.randf_range(5.0, 6.5)
+	site.footprint_m = site.half_l + 4.0
+	site.clear = [[d, site.half_l + 4.0], [local_dir(site, site.half_w + 5.0, -site.half_l + 3.0), 7.0]]
+
+
 ## Share of ruins with a living camp: a fire burning and folk round it
 ## (Camps). The rest stand empty.
 const INHABITED := 0.55
@@ -239,7 +322,8 @@ static func inhabited(site: Dictionary) -> bool:
 ## and a hooded one, 45%), "goblin" (20%) or "tribal"; "north" at igloos,
 ## "tribal" under treehouses, "marsh" by boardwalks. At pyramids, the
 ## country's own folk ("dead" or "tribal" in the desert, "north" in snow,
-## the stone ruins' roll on grey ziggurats).
+## the stone ruins' roll on grey ziggurats). The dead keep graveyards;
+## the dead or goblins sit at barrows.
 static func camp_folk(site: Dictionary) -> String:
 	match int(site.kind):
 		Kind.IGLOO:
@@ -260,6 +344,14 @@ static func camp_folk(site: Dictionary) -> String:
 					var drng := RandomNumberGenerator.new()
 					drng.seed = hash([site.seed, "folk"])
 					return "dead" if drng.randf() < 0.5 else "tribal"
+		Kind.GRAVEYARD:
+			return "dead"
+		Kind.BARROW:
+			var brng := RandomNumberGenerator.new()
+			brng.seed = hash([site.seed, "folk"])
+			if site.style == "desert":
+				return "dead" if brng.randf() < 0.5 else "tribal"
+			return "dead" if brng.randf() < 0.5 else "goblin"
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([site.seed, "folk"])
 	var roll := rng.randf()

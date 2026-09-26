@@ -386,9 +386,58 @@ Verified:
     desert. Glowing-site labels use `Ruins.site_name()` ("Desert pyramid",
     "Temple pyramid", "Step pyramid", "Frozen pyramid", "Sunken pyramid").
 
-  Planet-wide with seed 42: 276 towers, 172 aqueducts, 85 castles, 208
-  igloo sites, 72 treehouse villages, 17 boardwalks, and 187 pyramids
-  (102 desert, 42 step, 24 temple, 15 frozen, 4 sunken). Wood, snow, thatch,
+    The desert pyramid can be explored: a stair climbs the -z face at 38
+    degrees to a portal standing proud of the casing (the courses behind
+    it have a gap), and a corridor 2 m wide runs straight in to a burial
+    chamber at the heart, 5 by 7 m, with a granite sarcophagus, grave
+    goods and a lamp-gold glow (a dim teal one along the corridor).
+  - **the dead**, on another roll of its own when a ruin isn't a pyramid
+    (`Ruins.TOMB_CHANCE`, [graveyard, barrow]: 12%/12% in stone country,
+    8%/15% desert, 6%/10% snow, 10%/6% marsh, none in the jungle), on
+    level ground:
+    - **graveyards** ("Old graveyard", "Snowbound graveyard", "Sunken
+      graveyard"): a low stone wall round a 24-31 m square, the gate on -z
+      between capped posts, a breach or two; rows of graves either side
+      of a path up the middle, each a headstone (slab, shouldered slab,
+      cross or little obelisk, leaning, more so in the marsh, or fallen
+      flat) over a low mound (snowed over in the cold); one to three dead
+      trees; and at the back a **mausoleum** on a plinth, steps up to its
+      door, a gabled roof over pediments, a sarcophagus and grave goods
+      inside and a faint glow;
+    - **barrows** ("Barrow tomb"): a long earth mound (turf, or snow),
+      highest at the front where a dry-stone facade stands across its
+      open end with a portal of two uprights and a lintel, standing stones
+      before it. Inside, a passage of upright slabs under capstones runs
+      in past two pairs of side cells to an end chamber: a sarcophagus,
+      urns, bones, a skull, gold, a lamp-gold glow at the end and a dim
+      one along the way;
+    - in the desert, **mastabas** ("Desert tomb"): a flat-roofed sandstone
+      house of the dead on a drift of sand, steps up to its door, one roof
+      slab often fallen in so a shaft of sun reaches a false-door stele,
+      the sarcophagus and grave goods.
+
+    Tomb lights are `OmniLight3D`s (`RuinBuilder._lights`, made in
+    `make_node()`), fading out past 50-70 m. Chambers and passages are
+    shelters (no rain inside). Graveyards are kept by the dead; barrows
+    by the dead or goblins; desert tombs by the dead or tribal folk.
+
+    Getting in is walkable throughout: stairs and door steps have no
+    collision of their own; a smooth ramp stands in for them and meets
+    the floor above the sill, so there's no lip to catch on. (Tested by
+    walking the player in from outside: the barrow's end chamber, the
+    mausoleum, the mastaba, the pyramid's chamber and the stepped
+    pyramids' tops.)
+
+  Planet-wide with seed 42: 215 towers, 128 aqueducts, 65 castles, 174
+  igloo sites, 72 treehouse villages, 12 boardwalks, 187 pyramids (102
+  desert, 42 step, 24 temple, 15 frozen, 4 sunken), 75 graveyards (59
+  old, 13 snowbound, 3 sunken), 62 barrows and 25 desert tombs.
+
+  Collision for drawn surfaces (mounds, the cased pyramid, the barrow)
+  goes in with its winding reversed (`_collide_since()`): Godot takes
+  clockwise triangles as front-facing and concave shapes collide on one
+  side only, so copied as drawn they let you walk in from outside and
+  then held you under them (castle mottes were affected too). Wood, snow, thatch,
   leaves and hide carry their own texture (a material id per vertex; the
   ruin shader picks bark, packed snow, straw, leaves or a soft grain).
 

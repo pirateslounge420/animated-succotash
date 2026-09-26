@@ -60,7 +60,8 @@ move on:
 - wildlife within ~140 m, wolf packs near their dens, mythical creatures
   heard from ~1 km and seen from ~220 m;
 - ruins (crumbling towers, castles on hills, aqueducts, and now and then
-  a pyramid) from ~2.6 km,
+  a pyramid, a graveyard or a barrow; tombs, mausoleums and the desert
+  pyramid's burial chamber can be walked into) from ~2.6 km,
   so their silhouettes rise out of the fog before you reach them; about
   a third hold a survivors' camp of tepees and lean-tos. At night they,
   some lakes and wetlands, and mythical territories glow teal and cobalt.

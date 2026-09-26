@@ -44,6 +44,9 @@ const SNOW := Color(0.7, 0.77, 0.86) # packed snow blocks, cooler than a snowfie
 const ROPE := Color(0.42, 0.36, 0.24)
 # Desert pyramids: warm sandstone; jungle temples: pale limestone.
 const SANDSTONE := [Color(0.78, 0.66, 0.46), Color(0.72, 0.6, 0.42), Color(0.82, 0.71, 0.5), Color(0.75, 0.64, 0.47), Color(0.69, 0.57, 0.4)]
+const BONE := Color(0.82, 0.78, 0.66)
+const CLAY := Color(0.52, 0.32, 0.2)
+const GOLD := Color(0.95, 0.75, 0.25)
 const LIMESTONE := [Color(0.62, 0.6, 0.52), Color(0.56, 0.55, 0.49), Color(0.66, 0.63, 0.55), Color(0.52, 0.52, 0.47), Color(0.6, 0.57, 0.5)]
 
 ## Distance where the drawn blocks give way to the plain-box LOD, and the
@@ -81,9 +84,12 @@ var _m := PackedVector2Array() # material per vertex (x)
 var mat := STONE_M
 ## Stone colors for block() and rubble().
 var palette: Array = STONES
-## Off: box() adds no collision (a pyramid's stair steps, which a ramp
-## stands in for).
+## Off: box() and boulder() add no collision (stair steps, which a ramp
+## stands in for; grave mounds and things on a tomb's floor).
 var solid := true
+## Lights inside tombs: [local position, color, range m, energy]
+## (make_node() adds an OmniLight3D for each).
+var _lights: Array = []
 ## Collision triangles: plain boxes, much cheaper than the drawn blocks.
 var _cv := PackedVector3Array()
 ## Far LOD (past LOD_M): plain boxes too, in the blocks' face colors, and
@@ -139,6 +145,10 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._boardwalk()
 		Ruins.Kind.PYRAMID:
 			b._pyramid()
+		Ruins.Kind.GRAVEYARD:
+			b._graveyard()
+		Ruins.Kind.BARROW:
+			b._barrow()
 	# Its own roll, so a camp never changes the ruin itself. (Only the stone
 	# ruins: the others are dwellings already.)
 	var camp_rng := RandomNumberGenerator.new()
@@ -151,7 +161,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 		b._stone_camp_spot()
 	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
-		"shelters": b._shelters, "camp_spot": b._camp_spot}
+		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights}
 
 
 ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
@@ -209,6 +219,17 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	far.visibility_range_begin = LOD_M
 	far.visibility_range_begin_margin = LOD_MARGIN_M
 	root.add_child(far)
+	for l in data.get("lights", []):
+		var o := OmniLight3D.new()
+		o.position = l[0]
+		o.light_color = l[1]
+		o.omni_range = l[2]
+		o.light_energy = l[3]
+		o.omni_attenuation = 1.4
+		o.distance_fade_enabled = true
+		o.distance_fade_begin = 50.0
+		o.distance_fade_length = 20.0
+		root.add_child(o)
 	var body := StaticBody3D.new()
 	var shape := ConcavePolygonShape3D.new()
 	shape.set_faces(data.cv)
@@ -378,6 +399,15 @@ func _smooth_from(start: int) -> void:
 			_n[i] = sum.normalized()
 
 
+## Collision for the drawn triangles added since `start` (mounds, the
+## cased pyramid, the barrow). Godot takes clockwise triangles as facing
+## front, the reverse of the drawn winding, and concave collision is one
+## sided, so each goes in reversed: solid from outside, as boxes are.
+func _collide_since(start: int) -> void:
+	for t in range(start, _v.size(), 3):
+		_cv.append_array([_v[t], _v[t + 2], _v[t + 1]])
+
+
 func _collision_box(xf: Transform3D, h: Vector3) -> void:
 	var p: Array[Vector3] = []
 	for i in 8:
@@ -439,7 +469,8 @@ func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: fl
 		var b2 := faces[f + 1]
 		var d := faces[f + 2]
 		_tri_n(pos[a], pos[b2], pos[d], nrm[a], nrm[b2], nrm[d], cols[a], cols[b2], cols[d], center)
-	_collision_box(Transform3D(basis, center), radii * 0.8)
+	if solid:
+		_collision_box(Transform3D(basis, center), radii * 0.8)
 	var top := col.lerp(MOSS, moss)
 	top.a = moss
 	var side := col.lerp(MOSS, moss * 0.2)
@@ -627,7 +658,7 @@ func mound(radius_top: float, radius_bottom: float, depth: float, rise: float) -
 		_face(c, top_pts[j], top_pts[i], top_pts[i], grass, inside)
 		_face(top_pts[i], top_pts[j], bot_pts[j], bot_pts[i], earth.lerp(grass, 0.25), inside)
 	_smooth_from(start)
-	_cv.append_array(_v.slice(start))
+	_collide_since(start)
 	_lv.append_array(_v.slice(start))
 	_ln.append_array(_n.slice(start))
 	_lc.append_array(_c.slice(start))
@@ -1565,12 +1596,15 @@ func _ground_range(c: Vector2, hs: float) -> Vector2:
 func _desert_pyramid(hs: float) -> void:
 	var h: float = site.height_m
 	mound(hs + 2.0, hs + 44.0, 26.0, 0.3)
-	var yt := _cased_pyramid(Vector2.ZERO, hs, h, -0.3, 0.93)
+	# The way in, a little up the -z face (floor at y_f).
+	var y_f := -0.3 + h * 0.13 - 0.3
+	var yt := _cased_pyramid(Vector2.ZERO, hs, h, -0.3, 0.93, Vector3(1.6, y_f + 0.1, y_f + 2.6))
 	var st := hs * 0.07
 	for i in rng.randi_range(2, 4):
 		var a := rng.randf() * TAU
 		block(Vector3(rng.randf_range(-st, st) * 0.6, yt + 0.5, rng.randf_range(-st, st) * 0.6), Vector3(cos(a), 0.0, sin(a)), Vector3(2.2, 1.0, 1.6), 0.0)
 	_pyramid_entrance(hs, h, -0.3)
+	_pyramid_chamber(hs, h, -0.3)
 	var q: float = site.queen_hs
 	var qc := Vector2(-(hs + q + 8.0), 0.0)
 	var qg := _ground_range(qc, q)
@@ -1584,8 +1618,10 @@ func _desert_pyramid(hs: float) -> void:
 ## cut off at `cut` of its height (the capstone gone). The casing is
 ## weathered into rough courses: each one leans in a little steeper than
 ## the whole and steps back at a ledge. A skirt runs down below the base so
-## it never floats over coarser far terrain. Returns the top's height.
-func _cased_pyramid(c: Vector2, hs: float, h: float, y0: float, cut: float) -> float:
+## it never floats over coarser far terrain. `door` (half width, from y,
+## to y), if set, leaves a gap in the -z face's courses there for a way
+## in. Returns the top's height.
+func _cased_pyramid(c: Vector2, hs: float, h: float, y0: float, cut: float, door := Vector3.ZERO) -> float:
 	var start := _v.size()
 	var rows := maxi(6, int(h * cut / 1.7))
 	var corner := func(i: int, s: float, y: float) -> Vector3:
@@ -1608,15 +1644,35 @@ func _cased_pyramid(c: Vector2, hs: float, h: float, y0: float, cut: float) -> f
 		col.a = 0.0
 		var ledge_col := col.lightened(0.1)
 		ledge_col.a = 0.0
+		var gap := door.x > 0.0 and yb > door.y and ya < door.z
 		for f in 4:
-			_face(corner.call(f, s0, ya), corner.call(f + 1, s0, ya), corner.call(f + 1, s1 + ledge, yb), corner.call(f, s1 + ledge, yb), col, Vector3(c.x, ya, c.y))
-			_face(corner.call(f, s1 + ledge, yb), corner.call(f + 1, s1 + ledge, yb), corner.call(f + 1, s1, yb), corner.call(f, s1, yb), ledge_col, Vector3(c.x, yb - 4.0, c.y))
+			var a0: Vector3 = corner.call(f, s0, ya)
+			var b0: Vector3 = corner.call(f + 1, s0, ya)
+			var a1: Vector3 = corner.call(f, s1 + ledge, yb)
+			var b1: Vector3 = corner.call(f + 1, s1 + ledge, yb)
+			var a2: Vector3 = corner.call(f, s1, yb)
+			var b2: Vector3 = corner.call(f + 1, s1, yb)
+			if f == 0 and gap:
+				# Two pieces either side of the doorway (the -z face runs
+				# along x at constant z).
+				var inside_a := Vector3(c.x, ya, c.y)
+				var inside_b := Vector3(c.x, yb - 4.0, c.y)
+				for piece in [[a0, a1, a2, -1.0], [b0, b1, b2, 1.0]]:
+					var p0: Vector3 = piece[0]
+					var p1: Vector3 = piece[1]
+					var p2: Vector3 = piece[2]
+					var gx: float = c.x + float(piece[3]) * door.x
+					_face(p0, Vector3(gx, p0.y, p0.z), Vector3(gx, p1.y, p1.z), p1, col, inside_a)
+					_face(p1, Vector3(gx, p1.y, p1.z), Vector3(gx, p2.y, p2.z), p2, ledge_col, inside_b)
+				continue
+			_face(a0, b0, b1, a1, col, Vector3(c.x, ya, c.y))
+			_face(a1, b1, b2, a2, ledge_col, Vector3(c.x, yb - 4.0, c.y))
 	var st := hs * (1.0 - cut)
 	var yt := y0 + h * cut
 	var top: Color = palette[0]
 	top.a = 0.0
 	_face(corner.call(0, st, yt), corner.call(1, st, yt), corner.call(2, st, yt), corner.call(3, st, yt), top, Vector3(c.x, yt - 4.0, c.y))
-	_cv.append_array(_v.slice(start))
+	_collide_since(start)
 	_lv.append_array(_v.slice(start))
 	_ln.append_array(_n.slice(start))
 	_lc.append_array(_c.slice(start))
@@ -1624,18 +1680,61 @@ func _cased_pyramid(c: Vector2, hs: float, h: float, y0: float, cut: float) -> f
 	return yt
 
 
-## The way in, a little up the -z face: a block of casing standing proud,
-## a dark doorway in it, and two great slabs leaning together over it.
+## The way in, a little up the -z face (floor y_f): a portal of casing
+## stone standing proud of the face, its doorway open, two great slabs
+## leaning together over it, and a stair up the face to its sill.
 func _pyramid_entrance(hs: float, h: float, y0: float) -> void:
 	var t := 0.13
-	var y := y0 + h * t
+	var y_f := y0 + h * t - 0.3
 	var z := -hs * (1.0 - t)
-	box(Transform3D(Basis.IDENTITY, Vector3(0.0, y + 1.8, z + 0.6)), Vector3(4.2, 4.6, 3.0), palette[1], 0.0, 0.12, 0.04)
-	var zf := z + 0.6 - 1.5 - 0.03
-	var dark := Color(0.04, 0.03, 0.03, 0.0)
-	_face(Vector3(-0.9, y - 0.3, zf), Vector3(0.9, y - 0.3, zf), Vector3(0.9, y + 2.2, zf), Vector3(-0.9, y + 2.2, zf), dark, Vector3(0.0, y, z + 2.0))
+	var zc := z + 0.6
 	for sx: float in [-1.0, 1.0]:
-		box(Transform3D(Basis(Vector3(0, 0, 1), -sx * 0.75), Vector3(sx * 1.1, y + 4.6, z + 0.2)), Vector3(3.0, 0.8, 3.2), palette[2], 0.0)
+		box(Transform3D(Basis.IDENTITY, Vector3(sx * 1.55, y_f + 1.1, zc)), Vector3(1.1, 6.6, 3.0), palette[1], 0.0, 0.12, 0.04)
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, y_f + 3.45, zc)), Vector3(2.0, 1.9, 3.0), palette[1], 0.0, 0.1, 0.03)
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, y_f - 1.1, zc)), Vector3(2.0, 2.2, 3.0), palette[1], 0.0, 0.05, 0.02)
+	for sx: float in [-1.0, 1.0]:
+		box(Transform3D(Basis(Vector3(0, 0, 1), -sx * 0.75), Vector3(sx * 1.1, y_f + 4.9, z + 0.2)), Vector3(3.0, 0.8, 3.2), palette[2], 0.0)
+	_stairs(3.0, zc - 1.5, y_f, -(hs + 8.0), 38.0, func(y: float) -> float:
+		return -hs * (1.0 - (y - y0) / h) + 0.5)
+
+
+## Inside the desert pyramid: a corridor from the portal straight in to a
+## burial chamber at the heart, 5 by 7 m and 4 m high, a granite
+## sarcophagus and grave goods within, a lamp-gold glow there and a dim
+## one along the way.
+func _pyramid_chamber(hs: float, h: float, y0: float) -> void:
+	var t := 0.13
+	var y_f := y0 + h * t - 0.3
+	var z_in := -hs * (1.0 - t) + 2.1 # the portal's back
+	var chx := 3.4
+	var chz := 4.3
+	var z_out := -chz
+	var length := z_out - z_in
+	var n := maxi(1, int(ceil(length / 3.0)))
+	var sl := length / n
+	for i in n:
+		var zm := z_in + (i + 0.5) * sl
+		var col: Color = palette[rng.randi() % palette.size()]
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, y_f - 0.25, zm)), Vector3(3.2, 0.5, sl), col.darkened(0.1), 0.0, 0.04, 0.02)
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, y_f + 2.75, zm)), Vector3(3.2, 0.5, sl), col.darkened(0.15), 0.0, 0.04, 0.02)
+		for sx: float in [-1.0, 1.0]:
+			box(Transform3D(Basis.IDENTITY, Vector3(sx * 1.3, y_f + 1.25, zm)), Vector3(0.6, 2.5, sl), palette[rng.randi() % palette.size()], 0.0, 0.05, 0.02)
+	# The chamber: a floor, walls with a door to the corridor, a flat roof.
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, y_f - 0.25, 0.0)), Vector3(chx * 2.0, 0.5, chz * 2.0), palette[2], 0.0, 0.05, 0.02)
+	var courses := 4
+	var ch := 1.05
+	_house_walls(Vector3(0.0, y_f, 0.0), chx, chz, courses, ch, 0.8, 0.9, 2, 1.0, 0.0)
+	for i in 3:
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, y_f + courses * ch + 0.3, -chz + (i + 0.5) * chz * 2.0 / 3.0)), Vector3(chx * 2.0, 0.6, chz * 2.0 / 3.0), palette[rng.randi() % palette.size()], 0.0, 0.06, 0.02)
+	_sarcophagus(Vector3(0.0, y_f, 1.4), 0.0, Color(0.36, 0.3, 0.3))
+	_grave_goods(Vector3(0.0, y_f, -1.2), 1.6, 6)
+	_glow(Vector3(0.0, y_f + 3.0, 0.0), Color(1.0, 0.72, 0.4), 8.0, 0.8)
+	_glow(Vector3(0.0, y_f + 2.0, (z_in + z_out) * 0.5), Color(0.45, 0.85, 0.8), 7.0, 0.35)
+	_shelters.append([Vector3(0.0, y_f, 0.0), 3.0, courses * ch])
+	var zs := z_in
+	while zs < z_out:
+		_shelters.append([Vector3(0.0, y_f, zs), 1.3, 2.5])
+		zs += 2.0
 
 
 ## A stepped pyramid: `tiers` tiers of big blocks narrowing to the top
@@ -1658,7 +1757,10 @@ func _step_pyramid(hs: float, style: String) -> void:
 		var bottom := gr.x - 3.0 if k == 0 else top - th - 0.3
 		_tier(s, bottom, top, inset + 0.6, k, stair_w, lush, th)
 	var y_top := y0 + n * th
-	_stair(hs, top_hs, y_top, stair_w, y0, th, inset)
+	var reach: float = hs + site.stair_out + 1.0
+	_stairs(stair_w, -top_hs, y_top, -reach, Ruins.STAIR_DEG, func(y: float) -> float:
+		var k := clampi(int(floor((y - y0) / th)), 0, n - 1)
+		return -(hs - k * inset) + 0.6)
 	var floor_y := y_top - 0.12
 	if style == "snow":
 		for k in n - 1:
@@ -1733,19 +1835,18 @@ func _snow_ledge(s: float, width: float, y: float) -> void:
 	mat = STONE_M
 
 
-## The stair up the -z face, from where it meets the ground past the foot
-## to the top platform's edge at Ruins.STAIR_DEG: stepped slabs, each
-## reaching back into the face, between two sloping balustrades. A smooth
-## ramp stands in for the steps underfoot (the player can't climb stairs
-## step by step).
-func _stair(hs: float, top_hs: float, y_top: float, w: float, y0: float, th: float, inset: float) -> void:
-	var z_end := -top_hs
-	var reach: float = hs + site.stair_out + 1.0
-	var tanv := tan(deg_to_rad(Ruins.STAIR_DEG))
+## A flight of steps climbing toward +z at `deg` degrees to (z_end,
+## y_top): from where that line meets the ground (but no further out
+## than reach_z), each step a slab reaching back to back.call(y) (the
+## face it's built against), `w` wide, between two sloping balustrades.
+## A smooth ramp stands in for the steps underfoot (the player can't
+## climb stairs step by step).
+func _stairs(w: float, z_end: float, y_top: float, reach_z: float, deg: float, back: Callable) -> void:
+	var tanv := tan(deg_to_rad(deg))
 	var z_start := z_end
 	for i in 400:
 		z_start -= 0.25
-		if y_top - (z_end - z_start) * tanv <= ground(0.0, z_start) or z_start < -reach:
+		if y_top - (z_end - z_start) * tanv <= ground(0.0, z_start) or z_start < reach_z:
 			break
 	var y_start := ground(0.0, z_start)
 	var rise := y_top - y_start
@@ -1753,16 +1854,14 @@ func _stair(hs: float, top_hs: float, y_top: float, w: float, y0: float, th: flo
 	var steps := maxi(4, int(round(rise / 0.5)))
 	var r := rise / steps
 	var t := run / steps
-	var n: int = site.tiers
 	solid = false
 	for i in steps:
 		var y_i := y_start + (i + 1) * r
 		var z_i := z_start + i * t
-		var k := clampi(int(floor((y_i - r * 0.5 - y0) / th)), 0, n - 1)
-		var back := maxf(-(hs - k * inset) + 0.6, z_i + 0.6)
+		var bk := maxf(float(back.call(y_i - r * 0.5)), z_i + 0.6)
 		var bottom := y_i - r if i > 0 else ground(0.0, z_i) - 1.5
 		var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.04, 0.04))
-		box(Transform3D(Basis.IDENTITY, Vector3(0.0, (y_i + bottom) * 0.5, (z_i + back) * 0.5)), Vector3(w + 2.0, y_i - bottom, back - z_i), col, _growth(0.25), 0.06, 0.03)
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, (y_i + bottom) * 0.5, (z_i + bk) * 0.5)), Vector3(w + 2.0, y_i - bottom, bk - z_i), col, _growth(0.25), 0.06, 0.03)
 	solid = true
 	var dirv := Vector3(0.0, rise, run).normalized()
 	var nrm := dirv.cross(Vector3.RIGHT)
@@ -1771,20 +1870,50 @@ func _stair(hs: float, top_hs: float, y_top: float, w: float, y0: float, th: flo
 	var length := Vector2(rise, run).length()
 	for sx: float in [-1.0, 1.0]:
 		box(Transform3D(basis, mid + Vector3(sx * (w * 0.5 + 0.5), 0.0, 0.0) + nrm * 0.35), Vector3(1.0, 1.1, length + 0.6), palette[0], _growth(0.4), 0.12, 0.04)
-	_collision_box(Transform3D(basis, mid - nrm * (0.5 + r * 0.4)), Vector3(w * 0.5, 0.5, length * 0.5 + 0.3))
+	_ramp(Vector3(0.0, y_start, z_start), Vector3(0.0, y_top, z_end), w, r * 0.8)
 
 
-## A temple house on the top platform (floor at `y`), centered `zc` back
-## from the stair, its door toward it, a roof comb above; `fallen` leaves
-## broken walls and the roof in pieces on the floor.
-func _shrine(y: float, zc: float, fallen: bool) -> void:
-	var hx := 3.4
-	var hz := 2.4
-	var courses := 4
-	var ch := 0.8
-	var thick := 0.7
-	box(Transform3D(Basis.IDENTITY, Vector3(0.0, y + 0.25, zc)), Vector3(hx * 2.0 + 1.2, 0.5, hz * 2.0 + 1.2), palette[0], _growth(0.6))
-	var yb := y + 0.5
+## A walkable slope (collision only) from `a` up to `b` (both in one
+## x = const plane), `w` wide, its surface `sink` m below the line at the
+## foot and meeting `b` exactly at the top (so there's no lip onto the
+## floor there). It runs on a little past the foot, into the ground.
+func _ramp(a: Vector3, b: Vector3, w: float, sink: float) -> void:
+	a -= Vector3(0.0, sink, 0.0)
+	var dirv := (b - a).normalized()
+	var x := Vector3.RIGHT
+	var nrm := dirv.cross(x)
+	if nrm.y < 0.0:
+		nrm = -nrm
+		x = -x
+	var foot := a - dirv * 0.6
+	var length := foot.distance_to(b)
+	_collision_box(Transform3D(Basis(x, nrm, dirv), (foot + b) * 0.5 - nrm * 0.5), Vector3(w * 0.5, 0.5, length * 0.5))
+
+
+## Steps up to a raised floor at `floor_y` from the ground in front of a
+## door on the -z side at z_door, `w` wide, over a ramp.
+func _door_steps(x: float, z_door: float, floor_y: float, w: float) -> void:
+	var g := ground(x, z_door - 1.2)
+	var rise := floor_y - g
+	if rise < 0.12:
+		return
+	var n := clampi(int(ceil(rise / 0.3)), 1, 4)
+	solid = false
+	for k in n:
+		var top := floor_y - rise * (k + 1) / (n + 1)
+		var z1 := z_door - 0.45 * k
+		var z0 := z1 - 0.45
+		box(Transform3D(Basis.IDENTITY, Vector3(x, (top + g - 0.5) * 0.5, (z0 + z1) * 0.5 + 0.2)), Vector3(w, top - g + 0.5, z1 - z0 + 0.4), palette[k % palette.size()], _growth(0.3), 0.05, 0.03)
+	solid = true
+	# Up just past the floor's front edge, so there's no lip to catch on.
+	_ramp(Vector3(x, g, z_door - 0.45 * n - 0.6), Vector3(x, floor_y + 0.04, z_door + 0.05), w, 0.0)
+
+
+## Four walls of block courses round a room (floor at c.y, centered on c),
+## `hx` by `hz` outside and `thick` thick, the door on the -z wall
+## `door_half` either side of c.x and `door_courses` courses tall. Each
+## column stands whole with chance `keep`, else broken down to a stump.
+func _house_walls(c: Vector3, hx: float, hz: float, courses: int, ch: float, thick: float, door_half: float, door_courses: int, keep := 1.0, ivy_chance := 0.5) -> void:
 	for f in 4:
 		var along_x := f % 2 == 0
 		var sgn := -1.0 if f == 0 or f == 3 else 1.0
@@ -1797,19 +1926,72 @@ func _shrine(y: float, zc: float, fallen: bool) -> void:
 		var bw := length / blocks
 		for i in blocks:
 			var u := -length * 0.5 + (i + 0.5) * bw
-			var h := rng.randi_range(0, 2) if fallen else courses
+			var h := courses if rng.randf() < keep else rng.randi_range(0, courses - 1)
 			for j in h:
-				if f == 0 and absf(u) < 0.9 and j < 3:
+				if f == 0 and absf(u) < door_half + bw * 0.4 and j < door_courses:
 					continue # the door
 				var col: Color = palette[rng.randi() % palette.size()]
-				box(Transform3D(basis, Vector3(0.0, yb + (j + 0.5) * ch, zc) + dir * u + out * (half - thick * 0.5)), Vector3(bw, ch * 0.97, thick), col, _growth(0.25 + 0.15 * j), 0.07, 0.04)
-		if not fallen and rng.randf() < 0.7:
-			ivy(Vector3(0.0, yb + courses * ch, zc) + dir * rng.randf_range(-length * 0.3, length * 0.3) + out * (half + 0.1), out, rng.randf_range(1.5, 3.0))
+				box(Transform3D(basis, c + Vector3(0.0, (j + 0.5) * ch, 0.0) + dir * u + out * (half - thick * 0.5)), Vector3(bw, ch * 0.97, thick), col, _growth(0.25 + 0.15 * j), 0.07, 0.04)
+		if rng.randf() < ivy_chance:
+			ivy(c + Vector3(0.0, courses * ch, 0.0) + dir * rng.randf_range(-length * 0.3, length * 0.3) + out * (half + 0.1), out, rng.randf_range(1.5, 3.0))
+
+
+## A light in a tomb (moss-glow teal, or lamp-gold by the dead's goods).
+func _glow(p: Vector3, col: Color, range_m: float, energy: float) -> void:
+	_lights.append([p, col, range_m, energy])
+
+
+## Things left with the dead round `c` (on the floor at c.y): clay urns,
+## bones and a skull, and a glint of gold. No collision.
+func _grave_goods(c: Vector3, spread: float, count: int) -> void:
+	solid = false
+	for i in count:
+		var p := c + Vector3(rng.randf_range(-spread, spread), 0.0, rng.randf_range(-spread, spread))
+		match rng.randi() % 4:
+			0:
+				boulder(p + Vector3(0.0, 0.28, 0.0), Vector3(0.2, 0.3, 0.2), Basis.IDENTITY, CLAY, 0.0)
+				if rng.randf() < 0.5:
+					boulder(p + Vector3(0.45, 0.2, 0.1), Vector3(0.14, 0.2, 0.14), Basis.IDENTITY, CLAY.darkened(0.1), 0.0)
+			1:
+				for k in 3:
+					box(Transform3D(Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), p + Vector3(rng.randf_range(-0.3, 0.3), 0.04, rng.randf_range(-0.3, 0.3))), Vector3(0.45, 0.06, 0.06), BONE, 0.0, 0.02, 0.01)
+			2:
+				boulder(p + Vector3(0.0, 0.1, 0.0), Vector3(0.11, 0.1, 0.13), Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), BONE, 0.0)
+			_:
+				for k in 4:
+					box(Transform3D(Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), p + Vector3(rng.randf_range(-0.2, 0.2), 0.02 + k * 0.03, rng.randf_range(-0.2, 0.2))), Vector3(0.12, 0.025, 0.12), GOLD, 0.0, 0.01, 0.005)
+	solid = true
+
+
+## A stone coffin at `p` (on the floor), long along `yaw`, its lid
+## pushed askew.
+func _sarcophagus(p: Vector3, yaw: float, col: Color) -> void:
+	box(Transform3D(Basis(Vector3.UP, yaw), p + Vector3(0.0, 0.45, 0.0)), Vector3(0.95, 0.9, 2.2), col.darkened(0.05), _growth(0.15), 0.08, 0.02)
+	var lid := Basis(Vector3.UP, yaw + rng.randf_range(-0.25, 0.25))
+	box(Transform3D(lid, p + Vector3(rng.randf_range(-0.15, 0.15), 1.0, rng.randf_range(-0.2, 0.2))), Vector3(1.05, 0.2, 2.3), col.lightened(0.05), _growth(0.2), 0.06, 0.02)
+
+
+## A temple house on the top platform (floor at `y`), centered `zc` back
+## from the stair, its door toward it, a roof comb above; `fallen` leaves
+## broken walls and the roof in pieces on the floor.
+func _shrine(y: float, zc: float, fallen: bool) -> void:
+	var hx := 3.4
+	var hz := 2.4
+	var courses := 4
+	var ch := 0.8
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, y + 0.25, zc)), Vector3(hx * 2.0 + 1.2, 0.5, hz * 2.0 + 1.2), palette[0], _growth(0.6))
+	var yb := y + 0.5
+	_house_walls(Vector3(0.0, yb, zc), hx, hz, courses, ch, 0.7, 0.75, 3, 0.0 if fallen else 1.0, 0.0 if fallen else 0.7)
 	var roof_y := yb + courses * ch
 	if not fallen:
 		box(Transform3D(Basis.IDENTITY, Vector3(0.0, roof_y + 0.25, zc)), Vector3(hx * 2.0 + 0.6, 0.5, hz * 2.0 + 0.6), palette[1], _growth(0.8))
 		box(Transform3D(Basis.IDENTITY, Vector3(0.0, roof_y + 1.6, zc + 0.3)), Vector3(hx * 1.5, 2.2, 0.5), palette[2], _growth(0.5))
 		ivy(Vector3(rng.randf_range(-1.5, 1.5), roof_y + 2.7, zc + 0.05), Vector3(0, 0, -1), rng.randf_range(1.5, 3.5))
+		# An altar within, offerings round it, and a glow.
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, yb + 0.45, zc + 0.9)), Vector3(1.6, 0.9, 0.8), palette[3], _growth(0.4))
+		_grave_goods(Vector3(0.0, yb, zc + 0.2), 1.3, 3)
+		_glow(Vector3(0.0, yb + 2.0, zc), Color(0.45, 0.9, 0.75), 6.0, 0.7)
+		_shelters.append([Vector3(0.0, yb, zc), 2.0, courses * ch])
 	else:
 		for i in rng.randi_range(3, 5):
 			var p := Vector3(rng.randf_range(-hx, hx), yb + 0.3, zc + rng.randf_range(-hz, hz))
@@ -1836,3 +2018,339 @@ func _obelisk(y: float, top_hs: float) -> void:
 			var p := Vector2(cx, cz) * (top_hs - 1.3)
 			for d in rng.randi_range(1, 3):
 				box(Transform3D(Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), Vector3(p.x, y + 0.6 + d * 1.2, p.y)), Vector3(0.9, 1.15, 0.9), palette[rng.randi() % palette.size()], _growth(0.35), 0.1, 0.05)
+
+
+# --- Graveyards and tombs -----------------------------------------------------
+
+## A graveyard: a low stone wall round a square with a gate on -z (posts
+## and capstones) and a breach or two, rows of graves facing the gate
+## either side of a path up the middle,
+## dead trees, and a mausoleum at the back. Headstones lean more in the
+## marsh; the camp (if any) sits just inside the gate.
+func _graveyard() -> void:
+	var hm: float = site.half_m
+	var style: String = site.style
+	if style == "desert":
+		palette = SANDSTONE
+	var c := [Vector2(-hm, -hm), Vector2(hm, -hm), Vector2(hm, hm), Vector2(-hm, hm)]
+	var wall_h := rng.randf_range(1.1, 1.5)
+	wall(c[0], Vector2(-1.8, -hm), wall_h, 0.6, [], 0.3)
+	wall(Vector2(1.8, -hm), c[1], wall_h, 0.6, [], 0.3)
+	for i in range(1, 4):
+		var br: Array = []
+		if rng.randf() < 0.6:
+			var s0 := rng.randf_range(0.1, 0.6)
+			br.append([s0, s0 + rng.randf_range(0.15, 0.3)])
+		wall(c[i], c[(i + 1) % 4], wall_h, 0.6, br, 0.35)
+	for sx: float in [-1.0, 1.0]:
+		var gp := Vector2(sx * 2.1, -hm)
+		var g := ground(gp.x, gp.y)
+		box(Transform3D(Basis.IDENTITY, Vector3(gp.x, g + 0.9, gp.y)), Vector3(0.8, 2.6, 0.8), palette[1], _growth(0.4))
+		box(Transform3D(Basis.IDENTITY, Vector3(gp.x, g + 2.3, gp.y)), Vector3(1.0, 0.25, 1.0), palette[2], _growth(0.7))
+	var tilt := 0.35 if style == "marsh" else 0.12
+	var z := -hm + 8.0
+	while z < hm - 9.0:
+		var x := -hm + 2.2
+		while x < hm - 2.0:
+			# A path up the middle from the gate to the mausoleum.
+			if absf(x) > 1.4 and rng.randf() < 0.78:
+				_grave(Vector2(x + rng.randf_range(-0.2, 0.2), z), tilt, style == "snow")
+			x += rng.randf_range(1.7, 2.1)
+		z += 2.5
+	for i in rng.randi_range(1, 3):
+		# Along the side walls, clear of the gate, the camp and the mausoleum.
+		var a := (0.0 if rng.randf() < 0.5 else PI) + rng.randf_range(-0.8, 0.8)
+		_dead_tree(Vector2(cos(a) * hm * rng.randf_range(0.72, 0.85), sin(a) * hm * 0.5 - hm * 0.1))
+	_mausoleum(Vector2(0.0, hm - 4.5), rng.randf_range(2.4, 3.0), rng.randf_range(2.8, 3.4))
+	_camp_spot = Vector3(0.0, ground(0.0, -hm + 4.5), -hm + 4.5)
+
+
+## One grave at `p`: a headstone at its head (+z) facing the gate, a slab,
+## a shouldered slab, a cross or a little obelisk, leaning up to `tilt`,
+## or fallen flat; and usually a low mound (snowed over in snow country).
+func _grave(p: Vector2, tilt: float, snowy: bool) -> void:
+	var g := ground(p.x, p.y)
+	var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.05, 0.08))
+	var lean := Basis.from_euler(Vector3(rng.randf_range(-tilt, tilt), rng.randf_range(-0.08, 0.08), rng.randf_range(-tilt, tilt) * 0.6))
+	var stone := Vector3(p.x, g - 0.15, p.y + 0.9)
+	var moss := _growth(0.45)
+	match rng.randi() % 6:
+		0, 1:
+			box(Transform3D(lean, stone + lean * Vector3(0.0, 0.55, 0.0)), Vector3(0.7, 1.1, 0.16), col, moss, 0.05, 0.03)
+		2:
+			box(Transform3D(lean, stone + lean * Vector3(0.0, 0.5, 0.0)), Vector3(0.72, 0.95, 0.17), col, moss, 0.05, 0.03)
+			box(Transform3D(lean, stone + lean * Vector3(0.0, 1.05, 0.0)), Vector3(0.44, 0.2, 0.17), col, moss, 0.05, 0.02)
+		3:
+			box(Transform3D(lean, stone + lean * Vector3(0.0, 0.7, 0.0)), Vector3(0.18, 1.4, 0.16), col, moss, 0.04, 0.02)
+			box(Transform3D(lean, stone + lean * Vector3(0.0, 1.0, 0.0)), Vector3(0.7, 0.18, 0.16), col, moss, 0.04, 0.02)
+		4:
+			box(Transform3D(Basis.IDENTITY, stone + Vector3(0.0, 0.3, 0.0)), Vector3(0.6, 0.4, 0.6), col, moss, 0.05, 0.02)
+			box(Transform3D(lean, stone + Vector3(0.0, 0.5, 0.0) + lean * Vector3(0.0, 0.75, 0.0)), Vector3(0.28, 1.5, 0.28), col, moss, 0.05, 0.02)
+		_:
+			box(Transform3D(Basis.from_euler(Vector3(PI * 0.5 + rng.randf_range(-0.1, 0.1), rng.randf_range(-0.3, 0.3), 0.0)), stone + Vector3(rng.randf_range(-0.2, 0.2), 0.23, -0.4)), Vector3(0.7, 1.1, 0.16), col, moss, 0.05, 0.03)
+	if rng.randf() < 0.7:
+		var earth := EARTH.lerp(TerrainChunk._biome_blend(map, up), 0.5)
+		if snowy:
+			earth = SNOW
+			mat = SNOW_M
+		solid = false
+		box(Transform3D(Basis(Vector3.UP, rng.randf_range(-0.05, 0.05)), Vector3(p.x, g + 0.02, p.y - 0.1)), Vector3(0.9, 0.34, 1.8), earth, 0.0 if snowy else _growth(0.6), 0.16, 0.06)
+		solid = true
+		mat = STONE_M
+
+
+## A bare, twisted dead tree: a leaning trunk and a few crooked limbs.
+func _dead_tree(p: Vector2) -> void:
+	mat = WOOD_M
+	var g := ground(p.x, p.y)
+	var base := Vector3(p.x, g - 0.4, p.y)
+	var top := base + Vector3(rng.randf_range(-0.6, 0.6), rng.randf_range(3.5, 5.5), rng.randf_range(-0.6, 0.6))
+	_limb(base, top, 0.42)
+	for i in rng.randi_range(3, 5):
+		var from := base.lerp(top, rng.randf_range(0.55, 1.0))
+		var a := rng.randf() * TAU
+		var end := from + Vector3(cos(a), rng.randf_range(0.3, 0.9), sin(a)).normalized() * rng.randf_range(1.4, 2.6)
+		_limb(from, end, 0.18)
+		for j in 2:
+			var a2 := a + rng.randf_range(-0.9, 0.9)
+			_limb(end, end + Vector3(cos(a2), rng.randf_range(0.2, 0.8), sin(a2)).normalized() * rng.randf_range(0.6, 1.2), 0.08)
+	mat = STONE_M
+
+
+## A mausoleum centered at `c`, `hx` by `hz` (half, outside): a stone
+## house of the dead on a plinth, its door to the gate (-z) with steps up,
+## a gabled roof of two slabs over pediments, a sarcophagus within, the
+## dead's goods about it and a faint glow.
+func _mausoleum(c: Vector2, hx: float, hz: float) -> void:
+	var gr := _ground_range(c, maxf(hx, hz))
+	var floor_y := gr.y + 0.25
+	var base_y := gr.x - 0.6
+	box(Transform3D(Basis.IDENTITY, Vector3(c.x, (floor_y + base_y) * 0.5, c.y)), Vector3(hx * 2.0 + 0.8, floor_y - base_y, hz * 2.0 + 0.8), palette[0], _growth(0.3), 0.1, 0.03)
+	_door_steps(c.x, c.y - hz - 0.4, floor_y, 1.8)
+	var courses := 4
+	var ch := 0.8
+	_house_walls(Vector3(c.x, floor_y, c.y), hx, hz, courses, ch, 0.6, 0.75, 3, 0.92)
+	# The roof: two slabs pitched from a ridge along z, over pediments.
+	var wt := floor_y + courses * ch
+	var pitch := 0.45
+	var span := hx + 0.5
+	for sx: float in [-1.0, 1.0]:
+		var b := Basis(Vector3(0, 0, 1), -sx * pitch)
+		box(Transform3D(b, Vector3(c.x + sx * span * 0.5, wt + tan(pitch) * span * 0.5 + 0.12, c.y)), Vector3(span / cos(pitch) + 0.1, 0.28, hz * 2.0 + 0.6), palette[1], _growth(0.7), 0.06, 0.03)
+	var start := _v.size()
+	var peak := wt + tan(pitch) * hx
+	var gable: Color = palette[2]
+	gable.a = _growth(0.2)
+	for sz: float in [-1.0, 1.0]:
+		var zz := c.y + sz * (hz - 0.05)
+		var t0 := Vector3(c.x - hx, wt, zz)
+		var t1 := Vector3(c.x + hx, wt, zz)
+		var t2 := Vector3(c.x, peak, zz)
+		if (t1 - t0).cross(t2 - t0).z * sz > 0.0:
+			_tri(t0, t1, t2, gable)
+		else:
+			_tri(t0, t2, t1, gable)
+	_lv.append_array(_v.slice(start))
+	_ln.append_array(_n.slice(start))
+	_lc.append_array(_c.slice(start))
+	_lm.append_array(_m.slice(start))
+	_sarcophagus(Vector3(c.x, floor_y, c.y + hz * 0.2), 0.0, palette[3])
+	_grave_goods(Vector3(c.x, floor_y, c.y - hz * 0.3), maxf(hx - 1.2, 0.5), 3)
+	_glow(Vector3(c.x, floor_y + 2.0, c.y), Color(0.45, 0.85, 0.8), 6.0, 0.6)
+	_shelters.append([Vector3(c.x, floor_y, c.y), minf(hx, hz), courses * ch])
+
+
+## A barrow: a long earth mound, highest at its front (-z) where a
+## dry-stone facade stands with a portal of two uprights and a lintel and
+## standing stones before it. Inside, a passage of upright slabs roofed
+## with capstones runs in past two pairs of side cells to an end chamber,
+## the dead's goods in each and a glow at the end. In the desert, a
+## mastaba instead.
+func _barrow() -> void:
+	var style: String = site.style
+	if style == "desert":
+		palette = SANDSTONE
+		_mastaba()
+		return
+	var w: float = site.half_w
+	var l: float = site.half_l
+	var h: float = site.height_m
+	var snowy := style == "snow"
+	var ph := rng.randf() * TAU
+	var hf := func(x: float, z: float) -> float:
+		var prof := pow(maxf(0.0, 1.0 - (x / w) * (x / w)), 0.6)
+		var along := lerpf(1.0, 0.7, (z + l) / (2.0 * l)) * sqrt(clampf((l - z) / 3.0, 0.0, 1.0))
+		return ground(x, z) - 1.0 + ((h + 1.0) + 0.2 * sin(x * 1.3 + ph) * sin(z * 0.8 + ph)) * prof * along
+	# The mound: turf (the grass texture), earthier toward the foot.
+	var turf := TerrainChunk._biome_blend(map, up).lerp(GRASS, 0.2)
+	if snowy:
+		turf = SNOW
+	var soil := turf.darkened(0.25).lerp(EARTH, 0.35)
+	turf.a = 0.0 if snowy else 0.1
+	soil.a = 0.0
+	mat = SNOW_M if snowy else THATCH_M
+	var nx := 12
+	var nz := 16
+	var pts: Array[Vector3] = []
+	for j in nz + 1:
+		var z := -l + 2.0 * l * j / nz
+		for i in nx + 1:
+			var x := -w + 2.0 * w * i / nx
+			pts.append(Vector3(x, hf.call(x, z), z))
+	var start := _v.size()
+	for j in nz:
+		for i in nx:
+			var a := pts[j * (nx + 1) + i]
+			var b := pts[j * (nx + 1) + i + 1]
+			var c := pts[(j + 1) * (nx + 1) + i + 1]
+			var d := pts[(j + 1) * (nx + 1) + i]
+			var mid := (a + b + c + d) * 0.25
+			var prof := pow(maxf(0.0, 1.0 - (mid.x / w) * (mid.x / w)), 0.6)
+			_face(a, b, c, d, soil.lerp(turf, smoothstep(0.0, 0.5, prof)), mid - Vector3(0.0, 3.0, 0.0))
+	_smooth_from(start)
+	_collide_since(start)
+	_lv.append_array(_v.slice(start))
+	_ln.append_array(_n.slice(start))
+	_lc.append_array(_c.slice(start))
+	_lm.append_array(_m.slice(start))
+	mat = STONE_M
+	# The facade across the mound's open front, up to its outline.
+	var z0 := -l
+	var gd := ground(0.0, z0)
+	var cols := int(ceil(2.0 * w / 1.1))
+	var cw := 2.0 * w / cols
+	for i in cols:
+		var x := -w + (i + 0.5) * cw
+		var g := ground(x, z0)
+		var top: float = hf.call(x, z0) + 0.25
+		var y := g - 0.6
+		while y < top - 0.15:
+			var chh := minf(0.55, top - y)
+			if not (absf(x) < 1.25 and y + chh * 0.5 < gd + 2.3):
+				var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.05, 0.05))
+				box(Transform3D(Basis.IDENTITY, Vector3(x, y + chh * 0.5, z0 - 0.35)), Vector3(cw, chh * 0.97, 0.9), col, _growth(0.3 + (0.4 if y + chh >= top - 0.3 else 0.0)), 0.07, 0.04)
+			y += chh
+	# The portal: two uprights and a lintel.
+	for sx: float in [-1.0, 1.0]:
+		box(Transform3D(Basis.IDENTITY, Vector3(sx * 1.25, gd + 1.0, z0 - 0.45)), Vector3(0.9, 2.9, 1.2), palette[1], _growth(0.4), 0.12, 0.05)
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, gd + 2.7, z0 - 0.4)), Vector3(3.6, 0.6, 1.3), palette[2], _growth(0.6), 0.12, 0.05)
+	# Standing stones before it.
+	for sx: float in [-1.0, 1.0]:
+		for k in 2:
+			if rng.randf() < 0.3:
+				continue
+			var x := sx * (2.6 + k * 1.8 + rng.randf_range(-0.3, 0.3))
+			var zz := z0 - 1.4 - k * 0.8
+			var hh := rng.randf_range(2.2, 3.6) * (1.0 - 0.25 * k)
+			var tilt := Basis.from_euler(Vector3(rng.randf_range(-0.08, 0.08), rng.randf_range(-0.3, 0.3), rng.randf_range(-0.1, 0.1)))
+			box(Transform3D(tilt, Vector3(x, ground(x, zz) + hh * 0.5 - 0.5, zz)), Vector3(rng.randf_range(0.9, 1.3), hh, rng.randf_range(0.5, 0.8)), palette[rng.randi() % palette.size()], _growth(0.5), 0.2, 0.12)
+	_barrow_passage(l)
+	_camp_spot = Vector3(w + 5.0, ground(w + 5.0, -l + 3.0), -l + 3.0)
+
+
+## The barrow's inside: a passage 1.6 m wide from the portal along +z,
+## side cells opening off it left and right twice, an end chamber, all
+## upright slabs under capstones on the natural floor.
+func _barrow_passage(l: float) -> void:
+	var z0 := -l
+	var z1 := -l + 2.0 * l * 0.28
+	var z2 := -l + 2.0 * l * 0.45
+	var ze := -l + 2.0 * l * 0.62
+	var t := 0.55 # slab thickness
+	var wx := 0.8 + t * 0.5 # passage wall line
+	for sx: float in [-1.0, 1.0]:
+		for seg in [[z0, z1 - 0.8], [z1 + 0.8, z2 - 0.8], [z2 + 0.8, ze]]:
+			_slabs(Vector2(sx * wx, seg[0]), Vector2(sx * wx, seg[1]))
+		for zc: float in [z1, z2]:
+			var bx := sx * (2.8 + t * 0.5)
+			_slabs(Vector2(bx, zc - 0.8 - t), Vector2(bx, zc + 0.8 + t))
+			for sz: float in [-1.0, 1.0]:
+				_slabs(Vector2(sx * (0.8 + t), zc + sz * (0.8 + t * 0.5)), Vector2(bx, zc + sz * (0.8 + t * 0.5)))
+			_capstone(Vector2(sx * 1.8, zc), Vector2(2.9, 2.5))
+			_grave_goods(Vector3(sx * 1.9, ground(sx * 1.9, zc), zc), 0.5, 2)
+		# The end chamber's side and the front walls beside the passage.
+		_slabs(Vector2(sx * (1.8 + t * 0.5), ze), Vector2(sx * (1.8 + t * 0.5), ze + 3.2))
+		_slabs(Vector2(sx * (0.8 + t), ze - t * 0.5), Vector2(sx * (1.8 + t), ze - t * 0.5))
+	_slabs(Vector2(-1.8 - t, ze + 3.2 + t * 0.5), Vector2(1.8 + t, ze + 3.2 + t * 0.5))
+	var z := z0 + 0.3
+	while z < ze:
+		_capstone(Vector2(0.0, z + 0.65), Vector2(2.9, 1.4))
+		z += 1.3
+	_capstone(Vector2(0.0, ze + 0.8), Vector2(4.6, 1.8))
+	_capstone(Vector2(0.0, ze + 2.4), Vector2(4.6, 1.8))
+	var gc := ground(0.0, ze + 1.6)
+	_sarcophagus(Vector3(0.0, gc - 0.1, ze + 1.9), PI * 0.5, palette[3])
+	_grave_goods(Vector3(0.0, gc, ze + 0.8), 1.2, 4)
+	_glow(Vector3(0.0, gc + 1.8, ze + 1.6), Color(1.0, 0.72, 0.4), 6.5, 0.7)
+	_glow(Vector3(0.0, ground(0.0, (z0 + ze) * 0.5) + 1.8, (z0 + ze) * 0.5), Color(0.45, 0.85, 0.8), 5.0, 0.35)
+	var zs := z0 + 1.0
+	while zs < ze + 3.0:
+		_shelters.append([Vector3(0.0, ground(0.0, zs), zs), 1.2, 2.2])
+		zs += 1.6
+
+
+## Upright slabs from a to b (local xz), up to 2.2 m above the ground
+## (and down into it), each at most 1.4 m long.
+func _slabs(a: Vector2, b: Vector2) -> void:
+	var along := b - a
+	var length := along.length()
+	if length < 0.2:
+		return
+	var n := maxi(1, int(ceil(length / 1.4)))
+	var dir := Vector3(along.x, 0.0, along.y) / length
+	var basis := Basis(dir, Vector3.UP, dir.cross(Vector3.UP))
+	for i in n:
+		var p := a + along * (i + 0.5) / n
+		var g := ground(p.x, p.y)
+		var col: Color = (palette[rng.randi() % palette.size()] as Color).darkened(rng.randf_range(0.0, 0.12))
+		box(Transform3D(basis.rotated(Vector3.UP, rng.randf_range(-0.04, 0.04)), Vector3(p.x, g + 0.9, p.y)), Vector3(length / n + 0.05, 2.6, 0.55), col, _growth(0.2), 0.1, 0.05)
+
+
+## A capstone roofing the barrow at `p`, `size` (x, z), on the walls'
+## tops 2.2 m above the ground there.
+func _capstone(p: Vector2, size: Vector2) -> void:
+	var g := ground(p.x, p.y)
+	box(Transform3D(Basis.from_euler(Vector3(rng.randf_range(-0.03, 0.03), rng.randf_range(-0.05, 0.05), rng.randf_range(-0.03, 0.03))), Vector3(p.x, g + 2.42, p.y)), Vector3(size.x, 0.45, size.y), palette[rng.randi() % palette.size()], _growth(0.3), 0.14, 0.06)
+
+
+## A mastaba (a desert tomb): a flat-roofed sandstone house of the dead
+## on a drift of sand, its door on -z with steps up. One roof slab has
+## often fallen in, letting a shaft of sun down onto a false-door stele
+## on the back wall, a sarcophagus and the dead's goods.
+func _mastaba() -> void:
+	var hx: float = site.half_w
+	var hz: float = site.half_l
+	var h: float = site.height_m
+	mound(maxf(hx, hz) + 1.5, maxf(hx, hz) + 30.0, 22.0, 0.25)
+	var gr := _ground_range(Vector2.ZERO, maxf(hx, hz))
+	var floor_y := maxf(gr.y, 0.25) + 0.2
+	var base_y := gr.x - 1.0
+	var thick := 1.2
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, (floor_y + base_y) * 0.5, 0.0)), Vector3(hx * 2.0 + 0.6, floor_y - base_y, hz * 2.0 + 0.6), palette[0], 0.0, 0.1, 0.03)
+	_door_steps(0.0, -hz - 0.3, floor_y, 2.0)
+	var courses := maxi(3, int(round(h)))
+	var ch := h / courses
+	_house_walls(Vector3(0.0, floor_y, 0.0), hx, hz, courses, ch, thick, 0.8, 3, 0.97, 0.0)
+	var n := int(ceil(hz * 2.0 / 1.6))
+	var sw := hz * 2.0 / n
+	var missing := rng.randi_range(1, n - 2) if rng.randf() < 0.7 else -1
+	for i in n:
+		if i == missing:
+			continue
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, floor_y + h + 0.25, -hz + (i + 0.5) * sw)), Vector3(hx * 2.0 + 0.3, 0.5, sw * 0.99), palette[rng.randi() % palette.size()], 0.0, 0.1, 0.04)
+	if missing >= 0:
+		# The fallen slab, broken, its piece leaning against a side wall
+		# (clear of the way from the door).
+		var sx := -1.0 if rng.randf() < 0.5 else 1.0
+		box(Transform3D(Basis.from_euler(Vector3(0.0, 0.15, sx * 0.9)), Vector3(sx * (hx - thick - 0.7), floor_y + 0.9, -hz + (missing + 0.5) * sw)), Vector3(2.0, 0.45, sw * 0.9), palette[1], 0.0, 0.12, 0.06)
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, floor_y + 1.4, hz - thick - 0.12)), Vector3(1.6, 2.8, 0.25), palette[3], 0.0, 0.05, 0.01)
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, floor_y + 1.1, hz - thick - 0.2)), Vector3(0.7, 1.9, 0.12), Color(0.2, 0.16, 0.12), 0.0, 0.03, 0.01)
+	_sarcophagus(Vector3(0.0, floor_y, hz * 0.25), PI * 0.5, palette[3])
+	for sx: float in [-1.0, 1.0]:
+		_grave_goods(Vector3(sx * (hx - thick) * 0.55, floor_y, -hz * 0.2), 1.2, 3)
+	_glow(Vector3(0.0, floor_y + 2.5, 0.0), Color(1.0, 0.72, 0.4), 7.0, 0.6)
+	_shelters.append([Vector3(0.0, floor_y, 0.0), minf(hx, hz) - thick, h])
+	for k in 3:
+		var a := rng.randf_range(0.3, PI - 0.3)
+		rubble(Vector3(cos(a) * (hx + 2.0), 0.0, sin(a) * (hz + 2.0)), 2.0, 4)
+	_camp_spot = Vector3(hx + 6.0, ground(hx + 6.0, 0.0), 0.0)
