@@ -66,7 +66,7 @@ The build is far past "prototype." Most layers of the stack already exist. The j
 
 ## Current phase: **Phase 0 — Look & Light**
 
-Target: **2000–2004 console 3D** (Dreamcast / GameCube). Low-poly *and smooth*. See Appendix R1.
+Target: **late-90s/early-2000s console 3D, saturated dark-fantasy**. Low-poly but rounded. See Appendix R1 and R1a.
 
 **Suspected causes of the blocky look, to confirm in audit:**
 1. `post_grade` — dithered color depth and sharpening. Replace with: subtle film grain, slight color bleed, mild fog haze, viewport render scale ~0.75–0.8 for 480p softness. Keep the night tint.
@@ -76,7 +76,7 @@ Target: **2000–2004 console 3D** (Dreamcast / GameCube). Low-poly *and smooth*
 5. Environment — glow/bloom off, SSAO off, MSAA 2x at most.
 6. Sky — 45/20/35/20 split, smooth lerps of sky/sun/ambient/fog through dawn and dusk.
 
-**Done when:** a dusk screenshot by the river could be from a GameCube disc, and a 20-min time-lapse shows sun and moon crossing with no snapping.
+**Done when:** a dusk river screenshot could sit beside the R1a references and belong, and a 20-min time-lapse shows sun and moon crossing with no snapping.
 
 **Prompt A (paste this):**
 > Read docs/WORLD_SYSTEMS_SPEC.md and docs/PROGRESS.md. We are in Phase 0. First, tell me exactly what the restyle and set-piece agents are changing in their copies, and whether it matches Appendix R1. Then audit the current render path against R1 and the six suspected causes in Part C — post_grade, texture filtering, foliage, terrain normals, environment settings, and the day split — and list in plain English where it diverges. Propose a fix order. Don't change anything yet.
@@ -221,20 +221,35 @@ The designer should be **surprised**. If any of these had to be hard-coded, the 
 
 # APPENDICES — Reference (Claude Code consults; designer edits)
 
-## R1. Render target: 2000–2004 console 3D
-References: Phantasy Star Online Ep. 1&2, F-Zero GX, Super Smash Bros. Melee, American McGee's Alice, early League of Legends map atmosphere.
+## R1. Render target: late-90s/early-2000s console 3D, saturated dark-fantasy
+The references have crunchy textures on smooth, rounded shapes. Grain, dither and low-res texture noise are IN. Blocky geometry, cube foliage, stepped terrain and oversized pixels are OUT.
 
 | Element | Do | Don't |
 |---|---|---|
-| Geometry | Low polycount, smooth-shaded organic shapes; rounded trunks, sloped terrain | Voxels, cubes, faceted flat shading |
-| Textures | 64–256px painted-style, **linear + mipmaps**, gently soft | Nearest-neighbor / pixel-art |
-| Terrain | Continuous mesh, smooth normals | Blocks, stepped terraces |
-| Lighting | Directional sun + directional moon, simple shading; soft ambient fill | Blocky baked light, harsh cutoffs |
-| Post | Subtle grain, slight color bleed, mild haze; render scale ~0.75–0.8 | Sharpening, dithered color depth, bloom, SSAO, heavy AA |
-| Palette | Saturated blue nights, warm orange fire, mossy greens, cold grey stone | Neon, pastel, pure-black shadows |
-| Foliage | Alpha-cutout quads / low-poly clusters, vertex-colored | Cube leaves |
+| Geometry | Low-poly but rounded, organic silhouettes | Blocky geometry, cube foliage, stepped terrain |
+| Textures | 128–256px painted-style with visible noise; texels never bigger than 2–3 screen pixels; nearest or bilinear both fine | Oversized pixels |
+| Lighting | Directional sun + moon with strong coloured fill — ultramarine at night, warm orange near fire | |
+| Post | Subtle grain, mild haze, night tint, light dither at ~1/4 strength optional; render scale 0.75–0.85 | Sharpening, bloom, SSAO |
+| Sky | Dense speckled stars, big visible moon, painted cloud streaks on pure saturated blue by day | |
 
-**Acceptance test:** a dusk screenshot by the river could be from a GameCube disc.
+**Acceptance test:** a dusk river screenshot could sit beside the R1a references and belong.
+
+## R1a. Palette
+| Thing | Colour |
+|---|---|
+| Night sky | #0A14A0 → #1B2ED8 — bright ultramarine, never black or grey |
+| Night fog | #1E30C0 at ~40%; distance dissolves to blue |
+| Night water | #1B3CFF with #7FB0FF highlights — near self-lit; waterfalls near-white at the crest |
+| Moonlight on stone/snow | #8FA8FF |
+| Day sky | #1436FF zenith → #4C7CFF horizon |
+| Grass | day #3FA83A / shadow #1F5A22, cooling toward #1E4A6A at night |
+| Dirt / bark | #6B4A2E → #A07A4A — the one warm ground colour |
+| Stone | #6F7A8A day, #3E4C8C night; moss #3F7A3A |
+| Fire | #FFB020 core, #FF4A00 coals, #FF7A2A light |
+| Windows / lanterns | #FF3A2A / #FFC040 |
+| Snow | #C8D8F0 with #6A82C0 shadows |
+
+Rules: saturate, never desaturate; scenes are blue plus one warm accent; nothing pure black.
 
 ## R2. Plant strata by Whittaker region (tolerance guide)
 
