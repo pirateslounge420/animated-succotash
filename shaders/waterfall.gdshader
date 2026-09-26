@@ -4,9 +4,9 @@
 // material. Streaks of white water slide down over a deep blue sheet, foam
 // thickens toward the plunge pool, and the edges fray. At night the water
 // glows from within like the rest (brighter than still water: the
-// bioluminescent waterfalls of the references), and bright enough to bloom.
+// bioluminescent waterfalls of the references). Vertex-lit Lambert (Look).
 shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specular_disabled;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 
@@ -52,8 +52,4 @@ void fragment() {
 	EMISSION = glow * (0.08 + 1.6 * look_night) * (0.6 + 0.6 * streak);
 	EMISSION += look_glow_emission(world_pos, look_site_glow(world_pos, 1.0) * 1.2);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
-}
-
-void light() {
-	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
 }

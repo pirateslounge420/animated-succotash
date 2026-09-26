@@ -1,8 +1,8 @@
-// Imported models (ModelLibrary): the model's own texture and color, lit
-// like the rest of the world (Lambert with colored shadows, a rim light,
-// a glossy sheen, the moonlit edge after dark) and fogged like it.
+// Imported models (ModelLibrary): the model's own texture and color,
+// vertex-lit like the rest of the world (Lambert, no specular, Look) and
+// fogged like it.
 shader_type spatial;
-render_mode diffuse_lambert;
+render_mode vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 
@@ -33,14 +33,8 @@ void fragment() {
 		ALPHA = c.a;
 		ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
 	}
-	ROUGHNESS = 0.6;
+	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
-	EMISSION = emission_color * emission_energy + look_rim(NORMAL, VIEW, 0.45) + look_gloss(NORMAL, VIEW, 0.14);
+	EMISSION = emission_color * emission_energy;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
-}
-
-void light() {
-	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
-	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, ROUGHNESS, 0.5, 0.4, ALBEDO);
-	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, 24.0, 0.5);
 }

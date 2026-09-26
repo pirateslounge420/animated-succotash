@@ -1,7 +1,7 @@
 // Distant planet shell (FarShell): coarse terrain or sea far beyond the
 // streamed chunks, for long views of distant mountains. Cut away near the
-// camera, where detailed chunks take over. Lit flat and fogged in bands
-// like the near terrain, so the two meet without a visible change.
+// camera, where detailed chunks take over. Vertex-lit and fogged like the
+// near terrain, so the two meet without a visible change.
 //
 // Mountains read crunchy, not as flat color: rock (grey, or anything
 // steep) carries Look's stone texture at the scale of crags, meters per
@@ -9,7 +9,7 @@
 // in the planet's own frame (the shell sits at the planet center), so it
 // doesn't slide when the floating origin moves.
 shader_type spatial;
-render_mode cull_back, diffuse_lambert, specular_disabled;
+render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 
@@ -67,8 +67,4 @@ void fragment() {
 	}
 	ROUGHNESS = 1.0;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
-}
-
-void light() {
-	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
 }

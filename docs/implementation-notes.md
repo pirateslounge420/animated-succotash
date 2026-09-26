@@ -207,8 +207,8 @@ Verified:
   - vibrance for greens and blues, plus an emerald push (greens lose red
     and gain a little blue, so foliage reads deep rather than lime);
   - blacks crushed slightly;
-  - sharpening day and night, plus a wide (3 px) luminance clarity boost
-    that separates crowns, trunks and stones.
+  - no sharpening or clarity (both removed with the 2001-2004 console
+    lighting pass: the era's image is soft).
 
   At night it adds crushed contrast, a cobalt/violet push in the shadows
   and a vignette. Inside glowing sites it adds extra contrast.
@@ -270,22 +270,36 @@ Verified:
   trunks (Vegetation), boulders are 320-triangle spheres, creature parts
   28-sided spheres and capsules, and camp folk, wolves, deer and goblins
   are one-piece sculpted bodies (Creatures).
-- **Lighting** is a custom light() in every world shader (Look):
-  - Lambert, plus **colored shadows**: where the sun or moon is blocked
-    or faces away, a share of it comes back tinted teal by day and cobalt
-    at night, multiplying each surface's own color, so shaded forest
-    stays green. The day ambient is neutral (0.26); the tint carries the
-    color of shade.
-  - a glossy **sheen** (Blinn-Phong, energy-normalized so a tight
-    highlight is bright and a broad one soft): strongest on creatures
-    (horn, hooves and leather most), lighter on worn stone, a waxy glint
-    on leaves;
-  - a **sky gloss**: surfaces seen edge-on pick up the sky's color
-    (`look_sky_color`, the horizon toward the zenith, dimming at night),
-    the glassy rim of GameCube-era models: most on horn and leather, some
-    on skin, a little on fur and stone.
-  - rim light, leaf translucency and the ground's wet toon highlight at
-    night, reimplemented because a custom light() replaces Godot's.
+- **Lighting: vertex-lit, 2001-2004 console style** (Phantasy Star
+  Online, Melee, F-Zero GX), not PBR and not soft cartoon shading:
+  - every lit world shader (terrain, far terrain, plants, ruins,
+    creatures, sculpted bodies, the player, imported models, waterfalls)
+    uses Godot's built-in Lambert with `render_mode vertex_lighting` and
+    `specular_disabled`. No custom light(): no rim, sheen, sky gloss,
+    colored-shadow fill or wet highlight. Plants keep Godot's leaf
+    translucency (BACKLIGHT).
+  - Godot 4.3 accepts `vertex_lighting` but still lights per pixel in
+    Forward+ and Compatibility alike (checked: a quad under a close omni
+    light shows a per-pixel hotspot either way, and a custom light() still
+    runs per pixel); from 4.4 the same render mode is true per-vertex
+    (Gouraud) shading, with no change here. With smooth normals, no
+    specular and no shadow maps the two look nearly the same.
+  - a strong flat **ambient** (`SkySystem.AMBIENT_DAY` 0.5, a soft cool
+    white; `AMBIENT_NIGHT` 0.34 moonlit blue, lifted by the moon), so the
+    side away from the sun is plainly readable, never black; the sun
+    (0.85) is the one clear light direction, the moon at night.
+  - **no shadow maps**: sun and moon cast none, so trees and ruins cast
+    no shadows. Characters get **blob shadows** (`BlobShadow`,
+    `shaders/blob_shadow.gdshader`): a soft dark disc (alpha 0.8 in
+    linear light, about half as bright on screen; solid to 55% of its
+    radius, then fading out) on the ground under the player, every
+    creature and the camp folk, sized to the body (0.55 m for the player,
+    0.3 × height for people; `footprint()` stretches it along animals),
+    in the character's upright frame at the ground under its feet. It's
+    drawn a little toward the camera so slopes don't cut it, shrinks as
+    the character jumps, hops or climbs, is gone afloat or above 3 m, and
+    fades out 35-60 m away and in haze. One mesh and one material serve
+    them all.
 - **Clouds** (`CloudLayers`): three transparent shells round the planet,
   each with a tunable altitude and speed multiplier: low cumulus 500-2,000
   m (default 1,500; 4x), mid altocumulus 2,000-7,000 m (3,800; 3x), high
@@ -311,29 +325,18 @@ Verified:
   height: 1.5 km at Earth's scale), so valleys are hazy and summits
   clear.
 - **Night** (the references' moonlit blue): a moon about 2.5× the old size
-  with a halo that blooms, bright blue moonlight and a saturated blue
-  ambient (never black), a luminous blue haze and thicker low mist, all
-  water glowing cobalt, a moon-tinted rim on foliage and creatures, and
-  strong emission on campfires and lanterns.
-- **Depth** (added because flat lighting alone read too flat):
-  - **Ambient occlusion**, in two layers:
-    - SSAO on the Environment, including a little on direct light
-      (Forward+ only);
-    - hard-edged AO baked into vertex colors, which works in every
-      renderer: terrain darkens in hollows and channels (up to 35%),
-      ground under tree crowns (30%), the base of every plant, and the
-      lowest courses of ruin walls.
-  - **Hard shadows:** unfiltered shadow maps, a 4096 atlas, and 2 splits
-    over a 160 m range, with enough normal bias (5) that lit ground
-    stays free of acne.
-  - **Rim light:** a light-driven rim (in light()) on plants, creatures
-    and (lightly) ruins, plus a moon-tinted emissive rim after dark.
-    Roughness 0.75 gives the rim its falloff: the rim exponent is
-    (1 − roughness) × 16, and at 1.0 the "rim" would light the whole
-    surface.
-  - **Glow:** threshold 1.0, no global bloom, levels 1-4. Campfire
-    flames, lanterns, glowing water and moss, and the sun push above the
-    threshold and bloom; ordinary daylight surfaces don't.
+  with a halo, bright blue moonlight and a saturated blue ambient (never
+  black), a luminous blue haze and thicker low mist, all water glowing
+  cobalt, and strong emission on campfires and lanterns.
+- **Depth**, the era's way: nothing screen-space.
+  - **Baked ambient occlusion** in vertex colors, which works in every
+    renderer: terrain darkens in hollows and channels (up to 35%),
+    ground under tree crowns (30%), the base of every plant, and the
+    lowest courses of ruin walls. No SSAO, SSIL, SSR or SDFGI.
+  - **Blob shadows** under characters (above); no shadow maps.
+  - **No rim light and no glow:** the Environment's glow is off, so
+    campfires, lanterns and glowing water and moss are bright emission
+    without halos.
   - **Grade:** contrast 1.28 by day and 1.32 at night, saturation 1.42
     by day (1.2 at night; `SkySystem.grade_saturation`, `grade_contrast`),
     exposure 0.9, for deep shadows and bright
@@ -727,8 +730,7 @@ Spawn tiers:
   - Vertices are skinned to the bones of the nearby shapes, and SculptRig
     copies the joint pivots onto a Skeleton3D, so Creature's leg, arm and
     tail swings bend the body at the hip and shoulder.
-  - Triplanar fur or skin grain, a glossier sheen and rim, and a coarse
-    LOD past 45 m.
+  - Triplanar fur or skin grain and a coarse LOD past 45 m.
   - Camp folk come in every shade of skin (people also of hide), so the
     tribal, elder and goblin meshes carry skin and hide as tint channels:
     each vertex's weight of each (with its shade and occlusion) in UV2,
@@ -762,10 +764,11 @@ howl, drone and whisper. Bodies are placeholders (`CreatureBodies`)
 built from smooth-shaded spheres and capsules (28 sides × 14 rings for
 bodies and heads, 16 × 8 for snouts and tails, coarser for eyes and
 noses), limbs that taper from hip to foot (12 sides), and
-flattened-cone ears, lit by `creature.gdshader` (colored shadows, rim,
-sheen, sky gloss). Meshes are shared by every creature: 336-820
-triangles each (deer ~900 and troll ~1,030 with antlers and mossy back).
-Wolf dens are framed by boulders and a bevelled slab. (The capsules and
+flattened-cone ears, vertex-lit by `creature.gdshader` (Lambert, no
+specular), each with a blob shadow (`BlobShadow`). Meshes are shared by
+every creature: 336-820 triangles each (deer ~900 and troll ~1,030 with
+antlers and mossy back). Wolf dens are framed by boulders and a bevelled
+slab. (The capsules and
 limbs were wound inside out, so their near side was culled and the far
 side's inside showed through, lit backwards. `_revolve` now winds them
 the way Godot draws a front face.)
@@ -857,7 +860,7 @@ the way Godot draws a front face.)
     killed a hare.
 - **First person** (V, F5, the right stick click): the camera at eye
   height (1.6 m, 0.98 crouched), wider pitch, your body hidden from the
-  camera (its own visual layer) but still casting its shadow, and the bow
+  camera (its own visual layer, with its blob shadow), and the bow
   in view, its string coming back as you draw.
 
 ## The opening encampment
@@ -877,7 +880,7 @@ crossed logs on a bed of glowing coals under four tongues of flame
 (`shaders/flame.gdshader`): cards that turn to face the camera, drawn
 additively so they build a hot white-yellow core with orange and a deep
 red edge, licked and torn by grain scrolling up, each on its own phase,
-and bright enough to bloom. At the start
+and bright at the core. At the start
 they speak once, as subtitles (`Hud.say`): "You're finally awake." /
 "Be careful at night, don't let it get you...". The camera opens over
 the player's shoulder so the fire is in view.
@@ -991,8 +994,8 @@ latest results:
 - **Rendering.** Forward+ is the target; screenshots were rendered in it
   on a software Vulkan driver (lavapipe), so real hardware should match
   but hasn't been checked, and lavapipe frame times say little about a
-  GPU's. SSAO exists only in Forward+. The compatibility renderer gets
-  everything else and only needs not to break.
+  GPU's. The compatibility renderer gets the same look and only needs
+  not to break.
 - **Frame cost of the organic pass** (Forward+ on lavapipe, a CPU
   renderer, 640 × 360, same views before and after): the forest view
   4.88 → 4.95 s/frame (6.5 → 7.1 M triangles including shadow passes),

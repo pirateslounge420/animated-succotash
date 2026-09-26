@@ -22,8 +22,6 @@ World="*res://scripts/core/world.gd"
 
 renderer/rendering_method="forward_plus"
 anti_aliasing/quality/msaa_3d=2
-lights_and_shadows/directional_shadow/size=4096
-lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 
 [shader_globals]
 
@@ -58,10 +56,6 @@ look_night={
 look_glow={
 "type": "float",
 "value": 0.0
-}
-look_rim_color={
-"type": "vec3",
-"value": Vector3(0.17064, 0.26327, 1)
 }
 look_site_0={
 "type": "vec4",
@@ -106,12 +100,4 @@ look_site_kind_b={
 look_site_count={
 "type": "int",
 "value": 0
-}
-look_shadow_tint={
-"type": "vec3",
-"value": Vector3(0.06372, 0.34239, 0.57048)
-}
-look_sky_color={
-"type": "vec3",
-"value": Vector3(0.3, 0.5, 0.9)
 }

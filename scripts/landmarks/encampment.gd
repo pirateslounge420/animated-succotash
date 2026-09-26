@@ -146,6 +146,8 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 		var body: Node3D = CreatureBodies.build(sp).root
 		body.name = "Body"
 		holder.add_child(body)
+		var f := BlobShadow.footprint(sp)
+		BlobShadow.make(holder, f.x, f.y)
 		var at := CreatureSpawner._offset(site, side + PI + (0.75 if i == 0 else -0.75), NPC_M)
 		holder.global_position = world.to_scene(at, PlanetConst.RADIUS_M + chunks.ground_height(at))
 		holder.set_meta("dir", at)

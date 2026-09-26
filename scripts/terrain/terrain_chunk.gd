@@ -376,7 +376,7 @@ static func _sand_from(e: float, coast_km: float) -> float:
 ## Baked ambient occlusion for hollows: a vertex lower than the ring of
 ## vertices around it (dips, gullies, river channels) is darkened, up to
 ## 35% for a 6 m deep hollow. Hard per-face darkening that fits the flat
-## look and works in every renderer (SSAO is Forward+ only).
+## look and works in every renderer (there is no screen-space AO).
 static func _bake_hollow_ao(h: PackedFloat32Array, cols: PackedColorArray) -> void:
 	var n := QUADS + 1
 	for jj in n:

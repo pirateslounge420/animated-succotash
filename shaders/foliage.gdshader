@@ -17,12 +17,11 @@
 // faces, and vines hang from the crown. Each vine strand has a 0-1 key in
 // UV2.y and shows only where the plant's vine amount is above it.
 //
-// Lit like the terrain (Lambert with colored shadows, no specular), with a
-// rim light on silhouettes (lit by sun and moon, plus a moonlit edge after
-// dark) and leaf translucency. Near
-// magical sites, about half the plants glow at their tips at night.
+// Vertex-lit like the terrain (Lambert, no specular, Look), with Godot's
+// own leaf translucency (BACKLIGHT). Near magical sites, about half the
+// plants glow at their tips at night.
 shader_type spatial;
-render_mode world_vertex_coords, cull_disabled, diffuse_lambert;
+render_mode world_vertex_coords, cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 
@@ -112,23 +111,9 @@ void fragment() {
 	// them too, so crowns seen from below stay green instead of black.
 	float leafy = step(0.5, mat_id) * step(mat_id, 3.5);
 	BACKLIGHT = ALBEDO * 0.6 * leafy;
-	// Specular is disabled, so roughness only shapes the rim (light()):
-	// the rim falloff exponent is (1 - roughness) * 16, and at 1.0 the
-	// "rim" would cover the whole surface.
-	ROUGHNESS = 0.75;
-	// No reflections of the sky; the only highlight is light()'s sheen.
+	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
 	float glow = look_site_glow(world_pos, 0.25) * glow_pick * smoothstep(0.3, 0.9, sway_w);
-	EMISSION = look_glow_emission(world_pos, glow * 1.0) + look_rim(NORMAL, VIEW, 0.45);
+	EMISSION = look_glow_emission(world_pos, glow * 1.0);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
-}
-
-// Lambert with colored shadows, plus the rim and leaf translucency that a
-// custom light() has to supply itself (RIM 0.45, tint 0.4).
-void light() {
-	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
-	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, ROUGHNESS, 0.45, 0.4, ALBEDO);
-	DIFFUSE_LIGHT += look_backlight(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, BACKLIGHT);
-	// A waxy glint on leaves (none on bark).
-	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, 16.0, 0.16) * step(0.001, BACKLIGHT.g);
 }

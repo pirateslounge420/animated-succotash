@@ -6,7 +6,7 @@ class_name Campfire
 ##
 ## The flames are tongues of shaders/flame.gdshader: cards that turn to
 ## the camera, drawn additively, so they read as fire from any side and
-## bloom. Each tongue has its own phase; all campfires share the three
+## build a hot core. Each tongue has its own phase; all campfires share the three
 ## materials.
 
 ## [width, height, x, z, phase] of each tongue: a tall one in the middle,

@@ -197,7 +197,6 @@ func _process(delta: float) -> void:
 	# Sheltered from the rain: under a tree's crown or in a camp shelter.
 	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position)
 	fx.update_fx(cam.global_position, d, _local_weather, sheltered)
-	TerrainChunk.terrain_material().set_shader_parameter("wetness", 1.0 - sky.daylight)
 	post.set_night(1.0 - sky.daylight)
 	creatures.update_creatures(delta, sky.daylight)
 	var prompt: String = creatures.prompt

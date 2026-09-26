@@ -3,7 +3,7 @@
 // overlapping build a hot core. The shape is a teardrop, round at the
 // base and drawn to a point, licked sideways and torn at the top by grain
 // scrolling up; color runs from a white-yellow heart through orange to a
-// deep red edge. Bright enough to bloom.
+// deep red edge.
 shader_type spatial;
 render_mode unshaded, blend_add, depth_draw_never, cull_disabled, shadows_disabled, fog_disabled;
 

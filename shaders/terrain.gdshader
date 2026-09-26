@@ -1,5 +1,5 @@
-// Ground. Low-poly faces colored per vertex (TerrainChunk), lit flat:
-// Lambert diffuse and no PBR specular, like GameCube-era terrain. The
+// Ground. Low-poly faces colored per vertex (TerrainChunk), vertex-lit:
+// Lambert diffuse and no specular, like GameCube-era terrain. The
 // surface is texture-led, like the hand-painted ground of GameCube-era
 // games: Look's 256 px textures, crisp (nearest-filtered) but dense (grass
 // texels about 0.7 cm), picked by the vertex color: streaky grass on green ground,
@@ -9,17 +9,12 @@
 // and smooth, painterly light and dark patches plus a slight hue drift
 // run over meters to tens of meters, like sun-dappled grass.
 //
-// `wetness` rises at night: a hard-edged toon highlight gives the spec's
-// wet, over-sharpened moonlit sheen without smooth PBR shading. Near
-// magical sites, patches of moss glow at night.
+// Near magical sites, patches of moss glow at night.
 shader_type spatial;
-render_mode cull_back, diffuse_lambert, specular_toon;
-// light() below: Lambert with colored shadows (Look), plus the toon wet
-// highlight.
+render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 
-uniform float wetness = 0.0;
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 // Anisotropic: stays chunky up close without ring-shaped moire where the
 // ground is seen at a grazing angle.
@@ -79,19 +74,11 @@ void fragment() {
 	vec3 tint = mix(vec3(0.94, 0.98, 1.08), vec3(1.07, 1.03, 0.9), smoothstep(-0.2, 0.2, dapple));
 	c *= mix(vec3(1.0), tint, green * 0.8);
 	ALBEDO = c * t * 2.0 * (1.0 + dapple * 0.35);
-	ROUGHNESS = mix(1.0, 0.55, wetness);
-	SPECULAR = 0.35 * wetness;
+	ROUGHNESS = 1.0;
 	// Glowing moss creeps over the ground at magical places, in patches a
 	// few meters across.
 	float patch = texture(look_grain_soft, UV * 0.03).r;
 	float glow = look_site_glow(world_pos, 0.3) * smoothstep(0.6, 0.75, patch);
 	EMISSION = look_glow_emission(world_pos, glow * 0.55);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
-}
-
-void light() {
-	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
-	// Hard-edged toon highlight (wet ground at night).
-	float rv = dot(reflect(-LIGHT, NORMAL), VIEW);
-	SPECULAR_LIGHT += LIGHT_COLOR / PI * ATTENUATION * smoothstep(0.985, 0.99, rv) * wetness * 0.12;
 }

@@ -58,9 +58,11 @@ const FALL_DAMAGE_PER_MPS := 7.0
 ## After a hit, health comes back at REGEN_PER_S once REGEN_DELAY_S pass.
 const REGEN_DELAY_S := 8.0
 const REGEN_PER_S := 2.0
-## Visual layer of the player's own body: hidden from the camera in first
-## person (lights still see it, so it still casts its shadow).
+## Visual layer of the player's own body and its blob shadow: hidden from
+## the camera in first person.
 const BODY_LAYER := 1 << 10
+## Blob shadow radius (m).
+const BLOB_R := 0.55
 const MOUSE_SENSITIVITY := 0.0025
 const STICK_SENSITIVITY := 2.6
 
@@ -106,6 +108,8 @@ var _camera: Camera3D
 ## else the elf (PlayerBody).
 var _body: Node3D
 var _animator: ModelAnimator
+## Soft shadow on the ground under the player (BlobShadow).
+var _blob: MeshInstance3D
 var _shape: CapsuleShape3D
 var _shape_node: CollisionShape3D
 var _last_forward_ms := -100000
@@ -139,6 +143,8 @@ func _ready() -> void:
 		_body = PlayerBody.new()
 	add_child(_body)
 	_set_layers(_body)
+	_blob = BlobShadow.make(self, BLOB_R)
+	_blob.layers = BODY_LAYER
 
 	_spring = SpringArm3D.new()
 	_spring.spring_length = 4.5
@@ -246,6 +252,7 @@ func _physics_process(delta: float) -> void:
 	if climbing:
 		_climb_step(delta)
 		_orient()
+		_update_blob(chunks.ground_height(surface_dir))
 		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
 		_update_noise(delta, 0.0)
 		trees.update_contact(delta, global_position, get_world_3d().direct_space_state)
@@ -312,6 +319,7 @@ func _physics_process(delta: float) -> void:
 	elif wish.length() > 0.1:
 		_face(wish.normalized(), delta)
 	_orient()
+	_update_blob(ground)
 	_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
 	_update_noise(delta, horizontal.length())
 
@@ -539,6 +547,18 @@ func _update_camera(delta: float) -> void:
 	if _body is PlayerBody:
 		for arm in (_body as PlayerBody).arms:
 			arm.rotation.x = lerpf(arm.rotation.x, 1.35 if bow.drawing else 0.06, clampf(delta * 10.0, 0.0, 1.0))
+
+
+## Keep the blob shadow on the ground (`ground`: its height at the
+## player's spot): it shrinks as you jump or climb and is gone in deep
+## water or high up.
+func _update_blob(ground: float) -> void:
+	var h: float = world.radius_of(global_position) - (PlanetConst.RADIUS_M + ground)
+	_blob.visible = not swimming and h < 3.0
+	if _blob.visible:
+		var k := maxf(1.0 - maxf(h, 0.0) / 3.0, 0.001)
+		_blob.position.y = BlobShadow.LIFT - h
+		_blob.scale = Vector3(BLOB_R * k, 1.0, BLOB_R * k)
 
 
 ## Put a body (and all it holds) on the player's own visual layer.

@@ -303,6 +303,8 @@ func _guard(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) ->
 	holder.set_meta("head", body.get_node_or_null("Head"))
 	holder.set_meta("speaker", "Guard")
 	holder.set_meta("standing", true)
+	var f := BlobShadow.footprint(sp)
+	BlobShadow.make(holder, f.x, f.y)
 	return holder
 
 
@@ -399,6 +401,9 @@ func _sitter(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -
 	holder.set_meta("arms", b.wings)
 	holder.set_meta("head", body.get_node_or_null("Head"))
 	holder.set_meta("speaker", sp.name)
+	# Seated: the shadow reaches forward under the knees.
+	var blob := BlobShadow.make(holder, 0.3 * sp.size_m, 0.4 * sp.size_m)
+	blob.position.z = -0.12 * sp.size_m
 	return holder
 
 

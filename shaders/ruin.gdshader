@@ -1,11 +1,10 @@
 // Ruins (RuinBuilder): stone blocks, timber, snow blocks, thatch and hide,
-// lit flat (Lambert, no specular) with Look's textures mapped per face,
-// and a rim light on edges (lit by sun and moon, plus a moonlit edge after
-// dark). UV.x is the material (RuinBuilder: 0 stone, 1 wood, 2 snow,
+// vertex-lit (Lambert, no specular, Look) with Look's textures mapped per
+// face. UV.x is the material (RuinBuilder: 0 stone, 1 wood, 2 snow,
 // 3 thatch, 4 leaves, 5 hide). Vertex alpha is moss: at night, near
 // glowing sites (every ruin is one), the moss patches shine teal/cobalt.
 shader_type spatial;
-render_mode cull_disabled, diffuse_lambert;
+render_mode cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 
@@ -51,21 +50,11 @@ void fragment() {
 	vec3 moss = texture(look_tex_leaves, uv * 1.1).rgb;
 	float weather = texture(look_grain_soft, uv * 0.12 + 0.5).r - 0.5;
 	ALBEDO = COLOR.rgb * mix(surface, moss, clamp(COLOR.a * 1.2, 0.0, 1.0) * (kind == 0 || kind == 1 ? 1.0 : 0.0)) * 2.0 * (1.0 + weather * 0.45);
-	ROUGHNESS = 0.75; // shapes the rim only (see foliage.gdshader)
-	// No reflections of the sky; the only highlight is light()'s sheen.
+	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
 	float patch = texture(look_grain_soft, uv * 0.06).r; // moss patches ~0.5-2 m
 	// Patches only (heavy moss on wet ruins shouldn't light whole walls).
 	float glow = look_site_glow(world_pos, 0.0) * min(COLOR.a, 0.6) * smoothstep(0.58, 0.72, patch);
-	EMISSION = look_glow_emission(world_pos, glow * 1.3) + look_rim(NORMAL, VIEW, 0.2);
+	EMISSION = look_glow_emission(world_pos, glow * 1.3);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
-}
-
-// Lambert with colored shadows and a light rim (0.12: big flat faces seen
-// at grazing angles would otherwise flood with rim light).
-void light() {
-	DIFFUSE_LIGHT += look_diffuse(NORMAL, LIGHT, LIGHT_COLOR, ATTENUATION, LIGHT_IS_DIRECTIONAL);
-	DIFFUSE_LIGHT += look_rim_light(NORMAL, VIEW, LIGHT_COLOR, ROUGHNESS, 0.12, 0.3, ALBEDO);
-	// Worn, slightly polished stone.
-	SPECULAR_LIGHT += look_sheen(NORMAL, VIEW, LIGHT, LIGHT_COLOR, ATTENUATION, 16.0, 0.12);
 }

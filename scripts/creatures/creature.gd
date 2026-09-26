@@ -69,6 +69,9 @@ var _panic := 0.0 # seconds it keeps bolting after being hit, however far
 
 var _parts := {}
 var _body: Node3D
+## Soft shadow on the ground under it (BlobShadow); null for none.
+var _blob: MeshInstance3D
+var _blob_size := Vector2.ZERO
 var _rng := RandomNumberGenerator.new()
 var _timer := 0.0
 var _anim := 0.0
@@ -120,6 +123,9 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 	_parts = CreatureBodies.build(sp)
 	_body = _parts.root
 	add_child(_body)
+	_blob_size = BlobShadow.footprint(sp)
+	if _blob_size != Vector2.ZERO:
+		_blob = BlobShadow.make(self, _blob_size.x, _blob_size.y)
 	home_radius = clampf(sp.one_per_radius_m * 0.6, 8.0, 60.0)
 	if sp.sound != "none":
 		voice = AudioStreamPlayer3D.new()
@@ -165,6 +171,7 @@ func leave() -> void:
 ## Show or hide the body (mythical creatures are heard before they're seen).
 func set_visible_body(v: bool) -> void:
 	_body.visible = v
+	_update_blob()
 
 
 func say() -> void:
@@ -648,16 +655,32 @@ func _place(delta: float) -> void:
 		if fwd.length_squared() < 1e-6:
 			fwd = CubeSphere.north(dir)
 		global_basis = Basis.looking_at(fwd.normalized(), dir)
+		_update_blob()
 	var size := 1.0 if species.role == "swarm" else species.size_m
 	_flash = maxf(_flash - delta * 5.0, 0.0)
 	var scale_now := size * maxf(_fade, 0.001) * (1.0 + 0.12 * _flash)
 	if scale_now != _scaled:
 		_scaled = scale_now
 		_body.scale = Vector3.ONE * scale_now
+		_update_blob()
 	if dead:
 		# Topples onto its side.
 		_body.rotation.z = lerpf(_body.rotation.z, PI * 0.5, clampf(delta * 5.0, 0.0, 1.0))
 	_animate(delta)
+
+
+## The blob stays on the ground under it: it shrinks as the creature
+## rises (a hop, taking off) and is gone when it's afloat, perched or
+## flying high.
+func _update_blob() -> void:
+	if _blob == null:
+		return
+	var show := _body.visible and not afloat and lift < 3.0
+	_blob.visible = show
+	if show:
+		var k := maxf((1.0 - lift / 3.0) * _fade, 0.001)
+		_blob.position.y = BlobShadow.LIFT - lift
+		_blob.scale = Vector3(_blob_size.x * k, 1.0, _blob_size.y * k)
 
 
 func _animate(delta: float) -> void:

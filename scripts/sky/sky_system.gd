@@ -23,7 +23,7 @@ extends Node3D
 const SKY_SHADER := preload("res://shaders/sky.gdshader")
 
 @export var moon_mode: Astro.MoonMode = Astro.MoonMode.ORBITAL
-@export var sun_max_energy := 1.05
+@export var sun_max_energy := 0.85
 @export var moon_max_energy := 0.95
 ## Moonlight never drops below this share of full (thin phases, playable nights).
 const MOON_FLOOR := 0.05
@@ -71,6 +71,9 @@ const _KEYS := [
 ## Night magic: inside a glowing site the moonlight dims and the air goes
 ## near-black so the bioluminescence reads like neon against black.
 const MAGIC_DARKEN := 0.6
+## Flat ambient energy by day and at night (before moonlight lifts it).
+const AMBIENT_DAY := 0.5
+const AMBIENT_NIGHT := 0.34
 
 
 func _ready() -> void:
@@ -104,64 +107,31 @@ func _ready() -> void:
 	environment.tonemap_exposure = 0.9 # a touch under, so nothing reads washed out
 	environment.fog_enabled = true
 	environment.fog_sky_affect = 0.0 # the sky shader draws its own banded haze
-	# Glow: punchy blown highlights on light sources (campfires, lanterns,
-	# glowing water and moss, the sun, glints on water), which are pushed
-	# well above the HDR threshold. No global bloom term, so ordinary
-	# daylight surfaces stay crisp.
-	environment.glow_enabled = true
-	environment.glow_intensity = 1.0
-	environment.glow_strength = 1.1
-	environment.glow_bloom = 0.0
-	environment.glow_hdr_threshold = 1.0
-	environment.glow_hdr_scale = 2.5
-	environment.glow_blend_mode = Environment.GLOW_BLEND_MODE_SCREEN
-	for level in 7:
-		environment.set_glow_level(level, 1.0 if level >= 1 and level <= 4 else 0.0)
 	environment.adjustment_enabled = true
-	# Ambient occlusion (Forward+ only; the compatibility renderer ignores
-	# it): darkens crevices, the ground under canopy, trunk bases and the
-	# joints between ruin blocks, which the flat ambient fill otherwise
-	# leaves evenly lit. A little of it also dims direct light so it still
-	# reads in full sun.
-	environment.ssao_enabled = true
-	environment.ssao_radius = 2.0
-	environment.ssao_intensity = 3.0
-	environment.ssao_power = 1.8
-	environment.ssao_detail = 0.5
-	environment.ssao_horizon = 0.06
-	environment.ssao_sharpness = 0.98
-	environment.ssao_light_affect = 0.35
+	# 2001-2004 console lighting: vertex-lit Lambert over a strong flat
+	# ambient, and nothing screen-space on top: no glow halos, no ambient
+	# occlusion, no screen-space reflections or indirect light.
+	environment.glow_enabled = false
+	environment.ssao_enabled = false
+	environment.ssil_enabled = false
+	environment.ssr_enabled = false
+	environment.sdfgi_enabled = false
 
 	var world_env := WorldEnvironment.new()
 	world_env.environment = environment
 	add_child(world_env)
 
-	# Hard, crisp shadows, not soft PCF penumbras: unfiltered shadow maps,
-	# a big atlas, and the shadow range pulled in so its resolution goes to
-	# what's near the player.
-	RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
-	RenderingServer.directional_shadow_atlas_set_size(4096, true)
-
+	# No shadow maps: sun and moon light every surface by its facing alone;
+	# characters get soft blob shadows instead (BlobShadow).
 	sun = DirectionalLight3D.new()
 	sun.name = "Sun"
-	sun.shadow_enabled = true
 	add_child(sun)
-
 	moon = DirectionalLight3D.new()
 	moon.name = "Moon"
-	moon.shadow_enabled = false
 	add_child(moon)
 	for light in [sun, moon]:
-		light.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
-		light.directional_shadow_max_distance = 160.0
-		light.shadow_blur = 0.0
+		light.shadow_enabled = false
 		light.light_angular_distance = 0.0
-		# Enough bias that hard, unfiltered maps don't streak lit ground
-		# with acne (at 2.0, flat sand under a high sun showed ring-shaped
-		# moire out to ~30 m); mostly normal bias, so contact shadows stay
-		# tight.
-		light.shadow_bias = 0.06
-		light.shadow_normal_bias = 5.0
 
 
 ## up/east/north: the viewer's local frame. weather: WeatherSim.local_weather().
@@ -196,8 +166,6 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	moon.light_color = moon_col
 	# Moonlight is lost in daylight.
 	moon.light_energy = moon_max_energy * moonlight * (1.0 - daylight) * (1.0 - 0.5 * float(weather.get("cloud", 0.0))) * (1.0 - MAGIC_DARKEN * dark_magic)
-	sun.shadow_enabled = sun.light_energy > 0.05
-	moon.shadow_enabled = not sun.shadow_enabled and moon.light_energy > 0.04
 	sun.visible = sun.light_energy > 0.001
 	moon.visible = moon.light_energy > 0.001
 
@@ -252,22 +220,14 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var cloud_under := Color(0.72, 0.78, 0.95).lerp(zenith, 0.25) * (0.35 + 0.65 * daylight)
 	cloud_shade = cloud_under.lerp(Color(0.3, 0.32, 0.38) * daylight, storm * 0.6)
 
-	# Ambient tracks the sky continuously.
-	# By day the fill is sky-tinted (shadows go blue-ish, the colored-shadow
-	# look of the era) but kept low so sunlit colors stay saturated instead
-	# of clipping to white. At night the world is drowned in cobalt/violet,
-	# never black: a starlight floor, lifted by the moon. The night fill is
-	# blue-lavender rather than pure blue, since leaves and soil reflect
-	# little blue and would otherwise go black.
-	# By day the fill is neutral: the color of shade comes from the world
-	# shaders' light() instead (Look: blocked or averted sun comes back
-	# tinted teal, multiplying each surface's own color, so forests stay
-	# green in shade instead of going grey or violet).
-	var amb_day := Color(0.8, 0.82, 0.85)
-	# Saturated moonlit blue, never black (the references' nights).
-	var amb_night := Color(0.26, 0.34, 0.92).lerp(Color(0.38, 0.5, 1.0), lift)
+	# Ambient: one strong flat fill, the vertex-lit consoles' way of keeping
+	# the side away from the sun clearly readable (Phantasy Star Online's
+	# bright shade), never a black shadow. By day a soft cool white; at
+	# night a moonlit blue, lifted by the moon.
+	var amb_day := Color(0.86, 0.9, 1.0)
+	var amb_night := Color(0.3, 0.38, 0.92).lerp(Color(0.42, 0.52, 1.0), lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
-	environment.ambient_light_energy = lerpf(0.24 + 0.2 * lift, 0.26, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
+	environment.ambient_light_energy = lerpf(AMBIENT_NIGHT + 0.2 * lift, AMBIENT_DAY, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
 
 	# Fog and mist (drawn in bands by the world shaders, see Look): a
 	# light haze that gives depth to long daytime views; thicker at night
@@ -290,11 +250,6 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 		"look_up": up,
 		"look_night": night,
 		"look_glow": 1.0 - smoothstep(0.08, 0.55, daylight),
-		"look_rim_color": moon_col.lerp(Color(0.4, 0.5, 1.0), 0.5) * (0.35 + 0.65 * moonlight),
-		# Shade: teal under the sun, cobalt under the moon.
-		"look_shadow_tint": Color(0.28, 0.62, 0.78).lerp(Color(0.22, 0.34, 0.95), night),
-		# What glossy surfaces reflect at grazing angles: the sky low down.
-		"look_sky_color": horizon.lerp(zenith, 0.35) * (0.25 + 0.75 * daylight),
 	})
 	sky_material.set_shader_parameter("fog_color", fog_color)
 
