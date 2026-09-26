@@ -296,7 +296,7 @@ static func eyes(parent: Node3D, pos: Vector3, spread: float, r: float, c := Col
 
 ## Four legs, a body, head, ears and tail. `leg` is leg length and `tail`
 ## tail length, both in body lengths.
-static func _quadruped(b: Dictionary, sp: CreatureSpecies, leg: float, tail: float) -> void:
+static func _quadruped(b: Dictionary, sp: CreatureSpecies, leg: float, tail: float, leg_thick := 0.07) -> void:
 	var r: Node3D = b.root
 	var c := sp.color
 	var body_h := 0.26
@@ -314,7 +314,7 @@ static func _quadruped(b: Dictionary, sp: CreatureSpecies, leg: float, tail: flo
 	eyes(head, Vector3(0, 0.03, -0.1), 0.06, 0.018)
 	for x in [-0.09, 0.09]:
 		for z in [-0.24, 0.24]:
-			limb(b, r, Vector3(x, leg + 0.02, z), leg + 0.02, 0.07, c.darkened(0.15))
+			limb(b, r, Vector3(x, leg + 0.02, z), leg + 0.02, leg_thick, c.darkened(0.15))
 	var t := Node3D.new()
 	t.position = Vector3(0, y + 0.06, 0.31)
 	r.add_child(t)
@@ -565,7 +565,7 @@ static func _tribal(b: Dictionary, sp: CreatureSpecies) -> void:
 ## Unicorn (size_m = height at the head): a slender white horse, a raised
 ## neck and a flowing mane, and a spiral horn that glows (`accent`).
 static func _unicorn(b: Dictionary, sp: CreatureSpecies) -> void:
-	_quadruped(b, sp, 0.58, 0.5)
+	_quadruped(b, sp, 0.58, 0.5, 0.1)
 	var r: Node3D = b.root
 	var c := sp.color
 	var head: Node3D = r.get_node("Head")
