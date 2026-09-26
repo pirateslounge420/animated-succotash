@@ -2,7 +2,10 @@ class_name TerrainPass
 ## Pass 1: samples TerrainField at every blueprint cell center (no fine
 ## detail layer; cells are ~1 km) and derives slope. Slope is stored as
 ## the Earth-equivalent rise over run (divided by HEIGHT_SCALE), so the
-## classification rules read real-world slopes.
+## classification rules read real-world slopes. The run is measured in
+## geographic meters (PlanetConst.GEO_RADIUS_M), so the dev postage stamp,
+## a shrunk copy of the geography, reads the slopes its full-size
+## original would have.
 ## Reads: nothing. Writes: elevation, slope.
 
 
@@ -19,7 +22,7 @@ static func run(map: PlanetData) -> void:
 		var steepest := 0.0
 		for k in 4:
 			var n := map.neighbors[c * 8 + k]
-			var run_m := (dirs[c] - dirs[n]).length() * PlanetConst.RADIUS_M
+			var run_m := (dirs[c] - dirs[n]).length() * PlanetConst.GEO_RADIUS_M
 			if run_m > 0.0:
 				steepest = maxf(steepest, absf(elev[c] - elev[n]) / run_m)
 		slope[c] = steepest / PlanetConst.HEIGHT_SCALE

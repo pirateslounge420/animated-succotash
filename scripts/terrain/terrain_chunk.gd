@@ -28,7 +28,17 @@ extends Node3D
 ## colors, plus local sand at the shore, bare rock on steep faces, and snow
 ## wherever it's below freezing at that exact height.
 
-const CHUNKS_PER_FACE := 384
+## Chunks are about CHUNK_M across whatever the planet's size: 384 per
+## face edge on the full planet, fewer on the dev postage stamp
+## (fit_to_planet, called by PlanetConst.set_circumference).
+const CHUNK_M := PlanetConst.FULL_CIRCUMFERENCE_M / 4.0 / 384.0
+static var CHUNKS_PER_FACE := 384
+
+
+static func fit_to_planet() -> void:
+	CHUNKS_PER_FACE = maxi(4, roundi(PlanetConst.CIRCUMFERENCE_M / 4.0 / CHUNK_M))
+
+
 const QUADS := 32 # coarse quads per edge (~8 m); the data grids use these
 const FINE := QUADS * 2 # fine quads per edge (~4 m), for the near mesh
 const WATER_QUADS := 16

@@ -77,7 +77,7 @@ static func run(map: PlanetData, weather: WeatherSim) -> void:
 ## x = rain-shadow factor (1 = open, down to MIN_SHADOW behind a big
 ## ridge), y = upslope along the wind at this cell (rise over run).
 static func _terrain_factors(map: PlanetData, d: Vector3, elev: float, wind_dir: Vector3) -> Vector2:
-	var step_rad := UPWIND_STEP_M / PlanetConst.RADIUS_M
+	var step_rad := UPWIND_STEP_M / PlanetConst.GEO_RADIUS_M # geographic meters
 	var p := d
 	var barrier := 0.0
 	var first_upwind := elev

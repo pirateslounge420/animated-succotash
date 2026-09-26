@@ -64,7 +64,7 @@ static func _classify(map: PlanetData, c: int, nbrs: PackedInt32Array, karst: Fa
 		return PlanetData.Rock.CLAY_PEAT
 	if map.temp_c[c] < -1.0:
 		return PlanetData.Rock.GLACIAL_TILL
-	if karst.get_noise_3dv(d * PlanetConst.RADIUS_M) > KARST_THRESHOLD and elev < 2500.0 * PlanetConst.HEIGHT_SCALE:
+	if karst.get_noise_3dv(d * PlanetConst.GEO_RADIUS_M) > KARST_THRESHOLD and elev < 2500.0 * PlanetConst.HEIGHT_SCALE:
 		return PlanetData.Rock.LIMESTONE_KARST
 	if map.moisture[c] < 0.3:
 		return PlanetData.Rock.SANDSTONE

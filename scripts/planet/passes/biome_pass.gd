@@ -42,7 +42,8 @@ const GLACIER_MIN_M := 2200.0 * H
 const GLACIER_MAX_LAT := 0.96 # 55 degrees; closer to the poles high ice is ice sheet
 
 
-## Largest patch, in ~1 km cells, for small specialty pockets. Linear
+## Largest patch, in default ~1 km cells (PlanetData.cells_for converts
+## for a coarser blueprint), for small specialty pockets. Linear
 ## coastal and river biomes (beach, dunes, mangrove, canyon, ...) are
 ## narrow strips, quick to cross however long, so they aren't capped; nor
 ## are glaciers, nor salt flats (real ones like Bonneville and Uyuni are
@@ -73,7 +74,7 @@ static func run(map: PlanetData) -> void:
 	for c in map.cell_count:
 		biome[c] = classify(map, c, nbrs)
 	for id in PATCH_CAP:
-		_cap_patches(map, biome, id, PATCH_CAP[id])
+		_cap_patches(map, biome, id, map.cells_for(PATCH_CAP[id]))
 	map.biome = biome
 
 
@@ -225,7 +226,8 @@ static func classify(map: PlanetData, c: int, nbrs: PackedInt32Array) -> int:
 			return BiomeTemplates.FEN if (near_river or near_lake) else BiomeTemplates.BOG
 
 	# 5. Rugged dry country.
-	if m < 0.35 and relief > 350.0 * H:
+	# (Relief is between neighboring cells, so wider cells need more.)
+	if m < 0.35 and relief > 350.0 * H * map.cell_scale():
 		if near_river:
 			return BiomeTemplates.CANYON
 		if rock == PlanetData.Rock.SANDSTONE and elev < 2200.0 * H:

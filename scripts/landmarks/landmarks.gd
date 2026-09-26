@@ -242,7 +242,7 @@ func _place_lights(pd: Vector3) -> void:
 				# Grid of points on the water within reach of the player.
 				var step := 45.0
 				var f := CubeSphere.face_of(pd)
-				var q := step / (CreatureSpawner.FACE_M * 0.5) # grid step in face coordinates
+				var q := step / (CreatureSpawner.face_m() * 0.5) # grid step in face coordinates
 				var uv := CubeSphere.face_uv(f, pd)
 				for gx in range(-4, 5):
 					for gy in range(-4, 5):

@@ -35,7 +35,7 @@ var water: PackedByteArray # Water
 var water_level: PackedFloat32Array # surface elevation for lakes/rivers/ocean
 var flow_to: PackedInt32Array # downstream cell, -1 if none
 var flow_order: PackedInt32Array # cells from the sea upward; reverse it to go downstream
-var flow_accum: PackedFloat32Array # upstream precipitation (discharge), in cell-meters/yr
+var flow_accum: PackedFloat32Array # upstream precipitation (discharge), in meters/yr over default ~1 km cells
 var salinity: PackedByteArray # Salinity
 var coast_dist_km: PackedFloat32Array # distance to ocean (0 in ocean)
 var water_dist_km: PackedFloat32Array # distance to any water
@@ -173,9 +173,32 @@ func neighbor(cell: int, k: int) -> int:
 	return neighbors[cell * 8 + k]
 
 
-## Approximate cell width in km (cells vary ~40% in size across a face).
+## Approximate cell width in km (cells vary ~40% in size across a face),
+## in geographic km: the blueprint's distances (coast_dist_km,
+## water_dist_km) are measured on the geography's full-size map, which on
+## the dev postage stamp is larger than the real planet (see PlanetConst).
 func cell_km() -> float:
-	return PlanetConst.CIRCUMFERENCE_M / 4.0 / res / 1000.0
+	return PlanetConst.GEO_CIRCUMFERENCE_M / 4.0 / res / 1000.0
+
+
+## Approximate cell width in real meters (walking scale).
+func cell_m() -> float:
+	return PlanetConst.CIRCUMFERENCE_M / 4.0 / res
+
+
+## A cell's width relative to the default ~1 km cell (1 at
+## PlanetGenerator.DEFAULT_RES; 2 at half that resolution). Rules written
+## in whole default cells (minimum sea size, biome patch caps, relief
+## between neighbors) scale by it, so a coarser blueprint, like the dev
+## postage stamp's, keeps the same geography.
+func cell_scale() -> float:
+	return float(PlanetGenerator.DEFAULT_RES) / float(res)
+
+
+## A count of default ~1 km cells, as a count of this blueprint's cells
+## (same area; at least 1).
+func cells_for(default_cells: float) -> int:
+	return maxi(1, roundi(default_cells / (cell_scale() * cell_scale())))
 
 
 func _build_neighbors() -> void:

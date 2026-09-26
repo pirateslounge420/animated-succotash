@@ -91,9 +91,9 @@ static func wild_site(map: PlanetData, c: Vector3i) -> Dictionary:
 		var cell := map.cell_at(p)
 		if map.water[cell] != PlanetData.Water.NONE:
 			continue
-		# Next to a river or lake (the blueprint measures in whole ~1 km
-		# cells: 1.04 is the cell beside one).
-		if map.water_dist_km[cell] > 1.1:
+		# Next to a river or lake (the blueprint measures in whole cells,
+		# ~1.04 km on the full planet: one cell width is the cell beside one).
+		if map.water_dist_km[cell] > map.cell_km() * 1.06:
 			continue
 		var e := map.terrain.elevation(p, true)
 		if e < 2.0:
