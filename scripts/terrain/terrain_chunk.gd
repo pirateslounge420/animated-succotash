@@ -140,8 +140,10 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 				nearest = minf(nearest, info.x)
 				var half := rivers.width[s] * 0.5
 				if info.x < half + BANK_M:
-					var f := 1.0 - smoothstep(half, half + BANK_M, info.x)
 					var bed := info.z - rivers.depth[s]
+					# Through high ground the banks steepen into gorge walls.
+					var bank := lerpf(BANK_M, 3.0, smoothstep(4.0, 14.0, e - bed))
+					var f := 1.0 - smoothstep(half, half + bank, info.x)
 					e = lerpf(e, minf(e, bed) if info.x > half else bed, f)
 					if info.x < half:
 						wl = Vector2(maxf(wl.x, info.z), 1.0 if rivers.salty[s] == 1 else 0.0)

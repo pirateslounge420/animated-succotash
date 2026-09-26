@@ -35,7 +35,15 @@ class_name VegetationPlacer
 ## Plants other than water plants keep this far above standing water.
 const WATERLINE_M := 0.3
 const T := PlantSpecies.Tier
-const SPACING_M := {0: 28.0, 1: 7.0, 2: 4.5, 3: 3.5}
+## Plants grow larger than their species' listed heights, for epic,
+## towering woods: emergent giants most (and now and then a true giant),
+## then canopy trees, then shrubs, ground cover and epiphytes. Spacing
+## widens to match (about with the square root), so the bigger crowns
+## don't merge into a wall or cost more instances.
+const SIZE_SCALE := {0: 1.45, 1: 1.3, 2: 1.2, 3: 1.2, 4: 1.2}
+const GIANT_CHANCE := 0.15
+const GIANT_SCALE := 1.25
+const SPACING_M := {0: 34.0, 1: 8.2, 2: 4.9, 3: 3.8}
 const FILL := {0: 0.55, 1: 0.9, 2: 0.65, 3: 0.95}
 ## Moist forest packs tighter (layered, view-framing woods like the
 ## references): spacing per tier scales down this far at full moisture.
@@ -148,7 +156,9 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 					chosen = k
 					break
 			var sp: PlantSpecies = candidates[chosen]
-			var height := lerpf(sp.height_m.x, sp.height_m.y, pow(ctx.rng.randf(), 0.8))
+			var height := lerpf(sp.height_m.x, sp.height_m.y, pow(ctx.rng.randf(), 0.8)) * float(SIZE_SCALE[tier])
+			if tier == T.EMERGENT and ctx.rng.randf() < GIANT_CHANCE:
+				height *= GIANT_SCALE
 			var sp_idx := SpeciesDB.index_of(sp)
 			# Wet sites mossy, wet and warm ones hung with vines (0-1 each,
 			# per plant; the foliage shader shows them).
@@ -187,7 +197,7 @@ static func _place_epiphytes(ctx: _Context, out: Dictionary, hosts: Array) -> vo
 				var angle := ctx.rng.randf() * TAU
 				var off := (CubeSphere.east(d) * cos(angle) + CubeSphere.north(d) * sin(angle)) * host_h * 0.22
 				var attach := host_h * ctx.rng.randf_range(0.55, 0.85)
-				var size := lerpf(sp.height_m.x, sp.height_m.y, ctx.rng.randf())
+				var size := lerpf(sp.height_m.x, sp.height_m.y, ctx.rng.randf()) * float(SIZE_SCALE[4])
 				if sp.shape == PlantSpecies.Shape.LIANA:
 					attach = host_h * 0.8
 					size = minf(size, attach * 0.9)
@@ -551,7 +561,7 @@ class _Context:
 		_emergents.append(d)
 
 	func near_emergent(d: Vector3) -> bool:
-		var limit := cos(4.0 / PlanetConst.RADIUS_M)
+		var limit := cos(5.5 / PlanetConst.RADIUS_M)
 		for e in _emergents:
 			if e.dot(d) > limit:
 				return true

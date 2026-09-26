@@ -221,10 +221,12 @@ Verified:
   band, punchy greens, and saturated turquoise/ultramarine water. It uses
   a linear tonemap, because filmic washes colors toward realism.
 - **Flat bands:**
-  - the sky gradient is stepped;
-  - clouds are three-tone cel shapes;
-  - distance fog is drawn by the world shaders in hard-edged bands
-    (N64-style) instead of the Environment's smooth fog.
+  - the sky is a smooth gradient (deep ultramarine overhead, soft haze
+    at the horizon, a warm glow on the sun's side); it used to be
+    stepped in flat bands;
+  - clouds are soft, shaded puffs;
+  - distance fog is drawn by the world shaders, smooth, instead of the
+    Environment's fog.
 
   Low ground below eye level fills with extra mist, strongest at night.
 - **Textures.** A small procedural set, generated at startup by
@@ -292,8 +294,8 @@ Verified:
   not, so clear sky costs one noise lookup. Standing above the
   low layer brings harsh alpine conditions (stronger wind, drier; HUD:
   "thin, cold air").
-- **Atmospheric perspective:** Environment fog plus the banded shader
-  fog, blue by day and cobalt at night; distance ridges fade in steps.
+- **Atmospheric perspective:** Environment fog plus the shader fog,
+  blue by day and cobalt at night; distance ridges fade smoothly.
   The haze thins with altitude (an exponential atmosphere, 150 m scale
   height: 1.5 km at Earth's scale), so valleys are hazy and summits
   clear.
@@ -323,8 +325,8 @@ Verified:
     threshold and bloom; ordinary daylight surfaces don't.
   - **Grade:** contrast 1.28 by day and 1.32 at night, saturation 1.42
     by day (1.2 at night), exposure 0.9, for deep shadows and bright
-    highlights. The sky has 5 bands and the fog 6, both with
-    near-hard edges.
+    highlights. Sky and fog are smooth gradients (they were stepped in 5
+    and 6 flat bands).
 - **Bioluminescent night** (the third palette): see Landmarks. Moss
   glows in patches a few meters across.
 
@@ -332,13 +334,34 @@ Verified:
 
 `scripts/landmarks/`
 
-- **Ruins** (`Ruins`, `RuinBuilder`). At most one per 3.2 km cell, placed
-  on the most prominent rise:
+- **Ruins** (`Ruins`, `RuinBuilder`). At most one per 3.2 km cell. What
+  stands there depends on the country at the cell (`Ruins.country()`);
+  stone ruins go on the most prominent rise, the rest on the flattest
+  ground:
   - castles on hills: a buried motte, an octagonal curtain wall with
     breaches and a gate gap, corner towers, and a tall keep with a fallen
     corner;
   - lone towers 14-22 m tall;
-  - aqueducts striding level on tall piers, with some spans fallen.
+  - aqueducts striding level on tall piers, with some spans fallen;
+  - **snow** (ice, tundra, or colder than -3 °C): one to three igloos of
+    snow-block rings leaning in, with a crouch-height entrance tunnel,
+    some caved in with fallen blocks, plus a windbreak and a drying rack
+    hung with hides;
+  - **jungle** (tropical and cloud forest): a treehouse village. Three or
+    four giant buttressed trees (26-34 m, huge leaf crowns, hanging vines)
+    carry plank decks 8-11 m up, with railings, knee braces and thatched
+    huts, joined by sagging rope bridges (planks missing, one sometimes
+    snapped). A walkable plank ramp spirals up the first tree from the
+    ground;
+  - **marsh** (wetlands, mangroves): a 40-65 m boardwalk on posts
+    wandering across the marsh, planks missing and a stretch sunk under
+    the water, dead snags beside it, and a stilt cabin at the end with a
+    window, boards gone and part of the thatch caved in.
+
+  Planet-wide with seed 42: 370 towers, 223 aqueducts, 88 castles, 223
+  igloo sites, 96 treehouse villages, 21 boardwalks. Wood, snow, thatch,
+  leaves and hide carry their own texture (a material id per vertex; the
+  ruin shader picks bark, packed snow, straw, leaves or a soft grain).
 
   All of it is stacked stone blocks, so collapse is jagged column tops,
   V-shaped breaches, missing window blocks and rubble at the foot. The
@@ -361,7 +384,27 @@ Verified:
   door gap) and lean-tos (forked uprights, a ridge pole, a vine-thatched
   roof to the ground), built from the same block primitives, so they get
   collision, the far LOD and the vines' night glow.
-  `Landmarks.sheltered_at()` tells when you're inside one.
+  `Landmarks.sheltered_at()` tells when you're inside one (igloos,
+  huts and the cabin count too).
+- **Living camps** (`Camps`): a fire burning and two to four folk seated
+  round it on logs (stones among the dead), built within 220 m of the
+  player. They look round at each other, gesture as they talk, turn to
+  watch you come within 12 m (never further than over a shoulder), and
+  one says a line when you step into the firelight. Found:
+  - in about half the ruins (`Ruins.inhabited()`), at the spot the
+    builder left: the survivors' fire ring (which then burns instead of
+    lying cold), a castle courtyard, a tower's foot, under an arch, among
+    the igloos, beneath the treehouses, where the boardwalk begins;
+  - in the wild, on flat dry ground beside a river or lake (about one
+    land cell in six, 1.8 km cells);
+  - in rock shelters at the foot of cliffs (escarpments; see Walkable
+    terrain), under a great slab jutting from the cliff above the fire,
+    boulders either side.
+
+  Who sits there: tribal folk in most land, fur-clad northerners in
+  snow, hooded marsh folk, and at about 45% of inhabited stone ruins the
+  restless dead, skeletons and a blue-robed hooded one keeping them
+  company.
 - **Glowing places** (`MagicSites`, `Landmarks`): every ruin, every
   mythical territory, and about a third of fresh lakes and wetland cells
   (glow ponds).
@@ -385,6 +428,16 @@ Verified:
     Collision, height_at() and plant placement use the fine heights;
   - a gentle roll layer (~60 m swells, ±2 m) makes slopes undulate,
     fading out near sea level;
+  - **escarpments**: in some inland regions the land steps up 14 m along
+    long winding lines (the zero line of a slow noise field), over ~4 m:
+    70-80° cliff faces with a plateau above;
+  - **ravines**: in some hill country, narrow slot canyons 12 m deep with
+    40-70° walls and a flat floor, meandering for kilometres (a narrow
+    band round another noise field's zero line). Both are walking-scale
+    detail, left out of the 1 km blueprint (a blueprint cell landing in a
+    ravine would make a phantom lake);
+  - where a river runs through ground more than 4 m above its bed, its
+    banks steepen from a 12 m slope to near-vertical 3 m walls: a gorge;
   - heights come from `TerrainField` with the detail layer;
   - rivers are carved in with water ribbons (`RiverNetwork`). The water
     follows the ground (a profile sampled every 6 m, a running minimum of
@@ -447,6 +500,11 @@ copy.
   all files; currently 107 species (12 of them bamboo), in 34 of the 51
   files (hot desert and
   taiga researched; most others still placeholders).
+- **Bigger than life.** Plants grow larger than their listed heights,
+  for epic woods: emergent trees ×1.45 (and one in seven a giant, ×1.25
+  more), canopy trees ×1.3, shrubs, ground cover and epiphytes ×1.2.
+  Spacing widens with them (about with the square root), so crowns don't
+  merge into a wall or add instances.
 - **Plants read climate, not biome names.** At each candidate site on a
   jittered grid (spacing per tier), `VegetationPlacer` combines:
   - temperature at the exact height, adjusted for aspect (equator-facing

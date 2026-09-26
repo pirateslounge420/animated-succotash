@@ -22,6 +22,14 @@ extends RefCounted
 ##   roll       - gentle ~60 m swells (a couple of meters) so slopes roll
 ##                at walking scale; fades out near sea level so coastlines
 ##                keep their shape. Blueprint skips it too.
+##   escarpments- in some inland regions, long winding cliff lines where
+##                the land steps up ESCARP_M over ~10 m: cliff faces,
+##                plateaus, rock shelters at their feet (Camps).
+##   ravines    - in some hill country, narrow slot canyons RAVINE_M deep
+##                with steep walls and a flat floor, meandering for km.
+##                Escarpments and ravines are walking-scale detail too (a
+##                1 km blueprint cell can't hold them): rivers cut through
+##                them (TerrainChunk forces their beds), as gorges.
 
 ## Geographic layers are Earth-like heights times PlanetConst.HEIGHT_SCALE;
 ## the walking-scale layers (detail, shore wiggle, roll) aren't scaled:
@@ -34,6 +42,8 @@ const MAX_DEPTH_M := 3800.0 * H
 const SHELF_DEPTH_M := 140.0 * H
 const DETAIL_M := 14.0
 const ROLL_M := 2.0
+const ESCARP_M := 14.0
+const RAVINE_M := 12.0
 
 const HOTSPOT_COUNT := 9
 const HOTSPOT_HEIGHT_M := Vector2(700.0, 2000.0) * H
@@ -56,6 +66,10 @@ var _hills := FastNoiseLite.new()
 var _detail := FastNoiseLite.new()
 var _shore := FastNoiseLite.new()
 var _roll := FastNoiseLite.new()
+var _escarp := FastNoiseLite.new()
+var _escarp_mask := FastNoiseLite.new()
+var _ravine := FastNoiseLite.new()
+var _ravine_mask := FastNoiseLite.new()
 
 
 func _init(p_seed: int, p_ocean_fraction := 0.62) -> void:
@@ -69,6 +83,10 @@ func _init(p_seed: int, p_ocean_fraction := 0.62) -> void:
 	_setup(_detail, 4, 1.0 / 180.0, 3)
 	_setup(_shore, 5, 1.0 / 900.0, 2)
 	_setup(_roll, 6, 1.0 / 60.0, 2)
+	_setup(_escarp, 7, 1.0 / 2500.0, 2)
+	_setup(_escarp_mask, 8, 1.0 / 20000.0, 1)
+	_setup(_ravine, 9, 1.0 / 3000.0, 1)
+	_setup(_ravine_mask, 10, 1.0 / 15000.0, 1)
 
 	_calibrate_sea_threshold()
 	_place_hotspots()
@@ -148,7 +166,25 @@ func elevation(dir: Vector3, detail := false, roll := true) -> float:
 		e += _detail.get_noise_3dv(p) * DETAIL_M + _shore.get_noise_3dv(p) * 6.0
 		if roll:
 			e += _roll.get_noise_3dv(p) * ROLL_M * smoothstep(1.5, 6.0, absf(e))
+		if x > 0.06:
+			e += _cliffs(p, x, e)
 	return e
+
+
+## Escarpments and ravines (see the class notes): the height to add at
+## `p` (scene-scale point on the sphere), `x` inland-ness, `e` so far.
+func _cliffs(p: Vector3, x: float, e: float) -> float:
+	var inland := smoothstep(0.06, 0.2, x)
+	var add := 0.0
+	var em := smoothstep(0.1, 0.35, _escarp_mask.get_noise_3dv(p)) * inland
+	if em > 0.0:
+		add += ESCARP_M * em * smoothstep(-0.0012, 0.0012, _escarp.get_noise_3dv(p))
+	var rm := smoothstep(0.05, 0.3, _ravine_mask.get_noise_3dv(p)) * inland * smoothstep(6.0, 14.0, e)
+	if rm > 0.0:
+		var n := absf(_ravine.get_noise_3dv(p))
+		if n < 0.012:
+			add -= minf(RAVINE_M, e - 3.0) * rm * smoothstep(0.0105, 0.0065, n)
+	return add
 
 
 func _hotspot_height(dir: Vector3) -> float:
