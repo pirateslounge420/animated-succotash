@@ -53,6 +53,10 @@ var _dev_loaded := false
 var planet: PlanetData
 var weather: WeatherSim
 var ready_to_play := false
+## The water ripple simulation (owner: the ripple system; see Ripples):
+## ripple height buffers of the water near the camera, for anything that
+## wants to read disturbances. Null when it isn't running.
+var ripples: Object = null
 
 ## In-game days since the start; fraction is time of day (0.5 = noon at
 ## longitude 0). Starts near full moon; main.gd then sets the clock to late
