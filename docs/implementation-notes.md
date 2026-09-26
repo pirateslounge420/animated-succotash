@@ -228,12 +228,24 @@ Verified:
 
   Low ground below eye level fills with extra mist, strongest at night.
 - **Textures.** A small procedural set, generated at startup by
-  `Look.texture()`: 64 px, nearest-filtered with mipmaps, centered on
-  0.5 so shaders multiply by 2 and keep the vertex color's hue.
-  - grass, dirt and stone on the ground, picked by the ground color
-    (green → grass, low saturation → stone, otherwise dirt), with their
-    contrast fading out between 25 and 140 m so distant ground doesn't
-    shimmer;
+  `Look.texture()` (~0.2 s): 128 px, nearest-filtered with mipmaps, and
+  centered on 0.5 so shaders multiply by 2 and keep the vertex color's
+  hue. Texels stay crisp but are dense with painted detail (thousands
+  of grass blades, lit and shadowed pebbles of several sizes), for a
+  texture-led look like the hand-painted references rather than big
+  blocky texels.
+  - grass, dirt, sand and stone on the ground, picked by the ground color
+    (green → grass, bright warm → sand, low saturation → stone, otherwise
+    dirt). Texels are about 1.4 cm for grass, 1.1 cm for dirt, 2 cm for
+    sand and 2.6 cm for stone. Each is sampled twice (a turned, rescaled
+    copy blended in by slow noise) so the tiling doesn't show. Smooth
+    light and dark patches at two scales (a few meters, a few tens of
+    meters) paint over them, with grass warmer in the light and cooler in
+    the dark. Contrast eases off between 60 and 450 m so distant ground
+    doesn't shimmer;
+  - water: a net of caustic lines over a mottled base. The water shader
+    drifts two copies across each other (with the current on rivers), for
+    darker mottles and bright cyan flecks where the lines cross;
   - bark and leaves on plants, mapped in object space (triplanar) and
     scaled with the plant, so a big tree doesn't get bigger texels;
   - a leaf-cluster card texture with alpha: foliage crowns carry
@@ -241,8 +253,11 @@ Verified:
   - weave (over-under strands) and fur (short strokes hanging down) for
     the player's robe, mantle and hair.
     The material ID (bark, leaves, card) rides in UV2.x;
-  - stone on ruins, turning to leaves where moss grows;
-  - the 32 px grain for everything else.
+  - stone on ruins (texels about 1.5 cm), turning to leaves where moss
+    grows, with soft weathering patches;
+  - the 32 px grain: bound twice, crisp for small-scale grit and smoothly
+    filtered (`look_grain_soft`) for large-scale variation, so broad
+    patches never come out as blocks.
 - **Smooth shading, GameCube style** (the F-Zero GX / Melee / PSO look
   rather than flat low poly): terrain, plants, rocks, ruins and creatures
   have smoothed vertex normals; terrain normals come from a grid padded
