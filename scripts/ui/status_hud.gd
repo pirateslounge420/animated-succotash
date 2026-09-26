@@ -19,7 +19,7 @@ var _death_label: Label
 
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_death_label = Label.new()
 	_death_label.text = "You died"
@@ -27,9 +27,11 @@ func _ready() -> void:
 	_death_label.add_theme_color_override("font_color", Color(0.95, 0.4, 0.35))
 	_death_label.add_theme_color_override("font_outline_color", Color(0.1, 0.02, 0.02))
 	_death_label.add_theme_constant_override("outline_size", 8)
-	_death_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	_death_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	_death_label.grow_vertical = Control.GROW_DIRECTION_BOTH
+	# Fill the screen and center the text in it (a centered preset before
+	# the text has a size puts it off to the top).
+	_death_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_death_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_death_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_death_label.visible = false
 	add_child(_death_label)
 

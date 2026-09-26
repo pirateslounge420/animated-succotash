@@ -123,10 +123,19 @@ func flash_hurt() -> void:
 
 func show_death() -> void:
 	_status.set_dead(true)
+	_dim_readouts(true)
 
 
 func hide_death() -> void:
 	_status.set_dead(false)
+	_dim_readouts(false)
+
+
+## The readouts step back behind the death curtain (by alpha, so the
+## show/hide toggle keeps its own state).
+func _dim_readouts(dim: bool) -> void:
+	for l: Label in [_left, _right, _hint, _prompt]:
+		l.modulate.a = 0.0 if dim else 1.0
 
 
 func set_prompt(text: String) -> void:
