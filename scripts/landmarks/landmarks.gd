@@ -190,7 +190,7 @@ func _refresh_sites(pd: Vector3) -> void:
 		if s.type == "ruin":
 			for r in ruins_near(s.dir, 1.0):
 				if r.dir.is_equal_approx(s.dir):
-					s.name = Ruins.KIND_NAMES[r.kind]
+					s.name = Ruins.site_name(r)
 	_sites.sort_custom(func(a, b): return a.dist < b.dist)
 	var kinds := PackedFloat32Array()
 	var count := mini(_sites.size(), 8)

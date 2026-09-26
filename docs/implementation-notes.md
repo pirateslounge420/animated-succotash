@@ -357,9 +357,38 @@ Verified:
     wandering across the marsh, planks missing and a stretch sunk under
     the water, dead snags beside it, and a stilt cabin at the end with a
     window, boards gone and part of the thatch caved in.
+  - **pyramids**, in any country, on its own roll (`Ruins.PYRAMID_CHANCE`:
+    35% of desert ruins, 20% jungle, 10% stone country and marsh, 8% snow;
+    a separate random stream, so every other ruin stays where it was) and
+    on level ground. `Ruins._pyramid_site()` picks the measurements and the
+    clearing; `RuinBuilder._pyramid()` builds to them:
+    - **desert**: a 56-84 m sandstone pyramid, 0.62 as tall as it is wide,
+      cased smooth but weathered into rough courses that step back at
+      each ledge, the capstone gone, sand drifted round the foot, a gabled
+      entrance up the -z face, fallen casing stones and a small queen's
+      pyramid beside it (about 2.7k triangles: flat faces, not blocks);
+    - **jungle** (pale limestone): a steep temple of 7-9 tiers with a
+      stair up one face to a shrine with a door and a roof comb, mossy
+      and hung with ivy;
+    - **marsh**: the same, half sunk (the lowest tier and a half buried),
+      its shrine fallen in;
+    - **stone** and **snow**: a broad grey ziggurat of 4-6 tiers with a
+      stair, a broken obelisk, altar and pillar stumps on top; in snow,
+      snow lies on every ledge.
 
-  Planet-wide with seed 42: 370 towers, 223 aqueducts, 88 castles, 223
-  igloo sites, 96 treehouse villages, 21 boardwalks. Wood, snow, thatch,
+    Stepped tiers are rings of big blocks round a darker core set back
+    behind them, so a block fallen out shows a recess, not a hole. The
+    stair climbs at 44 degrees (the player walks up to 50), from where it
+    meets the ground past the foot; its steps have no collision and a
+    smooth ramp stands in for them. The camp (if the ruin is inhabited)
+    sits at the foot on the +x side: tribal folk at temples, northerners
+    in snow, marsh folk in the marsh, the dead or tribal folk in the
+    desert. Glowing-site labels use `Ruins.site_name()` ("Desert pyramid",
+    "Temple pyramid", "Step pyramid", "Frozen pyramid", "Sunken pyramid").
+
+  Planet-wide with seed 42: 276 towers, 172 aqueducts, 85 castles, 208
+  igloo sites, 72 treehouse villages, 17 boardwalks, and 187 pyramids
+  (102 desert, 42 step, 24 temple, 15 frozen, 4 sunken). Wood, snow, thatch,
   leaves and hide carry their own texture (a material id per vertex; the
   ruin shader picks bark, packed snow, straw, leaves or a soft grain).
 

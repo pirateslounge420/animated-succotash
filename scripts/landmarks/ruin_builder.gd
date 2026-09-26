@@ -14,7 +14,9 @@ class_name RuinBuilder
 ## 14-22 m, aqueducts stride level across the ground on tall piers.
 ## Other countries have their own (Ruins): igloo clusters in snow, a
 ## treehouse village of platforms and rope bridges on giant jungle trees,
-## a boardwalk on stilts out to a cabin in the marsh. Ruins
+## a boardwalk on stilts out to a cabin in the marsh; and now and then a
+## pyramid (sandstone and cased in the desert, a stepped temple elsewhere).
+## Ruins
 ## are built up to ~2.6 km out, beyond the terrain chunks, so their bases
 ## run down into a buried mound or deep footings and never float over the
 ## coarser far terrain.
@@ -40,6 +42,9 @@ const JUNGLE_LEAF := Color(0.16, 0.42, 0.16)
 const THATCH := Color(0.55, 0.47, 0.28)
 const SNOW := Color(0.7, 0.77, 0.86) # packed snow blocks, cooler than a snowfield so they read
 const ROPE := Color(0.42, 0.36, 0.24)
+# Desert pyramids: warm sandstone; jungle temples: pale limestone.
+const SANDSTONE := [Color(0.78, 0.66, 0.46), Color(0.72, 0.6, 0.42), Color(0.82, 0.71, 0.5), Color(0.75, 0.64, 0.47), Color(0.69, 0.57, 0.4)]
+const LIMESTONE := [Color(0.62, 0.6, 0.52), Color(0.56, 0.55, 0.49), Color(0.66, 0.63, 0.55), Color(0.52, 0.52, 0.47), Color(0.6, 0.57, 0.5)]
 
 ## Distance where the drawn blocks give way to the plain-box LOD, and the
 ## hysteresis round it.
@@ -74,6 +79,11 @@ var _c := PackedColorArray()
 var _m := PackedVector2Array() # material per vertex (x)
 ## The material new geometry gets.
 var mat := STONE_M
+## Stone colors for block() and rubble().
+var palette: Array = STONES
+## Off: box() adds no collision (a pyramid's stair steps, which a ramp
+## stands in for).
+var solid := true
 ## Collision triangles: plain boxes, much cheaper than the drawn blocks.
 var _cv := PackedVector3Array()
 ## Far LOD (past LOD_M): plain boxes too, in the blocks' face colors, and
@@ -127,6 +137,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 			b._treehouse()
 		Ruins.Kind.BOARDWALK:
 			b._boardwalk()
+		Ruins.Kind.PYRAMID:
+			b._pyramid()
 	# Its own roll, so a camp never changes the ruin itself. (Only the stone
 	# ruins: the others are dwellings already.)
 	var camp_rng := RandomNumberGenerator.new()
@@ -166,7 +178,7 @@ static func rock_mesh(size: Vector3, p_seed: int, col: Color, block := false) ->
 static func make_node(data: Dictionary, world: Node) -> Node3D:
 	var site: Dictionary = data.site
 	var root := Node3D.new()
-	root.name = Ruins.KIND_NAMES[site.kind].replace(" ", "")
+	root.name = Ruins.site_name(site).replace(" ", "")
 	root.set_meta("site", site)
 	root.set_meta("shelters", data.get("shelters", []))
 	root.set_meta("camp_spot", data.get("camp_spot", Vector3.ZERO))
@@ -321,7 +333,8 @@ func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09,
 		var ns: Array[Vector3] = [fnorm.call(i, 0), fnorm.call(i, 1), fnorm.call(i, 2)]
 		var cs: Array[Color] = [face_col.call(i, 0), face_col.call(i, 1), face_col.call(i, 2)]
 		_tri_n(ps[0], ps[1], ps[2], ns[0], ns[1], ns[2], cs[0], cs[1], cs[2], o)
-	_collision_box(xf, h)
+	if solid:
+		_collision_box(xf, h)
 	_lod_box(xf, h, top, side, bottom)
 
 
@@ -442,7 +455,7 @@ func block(center: Vector3, dir: Vector3, size: Vector3, moss: float, wobble := 
 	var z := x.cross(Vector3.UP).normalized()
 	var basis := Basis(x, Vector3.UP, z)
 	basis = basis.rotated(Vector3.UP, rng.randf_range(-wobble, wobble)).rotated(x, rng.randf_range(-wobble, wobble) * 0.5)
-	var col: Color = STONES[rng.randi() % STONES.size()]
+	var col: Color = palette[rng.randi() % palette.size()]
 	col = col.lightened(rng.randf_range(-0.06, 0.06))
 	col = col.darkened(0.4 * exp(-maxf(above, 0.0) / 1.3))
 	# Irregular masonry: blocks a little longer or shorter, shallower or
@@ -503,7 +516,7 @@ func rubble(center: Vector3, spread: float, count: int) -> void:
 		var z := center.z + sin(a) * r
 		var size := Vector3(rng.randf_range(0.6, 1.4), rng.randf_range(0.4, 0.8), rng.randf_range(0.6, 1.2))
 		var basis := Basis.from_euler(Vector3(rng.randf_range(-0.5, 0.5), rng.randf() * TAU, rng.randf_range(-0.5, 0.5)))
-		var col: Color = STONES[rng.randi() % STONES.size()]
+		var col: Color = palette[rng.randi() % palette.size()]
 		var p := Vector3(x, ground(x, z) + size.y * 0.3, z)
 		if rng.randf() < 0.55:
 			# A tumbled block, edges knocked round.
@@ -1511,3 +1524,315 @@ func cabin(center: Vector2, heading: float, floor_y: float) -> void:
 			box(Transform3D(basis, (ridge + eave) * 0.5 + fwd * t), Vector3((hl + 0.4) * 2.0 / 3.0, 0.14, ridge.distance_to(eave) + 0.25), tc, 0.0, 0.05, 0.04)
 	mat = STONE_M
 	_shelters.append([c, minf(hl, hw), wall_h])
+
+
+# --- Pyramids ---------------------------------------------------------------------
+
+## A pyramid, to the measurements Ruins._pyramid_site() chose: cased in
+## sandstone in the desert, stepped everywhere else. A living camp's fire
+## goes at the foot on the +x side.
+func _pyramid() -> void:
+	var style: String = site.style
+	var hs: float = site.base_m * 0.5
+	match style:
+		"desert":
+			palette = SANDSTONE
+			_desert_pyramid(hs)
+		"jungle", "marsh":
+			palette = LIMESTONE
+			_step_pyramid(hs, style)
+		_:
+			_step_pyramid(hs, style)
+	var cx := hs + 6.0
+	_camp_spot = Vector3(cx, ground(cx, 0.0), 0.0)
+
+
+## Lowest (x) and highest (y) ground under a square of half-side `hs`.
+func _ground_range(c: Vector2, hs: float) -> Vector2:
+	var lo := INF
+	var hi := -INF
+	for i in 5:
+		for j in 5:
+			var g := ground(c.x - hs + hs * 0.5 * i, c.y - hs + hs * 0.5 * j)
+			lo = minf(lo, g)
+			hi = maxf(hi, g)
+	return Vector2(lo, hi)
+
+
+## The great desert pyramid: sand drifted round its foot, a few broken
+## capstone blocks on its flat top, an entrance up one face, fallen casing
+## stones at the base and a small queen's pyramid beside it.
+func _desert_pyramid(hs: float) -> void:
+	var h: float = site.height_m
+	mound(hs + 2.0, hs + 44.0, 26.0, 0.3)
+	var yt := _cased_pyramid(Vector2.ZERO, hs, h, -0.3, 0.93)
+	var st := hs * 0.07
+	for i in rng.randi_range(2, 4):
+		var a := rng.randf() * TAU
+		block(Vector3(rng.randf_range(-st, st) * 0.6, yt + 0.5, rng.randf_range(-st, st) * 0.6), Vector3(cos(a), 0.0, sin(a)), Vector3(2.2, 1.0, 1.6), 0.0)
+	_pyramid_entrance(hs, h, -0.3)
+	var q: float = site.queen_hs
+	var qc := Vector2(-(hs + q + 8.0), 0.0)
+	var qg := _ground_range(qc, q)
+	_cased_pyramid(qc, q, q * 2.0 * 0.62, qg.x - 0.6, 0.97)
+	for k in 4:
+		var a := rng.randf() * TAU
+		rubble(Vector3(cos(a) * hs * 1.03, 0.0, sin(a) * hs * 1.03), 5.0, 7)
+
+
+## A smooth-sided pyramid of side 2 * `hs` and full height `h` from `y0`,
+## cut off at `cut` of its height (the capstone gone). The casing is
+## weathered into rough courses: each one leans in a little steeper than
+## the whole and steps back at a ledge. A skirt runs down below the base so
+## it never floats over coarser far terrain. Returns the top's height.
+func _cased_pyramid(c: Vector2, hs: float, h: float, y0: float, cut: float) -> float:
+	var start := _v.size()
+	var rows := maxi(6, int(h * cut / 1.7))
+	var corner := func(i: int, s: float, y: float) -> Vector3:
+		var q: Vector2 = [Vector2(-1, -1), Vector2(1, -1), Vector2(1, 1), Vector2(-1, 1)][i % 4]
+		return Vector3(c.x + q.x * s, y, c.y + q.y * s)
+	var skirt: Color = (palette[4] as Color).darkened(0.1)
+	skirt.a = 0.0
+	for f in 4:
+		_face(corner.call(f, hs, y0 - 8.0), corner.call(f + 1, hs, y0 - 8.0), corner.call(f + 1, hs, y0), corner.call(f, hs, y0), skirt, Vector3(c.x, y0 - 4.0, c.y))
+	for r in rows:
+		var t0 := cut * r / rows
+		var t1 := cut * (r + 1) / rows
+		var s0 := hs * (1.0 - t0)
+		var s1 := hs * (1.0 - t1)
+		var ya := y0 + h * t0
+		var yb := y0 + h * t1
+		# Weathered further back toward the top.
+		var ledge := rng.randf_range(0.1, 0.3) + 0.5 * t1 * rng.randf()
+		var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.04, 0.04))
+		col.a = 0.0
+		var ledge_col := col.lightened(0.1)
+		ledge_col.a = 0.0
+		for f in 4:
+			_face(corner.call(f, s0, ya), corner.call(f + 1, s0, ya), corner.call(f + 1, s1 + ledge, yb), corner.call(f, s1 + ledge, yb), col, Vector3(c.x, ya, c.y))
+			_face(corner.call(f, s1 + ledge, yb), corner.call(f + 1, s1 + ledge, yb), corner.call(f + 1, s1, yb), corner.call(f, s1, yb), ledge_col, Vector3(c.x, yb - 4.0, c.y))
+	var st := hs * (1.0 - cut)
+	var yt := y0 + h * cut
+	var top: Color = palette[0]
+	top.a = 0.0
+	_face(corner.call(0, st, yt), corner.call(1, st, yt), corner.call(2, st, yt), corner.call(3, st, yt), top, Vector3(c.x, yt - 4.0, c.y))
+	_cv.append_array(_v.slice(start))
+	_lv.append_array(_v.slice(start))
+	_ln.append_array(_n.slice(start))
+	_lc.append_array(_c.slice(start))
+	_lm.append_array(_m.slice(start))
+	return yt
+
+
+## The way in, a little up the -z face: a block of casing standing proud,
+## a dark doorway in it, and two great slabs leaning together over it.
+func _pyramid_entrance(hs: float, h: float, y0: float) -> void:
+	var t := 0.13
+	var y := y0 + h * t
+	var z := -hs * (1.0 - t)
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, y + 1.8, z + 0.6)), Vector3(4.2, 4.6, 3.0), palette[1], 0.0, 0.12, 0.04)
+	var zf := z + 0.6 - 1.5 - 0.03
+	var dark := Color(0.04, 0.03, 0.03, 0.0)
+	_face(Vector3(-0.9, y - 0.3, zf), Vector3(0.9, y - 0.3, zf), Vector3(0.9, y + 2.2, zf), Vector3(-0.9, y + 2.2, zf), dark, Vector3(0.0, y, z + 2.0))
+	for sx: float in [-1.0, 1.0]:
+		box(Transform3D(Basis(Vector3(0, 0, 1), -sx * 0.75), Vector3(sx * 1.1, y + 4.6, z + 0.2)), Vector3(3.0, 0.8, 3.2), palette[2], 0.0)
+
+
+## A stepped pyramid: `tiers` tiers of big blocks narrowing to the top
+## platform, a stair up the -z face, and on top a shrine (jungle), a
+## fallen shrine (marsh, where the pyramid's sunk to its second tier) or
+## an obelisk (stone and snow; snow lies on every ledge).
+func _step_pyramid(hs: float, style: String) -> void:
+	var n: int = site.tiers
+	var th: float = site.tier_m
+	var top_hs: float = site.top_hs
+	var inset := (hs - top_hs) / (n - 1)
+	var gr := _ground_range(Vector2.ZERO, hs)
+	mound(hs + 1.0, hs + 30.0, 26.0, -0.2)
+	var y0 := gr.y - th * (1.6 if style == "marsh" else 0.5)
+	var lush := style == "jungle" or style == "marsh"
+	var stair_w := clampf(hs * 0.28, 5.0, 8.0)
+	for k in n:
+		var s := hs - k * inset
+		var top := y0 + (k + 1) * th
+		var bottom := gr.x - 3.0 if k == 0 else top - th - 0.3
+		_tier(s, bottom, top, inset + 0.6, k, stair_w, lush, th)
+	var y_top := y0 + n * th
+	_stair(hs, top_hs, y_top, stair_w, y0, th, inset)
+	var floor_y := y_top - 0.12
+	if style == "snow":
+		for k in n - 1:
+			_snow_ledge(hs - k * inset, inset, y0 + (k + 1) * th)
+		mat = SNOW_M
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, floor_y + 0.1, 0.0)), Vector3(2.0 * top_hs - 1.4, 0.2, 2.0 * top_hs - 1.4), SNOW, 0.0, 0.1, 0.06)
+		mat = STONE_M
+	match style:
+		"jungle":
+			_shrine(floor_y, 0.8, false)
+		"marsh":
+			_shrine(floor_y, 0.8, true)
+		_:
+			_obelisk(floor_y, top_hs)
+	for k in rng.randi_range(2, 4):
+		var a := rng.randf_range(0.3, PI - 0.3) # clear of the stair's foot
+		rubble(Vector3(cos(a) * hs * 1.08, 0.0, sin(a) * hs * 1.08), 4.0, 6)
+
+
+## One tier: a ring of big blocks, `depth` deep, round a core set back a
+## little behind them (the core shows where a block has fallen out, and
+## its top is the platform's paving on the top tier). Blocks behind the
+## stair are left out. Mossy on top, heavily so and hung with ivy on
+## `lush` pyramids.
+func _tier(s: float, bottom: float, top: float, depth: float, k: int, stair_w: float, lush: bool, th: float) -> void:
+	var core_col: Color = (palette[3] as Color).darkened(0.2)
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, (bottom + top) * 0.5 - 0.06, 0.0)), Vector3(2.0 * s - 1.0, top - bottom - 0.12, 2.0 * s - 1.0), core_col, _growth(0.5 if lush else 0.2), 0.1, 0.0)
+	var courses := maxi(1, int(round((top - bottom) / 1.5)))
+	var ch := (top - bottom) / courses
+	for f in 4:
+		# -z, +x, +z, -x. The two along x run corner to corner, the other
+		# two fit between them.
+		var along_x := f % 2 == 0
+		var sgn := -1.0 if f == 0 or f == 3 else 1.0
+		var length := 2.0 * s if along_x else 2.0 * (s - depth)
+		var dir := Vector3(1, 0, 0) if along_x else Vector3(0, 0, 1)
+		var out := Vector3(0, 0, sgn) if along_x else Vector3(sgn, 0, 0)
+		var basis := Basis(dir, Vector3.UP, dir.cross(Vector3.UP))
+		var blocks := maxi(1, int(ceil(length / 3.2)))
+		var bw := length / blocks
+		for i in blocks:
+			var u := -length * 0.5 + (i + 0.5) * bw
+			if f == 0 and absf(u) < stair_w * 0.5 - 0.4:
+				continue
+			var c := dir * u + out * (s - depth * 0.5)
+			for j in courses:
+				var last := j == courses - 1
+				if k > 0 and last and rng.randf() < 0.06:
+					continue # fallen out
+				var moss := (0.2 + (0.5 if last else 0.0)) * (1.0 if lush else 0.5) + rng.randf_range(0.0, 0.15)
+				var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.05, 0.05))
+				box(Transform3D(basis, c + Vector3(0.0, bottom + (j + 0.5) * ch, 0.0)), Vector3(bw, ch * 0.98, depth), col, _growth(moss), rng.randf_range(0.08, 0.14), 0.05)
+		if lush:
+			for m in 2:
+				var u := rng.randf_range(-length * 0.4, length * 0.4)
+				if f == 0 and absf(u) < stair_w:
+					continue
+				ivy(dir * u + out * s + Vector3(0.0, top, 0.0), out, rng.randf_range(1.0, th * 1.4))
+
+
+## Snow lying on a tier's ledge (the band `width` wide inside its edge).
+func _snow_ledge(s: float, width: float, y: float) -> void:
+	mat = SNOW_M
+	for f in 4:
+		var along_x := f % 2 == 0
+		var sgn := -1.0 if f == 0 or f == 3 else 1.0
+		var length := 2.0 * s if along_x else 2.0 * (s - width)
+		var dir := Vector3(1, 0, 0) if along_x else Vector3(0, 0, 1)
+		var out := Vector3(0, 0, sgn) if along_x else Vector3(sgn, 0, 0)
+		var basis := Basis(dir, Vector3.UP, dir.cross(Vector3.UP))
+		box(Transform3D(basis, out * (s - width * 0.5) + Vector3(0.0, y + 0.12, 0.0)), Vector3(length, 0.24, width + 0.05), SNOW, 0.0, 0.1, 0.06)
+	mat = STONE_M
+
+
+## The stair up the -z face, from where it meets the ground past the foot
+## to the top platform's edge at Ruins.STAIR_DEG: stepped slabs, each
+## reaching back into the face, between two sloping balustrades. A smooth
+## ramp stands in for the steps underfoot (the player can't climb stairs
+## step by step).
+func _stair(hs: float, top_hs: float, y_top: float, w: float, y0: float, th: float, inset: float) -> void:
+	var z_end := -top_hs
+	var reach: float = hs + site.stair_out + 1.0
+	var tanv := tan(deg_to_rad(Ruins.STAIR_DEG))
+	var z_start := z_end
+	for i in 400:
+		z_start -= 0.25
+		if y_top - (z_end - z_start) * tanv <= ground(0.0, z_start) or z_start < -reach:
+			break
+	var y_start := ground(0.0, z_start)
+	var rise := y_top - y_start
+	var run := z_end - z_start
+	var steps := maxi(4, int(round(rise / 0.5)))
+	var r := rise / steps
+	var t := run / steps
+	var n: int = site.tiers
+	solid = false
+	for i in steps:
+		var y_i := y_start + (i + 1) * r
+		var z_i := z_start + i * t
+		var k := clampi(int(floor((y_i - r * 0.5 - y0) / th)), 0, n - 1)
+		var back := maxf(-(hs - k * inset) + 0.6, z_i + 0.6)
+		var bottom := y_i - r if i > 0 else ground(0.0, z_i) - 1.5
+		var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.04, 0.04))
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, (y_i + bottom) * 0.5, (z_i + back) * 0.5)), Vector3(w + 2.0, y_i - bottom, back - z_i), col, _growth(0.25), 0.06, 0.03)
+	solid = true
+	var dirv := Vector3(0.0, rise, run).normalized()
+	var nrm := dirv.cross(Vector3.RIGHT)
+	var basis := Basis(Vector3.RIGHT, nrm, dirv)
+	var mid := Vector3(0.0, (y_start + y_top) * 0.5, (z_start + z_end) * 0.5)
+	var length := Vector2(rise, run).length()
+	for sx: float in [-1.0, 1.0]:
+		box(Transform3D(basis, mid + Vector3(sx * (w * 0.5 + 0.5), 0.0, 0.0) + nrm * 0.35), Vector3(1.0, 1.1, length + 0.6), palette[0], _growth(0.4), 0.12, 0.04)
+	_collision_box(Transform3D(basis, mid - nrm * (0.5 + r * 0.4)), Vector3(w * 0.5, 0.5, length * 0.5 + 0.3))
+
+
+## A temple house on the top platform (floor at `y`), centered `zc` back
+## from the stair, its door toward it, a roof comb above; `fallen` leaves
+## broken walls and the roof in pieces on the floor.
+func _shrine(y: float, zc: float, fallen: bool) -> void:
+	var hx := 3.4
+	var hz := 2.4
+	var courses := 4
+	var ch := 0.8
+	var thick := 0.7
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, y + 0.25, zc)), Vector3(hx * 2.0 + 1.2, 0.5, hz * 2.0 + 1.2), palette[0], _growth(0.6))
+	var yb := y + 0.5
+	for f in 4:
+		var along_x := f % 2 == 0
+		var sgn := -1.0 if f == 0 or f == 3 else 1.0
+		var length := hx * 2.0 if along_x else hz * 2.0 - thick * 2.0
+		var dir := Vector3(1, 0, 0) if along_x else Vector3(0, 0, 1)
+		var out := Vector3(0, 0, sgn) if along_x else Vector3(sgn, 0, 0)
+		var half := hz if along_x else hx
+		var basis := Basis(dir, Vector3.UP, dir.cross(Vector3.UP))
+		var blocks := maxi(1, int(ceil(length / 1.3)))
+		var bw := length / blocks
+		for i in blocks:
+			var u := -length * 0.5 + (i + 0.5) * bw
+			var h := rng.randi_range(0, 2) if fallen else courses
+			for j in h:
+				if f == 0 and absf(u) < 0.9 and j < 3:
+					continue # the door
+				var col: Color = palette[rng.randi() % palette.size()]
+				box(Transform3D(basis, Vector3(0.0, yb + (j + 0.5) * ch, zc) + dir * u + out * (half - thick * 0.5)), Vector3(bw, ch * 0.97, thick), col, _growth(0.25 + 0.15 * j), 0.07, 0.04)
+		if not fallen and rng.randf() < 0.7:
+			ivy(Vector3(0.0, yb + courses * ch, zc) + dir * rng.randf_range(-length * 0.3, length * 0.3) + out * (half + 0.1), out, rng.randf_range(1.5, 3.0))
+	var roof_y := yb + courses * ch
+	if not fallen:
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, roof_y + 0.25, zc)), Vector3(hx * 2.0 + 0.6, 0.5, hz * 2.0 + 0.6), palette[1], _growth(0.8))
+		box(Transform3D(Basis.IDENTITY, Vector3(0.0, roof_y + 1.6, zc + 0.3)), Vector3(hx * 1.5, 2.2, 0.5), palette[2], _growth(0.5))
+		ivy(Vector3(rng.randf_range(-1.5, 1.5), roof_y + 2.7, zc + 0.05), Vector3(0, 0, -1), rng.randf_range(1.5, 3.5))
+	else:
+		for i in rng.randi_range(3, 5):
+			var p := Vector3(rng.randf_range(-hx, hx), yb + 0.3, zc + rng.randf_range(-hz, hz))
+			box(Transform3D(Basis.from_euler(Vector3(rng.randf_range(-0.3, 0.3), rng.randf() * TAU, rng.randf_range(-0.3, 0.3))), p), Vector3(rng.randf_range(1.2, 2.4), 0.5, rng.randf_range(0.8, 1.6)), palette[rng.randi() % palette.size()], _growth(0.8), 0.14, 0.08)
+
+
+## A broken obelisk on the top platform (floor at `y`), an altar before
+## it and broken pillars at the corners, the obelisk's tip lying fallen.
+func _obelisk(y: float, top_hs: float) -> void:
+	box(Transform3D(Basis.IDENTITY, Vector3(0.0, y + 0.5, -1.6)), Vector3(2.4, 1.0, 1.4), palette[0], _growth(0.4))
+	var w := 1.5
+	var yy := y
+	var parts := rng.randi_range(3, 5)
+	for i in parts:
+		var basis := Basis.IDENTITY
+		if i == parts - 1:
+			basis = Basis.from_euler(Vector3(rng.randf_range(-0.12, 0.12), rng.randf() * TAU, rng.randf_range(-0.12, 0.12)))
+		box(Transform3D(basis, Vector3(0.0, yy + 0.95, 1.8)), Vector3(w, 1.9, w), palette[rng.randi() % palette.size()], _growth(0.3), 0.1, 0.05)
+		yy += 1.9
+		w *= 0.86
+	box(Transform3D(Basis.from_euler(Vector3(0.0, rng.randf() * TAU, PI * 0.5)), Vector3(-top_hs * 0.45, y + w * 0.5, top_hs * 0.3)), Vector3(w, 2.4, w), palette[1], _growth(0.5), 0.12, 0.06)
+	for cx: float in [-1.0, 1.0]:
+		for cz: float in [-1.0, 1.0]:
+			var p := Vector2(cx, cz) * (top_hs - 1.3)
+			for d in rng.randi_range(1, 3):
+				box(Transform3D(Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), Vector3(p.x, y + 0.6 + d * 1.2, p.y)), Vector3(0.9, 1.15, 0.9), palette[rng.randi() % palette.size()], _growth(0.35), 0.1, 0.05)
