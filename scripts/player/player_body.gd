@@ -353,8 +353,9 @@ static func _lathe(g: Geo, rings: int, radial: int, f: Callable, kind: int, top:
 
 static func _vert(g: Geo, p: Vector3, c: Color, kind: int, sway: float) -> void:
 	g.verts.append(p)
-	# Vertex colors reach the shader as they are: pass them linear.
-	g.colors.append(c.srgb_to_linear())
+	# Raw, like the terrain's and ruins' vertex colors (the world's grade
+	# is tuned for those; converted to linear the elf read near black).
+	g.colors.append(c)
 	g.uv.append(Vector2(kind, sway))
 
 
