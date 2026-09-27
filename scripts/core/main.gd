@@ -174,6 +174,8 @@ func _on_planet_ready() -> void:
 	# The opening lines, once, at the start of the game.
 	hud.say("Elder", "You're finally awake.", 1.2, 3.2)
 	hud.say("Hunter", "Be careful at night, don't let it get you...", 4.6, 4.8)
+	camp.talk(0, 1.2)
+	camp.talk(1, 4.6)
 
 
 func _process(delta: float) -> void:
@@ -280,6 +282,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		BranchGraphView.toggle(self, player)
 	elif event.is_action_pressed("toggle_collision_view") and world.dev_mode:
 		CollisionView.toggle_for(self, player)
+	elif event.is_action_pressed("dev_howl") and world.dev_mode:
+		creatures.dev_howl()
 	elif event.is_action_pressed("interact"):
 		# Let go of a tree; else a log within reach; else climb the tree
 		# in front of you.

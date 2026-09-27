@@ -16,8 +16,13 @@ extends Node
 ##
 ## Both are in the atmosphere, so they're drawn in the viewer's local sky
 ## (sky shader: up to MAX_STREAKS at once) and hidden by cloud layers.
+## A meteor's sound is a 3D player (Audio3D "meteor") kept VOICE_M out
+## from the camera toward the meteor's head as it crosses the sky (then
+## where it burned out), so the hiss sweeps across with it.
 
 const MAX_STREAKS := 3
+## How far out (m) the meteor's sound sits, toward it in the sky.
+const VOICE_M := 400.0
 
 ## Tuning. At the defaults, a dark night shows about two shooting stars a
 ## minute, and a meteor comes about once every 5.7 hours of darkness
@@ -45,15 +50,17 @@ var force_meteor := false
 
 var _streaks: Array = [] # {start, end, t, duration, trail, width, bright, color, meteor}
 var _roll_timer := 0.0
-var _voice: AudioStreamPlayer
+var _voice: AudioStreamPlayer3D
+## The meteor the voice follows (its streak), and where it was last.
+var _voice_streak := {}
+var _voice_dir := Vector3.UP
 
 
 func setup(p_sky: SkySystem) -> void:
 	sky = p_sky
 	rng.randomize()
-	_voice = AudioStreamPlayer.new()
+	_voice = Audio3D.make("meteor", self, "Meteor")
 	_voice.volume_db = -6.0
-	add_child(_voice)
 
 
 ## Per frame: `up`, `north` the viewer's local frame; `darkness` 0 by day,
@@ -81,6 +88,7 @@ func update_events(delta: float, up: Vector3, north: Vector3, darkness: float, c
 				flash_color = s.color
 	_streaks = alive
 	_push()
+	_place_voice()
 
 
 func _spawn(up: Vector3, north: Vector3, meteor: bool) -> void:
@@ -109,7 +117,25 @@ func _spawn(up: Vector3, north: Vector3, meteor: bool) -> void:
 	_streaks.append(s)
 	if meteor and _voice:
 		_voice.stream = SoundSynth.stream("meteor", rng.randi())
-		_voice.play()
+		_voice_streak = s
+		_voice_dir = start
+		_place_voice()
+		Audio3D.play(_voice)
+
+
+## Keep the meteor's sound toward its head (or where it ended), VOICE_M
+## from the camera.
+func _place_voice() -> void:
+	if _voice == null or (not _voice.playing and _voice_streak.is_empty()):
+		return
+	if not _voice_streak.is_empty():
+		var s := _voice_streak
+		_voice_dir = (s.start as Vector3).slerp(s.end, clampf(s.t / s.duration, 0.0, 1.0))
+		if s.t >= s.duration:
+			_voice_streak = {}
+	var cam := get_viewport().get_camera_3d()
+	if cam:
+		_voice.global_position = cam.global_position + _voice_dir * VOICE_M
 
 
 func _push() -> void:

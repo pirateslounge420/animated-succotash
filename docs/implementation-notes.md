@@ -20,6 +20,7 @@ main.gd                orchestrates the playable scene:
   CreatureSpawner      wildlife, wolf packs, mythical creatures, logs
   Landmarks            ruins and glowing places (bioluminescent night)
   Hud, MapOverlay, PostGrade
+Audio3D                every world sound's falloff (data/audio.json)
 ```
 
 Only the coarse blueprint is built for the whole planet, because the
@@ -183,16 +184,23 @@ Uses:
     keeping the long-run totals.
 - **Effects:** `WeatherFX` turns that into rain or snow that leans with
   the wind (GPU particles; intensity is `amount_ratio`, so it changes
-  smoothly without restarting the emitter), and the sound of rain (a
-  synthesized loop on its own bus). Under a crown or a camp shelter the
-  rain around you thins to 30% and its sound is low-passed. The same
-  wind vector sways all foliage.
+  smoothly without restarting the emitter), and the sound of rain: four
+  3D players 5 m out north, east, south and west of the camera, moving
+  with it, each a different synthesized loop at a slightly different
+  speed (so the four don't fuse into one sound in the middle), on their
+  own bus. Under a crown or a camp shelter the rain around you thins to
+  30% and its sound is low-passed (900 Hz). The same wind vector sways
+  all foliage.
 - **Storms** (`StormFX`): above storm level 0.55, lightning every ~40 s
   at the threshold down to ~7 s at full strength: a flickering third
   directional light from a random bearing, flashing the sky, the cloud
   tops and the ambient; thunder follows ~3 s per km of a made-up distance
   (0.25-6 km, close strikes rarer): a crack and heavy rumble within
   1.2 km, a long low roll farther off; within 0.8 km the camera shakes.
+  The thunder is a 3D sound at the strike (the flash's bearing, that
+  distance off, 300 m up), so it comes from where the lightning was, and
+  the distance alone makes it quieter and duller (see Sound). Two
+  players, so a new peal doesn't cut off the last one's roll.
   Heavy rain soaks the land (fills over ~2 minutes, drains over ~5):
   rivers and waves run faster, drops pock the water, and fresh water
   rises up to 0.3 m, visually only (swimming depth and the terrain don't
@@ -250,7 +258,10 @@ Verified:
   stars (about two a minute on a dark night) and rare meteors, gated by
   the I Ching (`IChing`: an all-changing hexagram, 1 in 4,096, cast every
   5 s of darkness: about one in 8-9 nights), in six colors, with a flash
-  over the land and a hiss and rumble. Both frequencies are exported.
+  over the land and a hiss and rumble. The meteor's sound is a 3D player
+  kept 400 m out toward its glowing head as it crosses the sky (then
+  where it burned out), so the hiss sweeps across with it. Both
+  frequencies are exported.
 - **Earth-like moon** (`Astro.moon_dir`, `MoonMode.ORBITAL`, the default):
   - it orbits once per 29.5-day phase cycle (`moon_cycle_days`) on an
     orbit tilted 5.1°;
@@ -653,7 +664,11 @@ Verified:
   edge of the firelight with a spear or a bow (the `archer` tribal
   shape), facing out and turning to watch you come. They look round at each other, gesture as they talk, turn to
   watch you come within 12 m (never further than over a shoulder), and
-  one says a line when you step into the firelight. Found:
+  one says a line when you step into the firelight. Whenever a line
+  comes up (that one, or an arrow in one of them) they murmur as the
+  subtitle shows: several soft synthesized voices overlapping, no words
+  (`SoundSynth` "murmur"), on a 3D player among them heard to about
+  25 m. Found:
   - in about half the ruins (`Ruins.inhabited()`), at the spot the
     builder left: the survivors' fire ring (which then burns instead of
     lying cold), a castle courtyard, a tower's foot, under an arch, among
@@ -1110,15 +1125,22 @@ Spawn tiers:
   found per grid cell.
   - Packs rest by day and patrol their territory at night.
   - They howl in call-and-response: members answer the leader, and
-    neighboring packs answer back.
+    neighboring packs answer back. A pack's howls are exempt from the
+    rule that keeps two creatures from making the same call within 4 s
+    (it would silence the answers).
+  - F8 (dev mode only; `CreatureSpawner.dev_howl()`): the nearest pack
+    within 800 m howls now, the leader first and the pack answering; a
+    pack still at its den beyond 420 m comes out for 45 s to do it. The
+    prompt line says which pack howled and how far off, or "No wolf pack
+    within 800 m."
   - Once they notice you, they spread out and close in to about 9 m,
     then drift home when you leave.
 - **Mythical** (`Territories`). At most one territory per 1.6 km cell,
   chosen among the mythical species whose climate fits.
   - **Dormant** beyond 1 km: nothing exists.
   - **Aware** from 1 km: unseen but pacing and calling. Calls are
-    low-pass filtered and nearly mono far away, then sharpen with
-    distance.
+    low-pass filtered and nearly mono far away, then sharpen as you
+    approach (the distance muffling every far sound has; see Sound).
   - **Visible** within 220 m.
   - Temperament decides what they do:
     - hostile ones stalk at a distance and freeze while you look at them;
@@ -1494,7 +1516,8 @@ Spawn tiers:
     failed swings, and the holding hand within 0.1 mm of its handhold.
 
 Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
-howl, drone and whisper. Bodies are placeholders (`CreatureBodies`)
+howl, drone and whisper, each on the creature's own 3D player (see
+Sound). Bodies are placeholders (`CreatureBodies`)
 built from smooth-shaded spheres and capsules (28 sides × 14 rings for
 bodies and heads, 16 × 8 for snouts and tails, coarser for eyes and
 noses), limbs that taper from hip to foot (12 sides), and
@@ -1506,6 +1529,47 @@ slab. (The capsules and
 limbs were wound inside out, so their near side was culled and the far
 side's inside showed through, lit backwards. `_revolve` now winds them
 the way Godot draws a front face.)
+
+## Sound
+
+`scripts/core/audio3d.gd`, `data/audio.json`, `SoundSynth`
+
+Every world sound is a 3D player with distance and direction (spec D5):
+nothing plays as a flat 2D sound any more. One table, `data/audio.json`,
+has a row per kind of sound; `Audio3D.apply(player, kind)` sets a
+player's unit size (full loudness within it), max distance (silent past
+it, fading out linearly toward it), attenuation model (`inverse`: about
+6 dB quieter per doubling of distance, like sound in the open; also
+`inverse_square`, `log`, `none`), loudest boost when closer than the unit
+size, and distance muffling:
+
+| Kind | Who | Unit m | Max m | Muffled m |
+|---|---|---|---|---|
+| footstep | the player's feet (`Footsteps`) | 4 | 35 | — |
+| player_voice | the player hit, at the chest | 4 | 40 | — |
+| bow | draw and release, at the hands | 4 | 40 | — |
+| arrow | its thunk where it lands | 6 | 60 | — |
+| rustle | a tree's crown (`TreeContact`) | 6 | 60 | — |
+| rain | four round the camera (`WeatherFX`) | 6 | 60 | — |
+| wildlife_call | small wildlife | 8 | 60 | 25-60 |
+| howl | wolves | 40 | 1200 | 60-760 |
+| mythic_call | mythical creatures | 30 | 400 | 60-760 |
+| hoofbeats_far | the Night Riders' biome cue (`Mythics`) | 45 | 1000 | 30-500 |
+| camp_chatter | camp folk's murmur (`Camps`, `Encampment`) | 3 | 25 | 6-25 |
+| thunder | the strike (`StormFX`) | 1000 | 12000 | 400-8000 |
+| meteor | toward its head, 400 m out (`SkyEvents`) | 400 | 3000 | — |
+
+The player's own sounds never get louder than set when the camera is
+closer than the unit size (max boost 0 dB), so first and third person
+sound alike. Muffled kinds lose their high end (down to 700 Hz) and most
+of their left-right direction (panning down to 5%) between the two
+distances from the listener, the camera drawing the view; one `Audio3D`
+node, made on first use, updates the playing ones every frame, so a howl
+dulls as you walk away from it (this replaces the spawner's old
+`_fidelity`, which only wolves and mythicals had). The Night Rider's hoof
+thuds and the Pond Crawler's sounds keep their own settings in
+`scripts/creatures/mythics/`. Wind and campfire crackle have no sound
+yet (deferred).
 
 ## The player
 
@@ -1559,8 +1623,9 @@ the way Godot draws a front face.)
   60 trees a frame (all at once behind the loading screen);
   `TerrainChunk.tree_up` now follows the tree's lean. One sphere query a few times a second finds trunks near the
   player: under a crown is `under_canopy` (rain shelter); walking through
-  a crown or bumping a trunk rustles it (a synthesized rustle and a crown
-  shiver through the MultiMesh custom data's b channel). A physics query
+  a crown or bumping a trunk rustles it (a synthesized rustle from that
+  tree's crown, where it stays as you walk on, and a crown shiver through
+  the MultiMesh custom data's b channel). A physics query
   stands in for a trigger volume per tree, which would be thousands of
   nodes.
 - **Climbing**: E facing a trunk (a ray on the tree layer) grabs it; W/S
@@ -1571,13 +1636,15 @@ the way Godot draws a front face.)
   The ground: shallow water; else the collider underfoot (ruin stone,
   tree roots); else the terrain's vertex color classified like the
   terrain shader's texture pick (grass, stone, snow, sand, dirt). Seven
-  synthesized sounds.
+  synthesized sounds, on a 3D player at the feet; a step in shallow
+  water also splashes (`PlanetPlayer.foot_splash`, `Ripples`).
 
 ## Health, the bow and the view
 
 - **Health** (`PlanetPlayer`): 100 HP, shown as ten hearts (half hearts
   too) at the bottom left (`StatusHud`), shivering when low, with a red
-  flash at the screen's edge on a hit.
+  flash at the screen's edge on a hit, and a thump and a gasp from a 3D
+  player at the chest.
   - Falls faster than 11 m/s (about a 6 m drop) hurt 7 HP per extra m/s:
     15 m costs about 43.
   - Bites: a pack that turns on you (you shot one, or walked into them at
@@ -1647,7 +1714,9 @@ added in the same orange, flickering with the flames
 (`shaders/fire_glow.gdshader`), since blue-green night grass under an
 orange light alone goes olive, not orange. At the start
 they speak once, as subtitles (`Hud.say`): "You're finally awake." /
-"Be careful at night, don't let it get you...". The camera opens over
+"Be careful at night, don't let it get you...", each with a one-voice
+wordless murmur from the speaker (`Encampment.talk`, 3D, heard to
+~25 m). The camera opens over
 the player's shoulder so the fire is in view.
 
 ## UI
@@ -1905,7 +1974,8 @@ latest results:
     40 m, fading out past 30 m.
 - **Storm fakes.** Rain doesn't collide with crowns; under cover the
   falling rain thins instead. Thunder's distance is made up per strike
-  (there is no bolt), and flooding is visual only.
+  (there is no bolt; the sound is placed at that made-up spot), and
+  flooding is visual only.
 - **NPCs** speak their opening lines once and otherwise only watch you;
   there's no dialogue or behavior beyond that yet.
 - **Frame cost of the movement/storm batch** (headless, main thread, the

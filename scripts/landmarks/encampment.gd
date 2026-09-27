@@ -20,6 +20,8 @@ extends Node3D
 ## logs collide (PropCollision); the flat mat doesn't. The two people have
 ## hitbox parts and a blocker (CreatureHitboxes): the player can't walk
 ## through them, and an arrow glances off them (Arrow, Camps.shot_at()).
+## When one of them speaks (talk(), with the opening lines' subtitles) a
+## wordless murmur comes from them.
 
 const CANDIDATES := 12
 const MIN_SEPARATION_M := 20000.0
@@ -41,6 +43,9 @@ var _fire: Node3D
 var _npcs: Array[Node3D] = []
 var _time := 0.0
 var _hitboxes_on := true
+## Their voice when they speak (talk()): a wordless murmur, 3D at the
+## speaker (Audio3D "camp_chatter").
+var _voice: AudioStreamPlayer3D
 
 
 ## The best first-camp cells of the planet, spread apart (directions).
@@ -168,6 +173,22 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 		seat.global_position = world.to_scene(seat_at, PlanetConst.RADIUS_M + chunks.ground_height(seat_at) + 0.14)
 		seat.global_basis = Basis.looking_at(_tangent(seat_at, site), seat_at) * Basis(Vector3(0, 0, 1), PI * 0.5)
 		PropCollision.capsule(PropCollision.body(seat), Transform3D(), 0.16, 1.2)
+	_voice = Audio3D.make("camp_chatter", self, "Chatter")
+	_voice.volume_db = -8.0
+	for i in 2:
+		SoundSynth.stream("murmur_one", i)
+
+
+## One of the two (0 the elder, 1 the hunter) speaks `delay` seconds from
+## now: a murmur from them while the caller's subtitle shows.
+func talk(who: int, delay: float) -> void:
+	get_tree().create_timer(delay).timeout.connect(func() -> void:
+		if not is_instance_valid(_voice) or who >= _npcs.size():
+			return
+		var n := _npcs[who]
+		_voice.global_position = n.global_position + (n.get_meta("dir") as Vector3) * 1.4
+		_voice.stream = SoundSynth.stream("murmur_one", who)
+		Audio3D.play(_voice))
 
 
 ## Per frame: the fire flickers; the NPCs breathe and turn to face the

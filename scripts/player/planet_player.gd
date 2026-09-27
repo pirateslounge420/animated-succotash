@@ -115,6 +115,8 @@ var anim_state := "idle"
 var prompt := ""
 var trees: TreeContact
 var footsteps: Footsteps
+## The player's own voice (hurt): 3D at the chest (Audio3D "player_voice").
+var voice: AudioStreamPlayer3D
 
 var _yaw := 0.0 # camera heading around local up, radians
 var _facing := Vector3.FORWARD # direction the body faces
@@ -188,6 +190,8 @@ func _ready() -> void:
 	footsteps = Footsteps.new()
 	footsteps.name = "Footsteps"
 	add_child(footsteps)
+	voice = Audio3D.make("player_voice", self, "Voice")
+	voice.position = Vector3(0, 1.3, 0)
 	bow = Bow.new()
 	bow.name = "Bow"
 	add_child(bow)
@@ -516,8 +520,8 @@ func _damage(amount: float) -> void:
 	hp = maxf(hp - amount, 0.0)
 	_since_hit = 0.0
 	shake(clampf(amount / 30.0, 0.2, 0.8))
-	footsteps.stream = SoundSynth.stream("hurt", randi())
-	footsteps.play()
+	voice.stream = SoundSynth.stream("hurt", randi())
+	voice.play()
 	hurt.emit(amount)
 	if hp <= 0.0:
 		dead = true
