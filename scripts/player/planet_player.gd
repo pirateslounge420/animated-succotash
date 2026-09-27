@@ -56,50 +56,70 @@ extends CharacterBody3D
 ## Mouse or right stick turns the camera; click the game window to capture
 ## the mouse, press release_mouse (Esc) to free it.
 
-const GRAVITY := 9.8
-const WALK_SPEED := 5.5
-const SPRINT_SPEED := 8.8
-const CROUCH_SPEED := 0.8
-## Creeping with the bow drawn or the spear raised.
-const AIM_SPEED := 0.75
+## Every tunable movement number comes from data/movement.json (Tuning;
+## the designer edits the table, spec A2). The feel is Melee's spacies:
+## heavy gravity with a fast-fall, a short snappy jump, fast ground
+## acceleration with a little traction slide on stop (longer on snow, ice
+## and wet ground), an instant turn-around with a brief skid, air control
+## that steers only a little way off your take-off speed (a jump commits
+## you), a couple of frames of landing squat (more after a fall of more
+## than a body length); a sprint carries into a longer slide and a longer
+## jump. See the table's "_help" for each number.
+static var GRAVITY := Tuning.num("movement", "air", "gravity_mps2")
+static var WALK_SPEED := Tuning.num("movement", "speed", "walk_mps")
+static var SPRINT_SPEED := Tuning.num("movement", "speed", "sprint_mps")
+static var CROUCH_SPEED := Tuning.num("movement", "speed", "sneak_mps")
+## Creeping with the bow drawn or the spear raised (on the ground).
+static var AIM_SPEED := Tuning.num("movement", "speed", "aim_mps")
+static var SWIM_SPEED := Tuning.num("movement", "speed", "swim_mps")
+static var JUMP_SPEED := Tuning.num("movement", "air", "jump_mps")
+static var SPRINT_JUMP := Tuning.num("movement", "air", "sprint_jump")
+static var FAST_FALL_MPS := Tuning.num("movement", "air", "fast_fall_mps")
+static var MAX_FALL_MPS := Tuning.num("movement", "air", "max_fall_mps")
+static var ACCEL_MPS2 := Tuning.num("movement", "ground", "accel_mps2")
+static var FRICTION_MPS2 := Tuning.num("movement", "ground", "friction_mps2")
+static var TURNAROUND_KEEP := Tuning.num("movement", "ground", "turnaround_keep")
+static var TURNAROUND_MIN_MPS := Tuning.num("movement", "ground", "turnaround_min_mps")
+static var AIR_ACCEL_MPS2 := Tuning.num("movement", "air", "air_accel_mps2")
+static var AIR_STEER_MPS := Tuning.num("movement", "air", "air_steer_mps")
+static var SWIM_ACCEL_MPS2 := Tuning.num("movement", "speed", "swim_accel_mps2")
+static var SQUAT_S := Tuning.num("movement", "landing", "squat_s")
+static var HEAVY_SQUAT_S := Tuning.num("movement", "landing", "heavy_squat_s")
+static var HEAVY_FALL_M := Tuning.num("movement", "landing", "heavy_fall_m")
+static var SQUAT_DIP_M := Tuning.num("movement", "landing", "dip_m")
+## Wall jump (right click in the air by a steep face; _wall_jump()).
+static var WJ_WINDOW_S := Tuning.num("movement", "wall_jump", "window_s")
+static var WJ_SPEED := Tuning.num("movement", "wall_jump", "speed_mps")
+static var WJ_ANGLE := deg_to_rad(Tuning.num("movement", "wall_jump", "angle_deg"))
+static var WJ_DECAY := Tuning.num("movement", "wall_jump", "chain_decay")
+static var WJ_STEEP := Tuning.num("movement", "wall_jump", "min_wall_steepness")
+static var WJ_NOISE_M := Tuning.num("movement", "wall_jump", "noise_m")
 ## How long a hand takes to reach for something and come back (grab_toward).
-const GRAB_S := 0.45
+static var GRAB_S := Tuning.num("movement", "climb", "grab_s")
 ## Unstick rule (_unstick): barely moving (under STUCK_MPS) while pushing
 ## against two or more colliders for STUCK_S, you're nudged UNSTICK_M free.
-const STUCK_S := 0.5
-const STUCK_MPS := 0.15
-const UNSTICK_M := 0.35
+static var STUCK_S := Tuning.num("movement", "unstick", "stall_s")
+static var STUCK_MPS := Tuning.num("movement", "unstick", "stall_mps")
+static var UNSTICK_M := Tuning.num("movement", "unstick", "nudge_m")
+static var JAM_S := Tuning.num("movement", "unstick", "ground_jam_s")
 ## The camera looks all the way up and all the way down, in first person and
 ## orbiting in third (a hair short of vertical so the view never flips).
 const PITCH_MAX := PI * 0.5 - 0.002
-const SWIM_SPEED := 1.6
-const JUMP_SPEED := 4.6
-## Momentum (spec D5: the F-Zero GX / Melee spirit). On the ground speed
-## builds at ACCEL_MPS2 and bleeds off at FRICTION_MPS2: a sprint takes
-## about half a second to reach and a short slide to stop, and turns at
-## speed are wider. In the air you keep your momentum and only steer
-## (AIR_ACCEL_MPS2), so a sprinting jump carries. Water is slow both ways.
-## (Scaled by 1.6 with the speeds, so the feel stays: a sprint still takes
-## about half a second to reach.)
-const ACCEL_MPS2 := 17.6
-const FRICTION_MPS2 := 28.8
-const AIR_ACCEL_MPS2 := 3.0
-const SWIM_ACCEL_MPS2 := 4.0
-## Two forward presses closer together than this start a sprint.
-const DOUBLE_TAP_S := 0.3
+static var DOUBLE_TAP_S := Tuning.num("movement", "speed", "double_tap_s")
 const STAND_HEIGHT := 1.7
 const CROUCH_HEIGHT := 1.05
 const CAMERA_Y := 1.5
 const CROUCH_CAMERA_Y := 0.95
-const CLIMB_SPEED := 1.1
-const CLIMB_REACH_M := 1.6
+static var CLIMB_SPEED := Tuning.num("movement", "climb", "simple_mps")
+static var CLIMB_REACH_M := Tuning.num("movement", "climb", "reach_m")
 ## First person: eye height standing and crouched.
 const EYE_Y := 1.6
 const CROUCH_EYE_Y := 0.98
-## Hit points; falls faster than FALL_SAFE_MPS (about a 6 m drop) hurt.
+## Hit points; a drop of more than FALL_SAFE_M hurts (by the height, so a
+## fast-fall out of a hop doesn't).
 const MAX_HP := 100.0
-const FALL_SAFE_MPS := 11.0
-const FALL_DAMAGE_PER_MPS := 7.0
+static var FALL_SAFE_M := Tuning.num("movement", "fall_damage", "safe_m")
+static var FALL_DAMAGE_PER_M := Tuning.num("movement", "fall_damage", "per_m")
 ## After a hit, health comes back at REGEN_PER_S once REGEN_DELAY_S pass.
 const REGEN_DELAY_S := 8.0
 const REGEN_PER_S := 2.0
@@ -108,8 +128,8 @@ const REGEN_PER_S := 2.0
 const BODY_LAYER := 1 << 10
 ## Blob shadow radius (m).
 const BLOB_R := 0.55
-const MOUSE_SENSITIVITY := 0.0025
-const STICK_SENSITIVITY := 2.6
+static var MOUSE_SENSITIVITY := Tuning.num("movement", "camera", "mouse_sensitivity")
+static var STICK_SENSITIVITY := Tuning.num("movement", "camera", "stick_sensitivity")
 
 signal hurt(amount: float)
 signal died
@@ -123,6 +143,27 @@ var hp := MAX_HP
 var dead := false
 var first_person := true
 var _grab_at := Vector3.ZERO
+## Movement state (Melee-spacie feel, wall jump).
+var _takeoff := Vector3.ZERO
+var _jumped := false
+var _was_on_floor := true
+var _squat_t := 0.0
+var _squat_len := 0.0
+var _squat_dip := 0.0
+var _traction := 1.0
+var _traction_t := 0.0
+var _wall_t := INF
+var _wall_n := Vector3.ZERO
+var _wall_in := Vector3.ZERO
+var _wj_chain := 0
+var _kick_t := 0.0
+static var KICK_S := Tuning.num("movement", "wall_jump", "kick_s")
+## How wet the ground is from rain, 0-1 (main sets it from the weather).
+var ground_wet := 0.0
+## Counters the tests read.
+var skids := 0
+var landings := 0
+var wall_jumps := 0
 var _stuck_t := 0.0
 ## How many times the unstick rule has freed you (tests read it).
 var unsticks := 0
@@ -131,6 +172,12 @@ var bow: Bow
 var spear: Spear
 ## What the crosshair rests on, named (the HUD shows its binomial).
 var look: LookTarget
+## What you carry and wear (Inventory; the screen on I). Past the movement
+## table's burden.free_items carried things you're slower, climb slower
+## and are louder (burden_*()).
+var inventory := Inventory.new()
+## The inventory screen is open (main sets it): the mouse is free for it.
+var ui_open := false
 ## The dotted arc of where the shot will go, while drawing or raising.
 var aim_arc: AimArc
 ## The weapon in hand: "bow" or "spear" (swap_weapon()).
@@ -138,6 +185,9 @@ var weapon := "bow"
 var _since_hit := 99.0
 var _invulnerable := 0.0
 var _fall_speed := 0.0
+## Distance from the planet's center at the top of this fall (the highest
+## point since you last stood, swam, climbed or wall-jumped).
+var _fall_top := -INF
 ## Horizontal momentum (m/s, along the ground): what the movement keys
 ## steer, as opposed to knockback and gravity.
 var _move := Vector3.ZERO
@@ -253,6 +303,9 @@ func _ready() -> void:
 	aim_arc.name = "AimArc"
 	aim_arc.player = self
 	add_child(aim_arc)
+	# Your bow and spear, worn (the inventory's ranged and melee slots).
+	inventory.wear(Inventory.make("bow"))
+	inventory.wear(Inventory.make("spear"))
 	look = LookTarget.new()
 	look.name = "LookTarget"
 	add_child(look)
@@ -315,6 +368,9 @@ func set_view(pitch: float, yaw: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# A screen that wants the mouse (the inventory) is open: clicks are its.
+	if ui_open and event is InputEventMouseButton:
+		return
 	if event is InputEventMouseButton and event.pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		# The click that takes the mouse doesn't also draw the bow.
@@ -378,57 +434,101 @@ func _physics_process(delta: float) -> void:
 	_update_stance()
 	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
 	var wish := (cam_right * input.x + cam_forward * input.y)
+	var on_floor := is_on_floor()
 	var speed := WALK_SPEED
 	if crouching:
 		speed = CROUCH_SPEED
 	elif sprinting:
 		speed = SPRINT_SPEED
-	if aiming():
-		# Drawing a bow (or raising the spear), you creep (as in Minecraft).
+	if aiming() and on_floor:
+		# Drawing a bow (or raising the spear) on the ground, you creep; in
+		# the air it changes nothing (a jump or wall jump carries on).
 		speed = minf(speed, AIM_SPEED)
 	if swimming:
 		speed = minf(speed, SWIM_SPEED)
+	speed *= burden_speed()
+	if on_floor:
+		_traction_t -= delta
+		if _traction_t <= 0.0:
+			_traction_t = 0.2
+			_traction = _traction_under()
 
-	# Momentum: steer the current speed toward what the keys ask for rather
-	# than jumping to it. Braking and reversing use friction; speeding up
-	# and turning use acceleration. Off the ground, no key means no braking.
+	# Momentum, Melee-spacie: fast ground acceleration and a short traction
+	# slide on stop (slidier on sand, snow, ice and wet ground); pushing the
+	# other way at speed skids briefly, then goes; in the air you steer only
+	# a little way off your take-off speed, so a jump commits you; landing,
+	# a couple of frames of squat with no steering.
 	var target := wish * speed
-	var rate := ACCEL_MPS2
+	var rate := ACCEL_MPS2 * _traction
+	_move -= up * _move.dot(up) # stay along the ground as "up" turns
 	if swimming:
 		rate = SWIM_ACCEL_MPS2
-	elif not is_on_floor():
+	elif not on_floor:
+		if _was_on_floor and not _jumped:
+			_takeoff = _move # ran off a ledge
+		var air_speed := maxf(_takeoff.length(), speed)
+		var steer := (wish * air_speed - _takeoff).limit_length(AIR_STEER_MPS) if wish.length() > 0.1 else Vector3.ZERO
+		target = _takeoff + steer
 		rate = AIR_ACCEL_MPS2
-		if wish.length() < 0.1:
-			target = _move
-	elif target.length() < _move.length() or target.dot(_move) < 0.0:
-		rate = FRICTION_MPS2
-	_move -= up * _move.dot(up) # stay along the ground as "up" turns
+	else:
+		if _squat_t > 0.0:
+			target = Vector3.ZERO
+		elif wish.length() > 0.1 and _move.length() > TURNAROUND_MIN_MPS and wish.normalized().dot(_move.normalized()) < -0.5:
+			# Turn-around: a brief skid, then off the other way.
+			_move *= TURNAROUND_KEEP
+			skids += 1
+			footsteps.scuff(self)
+		if target.length() < _move.length() or target.dot(_move) < 0.0:
+			rate = FRICTION_MPS2 * _traction
 	_move = _move.move_toward(target, rate * delta)
 	# Last frame's own vertical motion, without the knock-back (added fresh
 	# below each frame; carried over too, a hit's upward shove compounded
 	# every airborne frame and flung the player tens of meters up). The
 	# knock-back never enters _move, so it doesn't build up sideways either.
-	var vertical := up * (velocity - _knock).dot(up)
+	var vy := (velocity - _knock).dot(up)
 	var horizontal := _move
 	if swimming:
 		# Float up to the surface, head above water.
-		vertical = up * clampf((depth - 1.2) * 2.0, -2.0, 2.0)
+		vy = clampf((depth - 1.2) * 2.0, -2.0, 2.0)
 		if Input.is_action_pressed("jump"):
-			vertical += up * 1.5
-	elif is_on_floor():
-		vertical = Vector3.ZERO
-		_land()
-		# Held jump keeps jumping each time you land.
-		if Input.is_action_pressed("jump") and not crouching:
-			vertical = up * JUMP_SPEED
+			vy += 1.5
+		_jumped = false
+	elif on_floor:
+		vy = 0.0
+		if not _was_on_floor:
+			_land()
+		_jumped = false
+		_wj_chain = 0
+		_squat_t = maxf(_squat_t - delta, 0.0)
+		# Held jump keeps jumping each time you land (after the squat).
+		if Input.is_action_pressed("jump") and not crouching and _squat_t <= 0.0:
+			vy = JUMP_SPEED * (SPRINT_JUMP if sprinting else 1.0)
+			_takeoff = _move
+			_jumped = true
 	else:
-		vertical -= up * GRAVITY * delta
-		_fall_speed = maxf(_fall_speed, -vertical.dot(up))
+		vy -= GRAVITY * delta
+		# Fast-fall: crouch (down) after the apex drops you at once.
+		if Input.is_action_pressed("crouch") and vy < 0.5:
+			vy = minf(vy, -FAST_FALL_MPS)
+		vy = maxf(vy, -MAX_FALL_MPS)
+		_fall_speed = maxf(_fall_speed, -vy)
+		_fall_top = maxf(_fall_top, radius)
 	if swimming:
 		_fall_speed = 0.0
-	velocity = horizontal + vertical + _knock
+	if swimming or on_floor:
+		_fall_top = radius
+	# Wall jump (right click) off a face touched in the air just now.
+	if Input.is_action_just_pressed("wall_jump") and not on_floor and not swimming:
+		var kick := _wall_jump()
+		if kick != Vector3.INF:
+			horizontal = _move
+			vy = kick.dot(up)
+	_was_on_floor = on_floor
+	velocity = horizontal + up * vy + _knock
 	_knock = _knock.move_toward(Vector3.ZERO, delta * 12.0)
+	var before := horizontal
 	move_and_slide()
+	_wall_t += delta
 	for k in get_slide_collision_count():
 		var col := get_slide_collision(k)
 		# Running into a wall or a trunk stops the part of your momentum
@@ -436,9 +536,21 @@ func _physics_process(delta: float) -> void:
 		var n := col.get_normal()
 		if n.dot(up) < 0.7 and _move.dot(n) < 0.0:
 			_move -= n * _move.dot(n)
+			if not is_on_floor() and _takeoff.dot(n) < 0.0:
+				_takeoff -= n * _takeoff.dot(n)
+		# A steep face touched in the air: a wall jump may kick off it for
+		# WJ_WINDOW_S (cliff, trunk, ruin wall, boulder).
+		if absf(n.dot(up)) < WJ_STEEP and not is_on_floor():
+			_wall_n = n
+			# The approach: what you were moving at when you first met it
+			# (after that the slide has already turned you along it).
+			if _wall_t > delta * 1.5 or _wall_in == Vector3.ZERO:
+				_wall_in = before if before.length() > 0.5 else -n
+			_wall_t = 0.0
 		var body := col.get_collider()
 		if body is CollisionObject3D and (body as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER:
 			trees.bumped(body, col.get_collider_shape_index(), horizontal.length())
+	_update_squat(delta)
 	trees.update_contact(delta, global_position, get_world_3d().direct_space_state)
 	var moved := get_real_velocity() - up * get_real_velocity().dot(up)
 	_unstick(delta, wish, moved)
@@ -531,6 +643,7 @@ func stop_climb(push := false) -> void:
 
 func _climb_step(delta: float) -> void:
 	if _climb_graph:
+		trees.climb.speed_scale = burden_climb()
 		_graph_climb_step(delta)
 		return
 	# The chunk streamed out or left the detail ring (no trunks to hold).
@@ -538,18 +651,19 @@ func _climb_step(delta: float) -> void:
 		stop_climb()
 		return
 	_fall_speed = 0.0
+	_fall_top = -INF
 	var h: float = _climb_chunk.trees[_climb_tree][1]
 	var dims := PlantMeshes.tree_dims(_climb_chunk.tree_species(_climb_tree).shape)
 	var base := _climb_chunk.tree_base(_climb_tree)
 	var tup := _climb_chunk.tree_up(_climb_tree)
 	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
-	_climb_y += input.y * CLIMB_SPEED * delta
+	_climb_y += input.y * CLIMB_SPEED * burden_climb() * delta
 	if _climb_y < 0.25 and input.y < 0.0:
 		stop_climb()
 		return
 	_climb_y = minf(_climb_y, h * 0.9)
 	var r := clampf(dims.x * h * 0.85, 0.1, 1.6) * lerpf(1.0, 0.6, clampf(_climb_y / h, 0.0, 1.0))
-	_climb_out = _climb_out.rotated(tup, -input.x * CLIMB_SPEED * delta / (r + 0.4))
+	_climb_out = _climb_out.rotated(tup, -input.x * CLIMB_SPEED * burden_climb() * delta / (r + 0.4))
 	_climb_out = (_climb_out - tup * _climb_out.dot(tup)).normalized()
 	global_position = base + tup * _climb_y + _climb_out * (r + 0.4)
 	velocity = Vector3.ZERO
@@ -563,6 +677,7 @@ func _climb_step(delta: float) -> void:
 ## way it says, and the elf's arms reach for the hands.
 func _graph_climb_step(delta: float) -> void:
 	_fall_speed = 0.0
+	_fall_top = -INF
 	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
 	var fwd := _camera_forward()
 	var c := trees.climb
@@ -617,33 +732,75 @@ func _reach_arms(hands: Array[Vector3]) -> void:
 ## one you're pushing (of 16 round you, tested with test_move), or up if
 ## none is free. Never while swimming or climbing.
 func _unstick(delta: float, wish: Vector3, moved: Vector3) -> void:
-	var pushing := wish.length() > 0.1 and not swimming and not climbing
-	var touching := get_slide_collision_count() >= 2
-	if not pushing or not touching or moved.length() > STUCK_MPS:
+	# Stuck is: touching something and going nowhere, either
+	#  - wedged between two or more walls (a trunk and a shrub's stem),
+	#  - held off the ground by something (under a root, in a fork), or
+	#  - caught on a crease of the ground's own collision mesh.
+	# One trunk or wall head-on, standing, isn't being stuck: you just turn.
+	if swimming or climbing or dead or get_slide_collision_count() == 0:
+		_stuck_t = 0.0
+		return
+	var normals: Array[Vector3] = []
+	var away := Vector3.ZERO
+	for k in get_slide_collision_count():
+		var n := get_slide_collision(k).get_normal()
+		if n.dot(up) < 0.7:
+			away += n
+			if normals.all(func(m: Vector3) -> bool: return m.dot(n) < 0.85):
+				normals.append(n)
+	var walls := normals.size() # distinct walls, not contacts
+	var real := get_real_velocity()
+	var still := moved.length() < STUCK_MPS and absf(real.dot(up)) < STUCK_MPS
+	var pushing := wish.length() > 0.1
+	var floor_now := is_on_floor()
+	var kind := ""
+	if walls >= 2:
+		kind = "wedge" if pushing or not floor_now else ""
+	elif not floor_now:
+		kind = "hung"
+	elif walls == 0 and pushing:
+		kind = "crease"
+	if kind == "" or not still:
 		_stuck_t = 0.0
 		return
 	_stuck_t += delta
-	if _stuck_t < STUCK_S:
+	# Caught on the ground alone, free yourself almost at once (a hitch you
+	# barely feel); otherwise after STUCK_S.
+	if _stuck_t < (JAM_S if kind == "crease" else STUCK_S):
 		return
 	_stuck_t = 0.0
 	unsticks += 1
-	var want := (wish - up * wish.dot(up)).normalized()
+	# Which way out: where you're pushing, else away from what holds you.
+	var want := wish - up * wish.dot(up)
+	if want.length() < 0.1:
+		want = away - up * away.dot(up)
+	if want.length() < 0.1:
+		want = -_camera_forward()
+	want = want.normalized()
 	var side := want.cross(up).normalized()
 	var best := Vector3.ZERO
 	var best_dot := -INF
+	# Tried from a hair above the ground, so the ground itself isn't in the way.
+	var lifted := global_transform.translated(up * 0.05)
 	for k in 16:
 		var a := TAU * k / 16.0
 		var d := (want * cos(a) + side * sin(a)).normalized()
-		if test_move(global_transform, d * UNSTICK_M):
+		if test_move(lifted, d * UNSTICK_M):
 			continue
 		if d.dot(want) > best_dot:
 			best_dot = d.dot(want)
 			best = d
 	if best == Vector3.ZERO:
 		global_position += up * 0.3
+	elif kind == "crease":
+		# Off the ground's crease: a hop of a couple of frames' travel,
+		# keeping your speed, so it reads as a stumble, not a jump.
+		global_position += up * 0.05 + best * clampf(_move.length() * delta * 2.0, 0.1, UNSTICK_M)
 	else:
-		global_position += best * UNSTICK_M
-	_move = best * minf(_move.length(), WALK_SPEED * 0.5)
+		global_position += up * 0.05 + best * UNSTICK_M
+		_move = best * minf(_move.length(), WALK_SPEED * 0.5)
+	if kind == "hung":
+		velocity -= up * velocity.dot(up)
 
 
 ## Where your reach is measured from: your chest, or while climbing the
@@ -705,17 +862,20 @@ func _update_prompt(delta: float, forward: Vector3) -> void:
 ## (held). Crouching cancels a sprint; standing up waits for headroom.
 func _update_stance() -> void:
 	if Input.is_action_just_pressed("move_forward"):
-		var now := Time.get_ticks_msec()
+		# Game time, not the wall clock (a slow frame doesn't break the tap).
+		var now := int(Engine.get_physics_frames() * 1000 / Engine.physics_ticks_per_second)
 		if now - _last_forward_ms < int(DOUBLE_TAP_S * 1000.0):
 			_sprint_latched = true
 		_last_forward_ms = now
-	if not Input.is_action_pressed("move_forward") or aiming():
+	# Drawing the bow or raising the spear no longer ends a sprint (it
+	# slows you on the ground instead: the movement step).
+	if not Input.is_action_pressed("move_forward"):
 		_sprint_latched = false
 	var want_crouch := Input.is_action_pressed("crouch") and not swimming
 	if want_crouch != crouching:
 		if want_crouch or _headroom():
 			_set_crouch(want_crouch)
-	sprinting = not crouching and not aiming() and (_sprint_latched or Input.is_action_pressed("sprint"))
+	sprinting = not crouching and (_sprint_latched or Input.is_action_pressed("sprint"))
 
 
 func _set_crouch(on: bool) -> void:
@@ -765,6 +925,7 @@ func revive() -> void:
 	_since_hit = 99.0
 	_invulnerable = 3.0
 	_fall_speed = 0.0
+	_fall_top = -INF
 	_knock = Vector3.ZERO
 	_body.rotation = Vector3.ZERO
 
@@ -778,9 +939,80 @@ func _update_health(delta: float) -> void:
 
 ## Landing: a hard enough fall hurts.
 func _land() -> void:
-	if _fall_speed > FALL_SAFE_MPS:
-		_damage((_fall_speed - FALL_SAFE_MPS) * FALL_DAMAGE_PER_MPS)
+	var fell := maxf(_fall_top - world.radius_of(global_position), 0.0) if _fall_top > -INF else 0.0
+	if fell > FALL_SAFE_M:
+		_damage((fell - FALL_SAFE_M) * FALL_DAMAGE_PER_M)
+	# A couple of frames of landing squat after a jump or a real drop; more
+	# after a fall of more than a body length. Running over a bump (off the
+	# ground for a frame or two) isn't a landing.
+	if _jumped or fell > Tuning.num("movement", "landing", "min_drop_m"):
+		_squat_t = HEAVY_SQUAT_S if fell > HEAVY_FALL_M else SQUAT_S
+		_squat_len = _squat_t
+		landings += 1
 	_fall_speed = 0.0
+	_fall_top = -INF
+
+
+## Wall jump: in the air within WJ_WINDOW_S of touching a steep face,
+## kick off it back the way you came (the reversed approach, turned away
+## from the face if it pointed along it), angled WJ_ANGLE up at WJ_SPEED;
+## each further wall jump before you land keeps WJ_DECAY of the last one's
+## upward speed. A short kick of the body and a scuff creatures hear.
+## Returns the kick's velocity, or INF if there was no wall to kick off.
+func _wall_jump() -> Vector3:
+	if climbing or _wall_t > WJ_WINDOW_S:
+		return Vector3.INF
+	var n_h := _wall_n - up * _wall_n.dot(up)
+	n_h = n_h.normalized() if n_h.length() > 0.1 else -_camera_forward()
+	var away := -(_wall_in - up * _wall_in.dot(up))
+	away = away.normalized() if away.length() > 0.1 else n_h
+	if away.dot(n_h) < 0.3:
+		away = (away + n_h * (0.3 - away.dot(n_h)) * 2.0).normalized()
+	var h := away * WJ_SPEED * cos(WJ_ANGLE)
+	var v := WJ_SPEED * sin(WJ_ANGLE) * pow(WJ_DECAY, _wj_chain)
+	_move = h
+	_takeoff = h
+	_jumped = true
+	_fall_speed = 0.0
+	_fall_top = -INF
+	_wj_chain += 1
+	_wall_t = INF
+	_kick_t = KICK_S
+	wall_jumps += 1
+	make_noise(0.55)
+	NoiseEvents.emit(global_position, WJ_NOISE_M)
+	footsteps.scuff(self)
+	return h + up * v
+
+
+## What's underfoot, as traction (movement table): slidier on sand, snow,
+## ice, shallow water and rain-soaked ground.
+func _traction_under() -> float:
+	var t: Dictionary = Tuning.section("movement", "traction")
+	var mat := Footsteps.material_under(self)
+	var c: int = world.planet.cell_at(surface_dir)
+	var b: int = world.planet.biome[c]
+	if b == BiomeTemplates.ICE_SHEET or b == BiomeTemplates.GLACIER or b == BiomeTemplates.SEA_ICE:
+		mat = "ice"
+	var k := float(t.get(mat, t.get("default", 1.0)))
+	if mat != "water" and mat != "ice":
+		k = lerpf(k, minf(k, float(t.get("wet", 0.5))), ground_wet)
+	return maxf(k, 0.05)
+
+
+## The landing squat (the view dips, the body sinks a little) and the wall
+## jump's kick (the body tips back), eased per frame.
+func _update_squat(delta: float) -> void:
+	var dip := 0.0
+	if _squat_len > 0.0 and _squat_t > 0.0:
+		dip = sin(PI * (1.0 - _squat_t / _squat_len)) * SQUAT_DIP_M * (_squat_len / maxf(SQUAT_S, 0.01)) * 0.5
+		dip = minf(dip, SQUAT_DIP_M * 2.0)
+	_squat_dip = move_toward(_squat_dip, dip, delta * 3.0)
+	_kick_t = maxf(_kick_t - delta, 0.0)
+	if _body != null and not dead:
+		_body.position = Vector3(0, -_squat_dip, 0)
+		var lean := minf(inventory.over() * Tuning.num("movement", "burden", "lean_per_item"), 0.3)
+		_body.rotation.x = (-0.45 * sin(PI * _kick_t / KICK_S) if _kick_t > 0.0 else 0.0) + lean
 
 
 ## Dead: you slump to the ground and lie still (main respawns you).
@@ -907,10 +1139,55 @@ func _headroom() -> bool:
 
 # --- Weapons ------------------------------------------------------------------
 
-## Drawing the bow or raising the spear (you creep, no sprint, the camera
-## comes over your shoulder).
+## Overburdened (Inventory.over(): carried things past the free handful):
+## your speed, climbing speed and loudness as shares of normal.
+func burden_speed() -> float:
+	var b := Tuning.section("movement", "burden")
+	return maxf(1.0 - inventory.over() * float(b.get("slow_per_item", 0.08)), float(b.get("min_speed", 0.6)))
+
+
+func burden_climb() -> float:
+	return maxf(1.0 - inventory.over() * Tuning.num("movement", "burden", "climb_slow_per_item"), 0.3)
+
+
+func burden_noise() -> float:
+	return 1.0 + inventory.over() * Tuning.num("movement", "burden", "noise_per_item")
+
+
+## Drawing the bow or raising the spear (slower on the ground, the camera
+## comes over your shoulder; a sprint or a jump carries on).
 func aiming() -> bool:
 	return bow.drawing or spear.raising
+
+
+## How far the aim wanders now, in degrees (combat table "aim"): a little
+## standing, more at a run, least at the top of a jump, more the faster
+## you're rising or falling.
+func aim_sway_deg() -> float:
+	var a := Tuning.section("combat", "aim")
+	var vy := velocity.dot(up)
+	var deg: float
+	if is_on_floor() or climbing or swimming:
+		var run := clampf(_move.length() / maxf(SPRINT_SPEED, 0.1), 0.0, 1.0)
+		deg = lerpf(float(a.get("still_deg", 0.3)), float(a.get("moving_deg", 1.2)), run)
+	else:
+		deg = float(a.get("apex_deg", 0.0)) + absf(vy) * float(a.get("per_vertical_mps_deg", 0.45))
+	return minf(deg, float(a.get("max_deg", 4.0)))
+
+
+## `dir` turned by the aim's wander now: a slow, smooth drift, so the aim
+## arc shows it and the shot follows the arc.
+func sway(dir: Vector3) -> Vector3:
+	var deg := aim_sway_deg()
+	if deg <= 0.001:
+		return dir
+	var t := Time.get_ticks_msec() * 0.001 * Tuning.num("combat", "aim", "rate")
+	var side := dir.cross(up)
+	side = side.normalized() if side.length() > 0.01 else dir.cross(Vector3.RIGHT).normalized()
+	var lift := side.cross(dir).normalized()
+	var ax := sin(t * 1.7) * 0.6 + sin(t * 3.1 + 1.3) * 0.4
+	var ay := sin(t * 2.3 + 0.7) * 0.6 + sin(t * 1.1 + 2.1) * 0.4
+	return dir.rotated(lift, deg_to_rad(deg) * ax).rotated(side, deg_to_rad(deg) * ay).normalized()
 
 
 ## 0-1: how hard the drawn bow or raised spear would fly.
@@ -963,6 +1240,8 @@ func _update_noise(delta: float, move_speed: float) -> void:
 		anim_state = "walk"
 	else:
 		anim_state = "idle"
+	# Overburdened, everything you do is louder (the pack knocks and rattles).
+	target = minf(target * burden_noise(), 1.0) if target > 0.0 else 0.0
 	noise_level = lerpf(noise_level, target, clampf(delta * (6.0 if target > noise_level else 1.5), 0.0, 1.0))
 	# Robe and hair trail behind as you go (the elf); an imported model
 	# plays the clip for the pose.

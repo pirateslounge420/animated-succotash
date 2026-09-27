@@ -18,18 +18,18 @@ extends Node3D
 ## miss can spook the animal it lands by.
 ## Lives under World.world_root, so it moves with the floating origin.
 
-const GRAVITY := 9.8
-const STUCK_S := 60.0
-const MAX_FLIGHT_S := 12.0
+static var GRAVITY := Tuning.num("combat", "arrow", "gravity_mps2")
+static var STUCK_S := Tuning.num("combat", "arrow", "stuck_s")
+static var MAX_FLIGHT_S := Tuning.num("combat", "arrow", "max_flight_s")
 ## How far off its landing is heard (NoiseEvents).
-const NOISE_M := 8.0
+static var NOISE_M := Tuning.num("combat", "arrow", "noise_m")
 
 ## Arrows in flight (hitboxes near one wake up: Hitboxes.wanted_at()).
 static var flying: Array[Arrow] = []
 ## Arrows stuck where they hit, which the player can take back (E).
 static var stuck: Array[Arrow] = []
 ## How far from you a stuck arrow can be taken back (m).
-const PICK_M := 2.0
+static var PICK_M := Tuning.num("combat", "arrow", "pick_m")
 
 var world: Node
 var chunks: ChunkManager
@@ -134,6 +134,12 @@ func _physics_process(delta: float) -> void:
 			_stick()
 			_life = STUCK_S - 3.0
 			return
+		# Past the ground's collision (it only exists near the player): the
+		# ground itself, from its height.
+		if world.radius_of(b) < PlanetConst.RADIUS_M + chunks.ground_height(d):
+			hit_kind = "world"
+			hit_pos = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
+	if hit_kind == "":
 		global_position = b
 		_orient()
 		return

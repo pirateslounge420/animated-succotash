@@ -20,6 +20,8 @@ class_name SoundSynth
 ##   bow_draw     a creak of wood and string as the bow bends
 ##   bow_release  the string's twang and the arrow's whoosh
 ##   arrow_hit    a dull thunk of an arrow biting into wood or earth
+##   scuff        a sole scraping hard across bark, rock or grit: a wall
+##                jump's kick, or the skid of a sharp turn (Footsteps)
 ##   hurt         a blunt thump and a gasp of breath (the player hit)
 ##   murmur       camp talk from a little way off: three or four soft
 ##                voices overlapping, no words (Camps); murmur_one, one
@@ -74,6 +76,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _arrow_hit(rng)
 		"hurt":
 			samples = _hurt(rng)
+		"scuff":
+			samples = _scuff(rng)
 		"murmur", "murmur_one":
 			samples = _murmur(rng, rng.randi_range(3, 4) if kind == "murmur" else 1)
 		_:
@@ -262,6 +266,23 @@ static func _rustle(rng: RandomNumberGenerator) -> PackedFloat32Array:
 
 ## One footstep on `ground`: a thump (the heel) plus the surface's own
 ## texture, each shaped by a few numbers.
+## A sole dragged hard across a rough face: a gritty scrape that brightens
+## and fades, with a knock where the foot bites.
+static func _scuff(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.2 * rng.randf_range(0.85, 1.15))
+	var lp := 0.0
+	var phase := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var bright := lerpf(0.25, 0.6, clampf(t / 0.08, 0.0, 1.0))
+		lp = lerpf(lp, rng.randf_range(-1, 1), bright)
+		var grit := rng.randf_range(-1, 1) * 1.2 if rng.randf() < 0.02 else 0.0
+		var scrape := (lp + grit) * minf(t / 0.01, 1.0) * exp(-t * 14.0)
+		phase += TAU * 120.0 / RATE
+		s[i] = scrape + sin(phase) * exp(-t * 40.0) * 0.6
+	return s
+
+
 static func _step(ground: String, rng: RandomNumberGenerator) -> PackedFloat32Array:
 	# [length s, thump Hz, thump level, noise level, noise brightness (0-1
 	# one-pole cutoff), noise decay /s, click rate, resonance Hz]

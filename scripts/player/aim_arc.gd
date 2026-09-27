@@ -12,11 +12,11 @@ extends MeshInstance3D
 ## Also Trail: the brief line an arrow or spear leaves behind it in flight.
 
 const COLOR := Color("#C8D8F0")
-const STEP_S := 1.0 / 30.0
-const MAX_S := 3.0
+static var STEP_S := Tuning.num("combat", "arc", "step_s")
+static var MAX_S := Tuning.num("combat", "arc", "max_s")
 ## A dot every so many steps, the first few skipped (too close to the eye).
-const DOT_EVERY := 2
-const SKIP := 2
+static var DOT_EVERY := int(Tuning.num("combat", "arc", "dot_every"))
+static var SKIP := int(Tuning.num("combat", "arc", "skip"))
 
 static var _mat: StandardMaterial3D
 
@@ -74,6 +74,12 @@ func update_arc() -> void:
 		if not hit.is_empty():
 			dots.append(hit.position)
 			break
+		# The ground beyond its collision (as the arrow does).
+		var nd: Vector3 = player.world.dir_of(nxt)
+		var gh := player.chunks.ground_height(nd)
+		if player.world.radius_of(nxt) < PlanetConst.RADIUS_M + gh:
+			dots.append(player.world.to_scene(nd, PlanetConst.RADIUS_M + gh))
+			break
 		pos = nxt
 		if k >= SKIP and k % DOT_EVERY == 0:
 			dots.append(pos)
@@ -91,7 +97,7 @@ func update_arc() -> void:
 ## LENGTH_S of positions, fading toward the tail; gone soon after it lands.
 class Trail:
 	extends MeshInstance3D
-	const LENGTH_S := 0.25
+	static var LENGTH_S := Tuning.num("combat", "arc", "trail_s")
 	var _pts: Array = [] # [position, age]
 	var _im := ImmediateMesh.new()
 

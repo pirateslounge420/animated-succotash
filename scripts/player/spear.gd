@@ -31,20 +31,20 @@ const LENGTH := 1.9
 ## The hand, this far back from the tip.
 const GRIP_M := 1.15
 ## A press shorter than this is a thrust; held longer, the spear rises.
-const TAP_S := 0.22
-const RAISE_S := 0.8
-const MIN_POWER := 0.15
-const MIN_SPEED := 9.0
-const MAX_SPEED := 24.0
-const THROW_DAMAGE := 45.0
-const REACH_M := 2.0
-const THRUST_S := 0.4
-const THRUST_DAMAGE := 25.0
-const PICK_M := 2.0
+static var TAP_S := Tuning.num("combat", "spear", "tap_s")
+static var RAISE_S := Tuning.num("combat", "spear", "raise_s")
+static var MIN_POWER := Tuning.num("combat", "spear", "min_power")
+static var MIN_SPEED := Tuning.num("combat", "spear", "min_speed_mps")
+static var MAX_SPEED := Tuning.num("combat", "spear", "max_speed_mps")
+static var THROW_DAMAGE := Tuning.num("combat", "spear", "throw_damage")
+static var REACH_M := Tuning.num("combat", "spear", "reach_m")
+static var THRUST_S := Tuning.num("combat", "spear", "thrust_s")
+static var THRUST_DAMAGE := Tuning.num("combat", "spear", "thrust_damage")
+static var PICK_M := Tuning.num("combat", "spear", "pick_m")
 ## The player's noise (PlanetPlayer.noise_level) as it thrusts or throws,
 ## and how far a thrust's knock is heard where it lands (NoiseEvents).
-const NOISE := 0.6
-const THRUST_NOISE_M := 5.0
+static var NOISE := Tuning.num("combat", "spear", "noise")
+static var THRUST_NOISE_M := Tuning.num("combat", "spear", "thrust_noise_m")
 
 const SHAFT := Color(0.5, 0.36, 0.22)
 const HEAD := Color(0.3, 0.3, 0.33)
@@ -213,7 +213,8 @@ func launch() -> Array:
 	else:
 		from = player.global_position + player.up * 1.75 + player.global_basis.x * 0.25 - player.global_basis.z * 0.3
 	var speed := lerpf(MIN_SPEED, MAX_SPEED, p)
-	return [from, _loft(from, _aim_point(), speed) * speed + player.velocity * 0.5]
+	var dir := player.sway(_loft(from, _aim_point(), speed))
+	return [from, dir * speed + player.velocity * Tuning.num("combat", "spear", "inherit_velocity")]
 
 
 func throw() -> void:

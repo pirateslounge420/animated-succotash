@@ -1,0 +1,29 @@
+{
+ "_help": {
+  "about": "The player's movement table (PlanetPlayer reads it at start; restart the game after editing). Speeds in m/s, rates in m/s², times in seconds, distances in metres. The feel is Melee's spacies: heavy, snappy, committed jumps.",
+  "speed": "Top speeds on the ground: walk, sprint (double-tap forward and hold), sneak (hold Shift), aim (while the bow is drawn or the spear raised, on the ground only), swim. swim_accel: how quickly you get up to swimming speed. double_tap_s: the most time between the two taps of forward that start a sprint.",
+  "ground": "accel: how fast you reach speed. friction: how fast you stop (lower = longer slide). turnaround_keep: pushing the other way at speed keeps this much of your old speed for a brief skid, then you go. turnaround_min_mps: below this there's no skid.",
+  "traction": "Multiplies ground accel and friction by what's underfoot: lower = slidier (a longer slide on stop). wet is shallow water and rain-soaked ground.",
+  "air": "gravity: the pull (twice Earth's for a heavy fall). jump_mps: take-off speed (a short hop). sprint_jump: the take-off speed is multiplied by this at a sprint (a longer jump). fast_fall_mps: press crouch in the air after the apex to drop at once at this speed. max_fall_mps: terminal speed. air_accel: how quickly you steer in the air. air_steer_mps: how far your air speed can move from your take-off speed (so a jump commits you).",
+  "landing": "squat_s: the frames of landing squat (no jump, no steering). heavy_squat_s: after a fall higher than heavy_fall_m (about a body length). dip_m: how far the view dips in the squat. min_drop_m: running off a bump lower than this (without jumping) is no landing at all.",
+  "fall_damage": "A drop higher than safe_m (metres, from the top of the fall) hurts: per_m hit points for each metre over. Measured by height, so a fast-fall out of a hop never hurts.",
+  "wall_jump": "kick_s: how long the kick animation lasts. Right click in the air within window_s of touching a wall, cliff, trunk or ruin face: kicks you off it back the way you came, angled up. speed_mps and angle_deg: the kick. chain_decay: each further wall jump before you land keeps this fraction of the last one's upward speed. min_wall_steepness: how steep a surface counts as a wall (0 = vertical only, 0.5 = up to 60° from vertical). noise_m: how far the scuff is heard.",
+  "climb": "On a tree's branches (the handholds): graph_trunk_mps is the body's speed during a reach up or round a trunk, graph_limb_mps along a limb; trunk_beat_s / limb_beat_s the pause after each reach. simple_mps: climbing a trunk that has no handholds. reach_m: how far ahead a trunk can be for E to start climbing. grab_s: how long a hand takes to reach for something (a stuck spear) while climbing.",
+  "burden": "Carrying more than free_items things (the inventory's carry slots), each thing more makes you slow_per_item slower (never below min_speed of your normal speed), climb climb_slow_per_item slower, noise_per_item louder, and lean lean_per_item radians further forward. Felt, never shown as a number.",
+  "wet_ground": "soaked_rain_mm_h: rain this heavy (mm per hour) soaks the ground fully (traction falls to 'wet'); lighter rain soaks it partly. dry_s: after the rain stops, how long soaked ground takes to dry.",
+  "unstick": "Stuck is touching something and going nowhere: wedged between two walls (a trunk and a shrub's stem), held off the ground (under a root, in a fork), or caught on a crease of the ground. After stall_s moving slower than stall_mps, you're nudged nudge_m out along the free direction nearest to where you push. ground_jam_s: caught on the ground alone, you're freed after only this long (a hitch you barely feel).",
+  "camera": "mouse and stick sensitivity."
+ },
+ "speed": {"walk_mps": 5.5, "sprint_mps": 8.8, "sneak_mps": 0.8, "aim_mps": 0.75, "swim_mps": 1.6, "swim_accel_mps2": 4.0, "double_tap_s": 0.3},
+ "ground": {"accel_mps2": 45.0, "friction_mps2": 60.0, "turnaround_keep": 0.25, "turnaround_min_mps": 2.0},
+ "traction": {"default": 1.0, "grass": 1.0, "dirt": 1.0, "stone": 1.0, "wood": 1.0, "sand": 0.75, "snow": 0.4, "ice": 0.15, "wet": 0.5, "water": 0.5},
+ "air": {"gravity_mps2": 19.6, "jump_mps": 5.2, "sprint_jump": 1.12, "fast_fall_mps": 20.0, "max_fall_mps": 45.0, "air_accel_mps2": 14.0, "air_steer_mps": 2.5},
+ "landing": {"squat_s": 0.05, "heavy_squat_s": 0.16, "heavy_fall_m": 1.7, "dip_m": 0.12, "min_drop_m": 0.3},
+ "fall_damage": {"safe_m": 6.0, "per_m": 7.0},
+ "wall_jump": {"window_s": 0.25, "speed_mps": 7.5, "angle_deg": 58.0, "chain_decay": 0.72, "min_wall_steepness": 0.45, "noise_m": 7.0, "kick_s": 0.18},
+ "climb": {"graph_trunk_mps": 0.72, "graph_limb_mps": 0.3, "trunk_beat_s": 0.3, "limb_beat_s": 0.3, "simple_mps": 1.1, "reach_m": 1.6, "grab_s": 0.45},
+ "burden": {"free_items": 6, "slow_per_item": 0.08, "min_speed": 0.6, "climb_slow_per_item": 0.12, "noise_per_item": 0.15, "lean_per_item": 0.05},
+ "wet_ground": {"soaked_rain_mm_h": 4.0, "dry_s": 90.0},
+ "unstick": {"stall_s": 0.5, "stall_mps": 0.15, "nudge_m": 0.35, "ground_jam_s": 0.08},
+ "camera": {"mouse_sensitivity": 0.0025, "stick_sensitivity": 2.6}
+}

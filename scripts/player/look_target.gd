@@ -14,7 +14,9 @@ extends Node
 ## chunks round the player, each taken as an upright capsule as tall as the
 ## plant. Those are indexed once per MultiMesh into a coarse grid, a few
 ## thousand instances a frame, so a look is only a handful of cells.
-## What it writes: `text` (and `kind`), nothing else.
+## What it writes: `text` (and `kind`), and for a plant or tree its
+## species index and the point looked at (`species_index`, `point`: E takes
+## a sample, Inventory), nothing else.
 ##
 ## Animals are named out to ANIMAL_M from you, trees out to TREE_M, other
 ## plants out to PLANT_M; the name lingers LINGER_S after the crosshair
@@ -35,6 +37,10 @@ const CHUNK_NEAR_M := 220.0
 var text := ""
 ## "animal", "tree", "plant" or "".
 var kind := ""
+## The plant's or tree's SpeciesDB index (-1 otherwise) and the point on
+## it the crosshair rests on (scene position).
+var species_index := -1
+var point := Vector3.INF
 
 var player: PlanetPlayer
 var chunks: ChunkManager
@@ -64,13 +70,18 @@ func _process(delta: float) -> void:
 		if _linger <= 0.0:
 			text = ""
 			kind = ""
+			species_index = -1
+			point = Vector3.INF
 	else:
 		text = found[0]
 		kind = found[1]
+		species_index = found[2] if found.size() > 2 else -1
+		point = found[3] if found.size() > 3 else Vector3.INF
 		_linger = LINGER_S
 
 
-## [binomial, kind] under the crosshair now, or [].
+## [binomial, kind, species index (plants and trees, else -1), point]
+## under the crosshair now, or [].
 func _look() -> Array:
 	var cam := player.camera()
 	if cam == null:
@@ -107,13 +118,13 @@ func _look() -> Array:
 	# nearer of the two is what you're looking at.
 	var plant := _plant_on_ray(from, dir, block_t + 0.3, me)
 	if not plant.is_empty() and (best.is_empty() or float(plant[2]) < block_t):
-		return [plant[0], plant[1]]
+		return [plant[0], plant[1], plant[3], from + dir * float(plant[2])]
 	return best
 
 
 ## The nearest indexed plant (not a tree) the ray passes through within
 ## `length` of `from` and PLANT_M of the player, as [binomial, "plant",
-## distance along the ray].
+## distance along the ray, species index].
 func _plant_on_ray(from: Vector3, dir: Vector3, length: float, me: Vector3) -> Array:
 	var best_t := INF
 	var best_sp := -1
@@ -156,7 +167,7 @@ func _plant_on_ray(from: Vector3, dir: Vector3, length: float, me: Vector3) -> A
 	if best_sp < 0:
 		return []
 	var sp: PlantSpecies = SpeciesDB.all()[best_sp]
-	return [] if sp.binomial() == "" else [sp.binomial(), "plant", best_t]
+	return [] if sp.binomial() == "" else [sp.binomial(), "plant", best_t, best_sp]
 
 
 ## Where along the ray (o + d t, t in [t0, t1], d unit) it passes within

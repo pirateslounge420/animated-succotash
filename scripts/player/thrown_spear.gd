@@ -17,15 +17,15 @@ extends Node3D
 ## only one. Lives under World.world_root (or the part it's stuck in), so
 ## it moves with the floating origin.
 
-const GRAVITY := 9.8
+static var GRAVITY := Tuning.num("combat", "thrown_spear", "gravity_mps2")
 ## Longer than this in the air (off the edge of loaded ground): it drops
 ## where it is.
-const MAX_FLIGHT_S := 10.0
+static var MAX_FLIGHT_S := Tuning.num("combat", "thrown_spear", "max_flight_s")
 ## How far off its landing is heard (NoiseEvents); in water, SPLASH_M.
-const NOISE_M := 12.0
-const SPLASH_M := 9.0
+static var NOISE_M := Tuning.num("combat", "thrown_spear", "noise_m")
+static var SPLASH_M := Tuning.num("combat", "thrown_spear", "splash_m")
 ## The point sinks this far into what it hits.
-const BURY_M := 0.22
+static var BURY_M := Tuning.num("combat", "thrown_spear", "bury_m")
 
 var world: Node
 var chunks: ChunkManager

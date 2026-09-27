@@ -21,6 +21,7 @@ var ground := "grass"
 var _dist := 0.0
 var _count := 0
 var _air_s := 0.0
+var _scuff_player: AudioStreamPlayer3D
 
 
 func _init() -> void:
@@ -59,6 +60,21 @@ func _step(player: PlanetPlayer, gait: String) -> void:
 	volume_db = VOLUME_DB[gait] + randf_range(-1.5, 1.5)
 	pitch_scale = randf_range(0.92, 1.08)
 	play()
+
+
+## A scuff: a wall jump's kick or the skid of a sharp turn, on its own 3D
+## player (so it doesn't cut off a footstep). Creatures hear the wall jump
+## through NoiseEvents; this is the sound you hear.
+func scuff(player: PlanetPlayer) -> void:
+	if _scuff_player == null:
+		_scuff_player = AudioStreamPlayer3D.new()
+		Audio3D.apply(_scuff_player, "footstep")
+		add_child(_scuff_player)
+	_count += 1
+	_scuff_player.stream = SoundSynth.stream("scuff", _count)
+	_scuff_player.volume_db = VOLUME_DB["sprint"] + randf_range(-1.0, 1.0)
+	_scuff_player.pitch_scale = randf_range(0.9, 1.1)
+	_scuff_player.play()
 
 
 ## What the player is standing on.

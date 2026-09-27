@@ -40,6 +40,11 @@ var storm: StormFX
 var ripples: RippleSim
 var hud: Hud
 var map_overlay: MapOverlay
+var inventory_screen: InventoryScreen
+## A short line in place of the prompt ("Your hands are full"), and how
+## long it stays.
+var _note := ""
+var _note_t := 0.0
 var _playing := false
 ## The latest local weather sample (a few times a second), and the eased
 ## copy everything on screen follows (WeatherSim.ease_toward), so a new
@@ -179,6 +184,11 @@ func _on_planet_ready() -> void:
 	add_child(map_overlay)
 	map_overlay.setup(world)
 
+	inventory_screen = InventoryScreen.new()
+	inventory_screen.name = "Inventory"
+	inventory_screen.inventory = player.inventory
+	hud.add_child(inventory_screen)
+
 	hud.hide_loading()
 	_playing = true
 	# The opening lines, once, at the start of the game.
@@ -206,6 +216,13 @@ func _process(delta: float) -> void:
 	if _weather_timer <= 0.0:
 		_weather_timer = 0.25
 		_local_weather = world.weather.local_weather(d, elevation)
+		# Rain soaks the ground: slidier underfoot (movement table traction).
+		var rain := float(_local_weather.get("rain_mm_h", 0.0))
+		var wet_t := Tuning.section("movement", "wet_ground")
+		if rain > 0.1:
+			player.ground_wet = clampf(rain / float(wet_t.get("soaked_rain_mm_h", 4.0)), player.ground_wet, 1.0)
+		else:
+			player.ground_wet = maxf(player.ground_wet - 0.25 / float(wet_t.get("dry_s", 90.0)), 0.0)
 		if clouds.above_low(elevation):
 			_above_clouds(_local_weather)
 	WeatherSim.ease_toward(_weather_eased, _local_weather, delta, DayCycle.weather_smoothing_s())
@@ -244,6 +261,13 @@ func _process(delta: float) -> void:
 		prompt = player.spear.prompt
 	elif Arrow.stuck_in_reach(player.reach_from(), Arrow.PICK_M) != null:
 		prompt = "E: take the arrow back"
+	elif WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M) != null:
+		prompt = "E: take the %s back" % Inventory.title(WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M).item).to_lower()
+	elif _sample_in_reach() >= 0:
+		prompt = "E: take %s" % _sample_words(Inventory.plant_sample(_sample_in_reach()))
+	if _note_t > 0.0:
+		_note_t -= delta
+		prompt = _note
 	if prompt == "":
 		prompt = player.prompt if player.prompt != "" else landmarks.nearby
 	hud.set_prompt(prompt)
@@ -300,22 +324,111 @@ func _unhandled_input(event: InputEvent) -> void:
 		CollisionView.toggle_for(self, player)
 	elif event.is_action_pressed("dev_howl") and world.dev_mode:
 		creatures.dev_howl()
+	elif event.is_action_pressed("inventory"):
+		_toggle_inventory(not inventory_screen.visible)
+	elif event.is_action_pressed("release_mouse") and inventory_screen.visible:
+		_toggle_inventory(false)
+	elif event.is_action_pressed("inventory_drop") and inventory_screen.visible:
+		_drop_chosen()
+	elif inventory_screen.visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		inventory_screen.click(event.position)
+	elif event.is_action_pressed("dev_items") and world.dev_mode:
+		# Dev: one of each carried kind, for looking at the screen.
+		for kind in ["herb_bundle", "fish", "mushroom", "stone_tool"]:
+			player.inventory.add(Inventory.make(kind))
 	elif event.is_action_pressed("interact"):
 		# E works from any state (climbing, swimming, crouched). What's in
 		# reach comes first: the thrown spear (Spear), then a stuck arrow;
 		# climbing, one hand keeps the wood and the other takes it. Else let
 		# go of a tree; else a log within reach; else climb the tree in
 		# front of you.
+		if inventory_screen.visible:
+			_wear_chosen()
+			return
 		var arrow := Arrow.stuck_in_reach(player.reach_from(), Arrow.PICK_M)
+		var lying := WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M)
+		var plant := _sample_in_reach()
 		if player.spear.in_reach():
 			player.grab_toward(player.spear.thrown.global_position)
 			player.spear.pick_up()
 		elif arrow != null:
 			player.grab_toward(arrow.global_position)
 			arrow.pick_up()
+		elif lying != null:
+			player.grab_toward(lying.global_position)
+			if player.inventory.add(lying.item):
+				lying.pick_up()
+			else:
+				_say_note("Your hands are full.")
+		elif plant >= 0:
+			# A cutting, a seed head, a leaf, a cut column or a bundle: it
+			# carries the species (Inventory.plant_sample).
+			player.grab_toward(player.look.point)
+			var it := Inventory.plant_sample(plant)
+			if player.inventory.add(it):
+				_say_note("You take %s." % _sample_words(it))
+			else:
+				_say_note("Your hands are full.")
 		elif player.climbing:
 			player.stop_climb()
 		elif creatures.log_in_reach(player.global_position):
 			creatures.interact(player.global_position)
 		else:
 			player.try_climb()
+
+
+## The plant (SpeciesDB index) under the crosshair near enough to take a
+## sample of (items.json sample_reach_m), or -1. Not a tree (E climbs
+## those).
+func _sample_in_reach() -> int:
+	var l := player.look
+	if l == null or l.kind != "plant" or l.species_index < 0 or l.point == Vector3.INF:
+		return -1
+	var reach := float(Inventory.data().get("sample_reach_m", 2.2))
+	return l.species_index if l.point.distance_to(player.reach_from()) <= reach else -1
+
+
+## "a cutting of Quercus robur", "a bundle of Cannabis sativa", ...
+func _sample_words(it: Dictionary) -> String:
+	var what: String = {"cutting": "a cutting", "seed": "a seed head", "leaf": "a leaf", "column": "a cut column", "bundle": "a bundle"}.get(str(it.get("part", "")), "a sample")
+	return "%s of %s" % [what, it.get("binomial", "it")]
+
+
+func _say_note(text: String) -> void:
+	_note = text
+	_note_t = 2.5
+
+
+## Open or close the inventory screen (I). The world goes on; the mouse is
+## freed for the screen while it's open.
+func _toggle_inventory(on: bool) -> void:
+	if on:
+		inventory_screen.open()
+		player.ui_open = true
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		inventory_screen.close()
+		player.ui_open = false
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		player.bow.block_until_release()
+
+
+## G on a carried thing: set it down on the ground in front of you.
+func _drop_chosen() -> void:
+	var c: Array = inventory_screen.chosen
+	if c.is_empty() or c[0] != "carried":
+		return
+	var it = player.inventory.take(c[1])
+	if it == null:
+		return
+	var at := player.global_position + player.global_basis.z * -0.7
+	var d: Vector3 = world.dir_of(at)
+	WorldItem.drop(it, world, d, chunks.ground_height(d))
+
+
+## E on a spare in the inventory: wear it (what was worn becomes the spare).
+func _wear_chosen() -> void:
+	var c: Array = inventory_screen.chosen
+	if c.is_empty() or c[0] != "worn":
+		return
+	player.inventory.wear_spare(c[1], c[2])

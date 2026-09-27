@@ -18,11 +18,11 @@ extends Node3D
 ## person it's in view in front of you and the string comes back as you
 ## draw.
 
-const DRAW_S := 1.0
-const MAX_SPEED := 55.0
-const MIN_POWER := 0.1
-const DAMAGE := 30.0
-const MAX_ARROWS := 40
+static var DRAW_S := Tuning.num("combat", "bow", "draw_s")
+static var MAX_SPEED := Tuning.num("combat", "bow", "max_speed_mps")
+static var MIN_POWER := Tuning.num("combat", "bow", "min_power")
+static var DAMAGE := Tuning.num("combat", "bow", "damage")
+static var MAX_ARROWS := int(Tuning.num("combat", "bow", "max_arrows"))
 
 var player: PlanetPlayer
 ## Seconds drawn (0 when not drawing).
@@ -101,8 +101,10 @@ func launch() -> Array:
 	else:
 		from = player.global_position + player.up * 1.35 - player.global_basis.z * 0.55
 	# Aim at what's under the crosshair.
-	var dir := (player.crosshair_point() - from).normalized()
-	return [from, dir * MAX_SPEED * p + player.velocity * 0.5]
+	# The aim wanders a little (steadiest at a jump's apex): the arc shows
+	# it, and the arrow follows the arc.
+	var dir := player.sway((player.crosshair_point() - from).normalized())
+	return [from, dir * MAX_SPEED * p + player.velocity * Tuning.num("combat", "bow", "inherit_velocity")]
 
 
 func _loose() -> void:
@@ -116,7 +118,7 @@ func _loose() -> void:
 	arrow.exclude = [player.get_rid()]
 	var dmg := DAMAGE * p
 	if p >= 1.0:
-		dmg *= 1.0 + randf() * 0.5 # a critical hit, now and then
+		dmg *= 1.0 + randf() * Tuning.num("combat", "bow", "crit_extra") # a critical hit, now and then
 	arrow.damage = dmg
 	player.world.world_root.add_child(arrow)
 	arrow.launch(from, shot[1])

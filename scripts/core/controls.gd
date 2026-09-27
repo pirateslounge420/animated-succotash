@@ -13,6 +13,10 @@ const DEFAULTS := {
 	# action is the gamepad's way in (click the left stick and hold).
 	"sprint": [],
 	"interact": [KEY_E],
+	# The inventory screen (what you carry and wear); G sets the chosen
+	# carried thing down while it's open.
+	"inventory": [KEY_I],
+	"inventory_drop": [KEY_G],
 	"toggle_map": [KEY_M],
 	"toggle_hud": [KEY_H],
 	# Debug overlay (spec A4): clock, phase, sun and moon.
@@ -24,6 +28,9 @@ const DEFAULTS := {
 	# MOUSE_BUTTONS). With the spear in hand: tap to thrust, hold and
 	# release to throw.
 	"shoot": [],
+	# Wall jump: in the air, by a wall, cliff, trunk or ruin (the right
+	# mouse button; see MOUSE_BUTTONS).
+	"wall_jump": [],
 	# Swap between the bow and the spear.
 	"weapon_swap": [KEY_Q],
 	# Dev mode only (data/dev.json): F4 shows collision shapes, F6 the
@@ -33,17 +40,20 @@ const DEFAULTS := {
 	"toggle_branch_view": [KEY_F6],
 	"dev_spawn": [KEY_F7],
 	"dev_howl": [KEY_F8],
+	# Dev: one of each carried kind into the pack (to look at the screen).
+	"dev_items": [KEY_F9],
 }
 
 ## Mouse buttons per action.
 const MOUSE_BUTTONS := {
 	"shoot": MOUSE_BUTTON_LEFT,
+	"wall_jump": MOUSE_BUTTON_RIGHT,
 }
 
 ## Gamepad: left stick moves, A jumps, X interacts, B crouches, Y swaps
 ## bow and spear, the left stick held in sprints, the right trigger draws
 ## and shoots the bow, the right stick clicked switches first/third person,
-## Back opens the map.
+## Back opens the map, the right shoulder wall-jumps.
 const PAD_BUTTONS := {
 	"weapon_swap": JOY_BUTTON_Y,
 	"toggle_view": JOY_BUTTON_RIGHT_STICK,
@@ -52,6 +62,8 @@ const PAD_BUTTONS := {
 	"crouch": JOY_BUTTON_B,
 	"sprint": JOY_BUTTON_LEFT_STICK,
 	"toggle_map": JOY_BUTTON_BACK,
+	"wall_jump": JOY_BUTTON_RIGHT_SHOULDER,
+	"inventory": JOY_BUTTON_START,
 }
 const PAD_AXES := {
 	"shoot": [JOY_AXIS_TRIGGER_RIGHT, 1.0],

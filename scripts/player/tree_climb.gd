@@ -37,10 +37,10 @@ const REACH_M := 1.2
 ## each reach (s): with a handhold every ~0.5 m, about 0.5 m/s up a trunk
 ## and about 0.3 m/s along a limb (the hands shuffle there, so the body
 ## moves on every other reach).
-const TRUNK_MPS := 0.72
-const LIMB_MPS := 0.3
-const TRUNK_BEAT_S := 0.3
-const LIMB_BEAT_S := 0.3
+static var TRUNK_MPS := Tuning.num("movement", "climb", "graph_trunk_mps")
+static var LIMB_MPS := Tuning.num("movement", "climb", "graph_limb_mps")
+static var TRUNK_BEAT_S := Tuning.num("movement", "climb", "trunk_beat_s")
+static var LIMB_BEAT_S := Tuning.num("movement", "climb", "limb_beat_s")
 const MIN_REACH_S := 0.35
 ## A reach round the trunk moves the body about this far (m).
 const AROUND_M := 0.45
@@ -91,6 +91,9 @@ var let_go := -1
 var took := -1
 ## What the HUD shows while climbing.
 var prompt := ""
+## Climbing speed as a share of normal (1; less when overburdened,
+## PlanetPlayer.burden_climb()).
+var speed_scale := 1.0
 ## Outputs, scene space: where the feet go, which way the body faces
 ## (horizontal), where each hand is, which way a push-off goes.
 var feet := Vector3.ZERO
@@ -173,7 +176,7 @@ func step(dt: float, input: Vector2, fwd: Vector3, right: Vector3, up: Vector3) 
 			took = reaching
 			reaching = -1
 			reaches += 1
-			_beat = TRUNK_BEAT_S if _cling(_to_i) else LIMB_BEAT_S
+			_beat = (TRUNK_BEAT_S if _cling(_to_i) else LIMB_BEAT_S) / speed_scale
 			holds_log.append("hand %s -> %s" % ["L" if took == 0 else "R", describe(_to_i)])
 	elif _beat > 0.0:
 		_beat -= dt
@@ -388,7 +391,7 @@ func _start_reach(h: int, i: int, a: float) -> void:
 	var to := _point(i, a, h)
 	var mid1 := (to + _hand_point(1 - h)) * 0.5
 	var steep := _cling(i) and _cling(hold[1 - h])
-	_len = maxf(mid0.distance_to(mid1) / (TRUNK_MPS if steep else LIMB_MPS), MIN_REACH_S)
+	_len = maxf(mid0.distance_to(mid1) / ((TRUNK_MPS if steep else LIMB_MPS) * speed_scale), MIN_REACH_S / speed_scale)
 	# Along a limb it faces the way it goes.
 	if not _cling(i):
 		var way := _horizontal(to - _hand_point(1 - h))

@@ -1,0 +1,38 @@
+{
+ "_help": {
+  "about": "What the player can carry and wear (Inventory; the inventory screen on I). Restart the game after editing. Spec Appendix R4: a handful of items, weight felt in movement (movement table 'burden'), never read in a menu.",
+  "sample_reach_m": "How near a plant must be (from your hands) for E to take a sample of it.",
+  "carry_slots": "How many things you can carry. Each slot holds one thing: a bundle of herbs, a plant sample, a cut cactus column, a fish, a mushroom, a stone tool.",
+  "equipment": "The slots you wear things in: how many are worn and how many spares each keeps (R4: one worn and two spares; rings two worn and two spares). Spares don't count as carried.",
+  "kinds": "Every kind of item: its name on the screen, the little picture drawn for it (icon), and which equipment slot it's worn in (slot; none = it's carried). color is the picture's main color where the item doesn't bring its own (a plant sample takes its species' colors).",
+  "sample_part": "What E on a plant takes, by the plant's shape: a cutting, a seed head, a leaf, or a cut column (a cactus: its own kind of item). Shapes not listed give a cutting.",
+  "bundle_genera": "Plants of these genera give a bundle of herbs (cut stems, tied) instead of a sample. It still carries the species."
+ },
+ "carry_slots": 10,
+ "sample_reach_m": 2.2,
+ "equipment": {
+  "ranged": {"label": "Ranged", "worn": 1, "spares": 2},
+  "melee": {"label": "Melee", "worn": 1, "spares": 2},
+  "amulet": {"label": "Amulet", "worn": 1, "spares": 2},
+  "rings": {"label": "Rings", "worn": 2, "spares": 2}
+ },
+ "kinds": {
+  "bow": {"name": "Bow", "icon": "bow", "slot": "ranged", "color": "#8a5a32"},
+  "spear": {"name": "Spear", "icon": "spear", "slot": "melee", "color": "#80603a"},
+  "amulet": {"name": "Amulet", "icon": "amulet", "slot": "amulet", "color": "#c8d8f0"},
+  "ring": {"name": "Ring", "icon": "ring", "slot": "rings", "color": "#c8d8f0"},
+  "plant_sample": {"name": "Plant sample", "icon": "sample", "color": "#5c8a3c"},
+  "herb_bundle": {"name": "Bundle of herbs", "icon": "bundle", "color": "#6f9446"},
+  "cactus_column": {"name": "Cut cactus column", "icon": "column", "color": "#5f8f55"},
+  "fish": {"name": "Fish", "icon": "fish", "color": "#9fb4c8"},
+  "mushroom": {"name": "Mushroom", "icon": "mushroom", "color": "#b07a52"},
+  "stone_tool": {"name": "Stone tool", "icon": "stone_tool", "color": "#8c8a86"}
+ },
+ "sample_part": {
+  "GRASS": "seed", "TUSSOCK": "seed", "REED": "seed", "BAMBOO": "cutting",
+  "FERN": "leaf", "TREE_FERN": "leaf", "MOSS": "leaf", "HANGING_MOSS": "leaf", "EPIPHYTE_CLUMP": "leaf",
+  "ROSETTE": "leaf", "SPIKE_ROSETTE": "leaf", "CUSHION": "leaf", "THERMOPHILE_MAT": "leaf",
+  "CACTUS": "column"
+ },
+ "bundle_genera": ["Cannabis", "Salvia", "Mentha", "Thymus", "Lavandula", "Artemisia", "Rosmarinus", "Ocimum"]
+}
