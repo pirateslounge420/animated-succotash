@@ -33,6 +33,15 @@
 			"gait": {"stride_m": 1.3, "stance": 0.62, "lift_m": 0.13, "turn_radius_m": 8.0, "accel_mps2": 0.25, "head_dip_deg": 7.0, "bob_m": 0.015},
 			"hunt": {"notice_m": 40, "give_up_m": 90, "reach_m": 2.6, "strike_s": 2.0},
 			"cue": {"sound": "hoofbeats_far", "when": "enter_biome", "distance_m": [280, 420], "cooldown_s": 300},
-			"notes": "Two riders on dark horses, always a pair: the second trails two body lengths behind, its gait out of phase. A slow four-beat walk only, heavy and slow to turn; soft hooves. The only light on them is their red eyes. Held back from play until Phase 7 (spawn: disabled); in dev mode F7 brings a pair past you."}
+			"notes": "Two riders on dark horses, always a pair: the second trails two body lengths behind, its gait out of phase. A slow four-beat walk only, heavy and slow to turn; soft hooves. The only light on them is their red eyes. Held back from play until Phase 7 (spawn: disabled); in dev mode F7 brings a pair past you."},
+		{
+			"name": "Pond Crawler", "genus": "Limnoreptor", "species": "cucullatus", "invented": true,
+			"role": "mythical", "shape": "pond_crawler", "spawn": "disabled",
+			"trophic": "mythic", "biome_lock": ["SWAMP", "BOG"], "water_bound": true, "activity": "night", "temperament": "aggressive",
+			"size_m": 1.4, "color": "#6e7590", "accent": "#2a6aff", "speed_mps": 2.2, "shy_m": 0, "sound": "none", "territory_m": 60,
+			"rig": {"notice_m": 26, "strike_m": 2.4, "wait_step_s": 2.2, "lurch_step_s": 0.55, "lurch_overlap": 0.4, "stride_m": 0.6, "lift_m": 0.35, "lurch_lift_m": 0.65,
+				"body_kg": 110, "hand_kg": 6, "wade_m": [0.08, 1.3], "eye_light_m": 5.5, "eye_light_energy": 0.8, "drift_every_s": [20, 50], "replant_every_s": [5, 12]},
+			"notes": "A rounded hooded lump with one large blue slit eye (a real light), wading on two long arms with splayed fingers. Waits motionless in swamp and bog water; lurches at you when you come near. Held back from play until Phase 7 (spawn: disabled); PondCrawler.debug_spawn() and tools/pond_crawler_demo.gd place one."
+		}
 	]
 }

@@ -318,7 +318,11 @@ func _physics_process(delta: float) -> void:
 		rate = FRICTION_MPS2
 	_move -= up * _move.dot(up) # stay along the ground as "up" turns
 	_move = _move.move_toward(target, rate * delta)
-	var vertical := up * velocity.dot(up)
+	# Last frame's own vertical motion, without the knock-back (added fresh
+	# below each frame; carried over too, a hit's upward shove compounded
+	# every airborne frame and flung the player tens of meters up). The
+	# knock-back never enters _move, so it doesn't build up sideways either.
+	var vertical := up * (velocity - _knock).dot(up)
 	var horizontal := _move
 	if swimming:
 		# Float up to the surface, head above water.

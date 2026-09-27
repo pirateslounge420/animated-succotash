@@ -53,6 +53,8 @@ var light_response := ""
 ## Mythic only: the biomes it's bound to (BiomeTemplates ids, from biome
 ## keys like "TAIGA"); empty = not bound.
 var biome_lock := PackedInt32Array()
+## Lives in the water and never leaves it (D4 water_bound).
+var water_bound := false
 ## Group size (D4 herd_min / herd_max); a pair is [2, 2].
 var herd := Vector2i(1, 1)
 ## The entry as written, for a species' own extra fields (a rig's tuning,
@@ -137,11 +139,14 @@ static func _from(e: Dictionary) -> CreatureSpecies:
 	if sp.activity != "" and not e.has("active"):
 		sp.active = sp.activity
 	sp.light_response = str(e.get("light_response", ""))
+	sp.water_bound = bool(e.get("water_bound", false))
 	var lock = e.get("biome_lock", [])
 	for k in ([lock] if lock is String else lock):
-		var id := BiomeTemplates.id_of_key(str(k))
+		var id := BiomeTemplates.id_of_key(str(k).to_upper())
 		if id >= 0:
 			sp.biome_lock.append(id)
+		else:
+			push_warning("CreatureSpecies: %s: unknown biome_lock \"%s\"" % [sp.name, k])
 	sp.herd = Vector2i(int(e.get("herd_min", 1)), int(e.get("herd_max", e.get("herd_min", 1))))
 	return sp
 
@@ -163,7 +168,9 @@ func hp_max() -> float:
 
 
 ## False for species held back from normal play (`"spawn": "disabled"`:
-## the Night Rider until Phase 7); only a debug spawn shows them.
+## the Night Rider and the Pond Crawler until Phase 7): no spawner or
+## territory picks them, and they don't change the odds for the others.
+## Only a debug spawn shows them.
 func spawns() -> bool:
 	return spawn != "disabled"
 
