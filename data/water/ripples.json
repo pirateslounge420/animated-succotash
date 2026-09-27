@@ -1,0 +1,67 @@
+{
+	"enabled": true,
+	"buffer_texels": 256,
+	"texel_m": 0.25,
+	"lead_m": 10,
+	"wave_speed_mps": 1.1,
+	"damping_per_s": 0.45,
+	"flatten_per_s2": 0.4,
+	"smoothing_per_s": 0.15,
+	"edge_texels": 20,
+	"view_fade_m": [22, 40],
+	"look": {
+		"height_m": 0.012,
+		"slope": 0.05,
+		"band_wavelength_m": 1.5,
+		"band_edge": 0.0,
+		"band_softness": 0.25,
+		"light_band": 0.7,
+		"dark_band": 0.35,
+		"light_side": 0.35,
+		"show_from_m": 0.001,
+		"full_at_m": 0.004,
+		"calm": 0.85,
+		"foam": 0.7,
+		"foam_from_m": 0.035,
+		"brush": 1.2,
+		"brush_m": 2.5
+	},
+	"splash": {
+		"radius_m_per_cuberoot_kg": 0.2,
+		"radius_min_m": 0.4,
+		"radius_max_m": 1.5,
+		"push_scale": 0.07,
+		"mass_exponent": 0.3,
+		"speed_exponent": 0.5,
+		"push_max_mps": 0.6
+	},
+	"wake": {
+		"radius_m_per_cuberoot_kg": 0.07,
+		"radius_min_m": 0.5,
+		"radius_max_m": 1.2,
+		"push_per_mps": 0.07,
+		"push_max_mps": 0.25
+	},
+	"rain": {
+		"full_at_mm_h": 4.0,
+		"drops_per_m2_s": 0.05,
+		"push_mps": 0.15,
+		"radius_m": 0.35,
+		"cell_m": 1.0
+	},
+	"contacts": {
+		"player_kg": 65,
+		"player_foot_kg": 6,
+		"player_hand_kg": 3,
+		"player_stroke_s": 0.7,
+		"player_drop_mps": 1.5,
+		"arrow_kg": 0.05,
+		"creature_kg_per_size_m3": 25
+	},
+	"readers": {
+		"max_sources": 256,
+		"source_life_s": 6,
+		"ring_gain": 0.12,
+		"ring_speed": 0.91
+	}
+}

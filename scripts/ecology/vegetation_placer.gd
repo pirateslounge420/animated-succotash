@@ -30,7 +30,9 @@ class_name VegetationPlacer
 ## placed; cypress knees scatter around cypress standing in water.
 ##
 ## Both compute functions are thread-safe (read-only planet data);
-## build_nodes() makes one MultiMesh per species on the main thread.
+## build_nodes() makes one MultiMesh per species on the main thread, and
+## for branchy canopy trees one more per layout (TreeLayouts): each tree
+## grows the layout its position hashes to, so trees stay batched.
 
 ## Plants other than water plants keep this far above standing water.
 const WATERLINE_M := 0.3
@@ -251,15 +253,31 @@ static func _place_knees(ctx: _Context, out: Dictionary, hosts: Array) -> void:
 ## MultiMesh buffers. Positions are relative to the chunk's anchor (its
 ## center at `anchor_r` from the planet center), which doesn't depend on
 ## the floating origin, so the whole buffer is built here and the main
-## thread only hands it over. Returns sp_idx -> [buffer, count, trees],
-## trees being [local_position, height, instance] of canopy and emergent
-## plants.
-static func prepare(plants: Dictionary, center: Vector3, anchor_r: float) -> Dictionary:
+## thread only hands it over. Returns sp_idx -> [buffer, count, trees,
+## layouts]: trees being [local_position, height, instance, pick,
+## layout_instance, rotation, order] of canopy and emergent plants, and
+## layouts, for branchy species, layout -> [buffer, count]: the same trees
+## again, split by the layout each grows and mirrored when its pick says
+## so (TreeLayouts.pick), drawn instead in the detail ring. `rotation` is
+## the tree's rigid rotation (radial up, yaw, lean; no scale).
+##
+## For the trees (compute_base's output) pass `hosts`, the chunk `key` and
+## the world seed: the seed, key and each tree's surface direction pick
+## its layout, and `order` is its index in `hosts` (placement order).
+static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts := [],
+		key := Vector3i.ZERO, world_seed := 0) -> Dictionary:
 	var out := {}
 	var all := SpeciesDB.all()
 	var cx := center.x * anchor_r
 	var cy := center.y * anchor_r
 	var cz := center.z * anchor_r
+	# The k-th tree of a species is that species' k-th host.
+	var order := {} # sp_idx -> host indices, in order
+	for hi in hosts.size():
+		var s: int = hosts[hi][3]
+		if not order.has(s):
+			order[s] = []
+		(order[s] as Array).append(hi)
 	for sp_idx in plants:
 		var sp: PlantSpecies = all[sp_idx]
 		var arr: PackedFloat32Array = plants[sp_idx]
@@ -268,6 +286,8 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float) -> Dic
 		buf.resize(count * MM_STRIDE)
 		var trees: Array = []
 		var tall := sp.tier == T.EMERGENT or sp.tier == T.CANOPY
+		var branchy := tall and TreeLayouts.branchy(sp)
+		var ords: Array = order.get(sp_idx, [])
 		for i in count:
 			var o := i * STRIDE
 			var d := Vector3(arr[o], arr[o + 1], arr[o + 2])
@@ -278,71 +298,144 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float) -> Dic
 			var basis := Basis(fwd.cross(up), up, fwd).orthonormalized()
 			basis = basis.rotated(up, arr[o + 4])
 			basis = basis.rotated(basis.x, arr[o + 5]).rotated(basis.z, arr[o + 6])
+			var rot := basis
 			basis = basis.scaled(Vector3.ONE * arr[o + 7])
-			var k := i * MM_STRIDE
-			# Transform as the rows of its 3x4 matrix, then color (white),
-			# then custom data (moss, vines, 0, 0): Godot's MultiMesh layout.
-			buf[k] = basis.x.x
-			buf[k + 1] = basis.y.x
-			buf[k + 2] = basis.z.x
-			buf[k + 3] = pos.x
-			buf[k + 4] = basis.x.y
-			buf[k + 5] = basis.y.y
-			buf[k + 6] = basis.z.y
-			buf[k + 7] = pos.y
-			buf[k + 8] = basis.x.z
-			buf[k + 9] = basis.y.z
-			buf[k + 10] = basis.z.z
-			buf[k + 11] = pos.z
-			buf[k + 12] = 1.0
-			buf[k + 13] = 1.0
-			buf[k + 14] = 1.0
-			buf[k + 15] = 1.0
-			buf[k + 16] = arr[o + 8]
-			buf[k + 17] = arr[o + 9]
+			_put(buf, i * MM_STRIDE, basis, pos, arr[o + 8], arr[o + 9])
 			if tall:
-				trees.append([pos, arr[o + 7], i])
-		out[sp_idx] = [buf, count, trees]
+				var pick := TreeLayouts.pick(world_seed, key, d) if branchy else -1
+				trees.append([pos, arr[o + 7], i, pick, -1, rot, ords[i] if i < ords.size() else -1])
+		var layouts := {}
+		if branchy:
+			var counts := PackedInt32Array()
+			counts.resize(TreeLayouts.COUNT)
+			for t in trees:
+				var l := TreeLayouts.layout_of(t[3])
+				t[4] = counts[l]
+				counts[l] += 1
+			for l in TreeLayouts.COUNT:
+				if counts[l] == 0:
+					continue
+				var lbuf := PackedFloat32Array()
+				lbuf.resize(counts[l] * MM_STRIDE)
+				for t in trees:
+					if TreeLayouts.layout_of(t[3]) != l:
+						continue
+					var h: float = t[1]
+					var mirror := -h if TreeLayouts.is_mirrored(t[3]) else h
+					var o: int = int(t[2]) * STRIDE
+					_put(lbuf, int(t[4]) * MM_STRIDE, (t[5] as Basis) * Basis.from_scale(Vector3(mirror, h, h)), t[0],
+						arr[o + 8], arr[o + 9])
+				layouts[l] = [lbuf, counts[l]]
+		out[sp_idx] = [buf, count, trees, layouts]
 	return out
 
 
+## One instance into a MultiMesh buffer at float `k`: the transform as the
+## rows of its 3x4 matrix, then color (white), then custom data (moss,
+## vines, 0, 0): Godot's MultiMesh layout.
+static func _put(buf: PackedFloat32Array, k: int, basis: Basis, pos: Vector3, moss: float, vines: float) -> void:
+	buf[k] = basis.x.x
+	buf[k + 1] = basis.y.x
+	buf[k + 2] = basis.z.x
+	buf[k + 3] = pos.x
+	buf[k + 4] = basis.x.y
+	buf[k + 5] = basis.y.y
+	buf[k + 6] = basis.z.y
+	buf[k + 7] = pos.y
+	buf[k + 8] = basis.x.z
+	buf[k + 9] = basis.y.z
+	buf[k + 10] = basis.z.z
+	buf[k + 11] = pos.z
+	buf[k + 12] = 1.0
+	buf[k + 13] = 1.0
+	buf[k + 14] = 1.0
+	buf[k + 15] = 1.0
+	buf[k + 16] = moss
+	buf[k + 17] = vines
+
+
 ## Main thread: one MultiMeshInstance3D per species under `parent`, from
-## prepare()'s buffers. Records trees on the chunk for canopy-dwelling
-## creatures.
+## prepare()'s buffers; for a branchy species that one draws its trees
+## only beyond the detail ring, and one more per layout draws them in it
+## (TerrainChunk.set_fine shows one set or the other). Records the trees
+## on the chunk, in placement order (chunk.trees[i] is chunk.hosts[i]),
+## for climbing, rustling, branch graphs and canopy-dwelling creatures.
 static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionary) -> void:
 	var all := SpeciesDB.all()
+	var own := parent == chunk
+	# Each at the chunk's current detail level; the chunk swaps meshes as
+	# the player comes and goes (TerrainChunk.set_fine).
+	var lod := chunk.plant_lod(parent)
+	var placed: Array = []
 	for sp_idx in prepared:
 		var sp: PlantSpecies = all[sp_idx]
 		var entry: Array = prepared[sp_idx]
-		var mm := MultiMesh.new()
-		mm.transform_format = MultiMesh.TRANSFORM_3D
-		mm.use_custom_data = true # (moss, vines, 0, 0)
-		# Instance colors (all white) too: without them the compatibility
-		# renderer garbles vertex colors when custom data is on.
-		mm.use_colors = true
-		# Each at the chunk's current detail level; the chunk swaps meshes
-		# as the player comes and goes (TerrainChunk.set_fine).
-		var lod := parent == chunk
-		mm.mesh = PlantMeshes.mesh_for(sp, chunk.plant_lod(parent))
-		mm.instance_count = entry[1]
-		mm.buffer = entry[0]
-		for t in entry[2]:
-			chunk.trees.append([t[0], t[1], sp_idx, t[2]])
-		if lod:
+		var layouts: Dictionary = entry[3]
+		var far_only := not layouts.is_empty()
+		# A branchy species' own MultiMesh only ever shows the far crown.
+		var mm := _multimesh(PlantMeshes.mesh_for(sp, PlantMeshes.LOD_FAR if far_only else lod), entry[0], entry[1])
+		var mmi := _instance(parent, sp_idx, sp, mm, sp.name.replace(" ", "_"))
+		if far_only:
+			mmi.set_meta("far_only", true)
+			mmi.visible = lod == PlantMeshes.LOD_FAR
+		var near := lod != PlantMeshes.LOD_FAR
+		for l in layouts:
+			# Meshless until the chunk comes into the detail ring.
+			var lmesh: Mesh = PlantMeshes.mesh_for(sp, lod, l) if near else null
+			var lmm := _multimesh(lmesh, layouts[l][0], layouts[l][1])
+			var lmi := _instance(parent, sp_idx, sp, lmm, "%s_%d" % [sp.name.replace(" ", "_"), l])
+			lmi.set_meta("layout", l)
+			lmi.visible = near
+			if own:
+				chunk.layout_mm[Vector2i(sp_idx, l)] = lmm
+		if own:
 			chunk.tree_mm[sp_idx] = mm
-		var mmi := MultiMeshInstance3D.new()
-		mmi.name = sp.name.replace(" ", "_")
-		mmi.multimesh = mm
-		mmi.material_override = PlantMeshes.material()
-		mmi.set_meta("species", sp_idx)
-		if sp.tier == T.GROUND or sp.tier == T.EPIPHYTE:
-			mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			# Out to 300 m so the ground never reads bare (it only exists in
-			# the detail ring anyway, ~390 m).
-			mmi.visibility_range_end = 300.0
-			mmi.visibility_range_end_margin = 40.0
-			mmi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
-		parent.add_child(mmi)
+		for t in entry[2]:
+			placed.append([t[0], t[1], sp_idx, t[2], t[3], t[4], t[5], t[6]])
+	# In placement order when every tree knows its place (compute_base's
+	# trees always do), else in the order they came.
+	var n := placed.size()
+	var sorted: Array = []
+	sorted.resize(n)
+	for t in placed:
+		var at: int = t[7]
+		if at < 0 or at >= n or sorted[at] != null:
+			sorted.clear()
+			break
+		sorted[at] = t
+	for t in (sorted if not sorted.is_empty() else placed):
+		t.resize(7)
+		chunk.trees.append(t)
+
+
+static func _multimesh(mesh: Mesh, buf: PackedFloat32Array, count: int) -> MultiMesh:
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.use_custom_data = true # (moss, vines, 0, 0)
+	# Instance colors (all white) too: without them the compatibility
+	# renderer garbles vertex colors when custom data is on.
+	mm.use_colors = true
+	mm.mesh = mesh
+	mm.instance_count = count
+	mm.buffer = buf
+	return mm
+
+
+static func _instance(parent: Node3D, sp_idx: int, sp: PlantSpecies, mm: MultiMesh, node_name: String) -> MultiMeshInstance3D:
+	var mmi := MultiMeshInstance3D.new()
+	mmi.name = node_name
+	mmi.multimesh = mm
+	mmi.material_override = PlantMeshes.material()
+	mmi.set_meta("species", sp_idx)
+	if sp.tier == T.GROUND or sp.tier == T.EPIPHYTE:
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		# Out to 300 m so the ground never reads bare (it only exists in
+		# the detail ring anyway, ~390 m).
+		mmi.visibility_range_end = 300.0
+		mmi.visibility_range_end_margin = 40.0
+		mmi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
+	parent.add_child(mmi)
+	return mmi
 
 
 ## Per-chunk working state: climate on a coarse grid, per-species

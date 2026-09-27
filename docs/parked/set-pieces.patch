@@ -1,0 +1,2014 @@
+From 7366634c319dbf72bf595d20bbc6bf59dd88c2fa Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 26 Sep 2026 19:46:27 +0000
+Subject: [PATCH] HOLD: set pieces (rotunda, chapel, mission, bridges),
+ unfinished; out of scope until a later phase
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HukiLSxK3HM1XRn82GE2f5
+---
+ README.md                              |    7 +-
+ docs/implementation-notes.md           |   55 +
+ scripts/landmarks/ruin_builder.gd      |   15 +-
+ scripts/landmarks/ruins.gd             |   25 +-
+ scripts/landmarks/set_piece_builder.gd | 1480 ++++++++++++++++++++++++
+ scripts/landmarks/set_pieces.gd        |  293 +++++
+ 6 files changed, 1867 insertions(+), 8 deletions(-)
+ create mode 100644 scripts/landmarks/set_piece_builder.gd
+ create mode 100644 scripts/landmarks/set_pieces.gd
+
+diff --git a/README.md b/README.md
+index e32354d..e6b79c2 100644
+--- a/README.md
++++ b/README.md
+@@ -61,7 +61,9 @@ move on:
+   heard from ~1 km and seen from ~220 m;
+ - ruins (crumbling towers, castles on hills, aqueducts, and now and then
+   a pyramid, a graveyard or a barrow; tombs, mausoleums and the desert
+-  pyramid's burial chamber can be walked into) from ~2.6 km,
++  pyramid's burial chamber can be walked into) and set pieces standing
++  whole (domed rotundas on knolls, field chapels, desert missions and
++  arched stone bridges over rivers) from ~2.6 km,
+   so their silhouettes rise out of the fog before you reach them; about
+   a third hold a survivors' camp of tepees and lean-tos. At night they,
+   some lakes and wetlands, and mythical territories glow teal and cobalt.
+@@ -97,7 +99,8 @@ scripts/
+   ecology/                 Plant species, placement rules, meshes
+   creatures/               Creature species, spawner, territories, bodies,
+                            synthesized sounds
+-  landmarks/               Ruins (towers, castles, aqueducts) and the
++  landmarks/               Ruins (towers, castles, aqueducts), set pieces
++                           (rotundas, chapels, missions, bridges) and the
+                            glowing places of the bioluminescent night
+   player/                  Third-person explorer with planet gravity
+   ui/                      HUD, planet map, night post-grade
+diff --git a/docs/implementation-notes.md b/docs/implementation-notes.md
+index 9ab28ae..96ad928 100644
+--- a/docs/implementation-notes.md
++++ b/docs/implementation-notes.md
+@@ -440,6 +440,61 @@ Verified:
+     mausoleum, the mastaba, the pyramid's chamber and the stepped
+     pyramids' tops.)
+ 
++  - **set pieces** (`SetPieces`, `SetPieceBuilder`): whole buildings in
++    the cells that hold no ruin (`Ruins.find()` rolls those first, with
++    the cell's own numbers; each kind has its own random stream, so every
++    ruin stays where and what it was). Chances by setting
++    (`SetPieces.CHANCE`, [rotunda, chapel, mission]: temperate forest and
++    meadow 14%/16%/0, dry grass and scrub 10%/10%/14%, desert 0/0/22%),
++    and a bridge (`BRIDGE_CHANCE`, 85%) wherever a river reach runs through
++    the cell that is at most 50 m wide, falls at most 16 m and has dry
++    banks, with no other reach within its span:
++    - **rotundas** ("Hilltop rotunda") on the most prominent rise: a ring
++      of six or eight columns (turned: moulded base, a shaft with entasis,
++      a flared capital under an abacus) on a round plinth of three steps
++      of curved blocks, an entablature ring with a cornice, a shallow
++      mossy dome with a lantern and finial (a darker ceiling within), an
++      altar with offerings and a teal glow; a broad stair down the knoll,
++      column drums, blocks and boulders fallen on the grass beside it;
++    - **chapels** ("Field chapel") on the flattest ground: coursed stone
++      walls with quoins, buttresses and three round-headed windows a side,
++      a 52-degree slate roof of overlapping courses, the front gable cut
++      by an arched door and a round window and topped by a bell cote (an
++      arch, a bell, a cross). Inside: flagstones, pews (a few toppled), an
++      altar with candles, a lamp-gold glow; the door leaf stands open.
++      A straight earth path with flagstones runs 24-38 m out from the door
++      to a wayside cross;
++    - **missions** ("Desert mission", "Old mission" in dry country) on a
++      rise: a sandstone terrace with a parapet, a grand stair down the
++      slope, a cross in the forecourt; the facade's curved gable carries a
++      cross and a bell in an arch over a round window and the arched door
++      (pilasters, an entablature, voussoirs), between two bell towers
++      (shaft, open belfry with a bell, cornice, octagonal drum, dome,
++      lantern, cross); a buttressed nave under a low terracotta roof,
++      benches, an altar and a lamp-gold glow within;
++    - **bridges** ("Old bridge") across the river: three, five or seven
++      round arches of wedge voussoirs, the largest in the middle and the
++      deck humped over them, piers with capped cutwaters running down past
++      the bed, a string course, parapets and coping following the deck's
++      slope, paving, and approach ramps down (or up) to the banks.
++
++    Stairs follow the hillside (`_hill_stair`): a riser down per tread
++    until they meet the ground, then set into it (runs at one height make
++    landings), with cheek walls and newels; a chain of ramp pieces meeting
++    end to end (no lip) stands in for the steps. Walls (`_wall`) are flat
++    faces coursed in block colors, joints staggered, with real
++    round-headed and round holes (reveals round them) under any top line
++    (gables, the mission's curve, a bridge's deck); runs of one block are
++    merged, and collision and the far LOD take them uncoursed. Columns,
++    domes, drums and bells are turned (`_lathe`), coarser in the far LOD.
++    Each piece is 9-16k triangles (collision 2-7k). Chapels and missions
++    are shelters; tribal folk keep them (or the dead, a third of the
++    time), goblins or tribal folk camp by a bridge, a rotunda gets the
++    stone ruins' roll.
++
++    Planet-wide with seed 42: 42 rotundas, 70 chapels, 67 missions (58 in
++    the desert) and 21 bridges (rivers are few and mostly steep or wide).
++
+   Planet-wide with seed 42: 215 towers, 128 aqueducts, 65 castles, 174
+   igloo sites, 72 treehouse villages, 12 boardwalks, 187 pyramids (102
+   desert, 42 step, 24 temple, 15 frozen, 4 sunken), 75 graveyards (59
+diff --git a/scripts/landmarks/ruin_builder.gd b/scripts/landmarks/ruin_builder.gd
+index 0780ad6..50a6b72 100644
+--- a/scripts/landmarks/ruin_builder.gd
++++ b/scripts/landmarks/ruin_builder.gd
+@@ -16,7 +16,9 @@ class_name RuinBuilder
+ ## treehouse village of platforms and rope bridges on giant jungle trees,
+ ## a boardwalk on stilts out to a cabin in the marsh; and now and then a
+ ## pyramid (sandstone and cased in the desert, a stepped temple elsewhere).
+-## Ruins
++## Set pieces (rotundas, chapels, missions, bridges) are built by
++## SetPieceBuilder, which adds columns, domes, arches and roofs to these
++## primitives. Ruins
+ ## are built up to ~2.6 km out, beyond the terrain chunks, so their bases
+ ## run down into a buried mound or deep footings and never float over the
+ ## coarser far terrain.
+@@ -124,7 +126,9 @@ static func material() -> ShaderMaterial:
+ ## only), so Landmarks runs it on a worker thread; make_node() turns the
+ ## result into nodes on the main thread.
+ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
+-	var b := RuinBuilder.new()
++	# Set pieces (rotundas, chapels, missions, bridges) have a builder of
++	# their own, with columns, domes, arches and roofs.
++	var b: RuinBuilder = SetPieceBuilder.new() if p_site.kind >= Ruins.Kind.ROTUNDA else RuinBuilder.new()
+ 	b.map = p_map
+ 	b.site = p_site
+ 	b.rng.seed = p_site.seed
+@@ -153,6 +157,8 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
+ 			b._graveyard()
+ 		Ruins.Kind.BARROW:
+ 			b._barrow()
++		_:
++			b._set_piece()
+ 	# Its own roll, so a camp never changes the ruin itself. (Only the stone
+ 	# ruins: the others are dwellings already.)
+ 	var camp_rng := RandomNumberGenerator.new()
+@@ -168,6 +174,11 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
+ 		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights}
+ 
+ 
++## Builds a set piece (SetPieceBuilder overrides it).
++func _set_piece() -> void:
++	pass
++
++
+ ## A lone rock mesh (den stones and the like): a boulder, or a bevelled
+ ## block when `block` is set. Drawn with the ruin material.
+ static func rock_mesh(size: Vector3, p_seed: int, col: Color, block := false) -> ArrayMesh:
+diff --git a/scripts/landmarks/ruins.gd b/scripts/landmarks/ruins.gd
+index 1c58500..7327b3e 100644
+--- a/scripts/landmarks/ruins.gd
++++ b/scripts/landmarks/ruins.gd
+@@ -39,18 +39,23 @@ class_name Ruins
+ ## Tombs, mausoleums and the desert pyramid's chamber are explorable: a
+ ## doorway, a way in, and a faint glow inside.
+ ##
++## Cells without a ruin may hold a set piece instead (SetPieces): a domed
++## rotunda on a knoll, a field chapel, a desert mission or a stone bridge
++## over a river, standing whole.
++##
+ ## A planet-wide grid with at most one ruin per CELL_M cell. Pure functions
+ ## of the planet data (thread-safe), so every visit finds the same ruin and
+ ## vegetation can keep the footprint clear.
+ 
+-enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW }
++enum Kind { TOWER, CASTLE, AQUEDUCT, IGLOO, TREEHOUSE, BOARDWALK, PYRAMID, GRAVEYARD, BARROW,
++	ROTUNDA, CHAPEL, MISSION, BRIDGE }
+ 
+ const CELL_M := 3200.0
+ const CHANCE := 0.5
+ const SALT := 555
+ const KIND_NAMES := ["Ruined tower", "Ruined castle", "Ruined aqueduct",
+ 	"Abandoned igloos", "Abandoned treehouses", "Old boardwalk", "Ancient pyramid", "Old graveyard",
+-	"Barrow tomb"]
++	"Barrow tomb", "Hilltop rotunda", "Field chapel", "Desert mission", "Old bridge"]
+ const SNOWY := [BiomeTemplates.ICE_SHEET, BiomeTemplates.TUNDRA, BiomeTemplates.ALPINE_TUNDRA, BiomeTemplates.GLACIER]
+ const JUNGLY := [BiomeTemplates.TROPICAL_RAINFOREST, BiomeTemplates.JUNGLE, BiomeTemplates.CLOUD_FOREST]
+ const SNOW_C := -3.0
+@@ -95,6 +100,8 @@ static func pyramid_style(map: PlanetData, p: Vector3, land: String) -> String:
+ 
+ ## A ruin's name (the glowing site's label).
+ static func site_name(site: Dictionary) -> String:
++	if int(site.kind) >= Kind.ROTUNDA:
++		return SetPieces.site_name(site)
+ 	match int(site.kind):
+ 		Kind.PYRAMID:
+ 			return PYRAMID_NAMES[site.style]
+@@ -127,7 +134,7 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
+ 	var rng := RandomNumberGenerator.new()
+ 	rng.seed = hash(key)
+ 	if rng.randf() > CHANCE:
+-		return {}
++		return SetPieces.find(map, c, key)
+ 	var center := CreatureSpawner._cell_point(c, cells_per_face(), SALT)
+ 	var land := country(map, center)
+ 	# A pyramid in its place now and then: its own roll (and its own
+@@ -323,9 +330,19 @@ static func inhabited(site: Dictionary) -> bool:
+ ## "tribal" under treehouses, "marsh" by boardwalks. At pyramids, the
+ ## country's own folk ("dead" or "tribal" in the desert, "north" in snow,
+ ## the stone ruins' roll on grey ziggurats). The dead keep graveyards;
+-## the dead or goblins sit at barrows.
++## the dead or goblins sit at barrows. Set pieces: tribal folk at a
++## chapel or mission (or the dead, a third of the time), goblins or tribal
++## folk under a bridge, and the stone ruins' roll at a rotunda.
+ static func camp_folk(site: Dictionary) -> String:
+ 	match int(site.kind):
++		Kind.CHAPEL, Kind.MISSION:
++			var crng := RandomNumberGenerator.new()
++			crng.seed = hash([site.seed, "folk"])
++			return "dead" if crng.randf() < 0.33 else "tribal"
++		Kind.BRIDGE:
++			var grng := RandomNumberGenerator.new()
++			grng.seed = hash([site.seed, "folk"])
++			return "goblin" if grng.randf() < 0.5 else "tribal"
+ 		Kind.IGLOO:
+ 			return "north"
+ 		Kind.TREEHOUSE:
+diff --git a/scripts/landmarks/set_piece_builder.gd b/scripts/landmarks/set_piece_builder.gd
+new file mode 100644
+index 0000000..aeadd6d
+--- /dev/null
++++ b/scripts/landmarks/set_piece_builder.gd
+@@ -0,0 +1,1480 @@
++class_name SetPieceBuilder
++extends RuinBuilder
++## Builds the set pieces (SetPieces): a domed rotunda on a knoll, a field
++## chapel, a desert mission and a stone bridge over a river. They stand
++## whole, weathered and mossy, so on top of RuinBuilder's blocks they have
++## shapes of their own:
++##   * turned stone (_lathe): column shafts with entasis, bases and
++##     capitals, domes, drums, bells;
++##   * ashlar walls (_wall): flat faces coursed in block colors, cut by
++##     real round-headed arches and round windows, with reveals, and
++##     gables or any top line; arches are ringed with wedge voussoirs
++##     (_hexa) standing proud of the face;
++##   * roofs of overlapping slab courses, stairs set into the hillside
++##     (_hill_stair) with a smooth ramp standing in for the steps.
++## Collision and the far LOD take the walls without their coursing, the
++## columns as boxes and the domes at a lower resolution.
++
++## Pale, fine-grained stone for the rotunda (no brighter than the pale
++## limestone: brighter albedo blooms in full sun and by firelight).
++const MARBLE := [Color(0.6, 0.58, 0.53), Color(0.56, 0.55, 0.51), Color(0.62, 0.6, 0.55), Color(0.53, 0.52, 0.49), Color(0.58, 0.56, 0.5)]
++## Warm grey fieldstone for chapels in dry country.
++const FIELDSTONE := [Color(0.5, 0.47, 0.41), Color(0.46, 0.44, 0.39), Color(0.54, 0.5, 0.43), Color(0.43, 0.41, 0.37), Color(0.49, 0.46, 0.4)]
++const SLATE := [Color(0.3, 0.33, 0.37), Color(0.27, 0.3, 0.34), Color(0.33, 0.35, 0.38), Color(0.29, 0.31, 0.33)]
++const TERRACOTTA := [Color(0.6, 0.33, 0.22), Color(0.55, 0.3, 0.2), Color(0.64, 0.37, 0.25), Color(0.5, 0.28, 0.19)]
++const BRONZE := Color(0.5, 0.4, 0.2)
++const DOOR_WOOD := Color(0.34, 0.24, 0.16)
++## Lamp-gold (a chapel's or mission's altar) and moss-teal glows.
++const LAMP := Color(1.0, 0.72, 0.4)
++const TEAL := Color(0.45, 0.85, 0.8)
++static var debug := false
++var _mark_at := 0
++
++
++func _mark(label: String) -> void:
++	if debug:
++		print("   %s: %d" % [label, (_v.size() - _mark_at) / 3])
++	_mark_at = _v.size()
++
++
++func _set_piece() -> void:
++	match int(site.kind):
++		Ruins.Kind.ROTUNDA:
++			_rotunda()
++		Ruins.Kind.CHAPEL:
++			_chapel()
++		Ruins.Kind.MISSION:
++			_mission()
++		Ruins.Kind.BRIDGE:
++			_bridge()
++	_front_faces(_v, _n, _c, _m)
++	_front_faces(_lv, _ln, _lc, _lm)
++
++
++## Rewind every triangle clockwise seen from outside, the way Godot takes
++## front faces. The primitives draw them the other way round, so with
++## culling off Godot shades them as back faces, their normals flipped:
++## under an omni light (a camp's fire, a lamp) the ruin shader's rim term,
++## which has no falloff, then floods whole flat faces white. (The ruins
++## keep the old winding, and their look, as they are.)
++func _front_faces(v: PackedVector3Array, n: PackedVector3Array, c: PackedColorArray, m: PackedVector2Array) -> void:
++	for t in range(0, v.size(), 3):
++		var pv := v[t + 1]
++		v[t + 1] = v[t + 2]
++		v[t + 2] = pv
++		var pn := n[t + 1]
++		n[t + 1] = n[t + 2]
++		n[t + 2] = pn
++		var pc := c[t + 1]
++		c[t + 1] = c[t + 2]
++		c[t + 2] = pc
++		var pm := m[t + 1]
++		m[t + 1] = m[t + 2]
++		m[t + 2] = pm
++
++
++# --- Primitives ----------------------------------------------------------------
++
++## Copy what was drawn since `start` into the far LOD.
++func _lod_since(start: int) -> void:
++	_lv.append_array(_v.slice(start))
++	_ln.append_array(_n.slice(start))
++	_lc.append_array(_c.slice(start))
++	_lm.append_array(_m.slice(start))
++
++
++## Drop what was drawn since `start`.
++func _undraw(start: int) -> void:
++	_v.resize(start)
++	_n.resize(start)
++	_c.resize(start)
++	_m.resize(start)
++
++
++## A flat quad (corners in order round it) with a color per corner, facing
++## away from `inside`.
++func _face4(a: Vector3, b: Vector3, c: Vector3, d: Vector3, ca: Color, cb: Color, cc: Color, cd: Color, inside: Vector3) -> void:
++	var nrm := (b - a).cross(c - a) + (c - a).cross(d - a)
++	if nrm.length_squared() < 1e-10:
++		return
++	nrm = nrm.normalized()
++	if nrm.dot((a + b + c + d) * 0.25 - inside) < 0.0:
++		nrm = -nrm
++	if (b - a).cross(c - a).length_squared() > 1e-10:
++		_tri_n(a, b, c, nrm, nrm, nrm, ca, cb, cc, inside)
++	if (c - a).cross(d - a).length_squared() > 1e-10:
++		_tri_n(a, c, d, nrm, nrm, nrm, ca, cc, cd, inside)
++
++
++## A collision triangle, solid from the side `out` points to.
++func _ctri(a: Vector3, b: Vector3, c: Vector3, out: Vector3) -> void:
++	if (b - a).cross(c - a).dot(out) > 0.0:
++		_cv.append_array([a, c, b])
++	else:
++		_cv.append_array([a, b, c])
++
++
++## A six-sided block from its 8 corners (index bits: 1 = +x, 2 = +y,
++## 4 = +z, in whatever frame the corners were made in: voussoirs, wedges,
++## sloping parapet stones). The +y face takes the moss.
++func _hexa(p: Array, col: Color, moss: float, lod := true) -> void:
++	col = col.darkened(shade)
++	var top := col.lerp(MOSS, moss)
++	top.a = moss
++	var side := col.lerp(MOSS, moss * 0.3)
++	side.a = moss * 0.4
++	var bottom := col.darkened(0.3)
++	bottom.a = 0.0
++	var inside := Vector3.ZERO
++	for q in p:
++		inside += q
++	inside /= 8.0
++	var start := _v.size()
++	for f in [[0, 1, 3, 2, side], [4, 5, 7, 6, side], [0, 1, 5, 4, bottom], [2, 3, 7, 6, top], [0, 2, 6, 4, side], [1, 3, 7, 5, side]]:
++		var c: Color = f[4]
++		_face4(p[f[0]], p[f[1]], p[f[2]], p[f[3]], c, c, c, c, inside)
++	if solid:
++		_collide_since(start)
++	if lod:
++		_lod_since(start)
++
++
++## A plain six-sided slab (12 triangles, no bevel): furniture and the
++## like, not in the far LOD.
++func _slab(xf: Transform3D, size: Vector3, col: Color) -> void:
++	var p: Array = []
++	for i in 8:
++		p.append(xf * (Vector3(0.5 if i & 1 else -0.5, 0.5 if i & 2 else -0.5, 0.5 if i & 4 else -0.5) * size))
++	_hexa(p, col, 0.0, false)
++
++
++## A surface of revolution round `xf`'s y axis: `prof` is (radius, height)
++## from bottom to top, the outside on the right of the line walked up
++## (so a closed loop walked that way makes a solid ring). Smooth round the
++## axis; along the profile each segment keeps its own normal, unless
++## `smooth` (domes, bells). Moss on the upward faces. `lod_sides` > 0 adds
++## a coarser copy to the far LOD. `inward` flips it to be seen from within
++## (a dome's ceiling).
++func _lathe(xf: Transform3D, prof: PackedVector2Array, sides: int, col: Color, moss: float, smooth := false, lod_sides := 0, inward := false) -> void:
++	_lathe_pass(xf, prof, sides, col, moss, smooth, inward)
++	if lod_sides > 0:
++		var start := _v.size()
++		_lathe_pass(xf, prof, lod_sides, col, moss, false, inward)
++		_lod_since(start)
++		_undraw(start)
++
++
++func _lathe_pass(xf: Transform3D, prof: PackedVector2Array, sides: int, col: Color, moss: float, smooth: bool, inward: bool) -> void:
++	col = col.darkened(shade)
++	var n := prof.size()
++	var sn: Array[Vector2] = []
++	for k in n - 1:
++		var d := prof[k + 1] - prof[k]
++		var nn := Vector2(d.y, -d.x).normalized()
++		sn.append(-nn if inward else nn)
++	# Normal (2D) at profile point k of segment `seg`.
++	var pn := func(k: int, seg: int) -> Vector2:
++		if not smooth:
++			return sn[seg]
++		var acc := Vector2.ZERO
++		if k > 0:
++			acc += sn[k - 1]
++		if k < n - 1:
++			acc += sn[k]
++		return acc.normalized() if acc.length_squared() > 1e-8 else sn[seg]
++	var cs := PackedFloat32Array()
++	var ss := PackedFloat32Array()
++	for i in sides + 1:
++		cs.append(cos(TAU * i / sides))
++		ss.append(sin(TAU * i / sides))
++	for k in n - 1:
++		var p0 := prof[k]
++		var p1 := prof[k + 1]
++		if p0.x < 1e-4 and p1.x < 1e-4:
++			continue
++		var n0: Vector2 = pn.call(k, k)
++		var n1: Vector2 = pn.call(k + 1, k)
++		for i in sides:
++			var pts: Array[Vector3] = []
++			var nrs: Array[Vector3] = []
++			var cols: Array[Color] = []
++			for q in [[p0, n0, i], [p0, n0, i + 1], [p1, n1, i + 1], [p1, n1, i]]:
++				var pp: Vector2 = q[0]
++				var nv: Vector2 = q[1]
++				var j: int = q[2]
++				pts.append(xf * Vector3(pp.x * cs[j], pp.y, pp.x * ss[j]))
++				var w := (xf.basis * Vector3(nv.x * cs[j], nv.y, nv.x * ss[j])).normalized()
++				nrs.append(w)
++				var m := moss * smoothstep(0.1, 0.7, w.y)
++				var c := col.lerp(MOSS, m)
++				c.a = m
++				cols.append(c)
++			var mid := (pts[0] + pts[2]) * 0.5
++			var inside := mid - (nrs[0] + nrs[2]).normalized() * 0.5
++			if (pts[1] - pts[0]).length_squared() > 1e-10:
++				_tri_n(pts[0], pts[1], pts[2], nrs[0], nrs[1], nrs[2], cols[0], cols[1], cols[2], inside)
++			if (pts[2] - pts[3]).length_squared() > 1e-10:
++				_tri_n(pts[0], pts[2], pts[3], nrs[0], nrs[2], nrs[3], cols[0], cols[2], cols[3], inside)
++
++
++## Collision for the top of a disc (a round floor) of radius `r` at y.
++func _disc_collision(c: Vector3, r: float, sides: int) -> void:
++	for i in sides:
++		var a0 := TAU * i / sides
++		var a1 := TAU * (i + 1) / sides
++		_ctri(c, c + Vector3(cos(a0), 0.0, sin(a0)) * r, c + Vector3(cos(a1), 0.0, sin(a1)) * r, Vector3.UP)
++
++
++## Mortar-free ashlar: which block (a key for its color) covers `u` along
++## a wall in course `course`, joints staggered course to course.
++func _ashlar_key(u: float, course: int, bl: float, wid: int) -> int:
++	var block := int(floor(u / bl + (0.5 if course % 2 == 1 else 0.0)))
++	return hash(Vector3i(wid, course, block))
++
++
++func _ashlar_col(key: int) -> Color:
++	var col: Color = palette[posmod(key, palette.size())]
++	return col.lightened(float(posmod(key >> 8, 100)) / 100.0 * 0.12 - 0.06)
++
++
++## A hole in a wall (`_wall`): centered `u` m along it, `hw` half wide;
++## round-headed from `sill` up to the springing at `spring` (then a
++## semicircle), or with `round` a circle of radius hw round `spring`.
++static func hole(u: float, hw: float, sill: float, spring: float, round := false) -> Dictionary:
++	return {"u": u, "hw": hw, "sill": sill, "spring": spring, "round": round}
++
++
++func _hole_lo(h: Dictionary, u: float) -> float:
++	if h.round:
++		return h.spring - sqrt(maxf(h.hw * h.hw - (u - h.u) * (u - h.u), 0.0))
++	return h.sill
++
++
++func _hole_hi(h: Dictionary, u: float) -> float:
++	return h.spring + sqrt(maxf(h.hw * h.hw - (u - h.u) * (u - h.u), 0.0))
++
++
++## A straight wall of dressed stone from a to b (local xz), `thick` thick,
++## from `y0` (down in the ground) up to the line `tops` ([Vector2(u, y)],
++## u along the wall from a; a gable is three points). Holes (hole()) are
++## cut right through with reveals round them. The outer face (side +1, on
++## the right walking a to b) is coursed `ch` high in blocks `bl` long by
++## color alone, joints staggered, darker toward the ground (and a floor at
++## `ao_floor`, if higher); the back face too, unless it's an interior
++## (`back_shade` > 0: plain, darkened by that much), and it's left out
++## below `back_from`. Collision and the far LOD get the faces uncoursed.
++func _wall(a: Vector2, b: Vector2, y0: float, tops: Array, thick: float, holes: Array, ch := 0.6, bl := 1.3,
++		moss := 0.2, back_from := -INF, back_shade := 0.0, caps := true) -> void:
++	var length := a.distance_to(b)
++	if length < 0.05:
++		return
++	var us := PackedFloat32Array([0.0, length])
++	var nb := int(ceil(length / (bl * 0.5)))
++	for i in range(1, nb):
++		us.append(length * i / nb)
++	for t: Vector2 in tops:
++		us.append(t.x)
++	for h: Dictionary in holes:
++		var segs := 16 if h.round else 10
++		for k in segs + 1:
++			us.append(h.u - h.hw + 2.0 * h.hw * k / segs)
++	us.sort()
++	var cuts := PackedFloat32Array()
++	for u in us:
++		if u < -0.001 or u > length + 0.001:
++			continue
++		if cuts.is_empty() or u - cuts[cuts.size() - 1] > 0.02:
++			cuts.append(clampf(u, 0.0, length))
++	cuts[cuts.size() - 1] = length
++	var wid := rng.randi()
++	var start := _v.size()
++	_wall_pass(a, b, y0, tops, thick, holes, cuts, 0.0, bl, moss, back_from, back_shade, caps, wid)
++	_collide_since(start)
++	_lod_since(start)
++	if ch > 0.0:
++		_undraw(start)
++		_wall_pass(a, b, y0, tops, thick, holes, cuts, ch, bl, moss, back_from, back_shade, caps, wid)
++
++
++## A floor inside walls (AO darkens toward it as toward the ground).
++var ao_floor := -INF
++
++
++func _top_at(tops: Array, u: float) -> float:
++	var prev: Vector2 = tops[0]
++	if u <= prev.x:
++		return prev.y
++	for i in range(1, tops.size()):
++		var t: Vector2 = tops[i]
++		if u <= t.x:
++			return lerpf(prev.y, t.y, (u - prev.x) / maxf(t.x - prev.x, 1e-5))
++		prev = t
++	return prev.y
++
++
++func _wall_pass(a: Vector2, b: Vector2, y0: float, tops: Array, thick: float, holes: Array, cuts: PackedFloat32Array,
++		ch: float, bl: float, moss: float, back_from: float, back_shade: float, caps: bool, wid: int) -> void:
++	var length := a.distance_to(b)
++	var d2 := (b - a) / length
++	var dir := Vector3(d2.x, 0.0, d2.y)
++	var nrm := Vector3(d2.y, 0.0, -d2.x)
++	var o := Vector3(a.x, 0.0, a.y)
++	var ht := thick * 0.5
++	var top_col: Color = (palette[0] as Color).darkened(shade)
++	var mtop := _growth(moss * 2.0)
++	var top_c := top_col.lerp(MOSS, mtop)
++	top_c.a = mtop
++	var rev: Color = (palette[3 % palette.size()] as Color).darkened(0.12 + shade)
++	# Course bands whole across a strip, gathered to be merged along the
++	# wall: [side, course] -> [[u0, u1, y0, y1, key, g], ...].
++	var bands := {}
++	for i in cuts.size() - 1:
++		var u0 := cuts[i]
++		var u1 := cuts[i + 1]
++		var um := (u0 + u1) * 0.5
++		var pm := o + dir * um
++		var g := maxf(ground(pm.x, pm.z), ao_floor)
++		var t0 := _top_at(tops, u0)
++		var t1 := _top_at(tops, u1)
++		# The holes this strip crosses, bottom up: solid between them.
++		var cut: Array = [] # [lo0, lo1, hi0, hi1]
++		for h: Dictionary in holes:
++			if absf(um - h.u) < h.hw:
++				cut.append([_hole_lo(h, u0), _hole_lo(h, u1), _hole_hi(h, u0), _hole_hi(h, u1)])
++		cut.sort_custom(func(p, q): return p[0] + p[1] < q[0] + q[1])
++		var spans: Array = [] # [bottom0, bottom1, top0, top1]
++		var c0 := y0
++		var c1 := y0
++		for hc in cut:
++			var lo0: float = hc[0]
++			var lo1: float = hc[1]
++			if maxf(lo0, lo1) > maxf(c0, c1) + 0.01:
++				spans.append([c0, c1, lo0, lo1])
++				var inside := pm + Vector3(0.0, (lo0 + lo1) * 0.5 - 0.3, 0.0)
++				_face4(o + dir * u0 + nrm * ht + Vector3(0, lo0, 0), o + dir * u1 + nrm * ht + Vector3(0, lo1, 0),
++					o + dir * u1 - nrm * ht + Vector3(0, lo1, 0), o + dir * u0 - nrm * ht + Vector3(0, lo0, 0), rev, rev, rev, rev, inside)
++			var h0 := minf(hc[2], t0)
++			var h1 := minf(hc[3], t1)
++			if h0 < t0 - 0.01 or h1 < t1 - 0.01:
++				var inside := pm + Vector3(0.0, (h0 + h1) * 0.5 + 0.3, 0.0)
++				_face4(o + dir * u0 + nrm * ht + Vector3(0, h0, 0), o + dir * u1 + nrm * ht + Vector3(0, h1, 0),
++					o + dir * u1 - nrm * ht + Vector3(0, h1, 0), o + dir * u0 - nrm * ht + Vector3(0, h0, 0), rev, rev, rev, rev, inside)
++			c0 = h0
++			c1 = h1
++		if c0 < t0 - 0.01 or c1 < t1 - 0.01:
++			spans.append([c0, c1, t0, t1])
++		for sp in spans:
++			for s: float in [1.0, -1.0]:
++				var b0: float = sp[0]
++				var b1: float = sp[1]
++				if s < 0.0 and back_from > -INF:
++					b0 = maxf(b0, back_from)
++					b1 = maxf(b1, back_from)
++					if b0 >= sp[2] - 0.01 and b1 >= sp[3] - 0.01:
++						continue
++				var interior := s < 0.0 and back_shade > 0.0
++				_wall_face(o, dir, nrm * (s * ht), pm - nrm * (s * ht), u0, u1, b0, b1, sp[2], sp[3], g,
++					0.0 if interior else ch, bl, wid, (back_shade if interior else 0.0) + shade, moss, bands, s)
++		# The top.
++		_face4(o + dir * u0 + nrm * ht + Vector3(0, t0, 0), o + dir * u1 + nrm * ht + Vector3(0, t1, 0),
++			o + dir * u1 - nrm * ht + Vector3(0, t1, 0), o + dir * u0 - nrm * ht + Vector3(0, t0, 0), top_c, top_c, top_c, top_c,
++			pm + Vector3(0.0, (t0 + t1) * 0.5 - 0.3, 0.0))
++	# The whole course bands, runs in one block merged.
++	for key in bands:
++		var s: float = key.x
++		var off := nrm * (s * ht)
++		var run: Array = bands[key]
++		run.sort_custom(func(p, q): return p[0] < q[0])
++		var j := 0
++		while j < run.size():
++			var first: Array = run[j]
++			var last: Array = first
++			while j + 1 < run.size():
++				var nx: Array = run[j + 1]
++				if absf(nx[0] - last[1]) > 0.001 or nx[4] != first[4] or absf(nx[2] - first[2]) > 0.001 or absf(nx[3] - first[3]) > 0.001:
++					break
++				last = nx
++				j += 1
++			j += 1
++			var ua: float = first[0]
++			var ub: float = last[1]
++			var ya: float = first[2]
++			var yb: float = first[3]
++			var c := _ashlar_col(first[4])
++			var dark := shade
++			var pa := o + dir * ua + off
++			var pb := o + dir * ub + off
++			_face4(pa + Vector3(0, ya, 0), pb + Vector3(0, ya, 0), pb + Vector3(0, yb, 0), pa + Vector3(0, yb, 0),
++				_wall_col(ya, first[5], c, dark, moss), _wall_col(ya, last[5], c, dark, moss), _wall_col(yb, last[5], c, dark, moss), _wall_col(yb, first[5], c, dark, moss),
++				o + dir * ((ua + ub) * 0.5) - off)
++	# Jambs of round-headed holes, up to the springing.
++	for h: Dictionary in holes:
++		if h.round:
++			continue
++		for s: float in [-1.0, 1.0]:
++			var u: float = h.u + s * h.hw
++			if u <= 0.001 or u >= length - 0.001:
++				continue
++			var top := minf(h.spring, _top_at(tops, u))
++			var lo: float = maxf(h.sill, y0)
++			if top <= lo:
++				continue
++			var p := o + dir * u
++			_face4(p + nrm * ht + Vector3(0, lo, 0), p + nrm * ht + Vector3(0, top, 0), p - nrm * ht + Vector3(0, top, 0),
++				p - nrm * ht + Vector3(0, lo, 0), rev, rev, rev, rev, p + dir * (s * 0.3) + Vector3(0, (lo + top) * 0.5, 0))
++	if caps:
++		for e in [[0.0, -1.0], [length, 1.0]]:
++			var u: float = e[0]
++			var p := o + dir * u
++			var top := _top_at(tops, u)
++			_face4(p + nrm * ht + Vector3(0, y0, 0), p + nrm * ht + Vector3(0, top, 0), p - nrm * ht + Vector3(0, top, 0),
++				p - nrm * ht + Vector3(0, y0, 0), rev, rev, rev, rev, p - dir * (float(e[1]) * 0.3) + Vector3(0, (y0 + top) * 0.5, 0))
++
++
++## A wall's color at height y over ground (or floor) g: darker toward it,
++## a little moss low down.
++func _wall_col(y: float, g: float, base: Color, dark: float, moss: float) -> Color:
++	var c := base.darkened(0.4 * exp(-maxf(y - g, 0.0) / 1.3) + dark)
++	var m := _growth(moss) * (0.3 + 0.5 * exp(-maxf(y - g, 0.0) / 1.5))
++	c = c.lerp(MOSS, m * 0.35)
++	c.a = m * 0.5
++	return c
++
++
++## One face of a wall strip from u0 to u1, bottom b0..b1, top e0..e1,
++## offset `off` from the wall's middle, coursed `ch` high (0: one quad).
++## Course bands whole across the strip go to `bands` (merged later).
++func _wall_face(o: Vector3, dir: Vector3, off: Vector3, inside: Vector3, u0: float, u1: float, b0: float, b1: float,
++		e0: float, e1: float, g: float, ch: float, bl: float, wid: int, dark: float, moss: float, bands: Dictionary, side: float) -> void:
++	var p0 := o + dir * u0 + off
++	var p1 := o + dir * u1 + off
++	var um := (u0 + u1) * 0.5
++	if ch <= 0.0:
++		var base: Color = palette[0]
++		_face4(p0 + Vector3(0, b0, 0), p1 + Vector3(0, b1, 0), p1 + Vector3(0, e1, 0), p0 + Vector3(0, e0, 0),
++			_wall_col(b0, g, base, dark, moss), _wall_col(b1, g, base, dark, moss), _wall_col(e1, g, base, dark, moss), _wall_col(e0, g, base, dark, moss), inside)
++		return
++	# The sloping bottom and top edges keep pieces of their own; the
++	# rectangle between is cut at the course lines (one piece below the
++	# ground).
++	var lo := maxf(b0, b1)
++	var hi := minf(e0, e1)
++	if hi < lo:
++		var c := _ashlar_col(_ashlar_key(um, int(floor((b0 + e0) * 0.5 / ch)), bl, wid))
++		_face4(p0 + Vector3(0, b0, 0), p1 + Vector3(0, b1, 0), p1 + Vector3(0, e1, 0), p0 + Vector3(0, e0, 0),
++			_wall_col(b0, g, c, dark, moss), _wall_col(b1, g, c, dark, moss), _wall_col(e1, g, c, dark, moss), _wall_col(e0, g, c, dark, moss), inside)
++		return
++	if lo - minf(b0, b1) > 0.01:
++		var c := _ashlar_col(_ashlar_key(um, int(floor(lo / ch)), bl, wid))
++		_face4(p0 + Vector3(0, b0, 0), p1 + Vector3(0, b1, 0), p1 + Vector3(0, lo, 0), p0 + Vector3(0, lo, 0),
++			_wall_col(b0, g, c, dark, moss), _wall_col(b1, g, c, dark, moss), _wall_col(lo, g, c, dark, moss), _wall_col(lo, g, c, dark, moss), inside)
++	var y := lo
++	var buried := g - 0.4
++	if y < buried:
++		var yb := minf(buried, hi)
++		var c := _ashlar_col(_ashlar_key(um, int(floor(y / ch)), bl, wid))
++		_face4(p0 + Vector3(0, y, 0), p1 + Vector3(0, y, 0), p1 + Vector3(0, yb, 0), p0 + Vector3(0, yb, 0),
++			_wall_col(y, g, c, dark, moss), _wall_col(y, g, c, dark, moss), _wall_col(yb, g, c, dark, moss), _wall_col(yb, g, c, dark, moss), inside)
++		y = yb
++	while y < hi - 0.01:
++		var k := int(floor(y / ch + 1e-4))
++		var yn := minf((k + 1) * ch, hi)
++		var bk := Vector2i(int(side), k)
++		if not bands.has(bk):
++			bands[bk] = []
++		(bands[bk] as Array).append([u0, u1, y, yn, _ashlar_key(um, k, bl, wid), g])
++		y = yn
++	if maxf(e0, e1) - hi > 0.01:
++		var c := _ashlar_col(_ashlar_key(um, int(floor(hi / ch)), bl, wid))
++		_face4(p0 + Vector3(0, hi, 0), p1 + Vector3(0, hi, 0), p1 + Vector3(0, e1, 0), p0 + Vector3(0, e0, 0),
++			_wall_col(hi, g, c, dark, moss), _wall_col(hi, g, c, dark, moss), _wall_col(e1, g, c, dark, moss), _wall_col(e0, g, c, dark, moss), inside)
++
++
++## Wedge stones about `stone` m long round a hole in the wall from a to b
++## (on both faces, or the outer one only, standing `proud` m out of them),
++## `depth` deep radially; the keystone bigger. Round holes get a full ring.
++func _voussoirs(a: Vector2, b: Vector2, thick: float, h: Dictionary, depth := 0.35, proud := 0.07, stone := 0.42, both := true) -> void:
++	var d2 := (b - a).normalized()
++	var dir := Vector3(d2.x, 0.0, d2.y)
++	var nrm := Vector3(d2.y, 0.0, -d2.x)
++	var c := Vector3(a.x, h.spring, a.y) + dir * float(h.u)
++	var r: float = h.hw
++	var arc := TAU if h.round else PI
++	var n := maxi(5, int(round(arc * r / stone)))
++	if not h.round and n % 2 == 0:
++		n += 1
++	var was := solid
++	solid = false
++	for s: float in ([-1.0, 1.0] if both else [1.0]):
++		var z0 := s * (thick * 0.5 - 0.03)
++		var z1 := s * (thick * 0.5 + proud)
++		for k in n:
++			var th0 := arc * k / n
++			var th1 := arc * (k + 1) / n
++			var key: bool = not h.round and k == n / 2
++			var ro := r + depth + (0.14 if key else 0.0)
++			var zz := z1 + (s * 0.04 if key else 0.0)
++			var p: Array = []
++			for i in 8:
++				var th := th1 if i & 1 else th0
++				var rr := ro if i & 2 else r
++				var z := zz if i & 4 else z0
++				p.append(c + dir * (cos(th) * rr) + Vector3.UP * (sin(th) * rr) + nrm * z)
++			var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(0.0, 0.06))
++			_hexa(p, col, _growth(0.25), false)
++	solid = was
++
++
++## A roof of `rows` overlapping slab courses a side, pitched `pitch` from
++## a ridge along z at height `ridge` over x = cx, reaching `hx` either side
++## (the eaves), from z0 to z1. A ridge cap on top.
++func _gable_roof(cx: float, ridge: float, hx: float, z0: float, z1: float, pitch: float, rows: int, tiles: Array) -> void:
++	var slope := hx / cos(pitch)
++	var step := slope / rows
++	for sx: float in [-1.0, 1.0]:
++		for k in rows:
++			# Each course a little steeper than the roof, so its foot sits
++			# proud of the course below it.
++			var s_mid := slope - (k + 0.5) * step
++			var p := Vector3(cx + sx * s_mid * cos(pitch), ridge - s_mid * sin(pitch), (z0 + z1) * 0.5)
++			var tilt := pitch + 0.035
++			var basis := Basis(Vector3(0, 0, 1), -sx * tilt)
++			p += basis * Vector3(0.0, 0.09, 0.0)
++			var col: Color = (tiles[rng.randi() % tiles.size()] as Color).lightened(rng.randf_range(-0.04, 0.04))
++			box(Transform3D(basis, p), Vector3(step + 0.22, 0.16, z1 - z0), col, _growth(0.35 + 0.25 * float(k == 0)), 0.05, 0.02)
++	box(Transform3D(Basis.IDENTITY, Vector3(cx, ridge + 0.14, (z0 + z1) * 0.5)), Vector3(0.42, 0.3, z1 - z0 + 0.1), (tiles[0] as Color).darkened(0.1), _growth(0.5), 0.1, 0.02)
++
++
++## A bell hanging with its crown at `top` (lathe, open underneath).
++func _bell(top: Vector3, r: float) -> void:
++	var prof := PackedVector2Array([Vector2(r * 1.05, -r * 1.9), Vector2(r, -r * 1.78), Vector2(r * 0.78, -r * 1.3),
++		Vector2(r * 0.66, -r * 0.7), Vector2(r * 0.6, -r * 0.3), Vector2(r * 0.42, -r * 0.06), Vector2(0.0, 0.0)])
++	_lathe(Transform3D(Basis.IDENTITY, top), prof, 12, BRONZE, 0.0, true)
++	_tri_box(Transform3D(Basis.IDENTITY, top + Vector3(0.0, 0.12, 0.0)), Vector3(0.08, 0.24, 0.08), OLD_WOOD)
++
++
++## A stone cross standing at `p` (its foot), `h` tall, facing along z.
++func _cross(p: Vector3, h: float, t: float, col: Color) -> void:
++	box(Transform3D(Basis.IDENTITY, p + Vector3(0.0, h * 0.5, 0.0)), Vector3(t, h, t), col, _growth(0.3), t * 0.15, 0.01)
++	box(Transform3D(Basis.IDENTITY, p + Vector3(0.0, h * 0.7, 0.0)), Vector3(h * 0.55, t, t), col, _growth(0.3), t * 0.15, 0.01)
++
++
++## A broad straight stair down the slope toward -z from a floor at
++## (z_top, y_top), `w` wide, about `length` m long (longer if it hasn't
++## reached the ground by then): steps a riser down each tread until they
++## meet the ground, then set into it and following it down (treads at one
++## height make landings), each on a footing. Cheek
++## walls either side, newels at the foot, and a smooth ramp (collision)
++## standing in for the steps. Returns the foot's z.
++func _hill_stair(w: float, z_top: float, y_top: float, length: float, run := 0.6, riser := 0.3) -> float:
++	var n := int(length / run)
++	var ys: Array[float] = []
++	var lows: Array[float] = []
++	var y := y_top
++	for i in n * 3:
++		var z0 := z_top - (i + 1) * run
++		var z1 := z_top - i * run
++		var gmax := -INF
++		var gmin := INF
++		for sx: float in [-0.5, 0.0, 0.5]:
++			for zz: float in [z0, z1]:
++				var gg := ground(sx * w, zz)
++				gmax = maxf(gmax, gg)
++				gmin = minf(gmin, gg)
++		if i >= n and y < gmax + 0.3:
++			break # long enough, and down on the ground
++		var want := maxf(y - riser, gmax + 0.12)
++		if want > y + 0.02:
++			break # the ground rises again
++		if y - want < 0.1 and i > 0:
++			want = y
++		y = minf(want, y)
++		ys.append(y)
++		lows.append(gmin)
++	var steps := ys.size()
++	var was := solid
++	solid = false
++	for i in steps:
++		var z0 := z_top - (i + 1) * run
++		var z1 := z_top - i * run + 0.3
++		var bottom := lows[i] - 0.7
++		var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.04, 0.04))
++		box(Transform3D(Basis.IDENTITY, Vector3(0.0, (ys[i] + bottom) * 0.5, (z0 + z1) * 0.5)), Vector3(w, ys[i] - bottom, z1 - z0), col, _growth(0.3), 0.06, 0.02)
++	solid = was
++	var foot := z_top - steps * run
++	# Cheek walls in runs of five treads, their tops following the stair.
++	var i0 := 0
++	while i0 < steps:
++		var i1 := mini(i0 + 4, steps - 1)
++		var za := z_top - (i1 + 1) * run
++		var zb := z_top - i0 * run + (0.3 if i0 == 0 else 0.0)
++		var ya := ys[i1] + 0.55
++		var yb := (ys[i0] if i0 > 0 else y_top) + 0.55
++		var low := INF
++		for k in range(i0, i1 + 1):
++			low = minf(low, lows[k])
++		for sx: float in [-1.0, 1.0]:
++			var xi := sx * w * 0.5
++			var xo := sx * (w * 0.5 + 0.6)
++			var p: Array = []
++			for c in 8:
++				var x := xo if c & 1 else xi
++				var z := zb if c & 4 else za
++				var yt := yb if c & 4 else ya
++				p.append(Vector3(x, yt if c & 2 else low - 0.8, z))
++			_hexa(p, (palette[rng.randi() % palette.size()] as Color), _growth(0.35))
++			var q: Array = []
++			for c in 8:
++				var x := sx * (w * 0.5 - 0.06) if not (c & 1) else sx * (w * 0.5 + 0.66)
++				var z := zb if c & 4 else za
++				var yt := yb if c & 4 else ya
++				q.append(Vector3(x, yt + (0.14 if c & 2 else -0.02), z))
++			_hexa(q, (palette[0] as Color).lightened(0.04), _growth(0.6))
++		i0 = i1 + 1
++	if steps > 0:
++		for sx: float in [-1.0, 1.0]:
++			var g := ground(sx * (w * 0.5 + 0.3), foot + 0.4)
++			box(Transform3D(Basis.IDENTITY, Vector3(sx * (w * 0.5 + 0.3), g + 0.5, foot + 0.4)), Vector3(0.9, 1.9, 0.9), palette[1], _growth(0.4), 0.1, 0.03)
++			box(Transform3D(Basis.IDENTITY, Vector3(sx * (w * 0.5 + 0.3), g + 1.5, foot + 0.4)), Vector3(1.1, 0.22, 1.1), palette[0], _growth(0.6), 0.06, 0.02)
++	# The ramp: through the treads' front edges, straight runs merged.
++	var pts: Array[Vector2] = [Vector2(z_top + 0.05, y_top + 0.04)] # (z, y)
++	for i in steps:
++		pts.append(Vector2(z_top - (i + 1) * run, ys[i]))
++	pts.append(Vector2(foot - 0.5, ground(0.0, foot - 0.5) - 0.02))
++	var simple: Array[Vector2] = [pts[0]]
++	for i in range(1, pts.size() - 1):
++		var prev: Vector2 = simple[simple.size() - 1]
++		var s0 := (pts[i].y - prev.y) / (pts[i].x - prev.x)
++		var s1 := (pts[i + 1].y - pts[i].y) / (pts[i + 1].x - pts[i].x)
++		if absf(s0 - s1) > 0.04:
++			simple.append(pts[i])
++	simple.append(pts[pts.size() - 1])
++	for i in simple.size() - 1:
++		var up_p: Vector2 = simple[i]
++		var dn: Vector2 = simple[i + 1]
++		_ramp_seg(Vector3(0.0, dn.y, dn.x), Vector3(0.0, up_p.y, up_p.x), w, 0.6 if i == simple.size() - 2 else 0.0)
++	return foot
++
++
++## A walkable slope (collision only) from `a` up to `b` (both in the x = 0
++## plane), `w` wide, its surface on the line, run on `ext` m past the foot
++## into the ground. Pieces of a stair meet at their ends with no lip (the
++## RuinBuilder ramp's foot would stand proud of a steeper piece below).
++func _ramp_seg(a: Vector3, b: Vector3, w: float, ext: float) -> void:
++	var dirv := (b - a).normalized()
++	var x := Vector3.RIGHT
++	var nrm := dirv.cross(x)
++	if nrm.y < 0.0:
++		nrm = -nrm
++		x = -x
++	var foot := a - dirv * ext
++	_collision_box(Transform3D(Basis(x, nrm, dirv), (foot + b) * 0.5 - nrm * 0.5), Vector3(w * 0.5, 0.5, foot.distance_to(b) * 0.5))
++
++
++## Flat paving (drawn only) over a rectangle at height y, in tiles about
++## `tile` m, each its own shade.
++func _paving(x0: float, x1: float, z0: float, z1: float, y: float, tile: float) -> void:
++	var nx := maxi(1, int(round((x1 - x0) / tile)))
++	var nz := maxi(1, int(round((z1 - z0) / tile)))
++	for i in nx:
++		for j in nz:
++			var xa := x0 + (x1 - x0) * i / nx
++			var xb := x0 + (x1 - x0) * (i + 1) / nx
++			var za := z0 + (z1 - z0) * j / nz
++			var zb := z0 + (z1 - z0) * (j + 1) / nz
++			var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.05, 0.05)).darkened(shade)
++			var m := _growth(0.15) * rng.randf()
++			col = col.lerp(MOSS, m * 0.4)
++			col.a = m
++			var yy := y + rng.randf_range(-0.01, 0.01)
++			_face4(Vector3(xa, yy, za), Vector3(xb, yy, za), Vector3(xb, yy, zb), Vector3(xa, yy, zb), col, col, col, col, Vector3((xa + xb) * 0.5, yy - 1.0, (za + zb) * 0.5))
++
++
++## A column standing at `p` (on the floor), `h` tall to the top of its
++## abacus, shaft radius `r`: a square plinth, a moulded base, a shaft with
++## entasis and a flared capital under a square abacus. Collision is a box.
++func _column(p: Vector3, h: float, r: float, yaw: float) -> void:
++	var basis := Basis(Vector3.UP, yaw)
++	box(Transform3D(basis, p + Vector3(0.0, 0.15, 0.0)), Vector3(r * 2.7, 0.3, r * 2.7), palette[rng.randi() % palette.size()], _growth(0.4), 0.05, 0.02)
++	var hs := h - 0.3 - 0.36 - 0.2 - 0.36
++	var prof := PackedVector2Array([Vector2(r + 0.14, 0.0), Vector2(r + 0.16, 0.07), Vector2(r + 0.13, 0.15), Vector2(r + 0.05, 0.18),
++		Vector2(r + 0.07, 0.24), Vector2(r + 0.02, 0.3), Vector2(r, 0.36), Vector2(r * 0.99, 0.36 + hs * 0.33),
++		Vector2(r * 0.95, 0.36 + hs * 0.66), Vector2(r * 0.87, 0.36 + hs), Vector2(r * 0.9, 0.4 + hs), Vector2(r * 0.87, 0.44 + hs),
++		Vector2(r * 1.02, 0.52 + hs), Vector2(r * 1.2, 0.62 + hs), Vector2(r * 1.32, 0.72 + hs), Vector2(0.0, 0.72 + hs)])
++	var col: Color = palette[rng.randi() % palette.size()]
++	var was := solid
++	_lathe(Transform3D(basis, p + Vector3(0.0, 0.3, 0.0)), prof, 16, col, _growth(0.35), false, 6)
++	box(Transform3D(basis, p + Vector3(0.0, h - 0.1, 0.0)), Vector3(r * 2.9, 0.2, r * 2.9), palette[rng.randi() % palette.size()], _growth(0.6), 0.04, 0.01)
++	solid = was
++	_collision_box(Transform3D(basis, p + Vector3(0.0, h * 0.5, 0.0)), Vector3(r * 0.95, h * 0.5, r * 0.95))
++
++
++## A column drum lying on the ground at (x, z), fallen long ago.
++func _fallen_drum(x: float, z: float, r: float, l: float) -> void:
++	var yaw := rng.randf() * TAU
++	var axis := Vector3(cos(yaw), 0.0, sin(yaw))
++	var g := minf(ground(x - axis.x * l * 0.5, z - axis.z * l * 0.5), ground(x + axis.x * l * 0.5, z + axis.z * l * 0.5))
++	# The drum's axis (the lathe's y) lies along `axis`.
++	var basis := Basis(Vector3.UP, axis, Vector3.UP.cross(axis).normalized())
++	var c := Vector3(x, g + r * 0.8, z) - axis * l * 0.5
++	var prof := PackedVector2Array([Vector2(0.0, 0.0), Vector2(r, 0.02), Vector2(r * 0.98, l - 0.02), Vector2(0.0, l)])
++	_lathe(Transform3D(basis, c), prof, 14, palette[rng.randi() % palette.size()], _growth(0.6), false, 6)
++	if solid:
++		_collision_box(Transform3D(basis, c + axis * l * 0.5), Vector3(r * 0.8, l * 0.5, r * 0.8))
++
++
++# --- Rotunda -----------------------------------------------------------------------
++
++## A tholos on a knoll: a ring of columns under an entablature ring and a
++## shallow dome with a lantern, on a round plinth of three steps, an altar
++## within. A broad stair climbs the knoll to it from -z, past column
++## drums and blocks fallen on the grass.
++func _rotunda() -> void:
++	palette = MARBLE
++	var rr: float = site.ring_r
++	var cols: int = site.columns
++	var ch: float = site.col_h
++	var r1: float = site.plinth_r
++	var r2 := r1 - 0.75
++	var r3 := r2 - 0.75
++	var sh := 0.36
++	var hi := -INF
++	var lo := INF
++	for k in 16:
++		var a := TAU * k / 16.0
++		for rad: float in [r1, r1 * 0.5]:
++			var g := ground(cos(a) * rad, sin(a) * rad)
++			hi = maxf(hi, g)
++			lo = minf(lo, g)
++	var y1 := hi + 0.3
++	var y2 := y1 + sh
++	var y3 := y2 + sh
++	var stair_w: float = 4.2 if rr < 4.4 else 4.8
++	_mark('The plinth: rings of curved ')
++	# The plinth: rings of curved blocks, the lower two cut away for the stair.
++	var tiers := [[r1, lo - 2.5, y1], [r2, y1 - 0.02, y2], [r3, y2 - 0.02, y3]]
++	for t in 3:
++		var rad: float = tiers[t][0]
++		var inner := rad - (1.3 if t == 2 else 1.0)
++		var n := int(ceil(TAU * rad / 1.25))
++		for k in n:
++			var a0 := TAU * k / n
++			var a1 := TAU * (k + 1) / n
++			var am := (a0 + a1) * 0.5
++			if t < 2 and sin(am) < 0.0 and absf(cos(am) * rad) < stair_w * 0.5 + 0.55:
++				continue
++			var p: Array = []
++			for i in 8:
++				var a := a1 if i & 1 else a0
++				var r := rad if i & 4 else inner
++				p.append(Vector3(cos(a) * r, tiers[t][2] if i & 2 else tiers[t][1], sin(a) * r))
++			var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.05, 0.03))
++			_hexa(p, col, _growth(0.45))
++	_mark('The floor inside the top rin')
++	# The floor inside the top ring, and a core below it.
++	var fl := PackedVector2Array([Vector2(r3 - 1.2, y3 - 0.03), Vector2(0.0, y3 - 0.03)])
++	_lathe(Transform3D(), fl, 24, (palette[0] as Color).darkened(0.05), _growth(0.3))
++	_disc_collision(Vector3(0.0, y3 - 0.03, 0.0), r3 - 1.0, 16)
++	var core := PackedVector2Array([Vector2(r3 - 1.1, lo - 2.5), Vector2(r3 - 1.1, y3 - 0.05)])
++	_lathe(Transform3D(), core, 16, (palette[3] as Color).darkened(0.3), 0.0)
++	_mark('Columns, the stair between t')
++	# Columns, the stair between two of them.
++	var col_r := 0.32 + 0.02 * (rr - 4.0)
++	for k in cols:
++		var a := -PI * 0.5 + (k + 0.5) * TAU / cols
++		var p := Vector3(cos(a) * rr, y3, sin(a) * rr)
++		_column(p, ch, col_r, -a)
++		if rng.randf() < 0.3 + 0.4 * wet:
++			ivy(p + Vector3(cos(a), 0.0, sin(a)) * (col_r + 0.1) + Vector3(0.0, ch - 0.3, 0.0), Vector3(cos(a), 0.0, sin(a)), rng.randf_range(1.5, 3.5))
++	_mark('The entablature ring: archit')
++	# The entablature ring: architrave, frieze, cornice.
++	var ye := y3 + ch
++	var ri := rr - 0.5
++	var ro := rr + 0.5
++	var ent := PackedVector2Array([Vector2(ri, ye), Vector2(ro, ye), Vector2(ro, ye + 0.5), Vector2(ro - 0.07, ye + 0.52),
++		Vector2(ro - 0.07, ye + 0.95), Vector2(ro + 0.08, ye + 1.0), Vector2(ro + 0.32, ye + 1.16), Vector2(ro + 0.34, ye + 1.3),
++		Vector2(ro + 0.08, ye + 1.34), Vector2(ri, ye + 1.34), Vector2(ri, ye)])
++	_lathe(Transform3D(), ent, 40, palette[2], _growth(0.4), false, 12)
++	_mark('The dome: a low attic, a sha')
++	# The dome: a low attic, a shallow cap, a lantern with a finial.
++	var yd := ye + 1.34
++	var rd := ro - 0.05
++	var hd := rd * 0.55
++	var dome := PackedVector2Array([Vector2(ro + 0.04, yd - 0.02), Vector2(rd, yd + 0.38), Vector2(rd - 0.12, yd + 0.45)])
++	for k in range(1, 9):
++		var th := PI * 0.5 * k / 9.0
++		dome.append(Vector2((rd - 0.12) * cos(th), yd + 0.45 + hd * sin(th)))
++	var rl := 0.55
++	var yl := yd + 0.45 + hd * sin(PI * 0.5 * 8.0 / 9.0)
++	var lantern := PackedVector2Array([Vector2(rl + 0.3, yl - 0.04), Vector2(rl, yl + 0.02), Vector2(rl, yl + 0.6), Vector2(rl + 0.12, yl + 0.66),
++		Vector2(rl * 0.8, yl + 0.8), Vector2(rl * 0.45, yl + 1.0), Vector2(0.12, yl + 1.12), Vector2(0.1, yl + 1.5),
++		Vector2(0.2, yl + 1.62), Vector2(0.0, yl + 1.8)])
++	_lathe(Transform3D(), dome, 36, palette[0], _growth(0.8), true, 12)
++	_lathe(Transform3D(), lantern, 16, palette[2], _growth(0.5), false, 6)
++	_mark('Its ceiling, seen from withi')
++	# Its ceiling, seen from within.
++	shade = 0.25
++	var ceil_prof := PackedVector2Array([Vector2(ri, ye + 1.0)])
++	for k in range(1, 8):
++		var th := PI * 0.5 * k / 7.0
++		ceil_prof.append(Vector2(ri * cos(th), ye + 1.0 + hd * 0.8 * sin(th)))
++	_lathe(Transform3D(), ceil_prof, 24, palette[3], 0.0, true, 0, true)
++	shade = 0.0
++	_mark('The altar within, offerings ')
++	# The altar within, offerings on it, and a glow.
++	var alt := PackedVector2Array([Vector2(0.62, y3), Vector2(0.62, y3 + 0.18), Vector2(0.46, y3 + 0.26), Vector2(0.4, y3 + 0.85),
++		Vector2(0.56, y3 + 0.95), Vector2(0.58, y3 + 1.05), Vector2(0.0, y3 + 1.05)])
++	_lathe(Transform3D(), alt, 16, palette[1], _growth(0.4), false)
++	_collision_box(Transform3D(Basis.IDENTITY, Vector3(0.0, y3 + 0.5, 0.0)), Vector3(0.5, 0.52, 0.5))
++	_offerings(Vector3(0.0, y3 + 1.05, 0.0), 0.35)
++	_glow(Vector3(0.0, y3 + 2.4, 0.0), TEAL, 7.0, 0.2)
++	_mark('The stair down the knoll.')
++	# The stair down the knoll.
++	var stair_len: float = site.stair_m
++	var foot := _hill_stair(stair_w, -r3 + 0.05, y3, stair_len + (r1 - r3), 0.6, 0.3)
++	_mark('Fallen stones on the grass a')
++	# Fallen stones on the grass along the way up: drums, blocks, boulders.
++	var span := absf(foot) - r1
++	for k in rng.randi_range(4, 6):
++		var sx := -1.0 if k % 2 == 0 else 1.0
++		var x := sx * rng.randf_range(stair_w * 0.5 + 1.8, stair_w * 0.5 + 7.0)
++		var z := -r1 - rng.randf_range(0.5, maxf(span, 3.0))
++		_fallen_drum(x, z, col_r * rng.randf_range(0.95, 1.05), rng.randf_range(0.8, 1.3))
++	for k in rng.randi_range(2, 3):
++		var a := rng.randf_range(-0.2, PI + 0.2) # round the back and sides
++		var x := cos(a) * (r1 + rng.randf_range(1.5, 4.0))
++		var z := sin(a) * (r1 + rng.randf_range(1.5, 4.0))
++		_fallen_drum(x, z, col_r, rng.randf_range(0.8, 1.2))
++	for k in rng.randi_range(3, 5):
++		var sx := -1.0 if rng.randf() < 0.5 else 1.0
++		var x := sx * rng.randf_range(stair_w * 0.5 + 1.5, stair_w * 0.5 + 9.0)
++		var z := -r1 - rng.randf_range(0.0, maxf(span + 2.0, 3.0))
++		var size := Vector3(rng.randf_range(0.8, 1.6), rng.randf_range(0.5, 0.8), rng.randf_range(0.7, 1.1))
++		var basis := Basis.from_euler(Vector3(rng.randf_range(-0.3, 0.3), rng.randf() * TAU, rng.randf_range(-0.3, 0.3)))
++		var col: Color = palette[rng.randi() % palette.size()]
++		if k < 2:
++			boulder(Vector3(x, ground(x, z) + size.y * 0.25, z), size * 0.6, basis, (STONES[rng.randi() % STONES.size()] as Color), _growth(0.7))
++		else:
++			box(Transform3D(basis, Vector3(x, ground(x, z) + size.y * 0.3, z)), size, col, _growth(rng.randf_range(0.4, 0.9)), 0.14, 0.08)
++	var cz := foot + 2.0
++	_camp_spot = Vector3(7.0, ground(7.0, cz), cz)
++
++
++## Offerings on an altar top at `c`: an urn or two and a glint of gold.
++func _offerings(c: Vector3, spread: float) -> void:
++	var was := solid
++	solid = false
++	var urn := PackedVector2Array([Vector2(0.08, 0.0), Vector2(0.15, 0.1), Vector2(0.16, 0.2), Vector2(0.09, 0.34), Vector2(0.11, 0.4), Vector2(0.0, 0.4)])
++	_lathe(Transform3D(Basis.IDENTITY, c + Vector3(rng.randf_range(-spread, spread), 0.0, rng.randf_range(-spread, spread))), urn, 10, CLAY, 0.0, true)
++	for k in 3:
++		box(Transform3D(Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), c + Vector3(rng.randf_range(-spread, spread), 0.02 + k * 0.03, rng.randf_range(-spread, spread))), Vector3(0.1, 0.025, 0.1), GOLD, 0.0, 0.01, 0.005)
++	solid = was
++
++
++# --- Chapel ---------------------------------------------------------------------
++
++## A field chapel: nave walls of coursed stone with quoins, three
++## round-headed windows a side between buttresses, a steep slate roof, the
++## front gable pierced by an arched door and a round window and topped by
++## a bell cote with its bell and a cross. Inside: a flagged floor, pews
++## either side of an aisle, an altar with candles and a glow. A straight
++## path runs out from the door, a wayside cross at its far end.
++func _chapel() -> void:
++	palette = STONES if site.style != "dry" else FIELDSTONE
++	var hw: float = site.half_w
++	var hl: float = site.half_l
++	var wh: float = site.wall_h
++	var t := 0.7
++	var gr := _ground_range(Vector2.ZERO, maxf(hw, hl))
++	var fy := gr.y + 0.35
++	var y0 := gr.x - 1.2
++	var pitch := deg_to_rad(52.0)
++	var eave := fy + wh
++	var over := 0.45
++	var rise := (hw + over) * tan(pitch)
++	var apex := eave - over * tan(pitch) + rise
++	_mark('The walls, walked round from')
++	# The walls, walked round from the front (outside on the right).
++	var fz := -hl + t * 0.5
++	var bz := hl - t * 0.5
++	var sx := hw - t * 0.5
++	var gable := [Vector2(0.0, eave), Vector2(hw, eave + hw * tan(pitch)), Vector2(2.0 * hw, eave)]
++	var door := hole(hw, 0.85, fy, fy + 2.15)
++	var rose := hole(hw, 0.55, 0.0, eave + 1.3, true)
++	_wall(Vector2(-hw, fz), Vector2(hw, fz), y0, gable, t, [door, rose], 0.55, 1.3, 0.25, fy, 0.35)
++	_voussoirs(Vector2(-hw, fz), Vector2(hw, fz), t, door, 0.38)
++	_voussoirs(Vector2(-hw, fz), Vector2(hw, fz), t, rose, 0.25, 0.07, 0.42, false)
++	var side_len := 2.0 * hl - 2.0 * t
++	var wins: Array = []
++	for k in 3:
++		wins.append(hole(side_len * (k + 0.5) / 3.0, 0.42, fy + 1.55, fy + 3.1))
++	var flat := [Vector2(0.0, eave), Vector2(side_len, eave)]
++	_wall(Vector2(sx, -hl + t), Vector2(sx, hl - t), y0, flat, t, wins, 0.55, 1.3, 0.25, fy, 0.35, false)
++	_wall(Vector2(-sx, hl - t), Vector2(-sx, -hl + t), y0, flat, t, wins, 0.55, 1.3, 0.25, fy, 0.35, false)
++	for w: Dictionary in wins:
++		_voussoirs(Vector2(sx, -hl + t), Vector2(sx, hl - t), t, w, 0.3, 0.07, 0.42, false)
++		_voussoirs(Vector2(-sx, hl - t), Vector2(-sx, -hl + t), t, w, 0.3, 0.07, 0.42, false)
++	var back_win := hole(hw, 0.4, fy + 2.2, fy + 3.6)
++	_wall(Vector2(hw, bz), Vector2(-hw, bz), y0, gable, t, [back_win], 0.55, 1.3, 0.25, fy, 0.35)
++	_voussoirs(Vector2(hw, bz), Vector2(-hw, bz), t, back_win, 0.3, 0.07, 0.42, false)
++	_mark('Quoins at the corners, a pli')
++	# Quoins at the corners, a plinth course and eaves courses.
++	for cx: float in [-1.0, 1.0]:
++		for cz: float in [-1.0, 1.0]:
++			var y := gr.x - 0.2
++			var k := 0
++			while y < eave - 0.3:
++				var along_x := k % 2 == 0
++				var lx := 0.95 if along_x else 0.5
++				var lz := 0.5 if along_x else 0.95
++				var c := Vector3(cx * (hw - lx * 0.5 + 0.05), y + 0.27, cz * (hl - lz * 0.5 + 0.05))
++				var p: Array = []
++				for i in 8:
++					p.append(c + Vector3((0.5 if i & 1 else -0.5) * (lx + 0.02), (0.27 if i & 2 else -0.27), (0.5 if i & 4 else -0.5) * (lz + 0.02)))
++				_hexa(p, (palette[rng.randi() % palette.size()] as Color).lightened(0.06), _growth(0.3), false)
++				y += 0.55
++				k += 1
++	for side: float in [-1.0, 1.0]:
++		box(Transform3D(Basis.IDENTITY, Vector3(side * (hw + 0.08), fy - 0.1, 0.0)), Vector3(0.3, 0.5, 2.0 * hl + 0.3), palette[1], _growth(0.5), 0.06, 0.02)
++		box(Transform3D(Basis.IDENTITY, Vector3(side * (hw + 0.1), eave - 0.12, 0.0)), Vector3(0.34, 0.26, 2.0 * hl + 0.2), palette[2], _growth(0.5), 0.05, 0.02)
++		# Front and back, the front's either side of the door.
++		for e: float in [-1.0, 1.0]:
++			box(Transform3D(Basis.IDENTITY, Vector3(e * (hw + 1.05) * 0.5, fy - 0.1, side * (hl + 0.08))), Vector3(hw - 0.75, 0.5, 0.3), palette[1], _growth(0.5), 0.06, 0.02)
++		if side > 0.0:
++			box(Transform3D(Basis.IDENTITY, Vector3(0.0, fy - 0.1, hl + 0.08)), Vector3(2.2, 0.5, 0.3), palette[1], _growth(0.5), 0.06, 0.02)
++		# Buttresses between the windows.
++		for k in 2:
++			var z := -hl + t + side_len * (k + 1) / 3.0
++			var g := ground(side * (hw + 0.5), z)
++			box(Transform3D(Basis.IDENTITY, Vector3(side * (hw + 0.45), (g - 0.5 + fy + 2.2) * 0.5, z)), Vector3(0.9, fy + 2.2 - g + 0.5, 0.75), palette[rng.randi() % palette.size()], _growth(0.4), 0.08, 0.03)
++			var b := Basis(Vector3(0, 0, 1), side * 0.55)
++			box(Transform3D(b, Vector3(side * (hw + 0.4), fy + 2.55, z)), Vector3(0.75, 0.9, 0.72), palette[rng.randi() % palette.size()], _growth(0.6), 0.06, 0.03)
++			box(Transform3D(Basis.IDENTITY, Vector3(side * (hw + 0.28), fy + 3.4, z)), Vector3(0.55, 1.6, 0.62), palette[rng.randi() % palette.size()], _growth(0.4), 0.06, 0.03)
++	_mark('The roof: slate courses on t')
++	# The roof: slate courses on the gables' slopes.
++	_gable_roof(0.0, apex, hw + over, -hl - 0.35, hl + 0.35, pitch, 6, SLATE)
++	_mark('The bell cote on the front g')
++	# The bell cote on the front gable: a pier of wall with an arched
++	# opening, a little gabled cap and a cross.
++	var cw := 1.2
++	var cb := apex - 1.6
++	var ct := apex + 2.2
++	var cote_h := hole(cw, 0.48, apex + 0.1, apex + 1.1)
++	var cote_top := [Vector2(0.0, ct), Vector2(cw, ct + 0.6), Vector2(2.0 * cw, ct)]
++	_mark('(A little thicker than the g')
++	# (A little thicker than the gable, so their faces don't fight.)
++	_wall(Vector2(-cw, fz), Vector2(cw, fz), cb, cote_top, t + 0.12, [cote_h], 0.55, 1.2, 0.3)
++	_voussoirs(Vector2(-cw, fz), Vector2(cw, fz), t + 0.12, cote_h, 0.24)
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, apex + 1.55, fz)), Vector3(1.1, 0.12, 0.12), OLD_WOOD, 0.0, 0.02, 0.01)
++	_bell(Vector3(0.0, apex + 1.5, fz), 0.3)
++	for s: float in [-1.0, 1.0]:
++		box(Transform3D(Basis(Vector3(0, 0, 1), -s * 0.46), Vector3(s * cw * 0.5, ct + 0.33, fz)), Vector3(cw * 1.2 + 0.3, 0.16, t + 0.3), SLATE[0], _growth(0.4), 0.04, 0.02)
++	_cross(Vector3(0.0, ct + 0.55, fz), 1.3, 0.16, palette[0])
++	_mark('Inside: a floor, pews, an al')
++	# Inside: a floor, pews, an altar, a door leaf ajar.
++	var ix := hw - t
++	var iz := hl - t
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, fy - 0.3, 0.0)), Vector3(2.0 * ix + 0.1, 0.6, 2.0 * iz + 0.1), palette[3], 0.0, 0.03, 0.01)
++	shade = 0.3
++	_paving(-ix, ix, -iz, iz, fy + 0.02, 0.9)
++	shade = 0.0
++	_door_steps(0.0, -hl - 0.05, fy, 1.9)
++	mat = WOOD_M
++	var hinge := Vector3(-0.8, fy, -hl + t)
++	var leaf := Basis(Vector3.UP, -1.4)
++	box(Transform3D(leaf, hinge + leaf * Vector3(0.82, 1.3, 0.05)), Vector3(1.6, 2.6, 0.1), DOOR_WOOD, 0.0, 0.02, 0.01)
++	var rows := int((2.0 * iz - 3.2) / 1.25)
++	for k in rows:
++		var z := -iz + 1.4 + k * 1.25
++		for s: float in [-1.0, 1.0]:
++			if rng.randf() < 0.15:
++				continue
++			var tilt := Basis.IDENTITY
++			var lift := 0.0
++			if rng.randf() < 0.15:
++				tilt = Basis(Vector3(1, 0, 0), -1.35)
++				lift = -0.2
++			var cx := s * (0.75 + (ix - 0.95) * 0.5)
++			var lw := ix - 0.95
++			var p := Vector3(cx, fy + 0.45 + lift, z)
++			_slab(Transform3D(tilt, p), Vector3(lw, 0.08, 0.42), OLD_WOOD)
++			_slab(Transform3D(tilt, p + tilt * Vector3(0.0, 0.3, 0.2)), Vector3(lw, 0.5, 0.06), OLD_WOOD)
++			for e: float in [-1.0, 1.0]:
++				_slab(Transform3D(tilt, p + tilt * Vector3(e * (lw * 0.5 - 0.06), -0.22, 0.0)), Vector3(0.07, 0.45, 0.42), OLD_WOOD.darkened(0.1))
++	mat = STONE_M
++	var az := iz - 1.0
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, fy + 0.5, az)), Vector3(1.9, 1.0, 0.8), palette[0], 0.0, 0.05, 0.02)
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, fy + 1.05, az)), Vector3(2.1, 0.1, 0.95), palette[2], 0.0, 0.03, 0.01)
++	var was := solid
++	solid = false
++	for s: float in [-1.0, 1.0]:
++		box(Transform3D(Basis.IDENTITY, Vector3(s * 0.7, fy + 1.3, az)), Vector3(0.08, 0.4, 0.08), GOLD, 0.0, 0.01, 0.005)
++		box(Transform3D(Basis.IDENTITY, Vector3(s * 0.7, fy + 1.55, az)), Vector3(0.05, 0.12, 0.05), BONE, 0.0, 0.01, 0.005)
++	solid = was
++	_cross(Vector3(0.0, fy + 1.9, hl - t - 0.1), 1.5, 0.12, GOLD.darkened(0.35))
++	_glow(Vector3(0.0, fy + 2.2, az - 0.6), LAMP, 8.0, 0.26)
++	_glow(Vector3(0.0, fy + 2.5, -iz * 0.3), TEAL, 6.0, 0.12)
++	var zs := -iz + ix * 0.8
++	while zs < iz:
++		_shelters.append([Vector3(0.0, fy, zs), ix, wh])
++		zs += ix * 1.2
++	_mark('The path out from the door, ')
++	# The path out from the door, and a wayside cross at its end.
++	_path(-hl - 2.0, -hl - float(site.path_m))
++	var ez := -hl - float(site.path_m)
++	var eg := ground(1.6, ez)
++	box(Transform3D(Basis.IDENTITY, Vector3(1.6, eg + 0.2, ez)), Vector3(0.9, 0.7, 0.9), palette[1], _growth(0.4), 0.08, 0.04)
++	_cross(Vector3(1.6, eg + 0.5, ez), 2.2, 0.26, palette[0])
++	_camp_spot = Vector3(hw + 5.0, ground(hw + 5.0, -hl + 1.0), -hl + 1.0)
++
++
++## A straight earth path down the middle toward -z from z0 to z1: a strip
++## of trodden earth following the ground, with flagstones set in it.
++func _path(z0: float, z1: float) -> void:
++	var earth := EARTH.lerp(TerrainChunk._biome_blend(map, up), 0.35)
++	earth.a = 0.0
++	var hw := 0.95
++	var n := maxi(2, int((z0 - z1) / 1.5))
++	var prev: Array = []
++	mat = HIDE_M
++	for i in n + 1:
++		var z := lerpf(z0, z1, float(i) / n)
++		var wob := sin(z * 0.37) * 0.12
++		var row: Array = []
++		for k in 3:
++			var x := (k - 1) * hw + wob + (rng.randf_range(-0.12, 0.12) if k != 1 else 0.0)
++			row.append(Vector3(x, ground(x, z) + 0.1, z))
++		if not prev.is_empty():
++			for k in 2:
++				var c := earth.lightened(rng.randf_range(-0.04, 0.04))
++				_face4(prev[k], prev[k + 1], row[k + 1], row[k], c, c, c, c, (prev[k] + row[k + 1]) * 0.5 - Vector3(0, 1, 0))
++		prev = row
++	mat = STONE_M
++	var was := solid
++	solid = false
++	var z := z0 - 0.4
++	while z > z1:
++		if rng.randf() < 0.7:
++			var x := rng.randf_range(-0.35, 0.35) + sin(z * 0.37) * 0.12
++			var sz := Vector3(rng.randf_range(0.6, 0.9), 0.14, rng.randf_range(0.5, 0.7))
++			var yaw := rng.randf_range(-0.3, 0.3)
++			var g := maxf(maxf(ground(x - 0.4, z), ground(x + 0.4, z)), maxf(ground(x, z - 0.3), ground(x, z + 0.3)))
++			box(Transform3D(Basis(Vector3.UP, yaw), Vector3(x, g + 0.08, z)), sz, (palette[rng.randi() % palette.size()] as Color).lightened(0.05), _growth(0.5), 0.05, 0.03)
++		z -= rng.randf_range(0.8, 1.2)
++	solid = was
++
++
++# --- Mission --------------------------------------------------------------------
++
++## A desert mission on a terrace: a facade between two bell towers (each
++## a shaft, an open belfry with a bell, a cornice, an octagonal drum and a
++## dome with a lantern and a cross), a curved gable over the arched door
++## with a round window, a bell in an arch in the gable and a cross on top;
++## behind it the nave, buttressed, under a low tiled roof. The terrace has
++## a parapet and a grand stair down the rise in front; a cross stands in
++## the forecourt. Inside: a paved floor, benches, an altar and a glow.
++func _mission() -> void:
++	palette = SANDSTONE
++	var hw: float = site.half_w
++	var hl: float = site.half_l
++	var tw: float = site.tower
++	var front: float = hl + float(site.terrace_front)
++	var tx := hw + tw + 3.0
++	var back := hl + 2.5
++	_mark('The terrace: its top a littl')
++	# The terrace: its top a little over the highest ground under it.
++	var hi := -INF
++	var lo := INF
++	for i in 7:
++		for j in 7:
++			var g := ground(-tx + 2.0 * tx * i / 6.0, -front + (front + back) * j / 6.0)
++			hi = maxf(hi, g)
++			lo = minf(lo, g)
++	var ty := hi + 0.6
++	var y0 := lo - 2.0
++	var stair_w := 6.0
++	var par := ty + 0.75
++	var gap := hole(tx, stair_w * 0.5, ty, ty + 20.0)
++	var edge := func(u_len: float) -> Array:
++		return [Vector2(0.0, par), Vector2(u_len, par)]
++	_mark('Each wall runs on half its t')
++	# Each wall runs on half its thickness past the corners, so they close.
++	var ext := 0.4
++	gap.u += ext
++	_wall(Vector2(-tx - ext, -front), Vector2(tx + ext, -front), y0, edge.call(2.0 * tx + 2.0 * ext), 0.8, [gap], 0.8, 1.8, 0.2, ty, 0.0, false)
++	_wall(Vector2(tx, -front - ext), Vector2(tx, back + ext), y0, edge.call(front + back + 2.0 * ext), 0.8, [], 0.8, 1.8, 0.2, ty, 0.0, false)
++	_wall(Vector2(tx + ext, back), Vector2(-tx - ext, back), y0, edge.call(2.0 * tx + 2.0 * ext), 0.8, [], 0.8, 1.8, 0.2, ty, 0.0, false)
++	_wall(Vector2(-tx, back + ext), Vector2(-tx, -front - ext), y0, edge.call(front + back + 2.0 * ext), 0.8, [], 0.8, 1.8, 0.2, ty, 0.0, false)
++	for cx: float in [-1.0, 1.0]:
++		for cz: float in [-front, back]:
++			box(Transform3D(Basis.IDENTITY, Vector3(cx * tx, par + 0.2, cz)), Vector3(1.3, 0.5, 1.3), palette[0], _growth(0.3), 0.08, 0.03)
++	for cx: float in [-1.0, 1.0]:
++		box(Transform3D(Basis.IDENTITY, Vector3(cx * (stair_w * 0.5 + 0.4), par + 0.45, -front)), Vector3(1.0, 1.0, 1.0), palette[0], _growth(0.3), 0.08, 0.03)
++		_lathe(Transform3D(Basis.IDENTITY, Vector3(cx * (stair_w * 0.5 + 0.4), par + 0.95, -front)), PackedVector2Array([Vector2(0.38, 0.0), Vector2(0.4, 0.2), Vector2(0.28, 0.45), Vector2(0.1, 0.62), Vector2(0.0, 0.66)]), 12, palette[2], _growth(0.3), true)
++	var inset := 0.4
++	_paving(-tx + inset, tx - inset, -front + inset, back - inset, ty, 2.2)
++	var was := solid
++	solid = true
++	_collision_box(Transform3D(Basis.IDENTITY, Vector3(0.0, ty - 0.5, (back - front) * 0.5)), Vector3(tx, 0.5, (front + back) * 0.5))
++	_mark('The facade: a curved gable b')
++	# The facade: a curved gable between the towers.
++	var t := 1.2
++	var wh := rng.randf_range(7.2, 8.2)
++	var fz := -hl + t * 0.5
++	var yf := ty + wh
++	var gh := rng.randf_range(3.2, 3.8)
++	var tops: Array = []
++	var fw := 2.0 * hw
++	for k in 17:
++		var u := fw * k / 16.0
++		var q := 1.0 - absf(u - hw) / hw # 0 at the edges, 1 in the middle
++		var s := 0.32 * smoothstep(0.0, 0.28, q) + 0.68 * smoothstep(0.42, 0.9, q)
++		tops.append(Vector2(u, yf + gh * s))
++	var door := hole(hw, 1.25, ty, ty + 3.0)
++	var rose := hole(hw, 0.7, 0.0, ty + 5.9, true)
++	var belfry := hole(hw, 0.5, yf + 0.5, yf + 1.5)
++	_wall(Vector2(-hw, fz), Vector2(hw, fz), ty - 1.0, tops, t, [door, rose, belfry], 0.8, 1.8, 0.15, ty, 0.35, false)
++	_voussoirs(Vector2(-hw, fz), Vector2(hw, fz), t, door, 0.45, 0.1)
++	_voussoirs(Vector2(-hw, fz), Vector2(hw, fz), t, rose, 0.3, 0.07, 0.5, false)
++	_voussoirs(Vector2(-hw, fz), Vector2(hw, fz), t, belfry, 0.25)
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + 1.6, fz)), Vector3(0.9, 0.1, 0.1), OLD_WOOD, 0.0, 0.02, 0.01)
++	_bell(Vector3(0.0, yf + 1.55, fz), 0.3)
++	_mark("The doorway's frame: pilaste")
++	# The doorway's frame: pilasters, an entablature over the arch.
++	for s: float in [-1.0, 1.0]:
++		var x := s * 1.95
++		box(Transform3D(Basis.IDENTITY, Vector3(x, ty + 0.2, fz - t * 0.5 - 0.1)), Vector3(0.75, 0.4, 0.5), palette[1], _growth(0.3), 0.05, 0.02)
++		box(Transform3D(Basis.IDENTITY, Vector3(x, ty + 2.35, fz - t * 0.5 - 0.08)), Vector3(0.55, 4.0, 0.36), palette[2], _growth(0.2), 0.05, 0.02)
++		box(Transform3D(Basis.IDENTITY, Vector3(x, ty + 4.45, fz - t * 0.5 - 0.1)), Vector3(0.7, 0.25, 0.46), palette[0], _growth(0.4), 0.04, 0.02)
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, ty + 4.72, fz - t * 0.5 - 0.12)), Vector3(4.8, 0.3, 0.5), palette[0], _growth(0.5), 0.05, 0.02)
++	_mark('String course where the gabl')
++	# String course where the gable starts, a coping along its curve, and
++	# the cross on top.
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, yf + 0.1, fz)), Vector3(fw + 0.1, 0.28, t + 0.34), palette[0], _growth(0.5), 0.06, 0.02)
++	for k in 16:
++		var ta: Vector2 = tops[k]
++		var tb: Vector2 = tops[k + 1]
++		var mid := (ta + tb) * 0.5
++		var ang := atan2(tb.y - ta.y, tb.x - ta.x)
++		box(Transform3D(Basis(Vector3(0, 0, 1), ang), Vector3(-hw + mid.x, mid.y + 0.08, fz)), Vector3(ta.distance_to(tb) + 0.12, 0.2, t + 0.22), palette[0], _growth(0.6), 0.04, 0.01)
++	_cross(Vector3(0.0, yf + gh + 0.12, fz), 2.0, 0.24, palette[0])
++	mat = WOOD_M
++	for s: float in [-1.0, 1.0]:
++		var hinge := Vector3(s * 1.25, ty, -hl + t)
++		var leaf := Basis(Vector3.UP, s * 1.3)
++		box(Transform3D(leaf, hinge + leaf * Vector3(-s * 0.62, 1.6, 0.05)), Vector3(1.2, 3.2, 0.12), DOOR_WOOD, 0.0, 0.02, 0.01)
++	mat = STONE_M
++	_mark('The towers.')
++	# The towers.
++	for s: float in [-1.0, 1.0]:
++		_bell_tower(Vector3(s * (hw + tw * 0.5 - 0.2), ty, -hl + tw * 0.5 - 0.7), tw, wh + 1.2)
++	_mark('The nave behind.')
++	# The nave behind.
++	var nh := wh - 1.2
++	var side_len := 2.0 * hl - 2.0 * t
++	var wins: Array = []
++	for k in 3:
++		wins.append(hole(side_len * (k + 0.5) / 3.0 + 0.4, 0.45, ty + nh - 3.0, ty + nh - 1.9))
++	var sx := hw - t * 0.5
++	var flat := [Vector2(0.0, ty + nh), Vector2(side_len, ty + nh)]
++	_wall(Vector2(sx, -hl + t), Vector2(sx, hl - t), ty - 1.0, flat, t, wins, 0.8, 1.8, 0.15, ty, 0.35, false)
++	_wall(Vector2(-sx, hl - t), Vector2(-sx, -hl + t), ty - 1.0, flat, t, wins, 0.8, 1.8, 0.15, ty, 0.35, false)
++	for w: Dictionary in wins:
++		_voussoirs(Vector2(sx, -hl + t), Vector2(sx, hl - t), t, w, 0.3, 0.07, 0.42, false)
++		_voussoirs(Vector2(-sx, hl - t), Vector2(-sx, -hl + t), t, w, 0.3, 0.07, 0.42, false)
++	var pitch := deg_to_rad(20.0)
++	var rgab := [Vector2(0.0, ty + nh), Vector2(hw, ty + nh + hw * tan(pitch)), Vector2(2.0 * hw, ty + nh)]
++	var bwin := hole(hw, 0.45, ty + nh - 2.6, ty + nh - 1.5)
++	_wall(Vector2(hw, hl - t * 0.5), Vector2(-hw, hl - t * 0.5), ty - 1.0, rgab, t, [bwin], 0.8, 1.8, 0.15, ty, 0.35)
++	_voussoirs(Vector2(hw, hl - t * 0.5), Vector2(-hw, hl - t * 0.5), t, bwin, 0.3, 0.07, 0.42, false)
++	for side: float in [-1.0, 1.0]:
++		for k in 2:
++			var z := -hl + t + side_len * (k + 1) / 3.0 + 0.4
++			box(Transform3D(Basis.IDENTITY, Vector3(side * (hw + 0.5), ty + (nh - 1.0) * 0.5 - 0.3, z)), Vector3(1.0, nh - 0.4, 1.0), palette[rng.randi() % palette.size()], _growth(0.3), 0.08, 0.03)
++			box(Transform3D(Basis(Vector3(0, 0, 1), side * 0.6), Vector3(side * (hw + 0.42), ty + nh - 0.8, z)), Vector3(0.9, 1.1, 0.95), palette[rng.randi() % palette.size()], _growth(0.5), 0.06, 0.03)
++		box(Transform3D(Basis.IDENTITY, Vector3(side * (hw + 0.08), ty + nh - 0.12, 0.8)), Vector3(0.3, 0.26, 2.0 * hl - 1.4), palette[0], _growth(0.4), 0.05, 0.02)
++	_gable_roof(0.0, ty + nh + (hw + 0.4) * tan(pitch) - 0.4 * tan(pitch), hw + 0.4, -hl + t + 0.1, hl + 0.3, pitch, 4, TERRACOTTA)
++	solid = was
++	_mark('Inside: benches, the altar, ')
++	# Inside: benches, the altar, candles, a glow.
++	var ix := hw - t
++	shade = 0.25
++	mat = WOOD_M
++	var z := -hl + t + 2.2
++	while z < hl - 4.2:
++		for s: float in [-1.0, 1.0]:
++			if rng.randf() < 0.2:
++				continue
++			var lw := ix - 1.1
++			var p := Vector3(s * (0.8 + lw * 0.5), ty + 0.45, z)
++			_slab(Transform3D(Basis.IDENTITY, p), Vector3(lw, 0.1, 0.45), OLD_WOOD)
++			for e: float in [-1.0, 1.0]:
++				_slab(Transform3D(Basis.IDENTITY, p + Vector3(e * (lw * 0.5 - 0.1), -0.23, 0.0)), Vector3(0.1, 0.45, 0.4), OLD_WOOD.darkened(0.1))
++		z += 1.4
++	mat = STONE_M
++	var az := hl - t - 1.6
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, ty + 0.25, az + 0.3)), Vector3(3.6, 0.5, 2.4), palette[0], 0.0, 0.05, 0.02)
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, ty + 1.0, az + 0.4)), Vector3(2.0, 1.0, 0.8), palette[2], 0.0, 0.05, 0.02)
++	shade = 0.0
++	solid = false
++	for s: float in [-1.0, 0.0, 1.0]:
++		box(Transform3D(Basis.IDENTITY, Vector3(s * 0.7, ty + 1.7, az + 0.4)), Vector3(0.08, 0.4, 0.08), GOLD, 0.0, 0.01, 0.005)
++		box(Transform3D(Basis.IDENTITY, Vector3(s * 0.7, ty + 1.96, az + 0.4)), Vector3(0.05, 0.12, 0.05), BONE, 0.0, 0.01, 0.005)
++	solid = true
++	_cross(Vector3(0.0, ty + 2.3, hl - t - 0.15), 2.0, 0.14, GOLD.darkened(0.35))
++	_glow(Vector3(0.0, ty + 3.0, az - 0.8), LAMP, 10.0, 0.3)
++	_glow(Vector3(0.0, ty + 3.0, -hl + 3.0), TEAL, 7.0, 0.12)
++	var zs := -hl + t + ix * 0.8
++	while zs < hl - t:
++		_shelters.append([Vector3(0.0, ty, zs), ix, nh])
++		zs += ix * 1.2
++	_mark("The forecourt's cross on a s")
++	# The forecourt's cross on a stepped base.
++	var fcz := -hl - float(site.terrace_front) * 0.55
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, ty + 0.2, fcz)), Vector3(1.8, 0.4, 1.8), palette[1], _growth(0.3), 0.06, 0.02)
++	box(Transform3D(Basis.IDENTITY, Vector3(0.0, ty + 0.6, fcz)), Vector3(1.2, 0.4, 1.2), palette[0], _growth(0.3), 0.06, 0.02)
++	_cross(Vector3(0.0, ty + 0.8, fcz), 2.6, 0.26, palette[2])
++	_mark('The grand stair down the ris')
++	# The grand stair down the rise.
++	_hill_stair(stair_w, -front + 0.4, ty, float(site.stair_m) + 0.4, 0.62, 0.3)
++	# Blocks fallen from the parapet at the terrace's foot.
++	for k in rng.randi_range(3, 5):
++		var fx := -1.0 if rng.randf() < 0.5 else 1.0
++		var x := fx * (tx + rng.randf_range(1.0, 3.5))
++		var zz := rng.randf_range(-front, back)
++		box(Transform3D(Basis.from_euler(Vector3(rng.randf_range(-0.3, 0.3), rng.randf() * TAU, rng.randf_range(-0.3, 0.3))), Vector3(x, ground(x, zz) + 0.2, zz)),
++			Vector3(rng.randf_range(0.8, 1.4), 0.6, rng.randf_range(0.6, 0.9)), palette[rng.randi() % palette.size()], _growth(0.3), 0.12, 0.06)
++	_camp_spot = Vector3(tx - 3.0, ty, -hl - float(site.terrace_front) * 0.5)
++
++
++## A bell tower of side `s` standing on `base` (its foot on the terrace):
++## a shaft `h` tall with a string course, an open belfry with an arch each
++## side and a bell, a cornice, an octagonal drum, a dome with a lantern and
++## a cross.
++func _bell_tower(base: Vector3, s: float, h: float) -> void:
++	var hs := s * 0.5
++	var y0 := base.y - 1.0
++	var yb := base.y + h
++	var c2 := Vector2(base.x, base.z)
++	var sq := [c2 + Vector2(-hs, -hs), c2 + Vector2(hs, -hs), c2 + Vector2(hs, hs), c2 + Vector2(-hs, hs)]
++	_mark('The shaft: four faces round ')
++	# The shaft: four faces round a solid core (collision a box).
++	var was := solid
++	for i in 4:
++		var dv: Vector2 = ((sq[(i + 1) % 4] as Vector2) - (sq[i] as Vector2)).normalized() * 0.45
++		var a: Vector2 = (sq[i] as Vector2) - dv
++		var b: Vector2 = (sq[(i + 1) % 4] as Vector2) + dv
++		var tl := a.distance_to(b)
++		var holes: Array = []
++		if i == 0:
++			holes.append(hole(tl * 0.5, 0.35, base.y + h * 0.55, base.y + h * 0.55 + 0.8))
++		_wall(a, b, y0, [Vector2(0.0, yb), Vector2(tl, yb)], 0.9, holes, 0.0, 1.5, 0.15, yb - 0.5, 0.4, false)
++		for hh: Dictionary in holes:
++			_voussoirs(a, b, 0.9, hh, 0.22, 0.07, 0.42, false)
++	box(Transform3D(Basis.IDENTITY, Vector3(base.x, base.y + h * 0.45, base.z)), Vector3(s + 0.28, 0.3, s + 0.28), palette[0], _growth(0.5), 0.05, 0.02)
++	box(Transform3D(Basis.IDENTITY, Vector3(base.x, yb + 0.12, base.z)), Vector3(s + 0.4, 0.3, s + 0.4), palette[0], _growth(0.5), 0.06, 0.02)
++	_mark('The belfry: four faces each ')
++	# The belfry: four faces each with an arch, a bell within.
++	var bh := 3.3
++	var bt := yb + 0.25 + bh
++	for i in 4:
++		var a0: Vector2 = (sq[i] as Vector2).lerp(c2, 0.08)
++		var b0: Vector2 = (sq[(i + 1) % 4] as Vector2).lerp(c2, 0.08)
++		var dv := (b0 - a0).normalized() * 0.275
++		var a := a0 - dv
++		var b := b0 + dv
++		var tl := a.distance_to(b)
++		var arch := hole(tl * 0.5, tl * 0.25, yb + 0.6, yb + 0.6 + 1.4)
++		_wall(a, b, yb + 0.2, [Vector2(0.0, bt), Vector2(tl, bt)], 0.55, [arch], 0.8, 1.8, 0.2, -INF, 0.2, false)
++		_voussoirs(a, b, 0.55, arch, 0.22, 0.07, 0.42, false)
++	box(Transform3D(Basis.IDENTITY, Vector3(base.x, bt - 0.4, base.z)), Vector3(s * 0.7, 0.14, 0.14), OLD_WOOD, 0.0, 0.02, 0.01)
++	_bell(Vector3(base.x, bt - 0.45, base.z), 0.42)
++	_mark('The cornice, the drum, the d')
++	# The cornice, the drum, the dome, the lantern, the cross.
++	box(Transform3D(Basis.IDENTITY, Vector3(base.x, bt + 0.14, base.z)), Vector3(s + 0.5, 0.28, s + 0.5), palette[0], _growth(0.6), 0.06, 0.02)
++	var r := s * 0.4
++	var prof := PackedVector2Array([Vector2(r + 0.1, 0.0), Vector2(r, 0.1), Vector2(r, 0.75), Vector2(r + 0.14, 0.82), Vector2(r + 0.1, 0.92)])
++	for k in range(0, 8):
++		var th := PI * 0.5 * k / 8.0
++		prof.append(Vector2(r * cos(th), 0.92 + r * 0.95 * sin(th)))
++	var ld := 0.92 + r * 0.95
++	prof.append_array(PackedVector2Array([Vector2(0.28, ld), Vector2(0.28, ld + 0.5), Vector2(0.36, ld + 0.55), Vector2(0.0, ld + 0.72)]))
++	_lathe(Transform3D(Basis.IDENTITY, Vector3(base.x, bt + 0.28, base.z)), prof, 8, palette[2], _growth(0.3), false, 0)
++	_mark('The dome proper is smooth: r')
++	# The dome proper is smooth: redo it at 20 sides above the drum.
++	var dome := PackedVector2Array()
++	for k in range(0, 9):
++		var th := PI * 0.5 * k / 8.0
++		dome.append(Vector2((r + 0.02) * cos(th), 0.92 + r * 0.95 * sin(th) + 0.02))
++	_lathe(Transform3D(Basis.IDENTITY, Vector3(base.x, bt + 0.28, base.z)), dome, 20, (palette[0] as Color).lightened(0.05), _growth(0.4), true, 8)
++	_cross(Vector3(base.x, bt + 0.28 + ld + 0.7, base.z), 1.3, 0.14, palette[0])
++	solid = was
++	_collision_box(Transform3D(Basis.IDENTITY, Vector3(base.x, (y0 + bt) * 0.5, base.z)), Vector3(hs, (bt - y0) * 0.5, hs))
++
++
++# --- Bridge ---------------------------------------------------------------------
++
++## A stone bridge across the river (along local x; the water runs along
++## z): round arches on piers with cutwaters, the largest in the middle
++## and the deck humped over them, a string course, parapets with coping,
++## and approach ramps down (or up) to the banks. The arch rings are wedge
++## voussoirs; the piers run down past the river bed.
++func _bridge() -> void:
++	match site.style:
++		"desert":
++			palette = SANDSTONE
++		_:
++			palette = STONES
++	var w: float = site.river_w
++	var span: float = site.span_m
++	var n := 3 if w < 16.0 else (5 if w < 30.0 else 7)
++	var mid := n / 2
++	var f := 0.78
++	var pw := clampf(span / (n * 5.5), 1.8, 3.2)
++	var fsum := 0.0
++	for i in n:
++		fsum += pow(f, absf(i - mid))
++	var s0 := clampf((span - (n - 1) * pw) / fsum, 5.0, 18.0)
++	var spans: Array[float] = []
++	var total := (n - 1) * pw
++	for i in n:
++		spans.append(s0 * pow(f, absf(i - mid)))
++		total += spans[i]
++	var xa := -total * 0.5
++	var xb := total * 0.5
++	var gl := ground(xa - 1.0, 0.0)
++	var gr := ground(xb + 1.0, 0.0)
++	_mark("(The water's levels are elev")
++	# (The water's levels are elevations; the builder works from base_e.)
++	var lv: float = float(site.level) - base_e
++	var bed: float = float(site.bed) - base_e
++	var r_end := spans[0] * 0.5
++	var spring := maxf(lv + 1.0, maxf(gl, gr) - 0.6 - r_end - 1.1)
++	var y0: float = minf(bed - 4.0, minf(gl, gr) - 8.0)
++	_mark('The deck line: over each cro')
++	# The deck line: over each crown, then out along approach ramps.
++	var crowns: Array[Vector2] = []
++	var x := xa
++	for i in n:
++		crowns.append(Vector2(x + spans[i] * 0.5, spring + spans[i] * 0.5 + 1.15))
++		x += spans[i] + pw
++	var deck: Array[Vector2] = []
++	var ends: Array[Vector2] = [] # the approach ramps' far ends
++	for s: float in [-1.0, 1.0]:
++		var xe := xb if s > 0.0 else xa
++		var ye: float = crowns[n - 1].y if s > 0.0 else crowns[0].y
++		var d := 1.0
++		var yend := ye
++		while d < 16.0:
++			var g := ground(xe + s * d, 0.0)
++			yend = ye + clampf(g - ye, -0.22 * d, 0.22 * d)
++			if absf(yend - g) < 0.12:
++				break
++			d += 0.5
++		ends.append(Vector2(xe + s * d, yend))
++	deck.append(ends[0])
++	deck.append(Vector2(xa, crowns[0].y))
++	deck.append_array(crowns)
++	deck.append(Vector2(xb, crowns[n - 1].y))
++	deck.append(ends[1])
++	var x0 := deck[0].x
++	var tops: Array = []
++	for p in deck:
++		tops.append(Vector2(p.x - x0, p.y))
++	var dw := 4.4
++	var holes: Array = []
++	x = xa
++	for i in n:
++		holes.append(hole(x + spans[i] * 0.5 - x0, spans[i] * 0.5, y0 - 1.0, spring))
++		x += spans[i] + pw
++	var a := Vector2(x0, 0.0)
++	var b := Vector2(deck[deck.size() - 1].x, 0.0)
++	_wall(a, b, y0, tops, dw, holes, 0.9, 1.8, 0.25)
++	var was := solid
++	for hh: Dictionary in holes:
++		_voussoirs(a, b, dw, hh, 0.55, 0.1, 0.8)
++	_mark('Cutwaters on the piers, poin')
++	# Cutwaters on the piers, pointed upstream and down, capped.
++	x = xa
++	for i in n - 1:
++		x += spans[i]
++		var pc := x + pw * 0.5
++		for sz: float in [-1.0, 1.0]:
++			var zi := sz * (dw * 0.5 - 0.05)
++			var zo := sz * (dw * 0.5 + pw * 0.75)
++			var yt := spring + 0.4
++			var p: Array = []
++			for c in 8:
++				var px := pc + (0.5 if c & 1 else -0.5) * pw * (0.0 if c & 4 else 1.0)
++				p.append(Vector3(px, yt if c & 2 else y0, zo if c & 4 else zi))
++			_hexa(p, palette[rng.randi() % palette.size()], _growth(0.3))
++			var q: Array = []
++			for c in 8:
++				var px := pc + (0.5 if c & 1 else -0.5) * pw * (0.0 if c & 4 else 1.0) * (0.15 if c & 2 else 1.02)
++				var pz := (zo + sz * 0.02 if c & 4 else zi) if not (c & 2) else lerpf(zi, zo, 0.3)
++				q.append(Vector3(px, yt + (1.1 if c & 2 else 0.0), pz))
++			_hexa(q, palette[0], _growth(0.6))
++		x += pw
++	_mark('String course, parapets and ')
++	# String course, parapets and coping along the deck, in stones that
++	# follow its slope; a gap here and there, the stones fallen.
++	for sz: float in [-1.0, 1.0]:
++		for k in deck.size() - 1:
++			var pa := deck[k]
++			var pb := deck[k + 1]
++			var seg := pa.distance_to(pb)
++			var m := maxi(1, int(round(seg / 2.4)))
++			for j in m:
++				var u0 := float(j) / m
++				var u1 := float(j + 1) / m
++				var qa := pa.lerp(pb, u0)
++				var qb := pa.lerp(pb, u1)
++				_slope_stone(qa, qb, qa.y - 0.55, qa.y - 0.2, qb.y - 0.55, qb.y - 0.2, sz * (dw * 0.5 - 0.1), sz * (dw * 0.5 + 0.14), palette[0], 0.3, false)
++				if rng.randf() < 0.05 and k > 0 and k < deck.size() - 2:
++					continue
++				_slope_stone(qa, qb, qa.y - 0.05, qa.y + 0.85, qb.y - 0.05, qb.y + 0.85, sz * (dw * 0.5 - 0.5), sz * (dw * 0.5), palette[rng.randi() % palette.size()], 0.3, true)
++				_slope_stone(qa, qb, qa.y + 0.85, qa.y + 1.05, qb.y + 0.85, qb.y + 1.05, sz * (dw * 0.5 - 0.58), sz * (dw * 0.5 + 0.06), (palette[0] as Color).lightened(0.05), 0.7, true)
++				if rng.randf() < 0.1 + 0.25 * wet:
++					ivy(Vector3((qa.x + qb.x) * 0.5, (qa.y + qb.y) * 0.5 + 0.9, sz * (dw * 0.5 + 0.1)), Vector3(0, 0, sz), rng.randf_range(1.5, 4.0))
++	solid = was
++	_mark('Paving slabs worn into the d')
++	# Paving slabs worn into the deck (drawn only).
++	solid = false
++	for k in deck.size() - 1:
++		var pa := deck[k]
++		var pb := deck[k + 1]
++		var m := maxi(1, int(round(pa.distance_to(pb) / 1.1)))
++		for j in m:
++			var qa := pa.lerp(pb, float(j) / m)
++			var qb := pa.lerp(pb, float(j + 1) / m)
++			for c in 3:
++				var za := -dw * 0.5 + 0.55 + (dw - 1.1) * c / 3.0
++				var zb := za + (dw - 1.1) / 3.0
++				var col: Color = (palette[rng.randi() % palette.size()] as Color).lightened(rng.randf_range(-0.05, 0.03))
++				var mo := _growth(0.2) * rng.randf()
++				col = col.lerp(MOSS, mo * 0.4)
++				col.a = mo
++				_face4(Vector3(qa.x, qa.y + 0.02, za), Vector3(qb.x, qb.y + 0.02, za), Vector3(qb.x, qb.y + 0.02, zb), Vector3(qa.x, qa.y + 0.02, zb),
++					col, col, col, col, Vector3((qa.x + qb.x) * 0.5, (qa.y + qb.y) * 0.5 - 1.0, (za + zb) * 0.5))
++	solid = was
++	_mark('A stone or two fallen from t')
++	# A stone or two fallen from the parapet, down by the water.
++	for k in rng.randi_range(1, 3):
++		var px := rng.randf_range(xa, xb)
++		var pz := (1.0 if rng.randf() < 0.5 else -1.0) * rng.randf_range(dw * 0.5 + 1.0, dw * 0.5 + 4.0)
++		box(Transform3D(Basis.from_euler(Vector3(rng.randf_range(-0.4, 0.4), rng.randf() * TAU, rng.randf_range(-0.4, 0.4))), Vector3(px, lv - 0.3, pz)), Vector3(1.6, 0.8, 0.6), palette[rng.randi() % palette.size()], _growth(0.8), 0.14, 0.08)
++	var cx := ends[1].x + 3.0
++	_camp_spot = Vector3(cx, ground(cx, 6.0), 6.0)
++	if debug:
++		print("bridge w %.1f span %.1f n %d s0 %.1f total %.1f lv %.1f bed %.1f spring %.1f y0 %.1f gl %.1f gr %.1f deck %s tris %d" % [w, span, n, s0, total, lv, bed, spring, y0, gl, gr, str(deck), _v.size() / 3])
++
++
++## A stone running along the deck from qa to qb (x, y): its bottom and top
++## at ya0/ya1 over qa's end and yb0/yb1 over qb's, across z from z0 to z1.
++func _slope_stone(qa: Vector2, qb: Vector2, ya0: float, ya1: float, yb0: float, yb1: float, z0: float, z1: float, col: Color, moss: float, lod: bool) -> void:
++	var p: Array = []
++	for c in 8:
++		var at_b := c & 1
++		var yy: float = (yb1 if at_b else ya1) if c & 2 else (yb0 if at_b else ya0)
++		p.append(Vector3(qb.x if at_b else qa.x, yy, z1 if c & 4 else z0))
++	_hexa(p, col.lightened(rng.randf_range(-0.04, 0.04)), _growth(moss), lod)
+diff --git a/scripts/landmarks/set_pieces.gd b/scripts/landmarks/set_pieces.gd
+new file mode 100644
+index 0000000..1812e30
+--- /dev/null
++++ b/scripts/landmarks/set_pieces.gd
+@@ -0,0 +1,293 @@
++class_name SetPieces
++## Where the set pieces stand: whole buildings of the old civilization,
++## weathered and mossy but standing, the architecture the references are
++## built round (Ruins finds them, SetPieceBuilder builds them):
++##   * a rotunda: a domed ring of columns on a stepped plinth on a knoll,
++##     a broad stair climbing to it past fallen stones (temperate and dry
++##     grass country);
++##   * a chapel: steep gabled roof, a bell cote on the front gable, arched
++##     door and windows, at the end of a straight path across open ground
++##     (temperate and dry country); you can walk in;
++##   * a mission: a sandstone church with two domed bell towers and a
++##     curved gable, on a terrace on a rise with a grand stair up to it
++##     (desert and dry country); you can walk in;
++##   * a bridge: stone arches on piers across a real river (any land but
++##     snow and marsh), a walkable deck between parapets.
++##
++## They take Ruins grid cells that hold no ruin (Ruins.find() rolls those
++## first, with the cell's own numbers), each on random streams of its own,
++## so every ruin stays just where and what it was.
++
++const TEMPERATE := [BiomeTemplates.TEMPERATE_DECIDUOUS, BiomeTemplates.TEMPERATE_RAINFOREST,
++	BiomeTemplates.TAIGA, BiomeTemplates.KRUMMHOLZ, BiomeTemplates.TALLGRASS_PRAIRIE, BiomeTemplates.WET_MEADOW,
++	BiomeTemplates.ALPINE_MEADOW, BiomeTemplates.PARAMO, BiomeTemplates.FLOODPLAIN_FOREST, BiomeTemplates.MARITIME_FOREST]
++const DRY := [BiomeTemplates.MEDITERRANEAN_SCRUB, BiomeTemplates.STEPPE, BiomeTemplates.SHORTGRASS_PRAIRIE,
++	BiomeTemplates.SAGEBRUSH, BiomeTemplates.SAVANNA, BiomeTemplates.THORN_SCRUB, BiomeTemplates.TROPICAL_DRY_FOREST,
++	BiomeTemplates.PUNA]
++## Share of the empty cells holding [a rotunda, a chapel, a mission], by
++## setting().
++const CHANCE := {"temperate": [0.14, 0.16, 0.0], "dry": [0.1, 0.1, 0.14], "desert": [0.0, 0.0, 0.22]}
++## Share of the empty cells with a river reach fit to bridge that get a
++## bridge (any setting but snow and marsh).
++const BRIDGE_CHANCE := 0.85
++const BRIDGE_MAX_W := 50.0
++## The most the river may fall along the reach (so no tall falls).
++const BRIDGE_MAX_DROP := 16.0
++const NAMES := {Ruins.Kind.ROTUNDA: "Hilltop rotunda", Ruins.Kind.CHAPEL: "Field chapel",
++	Ruins.Kind.MISSION: "Desert mission", Ruins.Kind.BRIDGE: "Old bridge"}
++
++
++## The kind of land for a set piece at `p`: "temperate", "dry", "desert",
++## "jungle" or "" (anything else: shores, volcanic fields, snow, marsh).
++static func setting(map: PlanetData, p: Vector3) -> String:
++	var land := Ruins.country(map, p)
++	if land == "jungle":
++		return "jungle"
++	if land != "":
++		return ""
++	var b := map.biome[map.cell_at(p)]
++	if b in Ruins.DESERTY:
++		return "desert"
++	if b in DRY:
++		return "dry"
++	if b in TEMPERATE:
++		return "temperate"
++	return ""
++
++
++static func site_name(site: Dictionary) -> String:
++	if int(site.kind) == Ruins.Kind.MISSION and site.style != "desert":
++		return "Old mission"
++	return NAMES[int(site.kind)]
++
++
++## The set piece in an empty Ruins cell `c` (key: its Ruins key), or {}.
++## Same fields as Ruins.find(), and each kind's measurements (see below).
++static func find(map: PlanetData, c: Vector3i, key: Vector4i) -> Dictionary:
++	var center := CreatureSpawner._cell_point(c, Ruins.cells_per_face(), Ruins.SALT)
++	var land := Ruins.country(map, center)
++	if land == "snow" or land == "marsh":
++		return {}
++	var brng := RandomNumberGenerator.new()
++	brng.seed = hash([key, "bridge"])
++	if brng.randf() < BRIDGE_CHANCE:
++		var br := _bridge_site(map, center, key, brng)
++		if not br.is_empty():
++			return br
++	var srng := RandomNumberGenerator.new()
++	srng.seed = hash([key, "setpiece"])
++	var where := setting(map, center)
++	var odds: Array = CHANCE.get(where, [0.0, 0.0, 0.0])
++	var roll := srng.randf()
++	var kind := -1
++	if roll < odds[0]:
++		kind = Ruins.Kind.ROTUNDA
++	elif roll < odds[0] + odds[1]:
++		kind = Ruins.Kind.CHAPEL
++	elif roll < odds[0] + odds[1] + odds[2]:
++		kind = Ruins.Kind.MISSION
++	if kind < 0:
++		return {}
++	# The rotunda and the mission on the most prominent rise; the chapel on
++	# the flattest open ground.
++	var level := kind == Ruins.Kind.CHAPEL
++	var best := {}
++	var best_score := -INF
++	for i in 18:
++		var p := CreatureSpawner._offset(center, srng.randf() * TAU, sqrt(srng.randf()) * Ruins.CELL_M * 0.35)
++		var e := map.terrain.elevation(p, true, false)
++		if e < 6.0 or map.water[map.cell_at(p)] != PlanetData.Water.NONE:
++			continue
++		if setting(map, p) != where:
++			continue
++		var ring := 0.0
++		for k in 6:
++			ring += map.terrain.elevation(CreatureSpawner._offset(p, k * TAU / 6.0, 120.0), true, false)
++		var prominence := e - ring / 6.0
++		var slope := 0.0
++		for k in 2:
++			var a := k * PI * 0.5
++			slope = maxf(slope, absf(map.terrain.elevation(CreatureSpawner._offset(p, a, 15.0), true, false) - map.terrain.elevation(CreatureSpawner._offset(p, a + PI, 15.0), true, false)) / 30.0)
++		if slope > (0.1 if level else 0.2):
++			continue
++		var score := (-slope * 40.0 if level else prominence - slope * 20.0) + srng.randf() * 4.0
++		if score > best_score:
++			best_score = score
++			best = {"dir": p}
++	if best.is_empty():
++		return {}
++	# The stair or path (local -z) runs down the steepest way off the site.
++	var low := INF
++	var heading := 0.0
++	for k in 8:
++		var e := map.terrain.elevation(CreatureSpawner._offset(best.dir, k * TAU / 8.0, 25.0), true, false)
++		if e < low:
++			low = e
++			heading = k * TAU / 8.0
++	heading += srng.randf_range(-0.3, 0.3)
++	var site := {"dir": best.dir, "kind": kind, "seed": hash(key), "heading": heading, "style": where}
++	match kind:
++		Ruins.Kind.ROTUNDA:
++			_rotunda_site(site, srng)
++		Ruins.Kind.CHAPEL:
++			_chapel_site(site, srng)
++		Ruins.Kind.MISSION:
++			_mission_site(site, srng)
++	return site
++
++
++## Circles along the local -z axis from z0 to z1 (z1 < z0), `r` wide.
++static func _clear_line(site: Dictionary, x: float, z0: float, z1: float, r: float) -> Array:
++	var out: Array = []
++	var n := maxi(1, int(ceil((z0 - z1) / r)))
++	for i in n + 1:
++		out.append([Ruins.local_dir(site, x, lerpf(z0, z1, float(i) / n)), r])
++	return out
++
++
++## Rotunda: {"ring_r" (the columns' circle), "columns", "col_h",
++## "plinth_r" (the lowest step's edge), "stair_m" (how far the stair runs
++## out from the plinth, down -z)}. The camp sits off the stair's foot.
++static func _rotunda_site(site: Dictionary, rng: RandomNumberGenerator) -> void:
++	site.ring_r = rng.randf_range(4.0, 4.8)
++	site.columns = 8 if rng.randf() < 0.6 else 6
++	site.col_h = rng.randf_range(5.0, 5.8)
++	site.plinth_r = site.ring_r + 2.6
++	site.stair_m = rng.randf_range(12.0, 20.0)
++	var pr: float = site.plinth_r
++	var reach: float = pr + site.stair_m
++	site.footprint_m = reach + 6.0
++	var clear: Array = [[site.dir, pr + 3.0]]
++	clear.append_array(_clear_line(site, 0.0, -pr, -reach - 2.0, 4.5))
++	clear.append([Ruins.local_dir(site, 7.0, -reach + 2.0), 5.0])
++	site.clear = clear
++
++
++## Chapel: {"half_w", "half_l" (the nave, outside), "wall_h", "path_m"
++## (the path's length out from the door, down -z)}. The camp sits by the
++## chapel's front corner on +x.
++static func _chapel_site(site: Dictionary, rng: RandomNumberGenerator) -> void:
++	site.half_w = rng.randf_range(3.3, 3.9)
++	site.half_l = rng.randf_range(5.8, 7.2)
++	site.wall_h = rng.randf_range(4.3, 5.0)
++	site.path_m = rng.randf_range(24.0, 38.0)
++	var hl: float = site.half_l
++	var hw: float = site.half_w
++	site.footprint_m = hl + site.path_m + 3.0
++	var clear: Array = [[site.dir, Vector2(hw, hl).length() + 2.5]]
++	clear.append_array(_clear_line(site, 0.0, -hl, -hl - site.path_m, 2.6))
++	clear.append([Ruins.local_dir(site, hw + 5.0, -hl + 1.0), 5.0])
++	site.clear = clear
++
++
++## Mission: {"half_w", "half_l" (the nave), "tower" (a bell tower's side),
++## "stair_m"} on a terrace reaching `terrace_front` m out in front of the
++## facade (-z). The camp sits on the terrace beside the facade (+x).
++static func _mission_site(site: Dictionary, rng: RandomNumberGenerator) -> void:
++	site.half_w = rng.randf_range(4.6, 5.4)
++	site.half_l = rng.randf_range(9.0, 11.0)
++	site.tower = rng.randf_range(3.6, 4.2)
++	site.terrace_front = rng.randf_range(9.0, 11.0)
++	site.stair_m = rng.randf_range(10.0, 18.0)
++	var hl: float = site.half_l
++	var tx: float = site.half_w + site.tower + 4.0
++	var front: float = hl + site.terrace_front
++	var reach: float = front + site.stair_m
++	site.footprint_m = maxf(reach, Vector2(tx, hl + 3.0).length()) + 4.0
++	var clear: Array = [[site.dir, Vector2(tx, hl + 3.0).length() + 1.0]]
++	clear.append_array(_clear_line(site, 0.0, -hl, -reach - 2.0, 5.0))
++	site.clear = clear
++
++
++## A bridge over a river reach in the cell: {"river_w", "level" (the
++## highest the water can stand there), "bed" (the lowest the channel's
++## bed can be), "span_m" (bank to bank, local x)}. The river runs along
++## local z; the bridge along x. The camp sits on the +x bank.
++static func _bridge_site(map: PlanetData, center: Vector3, key: Vector4i, rng: RandomNumberGenerator) -> Dictionary:
++	var best := {}
++	var best_score := -INF
++	for cell in MagicSites._cells_within(map, center, Ruins.CELL_M * 0.4):
++		if map.water[cell] != PlanetData.Water.RIVER:
++			continue
++		var t := map.flow_to[cell]
++		if t < 0 or map.water[t] != PlanetData.Water.RIVER:
++			continue
++		var la := map.water_level[cell]
++		var lb := minf(map.water_level[t], la)
++		# Tall falls along here: no bridge.
++		if la - lb > BRIDGE_MAX_DROP:
++			continue
++		var w := clampf(RiverNetwork.MIN_WIDTH_M + 3.0 * sqrt(map.flow_accum[cell]), RiverNetwork.MIN_WIDTH_M, RiverNetwork.MAX_WIDTH_M)
++		if w > BRIDGE_MAX_W:
++			continue
++		var mid := (map.dir[cell] + map.dir[t]).normalized()
++		if CubeSphere.surface_distance_m(mid, center) > Ruins.CELL_M * 0.35:
++			continue
++		var span := w + 2.0 * (TerrainChunk.BANK_M + 3.0)
++		# Another reach too near (a confluence, a bend, a stream alongside)?
++		if _other_reach_near(map, cell, t, mid, span * 0.5 + 25.0):
++			continue
++		# Both banks dry land a little above the water.
++		var along := (map.dir[t] - map.dir[cell])
++		along = (along - mid * along.dot(mid)).normalized()
++		var across := mid.cross(along).normalized()
++		var dry := true
++		for s: float in [-1.0, 1.0]:
++			var bank := (mid + across * s * (span * 0.5 + 4.0) / PlanetConst.RADIUS_M).normalized()
++			var bc := map.cell_at(bank)
++			if map.water[bc] == PlanetData.Water.OCEAN or map.water[bc] == PlanetData.Water.LAKE:
++				dry = false
++			if map.terrain.elevation(bank, true, false) < lb - 2.0:
++				dry = false
++		if not dry:
++			continue
++		var score := rng.randf() - (la - lb) * 0.2
++		if score > best_score:
++			best_score = score
++			var depth := 1.2 + w * 0.05
++			best = {"dir": mid, "along": along, "across": across, "river_w": w, "level": la, "bed": lb - depth, "span_m": span}
++	if best.is_empty():
++		return {}
++	# Local x (RuinBuilder's ex) runs across the river: heading + 90 degrees
++	# is the angle of `across` from north.
++	var d: Vector3 = best.dir
++	var ac: Vector3 = best.across
++	var a := atan2(ac.dot(CubeSphere.east(d)), ac.dot(CubeSphere.north(d)))
++	var site := {"dir": d, "kind": Ruins.Kind.BRIDGE, "seed": hash(key), "heading": a - PI * 0.5,
++		"style": setting(map, d), "river_w": best.river_w, "level": best.level, "bed": best.bed, "span_m": best.span_m}
++	# Room for approach ramps either side.
++	var half: float = best.span_m * 0.5 + 16.0
++	site.footprint_m = half + 4.0
++	var clear: Array = []
++	var n := int(half * 2.0 / 6.0)
++	for i in n + 1:
++		clear.append([Ruins.local_dir(site, -half + i * half * 2.0 / n, 0.0), 6.0])
++	site.clear = clear
++	return site
++
++
++## Does a river reach other than cell -> t (and the reaches running on
++## from either end) pass within `r` m of `p`?
++static func _other_reach_near(map: PlanetData, cell: int, t: int, p: Vector3, r: float) -> bool:
++	var seen := {}
++	for base in [cell, t]:
++		for k in 9:
++			var n: int = base if k == 8 else map.neighbors[base * 8 + k]
++			if n < 0 or seen.has(n):
++				continue
++			seen[n] = true
++			if map.water[n] != PlanetData.Water.RIVER:
++				continue
++			var m := map.flow_to[n]
++			if m < 0 or n == cell:
++				continue
++			# The reaches just upstream and downstream meet ours at its ends,
++			# half a cell away: only others count.
++			if m == cell or n == t:
++				continue
++			var pa := map.dir[n]
++			var ab := map.dir[m] - pa
++			var tt := clampf((p - pa).dot(ab) / maxf(ab.length_squared(), 1e-12), 0.0, 1.0)
++			if CubeSphere.surface_distance_m((pa + ab * tt).normalized(), p) < r:
++				return true
++	return false
+-- 
+2.43.0
+

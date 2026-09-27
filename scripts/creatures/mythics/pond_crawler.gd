@@ -37,10 +37,11 @@ extends Creature
 ## on you (Creature.hurt: angry) and hunts within 70 m; killed, the eye
 ## goes out and it slumps into the water, then fades.
 ##
-## Hitboxes (spec D5): the lump, hood, both upper arms, forearms and
-## hands are capsules and spheres (PondCrawlerHitboxes, set up in
-## _make_hitboxes()) that follow the bones: the player can't walk through
-## it, and an arrow sticks in the part it hits.
+## Hitboxes (spec D5, the shared Hitboxes helper): the lump, hood, both
+## upper arms, forearms and hands are capsules and spheres riding the
+## skeleton and the arm bones (_make_hitboxes()): an arrow's ray meets the
+## part it hits and sticks in it. The player bumps into a blocker in the
+## lump, so it can't walk through the body.
 ##
 ## It is never spawned in normal play (`"spawn": "disabled"`, until
 ## Phase 7); debug_spawn() places one (tools/pond_crawler_demo.gd).
@@ -98,7 +99,8 @@ class Hand:
 	var above := -1.0
 	var voice: AudioStreamPlayer3D
 
-var hitboxes: PondCrawlerHitboxes
+## Its hitbox bodies (Hitboxes): the parts, then the blocker.
+var hitboxes: Array[AnimatableBody3D] = []
 ## Rig tunables (DEFAULTS, overridden by the data's "rig").
 var rig := {}
 ## Everything each ripple call carried, for tools to check the wiring
@@ -223,33 +225,38 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 	_blink_t = _rng.randf_range(2.0, 6.0)
 	_fade = 1.0
 	_pose(0.0)
-	hitboxes.update()
 
 
-## Hitboxes: the lump and hood (rigid with the body, on the skeleton), and
-## each arm's upper arm, forearm and hand, riding their bones (`attach`:
-## bone name -> BoneAttachment3D). Points are in each node's own space,
-## REF meters (the body's scale applies).
+## Hitboxes (Hitboxes): the lump and hood (rigid with the body, on the
+## skeleton), and each arm's upper arm, forearm and hand, riding their
+## bones (`attach`: bone name -> BoneAttachment3D), each part named for
+## what it is; then the blocker the player bumps into, inside the lump.
+## Points are in each node's own space, REF meters (the body's scale
+## applies).
 func _make_hitboxes(attach: Dictionary) -> void:
-	hitboxes = PondCrawlerHitboxes.new()
-	hitboxes.name = "Hitboxes"
-	hitboxes.add_capsule("Lump", _skel, Vector3(0, -0.05, 0.32), Vector3(0, -0.05, -0.12), 0.52)
-	hitboxes.add_sphere("Hood", _skel, Vector3(0, 0.46, -0.16), 0.42)
+	hitboxes.clear()
+	_hitbox("Lump", Hitboxes.capsule(self, _skel, Vector3(0, -0.05, 0.32), Vector3(0, -0.05, -0.12), 0.52))
+	_hitbox("Hood", Hitboxes.sphere(self, _skel, Vector3(0, 0.46, -0.16), 0.42))
 	for sd: float in [-1.0, 1.0]:
 		var n := PondCrawlerBody.side_name(sd)
 		var r: Dictionary = _rest[sd]
-		hitboxes.add_capsule("UpperArm" + n, attach["Shoulder" + n], Vector3.ZERO, r.e - r.s, 0.095)
-		hitboxes.add_capsule("Forearm" + n, attach["Elbow" + n], Vector3.ZERO, r.w - r.e, 0.07)
+		_hitbox("UpperArm" + n, Hitboxes.capsule(self, attach["Shoulder" + n], Vector3.ZERO, r.e - r.s, 0.095))
+		_hitbox("Forearm" + n, Hitboxes.capsule(self, attach["Elbow" + n], Vector3.ZERO, r.w - r.e, 0.07))
 		var fwd := PondCrawlerBody.hand_fwd(sd)
-		hitboxes.add_capsule("Hand" + n, attach["Wrist" + n], r.palm - r.w - fwd * 0.04, r.palm - r.w + fwd * 0.2, 0.09)
-	add_child(hitboxes)
+		_hitbox("Hand" + n, Hitboxes.capsule(self, attach["Wrist" + n], r.palm - r.w - fwd * 0.04, r.palm - r.w + fwd * 0.2, 0.09))
+	_hitbox("Blocker", Hitboxes.blocker(self, _skel, Vector3(0, -0.05, 0.28), Vector3(0, -0.05, -0.08), 0.44))
+
+
+func _hitbox(part: String, body: AnimatableBody3D) -> void:
+	body.name = part
+	hitboxes.append(body)
 
 
 ## Show or hide it (its light too).
 func set_visible_body(v: bool) -> void:
 	_body.visible = v
 	_eye_light.visible = v
-	hitboxes.set_active(v and not dead)
+	Hitboxes.set_active(hitboxes, v and not dead)
 
 
 func tick(delta: float, ctx: Dictionary) -> void:
@@ -266,7 +273,6 @@ func tick(delta: float, ctx: Dictionary) -> void:
 	_body_step(delta)
 	_pose(delta)
 	_wake()
-	hitboxes.update()
 	if leaving:
 		_fade = move_toward(_fade, 0.0, delta * 0.8)
 		_body.scale = Vector3.ONE * _k * maxf(_fade, 0.001)
@@ -281,7 +287,7 @@ func tick(delta: float, ctx: Dictionary) -> void:
 func hurt(amount: float, from_pos: Vector3) -> void:
 	super.hurt(amount, from_pos)
 	if dead:
-		hitboxes.set_active(false)
+		Hitboxes.set_active(hitboxes, false)
 		return
 	_eye_flash = 1.0
 	var away := _to_g(_body_l) - from_pos

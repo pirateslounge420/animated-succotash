@@ -17,6 +17,8 @@
 		"ground": [
 			{
 				"name": "Marram grass",
+				"genus": "Calamagrostis",
+				"species": "arenaria",
 				"shape": "tussock",
 				"temp_c": [2, 27],
 				"moisture": [0.08, 0.7],

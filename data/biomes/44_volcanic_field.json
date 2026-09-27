@@ -16,6 +16,9 @@
 		"shrub": [
 			{
 				"name": "Volcanic pioneer shrub",
+				"genus": "Scoriofrutex",
+				"species": "primigenius",
+				"invented": true,
 				"shape": "shrub",
 				"temp_c": [8, 30],
 				"moisture": [0.35, 1],

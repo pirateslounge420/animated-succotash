@@ -6,8 +6,10 @@ extends SceneTree
 ## biome_lock, else the nearest other wetland pool), sets the local clock
 ## to 23:00 and places a crawler there (PondCrawler.debug_spawn). Then:
 ##   default   a scripted shot for the recording (11.5 s): it waits in the
-##             water (4 s), the player is moved to ~11 m from it, it
-##             lurches at them arm over arm and strikes, quit
+##             water (4 s), the player is moved to 5-11 m from it (where
+##             the water as drawn is shallow enough to show them: see
+##             _spot_near()), it lurches at them arm over arm and strikes,
+##             quit
 ##   --stills  the same, saving a still every couple of seconds instead
 ##   --look    close stills from four sides and a top view (for judging
 ##             the model against spec R1a), quit
@@ -291,7 +293,7 @@ func _plan_shot() -> void:
 			# Trunks, rocks or the bank between it and the lurch's start,
 			# middle and end.
 			for end in [c + up * 0.4, t + up * 1.0, c.lerp(t, 0.5) + up * 0.5]:
-				var ray := PhysicsRayQueryParameters3D.create(p, end, 0xFFFF & ~PondCrawlerHitboxes.LAYER)
+				var ray := PhysicsRayQueryParameters3D.create(p, end, 0xFFFF & ~Hitboxes.LAYER)
 				ray.exclude = skip
 				if not space.intersect_ray(ray).is_empty():
 					score -= 10.0
@@ -374,16 +376,22 @@ func _log_ripples() -> void:
 
 ## A spot to stand about `radius` m from `center` (ground, or water
 ## shallow enough to stand in: not swimming); `reachable`: with wadeable
-## water for the crawler all the way to it (else the nearest miss).
+## water for the crawler all the way to it (else the nearest miss), and
+## where the water as drawn agrees with the water the crawler wades by
+## (_drawn_water()): the player stands visibly in shallow water, not in a
+## dip beside a raised sheet of water that hides them, and the crawler
+## doesn't sink into the drawn surface on the way.
 func _spot_near(center: Vector3, radius: float, reachable: bool) -> Vector3:
 	var north := CubeSphere.north(center)
 	var best := Vector3.ZERO
 	var best_score := -INF
-	for r: float in [radius, radius * 0.8, radius * 1.2, radius * 0.65, radius * 1.4]:
+	# Shorter runs too, as a last resort for where the drawn water allows.
+	for r: float in [radius, radius * 0.8, radius * 1.2, radius * 0.65, radius * 1.4, radius * 0.5, radius * 0.42]:
 		for k in 36:
 			var bearing := north.rotated(center, k * TAU / 36.0)
 			var p := (center + bearing * r / PlanetConst.RADIUS_M).normalized()
-			var depth: float = main.chunks.water_level_at(p) - main.chunks.ground_height(p)
+			var ground: float = main.chunks.ground_height(p)
+			var depth: float = main.chunks.water_level_at(p) - ground
 			# Ankle- to knee-deep water is best (the crawler can reach you
 			# there); dry ground next; too deep to stand is out.
 			var score := -absf(depth - 0.3) * 4.0 - absf(r - radius) * 0.5
@@ -398,10 +406,50 @@ func _spot_near(center: Vector3, radius: float, reachable: bool) -> Vector3:
 						break
 					run = s
 				score -= (int(r) - 1 - run) * 2.0
+				# The drawn water: over the player no more than knee deep,
+				# and along the way within a hand of the level it wades by.
+				var drawn := _drawn_water(p)
+				var shown := 2.0 if is_nan(drawn) else drawn - ground
+				score -= maxf(shown - 0.6, 0.0) * 20.0
+				var gap := 0.0
+				for s in range(0, int(r) + 1):
+					var q := (center + bearing * s / PlanetConst.RADIUS_M).normalized()
+					var dw := _drawn_water(q)
+					gap = maxf(gap, 2.0 if is_nan(dw) else absf(dw - main.chunks.water_level_at(q)))
+				score -= maxf(gap - 0.15, 0.0) * 10.0
 			if score > best_score:
 				best_score = score
 				best = p
 	return best
+
+
+## The height (m over the planet's radius) of the water surface as drawn
+## over surface direction `d`, NAN where none is. The chunk's water quads,
+## split as TerrainChunk._build_water() splits them (corners 0-2-1,
+## 0-3-2). Not always ChunkManager.water_level_at(): a quad whose corners'
+## levels jump keeps one flat level, over ground that level_at puts
+## shallower (see the planning in _spot_near()).
+func _drawn_water(d: Vector3) -> float:
+	var c: TerrainChunk = main.chunks.chunk_at(d)
+	if c == null or c.data.is_empty():
+		return NAN
+	for q: Array in c.data.water:
+		var radii: PackedFloat32Array = q[4]
+		for tri: Array in [[0, 2, 1], [0, 3, 2]]:
+			var a: Vector3 = q[tri[0]]
+			var b: Vector3 = q[tri[1]]
+			var e: Vector3 = q[tri[2]]
+			var n := (b - a).cross(e - a)
+			if n.length_squared() < 1e-24:
+				continue
+			# Barycentric weights of d projected onto the triangle's plane.
+			var p := d - n.normalized() * (d - a).dot(n.normalized())
+			var wa := (b - p).cross(e - p).dot(n) / n.length_squared()
+			var wb := (e - p).cross(a - p).dot(n) / n.length_squared()
+			var we := 1.0 - wa - wb
+			if wa >= -1e-4 and wb >= -1e-4 and we >= -1e-4:
+				return radii[tri[0]] * wa + radii[tri[1]] * wb + radii[tri[2]] * we - PlanetConst.RADIUS_M
+	return NAN
 
 
 func _summary() -> void:

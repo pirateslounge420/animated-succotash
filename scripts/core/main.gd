@@ -7,7 +7,9 @@ extends Node
 ##   FarShell          distant mountains and sea
 ##   SkySystem         sun, moon, sky, ambient, fog
 ##   WeatherFX         rain/snow and wind on plants
+##   RippleSim         ripples on the water near the camera (Ripples)
 ##   CreatureSpawner   ambient wildlife, packs, mythical creatures
+##   Mythics           mythics not yet in play: biome cues, dev spawn (F7)
 ##   Landmarks         ruins, glowing places (the bioluminescent night)
 ##   PostGrade, Hud, MapOverlay
 ##
@@ -24,6 +26,7 @@ var sky: SkySystem
 var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
+var mythics: Mythics
 var landmarks: Landmarks
 var camps: Camps
 var post: PostGrade
@@ -31,6 +34,7 @@ var clouds: CloudLayers
 var camp: Encampment
 var sky_events: SkyEvents
 var storm: StormFX
+var ripples: RippleSim
 var hud: Hud
 var map_overlay: MapOverlay
 var _playing := false
@@ -130,11 +134,20 @@ func _on_planet_ready() -> void:
 	storm.name = "Storms"
 	add_child(storm)
 	storm.setup(sky, player)
+	ripples = RippleSim.new()
+	ripples.name = "Ripples"
+	add_child(ripples)
+	ripples.setup(world, chunks)
 
 	creatures = CreatureSpawner.new()
 	creatures.name = "Creatures"
 	add_child(creatures)
 	creatures.setup(world, chunks, player)
+	# Mythic creatures before they spawn: biome cues, the dev spawn (F7).
+	mythics = Mythics.new()
+	mythics.name = "Mythics"
+	add_child(mythics)
+	mythics.setup(world, chunks, player, sky, creatures)
 
 	post = PostGrade.new()
 	add_child(post)
@@ -206,6 +219,12 @@ func _process(delta: float) -> void:
 	post.set_night(1.0 - sky.daylight)
 	Campfire.night = 1.0 - sky.daylight
 	creatures.update_creatures(delta, sky.daylight)
+	# After everything that touches the water this frame has moved; round
+	# whichever camera is drawing.
+	var view := get_viewport().get_camera_3d()
+	if view == null:
+		view = cam
+	ripples.update_ripples(delta, view.global_position, -view.global_basis.z, weather, sky.cloud_light_dir)
 	var prompt: String = creatures.prompt
 	if prompt == "":
 		prompt = player.prompt if player.prompt != "" else landmarks.nearby
@@ -257,6 +276,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		hud.toggle()
 	elif event.is_action_pressed("toggle_debug"):
 		hud.toggle_debug()
+	elif event.is_action_pressed("toggle_branch_view") and world.dev_mode:
+		BranchGraphView.toggle(self, player)
 	elif event.is_action_pressed("interact"):
 		# Let go of a tree; else a log within reach; else climb the tree
 		# in front of you.

@@ -51,7 +51,8 @@ func update_contact(delta: float, pos: Vector3, space: PhysicsDirectSpaceState3D
 
 func _scan(pos: Vector3, space: PhysicsDirectSpaceState3D) -> void:
 	_query.transform = Transform3D(Basis(), pos)
-	var hits := space.intersect_shape(_query, 64)
+	# Several shapes per tree (stacked trunk cylinders, limb capsules).
+	var hits := space.intersect_shape(_query, 256)
 	var under := false
 	var now_inside := {}
 	for hit in hits:
@@ -103,9 +104,11 @@ func rustle(chunk: TerrainChunk, i: int, strength: float) -> void:
 	if _cooldown.size() > 200:
 		_cooldown.clear()
 	var t: Array = chunk.trees[i]
-	var mm: MultiMesh = chunk.tree_mm.get(t[2])
-	if mm != null and t.size() > 3:
-		var inst: int = t[3]
+	# The MultiMesh drawing the tree now (a layout's, near the player).
+	var drawn := chunk.tree_instance(i)
+	if not drawn.is_empty():
+		var mm: MultiMesh = drawn[0]
+		var inst: int = drawn[1]
 		_rustling.append({"mm": mm, "inst": inst, "base": mm.get_instance_custom_data(inst), "t": strength})
 	var h: float = t[1]
 	var v := _voices[_next_voice]

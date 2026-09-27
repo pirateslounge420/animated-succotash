@@ -16,6 +16,8 @@
 		"shrub": [
 			{
 				"name": "Sagebrush",
+				"genus": "Artemisia",
+				"species": "tridentata",
 				"shape": "shrub",
 				"temp_c": [2, 17],
 				"moisture": [0.14, 0.36],

@@ -70,11 +70,24 @@ const COLLISION_PARTS := 4
 var _col_faces := PackedVector3Array()
 var _col_body: StaticBody3D
 var _col_parts := 0
-## Canopy and emergent trees on this chunk: [local_position, height,
-## species_index, instance]. Canopy-dwelling creatures attach to these.
+## Canopy and emergent trees on this chunk, in placement order (trees[i]
+## is hosts[i]): [local_position, height, species_index, instance, pick,
+## layout_instance, rotation]. `instance` is the tree's index in
+## tree_mm[species_index]; a branchy tree (TreeLayouts) also has a `pick`
+## (its layout, maybe mirrored; -1 for other trees) and its index in
+## layout_mm; `rotation` is its rigid rotation (radial up, yaw and lean,
+## no scale). Canopy-dwelling creatures attach to these.
 var trees: Array = []
-## species index -> the MultiMesh drawing that species' trees here.
+## species index -> the MultiMesh drawing that species' trees here (for a
+## branchy species, only beyond the detail ring).
 var tree_mm := {}
+## Vector2i(species index, layout) -> the MultiMesh drawing that layout's
+## trees in the detail ring.
+var layout_mm := {}
+## Trees with a branch graph right now (registered with BranchGraphs;
+## ChunkManager adds and drops them by distance): tree index -> the
+## BranchGraph, or null for a tree with no wood to hold.
+var graphs := {}
 ## Raw compute() output and tree hosts, kept so the undergrowth layer can
 ## be computed later when the player comes close.
 var data: Dictionary
@@ -84,12 +97,16 @@ var detail_node: Node3D
 ## Physics layer (bit value) of tree trunks, besides the default layer 1,
 ## so queries can look for trees alone.
 const TREE_LAYER := 2
-# Trunk colliders, only while the chunk is in the detail ring: one static
-# body, one cylinder shape owner per tree, built a few hundred per frame.
+# Tree colliders, only while the chunk is in the detail ring: one static
+# body, one shape owner per collider (a trunk is up to four stacked
+# cylinders), built a few dozen trees per frame; limb capsules join it for
+# trees with a branch graph.
 var _tree_body: StaticBody3D
 var _tree_next := 0
 var _owner_tree := {} # shape owner id -> index in trees
-static var _cylinders := {}
+var _limb_owners := {} # tree index -> PackedInt32Array of shape owner ids
+## Shared collider shapes: Vector3i(radius cm, length dm, capsule) -> Shape3D.
+static var _shapes := {}
 
 
 static func key_of(face_i: int, i: int, j: int) -> Vector3i:
@@ -762,11 +779,14 @@ func set_fine(fine: bool, hero := false) -> void:
 	if _fine_mesh and _fine_mesh.visible != fine:
 		_fine_mesh.visible = fine
 		_coarse_mesh.visible = not fine
+		if not fine:
+			remove_graphs()
 		if not fine and _tree_body:
 			_tree_body.queue_free()
 			_tree_body = null
 			_tree_next = 0
 			_owner_tree.clear()
+			_limb_owners.clear()
 	var lod := PlantMeshes.LOD_FAR
 	if fine:
 		lod = PlantMeshes.LOD_HERO if hero else PlantMeshes.LOD_NEAR
@@ -786,74 +806,197 @@ func plant_lod(parent: Node) -> int:
 	return PlantMeshes.LOD_HERO if _plant_lod == PlantMeshes.LOD_HERO else PlantMeshes.LOD_NEAR
 
 
+## Branchy trees show their layouts' MultiMeshes in the detail ring and
+## their species' one (the far crown) beyond it; everything else swaps its
+## mesh for the level.
 func _swap_plants(parent: Node) -> void:
 	var all := SpeciesDB.all()
 	var lod := plant_lod(parent)
 	for ch in parent.get_children():
-		if ch is MultiMeshInstance3D and ch.has_meta("species"):
-			ch.multimesh.mesh = PlantMeshes.mesh_for(all[ch.get_meta("species")], lod)
+		if not (ch is MultiMeshInstance3D and ch.has_meta("species")):
+			continue
+		var mmi := ch as MultiMeshInstance3D
+		var sp: PlantSpecies = all[ch.get_meta("species")]
+		if ch.has_meta("layout"):
+			mmi.visible = lod != PlantMeshes.LOD_FAR
+			if mmi.visible:
+				mmi.multimesh.mesh = PlantMeshes.mesh_for(sp, lod, ch.get_meta("layout"))
+		elif ch.has_meta("far_only"):
+			mmi.visible = lod == PlantMeshes.LOD_FAR
+		else:
+			mmi.multimesh.mesh = PlantMeshes.mesh_for(sp, lod)
 
 
-# --- Trees: trunk colliders and lookups -------------------------------------
+func _exit_tree() -> void:
+	remove_graphs()
+
+
+# --- Trees: colliders, branch graphs and lookups ------------------------------
 
 ## True while trees in the detail ring still lack trunk colliders.
 func wants_tree_colliders() -> bool:
 	return _fine_mesh != null and _fine_mesh.visible and _tree_next < trees.size()
 
 
-## Give up to `budget` more trees a trunk collider (a cylinder sized from
-## the species' shape). Returns how many were added.
+## Give up to `budget` more trees their trunk colliders: stacked cylinders
+## along the drawn trunk (TreeLayouts.collider_segments) that lean, turn
+## and taper with it, a mangrove's stilt roots too, and nothing for plants
+## whose wood stays below knee height. Returns how many trees were done.
 func build_tree_colliders(budget: int) -> int:
-	if _tree_body == null:
-		_tree_body = StaticBody3D.new()
-		_tree_body.name = "Trunks"
-		_tree_body.collision_layer = 1 | TREE_LAYER
-		_tree_body.collision_mask = 0
-		add_child(_tree_body)
-	var all := SpeciesDB.all()
+	_ensure_tree_body()
 	var used := 0
 	while _tree_next < trees.size() and used < budget:
 		var i := _tree_next
 		_tree_next += 1
 		used += 1
 		var t: Array = trees[i]
-		var h: float = t[1]
-		var dims := PlantMeshes.tree_dims((all[t[2]] as PlantSpecies).shape)
-		var r := clampf(dims.x * h * 0.85, 0.1, 1.6)
-		var ch := maxf(dims.y * h, 2.0)
-		var key := Vector2i(roundi(r * 20.0), roundi(ch * 2.0))
-		if not _cylinders.has(key):
-			var cyl := CylinderShape3D.new()
-			cyl.radius = key.x / 20.0
-			cyl.height = key.y / 2.0
-			_cylinders[key] = cyl
-		var upv := tree_up(i)
-		var x := upv.cross(Vector3.FORWARD if absf(upv.z) < 0.9 else Vector3.RIGHT).normalized()
-		var owner := _tree_body.create_shape_owner(_tree_body)
-		_tree_body.shape_owner_add_shape(owner, _cylinders[key])
-		_tree_body.shape_owner_set_transform(owner, Transform3D(Basis(x, upv, x.cross(upv)), (t[0] as Vector3) + upv * (ch * 0.5 - 0.3)))
-		_owner_tree[owner] = i
+		var pick: int = t[4]
+		var sk := TreeLayouts.skeleton(t[2], TreeLayouts.layout_of(pick))
+		var frame := tree_frame(i)
+		for seg in TreeLayouts.collider_segments(sk, t[1], TreeLayouts.is_mirrored(pick), false):
+			_add_wood_shape(frame, seg, i)
 	return used
+
+
+func _ensure_tree_body() -> void:
+	if _tree_body == null:
+		_tree_body = StaticBody3D.new()
+		_tree_body.name = "Trunks"
+		_tree_body.collision_layer = 1 | TREE_LAYER
+		_tree_body.collision_mask = 0
+		add_child(_tree_body)
+
+
+## One collider shape (TreeLayouts.collider_segments' [a, b, radius,
+## capsule], in the tree's frame) on the trees' body, for tree `i`.
+## Returns its shape owner.
+func _add_wood_shape(frame: Transform3D, seg: Array, i: int) -> int:
+	var a: Vector3 = frame * (seg[0] as Vector3)
+	var b: Vector3 = frame * (seg[1] as Vector3)
+	var r: float = seg[2]
+	var capsule: bool = seg[3]
+	var length := a.distance_to(b)
+	var up := (b - a) / length
+	var x := up.cross(Vector3.FORWARD if absf(up.z) < 0.9 else Vector3.RIGHT).normalized()
+	var key := Vector3i(maxi(roundi(r * 100.0), 1), maxi(roundi(length * 10.0), 1), 1 if capsule else 0)
+	var shape: Shape3D = _shapes.get(key)
+	if shape == null:
+		if capsule:
+			var cap := CapsuleShape3D.new()
+			cap.radius = key.x / 100.0
+			# Godot's capsule height includes its round ends.
+			cap.height = key.y / 10.0 + cap.radius * 2.0
+			shape = cap
+		else:
+			var cyl := CylinderShape3D.new()
+			cyl.radius = key.x / 100.0
+			cyl.height = key.y / 10.0
+			shape = cyl
+		_shapes[key] = shape
+	var owner := _tree_body.create_shape_owner(_tree_body)
+	_tree_body.shape_owner_add_shape(owner, shape)
+	_tree_body.shape_owner_set_transform(owner, Transform3D(Basis(x, up, x.cross(up)), (a + b) * 0.5))
+	_owner_tree[owner] = i
+	return owner
 
 
 func has_tree_colliders() -> bool:
 	return _tree_body != null
 
 
-## Index in `trees` of the tree a trunk-collider shape belongs to, or -1.
+## Index in `trees` of the tree a trunk- or limb-collider shape belongs
+## to, or -1.
 func tree_for_shape(body: Object, shape_idx: int) -> int:
 	if body != _tree_body or _tree_body == null:
 		return -1
 	return _owner_tree.get(_tree_body.shape_find_owner(shape_idx), -1)
 
 
-## A tree's foot in scene space, and its local up.
+## Give tree `i` its branch graph (registered with BranchGraphs) and, for
+## a branchy tree, capsule colliders on its limbs and thick branches, on
+## the trunks' body and layers so arrows stick in them. A tree with no
+## wood to hold (bamboo, cacti, rosettes) is marked done without one.
+func add_graph(i: int) -> void:
+	if graphs.has(i):
+		return
+	var t: Array = trees[i]
+	var pick: int = t[4]
+	var g := TreeLayouts.graph(t[2], pick, t[1])
+	if g != null:
+		g.key = graph_key(i)
+		g.chunk = self
+		g.xform = tree_frame(i)
+		BranchGraphs.add(g)
+	graphs[i] = g
+	if pick < 0 or _limb_owners.has(i):
+		return
+	_ensure_tree_body()
+	var frame := tree_frame(i)
+	var owners := PackedInt32Array()
+	for seg in TreeLayouts.collider_segments(TreeLayouts.skeleton(t[2], TreeLayouts.layout_of(pick)), t[1], TreeLayouts.is_mirrored(pick), true):
+		owners.append(_add_wood_shape(frame, seg, i))
+	_limb_owners[i] = owners
+
+
+## Drop tree `i`'s branch graph and limb colliders.
+func remove_graph(i: int) -> void:
+	if graphs.has(i):
+		var g: BranchGraph = graphs[i]
+		if g != null:
+			BranchGraphs.remove(g.key)
+		graphs.erase(i)
+	if _limb_owners.has(i):
+		if _tree_body != null:
+			for owner in (_limb_owners[i] as PackedInt32Array):
+				_tree_body.remove_shape_owner(owner)
+				_owner_tree.erase(owner)
+		_limb_owners.erase(i)
+
+
+## Drop every branch graph (and limb collider) of this chunk's trees.
+func remove_graphs() -> void:
+	for i in graphs.keys():
+		remove_graph(i)
+
+
+## The key of tree `i`'s branch graph: the same tree gets the same key on
+## every visit (its chunk and its place in placement order), and no two
+## trees of a chunk share one.
+func graph_key(i: int) -> int:
+	return ((hash(Vector3i(face, ci, cj)) & 0x7FFFFFFF) << 20) | i
+
+
+## A tree's foot in scene space.
 func tree_base(i: int) -> Vector3:
 	return global_position + (trees[i][0] as Vector3)
 
 
+## Up the tree's trunk as it stands (leaning with it), in scene space.
 func tree_up(i: int) -> Vector3:
-	return (center_dir * anchor_radius + (trees[i][0] as Vector3)).normalized()
+	return (trees[i][6] as Basis).y
+
+
+## The tree's own frame in the chunk: trunk base at the origin, +Y up the
+## unleaned trunk, turned by its yaw and tilted by its lean; rotation and
+## translation only (its meshes scale this by the tree's height). Branch
+## graphs, colliders and handholds use it.
+func tree_frame(i: int) -> Transform3D:
+	return Transform3D(trees[i][6], trees[i][0])
+
+
+## The MultiMesh drawing tree `i` right now and the tree's index in it,
+## as [MultiMesh, index] (a branchy tree in the detail ring is drawn by its
+## layout's MultiMesh), or [] if there is none. TreeContact shakes trees
+## through it.
+func tree_instance(i: int) -> Array:
+	var t: Array = trees[i]
+	var pick: int = t[4]
+	if pick >= 0 and _plant_lod != PlantMeshes.LOD_FAR:
+		var lmm: MultiMesh = layout_mm.get(Vector2i(t[2], TreeLayouts.layout_of(pick)))
+		if lmm != null:
+			return [lmm, t[5]]
+	var mm: MultiMesh = tree_mm.get(t[2])
+	return [mm, t[3]] if mm != null else []
 
 
 func tree_species(i: int) -> PlantSpecies:

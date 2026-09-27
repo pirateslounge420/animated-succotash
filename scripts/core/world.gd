@@ -53,9 +53,11 @@ var _dev_loaded := false
 var planet: PlanetData
 var weather: WeatherSim
 var ready_to_play := false
-## The water ripple simulation (owner: the ripple system; see Ripples):
-## ripple height buffers of the water near the camera, for anything that
-## wants to read disturbances. Null when it isn't running.
+## The water ripple simulation (owner: the ripple system, RippleSim; see
+## Ripples): the ripple height buffer of the water near the camera (on the
+## GPU) and the recent disturbances, for anything that wants to read them
+## (Ripples.height_at, disturbance_at). Null until the game scene sets it
+## up.
 var ripples: Object = null
 
 ## In-game days since the start; fraction is time of day (0.5 = noon at

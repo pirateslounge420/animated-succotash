@@ -946,8 +946,9 @@ func player_hit(amount: float, from_pos: Vector3) -> void:
 
 
 ## The live creature an arrow flying from `a` to `b` (scene positions)
-## hits first: [creature, fraction along a..b], or []. A creature with
-## real hitboxes adds the node of the part hit: [creature, t, node].
+## hits first: [creature, fraction along a..b], or []. Creatures with
+## real hitboxes (Hitboxes: the Pond Crawler) are left to the arrow's
+## physics ray, which meets the part it hits.
 func creature_on_segment(a: Vector3, b: Vector3) -> Array:
 	var best: Array = []
 	var best_t := INF
@@ -966,14 +967,8 @@ func creature_on_segment(a: Vector3, b: Vector3) -> Array:
 		if cr == null or cr.dead or cr.done or cr.species.role == "swarm":
 			continue
 		var hb = cr.get("hitboxes")
-		if hb is PondCrawlerHitboxes:
-			# Real hitboxes (the Pond Crawler's): the part it actually
-			# meets, which the arrow then sticks in.
-			var h: Dictionary = (hb as PondCrawlerHitboxes).segment_hit(a, b)
-			if not h.is_empty() and h.t < best_t:
-				best_t = h.t
-				best = [cr, h.t, h.node]
-			continue
+		if hb is Array and not (hb as Array).is_empty():
+			continue # its own hitboxes (Hitboxes), found by the ray
 		var sz := cr.species.size_m
 		var tall := cr.species.role == "mythical"
 		var up: Vector3 = world.dir_of(cr.global_position)

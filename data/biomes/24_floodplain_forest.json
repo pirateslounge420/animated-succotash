@@ -15,6 +15,8 @@
 		"canopy": [
 			{
 				"name": "Cottonwood",
+				"genus": "Populus",
+				"species": "deltoides",
 				"shape": "broadleaf",
 				"temp_c": [5, 24],
 				"moisture": [0.3, 1],
@@ -29,6 +31,8 @@
 		"shrub": [
 			{
 				"name": "Giant river cane",
+				"genus": "Arundinaria",
+				"species": "gigantea",
 				"shape": "bamboo",
 				"temp_c": [10, 22],
 				"moisture": [0.55, 1],

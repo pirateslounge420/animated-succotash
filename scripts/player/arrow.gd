@@ -2,13 +2,14 @@ class_name Arrow
 extends Node3D
 ## An arrow in flight (Bow): falls under the planet's gravity, points
 ## along its path, and on the first thing it meets:
-##   * a creature (CreatureSpawner.creature_on_segment): hurts it and
-##     sticks in it, riding along;
+##   * a creature (CreatureSpawner.creature_on_segment, or a physics hit on
+##     a creature's hitbox, Hitboxes): hurts it and sticks in it (in the
+##     part it hit), riding along;
 ##   * camp folk (Camps.folk_on_segment): a glancing shot they complain
 ##     about, and it drops;
 ##   * ground, trees, ruins (physics): buries its head there and stays a
 ##     while;
-##   * water: sinks.
+##   * water: splashes (Ripples) and sinks.
 ## Lives under World.world_root, so it moves with the floating origin.
 
 const GRAVITY := 9.8
@@ -58,16 +59,12 @@ func _physics_process(delta: float) -> void:
 	var hit_obj = null
 	var hit_pos := b
 	var hit_normal := up
-	var hit_part: Node3D = null
 	if spawner:
 		var c: Array = spawner.creature_on_segment(a, b)
 		if not c.is_empty():
 			hit_t = c[1]
 			hit_kind = "creature"
 			hit_obj = c[0]
-			# Real hitboxes name the part hit (an arm, a hand): the arrow
-			# sticks in that and moves with it.
-			hit_part = c[2] if c.size() > 2 else null
 	if camps:
 		var f: Array = camps.folk_on_segment(a, b)
 		if not f.is_empty() and f[1] < hit_t:
@@ -76,10 +73,10 @@ func _physics_process(delta: float) -> void:
 			hit_obj = f[0]
 	var q := PhysicsRayQueryParameters3D.create(a, b)
 	q.exclude = exclude
-	# The Pond Crawler's hitboxes were tested exactly above (the creature
-	# segment test); the world ray skips them.
-	q.collision_mask &= ~PondCrawlerHitboxes.LAYER
+	# The world, and creatures' hitboxes on their own layer (Hitboxes).
+	q.collision_mask |= Hitboxes.LAYER
 	var ray := get_world_3d().direct_space_state.intersect_ray(q)
+	var hit_part: Node3D = null
 	if not ray.is_empty():
 		var t := a.distance_to(ray.position) / maxf(a.distance_to(b), 1e-6)
 		if t < hit_t:
@@ -87,12 +84,19 @@ func _physics_process(delta: float) -> void:
 			hit_kind = "world"
 			hit_pos = ray.position
 			hit_normal = ray.normal
+			# A creature's hitbox (Hitboxes): the creature is hit, there.
+			var owner := Hitboxes.creature_of(ray.collider)
+			if owner:
+				hit_kind = "creature"
+				hit_obj = owner
+				hit_part = ray.collider
 	if hit_kind == "":
 		# Water: sinks where it meets the surface.
 		var d: Vector3 = world.dir_of(b)
 		var water := chunks.water_level_at(d)
 		if water > chunks.ground_height(d) and world.radius_of(b) < PlanetConst.RADIUS_M + water:
 			global_position = b
+			Ripples.splash(world.to_scene(d, PlanetConst.RADIUS_M + water), RippleSim.contact("arrow_kg"), velocity.length())
 			_stick()
 			_life = STUCK_S - 3.0
 			return
@@ -103,6 +107,9 @@ func _physics_process(delta: float) -> void:
 		"creature":
 			var cr := hit_obj as Creature
 			global_position = a.lerp(b, hit_t)
+			if hit_part:
+				# In the part it hit, a little way in, riding along with it.
+				global_position = hit_pos + velocity.normalized() * 0.1
 			cr.hurt(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
 			_sound("arrow_hit")
 			reparent(hit_part if hit_part else cr, true)
@@ -112,10 +119,29 @@ func _physics_process(delta: float) -> void:
 			velocity *= -0.15
 			global_position = a.lerp(b, hit_t)
 		"world":
+			# Down through shallow water onto its bed in one step: it still
+			# rings the water where it went in.
+			_splash_crossing(a, hit_pos)
 			# Bury the head a little along the flight.
 			global_position = hit_pos + velocity.normalized() * 0.12
 			_sound("arrow_hit")
 			_stick()
+
+
+## A splash (Ripples) where the flight from `a` to `b` went down through
+## the water's surface, if it did.
+func _splash_crossing(a: Vector3, b: Vector3) -> void:
+	var d: Vector3 = world.dir_of(b)
+	var water := chunks.water_level_at(d)
+	if water <= chunks.ground_height(d):
+		return
+	var surface := PlanetConst.RADIUS_M + water
+	var ra: float = world.radius_of(a)
+	var rb: float = world.radius_of(b)
+	if ra < surface or rb >= surface:
+		return
+	var p := a.lerp(b, (ra - surface) / maxf(ra - rb, 1e-6))
+	Ripples.splash(world.to_scene(world.dir_of(p), surface), RippleSim.contact("arrow_kg"), velocity.length())
 
 
 func _stick() -> void:

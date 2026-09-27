@@ -15,6 +15,9 @@
 		"canopy": [
 			{
 				"name": "Dry-season deciduous tree",
+				"genus": "Siccidendron",
+				"species": "caducum",
+				"invented": true,
 				"shape": "broadleaf",
 				"temp_c": [20, 33],
 				"moisture": [0.4, 0.64],
@@ -25,6 +28,8 @@
 			},
 			{
 				"name": "Common bamboo",
+				"genus": "Bambusa",
+				"species": "vulgaris",
 				"shape": "bamboo",
 				"temp_c": [20, 32],
 				"moisture": [0.42, 0.8],

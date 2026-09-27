@@ -15,6 +15,7 @@ main.gd                orchestrates the playable scene:
   SkySystem            sun, moon, sky shader, ambient, fog
     SkyPaint           painted cloud and star panoramas, baked at startup
   WeatherFX            rain/snow particles, wind on foliage
+  RippleSim            ripples on the water near the camera (Ripples)
   PlanetPlayer         third-person explorer with planet gravity
   CreatureSpawner      wildlife, wolf packs, mythical creatures, logs
   Landmarks            ruins and glowing places (bioluminescent night)
@@ -377,7 +378,9 @@ Verified:
     cube face for standing water, across and downstream for rivers)
     wrapped by 300 m, a whole number of both layers' repeats, so no
     chunk or segment seam shows; the far sea (`far_sea.gdshader`) wears
-    the same flat day blue and night glow;
+    the same flat day blue and night glow. Near the camera anything
+    touching the water rings it, painted as soft light and dark bands
+    (Water ripples);
   - bark and leaves on plants, mapped in object space (triplanar) and
     scaled with the plant, so a big tree doesn't get bigger texels;
   - a leaf-cluster card texture with alpha: foliage crowns carry
@@ -769,6 +772,123 @@ several threads read them at once. Anything the chunk workers read is
 therefore a flat packed array (`BiomeTemplates._colors`) or a private
 copy.
 
+## Water ripples
+
+`scripts/water/` (`Ripples`, `RippleSim`), `shaders/ripple_step.gdshader`,
+`shaders/ripple_view.gdshader`, the ripple part of `water.gdshader`, and
+`data/water/ripples.json` (every number below; see its README)
+
+Anything that touches or moves through water near the camera rings it
+(spec Phase 1, ripple system). `Ripples` is the one way anything
+disturbs water; `RippleSim` owns `World.ripples`.
+
+- **One buffer round the camera** (agreed at Go): 256 × 256 texels of a
+  quarter meter, 64 m of water, centered 10 m ahead of whichever camera
+  is drawing, instead of one per nearby water chunk. A ring never has to
+  cross from one chunk's buffer into the next (or over a cube-face edge),
+  it's one simulation instead of four to nine, and a footstep's ring is
+  several texels across. The window moves in whole texels and the
+  simulation shifts its content back to match, so ripples stay put on
+  the water; its axes are carried along the planet, so the grid never
+  turns, and it lives in planet directions, so the floating origin never
+  smears it. It runs only while there's water (sea, lake, wetland pool
+  or river) in the chunks under it. Ripples fade out between 22 and 40 m
+  from the camera; past that, and whenever it isn't running, the water
+  is the static shader, unchanged.
+- **Simulated on the GPU**, one step a frame: a damped wave equation
+  (rings spread at 1.1 m/s and die away over a few seconds) drawn by two
+  SubViewports taking turns, each reading the other's last state. Height
+  and vertical speed are packed as 16-bit numbers in 8-bit channels
+  (exact in both renderers). A weak spring settles the surface back to
+  flat, and a soft border lets rings leave instead of bouncing back.
+- **Contacts** (`Ripples.splash`, `Ripples.wake`) are sized by mass and
+  speed from the table and batched, up to 32 stamps a step, each
+  zero-sum (pushed down under the body, up round it, as displaced water
+  is):
+  - a splash is a point: its footprint grows with the cube root of the
+    mass, its push with mass^0.3 × speed^0.5, so an arrow at full draw
+    (55 m/s) rings the water about as clearly as a wading step, a leaf
+    barely;
+  - a wake is the line each contact moved along since the last step,
+    one furrow per contact, so a moving body drags a continuous wake
+    (not a string of splashes) whatever the frame rate;
+  - the player: dropping in (a jump or a fall, faster than 1.5 m/s)
+    splashes with the whole body, while wading in from the bank is just
+    a step; wading, each leg drags a wake and every footstep
+    (`Footsteps`) plants a small splash; swimming, the body drags a wake
+    and the hands splash with each stroke;
+  - creatures (`creature.gd`): wading legs drag wakes and every half
+    stride plants a foot's splash; a body afloat (or without legs, like
+    a snake) drags one wake from its hull; mass is 25 kg × size³ (a
+    1.4 m deer ~70 kg). Anything up a tree, flying, or a wisp doesn't
+    touch water;
+  - arrows splash where they meet water, then sink; one fast enough to
+    go through shallow water onto its bed within one physics step
+    splashes where it went in;
+  - rain: drops land at random, in 1 m cells, up to 0.05 per m² a
+    second in full rain (4 mm/h), each ringing the water (drawn in the
+    step shader, not sent one by one). Denser, the rings overlap into a
+    blotchy pattern instead of reading as rings;
+  - dropped items and falling leaves don't exist in the game yet; when
+    they do, each calls `Ripples.splash()` where it meets the water,
+    with its own mass in the table, as arrows do.
+- **Painted, not lit** (R1, R1a). The view shader turns the state into
+  what the water samples: where each ring is in its swing (crest or
+  trough), its slope (the surface normal) and how big it is (height and
+  speed together hold steady through a swing), all from the surface less
+  its mean half a meter round, which keeps the rings and drops the
+  broad, slow swell a big splash leaves inside them (painted, that read
+  as wide blotches, not rings). The water paints every ring as two soft
+  bands: a light one over the crest, toward the highlight blue (night:
+  #7FB0FF; measured #81B7FF-#98CCFD on screen, the brighter streaks as
+  bright as the water's own highlights), and a dark one over the trough,
+  a deeper ultramarine (measured down to #0E31CA, never black).
+  A ring keeps the same two tones while it's big and fades as it dies
+  away. Under the bands the water's own mottling and sparkle calm, so
+  they read as bands (before, rings were lost in the mottling); the
+  water's grain roughens their edges, and a finer grain from the same
+  texture streaks them like brushwork (R1's crunchy texture on smooth
+  shapes; flat fills looked like vector art next to the designer's
+  night references); the side of each ring facing the moon (or sun) is
+  painted a little lighter; a hard splash churns pale for a moment.
+  Nothing is reflected. Bands finer than about two pixels (far off, or
+  seen edge on) fade out instead of shimmering.
+- **Readers** (agreed at Go): `Ripples.height_at(pos)` and
+  `disturbance_at(pos)` (fish fleeing, later) sum the recent
+  disturbances (where, how big, how long ago: up to 256 from the last
+  6 s) as rings with the simulation's own speed and damping, fitted to
+  it: 1.6 s after a splash, the trough's depth and radius match the
+  simulated buffer within ~10% (the center's bob is underestimated).
+  `Ripples.near(pos)` says whether a contact there would ring anything,
+  so callers can skip the work. The buffer itself stays on the GPU
+  (`RippleSim.texture`), since Godot 4.3 can only read a texture back by
+  stalling the renderer.
+- Headless (no renderer) the simulation doesn't run; contacts and the
+  readers still work. `enabled: false` in the table turns it all off.
+
+Cost: `update_ripples` averages 0.07-0.12 ms a frame in the demo (the
+contacts, the window and the uniforms), 9-20 µs alone without the
+software renderer competing for the CPU; `height_at` ~10 µs with 30
+recent disturbances. The three ripple passes took 1.3 ms of GPU time a
+frame on the software renderer (lavapipe, 960 × 540, busy water:
+splashes and a wake every frame) against 5.7 s for the main view, so
+well under 0.1% there; whole-frame times on and off were lost in the
+noise of other work sharing the machine. The compatibility renderer
+runs the same simulation and paints the same bands (checked with the
+demo's first night stills). On the GPU, three 256 × 256 passes a frame (the
+step, ~9 reads a texel plus the stamps; the view, 13 reads) and two
+more texture reads per water pixel while it runs (the buffer and the
+bands' brush grain).
+
+Checked with `tools/ripple_demo.gd` (run instructions in its header): on
+the postage stamp at night, through the player's own third-person
+camera, the player wades along a shore (a ring from every step, a
+continuous wake from his legs), looses an arrow that comes down about
+8 m out (its own ring, clear of his), wades back through the rings,
+then rain rings the water around him: a 13 s recording (Godot's Movie
+Maker), or stills of the same plus dusk and noon and the CPU readers
+against the simulated buffer.
+
 ## Vegetation
 
 `scripts/ecology/` and `data/biomes/*.json`
@@ -817,6 +937,53 @@ copy.
     120-370 triangles;
   - far, beyond it: 80-triangle lobes, 5-sided trunks, no branches,
     cards or vines; 56-230 triangles.
+- **Branchy canopy trees** (Phase 1 (i); `TreeLayouts`). Broadleaf,
+  gnarled, emergent, umbrella and cypress canopy and emergent trees are
+  drawn from a skeleton instead of one leaf blob: the trunk forks into
+  3-5 thick limbs, each limb splits into branches, and a smaller leaf
+  clump (the same lobe, colors and leaf cards) sits at each branch end,
+  so limbs show between the clumps. Cypress keeps its column: a leader
+  to the top with short upturned limbs. Each species grows
+  `TreeLayouts.COUNT` (6) layouts from the world seed and the species;
+  each tree picks one, mirrored or not, by hashing the world seed, its
+  chunk and where it stands (`TreeLayouts.pick`), so the same tree grows
+  the same way on every visit and neighbours differ. Trees stay batched:
+  in the detail ring each chunk draws a branchy species with one
+  MultiMesh per layout it uses; beyond it, with the species' old
+  single-crown far mesh in one MultiMesh (both sets are built on attach,
+  and `set_fine` shows one or the other). Hero draws every ring of the
+  skeleton (12-sided trunk, 9-sided limbs, 6-sided branches, 180-triangle
+  clumps); near draws every other ring and 80-triangle clumps with the
+  same limbs, so nothing pops between them. Wood you can hold (trunk,
+  limbs, branches; palm stems, mangrove roots and stems, conifer trunks)
+  has zero sway weight, so it holds still in the wind and a handhold
+  never drifts off it; leaf clumps, leaf cards, fronds and vines sway as
+  before. The same skeleton gives the mesh, the colliders and the branch
+  graph, so all three agree.
+- **Branch graphs** (`BranchGraph`, `BranchGraphs`; the contract other
+  systems read). Per layout, handholds are laid along the skeleton every
+  ~0.5 m (`BranchGraph.SPACING_M`): up the trunk from 0.4 m to where the
+  limbs leave, then out along each limb and branch until the wood is
+  thinner than 3.5 cm (`BranchGraph.MIN_RADIUS_M`), each with its
+  tangent, the wood's radius and its limb number, linked to its
+  neighbours along the wood and across each fork (both ways). They're
+  cached per layout and 10% height step in the unit-height frame; a
+  tree's graph scales them by its height, mirrors them if it is, and
+  `xform` places them with the tree's rigid transform (radial up, yaw,
+  lean; no scale). Palms, conifers and mangroves (stilt roots too) get
+  trunk-only graphs; bamboo, cacti and rosettes none. `ChunkManager`
+  gives every tree within 60 m of the player a graph (nearest first,
+  1 ms of work a frame) and drops it past 70 m or when its chunk leaves
+  the detail ring or is freed. The key is a hash of the chunk key and the
+  tree's index in placement order (`chunk.trees` is now in placement
+  order: `trees[i]` is `hosts[i]`). Nothing is stored: a chunk that
+  unloads and reloads gives the same keys and the same handholds, to the
+  millimetre.
+- **F6** (dev mode only; `BranchGraphView`): draws the handholds of the
+  graphs within 30 m of the player over everything, green where the
+  player can hold (wood at least 6 cm thick), yellow where only a monkey
+  can, and the links as lines; redrawn four times a second, and gone
+  entirely when off.
 - **Moss and vines.** Each plant carries its site's moss (moisture) and
   vine (moisture and warmth) amounts in the MultiMesh custom data: moss
   creeps over the bark, and tree meshes' hanging vine strands (lianas;
@@ -828,6 +995,24 @@ copy.
   and ground cover up to 20% closer; shrubs keep their spacing, because
   denser shrubs walled in the view. Ground cover and epiphytes draw out
   to 300 m, which covers the whole detail ring.
+- **What the branchy trees cost.** A branchy tree is 2,100-2,900
+  triangles at hero (was ~760), 900-1,330 at near (was ~350), and the
+  same 160-235 far. Rendering info for the whole frame (shadow passes
+  included), same seed, cameras and time, Forward+ at 960 × 540 on the
+  dev stamp:
+
+  | view | draw calls | primitives |
+  |---|---|---|
+  | rainforest, eye level | 251 → 277 (+10%) | 3.47 → 3.78 M (+9%) |
+  | rainforest hero tree, noon / dusk | 293 → 345, 299 → 351 (+18%) | 4.46 → 4.93 M, 4.48 → 4.96 M (+11%) |
+  | deciduous forest, eye level | 358 → 491 (+37%) | 4.27 → 5.66 M (+32%) |
+  | deciduous hero tree, noon / dusk | 335 → 470, 324 → 465 (+40-44%) | 3.99 → 5.56 M, 3.93 → 5.50 M (+39-40%) |
+  | boreal forest, eye level | 456 → 580 (+27%) | 5.33 → 6.39 M (+20%) |
+  | dusk river (Phase 0 acceptance view) | 300 → 376 (+25%) | 2.30 → 3.32 M (+44%) |
+
+  Draw calls stay well under double everywhere, so the six layouts
+  stay (the agreed fallback was four). The rainforest is mostly palms
+  and bamboo, so it changes least.
 
 ## Creatures
 
@@ -945,12 +1130,12 @@ Spawn tiers:
   exported to a real .glb: read raw at runtime, scaled to its sidecar
   height, relit, Idle and Walk switching as the player moved.
 - **Pond Crawler** (spec Phase 1 rig; `scripts/creatures/mythics/`
-  `pond_crawler.gd`, `pond_crawler_body.gd`, `pond_crawler_hitboxes.gd`,
+  `pond_crawler.gd`, `pond_crawler_body.gd`;
   `shaders/pond_crawler.gdshader`). *Limnoreptor cucullatus* (invented), a
   mythic of swamp and bog water, out at night. It's held back from normal
   play (`"spawn": "disabled"`) until Phase 7: `PondCrawler.debug_spawn()`
-  places one and `tools/pond_crawler_demo.gd` records it. Dev mode's F7
-  will place one too once the Phase 1 rigs share that key.
+  places one and `tools/pond_crawler_demo.gd` records it. F7 brings only
+  the Night Rider for now; the Phase 1 rigs are to share one dev-spawn key.
   `CreatureSpawner.adopt()` ticks a creature placed by hand and lets
   arrows hit it.
   - Body (`PondCrawlerBody`): sculpted like SculptedBodies (signed-distance
@@ -984,7 +1169,9 @@ Spawn tiers:
       speed) and plays a soft wet slap (3D, synthesized, six variants).
     - The body hangs from the planted hands on a loose spring: it lags,
       overshoots, sways, leans onto the planted arm and breathes. Its
-      drift calls `Ripples.wake` every frame it's in the water.
+      drift calls `Ripples.wake` every frame it's in the water. With the
+      ripple simulation (RippleSim) each plant shows as a ring, and a
+      lurch's overlapping plants stack into a field of them round it.
     - Two-bone IK bends each arm, elbow high and outward. A planted hand
       lies flat with its fingers splayed and curls as it lifts.
   - Behavior:
@@ -1004,16 +1191,120 @@ Spawn tiers:
       that can't go on ends where it is.
     - Shot, it turns on you; killed, the eye goes out and it slumps and
       fades.
-  - Hitboxes (spec D5, `PondCrawlerHitboxes`): capsules and spheres on the
-    lump, hood, upper arms, forearms and hands, following the bones.
-    - They are one static body on physics layer 5, which the player
-      collides with.
-    - Arrows use an exact segment test
-      (`CreatureSpawner.creature_on_segment`), so an arrow sticks in the
-      part it visibly hits and moves with it.
-    - They're kept to the crawler for now and move onto the shared hitbox
-      helper when the Phase 1 rigs merge.
+  - Hitboxes (spec D5): the shared `Hitboxes` helper, as the Night Rider
+    (below). Capsules and spheres on the lump, hood, upper arms, forearms
+    and hands, one kinematic body each on layer 3, riding the skeleton and
+    each arm's bone attachments. An arrow's ray meets the part it visibly
+    hits and sticks in it, moving with it. The player bumps into one
+    `Hitboxes.blocker()` capsule through the lump (layer 1); the arms,
+    like the rider's legs, don't snag you.
   - Tunables are the entry's `rig` (data/creatures/README.md).
+- **Night Rider** (Phase 1 rig; `scripts/creatures/mythics/`, data "Night
+  rider", *Nyctequus gemellus*, invented): two riders on dark horses,
+  always a pair, boreal forest (taiga) at night, aggressive. Held back from
+  play until Phase 7 (`spawn: disabled`: CreatureSpawner skips it and
+  Territories leaves it out of the odds, so every other territory is
+  unchanged; all 53 on the dev stamp hash the same with and without the
+  entry). Seen through the dev spawn (`NightRiderPair.debug_spawn()`; F7
+  in dev mode) and `tools/night_rider_demo.gd`.
+  - Body (`NightRiderBody`): horse and hooded, cloaked rider as one
+    sculpted skinned mesh, reusing SculptedBodies' shapes, surface nets and
+    skinning with its own spec, cache and rig (no change to the shared
+    sculpt code). A heavy horse (deep chest, arched neck, long mane to one
+    side, full tail, thick legs with the hair flaring over broad hooves);
+    the rider's deep pointed hood with a dark void for a face, broad
+    shoulders, sleeves to gloved hands at the reins, the cloak over the
+    horse's back and down its flanks with a torn hem. 16 bones in a real
+    hierarchy (each leg two: shoulder or hip to knee or hock, then to the
+    hoof), mirrored by nested pivots, so a pivot's rotation is its bone's
+    local pose. Triangles (near / far, switching at 55 m): 9,756 / 2,420;
+    the far mesh's shapes are thickened to at least its cell size so legs
+    don't break up. Built in about 4 s on a worker the first time it's
+    needed (at startup in dev mode, for F7).
+  - Look (`shaders/night_rider.gdshader`): vertex-lit like the world, with
+    Look's fur strokes and a hard-edged grain triplanar at a scale where a
+    texel is one to three screen pixels at walking distance (crunchy
+    texture on smooth shapes). The texture is bound to the rest pose: each
+    vertex carries its rest position and normal (CUSTOM0, CUSTOM1) and the
+    strokes and grain are looked up there, so they ride on the skin
+    instead of sliding over the legs as they walk. Palette (data) deep
+    ultramarine and indigo, every color at or above the night sky's
+    darkest, #0A14A0, and the shader eases creases and dark strokes onto
+    that floor rather than below it. At night they are "lit only by blue
+    sheen", as in the designer's references (a dark armoured figure, a
+    dark horse): the world's night light reaches them only `night_shade`
+    as much (data "look"), so they stand as deep blue masses darker than
+    the trunks, and a cold blue sheen (emitted; strongest on the edges
+    turned away from you, across the planes facing up and toward you, and
+    on what faces the sky, broken into streaks by the strokes and grain,
+    like the era's sphere-mapped gloss) carries their shapes. The rider's
+    face and the horse's eye sockets and nostrils are a void: untextured,
+    catching no sheen, the darkest thing on them. The world's own
+    materials have no sheen (look.gdshaderinc); this is the riders' alone.
+    Eyes:
+    `shaders/eye_glow.gdshader`, small camera-facing points of #FF2A2A
+    with a soft halo that never shrink below about three pixels, drawn a
+    little toward the camera so the head doesn't swallow them (it still
+    hides them from behind). They are the only light on the riders; no
+    light sources.
+  - Movement (`NightRider`, a Creature): heavy momentum. Speed eases at
+    `accel_mps2` (0.25 m/s²: four seconds to walking pace), and the heading
+    turns no tighter than an 8 m circle, the turn rate itself easing (a
+    heavy body swinging round); nearly stopped it can turn slowly on the
+    spot. It wades up to 0.7 m and won't step deeper. The body pitches to
+    the slope between fore and hind hooves.
+  - Gait: a slow four-beat walk only (left hind, left fore, right hind,
+    right fore, a quarter cycle apart). Each hoof is placed by two-bone IK
+    on its leg's pivots, fore knees bending forward, hind hocks back. In
+    stance the hoof sweeps back exactly as fast as the body moves on (the
+    stride scales with speed), so planted hooves don't slide; out of reach
+    at the ends of the stride the leg points straight at it, so the hoof
+    settles onto the ground and peels off it rather than skating. In swing
+    the hoof lifts 13 cm, folding the knee or hock, and sets down softly
+    (no spray). The head dips as each fore hoof lands, the body bobs
+    1.5 cm and rolls a touch, the rider sways, the tail swings, and each
+    hoof follows the ground under it.
+  - Pair (`NightRiderPair`): the follower rides in the leader's tracks two
+    horse lengths behind (5.1 m nose to nose), steering for the leader's
+    recorded track and easing its speed to hold the gap, its gait held 0.4
+    of a cycle out of step (so the eight hoofbeats never coincide). The
+    leader patrols (waypoints ahead within its territory, in its biome,
+    steering round trunks early with rays on the tree layer), walks a
+    route, or hunts: at night within `notice_m` (more if you're loud), or
+    once shot, it walks at you and strikes in reach
+    (`CreatureSpawner.player_hit`, the species' `bite`; no balancing).
+  - Hitboxes (`Hitboxes`, generic; meant to become every creature's): one
+    kinematic body (`AnimatableBody3D`) per part riding its pivot, sized
+    to the mesh: barrel, neck, head, tail, each leg's two segments, the
+    rider's body, arms and hood. The parts are on their own physics layer,
+    3 (`Hitboxes.LAYER`, bit value 4), not the world's layer 1, so the
+    player's movement (mask 1) never snags on a leg. Arrows find them: the
+    arrow's physics ray includes layer 3 in its mask (and the bow's aim
+    ray looks at every layer), and a ray that meets a part hurts that
+    creature (`Hitboxes.creature_of()`) and the arrow sticks in that part,
+    riding with it; the gap between the legs is a miss. For the player to
+    bump into there is one simple body per creature on layer 1
+    (`Hitboxes.blocker()`: a capsule through the horse's barrel, inside
+    the parts, so a shot always meets a part first). All off when it dies.
+  - Sound (`NightRiderSounds`): each hoof landing is a soft synthesized
+    thud (a low falling thump, a dark press of noise, a brief hush of
+    needles; no clop) on a 3D player moved to that hoof (unit size 5 m,
+    heard to 110 m). A hoof in water sends `Ripples.splash` as it lands and
+    `Ripples.wake` while it wades (no-ops until the ripple simulation is
+    attached).
+  - Biome cue (`Mythics`): on walking into a `biome_lock` biome during the
+    species' hours (or when they begin while you're there), at most every
+    `cooldown_s`, a 12 s recording of the pair walking far off
+    ("hoofbeats_far": both four-beat walks, out of step, darkened and
+    echoed) plays on a 3D player 280-420 m away, in the direction the
+    biome runs deepest from you, moving across as they walk, muffled by
+    distance. It reads the player's biome cell and the sky's daylight and
+    spawns nothing.
+  - Dev spawn: `NightRiderPair.debug_spawn(mythics, from, facing)` (from
+    code) brings a pair across the view about 30 m ahead, on dry ground.
+    F7 calls it in dev mode while the input map has no shared `dev_spawn`
+    action; once it has (the main branch's, for every Phase 1 rig), Mythics
+    stands down and the shared handler should call `debug_spawn()`.
 
 Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
 howl, drone and whisper. Bodies are placeholders (`CreatureBodies`)
@@ -1035,9 +1326,15 @@ the way Godot draws a front face.)
 
 - **Movement** (`PlanetPlayer`): walk 6 km/h; sprint 5.5 m/s by
   double-tapping forward and holding it (or the pad's left stick held
-  in); crouch (hold Shift or pad B) lowers the capsule and camera to
-  1.05 m, slows to 0.8 m/s and stands back up only with headroom; holding
-  jump jumps again on each landing. `noise_level` (0 crouched and still ..
+  in), ended by releasing forward or drawing the bow; crouch (hold Shift
+  or pad B) lowers the capsule and camera to 1.05 m, slows to 0.8 m/s and
+  stands back up only with headroom; holding jump jumps again on each
+  landing. Speed has momentum (spec D5): it builds at 11 m/s² (a sprint in
+  about half a second) and bleeds off at 18 m/s² (a short slide to a
+  stop). Turns at speed are wider. In the air you keep your momentum and
+  steer at 3 m/s², so a sprinting jump carries; water is 4 m/s² both ways.
+  Walls and trunks stop the part of the momentum that runs into them.
+  `noise_level` (0 crouched and still ..
   1 sprinting, eased) and `still_time` are what wildlife reads.
   `anim_state` (idle, walk, sprint, crouch, crouch_walk, air, swim,
   climb) is the hook for a future rigged model's animation tree, with the
@@ -1061,10 +1358,19 @@ the way Godot draws a front face.)
   `set_motion()` (the player's speed). Crouching still squashes the body
   vertically.
 - **Trees** (`TerrainChunk` trunk colliders, `TreeContact`): canopy and
-  emergent trees in the detail ring get a cylinder collider each (one
-  static body per chunk, a shape owner per tree, sized from
-  `PlantMeshes.tree_dims`, on physics layer 2 as well as 1), 60 a frame
-  (~0.2 ms; all at once behind the loading screen). One sphere query a few times a second finds trunks near the
+  emergent trees in the detail ring get colliders that follow the drawn
+  wood (D5: no invisible walls, no ghost-through), built from the same
+  skeleton as the mesh (`TreeLayouts.collider_segments`): up to four
+  stacked cylinders along the trunk that lean, turn and taper with it
+  (a flared foot takes two), each just inside the bark; a mangrove's
+  five stilt roots and its stem instead of one fat post; a cactus's
+  trunk and arms; no collider at all for plants whose wood stays below
+  knee height (0.5 m), and no more 2 m minimum. Trees with a branch graph
+  (within 60 m) also get capsules on their limbs and branches at least
+  5 cm thick, so arrows stick in limbs. All on one static body per chunk
+  (a shape owner per piece of wood, on physics layer 2 as well as 1),
+  60 trees a frame (all at once behind the loading screen);
+  `TerrainChunk.tree_up` now follows the tree's lean. One sphere query a few times a second finds trunks near the
   player: under a crown is `under_canopy` (rain shelter); walking through
   a crown or bumping a trunk rustles it (a synthesized rustle and a crown
   shiver through the MultiMesh custom data's b channel). A physics query
@@ -1114,7 +1420,8 @@ the way Godot draws a front face.)
   - Arrows aim at whatever is under the crosshair, fall with the planet's
     gravity and stick in the ground, trees and ruins (60 s, at most 40
     about), ride in a creature they hit (in the very part they hit, for a
-    creature with real hitboxes: the Pond Crawler), and sink in water.
+    creature with real hitboxes, `Hitboxes`: the Night Rider and the Pond
+    Crawler), and sink in water.
     Camp folk you hit complain.
   - In test, a full draw landed 103 m away after 1.9 s, and one arrow
     killed a hare.
@@ -1247,9 +1554,46 @@ latest results:
   coast, plus a sheet of moon phases.
 - **Climate checks.** Weather and climate checks cover the figures listed
   above; 49-50 of the 50 surface templates appear on each tested seed.
+- **Branchy trees and branch graphs** (headless, in the rainforest):
+  - `chunk.trees` is in placement order (0 of 9,622 trees out of step
+    with `hosts`);
+  - every handhold sampled (1,427 on 25 trees, 5 of them mirrored) lies
+    inside the drawn bark: four rays out across the wood from each one
+    all leave through the bark within 7 cm of the wood's radius;
+  - rendered, the MultiMesh transforms of 706 branchy trees match their
+    records exactly (rotation, height, mirror);
+  - after walking away (the chunks unload and the graphs are dropped:
+    none of the 30 old keys stayed registered) and back, all 30 graphs
+    come back with the same keys and handholds within 0.0000 m;
+  - links all run both ways; F6 redraws in ~3.5 ms, the tree-contact
+    scan takes 0.14 ms, a 75 m tree's graph 0.6 ms.
+  - A mirrored and a plain copy of the same layout, side by side, light
+    alike (`cull_disabled` with vertex lighting and a flat-colour
+    ambient).
 
 ## Known gaps and next steps
 
+- **Branchy trees and branch graphs (Phase 1 (i)).**
+  - Climbing still uses the old trunk climb (`PlanetPlayer`, radius from
+    `tree_dims`); climbing and the monkey are built on the graphs
+    separately.
+  - Graphs and limb colliders exist only within 60 m of the player;
+    farther crowns have trunk colliders only, so arrows pass through
+    distant limbs.
+  - Conifers get trunk-only graphs up to where the lowest cone hides the
+    trunk (0.3 of the height); palms their stem; bamboo, cacti and
+    rosettes none.
+  - Leaf clumps sway and branches don't: in a gale (the shader's full
+    0.8 m lean) a small tree's clump can slide off its branch tip.
+  - A mirrored tree is a negative-scale MultiMesh instance. It lights
+    correctly because the foliage material is `cull_disabled`,
+    vertex-lit and has a flat-colour ambient; per-pixel lighting or sky
+    ambient there would need a normal flip for mirrored instances.
+  - Stacked cylinders are sized to the wood halfway along each one, so
+    at the thin end of a tapering piece they stand up to ~6% proud of
+    the bark.
+  - Each branchy species keeps its 12 layout meshes (6 hero, 6 near;
+    ~3.5 MB of arrays) once it has appeared.
 - **Placeholder content.** Mansion star patterns are approximate (the
   star counts are right). Most plant and creature data is placeholder,
   and so are all the models and sounds.
@@ -1297,6 +1641,19 @@ latest results:
   (building them as chunks enter the detail ring, and the player
   colliding with them); the contact scan, footsteps and shelter checks
   are each under 0.02 ms.
+- **Ripples.** Dropped items and falling leaves don't exist yet, so
+  nothing calls `Ripples.splash()` for them; the call is ready. Rings
+  don't reflect off banks (they run on under the ground and are hidden)
+  and a river's current doesn't carry them downstream. Beyond the 64 m
+  window, and past 40 m from the camera, water doesn't ring at all and
+  the readers get 0 there. Rain is kept sparse (0.05 drops per m² a
+  second): denser, the rings merge into blotches; even so, round a
+  player wading in rain the overlapping rings read more as broad
+  blotches than as rings. Creatures' contacts were checked headless (a
+  heron wading at 0.6 m/s drags a wake from each leg and splashes every
+  half stride, a swimming duck drags one from its hull) but not filmed:
+  ground animals don't choose to walk through water. Costs were measured
+  on a software renderer only.
 - **Waterfalls** have no sound yet, and the fine terrain grid (4 m) can't
   make a truly vertical cliff, so the gorge wall under a tall fall is a
   steep ramp.

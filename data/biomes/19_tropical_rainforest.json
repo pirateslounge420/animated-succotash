@@ -14,6 +14,9 @@
 		"emergent": [
 			{
 				"name": "Rainforest emergent",
+				"genus": "Hyperdendron",
+				"species": "excelsum",
+				"invented": true,
 				"shape": "emergent",
 				"temp_c": [21, 33],
 				"moisture": [0.6, 1],
@@ -28,6 +31,9 @@
 		"canopy": [
 			{
 				"name": "Buttressed broadleaf",
+				"genus": "Pterobasis",
+				"species": "latifolia",
+				"invented": true,
 				"shape": "broadleaf",
 				"temp_c": [20, 33],
 				"moisture": [0.55, 1],
@@ -39,6 +45,9 @@
 			},
 			{
 				"name": "Rainforest palm",
+				"genus": "Silvipalma",
+				"species": "umbrosa",
+				"invented": true,
 				"shape": "palm",
 				"temp_c": [20, 33],
 				"moisture": [0.55, 1],
@@ -51,6 +60,8 @@
 			},
 			{
 				"name": "Giant bamboo",
+				"genus": "Dendrocalamus",
+				"species": "giganteus",
 				"shape": "bamboo",
 				"temp_c": [20, 30],
 				"moisture": [0.6, 1],
@@ -65,6 +76,8 @@
 		"shrub": [
 			{
 				"name": "Tree fern",
+				"genus": "Cyathea",
+				"species": "arborea",
 				"shape": "tree_fern",
 				"temp_c": [10, 30],
 				"moisture": [0.6, 1],
@@ -75,6 +88,9 @@
 			},
 			{
 				"name": "Rainforest sapling",
+				"genus": "Tirodendron",
+				"species": "umbraticum",
+				"invented": true,
 				"shape": "shrub",
 				"temp_c": [18, 33],
 				"moisture": [0.55, 1],
@@ -88,6 +104,9 @@
 		"ground": [
 			{
 				"name": "Forest-floor fern",
+				"genus": "Humifilix",
+				"species": "opaca",
+				"invented": true,
 				"shape": "fern",
 				"temp_c": [8, 33],
 				"moisture": [0.55, 1],
@@ -101,6 +120,8 @@
 		"epiphyte": [
 			{
 				"name": "Orchid",
+				"genus": "Cattleya",
+				"species": "labiata",
 				"shape": "epiphyte_clump",
 				"temp_c": [14, 32],
 				"moisture": [0.6, 1],
@@ -111,6 +132,8 @@
 			},
 			{
 				"name": "Bromeliad",
+				"genus": "Guzmania",
+				"species": "lingulata",
 				"shape": "epiphyte_clump",
 				"temp_c": [10, 32],
 				"moisture": [0.62, 1],
@@ -121,6 +144,9 @@
 			},
 			{
 				"name": "Liana",
+				"genus": "Restivitis",
+				"species": "longissima",
+				"invented": true,
 				"shape": "liana",
 				"temp_c": [20, 33],
 				"moisture": [0.6, 1],

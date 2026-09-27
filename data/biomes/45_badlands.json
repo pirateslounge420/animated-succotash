@@ -15,6 +15,8 @@
 		"canopy": [
 			{
 				"name": "Juniper",
+				"genus": "Juniperus",
+				"species": "communis",
 				"shape": "conifer",
 				"temp_c": [4, 21],
 				"moisture": [0.14, 0.46],

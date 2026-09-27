@@ -16,6 +16,8 @@
 		"canopy": [
 			{
 				"name": "Frailejon",
+				"genus": "Espeletia",
+				"species": "grandiflora",
 				"shape": "rosette",
 				"temp_c": [1, 11],
 				"moisture": [0.55, 1],
@@ -30,6 +32,9 @@
 		"shrub": [
 			{
 				"name": "Paramo dwarf shrub",
+				"genus": "Paramofrutex",
+				"species": "nanus",
+				"invented": true,
 				"shape": "shrub",
 				"temp_c": [1, 12],
 				"moisture": [0.5, 1],
@@ -41,6 +46,8 @@
 			},
 			{
 				"name": "Paramo dwarf bamboo",
+				"genus": "Chusquea",
+				"species": "tessellata",
 				"shape": "bamboo",
 				"temp_c": [2, 10],
 				"moisture": [0.6, 1],
@@ -55,6 +62,8 @@
 		"ground": [
 			{
 				"name": "Tussock grass",
+				"genus": "Calamagrostis",
+				"species": "effusa",
 				"shape": "tussock",
 				"temp_c": [-4, 12],
 				"moisture": [0.3, 1],
@@ -67,6 +76,9 @@
 			},
 			{
 				"name": "Cushion plant",
+				"genus": "Pulvinobium",
+				"species": "andicola",
+				"invented": true,
 				"shape": "cushion",
 				"temp_c": [-6, 9],
 				"moisture": [0.4, 1],

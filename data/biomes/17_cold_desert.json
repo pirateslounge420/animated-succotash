@@ -16,6 +16,8 @@
 		"shrub": [
 			{
 				"name": "Saltbush",
+				"genus": "Atriplex",
+				"species": "confertifolia",
 				"shape": "shrub",
 				"temp_c": [-2, 18],
 				"moisture": [0.03, 0.26],

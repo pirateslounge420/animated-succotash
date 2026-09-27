@@ -17,6 +17,8 @@
 		"ground": [
 			{
 				"name": "Sphagnum moss",
+				"genus": "Sphagnum",
+				"species": "fuscum",
 				"shape": "moss",
 				"temp_c": [-12, 6],
 				"moisture": [0.55, 1],
@@ -29,6 +31,8 @@
 			},
 			{
 				"name": "Lichen",
+				"genus": "Cetraria",
+				"species": "islandica",
 				"shape": "moss",
 				"temp_c": [-22, 4],
 				"moisture": [0.03, 0.8],
@@ -40,6 +44,8 @@
 			},
 			{
 				"name": "Tundra sedge",
+				"genus": "Carex",
+				"species": "bigelowii",
 				"shape": "grass",
 				"temp_c": [-12, 4],
 				"moisture": [0.3, 1],
@@ -50,6 +56,9 @@
 			},
 			{
 				"name": "Arctic annuals",
+				"genus": "Arctannua",
+				"species": "pumila",
+				"invented": true,
 				"shape": "grass",
 				"temp_c": [-8, 4],
 				"moisture": [0.35, 0.9],

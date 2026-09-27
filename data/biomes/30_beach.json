@@ -15,6 +15,8 @@
 		"canopy": [
 			{
 				"name": "Coconut palm",
+				"genus": "Cocos",
+				"species": "nucifera",
 				"shape": "palm",
 				"temp_c": [22, 33],
 				"moisture": [0.25, 1],

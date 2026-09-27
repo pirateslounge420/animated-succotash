@@ -1,0 +1,1761 @@
+{
+ "key": "TRICHOCEREUS_CATALOGUE",
+ "name": "Trichocereus (Andean torch cacti)",
+ "kind": "land",
+ "status": "18 species; only those the ethnobotanical literature records as ceremonially active, tagged documented / reported / trace",
+ "notes": "Loaded like the other catalogues (data/plants/*.json). Kew POWO files these under Echinopsis; the game uses the Trichocereus name with the synonym recorded. They grow only in cold, dry, high, rocky ground - Andean-type mountain bands - so on the planet they appear on the dry side of high ranges in the mild-temperature band. Bat/moth pollinated, one-night flowers; birds spread the fruit; fallen segments root, so clumps spread along slopes. Goats and other browsers do not eat them (cannot_be_browsed). Scope: the designer asked only for species with recorded ceremonial (psychoactive) use; the ceremony system reads the 'ceremonial' tag - 'documented' species carry a full ceremony, 'reported' a weaker one, 'trace' none (the oracle refuses them).",
+ "plants": {
+  "shrub": [
+   {
+    "name": "Trichocereus pachanoi",
+    "display": "San Pedro cactus",
+    "genus": "Trichocereus",
+    "species": "pachanoi",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis pachanoi",
+    "shape": "cactus",
+    "temp_c": [
+     9,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     1500,
+     3200
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#6FA870",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Flowers open at night for a single night; fallen segments root where they land (clonal 'sucker' here means basal pups and rooted segments)."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.2,
+      0.8
+     ],
+     "rib_count": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Fast-growing, few-ribbed columns with short spines; branches from the base into a clump. Huge white night-opening flowers; red fruit. Synonym Echinopsis pachanoi.",
+    "ceremonial": "documented"
+   },
+   {
+    "name": "Trichocereus peruvianus",
+    "display": "Peruvian torch",
+    "genus": "Trichocereus",
+    "species": "peruvianus",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis peruviana",
+    "shape": "cactus",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     1200,
+     3000
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.25,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5A8C6A",
+    "accent": "#8FA890",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Flowers open at night for a single night; fallen segments root where they land (clonal 'sucker' here means basal pups and rooted segments)."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.2,
+      0.8
+     ],
+     "rib_count": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Blue-green columns with long spines; sprawls and branches heavily. White nocturnal flowers, edible fruit. Synonym Echinopsis peruviana.",
+    "ceremonial": "documented"
+   },
+   {
+    "name": "Trichocereus bridgesii",
+    "display": "Bolivian torch",
+    "genus": "Trichocereus",
+    "species": "bridgesii",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis lageniformis",
+    "shape": "cactus",
+    "temp_c": [
+     8,
+     17
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1800,
+     3400
+    ],
+    "height_m": [
+     2.0,
+     5.0
+    ],
+    "density": 0.25,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8058",
+    "accent": "#7A9A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Flowers open at night for a single night; fallen segments root where they land (clonal 'sucker' here means basal pups and rooted segments)."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.2,
+      0.8
+     ],
+     "rib_count": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Pale green, thinner columns with long yellow spines; forms clumps. White night flowers. Synonym Echinopsis lageniformis.",
+    "ceremonial": "documented"
+   },
+   {
+    "name": "Trichocereus scopulicola",
+    "display": "Scopulicola torch",
+    "genus": "Trichocereus",
+    "species": "scopulicola",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis scopulicola",
+    "shape": "cactus",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1000,
+     2600
+    ],
+    "height_m": [
+     3.0,
+     4.5
+    ],
+    "density": 0.15,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#3E7A4A",
+    "accent": "#5C8C58",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Flowers open at night for a single night; fallen segments root where they land (clonal 'sucker' here means basal pups and rooted segments)."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.0,
+      0.15
+     ],
+     "rib_count": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Dark green, almost spineless columns with a smooth skin. White nocturnal flowers. Synonym Echinopsis scopulicola. Rare and local.",
+    "ceremonial": "documented"
+   },
+   {
+    "name": "Trichocereus macrogonus",
+    "display": "Macrogonus torch",
+    "genus": "Trichocereus",
+    "species": "macrogonus",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis macrogona",
+    "shape": "cactus",
+    "temp_c": [
+     10,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     1200,
+     3000
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "documented",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: documented (presence recorded in the literature; no potency data kept). Blue-green columns, long spines; the umbrella name Kew uses for the San Pedro/Peruvian torch complex."
+   },
+   {
+    "name": "Trichocereus cuzcoensis",
+    "display": "Cuzco torch",
+    "genus": "Trichocereus",
+    "species": "cuzcoensis",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis cuzcoensis",
+    "shape": "cactus",
+    "temp_c": [
+     9,
+     16
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     2200,
+     3400
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "reported",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Many-ribbed, heavily spined; ceremonial use recorded but weak."
+   },
+   {
+    "name": "Trichocereus terscheckii",
+    "display": "Card\u00f3n grande",
+    "genus": "Trichocereus",
+    "species": "terscheckii",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis terscheckii",
+    "shape": "cactus",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "altitude_m": [
+     500,
+     2600
+    ],
+    "height_m": [
+     6.0,
+     12.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       8000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "trace",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). A true tree cactus, trunked with many arms; the tallest in the genus. Presence recorded, ethnobotanical use minor."
+   },
+   {
+    "name": "Trichocereus tacaquirensis",
+    "display": "Tacaquira torch",
+    "genus": "Trichocereus",
+    "species": "tacaquirensis",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis tacaquirensis",
+    "shape": "cactus",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.15,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "trace",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Stout columns, dense spines; close to terscheckii."
+   },
+   {
+    "name": "Trichocereus taquimbalensis",
+    "display": "Taquimbal torch",
+    "genus": "Trichocereus",
+    "species": "taquimbalensis",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis tacaquirensis",
+    "shape": "cactus",
+    "temp_c": [
+     11,
+     18
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1800,
+     2900
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "trace",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Treated by Kew as tacaquirensis; kept separate for its own range."
+   },
+   {
+    "name": "Trichocereus santaensis",
+    "display": "Santa valley torch",
+    "genus": "Trichocereus",
+    "species": "santaensis",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis macrogona",
+    "shape": "cactus",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "reported",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Ancash form of the San Pedro complex."
+   },
+   {
+    "name": "Trichocereus puquiensis",
+    "display": "Puquio torch",
+    "genus": "Trichocereus",
+    "species": "puquiensis",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis macrogona",
+    "shape": "cactus",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     2500,
+     3300
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "reported",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Ayacucho form of the complex; thick columns."
+   },
+   {
+    "name": "Trichocereus huanucoensis",
+    "display": "Hu\u00e1nuco torch",
+    "genus": "Trichocereus",
+    "species": "huanucoensis",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis macrogona",
+    "shape": "cactus",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     1800,
+     2800
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "reported",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Hu\u00e1nuco form; broad ribs."
+   },
+   {
+    "name": "Trichocereus riomizquensis",
+    "display": "R\u00edo Mizque torch",
+    "genus": "Trichocereus",
+    "species": "riomizquensis",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis bridgesii",
+    "shape": "cactus",
+    "temp_c": [
+     13,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1500,
+     2600
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "reported",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Bolivian form near bridgesii."
+   },
+   {
+    "name": "Trichocereus werdermannianus",
+    "display": "Werdermann's torch",
+    "genus": "Trichocereus",
+    "species": "werdermannianus",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis werdermannii",
+    "shape": "cactus",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1500,
+     2700
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "reported",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Stout, well-spined; Kew files as E. werdermannii."
+   },
+   {
+    "name": "Trichocereus validus",
+    "display": "Card\u00f3n de la sierra",
+    "genus": "Trichocereus",
+    "species": "validus",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis terscheckii",
+    "shape": "cactus",
+    "temp_c": [
+     11,
+     18
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "altitude_m": [
+     1200,
+     2800
+    ],
+    "height_m": [
+     4.0,
+     8.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       8000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "trace",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Treated as terscheckii by Kew."
+   },
+   {
+    "name": "Trichocereus knuthianus",
+    "display": "Knuth's torch",
+    "genus": "Trichocereus",
+    "species": "knuthianus",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis macrogona",
+    "shape": "cactus",
+    "temp_c": [
+     14,
+     21
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1200,
+     2500
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "reported",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Mara\u00f1\u00f3n form; pale spines."
+   },
+   {
+    "name": "Trichocereus glaucus",
+    "display": "Glaucous torch",
+    "genus": "Trichocereus",
+    "species": "glaucus",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis macrogona",
+    "shape": "cactus",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1200,
+     2600
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "reported",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Frosted blue skin."
+   },
+   {
+    "name": "Trichocereus chalaensis",
+    "display": "Chala torch",
+    "genus": "Trichocereus",
+    "species": "chalaensis",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis chalaensis",
+    "shape": "cactus",
+    "temp_c": [
+     15,
+     20
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "altitude_m": [
+     100,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#7FA070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.3,
+      0.9
+     ],
+     "rib_count": [
+      0.3,
+      0.8
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "ceremonial": "trace",
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Lomas fog-hill cactus near the Pacific."
+   }
+  ]
+ }
+}
