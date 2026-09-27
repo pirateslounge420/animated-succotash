@@ -21,6 +21,20 @@ Ordered the way it is *used*: how to work → where the project is → what to d
 - **Shared state, no direct calls.** Systems read the `World` autoload and write only the fields they own. Systems never call each other's methods to change state.
 - **Arrows point down.** A system may read anything above it in the emergence stack (C2); it never writes upward.
 - **Nothing hand-placed.** Every terrain feature, plant, animal, nest, and camp must be derivable from the seed plus the passes above it. Pre-built nests, established territories, and half-grown crops are produced by *running the simulation forward at generation time*, not by placing them.
+- **Life comes only from life.** Nothing living appears from nothing. Every plant is a seed, spore, offset or cutting of a plant that existed; every animal is born to parents that existed. The only exception is generation itself, and even there the warm start runs the breeding rules forward so a new world is the descendant of its own first day. Consequences the code must honour:
+  - no proximity spawning — the spawner deals individuals from the ledger's population and never rolls new ones;
+  - vegetation grows in patches because offspring appear near parents and spread outward through suitable ground, so a lone tree in a meadow has a story and a meadow has edges;
+  - a region with no seed source and no seed bank stays bare until something arrives;
+  - a species wiped out in a region is gone there until it walks, blows or is carried back in;
+  - growth stages are part of this: every plant is seen small before it is seen large.
+
+  **Browsing:** herbivores eat plants at the stage they can reach. Goats and deer strip sprouts, saplings and low shrubs; goats also work slopes and rock that deer avoid, so goat country is bare of young trees and thick with what they won't eat. A plant entry may carry `cannot_be_browsed` (cacti, thorn scrub); those spread where browsers are heavy. Browsing writes to `flora.age_structure`, so a goat-heavy region visibly fails to regenerate.
+
+  ⚑ The code breaks this rule in two places today, and both are already scheduled:
+  - creatures spawn by proximity; the ledger spawner comes in Phase 7;
+  - plants are placed by suitability and clumping noise; placing them from parents comes in Phase 6.
+
+  The Phase 1 dev spawn key (F7) is a test tool, not play.
 - **Data over code.** Species, plants, biomes, and weather odds live in `data/`. The designer edits tables; Claude Code edits logic. Any tunable number goes in a table. Keep the existing files (`data/biomes/*.json`, `data/creatures/creatures.json`); extend their schemas, don't rename them.
 - **Ask before inventing.** If a rule or value isn't in this doc, propose it and wait. (A past prototype invented an unwanted breath meter. Don't.)
 - **Fewer polygons, softer textures, moodier light.** When unsure how anything should look, that is the answer — never "more pixels" or "sharper."
@@ -149,11 +163,11 @@ PlanetData is ~119 bytes per cell: 6.6 MB on the full planet, 1.6 MB on the stam
 | fauna.genome_mean[species][gene] | `World.fauna.genome_mean` | S×G× u8 (0–1 in 1/255 steps) | ledger | 8 |
 | fauna.packs ⚑ | `World.fauna.packs`: per pack its territory (regions) and members {age, sex, parents, genes incl. dominance}; ranks are derived from it, never stored | a few packs per region × ≤12 members × ~24 B | ledger | 8 |
 | events | `World.events`: per region a ring of the last ~50 records {day, kind, params} + a per-kind summary (count, first day, last day). Kinds include `scent` (a blooming aroid or a carcass: strength, until-day) | ~1.1 KB | ecology/events: append-only, every system adds records through it | 6 |
-| society[camp] | `World.society`: packed arrays per camp id (camps are few): pop, food, roles; culture {fish, hunt, forage, wary, range, ritual_smoke}; `landmark` (kind + id of the remnant it formed around); `salvage` {worked stone, timber, metal}; `standing` (the player's standing with the camp) | per camp: ~15 f32 + 2 i32 | camps | 10 |
-| player.haze | `World.player.haze` (a small player-state object; nothing else on it yet) | one f32, 0–1 | player (writes); `post_grade`, audio, creatures read | 10 |
+| society[camp] | `World.society`: packed arrays per camp id (camps are few): pop, food, roles; culture {fish, hunt, forage, wary, range, ritual_smoke, ceremony}; `landmark` (kind + id of the remnant it formed around); `salvage` {worked stone, timber, metal}; `standing` (the player's standing with the camp) and `guest_until` (day: a guest of the fire after a ceremony); `oracle_standing` | per camp: ~17 f32 + 2 i32 | camps | 10 |
+| player.haze, player.vision | `World.player.haze`, `World.player.vision` (a small player-state object) | one f32 each, 0–1 | player (writes); `post_grade`, audio, creatures read | 10 |
 | creature.memory[] | on each NEAR creature node; saved as a region delta in `World.fauna.memory_delta` (sparse, by region) | ≤5 × {what, where, day, good/bad} | creature | 11 |
 
-**Regions: PlanetData cells or a fixed coarsening.** Option A: one region per cell. Option B: a fixed k×k block of cells within a cube face, k in `data/sim.json`. Per region the fauna fields, soil, water and events come to about 2.4 KB at a planning roster of S = 64 species (25 today), G = 15 genes and ~24 event kinds (5.3 KB if genomes are f32). Flora is per species from Phase 6, but a region holds only the species actually present there: about 20–60 of them × ~28 bytes (id, counts per growth stage, biomass, seed bank, 6–10 gene means), so 0.6–1.7 KB more; stored densely for all 417 plant entries (107 biome plants + the two catalogues) it would be ~12 KB more per region. Totals at ~4.1 KB per region:
+**Regions: PlanetData cells or a fixed coarsening.** Option A: one region per cell. Option B: a fixed k×k block of cells within a cube face, k in `data/sim.json`. Per region the fauna fields, soil, water and events come to about 2.4 KB at a planning roster of S = 64 species (25 today), G = 15 genes and ~24 event kinds (5.3 KB if genomes are f32). Flora is per species from Phase 6, but a region holds only the species actually present there: about 20–60 of them × ~28 bytes (id, counts per growth stage, biomass, seed bank, 6–10 gene means), so 0.6–1.7 KB more; stored densely for all 435 plant entries (107 biome plants + the three catalogues) it would be ~12 KB more per region. Totals at ~4.1 KB per region:
 
 | | Regions | Ledger memory |
 |---|---|---|
@@ -173,7 +187,7 @@ Proposed: **B, k = 4.** It keeps the ledger small and, above all, keeps the warm
 - A 10× planet can't hold dense ledger arrays; FAR regions would store nothing until first simulated (regenerated deterministically per R6.5, then kept as a delta). That needs a region-id indirection from the start (Phase 6) so storage can go sparse without touching `tick_region`. Flora is sparse per region from day one.
 - Stored deltas beyond D1's list: felled and burned trees (chopping and fire make snags that tree age can't derive), plants that germinated during play and crops (as cohorts per region: species, germination day, count), placed items (a bundle drying by a fire or in a hut for days), and possibly remnant salvage (if salvaging uses a landmark up, `salvage_left` per landmark is a delta).
 - `cave_density`: GLACIAL_TILL isn't in the designer's rock list; proposed none (loose glacial deposits), like alluvial.
-- `player.haze` needs a home for player state on World; `World.player` is proposed, holding only `haze` for now.
+- `player.haze` and `player.vision` need a home for player state on World; `World.player` is proposed, holding only those two for now.
 - Human seed dispersal "along camp foraging ranges and paths" needs Phase 10's ranges; until then it uses each camp's position and a table radius.
 
 ### D4. Data schemas (extend existing files; don't rename)
@@ -183,12 +197,18 @@ data/plants/<catalogue>.json  plant catalogues, laid out like a biome file (key,
                              plants{stratum: [entries]}) but with no climate block: every entry carries its
                              own temp_c / moisture / altitude_m bands. The keys regions, types and
                              family_defaults are ignored by species_db. Today: amorphophallus.json (246
-                             species), cannabis.json (64 landraces of one species). Loaded from Phase 6.
+                             species), cannabis.json (64 landraces of one species), trichocereus.json (18
+                             Andean torch cacti). Loaded from Phase 6.
 plant                      { name, genus, species, invented?, stratum(canopy|under|ground), temp_min/max,
                              moisture_min/max, soil_min, slope_max, sway_stiffness, seasonal_color,
                              lifespan_years, snag_years, log_years,
-                             growth?, repro?, genes?, family?, aroid?, cannabis?, landrace?, landrace_id?, type? }
-  growth                   { stages: [{name, days}], final_size } — default trees: sprout, sapling, mature, old;
+                             growth?, repro?, genes?, family?, aroid?, cannabis?, landrace?, landrace_id?, type?,
+                             cannot_be_browsed?, synonym?, display?, ceremonial? }
+  cannot_be_browsed        true: browsers never eat it (cacti, thorn scrub); it spreads where browsers are heavy
+  synonym                  the accepted Kew name when the game uses another (Trichocereus → Echinopsis)
+  display                  the name shown in the game when `name` holds the binomial ("San Pedro cactus")
+  ceremonial               documented | reported | trace — read by the ceremony system (Phase 10)
+  growth                   { stages: [[name, days], …], final_size } — default trees: sprout, sapling, mature, old;
                              herbs and shrubs: sprout, young, mature. Growth runs 0–1 through the stages; the
                              size gene scales final_size. Crops use the same block.
   repro                    { mode: seed|clonal|both,
@@ -209,7 +229,7 @@ creature                   { name, genus, species, invented?, id, trophic(insect
                              light_response, herd_min/max, nest:{type, site}, reproduce_days,
                              biome_lock (mythic only), rare_variant, underground (cave fauna) }
 ```
-**Binomials (every entry, from now on).** Every plant and creature entry has `genus` and `species`; `name` stays the display name. Real organisms use their real binomial — the accepted name in Kew's Plants of the World Online for plants (*Tsuga heterophylla* for the hemlock, *Canis lupus* for the wolf). Invented ones — mythics, Night Rider, Pond Crawler, the placeholder plants named by habitat and form ("Understory shrub") — get an invented binomial in the same Linnaean style and `"invented": true`. No entry is valid without them. Entries sharing a binomial are one interbreeding species. (`repro.lifespan` — annual or perennial — is separate from `lifespan_years`, a tree's age at death.)
+**Binomials (every entry, from now on).** Every plant and creature entry has `genus` and `species`; `name` stays the display name. Real organisms use their real binomial — the accepted name in Kew's Plants of the World Online for plants (*Tsuga heterophylla* for the hemlock, *Canis lupus* for the wolf). Invented ones — mythics, Night Rider, Pond Crawler, the placeholder plants named by habitat and form ("Understory shrub") — get an invented binomial in the same Linnaean style and `"invented": true`. No entry is valid without them. Entries sharing a binomial are one interbreeding species. One exception to Kew: the torch cacti keep the name *Trichocereus*, with Kew's *Echinopsis* name recorded as `synonym`. (`repro.lifespan` — annual or perennial — is separate from `lifespan_years`, a tree's age at death.)
 
 ### D5. Player & controls (locked)
 - **Sprint = Minecraft-style:** tap W, then tap-and-hold W again quickly (double-tap window ~0.3 s). No Shift-to-sprint.
@@ -304,6 +324,7 @@ See Part C.
 - Tag every plant with a **stratum**; ensure each biome has canopy / understory / ground per Appendix R2. Small counts.
 - **Tree lifecycle:** every tree has an age derived from seed + position + world day (nothing stored). Each species has a lifespan in its table. Past lifespan a tree becomes a **snag** — standing dead, bare, broken top, own mesh in `plant_meshes` — for a species-set number of years, then a fallen log, then it's gone and its region gets a fertility bump. Chopping or fire (Phase 9) makes a snag immediately. Add `flora.snags[region]` and `flora.logs[region]` to the ledger so other systems can read them.
 - **Ledger core:** the flora ledger needs R6 rules 1–7, regions and `tick_region` in this phase; Phase 7 adds fauna to the same ledger and the same harness run.
+- **Life from life (A2):** placement grows patches outward from parent plants and the seed bank instead of scattering by suitability and noise; a region with no seed source stays bare.
 - **Plant catalogues:** `species_db` loads `data/plants/*.json` exactly like a biome file: entries carry their own bands, there is no biome climate block, and the `regions`, `types` and `family_defaults` keys are ignored (so is the biome-key check). `species_db` warns on any entry without `genus` and `species` (D4).
 - **Reproduction data:** each plant entry may add a `repro` block; entries without one get their tier's default (fields in D4). `dormant`: the plant withdraws to its root and shows nothing, or a withered stem, until its season returns; `seed` means an annual that dies and comes back from the seed bank. `dioecious`: each plant is male or female and only females fruit.
 - **Lifecycle (NEAR):** each plant has an age from seed + position + world day for generated plants (nothing stored), and from the region delta for plants that germinated during play. States seedling → vegetative → bloom → fruit → dormant on the species' calendar, offset by a timing gene. Bloom and fruit are visible states with their own mesh part; dormant plants vanish or wither. Some species bloom before they leaf. Flowering may be triggered by day length (a `flower_trigger` gene read against the sky system's day length at that latitude) or by age.
@@ -327,11 +348,25 @@ See Part C.
 - **Harness:** build `eco_sim`'s flora half in this phase — biomass by species and region over years, spread maps, succession after a scripted test burn, allocation gene means by region. Phase 7 adds fauna to the same run.
 - **Aroids — the Amorphophallus catalogue:** new shape `aroid`: one petiole with a dissected umbrella leaf; bloom part is a spathe and spadix; dormant shows nothing. Carrion-fly pollinated — the bloom writes a short-lived scent record (`world.events`, kind `scent`) that draws the same insects the carcass chain uses; berries dispersed by birds; tuber offsets, and bulbils on the leaf for some species; dormant in the dry season; the giants bloom every 3–10 years for two or three days. `data/plants/amorphophallus.json` holds all 246 species accepted by Kew, each with its own temp_c/moisture/altitude band, height, density, soil, an `aroid` block (petiole pattern and colours, spathe colours), a `repro` block and `genes` ranges. Its shape is `umbrella` for now — switch every entry to `aroid` once that shape exists. Do not hand-place any of them; they grow wherever their bands allow, which will be the warm–hot bands only. (⚑ 15 East Asian species, konjac among them, are banded down to 12 °C, so they also reach the warm edge of the mild band.)
 - **Cannabis:** `data/plants/cannabis.json` holds 64 landrace populations of the single species *Cannabis sativa*, loaded like the aroid catalogue. All entries interbreed as one species. Each plant is male or female — only females carry the harvestable flower, and on windy days a faint yellow drift blows downwind from a male stand. Wind-pollinated, annual, seed bank. Flowering starts when the day length at that latitude drops below the plant's `flower_trigger` (ruderal types flower by age), so a tropical landrace carried north by a camp may never finish before the cold — that failure is allowed. Camp-follower dispersal, so it grows on middens and trail edges near camps that use it. Genes gain `leaf_width`, `resin`, `fibre`, `flower_trigger`, `purple`; broad-leaf types purple in cold. (Its uses are Phase 10.)
+- **Trichocereus — the Andean torch cacti:** `data/plants/trichocereus.json` holds 18 of them, loaded like the other catalogues. Kew files them under *Echinopsis*; the game uses the *Trichocereus* name with the synonym recorded.
+  - All of them need cold, dry, high, rocky ground (thin soil, dry ground), so on the planet they appear only on the dry side of high ranges in the mild band.
+  - Columnar, slow four-stage growth, clumping from basal pups and rooted fallen segments (`clonal: sucker`).
+  - One-night white flowers pollinated by bats and moths in late spring; red fruit spread by birds; cold-dormant; never browsed.
+  - The tree-sized ones (terscheckii, validus, 6–12 m) sit in lower dry valleys and act as landmarks.
+  - Each entry carries a `ceremonial` tag — `documented` (pachanoi, peruvianus, bridgesii, scopulicola), `reported`, or `trace` — that the ceremony system reads.
+  - The `cactus` shape exists already; verify it can do a many-armed column and a trunked tree form.
+  - ⚑ Checked, and it can't yet. Today's `cactus` is one fixed saguaro-like silhouette — a single column with two elbow arms, the same for every cactus species. It makes no many-armed column, no basal clump and no trunked tree. This phase gives it parameters (arm count and heights, basal pups, a trunked candelabra) along with the growth stages.
+  - ⚑ The file differs from this text in four places:
+    - it tags five species `documented`, macrogonus as well;
+    - validus is 4–8 m tall, not 6–12;
+    - chalaensis grows at 100–1,200 m, not high ground;
+    - six entries share Kew's *Echinopsis macrogona* but count as separate species under the binomial rule.
 - **Do not build:** fauna in the ledger (Phase 7), spreading fire (Phase 9; this phase has only the harness's scripted test burn), camp and player uses of plants (Phase 10).
 - **Done when:** a fertility overlay explains why a valley is lush and a ridge is bare; walking the stamp shows the right plant sizes in the right places; an old-growth patch on the stamp shows live trees, snags and logs together, and a young patch shows none; a runner plant shows visible stems linking a uniform patch; a bird-dispersed berry appears across a river its parent can't cross; a test burn regrows grass, then shrub, then trees with no stage coded; an aroid blooms, stinks, draws flies, and vanishes for the dry season; a female cannabis plant flowers on the day the sky says it should for that latitude; a forest patch on the stamp shows all four stages at once and a burn scar shows only the first two; a sapling browsed by deer never becomes a tree; a camp's planted plot is visibly taller each dev day.
 
 ## Phase 7 — Ecology core
 - **Touches:** `ecology/ledger`, `ecology/events` and `tools/eco_sim.gd` (all from Phase 6), `creature_spawner`, `creatures.json`.
+- **Life from life (A2):** the spawner deals individuals from the ledger's population and never rolls new ones; a species wiped out in a region stays gone until it walks back in. Browsing (A2) runs here: goats and deer eat plants at the stages they reach, writing `flora.age_structure`.
 - Add fauna to Phase 6's ledger and harness: food web (R3), diet caps, nests, fauna in the warm start; the harness (a headless run of N years on the stamp at max speed, CSV plus PNG charts, fixed seed with a multi-seed flag) gains population by species and region, camp food and the events timeline.
 - **Cave fauna:** bats that roost by day and pour out at dusk, cave fish, blind salamanders and spiders join the ledger with `underground: true`; their regions are the cave-bearing cells from Phase 3.
 - **Cavity chain:** snags are habitat. Wood-boring beetles and grubs live in snags and logs (insect count capped by snag count). Woodpeckers eat them and carve cavities — a snag gains a cavity slot when a woodpecker nests there. Owls, squirrels and other cavity nesters use old cavities; they can't nest without one. Owls hunt rodents at night. So `nest.site: cavity` requires a snag with a free cavity in the region.
@@ -364,7 +399,7 @@ See Part C.
 - **Camp folk loop:** foragers/hunters/fishers go out by day, gather from the ledger and flora, return by dusk; food surplus → camp grows → more pressure on nearby prey → range farther or shrink. Background camp-to-camp trade. **Do not script outcomes.**
 - Camps are night safe zones. Interaction proximity-based; no dialogue trees.
 - **Firewood:** camp folk gather snags and logs for firewood first, so old wood thins near camps.
-- **Culture:** each camp holds culture sliders {fish, hunt, forage, wary, range, ritual_smoke} seeded from biome and the landmark it formed around, and moved by events — a wolf raid raises wary, a rich river raises fish. Goods, chatter, and how folk react to the player read from the sliders.
+- **Culture:** each camp holds culture sliders {fish, hunt, forage, wary, range, ritual_smoke, ceremony} seeded from biome and the landmark it formed around, and moved by events — a wolf raid raises wary, a rich river raises fish. Goods, chatter, and how folk react to the player read from the sliders.
 - **Camps form around remnants:** camps already sit in inhabited ruins, wild sites and cliff sites. Make it a scored rule: every landmark — tower, castle, aqueduct, pyramid, graveyard, barrow, boardwalk, treehouse, igloo, bridges (unpark `hold/set-pieces` for this phase), cave mouths, springs, river fords, waterfalls — gives nearby sites a camp score from water, flat ground, food (flora biomass and ledger fauna), shelter, and distance from other camps. The highest scores get camps. The landmark's kind seeds the camp: aqueduct → water and farming; ford or bridge → crossing and trade; graveyard or barrow → small, wary, afraid of the night; cave mouth → shelter and mining, wary of the dark; castle or tower → largest and best defended. Camp folk salvage from the remnant (worked stone, timber, metal scraps) — the remnants are the work of an older, more advanced people, and salvage is where a camp's rarer tools come from. Culture sliders start from the landmark kind. Camps never form inside a landmark; the fire sits where the ruin builder left it.
   - New remnant kinds, built in this phase (R1a, second reference batch): stone stairways up cliffs, hung bells, a stone giant or idol gate, hollow-tree dwellings, wells, chapels with candlelit interiors. The parked set pieces already hold a chapel.
   - ⚑ Today the ruin builder puts tepees, lean-tos and a fire inside some ruins. Read as: the builder's fire stays where it is and scored camps form beside landmarks, not in them — confirm whether those inhabited-ruin camps move out. Fords don't exist yet (derive them from river width and depth); cave mouths come from Phase 3.
@@ -375,7 +410,19 @@ See Part C.
   - Overdo it and the vignette closes in, the ground tilts, and the player stumbles for a while; nothing lethal. It's a trade — calm and company against slow and loud — never a plain buff.
   - ⚑ Hunger, a fear/panic vignette and oracle tribes don't exist yet; they arrive with this phase or stay hooks.
 - **Haze, in camps:** culture slider `ritual_smoke` (0–1), seeded from whether a resinous landrace grows in the camp's range, moved by history like the others. In a camp with the habit the pipe goes round at the fire after cooking: folk sit longer, chatter turns to laughter and slower speech, they sleep later, guards are drowsier — the camp is a little less safe that night, which the ledger's predators may notice. Astrology tribes with oracles smoke before reading the moon. Sharing the pipe is a proximity interaction, no dialogue tree, and raises standing with that camp the way sharing food does. Camps without the habit ignore the bundle; a few wary ones dislike the smell.
-- **Done when:** you catch a fish, bring it to the opening camp, cook it at dusk with the folk, and the camp's own hunters are seen leaving and returning; plus two camps with different histories visibly behave differently; on the stamp, every large landmark has a camp near it or a visible reason it doesn't (no water, too steep), and camps at two different landmark kinds look and act differently; a hemp stand near a camp becomes rope on its huts; the player dries a bundle by the fire, smokes it, the grade shifts and a cough spooks a deer; the camp folk pass a pipe and their guard nods off.
+- **Trichocereus ceremony:** ceremonial only; the cactus can't be used raw or alone. A highland camp with an oracle (astrology tribes; culture slider `ceremony`, seeded high in the Andean-type mountain bands where the cactus grows) holds a night ceremony at the fire when moon and season line up.
+  - The oracle prepares a brew from cut columns — one visible pot at the fire over a few in-game hours — and offers it to the circle. The player takes part by sitting in the circle; camp folk who take part are visibly in it too. No numbers, no menu.
+  - The oracle reads each cactus entry's `ceremonial` tag: `documented` gives the full ceremony, `reported` a shorter, dimmer one, `trace` is refused — "not this one." Only the documented species can produce the reading.
+  - **Effects on the player:** one status, `player.vision`, 0–1, in WorldState, lasting several in-game hours and rising slowly before it peaks.
+    - Visual, in `post_grade` within R1: geometry stays put but surfaces breathe; textures slowly slide and repeat; a faint stepped-geometric lattice in the Incan tocapu style — squares, diagonals, stepped crosses — drifts over the world and gathers at the screen edges, in gold #E8B84A and deep red #A01020 over the blue; colours cycle toward the R1a extremes; moon and stars grow trails; distant mountains seem to lean in.
+    - At the peak the fire shows brief figures — a stag, a serpent, a condor — that vanish when looked at, drawn from that region's events log so the visions are its history.
+    - Audio: the drone rises, the fire's crackle spreads into rhythm, camp chatter falls away.
+    - Status: no sprint, aim useless, hunger and thirst afterwards, and the player is effectively helpless — which is why it's done inside a camp, with guards.
+    - Taken outside a ceremony, or if the player wanders from the fire into the dark, the lattice turns cold blue, fear cues sharpen instead of softening, and creatures read the player as easy prey. It's a trade of a night's safety for sight.
+  - **What the player gets: the oracle's reading.** At the peak the ceremony reveals one true thing about this world from the events log or the ledger — where the mythic sleeps, which valley the herds will winter in, when the next full moon falls, a remnant nobody has found. Nothing invented: the reading is always a real record. This is how a wanderer learns what the tribes know.
+  - **Camp folk:** on ceremony nights the camp sits up till dawn, no hunting the next day, the oracle's standing rises, and a player who took part is treated as a guest of the fire. Camps without the cactus in range never hold one; carrying cut columns to a camp that has an oracle but no cactus is one of the few trades that matters.
+  - ⚑ Thirst, like hunger, doesn't exist yet; oracles arrive with this phase.
+- **Done when:** you catch a fish, bring it to the opening camp, cook it at dusk with the folk, and the camp's own hunters are seen leaving and returning; plus two camps with different histories visibly behave differently; on the stamp, every large landmark has a camp near it or a visible reason it doesn't (no water, too steep), and camps at two different landmark kinds look and act differently; a hemp stand near a camp becomes rope on its huts; the player dries a bundle by the fire, smokes it, the grade shifts and a cough spooks a deer; the camp folk pass a pipe and their guard nods off; at a highland camp on the stamp a ceremony happens on a full moon, the lattice and fire-figures show, the oracle's reading names a real event from the log, and the player is visibly vulnerable until dawn.
 
 ## Phase 11 — Memory and lore
 - **Touches:** `creature` (NEAR), `camps`, scrolls, HUD place names.
@@ -444,6 +491,7 @@ The references have crunchy textures on smooth, rounded shapes. Grain, dither an
 | Deep night (grade) | full blue: every surface tinted toward #1B2ED8, local colour nearly gone. The night rows above are the dusk/moonrise end of the range; the grade slides between the two through the night |
 | Storm / volcanic sky | purple-magenta, #5A1AA0 → #C030C0 streaks, instead of grey |
 | Dread accent | #A01020, a single deep red, rare |
+| Vision lattice (ceremony only) | gold #E8B84A and deep red #A01020 over the blue (Phase 10, Trichocereus ceremony) |
 
 Rules: saturate, never desaturate; scenes are blue plus one warm accent; nothing pure black. Warm light stays tiny — candles, hearths, windows — one or two points per scene. The tone ceiling is dread, not gore.
 
@@ -475,6 +523,8 @@ Rules: saturate, never desaturate; scenes are blue plus one warm accent; nothing
 | Warm–hot, wet | Giant beetles, butterflies, ants | Parrots, gibbon-type monkeys, agouti-type | Ocelot-type, big snakes, harpy-type | Jaguar/tiger-type | **Cichlids**, crocodile, piranha-type | Rainforest canopy serpent · Swamp bog-lurker |
 | Warm–hot, dry | Scarabs, scorpions | Sand grouse, jerboa-type, lizards | Jackal-type, caracal-type, vulture | **Lion**, hyena | Oasis fish | Savanna mane-lord · Desert sand-wyrm |
 | Ocean / big lake | Plankton (implicit) | Shoal fish | Big fish | **Shark** | — | Leviathan |
+
+**Mountains, cold–mild and mild–warm bands:** goats — herd animal, sure-footed on slopes, browser (A2, Browsing).
 
 Rules: generalists (wolf, deer, bear, hawk, cats, rats) span many bands; cold-blooded lock to warm bands; every predator has a `diet` list and is capped by it; herd and pack sizes follow food, never set directly; water creatures read water temperature; mythic ignores sharing rules.
 
