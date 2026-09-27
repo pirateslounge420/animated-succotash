@@ -1,0 +1,763 @@
+{
+ "key": "BAOBAB_CATALOGUE",
+ "name": "Baobabs and the ginkgo — ancient landmark trees",
+ "kind": "land",
+ "status": "9 species",
+ "notes": "All 8 baobab species (Africa, Madagascar, Australia) and the ginkgo. Both are 'landmark' trees: individually rare, huge or ancient, worth a place name; the events/lore system may name them. Baobabs are bat-pollinated night-bloomers and shed leaves in the dry season; hollow old ones shelter camps and bees. Ginkgo turns gold and drops every leaf in a week.",
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "African baobab",
+    "genus": "Adansonia",
+    "species": "digitata",
+    "family": "Malvaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     20,
+     29
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     15.0,
+     25.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#A08A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       365
+      ],
+      [
+       "sapling",
+       5000
+      ],
+      [
+       "mature",
+       40000
+      ],
+      [
+       "old",
+       400000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bat",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 7,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "African savanna, Sahel to Limpopo. The upside-down tree; thousands of years old; hollow trunks shelter people and bees. All 8 Kew-accepted species. Deciduous in the dry season, bat-pollinated white flowers at night, fruit by mammals.",
+    "landmark": true
+   },
+   {
+    "name": "Grandidier's baobab",
+    "genus": "Adansonia",
+    "species": "grandidieri",
+    "family": "Malvaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     25.0,
+     30.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#A08A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       365
+      ],
+      [
+       "sapling",
+       5000
+      ],
+      [
+       "mature",
+       40000
+      ],
+      [
+       "old",
+       400000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bat",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 7,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SW Madagascar dry forest; the Avenue. Tall smooth cylinders with a flat crown. All 8 Kew-accepted species. Deciduous in the dry season, bat-pollinated white flowers at night, fruit by mammals.",
+    "landmark": true
+   },
+   {
+    "name": "Fony baobab",
+    "genus": "Adansonia",
+    "species": "rubrostipa",
+    "family": "Malvaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#A08A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       365
+      ],
+      [
+       "sapling",
+       5000
+      ],
+      [
+       "mature",
+       40000
+      ],
+      [
+       "old",
+       400000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bat",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 7,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "W Madagascar dry forest. Bottle-shaped. All 8 Kew-accepted species. Deciduous in the dry season, bat-pollinated white flowers at night, fruit by mammals.",
+    "landmark": true
+   },
+   {
+    "name": "Za baobab",
+    "genus": "Adansonia",
+    "species": "za",
+    "family": "Malvaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     10.0,
+     30.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#A08A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       365
+      ],
+      [
+       "sapling",
+       5000
+      ],
+      [
+       "mature",
+       40000
+      ],
+      [
+       "old",
+       400000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bat",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 7,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "W and S Madagascar.  All 8 Kew-accepted species. Deciduous in the dry season, bat-pollinated white flowers at night, fruit by mammals.",
+    "landmark": true
+   },
+   {
+    "name": "Suarez baobab",
+    "genus": "Adansonia",
+    "species": "suarezensis",
+    "family": "Malvaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     24,
+     28
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     15.0,
+     25.0
+    ],
+    "density": 0.1,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#A08A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       365
+      ],
+      [
+       "sapling",
+       5000
+      ],
+      [
+       "mature",
+       40000
+      ],
+      [
+       "old",
+       400000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bat",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 7,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "N Madagascar limestone.  All 8 Kew-accepted species. Deciduous in the dry season, bat-pollinated white flowers at night, fruit by mammals.",
+    "landmark": true
+   },
+   {
+    "name": "Madagascar baobab",
+    "genus": "Adansonia",
+    "species": "madagascariensis",
+    "family": "Malvaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     24,
+     28
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     5.0,
+     20.0
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#A08A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       365
+      ],
+      [
+       "sapling",
+       5000
+      ],
+      [
+       "mature",
+       40000
+      ],
+      [
+       "old",
+       400000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bat",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 7,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "NW Madagascar.  All 8 Kew-accepted species. Deciduous in the dry season, bat-pollinated white flowers at night, fruit by mammals.",
+    "landmark": true
+   },
+   {
+    "name": "Perrier's baobab",
+    "genus": "Adansonia",
+    "species": "perrieri",
+    "family": "Malvaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     24,
+     28
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     400
+    ],
+    "height_m": [
+     20.0,
+     30.0
+    ],
+    "density": 0.05,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#A08A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       365
+      ],
+      [
+       "sapling",
+       5000
+      ],
+      [
+       "mature",
+       40000
+      ],
+      [
+       "old",
+       400000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bat",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 7,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "N Madagascar; rarest.  All 8 Kew-accepted species. Deciduous in the dry season, bat-pollinated white flowers at night, fruit by mammals.",
+    "landmark": true
+   },
+   {
+    "name": "Boab",
+    "genus": "Adansonia",
+    "species": "gregorii",
+    "family": "Malvaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     26,
+     30
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#A08A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       365
+      ],
+      [
+       "sapling",
+       5000
+      ],
+      [
+       "mature",
+       40000
+      ],
+      [
+       "old",
+       400000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "bat",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 7,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Kimberley, NW Australia. Swollen bottle trunk; prison tree. All 8 Kew-accepted species. Deciduous in the dry season, bat-pollinated white flowers at night, fruit by mammals.",
+    "landmark": true
+   },
+   {
+    "name": "Ginkgo",
+    "genus": "Ginkgo",
+    "species": "biloba",
+    "family": "Ginkgoaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     300,
+     1200
+    ],
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [],
+    "color": "#7AB040",
+    "accent": "#E8D040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       200
+      ],
+      [
+       "sapling",
+       3000
+      ],
+      [
+       "mature",
+       20000
+      ],
+      [
+       "old",
+       300000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 7,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Wild in the Tianmu and Dalou mountains of E China; the last of its line, unchanged since the dinosaurs. Fan leaves turn pure gold in one week each autumn, then drop all at once. Dioecious; wind-pollinated; fetid seeds carried by mammals. Kew POWO.",
+    "landmark": true
+   }
+  ],
+  "shrub": [],
+  "ground": [],
+  "epiphyte": []
+ }
+}

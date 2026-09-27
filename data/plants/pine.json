@@ -1,0 +1,3292 @@
+{
+ "key": "PINE_CATALOGUE",
+ "name": "Pines — 39 landscape-forming species",
+ "kind": "land",
+ "status": "39 species, curated",
+ "notes": "Kew accepts ~115 pines; these are the ones that make forests: boreal, Mediterranean, Himalayan, Chinese and Japanese, western and eastern North American, Mexican and Caribbean. Wind-pollinated; seeds by wind and by nutcrackers/jays (whitebark, Swiss stone, pinyon depend on birds). Many are fire species: lodgepole and jack pine reseed a burn in even-aged stands; longleaf and ponderosa need fire to keep their savanna open — the disturbance phase should read that.",
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Scots pine",
+    "genus": "Pinus",
+    "species": "sylvestris",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -4,
+     14
+    ],
+    "moisture": [
+     0.35,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     2600
+    ],
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#C87A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Eurasia, Scotland to Siberia; 20–35 m. Orange upper bark; the boreal and heath pine. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Siberian pine",
+    "genus": "Pinus",
+    "species": "sibirica",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -8,
+     6
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     200,
+     2400
+    ],
+    "height_m": [
+     25.0,
+     35.0
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2E6A3C",
+    "accent": "#8A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Siberian taiga; 25–35 m. Five-needle nut pine of the taiga. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Swiss stone pine",
+    "genus": "Pinus",
+    "species": "cembra",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -4,
+     5
+    ],
+    "moisture": [
+     0.45,
+     0.9
+    ],
+    "altitude_m": [
+     1500,
+     2500
+    ],
+    "height_m": [
+     15.0,
+     25.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2E6A3C",
+    "accent": "#8A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Alps and Carpathians high forest; 15–25 m. Nutcracker-planted; treeline forest. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Black pine",
+    "genus": "Pinus",
+    "species": "nigra",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     300,
+     2000
+    ],
+    "height_m": [
+     25.0,
+     45.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#6A6A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mediterranean mountains; 25–45 m. Dark crown; Corsica, Turkey, Balkans. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Aleppo pine",
+    "genus": "Pinus",
+    "species": "halepensis",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     15.0,
+     25.0
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A8A4A",
+    "accent": "#A08A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mediterranean lowlands; 15–25 m. Pale open crown; fire-prone hills. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Stone pine",
+    "genus": "Pinus",
+    "species": "pinea",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     15.0,
+     25.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#B08A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mediterranean coasts; 15–25 m. Umbrella crown; pine nuts. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Maritime pine",
+    "genus": "Pinus",
+    "species": "pinaster",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     11,
+     18
+    ],
+    "moisture": [
+     0.3,
+     0.65
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#B06A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Atlantic and W Mediterranean dunes; 20–35 m. Dune and heath pine of Iberia and France. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Turkish pine",
+    "genus": "Pinus",
+    "species": "brutia",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     13,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     20.0,
+     30.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A8A4A",
+    "accent": "#A08A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "E Mediterranean; 20–30 m.  Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Canary Island pine",
+    "genus": "Pinus",
+    "species": "canariensis",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     500,
+     2400
+    ],
+    "height_m": [
+     30.0,
+     40.0
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#A06A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Canary Islands; 30–40 m. Resprouts after fire; long drooping needles. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Chir pine",
+    "genus": "Pinus",
+    "species": "roxburghii",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     500,
+     2000
+    ],
+    "height_m": [
+     30.0,
+     50.0
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#A07A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Himalayan foothills; 30–50 m. Long-needle monsoon pine. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Bhutan pine",
+    "genus": "Pinus",
+    "species": "wallichiana",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     5,
+     14
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     1800,
+     4000
+    ],
+    "height_m": [
+     30.0,
+     50.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A50",
+    "accent": "#8A7A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Himalaya; 30–50 m. Blue-green drooping five-needle. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Chinese red pine",
+    "genus": "Pinus",
+    "species": "tabuliformis",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     14
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     100,
+     2600
+    ],
+    "height_m": [
+     20.0,
+     25.0
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#A07A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "N China; 20–25 m. Flat-topped. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Masson pine",
+    "genus": "Pinus",
+    "species": "massoniana",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     25.0,
+     45.0
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#B07A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "S China hills; 25–45 m. The common hill pine of southern China. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Japanese red pine",
+    "genus": "Pinus",
+    "species": "densiflora",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     900
+    ],
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#C87A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Japan, Korea; 20–35 m. Twisted red trunks. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Japanese black pine",
+    "genus": "Pinus",
+    "species": "thunbergii",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#5A5A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Japanese coasts; 20–35 m. Windswept coastal pine. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Korean pine",
+    "genus": "Pinus",
+    "species": "koraiensis",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     0,
+     10
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     200,
+     1500
+    ],
+    "height_m": [
+     30.0,
+     40.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2E6A3C",
+    "accent": "#8A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Korea, Manchuria, Russian Far East; 30–40 m. Nut pine of the mixed forest. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Sumatran pine",
+    "genus": "Pinus",
+    "species": "merkusii",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     18,
+     26
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     300,
+     2000
+    ],
+    "height_m": [
+     25.0,
+     45.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#A07A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE Asian highlands, Sumatra; 25–45 m. The only pine south of the equator. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Ponderosa pine",
+    "genus": "Pinus",
+    "species": "ponderosa",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     15
+    ],
+    "moisture": [
+     0.25,
+     0.55
+    ],
+    "altitude_m": [
+     300,
+     2700
+    ],
+    "height_m": [
+     30.0,
+     50.0
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#D08A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "western North America; 30–50 m. Vanilla-scented orange plates; open parkland forest. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Lodgepole pine",
+    "genus": "Pinus",
+    "species": "contorta",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     10
+    ],
+    "moisture": [
+     0.35,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     3500
+    ],
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#8A7A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "western North American mountains; 20–35 m. Dense even-aged stands after fire; cones open in heat. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Jeffrey pine",
+    "genus": "Pinus",
+    "species": "jeffreyi",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "altitude_m": [
+     1500,
+     3000
+    ],
+    "height_m": [
+     25.0,
+     40.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#C08A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sierra Nevada; 25–40 m.  Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Sugar pine",
+    "genus": "Pinus",
+    "species": "lambertiana",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     13
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     600,
+     2500
+    ],
+    "height_m": [
+     40.0,
+     60.0
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A50",
+    "accent": "#8A7A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sierra Nevada and Cascades; 40–60 m. Tallest pine; huge cones. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Western white pine",
+    "genus": "Pinus",
+    "species": "monticola",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     2,
+     10
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     300,
+     2500
+    ],
+    "height_m": [
+     30.0,
+     50.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A50",
+    "accent": "#8A7A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Pacific Northwest mountains; 30–50 m.  Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Whitebark pine",
+    "genus": "Pinus",
+    "species": "albicaulis",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -4,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     1500,
+     3600
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3A7040",
+    "accent": "#B0A890",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "western treeline; 5–15 m. Nutcracker-planted treeline pine, often krummholz. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Bristlecone pine",
+    "genus": "Pinus",
+    "species": "longaeva",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     6
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "altitude_m": [
+     2600,
+     3600
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3A7040",
+    "accent": "#C0A080",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Great Basin high peaks; 5–15 m. Oldest trees on Earth; gnarled, half-dead giants. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Limber pine",
+    "genus": "Pinus",
+    "species": "flexilis",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     1500,
+     3500
+    ],
+    "height_m": [
+     10.0,
+     20.0
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3A7040",
+    "accent": "#A09080",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Rocky Mountain treeline; 10–20 m.  Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Pinyon pine",
+    "genus": "Pinus",
+    "species": "edulis",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "altitude_m": [
+     1400,
+     2400
+    ],
+    "height_m": [
+     5.0,
+     12.0
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A8A4A",
+    "accent": "#8A7A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Colorado Plateau; 5–12 m. Pinyon-juniper woodland; pine nuts. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Singleleaf pinyon",
+    "genus": "Pinus",
+    "species": "monophylla",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.12,
+     0.32
+    ],
+    "altitude_m": [
+     1200,
+     2600
+    ],
+    "height_m": [
+     5.0,
+     12.0
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6A9A5A",
+    "accent": "#8A7A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Great Basin; 5–12 m.  Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Eastern white pine",
+    "genus": "Pinus",
+    "species": "strobus",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     30.0,
+     50.0
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A50",
+    "accent": "#7A7A70",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "NE North America; 30–50 m. Soft five-needle; the tall pine of the north-east. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Red pine",
+    "genus": "Pinus",
+    "species": "resinosa",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     2,
+     9
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     200,
+     800
+    ],
+    "height_m": [
+     25.0,
+     35.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#C87A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Great Lakes and NE; 25–35 m.  Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Jack pine",
+    "genus": "Pinus",
+    "species": "banksiana",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -4,
+     6
+    ],
+    "moisture": [
+     0.35,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     15.0,
+     25.0
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#8A7A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Canadian boreal; 15–25 m. Fire-sealed cones; poor sandy ground. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Longleaf pine",
+    "genus": "Pinus",
+    "species": "palustris",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     16,
+     22
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     200
+    ],
+    "height_m": [
+     30.0,
+     35.0
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#B07A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE US coastal plain; 30–35 m. Grass-stage seedlings; fire-kept savanna. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Loblolly pine",
+    "genus": "Pinus",
+    "species": "taeda",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     14,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     700
+    ],
+    "height_m": [
+     30.0,
+     35.0
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#A07A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE US; 30–35 m.  Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Slash pine",
+    "genus": "Pinus",
+    "species": "elliottii",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     16,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     200
+    ],
+    "height_m": [
+     20.0,
+     30.0
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#A07A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE US flatwoods; 20–30 m.  Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Caribbean pine",
+    "genus": "Pinus",
+    "species": "caribaea",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     22,
+     27
+    ],
+    "moisture": [
+     0.4,
+     0.75
+    ],
+    "altitude_m": [
+     0,
+     900
+    ],
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#B07A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Central American and Caribbean lowland savanna; 20–35 m. Tropical pine savanna. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Mexican weeping pine",
+    "genus": "Pinus",
+    "species": "patula",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     1500,
+     3000
+    ],
+    "height_m": [
+     30.0,
+     40.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A9A5A",
+    "accent": "#B07A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mexican highlands; 30–40 m.  Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Montezuma pine",
+    "genus": "Pinus",
+    "species": "montezumae",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     1200,
+     3200
+    ],
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A50",
+    "accent": "#8A7A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mexican volcanoes; 20–35 m. Long drooping needles. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Hartweg's pine",
+    "genus": "Pinus",
+    "species": "hartwegii",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     2,
+     9
+    ],
+    "moisture": [
+     0.4,
+     0.75
+    ],
+    "altitude_m": [
+     2500,
+     4000
+    ],
+    "height_m": [
+     20.0,
+     30.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2E6A3C",
+    "accent": "#8A7A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mexican volcano treeline; 20–30 m. Highest pine forest in North America. Kew POWO for the name; standard floras for range."
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Siberian dwarf pine",
+    "genus": "Pinus",
+    "species": "pumila",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -10,
+     2
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "altitude_m": [
+     300,
+     2300
+    ],
+    "height_m": [
+     1.0,
+     4.0
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3A7040",
+    "accent": "#8A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "NE Asian mountains and tundra edge; 1–4 m. Prostrate krummholz pine. Kew POWO for the name; standard floras for range."
+   },
+   {
+    "name": "Mountain pine",
+    "genus": "Pinus",
+    "species": "mugo",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -4,
+     6
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "altitude_m": [
+     1400,
+     2700
+    ],
+    "height_m": [
+     2.0,
+     6.0
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2E6A3C",
+    "accent": "#8A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Alps, Carpathians treeline; 2–6 m. Krummholz shrub pine. Kew POWO for the name; standard floras for range."
+   }
+  ],
+  "ground": [],
+  "epiphyte": []
+ }
+}

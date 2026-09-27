@@ -1,0 +1,1281 @@
+{
+ "key": "CITRUS_CATALOGUE",
+ "name": "Citrus — wild species and the old hybrids",
+ "kind": "land",
+ "status": "15 species",
+ "notes": "Wild citrus of Asian foothills and forests plus the Australian limes; the old hybrids people carry (lime, oranges, lemon, yuzu) are camp-followers and appear only near camps and old ruins. Thorny, evergreen, bee-pollinated; fruit for birds, mammals and foragers; a trade good.",
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Pomelo",
+    "genus": "Citrus",
+    "species": "maxima",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     8.0,
+     15.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#D8E060",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE Asian river lowlands. Kew POWO."
+   },
+   {
+    "name": "Desert lime",
+    "genus": "Citrus",
+    "species": "glauca",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     18,
+     25
+    ],
+    "moisture": [
+     0.2,
+     0.4
+    ],
+    "altitude_m": [
+     100,
+     600
+    ],
+    "height_m": [
+     2.0,
+     8.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#C0D060",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Australian semi-arid woodland. Kew POWO."
+   },
+   {
+    "name": "Round lime",
+    "genus": "Citrus",
+    "species": "australis",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     18,
+     24
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#B0C040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Queensland subtropical forest. Kew POWO."
+   },
+   {
+    "name": "Sour orange",
+    "genus": "Citrus",
+    "species": "× aurantium",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     15,
+     24
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     5.0,
+     8.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#F0A020",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "naturalised by rivers; camp-follower. Kew POWO.",
+    "camp_follower": true
+   },
+   {
+    "name": "Sweet orange",
+    "genus": "Citrus",
+    "species": "× sinensis",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     16,
+     24
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     5.0,
+     10.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#F0A020",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "S China; camp-follower. Kew POWO.",
+    "camp_follower": true
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Citron",
+    "genus": "Citrus",
+    "species": "medica",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     16,
+     24
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     100,
+     1200
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#E8D040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Himalayan foothills to Indochina; the ancestor. Kew POWO."
+   },
+   {
+    "name": "Mandarin",
+    "genus": "Citrus",
+    "species": "reticulata",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     16,
+     24
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     100,
+     1500
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#F0A020",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "S China and Vietnam hills. Kew POWO."
+   },
+   {
+    "name": "Kumquat",
+    "genus": "Citrus",
+    "species": "japonica",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     100,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#F0A020",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "S China. Kew POWO."
+   },
+   {
+    "name": "Kaffir lime",
+    "genus": "Citrus",
+    "species": "hystrix",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#7AA040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE Asian rainforest edge. Kew POWO."
+   },
+   {
+    "name": "Ichang papeda",
+    "genus": "Citrus",
+    "species": "cavaleriei",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     500,
+     2500
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#B0C040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "central Chinese mountains; hardiest wild citrus. Kew POWO."
+   },
+   {
+    "name": "Trifoliate orange",
+    "genus": "Citrus",
+    "species": "trifoliata",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#E0C040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "N China, Korea; thorny, deciduous, survives -20 C. Kew POWO."
+   },
+   {
+    "name": "Australian finger lime",
+    "genus": "Citrus",
+    "species": "australasica",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     18,
+     24
+    ],
+    "moisture": [
+     0.65,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     2.0,
+     6.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#A0C060",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Queensland rainforest understory. Kew POWO."
+   },
+   {
+    "name": "Lime",
+    "genus": "Citrus",
+    "species": "× aurantiifolia",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     900
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#A0C040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "tropical lowlands; camp-follower. Kew POWO.",
+    "camp_follower": true
+   },
+   {
+    "name": "Lemon",
+    "genus": "Citrus",
+    "species": "× limon",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     15,
+     23
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#F0E040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Assam-Myanmar origin; camp-follower. Kew POWO.",
+    "camp_follower": true
+   },
+   {
+    "name": "Yuzu",
+    "genus": "Citrus",
+    "species": "× junos",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     10,
+     18
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     100,
+     1200
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#E8D040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Chinese and Japanese hills; camp-follower. Kew POWO.",
+    "camp_follower": true
+   }
+  ],
+  "ground": [],
+  "epiphyte": []
+ }
+}

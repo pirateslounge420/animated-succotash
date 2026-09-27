@@ -1,0 +1,2537 @@
+{
+ "key": "VINE_CATALOGUE",
+ "name": "Vines, lianas and climbers",
+ "kind": "land",
+ "status": "30 species",
+ "notes": "Climbers need a host: 'climber': true means the plant is placed at the base of a tree, snag, ruin wall or cliff and grows UP it along the branch graph, or over ruins and rock. Aroids of the rainforest (philodendron, monstera, pothos), lianas, rattans, temperate ivy, grape and creeper on ruins, kudzu and honeysuckle at edges, annual twiners on the ground. Stranglers kill old hosts over decades — a real event. Ruins overgrown with ivy and creeper are the reference look.",
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Tree philodendron",
+    "genus": "Philodendron",
+    "species": "bipinnatifidum",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     18,
+     26
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Brazilian Atlantic forest. Huge cut leaves; a crawler at the forest edge. Kew POWO.",
+    "climber": true
+   }
+  ],
+  "ground": [
+   {
+    "name": "Morning glory",
+    "genus": "Ipomoea",
+    "species": "purpurea",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     16,
+     27
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     2000
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "tropical American edge. Annual twiner. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Hops",
+    "genus": "Humulus",
+    "species": "lupulus",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     6,
+     16
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     3.0,
+     8.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Eurasian and N American riverbanks. Dies back each winter; a brewing plant for camps. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Wild yam",
+    "genus": "Dioscorea",
+    "species": "villosa",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     2.0,
+     5.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "E North American woods. Twining; edible tuber. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Bryony",
+    "genus": "Bryonia",
+    "species": "dioica",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "European hedgerows. Poisonous red berries. Kew POWO.",
+    "climber": true
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Philodendron",
+    "genus": "Philodendron",
+    "species": "hederaceum",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     3.0,
+     15.0
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Neotropical rainforest. Heart-leaf climber up trunks. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Monstera",
+    "genus": "Monstera",
+    "species": "deliciosa",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     5.0,
+     20.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Central American rainforest. Split leaves; climbs with aerial roots. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Golden pothos",
+    "genus": "Epipremnum",
+    "species": "aureum",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     29
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     5.0,
+     20.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Society Islands; pantropical.  Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Syngonium",
+    "genus": "Syngonium",
+    "species": "podophyllum",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     21,
+     27
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     3.0,
+     10.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Central American forest. Arrowhead vine. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Rattan",
+    "genus": "Calamus",
+    "species": "rotang",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     20.0,
+     60.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Indian and SE Asian rainforest. Climbing palm; cordage. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Liana (Bauhinia)",
+    "genus": "Bauhinia",
+    "species": "guianensis",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     20.0,
+     40.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Amazon; monkey-ladder. Flat twisted ladder vine. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Water vine",
+    "genus": "Cissus",
+    "species": "verticillata",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     5.0,
+     20.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Neotropical forest. Cut it and drink. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Passion vine",
+    "genus": "Passiflora",
+    "species": "edulis",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     18,
+     26
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     3.0,
+     10.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Brazilian forest edge. Fruit for foragers. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Vanilla",
+    "genus": "Vanilla",
+    "species": "planifolia",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     700
+    ],
+    "height_m": [
+     5.0,
+     20.0
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mexican and Central American rainforest. The vine orchid; bee-pollinated by one bee. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Strangler fig",
+    "genus": "Ficus",
+    "species": "aurea",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     15.0,
+     30.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Florida and Caribbean hammocks. Starts in a crown, sends roots down, kills the host — a real strangler event on old trees. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Wild grape",
+    "genus": "Vitis",
+    "species": "riparia",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     4,
+     18
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     5.0,
+     25.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "North American riverbanks. Fruit for birds and camps. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Wild grape (Eurasian)",
+    "genus": "Vitis",
+    "species": "vinifera subsp. sylvestris",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     10,
+     18
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     5.0,
+     25.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Caucasus and Mediterranean river forest.  Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Ivy",
+    "genus": "Hedera",
+    "species": "helix",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     6,
+     16
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     5.0,
+     30.0
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "European forest. Evergreen; climbs snags and ruins; winter berries for birds. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Virginia creeper",
+    "genus": "Parthenocissus",
+    "species": "quinquefolia",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     5,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     5.0,
+     25.0
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "E North American forest edge. Scarlet in autumn on ruins. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Honeysuckle",
+    "genus": "Lonicera",
+    "species": "periclymenum",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     7.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "European woodland edge. Night-scented; moth-pollinated. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Clematis",
+    "genus": "Clematis",
+    "species": "vitalba",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     5.0,
+     25.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "European hedgerow; old man's beard.  Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Kudzu",
+    "genus": "Pueraria",
+    "species": "montana",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     10.0,
+     30.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "East Asian hills. Smothers everything on the forest edge; root starch for camps. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Wisteria",
+    "genus": "Wisteria",
+    "species": "floribunda",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     900
+    ],
+    "height_m": [
+     10.0,
+     20.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Japanese hill forest. Purple drapes in spring. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Bougainvillea",
+    "genus": "Bougainvillea",
+    "species": "spectabilis",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     18,
+     27
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     3.0,
+     12.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Brazilian dry forest.  Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Bittersweet",
+    "genus": "Celastrus",
+    "species": "scandens",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.45,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "N American forest edge. Orange winter berries. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Rattan (Africa)",
+    "genus": "Eremospatha",
+    "species": "macrocarpa",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     20.0,
+     50.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Congo rainforest.  Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Aroid vine",
+    "genus": "Rhaphidophora",
+    "species": "tetrasperma",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     3.0,
+     10.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Malaysian rainforest. Small split-leaf climber. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Bignonia liana",
+    "genus": "Bignonia",
+    "species": "capreolata",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     13,
+     21
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     400
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE US swamp forest. Cross vine; orange trumpets. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Liana (Strychnos)",
+    "genus": "Strychnos",
+    "species": "toxifera",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     24,
+     28
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     10.0,
+     30.0
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Guiana rainforest. Curare vine; arrow poison for camps that know it. Kew POWO.",
+    "climber": true
+   },
+   {
+    "name": "Sea bean",
+    "genus": "Entada",
+    "species": "gigas",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     20.0,
+     40.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Neotropical and African rainforest. The monkey ladder with metre-long pods; sea-drifted seeds. Kew POWO.",
+    "climber": true
+   }
+  ]
+ }
+}
