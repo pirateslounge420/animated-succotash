@@ -32,16 +32,20 @@
 - To stop, press **Esc** to free the mouse and close the game window. Or, back in the editor, press the **■ Stop** button.
 
 ## 5. Keys (keyboard and mouse)
+You start in first person. Walk and sprint speeds, the jump and every other movement and weapon number are in `data/movement.json` and `data/combat.json` (each part explained at the top of the file); edit them and restart the game.
+
 | Key | What it does |
 |---|---|
 | W A S D (or arrow keys) | Walk |
 | W twice quickly, then hold | Sprint |
-| Shift (hold) | Sneak: crouch, slower and quieter |
-| Space | Jump (hold for a higher jump); while climbing, push off |
-| Mouse | Look around |
-| Left mouse button | Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw |
+| Shift (hold) | Sneak: crouch, slower and quieter. In the air: drop fast |
+| Space | Jump (a short hop; a longer one at a sprint); while climbing, push off |
+| Right mouse button | Wall jump: in the air, right after touching a wall, cliff, tree trunk or ruin, kick off it. Chain several |
+| Mouse | Look around (straight up and down too) |
+| Left mouse button | Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw. Works in the air too |
 | Q | Swap between bow and spear |
-| E | Interact: grab a tree to climb it (E again lets go), pick your thrown spear back up, turn over a fallen log |
+| E | Interact, whatever you're doing (climbing, swimming, crouched): take a sample of the plant you're looking at, pick up your spear, an arrow or something you set down, grab a tree to climb it (E again lets go), turn over a fallen log |
+| I | Inventory: what you carry and wear. The world doesn't stop. Click a line to choose it; G sets a carried thing down, E wears a spare. I or Esc closes it |
 | V or F5 | Switch between first and third person |
 | M | Map. While it's open, 1 = biomes, 2 = height, 3 = temperature, 4 = rainfall, 5 = live weather |
 | H | Hide or show the on-screen text |
@@ -51,13 +55,19 @@
 | F6 (dev) | Show trees' branch graphs (the handholds) |
 | F7 (dev) | Spawn the next test creature beside you, in turn: the Night Rider pair, the Pond Crawler (in the nearest water), the gibbon (on the nearest rainforest tree). It prints why when it can't |
 | F8 (dev) | Make the nearest wolf pack howl |
+| F9 (dev) | Put a bundle of herbs, a fish, a mushroom and a stone tool in your pack (to look at the inventory) |
 
 Gamepad:
 - Left stick moves, and clicking it in (held) sprints.
-- A jumps, B crouches, X interacts, Y swaps bow and spear.
+- A jumps, B crouches (fast-fall in the air), X interacts, Y swaps bow and spear.
+- The right shoulder wall-jumps.
 - The right trigger draws and shoots.
 - Clicking the right stick switches first and third person.
-- Back opens the map.
+- Start opens the inventory, Back the map.
+
+Health: the thin blue bar at the bottom left, with its number. It doesn't come back on its own; stand or sit still by a lit campfire to heal.
+
+Carrying: ten things at most. Past six you're slower, climb slower and make more noise.
 
 Climbing: walk up to a tree and press E. W and S go up and down the trunk, and A and D go around it. At a fork, look out along a limb and push W to go onto it. Push toward another limb to reach across.
 

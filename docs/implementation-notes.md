@@ -1682,20 +1682,73 @@ yet (deferred).
 
 `scripts/player/`
 
-- **Movement** (`PlanetPlayer`): walk 6 km/h; sprint 5.5 m/s by
-  double-tapping forward and holding it (or the pad's left stick held
-  in), ended by releasing forward, drawing the bow or raising the spear; crouch (hold Shift
-  or pad B) lowers the capsule and camera to 1.05 m, slows to 0.8 m/s and
-  stands back up only with headroom; holding jump jumps again on each
-  landing. Speed has momentum (spec D5): it builds at 11 m/s² (a sprint in
-  about half a second) and bleeds off at 18 m/s² (a short slide to a
-  stop). Turns at speed are wider. In the air you keep your momentum and
-  steer at 3 m/s², so a sprinting jump carries; water is 4 m/s² both ways.
-  Walls and trunks stop the part of the momentum that runs into them.
-  `noise_level` (0 crouched and still ..
-  1 sprinting, eased) and `still_time` are what wildlife reads. Loosing
-  an arrow, a spear thrust and a throw raise it to at least 0.6 for a
-  moment (`make_noise()`); it eases back down within about a second.
+- **Tables** (`Tuning`, `scripts/core/tuning.gd`): every movement and
+  weapon number lives in `data/movement.json` and `data/combat.json`,
+  each section explained in its `_help` block; read once at start
+  (`Tuning.num(table, section, key)`, a missing key warns once and reads
+  0). The designer's first play asked for this.
+- **Movement** (`PlanetPlayer`; the feel of Melee's spacies): walk
+  5.5 m/s (the old sprint), sprint 8.8 m/s (double-tap forward and hold,
+  or the pad's left stick held in; timed in game time, so a slow frame
+  doesn't break the tap), sneak 0.8 m/s (hold Shift or pad B). Gravity
+  is 2x Earth's (19.6 m/s²) and the jump a short hop (5.2 m/s: 0.52 s in
+  the air, 0.74 m high); a sprint jump takes off 1.12x faster and carries
+  the sprint (5.9 m vs 3.2 m from a walk). Crouch in the air after the
+  apex fast-falls at 20 m/s. Ground: 45 m/s² to speed, 60 m/s² to a stop
+  times the traction underfoot (sand 0.75, snow 0.4, ice 0.15, shallow
+  water and rain-soaked ground 0.5; `ground_wet` from the local rain,
+  drying over 90 s), so a stop slides 0.3 m from a walk, 1 m from a
+  sprint, 1.4 m on wet ground. Pushing the other way at speed keeps a
+  quarter of the speed for a brief skid (a scuff) and goes: 4 m/s the
+  other way in 0.2 s. In the air you steer at most 2.5 m/s off your
+  take-off velocity, so a jump commits you; running off a ledge drops
+  (0.55 s down 3 m, against 0.78 s at Earth's pull). Landing after a jump
+  or a drop of more than 0.3 m squats 50 ms (no steering, no jump), 160 ms
+  after more than a body length (1.7 m). Fall damage goes by the drop
+  (over 6 m, 7 HP a metre), so a fast-fall out of a hop never hurts.
+  Drawing the bow or raising the spear slows you to 0.75 m/s on the
+  ground only; it no longer ends a sprint or a jump, and every action
+  (draw, loose, throw, thrust, E) works in the air and out of a wall
+  jump; a draw begun in the air holds through the landing.
+- **Wall jump** (right mouse, pad right shoulder): in the air within
+  0.25 s of touching a steep face (a wall, cliff, trunk, ruin), kick off
+  it back the way you came (the approach reversed, turned away from the
+  face) at 7.5 m/s angled 58 degrees up; each further wall jump before you
+  land keeps 72% of the last one's upward speed (6.4 then 4.6 m/s), so you
+  can chain between faces. The body tips back in a kick; a scuff sound,
+  and creatures hear it 7 m off.
+- **Aim** (`aim_sway_deg()`, combat table "aim"): the aim wanders a
+  little, smoothly: 0.3 degrees standing, up to 1.2 at a sprint, least at
+  a jump's apex (0 there, plus 0.45 degrees per m/s rising or falling).
+  The aim arc shows the wander and the shot follows the arc.
+- **Unstick**: stuck is touching something and going nowhere: wedged
+  between two walls (a trunk and a shrub's stem), held off the ground
+  (under a root), or caught on a crease of the ground's collision mesh
+  (the last happens every few seconds in a dense forest; freed after
+  0.08 s, a hitch you barely feel, by a nudge of a couple of frames'
+  travel toward the free direction nearest where you push; the others
+  after 0.5 s by 0.35 m). One trunk head-on isn't stuck. Headless: 2
+  minutes through the stamp's densest patch, 715 m covered, never held
+  for a second. The creases' cause (the capsule on the ground's trimesh)
+  isn't found yet.
+- **Inventory** (`Inventory`, `InventoryScreen`, `ItemIcon`, `WorldItem`;
+  `data/items.json`; spec R4, the designer's item 11): ten carry slots,
+  each holding one thing, and the equipment slots: ranged (the bow),
+  melee (the spear), amulet, rings, each one worn plus two spares (rings
+  two worn plus two). I opens a small plain panel in the R1a blues: what
+  you wear on the left (spares dimmer), what you carry on the right, the
+  chosen thing drawn large with its name and a sample's binomial in
+  italics; nothing else. It doesn't pause the world; the mouse is free
+  while it's open. E on a worn spare wears it; G sets a carried thing
+  down on the ground (E takes it back). E on a plant (not a tree: E climbs
+  those) within 2.2 m of your hands takes a sample by its shape: a
+  cutting, a seed head, a leaf, a cut cactus column, or a bundle of herbs
+  for the herb genera; it carries the species index, binomial, shape and
+  colors, so it can be looked at now and traded or planted later. Past
+  six carried things, each more is 8% slower (never below 60%), 12%
+  slower climbing and 15% louder, and the body leans forward: felt, never
+  shown. F9 (dev) puts one of each loose kind in the pack. Fish,
+  mushrooms and stone tools have no source yet.
 - **Noises out in the world** (`NoiseEvents`, spec D5: "player noise ...
   bow, spear ... is what creatures hear"): a tiny static facade.
   `NoiseEvents.emit(scene_pos, loudness_m)` records a noise for 8 frames;
