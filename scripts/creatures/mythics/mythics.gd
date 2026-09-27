@@ -14,19 +14,18 @@ extends Node
 ##   under the player (the planet blueprint) and the sky's daylight, and
 ##   spawns nothing.
 ##
-##   Debug spawn (dev mode only, data/dev.json): F7 brings a Night Rider
-##   pair past you (NightRiderPair.debug_spawn(), callable from code),
-##   riding across your view about 30 m ahead and then patrolling (and, at
-##   night, coming for you: they're aggressive); another F7 sends that
-##   pair away and brings a new one. Tools spawn through
-##   spawn_night_riders() (tools/night_rider_demo.gd).
+##   Debug spawn (dev mode only, data/dev.json): the shared dev spawn key
+##   (F7, DevSpawn) brings a Night Rider pair past you in its turn
+##   (NightRiderPair.debug_spawn()), riding across your view about 30 m
+##   ahead and then patrolling (and, at night, coming for you: they're
+##   aggressive); the pair before is sent away. The pairs it brings live
+##   in `pairs`, ticked here. Tools spawn through spawn_night_riders()
+##   (tools/night_rider_demo.gd).
 ##
 ## Reads World (planet, dev mode), the player's position and noise, the
 ## sky's daylight; writes only its own nodes (under World.world_root, so
 ## they move with the floating origin).
 
-## The dev spawn key, while the input map has no "dev_spawn" action.
-const DEBUG_KEY := KEY_F7
 ## Pairs this far from the player are dropped.
 const DROP_M := 700.0
 
@@ -179,16 +178,3 @@ func spawn_night_riders(d: Vector3, heading: Vector3, route := [], walking := 0.
 	pairs.append(pair)
 	return pair
 
-
-## F7, dev mode only: a pair across your view (any earlier one leaves).
-## Once the input map has the shared "dev_spawn" action (F7 for every
-## Phase 1 rig), its handler calls NightRiderPair.debug_spawn() and this
-## one stands down.
-func _unhandled_input(event: InputEvent) -> void:
-	if world == null or not world.dev_mode or InputMap.has_action("dev_spawn"):
-		return
-	if event is InputEventKey and event.pressed and not event.echo and event.keycode == DEBUG_KEY:
-		get_viewport().set_input_as_handled()
-		for pair in pairs:
-			pair.dismiss()
-		NightRiderPair.debug_spawn(self, player.surface_dir, -player.camera().global_basis.z)

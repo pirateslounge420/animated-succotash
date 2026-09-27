@@ -13,8 +13,16 @@ extends CharacterBody3D
 ##   crouch   hold crouch (Shift): lower, slower and nearly silent
 ##   jump     hold to keep jumping each time you land
 ##   swim     in water deeper than chest height
-##   climb    E facing a tree trunk: W/S up and down, A/D around it, E or
-##            jump to let go (capped just into the crown)
+##   climb    E facing a tree trunk takes the nearest handhold of its
+##            branch graph you can hold (TreeContact, TreeClimb): W/S hand
+##            over hand up and down the trunk, A/D round it, push toward a
+##            limb at a fork to climb onto it and along it to shimmy out,
+##            toward another limb within reach to reach across; slow, a
+##            beat between reaches, breath and bark at the hands, never a
+##            swing or a leap. E lets go, jump pushes off. A tree without
+##            a graph (bamboo; one not yet in NEAR range) is climbed the
+##            old way: W/S up and down its trunk, A/D around it, capped
+##            just into the crown.
 ## Speed has momentum: it builds up and bleeds off rather than snapping, and
 ## in the air you keep it (ACCEL_MPS2 and the constants below it).
 ## There is no fast travel: the world is crossed on foot.
@@ -136,6 +144,12 @@ var _climb_chunk: TerrainChunk
 var _climb_tree := -1
 var _climb_y := 0.0
 var _climb_out := Vector3.ZERO # unit, from the trunk's axis out to the player
+## Climbing a branch graph (TreeContact.climb) rather than the old trunk
+## climb; the first moments ease the body from where it stood onto the
+## tree.
+var _climb_graph := false
+var _climb_from := Vector3.ZERO
+var _climb_ease := 1.0
 var _prompt_timer := 0.0
 var _shake := 0.0
 var _knock := Vector3.ZERO
@@ -394,7 +408,9 @@ func tree_ahead(forward: Vector3) -> Array:
 	return [chunk, i]
 
 
-## Start climbing the tree in front of you, if there is one.
+## Start climbing the tree in front of you, if there is one: on its
+## branch graph from the nearest handhold you can hold, or (no graph) the
+## old way up its trunk.
 func try_climb() -> bool:
 	if climbing or swimming:
 		return false
@@ -403,6 +419,14 @@ func try_climb() -> bool:
 		return false
 	_climb_chunk = t[0]
 	_climb_tree = t[1]
+	var g := trees.graph_of(_climb_chunk, _climb_tree)
+	var hold := trees.nearest_holdable(g, global_position + up * STAND_HEIGHT) if g else -1
+	_climb_graph = hold >= 0
+	if _climb_graph:
+		trees.climb.start(g, hold, global_position, up)
+		_climb_from = global_position
+		_climb_ease = 0.0
+		_climb_out = trees.climb.push_dir
 	var base := _climb_chunk.tree_base(_climb_tree)
 	var tup := _climb_chunk.tree_up(_climb_tree)
 	var rel := global_position - base
@@ -422,6 +446,10 @@ func stop_climb(push := false) -> void:
 	if not climbing:
 		return
 	climbing = false
+	if _climb_graph:
+		_climb_out = trees.climb.push_dir
+		_rest_arms()
+	_climb_graph = false
 	velocity = (_climb_out * 2.5 + up * 2.5) if push else Vector3.ZERO
 	_move = _climb_out * 2.5 if push else Vector3.ZERO
 	_climb_chunk = null
@@ -429,6 +457,9 @@ func stop_climb(push := false) -> void:
 
 
 func _climb_step(delta: float) -> void:
+	if _climb_graph:
+		_graph_climb_step(delta)
+		return
 	# The chunk streamed out or left the detail ring (no trunks to hold).
 	if not is_instance_valid(_climb_chunk) or not _climb_chunk.has_tree_colliders():
 		stop_climb()
@@ -454,6 +485,73 @@ func _climb_step(delta: float) -> void:
 		stop_climb(true)
 
 
+## On a branch graph: TreeClimb moves the hands; the body goes where it
+## says (eased there from where you stood as you take hold), faces the
+## way it says, and the elf's arms reach for the hands.
+func _graph_climb_step(delta: float) -> void:
+	_fall_speed = 0.0
+	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
+	var fwd := _camera_forward()
+	var c := trees.climb
+	# "drop": down at the foot of the tree, step off; "lost": the tree
+	# went (its chunk streamed out).
+	if c.step(delta, input, fwd, fwd.cross(up), up) != "":
+		stop_climb()
+		return
+	_climb_ease = minf(_climb_ease + delta / 0.4, 1.0)
+	global_position = _climb_from.lerp(c.feet, smoothstep(0.0, 1.0, _climb_ease)) if _climb_ease < 1.0 else c.feet
+	velocity = Vector3.ZERO
+	if c.facing.length() > 0.1:
+		_face(c.facing.normalized(), delta * 0.6)
+	_climb_out = c.push_dir
+	_orient()
+	_reach_arms(c.hands)
+	trees.climb_sounds(global_position + up * EYE_Y)
+	if Input.is_action_just_pressed("jump"):
+		stop_climb(true)
+
+
+## The elf's arms reach for `hands` (scene; left, right): each arm points
+## from its shoulder at its hand and stretches or shortens a little to put
+## the hand on it (the elf has no elbows). An imported model plays its
+## "climb" clip instead.
+func _reach_arms(hands: Array[Vector3]) -> void:
+	if not _body is PlayerBody:
+		return
+	var inv := _body.global_transform.affine_inverse()
+	var arms := (_body as PlayerBody).arms
+	for s in 2:
+		var arm := arms[s]
+		var d := inv * hands[s] - arm.position
+		var length := d.length()
+		if length < 1e-3:
+			continue
+		var y := -d / length
+		var x := Vector3.RIGHT - y * y.dot(Vector3.RIGHT)
+		x = x.normalized() if x.length() > 0.1 else y.cross(Vector3.BACK).normalized()
+		var z := x.cross(y)
+		arm.transform.basis = Basis(x, y * clampf(length / TreeClimb.ARM_M, 0.4, 1.3), z)
+
+
+## Where each of the elf's hands is (scene), for tests.
+func hand_positions() -> Array[Vector3]:
+	var out: Array[Vector3] = []
+	if _body is PlayerBody:
+		for arm in (_body as PlayerBody).arms:
+			out.append(arm.global_transform * Vector3(0, -TreeClimb.ARM_M, 0))
+	return out
+
+
+## The arms back at the sides (letting go of a tree).
+func _rest_arms() -> void:
+	if not _body is PlayerBody:
+		return
+	var arms := (_body as PlayerBody).arms
+	for s in 2:
+		arms[s].transform.basis = Basis.IDENTITY
+		arms[s].rotation = Vector3(0.06, 0.0, 0.13 * (1.0 if s == 1 else -1.0))
+
+
 func _camera_forward() -> Vector3:
 	return _heading.rotated(up, _yaw)
 
@@ -463,7 +561,9 @@ func _update_prompt(delta: float, forward: Vector3) -> void:
 	if _prompt_timer > 0.0:
 		return
 	_prompt_timer = 0.2
-	if climbing:
+	if climbing and _climb_graph:
+		prompt = trees.climb.prompt
+	elif climbing:
 		prompt = "W/S climb · A/D around the trunk · E or Space let go"
 	elif not swimming and not tree_ahead(forward).is_empty():
 		prompt = "E: climb the tree"
@@ -596,8 +696,9 @@ func _update_camera(delta: float) -> void:
 	_camera.h_offset = 0.55 * _aim_blend + randf_range(-1.0, 1.0) * _shake * 0.12
 	_camera.v_offset = randf_range(-1.0, 1.0) * _shake * 0.12
 	_camera.fov = lerpf(70.0, 60.0, bow.power() if bow.drawing else 0.0)
-	# The elf raises both arms to aim (an imported model has its own clips).
-	if _body is PlayerBody:
+	# The elf raises both arms to aim (an imported model has its own clips);
+	# on a branch graph they hold the tree (_reach_arms()).
+	if _body is PlayerBody and not (climbing and _climb_graph):
 		for arm in (_body as PlayerBody).arms:
 			arm.rotation.x = lerpf(arm.rotation.x, 1.35 if bow.drawing else 0.06, clampf(delta * 10.0, 0.0, 1.0))
 

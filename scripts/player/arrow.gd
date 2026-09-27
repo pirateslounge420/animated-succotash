@@ -3,8 +3,10 @@ extends Node3D
 ## An arrow in flight (Bow): falls under the planet's gravity, points
 ## along its path, and on the first thing it meets:
 ##   * a creature (CreatureSpawner.creature_on_segment, or a physics hit on
-##     a creature's hitbox, Hitboxes): hurts it and sticks in it (in the
-##     part it hit), riding along;
+##     a creature's hitbox, Hitboxes.creature_of(): a Creature or a rig of
+##     its own such as the gibbon): hurts it and sticks in it (in the part
+##     it hit, the collision shape itself, so it rides along with that
+##     part as it moves);
 ##   * camp folk (Camps.folk_on_segment): a glancing shot they complain
 ##     about, and it drops;
 ##   * ground, trees, ruins (physics): buries its head there and stays a
@@ -89,7 +91,7 @@ func _physics_process(delta: float) -> void:
 			if owner:
 				hit_kind = "creature"
 				hit_obj = owner
-				hit_part = ray.collider
+				hit_part = _shape_node(ray.collider, ray.shape)
 	if hit_kind == "":
 		# Water: sinks where it meets the surface.
 		var d: Vector3 = world.dir_of(b)
@@ -105,12 +107,13 @@ func _physics_process(delta: float) -> void:
 		return
 	match hit_kind:
 		"creature":
-			var cr := hit_obj as Creature
+			var cr := hit_obj as Node
 			global_position = a.lerp(b, hit_t)
 			if hit_part:
 				# In the part it hit, a little way in, riding along with it.
 				global_position = hit_pos + velocity.normalized() * 0.1
-			cr.hurt(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
+			if cr.has_method("hurt"):
+				cr.hurt(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
 			_sound("arrow_hit")
 			reparent(hit_part if hit_part else cr, true)
 			_stick()
@@ -126,6 +129,17 @@ func _physics_process(delta: float) -> void:
 			global_position = hit_pos + velocity.normalized() * 0.12
 			_sound("arrow_hit")
 			_stick()
+
+
+## The node of the collision shape a ray met (`shape` of `collider`): the
+## part itself, which follows its bone even when one body carries all of
+## a creature's parts (GibbonHitboxes); else the body.
+static func _shape_node(collider: Object, shape: int) -> Node3D:
+	var body := collider as CollisionObject3D
+	if body == null:
+		return collider as Node3D
+	var owner_node := body.shape_owner_get_owner(body.shape_find_owner(shape)) as Node3D
+	return owner_node if owner_node != null else body
 
 
 ## A splash (Ripples) where the flight from `a` to `b` went down through

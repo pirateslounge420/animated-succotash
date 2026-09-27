@@ -9,7 +9,8 @@ extends Node
 ##   WeatherFX         rain/snow and wind on plants
 ##   RippleSim         ripples on the water near the camera (Ripples)
 ##   CreatureSpawner   ambient wildlife, packs, mythical creatures
-##   Mythics           mythics not yet in play: biome cues, dev spawn (F7)
+##   Mythics           mythics not yet in play: biome cues
+##   DevSpawn          dev mode only: F7 spawns the next Phase 1 rig
 ##   Landmarks         ruins, glowing places (the bioluminescent night)
 ##   PostGrade, Hud, MapOverlay
 ##
@@ -27,6 +28,8 @@ var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
 var mythics: Mythics
+## Dev mode only (data/dev.json): the F7 rig spawner.
+var dev_spawn: DevSpawn
 var landmarks: Landmarks
 var camps: Camps
 var post: PostGrade
@@ -143,11 +146,18 @@ func _on_planet_ready() -> void:
 	creatures.name = "Creatures"
 	add_child(creatures)
 	creatures.setup(world, chunks, player)
-	# Mythic creatures before they spawn: biome cues, the dev spawn (F7).
+	# Mythic creatures before they spawn: biome cues.
 	mythics = Mythics.new()
 	mythics.name = "Mythics"
 	add_child(mythics)
 	mythics.setup(world, chunks, player, sky, creatures)
+	# F7 spawns the Phase 1 rigs in turn (dev mode only: nothing spawns in
+	# normal play).
+	if world.dev_mode:
+		dev_spawn = DevSpawn.new()
+		dev_spawn.name = "DevSpawn"
+		add_child(dev_spawn)
+		dev_spawn.setup(world, chunks, player, mythics, creatures)
 
 	post = PostGrade.new()
 	add_child(post)
