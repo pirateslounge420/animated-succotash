@@ -24,6 +24,9 @@ extends Node3D
 ## suspicion (1 after it's been startled). Suspicion fades while you keep
 ## still near it (a few seconds) or stay well away (slowly).
 ##
+## In water they ring it (Ripples): wading legs and paddling hulls drag
+## wakes, footfalls splash (_water_contacts).
+##
 ## Arrows hurt them (hurt()): hit points by size (CreatureSpecies.hp_max()).
 ## Prey bolts; pack hunters and hostile creatures turn on you (`angry`:
 ## chase and bite, CreatureSpawner.player_hit()); at 0 they die, tip over
@@ -106,6 +109,8 @@ var _legs_moving := true
 ## ticks on.
 var lod_delta := 0.0
 var lod_phase := 0
+## Half strides taken (_animate's cycle), for footfalls in water.
+var _stride_n := 0
 
 
 func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner: Node, d: Vector3, seed_value: int) -> void:
@@ -667,6 +672,39 @@ func _place(delta: float) -> void:
 		# Topples onto its side.
 		_body.rotation.z = lerpf(_body.rotation.z, PI * 0.5, clampf(delta * 5.0, 0.0, 1.0))
 	_animate(delta)
+	_water_contacts()
+
+
+## Water contacts (Ripples), only where the ripples run (water near the
+## camera): legs standing in water drag a wake as they walk and each
+## stride plants a small splash; a body afloat (or without legs) drags a
+## wake from its hull. Mass from its size (RippleSim.creature_mass).
+func _water_contacts() -> void:
+	if dead or leaving or not _body.visible or not Ripples.near(global_position):
+		return
+	# Up in a tree or the air, or hovering (fireflies, wisps): no contact.
+	if not afloat and (lift > 0.3 or species.role == "swarm" or species.shape == "wisp"):
+		return
+	var water := _water_at(dir)
+	if not afloat and water < _ground_at(dir) + 0.03:
+		return
+	var surface: Vector3 = world.to_scene(dir, PlanetConst.RADIUS_M + water)
+	var mass := RippleSim.creature_mass(species.size_m)
+	var key := get_instance_id() * 8
+	var legs: Array = _parts.legs
+	if afloat or legs.is_empty():
+		Ripples.wake(key + 7, surface, mass, _speed_now)
+		return
+	var each := mass / legs.size()
+	for i in mini(legs.size(), 6):
+		var p: Vector3 = (legs[i] as Node3D).global_position
+		Ripples.wake(key + i, p - dir * dir.dot(p - surface), each, _speed_now)
+	# A foot comes down every half stride.
+	var stride := int(_anim / PI)
+	if _speed_now > 0.05 and stride != _stride_n:
+		var p: Vector3 = (legs[stride % legs.size()] as Node3D).global_position
+		Ripples.splash(p - dir * dir.dot(p - surface), each, _speed_now + 0.5)
+	_stride_n = stride
 
 
 ## The blob stays on the ground under it: it shrinks as the creature

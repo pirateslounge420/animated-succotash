@@ -97,6 +97,12 @@ Trees block your way and can be climbed; their crowns (and camp
 shelters) keep the rain off. Storms bring lightning and thunder, and
 heavy rain swells the rivers.
 
+Near you, anything that touches the water rings it: your steps and the
+wake you drag as you wade, swimming strokes, animals' legs, arrows and
+rain. The rings are painted as soft light and dark bands; their reach,
+sizes and look are in `data/water/ripples.json`. `tools/ripple_demo.gd`
+records them at night (how to run it is at the top of the file).
+
 The floating origin keeps the player near (0,0,0), so precision holds
 anywhere on the planet.
 
@@ -110,6 +116,7 @@ scenes/main.tscn           Game entry point
 data/
   biomes/                  51 biome files: plant lists per biome (edit these)
   creatures/creatures.json Creature species (edit this)
+  water/ripples.json       Water ripples: reach, sizes, rain, look (edit this)
 scripts/
   core/                    World autoload (planet, clock, weather, floating
                            origin), main orchestrator, input actions
@@ -119,6 +126,7 @@ scripts/
   biomes/                  The 51 biome templates (names, colors, sizes)
   sky/                     Sun, Earth-like moon, 28 lunar mansions, sky
   terrain/                 Chunk streaming, rivers, far shell
+  water/                   Ripples on the water near the camera
   ecology/                 Plant species, placement rules, meshes
   creatures/               Creature species, spawner, territories, bodies,
                            synthesized sounds

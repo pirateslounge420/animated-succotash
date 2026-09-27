@@ -8,7 +8,7 @@ extends Node3D
 ##     about, and it drops;
 ##   * ground, trees, ruins (physics): buries its head there and stays a
 ##     while;
-##   * water: sinks.
+##   * water: splashes (Ripples) and sinks.
 ## Lives under World.world_root, so it moves with the floating origin.
 
 const GRAVITY := 9.8
@@ -86,6 +86,7 @@ func _physics_process(delta: float) -> void:
 		var water := chunks.water_level_at(d)
 		if water > chunks.ground_height(d) and world.radius_of(b) < PlanetConst.RADIUS_M + water:
 			global_position = b
+			Ripples.splash(world.to_scene(d, PlanetConst.RADIUS_M + water), RippleSim.contact("arrow_kg"), velocity.length())
 			_stick()
 			_life = STUCK_S - 3.0
 			return
@@ -105,10 +106,29 @@ func _physics_process(delta: float) -> void:
 			velocity *= -0.15
 			global_position = a.lerp(b, hit_t)
 		"world":
+			# Down through shallow water onto its bed in one step: it still
+			# rings the water where it went in.
+			_splash_crossing(a, hit_pos)
 			# Bury the head a little along the flight.
 			global_position = hit_pos + velocity.normalized() * 0.12
 			_sound("arrow_hit")
 			_stick()
+
+
+## A splash (Ripples) where the flight from `a` to `b` went down through
+## the water's surface, if it did.
+func _splash_crossing(a: Vector3, b: Vector3) -> void:
+	var d: Vector3 = world.dir_of(b)
+	var water := chunks.water_level_at(d)
+	if water <= chunks.ground_height(d):
+		return
+	var surface := PlanetConst.RADIUS_M + water
+	var ra: float = world.radius_of(a)
+	var rb: float = world.radius_of(b)
+	if ra < surface or rb >= surface:
+		return
+	var p := a.lerp(b, (ra - surface) / maxf(ra - rb, 1e-6))
+	Ripples.splash(world.to_scene(world.dir_of(p), surface), RippleSim.contact("arrow_kg"), velocity.length())
 
 
 func _stick() -> void:

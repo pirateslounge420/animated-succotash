@@ -3,11 +3,11 @@ extends AudioStreamPlayer
 ## The player's footsteps: one per stride (shorter crouched, longer
 ## sprinting), in the sound of what's underfoot, louder the faster you go.
 ##
-## Ground: wading in shallow water; else what the player stands on (ruin
-## stone, a tree's roots); else the terrain's own color, read the way the
-## terrain shader picks its texture (green: grass, grey: stone, pale grey:
-## snow, beach sand, anything else: dirt). Sounds are synthesized
-## (SoundSynth "step_<kind>").
+## Ground: wading in shallow water (each step also splashes: Ripples);
+## else what the player stands on (ruin stone, a tree's roots); else the
+## terrain's own color, read the way the terrain shader picks its texture
+## (green: grass, grey: stone, pale grey: snow, beach sand, anything else:
+## dirt). Sounds are synthesized (SoundSynth "step_<kind>").
 
 const STRIDE_M := {"crouch": 0.5, "walk": 0.78, "sprint": 1.25}
 const VOLUME_DB := {"crouch": -21.0, "walk": -11.0, "sprint": -4.0}
@@ -47,6 +47,8 @@ func step_update(player: PlanetPlayer, moved: float, on_floor: bool, delta: floa
 func _step(player: PlanetPlayer, gait: String) -> void:
 	ground = material_under(player)
 	_count += 1
+	if ground == "water":
+		player.foot_splash(_count)
 	stream = SoundSynth.stream("step_" + ground, _count)
 	volume_db = VOLUME_DB[gait] + randf_range(-1.5, 1.5)
 	pitch_scale = randf_range(0.92, 1.08)

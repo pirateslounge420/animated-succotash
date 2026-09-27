@@ -15,6 +15,7 @@ main.gd                orchestrates the playable scene:
   SkySystem            sun, moon, sky shader, ambient, fog
     SkyPaint           painted cloud and star panoramas, baked at startup
   WeatherFX            rain/snow particles, wind on foliage
+  RippleSim            ripples on the water near the camera (Ripples)
   PlanetPlayer         third-person explorer with planet gravity
   CreatureSpawner      wildlife, wolf packs, mythical creatures, logs
   Landmarks            ruins and glowing places (bioluminescent night)
@@ -377,7 +378,9 @@ Verified:
     cube face for standing water, across and downstream for rivers)
     wrapped by 300 m, a whole number of both layers' repeats, so no
     chunk or segment seam shows; the far sea (`far_sea.gdshader`) wears
-    the same flat day blue and night glow;
+    the same flat day blue and night glow. Near the camera anything
+    touching the water rings it, painted as soft light and dark bands
+    (Water ripples);
   - bark and leaves on plants, mapped in object space (triplanar) and
     scaled with the plant, so a big tree doesn't get bigger texels;
   - a leaf-cluster card texture with alpha: foliage crowns carry
@@ -768,6 +771,123 @@ screen's blocking load about 5 s.
 several threads read them at once. Anything the chunk workers read is
 therefore a flat packed array (`BiomeTemplates._colors`) or a private
 copy.
+
+## Water ripples
+
+`scripts/water/` (`Ripples`, `RippleSim`), `shaders/ripple_step.gdshader`,
+`shaders/ripple_view.gdshader`, the ripple part of `water.gdshader`, and
+`data/water/ripples.json` (every number below; see its README)
+
+Anything that touches or moves through water near the camera rings it
+(spec Phase 1, ripple system). `Ripples` is the one way anything
+disturbs water; `RippleSim` owns `World.ripples`.
+
+- **One buffer round the camera** (agreed at Go): 256 × 256 texels of a
+  quarter meter, 64 m of water, centered 10 m ahead of whichever camera
+  is drawing, instead of one per nearby water chunk. A ring never has to
+  cross from one chunk's buffer into the next (or over a cube-face edge),
+  it's one simulation instead of four to nine, and a footstep's ring is
+  several texels across. The window moves in whole texels and the
+  simulation shifts its content back to match, so ripples stay put on
+  the water; its axes are carried along the planet, so the grid never
+  turns, and it lives in planet directions, so the floating origin never
+  smears it. It runs only while there's water (sea, lake, wetland pool
+  or river) in the chunks under it. Ripples fade out between 22 and 40 m
+  from the camera; past that, and whenever it isn't running, the water
+  is the static shader, unchanged.
+- **Simulated on the GPU**, one step a frame: a damped wave equation
+  (rings spread at 1.1 m/s and die away over a few seconds) drawn by two
+  SubViewports taking turns, each reading the other's last state. Height
+  and vertical speed are packed as 16-bit numbers in 8-bit channels
+  (exact in both renderers). A weak spring settles the surface back to
+  flat, and a soft border lets rings leave instead of bouncing back.
+- **Contacts** (`Ripples.splash`, `Ripples.wake`) are sized by mass and
+  speed from the table and batched, up to 32 stamps a step, each
+  zero-sum (pushed down under the body, up round it, as displaced water
+  is):
+  - a splash is a point: its footprint grows with the cube root of the
+    mass, its push with mass^0.3 × speed^0.5, so an arrow at full draw
+    (55 m/s) rings the water about as clearly as a wading step, a leaf
+    barely;
+  - a wake is the line each contact moved along since the last step,
+    one furrow per contact, so a moving body drags a continuous wake
+    (not a string of splashes) whatever the frame rate;
+  - the player: dropping in (a jump or a fall, faster than 1.5 m/s)
+    splashes with the whole body, while wading in from the bank is just
+    a step; wading, each leg drags a wake and every footstep
+    (`Footsteps`) plants a small splash; swimming, the body drags a wake
+    and the hands splash with each stroke;
+  - creatures (`creature.gd`): wading legs drag wakes and every half
+    stride plants a foot's splash; a body afloat (or without legs, like
+    a snake) drags one wake from its hull; mass is 25 kg × size³ (a
+    1.4 m deer ~70 kg). Anything up a tree, flying, or a wisp doesn't
+    touch water;
+  - arrows splash where they meet water, then sink; one fast enough to
+    go through shallow water onto its bed within one physics step
+    splashes where it went in;
+  - rain: drops land at random, in 1 m cells, up to 0.05 per m² a
+    second in full rain (4 mm/h), each ringing the water (drawn in the
+    step shader, not sent one by one). Denser, the rings overlap into a
+    blotchy pattern instead of reading as rings;
+  - dropped items and falling leaves don't exist in the game yet; when
+    they do, each calls `Ripples.splash()` where it meets the water,
+    with its own mass in the table, as arrows do.
+- **Painted, not lit** (R1, R1a). The view shader turns the state into
+  what the water samples: where each ring is in its swing (crest or
+  trough), its slope (the surface normal) and how big it is (height and
+  speed together hold steady through a swing), all from the surface less
+  its mean half a meter round, which keeps the rings and drops the
+  broad, slow swell a big splash leaves inside them (painted, that read
+  as wide blotches, not rings). The water paints every ring as two soft
+  bands: a light one over the crest, toward the highlight blue (night:
+  #7FB0FF; measured #81B7FF-#98CCFD on screen, the brighter streaks as
+  bright as the water's own highlights), and a dark one over the trough,
+  a deeper ultramarine (measured down to #0E31CA, never black).
+  A ring keeps the same two tones while it's big and fades as it dies
+  away. Under the bands the water's own mottling and sparkle calm, so
+  they read as bands (before, rings were lost in the mottling); the
+  water's grain roughens their edges, and a finer grain from the same
+  texture streaks them like brushwork (R1's crunchy texture on smooth
+  shapes; flat fills looked like vector art next to the designer's
+  night references); the side of each ring facing the moon (or sun) is
+  painted a little lighter; a hard splash churns pale for a moment.
+  Nothing is reflected. Bands finer than about two pixels (far off, or
+  seen edge on) fade out instead of shimmering.
+- **Readers** (agreed at Go): `Ripples.height_at(pos)` and
+  `disturbance_at(pos)` (fish fleeing, later) sum the recent
+  disturbances (where, how big, how long ago: up to 256 from the last
+  6 s) as rings with the simulation's own speed and damping, fitted to
+  it: 1.6 s after a splash, the trough's depth and radius match the
+  simulated buffer within ~10% (the center's bob is underestimated).
+  `Ripples.near(pos)` says whether a contact there would ring anything,
+  so callers can skip the work. The buffer itself stays on the GPU
+  (`RippleSim.texture`), since Godot 4.3 can only read a texture back by
+  stalling the renderer.
+- Headless (no renderer) the simulation doesn't run; contacts and the
+  readers still work. `enabled: false` in the table turns it all off.
+
+Cost: `update_ripples` averages 0.07-0.12 ms a frame in the demo (the
+contacts, the window and the uniforms), 9-20 µs alone without the
+software renderer competing for the CPU; `height_at` ~10 µs with 30
+recent disturbances. The three ripple passes took 1.3 ms of GPU time a
+frame on the software renderer (lavapipe, 960 × 540, busy water:
+splashes and a wake every frame) against 5.7 s for the main view, so
+well under 0.1% there; whole-frame times on and off were lost in the
+noise of other work sharing the machine. The compatibility renderer
+runs the same simulation and paints the same bands (checked with the
+demo's first night stills). On the GPU, three 256 × 256 passes a frame (the
+step, ~9 reads a texel plus the stamps; the view, 13 reads) and two
+more texture reads per water pixel while it runs (the buffer and the
+bands' brush grain).
+
+Checked with `tools/ripple_demo.gd` (run instructions in its header): on
+the postage stamp at night, through the player's own third-person
+camera, the player wades along a shore (a ring from every step, a
+continuous wake from his legs), looses an arrow that comes down about
+8 m out (its own ring, clear of his), wades back through the rings,
+then rain rings the water around him: a 13 s recording (Godot's Movie
+Maker), or stills of the same plus dusk and noon and the CPU readers
+against the simulated buffer.
 
 ## Vegetation
 
@@ -1215,6 +1335,19 @@ latest results:
   (building them as chunks enter the detail ring, and the player
   colliding with them); the contact scan, footsteps and shelter checks
   are each under 0.02 ms.
+- **Ripples.** Dropped items and falling leaves don't exist yet, so
+  nothing calls `Ripples.splash()` for them; the call is ready. Rings
+  don't reflect off banks (they run on under the ground and are hidden)
+  and a river's current doesn't carry them downstream. Beyond the 64 m
+  window, and past 40 m from the camera, water doesn't ring at all and
+  the readers get 0 there. Rain is kept sparse (0.05 drops per m² a
+  second): denser, the rings merge into blotches; even so, round a
+  player wading in rain the overlapping rings read more as broad
+  blotches than as rings. Creatures' contacts were checked headless (a
+  heron wading at 0.6 m/s drags a wake from each leg and splashes every
+  half stride, a swimming duck drags one from its hull) but not filmed:
+  ground animals don't choose to walk through water. Costs were measured
+  on a software renderer only.
 - **Waterfalls** have no sound yet, and the fine terrain grid (4 m) can't
   make a truly vertical cliff, so the gorge wall under a tall fall is a
   steep ramp.

@@ -26,6 +26,20 @@
 // layers' repeats (6 m, and 7.5 m turned 3-4-5), so no chunk or segment
 // seam shows. Speeds are chosen so the pattern also comes back to itself
 // when the engine's TIME rolls over each hour.
+//
+// Ripples near the camera (RippleSim): anything touching the water rings
+// it, and each ring is painted as two soft bands, not lit: a light band
+// (toward the highlight blue) over its crest and a dark band (a deeper
+// blue, never black) over its trough. The bands keep the same two tones
+// while a ring is big and fade as it dies away; under them the water's
+// own mottling and sparkle calm, so the bands read as bands, while the
+// water's grain roughens their edges and, finer, streaks them like
+// brushwork (R1: crunchy texture on smooth shapes). The ripple buffer's
+// slope (its surface normal) paints the side of each ring facing the key
+// light (the moon at night, the sun by day) a little lighter; a hard
+// splash churns pale for a moment. They fade out with distance into the
+// static water above, and are looked up by scene position, so they run
+// on across chunks, pools and river ribbons.
 shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 
@@ -57,6 +71,31 @@ uniform float storm_flow = 0.0;
 uniform float rain_drops = 0.0;
 uniform sampler2D look_tex_water : filter_linear_mipmap_anisotropic, repeat_enable;
 
+// Ripples (RippleSim sets these): the buffer (ripple_view.gdshader: R
+// where each ring is in its swing, 1 crest .. 0 trough; G B slope along
+// the window's axes; A how big the ripples are, eased), the window's
+// center and axes in the scene; window x: 1 / window size (m), y: on
+// (0-1), z-w: fade out between these distances from the camera (m).
+global uniform sampler2D ripple_tex : filter_linear, repeat_disable;
+global uniform vec3 ripple_center;
+global uniform vec3 ripple_axis_u;
+global uniform vec3 ripple_axis_v;
+global uniform vec4 ripple_window;
+// Bands: x where light gives way to dark in the swing (0: even halves),
+// y edge softness, z how far a light band goes toward the highlight
+// blue, w how much a dark band deepens.
+global uniform vec4 ripple_band;
+// x, y: the ripple size (envelope over look.height_m) where rings start
+// to show and where they're painted in full; z: how much the water's own
+// mottling calms under them; w: the size where a splash churns pale.
+global uniform vec4 ripple_ring;
+// xyz: the key light across the water (scaled by how much lighter the
+// side facing it is painted), w: splash foam.
+global uniform vec4 ripple_light;
+// Brushwork in the bands: x how strongly the grain streaks them, y the
+// grain's repeats per meter.
+global uniform vec2 ripple_brush;
+
 const float TILE_A = 6.0; // meters per repeat
 const float TILE_B = 7.5;
 
@@ -79,6 +118,50 @@ void fragment() {
 	// Soft highlights: strongest where both layers' blobs meet.
 	float hl = clamp(la.g * lb.g * 2.0 + 0.3 * max(la.g, lb.g), 0.0, 1.0);
 
+	// Ripples near the camera (RippleSim): `swing` +1 on a ring's crest ..
+	// -1 in its trough (`swing_w` how fast it changes across a pixel),
+	// `ring` how strongly it's painted (0 where calm or out of reach),
+	// `lit_side` + on the side facing the key light, `brush` the grain
+	// that streaks the bands. Derivatives and texture reads stay out here,
+	// where every pixel takes the same branch.
+	float swing = 0.0;
+	float swing_w = 0.0;
+	float ring = 0.0;
+	float lit_side = 0.0;
+	float churn = 0.0;
+	float brush = 0.0;
+	if (ripple_window.y > 0.0) {
+		vec3 rel = world_pos - ripple_center;
+		vec2 ruv = vec2(dot(rel, ripple_axis_u), dot(rel, ripple_axis_v)) * ripple_window.x + 0.5;
+		vec4 rs = texture(ripple_tex, ruv);
+		float edge = min(min(ruv.x, ruv.y), min(1.0 - ruv.x, 1.0 - ruv.y));
+		float k = ripple_window.y * smoothstep(0.0, 0.08, edge)
+			* (1.0 - smoothstep(ripple_window.z, ripple_window.w, distance(world_pos, CAMERA_POSITION_WORLD)));
+		// The ripples' size, back from its easing (ripple_view.gdshader).
+		float amp = rs.a * inversesqrt(max(1.0 - rs.a * rs.a, 1e-4));
+		// Painted, not traced: the water's grain wobbles each band's edge.
+		swing = rs.r * 2.0 - 1.0 + (la.r - 0.5) * 0.35;
+		swing_w = fwidth(swing);
+		ring = smoothstep(ripple_ring.x, ripple_ring.y, amp) * k;
+		// Bands finer than a couple of pixels (far off, or seen edge on)
+		// fade out instead of shimmering.
+		ring *= 1.0 - smoothstep(0.5, 1.0, swing_w);
+		vec2 slope = rs.gb * 2.0 - 1.0;
+		vec2 light = vec2(dot(ripple_light.xyz, ripple_axis_u), dot(ripple_light.xyz, ripple_axis_v));
+		lit_side = -dot(slope, light) * ring;
+		// A hard splash churns pale for a moment, in broken patches.
+		churn = smoothstep(ripple_ring.w, 2.0 * ripple_ring.w, amp * (0.75 + 0.5 * lb.g)) * ripple_light.w * k;
+		// Brushwork (R1: crunchy texture on smooth shapes): the water
+		// texture's grain, finer than the mottling calmed below, streaks
+		// each band lighter and darker without breaking the ring's shape.
+		brush = texture(look_tex_water, mat2(vec2(0.8, 0.6), vec2(-0.6, 0.8)) * (UV - drift_a * TIME) * ripple_brush.y + vec2(0.37, 0.61)).r - 0.5;
+		brush *= ripple_brush.x;
+	}
+	// Under painted rings the water's own mottling and sparkle calm, so
+	// the bands read as bands.
+	body *= 1.0 - ripple_ring.z * ring;
+	hl *= 1.0 - ripple_ring.z * ring;
+
 	ALBEDO = water_color * (1.0 + 0.28 * body);
 	ALBEDO = mix(ALBEDO, highlight_color, hl * 0.5);
 	vec3 glow = night_color * (1.0 + 0.22 * body);
@@ -93,6 +176,21 @@ void fragment() {
 		float drop = hit * (1.0 - smoothstep(0.12, 0.24, dot_r)) * 0.6;
 		ALBEDO = mix(ALBEDO, highlight_color, drop);
 		glow = mix(glow, night_highlight, drop);
+	}
+	if (ring > 0.0 || churn > 0.0) {
+		// Each ring's two bands, within the water's own blues: the light
+		// one toward the highlight (#7FB0FF at night), the dark one a deeper
+		// blue, never black; soft edged, a little lighter on the side
+		// facing the key light.
+		float soft = ripple_band.y + swing_w;
+		float lit = smoothstep(ripple_band.x - soft, ripple_band.x + soft, swing);
+		float shade = smoothstep(ripple_band.x - soft, ripple_band.x + soft, -swing);
+		float to_light = clamp(lit * ring * ripple_band.z * (1.0 + lit_side) * (1.0 + brush), 0.0, 1.0);
+		float deepen = clamp(shade * ring * ripple_band.w * (1.0 - lit_side) * (1.0 - brush), 0.0, 0.7);
+		ALBEDO = mix(ALBEDO, highlight_color, to_light) * (1.0 - deepen);
+		glow = mix(glow, night_highlight * 1.45, to_light) * (1.0 - deepen);
+		ALBEDO = mix(ALBEDO, foam_color, churn);
+		glow = mix(glow, night_highlight * 1.45, churn);
 	}
 	// A touch see-through looking down, solid toward the horizon (only how
 	// much of the bed shows; nothing is reflected).
