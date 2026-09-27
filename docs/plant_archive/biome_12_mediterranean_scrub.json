@@ -1,0 +1,593 @@
+{
+ "key": "MEDITERRANEAN_SCRUB",
+ "name": "Mediterranean scrub",
+ "group": "Grass & scrub",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Sclerophyll evergreen oaks and pines over dense aromatic shrubland (maquis/chaparral/fynbos) with summer drought; Mediterranean basin plus California, central Chile, Cape and SW Australia variants.",
+ "climate": {
+  "temp_c": [
+   11,
+   19
+  ],
+  "moisture": [
+   0.28,
+   0.56
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Holm oak",
+    "genus": "Quercus",
+    "species": "ilex",
+    "shape": "broadleaf",
+    "temp_c": [
+     11,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#2F6A35",
+    "accent": "#5A5045",
+    "source": "Quercus ilex, Mediterranean basin evergreen oak, dense dark crown 10-25 m — Euro+Med PlantBase"
+   },
+   {
+    "name": "Cork oak",
+    "genus": "Quercus",
+    "species": "suber",
+    "shape": "gnarled",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#3A7A40",
+    "accent": "#8A6A50",
+    "source": "Quercus suber, W Mediterranean (Iberia, Maghreb), thick-barked gnarled evergreen 10-20 m — Euro+Med PlantBase"
+   },
+   {
+    "name": "Aleppo pine",
+    "genus": "Pinus",
+    "species": "halepensis",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.28,
+     0.55
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#4A8040",
+    "accent": "#A08060",
+    "source": "Pinus halepensis, Mediterranean basin lowland pine, open crown 10-25 m — Euro+Med PlantBase"
+   },
+   {
+    "name": "Wild olive",
+    "genus": "Olea",
+    "species": "europaea",
+    "shape": "gnarled",
+    "temp_c": [
+     13,
+     20
+    ],
+    "moisture": [
+     0.28,
+     0.5
+    ],
+    "height_m": [
+     5,
+     12
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#8A9A70",
+    "accent": "#7A7060",
+    "source": "Olea europaea var. sylvestris, Mediterranean basin, silver-grey gnarled small tree 5-12 m — Euro+Med PlantBase"
+   },
+   {
+    "name": "Coast live oak",
+    "genus": "Quercus",
+    "species": "agrifolia",
+    "shape": "broadleaf",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#2F6A35",
+    "accent": "#5A5045",
+    "source": "Quercus agrifolia, California coast ranges, spreading evergreen oak 8-20 m — Jepson eFlora"
+   },
+   {
+    "name": "Stone pine",
+    "genus": "Pinus",
+    "species": "pinea",
+    "shape": "umbrella",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     12,
+     25
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#3F8038",
+    "accent": "#A07050",
+    "source": "Pinus pinea, Mediterranean coasts, umbrella-shaped crown 12-25 m — Euro+Med PlantBase"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Kermes oak",
+    "genus": "Quercus",
+    "species": "coccifera",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#3A7A3A",
+    "accent": "#6A5A45",
+    "source": "Quercus coccifera, Mediterranean garrigue/maquis dominant, spiny-leaved shrub 1-3 m — Euro+Med PlantBase"
+   },
+   {
+    "name": "Gum rockrose",
+    "genus": "Cistus",
+    "species": "ladanifer",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#4A8A40",
+    "accent": "#F8F0F0",
+    "source": "Cistus ladanifer, W Mediterranean, sticky shrub 1-2.5 m, big white flowers — Euro+Med PlantBase"
+   },
+   {
+    "name": "Mastic",
+    "genus": "Pistacia",
+    "species": "lentiscus",
+    "shape": "shrub",
+    "temp_c": [
+     13,
+     20
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     1,
+     4
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#2F7A35",
+    "accent": "#C03030",
+    "source": "Pistacia lentiscus, Mediterranean basin maquis, dense evergreen 1-4 m, red berries — Euro+Med PlantBase"
+   },
+   {
+    "name": "Strawberry tree",
+    "genus": "Arbutus",
+    "species": "unedo",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#2F7A35",
+    "accent": "#E05030",
+    "source": "Arbutus unedo, W Mediterranean and Ireland, evergreen shrub/small tree 3-8 m, red fruit — Euro+Med PlantBase"
+   },
+   {
+    "name": "Chamise",
+    "genus": "Adenostoma",
+    "species": "fasciculatum",
+    "shape": "shrub",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.45
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#4A7A40",
+    "accent": "#6A5040",
+    "source": "Adenostoma fasciculatum, dominant California chaparral shrub, needle-like leaves 1-3 m — Jepson eFlora"
+   },
+   {
+    "name": "Bigberry manzanita",
+    "genus": "Arctostaphylos",
+    "species": "glauca",
+    "shape": "gnarled",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.45
+    ],
+    "height_m": [
+     2,
+     5
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#7A9A80",
+    "accent": "#8A2A20",
+    "source": "Arctostaphylos glauca, S California chaparral, smooth red-barked shrub 2-5 m — Jepson eFlora"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Esparto grass",
+    "genus": "Macrochloa",
+    "species": "tenacissima",
+    "shape": "tussock",
+    "temp_c": [
+     14,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.4
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#E0D090",
+    "source": "Macrochloa (Stipa) tenacissima, SE Spain and N Africa dry steppe/scrub, tussock 0.5-1.2 m — Euro+Med PlantBase"
+   },
+   {
+    "name": "French lavender",
+    "genus": "Lavandula",
+    "species": "stoechas",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.45
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#8A9A80",
+    "accent": "#8040A0",
+    "source": "Lavandula stoechas, Mediterranean garrigue on acid soils, 30-100 cm, purple flower heads — Euro+Med PlantBase"
+   },
+   {
+    "name": "Common thyme",
+    "genus": "Thymus",
+    "species": "vulgaris",
+    "shape": "cushion",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.22,
+     0.45
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#7A9A78",
+    "accent": "#C080C0",
+    "source": "Thymus vulgaris, W Mediterranean garrigue, aromatic mat 10-30 cm — Euro+Med PlantBase"
+   },
+   {
+    "name": "Asphodel",
+    "genus": "Asphodelus",
+    "species": "ramosus",
+    "shape": "grass",
+    "temp_c": [
+     13,
+     20
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#F0F0F0",
+    "source": "Asphodelus ramosus, Mediterranean basin degraded scrub, white flower spikes 0.5-1.5 m — Euro+Med PlantBase"
+   },
+   {
+    "name": "Sugarbush protea",
+    "genus": "Protea",
+    "species": "repens",
+    "shape": "shrub",
+    "temp_c": [
+     14,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#7A9A78",
+    "accent": "#E06080",
+    "source": "Protea repens, Cape fynbos, S Africa, evergreen shrub 1-3 m with cup flowers — SANBI PlantZAfrica"
+   },
+   {
+    "name": "Ramose false brome",
+    "genus": "Brachypodium",
+    "species": "retusum",
+    "shape": "grass",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#8FA860",
+    "accent": "#C8B060",
+    "source": "Brachypodium retusum, dominant perennial grass under Mediterranean garrigue, 20-50 cm — Euro+Med PlantBase"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 42,
+  "names": [
+   "Chilean wine palm",
+   "Cretan date palm",
+   "Mediterranean fan palm",
+   "Arkansas yucca",
+   "Adam's needle",
+   "Weak-leaf yucca",
+   "Spanish dagger",
+   "Jalisco yucca",
+   "Sierra Madre yucca",
+   "Chiapas yucca",
+   "Glen Rose yucca",
+   "Pale-leaf yucca",
+   "Pine-woods yucca",
+   "San Angelo yucca",
+   "Twistleaf yucca",
+   "Trichocereus pachanoi",
+   "Trichocereus peruvianus",
+   "Trichocereus bridgesii",
+   "Trichocereus scopulicola",
+   "Trichocereus macrogonus",
+   "Trichocereus cuzcoensis",
+   "Trichocereus tacaquirensis",
+   "Trichocereus taquimbalensis",
+   "Trichocereus santaensis",
+   "Trichocereus puquiensis",
+   "Trichocereus huanucoensis",
+   "Trichocereus riomizquensis",
+   "Trichocereus werdermannianus",
+   "Trichocereus knuthianus",
+   "Trichocereus glaucus",
+   "Cannabis - Hindu Kush",
+   "Cannabis - Afghani",
+   "Cannabis - Mazar-i-Sharif",
+   "Cannabis - Chitral",
+   "Cannabis - Swat Valley",
+   "Cannabis - Tirah Valley",
+   "Cannabis - Kashmir",
+   "Cannabis - Durban",
+   "Cannabis - Ethiopian",
+   "Cannabis - Rif (Ketama)",
+   "Cannabis - Lebanese (Bekaa)",
+   "Cannabis - Turkish"
+  ]
+ },
+ "associations": [
+  {
+   "name": "Holm oak sclerophyll forest",
+   "where": "deep-soil valleys and shaded north slopes of the Mediterranean basin",
+   "dominant": [
+    "Holm oak"
+   ],
+   "companion": [
+    "Strawberry tree",
+    "Mastic",
+    "Kermes oak"
+   ],
+   "ground": [
+    "Ramose false brome",
+    "Asphodel"
+   ],
+   "catalogue": [
+    "Mediterranean fan palm"
+   ],
+   "cover": 0.85,
+   "source": "Quezel & Medail 2003 Ecologie et biogeographie des forets du bassin mediterraneen; Braun-Blanquet Quercetum ilicis"
+  },
+  {
+   "name": "Cork oak-wild olive open woodland",
+   "where": "acid sandy lowlands and warm sunny lower slopes, thin soil",
+   "dominant": [
+    "Cork oak",
+    "Wild olive"
+   ],
+   "companion": [
+    "Mastic",
+    "Gum rockrose",
+    "Strawberry tree"
+   ],
+   "ground": [
+    "French lavender",
+    "Asphodel",
+    "Ramose false brome"
+   ],
+   "catalogue": [
+    "Mediterranean fan palm"
+   ],
+   "cover": 0.6,
+   "source": "Rivas-Martinez 1987 Memoria del mapa de series de vegetacion de Espana; Quezel & Medail 2003"
+  },
+  {
+   "name": "Aleppo pine-kermes oak garrigue",
+   "where": "hot dry limestone hillsides and rocky ridges, frequently burned",
+   "dominant": [
+    "Aleppo pine"
+   ],
+   "companion": [
+    "Kermes oak",
+    "Mastic",
+    "Gum rockrose",
+    "Stone pine"
+   ],
+   "ground": [
+    "Common thyme",
+    "Esparto grass",
+    "French lavender",
+    "Asphodel"
+   ],
+   "catalogue": [
+    "Cretan date palm",
+    "Mediterranean fan palm"
+   ],
+   "cover": 0.5,
+   "source": "Tomaselli 1977 Degradation of the Mediterranean maquis (UNESCO MAB); Quezel & Medail 2003"
+  },
+  {
+   "name": "Coast live oak-chaparral mosaic",
+   "where": "canyon bottoms and north slopes of the California coast ranges, oak grove with chaparral on hot exposed slopes",
+   "dominant": [
+    "Coast live oak"
+   ],
+   "companion": [
+    "Chamise",
+    "Bigberry manzanita"
+   ],
+   "ground": [
+    "Ramose false brome"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Barbour & Major 1977 Terrestrial Vegetation of California; Sawyer, Keeler-Wolf & Evens 2009 Manual of California Vegetation"
+  },
+  {
+   "name": "Proteoid fynbos",
+   "where": "wet sandy south-facing mountain slopes of the Cape, nutrient-poor soil, fire every 10-20 years",
+   "dominant": [
+    "Sugarbush protea"
+   ],
+   "companion": [],
+   "ground": [
+    "Sugarbush protea"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Cowling 1992 The Ecology of Fynbos; Mucina & Rutherford 2006 Vegetation of South Africa"
+  }
+ ]
+}

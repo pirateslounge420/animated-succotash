@@ -22,37 +22,6 @@
   "shrub": [],
   "ground": [
    {
-    "name": "Pelagic sargassum",
-    "genus": "Sargassum",
-    "species": "natans",
-    "shape": "epiphyte_clump",
-    "temp_c": [
-     18,
-     30
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     0.2,
-     1.0
-    ],
-    "density": 0.15,
-    "soil": "wet",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0,
-     1
-    ],
-    "color": "#9A8A30",
-    "accent": "#6A5A20",
-    "source": "underwater — Sargassum natans, free-floating holopelagic brown alga of the Sargasso Sea and tropical Atlantic gyre, surface rafts 0.2-1 m thick — Wikipedia"
-   },
-   {
     "name": "Drift sargassum",
     "genus": "Sargassum",
     "species": "fluitans",
@@ -81,9 +50,76 @@
     ],
     "color": "#8A7A28",
     "accent": "#5A4A18",
-    "source": "underwater — Sargassum fluitans, second holopelagic species forming Atlantic and Caribbean windrows, 0.2-1 m — Wikipedia"
+    "source": "underwater — Sargassum fluitans, second holopelagic species forming Atlantic and Caribbean windrows, 0.2-1 m — Wikipedia",
+    "traits": {
+     "genus": "Sargassum",
+     "species": "fluitans",
+     "native_range": "underwater — Sargassum fluitans, second holopelagic species forming Atlantic and Caribbean windrows, 0",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.2,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Pelagic sargassum",
+    "genus": "Sargassum",
+    "species": "natans",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     18,
+     30
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     1.0
+    ],
+    "density": 0.15,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#9A8A30",
+    "accent": "#6A5A20",
+    "source": "underwater — Sargassum natans, free-floating holopelagic brown alga of the Sargasso Sea and tropical Atlantic gyre, surface rafts 0.2-1 m thick — Wikipedia",
+    "traits": {
+     "genus": "Sargassum",
+     "species": "natans",
+     "native_range": "underwater — Sargassum natans, free-floating holopelagic brown alga of the Sargasso Sea and tropical Atlantic gyre, surf",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.2,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- }
+ },
+ "hero_species": [],
+ "associations": []
 }

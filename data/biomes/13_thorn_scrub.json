@@ -20,50 +20,44 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Honey mesquite",
-    "genus": "Prosopis",
-    "species": "glandulosa",
+    "name": "Baobab",
+    "genus": "Adansonia",
+    "species": "digitata",
     "shape": "gnarled",
     "temp_c": [
-     16,
-     28
+     20,
+     30
     ],
     "moisture": [
-     0.1,
-     0.35
+     0.12,
+     0.4
     ],
     "height_m": [
-     5,
-     12
+     8,
+     25
     ],
-    "density": 0.8,
+    "density": 0.15,
     "soil": "sand",
     "color": "#5AA040",
-    "accent": "#6B4A2E",
-    "source": "Prosopis glandulosa, Tamaulipan thornscrub/Chihuahuan Desert (Mexico, SW USA), thorny deciduous legume 5-12 m — Wikipedia / USDA Plants"
-   },
-   {
-    "name": "Umbrella thorn",
-    "genus": "Vachellia",
-    "species": "tortilis",
-    "shape": "umbrella",
-    "temp_c": [
-     18,
-     32
-    ],
-    "moisture": [
-     0.1,
-     0.35
-    ],
-    "height_m": [
-     4,
-     14
-    ],
-    "density": 0.7,
-    "soil": "sand",
-    "color": "#4E9A3C",
-    "accent": "#5C4A38",
-    "source": "Vachellia (Acacia) tortilis, Sahel/East Africa/Arabia, flat-crowned thorn tree of Acacia-Commiphora bushland, 4-14 m — Wikipedia / Kew POWO"
+    "accent": "#8A7A64",
+    "source": "Adansonia digitata, African baobab, dry savanna and bushland of sub-Saharan Africa, massive-trunked deciduous tree 8-25 m — Wikipedia / Kew",
+    "traits": {
+     "genus": "Adansonia",
+     "species": "digitata",
+     "native_range": "Adansonia digitata, African baobab, dry savanna and bushland of sub-Saharan Africa, massive-trunked deciduous tree 8-25 ",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      8,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Caatinga catingueira",
@@ -86,7 +80,384 @@
     "soil": "thin",
     "color": "#5AB040",
     "accent": "#7A6A50",
-    "source": "Cenostigma (Poincianella/Caesalpinia) pyramidale, catingueira, dominant deciduous tree of NE Brazil Caatinga, 4-12 m — Flora do Brasil / Wikipedia"
+    "source": "Cenostigma (Poincianella/Caesalpinia) pyramidale, catingueira, dominant deciduous tree of NE Brazil Caatinga, 4-12 m — Flora do Brasil / Wikipedia",
+    "traits": {
+     "genus": "Cenostigma",
+     "species": "pyramidale",
+     "native_range": "Cenostigma (Poincianella/Caesalpinia) pyramidale, catingueira, dominant deciduous tree of NE Brazil Caatinga, 4-12 m — F",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      4,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Camel thorn",
+    "genus": "Vachellia",
+    "species": "erioloba",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     17,
+     25
+    ],
+    "moisture": [
+     0.1,
+     0.3
+    ],
+    "altitude_m": [
+     700,
+     1500
+    ],
+    "height_m": [
+     8.0,
+     16.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Kalahari. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted.",
+    "from_catalogue": "acacia",
+    "traits": {
+     "genus": "Vachellia",
+     "species": "erioloba",
+     "native_range": "Kalahari",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      8.0,
+      16.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Date palm",
+    "genus": "Phoenix",
+    "species": "dactylifera",
+    "family": "Arecaceae",
+    "shape": "palm",
+    "temp_c": [
+     18,
+     30
+    ],
+    "moisture": [
+     0.05,
+     0.35
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     15.0,
+     25.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3F8F45",
+    "accent": "#8A7A5A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       180
+      ],
+      [
+       "young",
+       1800
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       15000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trunk_lean": [
+      0.0,
+      0.6
+     ],
+     "frond_count": [
+      0.3,
+      0.8
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Palm of Sahara, Arabia, Mesopotamia oases; height 15-25 m. Oasis palm; suckers from the base. Standard floras and Kew POWO for the name.",
+    "from_catalogue": "palms",
+    "traits": {
+     "genus": "Phoenix",
+     "species": "dactylifera",
+     "native_range": "Sahara, Arabia, Mesopotamia oases",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      15.0,
+      25.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Doum palm",
+    "genus": "Hyphaene",
+    "species": "thebaica",
+    "family": "Arecaceae",
+    "shape": "palm",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.08,
+     0.35
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     8.0,
+     15.0
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "needs": [],
+    "color": "#3F8F45",
+    "accent": "#8A7A5A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       180
+      ],
+      [
+       "young",
+       1800
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       15000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trunk_lean": [
+      0.0,
+      0.6
+     ],
+     "frond_count": [
+      0.3,
+      0.8
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Palm of Sahel and Nile valley; height 8-15 m. The only branching palm; forked trunk. Standard floras and Kew POWO for the name.",
+    "from_catalogue": "palms",
+    "traits": {
+     "genus": "Hyphaene",
+     "species": "thebaica",
+     "native_range": "Sahel and Nile valley",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      8.0,
+      15.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Honey mesquite",
+    "genus": "Prosopis",
+    "species": "glandulosa",
+    "shape": "gnarled",
+    "temp_c": [
+     16,
+     28
+    ],
+    "moisture": [
+     0.1,
+     0.35
+    ],
+    "height_m": [
+     5,
+     12
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "color": "#5AA040",
+    "accent": "#6B4A2E",
+    "source": "Prosopis glandulosa, Tamaulipan thornscrub/Chihuahuan Desert (Mexico, SW USA), thorny deciduous legume 5-12 m — Wikipedia / USDA Plants",
+    "traits": {
+     "genus": "Prosopis",
+     "species": "glandulosa",
+     "native_range": "Prosopis glandulosa, Tamaulipan thornscrub/Chihuahuan Desert (Mexico, SW USA), thorny deciduous legume 5-12 m — Wikipedi",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      5,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Red quebracho",
@@ -109,30 +480,64 @@
     "soil": "rich",
     "color": "#4E9A3C",
     "accent": "#5A3A2A",
-    "source": "Schinopsis balansae, quebracho colorado, Gran Chaco (Argentina/Paraguay), tall hardwood of Chaco dry forest 10-24 m — Wikipedia"
+    "source": "Schinopsis balansae, quebracho colorado, Gran Chaco (Argentina/Paraguay), tall hardwood of Chaco dry forest 10-24 m — Wikipedia",
+    "traits": {
+     "genus": "Schinopsis",
+     "species": "balansae",
+     "native_range": "Schinopsis balansae, quebracho colorado, Gran Chaco (Argentina/Paraguay), tall hardwood of Chaco dry forest 10-24 m — Wi",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      10,
+      24
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Baobab",
-    "genus": "Adansonia",
-    "species": "digitata",
-    "shape": "gnarled",
+    "name": "Umbrella thorn",
+    "genus": "Vachellia",
+    "species": "tortilis",
+    "shape": "umbrella",
     "temp_c": [
-     20,
-     30
+     18,
+     32
     ],
     "moisture": [
-     0.12,
-     0.4
+     0.1,
+     0.35
     ],
     "height_m": [
-     8,
-     25
+     4,
+     14
     ],
-    "density": 0.15,
+    "density": 0.7,
     "soil": "sand",
-    "color": "#5AA040",
-    "accent": "#8A7A64",
-    "source": "Adansonia digitata, African baobab, dry savanna and bushland of sub-Saharan Africa, massive-trunked deciduous tree 8-25 m — Wikipedia / Kew"
+    "color": "#4E9A3C",
+    "accent": "#5C4A38",
+    "source": "Vachellia (Acacia) tortilis, Sahel/East Africa/Arabia, flat-crowned thorn tree of Acacia-Commiphora bushland, 4-14 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Vachellia",
+     "species": "tortilis",
+     "native_range": "Vachellia (Acacia) tortilis, Sahel/East Africa/Arabia, flat-crowned thorn tree of Acacia-Commiphora bushland, 4-14 m — W",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      4,
+      14
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [
@@ -157,30 +562,24 @@
     "soil": "thin",
     "color": "#4E9A3C",
     "accent": "#4A3A2E",
-    "source": "Vachellia rigidula, blackbrush acacia, dominant thicket shrub of Tamaulipan thornscrub (S Texas/NE Mexico), 1-4 m — Wikipedia / USDA"
-   },
-   {
-    "name": "Texas ebony",
-    "genus": "Ebenopsis",
-    "species": "ebano",
-    "shape": "shrub",
-    "temp_c": [
-     20,
-     27
-    ],
-    "moisture": [
-     0.15,
-     0.35
-    ],
-    "height_m": [
-     3,
-     8
-    ],
-    "density": 0.4,
-    "soil": "sand",
-    "color": "#3F8A38",
-    "accent": "#3A2E28",
-    "source": "Ebenopsis ebano, Texas ebony, thorny evergreen shrub/small tree of Tamaulipan thornscrub, 3-8 m — Wikipedia"
+    "source": "Vachellia rigidula, blackbrush acacia, dominant thicket shrub of Tamaulipan thornscrub (S Texas/NE Mexico), 1-4 m — Wikipedia / USDA",
+    "traits": {
+     "genus": "Vachellia",
+     "species": "rigidula",
+     "native_range": "Vachellia rigidula, blackbrush acacia, dominant thicket shrub of Tamaulipan thornscrub (S Texas/NE Mexico), 1-4 m — Wiki",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Facheiro cactus",
@@ -203,30 +602,24 @@
     "soil": "thin",
     "color": "#5A9AB0",
     "accent": "#D8D0A0",
-    "source": "Pilosocereus pachycladus, facheiro, blue columnar cactus of the Brazilian Caatinga, 2-6 m — Wikipedia / LLIFLE"
-   },
-   {
-    "name": "Mandacaru",
-    "genus": "Cereus",
-    "species": "jamacaru",
-    "shape": "cactus",
-    "temp_c": [
-     22,
-     30
-    ],
-    "moisture": [
-     0.12,
-     0.3
-    ],
-    "height_m": [
-     3,
-     8
-    ],
-    "density": 0.4,
-    "soil": "thin",
-    "color": "#3F8A60",
-    "accent": "#E8E0C0",
-    "source": "Cereus jamacaru, mandacaru, candelabra columnar cactus of NE Brazil Caatinga, up to 8 m — Wikipedia"
+    "source": "Pilosocereus pachycladus, facheiro, blue columnar cactus of the Brazilian Caatinga, 2-6 m — Wikipedia / LLIFLE",
+    "traits": {
+     "genus": "Pilosocereus",
+     "species": "pachycladus",
+     "native_range": "Pilosocereus pachycladus, facheiro, blue columnar cactus of the Brazilian Caatinga, 2-6 m — Wikipedia / LLIFLE",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Madagascar ocotillo",
@@ -249,7 +642,64 @@
     "soil": "sand",
     "color": "#5AB040",
     "accent": "#9A9080",
-    "source": "Alluaudia procera, Madagascar ocotillo, spiny whip-stemmed tree of the southern Madagascar spiny thicket, 3-12 m — Wikipedia / Kew"
+    "source": "Alluaudia procera, Madagascar ocotillo, spiny whip-stemmed tree of the southern Madagascar spiny thicket, 3-12 m — Wikipedia / Kew",
+    "traits": {
+     "genus": "Alluaudia",
+     "species": "procera",
+     "native_range": "Alluaudia procera, Madagascar ocotillo, spiny whip-stemmed tree of the southern Madagascar spiny thicket, 3-12 m — Wikip",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      3,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Mandacaru",
+    "genus": "Cereus",
+    "species": "jamacaru",
+    "shape": "cactus",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.12,
+     0.3
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3F8A60",
+    "accent": "#E8E0C0",
+    "source": "Cereus jamacaru, mandacaru, candelabra columnar cactus of NE Brazil Caatinga, up to 8 m — Wikipedia",
+    "traits": {
+     "genus": "Cereus",
+     "species": "jamacaru",
+     "native_range": "Cereus jamacaru, mandacaru, candelabra columnar cactus of NE Brazil Caatinga, up to 8 m — Wikipedia",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Myrrh bush",
@@ -272,7 +722,64 @@
     "soil": "thin",
     "color": "#5AA040",
     "accent": "#8A9A80",
-    "source": "Commiphora africana, African myrrh, spiny deciduous shrub co-dominant with Acacia in Somali-Masai bushland, 1-5 m — Wikipedia / PROTA"
+    "source": "Commiphora africana, African myrrh, spiny deciduous shrub co-dominant with Acacia in Somali-Masai bushland, 1-5 m — Wikipedia / PROTA",
+    "traits": {
+     "genus": "Commiphora",
+     "species": "africana",
+     "native_range": "Commiphora africana, African myrrh, spiny deciduous shrub co-dominant with Acacia in Somali-Masai bushland, 1-5 m — Wiki",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Texas ebony",
+    "genus": "Ebenopsis",
+    "species": "ebano",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#3F8A38",
+    "accent": "#3A2E28",
+    "source": "Ebenopsis ebano, Texas ebony, thorny evergreen shrub/small tree of Tamaulipan thornscrub, 3-8 m — Wikipedia",
+    "traits": {
+     "genus": "Ebenopsis",
+     "species": "ebano",
+     "native_range": "Ebenopsis ebano, Texas ebony, thorny evergreen shrub/small tree of Tamaulipan thornscrub, 3-8 m — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
@@ -297,53 +804,24 @@
     "soil": "sand",
     "color": "#C8B060",
     "accent": "#A88A40",
-    "source": "Cenchrus ciliaris, buffelgrass, tufted perennial grass native to Africa/Arabia/India dry bushland, 0.3-1.2 m — Wikipedia / USDA"
-   },
-   {
-    "name": "Threeawn grass",
-    "genus": "Aristida",
-    "species": "purpurea",
-    "shape": "tussock",
-    "temp_c": [
-     10,
-     26
-    ],
-    "moisture": [
-     0.1,
-     0.3
-    ],
-    "height_m": [
-     0.2,
-     0.7
-    ],
-    "density": 0.7,
-    "soil": "thin",
-    "color": "#C8B060",
-    "accent": "#B07A50",
-    "source": "Aristida purpurea, purple threeawn, wiry bunchgrass of SW USA/N Mexico thornscrub and desert grassland, 0.2-0.7 m — USDA Plants / Wikipedia"
-   },
-   {
-    "name": "Prickly pear",
-    "genus": "Opuntia",
-    "species": "engelmannii",
-    "shape": "cactus",
-    "temp_c": [
-     14,
-     28
-    ],
-    "moisture": [
-     0.08,
-     0.3
-    ],
-    "height_m": [
-     0.5,
-     2
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#5A9A50",
-    "accent": "#E8C040",
-    "source": "Opuntia engelmannii, Engelmann prickly pear, pad cactus of SW USA/N Mexico thornscrub, 0.5-2 m — Wikipedia / USDA"
+    "source": "Cenchrus ciliaris, buffelgrass, tufted perennial grass native to Africa/Arabia/India dry bushland, 0.3-1.2 m — Wikipedia / USDA",
+    "traits": {
+     "genus": "Cenchrus",
+     "species": "ciliaris",
+     "native_range": "Cenchrus ciliaris, buffelgrass, tufted perennial grass native to Africa/Arabia/India dry bushland, 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Elephant's foot",
@@ -366,7 +844,24 @@
     "soil": "sand",
     "color": "#7AB840",
     "accent": "#A0A870",
-    "source": "Euphorbia tirucalli, pencil tree, leafless succulent shrub of African dry bushland, 1-4 m (larger in cultivation) — Wikipedia / PROTA"
+    "source": "Euphorbia tirucalli, pencil tree, leafless succulent shrub of African dry bushland, 1-4 m (larger in cultivation) — Wikipedia / PROTA",
+    "traits": {
+     "genus": "Euphorbia",
+     "species": "tirucalli",
+     "native_range": "Euphorbia tirucalli, pencil tree, leafless succulent shrub of African dry bushland, 1-4 m (larger in cultivation) — Wiki",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Kinglet agave",
@@ -389,7 +884,104 @@
     "soil": "thin",
     "color": "#6AA060",
     "accent": "#D0C080",
-    "source": "Agave lechuguilla, lechuguilla, small spiny rosette indicator species of Chihuahuan Desert and Tamaulipan scrub, 0.3-0.6 m — Wikipedia"
+    "source": "Agave lechuguilla, lechuguilla, small spiny rosette indicator species of Chihuahuan Desert and Tamaulipan scrub, 0.3-0.6 m — Wikipedia",
+    "traits": {
+     "genus": "Agave",
+     "species": "lechuguilla",
+     "native_range": "Agave lechuguilla, lechuguilla, small spiny rosette indicator species of Chihuahuan Desert and Tamaulipan scrub, 0",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Prickly pear",
+    "genus": "Opuntia",
+    "species": "engelmannii",
+    "shape": "cactus",
+    "temp_c": [
+     14,
+     28
+    ],
+    "moisture": [
+     0.08,
+     0.3
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#5A9A50",
+    "accent": "#E8C040",
+    "source": "Opuntia engelmannii, Engelmann prickly pear, pad cactus of SW USA/N Mexico thornscrub, 0.5-2 m — Wikipedia / USDA",
+    "traits": {
+     "genus": "Opuntia",
+     "species": "engelmannii",
+     "native_range": "Opuntia engelmannii, Engelmann prickly pear, pad cactus of SW USA/N Mexico thornscrub, 0",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Threeawn grass",
+    "genus": "Aristida",
+    "species": "purpurea",
+    "shape": "tussock",
+    "temp_c": [
+     10,
+     26
+    ],
+    "moisture": [
+     0.1,
+     0.3
+    ],
+    "height_m": [
+     0.2,
+     0.7
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#B07A50",
+    "source": "Aristida purpurea, purple threeawn, wiry bunchgrass of SW USA/N Mexico thornscrub and desert grassland, 0.2-0.7 m — USDA Plants / Wikipedia",
+    "traits": {
+     "genus": "Aristida",
+     "species": "purpurea",
+     "native_range": "Aristida purpurea, purple threeawn, wiry bunchgrass of SW USA/N Mexico thornscrub and desert grassland, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.7
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": [
@@ -414,37 +1006,25 @@
     "soil": "thin",
     "color": "#8AA890",
     "accent": "#B0B0A0",
-    "source": "Tillandsia recurvata, ball moss, grey air-plant clumps on mesquite and acacia in Texas/Mexico thornscrub and Chaco — Wikipedia / USDA"
+    "source": "Tillandsia recurvata, ball moss, grey air-plant clumps on mesquite and acacia in Texas/Mexico thornscrub and Chaco — Wikipedia / USDA",
+    "traits": {
+     "genus": "Tillandsia",
+     "species": "recurvata",
+     "native_range": "Tillandsia recurvata, ball moss, grey air-plant clumps on mesquite and acacia in Texas/Mexico thornscrub and Chaco — Wik",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
-  ]
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 23,
-  "names": [
-   "Date palm",
-   "Doum palm",
-   "Red cabbage palm",
-   "California fan palm",
-   "Mexican fan palm",
-   "Guadalupe palm",
-   "Giant Spanish dagger",
-   "Carr's yucca",
-   "Coahuila yucca",
-   "Declined yucca",
-   "Blue-boy yucca",
-   "Endlich's yucca",
-   "Faxon yucca",
-   "Feeanouki's yucca",
-   "Sahuiliqui",
-   "Linear-leaf yucca",
-   "Mixtec yucca",
-   "Perilous yucca",
-   "Potosí yucca",
-   "Querétaro yucca",
-   "Beaked yucca",
-   "Thompson's yucca",
-   "Torrey yucca"
   ]
  },
  "associations": [
@@ -464,12 +1044,7 @@
     "Threeawn grass",
     "Prickly pear"
    ],
-   "catalogue": [
-    "Torrey yucca",
-    "Thompson's yucca",
-    "Beaked yucca",
-    "Giant Spanish dagger"
-   ],
+   "catalogue": [],
    "cover": 0.5,
    "source": "Jahrsdoerfer & Leslie 1988 Tamaulipan Brushland of the Lower Rio Grande Valley (USFWS); USNVC Prosopis glandulosa-Acacia rigidula shrubland"
   },
@@ -546,5 +1121,12 @@
    "cover": 0.5,
    "source": "Koechlin, Guillaumet & Morat 1974 Flore et vegetation de Madagascar; Moat & Smith 2007 Atlas of the Vegetation of Madagascar"
   }
+ ],
+ "hero_species": [
+  "Ball moss",
+  "Camel thorn",
+  "Date palm",
+  "Doum palm",
+  "Umbrella thorn"
  ]
 }

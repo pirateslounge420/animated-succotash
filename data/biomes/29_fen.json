@@ -20,29 +20,6 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Tamarack",
-    "genus": "Larix",
-    "species": "laricina",
-    "shape": "conifer",
-    "temp_c": [
-     -7,
-     5
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "height_m": [
-     5,
-     20
-    ],
-    "density": 0.5,
-    "soil": "peat",
-    "color": "#8AC050",
-    "accent": "#7A5030",
-    "source": "Larix laricina, N American rich fens and swamps, deciduous conifer 5-20 m"
-   },
-   {
     "name": "Grey alder",
     "genus": "Alnus",
     "species": "incana",
@@ -66,7 +43,24 @@
     ],
     "color": "#4A9A40",
     "accent": "#8A8A80",
-    "source": "Alnus incana, Eurasian and N American fen carr and stream margins, 5-15 m multi-stemmed"
+    "source": "Alnus incana, Eurasian and N American fen carr and stream margins, 5-15 m multi-stemmed",
+    "traits": {
+     "genus": "Alnus",
+     "species": "incana",
+     "native_range": "Alnus incana, Eurasian and N American fen carr and stream margins, 5-15 m multi-stemmed",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      5,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Northern white cedar",
@@ -89,55 +83,170 @@
     "soil": "peat",
     "color": "#3A7A45",
     "accent": "#8A6A50",
-    "source": "Thuja occidentalis, NE North American calcareous fens and cedar swamps, 8-20 m conical"
-   }
-  ],
-  "shrub": [
+    "source": "Thuja occidentalis, NE North American calcareous fens and cedar swamps, 8-20 m conical",
+    "traits": {
+     "genus": "Thuja",
+     "species": "occidentalis",
+     "native_range": "Thuja occidentalis, NE North American calcareous fens and cedar swamps, 8-20 m conical",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      8,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Fen willow",
-    "genus": "Salix",
-    "species": "cinerea",
-    "shape": "shrub",
+    "name": "Tamarack",
+    "genus": "Larix",
+    "species": "laricina",
+    "shape": "conifer",
     "temp_c": [
-     -4,
-     8
+     -7,
+     5
     ],
     "moisture": [
      0.7,
      1
     ],
     "height_m": [
-     2,
-     6
-    ],
-    "density": 0.6,
-    "soil": "wet",
-    "color": "#7AA070",
-    "accent": "#8A7A5A",
-    "source": "Salix cinerea (grey willow), European fen carr and marsh margins, bushy 2-6 m"
-   },
-   {
-    "name": "Shrubby cinquefoil",
-    "genus": "Dasiphora",
-    "species": "fruticosa",
-    "shape": "shrub",
-    "temp_c": [
-     -7,
-     6
-    ],
-    "moisture": [
-     0.6,
-     1
-    ],
-    "height_m": [
-     0.3,
-     1
+     5,
+     20
     ],
     "density": 0.5,
     "soil": "peat",
-    "color": "#4A8A40",
-    "accent": "#F0D030",
-    "source": "Dasiphora fruticosa, circumboreal calcareous fens, yellow-flowered shrub 0.3-1 m"
+    "color": "#8AC050",
+    "accent": "#7A5030",
+    "source": "Larix laricina, N American rich fens and swamps, deciduous conifer 5-20 m",
+    "traits": {
+     "genus": "Larix",
+     "species": "laricina",
+     "native_range": "Larix laricina, N American rich fens and swamps, deciduous conifer 5-20 m",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      5,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Alpenrose",
+    "genus": "Rhododendron",
+    "species": "ferrugineum",
+    "family": "Ericaceae",
+    "shape": "shrub",
+    "temp_c": [
+     -1,
+     6
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#D03050",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Alps subalpine; Heath above the trees. Kew POWO; standard floras.",
+    "from_catalogue": "rhododendron",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "ferrugineum",
+     "native_range": "Alps subalpine",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Bog birch",
@@ -160,35 +269,146 @@
     "soil": "peat",
     "color": "#4A9A40",
     "accent": "#7A5A3A",
-    "source": "Betula pumila, N American fens and peatlands, 1-3 m shrub birch (B. humilis in Europe)"
+    "source": "Betula pumila, N American fens and peatlands, 1-3 m shrub birch (B. humilis in Europe)",
+    "traits": {
+     "genus": "Betula",
+     "species": "pumila",
+     "native_range": "Betula pumila, N American fens and peatlands, 1-3 m shrub birch (B",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Fen willow",
+    "genus": "Salix",
+    "species": "cinerea",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#7AA070",
+    "accent": "#8A7A5A",
+    "source": "Salix cinerea (grey willow), European fen carr and marsh margins, bushy 2-6 m",
+    "traits": {
+     "genus": "Salix",
+     "species": "cinerea",
+     "native_range": "Salix cinerea (grey willow), European fen carr and marsh margins, bushy 2-6 m",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Shrubby cinquefoil",
+    "genus": "Dasiphora",
+    "species": "fruticosa",
+    "shape": "shrub",
+    "temp_c": [
+     -7,
+     6
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#4A8A40",
+    "accent": "#F0D030",
+    "source": "Dasiphora fruticosa, circumboreal calcareous fens, yellow-flowered shrub 0.3-1 m",
+    "traits": {
+     "genus": "Dasiphora",
+     "species": "fruticosa",
+     "native_range": "Dasiphora fruticosa, circumboreal calcareous fens, yellow-flowered shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
    {
-    "name": "Saw sedge",
-    "genus": "Cladium",
-    "species": "mariscus",
-    "shape": "reed",
+    "name": "Black bog-rush",
+    "genus": "Schoenus",
+    "species": "nigricans",
+    "shape": "tussock",
     "temp_c": [
      -2,
      8
     ],
     "moisture": [
-     0.8,
+     0.7,
      1
     ],
     "height_m": [
-     1,
-     2.5
+     0.2,
+     0.6
     ],
-    "density": 0.8,
+    "density": 0.6,
     "soil": "peat",
-    "needs": [
-     "standing_water"
-    ],
-    "color": "#7AA848",
-    "accent": "#A09040",
-    "source": "Cladium mariscus (great fen-sedge), dominant of European calcareous fens (Norfolk Broads), serrated leaves 1-2.5 m"
+    "color": "#6A9A48",
+    "accent": "#2A2A2A",
+    "source": "Schoenus nigricans, dominant tussock of calcareous fens in Britain/Ireland/continental Europe, dark flower heads 20-60 cm",
+    "traits": {
+     "genus": "Schoenus",
+     "species": "nigricans",
+     "native_range": "Schoenus nigricans, dominant tussock of calcareous fens in Britain/Ireland/continental Europe, dark flower heads 20-60 c",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Bottle sedge",
@@ -214,30 +434,24 @@
     ],
     "color": "#6AA850",
     "accent": "#A8A050",
-    "source": "Carex rostrata, circumboreal poor and rich fens, dominant sedge lawn 30-100 cm at water's edge"
-   },
-   {
-    "name": "Black bog-rush",
-    "genus": "Schoenus",
-    "species": "nigricans",
-    "shape": "tussock",
-    "temp_c": [
-     -2,
-     8
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "height_m": [
-     0.2,
-     0.6
-    ],
-    "density": 0.6,
-    "soil": "peat",
-    "color": "#6A9A48",
-    "accent": "#2A2A2A",
-    "source": "Schoenus nigricans, dominant tussock of calcareous fens in Britain/Ireland/continental Europe, dark flower heads 20-60 cm"
+    "source": "Carex rostrata, circumboreal poor and rich fens, dominant sedge lawn 30-100 cm at water's edge",
+    "traits": {
+     "genus": "Carex",
+     "species": "rostrata",
+     "native_range": "Carex rostrata, circumboreal poor and rich fens, dominant sedge lawn 30-100 cm at water's edge",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Brown moss",
@@ -260,30 +474,24 @@
     "soil": "wet",
     "color": "#7A6A30",
     "accent": "#A05A30",
-    "source": "Scorpidium scorpioides, characteristic brown moss carpet of rich fens across the boreal/temperate zone"
-   },
-   {
-    "name": "Marsh marigold",
-    "genus": "Caltha",
-    "species": "palustris",
-    "shape": "rosette",
-    "temp_c": [
-     -7,
-     8
-    ],
-    "moisture": [
-     0.8,
-     1
-    ],
-    "height_m": [
-     0.15,
-     0.5
-    ],
-    "density": 0.5,
-    "soil": "wet",
-    "color": "#3F8A3A",
-    "accent": "#F0C020",
-    "source": "Caltha palustris, circumboreal fens and wet meadows, glossy leaves and yellow flowers 15-50 cm"
+    "source": "Scorpidium scorpioides, characteristic brown moss carpet of rich fens across the boreal/temperate zone",
+    "traits": {
+     "genus": "Scorpidium",
+     "species": "scorpioides",
+     "native_range": "Scorpidium scorpioides, characteristic brown moss carpet of rich fens across the boreal/temperate zone",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.08
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Grass of Parnassus",
@@ -306,15 +514,110 @@
     "soil": "peat",
     "color": "#4A9A45",
     "accent": "#F8F8F0",
-    "source": "Parnassia palustris, Eurasian and N American calcareous fens, single white flower 10-30 cm"
+    "source": "Parnassia palustris, Eurasian and N American calcareous fens, single white flower 10-30 cm",
+    "traits": {
+     "genus": "Parnassia",
+     "species": "palustris",
+     "native_range": "Parnassia palustris, Eurasian and N American calcareous fens, single white flower 10-30 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Marsh marigold",
+    "genus": "Caltha",
+    "species": "palustris",
+    "shape": "rosette",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.15,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "color": "#3F8A3A",
+    "accent": "#F0C020",
+    "source": "Caltha palustris, circumboreal fens and wet meadows, glossy leaves and yellow flowers 15-50 cm",
+    "traits": {
+     "genus": "Caltha",
+     "species": "palustris",
+     "native_range": "Caltha palustris, circumboreal fens and wet meadows, glossy leaves and yellow flowers 15-50 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.15,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Saw sedge",
+    "genus": "Cladium",
+    "species": "mariscus",
+    "shape": "reed",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#7AA848",
+    "accent": "#A09040",
+    "source": "Cladium mariscus (great fen-sedge), dominant of European calcareous fens (Norfolk Broads), serrated leaves 1-2.5 m",
+    "traits": {
+     "genus": "Cladium",
+     "species": "mariscus",
+     "native_range": "Cladium mariscus (great fen-sedge), dominant of European calcareous fens (Norfolk Broads), serrated leaves 1-2",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 0,
-  "names": []
  },
  "associations": [
   {
@@ -412,5 +715,8 @@
    "cover": 0.75,
    "source": "Alnion glutinosae-incanae fen carr (Ellenberg 1988; Rodwell 1991 W2/W3)"
   }
+ ],
+ "hero_species": [
+  "Alpenrose"
  ]
 }

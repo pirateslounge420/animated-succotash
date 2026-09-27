@@ -1,0 +1,575 @@
+{
+ "key": "FRESHWATER",
+ "name": "Fresh water (river, lake)",
+ "group": "Freshwater",
+ "size": "small",
+ "status": "researched",
+ "kind": "water",
+ "notes": "River and lake margins: willow and alder on banks, cattail/reed/bulrush emergents in the shallows, water lilies and floating plants on still water, and submerged pondweed/water milfoil below. Drawn on temperate Eurasia and North America with tropical lakes (Amazon, African Rift) for lotus and giant water lily; underwater species flagged.",
+ "climate": {
+  "temp_c": [
+   0,
+   33
+  ],
+  "moisture": [
+   0,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "White willow",
+    "genus": "Salix",
+    "species": "alba",
+    "shape": "broadleaf",
+    "temp_c": [
+     4,
+     18
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#8FB080",
+    "accent": "#7A6A50",
+    "source": "Salix alba, Europe and W Asia river banks (S. nigra in N America), silver-leaved 10-25 m — Wikipedia"
+   },
+   {
+    "name": "Black willow",
+    "genus": "Salix",
+    "species": "nigra",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     22
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AA848",
+    "accent": "#4A3A30",
+    "source": "Salix nigra, eastern North American river and lake shores, 10-20 m — USDA Plants"
+   },
+   {
+    "name": "Black alder",
+    "genus": "Alnus",
+    "species": "glutinosa",
+    "shape": "broadleaf",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     15,
+     25
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#3E8E3A",
+    "accent": "#5A4A40",
+    "source": "Alnus glutinosa, European stream and lake margins, roots in water, 15-25 m — Wikipedia"
+   },
+   {
+    "name": "River red gum",
+    "genus": "Eucalyptus",
+    "species": "camaldulensis",
+    "shape": "broadleaf",
+    "temp_c": [
+     14,
+     26
+    ],
+    "moisture": [
+     0.3,
+     0.9
+    ],
+    "height_m": [
+     20,
+     40
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#7FA07A",
+    "accent": "#E0D8C8",
+    "source": "Eucalyptus camaldulensis, Australian inland river corridors (Murray-Darling), white-barked 20-40 m — Wikipedia"
+   },
+   {
+    "name": "Weeping willow",
+    "genus": "Salix",
+    "species": "babylonica",
+    "shape": "broadleaf",
+    "temp_c": [
+     8,
+     20
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#6AB048",
+    "accent": "#7A6A50",
+    "source": "Salix babylonica, N China river and lake shores (widely planted worldwide), pendulous 10-20 m — Wikipedia"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Buttonbush",
+    "genus": "Cephalanthus",
+    "species": "occidentalis",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     24
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "height_m": [
+     1.5,
+     4
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.6
+    ],
+    "color": "#3E8E3A",
+    "accent": "#F0F0E0",
+    "source": "Cephalanthus occidentalis, N American lake and river margins standing in water, white ball flowers, 1.5-4 m — USDA Plants"
+   },
+   {
+    "name": "Grey willow",
+    "genus": "Salix",
+    "species": "cinerea",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#7FA07A",
+    "accent": "#6A5A48",
+    "source": "Salix cinerea, European lake margins and riverside carr, multi-stemmed shrub 2-6 m — Wikipedia"
+   },
+   {
+    "name": "Papyrus",
+    "genus": "Cyperus",
+    "species": "papyrus",
+    "shape": "reed",
+    "temp_c": [
+     18,
+     30
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "height_m": [
+     2,
+     5
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1.5
+    ],
+    "color": "#5AB040",
+    "accent": "#8A7A40",
+    "source": "Cyperus papyrus, African lakes and rivers (Nile, Lake Victoria), giant umbrella-topped sedge 2-5 m — Wikipedia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Cattail",
+    "genus": "Typha",
+    "species": "latifolia",
+    "shape": "reed",
+    "temp_c": [
+     2,
+     26
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "height_m": [
+     1.5,
+     3
+    ],
+    "density": 1.2,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#6AB048",
+    "accent": "#6A4A2A",
+    "source": "Typha latifolia, N Hemisphere lake and pond margins (T. domingensis pantropical), brown sausage heads 1.5-3 m — Wikipedia"
+   },
+   {
+    "name": "Common reed",
+    "genus": "Phragmites",
+    "species": "australis",
+    "shape": "reed",
+    "temp_c": [
+     0,
+     30
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     2,
+     4
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#8AB860",
+    "accent": "#C8B060",
+    "source": "Phragmites australis, cosmopolitan lake and slow-river reedbeds, 2-4 m — Wikipedia"
+   },
+   {
+    "name": "Bulrush",
+    "genus": "Schoenoplectus",
+    "species": "lacustris",
+    "shape": "reed",
+    "temp_c": [
+     2,
+     22
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.3,
+     2
+    ],
+    "color": "#4A9A40",
+    "accent": "#8A6A40",
+    "source": "Schoenoplectus lacustris (S. acutus in N America), Eurasian lakes and rivers, round leafless stems 1-3 m in deeper water than reed — Wikipedia"
+   },
+   {
+    "name": "Yellow flag iris",
+    "genus": "Iris",
+    "species": "pseudacorus",
+    "shape": "grass",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "height_m": [
+     0.6,
+     1.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#4AA040",
+    "accent": "#F0D020",
+    "source": "Iris pseudacorus, European river and lake edges, sword leaves with yellow flowers 0.6-1.5 m — Wikipedia"
+   },
+   {
+    "name": "White water lily",
+    "genus": "Nymphaea",
+    "species": "alba",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.05,
+     0.15
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.3,
+     2.5
+    ],
+    "color": "#3E9A3A",
+    "accent": "#F8F8F0",
+    "source": "Nymphaea alba, European still lakes and slow rivers (N. odorata in N America), floating pads with white flowers — Wikipedia"
+   },
+   {
+    "name": "Sacred lotus",
+    "genus": "Nelumbo",
+    "species": "nucifera",
+    "shape": "rosette",
+    "temp_c": [
+     14,
+     30
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.3,
+     2
+    ],
+    "color": "#5AB040",
+    "accent": "#F090B0",
+    "source": "Nelumbo nucifera, S and E Asian lakes and ponds, emergent round leaves and pink flowers to 1.5 m above water — Wikipedia"
+   },
+   {
+    "name": "Giant water lily",
+    "genus": "Victoria",
+    "species": "amazonica",
+    "shape": "rosette",
+    "temp_c": [
+     24,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     3
+    ],
+    "color": "#4AA040",
+    "accent": "#B04050",
+    "source": "Victoria amazonica, Amazon basin oxbow lakes, floating pads up to 3 m across — Wikipedia"
+   },
+   {
+    "name": "Water hyacinth",
+    "genus": "Pontederia",
+    "species": "crassipes",
+    "shape": "rosette",
+    "temp_c": [
+     16,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.2,
+     5
+    ],
+    "color": "#5AC040",
+    "accent": "#B080E0",
+    "source": "Pontederia (Eichhornia) crassipes, Amazon basin native, floating free-drifting rosettes (invasive pantropically), 20-60 cm — Wikipedia"
+   },
+   {
+    "name": "Curled pondweed",
+    "genus": "Potamogeton",
+    "species": "crispus",
+    "shape": "grass",
+    "temp_c": [
+     4,
+     24
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     4
+    ],
+    "color": "#4A9A40",
+    "accent": "#7A5A30",
+    "source": "underwater — Potamogeton crispus, Eurasian (naturalised worldwide) lakes and slow rivers, submerged wavy-leaved stems 0.3-1.5 m — Wikipedia"
+   },
+   {
+    "name": "Eurasian water milfoil",
+    "genus": "Myriophyllum",
+    "species": "spicatum",
+    "shape": "fern",
+    "temp_c": [
+     3,
+     24
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     6
+    ],
+    "color": "#3E9A3A",
+    "accent": "#A05040",
+    "source": "underwater — Myriophyllum spicatum, Eurasia and N Africa lakes (invasive N America), feathery submerged stems 0.5-3 m — Wikipedia"
+   },
+   {
+    "name": "Canadian waterweed",
+    "genus": "Elodea",
+    "species": "canadensis",
+    "shape": "grass",
+    "temp_c": [
+     3,
+     22
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     2
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.3,
+     5
+    ],
+    "color": "#3E9A3A",
+    "accent": "#2F7A35",
+    "source": "underwater — Elodea canadensis, North American lakes and rivers (invasive Europe), whorled-leaf submerged stems 0.3-2 m — Wikipedia"
+   }
+  ],
+  "epiphyte": []
+ }
+}

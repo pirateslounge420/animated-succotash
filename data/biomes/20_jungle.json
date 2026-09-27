@@ -20,96 +20,116 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Teak",
-    "genus": "Tectona",
-    "species": "grandis",
-    "shape": "broadleaf",
-    "temp_c": [
-     21,
-     30
-    ],
-    "moisture": [
-     0.5,
-     0.7
-    ],
-    "height_m": [
-     20,
-     40
-    ],
-    "density": 0.7,
-    "soil": "rich",
-    "color": "#4E9A3C",
-    "accent": "#7A6A50",
-    "source": "Tectona grandis, teak, dominant deciduous tree of monsoon forest in India/Burma/Thailand, 20-40 m — Wikipedia / Kew"
-   },
-   {
-    "name": "Sal",
-    "genus": "Shorea",
-    "species": "robusta",
-    "shape": "broadleaf",
-    "temp_c": [
-     20,
-     29
-    ],
-    "moisture": [
-     0.5,
-     0.7
-    ],
-    "height_m": [
-     25,
-     40
-    ],
-    "density": 0.8,
-    "soil": "rich",
-    "color": "#3F8A38",
-    "accent": "#6A5A48",
-    "source": "Shorea robusta, sal, gregarious moist-deciduous dipterocarp of N India/Nepal terai jungle, 25-40 m — Wikipedia"
-   },
-   {
-    "name": "Trumpet tree",
-    "genus": "Cecropia",
-    "species": "obtusifolia",
-    "shape": "umbrella",
-    "temp_c": [
-     21,
-     30
-    ],
-    "moisture": [
-     0.5,
-     0.8
-    ],
-    "height_m": [
-     10,
-     20
-    ],
-    "density": 0.7,
-    "soil": "rich",
-    "color": "#5AB040",
-    "accent": "#B0B0A0",
-    "source": "Cecropia obtusifolia, trumpet tree, fast-growing pioneer of neotropical secondary jungle and gaps, 10-20 m — Wikipedia"
-   },
-   {
-    "name": "Umbrella tree",
-    "genus": "Musanga",
-    "species": "cecropioides",
-    "shape": "umbrella",
+    "name": "Coconut palm",
+    "genus": "Cocos",
+    "species": "nucifera",
+    "family": "Arecaceae",
+    "shape": "palm",
     "temp_c": [
      23,
      29
     ],
     "moisture": [
-     0.55,
-     0.8
+     0.4,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     300
     ],
     "height_m": [
-     15,
-     30
+     15.0,
+     30.0
     ],
-    "density": 0.6,
-    "soil": "rich",
-    "color": "#4E9A3C",
-    "accent": "#9A9A88",
-    "source": "Musanga cecropioides, African corkwood, dominant pioneer of Central/West African secondary forest, 15-30 m — Wikipedia / PROTA"
+    "density": 0.8,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#3F8F45",
+    "accent": "#8A7A5A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       180
+      ],
+      [
+       "young",
+       1800
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       15000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird",
+      "water"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trunk_lean": [
+      0.0,
+      0.6
+     ],
+     "frond_count": [
+      0.3,
+      0.8
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Palm of tropical coasts worldwide; height 15-30 m. Leaning trunk, feather crown; sea-dispersed nuts. Standard floras and Kew POWO for the name.",
+    "from_catalogue": "palms",
+    "traits": {
+     "genus": "Cocos",
+     "species": "nucifera",
+     "native_range": "tropical coasts worldwide",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      15.0,
+      30.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Fishtail palm",
@@ -132,44 +152,156 @@
     "soil": "rich",
     "color": "#3F8A38",
     "accent": "#8A7A60",
-    "source": "Caryota urens, jaggery/fishtail palm, monsoon forest of India and Sri Lanka, 10-20 m — Wikipedia"
-   }
-  ],
-  "shrub": [
+    "source": "Caryota urens, jaggery/fishtail palm, monsoon forest of India and Sri Lanka, 10-20 m — Wikipedia",
+    "traits": {
+     "genus": "Caryota",
+     "species": "urens",
+     "native_range": "Caryota urens, jaggery/fishtail palm, monsoon forest of India and Sri Lanka, 10-20 m — Wikipedia",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      10,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Guadua bamboo",
-    "genus": "Guadua",
-    "species": "angustifolia",
-    "shape": "bamboo",
+    "name": "Sal",
+    "genus": "Shorea",
+    "species": "robusta",
+    "shape": "broadleaf",
     "temp_c": [
      20,
-     28
+     29
+    ],
+    "moisture": [
+     0.5,
+     0.7
+    ],
+    "height_m": [
+     25,
+     40
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#6A5A48",
+    "source": "Shorea robusta, sal, gregarious moist-deciduous dipterocarp of N India/Nepal terai jungle, 25-40 m — Wikipedia",
+    "traits": {
+     "genus": "Shorea",
+     "species": "robusta",
+     "native_range": "Shorea robusta, sal, gregarious moist-deciduous dipterocarp of N India/Nepal terai jungle, 25-40 m — Wikipedia",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      25,
+      40
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Teak",
+    "genus": "Tectona",
+    "species": "grandis",
+    "shape": "broadleaf",
+    "temp_c": [
+     21,
+     30
+    ],
+    "moisture": [
+     0.5,
+     0.7
+    ],
+    "height_m": [
+     20,
+     40
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#7A6A50",
+    "source": "Tectona grandis, teak, dominant deciduous tree of monsoon forest in India/Burma/Thailand, 20-40 m — Wikipedia / Kew",
+    "traits": {
+     "genus": "Tectona",
+     "species": "grandis",
+     "native_range": "Tectona grandis, teak, dominant deciduous tree of monsoon forest in India/Burma/Thailand, 20-40 m — Wikipedia / Kew",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      20,
+      40
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Trumpet tree",
+    "genus": "Cecropia",
+    "species": "obtusifolia",
+    "shape": "umbrella",
+    "temp_c": [
+     21,
+     30
     ],
     "moisture": [
      0.5,
      0.8
     ],
     "height_m": [
-     15,
-     30
+     10,
+     20
     ],
-    "density": 0.9,
+    "density": 0.7,
     "soil": "rich",
     "color": "#5AB040",
-    "accent": "#8AA060",
-    "source": "Guadua angustifolia, giant thorny American bamboo, dominant in Amazon/Colombian bamboo forest (tabocal), 15-30 m — Wikipedia"
+    "accent": "#B0B0A0",
+    "source": "Cecropia obtusifolia, trumpet tree, fast-growing pioneer of neotropical secondary jungle and gaps, 10-20 m — Wikipedia",
+    "traits": {
+     "genus": "Cecropia",
+     "species": "obtusifolia",
+     "native_range": "Cecropia obtusifolia, trumpet tree, fast-growing pioneer of neotropical secondary jungle and gaps, 10-20 m — Wikipedia",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      10,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Giant bamboo",
-    "genus": "Dendrocalamus",
-    "species": "giganteus",
-    "shape": "bamboo",
+    "name": "Umbrella tree",
+    "genus": "Musanga",
+    "species": "cecropioides",
+    "shape": "umbrella",
     "temp_c": [
-     22,
-     30
+     23,
+     29
     ],
     "moisture": [
-     0.5,
+     0.55,
      0.8
     ],
     "height_m": [
@@ -178,10 +310,29 @@
     ],
     "density": 0.6,
     "soil": "rich",
-    "color": "#5AB040",
-    "accent": "#8AA060",
-    "source": "Dendrocalamus giganteus, giant bamboo, monsoon forest of Burma/Thailand/S China, clumps 15-30 m — Wikipedia"
-   },
+    "color": "#4E9A3C",
+    "accent": "#9A9A88",
+    "source": "Musanga cecropioides, African corkwood, dominant pioneer of Central/West African secondary forest, 15-30 m — Wikipedia / PROTA",
+    "traits": {
+     "genus": "Musanga",
+     "species": "cecropioides",
+     "native_range": "Musanga cecropioides, African corkwood, dominant pioneer of Central/West African secondary forest, 15-30 m — Wikipedia /",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "shrub": [
    {
     "name": "Bamboo thicket",
     "genus": "Bambusa",
@@ -203,53 +354,24 @@
     "soil": "rich",
     "color": "#7AB840",
     "accent": "#B0A040",
-    "source": "Bambusa bambos, giant thorny bamboo, dense impenetrable thickets in Indian/SE Asian jungle, 10-25 m — Wikipedia"
-   },
-   {
-    "name": "Hanging lobster-claw",
-    "genus": "Heliconia",
-    "species": "rostrata",
-    "shape": "shrub",
-    "temp_c": [
-     21,
-     30
-    ],
-    "moisture": [
-     0.55,
-     0.9
-    ],
-    "height_m": [
-     1.5,
-     4
-    ],
-    "density": 0.6,
-    "soil": "rich",
-    "color": "#4E9A3C",
-    "accent": "#E03A2A",
-    "source": "Heliconia rostrata, hanging lobster claw, neotropical moist forest edge herb 1.5-4 m — Wikipedia"
-   },
-   {
-    "name": "Wild banana",
-    "genus": "Musa",
-    "species": "acuminata",
-    "shape": "shrub",
-    "temp_c": [
-     22,
-     30
-    ],
-    "moisture": [
-     0.55,
-     0.9
-    ],
-    "height_m": [
-     3,
-     7
-    ],
-    "density": 0.5,
-    "soil": "rich",
-    "color": "#5AB040",
-    "accent": "#8A6A50",
-    "source": "Musa acuminata, wild banana, giant herb of SE Asian jungle gaps and streamsides, 3-7 m — Wikipedia"
+    "source": "Bambusa bambos, giant thorny bamboo, dense impenetrable thickets in Indian/SE Asian jungle, 10-25 m — Wikipedia",
+    "traits": {
+     "genus": "Bambusa",
+     "species": "bambos",
+     "native_range": "Bambusa bambos, giant thorny bamboo, dense impenetrable thickets in Indian/SE Asian jungle, 10-25 m — Wikipedia",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      10,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Elephant ear",
@@ -272,37 +394,149 @@
     "soil": "wet",
     "color": "#4E9A3C",
     "accent": "#6A8A50",
-    "source": "Alocasia macrorrhizos, giant taro, huge-leaved understory aroid of SE Asian/Pacific jungle, 1-4 m — Wikipedia"
-   }
-  ],
-  "ground": [
+    "source": "Alocasia macrorrhizos, giant taro, huge-leaved understory aroid of SE Asian/Pacific jungle, 1-4 m — Wikipedia",
+    "traits": {
+     "genus": "Alocasia",
+     "species": "macrorrhizos",
+     "native_range": "Alocasia macrorrhizos, giant taro, huge-leaved understory aroid of SE Asian/Pacific jungle, 1-4 m — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Lantana",
-    "genus": "Lantana",
-    "species": "camara",
-    "shape": "shrub",
+    "name": "Giant bamboo",
+    "genus": "Dendrocalamus",
+    "species": "giganteus",
+    "shape": "bamboo",
     "temp_c": [
-     18,
+     22,
      30
     ],
     "moisture": [
-     0.4,
-     0.7
+     0.5,
+     0.8
     ],
     "height_m": [
-     0.5,
-     2
+     15,
+     30
     ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#5AA040",
-    "accent": "#E88A30",
-    "source": "Lantana camara, neotropical native and pan-tropical scrambling shrub of jungle edges, 0.5-2 m — Wikipedia"
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#8AA060",
+    "source": "Dendrocalamus giganteus, giant bamboo, monsoon forest of Burma/Thailand/S China, clumps 15-30 m — Wikipedia",
+    "traits": {
+     "genus": "Dendrocalamus",
+     "species": "giganteus",
+     "native_range": "Dendrocalamus giganteus, giant bamboo, monsoon forest of Burma/Thailand/S China, clumps 15-30 m — Wikipedia",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Torch ginger",
-    "genus": "Etlingera",
-    "species": "elatior",
+    "name": "Guadua bamboo",
+    "genus": "Guadua",
+    "species": "angustifolia",
+    "shape": "bamboo",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#8AA060",
+    "source": "Guadua angustifolia, giant thorny American bamboo, dominant in Amazon/Colombian bamboo forest (tabocal), 15-30 m — Wikipedia",
+    "traits": {
+     "genus": "Guadua",
+     "species": "angustifolia",
+     "native_range": "Guadua angustifolia, giant thorny American bamboo, dominant in Amazon/Colombian bamboo forest (tabocal), 15-30 m — Wikip",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Hanging lobster-claw",
+    "genus": "Heliconia",
+    "species": "rostrata",
+    "shape": "shrub",
+    "temp_c": [
+     21,
+     30
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "height_m": [
+     1.5,
+     4
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#E03A2A",
+    "source": "Heliconia rostrata, hanging lobster claw, neotropical moist forest edge herb 1.5-4 m — Wikipedia",
+    "traits": {
+     "genus": "Heliconia",
+     "species": "rostrata",
+     "native_range": "Heliconia rostrata, hanging lobster claw, neotropical moist forest edge herb 1",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1.5,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Wild banana",
+    "genus": "Musa",
+    "species": "acuminata",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -313,15 +547,34 @@
      0.9
     ],
     "height_m": [
-     2,
-     5
+     3,
+     7
     ],
-    "density": 0.4,
+    "density": 0.5,
     "soil": "rich",
-    "color": "#4E9A3C",
-    "accent": "#E04A6A",
-    "source": "Etlingera elatior, torch ginger, tall rhizomatous herb of Malesian jungle understory 2-5 m — Wikipedia"
-   },
+    "color": "#5AB040",
+    "accent": "#8A6A50",
+    "source": "Musa acuminata, wild banana, giant herb of SE Asian jungle gaps and streamsides, 3-7 m — Wikipedia",
+    "traits": {
+     "genus": "Musa",
+     "species": "acuminata",
+     "native_range": "Musa acuminata, wild banana, giant herb of SE Asian jungle gaps and streamsides, 3-7 m — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      7
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "ground": [
    {
     "name": "Bracken",
     "genus": "Pteridium",
@@ -343,7 +596,24 @@
     "soil": "thin",
     "color": "#5AB040",
     "accent": "#6A5A38",
-    "source": "Pteridium aquilinum (cosmopolitan; tropical forms P. esculentum/revolutum), bracken fern colonising jungle clearings, 0.5-2 m — Wikipedia"
+    "source": "Pteridium aquilinum (cosmopolitan; tropical forms P. esculentum/revolutum), bracken fern colonising jungle clearings, 0.5-2 m — Wikipedia",
+    "traits": {
+     "genus": "Pteridium",
+     "species": "aquilinum",
+     "native_range": "Pteridium aquilinum (cosmopolitan",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cogon grass",
@@ -366,7 +636,64 @@
     "soil": "thin",
     "color": "#9AB850",
     "accent": "#C8B060",
-    "source": "Imperata cylindrica, cogon/alang-alang grass, dominant in SE Asian jungle clearings and burnt secondary growth, 0.5-1.5 m — Wikipedia"
+    "source": "Imperata cylindrica, cogon/alang-alang grass, dominant in SE Asian jungle clearings and burnt secondary growth, 0.5-1.5 m — Wikipedia",
+    "traits": {
+     "genus": "Imperata",
+     "species": "cylindrica",
+     "native_range": "Imperata cylindrica, cogon/alang-alang grass, dominant in SE Asian jungle clearings and burnt secondary growth, 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Lantana",
+    "genus": "Lantana",
+    "species": "camara",
+    "shape": "shrub",
+    "temp_c": [
+     18,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#5AA040",
+    "accent": "#E88A30",
+    "source": "Lantana camara, neotropical native and pan-tropical scrambling shrub of jungle edges, 0.5-2 m — Wikipedia",
+    "traits": {
+     "genus": "Lantana",
+     "species": "camara",
+     "native_range": "Lantana camara, neotropical native and pan-tropical scrambling shrub of jungle edges, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Spiral ginger",
@@ -389,32 +716,106 @@
     "soil": "rich",
     "color": "#4E9A3C",
     "accent": "#E0503A",
-    "source": "Costus spicatus, spiked spiral ginger, neotropical moist forest floor herb 1-2.5 m — Wikipedia / Tropicos"
+    "source": "Costus spicatus, spiked spiral ginger, neotropical moist forest floor herb 1-2.5 m — Wikipedia / Tropicos",
+    "traits": {
+     "genus": "Costus",
+     "species": "spicatus",
+     "native_range": "Costus spicatus, spiked spiral ginger, neotropical moist forest floor herb 1-2",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Torch ginger",
+    "genus": "Etlingera",
+    "species": "elatior",
+    "shape": "shrub",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "height_m": [
+     2,
+     5
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#E04A6A",
+    "source": "Etlingera elatior, torch ginger, tall rhizomatous herb of Malesian jungle understory 2-5 m — Wikipedia",
+    "traits": {
+     "genus": "Etlingera",
+     "species": "elatior",
+     "native_range": "Etlingera elatior, torch ginger, tall rhizomatous herb of Malesian jungle understory 2-5 m — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": [
    {
-    "name": "Staghorn fern",
-    "genus": "Platycerium",
-    "species": "bifurcatum",
-    "shape": "epiphyte_clump",
+    "name": "Passion vine",
+    "genus": "Passiflora",
+    "species": "edulis",
+    "shape": "liana",
     "temp_c": [
-     18,
-     28
+     20,
+     30
     ],
     "moisture": [
      0.5,
-     0.9
+     0.8
     ],
     "height_m": [
-     0.4,
-     1
+     3,
+     15
     ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#5AA040",
-    "accent": "#8A9A70",
-    "source": "Platycerium bifurcatum, staghorn fern, epiphyte on trunks in Australian/New Guinea rainforest and jungle — Wikipedia"
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#9A5AC0",
+    "source": "Passiflora edulis, passionfruit, tendril climber of S American moist forest edges, to 15 m — Wikipedia",
+    "traits": {
+     "genus": "Passiflora",
+     "species": "edulis",
+     "native_range": "Passiflora edulis, passionfruit, tendril climber of S American moist forest edges, to 15 m — Wikipedia",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      3,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Rattan vine",
@@ -437,211 +838,65 @@
     "soil": "rich",
     "color": "#5AB040",
     "accent": "#8A8A50",
-    "source": "Calamus rotang, common rattan, spiny climbing palm forming tangles in Indian/Sri Lankan jungle, stems to 30 m — Wikipedia"
+    "source": "Calamus rotang, common rattan, spiny climbing palm forming tangles in Indian/Sri Lankan jungle, stems to 30 m — Wikipedia",
+    "traits": {
+     "genus": "Calamus",
+     "species": "rotang",
+     "native_range": "Calamus rotang, common rattan, spiny climbing palm forming tangles in Indian/Sri Lankan jungle, stems to 30 m — Wikipedi",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      5,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Passion vine",
-    "genus": "Passiflora",
-    "species": "edulis",
-    "shape": "liana",
+    "name": "Staghorn fern",
+    "genus": "Platycerium",
+    "species": "bifurcatum",
+    "shape": "epiphyte_clump",
     "temp_c": [
-     20,
-     30
+     18,
+     28
     ],
     "moisture": [
      0.5,
-     0.8
+     0.9
     ],
     "height_m": [
-     3,
-     15
+     0.4,
+     1
     ],
-    "density": 0.4,
-    "soil": "rich",
-    "color": "#4E9A3C",
-    "accent": "#9A5AC0",
-    "source": "Passiflora edulis, passionfruit, tendril climber of S American moist forest edges, to 15 m — Wikipedia"
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#5AA040",
+    "accent": "#8A9A70",
+    "source": "Platycerium bifurcatum, staghorn fern, epiphyte on trunks in Australian/New Guinea rainforest and jungle — Wikipedia",
+    "traits": {
+     "genus": "Platycerium",
+     "species": "bifurcatum",
+     "native_range": "Platycerium bifurcatum, staghorn fern, epiphyte on trunks in Australian/New Guinea rainforest and jungle — Wikipedia",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.4,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
-  ]
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 174,
-  "names": [
-   "Coconut palm",
-   "Talipot palm",
-   "Chinese fan palm",
-   "Babassu",
-   "Royal palm",
-   "Sabal palmetto",
-   "Senegal date palm",
-   "Foxtail palm",
-   "Saw palmetto",
-   "Bottle palm",
-   "Amorphophallus aberrans",
-   "Amorphophallus albispathus",
-   "Amorphophallus allenii",
-   "Amorphophallus amygdaloides",
-   "Amorphophallus angustispathus",
-   "Amorphophallus arcuspadix",
-   "Amorphophallus atrorubens",
-   "Amorphophallus atroviridis",
-   "Amorphophallus bangkokensis",
-   "Amorphophallus bantae",
-   "Amorphophallus barbatus",
-   "Amorphophallus bolikhamxayensis",
-   "Amorphophallus boyceanus",
-   "Amorphophallus brevipetiolatus",
-   "Amorphophallus brevispathus",
-   "Amorphophallus bufo",
-   "Amorphophallus bulbifer",
-   "Amorphophallus calcicola",
-   "Amorphophallus canaliculatus",
-   "Amorphophallus candidissimus",
-   "Amorphophallus carneus",
-   "Amorphophallus carnosus",
-   "Amorphophallus caudatus",
-   "Amorphophallus chlorospathus",
-   "Amorphophallus cicatricifer",
-   "Amorphophallus cirrifer",
-   "Amorphophallus claudelii",
-   "Amorphophallus commutatus",
-   "Amorphophallus coudercii",
-   "Amorphophallus crinitus",
-   "Amorphophallus crispifolius",
-   "Amorphophallus croatii",
-   "Amorphophallus cruddasianus",
-   "Amorphophallus curvistylis",
-   "Amorphophallus discophorus",
-   "Amorphophallus dumboi",
-   "Amorphophallus dzui",
-   "Amorphophallus echinatus",
-   "Amorphophallus elatus",
-   "Amorphophallus elegans",
-   "Amorphophallus erythrorrhachis",
-   "Amorphophallus excentricus",
-   "Amorphophallus ferruginosus",
-   "Amorphophallus flammeus",
-   "Amorphophallus flotoi",
-   "Amorphophallus fontarumii",
-   "Amorphophallus fornicatus",
-   "Amorphophallus fuscus",
-   "Amorphophallus galbra",
-   "Amorphophallus gallowayi",
-   "Amorphophallus glaucophyllus",
-   "Amorphophallus gliruroides",
-   "Amorphophallus glossophyllus",
-   "Amorphophallus gracilior",
-   "Amorphophallus harmandii",
-   "Amorphophallus hayi",
-   "Amorphophallus hemicryptus",
-   "Amorphophallus hirsutus",
-   "Amorphophallus hohenackeri",
-   "Amorphophallus incurvatus",
-   "Amorphophallus interruptus",
-   "Amorphophallus kachinensis",
-   "Amorphophallus khammouanensis",
-   "Amorphophallus kienluongensis",
-   "Amorphophallus konkanensis",
-   "Amorphophallus koratensis",
-   "Amorphophallus kuznetsovii",
-   "Amorphophallus lacourii",
-   "Amorphophallus lanuginosus",
-   "Amorphophallus laoticus",
-   "Amorphophallus linearis",
-   "Amorphophallus linguiformis",
-   "Amorphophallus longicomus",
-   "Amorphophallus longiconnectivus",
-   "Amorphophallus longistylus",
-   "Amorphophallus longituberosus",
-   "Amorphophallus lunatus",
-   "Amorphophallus macrophyllus",
-   "Amorphophallus macrorhizus",
-   "Amorphophallus margaritifer",
-   "Amorphophallus margretae",
-   "Amorphophallus maxwellii",
-   "Amorphophallus mayoi",
-   "Amorphophallus minimus",
-   "Amorphophallus minor",
-   "Amorphophallus muelleri",
-   "Amorphophallus myosuroides",
-   "Amorphophallus mysorensis",
-   "Amorphophallus napalensis",
-   "Amorphophallus napiger",
-   "Amorphophallus nicolaii",
-   "Amorphophallus nicolsonianus",
-   "Amorphophallus obscurus",
-   "Amorphophallus ochroleucus",
-   "Amorphophallus oncophyllus",
-   "Amorphophallus ongsakulii",
-   "Amorphophallus operculatus",
-   "Amorphophallus opertus",
-   "Amorphophallus paeoniifolius",
-   "Amorphophallus paucisectus",
-   "Amorphophallus pilosus",
-   "Amorphophallus polyanthus",
-   "Amorphophallus prolificus",
-   "Amorphophallus pulchellus",
-   "Amorphophallus purpurascens",
-   "Amorphophallus pusillus",
-   "Amorphophallus putii",
-   "Amorphophallus pygmaeus",
-   "Amorphophallus rayongii",
-   "Amorphophallus reflexus",
-   "Amorphophallus rhizomatosus",
-   "Amorphophallus rugosus",
-   "Amorphophallus sagittarius",
-   "Amorphophallus sakonnakhonensis",
-   "Amorphophallus saraburensis",
-   "Amorphophallus saururus",
-   "Amorphophallus scaber",
-   "Amorphophallus schmidtiae",
-   "Amorphophallus scutatus",
-   "Amorphophallus serrulatus",
-   "Amorphophallus sinuatus",
-   "Amorphophallus sizemoreae",
-   "Amorphophallus smithsonianus",
-   "Amorphophallus subcymbiformis",
-   "Amorphophallus sumawongii",
-   "Amorphophallus symonianus",
-   "Amorphophallus synandrifer",
-   "Amorphophallus tenuispadix",
-   "Amorphophallus tenuistylis",
-   "Amorphophallus terrestris",
-   "Amorphophallus thaiensis",
-   "Amorphophallus tuberculatus",
-   "Amorphophallus umbrinus",
-   "Amorphophallus urceolatus",
-   "Amorphophallus variabilis",
-   "Amorphophallus villosus",
-   "Amorphophallus vogelianus",
-   "Amorphophallus wasa",
-   "Spanish dagger",
-   "Cannabis - Kerala",
-   "Cannabis - Mysore",
-   "Cannabis - Ceylon",
-   "Cannabis - Thai (Isan)",
-   "Cannabis - Meao Thai",
-   "Cannabis - Luang Prabang",
-   "Cannabis - Cambodian",
-   "Cannabis - Vietnamese (Vietnam Black)",
-   "Cannabis - Burmese",
-   "Cannabis - Durban",
-   "Cannabis - Malawi",
-   "Cannabis - Kilimanjaro",
-   "Cannabis - Kisumu",
-   "Cannabis - Angolan",
-   "Cannabis - Nigerian",
-   "Cannabis - Ghanaian",
-   "Cannabis - Oaxacan",
-   "Cannabis - Michoacán",
-   "Cannabis - Santa Marta Gold",
-   "Cannabis - Punto Rojo",
-   "Cannabis - Limón Verde",
-   "Cannabis - Panama Red",
-   "Cannabis - Lamb's Bread",
-   "Cannabis - Manga Rosa",
-   "Cannabis - Hawaiian (Kona / Puna)"
   ]
  },
  "associations": [
@@ -660,9 +915,7 @@
     "Lantana",
     "Bracken"
    ],
-   "catalogue": [
-    "Talipot palm"
-   ],
+   "catalogue": [],
    "cover": 0.7,
    "source": "Champion & Seth 1968 A Revised Survey of the Forest Types of India (moist teak forest); Stamp 1925 Vegetation of Burma"
   },
@@ -680,9 +933,7 @@
     "Cogon grass",
     "Lantana"
    ],
-   "catalogue": [
-    "Chinese fan palm"
-   ],
+   "catalogue": [],
    "cover": 0.75,
    "source": "Champion & Seth 1968 (moist sal forest); Puri 1960 Indian Forest Ecology"
   },
@@ -700,9 +951,7 @@
    "ground": [
     "Spiral ginger"
    ],
-   "catalogue": [
-    "Babassu"
-   ],
+   "catalogue": [],
    "cover": 0.75,
    "source": "Griscom & Ashton 2003 Bamboo control of forest succession (Forest Ecology and Management); Nelson 1994"
   },
@@ -726,9 +975,7 @@
     "Cogon grass",
     "Bracken"
    ],
-   "catalogue": [
-    "Royal palm"
-   ],
+   "catalogue": [],
    "cover": 0.6,
    "source": "Richards 1996 The Tropical Rain Forest (secondary succession); Whitmore 1984"
   },
@@ -747,11 +994,13 @@
     "Torch ginger",
     "Spiral ginger"
    ],
-   "catalogue": [
-    "Amorphophallus bulbifer"
-   ],
+   "catalogue": [],
    "cover": 0.8,
    "source": "Whitmore 1984; Champion & Seth 1968 (tropical semi-evergreen and riverine forest)"
   }
+ ],
+ "hero_species": [
+  "Coconut palm",
+  "Wild banana"
  ]
 }

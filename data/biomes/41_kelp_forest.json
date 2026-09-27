@@ -20,37 +20,6 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Giant kelp",
-    "genus": "Macrocystis",
-    "species": "pyrifera",
-    "shape": "liana",
-    "temp_c": [
-     6,
-     18
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     15,
-     45
-    ],
-    "density": 1.2,
-    "soil": "thin",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     5,
-     40
-    ],
-    "color": "#6A7A28",
-    "accent": "#4A4A20",
-    "source": "underwater — Macrocystis pyrifera, California, Chile, S Africa, Tasmania/NZ rocky bottom 5-30 m, fronds to 45 m reaching the surface — Wikipedia"
-   },
-   {
     "name": "Bull kelp",
     "genus": "Nereocystis",
     "species": "luetkeana",
@@ -79,7 +48,72 @@
     ],
     "color": "#7A7A30",
     "accent": "#5A4A20",
-    "source": "underwater — Nereocystis luetkeana, Alaska to California rocky shallows, single stipe with float bulb 10-30 m — Wikipedia"
+    "source": "underwater — Nereocystis luetkeana, Alaska to California rocky shallows, single stipe with float bulb 10-30 m — Wikipedia",
+    "traits": {
+     "genus": "Nereocystis",
+     "species": "luetkeana",
+     "native_range": "underwater — Nereocystis luetkeana, Alaska to California rocky shallows, single stipe with float bulb 10-30 m — Wikipedi",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      10,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Giant kelp",
+    "genus": "Macrocystis",
+    "species": "pyrifera",
+    "shape": "liana",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     15,
+     45
+    ],
+    "density": 1.2,
+    "soil": "thin",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     5,
+     40
+    ],
+    "color": "#6A7A28",
+    "accent": "#4A4A20",
+    "source": "underwater — Macrocystis pyrifera, California, Chile, S Africa, Tasmania/NZ rocky bottom 5-30 m, fronds to 45 m reaching the surface — Wikipedia",
+    "traits": {
+     "genus": "Macrocystis",
+     "species": "pyrifera",
+     "native_range": "underwater — Macrocystis pyrifera, California, Chile, S Africa, Tasmania/NZ rocky bottom 5-30 m, fronds to 45 m reaching",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      15,
+      45
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Oarweed",
@@ -110,7 +144,24 @@
     ],
     "color": "#5A5A28",
     "accent": "#3A3A18",
-    "source": "underwater — Laminaria digitata (L. hyperborea deeper), N Atlantic rocky subtidal, fingered blade 1-3 m — Wikipedia"
+    "source": "underwater — Laminaria digitata (L. hyperborea deeper), N Atlantic rocky subtidal, fingered blade 1-3 m — Wikipedia",
+    "traits": {
+     "genus": "Laminaria",
+     "species": "digitata",
+     "native_range": "underwater — Laminaria digitata (L",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Southern bull kelp",
@@ -141,10 +192,67 @@
     ],
     "color": "#6A5A28",
     "accent": "#4A3A18",
-    "source": "underwater — Durvillaea antarctica, Chile, NZ and subantarctic exposed rocky shores, thick honeycombed fronds 3-10 m — Wikipedia"
+    "source": "underwater — Durvillaea antarctica, Chile, NZ and subantarctic exposed rocky shores, thick honeycombed fronds 3-10 m — Wikipedia",
+    "traits": {
+     "genus": "Durvillaea",
+     "species": "antarctica",
+     "native_range": "underwater — Durvillaea antarctica, Chile, NZ and subantarctic exposed rocky shores, thick honeycombed fronds 3-10 m — W",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      3,
+      10
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [
+   {
+    "name": "Coastal heather",
+    "genus": "Calluna",
+    "species": "vulgaris",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     13
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#5A8A40",
+    "accent": "#B060B0",
+    "source": "Calluna vulgaris, N Atlantic clifftop heath (Scotland, Norway), purple-flowered dwarf shrub 20-60 cm — Wikipedia",
+    "traits": {
+     "genus": "Calluna",
+     "species": "vulgaris",
+     "native_range": "Calluna vulgaris, N Atlantic clifftop heath (Scotland, Norway), purple-flowered dwarf shrub 20-60 cm — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
     "name": "Coyote brush",
     "genus": "Baccharis",
@@ -166,7 +274,24 @@
     "soil": "thin",
     "color": "#4A9A40",
     "accent": "#8A7A5A",
-    "source": "Baccharis pilularis, California coastal bluffs above kelp coast, evergreen scrub 0.5-3 m — Wikipedia"
+    "source": "Baccharis pilularis, California coastal bluffs above kelp coast, evergreen scrub 0.5-3 m — Wikipedia",
+    "traits": {
+     "genus": "Baccharis",
+     "species": "pilularis",
+     "native_range": "Baccharis pilularis, California coastal bluffs above kelp coast, evergreen scrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Salal",
@@ -189,30 +314,24 @@
     "soil": "thin",
     "color": "#2F7A35",
     "accent": "#6A4A5A",
-    "source": "Gaultheria shallon, Pacific NW headlands, evergreen shrub 0.5-2 m — Wikipedia"
-   },
-   {
-    "name": "Coastal heather",
-    "genus": "Calluna",
-    "species": "vulgaris",
-    "shape": "shrub",
-    "temp_c": [
-     2,
-     13
-    ],
-    "moisture": [
-     0.4,
-     0.9
-    ],
-    "height_m": [
-     0.2,
-     0.6
-    ],
-    "density": 0.4,
-    "soil": "thin",
-    "color": "#5A8A40",
-    "accent": "#B060B0",
-    "source": "Calluna vulgaris, N Atlantic clifftop heath (Scotland, Norway), purple-flowered dwarf shrub 20-60 cm — Wikipedia"
+    "source": "Gaultheria shallon, Pacific NW headlands, evergreen shrub 0.5-2 m — Wikipedia",
+    "traits": {
+     "genus": "Gaultheria",
+     "species": "shallon",
+     "native_range": "Gaultheria shallon, Pacific NW headlands, evergreen shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Sea blite bush",
@@ -238,35 +357,74 @@
     ],
     "color": "#8AA890",
     "accent": "#7A6A5A",
-    "source": "Suaeda taxifolia, S California coastal bluffs and salt marsh edge, grey-green fleshy shrub 0.5-1.5 m — Calflora"
+    "source": "Suaeda taxifolia, S California coastal bluffs and salt marsh edge, grey-green fleshy shrub 0.5-1.5 m — Calflora",
+    "traits": {
+     "genus": "Suaeda",
+     "species": "taxifolia",
+     "native_range": "Suaeda taxifolia, S California coastal bluffs and salt marsh edge, grey-green fleshy shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
    {
-    "name": "Thrift",
-    "genus": "Armeria",
-    "species": "maritima",
-    "shape": "cushion",
+    "name": "Coralline alga",
+    "genus": "Corallina",
+    "species": "officinalis",
+    "shape": "moss",
     "temp_c": [
-     -2,
-     16
+     4,
+     18
     ],
     "moisture": [
-     0.3,
-     0.8
+     1.0,
+     1.0
     ],
     "height_m": [
-     0.05,
-     0.3
+     0.03,
+     0.12
     ],
-    "density": 0.8,
+    "density": 0.6,
     "soil": "thin",
     "needs": [
+     "standing_water",
      "salt_water"
     ],
-    "color": "#4A9A40",
-    "accent": "#E878A0",
-    "source": "Armeria maritima, N Hemisphere sea cliffs above kelp coasts, pink cushions 5-30 cm — Wikipedia"
+    "water_depth_m": [
+     0,
+     15
+    ],
+    "color": "#D890A8",
+    "accent": "#E8C0D0",
+    "source": "underwater — Corallina officinalis, N Atlantic and N Pacific kelp understory and pools, pink jointed calcified turf 3-12 cm — Wikipedia",
+    "traits": {
+     "genus": "Corallina",
+     "species": "officinalis",
+     "native_range": "underwater — Corallina officinalis, N Atlantic and N Pacific kelp understory and pools, pink jointed calcified turf 3-12",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Rockweed",
@@ -297,38 +455,24 @@
     ],
     "color": "#6A6A28",
     "accent": "#3A3A18",
-    "source": "Fucus distichus, N Pacific and N Atlantic intertidal rock at the kelp-forest shoreline, olive rockweed 10-40 cm — Wikipedia"
-   },
-   {
-    "name": "Surfgrass",
-    "genus": "Phyllospadix",
-    "species": "scouleri",
-    "shape": "grass",
-    "temp_c": [
-     6,
-     16
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     0.3,
-     1.0
-    ],
-    "density": 0.7,
-    "soil": "thin",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0,
-     3
-    ],
-    "color": "#3E9A3A",
-    "accent": "#2F7A35",
-    "source": "Phyllospadix scouleri, Pacific coast Alaska-Baja, seagrass on wave-exposed intertidal rock, bright-green ribbons 30-100 cm — Wikipedia"
+    "source": "Fucus distichus, N Pacific and N Atlantic intertidal rock at the kelp-forest shoreline, olive rockweed 10-40 cm — Wikipedia",
+    "traits": {
+     "genus": "Fucus",
+     "species": "distichus",
+     "native_range": "Fucus distichus, N Pacific and N Atlantic intertidal rock at the kelp-forest shoreline, olive rockweed 10-40 cm — Wikipe",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Sea palm",
@@ -359,26 +503,43 @@
     ],
     "color": "#6A7A28",
     "accent": "#4A4A20",
-    "source": "Postelsia palmaeformis, British Columbia to California surf-exposed rocks, miniature palm-like kelp 30-60 cm — Wikipedia"
+    "source": "Postelsia palmaeformis, British Columbia to California surf-exposed rocks, miniature palm-like kelp 30-60 cm — Wikipedia",
+    "traits": {
+     "genus": "Postelsia",
+     "species": "palmaeformis",
+     "native_range": "Postelsia palmaeformis, British Columbia to California surf-exposed rocks, miniature palm-like kelp 30-60 cm — Wikipedia",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Coralline alga",
-    "genus": "Corallina",
-    "species": "officinalis",
-    "shape": "moss",
+    "name": "Surfgrass",
+    "genus": "Phyllospadix",
+    "species": "scouleri",
+    "shape": "grass",
     "temp_c": [
-     4,
-     18
+     6,
+     16
     ],
     "moisture": [
      1.0,
      1.0
     ],
     "height_m": [
-     0.03,
-     0.12
+     0.3,
+     1.0
     ],
-    "density": 0.6,
+    "density": 0.7,
     "soil": "thin",
     "needs": [
      "standing_water",
@@ -386,13 +547,75 @@
     ],
     "water_depth_m": [
      0,
-     15
+     3
     ],
-    "color": "#D890A8",
-    "accent": "#E8C0D0",
-    "source": "underwater — Corallina officinalis, N Atlantic and N Pacific kelp understory and pools, pink jointed calcified turf 3-12 cm — Wikipedia"
+    "color": "#3E9A3A",
+    "accent": "#2F7A35",
+    "source": "Phyllospadix scouleri, Pacific coast Alaska-Baja, seagrass on wave-exposed intertidal rock, bright-green ribbons 30-100 cm — Wikipedia",
+    "traits": {
+     "genus": "Phyllospadix",
+     "species": "scouleri",
+     "native_range": "Phyllospadix scouleri, Pacific coast Alaska-Baja, seagrass on wave-exposed intertidal rock, bright-green ribbons 30-100 ",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Thrift",
+    "genus": "Armeria",
+    "species": "maritima",
+    "shape": "cushion",
+    "temp_c": [
+     -2,
+     16
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4A9A40",
+    "accent": "#E878A0",
+    "source": "Armeria maritima, N Hemisphere sea cliffs above kelp coasts, pink cushions 5-30 cm — Wikipedia",
+    "traits": {
+     "genus": "Armeria",
+     "species": "maritima",
+     "native_range": "Armeria maritima, N Hemisphere sea cliffs above kelp coasts, pink cushions 5-30 cm — Wikipedia",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- }
+ },
+ "hero_species": [],
+ "associations": []
 }

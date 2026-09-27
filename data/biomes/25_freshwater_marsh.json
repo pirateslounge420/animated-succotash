@@ -17,62 +17,619 @@
   ]
  },
  "plants": {
-  "emergent": [],
-  "canopy": [],
-  "shrub": [
+  "emergent": [
    {
-    "name": "Grey willow",
-    "genus": "Salix",
-    "species": "cinerea",
-    "shape": "shrub",
+    "name": "Coast redwood",
+    "genus": "Sequoia",
+    "species": "sempervirens",
+    "family": "Cupressaceae",
+    "shape": "conifer",
     "temp_c": [
-     4,
+     10,
      16
     ],
     "moisture": [
      0.7,
-     1
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     900
     ],
     "height_m": [
-     3,
-     7
+     70.0,
+     115.0
     ],
-    "density": 0.3,
-    "soil": "wet",
-    "needs": [
-     "standing_water"
-    ],
-    "water_depth_m": [
-     0,
-     0.2
-    ],
-    "color": "#7AA860",
-    "accent": "#8A7A5A",
-    "source": "Salix cinerea, grey willow, Europe & W Asia, willow carr invading fen and marsh margins, 3-7 m — Wikipedia / Kew POWO"
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#8A4A30",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "N California fog belt; tallest tree on Earth; resprouts from the stump. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "sequoia",
+    "traits": {
+     "genus": "Sequoia",
+     "species": "sempervirens",
+     "native_range": "N California fog belt",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      70.0,
+      115.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Sweet gale",
-    "genus": "Myrica",
-    "species": "gale",
-    "shape": "shrub",
+    "name": "Kauri",
+    "genus": "Agathis",
+    "species": "australis",
+    "family": "Araucariaceae",
+    "shape": "emergent",
     "temp_c": [
-     3,
-     14
+     13,
+     16
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     40.0,
+     50.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3A7A4A",
+    "accent": "#A0A090",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Northland, New Zealand; vast grey columns; the same family. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "araucaria",
+    "traits": {
+     "genus": "Agathis",
+     "species": "australis",
+     "native_range": "Northland, New Zealand",
+     "leaf_shape": "broad leathery leaves",
+     "trunk": "towering straight bole, buttressed base, crown above the canopy",
+     "petiole": "short petiole",
+     "height_m": [
+      40.0,
+      50.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "canopy": [
+   {
+    "name": "Big-leaf rhododendron",
+    "genus": "Rhododendron",
+    "species": "sinogrande",
+    "family": "Ericaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     12
     ],
     "moisture": [
      0.7,
-     1
+     1.0
+    ],
+    "altitude_m": [
+     2100,
+     3600
     ],
     "height_m": [
-     0.6,
-     2
+     8.0,
+     15.0
     ],
     "density": 0.4,
     "soil": "peat",
-    "color": "#3E8F3A",
-    "accent": "#8A6A4A",
-    "source": "Myrica gale, bog myrtle, circumboreal, scented shrub of marsh and fen margins, 0.6-2 m — Wikipedia / Kew POWO"
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#F0E8C0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Yunnan-Burma cloud forest; Leaves to a metre long. Kew POWO; standard floras.",
+    "from_catalogue": "rhododendron",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "sinogrande",
+     "native_range": "Yunnan-Burma cloud forest",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      8.0,
+      15.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
+   {
+    "name": "Campbell's magnolia",
+    "genus": "Magnolia",
+    "species": "campbellii",
+    "family": "Magnoliaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     14
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     1800,
+     3000
+    ],
+    "height_m": [
+     20.0,
+     30.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A50",
+    "accent": "#F0A0C0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "E Himalayan cloud forest; 20–30 m. Pink cups the size of dinner plates on bare branches. Kew POWO for the name; standard floras for range.",
+    "from_catalogue": "magnolia",
+    "traits": {
+     "genus": "Magnolia",
+     "species": "campbellii",
+     "native_range": "E Himalayan cloud forest",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      20.0,
+      30.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Dawn redwood",
+    "genus": "Metasequoia",
+    "species": "glyptostroboides",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     700,
+     1500
+    ],
+    "height_m": [
+     35.0,
+     50.0
+    ],
+    "density": 0.2,
+    "soil": "wet",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#B06A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Hubei valley bottoms, one region; deciduous; the living fossil. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "sequoia",
+    "traits": {
+     "genus": "Metasequoia",
+     "species": "glyptostroboides",
+     "native_range": "Hubei valley bottoms, one region",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      35.0,
+      50.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tree rhododendron",
+    "genus": "Rhododendron",
+    "species": "arboreum",
+    "family": "Ericaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "altitude_m": [
+     1500,
+     3600
+    ],
+    "height_m": [
+     10.0,
+     20.0
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#D02030",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Himalaya and S Indian hills; forest-forming; Blood-red blossom forests of Nepal and Sikkim. Kew POWO; standard floras.",
+    "from_catalogue": "rhododendron",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "arboreum",
+     "native_range": "Himalaya and S Indian hills",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      10.0,
+      20.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "shrub": [
    {
     "name": "Buttonbush",
     "genus": "Cephalanthus",
@@ -101,7 +658,215 @@
     ],
     "color": "#4A9A3A",
     "accent": "#F0F0E0",
-    "source": "Cephalanthus occidentalis, buttonbush, eastern North America, shrub of marsh edges standing in shallow water, 1.5-4 m, white ball flowers — USDA Plants / Wikipedia"
+    "source": "Cephalanthus occidentalis, buttonbush, eastern North America, shrub of marsh edges standing in shallow water, 1.5-4 m, white ball flowers — USDA Plants / Wikipedia",
+    "traits": {
+     "genus": "Cephalanthus",
+     "species": "occidentalis",
+     "native_range": "Cephalanthus occidentalis, buttonbush, eastern North America, shrub of marsh edges standing in shallow water, 1",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1.5,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Great rhododendron",
+    "genus": "Rhododendron",
+    "species": "maximum",
+    "family": "Ericaceae",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     14
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     200,
+     1800
+    ],
+    "height_m": [
+     3.0,
+     8.0
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#F0C0D0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Appalachian coves and stream banks; Rhododendron hells under hemlock. Kew POWO; standard floras.",
+    "from_catalogue": "rhododendron",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "maximum",
+     "native_range": "Appalachian coves and stream banks",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      3.0,
+      8.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Grey willow",
+    "genus": "Salix",
+    "species": "cinerea",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     3,
+     7
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.2
+    ],
+    "color": "#7AA860",
+    "accent": "#8A7A5A",
+    "source": "Salix cinerea, grey willow, Europe & W Asia, willow carr invading fen and marsh margins, 3-7 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Salix",
+     "species": "cinerea",
+     "native_range": "Salix cinerea, grey willow, Europe & W Asia, willow carr invading fen and marsh margins, 3-7 m — Wikipedia / Kew POWO",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      7
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Sweet gale",
+    "genus": "Myrica",
+    "species": "gale",
+    "shape": "shrub",
+    "temp_c": [
+     3,
+     14
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.6,
+     2
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#3E8F3A",
+    "accent": "#8A6A4A",
+    "source": "Myrica gale, bog myrtle, circumboreal, scented shrub of marsh and fen margins, 0.6-2 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Myrica",
+     "species": "gale",
+     "native_range": "Myrica gale, bog myrtle, circumboreal, scented shrub of marsh and fen margins, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.6,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
@@ -133,7 +898,24 @@
     ],
     "color": "#5AB040",
     "accent": "#7A5A3A",
-    "source": "Typha latifolia, broadleaf cattail, circumboreal (N America, Eurasia), dominant emergent of freshwater marsh, 1.5-3 m, brown sausage heads — USDA Plants / Wikipedia"
+    "source": "Typha latifolia, broadleaf cattail, circumboreal (N America, Eurasia), dominant emergent of freshwater marsh, 1.5-3 m, brown sausage heads — USDA Plants / Wikipedia",
+    "traits": {
+     "genus": "Typha",
+     "species": "latifolia",
+     "native_range": "Typha latifolia, broadleaf cattail, circumboreal (N America, Eurasia), dominant emergent of freshwater marsh, 1",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      1.5,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Common reed",
@@ -163,97 +945,354 @@
     ],
     "color": "#7AA860",
     "accent": "#C8B060",
-    "source": "Phragmites australis, common reed, cosmopolitan, vast reedbeds in freshwater and brackish marsh, 2-4 m feathery plumes — Wikipedia / Kew POWO"
+    "source": "Phragmites australis, common reed, cosmopolitan, vast reedbeds in freshwater and brackish marsh, 2-4 m feathery plumes — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Phragmites",
+     "species": "australis",
+     "native_range": "Phragmites australis, common reed, cosmopolitan, vast reedbeds in freshwater and brackish marsh, 2-4 m feathery plumes —",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      2,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Soft-stem bulrush",
-    "genus": "Schoenoplectus",
-    "species": "tabernaemontani",
-    "shape": "reed",
+    "name": "Forked sundew",
+    "genus": "Drosera",
+    "species": "binata",
+    "family": "Droseraceae",
+    "shape": "rosette",
     "temp_c": [
-     3,
-     18
+     10,
+     20
     ],
     "moisture": [
-     0.8,
-     1
-    ],
-    "height_m": [
-     1,
-     3
-    ],
-    "density": 0.7,
-    "soil": "wet",
-    "needs": [
-     "standing_water"
-    ],
-    "water_depth_m": [
-     0.1,
+     0.7,
      1.0
     ],
-    "color": "#4A9A3A",
-    "accent": "#8A6A4A",
-    "source": "Schoenoplectus tabernaemontani, softstem bulrush, cosmopolitan, leafless round culms in shallow open water of marshes, 1-3 m — USDA Plants / Wikipedia"
-   },
-   {
-    "name": "Yellow flag iris",
-    "genus": "Iris",
-    "species": "pseudacorus",
-    "shape": "spike_rosette",
-    "temp_c": [
-     5,
-     18
-    ],
-    "moisture": [
-     0.75,
-     1
+    "altitude_m": [
+     0,
+     1200
     ],
     "height_m": [
-     0.7,
-     1.5
+     0.2,
+     0.5
     ],
     "density": 0.5,
-    "soil": "wet",
-    "needs": [
-     "standing_water"
-    ],
-    "water_depth_m": [
-     0,
-     0.3
-    ],
-    "color": "#4A9A3A",
-    "accent": "#F0C820",
-    "source": "Iris pseudacorus, yellow flag, Europe, W Asia & N Africa, marsh margins and ditches, 0.7-1.5 m sword leaves, yellow flowers — Wikipedia / Kew POWO"
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "E Australian and NZ swamps. Forked antlers. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Drosera",
+     "species": "binata",
+     "native_range": "E Australian and NZ swamps",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Tussock sedge",
-    "genus": "Carex",
-    "species": "stricta",
-    "shape": "tussock",
+    "name": "Giant montane pitcher",
+    "genus": "Nepenthes",
+    "species": "rajah",
+    "family": "Nepenthaceae",
+    "shape": "reed",
     "temp_c": [
-     3,
+     10,
      16
     ],
     "moisture": [
-     0.75,
-     1
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2650
     ],
     "height_m": [
-     0.5,
-     1.2
+     0.3,
+     1.0
     ],
-    "density": 0.7,
-    "soil": "wet",
-    "needs": [
-     "standing_water"
+    "density": 0.2,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Mount Kinabalu, Borneo, 1500-2600 m. Largest pitcher on Earth, drowns rats; tree shrews use it as a toilet — a real nutrient exchange. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Nepenthes",
+     "species": "rajah",
+     "native_range": "Mount Kinabalu, Borneo, 1500-2600 m",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Purple pitcher plant",
+    "genus": "Sarracenia",
+    "species": "purpurea",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     -4,
+     18
     ],
-    "water_depth_m": [
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "altitude_m": [
      0,
+     1500
+    ],
+    "height_m": [
+     0.1,
      0.3
     ],
-    "color": "#4A9A3A",
-    "accent": "#A8B860",
-    "source": "Carex stricta, tussock sedge, eastern & central North America, dense tussocks in sedge meadows and marsh edges, 0.5-1.2 m — USDA Plants / Wikipedia"
+    "density": 0.8,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "E North American bogs, Florida to Labrador; the only pitcher in Canada. Squat red-veined pitchers full of rainwater; mosquito larvae live in them. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Sarracenia",
+     "species": "purpurea",
+     "native_range": "E North American bogs, Florida to Labrador",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Reed sweet-grass",
@@ -283,38 +1322,278 @@
     ],
     "color": "#5AB040",
     "accent": "#C8C880",
-    "source": "Glyceria maxima, reed sweet-grass, Europe & W Asia, lush stands on nutrient-rich marsh and river margins, 1-2.5 m — Wikipedia / Kew POWO"
+    "source": "Glyceria maxima, reed sweet-grass, Europe & W Asia, lush stands on nutrient-rich marsh and river margins, 1-2.5 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Glyceria",
+     "species": "maxima",
+     "native_range": "Glyceria maxima, reed sweet-grass, Europe & W Asia, lush stands on nutrient-rich marsh and river margins, 1-2",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Soft-stem bulrush",
+    "genus": "Schoenoplectus",
+    "species": "tabernaemontani",
+    "shape": "reed",
+    "temp_c": [
+     3,
+     18
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.1,
+     1.0
+    ],
+    "color": "#4A9A3A",
+    "accent": "#8A6A4A",
+    "source": "Schoenoplectus tabernaemontani, softstem bulrush, cosmopolitan, leafless round culms in shallow open water of marshes, 1-3 m — USDA Plants / Wikipedia",
+    "traits": {
+     "genus": "Schoenoplectus",
+     "species": "tabernaemontani",
+     "native_range": "Schoenoplectus tabernaemontani, softstem bulrush, cosmopolitan, leafless round culms in shallow open water of marshes, 1",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tussock sedge",
+    "genus": "Carex",
+    "species": "stricta",
+    "shape": "tussock",
+    "temp_c": [
+     3,
+     16
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#4A9A3A",
+    "accent": "#A8B860",
+    "source": "Carex stricta, tussock sedge, eastern & central North America, dense tussocks in sedge meadows and marsh edges, 0.5-1.2 m — USDA Plants / Wikipedia",
+    "traits": {
+     "genus": "Carex",
+     "species": "stricta",
+     "native_range": "Carex stricta, tussock sedge, eastern & central North America, dense tussocks in sedge meadows and marsh edges, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Yellow flag iris",
+    "genus": "Iris",
+    "species": "pseudacorus",
+    "shape": "spike_rosette",
+    "temp_c": [
+     5,
+     18
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     0.7,
+     1.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#4A9A3A",
+    "accent": "#F0C820",
+    "source": "Iris pseudacorus, yellow flag, Europe, W Asia & N Africa, marsh margins and ditches, 0.7-1.5 m sword leaves, yellow flowers — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Iris",
+     "species": "pseudacorus",
+     "native_range": "Iris pseudacorus, yellow flag, Europe, W Asia & N Africa, marsh margins and ditches, 0",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.7,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
-  "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 23,
-  "names": [
-   "Andean wax palm",
-   "Nikau palm",
-   "Windmill palm",
-   "Needle palm",
-   "Dwarf palmetto",
-   "Amorphophallus albus",
-   "Amorphophallus coaetaneus",
-   "Amorphophallus dunnii",
-   "Amorphophallus henryi",
-   "Amorphophallus hirtus",
-   "Amorphophallus kiusianus",
-   "Amorphophallus konjac",
-   "Amorphophallus krausei",
-   "Amorphophallus mekongensis",
-   "Amorphophallus tonkinensis",
-   "Amorphophallus verticillatus",
-   "Amorphophallus xiei",
-   "Amorphophallus yaoi",
-   "Amorphophallus yuloensis",
-   "Amorphophallus yunnanensis",
-   "Cannabis - Japanese hemp (asa)",
-   "Cannabis - Korean hemp (Andong)",
-   "Cannabis - Kentucky feral hemp"
+  "epiphyte": [
+   {
+    "name": "Lowe's pitcher",
+    "genus": "Nepenthes",
+    "species": "lowii",
+    "family": "Nepenthaceae",
+    "shape": "liana",
+    "temp_c": [
+     12,
+     17
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     1600,
+     2600
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Bornean mossy forest. Toilet pitcher: tree shrews feed on its lid and defecate in it. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Nepenthes",
+     "species": "lowii",
+     "native_range": "Bornean mossy forest",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
   ]
  },
  "associations": [
@@ -387,5 +1666,18 @@
    "cover": 0.5,
    "source": "Shrub-carr and buttonbush swamp (Curtis 1959; Rodwell 1991 W1 Salix cinerea woodland)"
   }
+ ],
+ "hero_species": [
+  "Big-leaf rhododendron",
+  "Campbell's magnolia",
+  "Coast redwood",
+  "Dawn redwood",
+  "Forked sundew",
+  "Giant montane pitcher",
+  "Great rhododendron",
+  "Kauri",
+  "Lowe's pitcher",
+  "Purple pitcher plant",
+  "Tree rhododendron"
  ]
 }

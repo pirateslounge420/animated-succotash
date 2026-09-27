@@ -20,27 +20,44 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Rocky Mountain juniper",
-    "genus": "Juniperus",
-    "species": "scopulorum",
+    "name": "Aleppo pine",
+    "genus": "Pinus",
+    "species": "halepensis",
     "shape": "conifer",
     "temp_c": [
-     2,
-     16
+     12,
+     20
     ],
     "moisture": [
-     0.15,
-     0.4
+     0.2,
+     0.45
     ],
     "height_m": [
-     5,
-     12
+     8,
+     20
     ],
-    "density": 0.5,
+    "density": 0.2,
     "soil": "thin",
-    "color": "#4A7040",
-    "accent": "#8A6A50",
-    "source": "Juniperus scopulorum (Rocky Mountain juniper), N American plains breaks and badland ravines, 5-12 m — USDA PLANTS"
+    "color": "#4A8040",
+    "accent": "#A08060",
+    "source": "Pinus halepensis, Bardenas Reales and Spanish gypsum badlands, 8-20 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Pinus",
+     "species": "halepensis",
+     "native_range": "Pinus halepensis, Bardenas Reales and Spanish gypsum badlands, 8-20 m — Euro+Med PlantBase",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      8,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Plains cottonwood",
@@ -66,78 +83,330 @@
     ],
     "color": "#5AB040",
     "accent": "#A09070",
-    "source": "Populus deltoides, badland creek bottoms, 15-30 m — USDA PLANTS"
+    "source": "Populus deltoides, badland creek bottoms, 15-30 m — USDA PLANTS",
+    "traits": {
+     "genus": "Populus",
+     "species": "deltoides",
+     "native_range": "Populus deltoides, badland creek bottoms, 15-30 m — USDA PLANTS",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Aleppo pine",
-    "genus": "Pinus",
-    "species": "halepensis",
+    "name": "Rocky Mountain juniper",
+    "genus": "Juniperus",
+    "species": "scopulorum",
     "shape": "conifer",
     "temp_c": [
-     12,
-     20
+     2,
+     16
     ],
     "moisture": [
-     0.2,
-     0.45
+     0.15,
+     0.4
     ],
     "height_m": [
-     8,
-     20
+     5,
+     12
     ],
-    "density": 0.2,
+    "density": 0.5,
     "soil": "thin",
-    "color": "#4A8040",
-    "accent": "#A08060",
-    "source": "Pinus halepensis, Bardenas Reales and Spanish gypsum badlands, 8-20 m — Euro+Med PlantBase"
+    "color": "#4A7040",
+    "accent": "#8A6A50",
+    "source": "Juniperus scopulorum (Rocky Mountain juniper), N American plains breaks and badland ravines, 5-12 m — USDA PLANTS",
+    "traits": {
+     "genus": "Juniperus",
+     "species": "scopulorum",
+     "native_range": "Juniperus scopulorum (Rocky Mountain juniper), N American plains breaks and badland ravines, 5-12 m — USDA PLANTS",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      5,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [
    {
-    "name": "Silver sagebrush",
-    "genus": "Artemisia",
-    "species": "cana",
-    "shape": "shrub",
-    "temp_c": [
-     0,
-     14
-    ],
-    "moisture": [
-     0.15,
-     0.4
-    ],
-    "height_m": [
-     0.5,
-     1.5
-    ],
-    "density": 0.7,
-    "soil": "thin",
-    "color": "#A8B4A0",
-    "accent": "#B8A878",
-    "source": "Artemisia cana, northern Great Plains badland flats and draws, silver shrub 0.5-1.5 m — USDA PLANTS"
-   },
-   {
-    "name": "Skunkbush sumac",
-    "genus": "Rhus",
-    "species": "trilobata",
+    "name": "Greasewood",
+    "genus": "Sarcobatus",
+    "species": "vermiculatus",
     "shape": "shrub",
     "temp_c": [
      2,
-     18
+     17
     ],
     "moisture": [
-     0.15,
-     0.4
+     0.08,
+     0.3
     ],
     "height_m": [
      1,
      2.5
     ],
-    "density": 0.4,
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#7FA060",
+    "accent": "#C0B090",
+    "source": "Sarcobatus vermiculatus, saline badland bottoms, 1-2.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Sarcobatus",
+     "species": "vermiculatus",
+     "native_range": "Sarcobatus vermiculatus, saline badland bottoms, 1-2",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Izote",
+    "genus": "Yucca",
+    "species": "filifera",
+    "family": "Asparagaceae",
+    "shape": "gnarled",
+    "temp_c": [
+     14,
+     20
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "altitude_m": [
+     1200,
+     2500
+    ],
+    "height_m": [
+     4.0,
+     10.0
+    ],
+    "density": 0.3,
     "soil": "thin",
-    "color": "#3F8C38",
-    "accent": "#D04030",
-    "source": "Rhus trilobata, western N America ravines and rocky slopes, 1-2.5 m, red autumn foliage — USDA PLANTS"
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5A8A5A",
+    "accent": "#B8A070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       200
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       8000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "gravity"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none",
+     "note": "Yucca moths are the only pollinator (obligate mutualism); if the insect count in the region is zero, seed set is zero and only offsets spread it."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_length": [
+      0.3,
+      0.8
+     ],
+     "trunk": [
+      0.0,
+      1.0
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Kew POWO accepted name. central Mexican plateau; tree/branching form. Traits documented. Tall branching tree yucca with drooping flower clusters.",
+    "from_catalogue": "yucca",
+    "traits": {
+     "genus": "Yucca",
+     "species": "filifera",
+     "native_range": "",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      4.0,
+      10.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Joshua tree",
+    "genus": "Yucca",
+    "species": "brevifolia",
+    "family": "Asparagaceae",
+    "shape": "gnarled",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.08,
+     0.22
+    ],
+    "altitude_m": [
+     600,
+     1800
+    ],
+    "height_m": [
+     4.0,
+     12.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5A8A5A",
+    "accent": "#B8A070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       200
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       8000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "gravity"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none",
+     "note": "Yucca moths are the only pollinator (obligate mutualism); if the insect count in the region is zero, seed set is zero and only offsets spread it."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_length": [
+      0.3,
+      0.8
+     ],
+     "trunk": [
+      0.0,
+      1.0
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Kew POWO accepted name. Mojave Desert, 600-1800 m; tree/branching form. Traits documented. Tree yucca with branching arms; the Mojave's signature silhouette.",
+    "from_catalogue": "yucca",
+    "traits": {
+     "genus": "Yucca",
+     "species": "brevifolia",
+     "native_range": "",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      4.0,
+      12.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Plains prickly pear",
@@ -160,7 +429,24 @@
     "soil": "thin",
     "color": "#6A9A50",
     "accent": "#E0C040",
-    "source": "Opuntia polyacantha, badland benches and clay slopes, 20-50 cm clumps — USDA PLANTS"
+    "source": "Opuntia polyacantha, badland benches and clay slopes, 20-50 cm clumps — USDA PLANTS",
+    "traits": {
+     "genus": "Opuntia",
+     "species": "polyacantha",
+     "native_range": "Opuntia polyacantha, badland benches and clay slopes, 20-50 cm clumps — USDA PLANTS",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Rubber rabbitbrush",
@@ -183,30 +469,104 @@
     "soil": "sand",
     "color": "#9FAF8A",
     "accent": "#E8C830",
-    "source": "Ericameria nauseosa, badland washes and disturbed slopes, 0.6-2 m — USDA PLANTS"
+    "source": "Ericameria nauseosa, badland washes and disturbed slopes, 0.6-2 m — USDA PLANTS",
+    "traits": {
+     "genus": "Ericameria",
+     "species": "nauseosa",
+     "native_range": "Ericameria nauseosa, badland washes and disturbed slopes, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.6,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Greasewood",
-    "genus": "Sarcobatus",
-    "species": "vermiculatus",
+    "name": "Silver sagebrush",
+    "genus": "Artemisia",
+    "species": "cana",
+    "shape": "shrub",
+    "temp_c": [
+     0,
+     14
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#A8B4A0",
+    "accent": "#B8A878",
+    "source": "Artemisia cana, northern Great Plains badland flats and draws, silver shrub 0.5-1.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Artemisia",
+     "species": "cana",
+     "native_range": "Artemisia cana, northern Great Plains badland flats and draws, silver shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Skunkbush sumac",
+    "genus": "Rhus",
+    "species": "trilobata",
     "shape": "shrub",
     "temp_c": [
      2,
-     17
+     18
     ],
     "moisture": [
-     0.08,
-     0.3
+     0.15,
+     0.4
     ],
     "height_m": [
      1,
      2.5
     ],
-    "density": 0.3,
-    "soil": "sand",
-    "color": "#7FA060",
-    "accent": "#C0B090",
-    "source": "Sarcobatus vermiculatus, saline badland bottoms, 1-2.5 m — USDA PLANTS"
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3F8C38",
+    "accent": "#D04030",
+    "source": "Rhus trilobata, western N America ravines and rocky slopes, 1-2.5 m, red autumn foliage — USDA PLANTS",
+    "traits": {
+     "genus": "Rhus",
+     "species": "trilobata",
+     "native_range": "Rhus trilobata, western N America ravines and rocky slopes, 1-2",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Soapweed yucca",
@@ -229,33 +589,27 @@
     "soil": "sand",
     "color": "#6E9A8A",
     "accent": "#F0E8C8",
-    "source": "Yucca glauca, dry badland slopes of the Great Plains, 0.5-1.2 m — USDA PLANTS"
+    "source": "Yucca glauca, dry badland slopes of the Great Plains, 0.5-1.2 m — USDA PLANTS",
+    "traits": {
+     "genus": "Yucca",
+     "species": "glauca",
+     "native_range": "Yucca glauca, dry badland slopes of the Great Plains, 0",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
-   {
-    "name": "Western wheatgrass",
-    "genus": "Pascopyrum",
-    "species": "smithii",
-    "shape": "grass",
-    "temp_c": [
-     2,
-     18
-    ],
-    "moisture": [
-     0.2,
-     0.45
-    ],
-    "height_m": [
-     0.3,
-     0.9
-    ],
-    "density": 0.8,
-    "soil": "rich",
-    "color": "#6E9A8A",
-    "accent": "#C8B060",
-    "source": "Pascopyrum smithii, dominant grass of northern badland flats on clay, 0.3-0.9 m — USDA PLANTS"
-   },
    {
     "name": "Blue grama",
     "genus": "Bouteloua",
@@ -277,53 +631,24 @@
     "soil": "thin",
     "color": "#9AAE6A",
     "accent": "#C8B060",
-    "source": "Bouteloua gracilis, badland benches and prairie tables, 15-40 cm — USDA PLANTS"
-   },
-   {
-    "name": "Little bluestem",
-    "genus": "Schizachyrium",
-    "species": "scoparium",
-    "shape": "tussock",
-    "temp_c": [
-     3,
-     20
-    ],
-    "moisture": [
-     0.2,
-     0.45
-    ],
-    "height_m": [
-     0.5,
-     1
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#8FA070",
-    "accent": "#B05A40",
-    "source": "Schizachyrium scoparium, badland slopes and tables, 0.5-1 m, red-brown in autumn — USDA PLANTS"
-   },
-   {
-    "name": "Gumbo evening primrose",
-    "genus": "Oenothera",
-    "species": "caespitosa",
-    "shape": "rosette",
-    "temp_c": [
-     2,
-     18
-    ],
-    "moisture": [
-     0.08,
-     0.3
-    ],
-    "height_m": [
-     0.1,
-     0.3
-    ],
-    "density": 0.3,
-    "soil": "thin",
-    "color": "#8FA08A",
-    "accent": "#F8F8F0",
-    "source": "Oenothera caespitosa, bare clay badland slopes of western N America, rosette 10-30 cm with white flowers — USDA PLANTS"
+    "source": "Bouteloua gracilis, badland benches and prairie tables, 15-40 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Bouteloua",
+     "species": "gracilis",
+     "native_range": "Bouteloua gracilis, badland benches and prairie tables, 15-40 cm — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.15,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Esparto grass",
@@ -346,90 +671,254 @@
     "soil": "thin",
     "color": "#C8B060",
     "accent": "#E0D090",
-    "source": "Macrochloa tenacissima, Spanish gypsum badlands, tussock 0.5-1.2 m — Euro+Med PlantBase"
+    "source": "Macrochloa tenacissima, Spanish gypsum badlands, tussock 0.5-1.2 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Macrochloa",
+     "species": "tenacissima",
+     "native_range": "Macrochloa tenacissima, Spanish gypsum badlands, tussock 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Gumbo evening primrose",
+    "genus": "Oenothera",
+    "species": "caespitosa",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.08,
+     0.3
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#8FA08A",
+    "accent": "#F8F8F0",
+    "source": "Oenothera caespitosa, bare clay badland slopes of western N America, rosette 10-30 cm with white flowers — USDA PLANTS",
+    "traits": {
+     "genus": "Oenothera",
+     "species": "caespitosa",
+     "native_range": "Oenothera caespitosa, bare clay badland slopes of western N America, rosette 10-30 cm with white flowers — USDA PLANTS",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Little bluestem",
+    "genus": "Schizachyrium",
+    "species": "scoparium",
+    "shape": "tussock",
+    "temp_c": [
+     3,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     0.5,
+     1
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#8FA070",
+    "accent": "#B05A40",
+    "source": "Schizachyrium scoparium, badland slopes and tables, 0.5-1 m, red-brown in autumn — USDA PLANTS",
+    "traits": {
+     "genus": "Schizachyrium",
+     "species": "scoparium",
+     "native_range": "Schizachyrium scoparium, badland slopes and tables, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Western wheatgrass",
+    "genus": "Pascopyrum",
+    "species": "smithii",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     0.3,
+     0.9
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#6E9A8A",
+    "accent": "#C8B060",
+    "source": "Pascopyrum smithii, dominant grass of northern badland flats on clay, 0.3-0.9 m — USDA PLANTS",
+    "traits": {
+     "genus": "Pascopyrum",
+     "species": "smithii",
+     "native_range": "Pascopyrum smithii, dominant grass of northern badland flats on clay, 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.9
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
-  "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 75,
-  "names": [
-   "Date palm",
-   "Red cabbage palm",
-   "California fan palm",
-   "Mexican fan palm",
-   "Guadalupe palm",
-   "Mexican blue palm",
-   "Cretan date palm",
-   "Narrowleaf yucca",
-   "Banana yucca",
-   "Navajo yucca",
-   "Joshua tree",
-   "Plains yucca",
-   "Cape yucca",
-   "Giant Spanish dagger",
-   "Carr's yucca",
-   "Coahuila yucca",
-   "Buckley's yucca",
-   "Palma china",
-   "Declined yucca",
-   "Blue-boy yucca",
-   "Soaptree yucca",
-   "Endlich's yucca",
-   "Faxon yucca",
-   "Feeanouki's yucca",
-   "Izote",
-   "Soapweed yucca",
-   "Sahuiliqui",
-   "Harriman's yucca",
-   "Intermediate yucca",
-   "Eastern Joshua tree",
-   "Jalisco yucca",
-   "Linear-leaf yucca",
-   "Luminous yucca",
-   "Mixtec yucca",
-   "New Mexico yucca",
-   "Perilous yucca",
-   "Potosí yucca",
-   "Querétaro yucca",
-   "San Angelo yucca",
-   "Beaked yucca",
-   "Mojave yucca",
-   "Sterile yucca",
-   "Thompson's yucca",
-   "Torrey yucca",
-   "Trecul yucca",
-   "Utah yucca",
-   "Datilillo",
-   "Trichocereus peruvianus",
-   "Trichocereus bridgesii",
-   "Trichocereus scopulicola",
-   "Trichocereus macrogonus",
-   "Trichocereus terscheckii",
-   "Trichocereus tacaquirensis",
-   "Trichocereus taquimbalensis",
-   "Trichocereus santaensis",
-   "Trichocereus puquiensis",
-   "Trichocereus riomizquensis",
-   "Trichocereus werdermannianus",
-   "Trichocereus validus",
-   "Trichocereus knuthianus",
-   "Trichocereus glaucus",
-   "Trichocereus chalaensis",
-   "Cannabis - Hindu Kush",
-   "Cannabis - Afghani",
-   "Cannabis - Mazar-i-Sharif",
-   "Cannabis - Lashkar Gah",
-   "Cannabis - Chitral",
-   "Cannabis - Swat Valley",
-   "Cannabis - Tirah Valley",
-   "Cannabis - Kashmir",
-   "Cannabis - Uzbek",
-   "Cannabis - Pamir",
-   "Cannabis - Lebanese (Bekaa)",
-   "Cannabis - Iranian (Mashhad)",
-   "Cannabis - Mongolian"
+  "epiphyte": [
+   {
+    "name": "Rock tillandsia",
+    "genus": "Tillandsia",
+    "species": "tectorum",
+    "family": "Bromeliaceae",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.1,
+     0.4
+    ],
+    "altitude_m": [
+     1000,
+     3000
+    ],
+    "height_m": [
+     0.1,
+     0.2
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [],
+    "color": "#D8DCD0",
+    "accent": "#E04060",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       600
+      ],
+      [
+       "mature",
+       2000
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bird",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 21,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "none",
+     "note": "most bloom once then die, leaving pups; hummingbird-pollinated; tank species hold rainwater that frogs and insects breed in"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.6
+     ],
+     "allocation": [
+      0.4,
+      0.8
+     ]
+    },
+    "bromeliad": {
+     "tank": false,
+     "air_plant": true
+    },
+    "source": "Peruvian Andean cliffs and fog desert. Snow-white fuzz; lives on fog on bare rock. Kew POWO.",
+    "from_catalogue": "bromeliad",
+    "traits": {
+     "genus": "Tillandsia",
+     "species": "tectorum",
+     "native_range": "Peruvian Andean cliffs and fog desert",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.1,
+      0.2
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by tuber_offset",
+     "pollinator": "bird",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
   ]
  },
  "associations": [
@@ -501,8 +990,7 @@
     "Blue grama"
    ],
    "catalogue": [
-    "Soapweed yucca",
-    "Plains yucca"
+    "Soapweed yucca"
    ],
    "cover": 0.15,
    "source": "Butler et al. 1986 Badlands NP sparse vegetation; Hansen & Hoffman 1988"
@@ -537,5 +1025,11 @@
    "cover": 0.25,
    "source": "Rivas-Martinez Pinus halepensis-Stipa tenacissima steppe, Ebro valley badlands"
   }
+ ],
+ "hero_species": [
+  "Izote",
+  "Joshua tree",
+  "Rock tillandsia",
+  "Soapweed yucca"
  ]
 }

@@ -21,34 +21,521 @@
   ]
  },
  "plants": {
-  "emergent": [],
-  "canopy": [
+  "emergent": [
    {
-    "name": "Gnarled cloud-forest tree",
-    "genus": "Weinmannia",
-    "species": "tomentosa",
-    "shape": "gnarled",
+    "name": "Andean wax palm",
+    "genus": "Ceroxylon",
+    "species": "quindiuense",
+    "family": "Arecaceae",
+    "shape": "palm",
     "temp_c": [
-     8,
+     12,
+     19
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     1800,
+     3000
+    ],
+    "height_m": [
+     40.0,
+     60.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3F8F45",
+    "accent": "#8A7A5A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       180
+      ],
+      [
+       "young",
+       1800
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       15000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trunk_lean": [
+      0.0,
+      0.6
+     ],
+     "frond_count": [
+      0.3,
+      0.8
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Palm of Colombian and Peruvian Andes cloud forest; height 40-60 m. Tallest palm on Earth; waxy white trunk above the cloud forest. Standard floras and Kew POWO for the name.",
+    "from_catalogue": "palms",
+    "traits": {
+     "genus": "Ceroxylon",
+     "species": "quindiuense",
+     "native_range": "Colombian and Peruvian Andes cloud forest",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      40.0,
+      60.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Coast redwood",
+    "genus": "Sequoia",
+    "species": "sempervirens",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     10,
      16
     ],
     "moisture": [
      0.7,
-     1
+     1.0
     ],
     "altitude_m": [
-     2000,
-     3500
+     0,
+     900
     ],
     "height_m": [
-     8,
-     20
+     70.0,
+     115.0
     ],
-    "density": 1.0,
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#8A4A30",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "N California fog belt; tallest tree on Earth; resprouts from the stump. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "sequoia",
+    "traits": {
+     "genus": "Sequoia",
+     "species": "sempervirens",
+     "native_range": "N California fog belt",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      70.0,
+      115.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Giant sequoia",
+    "genus": "Sequoiadendron",
+    "species": "giganteum",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     6,
+     12
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     1400,
+     2400
+    ],
+    "height_m": [
+     60.0,
+     90.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#B04A30",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sierra Nevada groves; largest tree by volume; fire opens its cones. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "sequoia",
+    "traits": {
+     "genus": "Sequoiadendron",
+     "species": "giganteum",
+     "native_range": "Sierra Nevada groves",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      60.0,
+      90.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "canopy": [
+   {
+    "name": "Big-leaf rhododendron",
+    "genus": "Rhododendron",
+    "species": "sinogrande",
+    "family": "Ericaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     12
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     2100,
+     3600
+    ],
+    "height_m": [
+     8.0,
+     15.0
+    ],
+    "density": 0.4,
     "soil": "peat",
-    "color": "#3E8F3A",
-    "accent": "#6E5A44",
-    "source": "Weinmannia tomentosa, encenillo, northern Andes (Colombia/Venezuela) cloud forest 2400-3400 m, twisted moss-covered trunks 8-20 m — Wikipedia / Kew POWO"
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#F0E8C0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Yunnan-Burma cloud forest; Leaves to a metre long. Kew POWO; standard floras.",
+    "from_catalogue": "rhododendron",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "sinogrande",
+     "native_range": "Yunnan-Burma cloud forest",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      8.0,
+      15.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Campbell's magnolia",
+    "genus": "Magnolia",
+    "species": "campbellii",
+    "family": "Magnoliaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     14
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     1800,
+     3000
+    ],
+    "height_m": [
+     20.0,
+     30.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A50",
+    "accent": "#F0A0C0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "E Himalayan cloud forest; 20–30 m. Pink cups the size of dinner plates on bare branches. Kew POWO for the name; standard floras for range.",
+    "from_catalogue": "magnolia",
+    "traits": {
+     "genus": "Magnolia",
+     "species": "campbellii",
+     "native_range": "E Himalayan cloud forest",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      20.0,
+      30.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cloud-forest oak",
@@ -75,34 +562,24 @@
     "soil": "rich",
     "color": "#2F7A35",
     "accent": "#6B4A2E",
-    "source": "Quercus costaricensis, Talamanca cloud-forest oak, Costa Rica/Panama 2000-3300 m, dominant 20-35 m with bromeliad-laden limbs — Wikipedia / Kew POWO"
-   },
-   {
-    "name": "Podocarp",
-    "genus": "Podocarpus",
-    "species": "oleifolius",
-    "shape": "conifer",
-    "temp_c": [
-     9,
-     18
-    ],
-    "moisture": [
-     0.65,
-     1
-    ],
-    "altitude_m": [
-     1500,
-     3500
-    ],
-    "height_m": [
-     15,
-     30
-    ],
-    "density": 0.5,
-    "soil": "rich",
-    "color": "#2A6A38",
-    "accent": "#8A6A4A",
-    "source": "Podocarpus oleifolius, Andean podocarp, Mexico to Bolivia montane cloud forest 1500-3500 m, 15-30 m — Wikipedia / Gymnosperm Database"
+    "source": "Quercus costaricensis, Talamanca cloud-forest oak, Costa Rica/Panama 2000-3300 m, dominant 20-35 m with bromeliad-laden limbs — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Quercus",
+     "species": "costaricensis",
+     "native_range": "Quercus costaricensis, Talamanca cloud-forest oak, Costa Rica/Panama 2000-3300 m, dominant 20-35 m with bromeliad-laden ",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      20,
+      35
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Clusia",
@@ -129,7 +606,376 @@
     "soil": "thin",
     "color": "#3A8535",
     "accent": "#E8B0B0",
-    "source": "Clusia multiflora, gaque, northern Andes cloud forest 1500-3200 m, thick leathery leaves, stilt roots, 8-20 m — Kew POWO / Wikipedia"
+    "source": "Clusia multiflora, gaque, northern Andes cloud forest 1500-3200 m, thick leathery leaves, stilt roots, 8-20 m — Kew POWO / Wikipedia",
+    "traits": {
+     "genus": "Clusia",
+     "species": "multiflora",
+     "native_range": "Clusia multiflora, gaque, northern Andes cloud forest 1500-3200 m, thick leathery leaves, stilt roots, 8-20 m — Kew POWO",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      8,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Dawn redwood",
+    "genus": "Metasequoia",
+    "species": "glyptostroboides",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     700,
+     1500
+    ],
+    "height_m": [
+     35.0,
+     50.0
+    ],
+    "density": 0.2,
+    "soil": "wet",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#B06A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Hubei valley bottoms, one region; deciduous; the living fossil. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "sequoia",
+    "traits": {
+     "genus": "Metasequoia",
+     "species": "glyptostroboides",
+     "native_range": "Hubei valley bottoms, one region",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      35.0,
+      50.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Giant highland banana",
+    "genus": "Musa",
+    "species": "ingens",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     1000,
+     2000
+    ],
+    "height_m": [
+     10.0,
+     20.0
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "New Guinea highland forest. Largest herb on Earth; 15 m stems. Kew POWO.",
+    "from_catalogue": "giant_herbs",
+    "traits": {
+     "genus": "Musa",
+     "species": "ingens",
+     "native_range": "New Guinea highland forest",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      10.0,
+      20.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Ginkgo",
+    "genus": "Ginkgo",
+    "species": "biloba",
+    "family": "Ginkgoaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     300,
+     1200
+    ],
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [],
+    "color": "#7AB040",
+    "accent": "#E8D040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       200
+      ],
+      [
+       "sapling",
+       3000
+      ],
+      [
+       "mature",
+       20000
+      ],
+      [
+       "old",
+       300000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 7,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Wild in the Tianmu and Dalou mountains of E China; the last of its line, unchanged since the dinosaurs. Fan leaves turn pure gold in one week each autumn, then drop all at once. Dioecious; wind-pollinated; fetid seeds carried by mammals. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "baobab",
+    "traits": {
+     "genus": "Ginkgo",
+     "species": "biloba",
+     "native_range": "Wild in the Tianmu and Dalou mountains of E China",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      20.0,
+      35.0
+     ],
+     "growth_rate": "very slow (centuries)",
+     "reproduction": "seed, clonal by sucker, dioecious",
+     "pollinator": "wind",
+     "disperser": [
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Gnarled cloud-forest tree",
+    "genus": "Weinmannia",
+    "species": "tomentosa",
+    "shape": "gnarled",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     2000,
+     3500
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#3E8F3A",
+    "accent": "#6E5A44",
+    "source": "Weinmannia tomentosa, encenillo, northern Andes (Colombia/Venezuela) cloud forest 2400-3400 m, twisted moss-covered trunks 8-20 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Weinmannia",
+     "species": "tomentosa",
+     "native_range": "Weinmannia tomentosa, encenillo, northern Andes (Colombia/Venezuela) cloud forest 2400-3400 m, twisted moss-covered trun",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      8,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Hagenia",
@@ -156,37 +1002,777 @@
     "soil": "rich",
     "color": "#4A9A3A",
     "accent": "#C86A4A",
-    "source": "Hagenia abyssinica, African redwood, Afromontane cloud forest 2400-3600 m (Ethiopia-Malawi), spreading crown 10-20 m, red flower panicles — Wikipedia / PROTA"
-   }
-  ],
-  "shrub": [
+    "source": "Hagenia abyssinica, African redwood, Afromontane cloud forest 2400-3600 m (Ethiopia-Malawi), spreading crown 10-20 m, red flower panicles — Wikipedia / PROTA",
+    "traits": {
+     "genus": "Hagenia",
+     "species": "abyssinica",
+     "native_range": "Hagenia abyssinica, African redwood, Afromontane cloud forest 2400-3600 m (Ethiopia-Malawi), spreading crown 10-20 m, re",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      10,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Mountain bamboo",
-    "genus": "Yushania",
-    "species": "alpina",
-    "shape": "bamboo",
+    "name": "Lawson cypress",
+    "genus": "Chamaecyparis",
+    "species": "lawsoniana",
+    "family": "Cupressaceae",
+    "shape": "conifer",
     "temp_c": [
      8,
-     15
+     14
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     40.0,
+     60.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3A7A4A",
+    "accent": "#7A6A5A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Oregon-California coast ranges. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "cypress",
+    "traits": {
+     "genus": "Chamaecyparis",
+     "species": "lawsoniana",
+     "native_range": "Oregon-California coast ranges",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      40.0,
+      60.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Monkey puzzle",
+    "genus": "Araucaria",
+    "species": "araucana",
+    "family": "Araucariaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     6,
+     12
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     600,
+     1800
+    ],
+    "height_m": [
+     30.0,
+     40.0
+    ],
+    "density": 0.6,
+    "soil": "volcanic",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#6A5A4A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Chilean and Argentine Andes on volcanic ash; sacred to the Mapuche; 1,000 years. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "araucaria",
+    "traits": {
+     "genus": "Araucaria",
+     "species": "araucana",
+     "native_range": "Chilean and Argentine Andes on volcanic ash",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      30.0,
+      40.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Montezuma cypress",
+    "genus": "Taxodium",
+    "species": "mucronatum",
+    "family": "Cupressaceae",
+    "shape": "cypress",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     300,
+     2500
+    ],
+    "height_m": [
+     25.0,
+     40.0
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [],
+    "color": "#5A8A4A",
+    "accent": "#8A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mexican river banks; the Tule tree, widest trunk on Earth. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "cypress",
+    "traits": {
+     "genus": "Taxodium",
+     "species": "mucronatum",
+     "native_range": "Mexican river banks",
+     "leaf_shape": "feathery deciduous or scale needles",
+     "trunk": "fluted buttressed trunk, knees in water",
+     "petiole": "none",
+     "height_m": [
+      25.0,
+      40.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Paraná pine",
+    "genus": "Araucaria",
+    "species": "angustifolia",
+    "family": "Araucariaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     500,
+     1800
+    ],
+    "height_m": [
+     30.0,
+     50.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#6A5A4A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "S Brazilian highlands; candelabra crown; pine-nut forests. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "araucaria",
+    "traits": {
+     "genus": "Araucaria",
+     "species": "angustifolia",
+     "native_range": "S Brazilian highlands",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      30.0,
+      50.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Podocarp",
+    "genus": "Podocarpus",
+    "species": "oleifolius",
+    "shape": "conifer",
+    "temp_c": [
+     9,
+     18
     ],
     "moisture": [
      0.65,
      1
     ],
     "altitude_m": [
-     2000,
-     3400
+     1500,
+     3500
     ],
     "height_m": [
+     15,
+     30
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#2A6A38",
+    "accent": "#8A6A4A",
+    "source": "Podocarpus oleifolius, Andean podocarp, Mexico to Bolivia montane cloud forest 1500-3500 m, 15-30 m — Wikipedia / Gymnosperm Database",
+    "traits": {
+     "genus": "Podocarpus",
+     "species": "oleifolius",
+     "native_range": "Podocarpus oleifolius, Andean podocarp, Mexico to Bolivia montane cloud forest 1500-3500 m, 15-30 m — Wikipedia / Gymnos",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tree rhododendron",
+    "genus": "Rhododendron",
+    "species": "arboreum",
+    "family": "Ericaceae",
+    "shape": "broadleaf",
+    "temp_c": [
      6,
      15
     ],
-    "density": 0.8,
-    "soil": "rich",
-    "color": "#5AB040",
-    "accent": "#A8B860",
-    "source": "Yushania alpina, African alpine bamboo, Afromontane belt 2400-3300 m (Kenya, Uganda, Ethiopia, Rwanda), dense stands 6-15 m — Wikipedia / PROTA"
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "altitude_m": [
+     1500,
+     3600
+    ],
+    "height_m": [
+     10.0,
+     20.0
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#D02030",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Himalaya and S Indian hills; forest-forming; Blood-red blossom forests of Nepal and Sikkim. Kew POWO; standard floras.",
+    "from_catalogue": "rhododendron",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "arboreum",
+     "native_range": "Himalaya and S Indian hills",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      10.0,
+      20.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
+   {
+    "name": "Tulip tree",
+    "genus": "Liriodendron",
+    "species": "tulipifera",
+    "family": "Magnoliaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     8,
+     17
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     35.0,
+     50.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#5AA040",
+    "accent": "#D8C040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "E North American cove forest; 35–50 m. Magnolia family; tallest eastern hardwood; tulip flowers. Kew POWO for the name; standard floras for range.",
+    "from_catalogue": "magnolia",
+    "traits": {
+     "genus": "Liriodendron",
+     "species": "tulipifera",
+     "native_range": "E North American cove forest",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      35.0,
+      50.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Yulan magnolia",
+    "genus": "Magnolia",
+    "species": "denudata",
+    "family": "Magnoliaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     300,
+     1200
+    ],
+    "height_m": [
+     10.0,
+     15.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#4A8A4A",
+    "accent": "#F8F4F0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "central China; 10–15 m. White goblets before the leaves. Kew POWO for the name; standard floras for range.",
+    "from_catalogue": "magnolia",
+    "traits": {
+     "genus": "Magnolia",
+     "species": "denudata",
+     "native_range": "central China",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      10.0,
+      15.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "shrub": [
    {
     "name": "Andean chusquea",
     "genus": "Chusquea",
@@ -212,34 +1798,24 @@
     "soil": "rich",
     "color": "#4A9A3A",
     "accent": "#C8C880",
-    "source": "Chusquea scandens, chusque, northern Andes cloud forest 1800-3500 m, scrambling clump bamboo 3-8 m — Kew POWO / Wikipedia"
-   },
-   {
-    "name": "Andean tree fern",
-    "genus": "Cyathea",
-    "species": "caracasana",
-    "shape": "tree_fern",
-    "temp_c": [
-     10,
-     19
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "altitude_m": [
-     800,
-     3000
-    ],
-    "height_m": [
-     4,
-     12
-    ],
-    "density": 0.6,
-    "soil": "rich",
-    "color": "#4E9A3C",
-    "accent": "#7A5A3A",
-    "source": "Cyathea caracasana, Andean tree fern, Central America to Bolivia cloud forest 1000-3000 m, trunk 4-12 m — Wikipedia / Kew POWO"
+    "source": "Chusquea scandens, chusque, northern Andes cloud forest 1800-3500 m, scrambling clump bamboo 3-8 m — Kew POWO / Wikipedia",
+    "traits": {
+     "genus": "Chusquea",
+     "species": "scandens",
+     "native_range": "Chusquea scandens, chusque, northern Andes cloud forest 1800-3500 m, scrambling clump bamboo 3-8 m — Kew POWO / Wikipedi",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      3,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Andean miconia",
@@ -266,7 +1842,173 @@
     "soil": "rich",
     "color": "#3E8F3A",
     "accent": "#8A5A6A",
-    "source": "Miconia theizans, melastome shrub, Neotropical montane forest 1000-3000 m, common gap coloniser 2-6 m — Kew POWO / Tropicos"
+    "source": "Miconia theizans, melastome shrub, Neotropical montane forest 1000-3000 m, common gap coloniser 2-6 m — Kew POWO / Tropicos",
+    "traits": {
+     "genus": "Miconia",
+     "species": "theizans",
+     "native_range": "Miconia theizans, melastome shrub, Neotropical montane forest 1000-3000 m, common gap coloniser 2-6 m — Kew POWO / Tropi",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Andean tree fern",
+    "genus": "Cyathea",
+    "species": "caracasana",
+    "shape": "tree_fern",
+    "temp_c": [
+     10,
+     19
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     800,
+     3000
+    ],
+    "height_m": [
+     4,
+     12
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#7A5A3A",
+    "source": "Cyathea caracasana, Andean tree fern, Central America to Bolivia cloud forest 1000-3000 m, trunk 4-12 m — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Cyathea",
+     "species": "caracasana",
+     "native_range": "Cyathea caracasana, Andean tree fern, Central America to Bolivia cloud forest 1000-3000 m, trunk 4-12 m — Wikipedia / Ke",
+     "leaf_shape": "huge pinnate fronds",
+     "trunk": "fibrous trunk of old leaf bases",
+     "petiole": "long stipe",
+     "height_m": [
+      4,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Enset",
+    "genus": "Ensete",
+    "species": "ventricosum",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     1000,
+     3000
+    ],
+    "height_m": [
+     6.0,
+     12.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Ethiopian highlands and African mountain forest. False banana; the corm is the staple of the Ethiopian highlands; grows huge then dies after flowering. Kew POWO.",
+    "from_catalogue": "giant_herbs",
+    "traits": {
+     "genus": "Ensete",
+     "species": "ventricosum",
+     "native_range": "Ethiopian highlands and African mountain forest",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      6.0,
+      12.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Fuchsia",
@@ -293,79 +2035,281 @@
     "soil": "rich",
     "color": "#4A9A3A",
     "accent": "#D83A5A",
-    "source": "Fuchsia boliviana, Bolivian fuchsia, Andes of Peru/Bolivia/Argentina cloud forest 1000-3000 m, 2-4 m, hanging red flowers — Wikipedia / Kew POWO"
-   }
-  ],
-  "ground": [
+    "source": "Fuchsia boliviana, Bolivian fuchsia, Andes of Peru/Bolivia/Argentina cloud forest 1000-3000 m, 2-4 m, hanging red flowers — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Fuchsia",
+     "species": "boliviana",
+     "native_range": "Fuchsia boliviana, Bolivian fuchsia, Andes of Peru/Bolivia/Argentina cloud forest 1000-3000 m, 2-4 m, hanging red flower",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Moss carpet",
-    "genus": "Thuidium",
-    "species": "delicatulum",
-    "shape": "moss",
+    "name": "Great rhododendron",
+    "genus": "Rhododendron",
+    "species": "maximum",
+    "family": "Ericaceae",
+    "shape": "shrub",
     "temp_c": [
      6,
-     20
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "height_m": [
-     0.03,
-     0.1
-    ],
-    "density": 1.0,
-    "soil": "peat",
-    "color": "#4E9A3C",
-    "accent": "#8A7A5A",
-    "source": "Thuidium delicatulum, delicate fern moss, cosmopolitan, forms dense carpets on cloud-forest floor and logs, 3-10 cm — Wikipedia / Tropicos"
-   },
-   {
-    "name": "Filmy fern",
-    "genus": "Hymenophyllum",
-    "species": "polyanthos",
-    "shape": "fern",
-    "temp_c": [
-     8,
-     20
-    ],
-    "moisture": [
-     0.8,
-     1
-    ],
-    "height_m": [
-     0.05,
-     0.2
-    ],
-    "density": 0.7,
-    "soil": "peat",
-    "color": "#4A9A3A",
-    "accent": "#3A5A38",
-    "source": "Hymenophyllum polyanthos, filmy fern, pantropical montane cloud forest, translucent one-cell-thick fronds 5-20 cm on rocks, logs and trunks — Wikipedia / Kew POWO"
-   },
-   {
-    "name": "Hard fern",
-    "genus": "Blechnum",
-    "species": "occidentale",
-    "shape": "fern",
-    "temp_c": [
-     10,
-     21
+     14
     ],
     "moisture": [
      0.6,
-     1
+     0.95
+    ],
+    "altitude_m": [
+     200,
+     1800
     ],
     "height_m": [
-     0.3,
-     0.6
+     3.0,
+     8.0
     ],
-    "density": 0.6,
-    "soil": "rich",
-    "color": "#3E8F3A",
-    "accent": "#8A4A3A",
-    "source": "Blechnum occidentale, hammock fern, Neotropics lowland to montane forest, 30-60 cm fronds, red-tinged new growth — Wikipedia / Kew POWO"
+    "density": 1.0,
+    "soil": "peat",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#F0C0D0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Appalachian coves and stream banks; Rhododendron hells under hemlock. Kew POWO; standard floras.",
+    "from_catalogue": "rhododendron",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "maximum",
+     "native_range": "Appalachian coves and stream banks",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      3.0,
+      8.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
+   {
+    "name": "Ichang papeda",
+    "genus": "Citrus",
+    "species": "cavaleriei",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     500,
+     2500
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#B0C040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "central Chinese mountains; hardiest wild citrus. Kew POWO.",
+    "from_catalogue": "citrus",
+    "traits": {
+     "genus": "Citrus",
+     "species": "cavaleriei",
+     "native_range": "central Chinese mountains",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      3.0,
+      6.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Mountain bamboo",
+    "genus": "Yushania",
+    "species": "alpina",
+    "shape": "bamboo",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "altitude_m": [
+     2000,
+     3400
+    ],
+    "height_m": [
+     6,
+     15
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#A8B860",
+    "source": "Yushania alpina, African alpine bamboo, Afromontane belt 2400-3300 m (Kenya, Uganda, Ethiopia, Rwanda), dense stands 6-15 m — Wikipedia / PROTA",
+    "traits": {
+     "genus": "Yushania",
+     "species": "alpina",
+     "native_range": "Yushania alpina, African alpine bamboo, Afromontane belt 2400-3300 m (Kenya, Uganda, Ethiopia, Rwanda), dense stands 6-1",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      6,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "ground": [
    {
     "name": "Begonia",
     "genus": "Begonia",
@@ -391,7 +2335,474 @@
     "soil": "rich",
     "color": "#4A9A3A",
     "accent": "#F0B8C8",
-    "source": "Begonia foliosa, fern-leaf begonia, northern Andes cloud forest 1500-3000 m, shaded banks, 20-60 cm, pink flowers — Kew POWO / Wikipedia"
+    "source": "Begonia foliosa, fern-leaf begonia, northern Andes cloud forest 1500-3000 m, shaded banks, 20-60 cm, pink flowers — Kew POWO / Wikipedia",
+    "traits": {
+     "genus": "Begonia",
+     "species": "foliosa",
+     "native_range": "Begonia foliosa, fern-leaf begonia, northern Andes cloud forest 1500-3000 m, shaded banks, 20-60 cm, pink flowers — Kew ",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Cape sundew",
+    "genus": "Drosera",
+    "species": "capensis",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     13,
+     18
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Cape fynbos seeps. Straps that curl round prey. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Drosera",
+     "species": "capensis",
+     "native_range": "Cape fynbos seeps",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Filmy fern",
+    "genus": "Hymenophyllum",
+    "species": "polyanthos",
+    "shape": "fern",
+    "temp_c": [
+     8,
+     20
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "color": "#4A9A3A",
+    "accent": "#3A5A38",
+    "source": "Hymenophyllum polyanthos, filmy fern, pantropical montane cloud forest, translucent one-cell-thick fronds 5-20 cm on rocks, logs and trunks — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Hymenophyllum",
+     "species": "polyanthos",
+     "native_range": "Hymenophyllum polyanthos, filmy fern, pantropical montane cloud forest, translucent one-cell-thick fronds 5-20 cm on roc",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Forked sundew",
+    "genus": "Drosera",
+    "species": "binata",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "E Australian and NZ swamps. Forked antlers. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Drosera",
+     "species": "binata",
+     "native_range": "E Australian and NZ swamps",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Giant montane pitcher",
+    "genus": "Nepenthes",
+    "species": "rajah",
+    "family": "Nepenthaceae",
+    "shape": "reed",
+    "temp_c": [
+     10,
+     16
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2650
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Mount Kinabalu, Borneo, 1500-2600 m. Largest pitcher on Earth, drowns rats; tree shrews use it as a toilet — a real nutrient exchange. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Nepenthes",
+     "species": "rajah",
+     "native_range": "Mount Kinabalu, Borneo, 1500-2600 m",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Hard fern",
+    "genus": "Blechnum",
+    "species": "occidentale",
+    "shape": "fern",
+    "temp_c": [
+     10,
+     21
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#8A4A3A",
+    "source": "Blechnum occidentale, hammock fern, Neotropics lowland to montane forest, 30-60 cm fronds, red-tinged new growth — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Blechnum",
+     "species": "occidentale",
+     "native_range": "Blechnum occidentale, hammock fern, Neotropics lowland to montane forest, 30-60 cm fronds, red-tinged new growth — Wikip",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Moss carpet",
+    "genus": "Thuidium",
+    "species": "delicatulum",
+    "shape": "moss",
+    "temp_c": [
+     6,
+     20
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#4E9A3C",
+    "accent": "#8A7A5A",
+    "source": "Thuidium delicatulum, delicate fern moss, cosmopolitan, forms dense carpets on cloud-forest floor and logs, 3-10 cm — Wikipedia / Tropicos",
+    "traits": {
+     "genus": "Thuidium",
+     "species": "delicatulum",
+     "native_range": "Thuidium delicatulum, delicate fern moss, cosmopolitan, forms dense carpets on cloud-forest floor and logs, 3-10 cm — Wi",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Peperomia",
@@ -418,55 +2829,66 @@
     "soil": "thin",
     "color": "#5AB040",
     "accent": "#C8D880",
-    "source": "Peperomia galioides, Andean peperomia, Mexico to Bolivia montane forest 1000-3500 m, succulent whorled leaves 10-40 cm — Kew POWO / Tropicos"
+    "source": "Peperomia galioides, Andean peperomia, Mexico to Bolivia montane forest 1000-3500 m, succulent whorled leaves 10-40 cm — Kew POWO / Tropicos",
+    "traits": {
+     "genus": "Peperomia",
+     "species": "galioides",
+     "native_range": "Peperomia galioides, Andean peperomia, Mexico to Bolivia montane forest 1000-3500 m, succulent whorled leaves 10-40 cm —",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": [
    {
-    "name": "Epiphytic moss and liverworts",
-    "genus": "Plagiochila",
-    "species": "bifaria",
+    "name": "Beard lichen",
+    "genus": "Usnea",
+    "species": "barbata",
     "shape": "hanging_moss",
     "temp_c": [
      6,
-     20
-    ],
-    "moisture": [
-     0.8,
-     1
-    ],
-    "height_m": [
-     0.05,
-     0.3
-    ],
-    "density": 1.0,
-    "soil": "peat",
-    "color": "#4E9A3C",
-    "accent": "#6A8A4A",
-    "source": "Plagiochila bifaria, leafy liverwort, pantropical and oceanic cloud forests, hangs in dense mats from branches with mosses, 5-30 cm — Wikipedia / Tropicos"
-   },
-   {
-    "name": "Tank bromeliad",
-    "genus": "Guzmania",
-    "species": "monostachia",
-    "shape": "epiphyte_clump",
-    "temp_c": [
-     10,
-     21
+     18
     ],
     "moisture": [
      0.7,
      1
     ],
     "height_m": [
-     0.3,
-     0.6
+     0.1,
+     0.5
     ],
-    "density": 0.8,
+    "density": 0.5,
     "soil": "thin",
-    "color": "#4A9A3A",
-    "accent": "#E84A3A",
-    "source": "Guzmania monostachia, West Indian tufted airplant, Florida & Neotropics to Andes 0-2500 m, epiphytic water-tank rosette 30-60 cm, red-tipped spike — Wikipedia / Kew POWO"
+    "color": "#A8C890",
+    "accent": "#C8D8B0",
+    "source": "Usnea barbata, beard lichen, cosmopolitan in humid montane forest, pale grey-green tufts hanging from twigs 10-50 cm — Wikipedia",
+    "traits": {
+     "genus": "Usnea",
+     "species": "barbata",
+     "native_range": "Usnea barbata, beard lichen, cosmopolitan in humid montane forest, pale grey-green tufts hanging from twigs 10-50 cm — W",
+     "leaf_shape": "thread-like strands",
+     "trunk": "none — hangs from branches",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Epidendrum orchid",
@@ -493,80 +2915,319 @@
     "soil": "thin",
     "color": "#3E8F3A",
     "accent": "#E85A8A",
-    "source": "Epidendrum secundum, crucifix orchid, Andes and Central America 800-3400 m, epiphytic or on mossy banks, 30-100 cm, pink-orange flowers — Wikipedia / Kew POWO"
+    "source": "Epidendrum secundum, crucifix orchid, Andes and Central America 800-3400 m, epiphytic or on mossy banks, 30-100 cm, pink-orange flowers — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Epidendrum",
+     "species": "secundum",
+     "native_range": "Epidendrum secundum, crucifix orchid, Andes and Central America 800-3400 m, epiphytic or on mossy banks, 30-100 cm, pink",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Beard lichen",
-    "genus": "Usnea",
-    "species": "barbata",
+    "name": "Epiphytic moss and liverworts",
+    "genus": "Plagiochila",
+    "species": "bifaria",
     "shape": "hanging_moss",
     "temp_c": [
      6,
-     18
+     20
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#4E9A3C",
+    "accent": "#6A8A4A",
+    "source": "Plagiochila bifaria, leafy liverwort, pantropical and oceanic cloud forests, hangs in dense mats from branches with mosses, 5-30 cm — Wikipedia / Tropicos",
+    "traits": {
+     "genus": "Plagiochila",
+     "species": "bifaria",
+     "native_range": "Plagiochila bifaria, leafy liverwort, pantropical and oceanic cloud forests, hangs in dense mats from branches with moss",
+     "leaf_shape": "thread-like strands",
+     "trunk": "none — hangs from branches",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Lowe's pitcher",
+    "genus": "Nepenthes",
+    "species": "lowii",
+    "family": "Nepenthaceae",
+    "shape": "liana",
+    "temp_c": [
+     12,
+     17
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     1600,
+     2600
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Bornean mossy forest. Toilet pitcher: tree shrews feed on its lid and defecate in it. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Nepenthes",
+     "species": "lowii",
+     "native_range": "Bornean mossy forest",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tank bromeliad",
+    "genus": "Guzmania",
+    "species": "monostachia",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     10,
+     21
     ],
     "moisture": [
      0.7,
      1
     ],
     "height_m": [
-     0.1,
-     0.5
+     0.3,
+     0.6
     ],
-    "density": 0.5,
+    "density": 0.8,
     "soil": "thin",
-    "color": "#A8C890",
-    "accent": "#C8D8B0",
-    "source": "Usnea barbata, beard lichen, cosmopolitan in humid montane forest, pale grey-green tufts hanging from twigs 10-50 cm — Wikipedia"
+    "color": "#4A9A3A",
+    "accent": "#E84A3A",
+    "source": "Guzmania monostachia, West Indian tufted airplant, Florida & Neotropics to Andes 0-2500 m, epiphytic water-tank rosette 30-60 cm, red-tipped spike — Wikipedia / Kew POWO",
+    "traits": {
+     "genus": "Guzmania",
+     "species": "monostachia",
+     "native_range": "Guzmania monostachia, West Indian tufted airplant, Florida & Neotropics to Andes 0-2500 m, epiphytic water-tank rosette ",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Vireya rhododendron",
+    "genus": "Rhododendron",
+    "species": "javanicum",
+    "family": "Ericaceae",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     800,
+     2400
+    ],
+    "height_m": [
+     1.0,
+     3.0
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#F09030",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Malesian montane forest, epiphytic; Tropical epiphytic rhododendrons. Kew POWO; standard floras.",
+    "from_catalogue": "rhododendron",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "javanicum",
+     "native_range": "Malesian montane forest, epiphytic",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      1.0,
+      3.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
-  ]
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 43,
-  "names": [
-   "Andean wax palm",
-   "Cabbage-tree palm",
-   "Windmill palm",
-   "Amorphophallus albus",
-   "Amorphophallus coaetaneus",
-   "Amorphophallus cruddasianus",
-   "Amorphophallus dunnii",
-   "Amorphophallus henryi",
-   "Amorphophallus hirtus",
-   "Amorphophallus kachinensis",
-   "Amorphophallus kiusianus",
-   "Amorphophallus konjac",
-   "Amorphophallus krausei",
-   "Amorphophallus mekongensis",
-   "Amorphophallus napalensis",
-   "Amorphophallus tonkinensis",
-   "Amorphophallus verticillatus",
-   "Amorphophallus xiei",
-   "Amorphophallus yaoi",
-   "Amorphophallus yuloensis",
-   "Amorphophallus yunnanensis",
-   "Cannabis - Manali",
-   "Cannabis - Parvati (Malana)",
-   "Cannabis - Nepalese",
-   "Cannabis - Manipur",
-   "Cannabis - Meao Thai",
-   "Cannabis - Yunnan",
-   "Cannabis - Papua New Guinea",
-   "Cannabis - Durban",
-   "Cannabis - Transkei (Rooibaard)",
-   "Cannabis - Swazi",
-   "Cannabis - Kilimanjaro",
-   "Cannabis - Ethiopian",
-   "Cannabis - Oaxacan",
-   "Cannabis - Michoacán",
-   "Cannabis - Santa Marta Gold",
-   "Cannabis - Hawaiian (Kona / Puna)",
-   "Cannabis - Northern Chinese hemp",
-   "Cannabis - Japanese hemp (asa)",
-   "Cannabis - Korean hemp (Andong)",
-   "Cannabis - Central Russian hemp",
-   "Cannabis - Carmagnola",
-   "Cannabis - Anatolian hemp (Kastamonu)"
   ]
  },
  "associations": [
@@ -673,5 +3334,31 @@
    "cover": 0.7,
    "source": "Grubb 1977 Control of forest growth on wet tropical mountains; Bruijnzeel et al. 2011"
   }
+ ],
+ "hero_species": [
+  "Andean wax palm",
+  "Big-leaf rhododendron",
+  "Campbell's magnolia",
+  "Cape sundew",
+  "Coast redwood",
+  "Dawn redwood",
+  "Enset",
+  "Forked sundew",
+  "Giant highland banana",
+  "Giant montane pitcher",
+  "Giant sequoia",
+  "Ginkgo",
+  "Great rhododendron",
+  "Ichang papeda",
+  "Lawson cypress",
+  "Lowe's pitcher",
+  "Monkey puzzle",
+  "Montezuma cypress",
+  "Paraná pine",
+  "Tank bromeliad",
+  "Tree rhododendron",
+  "Tulip tree",
+  "Vireya rhododendron",
+  "Yulan magnolia"
  ]
 }

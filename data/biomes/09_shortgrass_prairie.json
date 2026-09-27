@@ -20,6 +20,105 @@
   "emergent": [],
   "canopy": [
    {
+    "name": "Mediterranean cypress",
+    "genus": "Cupressus",
+    "species": "sempervirens",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.55
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     20.0,
+     30.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#6A5A4A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "E Mediterranean hills; the dark column of graveyards and ruins. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "cypress",
+    "traits": {
+     "genus": "Cupressus",
+     "species": "sempervirens",
+     "native_range": "E Mediterranean hills",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      20.0,
+      30.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
     "name": "Plains cottonwood",
     "genus": "Populus",
     "species": "deltoides",
@@ -43,32 +142,278 @@
     ],
     "color": "#5AB040",
     "accent": "#A09070",
-    "source": "Populus deltoides ssp. monilifera, N American plains along streams, 15-30 m — USDA PLANTS"
+    "source": "Populus deltoides ssp. monilifera, N American plains along streams, 15-30 m — USDA PLANTS",
+    "traits": {
+     "genus": "Populus",
+     "species": "deltoides",
+     "native_range": "Populus deltoides ssp",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Ponderosa pine",
+    "genus": "Pinus",
+    "species": "ponderosa",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     15
+    ],
+    "moisture": [
+     0.25,
+     0.55
+    ],
+    "altitude_m": [
+     300,
+     2700
+    ],
+    "height_m": [
+     30.0,
+     50.0
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#D08A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "western North America; 30–50 m. Vanilla-scented orange plates; open parkland forest. Kew POWO for the name; standard floras for range.",
+    "from_catalogue": "pine",
+    "traits": {
+     "genus": "Pinus",
+     "species": "ponderosa",
+     "native_range": "western North America",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      30.0,
+      50.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Stone pine",
+    "genus": "Pinus",
+    "species": "pinea",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     15.0,
+     25.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#B08A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mediterranean coasts; 15–25 m. Umbrella crown; pine nuts. Kew POWO for the name; standard floras for range.",
+    "from_catalogue": "pine",
+    "traits": {
+     "genus": "Pinus",
+     "species": "pinea",
+     "native_range": "Mediterranean coasts",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      15.0,
+      25.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [
    {
-    "name": "Soapweed yucca",
-    "genus": "Yucca",
-    "species": "glauca",
-    "shape": "spike_rosette",
+    "name": "Fringed sage",
+    "genus": "Artemisia",
+    "species": "frigida",
+    "shape": "shrub",
     "temp_c": [
-     3,
-     19
+     -2,
+     18
     ],
     "moisture": [
-     0.2,
+     0.15,
      0.45
     ],
     "height_m": [
-     0.5,
-     1.2
+     0.2,
+     0.5
     ],
     "density": 0.5,
-    "soil": "sand",
-    "color": "#6E9A8A",
-    "accent": "#F0E8C8",
-    "source": "Yucca glauca, Great Plains from Alberta to Texas, stemless rosette 0.5-1.2 m with white flower stalk — USDA PLANTS"
+    "soil": "thin",
+    "color": "#A0B0A0",
+    "accent": "#C8B878",
+    "source": "Artemisia frigida, N American plains and Eurasian steppe, silver sub-shrub 0.2-0.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Artemisia",
+     "species": "frigida",
+     "native_range": "Artemisia frigida, N American plains and Eurasian steppe, silver sub-shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Plains prickly pear",
@@ -91,30 +436,24 @@
     "soil": "sand",
     "color": "#6A9A50",
     "accent": "#E0C040",
-    "source": "Opuntia polyacantha, western N America grasslands, low clumps 0.2-0.5 m, yellow flowers — USDA PLANTS"
-   },
-   {
-    "name": "Fringed sage",
-    "genus": "Artemisia",
-    "species": "frigida",
-    "shape": "shrub",
-    "temp_c": [
-     -2,
-     18
-    ],
-    "moisture": [
-     0.15,
-     0.45
-    ],
-    "height_m": [
-     0.2,
-     0.5
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#A0B0A0",
-    "accent": "#C8B878",
-    "source": "Artemisia frigida, N American plains and Eurasian steppe, silver sub-shrub 0.2-0.5 m — USDA PLANTS"
+    "source": "Opuntia polyacantha, western N America grasslands, low clumps 0.2-0.5 m, yellow flowers — USDA PLANTS",
+    "traits": {
+     "genus": "Opuntia",
+     "species": "polyacantha",
+     "native_range": "Opuntia polyacantha, western N America grasslands, low clumps 0",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Rubber rabbitbrush",
@@ -137,7 +476,64 @@
     "soil": "sand",
     "color": "#9FAF8A",
     "accent": "#E8C830",
-    "source": "Ericameria nauseosa, western N America, 0.6-2 m shrub with yellow autumn flowers — USDA PLANTS"
+    "source": "Ericameria nauseosa, western N America, 0.6-2 m shrub with yellow autumn flowers — USDA PLANTS",
+    "traits": {
+     "genus": "Ericameria",
+     "species": "nauseosa",
+     "native_range": "Ericameria nauseosa, western N America, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.6,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Soapweed yucca",
+    "genus": "Yucca",
+    "species": "glauca",
+    "shape": "spike_rosette",
+    "temp_c": [
+     3,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#6E9A8A",
+    "accent": "#F0E8C8",
+    "source": "Yucca glauca, Great Plains from Alberta to Texas, stemless rosette 0.5-1.2 m with white flower stalk — USDA PLANTS",
+    "traits": {
+     "genus": "Yucca",
+     "species": "glauca",
+     "native_range": "Yucca glauca, Great Plains from Alberta to Texas, stemless rosette 0",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
@@ -162,7 +558,24 @@
     "soil": "thin",
     "color": "#9AAE6A",
     "accent": "#C8B060",
-    "source": "Bouteloua gracilis, dominant shortgrass prairie grass, central N America, 0.15-0.4 m, eyelash seed heads — USDA PLANTS"
+    "source": "Bouteloua gracilis, dominant shortgrass prairie grass, central N America, 0.15-0.4 m, eyelash seed heads — USDA PLANTS",
+    "traits": {
+     "genus": "Bouteloua",
+     "species": "gracilis",
+     "native_range": "Bouteloua gracilis, dominant shortgrass prairie grass, central N America, 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.15,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Buffalograss",
@@ -185,53 +598,24 @@
     "soil": "rich",
     "color": "#8FA860",
     "accent": "#C8B060",
-    "source": "Bouteloua dactyloides, sod-forming shortgrass co-dominant, Great Plains, 5-20 cm — USDA PLANTS"
-   },
-   {
-    "name": "Western wheatgrass",
-    "genus": "Pascopyrum",
-    "species": "smithii",
-    "shape": "grass",
-    "temp_c": [
-     2,
-     18
-    ],
-    "moisture": [
-     0.25,
-     0.5
-    ],
-    "height_m": [
-     0.3,
-     0.9
-    ],
-    "density": 0.6,
-    "soil": "rich",
-    "color": "#6E9A8A",
-    "accent": "#C8B060",
-    "source": "Pascopyrum smithii, cool-season rhizomatous grass of the northern plains, 0.3-0.9 m, blue-green — USDA PLANTS"
-   },
-   {
-    "name": "Scarlet globemallow",
-    "genus": "Sphaeralcea",
-    "species": "coccinea",
-    "shape": "grass",
-    "temp_c": [
-     2,
-     19
-    ],
-    "moisture": [
-     0.15,
-     0.4
-    ],
-    "height_m": [
-     0.1,
-     0.3
-    ],
-    "density": 0.3,
-    "soil": "thin",
-    "color": "#8FA08A",
-    "accent": "#E86A40",
-    "source": "Sphaeralcea coccinea, western N American plains forb, 10-30 cm, orange flowers — USDA PLANTS"
+    "source": "Bouteloua dactyloides, sod-forming shortgrass co-dominant, Great Plains, 5-20 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Bouteloua",
+     "species": "dactyloides",
+     "native_range": "Bouteloua dactyloides, sod-forming shortgrass co-dominant, Great Plains, 5-20 cm — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Needle-and-thread",
@@ -254,55 +638,107 @@
     "soil": "sand",
     "color": "#C8B060",
     "accent": "#E8D8A0",
-    "source": "Hesperostipa comata, cool-season bunchgrass of the western plains, 0.3-0.9 m, long awns — USDA PLANTS"
+    "source": "Hesperostipa comata, cool-season bunchgrass of the western plains, 0.3-0.9 m, long awns — USDA PLANTS",
+    "traits": {
+     "genus": "Hesperostipa",
+     "species": "comata",
+     "native_range": "Hesperostipa comata, cool-season bunchgrass of the western plains, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.9
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Scarlet globemallow",
+    "genus": "Sphaeralcea",
+    "species": "coccinea",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     19
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#8FA08A",
+    "accent": "#E86A40",
+    "source": "Sphaeralcea coccinea, western N American plains forb, 10-30 cm, orange flowers — USDA PLANTS",
+    "traits": {
+     "genus": "Sphaeralcea",
+     "species": "coccinea",
+     "native_range": "Sphaeralcea coccinea, western N American plains forb, 10-30 cm, orange flowers — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Western wheatgrass",
+    "genus": "Pascopyrum",
+    "species": "smithii",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     0.3,
+     0.9
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#6E9A8A",
+    "accent": "#C8B060",
+    "source": "Pascopyrum smithii, cool-season rhizomatous grass of the northern plains, 0.3-0.9 m, blue-green — USDA PLANTS",
+    "traits": {
+     "genus": "Pascopyrum",
+     "species": "smithii",
+     "native_range": "Pascopyrum smithii, cool-season rhizomatous grass of the northern plains, 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.9
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 39,
-  "names": [
-   "Chilean wine palm",
-   "Cretan date palm",
-   "Mediterranean fan palm",
-   "Arkansas yucca",
-   "Jalisco yucca",
-   "Sierra Madre yucca",
-   "Glen Rose yucca",
-   "Pale-leaf yucca",
-   "Pine-woods yucca",
-   "San Angelo yucca",
-   "Twistleaf yucca",
-   "Trichocereus pachanoi",
-   "Trichocereus peruvianus",
-   "Trichocereus bridgesii",
-   "Trichocereus scopulicola",
-   "Trichocereus macrogonus",
-   "Trichocereus cuzcoensis",
-   "Trichocereus tacaquirensis",
-   "Trichocereus taquimbalensis",
-   "Trichocereus santaensis",
-   "Trichocereus puquiensis",
-   "Trichocereus huanucoensis",
-   "Trichocereus riomizquensis",
-   "Trichocereus werdermannianus",
-   "Trichocereus knuthianus",
-   "Trichocereus glaucus",
-   "Cannabis - Hindu Kush",
-   "Cannabis - Afghani",
-   "Cannabis - Mazar-i-Sharif",
-   "Cannabis - Chitral",
-   "Cannabis - Swat Valley",
-   "Cannabis - Tirah Valley",
-   "Cannabis - Kashmir",
-   "Cannabis - Pamir",
-   "Cannabis - Rif (Ketama)",
-   "Cannabis - Lebanese (Bekaa)",
-   "Cannabis - Turkish",
-   "Cannabis - Russian ruderalis",
-   "Cannabis - Chuy Valley"
-  ]
  },
  "associations": [
   {
@@ -354,9 +790,7 @@
    "ground": [
     "Scarlet globemallow"
    ],
-   "catalogue": [
-    "Arkansas yucca"
-   ],
+   "catalogue": [],
    "cover": 0.3,
    "source": "Weaver & Albertson 1956; Lauenroth & Burke 2008"
   },
@@ -395,5 +829,11 @@
    "cover": 0.5,
    "source": "Friedman et al. 1997 Great Plains cottonwood forests; Weaver & Albertson 1956"
   }
+ ],
+ "hero_species": [
+  "Mediterranean cypress",
+  "Ponderosa pine",
+  "Soapweed yucca",
+  "Stone pine"
  ]
 }

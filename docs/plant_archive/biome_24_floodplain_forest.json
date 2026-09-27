@@ -1,0 +1,824 @@
+{
+ "key": "FLOODPLAIN_FOREST",
+ "name": "Floodplain forest",
+ "group": "Wetlands",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Riparian bottomland forest of fast-growing cottonwoods, willows, sycamore and silver maple that tolerate seasonal flooding, over cane, dogwood and tall nettle/fern ground cover threaded with vines; drawn on the Mississippi/Missouri bottoms and the Rhine/Danube floodplains.",
+ "climate": {
+  "temp_c": [
+   4,
+   26
+  ],
+  "moisture": [
+   0.48,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Cottonwood",
+    "genus": "Populus",
+    "species": "deltoides",
+    "shape": "broadleaf",
+    "temp_c": [
+     5,
+     22
+    ],
+    "moisture": [
+     0.55,
+     1
+    ],
+    "height_m": [
+     25,
+     40
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#8A8A7A",
+    "source": "Populus deltoides, eastern cottonwood, central & eastern North America, pioneer of river floodplains and sandbars, 25-40 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Sycamore",
+    "genus": "Platanus",
+    "species": "occidentalis",
+    "shape": "broadleaf",
+    "temp_c": [
+     7,
+     24
+    ],
+    "moisture": [
+     0.55,
+     1
+    ],
+    "height_m": [
+     25,
+     40
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#E8E0C8",
+    "source": "Platanus occidentalis, American sycamore, eastern North America, bottomland and riverbank forest, 25-40 m mottled white bark — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Silver maple",
+    "genus": "Acer",
+    "species": "saccharinum",
+    "shape": "broadleaf",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     20,
+     30
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "color": "#5AB040",
+    "accent": "#A8A898",
+    "source": "Acer saccharinum, silver maple, eastern North America, flood-tolerant floodplain forest and stream banks, 20-30 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "White willow",
+    "genus": "Salix",
+    "species": "alba",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     15,
+     25
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#7AA860",
+    "accent": "#8A7A5A",
+    "source": "Salix alba, white willow, Europe to Central Asia, softwood floodplain forest along large rivers, 15-25 m silvery leaves — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Black poplar",
+    "genus": "Populus",
+    "species": "nigra",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     20,
+     30
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#6E5A44",
+    "source": "Populus nigra, black poplar, Europe to W Asia, riverine floodplain woodland on gravel and sand, 20-30 m — Wikipedia / EUFORGEN"
+   },
+   {
+    "name": "Pecan",
+    "genus": "Carya",
+    "species": "illinoinensis",
+    "shape": "broadleaf",
+    "temp_c": [
+     12,
+     26
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     25,
+     40
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#7A5A3A",
+    "source": "Carya illinoinensis, pecan, Mississippi valley to Mexico, bottomland hardwood forest on rich alluvium, 25-40 m — USDA Plants / Wikipedia"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Giant river cane",
+    "genus": "Arundinaria",
+    "species": "gigantea",
+    "shape": "bamboo",
+    "temp_c": [
+     10,
+     24
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "color": "#5AB040",
+    "accent": "#C8C880",
+    "source": "Arundinaria gigantea, giant river cane, southeastern USA, dense canebrakes on floodplains, 2-8 m native bamboo — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Red-osier dogwood",
+    "genus": "Cornus",
+    "species": "sericea",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     1.5,
+     4
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#C83A3A",
+    "source": "Cornus sericea, red-osier dogwood, northern & western North America, thickets on stream banks and floodplains, 1.5-4 m red stems — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Grey willow",
+    "genus": "Salix",
+    "species": "cinerea",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#7AA860",
+    "accent": "#8A7A5A",
+    "source": "Salix cinerea, grey willow, Europe & W Asia, willow carr on floodplains and wet ground, 3-8 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Elderberry",
+    "genus": "Sambucus",
+    "species": "nigra",
+    "shape": "shrub",
+    "temp_c": [
+     7,
+     17
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "height_m": [
+     3,
+     6
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#E8E8D0",
+    "source": "Sambucus nigra, elder, Europe & W Asia, nutrient-rich riverside woodland and levees, 3-6 m — Wikipedia / Kew POWO"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Stinging nettle",
+    "genus": "Urtica",
+    "species": "dioica",
+    "shape": "grass",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#5A7A3A",
+    "source": "Urtica dioica, stinging nettle, Eurasia & North America, dominant tall herb on nitrogen-rich floodplain soils, 0.5-1.5 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Reed canary grass",
+    "genus": "Phalaris",
+    "species": "arundinacea",
+    "shape": "grass",
+    "temp_c": [
+     3,
+     18
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     0.6,
+     2
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB040",
+    "accent": "#C8B060",
+    "source": "Phalaris arundinacea, reed canary grass, circumboreal, wet floodplain margins and ditches, 0.6-2 m — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Ostrich fern",
+    "genus": "Matteuccia",
+    "species": "struthiopteris",
+    "shape": "fern",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     1,
+     1.7
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#7A6A4A",
+    "source": "Matteuccia struthiopteris, ostrich fern, circumboreal, colonies on shaded river floodplains, vase of fronds 1-1.7 m — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Jewelweed",
+    "genus": "Impatiens",
+    "species": "capensis",
+    "shape": "grass",
+    "temp_c": [
+     5,
+     20
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "color": "#5AB040",
+    "accent": "#E8901E",
+    "source": "Impatiens capensis, orange jewelweed, eastern North America, dense stands on wet shaded floodplain ground, 0.5-1.5 m orange flowers — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Sedge",
+    "genus": "Carex",
+    "species": "grayi",
+    "shape": "tussock",
+    "temp_c": [
+     6,
+     20
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.4,
+     0.9
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "color": "#4A9A3A",
+    "accent": "#A8B860",
+    "source": "Carex grayi, Gray's sedge, eastern North America, floodplain forest floor and swampy woods, 40-90 cm, spiky mace-like heads — USDA Plants / Wikipedia"
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Riverbank grape",
+    "genus": "Vitis",
+    "species": "riparia",
+    "shape": "liana",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     5,
+     25
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#5A3A5A",
+    "source": "Vitis riparia, riverbank grape, central & eastern North America, drapes floodplain trees to 25 m, dark purple fruit — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Virginia creeper",
+    "genus": "Parthenocissus",
+    "species": "quinquefolia",
+    "shape": "liana",
+    "temp_c": [
+     5,
+     24
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     5,
+     20
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#C83A3A",
+    "source": "Parthenocissus quinquefolia, Virginia creeper, eastern North America to Mexico, climbs trunks in bottomland forest to 20 m, scarlet autumn — USDA Plants / Wikipedia"
+   }
+  ]
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 295,
+  "names": [
+   "Andean wax palm",
+   "Coconut palm",
+   "Oil palm",
+   "Raffia palm",
+   "Betel palm",
+   "Fishtail palm",
+   "Talipot palm",
+   "Chinese fan palm",
+   "Cabbage-tree palm",
+   "Nikau palm",
+   "Açaí palm",
+   "Babassu",
+   "Royal palm",
+   "Sabal palmetto",
+   "Windmill palm",
+   "Wild date palm",
+   "Senegal date palm",
+   "Buriti-do-brejo",
+   "Foxtail palm",
+   "Peach palm",
+   "Walking palm",
+   "Coco de mer",
+   "Saw palmetto",
+   "Needle palm",
+   "Dwarf palmetto",
+   "Bottle palm",
+   "Rattan",
+   "Amorphophallus decus-silvae",
+   "Amorphophallus gigas",
+   "Amorphophallus hewittii",
+   "Amorphophallus titanum",
+   "Amorphophallus aberrans",
+   "Amorphophallus adamsensis",
+   "Amorphophallus albispathus",
+   "Amorphophallus albus",
+   "Amorphophallus allenii",
+   "Amorphophallus amygdaloides",
+   "Amorphophallus angulatus",
+   "Amorphophallus angustispathus",
+   "Amorphophallus annulifer",
+   "Amorphophallus arcuspadix",
+   "Amorphophallus ardii",
+   "Amorphophallus asper",
+   "Amorphophallus atrorubens",
+   "Amorphophallus atroviridis",
+   "Amorphophallus bangkokensis",
+   "Amorphophallus bantae",
+   "Amorphophallus barbatus",
+   "Amorphophallus barthlottii",
+   "Amorphophallus beccarii",
+   "Amorphophallus bequaertii",
+   "Amorphophallus bognerianus",
+   "Amorphophallus bolikhamxayensis",
+   "Amorphophallus bonaccordensis",
+   "Amorphophallus borneensis",
+   "Amorphophallus boyceanus",
+   "Amorphophallus brachyphyllus",
+   "Amorphophallus brevipetiolatus",
+   "Amorphophallus brevispathus",
+   "Amorphophallus bubenensis",
+   "Amorphophallus bufo",
+   "Amorphophallus bulbifer",
+   "Amorphophallus calabaricus",
+   "Amorphophallus calcicola",
+   "Amorphophallus canaliculatus",
+   "Amorphophallus candidissimus",
+   "Amorphophallus carneus",
+   "Amorphophallus carnosus",
+   "Amorphophallus caudatus",
+   "Amorphophallus chlorospathus",
+   "Amorphophallus cicatricifer",
+   "Amorphophallus cidarioides",
+   "Amorphophallus cirrifer",
+   "Amorphophallus claudelii",
+   "Amorphophallus coaetaneus",
+   "Amorphophallus commutatus",
+   "Amorphophallus costatus",
+   "Amorphophallus coudercii",
+   "Amorphophallus crinitus",
+   "Amorphophallus crispifolius",
+   "Amorphophallus croatii",
+   "Amorphophallus cruddasianus",
+   "Amorphophallus curvistylis",
+   "Amorphophallus declinatus",
+   "Amorphophallus discophorus",
+   "Amorphophallus dumboi",
+   "Amorphophallus dunnii",
+   "Amorphophallus dzui",
+   "Amorphophallus eburneus",
+   "Amorphophallus echinatus",
+   "Amorphophallus elatus",
+   "Amorphophallus elegans",
+   "Amorphophallus erythrorrhachis",
+   "Amorphophallus excentricus",
+   "Amorphophallus fallax",
+   "Amorphophallus ferruginosus",
+   "Amorphophallus flammeus",
+   "Amorphophallus flotoi",
+   "Amorphophallus fontarumii",
+   "Amorphophallus forbesii",
+   "Amorphophallus fornicatus",
+   "Amorphophallus fuscus",
+   "Amorphophallus galbra",
+   "Amorphophallus gallowayi",
+   "Amorphophallus glaucophyllus",
+   "Amorphophallus gliruroides",
+   "Amorphophallus glossophyllus",
+   "Amorphophallus gracilior",
+   "Amorphophallus gracilis",
+   "Amorphophallus haematospadix",
+   "Amorphophallus harmandii",
+   "Amorphophallus hayi",
+   "Amorphophallus hemicryptus",
+   "Amorphophallus henryi",
+   "Amorphophallus hirsutus",
+   "Amorphophallus hirtus",
+   "Amorphophallus hohenackeri",
+   "Amorphophallus hottae",
+   "Amorphophallus incurvatus",
+   "Amorphophallus infundibuliformis",
+   "Amorphophallus interruptus",
+   "Amorphophallus josefbogneri",
+   "Amorphophallus julaihii",
+   "Amorphophallus juliae",
+   "Amorphophallus kachinensis",
+   "Amorphophallus khammouanensis",
+   "Amorphophallus kienluongensis",
+   "Amorphophallus kiusianus",
+   "Amorphophallus konjac",
+   "Amorphophallus konkanensis",
+   "Amorphophallus koratensis",
+   "Amorphophallus krausei",
+   "Amorphophallus kuznetsovii",
+   "Amorphophallus lacourii",
+   "Amorphophallus lambii",
+   "Amorphophallus lanceolatus",
+   "Amorphophallus lanuginosus",
+   "Amorphophallus laoticus",
+   "Amorphophallus leptosoma",
+   "Amorphophallus linearis",
+   "Amorphophallus linguiformis",
+   "Amorphophallus longicomus",
+   "Amorphophallus longiconnectivus",
+   "Amorphophallus longispathaceus",
+   "Amorphophallus longistylus",
+   "Amorphophallus longituberosus",
+   "Amorphophallus lunatus",
+   "Amorphophallus luzoniensis",
+   "Amorphophallus lyratus",
+   "Amorphophallus macrophyllus",
+   "Amorphophallus macrorhizus",
+   "Amorphophallus malkmus-husseinii",
+   "Amorphophallus margaritifer",
+   "Amorphophallus margretae",
+   "Amorphophallus maxwellii",
+   "Amorphophallus mayoi",
+   "Amorphophallus mekongensis",
+   "Amorphophallus merrillii",
+   "Amorphophallus minimus",
+   "Amorphophallus minor",
+   "Amorphophallus mirabilis",
+   "Amorphophallus muelleri",
+   "Amorphophallus mullendersii",
+   "Amorphophallus myosuroides",
+   "Amorphophallus mysorensis",
+   "Amorphophallus napalensis",
+   "Amorphophallus napiger",
+   "Amorphophallus natolii",
+   "Amorphophallus niahensis",
+   "Amorphophallus nicolaii",
+   "Amorphophallus nicolsonianus",
+   "Amorphophallus obovoideus",
+   "Amorphophallus obscurus",
+   "Amorphophallus ochroleucus",
+   "Amorphophallus oncophyllus",
+   "Amorphophallus ongsakulii",
+   "Amorphophallus opalinus",
+   "Amorphophallus operculatus",
+   "Amorphophallus opertus",
+   "Amorphophallus paeoniifolius",
+   "Amorphophallus palawanensis",
+   "Amorphophallus paucisectus",
+   "Amorphophallus pendulus",
+   "Amorphophallus perakensis",
+   "Amorphophallus pilosus",
+   "Amorphophallus plicatus",
+   "Amorphophallus polyanthus",
+   "Amorphophallus prainii",
+   "Amorphophallus preussii",
+   "Amorphophallus prolificus",
+   "Amorphophallus pulchellus",
+   "Amorphophallus purpurascens",
+   "Amorphophallus pusillus",
+   "Amorphophallus putii",
+   "Amorphophallus pygmaeus",
+   "Amorphophallus ranchanensis",
+   "Amorphophallus ravenii",
+   "Amorphophallus rayongii",
+   "Amorphophallus reflexus",
+   "Amorphophallus rhizomatosus",
+   "Amorphophallus rostratus",
+   "Amorphophallus rugosus",
+   "Amorphophallus sagittarius",
+   "Amorphophallus sakonnakhonensis",
+   "Amorphophallus salmoneus",
+   "Amorphophallus samarensis",
+   "Amorphophallus saraburensis",
+   "Amorphophallus saururus",
+   "Amorphophallus scaber",
+   "Amorphophallus schmidtiae",
+   "Amorphophallus scutatus",
+   "Amorphophallus serrulatus",
+   "Amorphophallus shyamsalilianus",
+   "Amorphophallus sinuatus",
+   "Amorphophallus sizemoreae",
+   "Amorphophallus smithsonianus",
+   "Amorphophallus sparsiflorus",
+   "Amorphophallus spectabilis",
+   "Amorphophallus staudtii",
+   "Amorphophallus subcymbiformis",
+   "Amorphophallus sumawongii",
+   "Amorphophallus suwidjianus",
+   "Amorphophallus sylvaticus",
+   "Amorphophallus symonianus",
+   "Amorphophallus synandrifer",
+   "Amorphophallus tenuispadix",
+   "Amorphophallus tenuistylis",
+   "Amorphophallus terrestris",
+   "Amorphophallus thaiensis",
+   "Amorphophallus tinekeae",
+   "Amorphophallus tonkinensis",
+   "Amorphophallus tuberculatus",
+   "Amorphophallus umbrinus",
+   "Amorphophallus urceolatus",
+   "Amorphophallus variabilis",
+   "Amorphophallus venustus",
+   "Amorphophallus verticillatus",
+   "Amorphophallus villosus",
+   "Amorphophallus vogelianus",
+   "Amorphophallus wasa",
+   "Amorphophallus xiei",
+   "Amorphophallus yaoi",
+   "Amorphophallus yuloensis",
+   "Amorphophallus yunnanensis",
+   "Amorphophallus zenkeri",
+   "Spanish bayonet",
+   "Nodding yucca",
+   "Adam's needle",
+   "Weak-leaf yucca",
+   "Spanish dagger",
+   "Lacandon yucca",
+   "Cannabis - Manali",
+   "Cannabis - Parvati (Malana)",
+   "Cannabis - Nepalese",
+   "Cannabis - Kerala",
+   "Cannabis - Mysore",
+   "Cannabis - Manipur",
+   "Cannabis - Ceylon",
+   "Cannabis - Thai (Isan)",
+   "Cannabis - Meao Thai",
+   "Cannabis - Luang Prabang",
+   "Cannabis - Vietnamese (Vietnam Black)",
+   "Cannabis - Burmese",
+   "Cannabis - Aceh",
+   "Cannabis - Yunnan",
+   "Cannabis - Papua New Guinea",
+   "Cannabis - Durban",
+   "Cannabis - Transkei (Rooibaard)",
+   "Cannabis - Swazi",
+   "Cannabis - Malawi",
+   "Cannabis - Kilimanjaro",
+   "Cannabis - Kisumu",
+   "Cannabis - Ethiopian",
+   "Cannabis - Congolese",
+   "Cannabis - Angolan",
+   "Cannabis - Nigerian",
+   "Cannabis - Ghanaian",
+   "Cannabis - Zamal",
+   "Cannabis - Acapulco Gold",
+   "Cannabis - Oaxacan",
+   "Cannabis - Michoacán",
+   "Cannabis - Santa Marta Gold",
+   "Cannabis - Punto Rojo",
+   "Cannabis - Limón Verde",
+   "Cannabis - Panama Red",
+   "Cannabis - Lamb's Bread",
+   "Cannabis - Manga Rosa",
+   "Cannabis - Hawaiian (Kona / Puna)",
+   "Cannabis - Northern Chinese hemp",
+   "Cannabis - Japanese hemp (asa)",
+   "Cannabis - Korean hemp (Andong)",
+   "Cannabis - Central Russian hemp",
+   "Cannabis - Carmagnola",
+   "Cannabis - Anatolian hemp (Kastamonu)",
+   "Cannabis - Kentucky feral hemp"
+  ]
+ },
+ "associations": [
+  {
+   "name": "Cottonwood-willow pioneer forest",
+   "where": "fresh sand and gravel bars at the river edge, flooded every year",
+   "dominant": [
+    "Cottonwood",
+    "White willow"
+   ],
+   "companion": [
+    "Grey willow",
+    "Red-osier dogwood"
+   ],
+   "ground": [
+    "Reed canary grass",
+    "Sedge"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Salicion albae softwood floodplain forest (Ellenberg 1988) and Populus deltoides-Salix bottoms (Hosner & Minckler 1963)"
+  },
+  {
+   "name": "Silver maple-sycamore bottomland",
+   "where": "low first bottoms flooded most springs, silty soil",
+   "dominant": [
+    "Silver maple",
+    "Sycamore"
+   ],
+   "companion": [
+    "Cottonwood",
+    "Elderberry",
+    "Riverbank grape",
+    "Virginia creeper"
+   ],
+   "ground": [
+    "Stinging nettle",
+    "Jewelweed",
+    "Ostrich fern"
+   ],
+   "catalogue": [],
+   "cover": 0.85,
+   "source": "Acer saccharinum floodplain forest (Braun 1950; USNVC Silver Maple-Sycamore Floodplain Forest)"
+  },
+  {
+   "name": "Black poplar-white willow riverside wood",
+   "where": "riverbank levees and islands of European lowland rivers, gravelly alluvium",
+   "dominant": [
+    "Black poplar",
+    "White willow"
+   ],
+   "companion": [
+    "Grey willow",
+    "Elderberry"
+   ],
+   "ground": [
+    "Stinging nettle",
+    "Reed canary grass"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Rhine/Danube Salici-Populetum softwood forest (Ellenberg 1988)"
+  },
+  {
+   "name": "Pecan-cane ridge forest",
+   "where": "higher natural levees and terraces, rarely flooded, deep loam",
+   "dominant": [
+    "Pecan"
+   ],
+   "companion": [
+    "Sycamore",
+    "Giant river cane",
+    "Elderberry",
+    "Riverbank grape",
+    "Virginia creeper"
+   ],
+   "ground": [
+    "Ostrich fern",
+    "Jewelweed",
+    "Stinging nettle"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Mississippi bottomland canebrake and pecan flats (Wharton et al. 1982; Platt & Brantley 1997)"
+  }
+ ]
+}

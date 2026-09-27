@@ -1,0 +1,362 @@
+{
+ "key": "ALPINE_TUNDRA",
+ "name": "Alpine tundra",
+ "group": "Polar/cold",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "High-mountain zone above treeline (Rockies, Alps, Himalaya, Andes): fellfield, scree and cushion communities with prostrate willows, cushion plants, sedges and lichens. Drawn on Rocky Mountains, Alps and Himalaya.",
+ "climate": {
+  "temp_c": [
+   -8,
+   0
+  ],
+  "moisture": [
+   0.1,
+   1
+  ],
+  "altitude_m": [
+   900,
+   6000
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Snow willow",
+    "genus": "Salix",
+    "species": "herbacea",
+    "shape": "shrub",
+    "temp_c": [
+     -10,
+     2
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "altitude_m": [
+     800,
+     3000
+    ],
+    "height_m": [
+     0.02,
+     0.06
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#4A9A45",
+    "accent": "#7A6A4A",
+    "source": "Salix herbacea (dwarf/least willow), Arctic-alpine Europe and NE North America, snowbed creeping willow 2-6 cm"
+   },
+   {
+    "name": "Alpine azalea",
+    "genus": "Kalmia",
+    "species": "procumbens",
+    "shape": "shrub",
+    "temp_c": [
+     -10,
+     2
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     1500,
+     3000
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#2F6A30",
+    "accent": "#E060A0",
+    "source": "Kalmia procumbens (Loiseleuria), circumpolar Arctic-alpine wind-swept ridges, prostrate evergreen mat with pink flowers"
+   },
+   {
+    "name": "Net-leaved willow",
+    "genus": "Salix",
+    "species": "reticulata",
+    "shape": "shrub",
+    "temp_c": [
+     -10,
+     2
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "altitude_m": [
+     1500,
+     3200
+    ],
+    "height_m": [
+     0.02,
+     0.08
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3A7A3A",
+    "accent": "#8A6A4A",
+    "source": "Salix reticulata, circumpolar Arctic-alpine calcareous ground, prostrate rounded net-veined leaves"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Moss campion",
+    "genus": "Silene",
+    "species": "acaulis",
+    "shape": "cushion",
+    "temp_c": [
+     -10,
+     2
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     1500,
+     4000
+    ],
+    "height_m": [
+     0.02,
+     0.08
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#3E8A3A",
+    "accent": "#E858A0",
+    "source": "Silene acaulis, circumpolar Arctic-alpine (Rockies, Alps, Himalaya-adjacent), dense cushion 2-8 cm with pink flowers"
+   },
+   {
+    "name": "Alpine sedge",
+    "genus": "Kobresia",
+    "species": "myosuroides",
+    "shape": "tussock",
+    "temp_c": [
+     -10,
+     3
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     2000,
+     5000
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "color": "#8AA040",
+    "accent": "#C8B060",
+    "source": "Kobresia myosuroides, dominant turf-former of dry alpine meadows in Rockies, Alps and Tibetan Plateau, 5-20 cm"
+   },
+   {
+    "name": "Curved sedge",
+    "genus": "Carex",
+    "species": "curvula",
+    "shape": "grass",
+    "temp_c": [
+     -8,
+     2
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     1800,
+     3200
+    ],
+    "height_m": [
+     0.05,
+     0.15
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#9AA845",
+    "accent": "#C8A050",
+    "source": "Carex curvula, dominant acid alpine grassland of the Alps/Carpathians 2000-3000 m, curved yellowish leaves"
+   },
+   {
+    "name": "Mountain avens",
+    "genus": "Dryas",
+    "species": "octopetala",
+    "shape": "cushion",
+    "temp_c": [
+     -10,
+     3
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     1000,
+     3500
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#3A7A35",
+    "accent": "#F8F8F0",
+    "source": "Dryas octopetala, Arctic-alpine Eurasia and N America on limestone, evergreen mat, white 8-petal flowers"
+   },
+   {
+    "name": "Purple saxifrage",
+    "genus": "Saxifraga",
+    "species": "oppositifolia",
+    "shape": "cushion",
+    "temp_c": [
+     -12,
+     0
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "altitude_m": [
+     1500,
+     4500
+    ],
+    "height_m": [
+     0.02,
+     0.05
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3A7A3A",
+    "accent": "#B040A0",
+    "source": "Saxifraga oppositifolia, circumpolar and alpine to 4500 m in Alps, mat-forming on scree, earliest purple flowers"
+   },
+   {
+    "name": "Map lichen",
+    "genus": "Rhizocarpon",
+    "species": "geographicum",
+    "shape": "moss",
+    "temp_c": [
+     -15,
+     5
+    ],
+    "moisture": [
+     0,
+     1
+    ],
+    "altitude_m": [
+     1000,
+     6000
+    ],
+    "height_m": [
+     0.001,
+     0.01
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#B8C830",
+    "accent": "#2A2A2A",
+    "source": "Rhizocarpon geographicum, crustose lichen on alpine boulders worldwide"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 0,
+  "names": []
+ },
+ "associations": [
+  {
+   "name": "Curved sedge alpine heath",
+   "where": "windswept acid ridges and plateaus above treeline, thin soil",
+   "dominant": [
+    "Curved sedge"
+   ],
+   "companion": [
+    "Alpine azalea"
+   ],
+   "ground": [
+    "Map lichen",
+    "Moss campion"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Ellenberg 1988 (Caricetum curvulae); Grabherr & Mucina 1993"
+  },
+  {
+   "name": "Cushion-plant fellfield",
+   "where": "exposed gravelly summits and wind-scoured slopes, no snow cover",
+   "dominant": [
+    "Moss campion"
+   ],
+   "companion": [
+    "Alpine azalea",
+    "Net-leaved willow"
+   ],
+   "ground": [
+    "Purple saxifrage",
+    "Map lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Billings 1973; Komarkova 1979 Colorado alpine vegetation"
+  },
+  {
+   "name": "Mountain-avens dwarf willow mat",
+   "where": "limestone slopes and ledges, calcareous gravel, sunny",
+   "dominant": [
+    "Mountain avens",
+    "Net-leaved willow"
+   ],
+   "companion": [],
+   "ground": [
+    "Purple saxifrage",
+    "Alpine sedge"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Ellenberg 1988 (Dryadetum octopetalae / Elynion); Komarkova 1979"
+  },
+  {
+   "name": "Snow willow snowbed",
+   "where": "hollows and lee slopes with late-lying snow, moist",
+   "dominant": [
+    "Snow willow"
+   ],
+   "companion": [],
+   "ground": [
+    "Alpine sedge",
+    "Moss campion"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Ellenberg 1988 (Salicetum herbaceae); Billings & Bliss 1959"
+  },
+  {
+   "name": "Purple saxifrage scree and rock crevice",
+   "where": "unstable scree, cliff ledges and bare rock",
+   "dominant": [
+    "Purple saxifrage"
+   ],
+   "companion": [],
+   "ground": [
+    "Map lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.1,
+   "source": "Ellenberg 1988 (Thlaspion rotundifolii, Androsacion alpinae); Grabherr & Mucina 1993"
+  }
+ ]
+}

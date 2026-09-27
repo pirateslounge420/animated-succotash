@@ -119,7 +119,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Hindu Kush range, Afghanistan and Pakistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. The archetypal mountain broad-leaf population; hash culture."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Hindu Kush range, Afghanistan and Pakistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. The archetypal mountain broad-leaf population; hash culture.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Afghani",
@@ -227,7 +247,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kandahar and Helmand, Afghanistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Lowland-valley Afghan population; broad, heavy plants."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kandahar and Helmand, Afghanistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Lowland-valley Afghan population; broad, heavy plants.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Mazar-i-Sharif",
@@ -335,7 +375,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Balkh, northern Afghanistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Northern plains population; very tall for a broad-leaf type."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Balkh, northern Afghanistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Northern plains population; very tall for a broad-leaf type.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Lashkar Gah",
@@ -443,7 +503,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Helmand, Afghanistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Desert-edge irrigated valley population."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Helmand, Afghanistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Desert-edge irrigated valley population.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Chitral",
@@ -551,7 +631,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Chitral, northern Pakistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Purple and red phenotypes common."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Chitral, northern Pakistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Purple and red phenotypes common.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Swat Valley",
@@ -659,7 +759,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Swat, northern Pakistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Swat, northern Pakistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Tirah Valley",
@@ -767,7 +887,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Khyber, Pakistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Khyber, Pakistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Kashmir",
@@ -875,7 +1015,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kashmir valley; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. High-valley population; among the coldest-adapted drug types."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kashmir valley; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. High-valley population; among the coldest-adapted drug types.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Uzbek",
@@ -983,7 +1143,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Uzbekistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Central Asian oasis population."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Uzbekistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Central Asian oasis population.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Pamir",
@@ -1091,7 +1271,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Tajikistan / Pamirs; attestation: less attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Highest documented cultivation range."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Tajikistan / Pamirs; attestation: less attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Highest documented cultivation range.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Manali",
@@ -1199,7 +1399,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kullu valley, Himachal Pradesh; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Himalayan foothill population."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kullu valley, Himachal Pradesh; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Himalayan foothill population.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Parvati (Malana)",
@@ -1307,7 +1527,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Parvati valley, Himachal Pradesh; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Hand-rubbed resin culture of the high villages."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Parvati valley, Himachal Pradesh; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Hand-rubbed resin culture of the high villages.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Nepalese",
@@ -1415,7 +1655,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Nepal middle hills; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Nepal middle hills; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Kerala",
@@ -1523,7 +1783,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Western Ghats, Kerala, India; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Wet-tropical population; very tall."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Western Ghats, Kerala, India; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Wet-tropical population; very tall.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Mysore",
@@ -1631,7 +1911,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Karnataka, India; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Karnataka, India; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Manipur",
@@ -1739,7 +2039,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Manipur, NE India; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Manipur, NE India; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Ceylon",
@@ -1847,7 +2167,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Sri Lanka; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Sri Lanka; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Thai (Isan)",
@@ -1955,7 +2295,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Northeast Thailand; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. The 'Thai stick' population; some phenotypes with a dark cocoa cast ('Chocolate Thai')."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Northeast Thailand; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. The 'Thai stick' population; some phenotypes with a dark cocoa cast ('Chocolate Thai').",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Meao Thai",
@@ -2063,7 +2423,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Hmong hill villages, northern Thailand; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Hill-tribe population."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Hmong hill villages, northern Thailand; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Hill-tribe population.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Luang Prabang",
@@ -2171,7 +2551,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: northern Laos; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: northern Laos; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Cambodian",
@@ -2279,7 +2679,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Cambodia; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Cambodia; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Vietnamese (Vietnam Black)",
@@ -2387,7 +2807,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Vietnam; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Dark-leaved phenotypes."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Vietnam; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Dark-leaved phenotypes.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Burmese",
@@ -2495,7 +2935,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Myanmar; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Myanmar; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Aceh",
@@ -2603,7 +3063,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Aceh, northern Sumatra; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Wet equatorial population."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Aceh, northern Sumatra; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Wet equatorial population.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Yunnan",
@@ -2711,7 +3191,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Yunnan, China; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Also a fibre and seed source; intermediate type."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Yunnan, China; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Also a fibre and seed source; intermediate type.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Papua New Guinea",
@@ -2819,7 +3319,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: PNG highlands; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: PNG highlands; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Durban",
@@ -2927,7 +3447,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: KwaZulu-Natal, South Africa; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Early-flowering for a narrow-leaf type."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: KwaZulu-Natal, South Africa; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Early-flowering for a narrow-leaf type.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Transkei (Rooibaard)",
@@ -3035,7 +3575,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Eastern Cape, South Africa; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. 'Red beard' - red pistils."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Eastern Cape, South Africa; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. 'Red beard' - red pistils.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Swazi",
@@ -3143,7 +3703,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Eswatini highlands; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Gold and red phenotypes."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Eswatini highlands; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Gold and red phenotypes.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Malawi",
@@ -3251,7 +3831,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Nkhotakota and the lake shore, Malawi; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Very long flowering; 'Malawi Gold'."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Nkhotakota and the lake shore, Malawi; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Very long flowering; 'Malawi Gold'.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Kilimanjaro",
@@ -3359,7 +3959,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kilimanjaro foothills, Tanzania; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kilimanjaro foothills, Tanzania; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Kisumu",
@@ -3467,7 +4087,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Lake Victoria shore, Kenya; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Lake Victoria shore, Kenya; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Ethiopian",
@@ -3575,7 +4215,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Ethiopian highlands; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Ethiopian highlands; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Congolese",
@@ -3683,7 +4343,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Congo basin; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. 'Red Congolese' phenotypes."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Congo basin; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. 'Red Congolese' phenotypes.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Angolan",
@@ -3791,7 +4471,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Angola; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Angola; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Nigerian",
@@ -3899,7 +4599,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Nigeria; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Nigeria; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Ghanaian",
@@ -4007,7 +4727,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Ghana; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Ghana; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Zamal",
@@ -4115,7 +4855,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Réunion; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Réunion; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Rif (Ketama)",
@@ -4223,7 +4983,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Rif mountains, Morocco; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Mediterranean mountain population, dense and short for its type; hashish culture."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Rif mountains, Morocco; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Mediterranean mountain population, dense and short for its type; hashish culture.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Lebanese (Bekaa)",
@@ -4331,7 +5111,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Bekaa valley, Lebanon; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Red and blonde resin cultures."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Bekaa valley, Lebanon; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Red and blonde resin cultures.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Turkish",
@@ -4439,7 +5239,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Anatolia, Turkey; attestation: less attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Anatolia, Turkey; attestation: less attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Iranian (Mashhad)",
@@ -4547,7 +5367,27 @@
       0.9
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Khorasan, Iran; attestation: less attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Khorasan, Iran; attestation: less attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, broad leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Acapulco Gold",
@@ -4655,7 +5495,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Guerrero, Mexico; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Golden-brown drying colour."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Guerrero, Mexico; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Golden-brown drying colour.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Oaxacan",
@@ -4763,7 +5623,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Oaxaca, Mexico; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Oaxaca, Mexico; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Michoacán",
@@ -4871,7 +5751,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Michoacán, Mexico; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Michoacán, Mexico; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Sinaloan",
@@ -4979,7 +5879,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Sinaloa, Mexico; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Sinaloa, Mexico; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      3.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Santa Marta Gold",
@@ -5087,7 +6007,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Sierra Nevada de Santa Marta, Colombia; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. 'Colombian Gold'."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Sierra Nevada de Santa Marta, Colombia; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. 'Colombian Gold'.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Punto Rojo",
@@ -5195,7 +6135,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Colombia; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Red pistils."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Colombia; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Red pistils.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Limón Verde",
@@ -5303,7 +6263,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Colombia; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Colombia; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Panama Red",
@@ -5411,7 +6391,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Panama; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Red-tinged."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Panama; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Red-tinged.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Lamb's Bread",
@@ -5519,7 +6519,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Jamaica; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Jamaica; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Manga Rosa",
@@ -5627,7 +6647,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: northeast Brazil; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Pink-tinged."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: northeast Brazil; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Pink-tinged.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Hawaiian (Kona / Puna)",
@@ -5735,7 +6775,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Hawai'i; attestation: heirloom, naturalized - not a true landrace. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. 1960s-70s introductions that went feral; kept because every landrace list names them."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Hawai'i; attestation: heirloom, naturalized - not a true landrace. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. 1960s-70s introductions that went feral; kept because every landrace list names them.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Russian ruderalis",
@@ -5843,7 +6903,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Volga and southern Siberia; attestation: well attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement. The autoflowering source population."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Volga and southern Siberia; attestation: well attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement. The autoflowering source population.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Altai",
@@ -5951,7 +7031,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Altai mountains; attestation: attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Altai mountains; attestation: attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Chuy Valley",
@@ -6059,7 +7159,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Chuy valley, Kazakhstan / Kyrgyzstan; attestation: well attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement. Vast wild stands; intermediate between ruderal and drug types."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Chuy valley, Kazakhstan / Kyrgyzstan; attestation: well attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement. Vast wild stands; intermediate between ruderal and drug types.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Mongolian",
@@ -6167,7 +7287,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Mongolian steppe; attestation: less attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Mongolian steppe; attestation: less attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Northern Chinese hemp",
@@ -6275,7 +7415,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Shandong / Hebei, China; attestation: well attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Ancient fibre and seed populations; the oldest cultivation record."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Shandong / Hebei, China; attestation: well attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Ancient fibre and seed populations; the oldest cultivation record.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Japanese hemp (asa)",
@@ -6383,7 +7543,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Tochigi and Nagano, Japan; attestation: attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Ritual cordage and cloth."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Tochigi and Nagano, Japan; attestation: attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Ritual cordage and cloth.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Korean hemp (Andong)",
@@ -6491,7 +7671,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Andong, Korea; attestation: attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Fine cloth (sambe)."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Andong, Korea; attestation: attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Fine cloth (sambe).",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Central Russian hemp",
@@ -6599,7 +7799,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: central Russia / Ukraine; attestation: well attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Northern short-season fibre population."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: central Russia / Ukraine; attestation: well attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Northern short-season fibre population.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Carmagnola",
@@ -6707,7 +7927,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Piedmont, Italy; attestation: well attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Very tall Italian fibre population."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Piedmont, Italy; attestation: well attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Very tall Italian fibre population.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Anatolian hemp (Kastamonu)",
@@ -6815,7 +8055,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: northern Turkey; attestation: attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: northern Turkey; attestation: attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cannabis - Kentucky feral hemp",
@@ -6923,7 +8183,27 @@
       0.3
      ]
     },
-    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Ohio valley, USA; attestation: naturalized escape of old fibre crops. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Roadside 'ditchweed'."
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Ohio valley, USA; attestation: naturalized escape of old fibre crops. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Roadside 'ditchweed'.",
+    "traits": {
+     "genus": "Cannabis",
+     "species": "sativa",
+     "native_range": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace l",
+     "leaf_shape": "palmate leaves, narrow leaflets",
+     "trunk": "single herbaceous stem, branching",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "seed, dioecious, annual",
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ]
  }

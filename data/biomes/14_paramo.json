@@ -25,6 +25,110 @@
   "canopy": [],
   "shrub": [
    {
+    "name": "Alpenrose",
+    "genus": "Rhododendron",
+    "species": "ferrugineum",
+    "family": "Ericaceae",
+    "shape": "shrub",
+    "temp_c": [
+     -1,
+     6
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#D03050",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Alps subalpine; Heath above the trees. Kew POWO; standard floras.",
+    "from_catalogue": "rhododendron",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "ferrugineum",
+     "native_range": "Alps subalpine",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
     "name": "Frailejon",
     "genus": "Espeletia",
     "species": "grandiflora",
@@ -49,61 +153,24 @@
     "soil": "peat",
     "color": "#A8B890",
     "accent": "#C8A050",
-    "source": "Espeletia grandiflora, Colombian Eastern Cordillera paramo 2700-4200 m, woolly stem-rosette 0.5-3 m with yellow daisies"
-   },
-   {
-    "name": "Tall frailejon",
-    "genus": "Espeletia",
-    "species": "pycnophylla",
-    "shape": "rosette",
-    "temp_c": [
-     -2,
-     8
-    ],
-    "moisture": [
-     0.6,
-     1
-    ],
-    "altitude_m": [
-     3000,
-     4200
-    ],
-    "height_m": [
-     2,
-     6
-    ],
-    "density": 0.5,
-    "soil": "peat",
-    "color": "#A8B890",
-    "accent": "#D0B058",
-    "source": "Espeletia pycnophylla, Ecuador/S Colombia paramo (El Angel), columnar stem-rosette to 6 m, dense stands"
-   },
-   {
-    "name": "Paramo dwarf shrub",
-    "genus": "Hypericum",
-    "species": "laricifolium",
-    "shape": "shrub",
-    "temp_c": [
-     -2,
-     8
-    ],
-    "moisture": [
-     0.5,
-     0.9
-    ],
-    "altitude_m": [
-     2800,
-     4300
-    ],
-    "height_m": [
-     0.5,
-     2
-    ],
-    "density": 0.7,
-    "soil": "peat",
-    "color": "#3F8A3A",
-    "accent": "#F0C030",
-    "source": "Hypericum laricifolium, Venezuela to Peru paramo 2800-4300 m, heath-like needle-leaved shrub 0.5-2 m, yellow flowers"
+    "source": "Espeletia grandiflora, Colombian Eastern Cordillera paramo 2700-4200 m, woolly stem-rosette 0.5-3 m with yellow daisies",
+    "traits": {
+     "genus": "Espeletia",
+     "species": "grandiflora",
+     "native_range": "Espeletia grandiflora, Colombian Eastern Cordillera paramo 2700-4200 m, woolly stem-rosette 0",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.5,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Paramo dwarf bamboo",
@@ -130,7 +197,68 @@
     "soil": "peat",
     "color": "#6AB048",
     "accent": "#B0A060",
-    "source": "Chusquea tessellata, Colombia/Venezuela/Ecuador wet paramo 3000-4300 m, dwarf bamboo thickets 0.5-2 m"
+    "source": "Chusquea tessellata, Colombia/Venezuela/Ecuador wet paramo 3000-4300 m, dwarf bamboo thickets 0.5-2 m",
+    "traits": {
+     "genus": "Chusquea",
+     "species": "tessellata",
+     "native_range": "Chusquea tessellata, Colombia/Venezuela/Ecuador wet paramo 3000-4300 m, dwarf bamboo thickets 0",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Paramo dwarf shrub",
+    "genus": "Hypericum",
+    "species": "laricifolium",
+    "shape": "shrub",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     2800,
+     4300
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "color": "#3F8A3A",
+    "accent": "#F0C030",
+    "source": "Hypericum laricifolium, Venezuela to Peru paramo 2800-4300 m, heath-like needle-leaved shrub 0.5-2 m, yellow flowers",
+    "traits": {
+     "genus": "Hypericum",
+     "species": "laricifolium",
+     "native_range": "Hypericum laricifolium, Venezuela to Peru paramo 2800-4300 m, heath-like needle-leaved shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Paramo puya",
@@ -157,36 +285,110 @@
     "soil": "thin",
     "color": "#8AB0A0",
     "accent": "#4060C0",
-    "source": "Puya clava-herculis, Ecuadorian paramo 3300-4400 m, spiny terrestrial bromeliad rosette 1-2.5 m with blue-green spike"
-   }
-  ],
-  "ground": [
+    "source": "Puya clava-herculis, Ecuadorian paramo 3300-4400 m, spiny terrestrial bromeliad rosette 1-2.5 m with blue-green spike",
+    "traits": {
+     "genus": "Puya",
+     "species": "clava-herculis",
+     "native_range": "Puya clava-herculis, Ecuadorian paramo 3300-4400 m, spiny terrestrial bromeliad rosette 1-2",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.8,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Tussock grass",
-    "genus": "Calamagrostis",
-    "species": "effusa",
-    "shape": "tussock",
+    "name": "Tall frailejon",
+    "genus": "Espeletia",
+    "species": "pycnophylla",
+    "shape": "rosette",
     "temp_c": [
      -2,
      8
     ],
     "moisture": [
-     0.5,
+     0.6,
      1
     ],
     "altitude_m": [
-     2800,
-     4300
+     3000,
+     4200
     ],
     "height_m": [
-     0.4,
+     2,
+     6
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#A8B890",
+    "accent": "#D0B058",
+    "source": "Espeletia pycnophylla, Ecuador/S Colombia paramo (El Angel), columnar stem-rosette to 6 m, dense stands",
+    "traits": {
+     "genus": "Espeletia",
+     "species": "pycnophylla",
+     "native_range": "Espeletia pycnophylla, Ecuador/S Colombia paramo (El Angel), columnar stem-rosette to 6 m, dense stands",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Bog moss",
+    "genus": "Sphagnum",
+    "species": "magellanicum",
+    "shape": "moss",
+    "temp_c": [
+     -3,
+     8
+    ],
+    "moisture": [
+     0.8,
      1
     ],
-    "density": 1.0,
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.5,
     "soil": "peat",
-    "color": "#B0B858",
-    "accent": "#C8B060",
-    "source": "Calamagrostis effusa, dominant bunchgrass of Colombian/Venezuelan grass paramo 2800-4300 m, tussocks 40-100 cm"
+    "color": "#B04A40",
+    "accent": "#8A6030",
+    "source": "Sphagnum magellanicum, Andean paramo bogs and southern S America, red peat moss carpets",
+    "traits": {
+     "genus": "Sphagnum",
+     "species": "magellanicum",
+     "native_range": "Sphagnum magellanicum, Andean paramo bogs and southern S America, red peat moss carpets",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cushion plant",
@@ -213,30 +415,64 @@
     "soil": "wet",
     "color": "#5AA040",
     "accent": "#8A9A50",
-    "source": "Plantago rigida, Andean cushion bogs Venezuela to Bolivia 3500-4800 m, hard mounded cushions 5-30 cm"
+    "source": "Plantago rigida, Andean cushion bogs Venezuela to Bolivia 3500-4800 m, hard mounded cushions 5-30 cm",
+    "traits": {
+     "genus": "Plantago",
+     "species": "rigida",
+     "native_range": "Plantago rigida, Andean cushion bogs Venezuela to Bolivia 3500-4800 m, hard mounded cushions 5-30 cm",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Bog moss",
-    "genus": "Sphagnum",
-    "species": "magellanicum",
-    "shape": "moss",
+    "name": "Paramo club moss",
+    "genus": "Lycopodium",
+    "species": "clavatum",
+    "shape": "fern",
     "temp_c": [
-     -3,
+     -2,
      8
     ],
     "moisture": [
-     0.8,
+     0.6,
      1
     ],
     "height_m": [
-     0.02,
-     0.1
+     0.05,
+     0.2
     ],
-    "density": 0.5,
+    "density": 0.3,
     "soil": "peat",
-    "color": "#B04A40",
-    "accent": "#8A6030",
-    "source": "Sphagnum magellanicum, Andean paramo bogs and southern S America, red peat moss carpets"
+    "color": "#4A9A40",
+    "accent": "#9AA040",
+    "source": "Lycopodium clavatum, cosmopolitan incl. Andean paramo, trailing club moss 5-20 cm",
+    "traits": {
+     "genus": "Lycopodium",
+     "species": "clavatum",
+     "native_range": "Lycopodium clavatum, cosmopolitan incl",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Paramo lupine",
@@ -263,38 +499,71 @@
     "soil": "thin",
     "color": "#A0B0A0",
     "accent": "#5050C0",
-    "source": "Lupinus alopecuroides, superparamo Colombia/Ecuador 3800-4800 m, woolly rosette with blue flower spike"
+    "source": "Lupinus alopecuroides, superparamo Colombia/Ecuador 3800-4800 m, woolly rosette with blue flower spike",
+    "traits": {
+     "genus": "Lupinus",
+     "species": "alopecuroides",
+     "native_range": "Lupinus alopecuroides, superparamo Colombia/Ecuador 3800-4800 m, woolly rosette with blue flower spike",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Paramo club moss",
-    "genus": "Lycopodium",
-    "species": "clavatum",
-    "shape": "fern",
+    "name": "Tussock grass",
+    "genus": "Calamagrostis",
+    "species": "effusa",
+    "shape": "tussock",
     "temp_c": [
      -2,
      8
     ],
     "moisture": [
-     0.6,
+     0.5,
      1
     ],
-    "height_m": [
-     0.05,
-     0.2
+    "altitude_m": [
+     2800,
+     4300
     ],
-    "density": 0.3,
+    "height_m": [
+     0.4,
+     1
+    ],
+    "density": 1.0,
     "soil": "peat",
-    "color": "#4A9A40",
-    "accent": "#9AA040",
-    "source": "Lycopodium clavatum, cosmopolitan incl. Andean paramo, trailing club moss 5-20 cm"
+    "color": "#B0B858",
+    "accent": "#C8B060",
+    "source": "Calamagrostis effusa, dominant bunchgrass of Colombian/Venezuelan grass paramo 2800-4300 m, tussocks 40-100 cm",
+    "traits": {
+     "genus": "Calamagrostis",
+     "species": "effusa",
+     "native_range": "Calamagrostis effusa, dominant bunchgrass of Colombian/Venezuelan grass paramo 2800-4300 m, tussocks 40-100 cm",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.4,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 0,
-  "names": []
  },
  "associations": [
   {
@@ -387,5 +656,8 @@
    "cover": 0.4,
    "source": "Hofstede 1995 Effects of burning and grazing on a Colombian paramo ecosystem; Cleef 1981"
   }
+ ],
+ "hero_species": [
+  "Alpenrose"
  ]
 }

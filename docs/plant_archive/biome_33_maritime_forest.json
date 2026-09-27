@@ -1,0 +1,655 @@
+{
+ "key": "MARITIME_FOREST",
+ "name": "Maritime forest",
+ "group": "Coastal",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Salt-pruned coastal forest just behind the dunes: wind-sheared live oaks, pines, palmettos or cypresses over a dense evergreen shrub thicket, with Spanish moss and resurrection fern on the limbs; drawn on the US Atlantic/Gulf barrier islands, Monterey coast and Japanese/Hokkaido shorelines.",
+ "climate": {
+  "temp_c": [
+   4,
+   22
+  ],
+  "moisture": [
+   0.45,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Wind-shaped live oak",
+    "genus": "Quercus",
+    "species": "virginiana",
+    "shape": "gnarled",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "color": "#2F7A35",
+    "accent": "#5A4A38",
+    "source": "Quercus virginiana, southern live oak, US Atlantic & Gulf coastal plain, dominant of barrier-island maritime forest, salt-sheared canopy 8-20 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Loblolly pine",
+    "genus": "Pinus",
+    "species": "taeda",
+    "shape": "conifer",
+    "temp_c": [
+     13,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     25,
+     35
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#2A6A38",
+    "accent": "#8A5A3A",
+    "source": "Pinus taeda, loblolly pine, southeastern US coastal plain, mixed with live oak in maritime forest, 25-35 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Cabbage palmetto",
+    "genus": "Sabal",
+    "species": "palmetto",
+    "shape": "palm",
+    "temp_c": [
+     16,
+     22
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#3E8F3A",
+    "accent": "#8A7A5A",
+    "source": "Sabal palmetto, cabbage palm, Carolinas to Florida & Cuba, coastal maritime hammocks and forest edges, fan palm 10-20 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Monterey cypress",
+    "genus": "Cupressus",
+    "species": "macrocarpa",
+    "shape": "cypress",
+    "temp_c": [
+     11,
+     16
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#2F6E3A",
+    "accent": "#7A6A5A",
+    "source": "Cupressus macrocarpa, Monterey cypress, native to two groves on the Monterey coast, California, wind-flagged crowns 10-25 m on exposed headlands — Wikipedia / Gymnosperm Database"
+   },
+   {
+    "name": "Japanese black pine",
+    "genus": "Pinus",
+    "species": "thunbergii",
+    "shape": "conifer",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     15,
+     25
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#2A6A38",
+    "accent": "#4A3A2A",
+    "source": "Pinus thunbergii, Japanese black pine, coastal Japan & Korea, salt-tolerant shoreline pine forests, 15-25 m, black bark — Wikipedia / Gymnosperm Database"
+   },
+   {
+    "name": "Sitka spruce",
+    "genus": "Picea",
+    "species": "sitchensis",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     12
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     30,
+     60
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#2F6E3A",
+    "accent": "#8A7A6A",
+    "source": "Picea sitchensis, Sitka spruce, fog-bound Pacific coast Alaska-California, shoreline fringe forest, wind-shaped 30-60 m — Wikipedia / USDA Plants"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Wax myrtle",
+    "genus": "Morella",
+    "species": "cerifera",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     22
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "color": "#3E8F3A",
+    "accent": "#A8B8C0",
+    "source": "Morella cerifera, southern wax myrtle, US Atlantic & Gulf coasts, dense evergreen thicket of maritime forest and dune swales, 2-6 m, waxy grey berries — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Yaupon holly",
+    "genus": "Ilex",
+    "species": "vomitoria",
+    "shape": "shrub",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.45,
+     0.9
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "color": "#2F7A35",
+    "accent": "#E03A3A",
+    "source": "Ilex vomitoria, yaupon, southeastern US coastal plain, evergreen understory of maritime forest, 3-8 m, red berries — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Saw palmetto",
+    "genus": "Serenoa",
+    "species": "repens",
+    "shape": "palm",
+    "temp_c": [
+     16,
+     22
+    ],
+    "moisture": [
+     0.45,
+     0.9
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#4A9A3A",
+    "accent": "#8A7A5A",
+    "source": "Serenoa repens, saw palmetto, southeastern US coastal plain, clonal fan-palm thickets under pine and oak, 1-3 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Kuril bamboo",
+    "genus": "Sasa",
+    "species": "kurilensis",
+    "shape": "bamboo",
+    "temp_c": [
+     4,
+     10
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#C8C880",
+    "source": "Sasa kurilensis, chishima-zasa, Hokkaido/Kuril/Sakhalin coastal and montane forest understory, 1-3 m — Wikipedia / Flora of Japan"
+   },
+   {
+    "name": "Coyote brush",
+    "genus": "Baccharis",
+    "species": "pilularis",
+    "shape": "shrub",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.45,
+     0.75
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#4A9A3A",
+    "accent": "#E8E8D0",
+    "source": "Baccharis pilularis, coyote brush, California-Oregon coast, evergreen coastal scrub and forest edge, 1-3 m — Calflora / Wikipedia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Pink muhly grass",
+    "genus": "Muhlenbergia",
+    "species": "capillaris",
+    "shape": "tussock",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "height_m": [
+     0.6,
+     1
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#7AA860",
+    "accent": "#E88AB0",
+    "source": "Muhlenbergia capillaris, pink muhly, southeastern US coastal plain, open sandy ground and forest edges, 0.6-1 m, pink haze in autumn — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Bracken",
+    "genus": "Pteridium",
+    "species": "aquilinum",
+    "shape": "fern",
+    "temp_c": [
+     4,
+     22
+    ],
+    "moisture": [
+     0.45,
+     0.9
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#4A9A3A",
+    "accent": "#8A6A3A",
+    "source": "Pteridium aquilinum, bracken, cosmopolitan, sandy forest floor and clearings, fronds 0.5-1.5 m — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Partridgeberry",
+    "genus": "Mitchella",
+    "species": "repens",
+    "shape": "cushion",
+    "temp_c": [
+     8,
+     20
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "height_m": [
+     0.03,
+     0.06
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#2F7A35",
+    "accent": "#E03A3A",
+    "source": "Mitchella repens, partridgeberry, eastern North America, creeping evergreen mat on shaded forest floor, 3-6 cm, red berries — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Salal",
+    "genus": "Gaultheria",
+    "species": "shallon",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     14
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#2F7A35",
+    "accent": "#4A3A5A",
+    "source": "Gaultheria shallon, salal, Pacific NW shoreline forest, wind-clipped evergreen ground thicket 0.3-1.5 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Seaside goldenrod",
+    "genus": "Solidago",
+    "species": "sempervirens",
+    "shape": "grass",
+    "temp_c": [
+     6,
+     22
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#4A9A3A",
+    "accent": "#F0C020",
+    "source": "Solidago sempervirens, seaside goldenrod, Atlantic & Gulf coasts of North America, forest edge and back-dune, 0.5-1.5 m yellow plumes — USDA Plants / Wikipedia"
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Spanish moss",
+    "genus": "Tillandsia",
+    "species": "usneoides",
+    "shape": "hanging_moss",
+    "temp_c": [
+     15,
+     22
+    ],
+    "moisture": [
+     0.55,
+     1
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "color": "#9AB8A0",
+    "accent": "#B8C8B0",
+    "source": "Tillandsia usneoides, Spanish moss, southeastern US to South America, grey festoons hanging from live oak limbs 0.5-3 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Resurrection fern",
+    "genus": "Pleopeltis",
+    "species": "polypodioides",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#3E8F3A",
+    "accent": "#5A4A38",
+    "source": "Pleopeltis polypodioides, resurrection fern, southeastern US & Neotropics, mats along horizontal live oak limbs, fronds 5-20 cm — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Muscadine grape",
+    "genus": "Vitis",
+    "species": "rotundifolia",
+    "shape": "liana",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     5,
+     20
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#4A9A3A",
+    "accent": "#5A3A5A",
+    "source": "Vitis rotundifolia, muscadine, southeastern USA, climbs maritime forest canopy to 20 m, bronze-purple fruit — USDA Plants / Wikipedia"
+   }
+  ]
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 61,
+  "names": [
+   "Andean wax palm",
+   "Chinese fan palm",
+   "Cabbage-tree palm",
+   "Nikau palm",
+   "Sabal palmetto",
+   "Windmill palm",
+   "Saw palmetto",
+   "Needle palm",
+   "Dwarf palmetto",
+   "Amorphophallus albus",
+   "Amorphophallus coaetaneus",
+   "Amorphophallus cruddasianus",
+   "Amorphophallus dunnii",
+   "Amorphophallus henryi",
+   "Amorphophallus hirtus",
+   "Amorphophallus kachinensis",
+   "Amorphophallus kiusianus",
+   "Amorphophallus konjac",
+   "Amorphophallus krausei",
+   "Amorphophallus mekongensis",
+   "Amorphophallus napalensis",
+   "Amorphophallus tonkinensis",
+   "Amorphophallus verticillatus",
+   "Amorphophallus xiei",
+   "Amorphophallus yaoi",
+   "Amorphophallus yuloensis",
+   "Amorphophallus yunnanensis",
+   "Spanish bayonet",
+   "Nodding yucca",
+   "Adam's needle",
+   "Weak-leaf yucca",
+   "Spanish dagger",
+   "Chiapas yucca",
+   "Cannabis - Manali",
+   "Cannabis - Parvati (Malana)",
+   "Cannabis - Nepalese",
+   "Cannabis - Mysore",
+   "Cannabis - Manipur",
+   "Cannabis - Meao Thai",
+   "Cannabis - Yunnan",
+   "Cannabis - Papua New Guinea",
+   "Cannabis - Durban",
+   "Cannabis - Transkei (Rooibaard)",
+   "Cannabis - Swazi",
+   "Cannabis - Kilimanjaro",
+   "Cannabis - Ethiopian",
+   "Cannabis - Zamal",
+   "Cannabis - Acapulco Gold",
+   "Cannabis - Oaxacan",
+   "Cannabis - Michoacán",
+   "Cannabis - Santa Marta Gold",
+   "Cannabis - Punto Rojo",
+   "Cannabis - Limón Verde",
+   "Cannabis - Hawaiian (Kona / Puna)",
+   "Cannabis - Northern Chinese hemp",
+   "Cannabis - Japanese hemp (asa)",
+   "Cannabis - Korean hemp (Andong)",
+   "Cannabis - Central Russian hemp",
+   "Cannabis - Carmagnola",
+   "Cannabis - Anatolian hemp (Kastamonu)",
+   "Cannabis - Kentucky feral hemp"
+  ]
+ },
+ "associations": [
+  {
+   "name": "Live oak-cabbage palmetto maritime hammock",
+   "where": "sheltered back-dune flats and swales on barrier islands, sandy soil, salt-pruned edge toward the sea",
+   "dominant": [
+    "Wind-shaped live oak",
+    "Cabbage palmetto"
+   ],
+   "companion": [
+    "Wax myrtle",
+    "Yaupon holly",
+    "Saw palmetto",
+    "Spanish moss",
+    "Resurrection fern",
+    "Muscadine grape"
+   ],
+   "ground": [
+    "Partridgeberry",
+    "Pink muhly grass"
+   ],
+   "catalogue": [
+    "Sabal palmetto",
+    "Saw palmetto",
+    "Spanish bayonet"
+   ],
+   "cover": 0.85,
+   "source": "Bellis 1995 Ecology of Maritime Forests of the Southern Atlantic Coast (USFWS); USNVC Quercus virginiana-Sabal palmetto maritime forest"
+  },
+  {
+   "name": "Loblolly pine-wax myrtle back-dune woodland",
+   "where": "young stabilised dunes and disturbed or burned ground behind the foredune, dry sand",
+   "dominant": [
+    "Loblolly pine"
+   ],
+   "companion": [
+    "Wax myrtle",
+    "Yaupon holly"
+   ],
+   "ground": [
+    "Pink muhly grass",
+    "Bracken",
+    "Seaside goldenrod"
+   ],
+   "catalogue": [
+    "Adam's needle"
+   ],
+   "cover": 0.6,
+   "source": "Bellis 1995; USNVC Pinus taeda maritime forest"
+  },
+  {
+   "name": "Wax myrtle-yaupon salt-shrub thicket",
+   "where": "the wind-sheared seaward forest edge and dune slacks, salt spray, sandy soil",
+   "dominant": [
+    "Wax myrtle",
+    "Yaupon holly"
+   ],
+   "companion": [
+    "Saw palmetto"
+   ],
+   "ground": [
+    "Seaside goldenrod",
+    "Pink muhly grass"
+   ],
+   "catalogue": [
+    "Spanish bayonet"
+   ],
+   "cover": 0.6,
+   "source": "Bellis 1995; USNVC Morella cerifera-Ilex vomitoria maritime shrubland"
+  },
+  {
+   "name": "Monterey cypress-coyote brush headland forest",
+   "where": "fog-swept rocky headlands and coastal terraces on the central California coast, thin soil",
+   "dominant": [
+    "Monterey cypress"
+   ],
+   "companion": [
+    "Coyote brush",
+    "Salal"
+   ],
+   "ground": [
+    "Bracken",
+    "Salal"
+   ],
+   "catalogue": [],
+   "cover": 0.65,
+   "source": "Barbour & Major 1977 Terrestrial Vegetation of California, closed-cone coastal forest; Point Lobos and Cypress Point stands"
+  },
+  {
+   "name": "Sitka spruce-salal coastal forest",
+   "where": "wet, cool shore terraces and slopes just behind the beach on the North Pacific coast",
+   "dominant": [
+    "Sitka spruce"
+   ],
+   "companion": [
+    "Salal"
+   ],
+   "ground": [
+    "Salal",
+    "Bracken"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Franklin & Dyrness 1973 Natural Vegetation of Oregon and Washington, Picea sitchensis zone"
+  },
+  {
+   "name": "Japanese black pine-kuril bamboo coastal pine wood",
+   "where": "sandy shores and low coastal hills of Japan and Hokkaido, wind-exposed, well drained",
+   "dominant": [
+    "Japanese black pine"
+   ],
+   "companion": [
+    "Kuril bamboo"
+   ],
+   "ground": [
+    "Bracken"
+   ],
+   "catalogue": [],
+   "cover": 0.65,
+   "source": "Miyawaki 1980-89 Vegetation of Japan, Pinus thunbergii coastal forest with Sasa understory"
+  }
+ ]
+}

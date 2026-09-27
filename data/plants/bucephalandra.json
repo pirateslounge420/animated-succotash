@@ -1,0 +1,435 @@
+{
+ "key": "BUCEPHALANDRA_CATALOGUE",
+ "name": "Bucephalandra — the Bornean stream aroids",
+ "kind": "land",
+ "status": "4 species",
+ "notes": "Tiny aroids that grow only on rocks in fast, clear Bornean rainforest streams, half-submerged, glittering with iridescent leaves; each river has its own forms. Rheophytes: they need current, and vanish when a stream silts or slows.",
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [],
+  "ground": [
+   {
+    "name": "Bucephalandra motleyana",
+    "genus": "Bucephalandra",
+    "species": "motleyana",
+    "family": "Araceae",
+    "shape": "rosette",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     0.05,
+     0.15
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#2A5A3A",
+    "accent": "#8A60A0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       730
+      ],
+      [
+       "old",
+       3000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "beetle-pollinated; seeds float downstream; needs flowing water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Bornean rainforest streams on rock; the widespread species; purple-tinged. Kew POWO.",
+    "rheophyte": true,
+    "water_depth_m": [
+     0.0,
+     0.3
+    ],
+    "traits": {
+     "genus": "Bucephalandra",
+     "species": "motleyana",
+     "native_range": "Bornean rainforest streams on rock",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Bucephalandra catherineae",
+    "genus": "Bucephalandra",
+    "species": "catherineae",
+    "family": "Araceae",
+    "shape": "rosette",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     500
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#2A5A3A",
+    "accent": "#6060A0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       730
+      ],
+      [
+       "old",
+       3000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Sarawak streams; iridescent blue-green leaves. Kew POWO.",
+    "rheophyte": true,
+    "water_depth_m": [
+     0.0,
+     0.3
+    ],
+    "traits": {
+     "genus": "Bucephalandra",
+     "species": "catherineae",
+     "native_range": "Sarawak streams",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Bucephalandra gigantea",
+    "genus": "Bucephalandra",
+    "species": "gigantea",
+    "family": "Araceae",
+    "shape": "rosette",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     500
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#2A5A3A",
+    "accent": "#8A60A0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       730
+      ],
+      [
+       "old",
+       3000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Central Kalimantan; the largest of the genus. Kew POWO.",
+    "rheophyte": true,
+    "water_depth_m": [
+     0.0,
+     0.4
+    ],
+    "traits": {
+     "genus": "Bucephalandra",
+     "species": "gigantea",
+     "native_range": "Central Kalimantan",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Bucephalandra bogneri",
+    "genus": "Bucephalandra",
+    "species": "bogneri",
+    "family": "Araceae",
+    "shape": "rosette",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     500
+    ],
+    "height_m": [
+     0.02,
+     0.06
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#2A5A3A",
+    "accent": "#6060A0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       730
+      ],
+      [
+       "old",
+       3000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "spores by wind and water; no flowers; needs a wet film to reproduce, so spread reads moisture not pollinators"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Sarawak; tiny, in the spray of falls. Kew POWO.",
+    "rheophyte": true,
+    "water_depth_m": [
+     0.0,
+     0.2
+    ],
+    "traits": {
+     "genus": "Bucephalandra",
+     "species": "bogneri",
+     "native_range": "Sarawak",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.06
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "epiphyte": []
+ }
+}

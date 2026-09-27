@@ -1,0 +1,1421 @@
+{
+ "key": "TEPUI",
+ "name": "Tepui summit",
+ "group": "Mountain",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "The table mountains of the Guiana Shield: Precambrian quartzite plateaus rising 1,000-2,000 m out of tropical rainforest with sheer cliffs on every side, cool, permanently wet, swept by cloud, the rock black-crusted and cut into mazes and sinkholes. Among the oldest land surfaces on Earth — never glaciated, never under the sea for a billion years — so the summits carry plants found nowhere else: Stegolepis rosette stands, Bonnetia clefts, carnivorous sun pitchers and Brocchinia, cushion bromeliads, Roraima sundews. Nutrient-starved: a third of the flora is carnivorous. Angel Falls drops off one; caves run through the quartzite. Generation: an isolated plateau landform on SANDSTONE in the warm-wet band whose summit reads this biome by altitude, its cliffs bare, its slopes tropical rainforest, its rim shedding waterfalls, its interior threaded with caves.",
+ "climate": {
+  "temp_c": [
+   8,
+   16
+  ],
+  "moisture": [
+   0.8,
+   1.0
+  ],
+  "altitude_m": [
+   1500,
+   3000
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Bonnetia",
+    "genus": "Bonnetia",
+    "species": "roraimae",
+    "family": "Bonnetiaceae",
+    "shape": "gnarled",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1800,
+     2800
+    ],
+    "height_m": [
+     2.0,
+     8.0
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3A6A3A",
+    "accent": "#6A5A4A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Roraima and Auyán-tepui summits; the tepui's own gnarled tree, twisted by wind, pink flowers; forms the only forest up there in sheltered clefts. Kew POWO."
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Tepui stegolepis",
+    "genus": "Stegolepis",
+    "species": "guianensis",
+    "family": "Rapateaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1800,
+     2800
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A8A5A",
+    "accent": "#D8C040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits; the dominant rosette herb of the open summit, in vast stands over bare rock. Kew POWO."
+   },
+   {
+    "name": "Giant brocchinia",
+    "genus": "Brocchinia",
+    "species": "micrantha",
+    "family": "Bromeliaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     1000,
+     2500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A9A5A",
+    "accent": "#E0E080",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui slopes; a 4 m bromeliad with a tree-like stem. Kew POWO."
+   },
+   {
+    "name": "Tepui myrtle",
+    "genus": "Tepuianthus",
+    "species": "auyantepuiensis",
+    "family": "Thymelaeaceae",
+    "shape": "shrub",
+    "temp_c": [
+     9,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1600,
+     2600
+    ],
+    "height_m": [
+     1.0,
+     3.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3A6A3A",
+    "accent": "#6A5A4A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Auyán-tepui; a shrub genus known from nowhere else. Kew POWO."
+   },
+   {
+    "name": "Tepui clusia",
+    "genus": "Clusia",
+    "species": "tepuiensis",
+    "family": "Clusiaceae",
+    "shape": "gnarled",
+    "temp_c": [
+     9,
+     16
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2600
+    ],
+    "height_m": [
+     1.0,
+     4.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#F0C0C0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui rims and cliffs; thick-leaved, roots into cracks, hangs over the drop. Kew POWO."
+   },
+   {
+    "name": "Tepui tree fern",
+    "genus": "Cyathea",
+    "species": "pungens",
+    "family": "Cyatheaceae",
+    "shape": "tree_fern",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1200,
+     2400
+    ],
+    "height_m": [
+     2.0,
+     5.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3A8A3A",
+    "accent": "#5A4A3A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui slope forest and summit clefts; Cyathea pungens is the tree fern of the Guiana Highlands. Kew POWO."
+   }
+  ],
+  "ground": [
+   {
+    "name": "Brocchinia",
+    "genus": "Brocchinia",
+    "species": "reducta",
+    "family": "Bromeliaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#A0C060",
+    "accent": "#E0E080",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits and slopes; a carnivorous bromeliad — its yellow tank drowns insects and smells of nectar; Utricularia humboldtii lives in its water. Kew POWO.",
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "bromeliad": {
+     "tank": true
+    }
+   },
+   {
+    "name": "Sun pitcher",
+    "genus": "Heliamphora",
+    "species": "nutans",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     8,
+     14
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     2000,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Roraima summit marsh; the tepui pitcher plant, overflow-slotted for the endless rain. Kew POWO.",
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    }
+   },
+   {
+    "name": "Giant sun pitcher",
+    "genus": "Heliamphora",
+    "species": "tatei",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     9,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1800,
+     2600
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Cerro Duida and Marahuaka; the tallest sun pitcher, stems to 1.5 m. Kew POWO.",
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    }
+   },
+   {
+    "name": "Roraima sundew",
+    "genus": "Drosera",
+    "species": "roraimae",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1800,
+     2800
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "needs": [],
+    "color": "#8A3A3A",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits; red sundew on wet sandstone and moss. Kew POWO.",
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    }
+   },
+   {
+    "name": "Tepui orectanthe",
+    "genus": "Orectanthe",
+    "species": "sceptrum",
+    "family": "Xyridaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1800,
+     2800
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6A9A5A",
+    "accent": "#E0E0A0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summit bogs; sceptre-headed rosette endemic to the Guiana Highlands. Kew POWO."
+   },
+   {
+    "name": "Tepui cushion",
+    "genus": "Connellia",
+    "species": "augustae",
+    "family": "Bromeliaceae",
+    "shape": "cushion",
+    "temp_c": [
+     8,
+     14
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     2000,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#7AA070",
+    "accent": "#E08080",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits; cushion bromeliad on bare quartzite. Kew POWO."
+   },
+   {
+    "name": "Summit moss",
+    "genus": "Sphagnum",
+    "species": "magellanicum",
+    "family": "Sphagnaceae",
+    "shape": "moss",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "needs": [],
+    "color": "#A0B060",
+    "accent": "#C08080",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summit bog mats; the peat maker of the plateau. Kew POWO."
+   },
+   {
+    "name": "Rock lichen",
+    "genus": "Cladonia",
+    "species": "confusa",
+    "family": "Cladoniaceae",
+    "shape": "moss",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.01,
+     0.05
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "needs": [],
+    "color": "#B0C0A0",
+    "accent": "#B0C0A0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui bare rock; Cladonia confusa, the pale tropical-montane reindeer lichen, on black-crusted quartzite. Index Fungorum."
+   },
+   {
+    "name": "Tepui bromeliad",
+    "genus": "Navia",
+    "species": "glauca",
+    "family": "Bromeliaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A8A5A",
+    "accent": "#E06060",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Navia is almost entirely tepui-endemic; N. glauca forms rock rosettes on Guayana cliffs and summits. Kew POWO."
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Humboldt's bladderwort",
+    "genus": "Utricularia",
+    "species": "humboldtii",
+    "family": "Lentibulariaceae",
+    "shape": "rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [],
+    "color": "#5A8A5A",
+    "accent": "#8060C0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits; grows in the water tanks of Brocchinia bromeliads, big violet flowers — placed in a tank, not on a tree. Kew POWO.",
+    "carnivore": {
+     "trap": "bladder",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "tank_dweller": true
+   }
+  ]
+ },
+ "associations": [
+  {
+   "name": "Stegolepis-brocchinia rosette meadow",
+   "where": "flat peaty summit plateaus, permanently wet, exposed to cloud and wind",
+   "dominant": [
+    "Tepui stegolepis",
+    "Giant brocchinia"
+   ],
+   "companion": [],
+   "ground": [
+    "Brocchinia",
+    "Sun pitcher",
+    "Roraima sundew",
+    "Tepui orectanthe",
+    "Summit moss"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Huber 1995 Flora of the Venezuelan Guayana vol. 1, tepui broad-leaved meadows (Stegolepis)"
+  },
+  {
+   "name": "Bonnetia summit scrub-forest",
+   "where": "sheltered clefts, sinkhole rims and drainage lines with deeper peat",
+   "dominant": [
+    "Bonnetia"
+   ],
+   "companion": [
+    "Tepui clusia",
+    "Tepui myrtle",
+    "Tepui tree fern"
+   ],
+   "ground": [
+    "Summit moss",
+    "Tepui bromeliad"
+   ],
+   "catalogue": [],
+   "cover": 0.75,
+   "source": "Huber 1995; Steyermark 1986 Bonnetia roraimae tepui scrub forests"
+  },
+  {
+   "name": "Sun pitcher-sundew peat bog",
+   "where": "waterlogged hollows and seepage flats on the summit, black peat",
+   "dominant": [
+    "Sun pitcher",
+    "Giant sun pitcher"
+   ],
+   "companion": [
+    "Humboldt's bladderwort"
+   ],
+   "ground": [
+    "Roraima sundew",
+    "Tepui cushion",
+    "Summit moss",
+    "Brocchinia"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Huber 1995 tepui herbaceous bogs; Steyermark 1979 Heliamphora"
+  },
+  {
+   "name": "Rock lichen-bromeliad bare quartzite",
+   "where": "black-crusted bare rock, pinnacles and cliff tops with no soil",
+   "dominant": [
+    "Rock lichen"
+   ],
+   "companion": [],
+   "ground": [
+    "Rock lichen",
+    "Tepui bromeliad",
+    "Tepui cushion"
+   ],
+   "catalogue": [],
+   "cover": 0.15,
+   "source": "Huber 1995 pioneer rock vegetation of the tepui summits"
+  },
+  {
+   "name": "Tepui myrtle-clusia cliff-edge shrubland",
+   "where": "rim edges and rocky slopes with thin peat pockets, wind-swept",
+   "dominant": [
+    "Tepui myrtle",
+    "Tepui clusia"
+   ],
+   "companion": [
+    "Tepui tree fern"
+   ],
+   "ground": [
+    "Tepui bromeliad",
+    "Rock lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Huber 1995 tepui shrublands"
+  }
+ ]
+}

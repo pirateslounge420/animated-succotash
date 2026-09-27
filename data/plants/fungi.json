@@ -95,7 +95,26 @@
       0.0
      ]
     },
-    "source": "worldwide temperate; Banded bracket on dead hardwood; the commonest wood-rotter on Earth.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide temperate; Banded bracket on dead hardwood; the commonest wood-rotter on Earth.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Trametes",
+     "species": "versicolor",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Tinder fungus",
@@ -186,7 +205,26 @@
       0.0
      ]
     },
-    "source": "northern forests, birch and beech; Hoof bracket on birch snags; fire-starter tinder for camp folk.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "northern forests, birch and beech; Hoof bracket on birch snags; fire-starter tinder for camp folk.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Fomes",
+     "species": "fomentarius",
+     "native_range": "northern forests, birch and beech",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Birch polypore",
@@ -277,7 +315,26 @@
       0.0
      ]
     },
-    "source": "boreal and temperate birch; On dying birch; razor strop.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "boreal and temperate birch; On dying birch; razor strop.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Fomitopsis",
+     "species": "betulina",
+     "native_range": "boreal and temperate birch",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.08,
+      0.25
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Chicken of the woods",
@@ -368,7 +425,26 @@
       0.0
      ]
     },
-    "source": "temperate oak and cherry; Bright orange shelves on oak snags; a meal.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate oak and cherry; Bright orange shelves on oak snags; a meal.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Laetiporus",
+     "species": "sulphureus",
+     "native_range": "temperate oak and cherry",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Honey fungus",
@@ -459,7 +535,26 @@
       1.0
      ]
     },
-    "source": "worldwide temperate; Clumps at the base of dying trees; its mycelium glows faintly — foxfire — on rotting wood.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide temperate; Clumps at the base of dying trees; its mycelium glows faintly — foxfire — on rotting wood.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Armillaria",
+     "species": "mellea",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Oyster mushroom",
@@ -550,7 +645,26 @@
       0.0
      ]
     },
-    "source": "worldwide temperate; Shelving clusters on dead beech and poplar; a meal.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide temperate; Shelving clusters on dead beech and poplar; a meal.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Pleurotus",
+     "species": "ostreatus",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Shiitake",
@@ -641,7 +755,26 @@
       0.0
      ]
     },
-    "source": "East Asian oak forests; On fallen oak and chinquapin.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "East Asian oak forests; On fallen oak and chinquapin.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Lentinula",
+     "species": "edodes",
+     "native_range": "East Asian oak forests",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Sulphur tuft",
@@ -732,7 +865,26 @@
       0.0
      ]
     },
-    "source": "worldwide temperate; Dense yellow tufts on stumps; bitter, poisonous.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide temperate; Dense yellow tufts on stumps; bitter, poisonous.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Hypholoma",
+     "species": "fasciculare",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.06
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Velvet shank",
@@ -823,7 +975,26 @@
       0.0
      ]
     },
-    "source": "northern temperate, winter; Fruits through frost on elm and willow snags — the winter mushroom.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "northern temperate, winter; Fruits through frost on elm and willow snags — the winter mushroom.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Flammulina",
+     "species": "velutipes",
+     "native_range": "northern temperate, winter",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.06
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Artist's conk",
@@ -914,7 +1085,26 @@
       0.0
      ]
     },
-    "source": "worldwide temperate; Huge flat bracket on old snags; lasts for years.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide temperate; Huge flat bracket on old snags; lasts for years.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Ganoderma",
+     "species": "applanatum",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.15,
+      0.5
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Reishi",
@@ -1005,7 +1195,26 @@
       0.0
      ]
     },
-    "source": "East Asian and warm temperate hardwood; Lacquered red bracket at the base of oaks and maples; camp medicine.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "East Asian and warm temperate hardwood; Lacquered red bracket at the base of oaks and maples; camp medicine.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Ganoderma",
+     "species": "lucidum",
+     "native_range": "East Asian and warm temperate hardwood",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Dryad's saddle",
@@ -1096,7 +1305,26 @@
       0.0
      ]
     },
-    "source": "temperate elm, ash, maple; Pheasant-back shelves in spring.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate elm, ash, maple; Pheasant-back shelves in spring.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Cerioporus",
+     "species": "squamosus",
+     "native_range": "temperate elm, ash, maple",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Red-belted conk",
@@ -1187,7 +1415,26 @@
       0.0
      ]
     },
-    "source": "boreal and mountain conifer; On spruce and fir snags; the boreal wood-rotter.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "boreal and mountain conifer; On spruce and fir snags; the boreal wood-rotter.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Fomitopsis",
+     "species": "pinicola",
+     "native_range": "boreal and mountain conifer",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Beefsteak fungus",
@@ -1278,7 +1525,26 @@
       0.0
      ]
     },
-    "source": "temperate oak and chestnut; Bleeds red when cut; on old oaks.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate oak and chestnut; Bleeds red when cut; on old oaks.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Fistulina",
+     "species": "hepatica",
+     "native_range": "temperate oak and chestnut",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.25
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Lion's mane",
@@ -1369,7 +1635,26 @@
       0.0
      ]
     },
-    "source": "temperate beech and oak; White spines on wounded hardwood.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate beech and oak; White spines on wounded hardwood.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Hericium",
+     "species": "erinaceus",
+     "native_range": "temperate beech and oak",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Coral tooth",
@@ -1460,7 +1745,26 @@
       0.0
      ]
     },
-    "source": "boreal and temperate; On fallen beech and birch.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "boreal and temperate; On fallen beech and birch.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Hericium",
+     "species": "coralloides",
+     "native_range": "boreal and temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Split gill",
@@ -1551,7 +1855,26 @@
       0.0
      ]
     },
-    "source": "every continent; Tiny fan on any dead wood, from tundra edge to tropics; the widest-ranging fungus known.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "every continent; Tiny fan on any dead wood, from tundra edge to tropics; the widest-ranging fungus known.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Schizophyllum",
+     "species": "commune",
+     "native_range": "every continent",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.04
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Tropical oyster",
@@ -1642,7 +1965,26 @@
       0.0
      ]
     },
-    "source": "tropics worldwide; Pink oyster on fallen tropical wood.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "tropics worldwide; Pink oyster on fallen tropical wood.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Pleurotus",
+     "species": "djamor",
+     "native_range": "tropics worldwide",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Ghost fungus",
@@ -1733,7 +2075,26 @@
       1.0
      ]
     },
-    "source": "Australian eucalypt forest; Glows green in the dark at the base of dead eucalypts.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "Australian eucalypt forest; Glows green in the dark at the base of dead eucalypts.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Omphalotus",
+     "species": "nidiformis",
+     "native_range": "Australian eucalypt forest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Jack-o'-lantern",
@@ -1824,7 +2185,26 @@
       1.0
      ]
     },
-    "source": "eastern North America oak; Orange clumps on buried roots; gills glow at night.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "eastern North America oak; Orange clumps on buried roots; gills glow at night.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Omphalotus",
+     "species": "illudens",
+     "native_range": "eastern North America oak",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Bitter bracket",
@@ -1915,7 +2295,26 @@
       0.0
      ]
     },
-    "source": "worldwide; . Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide; . Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Trametes",
+     "species": "hirsuta",
+     "native_range": "worldwide",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Fairy ring champignon",
@@ -2006,7 +2405,26 @@
       0.0
      ]
     },
-    "source": "temperate grassland; Rings in meadows and prairie that widen a little every year — a ring's age is readable.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate grassland; Rings in meadows and prairie that widen a little every year — a ring's age is readable.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Marasmius",
+     "species": "oreades",
+     "native_range": "temperate grassland",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.05
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Horsehair parachute",
@@ -2097,7 +2515,26 @@
       0.0
      ]
     },
-    "source": "temperate leaf litter; Tiny white parachutes on fallen twigs and leaves; the leaf-mould worker.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate leaf litter; Tiny white parachutes on fallen twigs and leaves; the leaf-mould worker.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Marasmius",
+     "species": "rotula",
+     "native_range": "temperate leaf litter",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.005,
+      0.015
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Shaggy inkcap",
@@ -2188,7 +2625,26 @@
       0.0
      ]
     },
-    "source": "temperate disturbed ground and camp edges; Rises overnight on middens and paths, dissolves to ink by evening.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate disturbed ground and camp edges; Rises overnight on middens and paths, dissolves to ink by evening.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Coprinus",
+     "species": "comatus",
+     "native_range": "temperate disturbed ground and camp edges",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Wood blewit",
@@ -2279,7 +2735,26 @@
       0.0
      ]
     },
-    "source": "temperate deciduous litter, autumn; Lilac; in deep leaf mould after the first frosts.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate deciduous litter, autumn; Lilac; in deep leaf mould after the first frosts.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Lepista",
+     "species": "nuda",
+     "native_range": "temperate deciduous litter, autumn",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.04,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Parasol mushroom",
@@ -2370,7 +2845,26 @@
       0.0
      ]
     },
-    "source": "temperate meadow and open wood; Tall drumstick then a parasol; grassland edges.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate meadow and open wood; Tall drumstick then a parasol; grassland edges.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Macrolepiota",
+     "species": "procera",
+     "native_range": "temperate meadow and open wood",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Common puffball",
@@ -2461,7 +2955,26 @@
       0.0
      ]
     },
-    "source": "worldwide temperate; Puffs spores when trodden.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide temperate; Puffs spores when trodden.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Lycoperdon",
+     "species": "perlatum",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.06
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Giant puffball",
@@ -2552,7 +3065,26 @@
       0.0
      ]
     },
-    "source": "temperate meadow; A white boulder in a meadow; feeds a camp.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate meadow; A white boulder in a meadow; feeds a camp.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Calvatia",
+     "species": "gigantea",
+     "native_range": "temperate meadow",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Death cap",
@@ -2643,7 +3175,26 @@
       0.0
      ]
     },
-    "source": "Eurasian oak and beech, spread worldwide; Under oaks; the deadliest mushroom. Camp folk with the knowledge warn of it.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "Eurasian oak and beech, spread worldwide; Under oaks; the deadliest mushroom. Camp folk with the knowledge warn of it.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Amanita",
+     "species": "phalloides",
+     "native_range": "Eurasian oak and beech, spread worldwide",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Fly agaric",
@@ -2734,7 +3285,26 @@
       0.0
      ]
     },
-    "source": "boreal and temperate birch, pine, spruce; Red with white flecks under birch and pine; the storybook toadstool.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "boreal and temperate birch, pine, spruce; Red with white flecks under birch and pine; the storybook toadstool.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Amanita",
+     "species": "muscaria",
+     "native_range": "boreal and temperate birch, pine, spruce",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Penny bun",
@@ -2825,7 +3395,26 @@
       0.0
      ]
     },
-    "source": "northern conifer and oak; With spruce, pine and oak; the prize of any forager.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "northern conifer and oak; With spruce, pine and oak; the prize of any forager.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Boletus",
+     "species": "edulis",
+     "native_range": "northern conifer and oak",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.06,
+      0.25
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Chanterelle",
@@ -2916,7 +3505,26 @@
       0.0
      ]
     },
-    "source": "temperate and boreal forest; Golden funnels in mossy conifer and beech woods.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate and boreal forest; Golden funnels in mossy conifer and beech woods.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Cantharellus",
+     "species": "cibarius",
+     "native_range": "temperate and boreal forest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Saffron milkcap",
@@ -3007,7 +3615,26 @@
       0.0
      ]
     },
-    "source": "pine forest; Under pines; bleeds orange.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "pine forest; Under pines; bleeds orange.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Lactarius",
+     "species": "deliciosus",
+     "native_range": "pine forest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.04,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Matsutake",
@@ -3098,7 +3725,26 @@
       0.0
      ]
     },
-    "source": "East Asian and boreal pine; Under old pines; spicy scent; rare.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "East Asian and boreal pine; Under old pines; spicy scent; rare.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Tricholoma",
+     "species": "matsutake",
+     "native_range": "East Asian and boreal pine",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Truffle",
@@ -3189,7 +3835,26 @@
       0.0
      ]
     },
-    "source": "Mediterranean oak and hazel, limestone; Underground; pigs and dogs find it by scent — the camp's most valued trade good.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "Mediterranean oak and hazel, limestone; Underground; pigs and dogs find it by scent — the camp's most valued trade good.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Tuber",
+     "species": "melanosporum",
+     "native_range": "Mediterranean oak and hazel, limestone",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.08
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Morel",
@@ -3280,7 +3945,26 @@
       0.0
      ]
     },
-    "source": "temperate spring, burned ground; Spring; floods burned ground the year after a fire.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate spring, burned ground; Spring; floods burned ground the year after a fire.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Morchella",
+     "species": "esculenta",
+     "native_range": "temperate spring, burned ground",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.04,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Fire morel",
@@ -3371,7 +4055,26 @@
       0.0
      ]
     },
-    "source": "western North American conifer burns; Fruits by the thousand on last year's fire scar, then vanishes.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "western North American conifer burns; Fruits by the thousand on last year's fire scar, then vanishes.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Morchella",
+     "species": "exuberans",
+     "native_range": "western North American conifer burns",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.04,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Dung roundhead",
@@ -3462,7 +4165,26 @@
       0.0
      ]
     },
-    "source": "worldwide pasture; On herbivore dung wherever herds graze.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide pasture; On herbivore dung wherever herds graze.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Protostropharia",
+     "species": "semiglobata",
+     "native_range": "worldwide pasture",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.04
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Carcass cup",
@@ -3553,7 +4275,26 @@
       0.0
      ]
     },
-    "source": "worldwide, rich decaying ground; Cup fungus on midden, dung and carcass ground.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide, rich decaying ground; Cup fungus on midden, dung and carcass ground.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Peziza",
+     "species": "vesiculosa",
+     "native_range": "worldwide, rich decaying ground",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.08
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Bonnet",
@@ -3644,7 +4385,26 @@
       0.0
      ]
     },
-    "source": "worldwide on stumps; Tiny bonnets in troops on stumps.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide on stumps; Tiny bonnets in troops on stumps.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Mycena",
+     "species": "galericulata",
+     "native_range": "worldwide on stumps",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.03
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Glowing bonnet",
@@ -3735,7 +4495,26 @@
       1.0
      ]
     },
-    "source": "tropical Asian and Pacific rainforest; Bright green-glowing caps on wet fallen wood.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "tropical Asian and Pacific rainforest; Bright green-glowing caps on wet fallen wood.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Mycena",
+     "species": "chlorophos",
+     "native_range": "tropical Asian and Pacific rainforest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.03
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cave bonnet",
@@ -3826,7 +4605,26 @@
       1.0
      ]
     },
-    "source": "Brazilian Atlantic forest; cave mouths and deep shade; Eternal light: stems glow in the dark; deep shade and cave entrances.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "Brazilian Atlantic forest; cave mouths and deep shade; Eternal light: stems glow in the dark; deep shade and cave entrances.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Mycena",
+     "species": "luxaeterna",
+     "native_range": "Brazilian Atlantic forest",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.005,
+      0.02
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cordyceps",
@@ -3917,7 +4715,26 @@
       0.0
      ]
     },
-    "source": "tropical rainforest; Grows from dead insects clamped to the undersides of leaves — fed by the insect ledger.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "tropical rainforest; Grows from dead insects clamped to the undersides of leaves — fed by the insect ledger.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Ophiocordyceps",
+     "species": "unilateralis",
+     "native_range": "tropical rainforest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.05
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ]
  }

@@ -1,0 +1,89 @@
+{
+ "key": "DEEP_OCEAN",
+ "name": "Open / deep ocean",
+ "group": "Ocean",
+ "size": "vast",
+ "status": "researched",
+ "kind": "water",
+ "notes": "Open and deep ocean: no rooted plants at all; near-empty is correct. The only macroscopic 'vegetation' is drifting pelagic Sargassum rafts in the subtropical gyres (Sargasso Sea) and drift kelp; everything else is phytoplankton, not renderable.",
+ "climate": {
+  "temp_c": [
+   -2,
+   32
+  ],
+  "moisture": [
+   0,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [],
+  "ground": [
+   {
+    "name": "Pelagic sargassum",
+    "genus": "Sargassum",
+    "species": "natans",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     18,
+     30
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     1.0
+    ],
+    "density": 0.15,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#9A8A30",
+    "accent": "#6A5A20",
+    "source": "underwater — Sargassum natans, free-floating holopelagic brown alga of the Sargasso Sea and tropical Atlantic gyre, surface rafts 0.2-1 m thick — Wikipedia"
+   },
+   {
+    "name": "Drift sargassum",
+    "genus": "Sargassum",
+    "species": "fluitans",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     18,
+     30
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     1.0
+    ],
+    "density": 0.1,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#8A7A28",
+    "accent": "#5A4A18",
+    "source": "underwater — Sargassum fluitans, second holopelagic species forming Atlantic and Caribbean windrows, 0.2-1 m — Wikipedia"
+   }
+  ],
+  "epiphyte": []
+ }
+}

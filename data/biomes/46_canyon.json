@@ -43,61 +43,24 @@
     ],
     "color": "#5AB040",
     "accent": "#A09070",
-    "source": "Populus fremontii, SW USA canyon streams, 12-30 m, bright green — USDA PLANTS"
-   },
-   {
-    "name": "Two-needle pinyon",
-    "genus": "Pinus",
-    "species": "edulis",
-    "shape": "conifer",
-    "temp_c": [
-     6,
-     15
-    ],
-    "moisture": [
-     0.18,
-     0.4
-    ],
-    "altitude_m": [
-     1400,
-     2700
-    ],
-    "height_m": [
-     5,
-     12
-    ],
-    "density": 0.6,
-    "soil": "thin",
-    "color": "#3A6A3A",
-    "accent": "#7A6050",
-    "source": "Pinus edulis, Colorado Plateau canyon rims and slopes, 5-12 m — USDA PLANTS"
-   },
-   {
-    "name": "Utah juniper",
-    "genus": "Juniperus",
-    "species": "osteosperma",
-    "shape": "conifer",
-    "temp_c": [
-     6,
-     17
-    ],
-    "moisture": [
-     0.12,
-     0.35
-    ],
-    "altitude_m": [
-     900,
-     2600
-    ],
-    "height_m": [
-     3,
-     8
-    ],
-    "density": 0.8,
-    "soil": "thin",
-    "color": "#4A7040",
-    "accent": "#8A6A50",
-    "source": "Juniperus osteosperma, canyon rims and slopes of the Colorado Plateau, 3-8 m — USDA PLANTS"
+    "source": "Populus fremontii, SW USA canyon streams, 12-30 m, bright green — USDA PLANTS",
+    "traits": {
+     "genus": "Populus",
+     "species": "fremontii",
+     "native_range": "Populus fremontii, SW USA canyon streams, 12-30 m, bright green — USDA PLANTS",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      12,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Gambel oak",
@@ -124,7 +87,24 @@
     "soil": "thin",
     "color": "#3F8C38",
     "accent": "#7A6A55",
-    "source": "Quercus gambelii, side canyons and north slopes of the SW USA, clonal deciduous oak 5-15 m — USDA PLANTS"
+    "source": "Quercus gambelii, side canyons and north slopes of the SW USA, clonal deciduous oak 5-15 m — USDA PLANTS",
+    "traits": {
+     "genus": "Quercus",
+     "species": "gambelii",
+     "native_range": "Quercus gambelii, side canyons and north slopes of the SW USA, clonal deciduous oak 5-15 m — USDA PLANTS",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      5,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Netleaf hackberry",
@@ -147,10 +127,235 @@
     "soil": "thin",
     "color": "#3F8C38",
     "accent": "#8A7A65",
-    "source": "Celtis reticulata, canyon bottoms and rocky slopes, SW USA and N Mexico, 5-12 m — USDA PLANTS"
+    "source": "Celtis reticulata, canyon bottoms and rocky slopes, SW USA and N Mexico, 5-12 m — USDA PLANTS",
+    "traits": {
+     "genus": "Celtis",
+     "species": "reticulata",
+     "native_range": "Celtis reticulata, canyon bottoms and rocky slopes, SW USA and N Mexico, 5-12 m — USDA PLANTS",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      5,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Two-needle pinyon",
+    "genus": "Pinus",
+    "species": "edulis",
+    "shape": "conifer",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.18,
+     0.4
+    ],
+    "altitude_m": [
+     1400,
+     2700
+    ],
+    "height_m": [
+     5,
+     12
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#3A6A3A",
+    "accent": "#7A6050",
+    "source": "Pinus edulis, Colorado Plateau canyon rims and slopes, 5-12 m — USDA PLANTS",
+    "traits": {
+     "genus": "Pinus",
+     "species": "edulis",
+     "native_range": "Pinus edulis, Colorado Plateau canyon rims and slopes, 5-12 m — USDA PLANTS",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      5,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Utah juniper",
+    "genus": "Juniperus",
+    "species": "osteosperma",
+    "shape": "conifer",
+    "temp_c": [
+     6,
+     17
+    ],
+    "moisture": [
+     0.12,
+     0.35
+    ],
+    "altitude_m": [
+     900,
+     2600
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#4A7040",
+    "accent": "#8A6A50",
+    "source": "Juniperus osteosperma, canyon rims and slopes of the Colorado Plateau, 3-8 m — USDA PLANTS",
+    "traits": {
+     "genus": "Juniperus",
+     "species": "osteosperma",
+     "native_range": "Juniperus osteosperma, canyon rims and slopes of the Colorado Plateau, 3-8 m — USDA PLANTS",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      3,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [
+   {
+    "name": "Big sagebrush",
+    "genus": "Artemisia",
+    "species": "tridentata",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     17
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "height_m": [
+     0.6,
+     2.5
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#9AA890",
+    "accent": "#B8A878",
+    "source": "Artemisia tridentata, canyon benches and rims, 0.6-2.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Artemisia",
+     "species": "tridentata",
+     "native_range": "Artemisia tridentata, canyon benches and rims, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.6,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Blackbrush",
+    "genus": "Coleogyne",
+    "species": "ramosissima",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.08,
+     0.25
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#6A7A60",
+    "accent": "#3A3A38",
+    "source": "Coleogyne ramosissima, dark low shrub of canyon terraces and lower slopes, 0.3-1.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Coleogyne",
+     "species": "ramosissima",
+     "native_range": "Coleogyne ramosissima, dark low shrub of canyon terraces and lower slopes, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Cliffrose",
+    "genus": "Purshia",
+    "species": "stansburiana",
+    "shape": "gnarled",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.12,
+     0.35
+    ],
+    "height_m": [
+     1,
+     4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#6A8A60",
+    "accent": "#F0E8B0",
+    "source": "Purshia stansburiana, cliffs and rocky slopes of the Colorado Plateau, gnarled shrub 1-4 m, cream flowers — USDA PLANTS",
+    "traits": {
+     "genus": "Purshia",
+     "species": "stansburiana",
+     "native_range": "Purshia stansburiana, cliffs and rocky slopes of the Colorado Plateau, gnarled shrub 1-4 m, cream flowers — USDA PLANTS",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
     "name": "Coyote willow",
     "genus": "Salix",
@@ -175,30 +380,24 @@
     ],
     "color": "#8FB070",
     "accent": "#A08060",
-    "source": "Salix exigua, sandbars and stream edges of western N American canyons, narrow-leaved thicket 2-5 m — USDA PLANTS"
-   },
-   {
-    "name": "Cliffrose",
-    "genus": "Purshia",
-    "species": "stansburiana",
-    "shape": "gnarled",
-    "temp_c": [
-     8,
-     18
-    ],
-    "moisture": [
-     0.12,
-     0.35
-    ],
-    "height_m": [
-     1,
-     4
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#6A8A60",
-    "accent": "#F0E8B0",
-    "source": "Purshia stansburiana, cliffs and rocky slopes of the Colorado Plateau, gnarled shrub 1-4 m, cream flowers — USDA PLANTS"
+    "source": "Salix exigua, sandbars and stream edges of western N American canyons, narrow-leaved thicket 2-5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Salix",
+     "species": "exigua",
+     "native_range": "Salix exigua, sandbars and stream edges of western N American canyons, narrow-leaved thicket 2-5 m — USDA PLANTS",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Green Mormon tea",
@@ -221,53 +420,24 @@
     "soil": "thin",
     "color": "#5A9A50",
     "accent": "#9A9070",
-    "source": "Ephedra viridis, canyon slopes and rims of the SW USA, jointed green shrub 0.5-1.5 m — USDA PLANTS"
-   },
-   {
-    "name": "Big sagebrush",
-    "genus": "Artemisia",
-    "species": "tridentata",
-    "shape": "shrub",
-    "temp_c": [
-     2,
-     17
-    ],
-    "moisture": [
-     0.15,
-     0.35
-    ],
-    "height_m": [
-     0.6,
-     2.5
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#9AA890",
-    "accent": "#B8A878",
-    "source": "Artemisia tridentata, canyon benches and rims, 0.6-2.5 m — USDA PLANTS"
-   },
-   {
-    "name": "Blackbrush",
-    "genus": "Coleogyne",
-    "species": "ramosissima",
-    "shape": "shrub",
-    "temp_c": [
-     8,
-     18
-    ],
-    "moisture": [
-     0.08,
-     0.25
-    ],
-    "height_m": [
-     0.3,
-     1.5
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#6A7A60",
-    "accent": "#3A3A38",
-    "source": "Coleogyne ramosissima, dark low shrub of canyon terraces and lower slopes, 0.3-1.5 m — USDA PLANTS"
+    "source": "Ephedra viridis, canyon slopes and rims of the SW USA, jointed green shrub 0.5-1.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Ephedra",
+     "species": "viridis",
+     "native_range": "Ephedra viridis, canyon slopes and rims of the SW USA, jointed green shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Prickly pear",
@@ -290,32 +460,66 @@
     "soil": "thin",
     "color": "#6A9A50",
     "accent": "#E0C040",
-    "source": "Opuntia engelmannii, lower canyon slopes of the SW USA, 0.5-2 m — USDA PLANTS"
+    "source": "Opuntia engelmannii, lower canyon slopes of the SW USA, 0.5-2 m — USDA PLANTS",
+    "traits": {
+     "genus": "Opuntia",
+     "species": "engelmannii",
+     "native_range": "Opuntia engelmannii, lower canyon slopes of the SW USA, 0",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
    {
-    "name": "Indian ricegrass",
-    "genus": "Achnatherum",
-    "species": "hymenoides",
-    "shape": "tussock",
+    "name": "Desert globemallow",
+    "genus": "Sphaeralcea",
+    "species": "ambigua",
+    "shape": "grass",
     "temp_c": [
-     2,
-     18
+     10,
+     24
     ],
     "moisture": [
-     0.08,
+     0.05,
      0.3
     ],
     "height_m": [
      0.3,
-     0.6
+     1
     ],
-    "density": 0.7,
-    "soil": "sand",
-    "color": "#C8B060",
-    "accent": "#E8DCB0",
-    "source": "Achnatherum hymenoides, sandy canyon benches, 30-60 cm — USDA PLANTS"
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#8FA08A",
+    "accent": "#E86A40",
+    "source": "Sphaeralcea ambigua, rocky canyon slopes of the SW USA, orange-flowered forb 30-100 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Sphaeralcea",
+     "species": "ambigua",
+     "native_range": "Sphaeralcea ambigua, rocky canyon slopes of the SW USA, orange-flowered forb 30-100 cm — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Galleta grass",
@@ -338,30 +542,64 @@
     "soil": "sand",
     "color": "#9AA870",
     "accent": "#C8B060",
-    "source": "Pleuraphis jamesii, canyon flats and rims of the Colorado Plateau, 20-50 cm — USDA PLANTS"
+    "source": "Pleuraphis jamesii, canyon flats and rims of the Colorado Plateau, 20-50 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Pleuraphis",
+     "species": "jamesii",
+     "native_range": "Pleuraphis jamesii, canyon flats and rims of the Colorado Plateau, 20-50 cm — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Sand dropseed",
-    "genus": "Sporobolus",
-    "species": "cryptandrus",
+    "name": "Indian ricegrass",
+    "genus": "Achnatherum",
+    "species": "hymenoides",
     "shape": "tussock",
     "temp_c": [
-     4,
-     22
+     2,
+     18
     ],
     "moisture": [
-     0.1,
-     0.35
+     0.08,
+     0.3
     ],
     "height_m": [
      0.3,
-     1
+     0.6
     ],
-    "density": 0.5,
+    "density": 0.7,
     "soil": "sand",
-    "color": "#9AB070",
-    "accent": "#C8B060",
-    "source": "Sporobolus cryptandrus, sandy canyon floors and washes, 30-100 cm — USDA PLANTS"
+    "color": "#C8B060",
+    "accent": "#E8DCB0",
+    "source": "Achnatherum hymenoides, sandy canyon benches, 30-60 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Achnatherum",
+     "species": "hymenoides",
+     "native_range": "Achnatherum hymenoides, sandy canyon benches, 30-60 cm — USDA PLANTS",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Maidenhair fern",
@@ -387,30 +625,64 @@
     ],
     "color": "#5AB040",
     "accent": "#2A2A2A",
-    "source": "Adiantum capillus-veneris, dripping seeps and hanging gardens on canyon walls, 20-50 cm — USDA PLANTS"
+    "source": "Adiantum capillus-veneris, dripping seeps and hanging gardens on canyon walls, 20-50 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Adiantum",
+     "species": "capillus-veneris",
+     "native_range": "Adiantum capillus-veneris, dripping seeps and hanging gardens on canyon walls, 20-50 cm — USDA PLANTS",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Desert globemallow",
-    "genus": "Sphaeralcea",
-    "species": "ambigua",
-    "shape": "grass",
+    "name": "Sand dropseed",
+    "genus": "Sporobolus",
+    "species": "cryptandrus",
+    "shape": "tussock",
     "temp_c": [
-     10,
-     24
+     4,
+     22
     ],
     "moisture": [
-     0.05,
-     0.3
+     0.1,
+     0.35
     ],
     "height_m": [
      0.3,
      1
     ],
-    "density": 0.4,
-    "soil": "thin",
-    "color": "#8FA08A",
-    "accent": "#E86A40",
-    "source": "Sphaeralcea ambigua, rocky canyon slopes of the SW USA, orange-flowered forb 30-100 cm — USDA PLANTS"
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#9AB070",
+    "accent": "#C8B060",
+    "source": "Sporobolus cryptandrus, sandy canyon floors and washes, 30-100 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Sporobolus",
+     "species": "cryptandrus",
+     "native_range": "Sporobolus cryptandrus, sandy canyon floors and washes, 30-100 cm — USDA PLANTS",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Scarlet monkeyflower",
@@ -436,7 +708,24 @@
     ],
     "color": "#5AB040",
     "accent": "#E03030",
-    "source": "Erythranthe cardinalis, streamsides and seeps in SW USA canyons, red-flowered herb 30-80 cm — USDA PLANTS"
+    "source": "Erythranthe cardinalis, streamsides and seeps in SW USA canyons, red-flowered herb 30-80 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Erythranthe",
+     "species": "cardinalis",
+     "native_range": "Erythranthe cardinalis, streamsides and seeps in SW USA canyons, red-flowered herb 30-80 cm — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
@@ -549,5 +838,6 @@
    "cover": 0.3,
    "source": "Brown 1994 Great Basin desertscrub; USNVC Artemisia tridentata sandy shrubland"
   }
- ]
+ ],
+ "hero_species": []
 }

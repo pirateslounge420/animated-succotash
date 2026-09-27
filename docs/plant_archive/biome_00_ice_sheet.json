@@ -1,0 +1,73 @@
+{
+ "key": "ICE_SHEET",
+ "name": "Ice sheet / polar desert",
+ "group": "Polar/cold",
+ "size": "mid",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Permanent ice and polar desert (Antarctic interior, Greenland ice sheet, high-Arctic nunataks). Essentially plantless; only crustose lichens and a cushion moss survive on exposed rock edges, so the list is deliberately near-empty.",
+ "climate": {
+  "temp_c": [
+   -40,
+   -10
+  ],
+  "moisture": [
+   0,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [],
+  "ground": [
+   {
+    "name": "Map lichen",
+    "genus": "Rhizocarpon",
+    "species": "geographicum",
+    "shape": "moss",
+    "temp_c": [
+     -40,
+     5
+    ],
+    "moisture": [
+     0,
+     1
+    ],
+    "height_m": [
+     0.001,
+     0.01
+    ],
+    "density": 0.15,
+    "soil": "thin",
+    "color": "#B8C830",
+    "accent": "#2A2A2A",
+    "source": "Rhizocarpon geographicum, bipolar/cosmopolitan crustose lichen on exposed rock incl. Antarctic nunataks; yellow-green crust <1 cm thick (Antarctic lichen flora refs)"
+   },
+   {
+    "name": "Antarctic moss",
+    "genus": "Bryum",
+    "species": "pseudotriquetrum",
+    "shape": "moss",
+    "temp_c": [
+     -30,
+     5
+    ],
+    "moisture": [
+     0.4,
+     1
+    ],
+    "height_m": [
+     0.01,
+     0.05
+    ],
+    "density": 0.1,
+    "soil": "thin",
+    "color": "#4A8A3A",
+    "accent": "#6A5A3A",
+    "source": "Bryum pseudotriquetrum, cosmopolitan moss present in Antarctic and high-Arctic rock cracks; cushions 1-5 cm (British Antarctic Survey plant lists)"
+   }
+  ],
+  "epiphyte": []
+ }
+}

@@ -1,0 +1,391 @@
+{
+ "key": "PARAMO",
+ "name": "Paramo",
+ "group": "High-altitude",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "High-Andean paramo (Colombia, Venezuela, Ecuador, N Peru) above cloud forest: humid, giant-rosette frailejones, tussock grasses, cushion bogs and dwarf shrubs; Espeletia in the north, Puya and Chusquea widespread.",
+ "climate": {
+  "temp_c": [
+   -3,
+   5
+  ],
+  "moisture": [
+   0.55,
+   1
+  ],
+  "altitude_m": [
+   2500,
+   5000
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Frailejon",
+    "genus": "Espeletia",
+    "species": "grandiflora",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "altitude_m": [
+     2700,
+     4300
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#A8B890",
+    "accent": "#C8A050",
+    "source": "Espeletia grandiflora, Colombian Eastern Cordillera paramo 2700-4200 m, woolly stem-rosette 0.5-3 m with yellow daisies"
+   },
+   {
+    "name": "Tall frailejon",
+    "genus": "Espeletia",
+    "species": "pycnophylla",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "altitude_m": [
+     3000,
+     4200
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#A8B890",
+    "accent": "#D0B058",
+    "source": "Espeletia pycnophylla, Ecuador/S Colombia paramo (El Angel), columnar stem-rosette to 6 m, dense stands"
+   },
+   {
+    "name": "Paramo dwarf shrub",
+    "genus": "Hypericum",
+    "species": "laricifolium",
+    "shape": "shrub",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     2800,
+     4300
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "color": "#3F8A3A",
+    "accent": "#F0C030",
+    "source": "Hypericum laricifolium, Venezuela to Peru paramo 2800-4300 m, heath-like needle-leaved shrub 0.5-2 m, yellow flowers"
+   },
+   {
+    "name": "Paramo dwarf bamboo",
+    "genus": "Chusquea",
+    "species": "tessellata",
+    "shape": "bamboo",
+    "temp_c": [
+     -2,
+     6
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "altitude_m": [
+     3000,
+     4300
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "color": "#6AB048",
+    "accent": "#B0A060",
+    "source": "Chusquea tessellata, Colombia/Venezuela/Ecuador wet paramo 3000-4300 m, dwarf bamboo thickets 0.5-2 m"
+   },
+   {
+    "name": "Paramo puya",
+    "genus": "Puya",
+    "species": "clava-herculis",
+    "shape": "spike_rosette",
+    "temp_c": [
+     -2,
+     6
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     3300,
+     4400
+    ],
+    "height_m": [
+     0.8,
+     2.5
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#8AB0A0",
+    "accent": "#4060C0",
+    "source": "Puya clava-herculis, Ecuadorian paramo 3300-4400 m, spiny terrestrial bromeliad rosette 1-2.5 m with blue-green spike"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Tussock grass",
+    "genus": "Calamagrostis",
+    "species": "effusa",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "altitude_m": [
+     2800,
+     4300
+    ],
+    "height_m": [
+     0.4,
+     1
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#B0B858",
+    "accent": "#C8B060",
+    "source": "Calamagrostis effusa, dominant bunchgrass of Colombian/Venezuelan grass paramo 2800-4300 m, tussocks 40-100 cm"
+   },
+   {
+    "name": "Cushion plant",
+    "genus": "Plantago",
+    "species": "rigida",
+    "shape": "cushion",
+    "temp_c": [
+     -3,
+     5
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     3500,
+     4800
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "color": "#5AA040",
+    "accent": "#8A9A50",
+    "source": "Plantago rigida, Andean cushion bogs Venezuela to Bolivia 3500-4800 m, hard mounded cushions 5-30 cm"
+   },
+   {
+    "name": "Bog moss",
+    "genus": "Sphagnum",
+    "species": "magellanicum",
+    "shape": "moss",
+    "temp_c": [
+     -3,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#B04A40",
+    "accent": "#8A6030",
+    "source": "Sphagnum magellanicum, Andean paramo bogs and southern S America, red peat moss carpets"
+   },
+   {
+    "name": "Paramo lupine",
+    "genus": "Lupinus",
+    "species": "alopecuroides",
+    "shape": "rosette",
+    "temp_c": [
+     -3,
+     4
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     3800,
+     4800
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#A0B0A0",
+    "accent": "#5050C0",
+    "source": "Lupinus alopecuroides, superparamo Colombia/Ecuador 3800-4800 m, woolly rosette with blue flower spike"
+   },
+   {
+    "name": "Paramo club moss",
+    "genus": "Lycopodium",
+    "species": "clavatum",
+    "shape": "fern",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.3,
+    "soil": "peat",
+    "color": "#4A9A40",
+    "accent": "#9AA040",
+    "source": "Lycopodium clavatum, cosmopolitan incl. Andean paramo, trailing club moss 5-20 cm"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 0,
+  "names": []
+ },
+ "associations": [
+  {
+   "name": "Frailejon-tussock grass paramo",
+   "where": "open humid slopes and rolling plateaus above treeline, well-drained peaty soil",
+   "dominant": [
+    "Frailejon"
+   ],
+   "companion": [
+    "Paramo dwarf shrub",
+    "Paramo dwarf bamboo"
+   ],
+   "ground": [
+    "Tussock grass",
+    "Paramo lupine",
+    "Paramo club moss"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Cuatrecasas 1968 Paramo vegetation and its life forms; Cleef 1981 Vegetation of the paramos of the Colombian Cordillera Oriental"
+  },
+  {
+   "name": "Tall frailejon subparamo",
+   "where": "sheltered lower paramo just above the cloud forest edge, deeper soil",
+   "dominant": [
+    "Tall frailejon",
+    "Paramo dwarf bamboo"
+   ],
+   "companion": [
+    "Paramo dwarf shrub"
+   ],
+   "ground": [
+    "Tussock grass",
+    "Paramo lupine"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Cleef 1981; Cuatrecasas 1968"
+  },
+  {
+   "name": "Cushion bog (paramo turbera)",
+   "where": "flat valley floors, hollows and lake margins with waterlogged peat",
+   "dominant": [
+    "Cushion plant"
+   ],
+   "companion": [
+    "Frailejon"
+   ],
+   "ground": [
+    "Cushion plant",
+    "Bog moss",
+    "Paramo club moss"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Cleef 1981; Bosman et al. 1993 Paramo cushion bogs of Colombia (Vegetatio)"
+  },
+  {
+   "name": "Puya-dwarf shrub rocky paramo",
+   "where": "rocky ridges, cliffs and dry exposed slopes with thin soil",
+   "dominant": [
+    "Paramo puya",
+    "Paramo dwarf shrub"
+   ],
+   "companion": [
+    "Frailejon"
+   ],
+   "ground": [
+    "Tussock grass",
+    "Paramo lupine"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Cuatrecasas 1968; Luteyn 1999 Paramos: a checklist of plant diversity, geographical distribution and botanical literature"
+  },
+  {
+   "name": "Tussock grass paramo grassland",
+   "where": "wide open slopes and burned or grazed flats, drier and wind-exposed",
+   "dominant": [
+    "Tussock grass"
+   ],
+   "companion": [
+    "Paramo dwarf shrub"
+   ],
+   "ground": [
+    "Tussock grass",
+    "Paramo lupine"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Hofstede 1995 Effects of burning and grazing on a Colombian paramo ecosystem; Cleef 1981"
+  }
+ ]
+}
