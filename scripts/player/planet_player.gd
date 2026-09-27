@@ -760,12 +760,12 @@ func _unstick(delta: float, wish: Vector3, moved: Vector3) -> void:
 	var pushing := wish.length() > 0.1
 	var floor_now := is_on_floor()
 	var kind := ""
-	if walls >= 2:
-		kind = "wedge" if pushing or not floor_now else ""
-	elif not floor_now:
+	if not floor_now:
 		kind = "hung"
 	elif walls == 0 and pushing:
 		kind = "crease"
+	elif pushing:
+		kind = "wedge"
 	if kind == "" or not still:
 		_stuck_t = 0.0
 		return
@@ -775,7 +775,6 @@ func _unstick(delta: float, wish: Vector3, moved: Vector3) -> void:
 	if _stuck_t < (JAM_S if kind == "crease" else STUCK_S):
 		return
 	_stuck_t = 0.0
-	unsticks += 1
 	# Which way out: where you're pushing, else away from what holds you.
 	var want := wish - up * wish.dot(up)
 	if want.length() < 0.1:
@@ -783,6 +782,12 @@ func _unstick(delta: float, wish: Vector3, moved: Vector3) -> void:
 	if want.length() < 0.1:
 		want = -_camera_forward()
 	want = want.normalized()
+	# Pushing against a trunk or a wall you could simply turn away from
+	# isn't being stuck: only when backing off is blocked too (between two
+	# trunks, in the V of a tree's roots).
+	if kind == "wedge" and walls >= 1 and not test_move(global_transform.translated(up * 0.05), -want * 0.15):
+		return
+	unsticks += 1
 	var side := want.cross(up).normalized()
 	var best := Vector3.ZERO
 	var best_dot := -INF
