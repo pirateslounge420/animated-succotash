@@ -102,7 +102,27 @@
     },
     "cannot_be_browsed": true,
     "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Fast-growing, few-ribbed columns with short spines; branches from the base into a clump. Huge white night-opening flowers; red fruit. Synonym Echinopsis pachanoi.",
-    "ceremonial": "documented"
+    "ceremonial": "documented",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "pachanoi",
+     "native_range": "",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      6.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus peruvianus",
@@ -200,7 +220,27 @@
     },
     "cannot_be_browsed": true,
     "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Blue-green columns with long spines; sprawls and branches heavily. White nocturnal flowers, edible fruit. Synonym Echinopsis peruviana.",
-    "ceremonial": "documented"
+    "ceremonial": "documented",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "peruvianus",
+     "native_range": "",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      6.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus bridgesii",
@@ -298,7 +338,27 @@
     },
     "cannot_be_browsed": true,
     "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Pale green, thinner columns with long yellow spines; forms clumps. White night flowers. Synonym Echinopsis lageniformis.",
-    "ceremonial": "documented"
+    "ceremonial": "documented",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "bridgesii",
+     "native_range": "",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      2.0,
+      5.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus scopulicola",
@@ -396,7 +456,27 @@
     },
     "cannot_be_browsed": true,
     "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Dark green, almost spineless columns with a smooth skin. White nocturnal flowers. Synonym Echinopsis scopulicola. Rare and local.",
-    "ceremonial": "documented"
+    "ceremonial": "documented",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "scopulicola",
+     "native_range": "",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      4.5
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus macrogonus",
@@ -493,7 +573,27 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "reported",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: documented (presence recorded in the literature; no potency data kept). Blue-green columns, long spines; the umbrella name Kew uses for the San Pedro/Peruvian torch complex."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: documented (presence recorded in the literature; no potency data kept). Blue-green columns, long spines; the umbrella name Kew uses for the San Pedro/Peruvian torch complex.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "macrogonus",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      6.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus cuzcoensis",
@@ -590,11 +690,31 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "reported",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Many-ribbed, heavily spined; ceremonial use recorded but weak."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Many-ribbed, heavily spined; ceremonial use recorded but weak.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "cuzcoensis",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      5.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus terscheckii",
-    "display": "Card\u00f3n grande",
+    "display": "Cardón grande",
     "genus": "Trichocereus",
     "species": "terscheckii",
     "family": "Cactaceae",
@@ -687,7 +807,27 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "trace",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). A true tree cactus, trunked with many arms; the tallest in the genus. Presence recorded, ethnobotanical use minor."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). A true tree cactus, trunked with many arms; the tallest in the genus. Presence recorded, ethnobotanical use minor.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "terscheckii",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      6.0,
+      12.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus tacaquirensis",
@@ -784,7 +924,27 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "trace",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Stout columns, dense spines; close to terscheckii."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Stout columns, dense spines; close to terscheckii.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "tacaquirensis",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      6.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus taquimbalensis",
@@ -881,7 +1041,27 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "trace",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Treated by Kew as tacaquirensis; kept separate for its own range."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Treated by Kew as tacaquirensis; kept separate for its own range.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "taquimbalensis",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      5.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus santaensis",
@@ -978,7 +1158,27 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "reported",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Ancash form of the San Pedro complex."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Ancash form of the San Pedro complex.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "santaensis",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      5.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus puquiensis",
@@ -1075,11 +1275,31 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "reported",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Ayacucho form of the complex; thick columns."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Ayacucho form of the complex; thick columns.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "puquiensis",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      5.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus huanucoensis",
-    "display": "Hu\u00e1nuco torch",
+    "display": "Huánuco torch",
     "genus": "Trichocereus",
     "species": "huanucoensis",
     "family": "Cactaceae",
@@ -1172,11 +1392,31 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "reported",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Hu\u00e1nuco form; broad ribs."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Huánuco form; broad ribs.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "huanucoensis",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      6.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus riomizquensis",
-    "display": "R\u00edo Mizque torch",
+    "display": "Río Mizque torch",
     "genus": "Trichocereus",
     "species": "riomizquensis",
     "family": "Cactaceae",
@@ -1269,7 +1509,27 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "reported",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Bolivian form near bridgesii."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Bolivian form near bridgesii.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "riomizquensis",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus werdermannianus",
@@ -1366,11 +1626,31 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "reported",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Stout, well-spined; Kew files as E. werdermannii."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Stout, well-spined; Kew files as E. werdermannii.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "werdermannianus",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      6.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus validus",
-    "display": "Card\u00f3n de la sierra",
+    "display": "Cardón de la sierra",
     "genus": "Trichocereus",
     "species": "validus",
     "family": "Cactaceae",
@@ -1463,7 +1743,27 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "trace",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Treated as terscheckii by Kew."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Treated as terscheckii by Kew.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "validus",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      4.0,
+      8.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus knuthianus",
@@ -1560,7 +1860,27 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "reported",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Mara\u00f1\u00f3n form; pale spines."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Marañón form; pale spines.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "knuthianus",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      6.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus glaucus",
@@ -1657,7 +1977,27 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "reported",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Frosted blue skin."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: reported (presence recorded in the literature; no potency data kept). Frosted blue skin.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "glaucus",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      3.0,
+      5.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Trichocereus chalaensis",
@@ -1754,7 +2094,27 @@
     },
     "cannot_be_browsed": true,
     "ceremonial": "trace",
-    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Lomas fog-hill cactus near the Pacific."
+    "source": "Kew POWO synonymy under Echinopsis; range and habit from Anderson, The Cactus Family (2001) and the ethnobotanical literature on the Andean torch cacti. Ceremonial attestation: trace (presence recorded in the literature; no potency data kept). Lomas fog-hill cactus near the Pacific.",
+    "traits": {
+     "genus": "Trichocereus",
+     "species": "chalaensis",
+     "native_range": "Kew POWO synonymy under Echinopsis",
+     "leaf_shape": "none — spines on ribs",
+     "trunk": "succulent columns or pads",
+     "petiole": "none",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ]
  }

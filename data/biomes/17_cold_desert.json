@@ -21,75 +21,6 @@
   "canopy": [],
   "shrub": [
    {
-    "name": "Saltbush",
-    "genus": "Atriplex",
-    "species": "canescens",
-    "shape": "shrub",
-    "temp_c": [
-     4,
-     20
-    ],
-    "moisture": [
-     0.05,
-     0.25
-    ],
-    "height_m": [
-     0.5,
-     2.5
-    ],
-    "density": 1.0,
-    "soil": "sand",
-    "color": "#AEB8A0",
-    "accent": "#D8D0A8",
-    "source": "Atriplex canescens (fourwing saltbush), western N American deserts, grey shrub 0.5-2.5 m — USDA PLANTS"
-   },
-   {
-    "name": "Saxaul",
-    "genus": "Haloxylon",
-    "species": "ammodendron",
-    "shape": "gnarled",
-    "temp_c": [
-     2,
-     14
-    ],
-    "moisture": [
-     0.03,
-     0.2
-    ],
-    "height_m": [
-     2,
-     8
-    ],
-    "density": 0.7,
-    "soil": "sand",
-    "color": "#8FA878",
-    "accent": "#8A7A60",
-    "source": "Haloxylon ammodendron, Gobi and Central Asian sand/gravel deserts, leafless twisted shrub-tree 2-8 m — Flora of China"
-   },
-   {
-    "name": "Winterfat",
-    "genus": "Krascheninnikovia",
-    "species": "ceratoides",
-    "shape": "shrub",
-    "temp_c": [
-     -2,
-     16
-    ],
-    "moisture": [
-     0.05,
-     0.25
-    ],
-    "height_m": [
-     0.3,
-     1
-    ],
-    "density": 0.7,
-    "soil": "thin",
-    "color": "#B8C0A8",
-    "accent": "#E8E0D0",
-    "source": "Krascheninnikovia ceratoides, Eurasian and N American cold deserts, woolly grey sub-shrub 0.3-1 m — Flora of China / USDA PLANTS"
-   },
-   {
     "name": "Blackbrush",
     "genus": "Coleogyne",
     "species": "ramosissima",
@@ -110,7 +41,24 @@
     "soil": "thin",
     "color": "#6A7A60",
     "accent": "#3A3A38",
-    "source": "Coleogyne ramosissima, Mojave-Great Basin transition, dark twiggy shrub 0.3-1.5 m — USDA PLANTS"
+    "source": "Coleogyne ramosissima, Mojave-Great Basin transition, dark twiggy shrub 0.3-1.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Coleogyne",
+     "species": "ramosissima",
+     "native_range": "Coleogyne ramosissima, Mojave-Great Basin transition, dark twiggy shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Mormon tea",
@@ -133,7 +81,24 @@
     "soil": "sand",
     "color": "#7FA060",
     "accent": "#9A9070",
-    "source": "Ephedra nevadensis, Great Basin and Mojave, leafless jointed green shrub 0.5-1.5 m — USDA PLANTS"
+    "source": "Ephedra nevadensis, Great Basin and Mojave, leafless jointed green shrub 0.5-1.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Ephedra",
+     "species": "nevadensis",
+     "native_range": "Ephedra nevadensis, Great Basin and Mojave, leafless jointed green shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Reaumuria",
@@ -156,18 +121,113 @@
     "soil": "sand",
     "color": "#9AAA90",
     "accent": "#D0A0A0",
-    "source": "Reaumuria soongarica, dominant dwarf shrub of Gobi gravel deserts, 20-60 cm — Flora of China"
-   }
-  ],
-  "ground": [
+    "source": "Reaumuria soongarica, dominant dwarf shrub of Gobi gravel deserts, 20-60 cm — Flora of China",
+    "traits": {
+     "genus": "Reaumuria",
+     "species": "soongarica",
+     "native_range": "Reaumuria soongarica, dominant dwarf shrub of Gobi gravel deserts, 20-60 cm — Flora of China",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Indian ricegrass",
-    "genus": "Achnatherum",
-    "species": "hymenoides",
-    "shape": "tussock",
+    "name": "Saltbush",
+    "genus": "Atriplex",
+    "species": "canescens",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.05,
+     0.25
+    ],
+    "height_m": [
+     0.5,
+     2.5
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "color": "#AEB8A0",
+    "accent": "#D8D0A8",
+    "source": "Atriplex canescens (fourwing saltbush), western N American deserts, grey shrub 0.5-2.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Atriplex",
+     "species": "canescens",
+     "native_range": "Atriplex canescens (fourwing saltbush), western N American deserts, grey shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Saxaul",
+    "genus": "Haloxylon",
+    "species": "ammodendron",
+    "shape": "gnarled",
     "temp_c": [
      2,
-     18
+     14
+    ],
+    "moisture": [
+     0.03,
+     0.2
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#8FA878",
+    "accent": "#8A7A60",
+    "source": "Haloxylon ammodendron, Gobi and Central Asian sand/gravel deserts, leafless twisted shrub-tree 2-8 m — Flora of China",
+    "traits": {
+     "genus": "Haloxylon",
+     "species": "ammodendron",
+     "native_range": "Haloxylon ammodendron, Gobi and Central Asian sand/gravel deserts, leafless twisted shrub-tree 2-8 m — Flora of China",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Winterfat",
+    "genus": "Krascheninnikovia",
+    "species": "ceratoides",
+    "shape": "shrub",
+    "temp_c": [
+     -2,
+     16
     ],
     "moisture": [
      0.05,
@@ -175,13 +235,72 @@
     ],
     "height_m": [
      0.3,
-     0.6
+     1
     ],
-    "density": 0.6,
-    "soil": "sand",
-    "color": "#C8B060",
-    "accent": "#E8DCB0",
-    "source": "Achnatherum hymenoides, sandy cold deserts of western N America, 30-60 cm — USDA PLANTS"
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#B8C0A8",
+    "accent": "#E8E0D0",
+    "source": "Krascheninnikovia ceratoides, Eurasian and N American cold deserts, woolly grey sub-shrub 0.3-1 m — Flora of China / USDA PLANTS",
+    "traits": {
+     "genus": "Krascheninnikovia",
+     "species": "ceratoides",
+     "native_range": "Krascheninnikovia ceratoides, Eurasian and N American cold deserts, woolly grey sub-shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Desert halogeton",
+    "genus": "Anabasis",
+    "species": "brevifolia",
+    "shape": "cushion",
+    "temp_c": [
+     0,
+     12
+    ],
+    "moisture": [
+     0.02,
+     0.15
+    ],
+    "height_m": [
+     0.05,
+     0.25
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#8FA080",
+    "accent": "#B0A080",
+    "source": "Anabasis brevifolia, Gobi and Kazakh stony deserts, succulent dwarf cushion 5-25 cm — Flora of China",
+    "traits": {
+     "genus": "Anabasis",
+     "species": "brevifolia",
+     "native_range": "Anabasis brevifolia, Gobi and Kazakh stony deserts, succulent dwarf cushion 5-25 cm — Flora of China",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Galleta grass",
@@ -204,7 +323,24 @@
     "soil": "sand",
     "color": "#9AA870",
     "accent": "#C8B060",
-    "source": "Pleuraphis jamesii, Colorado Plateau and Great Basin desert grass, 20-50 cm — USDA PLANTS"
+    "source": "Pleuraphis jamesii, Colorado Plateau and Great Basin desert grass, 20-50 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Pleuraphis",
+     "species": "jamesii",
+     "native_range": "Pleuraphis jamesii, Colorado Plateau and Great Basin desert grass, 20-50 cm — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Gobi needlegrass",
@@ -227,54 +363,67 @@
     "soil": "thin",
     "color": "#C8B060",
     "accent": "#D8C890",
-    "source": "Stipa glareosa, gravel deserts of Mongolia and Xinjiang, small tussock 10-30 cm — Flora of China"
+    "source": "Stipa glareosa, gravel deserts of Mongolia and Xinjiang, small tussock 10-30 cm — Flora of China",
+    "traits": {
+     "genus": "Stipa",
+     "species": "glareosa",
+     "native_range": "Stipa glareosa, gravel deserts of Mongolia and Xinjiang, small tussock 10-30 cm — Flora of China",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Desert halogeton",
-    "genus": "Anabasis",
-    "species": "brevifolia",
-    "shape": "cushion",
+    "name": "Indian ricegrass",
+    "genus": "Achnatherum",
+    "species": "hymenoides",
+    "shape": "tussock",
     "temp_c": [
-     0,
-     12
+     2,
+     18
     ],
     "moisture": [
-     0.02,
-     0.15
-    ],
-    "height_m": [
      0.05,
      0.25
     ],
-    "density": 0.4,
-    "soil": "thin",
-    "color": "#8FA080",
-    "accent": "#B0A080",
-    "source": "Anabasis brevifolia, Gobi and Kazakh stony deserts, succulent dwarf cushion 5-25 cm — Flora of China"
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#C8B060",
+    "accent": "#E8DCB0",
+    "source": "Achnatherum hymenoides, sandy cold deserts of western N America, 30-60 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Achnatherum",
+     "species": "hymenoides",
+     "native_range": "Achnatherum hymenoides, sandy cold deserts of western N America, 30-60 cm — USDA PLANTS",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 15,
-  "names": [
-   "Narrowleaf yucca",
-   "Banana yucca",
-   "Navajo yucca",
-   "Joshua tree",
-   "Giant Spanish dagger",
-   "Soaptree yucca",
-   "Endlich's yucca",
-   "Faxon yucca",
-   "Harriman's yucca",
-   "Eastern Joshua tree",
-   "Linear-leaf yucca",
-   "Potosí yucca",
-   "Mojave yucca",
-   "Sterile yucca",
-   "Utah yucca"
-  ]
  },
  "associations": [
   {
@@ -292,11 +441,7 @@
     "Indian ricegrass",
     "Desert halogeton"
    ],
-   "catalogue": [
-    "Narrowleaf yucca",
-    "Utah yucca",
-    "Navajo yucca"
-   ],
+   "catalogue": [],
    "cover": 0.2,
    "source": "Billings 1949 Shadscale vegetation zone of Nevada; West 1983 Ecosystems of the World 5 Intermountain salt-desert shrubland"
   },
@@ -315,9 +460,7 @@
     "Galleta grass"
    ],
    "catalogue": [
-    "Joshua tree",
-    "Mojave yucca",
-    "Banana yucca"
+    "Joshua tree"
    ],
    "cover": 0.3,
    "source": "Bowns & West 1976 Blackbrush (Coleogyne ramosissima) in southwestern Utah; USNVC Coleogyne ramosissima shrubland"
@@ -336,9 +479,7 @@
     "Indian ricegrass",
     "Galleta grass"
    ],
-   "catalogue": [
-    "Harriman's yucca"
-   ],
+   "catalogue": [],
    "cover": 0.25,
    "source": "West 1983; Stevens et al. 1977 Winterfat (Utah Div. Wildlife Resources)"
   },
@@ -375,5 +516,6 @@
    "cover": 0.15,
    "source": "Hilbig 1995 The Vegetation of Mongolia; Walter & Box 1983"
   }
- ]
+ ],
+ "hero_species": []
 }

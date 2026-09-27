@@ -20,53 +20,6 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Holm oak",
-    "genus": "Quercus",
-    "species": "ilex",
-    "shape": "broadleaf",
-    "leaf_density": 0.85,
-    "temp_c": [
-     11,
-     19
-    ],
-    "moisture": [
-     0.3,
-     0.6
-    ],
-    "height_m": [
-     10,
-     25
-    ],
-    "density": 0.9,
-    "soil": "thin",
-    "color": "#2F6A35",
-    "accent": "#5A5045",
-    "source": "Quercus ilex, Mediterranean basin evergreen oak, dense dark crown 10-25 m — Euro+Med PlantBase"
-   },
-   {
-    "name": "Cork oak",
-    "genus": "Quercus",
-    "species": "suber",
-    "shape": "gnarled",
-    "temp_c": [
-     13,
-     19
-    ],
-    "moisture": [
-     0.35,
-     0.6
-    ],
-    "height_m": [
-     10,
-     20
-    ],
-    "density": 0.5,
-    "soil": "sand",
-    "color": "#3A7A40",
-    "accent": "#8A6A50",
-    "source": "Quercus suber, W Mediterranean (Iberia, Maghreb), thick-barked gnarled evergreen 10-20 m — Euro+Med PlantBase"
-   },
-   {
     "name": "Aleppo pine",
     "genus": "Pinus",
     "species": "halepensis",
@@ -87,30 +40,24 @@
     "soil": "thin",
     "color": "#4A8040",
     "accent": "#A08060",
-    "source": "Pinus halepensis, Mediterranean basin lowland pine, open crown 10-25 m — Euro+Med PlantBase"
-   },
-   {
-    "name": "Wild olive",
-    "genus": "Olea",
-    "species": "europaea",
-    "shape": "gnarled",
-    "temp_c": [
-     13,
-     20
-    ],
-    "moisture": [
-     0.28,
-     0.5
-    ],
-    "height_m": [
-     5,
-     12
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#8A9A70",
-    "accent": "#7A7060",
-    "source": "Olea europaea var. sylvestris, Mediterranean basin, silver-grey gnarled small tree 5-12 m — Euro+Med PlantBase"
+    "source": "Pinus halepensis, Mediterranean basin lowland pine, open crown 10-25 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Pinus",
+     "species": "halepensis",
+     "native_range": "Pinus halepensis, Mediterranean basin lowland pine, open crown 10-25 m — Euro+Med PlantBase",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      10,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Coast live oak",
@@ -133,7 +80,204 @@
     "soil": "thin",
     "color": "#2F6A35",
     "accent": "#5A5045",
-    "source": "Quercus agrifolia, California coast ranges, spreading evergreen oak 8-20 m — Jepson eFlora"
+    "source": "Quercus agrifolia, California coast ranges, spreading evergreen oak 8-20 m — Jepson eFlora",
+    "traits": {
+     "genus": "Quercus",
+     "species": "agrifolia",
+     "native_range": "Quercus agrifolia, California coast ranges, spreading evergreen oak 8-20 m — Jepson eFlora",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      8,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Cork oak",
+    "genus": "Quercus",
+    "species": "suber",
+    "shape": "gnarled",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#3A7A40",
+    "accent": "#8A6A50",
+    "source": "Quercus suber, W Mediterranean (Iberia, Maghreb), thick-barked gnarled evergreen 10-20 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Quercus",
+     "species": "suber",
+     "native_range": "Quercus suber, W Mediterranean (Iberia, Maghreb), thick-barked gnarled evergreen 10-20 m — Euro+Med PlantBase",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      10,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Holm oak",
+    "genus": "Quercus",
+    "species": "ilex",
+    "shape": "broadleaf",
+    "leaf_density": 0.85,
+    "temp_c": [
+     11,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#2F6A35",
+    "accent": "#5A5045",
+    "source": "Quercus ilex, Mediterranean basin evergreen oak, dense dark crown 10-25 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Quercus",
+     "species": "ilex",
+     "native_range": "Quercus ilex, Mediterranean basin evergreen oak, dense dark crown 10-25 m — Euro+Med PlantBase",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      10,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Mediterranean cypress",
+    "genus": "Cupressus",
+    "species": "sempervirens",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.55
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     20.0,
+     30.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#6A5A4A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "E Mediterranean hills; the dark column of graveyards and ruins. Kew POWO.",
+    "landmark": true,
+    "from_catalogue": "cypress",
+    "traits": {
+     "genus": "Cupressus",
+     "species": "sempervirens",
+     "native_range": "E Mediterranean hills",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      20.0,
+      30.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Stone pine",
@@ -156,101 +300,106 @@
     "soil": "sand",
     "color": "#3F8038",
     "accent": "#A07050",
-    "source": "Pinus pinea, Mediterranean coasts, umbrella-shaped crown 12-25 m — Euro+Med PlantBase"
-   }
-  ],
-  "shrub": [
-   {
-    "name": "Kermes oak",
-    "genus": "Quercus",
-    "species": "coccifera",
-    "shape": "shrub",
-    "temp_c": [
-     12,
-     20
-    ],
-    "moisture": [
-     0.25,
-     0.5
-    ],
-    "height_m": [
-     1,
-     3
-    ],
-    "density": 0.8,
-    "soil": "thin",
-    "color": "#3A7A3A",
-    "accent": "#6A5A45",
-    "source": "Quercus coccifera, Mediterranean garrigue/maquis dominant, spiny-leaved shrub 1-3 m — Euro+Med PlantBase"
+    "source": "Pinus pinea, Mediterranean coasts, umbrella-shaped crown 12-25 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Pinus",
+     "species": "pinea",
+     "native_range": "Pinus pinea, Mediterranean coasts, umbrella-shaped crown 12-25 m — Euro+Med PlantBase",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      12,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Gum rockrose",
-    "genus": "Cistus",
-    "species": "ladanifer",
-    "shape": "shrub",
-    "temp_c": [
-     12,
-     19
-    ],
-    "moisture": [
-     0.25,
-     0.5
-    ],
-    "height_m": [
-     1,
-     2.5
-    ],
-    "density": 0.8,
-    "soil": "thin",
-    "color": "#4A8A40",
-    "accent": "#F8F0F0",
-    "source": "Cistus ladanifer, W Mediterranean, sticky shrub 1-2.5 m, big white flowers — Euro+Med PlantBase"
-   },
-   {
-    "name": "Mastic",
-    "genus": "Pistacia",
-    "species": "lentiscus",
-    "shape": "shrub",
+    "name": "Wild olive",
+    "genus": "Olea",
+    "species": "europaea",
+    "shape": "gnarled",
     "temp_c": [
      13,
      20
     ],
     "moisture": [
-     0.25,
+     0.28,
      0.5
     ],
     "height_m": [
-     1,
-     4
+     5,
+     12
     ],
-    "density": 0.6,
+    "density": 0.5,
     "soil": "thin",
-    "color": "#2F7A35",
-    "accent": "#C03030",
-    "source": "Pistacia lentiscus, Mediterranean basin maquis, dense evergreen 1-4 m, red berries — Euro+Med PlantBase"
-   },
+    "color": "#8A9A70",
+    "accent": "#7A7060",
+    "source": "Olea europaea var. sylvestris, Mediterranean basin, silver-grey gnarled small tree 5-12 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Olea",
+     "species": "europaea",
+     "native_range": "Olea europaea var",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      5,
+      12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "shrub": [
    {
-    "name": "Strawberry tree",
-    "genus": "Arbutus",
-    "species": "unedo",
-    "shape": "shrub",
+    "name": "Bigberry manzanita",
+    "genus": "Arctostaphylos",
+    "species": "glauca",
+    "shape": "gnarled",
     "temp_c": [
-     12,
+     13,
      19
     ],
     "moisture": [
-     0.35,
-     0.6
+     0.25,
+     0.45
     ],
     "height_m": [
-     3,
-     8
+     2,
+     5
     ],
     "density": 0.4,
     "soil": "thin",
-    "color": "#2F7A35",
-    "accent": "#E05030",
-    "source": "Arbutus unedo, W Mediterranean and Ireland, evergreen shrub/small tree 3-8 m, red fruit — Euro+Med PlantBase"
+    "color": "#7A9A80",
+    "accent": "#8A2A20",
+    "source": "Arctostaphylos glauca, S California chaparral, smooth red-barked shrub 2-5 m — Jepson eFlora",
+    "traits": {
+     "genus": "Arctostaphylos",
+     "species": "glauca",
+     "native_range": "Arctostaphylos glauca, S California chaparral, smooth red-barked shrub 2-5 m — Jepson eFlora",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Chamise",
@@ -273,60 +422,29 @@
     "soil": "thin",
     "color": "#4A7A40",
     "accent": "#6A5040",
-    "source": "Adenostoma fasciculatum, dominant California chaparral shrub, needle-like leaves 1-3 m — Jepson eFlora"
+    "source": "Adenostoma fasciculatum, dominant California chaparral shrub, needle-like leaves 1-3 m — Jepson eFlora",
+    "traits": {
+     "genus": "Adenostoma",
+     "species": "fasciculatum",
+     "native_range": "Adenostoma fasciculatum, dominant California chaparral shrub, needle-like leaves 1-3 m — Jepson eFlora",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Bigberry manzanita",
-    "genus": "Arctostaphylos",
-    "species": "glauca",
-    "shape": "gnarled",
-    "temp_c": [
-     13,
-     19
-    ],
-    "moisture": [
-     0.25,
-     0.45
-    ],
-    "height_m": [
-     2,
-     5
-    ],
-    "density": 0.4,
-    "soil": "thin",
-    "color": "#7A9A80",
-    "accent": "#8A2A20",
-    "source": "Arctostaphylos glauca, S California chaparral, smooth red-barked shrub 2-5 m — Jepson eFlora"
-   }
-  ],
-  "ground": [
-   {
-    "name": "Esparto grass",
-    "genus": "Macrochloa",
-    "species": "tenacissima",
-    "shape": "tussock",
-    "temp_c": [
-     14,
-     20
-    ],
-    "moisture": [
-     0.2,
-     0.4
-    ],
-    "height_m": [
-     0.5,
-     1.2
-    ],
-    "density": 0.7,
-    "soil": "thin",
-    "color": "#C8B060",
-    "accent": "#E0D090",
-    "source": "Macrochloa (Stipa) tenacissima, SE Spain and N Africa dry steppe/scrub, tussock 0.5-1.2 m — Euro+Med PlantBase"
-   },
-   {
-    "name": "French lavender",
-    "genus": "Lavandula",
-    "species": "stoechas",
+    "name": "Gum rockrose",
+    "genus": "Cistus",
+    "species": "ladanifer",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -334,17 +452,196 @@
     ],
     "moisture": [
      0.25,
-     0.45
+     0.5
     ],
     "height_m": [
-     0.3,
-     1
+     1,
+     2.5
     ],
-    "density": 0.5,
+    "density": 0.8,
     "soil": "thin",
-    "color": "#8A9A80",
-    "accent": "#8040A0",
-    "source": "Lavandula stoechas, Mediterranean garrigue on acid soils, 30-100 cm, purple flower heads — Euro+Med PlantBase"
+    "color": "#4A8A40",
+    "accent": "#F8F0F0",
+    "source": "Cistus ladanifer, W Mediterranean, sticky shrub 1-2.5 m, big white flowers — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Cistus",
+     "species": "ladanifer",
+     "native_range": "Cistus ladanifer, W Mediterranean, sticky shrub 1-2",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Kermes oak",
+    "genus": "Quercus",
+    "species": "coccifera",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#3A7A3A",
+    "accent": "#6A5A45",
+    "source": "Quercus coccifera, Mediterranean garrigue/maquis dominant, spiny-leaved shrub 1-3 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Quercus",
+     "species": "coccifera",
+     "native_range": "Quercus coccifera, Mediterranean garrigue/maquis dominant, spiny-leaved shrub 1-3 m — Euro+Med PlantBase",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Mastic",
+    "genus": "Pistacia",
+    "species": "lentiscus",
+    "shape": "shrub",
+    "temp_c": [
+     13,
+     20
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     1,
+     4
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#2F7A35",
+    "accent": "#C03030",
+    "source": "Pistacia lentiscus, Mediterranean basin maquis, dense evergreen 1-4 m, red berries — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Pistacia",
+     "species": "lentiscus",
+     "native_range": "Pistacia lentiscus, Mediterranean basin maquis, dense evergreen 1-4 m, red berries — Euro+Med PlantBase",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Strawberry tree",
+    "genus": "Arbutus",
+    "species": "unedo",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#2F7A35",
+    "accent": "#E05030",
+    "source": "Arbutus unedo, W Mediterranean and Ireland, evergreen shrub/small tree 3-8 m, red fruit — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Arbutus",
+     "species": "unedo",
+     "native_range": "Arbutus unedo, W Mediterranean and Ireland, evergreen shrub/small tree 3-8 m, red fruit — Euro+Med PlantBase",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "ground": [
+   {
+    "name": "Asphodel",
+    "genus": "Asphodelus",
+    "species": "ramosus",
+    "shape": "grass",
+    "temp_c": [
+     13,
+     20
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#F0F0F0",
+    "source": "Asphodelus ramosus, Mediterranean basin degraded scrub, white flower spikes 0.5-1.5 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Asphodelus",
+     "species": "ramosus",
+     "native_range": "Asphodelus ramosus, Mediterranean basin degraded scrub, white flower spikes 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Common thyme",
@@ -367,53 +664,104 @@
     "soil": "thin",
     "color": "#7A9A78",
     "accent": "#C080C0",
-    "source": "Thymus vulgaris, W Mediterranean garrigue, aromatic mat 10-30 cm — Euro+Med PlantBase"
+    "source": "Thymus vulgaris, W Mediterranean garrigue, aromatic mat 10-30 cm — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Thymus",
+     "species": "vulgaris",
+     "native_range": "Thymus vulgaris, W Mediterranean garrigue, aromatic mat 10-30 cm — Euro+Med PlantBase",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Asphodel",
-    "genus": "Asphodelus",
-    "species": "ramosus",
-    "shape": "grass",
+    "name": "Esparto grass",
+    "genus": "Macrochloa",
+    "species": "tenacissima",
+    "shape": "tussock",
     "temp_c": [
-     13,
+     14,
      20
     ],
     "moisture": [
-     0.25,
-     0.5
+     0.2,
+     0.4
     ],
     "height_m": [
      0.5,
-     1.5
+     1.2
     ],
-    "density": 0.4,
+    "density": 0.7,
     "soil": "thin",
-    "color": "#5AB040",
-    "accent": "#F0F0F0",
-    "source": "Asphodelus ramosus, Mediterranean basin degraded scrub, white flower spikes 0.5-1.5 m — Euro+Med PlantBase"
+    "color": "#C8B060",
+    "accent": "#E0D090",
+    "source": "Macrochloa (Stipa) tenacissima, SE Spain and N Africa dry steppe/scrub, tussock 0.5-1.2 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Macrochloa",
+     "species": "tenacissima",
+     "native_range": "Macrochloa (Stipa) tenacissima, SE Spain and N Africa dry steppe/scrub, tussock 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Sugarbush protea",
-    "genus": "Protea",
-    "species": "repens",
+    "name": "French lavender",
+    "genus": "Lavandula",
+    "species": "stoechas",
     "shape": "shrub",
     "temp_c": [
-     14,
+     12,
      19
     ],
     "moisture": [
-     0.3,
-     0.55
+     0.25,
+     0.45
     ],
     "height_m": [
-     1,
-     3
+     0.3,
+     1
     ],
-    "density": 0.4,
-    "soil": "sand",
-    "color": "#7A9A78",
-    "accent": "#E06080",
-    "source": "Protea repens, Cape fynbos, S Africa, evergreen shrub 1-3 m with cup flowers — SANBI PlantZAfrica"
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#8A9A80",
+    "accent": "#8040A0",
+    "source": "Lavandula stoechas, Mediterranean garrigue on acid soils, 30-100 cm, purple flower heads — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Lavandula",
+     "species": "stoechas",
+     "native_range": "Lavandula stoechas, Mediterranean garrigue on acid soils, 30-100 cm, purple flower heads — Euro+Med PlantBase",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Ramose false brome",
@@ -436,56 +784,67 @@
     "soil": "thin",
     "color": "#8FA860",
     "accent": "#C8B060",
-    "source": "Brachypodium retusum, dominant perennial grass under Mediterranean garrigue, 20-50 cm — Euro+Med PlantBase"
+    "source": "Brachypodium retusum, dominant perennial grass under Mediterranean garrigue, 20-50 cm — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Brachypodium",
+     "species": "retusum",
+     "native_range": "Brachypodium retusum, dominant perennial grass under Mediterranean garrigue, 20-50 cm — Euro+Med PlantBase",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Sugarbush protea",
+    "genus": "Protea",
+    "species": "repens",
+    "shape": "shrub",
+    "temp_c": [
+     14,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#7A9A78",
+    "accent": "#E06080",
+    "source": "Protea repens, Cape fynbos, S Africa, evergreen shrub 1-3 m with cup flowers — SANBI PlantZAfrica",
+    "traits": {
+     "genus": "Protea",
+     "species": "repens",
+     "native_range": "Protea repens, Cape fynbos, S Africa, evergreen shrub 1-3 m with cup flowers — SANBI PlantZAfrica",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 40,
-  "names": [
-   "Cretan date palm",
-   "Arkansas yucca",
-   "Adam's needle",
-   "Weak-leaf yucca",
-   "Spanish dagger",
-   "Jalisco yucca",
-   "Sierra Madre yucca",
-   "Chiapas yucca",
-   "Glen Rose yucca",
-   "Pale-leaf yucca",
-   "Pine-woods yucca",
-   "San Angelo yucca",
-   "Twistleaf yucca",
-   "Trichocereus pachanoi",
-   "Trichocereus peruvianus",
-   "Trichocereus bridgesii",
-   "Trichocereus scopulicola",
-   "Trichocereus macrogonus",
-   "Trichocereus cuzcoensis",
-   "Trichocereus tacaquirensis",
-   "Trichocereus taquimbalensis",
-   "Trichocereus santaensis",
-   "Trichocereus puquiensis",
-   "Trichocereus huanucoensis",
-   "Trichocereus riomizquensis",
-   "Trichocereus werdermannianus",
-   "Trichocereus knuthianus",
-   "Trichocereus glaucus",
-   "Cannabis - Hindu Kush",
-   "Cannabis - Afghani",
-   "Cannabis - Mazar-i-Sharif",
-   "Cannabis - Chitral",
-   "Cannabis - Swat Valley",
-   "Cannabis - Tirah Valley",
-   "Cannabis - Kashmir",
-   "Cannabis - Durban",
-   "Cannabis - Ethiopian",
-   "Cannabis - Rif (Ketama)",
-   "Cannabis - Lebanese (Bekaa)",
-   "Cannabis - Turkish"
-  ]
  },
  "associations": [
   {
@@ -546,9 +905,7 @@
     "French lavender",
     "Asphodel"
    ],
-   "catalogue": [
-    "Cretan date palm"
-   ],
+   "catalogue": [],
    "cover": 0.5,
    "source": "Tomaselli 1977 Degradation of the Mediterranean maquis (UNESCO MAB); Quezel & Medail 2003"
   },
@@ -583,5 +940,9 @@
    "cover": 0.4,
    "source": "Cowling 1992 The Ecology of Fynbos; Mucina & Rutherford 2006 Vegetation of South Africa"
   }
+ ],
+ "hero_species": [
+  "Mediterranean cypress",
+  "Stone pine"
  ]
 }

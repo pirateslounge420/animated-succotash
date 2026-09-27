@@ -21,29 +21,6 @@
   "canopy": [],
   "shrub": [
    {
-    "name": "Dwarf birch",
-    "genus": "Betula",
-    "species": "nana",
-    "shape": "shrub",
-    "temp_c": [
-     -12,
-     2
-    ],
-    "moisture": [
-     0.4,
-     0.9
-    ],
-    "height_m": [
-     0.3,
-     1.2
-    ],
-    "density": 0.7,
-    "soil": "peat",
-    "color": "#3F8A3A",
-    "accent": "#7A4A2A",
-    "source": "Betula nana, circumpolar Arctic/subarctic shrub tundra, 0.2-1.2 m, wet peaty ground; leaves turn red in autumn"
-   },
-   {
     "name": "Arctic willow",
     "genus": "Salix",
     "species": "arctica",
@@ -64,30 +41,24 @@
     "soil": "thin",
     "color": "#4A9A45",
     "accent": "#8A7A5A",
-    "source": "Salix arctica, circumpolar high Arctic, prostrate creeping willow to ~0.5 m, northernmost woody plant"
-   },
-   {
-    "name": "Crowberry",
-    "genus": "Empetrum",
-    "species": "nigrum",
-    "shape": "shrub",
-    "temp_c": [
-     -12,
-     4
-    ],
-    "moisture": [
-     0.4,
-     0.9
-    ],
-    "height_m": [
-     0.1,
-     0.3
-    ],
-    "density": 0.6,
-    "soil": "peat",
-    "color": "#2F6A30",
-    "accent": "#3A2A40",
-    "source": "Empetrum nigrum, circumboreal heath, evergreen mat shrub 10-30 cm with black berries"
+    "source": "Salix arctica, circumpolar high Arctic, prostrate creeping willow to ~0.5 m, northernmost woody plant",
+    "traits": {
+     "genus": "Salix",
+     "species": "arctica",
+     "native_range": "Salix arctica, circumpolar high Arctic, prostrate creeping willow to ~0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.05,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Bog bilberry",
@@ -110,32 +81,146 @@
     "soil": "peat",
     "color": "#4A8A5A",
     "accent": "#6A3A6A",
-    "source": "Vaccinium uliginosum, circumpolar tundra/bog deciduous dwarf shrub 10-60 cm, blue-grey leaves"
+    "source": "Vaccinium uliginosum, circumpolar tundra/bog deciduous dwarf shrub 10-60 cm, blue-grey leaves",
+    "traits": {
+     "genus": "Vaccinium",
+     "species": "uliginosum",
+     "native_range": "Vaccinium uliginosum, circumpolar tundra/bog deciduous dwarf shrub 10-60 cm, blue-grey leaves",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.1,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Crowberry",
+    "genus": "Empetrum",
+    "species": "nigrum",
+    "shape": "shrub",
+    "temp_c": [
+     -12,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "color": "#2F6A30",
+    "accent": "#3A2A40",
+    "source": "Empetrum nigrum, circumboreal heath, evergreen mat shrub 10-30 cm with black berries",
+    "traits": {
+     "genus": "Empetrum",
+     "species": "nigrum",
+     "native_range": "Empetrum nigrum, circumboreal heath, evergreen mat shrub 10-30 cm with black berries",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Dwarf birch",
+    "genus": "Betula",
+    "species": "nana",
+    "shape": "shrub",
+    "temp_c": [
+     -12,
+     2
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "color": "#3F8A3A",
+    "accent": "#7A4A2A",
+    "source": "Betula nana, circumpolar Arctic/subarctic shrub tundra, 0.2-1.2 m, wet peaty ground; leaves turn red in autumn",
+    "traits": {
+     "genus": "Betula",
+     "species": "nana",
+     "native_range": "Betula nana, circumpolar Arctic/subarctic shrub tundra, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
    {
-    "name": "Tundra sedge",
-    "genus": "Carex",
-    "species": "aquatilis",
-    "shape": "grass",
+    "name": "Arctic annuals",
+    "genus": "Papaver",
+    "species": "radicatum",
+    "shape": "cushion",
     "temp_c": [
      -15,
-     2
+     0
     ],
     "moisture": [
-     0.6,
-     1
+     0.2,
+     0.6
     ],
     "height_m": [
-     0.2,
-     0.8
+     0.05,
+     0.25
     ],
-    "density": 1.0,
-    "soil": "wet",
-    "color": "#5AA045",
-    "accent": "#A08A50",
-    "source": "Carex aquatilis, circumpolar wet tundra and lake margins, dominant sedge of Arctic wet meadows 20-80 cm"
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5A9A50",
+    "accent": "#F0D040",
+    "source": "Papaver radicatum (Arctic poppy), circumpolar high Arctic gravel and scree, yellow flowers 5-25 cm",
+    "traits": {
+     "genus": "Papaver",
+     "species": "radicatum",
+     "native_range": "Papaver radicatum (Arctic poppy), circumpolar high Arctic gravel and scree, yellow flowers 5-25 cm",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Arctic cottongrass",
@@ -158,53 +243,24 @@
     "soil": "peat",
     "color": "#6AA850",
     "accent": "#F4F2E8",
-    "source": "Eriophorum scheuchzeri, circumpolar Arctic wet tundra and pond edges, single white cotton head, 10-40 cm"
-   },
-   {
-    "name": "Reindeer lichen",
-    "genus": "Cladonia",
-    "species": "rangiferina",
-    "shape": "moss",
-    "temp_c": [
-     -15,
-     5
-    ],
-    "moisture": [
-     0.2,
-     0.8
-    ],
-    "height_m": [
-     0.03,
-     0.12
-    ],
-    "density": 0.9,
-    "soil": "thin",
-    "color": "#C8D8C0",
-    "accent": "#A8B8A0",
-    "source": "Cladonia rangiferina, circumboreal/Arctic, grey-white fruticose lichen mats 3-12 cm on dry tundra"
-   },
-   {
-    "name": "Rusty bog-moss",
-    "genus": "Sphagnum",
-    "species": "fuscum",
-    "shape": "moss",
-    "temp_c": [
-     -15,
-     5
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "height_m": [
-     0.02,
-     0.1
-    ],
-    "density": 0.8,
-    "soil": "peat",
-    "color": "#8A9A30",
-    "accent": "#A05A30",
-    "source": "Sphagnum fuscum, circumpolar hummock-forming peat moss in tundra and bogs, brown-green cushions"
+    "source": "Eriophorum scheuchzeri, circumpolar Arctic wet tundra and pond edges, single white cotton head, 10-40 cm",
+    "traits": {
+     "genus": "Eriophorum",
+     "species": "scheuchzeri",
+     "native_range": "Eriophorum scheuchzeri, circumpolar Arctic wet tundra and pond edges, single white cotton head, 10-40 cm",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Entire-leaf mountain avens",
@@ -227,38 +283,147 @@
     "soil": "thin",
     "color": "#3A7A35",
     "accent": "#F8F8F0",
-    "source": "Dryas integrifolia, North American Arctic (Greenland to Alaska), evergreen mat on dry gravel, white flowers 3-10 cm"
+    "source": "Dryas integrifolia, North American Arctic (Greenland to Alaska), evergreen mat on dry gravel, white flowers 3-10 cm",
+    "traits": {
+     "genus": "Dryas",
+     "species": "integrifolia",
+     "native_range": "Dryas integrifolia, North American Arctic (Greenland to Alaska), evergreen mat on dry gravel, white flowers 3-10 cm",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Arctic annuals",
-    "genus": "Papaver",
-    "species": "radicatum",
-    "shape": "cushion",
+    "name": "Reindeer lichen",
+    "genus": "Cladonia",
+    "species": "rangiferina",
+    "shape": "moss",
     "temp_c": [
      -15,
-     0
+     5
     ],
     "moisture": [
      0.2,
-     0.6
+     0.8
     ],
     "height_m": [
-     0.05,
-     0.25
+     0.03,
+     0.12
     ],
-    "density": 0.3,
+    "density": 0.9,
     "soil": "thin",
-    "color": "#5A9A50",
-    "accent": "#F0D040",
-    "source": "Papaver radicatum (Arctic poppy), circumpolar high Arctic gravel and scree, yellow flowers 5-25 cm"
+    "color": "#C8D8C0",
+    "accent": "#A8B8A0",
+    "source": "Cladonia rangiferina, circumboreal/Arctic, grey-white fruticose lichen mats 3-12 cm on dry tundra",
+    "traits": {
+     "genus": "Cladonia",
+     "species": "rangiferina",
+     "native_range": "Cladonia rangiferina, circumboreal/Arctic, grey-white fruticose lichen mats 3-12 cm on dry tundra",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Rusty bog-moss",
+    "genus": "Sphagnum",
+    "species": "fuscum",
+    "shape": "moss",
+    "temp_c": [
+     -15,
+     5
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "color": "#8A9A30",
+    "accent": "#A05A30",
+    "source": "Sphagnum fuscum, circumpolar hummock-forming peat moss in tundra and bogs, brown-green cushions",
+    "traits": {
+     "genus": "Sphagnum",
+     "species": "fuscum",
+     "native_range": "Sphagnum fuscum, circumpolar hummock-forming peat moss in tundra and bogs, brown-green cushions",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tundra sedge",
+    "genus": "Carex",
+    "species": "aquatilis",
+    "shape": "grass",
+    "temp_c": [
+     -15,
+     2
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.8
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "color": "#5AA045",
+    "accent": "#A08A50",
+    "source": "Carex aquatilis, circumpolar wet tundra and lake margins, dominant sedge of Arctic wet meadows 20-80 cm",
+    "traits": {
+     "genus": "Carex",
+     "species": "aquatilis",
+     "native_range": "Carex aquatilis, circumpolar wet tundra and lake margins, dominant sedge of Arctic wet meadows 20-80 cm",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 0,
-  "names": []
  },
  "associations": [
   {
@@ -350,5 +515,6 @@
    "cover": 0.5,
    "source": "Viereck et al. 1992 (open low willow scrub); Bliss & Matveyeva 1992"
   }
- ]
+ ],
+ "hero_species": []
 }

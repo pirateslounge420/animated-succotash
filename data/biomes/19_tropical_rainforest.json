@@ -39,7 +39,24 @@
     "soil": "rich",
     "color": "#2F7A35",
     "accent": "#5A4A38",
-    "source": "Bertholletia excelsa, Brazil nut, emergent of non-flooded Amazon terra firme forest, 30-50 m — Wikipedia / Kew"
+    "source": "Bertholletia excelsa, Brazil nut, emergent of non-flooded Amazon terra firme forest, 30-50 m — Wikipedia / Kew",
+    "traits": {
+     "genus": "Bertholletia",
+     "species": "excelsa",
+     "native_range": "Bertholletia excelsa, Brazil nut, emergent of non-flooded Amazon terra firme forest, 30-50 m — Wikipedia / Kew",
+     "leaf_shape": "broad leathery leaves",
+     "trunk": "towering straight bole, buttressed base, crown above the canopy",
+     "petiole": "short petiole",
+     "height_m": [
+      30,
+      50
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Kapok",
@@ -62,7 +79,24 @@
     "soil": "rich",
     "color": "#3F8A38",
     "accent": "#8A8A78",
-    "source": "Ceiba pentandra, kapok, buttressed emergent of neotropical and West African rainforest, up to 70 m — Wikipedia"
+    "source": "Ceiba pentandra, kapok, buttressed emergent of neotropical and West African rainforest, up to 70 m — Wikipedia",
+    "traits": {
+     "genus": "Ceiba",
+     "species": "pentandra",
+     "native_range": "Ceiba pentandra, kapok, buttressed emergent of neotropical and West African rainforest, up to 70 m — Wikipedia",
+     "leaf_shape": "broad leathery leaves",
+     "trunk": "towering straight bole, buttressed base, crown above the canopy",
+     "petiole": "short petiole",
+     "height_m": [
+      40,
+      70
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Tualang",
@@ -85,7 +119,24 @@
     "soil": "rich",
     "color": "#3F8A38",
     "accent": "#B0A090",
-    "source": "Koompassia excelsa, tualang/mengaris, tallest emergent of Sundaland lowland rainforest (Borneo, Malaya), up to 80+ m — Wikipedia"
+    "source": "Koompassia excelsa, tualang/mengaris, tallest emergent of Sundaland lowland rainforest (Borneo, Malaya), up to 80+ m — Wikipedia",
+    "traits": {
+     "genus": "Koompassia",
+     "species": "excelsa",
+     "native_range": "Koompassia excelsa, tualang/mengaris, tallest emergent of Sundaland lowland rainforest (Borneo, Malaya), up to 80+ m — W",
+     "leaf_shape": "broad leathery leaves",
+     "trunk": "towering straight bole, buttressed base, crown above the canopy",
+     "petiole": "short petiole",
+     "height_m": [
+      45,
+      80
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Yellow meranti",
@@ -108,32 +159,66 @@
     "soil": "rich",
     "color": "#2F7A35",
     "accent": "#7A6A50",
-    "source": "Shorea faguetiana, yellow meranti dipterocarp, Borneo lowland forest emergent, record 100 m tropical tree — Wikipedia / Nature 2019"
+    "source": "Shorea faguetiana, yellow meranti dipterocarp, Borneo lowland forest emergent, record 100 m tropical tree — Wikipedia / Nature 2019",
+    "traits": {
+     "genus": "Shorea",
+     "species": "faguetiana",
+     "native_range": "Shorea faguetiana, yellow meranti dipterocarp, Borneo lowland forest emergent, record 100 m tropical tree — Wikipedia / ",
+     "leaf_shape": "broad leathery leaves",
+     "trunk": "towering straight bole, buttressed base, crown above the canopy",
+     "petiole": "short petiole",
+     "height_m": [
+      40,
+      90
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "canopy": [
    {
-    "name": "Sapucaia",
-    "genus": "Lecythis",
-    "species": "pisonis",
-    "shape": "broadleaf",
+    "name": "Assai palm",
+    "genus": "Euterpe",
+    "species": "precatoria",
+    "shape": "palm",
     "temp_c": [
-     22,
+     24,
      30
     ],
     "moisture": [
-     0.6,
+     0.65,
      1.0
     ],
     "height_m": [
-     20,
-     35
+     10,
+     25
     ],
-    "density": 0.6,
-    "soil": "rich",
+    "density": 0.7,
+    "soil": "wet",
     "color": "#3F8A38",
-    "accent": "#6A5A48",
-    "source": "Lecythis pisonis, sapucaia (monkey-pot), Amazon/Atlantic forest canopy tree with pink flush, 20-35 m — Wikipedia / Kew"
+    "accent": "#8A7A60",
+    "source": "Euterpe precatoria, acai palm, most abundant tree species of the Amazon (ter Steege 2013), slender palm 10-25 m — Wikipedia",
+    "traits": {
+     "genus": "Euterpe",
+     "species": "precatoria",
+     "native_range": "Euterpe precatoria, acai palm, most abundant tree species of the Amazon (ter Steege 2013), slender palm 10-25 m — Wikipe",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      10,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Limba",
@@ -156,76 +241,246 @@
     "soil": "rich",
     "color": "#4E9A3C",
     "accent": "#8A8A78",
-    "source": "Terminalia superba, limba/afara, layered-crown canopy tree of Congo Basin and West African rainforest, 30-50 m — Wikipedia / PROTA"
+    "source": "Terminalia superba, limba/afara, layered-crown canopy tree of Congo Basin and West African rainforest, 30-50 m — Wikipedia / PROTA",
+    "traits": {
+     "genus": "Terminalia",
+     "species": "superba",
+     "native_range": "Terminalia superba, limba/afara, layered-crown canopy tree of Congo Basin and West African rainforest, 30-50 m — Wikiped",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      30,
+      50
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Red meranti",
-    "genus": "Shorea",
-    "species": "leprosula",
-    "shape": "broadleaf",
-    "temp_c": [
-     24,
-     30
-    ],
-    "moisture": [
-     0.65,
-     1.0
-    ],
-    "height_m": [
-     30,
-     50
-    ],
-    "density": 0.9,
-    "soil": "rich",
-    "color": "#2F7A35",
-    "accent": "#5A3A2E",
-    "source": "Shorea leprosula, light red meranti, dominant dipterocarp of Sundaland lowland forest canopy, 30-50 m — Wikipedia / IUCN"
-   },
-   {
-    "name": "Strangler fig",
-    "genus": "Ficus",
-    "species": "aurea",
-    "shape": "gnarled",
-    "temp_c": [
-     21,
-     30
-    ],
-    "moisture": [
-     0.55,
-     1.0
-    ],
-    "height_m": [
-     15,
-     30
-    ],
-    "density": 0.4,
-    "soil": "rich",
-    "color": "#3F8A38",
-    "accent": "#9A9A88",
-    "source": "Ficus aurea, Florida/Caribbean strangler fig; Ficus lianes typical of all tropical rainforests, 15-30 m on host trees — Wikipedia"
-   },
-   {
-    "name": "Assai palm",
-    "genus": "Euterpe",
-    "species": "precatoria",
+    "name": "Moriche palm",
+    "genus": "Mauritia",
+    "species": "flexuosa",
+    "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
      24,
-     30
+     29
     ],
     "moisture": [
-     0.65,
+     0.7,
      1.0
     ],
-    "height_m": [
-     10,
-     25
+    "altitude_m": [
+     0,
+     500
     ],
-    "density": 0.7,
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 0.6,
     "soil": "wet",
-    "color": "#3F8A38",
-    "accent": "#8A7A60",
-    "source": "Euterpe precatoria, acai palm, most abundant tree species of the Amazon (ter Steege 2013), slender palm 10-25 m — Wikipedia"
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#3F8F45",
+    "accent": "#8A7A5A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       180
+      ],
+      [
+       "young",
+       1800
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       15000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird",
+      "water"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trunk_lean": [
+      0.0,
+      0.6
+     ],
+     "frond_count": [
+      0.3,
+      0.8
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Palm of Amazon and Orinoco swamps; height 20-35 m. Fan palm of the swamps; buriti. Standard floras and Kew POWO for the name.",
+    "water_depth_m": [
+     0.05,
+     1.0
+    ],
+    "from_catalogue": "palms",
+    "traits": {
+     "genus": "Mauritia",
+     "species": "flexuosa",
+     "native_range": "Amazon and Orinoco swamps",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      20.0,
+      35.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Pomelo",
+    "genus": "Citrus",
+    "species": "maxima",
+    "family": "Rutaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     8.0,
+     15.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#D8E060",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE Asian river lowlands. Kew POWO.",
+    "from_catalogue": "citrus",
+    "traits": {
+     "genus": "Citrus",
+     "species": "maxima",
+     "native_range": "SE Asian river lowlands",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      8.0,
+      15.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Rattan palm",
@@ -248,10 +503,187 @@
     "soil": "rich",
     "color": "#5AB040",
     "accent": "#8A8A50",
-    "source": "Calamus manan, manau rattan, climbing spiny palm of Malesian rainforest, stems 40+ m long — Wikipedia / PROSEA"
+    "source": "Calamus manan, manau rattan, climbing spiny palm of Malesian rainforest, stems 40+ m long — Wikipedia / PROSEA",
+    "traits": {
+     "genus": "Calamus",
+     "species": "manan",
+     "native_range": "Calamus manan, manau rattan, climbing spiny palm of Malesian rainforest, stems 40+ m long — Wikipedia / PROSEA",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      10,
+      40
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Red meranti",
+    "genus": "Shorea",
+    "species": "leprosula",
+    "shape": "broadleaf",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     30,
+     50
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#5A3A2E",
+    "source": "Shorea leprosula, light red meranti, dominant dipterocarp of Sundaland lowland forest canopy, 30-50 m — Wikipedia / IUCN",
+    "traits": {
+     "genus": "Shorea",
+     "species": "leprosula",
+     "native_range": "Shorea leprosula, light red meranti, dominant dipterocarp of Sundaland lowland forest canopy, 30-50 m — Wikipedia / IUCN",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      30,
+      50
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Sapucaia",
+    "genus": "Lecythis",
+    "species": "pisonis",
+    "shape": "broadleaf",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     20,
+     35
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#6A5A48",
+    "source": "Lecythis pisonis, sapucaia (monkey-pot), Amazon/Atlantic forest canopy tree with pink flush, 20-35 m — Wikipedia / Kew",
+    "traits": {
+     "genus": "Lecythis",
+     "species": "pisonis",
+     "native_range": "Lecythis pisonis, sapucaia (monkey-pot), Amazon/Atlantic forest canopy tree with pink flush, 20-35 m — Wikipedia / Kew",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      20,
+      35
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Strangler fig",
+    "genus": "Ficus",
+    "species": "aurea",
+    "shape": "gnarled",
+    "temp_c": [
+     21,
+     30
+    ],
+    "moisture": [
+     0.55,
+     1.0
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#9A9A88",
+    "source": "Ficus aurea, Florida/Caribbean strangler fig; Ficus lianes typical of all tropical rainforests, 15-30 m on host trees — Wikipedia",
+    "traits": {
+     "genus": "Ficus",
+     "species": "aurea",
+     "native_range": "Ficus aurea, Florida/Caribbean strangler fig",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [
+   {
+    "name": "Aframomum ginger",
+    "genus": "Aframomum",
+    "species": "melegueta",
+    "shape": "shrub",
+    "temp_c": [
+     23,
+     29
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#E04A5A",
+    "source": "Aframomum melegueta, grains of paradise, Zingiberaceae understory herb of West/Central African rainforest, 1-2.5 m — Wikipedia / PROTA",
+    "traits": {
+     "genus": "Aframomum",
+     "species": "melegueta",
+     "native_range": "Aframomum melegueta, grains of paradise, Zingiberaceae understory herb of West/Central African rainforest, 1-2",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
     "name": "Giant bamboo",
     "genus": "Dendrocalamus",
@@ -273,30 +705,131 @@
     "soil": "rich",
     "color": "#5AB040",
     "accent": "#8AA060",
-    "source": "Dendrocalamus giganteus, giant bamboo, SE Asian monsoon and rainforest margins, clumps 15-30 m — Wikipedia"
+    "source": "Dendrocalamus giganteus, giant bamboo, SE Asian monsoon and rainforest margins, clumps 15-30 m — Wikipedia",
+    "traits": {
+     "genus": "Dendrocalamus",
+     "species": "giganteus",
+     "native_range": "Dendrocalamus giganteus, giant bamboo, SE Asian monsoon and rainforest margins, clumps 15-30 m — Wikipedia",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Tree fern",
-    "genus": "Cyathea",
-    "species": "arborea",
-    "shape": "tree_fern",
+    "name": "Giant taro",
+    "genus": "Alocasia",
+    "species": "macrorrhizos",
+    "family": "Araceae",
+    "shape": "umbrella",
     "temp_c": [
-     20,
-     28
+     22,
+     29
     ],
     "moisture": [
-     0.65,
+     0.6,
      1.0
     ],
-    "height_m": [
-     3,
-     9
+    "altitude_m": [
+     0,
+     1200
     ],
-    "density": 0.5,
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.7,
     "soil": "rich",
-    "color": "#4E9A3C",
-    "accent": "#5A4A38",
-    "source": "Cyathea arborea, West Indian tree fern, neotropical rainforest understory and gaps, 3-9 m — Wikipedia"
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "SE Asian and Pacific rainforest edge and streams. Upright elephant ears 2 m long; corm eaten after long cooking. Kew POWO.",
+    "from_catalogue": "giant_herbs",
+    "traits": {
+     "genus": "Alocasia",
+     "species": "macrorrhizos",
+     "native_range": "SE Asian and Pacific rainforest edge and streams",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by tuber_offset",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Heliconia",
@@ -319,7 +852,24 @@
     "soil": "rich",
     "color": "#4E9A3C",
     "accent": "#E03A2A",
-    "source": "Heliconia bihai, red palulu/lobster claw, neotropical rainforest understory herb 1.5-4 m — Wikipedia"
+    "source": "Heliconia bihai, red palulu/lobster claw, neotropical rainforest understory herb 1.5-4 m — Wikipedia",
+    "traits": {
+     "genus": "Heliconia",
+     "species": "bihai",
+     "native_range": "Heliconia bihai, red palulu/lobster claw, neotropical rainforest understory herb 1",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1.5,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Silver miconia",
@@ -342,102 +892,279 @@
     "soil": "rich",
     "color": "#3F8A38",
     "accent": "#B8C8B0",
-    "source": "Miconia argentea, Melastomataceae pioneer shrub/treelet common in neotropical rainforest understory and gaps, 2-8 m — Wikipedia / STRI"
+    "source": "Miconia argentea, Melastomataceae pioneer shrub/treelet common in neotropical rainforest understory and gaps, 2-8 m — Wikipedia / STRI",
+    "traits": {
+     "genus": "Miconia",
+     "species": "argentea",
+     "native_range": "Miconia argentea, Melastomataceae pioneer shrub/treelet common in neotropical rainforest understory and gaps, 2-8 m — Wi",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Aframomum ginger",
-    "genus": "Aframomum",
-    "species": "melegueta",
-    "shape": "shrub",
+    "name": "Tree fern",
+    "genus": "Cyathea",
+    "species": "arborea",
+    "shape": "tree_fern",
     "temp_c": [
-     23,
-     29
+     20,
+     28
     ],
     "moisture": [
-     0.6,
+     0.65,
      1.0
     ],
     "height_m": [
-     1,
-     2.5
+     3,
+     9
     ],
     "density": 0.5,
     "soil": "rich",
-    "color": "#5AB040",
-    "accent": "#E04A5A",
-    "source": "Aframomum melegueta, grains of paradise, Zingiberaceae understory herb of West/Central African rainforest, 1-2.5 m — Wikipedia / PROTA"
-   }
-  ],
-  "ground": [
+    "color": "#4E9A3C",
+    "accent": "#5A4A38",
+    "source": "Cyathea arborea, West Indian tree fern, neotropical rainforest understory and gaps, 3-9 m — Wikipedia",
+    "traits": {
+     "genus": "Cyathea",
+     "species": "arborea",
+     "native_range": "Cyathea arborea, West Indian tree fern, neotropical rainforest understory and gaps, 3-9 m — Wikipedia",
+     "leaf_shape": "huge pinnate fronds",
+     "trunk": "fibrous trunk of old leaf bases",
+     "petiole": "long stipe",
+     "height_m": [
+      3,
+      9
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Forest-floor fern",
-    "genus": "Adiantum",
-    "species": "latifolium",
-    "shape": "fern",
+    "name": "Wild banana",
+    "genus": "Musa",
+    "species": "acuminata",
+    "family": "Musaceae",
+    "shape": "palm",
     "temp_c": [
      22,
-     30
+     29
     ],
     "moisture": [
      0.65,
      1.0
     ],
+    "altitude_m": [
+     0,
+     1200
+    ],
     "height_m": [
-     0.3,
-     0.8
+     3.0,
+     7.0
     ],
     "density": 0.8,
     "soil": "rich",
-    "color": "#4E9A3C",
-    "accent": "#3A2A20",
-    "source": "Adiantum latifolium, maidenhair fern, common terrestrial fern of shaded neotropical rainforest floor, 0.3-0.8 m — Wikipedia / Tropicos"
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Malesian rainforest gaps and streams; ancestor of the banana. Seedy fruit; bats pollinate the hanging flower; pioneer of gaps and landslides. Kew POWO.",
+    "from_catalogue": "giant_herbs",
+    "traits": {
+     "genus": "Musa",
+     "species": "acuminata",
+     "native_range": "Malesian rainforest gaps and streams",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      3.0,
+      7.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Selaginella",
-    "genus": "Selaginella",
-    "species": "willdenowii",
-    "shape": "moss",
+    "name": "Wild banana (Indian)",
+    "genus": "Musa",
+    "species": "balbisiana",
+    "family": "Musaceae",
+    "shape": "palm",
     "temp_c": [
-     22,
-     30
+     20,
+     29
     ],
     "moisture": [
-     0.65,
-     1.0
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1500
     ],
     "height_m": [
-     0.1,
-     0.5
+     4.0,
+     8.0
     ],
-    "density": 0.6,
+    "density": 0.7,
     "soil": "rich",
-    "color": "#3F8A60",
-    "accent": "#2F6A60",
-    "source": "Selaginella willdenowii, peacock spikemoss, iridescent blue-green ground carpet of SE Asian rainforest floor — Wikipedia"
-   },
-   {
-    "name": "Marantaceae herb",
-    "genus": "Calathea",
-    "species": "lutea",
-    "shape": "shrub",
-    "temp_c": [
-     22,
-     30
-    ],
-    "moisture": [
-     0.6,
-     1.0
-    ],
-    "height_m": [
-     1,
-     3
-    ],
-    "density": 0.6,
-    "soil": "wet",
-    "color": "#4E9A3C",
-    "accent": "#E8C040",
-    "source": "Calathea lutea, cigar calathea, large-leaved neotropical rainforest floor herb 1-3 m — Wikipedia"
-   },
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Indian and Indochinese monsoon forest. Hardier, drought-tolerant ancestor; fibre and leaves for camps. Kew POWO.",
+    "from_catalogue": "giant_herbs",
+    "traits": {
+     "genus": "Musa",
+     "species": "balbisiana",
+     "native_range": "Indian and Indochinese monsoon forest",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      4.0,
+      8.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "ground": [
    {
     "name": "Amazon sword",
     "genus": "Echinodorus",
@@ -462,17 +1189,142 @@
     ],
     "color": "#5AB040",
     "accent": "#F0F0E0",
-    "source": "Echinodorus grandiflorus, Amazon sword plant, emergent along rainforest creek margins, 0.5-1.5 m — Wikipedia"
-   }
-  ],
-  "epiphyte": [
+    "source": "Echinodorus grandiflorus, Amazon sword plant, emergent along rainforest creek margins, 0.5-1.5 m — Wikipedia",
+    "traits": {
+     "genus": "Echinodorus",
+     "species": "grandiflorus",
+     "native_range": "Echinodorus grandiflorus, Amazon sword plant, emergent along rainforest creek margins, 0",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Bromeliad",
-    "genus": "Guzmania",
-    "species": "lingulata",
-    "shape": "epiphyte_clump",
+    "name": "Common swamp pitcher",
+    "genus": "Nepenthes",
+    "species": "mirabilis",
+    "family": "Nepenthaceae",
+    "shape": "reed",
     "temp_c": [
-     21,
+     22,
+     29
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     1.0,
+     6.0
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Indochina to Australia; swamps and wet grassland. Widest-ranging pitcher; climbs the reeds. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Nepenthes",
+     "species": "mirabilis",
+     "native_range": "Indochina to Australia",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      1.0,
+      6.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Forest-floor fern",
+    "genus": "Adiantum",
+    "species": "latifolium",
+    "shape": "fern",
+    "temp_c": [
+     22,
      30
     ],
     "moisture": [
@@ -480,20 +1332,37 @@
      1.0
     ],
     "height_m": [
-     0.2,
-     0.5
+     0.3,
+     0.8
     ],
     "density": 0.8,
-    "soil": "thin",
+    "soil": "rich",
     "color": "#4E9A3C",
-    "accent": "#E84A2A",
-    "source": "Guzmania lingulata, scarlet star bromeliad, epiphytic tank bromeliad of neotropical rainforest canopy — Wikipedia"
+    "accent": "#3A2A20",
+    "source": "Adiantum latifolium, maidenhair fern, common terrestrial fern of shaded neotropical rainforest floor, 0.3-0.8 m — Wikipedia / Tropicos",
+    "traits": {
+     "genus": "Adiantum",
+     "species": "latifolium",
+     "native_range": "Adiantum latifolium, maidenhair fern, common terrestrial fern of shaded neotropical rainforest floor, 0",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.3,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Orchid",
-    "genus": "Cattleya",
-    "species": "labiata",
-    "shape": "epiphyte_clump",
+    "name": "Marantaceae herb",
+    "genus": "Calathea",
+    "species": "lutea",
+    "shape": "shrub",
     "temp_c": [
      22,
      30
@@ -503,15 +1372,403 @@
      1.0
     ],
     "height_m": [
-     0.2,
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#4E9A3C",
+    "accent": "#E8C040",
+    "source": "Calathea lutea, cigar calathea, large-leaved neotropical rainforest floor herb 1-3 m — Wikipedia",
+    "traits": {
+     "genus": "Calathea",
+     "species": "lutea",
+     "native_range": "Calathea lutea, cigar calathea, large-leaved neotropical rainforest floor herb 1-3 m — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Selaginella",
+    "genus": "Selaginella",
+    "species": "willdenowii",
+    "shape": "moss",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#3F8A60",
+    "accent": "#2F6A60",
+    "source": "Selaginella willdenowii, peacock spikemoss, iridescent blue-green ground carpet of SE Asian rainforest floor — Wikipedia",
+    "traits": {
+     "genus": "Selaginella",
+     "species": "willdenowii",
+     "native_range": "Selaginella willdenowii, peacock spikemoss, iridescent blue-green ground carpet of SE Asian rainforest floor — Wikipedia",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Slender pitcher",
+    "genus": "Nepenthes",
+    "species": "gracilis",
+    "family": "Nepenthaceae",
+    "shape": "reed",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1100
+    ],
+    "height_m": [
+     1.0,
+     5.0
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Malesian heath forest and swamp edge. The common weedy pitcher; scrambles over heath. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Nepenthes",
+     "species": "gracilis",
+     "native_range": "Malesian heath forest and swamp edge",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      1.0,
+      5.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Taro",
+    "genus": "Colocasia",
+    "species": "esculenta",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     20,
+     29
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     0.8,
+     2.0
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "SE Asia; wet fields and stream banks everywhere in the tropics. The staple root of the wet tropics; camp folk plant it in water; camp-follower. Kew POWO.",
+    "water_depth_m": [
+     0.05,
      0.4
     ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#5AB040",
-    "accent": "#C84A9A",
-    "source": "Cattleya labiata, crimson cattleya, epiphytic orchid of Brazilian rainforest canopy — Wikipedia"
+    "camp_follower": true,
+    "from_catalogue": "giant_herbs",
+    "traits": {
+     "genus": "Colocasia",
+     "species": "esculenta",
+     "native_range": "SE Asia",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      0.8,
+      2.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by tuber_offset",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
+   {
+    "name": "Zebra alocasia",
+    "genus": "Alocasia",
+    "species": "zebrina",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     700
+    ],
+    "height_m": [
+     0.8,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Philippine rainforest. Tiger-striped stems. Kew POWO.",
+    "from_catalogue": "giant_herbs",
+    "traits": {
+     "genus": "Alocasia",
+     "species": "zebrina",
+     "native_range": "Philippine rainforest",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      0.8,
+      1.5
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by tuber_offset",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "epiphyte": [
    {
     "name": "Bird's nest fern",
     "genus": "Asplenium",
@@ -533,30 +1790,383 @@
     "soil": "thin",
     "color": "#5AB040",
     "accent": "#3A2A20",
-    "source": "Asplenium nidus, bird's nest fern, large epiphytic fern of Asian/Australasian rainforest trunks and branches — Wikipedia"
+    "source": "Asplenium nidus, bird's nest fern, large epiphytic fern of Asian/Australasian rainforest trunks and branches — Wikipedia",
+    "traits": {
+     "genus": "Asplenium",
+     "species": "nidus",
+     "native_range": "Asplenium nidus, bird's nest fern, large epiphytic fern of Asian/Australasian rainforest trunks and branches — Wikipedia",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Monstera",
-    "genus": "Monstera",
-    "species": "deliciosa",
-    "shape": "liana",
+    "name": "Bromeliad",
+    "genus": "Guzmania",
+    "species": "lingulata",
+    "shape": "epiphyte_clump",
     "temp_c": [
      21,
-     29
+     30
     ],
     "moisture": [
      0.65,
      1.0
     ],
     "height_m": [
-     3,
-     20
+     0.2,
+     0.5
     ],
-    "density": 0.5,
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#4E9A3C",
+    "accent": "#E84A2A",
+    "source": "Guzmania lingulata, scarlet star bromeliad, epiphytic tank bromeliad of neotropical rainforest canopy — Wikipedia",
+    "traits": {
+     "genus": "Guzmania",
+     "species": "lingulata",
+     "native_range": "Guzmania lingulata, scarlet star bromeliad, epiphytic tank bromeliad of neotropical rainforest canopy — Wikipedia",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Ghost orchid",
+    "genus": "Dendrophylax",
+    "species": "lindenii",
+    "family": "Orchidaceae",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     20,
+     26
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     50
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.1,
     "soil": "rich",
-    "color": "#3F8A38",
-    "accent": "#8A9A70",
-    "source": "Monstera deliciosa, split-leaf philodendron, hemi-epiphytic climber of Central American rainforest, climbing 20 m — Wikipedia"
+    "needs": [],
+    "color": "#4A8A4A",
+    "accent": "#F8F4F0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "none",
+     "note": "dust seed by wind; germinates only where its fungus lives (reads mycorrhizal presence); most species need one specific pollinator"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Florida and Cuban swamp forest. Leafless roots on pond apple and cypress; sphinx-moth pollinated at night. Kew POWO.",
+    "orchid": {
+     "mycoheterotroph": false,
+     "specific_pollinator": true
+    },
+    "from_catalogue": "orchid",
+    "traits": {
+     "genus": "Dendrophylax",
+     "species": "lindenii",
+     "native_range": "Florida and Cuban swamp forest",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Golden pothos",
+    "genus": "Epipremnum",
+    "species": "aureum",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     29
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     5.0,
+     20.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Society Islands; pantropical.  Kew POWO.",
+    "climber": true,
+    "from_catalogue": "vine",
+    "traits": {
+     "genus": "Epipremnum",
+     "species": "aureum",
+     "native_range": "Society Islands",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      5.0,
+      20.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by runner",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Guzmania",
+    "genus": "Guzmania",
+    "species": "lingulata",
+    "family": "Bromeliaceae",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     0.3,
+     0.5
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#4A8A4A",
+    "accent": "#E04060",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       600
+      ],
+      [
+       "mature",
+       2000
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bird",
+     "disperser": [
+      "bird"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 21,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "none",
+     "note": "most bloom once then die, leaving pups; hummingbird-pollinated; tank species hold rainwater that frogs and insects breed in"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.6
+     ],
+     "allocation": [
+      0.4,
+      0.8
+     ]
+    },
+    "bromeliad": {
+     "tank": true,
+     "air_plant": false
+    },
+    "source": "Neotropical rainforest. Scarlet star; tank. Kew POWO.",
+    "from_catalogue": "bromeliad",
+    "traits": {
+     "genus": "Guzmania",
+     "species": "lingulata",
+     "native_range": "Neotropical rainforest",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.3,
+      0.5
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by tuber_offset",
+     "pollinator": "bird",
+     "disperser": [
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Liana",
@@ -579,226 +2189,317 @@
     "soil": "rich",
     "color": "#4E9A3C",
     "accent": "#7A6A50",
-    "source": "Bauhinia guianensis, monkey-ladder liana, flattened woody climber of Amazon canopy, 40 m — Wikipedia / Tropicos"
+    "source": "Bauhinia guianensis, monkey-ladder liana, flattened woody climber of Amazon canopy, 40 m — Wikipedia / Tropicos",
+    "traits": {
+     "genus": "Bauhinia",
+     "species": "guianensis",
+     "native_range": "Bauhinia guianensis, monkey-ladder liana, flattened woody climber of Amazon canopy, 40 m — Wikipedia / Tropicos",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      10,
+      40
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Monstera",
+    "genus": "Monstera",
+    "species": "deliciosa",
+    "shape": "liana",
+    "temp_c": [
+     21,
+     29
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     3,
+     20
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#8A9A70",
+    "source": "Monstera deliciosa, split-leaf philodendron, hemi-epiphytic climber of Central American rainforest, climbing 20 m — Wikipedia",
+    "traits": {
+     "genus": "Monstera",
+     "species": "deliciosa",
+     "native_range": "Monstera deliciosa, split-leaf philodendron, hemi-epiphytic climber of Central American rainforest, climbing 20 m — Wiki",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      3,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Moth orchid",
+    "genus": "Phalaenopsis",
+    "species": "amabilis",
+    "family": "Orchidaceae",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#4A8A4A",
+    "accent": "#F8F4F0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "none",
+     "note": "dust seed by wind; germinates only where its fungus lives (reads mycorrhizal presence); most species need one specific pollinator"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Malesian rainforest, epiphyte. Big white moths on trunks; moth-pollinated. Kew POWO.",
+    "orchid": {
+     "mycoheterotroph": false,
+     "specific_pollinator": true
+    },
+    "from_catalogue": "orchid",
+    "traits": {
+     "genus": "Phalaenopsis",
+     "species": "amabilis",
+     "native_range": "Malesian rainforest, epiphyte",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Orchid",
+    "genus": "Cattleya",
+    "species": "labiata",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#C84A9A",
+    "source": "Cattleya labiata, crimson cattleya, epiphytic orchid of Brazilian rainforest canopy — Wikipedia",
+    "traits": {
+     "genus": "Cattleya",
+     "species": "labiata",
+     "native_range": "Cattleya labiata, crimson cattleya, epiphytic orchid of Brazilian rainforest canopy — Wikipedia",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.2,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Philodendron",
+    "genus": "Philodendron",
+    "species": "hederaceum",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     3.0,
+     15.0
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Neotropical rainforest. Heart-leaf climber up trunks. Kew POWO.",
+    "climber": true,
+    "from_catalogue": "vine",
+    "traits": {
+     "genus": "Philodendron",
+     "species": "hederaceum",
+     "native_range": "Neotropical rainforest",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      3.0,
+      15.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by runner",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
-  ]
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 212,
-  "names": [
-   "Coconut palm",
-   "Fishtail palm",
-   "Senegal date palm",
-   "Nipa palm",
-   "Amorphophallus decus-silvae",
-   "Amorphophallus gigas",
-   "Amorphophallus hewittii",
-   "Amorphophallus titanum",
-   "Amorphophallus aberrans",
-   "Amorphophallus adamsensis",
-   "Amorphophallus albispathus",
-   "Amorphophallus allenii",
-   "Amorphophallus amygdaloides",
-   "Amorphophallus angulatus",
-   "Amorphophallus angustispathus",
-   "Amorphophallus annulifer",
-   "Amorphophallus arcuspadix",
-   "Amorphophallus ardii",
-   "Amorphophallus asper",
-   "Amorphophallus atrorubens",
-   "Amorphophallus atroviridis",
-   "Amorphophallus bangkokensis",
-   "Amorphophallus bantae",
-   "Amorphophallus barbatus",
-   "Amorphophallus barthlottii",
-   "Amorphophallus beccarii",
-   "Amorphophallus bequaertii",
-   "Amorphophallus bognerianus",
-   "Amorphophallus bolikhamxayensis",
-   "Amorphophallus bonaccordensis",
-   "Amorphophallus borneensis",
-   "Amorphophallus boyceanus",
-   "Amorphophallus brachyphyllus",
-   "Amorphophallus brevipetiolatus",
-   "Amorphophallus brevispathus",
-   "Amorphophallus bubenensis",
-   "Amorphophallus bufo",
-   "Amorphophallus calabaricus",
-   "Amorphophallus calcicola",
-   "Amorphophallus canaliculatus",
-   "Amorphophallus candidissimus",
-   "Amorphophallus carneus",
-   "Amorphophallus carnosus",
-   "Amorphophallus caudatus",
-   "Amorphophallus chlorospathus",
-   "Amorphophallus cicatricifer",
-   "Amorphophallus cidarioides",
-   "Amorphophallus cirrifer",
-   "Amorphophallus claudelii",
-   "Amorphophallus costatus",
-   "Amorphophallus coudercii",
-   "Amorphophallus crinitus",
-   "Amorphophallus crispifolius",
-   "Amorphophallus croatii",
-   "Amorphophallus curvistylis",
-   "Amorphophallus declinatus",
-   "Amorphophallus discophorus",
-   "Amorphophallus dumboi",
-   "Amorphophallus dzui",
-   "Amorphophallus eburneus",
-   "Amorphophallus echinatus",
-   "Amorphophallus elatus",
-   "Amorphophallus elegans",
-   "Amorphophallus erythrorrhachis",
-   "Amorphophallus excentricus",
-   "Amorphophallus fallax",
-   "Amorphophallus ferruginosus",
-   "Amorphophallus flammeus",
-   "Amorphophallus flotoi",
-   "Amorphophallus fontarumii",
-   "Amorphophallus forbesii",
-   "Amorphophallus fornicatus",
-   "Amorphophallus fuscus",
-   "Amorphophallus gallowayi",
-   "Amorphophallus glaucophyllus",
-   "Amorphophallus gliruroides",
-   "Amorphophallus glossophyllus",
-   "Amorphophallus gracilior",
-   "Amorphophallus gracilis",
-   "Amorphophallus haematospadix",
-   "Amorphophallus harmandii",
-   "Amorphophallus hayi",
-   "Amorphophallus hemicryptus",
-   "Amorphophallus hirsutus",
-   "Amorphophallus hottae",
-   "Amorphophallus incurvatus",
-   "Amorphophallus infundibuliformis",
-   "Amorphophallus interruptus",
-   "Amorphophallus josefbogneri",
-   "Amorphophallus julaihii",
-   "Amorphophallus juliae",
-   "Amorphophallus khammouanensis",
-   "Amorphophallus kienluongensis",
-   "Amorphophallus koratensis",
-   "Amorphophallus kuznetsovii",
-   "Amorphophallus lacourii",
-   "Amorphophallus lambii",
-   "Amorphophallus lanceolatus",
-   "Amorphophallus lanuginosus",
-   "Amorphophallus laoticus",
-   "Amorphophallus leptosoma",
-   "Amorphophallus linearis",
-   "Amorphophallus linguiformis",
-   "Amorphophallus longicomus",
-   "Amorphophallus longiconnectivus",
-   "Amorphophallus longispathaceus",
-   "Amorphophallus longituberosus",
-   "Amorphophallus lunatus",
-   "Amorphophallus luzoniensis",
-   "Amorphophallus lyratus",
-   "Amorphophallus macrophyllus",
-   "Amorphophallus macrorhizus",
-   "Amorphophallus malkmus-husseinii",
-   "Amorphophallus margretae",
-   "Amorphophallus maxwellii",
-   "Amorphophallus mayoi",
-   "Amorphophallus merrillii",
-   "Amorphophallus minimus",
-   "Amorphophallus minor",
-   "Amorphophallus mirabilis",
-   "Amorphophallus muelleri",
-   "Amorphophallus mullendersii",
-   "Amorphophallus myosuroides",
-   "Amorphophallus napiger",
-   "Amorphophallus natolii",
-   "Amorphophallus niahensis",
-   "Amorphophallus nicolaii",
-   "Amorphophallus obovoideus",
-   "Amorphophallus obscurus",
-   "Amorphophallus ochroleucus",
-   "Amorphophallus ongsakulii",
-   "Amorphophallus opalinus",
-   "Amorphophallus operculatus",
-   "Amorphophallus opertus",
-   "Amorphophallus palawanensis",
-   "Amorphophallus paucisectus",
-   "Amorphophallus pendulus",
-   "Amorphophallus perakensis",
-   "Amorphophallus pilosus",
-   "Amorphophallus plicatus",
-   "Amorphophallus polyanthus",
-   "Amorphophallus prainii",
-   "Amorphophallus preussii",
-   "Amorphophallus prolificus",
-   "Amorphophallus pulchellus",
-   "Amorphophallus purpurascens",
-   "Amorphophallus pusillus",
-   "Amorphophallus putii",
-   "Amorphophallus pygmaeus",
-   "Amorphophallus ranchanensis",
-   "Amorphophallus ravenii",
-   "Amorphophallus rayongii",
-   "Amorphophallus reflexus",
-   "Amorphophallus rhizomatosus",
-   "Amorphophallus rostratus",
-   "Amorphophallus rugosus",
-   "Amorphophallus sagittarius",
-   "Amorphophallus sakonnakhonensis",
-   "Amorphophallus salmoneus",
-   "Amorphophallus samarensis",
-   "Amorphophallus saraburensis",
-   "Amorphophallus saururus",
-   "Amorphophallus scaber",
-   "Amorphophallus schmidtiae",
-   "Amorphophallus scutatus",
-   "Amorphophallus serrulatus",
-   "Amorphophallus shyamsalilianus",
-   "Amorphophallus sinuatus",
-   "Amorphophallus sizemoreae",
-   "Amorphophallus sparsiflorus",
-   "Amorphophallus spectabilis",
-   "Amorphophallus staudtii",
-   "Amorphophallus subcymbiformis",
-   "Amorphophallus sumawongii",
-   "Amorphophallus suwidjianus",
-   "Amorphophallus sylvaticus",
-   "Amorphophallus symonianus",
-   "Amorphophallus synandrifer",
-   "Amorphophallus tenuispadix",
-   "Amorphophallus tenuistylis",
-   "Amorphophallus terrestris",
-   "Amorphophallus thaiensis",
-   "Amorphophallus tinekeae",
-   "Amorphophallus tuberculatus",
-   "Amorphophallus umbrinus",
-   "Amorphophallus urceolatus",
-   "Amorphophallus variabilis",
-   "Amorphophallus venustus",
-   "Amorphophallus villosus",
-   "Amorphophallus vogelianus",
-   "Amorphophallus wasa",
-   "Amorphophallus zenkeri",
-   "Lacandon yucca",
-   "Cannabis - Kerala",
-   "Cannabis - Ceylon",
-   "Cannabis - Meao Thai",
-   "Cannabis - Luang Prabang",
-   "Cannabis - Vietnamese (Vietnam Black)",
-   "Cannabis - Burmese",
-   "Cannabis - Aceh",
-   "Cannabis - Papua New Guinea",
-   "Cannabis - Kisumu",
-   "Cannabis - Congolese",
-   "Cannabis - Nigerian",
-   "Cannabis - Ghanaian",
-   "Cannabis - Zamal",
-   "Cannabis - Santa Marta Gold",
-   "Cannabis - Punto Rojo",
-   "Cannabis - Limón Verde",
-   "Cannabis - Panama Red",
-   "Cannabis - Lamb's Bread",
-   "Cannabis - Hawaiian (Kona / Puna)"
   ]
  },
  "associations": [
@@ -842,7 +2543,9 @@
     "Amazon sword",
     "Marantaceae herb"
    ],
-   "catalogue": [],
+   "catalogue": [
+    "Moriche palm"
+   ],
    "cover": 0.85,
    "source": "Prance 1979 Notes on the vegetation of Amazonia III (Brittonia); Junk 1989 Flood tolerance and tree distribution in central Amazonian floodplains"
   },
@@ -866,10 +2569,7 @@
     "Forest-floor fern",
     "Selaginella"
    ],
-   "catalogue": [
-    "Nipa palm",
-    "Amorphophallus titanum"
-   ],
+   "catalogue": [],
    "cover": 0.95,
    "source": "Whitmore 1984 Tropical Rain Forests of the Far East; Ashton 1964 Ecological studies in the mixed dipterocarp forests of Brunei State"
   },
@@ -910,5 +2610,23 @@
    "cover": 0.7,
    "source": "Richards 1996 The Tropical Rain Forest (gap phase); Whitmore 1984"
   }
+ ],
+ "hero_species": [
+  "Common swamp pitcher",
+  "Ghost orchid",
+  "Giant taro",
+  "Golden pothos",
+  "Guzmania",
+  "Monstera",
+  "Moriche palm",
+  "Moth orchid",
+  "Philodendron",
+  "Pomelo",
+  "Slender pitcher",
+  "Strangler fig",
+  "Taro",
+  "Wild banana",
+  "Wild banana (Indian)",
+  "Zebra alocasia"
  ]
 }

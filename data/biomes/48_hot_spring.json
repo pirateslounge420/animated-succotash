@@ -20,6 +20,46 @@
   "emergent": [],
   "canopy": [
    {
+    "name": "Downy birch",
+    "genus": "Betula",
+    "species": "pubescens",
+    "shape": "broadleaf",
+    "temp_c": [
+     -2,
+     10
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     3,
+     10
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#E8E8E0",
+    "source": "Betula pubescens, downy birch, scrub near Icelandic geothermal valleys, 3-10 m — Wikipedia",
+    "traits": {
+     "genus": "Betula",
+     "species": "pubescens",
+     "native_range": "Betula pubescens, downy birch, scrub near Icelandic geothermal valleys, 3-10 m — Wikipedia",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      10
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
     "name": "Lodgepole pine",
     "genus": "Pinus",
     "species": "contorta",
@@ -40,7 +80,24 @@
     "soil": "thin",
     "color": "#2F6A35",
     "accent": "#7A5A40",
-    "source": "Pinus contorta, lodgepole pine, dominant tree ringing Yellowstone geyser basins (stunted near hot ground), 10-25 m — Wikipedia / NPS"
+    "source": "Pinus contorta, lodgepole pine, dominant tree ringing Yellowstone geyser basins (stunted near hot ground), 10-25 m — Wikipedia / NPS",
+    "traits": {
+     "genus": "Pinus",
+     "species": "contorta",
+     "native_range": "Pinus contorta, lodgepole pine, dominant tree ringing Yellowstone geyser basins (stunted near hot ground), 10-25 m — Wik",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      10,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Manuka",
@@ -66,33 +123,67 @@
     ],
     "color": "#5A9A60",
     "accent": "#F0E0E0",
-    "source": "Leptospermum scoparium, manuka, dominant shrub-tree on warm geothermal ground at Rotorua/Taupo, NZ, 2-8 m — Wikipedia / NZ DOC"
-   },
+    "source": "Leptospermum scoparium, manuka, dominant shrub-tree on warm geothermal ground at Rotorua/Taupo, NZ, 2-8 m — Wikipedia / NZ DOC",
+    "traits": {
+     "genus": "Leptospermum",
+     "species": "scoparium",
+     "native_range": "Leptospermum scoparium, manuka, dominant shrub-tree on warm geothermal ground at Rotorua/Taupo, NZ, 2-8 m — Wikipedia / ",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "shrub": [
    {
-    "name": "Downy birch",
-    "genus": "Betula",
-    "species": "pubescens",
-    "shape": "broadleaf",
+    "name": "Geothermal willow",
+    "genus": "Salix",
+    "species": "lanata",
+    "shape": "shrub",
     "temp_c": [
-     -2,
-     10
+     -4,
+     8
     ],
     "moisture": [
      0.4,
      0.9
     ],
     "height_m": [
-     3,
-     10
+     0.3,
+     1.5
     ],
-    "density": 0.3,
-    "soil": "thin",
-    "color": "#5AB040",
-    "accent": "#E8E8E0",
-    "source": "Betula pubescens, downy birch, scrub near Icelandic geothermal valleys, 3-10 m — Wikipedia"
-   }
-  ],
-  "shrub": [
+    "density": 0.4,
+    "soil": "wet",
+    "color": "#8AB0A0",
+    "accent": "#8A7A50",
+    "source": "Salix lanata, woolly willow, dwarf willow on warm wet ground beside Icelandic hot springs, 0.3-1.5 m — Wikipedia",
+    "traits": {
+     "genus": "Salix",
+     "species": "lanata",
+     "native_range": "Salix lanata, woolly willow, dwarf willow on warm wet ground beside Icelandic hot springs, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
     "name": "Prostrate kanuka",
     "genus": "Kunzea",
@@ -117,30 +208,24 @@
     ],
     "color": "#5AA040",
     "accent": "#F0F0E0",
-    "source": "Kunzea ericoides, kanuka (prostrate geothermal form), on heated soils of NZ Taupo Volcanic Zone, 0.5-3 m — Wikipedia / NZ DOC"
-   },
-   {
-    "name": "Geothermal willow",
-    "genus": "Salix",
-    "species": "lanata",
-    "shape": "shrub",
-    "temp_c": [
-     -4,
-     8
-    ],
-    "moisture": [
-     0.4,
-     0.9
-    ],
-    "height_m": [
-     0.3,
-     1.5
-    ],
-    "density": 0.4,
-    "soil": "wet",
-    "color": "#8AB0A0",
-    "accent": "#8A7A50",
-    "source": "Salix lanata, woolly willow, dwarf willow on warm wet ground beside Icelandic hot springs, 0.3-1.5 m — Wikipedia"
+    "source": "Kunzea ericoides, kanuka (prostrate geothermal form), on heated soils of NZ Taupo Volcanic Zone, 0.5-3 m — Wikipedia / NZ DOC",
+    "traits": {
+     "genus": "Kunzea",
+     "species": "ericoides",
+     "native_range": "Kunzea ericoides, kanuka (prostrate geothermal form), on heated soils of NZ Taupo Volcanic Zone, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Shrubby cinquefoil",
@@ -163,7 +248,24 @@
     "soil": "thin",
     "color": "#5A9A50",
     "accent": "#E8D040",
-    "source": "Dasiphora fruticosa, shrubby cinquefoil, common in wet meadows fringing Yellowstone thermal areas, 0.3-1.2 m — Wikipedia / USDA"
+    "source": "Dasiphora fruticosa, shrubby cinquefoil, common in wet meadows fringing Yellowstone thermal areas, 0.3-1.2 m — Wikipedia / USDA",
+    "traits": {
+     "genus": "Dasiphora",
+     "species": "fruticosa",
+     "native_range": "Dasiphora fruticosa, shrubby cinquefoil, common in wet meadows fringing Yellowstone thermal areas, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Umbrella fern",
@@ -189,40 +291,116 @@
     ],
     "color": "#5AB040",
     "accent": "#8A6A40",
-    "source": "Dicranopteris linearis, Old World forked fern, thicket-forming on heated ground in NZ and Asian geothermal fields, 0.5-2 m — Wikipedia / NZ DOC"
+    "source": "Dicranopteris linearis, Old World forked fern, thicket-forming on heated ground in NZ and Asian geothermal fields, 0.5-2 m — Wikipedia / NZ DOC",
+    "traits": {
+     "genus": "Dicranopteris",
+     "species": "linearis",
+     "native_range": "Dicranopteris linearis, Old World forked fern, thicket-forming on heated ground in NZ and Asian geothermal fields, 0",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
    {
-    "name": "Thermophile mat",
-    "genus": "Thermus",
-    "species": "aquaticus",
-    "shape": "thermophile_mat",
+    "name": "Broad-leaved cattail",
+    "genus": "Typha",
+    "species": "latifolia",
+    "shape": "reed",
     "temp_c": [
-     -10,
-     35
+     0,
+     25
     ],
     "moisture": [
      0.9,
      1.0
     ],
     "height_m": [
-     0.0,
-     0.02
+     1,
+     3
     ],
-    "density": 1.0,
+    "density": 0.4,
     "soil": "wet",
     "needs": [
-     "hot_ground",
      "standing_water"
     ],
     "water_depth_m": [
-     0,
-     0.1
+     0.1,
+     0.8
     ],
-    "color": "#E8A020",
-    "accent": "#D04020",
-    "source": "Thermus aquaticus (with cyanobacteria Synechococcus/Phormidium), orange-red microbial mat in hot spring outflow channels at 50-80 C, Yellowstone/Iceland/NZ — Wikipedia / NPS"
+    "color": "#5AB040",
+    "accent": "#6A4A2E",
+    "source": "Typha latifolia, cattail, in warm outflow pools below hot springs, Holarctic, 1-3 m — Wikipedia",
+    "traits": {
+     "genus": "Typha",
+     "species": "latifolia",
+     "native_range": "Typha latifolia, cattail, in warm outflow pools below hot springs, Holarctic, 1-3 m — Wikipedia",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Geothermal kanuka moss",
+    "genus": "Campylopus",
+    "species": "introflexus",
+    "shape": "moss",
+    "temp_c": [
+     5,
+     18
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "height_m": [
+     0.01,
+     0.05
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [
+     "hot_ground"
+    ],
+    "color": "#5AB040",
+    "accent": "#8A9A70",
+    "source": "Campylopus introflexus and geothermal moss carpets on hot soil at Rotorua, NZ, 1-5 cm — NZ DOC geothermal vegetation",
+    "traits": {
+     "genus": "Campylopus",
+     "species": "introflexus",
+     "native_range": "Campylopus introflexus and geothermal moss carpets on hot soil at Rotorua, NZ, 1-5 cm — NZ DOC geothermal vegetation",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.01,
+      0.05
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Green cyanobacteria mat",
@@ -253,7 +431,24 @@
     ],
     "color": "#7AC040",
     "accent": "#3F8A38",
-    "source": "Synechococcus lividus, green thermophilic cyanobacterial mat in cooler (45-70 C) hot spring channels, Yellowstone — Wikipedia / NPS"
+    "source": "Synechococcus lividus, green thermophilic cyanobacterial mat in cooler (45-70 C) hot spring channels, Yellowstone — Wikipedia / NPS",
+    "traits": {
+     "genus": "Synechococcus",
+     "species": "lividus",
+     "native_range": "Synechococcus lividus, green thermophilic cyanobacterial mat in cooler (45-70 C) hot spring channels, Yellowstone — Wiki",
+     "leaf_shape": "none — microbial mat",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.0,
+      0.02
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Hot-spring moss",
@@ -279,7 +474,24 @@
     ],
     "color": "#8AC050",
     "accent": "#B0C0A0",
-    "source": "Bryum argenteum, silver moss, cosmopolitan moss on warm geothermal soil in Iceland/Yellowstone — Wikipedia"
+    "source": "Bryum argenteum, silver moss, cosmopolitan moss on warm geothermal soil in Iceland/Yellowstone — Wikipedia",
+    "traits": {
+     "genus": "Bryum",
+     "species": "argenteum",
+     "native_range": "Bryum argenteum, silver moss, cosmopolitan moss on warm geothermal soil in Iceland/Yellowstone — Wikipedia",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.01,
+      0.03
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Ross' bentgrass",
@@ -305,33 +517,72 @@
     ],
     "color": "#8AB840",
     "accent": "#C8B060",
-    "source": "Agrostis rossiae, Ross' bentgrass, endemic annual grass growing only on heated ground in Yellowstone thermal areas, 5-20 cm — Wikipedia / NPS"
+    "source": "Agrostis rossiae, Ross' bentgrass, endemic annual grass growing only on heated ground in Yellowstone thermal areas, 5-20 cm — Wikipedia / NPS",
+    "traits": {
+     "genus": "Agrostis",
+     "species": "rossiae",
+     "native_range": "Agrostis rossiae, Ross' bentgrass, endemic annual grass growing only on heated ground in Yellowstone thermal areas, 5-20",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Geothermal kanuka moss",
-    "genus": "Campylopus",
-    "species": "introflexus",
-    "shape": "moss",
+    "name": "Thermophile mat",
+    "genus": "Thermus",
+    "species": "aquaticus",
+    "shape": "thermophile_mat",
     "temp_c": [
-     5,
-     18
+     -10,
+     35
     ],
     "moisture": [
-     0.5,
+     0.9,
      1.0
     ],
     "height_m": [
-     0.01,
-     0.05
+     0.0,
+     0.02
     ],
-    "density": 0.5,
-    "soil": "thin",
+    "density": 1.0,
+    "soil": "wet",
     "needs": [
-     "hot_ground"
+     "hot_ground",
+     "standing_water"
     ],
-    "color": "#5AB040",
-    "accent": "#8A9A70",
-    "source": "Campylopus introflexus and geothermal moss carpets on hot soil at Rotorua, NZ, 1-5 cm — NZ DOC geothermal vegetation"
+    "water_depth_m": [
+     0,
+     0.1
+    ],
+    "color": "#E8A020",
+    "accent": "#D04020",
+    "source": "Thermus aquaticus (with cyanobacteria Synechococcus/Phormidium), orange-red microbial mat in hot spring outflow channels at 50-80 C, Yellowstone/Iceland/NZ — Wikipedia / NPS",
+    "traits": {
+     "genus": "Thermus",
+     "species": "aquaticus",
+     "native_range": "Thermus aquaticus (with cyanobacteria Synechococcus/Phormidium), orange-red microbial mat in hot spring outflow channels",
+     "leaf_shape": "none — microbial mat",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.0,
+      0.02
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Tufted hairgrass",
@@ -354,37 +605,24 @@
     "soil": "wet",
     "color": "#6AB050",
     "accent": "#C8B060",
-    "source": "Deschampsia cespitosa, tufted hairgrass, tussock of wet meadows around cooled hot spring outflows, Holarctic, 0.3-1.2 m — Wikipedia / USDA"
-   },
-   {
-    "name": "Broad-leaved cattail",
-    "genus": "Typha",
-    "species": "latifolia",
-    "shape": "reed",
-    "temp_c": [
-     0,
-     25
-    ],
-    "moisture": [
-     0.9,
-     1.0
-    ],
-    "height_m": [
-     1,
-     3
-    ],
-    "density": 0.4,
-    "soil": "wet",
-    "needs": [
-     "standing_water"
-    ],
-    "water_depth_m": [
-     0.1,
-     0.8
-    ],
-    "color": "#5AB040",
-    "accent": "#6A4A2E",
-    "source": "Typha latifolia, cattail, in warm outflow pools below hot springs, Holarctic, 1-3 m — Wikipedia"
+    "source": "Deschampsia cespitosa, tufted hairgrass, tussock of wet meadows around cooled hot spring outflows, Holarctic, 0.3-1.2 m — Wikipedia / USDA",
+    "traits": {
+     "genus": "Deschampsia",
+     "species": "cespitosa",
+     "native_range": "Deschampsia cespitosa, tufted hairgrass, tussock of wet meadows around cooled hot spring outflows, Holarctic, 0",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
@@ -505,5 +743,8 @@
    "cover": 0.55,
    "source": "Given 1980; Burns 1997 Leptospermum-Dicranopteris geothermal scrub"
   }
+ ],
+ "hero_species": [
+  "Lodgepole pine"
  ]
 }

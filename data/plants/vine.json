@@ -2,14 +2,431 @@
  "key": "VINE_CATALOGUE",
  "name": "Vines, lianas and climbers",
  "kind": "land",
- "status": "30 species",
+ "status": "5 archetypal species (full list archived in docs/plant_archive)",
  "notes": "Climbers need a host: 'climber': true means the plant is placed at the base of a tree, snag, ruin wall or cliff and grows UP it along the branch graph, or over ruins and rock. Aroids of the rainforest (philodendron, monstera, pothos), lianas, rattans, temperate ivy, grape and creeper on ruins, kudzu and honeysuckle at edges, annual twiners on the ground. Stranglers kill old hosts over decades — a real event. Ruins overgrown with ivy and creeper are the reference look.",
  "plants": {
   "emergent": [],
   "canopy": [],
-  "shrub": [],
+  "shrub": [
+   {
+    "name": "Tree philodendron",
+    "genus": "Philodendron",
+    "species": "bipinnatifidum",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     18,
+     26
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Brazilian Atlantic forest. Huge cut leaves; a crawler at the forest edge. Kew POWO.",
+    "climber": true,
+    "traits": {
+     "genus": "Philodendron",
+     "species": "bipinnatifidum",
+     "native_range": "Brazilian Atlantic forest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      2.0,
+      4.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by runner",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
   "ground": [],
   "epiphyte": [
+   {
+    "name": "Philodendron",
+    "genus": "Philodendron",
+    "species": "hederaceum",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     3.0,
+     15.0
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Neotropical rainforest. Heart-leaf climber up trunks. Kew POWO.",
+    "climber": true,
+    "traits": {
+     "genus": "Philodendron",
+     "species": "hederaceum",
+     "native_range": "Neotropical rainforest",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      3.0,
+      15.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by runner",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Monstera",
+    "genus": "Monstera",
+    "species": "deliciosa",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     5.0,
+     20.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Central American rainforest. Split leaves; climbs with aerial roots. Kew POWO.",
+    "climber": true,
+    "traits": {
+     "genus": "Monstera",
+     "species": "deliciosa",
+     "native_range": "Central American rainforest",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      5.0,
+      20.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by runner",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Golden pothos",
+    "genus": "Epipremnum",
+    "species": "aureum",
+    "family": "",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     29
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     5.0,
+     20.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E8A3E",
+    "accent": "#7A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "runner",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 20,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Society Islands; pantropical.  Kew POWO.",
+    "climber": true,
+    "traits": {
+     "genus": "Epipremnum",
+     "species": "aureum",
+     "native_range": "Society Islands",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      5.0,
+      20.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by runner",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
     "name": "Strangler fig",
     "genus": "Ficus",
@@ -92,175 +509,27 @@
      ]
     },
     "source": "Florida and Caribbean hammocks. Starts in a crown, sends roots down, kills the host — a real strangler event on old trees. Kew POWO.",
-    "climber": true
-   },
-   {
-    "name": "Ivy",
-    "genus": "Hedera",
-    "species": "helix",
-    "family": "",
-    "shape": "liana",
-    "temp_c": [
-     6,
-     16
-    ],
-    "moisture": [
-     0.5,
-     0.9
-    ],
-    "altitude_m": [
-     0,
-     1500
-    ],
-    "height_m": [
-     5.0,
-     30.0
-    ],
-    "density": 0.9,
-    "soil": "rich",
-    "needs": [],
-    "color": "#3E8A3E",
-    "accent": "#7A6A50",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+    "climber": true,
+    "traits": {
+     "genus": "Ficus",
+     "species": "aurea",
+     "native_range": "Florida and Caribbean hammocks",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      15.0,
+      30.0
      ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by runner",
      "pollinator": "insect",
      "disperser": [
       "bird",
       "mammal"
      ],
-     "clonal": "runner",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "summer",
-      "days": 20,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "European forest. Evergreen; climbs snags and ruins; winter berries for birds. Kew POWO.",
-    "climber": true
-   },
-   {
-    "name": "Virginia creeper",
-    "genus": "Parthenocissus",
-    "species": "quinquefolia",
-    "family": "",
-    "shape": "liana",
-    "temp_c": [
-     5,
-     20
-    ],
-    "moisture": [
-     0.5,
-     0.9
-    ],
-    "altitude_m": [
-     0,
-     1500
-    ],
-    "height_m": [
-     5.0,
-     25.0
-    ],
-    "density": 0.8,
-    "soil": "rich",
-    "needs": [],
-    "color": "#3E8A3E",
-    "accent": "#7A6A50",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird",
-      "mammal"
-     ],
-     "clonal": "runner",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "summer",
-      "days": 20,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "E North American forest edge. Scarlet in autumn on ruins. Kew POWO.",
-    "climber": true
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ]
  }

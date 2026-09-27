@@ -2,7 +2,7 @@
  "key": "MAGNOLIA_CATALOGUE",
  "name": "Magnolias and tulip trees",
  "kind": "land",
- "status": "18 species, curated",
+ "status": "4 archetypal species (full list archived in docs/plant_archive)",
  "notes": "Magnolias are beetle-pollinated — the oldest flowering-plant pollination on Earth — with big cream, white or pink cups; the ledger's beetle count sets their seed. Fruit cones with red seeds taken by birds. Asian, Himalayan, eastern North American and a few tropical species.",
  "plants": {
   "emergent": [],
@@ -88,341 +88,26 @@
       0.6
      ]
     },
-    "source": "SE US coastal plain; 20–30 m. Glossy evergreen; huge cream flowers. Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "Sweetbay",
-    "genus": "Magnolia",
-    "species": "virginiana",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     13,
-     22
-    ],
-    "moisture": [
-     0.6,
-     1.0
-    ],
-    "altitude_m": [
-     0,
-     200
-    ],
-    "height_m": [
-     8.0,
-     20.0
-    ],
-    "density": 0.5,
-    "soil": "rich",
-    "needs": [
-     "standing_water"
-    ],
-    "color": "#4A8A5A",
-    "accent": "#F0EEE0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+    "source": "SE US coastal plain; 20–30 m. Glossy evergreen; huge cream flowers. Kew POWO for the name; standard floras for range.",
+    "traits": {
+     "genus": "Magnolia",
+     "species": "grandiflora",
+     "native_range": "SE US coastal plain",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      20.0,
+      30.0
      ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
      "pollinator": "insect",
      "disperser": [
       "bird"
      ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "SE US swamps; 8–20 m. Swamp magnolia; wet needs. Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "Cucumber tree",
-    "genus": "Magnolia",
-    "species": "acuminata",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     7,
-     15
-    ],
-    "moisture": [
-     0.5,
-     0.85
-    ],
-    "altitude_m": [
-     100,
-     1200
-    ],
-    "height_m": [
-     20.0,
-     30.0
-    ],
-    "density": 0.4,
-    "soil": "rich",
-    "needs": [],
-    "color": "#3E7A44",
-    "accent": "#D8D0A0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Appalachians; 20–30 m.  Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "Umbrella magnolia",
-    "genus": "Magnolia",
-    "species": "tripetala",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     9,
-     16
-    ],
-    "moisture": [
-     0.55,
-     0.9
-    ],
-    "altitude_m": [
-     100,
-     1000
-    ],
-    "height_m": [
-     10.0,
-     15.0
-    ],
-    "density": 0.3,
-    "soil": "rich",
-    "needs": [],
-    "color": "#4A8A4A",
-    "accent": "#F0EEE0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Appalachian coves; 10–15 m. Whorled giant leaves. Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "Bigleaf magnolia",
-    "genus": "Magnolia",
-    "species": "macrophylla",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     12,
-     18
-    ],
-    "moisture": [
-     0.55,
-     0.9
-    ],
-    "altitude_m": [
-     50,
-     600
-    ],
-    "height_m": [
-     10.0,
-     20.0
-    ],
-    "density": 0.2,
-    "soil": "rich",
-    "needs": [],
-    "color": "#4A8A4A",
-    "accent": "#F0EEE0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "SE US ravines; 10–20 m. Largest simple leaf in North America. Kew POWO for the name; standard floras for range."
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Yulan magnolia",
@@ -505,173 +190,26 @@
       0.6
      ]
     },
-    "source": "central China; 10–15 m. White goblets before the leaves. Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "Kobushi",
-    "genus": "Magnolia",
-    "species": "kobus",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     6,
-     14
-    ],
-    "moisture": [
-     0.55,
-     0.9
-    ],
-    "altitude_m": [
-     0,
-     1000
-    ],
-    "height_m": [
-     10.0,
-     20.0
-    ],
-    "density": 0.5,
-    "soil": "rich",
-    "needs": [],
-    "color": "#4A8A4A",
-    "accent": "#F8F4F0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+    "source": "central China; 10–15 m. White goblets before the leaves. Kew POWO for the name; standard floras for range.",
+    "traits": {
+     "genus": "Magnolia",
+     "species": "denudata",
+     "native_range": "central China",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      10.0,
+      15.0
      ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
      "pollinator": "insect",
      "disperser": [
       "bird"
      ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Japan, Korea; 10–20 m. Star-white spring bloom. Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "Japanese bigleaf magnolia",
-    "genus": "Magnolia",
-    "species": "obovata",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     4,
-     12
-    ],
-    "moisture": [
-     0.6,
-     0.95
-    ],
-    "altitude_m": [
-     300,
-     1800
-    ],
-    "height_m": [
-     20.0,
-     30.0
-    ],
-    "density": 0.5,
-    "soil": "rich",
-    "needs": [],
-    "color": "#4A8A4A",
-    "accent": "#F0EEE0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Japanese mountain forest; 20–30 m.  Kew POWO for the name; standard floras for range."
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Campbell's magnolia",
@@ -754,118 +292,54 @@
       0.6
      ]
     },
-    "source": "E Himalayan cloud forest; 20–30 m. Pink cups the size of dinner plates on bare branches. Kew POWO for the name; standard floras for range."
+    "source": "E Himalayan cloud forest; 20–30 m. Pink cups the size of dinner plates on bare branches. Kew POWO for the name; standard floras for range.",
+    "traits": {
+     "genus": "Magnolia",
+     "species": "campbellii",
+     "native_range": "E Himalayan cloud forest",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      20.0,
+      30.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Sprenger's magnolia",
-    "genus": "Magnolia",
-    "species": "sprengeri",
+    "name": "Tulip tree",
+    "genus": "Liriodendron",
+    "species": "tulipifera",
     "family": "Magnoliaceae",
     "shape": "broadleaf",
     "temp_c": [
      8,
-     15
+     17
     ],
     "moisture": [
-     0.55,
-     0.9
-    ],
-    "altitude_m": [
-     1300,
-     2400
-    ],
-    "height_m": [
-     15.0,
-     20.0
-    ],
-    "density": 0.3,
-    "soil": "rich",
-    "needs": [],
-    "color": "#4A8A4A",
-    "accent": "#F0B0C8",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "central China mountains; 15–20 m.  Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "Michelia",
-    "genus": "Magnolia",
-    "species": "champaca",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     20,
-     27
-    ],
-    "moisture": [
-     0.55,
-     0.9
+     0.5,
+     0.85
     ],
     "altitude_m": [
      0,
-     1500
+     1000
     ],
     "height_m": [
-     20.0,
-     30.0
+     35.0,
+     50.0
     ],
-    "density": 0.5,
+    "density": 0.7,
     "soil": "rich",
     "needs": [],
-    "color": "#3E7A44",
-    "accent": "#F0C040",
+    "color": "#5AA040",
+    "accent": "#D8C040",
     "growth": {
      "stages": [
       [
@@ -920,426 +394,29 @@
       0.6
      ]
     },
-    "source": "Indian and SE Asian monsoon forest; 20–30 m. Champak; orange scented flowers; temple tree. Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "White champaca",
-    "genus": "Magnolia",
-    "species": "× alba",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     22,
-     28
-    ],
-    "moisture": [
-     0.6,
-     0.9
-    ],
-    "altitude_m": [
-     0,
-     800
-    ],
-    "height_m": [
-     15.0,
-     25.0
-    ],
-    "density": 0.2,
-    "soil": "rich",
-    "needs": [],
-    "color": "#3E7A44",
-    "accent": "#F8F4E0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+    "source": "E North American cove forest; 35–50 m. Magnolia family; tallest eastern hardwood; tulip flowers. Kew POWO for the name; standard floras for range.",
+    "traits": {
+     "genus": "Liriodendron",
+     "species": "tulipifera",
+     "native_range": "E North American cove forest",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      35.0,
+      50.0
      ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
      "pollinator": "insect",
      "disperser": [
       "bird"
      ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "SE Asia; 15–25 m.  Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "Chinese evergreen magnolia",
-    "genus": "Magnolia",
-    "species": "delavayi",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     12,
-     18
-    ],
-    "moisture": [
-     0.4,
-     0.7
-    ],
-    "altitude_m": [
-     1500,
-     2800
-    ],
-    "height_m": [
-     8.0,
-     12.0
-    ],
-    "density": 0.3,
-    "soil": "rich",
-    "needs": [],
-    "color": "#2A5A38",
-    "accent": "#F0EEE0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Yunnan limestone; 8–12 m. Grey-green leathery leaves; karst. Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "Talauma",
-    "genus": "Magnolia",
-    "species": "dodecapetala",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     20,
-     25
-    ],
-    "moisture": [
-     0.7,
-     1.0
-    ],
-    "altitude_m": [
-     300,
-     1200
-    ],
-    "height_m": [
-     20.0,
-     30.0
-    ],
-    "density": 0.3,
-    "soil": "rich",
-    "needs": [],
-    "color": "#2A5A38",
-    "accent": "#F0EEE0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Caribbean montane forest; 20–30 m.  Kew POWO for the name; standard floras for range."
-   },
-   {
-    "name": "Fraser magnolia",
-    "genus": "Magnolia",
-    "species": "fraseri",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     8,
-     14
-    ],
-    "moisture": [
-     0.6,
-     0.9
-    ],
-    "altitude_m": [
-     300,
-     1500
-    ],
-    "height_m": [
-     10.0,
-     15.0
-    ],
-    "density": 0.3,
-    "soil": "rich",
-    "needs": [],
-    "color": "#4A8A4A",
-    "accent": "#F0EEE0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "southern Appalachians; 10–15 m.  Kew POWO for the name; standard floras for range."
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
-  "shrub": [
-   {
-    "name": "Oyama magnolia",
-    "genus": "Magnolia",
-    "species": "sieboldii",
-    "family": "Magnoliaceae",
-    "shape": "broadleaf",
-    "temp_c": [
-     4,
-     12
-    ],
-    "moisture": [
-     0.55,
-     0.9
-    ],
-    "altitude_m": [
-     300,
-     1500
-    ],
-    "height_m": [
-     3.0,
-     8.0
-    ],
-    "density": 0.4,
-    "soil": "rich",
-    "needs": [],
-    "color": "#4A8A4A",
-    "accent": "#F8F4F0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold",
-     "note": "beetle-pollinated: reads the ledger's beetle count, not bees"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Korea, Japan, NE China; 3–8 m. Nodding white cups; understory. Kew POWO for the name; standard floras for range."
-   }
-  ],
+  "shrub": [],
   "ground": [],
   "epiphyte": []
  }

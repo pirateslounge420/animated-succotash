@@ -1,0 +1,504 @@
+{
+ "key": "CYPRESS_CATALOGUE",
+ "name": "Cypresses",
+ "kind": "land",
+ "status": "5 species",
+ "notes": "The cypress family's landscape-makers: bald cypress of the southern swamps with its knees, the Mediterranean column cypress, Monterey cypress on the fog headlands, the Lawson cypress of the Pacific Northwest, and the Chinese swamp cypress.",
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Bald cypress",
+    "genus": "Taxodium",
+    "species": "distichum",
+    "family": "Cupressaceae",
+    "shape": "cypress",
+    "temp_c": [
+     13,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     200
+    ],
+    "height_m": [
+     25.0,
+     40.0
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "needs": [],
+    "color": "#5A8A4A",
+    "accent": "#8A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE US swamps and river bottoms; deciduous conifer; knees; 1,000+ years. Kew POWO.",
+    "landmark": true,
+    "traits": {
+     "genus": "Taxodium",
+     "species": "distichum",
+     "native_range": "SE US swamps and river bottoms",
+     "leaf_shape": "feathery deciduous or scale needles",
+     "trunk": "fluted buttressed trunk, knees in water",
+     "petiole": "none",
+     "height_m": [
+      25.0,
+      40.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Montezuma cypress",
+    "genus": "Taxodium",
+    "species": "mucronatum",
+    "family": "Cupressaceae",
+    "shape": "cypress",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     300,
+     2500
+    ],
+    "height_m": [
+     25.0,
+     40.0
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [],
+    "color": "#5A8A4A",
+    "accent": "#8A6A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Mexican river banks; the Tule tree, widest trunk on Earth. Kew POWO.",
+    "landmark": true,
+    "traits": {
+     "genus": "Taxodium",
+     "species": "mucronatum",
+     "native_range": "Mexican river banks",
+     "leaf_shape": "feathery deciduous or scale needles",
+     "trunk": "fluted buttressed trunk, knees in water",
+     "petiole": "none",
+     "height_m": [
+      25.0,
+      40.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Mediterranean cypress",
+    "genus": "Cupressus",
+    "species": "sempervirens",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.55
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     20.0,
+     30.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#6A5A4A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "E Mediterranean hills; the dark column of graveyards and ruins. Kew POWO.",
+    "landmark": true,
+    "traits": {
+     "genus": "Cupressus",
+     "species": "sempervirens",
+     "native_range": "E Mediterranean hills",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      20.0,
+      30.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Monterey cypress",
+    "genus": "Hesperocyparis",
+    "species": "macrocarpa",
+    "family": "Cupressaceae",
+    "shape": "gnarled",
+    "temp_c": [
+     11,
+     15
+    ],
+    "moisture": [
+     0.45,
+     0.75
+    ],
+    "altitude_m": [
+     0,
+     100
+    ],
+    "height_m": [
+     15.0,
+     25.0
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#7A6A5A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Monterey headlands; wind-flattened, fog-fed. Kew POWO.",
+    "traits": {
+     "genus": "Hesperocyparis",
+     "species": "macrocarpa",
+     "native_range": "Monterey headlands",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      15.0,
+      25.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Lawson cypress",
+    "genus": "Chamaecyparis",
+    "species": "lawsoniana",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     8,
+     14
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     40.0,
+     60.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3A7A4A",
+    "accent": "#7A6A5A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Oregon-California coast ranges. Kew POWO.",
+    "landmark": true,
+    "traits": {
+     "genus": "Chamaecyparis",
+     "species": "lawsoniana",
+     "native_range": "Oregon-California coast ranges",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      40.0,
+      60.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "shrub": [],
+  "ground": [],
+  "epiphyte": []
+ }
+}

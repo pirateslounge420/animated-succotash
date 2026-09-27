@@ -1,0 +1,459 @@
+{
+ "key": "ESTUARY",
+ "name": "Estuary / delta",
+ "group": "Coastal",
+ "size": "small",
+ "status": "researched",
+ "kind": "water",
+ "notes": "Brackish tidal river mouths and deltas: cordgrass and glasswort marsh fringing mudflats, reed and bulrush beds on the fresher side, mangrove in tropical deltas, and eelgrass in the channels. Drawn on Atlantic North America (Chesapeake), NW Europe (Wadden Sea, Thames), the Mekong/Ganges deltas and SE Australian estuaries; underwater species flagged.",
+ "climate": {
+  "temp_c": [
+   0,
+   33
+  ],
+  "moisture": [
+   0.3,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Grey mangrove",
+    "genus": "Avicennia",
+    "species": "marina",
+    "shape": "mangrove",
+    "temp_c": [
+     15,
+     33
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     3,
+     14
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#5A9A50",
+    "accent": "#9A9A8A",
+    "source": "Avicennia marina, Indo-West Pacific and E Africa estuaries, most cold-tolerant mangrove with pencil roots, 3-14 m — Wikipedia"
+   },
+   {
+    "name": "Nipa palm",
+    "genus": "Nypa",
+    "species": "fruticans",
+    "shape": "palm",
+    "temp_c": [
+     22,
+     33
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     4,
+     9
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#4CA040",
+    "accent": "#7A6A48",
+    "source": "Nypa fruticans, SE Asian and Bay of Bengal deltas (Mekong, Sundarbans), trunkless palm in brackish tidal mud, 4-9 m — Wikipedia"
+   },
+   {
+    "name": "Swamp she-oak",
+    "genus": "Casuarina",
+    "species": "glauca",
+    "shape": "conifer",
+    "temp_c": [
+     14,
+     25
+    ],
+    "moisture": [
+     0.55,
+     1.0
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4E8A44",
+    "accent": "#6A5A48",
+    "source": "Casuarina glauca, E Australian estuary margins behind mangroves, needle-like branchlets, 8-20 m — Wikipedia"
+   },
+   {
+    "name": "Crack willow",
+    "genus": "Salix",
+    "species": "fragilis",
+    "shape": "broadleaf",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AA848",
+    "accent": "#7A6A50",
+    "source": "Salix fragilis (S. x fragilis), European tidal river banks and freshwater deltas, 10-20 m — Wikipedia"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Sea purslane shrub",
+    "genus": "Halimione",
+    "species": "portulacoides",
+    "shape": "shrub",
+    "temp_c": [
+     7,
+     18
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#9AB8A0",
+    "accent": "#8A8A70",
+    "source": "Halimione (Atriplex) portulacoides, European Atlantic and Mediterranean estuary creek banks, silver-grey subshrub 30-80 cm — Wikipedia"
+   },
+   {
+    "name": "Marsh elder",
+    "genus": "Iva",
+    "species": "frutescens",
+    "shape": "shrub",
+    "temp_c": [
+     10,
+     24
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4A9A40",
+    "accent": "#8A7A5A",
+    "source": "Iva frutescens, US Atlantic/Gulf estuary high-marsh edge, shrub 1-3 m — USDA Plants"
+   },
+   {
+    "name": "Groundsel bush",
+    "genus": "Baccharis",
+    "species": "halimifolia",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "height_m": [
+     1,
+     4
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "color": "#5AA848",
+    "accent": "#E8E8E0",
+    "source": "Baccharis halimifolia, SE US and Gulf estuary margins (invasive in Australia/Europe), fluffy white seed heads, 1-4 m — Wikipedia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Smooth cordgrass",
+    "genus": "Sporobolus",
+    "species": "alterniflorus",
+    "shape": "reed",
+    "temp_c": [
+     5,
+     24
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     2.0
+    ],
+    "density": 1.2,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.6
+    ],
+    "color": "#5AB040",
+    "accent": "#C8B060",
+    "source": "Sporobolus (Spartina) alterniflorus, US Atlantic/Gulf low marsh (invasive in China/W Europe), daily-flooded cordgrass 0.5-2 m — Wikipedia"
+   },
+   {
+    "name": "Common cordgrass",
+    "genus": "Sporobolus",
+    "species": "anglicus",
+    "shape": "reed",
+    "temp_c": [
+     7,
+     17
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1.3
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.5
+    ],
+    "color": "#5AA848",
+    "accent": "#C8B060",
+    "source": "Sporobolus (Spartina) anglicus, NW European estuary mudflats (hybrid origin, Southampton), pioneer cordgrass 0.3-1.3 m — Wikipedia"
+   },
+   {
+    "name": "Common reed",
+    "genus": "Phragmites",
+    "species": "australis",
+    "shape": "reed",
+    "temp_c": [
+     0,
+     30
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     2,
+     4
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#8AB860",
+    "accent": "#C8B060",
+    "source": "Phragmites australis, cosmopolitan, brackish upper estuary and delta reedbeds (Danube, Rhone), 2-4 m — Wikipedia"
+   },
+   {
+    "name": "Glasswort",
+    "genus": "Salicornia",
+    "species": "europaea",
+    "shape": "cushion",
+    "temp_c": [
+     3,
+     22
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#6AC040",
+    "accent": "#D05040",
+    "source": "Salicornia europaea, N Hemisphere estuary mudflat pioneer, jointed succulent annual turning red in autumn, 5-30 cm — Wikipedia"
+   },
+   {
+    "name": "Saltmarsh bulrush",
+    "genus": "Bolboschoenus",
+    "species": "maritimus",
+    "shape": "reed",
+    "temp_c": [
+     3,
+     25
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.5
+    ],
+    "color": "#5AA848",
+    "accent": "#8A6A40",
+    "source": "Bolboschoenus maritimus, near-cosmopolitan brackish estuary margins and delta ponds, triangular-stemmed sedge 0.5-1.5 m — Wikipedia"
+   },
+   {
+    "name": "Sea aster",
+    "genus": "Tripolium",
+    "species": "pannonicum",
+    "shape": "rosette",
+    "temp_c": [
+     5,
+     18
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.8
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5AB040",
+    "accent": "#A080D0",
+    "source": "Tripolium pannonicum (Aster tripolium), European estuary marsh, fleshy-leaved lilac daisy 20-80 cm — Wikipedia"
+   },
+   {
+    "name": "Eelgrass",
+    "genus": "Zostera",
+    "species": "marina",
+    "shape": "grass",
+    "temp_c": [
+     0,
+     22
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.3,
+     6
+    ],
+    "color": "#3E9A3A",
+    "accent": "#2F7A35",
+    "source": "underwater — Zostera marina, N Hemisphere estuary and lagoon channels on sand/mud, ribbon-leaved seagrass 0.3-1.2 m — Wikipedia"
+   },
+   {
+    "name": "Widgeongrass",
+    "genus": "Ruppia",
+    "species": "maritima",
+    "shape": "grass",
+    "temp_c": [
+     3,
+     30
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.8
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.2,
+     3
+    ],
+    "color": "#4AA040",
+    "accent": "#3E7A3A",
+    "source": "underwater — Ruppia maritima, worldwide brackish estuary shallows, thread-leaved submerged plant 20-80 cm — Wikipedia"
+   }
+  ],
+  "epiphyte": []
+ }
+}

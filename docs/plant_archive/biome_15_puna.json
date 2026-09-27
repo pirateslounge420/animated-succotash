@@ -1,0 +1,403 @@
+{
+ "key": "PUNA",
+ "name": "Puna",
+ "group": "High-altitude",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Dry high-Andean puna (Peru, Bolivia, N Chile, NW Argentina) 3200-5000 m: bunchgrass steppe with Polylepis groves, resinous tola shrubs, Puya raimondii and hard cushion bogs (bofedales).",
+ "climate": {
+  "temp_c": [
+   -3,
+   5
+  ],
+  "moisture": [
+   0.12,
+   0.55
+  ],
+  "altitude_m": [
+   2500,
+   5000
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Queñua",
+    "genus": "Polylepis",
+    "species": "tarapacana",
+    "shape": "gnarled",
+    "temp_c": [
+     -3,
+     6
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     3800,
+     5200
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#4A7A3A",
+    "accent": "#B05A30",
+    "source": "Polylepis tarapacana, Bolivia/Chile/Peru/Argentina 4000-5200 m, world's highest tree, gnarled 2-8 m with peeling red bark"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Queen of the Andes",
+    "genus": "Puya",
+    "species": "raimondii",
+    "shape": "spike_rosette",
+    "temp_c": [
+     -3,
+     5
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     3200,
+     4800
+    ],
+    "height_m": [
+     3,
+     12
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#8AB0A0",
+    "accent": "#C8D880",
+    "source": "Puya raimondii, Peru/Bolivia puna 3200-4800 m, giant rosette 3 m with flowering spike to 12 m, largest bromeliad"
+   },
+   {
+    "name": "Puna daisy shrub",
+    "genus": "Parastrephia",
+    "species": "lepidophylla",
+    "shape": "shrub",
+    "temp_c": [
+     -3,
+     6
+    ],
+    "moisture": [
+     0.12,
+     0.4
+    ],
+    "altitude_m": [
+     3500,
+     4800
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.9,
+    "soil": "sand",
+    "color": "#6A8A50",
+    "accent": "#C0B050",
+    "source": "Parastrephia lepidophylla (tola), Bolivian/Peruvian/Chilean altiplano 3500-4800 m, resinous scale-leaved shrub 0.5-1.5 m"
+   },
+   {
+    "name": "Yareta",
+    "genus": "Azorella",
+    "species": "compacta",
+    "shape": "cushion",
+    "temp_c": [
+     -3,
+     4
+    ],
+    "moisture": [
+     0.12,
+     0.4
+    ],
+    "altitude_m": [
+     3200,
+     5200
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#7AB030",
+    "accent": "#9AC040",
+    "source": "Azorella compacta, Peru/Bolivia/Chile/Argentina 3200-5200 m, huge rock-hard bright green cushion mounds up to 1-3 m across"
+   },
+   {
+    "name": "Puna cactus",
+    "genus": "Cumulopuntia",
+    "species": "boliviana",
+    "shape": "cactus",
+    "temp_c": [
+     -3,
+     6
+    ],
+    "moisture": [
+     0.12,
+     0.35
+    ],
+    "altitude_m": [
+     3500,
+     4700
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#7A9A50",
+    "accent": "#E0C060",
+    "source": "Cumulopuntia boliviana, altiplano Peru/Bolivia/Chile/Argentina 3500-4700 m, spiny mound-forming cactus 10-50 cm"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Bunch grass",
+    "genus": "Festuca",
+    "species": "orthophylla",
+    "shape": "tussock",
+    "temp_c": [
+     -3,
+     6
+    ],
+    "moisture": [
+     0.12,
+     0.45
+    ],
+    "altitude_m": [
+     3700,
+     4800
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "color": "#C8B060",
+    "accent": "#A08A40",
+    "source": "Festuca orthophylla (paja brava), dominant stiff golden bunchgrass of the dry altiplano 3700-4800 m"
+   },
+   {
+    "name": "Ichu grass",
+    "genus": "Jarava",
+    "species": "ichu",
+    "shape": "tussock",
+    "temp_c": [
+     -3,
+     8
+    ],
+    "moisture": [
+     0.15,
+     0.5
+    ],
+    "altitude_m": [
+     3000,
+     4800
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#B8B050",
+    "accent": "#A09040",
+    "source": "Jarava ichu (Stipa ichu), Peru/Bolivia/Ecuador puna 3000-4800 m, fine feathery tussock 30-100 cm"
+   },
+   {
+    "name": "Bofedal cushion",
+    "genus": "Distichia",
+    "species": "muscoides",
+    "shape": "cushion",
+    "temp_c": [
+     -3,
+     5
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     3800,
+     5000
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AA040",
+    "accent": "#8A9A50",
+    "source": "Distichia muscoides, Andean peat bogs (bofedales) 3800-5000 m, hard bright-green cushion peat former"
+   },
+   {
+    "name": "Ground rosette",
+    "genus": "Werneria",
+    "species": "nubigena",
+    "shape": "rosette",
+    "temp_c": [
+     -3,
+     5
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     3800,
+     4800
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#4A9A45",
+    "accent": "#F0F0E0",
+    "source": "Werneria nubigena, Peru/Bolivia puna 3800-4800 m, flat ground-hugging rosette with white daisy flowers"
+   },
+   {
+    "name": "Puna gentian",
+    "genus": "Gentianella",
+    "species": "primuloides",
+    "shape": "cushion",
+    "temp_c": [
+     -3,
+     5
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     3800,
+     4600
+    ],
+    "height_m": [
+     0.03,
+     0.08
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#4A8A45",
+    "accent": "#4050C0",
+    "source": "Gentianella primuloides, Peruvian/Bolivian puna 3800-4600 m, tiny rosette gentian with blue-purple flowers"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 0,
+  "names": []
+ },
+ "associations": [
+  {
+   "name": "Ichu bunchgrass puna",
+   "where": "wide open slopes and rolling plateaus 3800-4500 m on stony, well-drained soil",
+   "dominant": [
+    "Ichu grass"
+   ],
+   "companion": [
+    "Puna daisy shrub"
+   ],
+   "ground": [
+    "Ichu grass",
+    "Bunch grass",
+    "Puna gentian",
+    "Ground rosette"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Weberbauer 1945 El mundo vegetal de los Andes peruanos; Cabrera 1968 Ecologia vegetal de la puna (Colloquium Geographicum)"
+  },
+  {
+   "name": "Polylepis (quenua) woodland",
+   "where": "sheltered rocky slopes, boulder fields and gullies at 3800-4800 m",
+   "dominant": [
+    "Queñua"
+   ],
+   "companion": [
+    "Puna daisy shrub",
+    "Puna cactus"
+   ],
+   "ground": [
+    "Bunch grass",
+    "Ichu grass",
+    "Ground rosette"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Kessler 1995 Polylepis-Walder Boliviens; Fjeldsa & Kessler 1996 Conserving the biological diversity of Polylepis woodlands"
+  },
+  {
+   "name": "Tola shrub steppe",
+   "where": "dry gravelly plains and gentle slopes of the southern puna and altiplano",
+   "dominant": [
+    "Puna daisy shrub"
+   ],
+   "companion": [
+    "Puna cactus"
+   ],
+   "ground": [
+    "Ichu grass",
+    "Bunch grass"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Cabrera 1968; Navarro & Maldonado 2002 Geografia ecologica de Bolivia"
+  },
+  {
+   "name": "Bofedal cushion bog",
+   "where": "valley floors, spring seeps and glacier-fed flats with year-round saturated soil",
+   "dominant": [
+    "Bofedal cushion"
+   ],
+   "companion": [],
+   "ground": [
+    "Bofedal cushion",
+    "Puna gentian",
+    "Ground rosette"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Squeo et al. 2006 Bofedales: high altitude peatlands of the central Andes (Rev. Chil. Hist. Nat.); Ruthsatz 2012"
+  },
+  {
+   "name": "Puya raimondii rocky slope",
+   "where": "steep rocky slopes and scree at 3800-4300 m among bunchgrass",
+   "dominant": [
+    "Queen of the Andes"
+   ],
+   "companion": [
+    "Puna daisy shrub",
+    "Puna cactus",
+    "Yareta"
+   ],
+   "ground": [
+    "Ichu grass",
+    "Bunch grass"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Vadillo, Suni & Cano 2004 Puya raimondii (Rev. Peru. Biol.); Weberbauer 1945"
+  }
+ ]
+}

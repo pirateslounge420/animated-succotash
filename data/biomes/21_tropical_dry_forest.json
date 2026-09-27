@@ -24,7 +24,6 @@
     "genus": "Bursera",
     "species": "simaruba",
     "shape": "broadleaf",
-    "leaf_density": 0.55,
     "temp_c": [
      22,
      30
@@ -41,53 +40,24 @@
     "soil": "thin",
     "color": "#5AB040",
     "accent": "#C06A40",
-    "source": "Bursera simaruba, gumbo-limbo, red-peeling-bark deciduous tree characteristic of Mesoamerican/Caribbean dry forest, 10-25 m — Wikipedia"
-   },
-   {
-    "name": "Guanacaste",
-    "genus": "Enterolobium",
-    "species": "cyclocarpum",
-    "shape": "umbrella",
-    "temp_c": [
-     22,
-     30
-    ],
-    "moisture": [
-     0.4,
-     0.6
-    ],
-    "height_m": [
-     20,
-     35
-    ],
-    "density": 0.5,
-    "soil": "rich",
-    "color": "#4E9A3C",
-    "accent": "#6A5A48",
-    "source": "Enterolobium cyclocarpum, guanacaste/ear-pod tree, huge spreading crown in Pacific Central American dry forest, 20-35 m — Wikipedia"
-   },
-   {
-    "name": "Indian rosewood",
-    "genus": "Dalbergia",
-    "species": "latifolia",
-    "shape": "broadleaf",
-    "temp_c": [
-     22,
-     30
-    ],
-    "moisture": [
-     0.4,
-     0.6
-    ],
-    "height_m": [
-     15,
-     30
-    ],
-    "density": 0.4,
-    "soil": "rich",
-    "color": "#3F8A38",
-    "accent": "#4A3A2E",
-    "source": "Dalbergia latifolia, Indian rosewood, tropical dry deciduous forest of peninsular India, 15-30 m — Wikipedia"
+    "source": "Bursera simaruba, gumbo-limbo, red-peeling-bark deciduous tree characteristic of Mesoamerican/Caribbean dry forest, 10-25 m — Wikipedia",
+    "traits": {
+     "genus": "Bursera",
+     "species": "simaruba",
+     "native_range": "Bursera simaruba, gumbo-limbo, red-peeling-bark deciduous tree characteristic of Mesoamerican/Caribbean dry forest, 10-2",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      10,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Flame of the forest",
@@ -110,30 +80,24 @@
     "soil": "thin",
     "color": "#5AA040",
     "accent": "#F05A20",
-    "source": "Butea monosperma, palash/flame of the forest, crooked deciduous tree of Indian dry deciduous forest, bright orange flowers, 8-15 m — Wikipedia"
-   },
-   {
-    "name": "Silk floss tree",
-    "genus": "Ceiba",
-    "species": "speciosa",
-    "shape": "broadleaf",
-    "temp_c": [
-     20,
-     28
-    ],
-    "moisture": [
-     0.4,
-     0.6
-    ],
-    "height_m": [
-     15,
-     25
-    ],
-    "density": 0.4,
-    "soil": "rich",
-    "color": "#4E9A3C",
-    "accent": "#8A9A70",
-    "source": "Ceiba speciosa, silk floss tree, bottle-trunked spiny deciduous tree of Chiquitano/Chaco dry forest (Bolivia, Paraguay, Brazil), 15-25 m — Wikipedia"
+    "source": "Butea monosperma, palash/flame of the forest, crooked deciduous tree of Indian dry deciduous forest, bright orange flowers, 8-15 m — Wikipedia",
+    "traits": {
+     "genus": "Butea",
+     "species": "monosperma",
+     "native_range": "Butea monosperma, palash/flame of the forest, crooked deciduous tree of Indian dry deciduous forest, bright orange flowe",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      8,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Grandidier's baobab",
@@ -156,10 +120,254 @@
     "soil": "sand",
     "color": "#5AB040",
     "accent": "#9A8A74",
-    "source": "Adansonia grandidieri, Grandidier's baobab, Madagascar western dry forest icon, 20-30 m — Wikipedia / IUCN"
+    "source": "Adansonia grandidieri, Grandidier's baobab, Madagascar western dry forest icon, 20-30 m — Wikipedia / IUCN",
+    "traits": {
+     "genus": "Adansonia",
+     "species": "grandidieri",
+     "native_range": "Adansonia grandidieri, Grandidier's baobab, Madagascar western dry forest icon, 20-30 m — Wikipedia / IUCN",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      20,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Guanacaste",
+    "genus": "Enterolobium",
+    "species": "cyclocarpum",
+    "shape": "umbrella",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     20,
+     35
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#6A5A48",
+    "source": "Enterolobium cyclocarpum, guanacaste/ear-pod tree, huge spreading crown in Pacific Central American dry forest, 20-35 m — Wikipedia",
+    "traits": {
+     "genus": "Enterolobium",
+     "species": "cyclocarpum",
+     "native_range": "Enterolobium cyclocarpum, guanacaste/ear-pod tree, huge spreading crown in Pacific Central American dry forest, 20-35 m ",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      20,
+      35
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Indian rosewood",
+    "genus": "Dalbergia",
+    "species": "latifolia",
+    "shape": "broadleaf",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#4A3A2E",
+    "source": "Dalbergia latifolia, Indian rosewood, tropical dry deciduous forest of peninsular India, 15-30 m — Wikipedia",
+    "traits": {
+     "genus": "Dalbergia",
+     "species": "latifolia",
+     "native_range": "Dalbergia latifolia, Indian rosewood, tropical dry deciduous forest of peninsular India, 15-30 m — Wikipedia",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Silk floss tree",
+    "genus": "Ceiba",
+    "species": "speciosa",
+    "shape": "broadleaf",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     15,
+     25
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#8A9A70",
+    "source": "Ceiba speciosa, silk floss tree, bottle-trunked spiny deciduous tree of Chiquitano/Chaco dry forest (Bolivia, Paraguay, Brazil), 15-25 m — Wikipedia",
+    "traits": {
+     "genus": "Ceiba",
+     "species": "speciosa",
+     "native_range": "Ceiba speciosa, silk floss tree, bottle-trunked spiny deciduous tree of Chiquitano/Chaco dry forest (Bolivia, Paraguay, ",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      15,
+      25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [
+   {
+    "name": "Australian cycad",
+    "genus": "Cycas",
+    "species": "media",
+    "family": "Cycadaceae/Zamiaceae",
+    "shape": "palm",
+    "temp_c": [
+     24,
+     29
+    ],
+    "moisture": [
+     0.35,
+     0.65
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     2.0,
+     6.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       365
+      ],
+      [
+       "young",
+       5000
+      ],
+      [
+       "mature",
+       20000
+      ],
+      [
+       "old",
+       80000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "water"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 21,
+      "interval_years": [
+       2,
+       5
+      ]
+     },
+     "dormant": "none",
+     "note": "weevil-pollinated: reads the beetle count"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "N Australian savanna; fire-resprouting.  Kew POWO.",
+    "from_catalogue": "cycad",
+    "traits": {
+     "genus": "Cycas",
+     "species": "media",
+     "native_range": "N Australian savanna",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      2.0,
+      6.0
+     ],
+     "growth_rate": "very slow (centuries)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
     "name": "Common bamboo",
     "genus": "Bambusa",
@@ -181,30 +389,24 @@
     "soil": "rich",
     "color": "#7AB840",
     "accent": "#C8B060",
-    "source": "Bambusa vulgaris, common/golden bamboo, pan-tropical clumping bamboo of dry forest streamsides and edges, 10-20 m — Wikipedia"
-   },
-   {
-    "name": "Frangipani",
-    "genus": "Plumeria",
-    "species": "rubra",
-    "shape": "gnarled",
-    "temp_c": [
-     22,
-     30
-    ],
-    "moisture": [
-     0.35,
-     0.6
-    ],
-    "height_m": [
-     3,
-     8
-    ],
-    "density": 0.4,
-    "soil": "thin",
-    "color": "#5AB040",
-    "accent": "#F0E0E0",
-    "source": "Plumeria rubra, frangipani, succulent-stemmed deciduous shrub/small tree native to Mesoamerican dry forest, 3-8 m — Wikipedia"
+    "source": "Bambusa vulgaris, common/golden bamboo, pan-tropical clumping bamboo of dry forest streamsides and edges, 10-20 m — Wikipedia",
+    "traits": {
+     "genus": "Bambusa",
+     "species": "vulgaris",
+     "native_range": "Bambusa vulgaris, common/golden bamboo, pan-tropical clumping bamboo of dry forest streamsides and edges, 10-20 m — Wiki",
+     "leaf_shape": "narrow leaves on branchlets",
+     "trunk": "hollow woody jointed culms in a clump",
+     "petiole": "sheath",
+     "height_m": [
+      10,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Coral bean",
@@ -227,30 +429,24 @@
     "soil": "thin",
     "color": "#5AA040",
     "accent": "#E0302A",
-    "source": "Erythrina berteroana, pito coral tree, thorny deciduous shrub/small tree of Central American dry forest, 4-8 m — Wikipedia"
-   },
-   {
-    "name": "Jatropha",
-    "genus": "Jatropha",
-    "species": "curcas",
-    "shape": "shrub",
-    "temp_c": [
-     20,
-     30
-    ],
-    "moisture": [
-     0.3,
-     0.6
-    ],
-    "height_m": [
-     2,
-     6
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#5AB040",
-    "accent": "#9AA080",
-    "source": "Jatropha curcas, physic nut, drought-deciduous shrub native to Mesoamerican dry forest, 2-6 m — Wikipedia"
+    "source": "Erythrina berteroana, pito coral tree, thorny deciduous shrub/small tree of Central American dry forest, 4-8 m — Wikipedia",
+    "traits": {
+     "genus": "Erythrina",
+     "species": "berteroana",
+     "native_range": "Erythrina berteroana, pito coral tree, thorny deciduous shrub/small tree of Central American dry forest, 4-8 m — Wikiped",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      4,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Dwarf date palm",
@@ -273,7 +469,104 @@
     "soil": "sand",
     "color": "#5A9A50",
     "accent": "#8A7A60",
-    "source": "Phoenix sylvestris, wild date palm, Indian dry deciduous forest and scrub, 4-15 m — Wikipedia"
+    "source": "Phoenix sylvestris, wild date palm, Indian dry deciduous forest and scrub, 4-15 m — Wikipedia",
+    "traits": {
+     "genus": "Phoenix",
+     "species": "sylvestris",
+     "native_range": "Phoenix sylvestris, wild date palm, Indian dry deciduous forest and scrub, 4-15 m — Wikipedia",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      4,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Frangipani",
+    "genus": "Plumeria",
+    "species": "rubra",
+    "shape": "gnarled",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#F0E0E0",
+    "source": "Plumeria rubra, frangipani, succulent-stemmed deciduous shrub/small tree native to Mesoamerican dry forest, 3-8 m — Wikipedia",
+    "traits": {
+     "genus": "Plumeria",
+     "species": "rubra",
+     "native_range": "Plumeria rubra, frangipani, succulent-stemmed deciduous shrub/small tree native to Mesoamerican dry forest, 3-8 m — Wiki",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Jatropha",
+    "genus": "Jatropha",
+    "species": "curcas",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#9AA080",
+    "source": "Jatropha curcas, physic nut, drought-deciduous shrub native to Mesoamerican dry forest, 2-6 m — Wikipedia",
+    "traits": {
+     "genus": "Jatropha",
+     "species": "curcas",
+     "native_range": "Jatropha curcas, physic nut, drought-deciduous shrub native to Mesoamerican dry forest, 2-6 m — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Kalanchoe",
@@ -296,7 +589,136 @@
     "soil": "thin",
     "color": "#8AA870",
     "accent": "#C8B090",
-    "source": "Kalanchoe beharensis, felt bush, succulent shrub of Madagascar western dry forest, 1-3 m — Wikipedia"
+    "source": "Kalanchoe beharensis, felt bush, succulent shrub of Madagascar western dry forest, 1-3 m — Wikipedia",
+    "traits": {
+     "genus": "Kalanchoe",
+     "species": "beharensis",
+     "native_range": "Kalanchoe beharensis, felt bush, succulent shrub of Madagascar western dry forest, 1-3 m — Wikipedia",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Spanish bayonet",
+    "genus": "Yucca",
+    "species": "aloifolia",
+    "family": "Asparagaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     16,
+     26
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     1.5,
+     5.0
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#6A9A6A",
+    "accent": "#B8A070",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       200
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       8000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "gravity"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none",
+     "note": "Yucca moths are the only pollinator (obligate mutualism); if the insect count in the region is zero, seed set is zero and only offsets spread it."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_length": [
+      0.3,
+      0.8
+     ],
+     "trunk": [
+      0.0,
+      1.0
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Kew POWO accepted name. SE USA coasts, Caribbean, Mexico; rosette form. Traits documented. Stiff dagger leaves on a leaning trunk; dunes and shell hammocks.",
+    "from_catalogue": "yucca",
+    "traits": {
+     "genus": "Yucca",
+     "species": "aloifolia",
+     "native_range": "",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      1.5,
+      5.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "gravity"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
@@ -321,30 +743,24 @@
     "soil": "thin",
     "color": "#C8B060",
     "accent": "#9A7A40",
-    "source": "Heteropogon contortus, spear/tanglehead grass, dominant pan-tropical dry forest floor grass, 0.3-1 m — Wikipedia / USDA"
-   },
-   {
-    "name": "Bluestem",
-    "genus": "Andropogon",
-    "species": "gayanus",
-    "shape": "tussock",
-    "temp_c": [
-     20,
-     30
-    ],
-    "moisture": [
-     0.35,
-     0.6
-    ],
-    "height_m": [
-     1,
-     3
-    ],
-    "density": 0.6,
-    "soil": "thin",
-    "color": "#B8B860",
-    "accent": "#C8A050",
-    "source": "Andropogon gayanus, gamba grass, tall tussock of African dry forest and woodland understory, 1-3 m — Wikipedia"
+    "source": "Heteropogon contortus, spear/tanglehead grass, dominant pan-tropical dry forest floor grass, 0.3-1 m — Wikipedia / USDA",
+    "traits": {
+     "genus": "Heteropogon",
+     "species": "contortus",
+     "native_range": "Heteropogon contortus, spear/tanglehead grass, dominant pan-tropical dry forest floor grass, 0",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Beach morning glory",
@@ -367,15 +783,32 @@
     "soil": "sand",
     "color": "#5AB040",
     "accent": "#C05AA0",
-    "source": "Ipomoea (Convolvulaceae) trailing morning-glory; I. pes-caprae pan-tropical creeper on dry sandy ground near coast dry forest, prostrate — Wikipedia"
+    "source": "Ipomoea (Convolvulaceae) trailing morning-glory; I. pes-caprae pan-tropical creeper on dry sandy ground near coast dry forest, prostrate — Wikipedia",
+    "traits": {
+     "genus": "Ipomoea",
+     "species": "pes-caprae",
+     "native_range": "Ipomoea (Convolvulaceae) trailing morning-glory",
+     "leaf_shape": "leaves along a climbing stem",
+     "trunk": "long woody or soft climbing stem on a host",
+     "petiole": "petiole, often twining",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Wild pineapple",
-    "genus": "Bromelia",
-    "species": "pinguin",
-    "shape": "spike_rosette",
+    "name": "Bluestem",
+    "genus": "Andropogon",
+    "species": "gayanus",
+    "shape": "tussock",
     "temp_c": [
-     22,
+     20,
      30
     ],
     "moisture": [
@@ -383,14 +816,138 @@
      0.6
     ],
     "height_m": [
-     0.8,
-     2
+     1,
+     3
     ],
-    "density": 0.5,
+    "density": 0.6,
     "soil": "thin",
-    "color": "#5AA040",
-    "accent": "#E03A2A",
-    "source": "Bromelia pinguin, wild pinguin, terrestrial spiny bromeliad forming thickets on Mesoamerican dry forest floor, 0.8-2 m — Wikipedia"
+    "color": "#B8B860",
+    "accent": "#C8A050",
+    "source": "Andropogon gayanus, gamba grass, tall tussock of African dry forest and woodland understory, 1-3 m — Wikipedia",
+    "traits": {
+     "genus": "Andropogon",
+     "species": "gayanus",
+     "native_range": "Andropogon gayanus, gamba grass, tall tussock of African dry forest and woodland understory, 1-3 m — Wikipedia",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Bromelia",
+    "genus": "Bromelia",
+    "species": "pinguin",
+    "family": "Bromeliaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.35,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#E04060",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       600
+      ],
+      [
+       "mature",
+       2000
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bird",
+     "disperser": [
+      "bird"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 21,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "none",
+     "note": "most bloom once then die, leaving pups; hummingbird-pollinated; tank species hold rainwater that frogs and insects breed in"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.6
+     ],
+     "allocation": [
+      0.4,
+      0.8
+     ]
+    },
+    "bromeliad": {
+     "tank": false,
+     "air_plant": false
+    },
+    "source": "Central American and Caribbean dry forest; living fence. Savage spines; red at bloom; hedges of camps. Kew POWO.",
+    "from_catalogue": "bromeliad",
+    "traits": {
+     "genus": "Bromelia",
+     "species": "pinguin",
+     "native_range": "Central American and Caribbean dry forest",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      1.0,
+      2.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by tuber_offset",
+     "pollinator": "bird",
+     "disperser": [
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Resurrection fern",
@@ -413,33 +970,67 @@
     "soil": "thin",
     "color": "#5AA040",
     "accent": "#7A6A50",
-    "source": "Pleopeltis polypodioides, resurrection fern, drought-curling fern on rocks and trunks of Americas dry forest — Wikipedia"
-   }
-  ],
-  "epiphyte": [
+    "source": "Pleopeltis polypodioides, resurrection fern, drought-curling fern on rocks and trunks of Americas dry forest — Wikipedia",
+    "traits": {
+     "genus": "Pleopeltis",
+     "species": "polypodioides",
+     "native_range": "Pleopeltis polypodioides, resurrection fern, drought-curling fern on rocks and trunks of Americas dry forest — Wikipedia",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Spanish moss",
-    "genus": "Tillandsia",
-    "species": "usneoides",
-    "shape": "hanging_moss",
+    "name": "Wild pineapple",
+    "genus": "Bromelia",
+    "species": "pinguin",
+    "shape": "spike_rosette",
     "temp_c": [
-     16,
-     28
+     22,
+     30
     ],
     "moisture": [
-     0.4,
-     0.7
+     0.35,
+     0.6
     ],
     "height_m": [
-     0.5,
-     3
+     0.8,
+     2
     ],
     "density": 0.5,
     "soil": "thin",
-    "color": "#9AB890",
-    "accent": "#B0B0A0",
-    "source": "Tillandsia usneoides, Spanish moss, festoons on dry-forest and gallery trees from SE USA to Argentina — Wikipedia"
-   },
+    "color": "#5AA040",
+    "accent": "#E03A2A",
+    "source": "Bromelia pinguin, wild pinguin, terrestrial spiny bromeliad forming thickets on Mesoamerican dry forest floor, 0.8-2 m — Wikipedia",
+    "traits": {
+     "genus": "Bromelia",
+     "species": "pinguin",
+     "native_range": "Bromelia pinguin, wild pinguin, terrestrial spiny bromeliad forming thickets on Mesoamerican dry forest floor, 0",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.8,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "epiphyte": [
    {
     "name": "Air plant",
     "genus": "Tillandsia",
@@ -461,7 +1052,24 @@
     "soil": "thin",
     "color": "#8AA860",
     "accent": "#E0503A",
-    "source": "Tillandsia fasciculata, cardinal air plant, epiphyte common on dry forest trees of Mesoamerica/Caribbean — Wikipedia"
+    "source": "Tillandsia fasciculata, cardinal air plant, epiphyte common on dry forest trees of Mesoamerica/Caribbean — Wikipedia",
+    "traits": {
+     "genus": "Tillandsia",
+     "species": "fasciculata",
+     "native_range": "Tillandsia fasciculata, cardinal air plant, epiphyte common on dry forest trees of Mesoamerica/Caribbean — Wikipedia",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Dry-forest orchid",
@@ -484,70 +1092,65 @@
     "soil": "thin",
     "color": "#5AB040",
     "accent": "#B04A8A",
-    "source": "Encyclia cordigera, epiphytic orchid characteristic of Mesoamerican Pacific dry forest — Wikipedia"
+    "source": "Encyclia cordigera, epiphytic orchid characteristic of Mesoamerican Pacific dry forest — Wikipedia",
+    "traits": {
+     "genus": "Encyclia",
+     "species": "cordigera",
+     "native_range": "Encyclia cordigera, epiphytic orchid characteristic of Mesoamerican Pacific dry forest — Wikipedia",
+     "leaf_shape": "strap or rosette leaves in a clump on a branch",
+     "trunk": "none — roots grip bark",
+     "petiole": "short",
+     "height_m": [
+      0.2,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Spanish moss",
+    "genus": "Tillandsia",
+    "species": "usneoides",
+    "shape": "hanging_moss",
+    "temp_c": [
+     16,
+     28
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#9AB890",
+    "accent": "#B0B0A0",
+    "source": "Tillandsia usneoides, Spanish moss, festoons on dry-forest and gallery trees from SE USA to Argentina — Wikipedia",
+    "traits": {
+     "genus": "Tillandsia",
+     "species": "usneoides",
+     "native_range": "Tillandsia usneoides, Spanish moss, festoons on dry-forest and gallery trees from SE USA to Argentina — Wikipedia",
+     "leaf_shape": "thread-like strands",
+     "trunk": "none — hangs from branches",
+     "petiole": "none",
+     "height_m": [
+      0.5,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
-  ]
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 56,
-  "names": [
-   "Palmyra palm",
-   "Wild date palm",
-   "Amorphophallus abyssinicus",
-   "Amorphophallus andranogidroensis",
-   "Amorphophallus angolensis",
-   "Amorphophallus ankarana",
-   "Amorphophallus antsingyensis",
-   "Amorphophallus aphyllus",
-   "Amorphophallus asterostigmatus",
-   "Amorphophallus baumannii",
-   "Amorphophallus bulbifer",
-   "Amorphophallus commutatus",
-   "Amorphophallus consimilis",
-   "Amorphophallus dracontioides",
-   "Amorphophallus eichleri",
-   "Amorphophallus elliotii",
-   "Amorphophallus galbra",
-   "Amorphophallus gallaensis",
-   "Amorphophallus goetzei",
-   "Amorphophallus gomboczianus",
-   "Amorphophallus hildebrandtii",
-   "Amorphophallus hohenackeri",
-   "Amorphophallus impressus",
-   "Amorphophallus johnsonii",
-   "Amorphophallus konkanensis",
-   "Amorphophallus lewallei",
-   "Amorphophallus longistylus",
-   "Amorphophallus mangelsdorffii",
-   "Amorphophallus margaritifer",
-   "Amorphophallus maximus",
-   "Amorphophallus mildbraedii",
-   "Amorphophallus mossambicensis",
-   "Amorphophallus mysorensis",
-   "Amorphophallus nicolsonianus",
-   "Amorphophallus oncophyllus",
-   "Amorphophallus paeoniifolius",
-   "Amorphophallus perrieri",
-   "Amorphophallus richardsiae",
-   "Amorphophallus smithsonianus",
-   "Amorphophallus stuhlmannii",
-   "Amorphophallus taurostigma",
-   "Amorphophallus teuszii",
-   "Spanish bayonet",
-   "Nodding yucca",
-   "Spineless yucca",
-   "Spanish dagger",
-   "Chiapas yucca",
-   "Cannabis - Mysore",
-   "Cannabis - Thai (Isan)",
-   "Cannabis - Durban",
-   "Cannabis - Malawi",
-   "Cannabis - Angolan",
-   "Cannabis - Acapulco Gold",
-   "Cannabis - Oaxacan",
-   "Cannabis - Michoacán",
-   "Cannabis - Manga Rosa"
   ]
  },
  "associations": [
@@ -590,11 +1193,7 @@
     "Bamboo grass",
     "Bluestem"
    ],
-   "catalogue": [
-    "Palmyra palm",
-    "Wild date palm",
-    "Amorphophallus paeoniifolius"
-   ],
+   "catalogue": [],
    "cover": 0.6,
    "source": "Champion & Seth 1968 A Revised Survey of the Forest Types of India (tropical dry deciduous forest); Puri 1960"
   },
@@ -630,10 +1229,7 @@
    "ground": [
     "Bluestem"
    ],
-   "catalogue": [
-    "Amorphophallus hildebrandtii",
-    "Amorphophallus ankarana"
-   ],
+   "catalogue": [],
    "cover": 0.5,
    "source": "Koechlin, Guillaumet & Morat 1974 Flore et vegetation de Madagascar; Moat & Smith 2007 Atlas of the Vegetation of Madagascar"
   },
@@ -656,5 +1252,13 @@
    "cover": 0.5,
    "source": "Janzen 1988; Rzedowski 1978 Vegetacion de Mexico (bosque tropical caducifolio)"
   }
+ ],
+ "hero_species": [
+  "Air plant",
+  "Australian cycad",
+  "Bromelia",
+  "Grandidier's baobab",
+  "Spanish bayonet",
+  "Spanish moss"
  ]
 }

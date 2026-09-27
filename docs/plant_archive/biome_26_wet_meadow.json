@@ -1,0 +1,371 @@
+{
+ "key": "WET_MEADOW",
+ "name": "Wet meadow",
+ "group": "Wetlands",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Seasonally saturated grassland without standing water: tufted grasses, rushes and sedges with a tall wildflower layer (meadowsweet, joe-pye weed, marsh marigold) and scattered willow; drawn on European water meadows and Molinia grasslands and the North American sedge meadows.",
+ "climate": {
+  "temp_c": [
+   3,
+   18
+  ],
+  "moisture": [
+   0.62,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Meadowsweet",
+    "genus": "Filipendula",
+    "species": "ulmaria",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     0.8,
+     2
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "color": "#4A9A3A",
+    "accent": "#F0F0E0",
+    "source": "Filipendula ulmaria, meadowsweet, Europe & W Asia, tall herb dominant of damp meadows and ditch sides, 0.8-2 m creamy plumes — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Joe-pye weed",
+    "genus": "Eutrochium",
+    "species": "maculatum",
+    "shape": "shrub",
+    "temp_c": [
+     3,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     1,
+     2
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "color": "#3E8F3A",
+    "accent": "#C878A8",
+    "source": "Eutrochium maculatum, spotted joe-pye weed, northern North America, wet meadows and stream sides, 1-2 m, pink-purple flower domes — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Grey willow",
+    "genus": "Salix",
+    "species": "cinerea",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.2,
+    "soil": "wet",
+    "color": "#7AA860",
+    "accent": "#8A7A5A",
+    "source": "Salix cinerea, grey willow, Europe & W Asia, scattered scrub on ungrazed wet meadow, 2-6 m — Wikipedia / Kew POWO"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Tufted hair-grass",
+    "genus": "Deschampsia",
+    "species": "cespitosa",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.62,
+     0.95
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "color": "#5AB040",
+    "accent": "#C8B060",
+    "source": "Deschampsia cespitosa, tufted hair-grass, circumboreal, dominant tussock grass of wet meadows, 0.5-1.5 m airy flower heads — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Soft rush",
+    "genus": "Juncus",
+    "species": "effusus",
+    "shape": "reed",
+    "temp_c": [
+     3,
+     18
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "color": "#3E8F3A",
+    "accent": "#8A7A4A",
+    "source": "Juncus effusus, soft rush, cosmopolitan, clumps of round green stems in waterlogged pasture and meadow, 0.5-1.5 m — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Purple moor-grass",
+    "genus": "Molinia",
+    "species": "caerulea",
+    "shape": "tussock",
+    "temp_c": [
+     4,
+     15
+    ],
+    "moisture": [
+     0.62,
+     0.95
+    ],
+    "height_m": [
+     0.4,
+     1.2
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "color": "#7AA860",
+    "accent": "#C8A060",
+    "source": "Molinia caerulea, purple moor-grass, Europe & W Asia, tussock dominant of damp acid meadows, 0.4-1.2 m, purple-tinged panicles — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Bluejoint reed grass",
+    "genus": "Calamagrostis",
+    "species": "canadensis",
+    "shape": "grass",
+    "temp_c": [
+     0,
+     14
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     0.6,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "color": "#5AB040",
+    "accent": "#C8B060",
+    "source": "Calamagrostis canadensis, bluejoint, northern North America, dominant grass of wet meadows and sedge meadows, 0.6-1.5 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Marsh marigold",
+    "genus": "Caltha",
+    "species": "palustris",
+    "shape": "cushion",
+    "temp_c": [
+     2,
+     14
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "color": "#4A9A3A",
+    "accent": "#F0C020",
+    "source": "Caltha palustris, marsh marigold, circumboreal, wet meadows, springs and ditch edges, 20-50 cm, golden spring flowers — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Common sedge",
+    "genus": "Carex",
+    "species": "nigra",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     14
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "color": "#4A9A3A",
+    "accent": "#3A3A2A",
+    "source": "Carex nigra, common sedge, circumboreal, dense low sward in wet meadows and fen margins, 20-60 cm, black-glumed spikes — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Ragged robin",
+    "genus": "Silene",
+    "species": "flos-cuculi",
+    "shape": "grass",
+    "temp_c": [
+     5,
+     15
+    ],
+    "moisture": [
+     0.65,
+     0.95
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "color": "#4A9A3A",
+    "accent": "#E878B0",
+    "source": "Silene flos-cuculi (Lychnis flos-cuculi), ragged robin, Europe & W Asia, damp meadows, 30-80 cm, ragged pink flowers — Wikipedia / Kew POWO"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 30,
+  "names": [
+   "Andean wax palm",
+   "Nikau palm",
+   "Windmill palm",
+   "Needle palm",
+   "Dwarf palmetto",
+   "Amorphophallus albus",
+   "Amorphophallus coaetaneus",
+   "Amorphophallus dunnii",
+   "Amorphophallus henryi",
+   "Amorphophallus hirtus",
+   "Amorphophallus kiusianus",
+   "Amorphophallus konjac",
+   "Amorphophallus krausei",
+   "Amorphophallus mekongensis",
+   "Amorphophallus tonkinensis",
+   "Amorphophallus verticillatus",
+   "Amorphophallus xiei",
+   "Amorphophallus yaoi",
+   "Amorphophallus yuloensis",
+   "Amorphophallus yunnanensis",
+   "Cannabis - Nepalese",
+   "Cannabis - Yunnan",
+   "Cannabis - Swazi",
+   "Cannabis - Northern Chinese hemp",
+   "Cannabis - Japanese hemp (asa)",
+   "Cannabis - Korean hemp (Andong)",
+   "Cannabis - Central Russian hemp",
+   "Cannabis - Carmagnola",
+   "Cannabis - Anatolian hemp (Kastamonu)",
+   "Cannabis - Kentucky feral hemp"
+  ]
+ },
+ "associations": [
+  {
+   "name": "Purple moor-grass fen meadow",
+   "where": "gently sloping, seasonally waterlogged, peaty base-poor soil, traditionally mown",
+   "dominant": [
+    "Purple moor-grass"
+   ],
+   "companion": [
+    "Meadowsweet"
+   ],
+   "ground": [
+    "Common sedge",
+    "Soft rush",
+    "Ragged robin",
+    "Marsh marigold"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Molinion caeruleae meadow (Ellenberg 1988; Rodwell 1991 M24/M26)"
+  },
+  {
+   "name": "Tufted hair-grass rush meadow",
+   "where": "flat, poorly drained mineral soil, wet in winter, grazed",
+   "dominant": [
+    "Tufted hair-grass",
+    "Soft rush"
+   ],
+   "companion": [
+    "Meadowsweet"
+   ],
+   "ground": [
+    "Common sedge",
+    "Marsh marigold",
+    "Ragged robin"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Deschampsia-Juncus rush pasture (Rodwell 1992 MG10; Ellenberg 1988 Calthion)"
+  },
+  {
+   "name": "Bluejoint-sedge meadow",
+   "where": "low prairie swales and lake margins, saturated in spring",
+   "dominant": [
+    "Bluejoint reed grass"
+   ],
+   "companion": [
+    "Joe-pye weed",
+    "Grey willow"
+   ],
+   "ground": [
+    "Common sedge",
+    "Marsh marigold"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Calamagrostis canadensis wet meadow (Curtis 1959; USNVC)"
+  },
+  {
+   "name": "Meadowsweet tall-herb fringe",
+   "where": "ditch banks, stream edges and ungrazed corners, wet rich soil",
+   "dominant": [
+    "Meadowsweet",
+    "Joe-pye weed"
+   ],
+   "companion": [
+    "Grey willow"
+   ],
+   "ground": [
+    "Ragged robin",
+    "Soft rush",
+    "Tufted hair-grass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Filipendulion tall-herb community (Ellenberg 1988; Rodwell 1991 M27)"
+  }
+ ]
+}

@@ -43,7 +43,24 @@
     ],
     "color": "#4CA040",
     "accent": "#A88A5A",
-    "source": "Cocos nucifera, reef cays and atoll islets throughout the tropics, 15-30 m — Wikipedia"
+    "source": "Cocos nucifera, reef cays and atoll islets throughout the tropics, 15-30 m — Wikipedia",
+    "traits": {
+     "genus": "Cocos",
+     "species": "nucifera",
+     "native_range": "Cocos nucifera, reef cays and atoll islets throughout the tropics, 15-30 m — Wikipedia",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Pisonia",
@@ -66,7 +83,24 @@
     "soil": "sand",
     "color": "#5AB040",
     "accent": "#B0B0A0",
-    "source": "Pisonia grandis, Indo-Pacific coral cays (Heron Island, Seychelles), soft-wooded seabird-forest tree 8-20 m — Wikipedia"
+    "source": "Pisonia grandis, Indo-Pacific coral cays (Heron Island, Seychelles), soft-wooded seabird-forest tree 8-20 m — Wikipedia",
+    "traits": {
+     "genus": "Pisonia",
+     "species": "grandis",
+     "native_range": "Pisonia grandis, Indo-Pacific coral cays (Heron Island, Seychelles), soft-wooded seabird-forest tree 8-20 m — Wikipedia",
+     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
+     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
+     "petiole": "long petiole",
+     "height_m": [
+      8,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [
@@ -94,7 +128,24 @@
     ],
     "color": "#5AB040",
     "accent": "#E8E8D0",
-    "source": "Scaevola taccada, reef-cay strand throughout the Indo-Pacific, 1-3 m — Wikipedia"
+    "source": "Scaevola taccada, reef-cay strand throughout the Indo-Pacific, 1-3 m — Wikipedia",
+    "traits": {
+     "genus": "Scaevola",
+     "species": "taccada",
+     "native_range": "Scaevola taccada, reef-cay strand throughout the Indo-Pacific, 1-3 m — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Octopus bush",
@@ -120,7 +171,24 @@
     ],
     "color": "#9AB88A",
     "accent": "#E6E6DC",
-    "source": "Heliotropium (Tournefortia) foertherianum, Indo-Pacific coral cays and reef islands, silvery-leaved 1-6 m — Wikipedia"
+    "source": "Heliotropium (Tournefortia) foertherianum, Indo-Pacific coral cays and reef islands, silvery-leaved 1-6 m — Wikipedia",
+    "traits": {
+     "genus": "Heliotropium",
+     "species": "foertherianum",
+     "native_range": "Heliotropium (Tournefortia) foertherianum, Indo-Pacific coral cays and reef islands, silvery-leaved 1-6 m — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
@@ -148,100 +216,24 @@
     ],
     "color": "#4CA040",
     "accent": "#C860B0",
-    "source": "Ipomoea pes-caprae, reef-cay sand strand, creeping vine 10-30 cm — Wikipedia"
-   },
-   {
-    "name": "Turtle grass",
-    "genus": "Thalassia",
-    "species": "testudinum",
-    "shape": "grass",
-    "temp_c": [
-     23,
-     32
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     0.2,
-     0.5
-    ],
-    "density": 0.8,
-    "soil": "sand",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0.5,
-     10
-    ],
-    "color": "#3E9A3A",
-    "accent": "#2F7A35",
-    "source": "underwater — Thalassia testudinum, Caribbean back-reef lagoons (T. hemprichii Indo-Pacific), broad-bladed seagrass 20-50 cm — Wikipedia"
-   },
-   {
-    "name": "Halimeda",
-    "genus": "Halimeda",
-    "species": "opuntia",
-    "shape": "cushion",
-    "temp_c": [
-     23,
-     32
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     0.05,
-     0.25
-    ],
-    "density": 1.0,
-    "soil": "thin",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0.5,
-     30
-    ],
-    "color": "#4AA840",
-    "accent": "#D8D8C0",
-    "source": "underwater — Halimeda opuntia, pantropical reef flats and slopes, calcified segmented green alga forming clumps 5-25 cm — Wikipedia"
-   },
-   {
-    "name": "Sea grapes alga",
-    "genus": "Caulerpa",
-    "species": "racemosa",
-    "shape": "moss",
-    "temp_c": [
-     23,
-     32
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     0.03,
-     0.15
-    ],
-    "density": 0.7,
-    "soil": "sand",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0.5,
-     30
-    ],
-    "color": "#5AC040",
-    "accent": "#3E9A3A",
-    "source": "underwater — Caulerpa racemosa, pantropical reef sand and rubble, runners with grape-like bladders 3-15 cm — Wikipedia"
+    "source": "Ipomoea pes-caprae, reef-cay sand strand, creeping vine 10-30 cm — Wikipedia",
+    "traits": {
+     "genus": "Ipomoea",
+     "species": "pes-caprae",
+     "native_range": "Ipomoea pes-caprae, reef-cay sand strand, creeping vine 10-30 cm — Wikipedia",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Crustose coralline alga",
@@ -272,7 +264,120 @@
     ],
     "color": "#D080A0",
     "accent": "#E8B0C0",
-    "source": "underwater — Porolithon onkodes, Indo-Pacific reef crest, pink encrusting coralline red alga that cements the reef, 1-3 cm crust — Wikipedia"
+    "source": "underwater — Porolithon onkodes, Indo-Pacific reef crest, pink encrusting coralline red alga that cements the reef, 1-3 cm crust — Wikipedia",
+    "traits": {
+     "genus": "Porolithon",
+     "species": "onkodes",
+     "native_range": "underwater — Porolithon onkodes, Indo-Pacific reef crest, pink encrusting coralline red alga that cements the reef, 1-3 ",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.01,
+      0.03
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Halimeda",
+    "genus": "Halimeda",
+    "species": "opuntia",
+    "shape": "cushion",
+    "temp_c": [
+     23,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.05,
+     0.25
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     30
+    ],
+    "color": "#4AA840",
+    "accent": "#D8D8C0",
+    "source": "underwater — Halimeda opuntia, pantropical reef flats and slopes, calcified segmented green alga forming clumps 5-25 cm — Wikipedia",
+    "traits": {
+     "genus": "Halimeda",
+     "species": "opuntia",
+     "native_range": "underwater — Halimeda opuntia, pantropical reef flats and slopes, calcified segmented green alga forming clumps 5-25 cm ",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Sea grapes alga",
+    "genus": "Caulerpa",
+    "species": "racemosa",
+    "shape": "moss",
+    "temp_c": [
+     23,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.03,
+     0.15
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     30
+    ],
+    "color": "#5AC040",
+    "accent": "#3E9A3A",
+    "source": "underwater — Caulerpa racemosa, pantropical reef sand and rubble, runners with grape-like bladders 3-15 cm — Wikipedia",
+    "traits": {
+     "genus": "Caulerpa",
+     "species": "racemosa",
+     "native_range": "underwater — Caulerpa racemosa, pantropical reef sand and rubble, runners with grape-like bladders 3-15 cm — Wikipedia",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Turbinaria alga",
@@ -303,9 +408,78 @@
     ],
     "color": "#8A7A30",
     "accent": "#5A4A20",
-    "source": "underwater — Turbinaria ornata, Indo-Pacific reef flats and crests, stiff brown alga with triangular blades 10-40 cm — Wikipedia"
+    "source": "underwater — Turbinaria ornata, Indo-Pacific reef flats and crests, stiff brown alga with triangular blades 10-40 cm — Wikipedia",
+    "traits": {
+     "genus": "Turbinaria",
+     "species": "ornata",
+     "native_range": "underwater — Turbinaria ornata, Indo-Pacific reef flats and crests, stiff brown alga with triangular blades 10-40 cm — W",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Turtle grass",
+    "genus": "Thalassia",
+    "species": "testudinum",
+    "shape": "grass",
+    "temp_c": [
+     23,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     10
+    ],
+    "color": "#3E9A3A",
+    "accent": "#2F7A35",
+    "source": "underwater — Thalassia testudinum, Caribbean back-reef lagoons (T. hemprichii Indo-Pacific), broad-bladed seagrass 20-50 cm — Wikipedia",
+    "traits": {
+     "genus": "Thalassia",
+     "species": "testudinum",
+     "native_range": "underwater — Thalassia testudinum, Caribbean back-reef lagoons (T",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- }
+ },
+ "hero_species": [
+  "Coconut palm"
+ ],
+ "associations": []
 }

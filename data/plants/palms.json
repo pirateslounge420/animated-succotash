@@ -2,10 +2,118 @@
  "key": "PALM_CATALOGUE",
  "name": "Palms — curated world set",
  "kind": "land",
- "status": "43 species, curated (Kew accepts ~2,600 palms; these are the regional dominants and icons)",
+ "status": "5 archetypal species (full list archived in docs/plant_archive)",
  "notes": "The recognisable palms of every palm region: tropical coasts, oases, African savanna and swamp, Asian monsoon plains and rainforest, Australia and NZ, Andean cloud forest (the wax palm as an emergent), Amazon floodplain and swamp, the SE US, desert canyon oases, the Mediterranean, and cold-hardy hill palms. Tiers: emergent for the wax palm, canopy for trunked palms, shrub for trunkless and clumping palms, epiphyte for rattan (climbing). The 'palm' shape exists; Phase 6 should give it fan vs feather crowns, a clustering form, and the doum fork.",
  "plants": {
-  "emergent": [],
+  "emergent": [
+   {
+    "name": "Andean wax palm",
+    "genus": "Ceroxylon",
+    "species": "quindiuense",
+    "family": "Arecaceae",
+    "shape": "palm",
+    "temp_c": [
+     12,
+     19
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     1800,
+     3000
+    ],
+    "height_m": [
+     40.0,
+     60.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3F8F45",
+    "accent": "#8A7A5A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       180
+      ],
+      [
+       "young",
+       1800
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       15000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trunk_lean": [
+      0.0,
+      0.6
+     ],
+     "frond_count": [
+      0.3,
+      0.8
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Palm of Colombian and Peruvian Andes cloud forest; height 40-60 m. Tallest palm on Earth; waxy white trunk above the cloud forest. Standard floras and Kew POWO for the name.",
+    "traits": {
+     "genus": "Ceroxylon",
+     "species": "quindiuense",
+     "native_range": "Colombian and Peruvian Andes cloud forest",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      40.0,
+      60.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
   "canopy": [
    {
     "name": "Coconut palm",
@@ -95,7 +203,28 @@
       0.6
      ]
     },
-    "source": "Palm of tropical coasts worldwide; height 15-30 m. Leaning trunk, feather crown; sea-dispersed nuts. Standard floras and Kew POWO for the name."
+    "source": "Palm of tropical coasts worldwide; height 15-30 m. Leaning trunk, feather crown; sea-dispersed nuts. Standard floras and Kew POWO for the name.",
+    "traits": {
+     "genus": "Cocos",
+     "species": "nucifera",
+     "native_range": "tropical coasts worldwide",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      15.0,
+      30.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Date palm",
@@ -182,7 +311,27 @@
       0.6
      ]
     },
-    "source": "Palm of Sahara, Arabia, Mesopotamia oases; height 15-25 m. Oasis palm; suckers from the base. Standard floras and Kew POWO for the name."
+    "source": "Palm of Sahara, Arabia, Mesopotamia oases; height 15-25 m. Oasis palm; suckers from the base. Standard floras and Kew POWO for the name.",
+    "traits": {
+     "genus": "Phoenix",
+     "species": "dactylifera",
+     "native_range": "Sahara, Arabia, Mesopotamia oases",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      15.0,
+      25.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Doum palm",
@@ -269,391 +418,54 @@
       0.6
      ]
     },
-    "source": "Palm of Sahel and Nile valley; height 8-15 m. The only branching palm; forked trunk. Standard floras and Kew POWO for the name."
-   },
-   {
-    "name": "California fan palm",
-    "genus": "Washingtonia",
-    "species": "filifera",
-    "family": "Arecaceae",
-    "shape": "palm",
-    "temp_c": [
-     18,
-     25
-    ],
-    "moisture": [
-     0.05,
-     0.3
-    ],
-    "altitude_m": [
-     0,
-     1200
-    ],
-    "height_m": [
-     15.0,
-     20.0
-    ],
-    "density": 0.3,
-    "soil": "rich",
-    "needs": [
-     "river_bank"
-    ],
-    "color": "#3F8F45",
-    "accent": "#8A7A5A",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
+    "source": "Palm of Sahel and Nile valley; height 8-15 m. The only branching palm; forked trunk. Standard floras and Kew POWO for the name.",
+    "traits": {
+     "genus": "Hyphaene",
+     "species": "thebaica",
+     "native_range": "Sahel and Nile valley",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      8.0,
+      15.0
      ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "mammal",
-      "bird",
-      "water"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "any",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "none"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "trunk_lean": [
-      0.0,
-      0.6
-     ],
-     "frond_count": [
-      0.3,
-      0.8
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Palm of Sonoran/Colorado desert oases and canyons; height 15-20 m. Petticoat of dead fronds; spring-fed canyon groves. Standard floras and Kew POWO for the name."
-   },
-   {
-    "name": "Mexican fan palm",
-    "genus": "Washingtonia",
-    "species": "robusta",
-    "family": "Arecaceae",
-    "shape": "palm",
-    "temp_c": [
-     19,
-     25
-    ],
-    "moisture": [
-     0.05,
-     0.3
-    ],
-    "altitude_m": [
-     0,
-     800
-    ],
-    "height_m": [
-     20.0,
-     30.0
-    ],
-    "density": 0.3,
-    "soil": "rich",
-    "needs": [
-     "river_bank"
-    ],
-    "color": "#3F8F45",
-    "accent": "#8A7A5A",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "mammal",
-      "bird",
-      "water"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "any",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "none"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "trunk_lean": [
-      0.0,
-      0.6
-     ],
-     "frond_count": [
-      0.3,
-      0.8
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Palm of Baja and Sonora canyons; height 20-30 m. Thinner and taller than filifera. Standard floras and Kew POWO for the name."
-   },
-   {
-    "name": "Cretan date palm",
-    "genus": "Phoenix",
-    "species": "theophrasti",
-    "family": "Arecaceae",
-    "shape": "palm",
-    "temp_c": [
-     16,
-     20
-    ],
-    "moisture": [
-     0.25,
-     0.45
-    ],
-    "altitude_m": [
-     0,
-     50
-    ],
-    "height_m": [
-     10.0,
-     15.0
-    ],
-    "density": 0.1,
-    "soil": "sand",
-    "needs": [
-     "salt_water"
-    ],
-    "color": "#3F8F45",
-    "accent": "#8A7A5A",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "both",
-     "pollinator": "insect",
-     "disperser": [
-      "mammal",
-      "bird",
-      "water"
-     ],
-     "clonal": "sucker",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "any",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "none"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "trunk_lean": [
-      0.0,
-      0.6
-     ],
-     "frond_count": [
-      0.3,
-      0.8
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Palm of Crete and SW Turkey beaches; height 10-15 m.  Standard floras and Kew POWO for the name."
-   },
-   {
-    "name": "Wild date palm",
-    "genus": "Phoenix",
-    "species": "sylvestris",
-    "family": "Arecaceae",
-    "shape": "palm",
-    "temp_c": [
-     22,
-     29
-    ],
-    "moisture": [
-     0.35,
-     0.65
-    ],
-    "altitude_m": [
-     0,
-     1300
-    ],
-    "height_m": [
-     10.0,
-     15.0
-    ],
-    "density": 0.4,
-    "soil": "rich",
-    "needs": [],
-    "color": "#3F8F45",
-    "accent": "#8A7A5A",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "both",
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
      "pollinator": "insect",
      "disperser": [
       "mammal",
       "bird"
      ],
-     "clonal": "sucker",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "any",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "none"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "trunk_lean": [
-      0.0,
-      0.6
-     ],
-     "frond_count": [
-      0.3,
-      0.8
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Palm of Indian plains; height 10-15 m. Tapped for toddy; dry monsoon plains. Standard floras and Kew POWO for the name."
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Senegal date palm",
-    "genus": "Phoenix",
-    "species": "reclinata",
+    "name": "Moriche palm",
+    "genus": "Mauritia",
+    "species": "flexuosa",
     "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
-     20,
-     28
+     24,
+     29
     ],
     "moisture": [
-     0.45,
-     0.85
+     0.7,
+     1.0
     ],
     "altitude_m": [
      0,
-     2000
+     500
     ],
     "height_m": [
-     6.0,
-     10.0
+     20.0,
+     35.0
     ],
-    "density": 0.4,
+    "density": 0.6,
     "soil": "wet",
     "needs": [
-     "river_bank"
+     "standing_water"
     ],
     "color": "#3F8F45",
     "accent": "#8A7A5A",
@@ -679,14 +491,14 @@
      "final_size": 1.0
     },
     "repro": {
-     "mode": "both",
+     "mode": "seed",
      "pollinator": "insect",
      "disperser": [
       "mammal",
       "bird",
       "water"
      ],
-     "clonal": "sucker",
+     "clonal": "none",
      "lifespan": "perennial",
      "bloom": {
       "season": "any",
@@ -716,7 +528,32 @@
       0.6
      ]
     },
-    "source": "Palm of African riverbanks and swamp edges; height 6-10 m. Clustering, leaning trunks over water. Standard floras and Kew POWO for the name."
+    "source": "Palm of Amazon and Orinoco swamps; height 20-35 m. Fan palm of the swamps; buriti. Standard floras and Kew POWO for the name.",
+    "water_depth_m": [
+     0.05,
+     1.0
+    ],
+    "traits": {
+     "genus": "Mauritia",
+     "species": "flexuosa",
+     "native_range": "Amazon and Orinoco swamps",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      20.0,
+      35.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [],

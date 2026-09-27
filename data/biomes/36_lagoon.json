@@ -48,7 +48,67 @@
     ],
     "color": "#5A9A50",
     "accent": "#9A9A8A",
-    "source": "Avicennia germinans, Caribbean, Gulf of Mexico and W African lagoon shores, pneumatophore mats, 3-15 m — Wikipedia"
+    "source": "Avicennia germinans, Caribbean, Gulf of Mexico and W African lagoon shores, pneumatophore mats, 3-15 m — Wikipedia",
+    "traits": {
+     "genus": "Avicennia",
+     "species": "germinans",
+     "native_range": "Avicennia germinans, Caribbean, Gulf of Mexico and W African lagoon shores, pneumatophore mats, 3-15 m — Wikipedia",
+     "leaf_shape": "thick glossy salt-excreting leaves",
+     "trunk": "prop roots or pneumatophores over mud",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Coconut palm",
+    "genus": "Cocos",
+    "species": "nucifera",
+    "shape": "palm",
+    "temp_c": [
+     21,
+     33
+    ],
+    "moisture": [
+     0.35,
+     0.9
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4CA040",
+    "accent": "#A88A5A",
+    "source": "Cocos nucifera, atoll lagoon rims throughout the tropical Pacific and Indian Ocean, 15-30 m — Wikipedia",
+    "traits": {
+     "genus": "Cocos",
+     "species": "nucifera",
+     "native_range": "Cocos nucifera, atoll lagoon rims throughout the tropical Pacific and Indian Ocean, 15-30 m — Wikipedia",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      15,
+      30
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Red mangrove",
@@ -79,33 +139,24 @@
     ],
     "color": "#3E8E3A",
     "accent": "#8A5A3A",
-    "source": "Rhizophora mangle, Neotropical and W African lagoon edges (R. stylosa in Indo-Pacific), stilt-rooted, 4-20 m — Wikipedia"
-   },
-   {
-    "name": "Coconut palm",
-    "genus": "Cocos",
-    "species": "nucifera",
-    "shape": "palm",
-    "temp_c": [
-     21,
-     33
-    ],
-    "moisture": [
-     0.35,
-     0.9
-    ],
-    "height_m": [
-     15,
-     30
-    ],
-    "density": 0.6,
-    "soil": "sand",
-    "needs": [
-     "salt_water"
-    ],
-    "color": "#4CA040",
-    "accent": "#A88A5A",
-    "source": "Cocos nucifera, atoll lagoon rims throughout the tropical Pacific and Indian Ocean, 15-30 m — Wikipedia"
+    "source": "Rhizophora mangle, Neotropical and W African lagoon edges (R. stylosa in Indo-Pacific), stilt-rooted, 4-20 m — Wikipedia",
+    "traits": {
+     "genus": "Rhizophora",
+     "species": "mangle",
+     "native_range": "Rhizophora mangle, Neotropical and W African lagoon edges (R",
+     "leaf_shape": "thick glossy salt-excreting leaves",
+     "trunk": "prop roots or pneumatophores over mud",
+     "petiole": "short petiole",
+     "height_m": [
+      4,
+      20
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Tamarisk",
@@ -131,10 +182,70 @@
     ],
     "color": "#7FA07A",
     "accent": "#E8A0C0",
-    "source": "Tamarix gallica, Mediterranean lagoon shores (Camargue, Venice littorals), feathery pink-flowered small tree 3-8 m — Wikipedia"
+    "source": "Tamarix gallica, Mediterranean lagoon shores (Camargue, Venice littorals), feathery pink-flowered small tree 3-8 m — Wikipedia",
+    "traits": {
+     "genus": "Tamarix",
+     "species": "gallica",
+     "native_range": "Tamarix gallica, Mediterranean lagoon shores (Camargue, Venice littorals), feathery pink-flowered small tree 3-8 m — Wik",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      3,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [
+   {
+    "name": "Beach naupaka",
+    "genus": "Scaevola",
+    "species": "taccada",
+    "shape": "shrub",
+    "temp_c": [
+     21,
+     33
+    ],
+    "moisture": [
+     0.35,
+     0.9
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5AB040",
+    "accent": "#E8E8D0",
+    "source": "Scaevola taccada, Indo-Pacific atoll lagoon rims, mounding succulent-leaved shrub 1-3 m — Wikipedia",
+    "traits": {
+     "genus": "Scaevola",
+     "species": "taccada",
+     "native_range": "Scaevola taccada, Indo-Pacific atoll lagoon rims, mounding succulent-leaved shrub 1-3 m — Wikipedia",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
     "name": "Buttonwood",
     "genus": "Conocarpus",
@@ -159,7 +270,24 @@
     ],
     "color": "#5A9A50",
     "accent": "#7A6A50",
-    "source": "Conocarpus erectus, Caribbean/Florida/W Africa lagoon back-shores just above tide, shrub or small tree 2-10 m — Wikipedia"
+    "source": "Conocarpus erectus, Caribbean/Florida/W Africa lagoon back-shores just above tide, shrub or small tree 2-10 m — Wikipedia",
+    "traits": {
+     "genus": "Conocarpus",
+     "species": "erectus",
+     "native_range": "Conocarpus erectus, Caribbean/Florida/W Africa lagoon back-shores just above tide, shrub or small tree 2-10 m — Wikipedi",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      10
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Shrubby seablite",
@@ -185,98 +313,27 @@
     ],
     "color": "#5A9A50",
     "accent": "#7A6A5A",
-    "source": "Suaeda vera, Mediterranean and S Atlantic European lagoon shores and shingle, evergreen fleshy subshrub 0.5-1.2 m — Wikipedia"
-   },
-   {
-    "name": "Beach naupaka",
-    "genus": "Scaevola",
-    "species": "taccada",
-    "shape": "shrub",
-    "temp_c": [
-     21,
-     33
-    ],
-    "moisture": [
-     0.35,
-     0.9
-    ],
-    "height_m": [
-     1,
-     3
-    ],
-    "density": 0.6,
-    "soil": "sand",
-    "needs": [
-     "salt_water"
-    ],
-    "color": "#5AB040",
-    "accent": "#E8E8D0",
-    "source": "Scaevola taccada, Indo-Pacific atoll lagoon rims, mounding succulent-leaved shrub 1-3 m — Wikipedia"
+    "source": "Suaeda vera, Mediterranean and S Atlantic European lagoon shores and shingle, evergreen fleshy subshrub 0.5-1.2 m — Wikipedia",
+    "traits": {
+     "genus": "Suaeda",
+     "species": "vera",
+     "native_range": "Suaeda vera, Mediterranean and S Atlantic European lagoon shores and shingle, evergreen fleshy subshrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
-   {
-    "name": "Sea purslane",
-    "genus": "Sesuvium",
-    "species": "portulacastrum",
-    "shape": "cushion",
-    "temp_c": [
-     20,
-     33
-    ],
-    "moisture": [
-     0.4,
-     1.0
-    ],
-    "height_m": [
-     0.05,
-     0.2
-    ],
-    "density": 0.8,
-    "soil": "sand",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0,
-     0.2
-    ],
-    "color": "#5AB040",
-    "accent": "#E070A0",
-    "source": "Sesuvium portulacastrum, pantropical lagoon mudflats and sand, succulent mat 5-20 cm — Wikipedia"
-   },
-   {
-    "name": "Perennial glasswort",
-    "genus": "Sarcocornia",
-    "species": "fruticosa",
-    "shape": "cushion",
-    "temp_c": [
-     11,
-     22
-    ],
-    "moisture": [
-     0.7,
-     1.0
-    ],
-    "height_m": [
-     0.2,
-     1.0
-    ],
-    "density": 0.8,
-    "soil": "wet",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0,
-     0.3
-    ],
-    "color": "#6AB040",
-    "accent": "#C05040",
-    "source": "Sarcocornia fruticosa, Mediterranean and Atlantic lagoon salt marsh (Venice, Camargue), woody jointed samphire 20-100 cm — Wikipedia"
-   },
    {
     "name": "Common reed",
     "genus": "Phragmites",
@@ -305,100 +362,24 @@
     ],
     "color": "#8AB860",
     "accent": "#C8B060",
-    "source": "Phragmites australis, brackish Baltic and Black Sea lagoon (haff, liman) reedbeds, 2-4 m — Wikipedia"
-   },
-   {
-    "name": "Saltmarsh rush",
-    "genus": "Juncus",
-    "species": "maritimus",
-    "shape": "reed",
-    "temp_c": [
-     8,
-     22
-    ],
-    "moisture": [
-     0.7,
-     1.0
-    ],
-    "height_m": [
-     0.5,
-     1.2
-    ],
-    "density": 0.5,
-    "soil": "wet",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0,
-     0.3
-    ],
-    "color": "#4A8A40",
-    "accent": "#8A7A50",
-    "source": "Juncus maritimus, European and Mediterranean lagoon fringe, stiff dark-green rush tussocks 0.5-1.2 m — Wikipedia"
-   },
-   {
-    "name": "Turtle grass",
-    "genus": "Thalassia",
-    "species": "testudinum",
-    "shape": "grass",
-    "temp_c": [
-     22,
-     32
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     0.2,
-     0.5
-    ],
-    "density": 1.2,
-    "soil": "sand",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     0.5,
-     10
-    ],
-    "color": "#3E9A3A",
-    "accent": "#2F7A35",
-    "source": "underwater — Thalassia testudinum, Caribbean and Gulf of Mexico lagoon floors, dominant broad-bladed seagrass 20-50 cm — Wikipedia"
-   },
-   {
-    "name": "Neptune grass",
-    "genus": "Posidonia",
-    "species": "oceanica",
-    "shape": "grass",
-    "temp_c": [
-     13,
-     24
-    ],
-    "moisture": [
-     1.0,
-     1.0
-    ],
-    "height_m": [
-     0.3,
-     1.0
-    ],
-    "density": 1.0,
-    "soil": "sand",
-    "needs": [
-     "standing_water",
-     "salt_water"
-    ],
-    "water_depth_m": [
-     1,
-     40
-    ],
-    "color": "#3E9A3A",
-    "accent": "#5A4A30",
-    "source": "underwater — Posidonia oceanica, Mediterranean endemic seagrass meadows on sand, 30-100 cm — Wikipedia"
+    "source": "Phragmites australis, brackish Baltic and Black Sea lagoon (haff, liman) reedbeds, 2-4 m — Wikipedia",
+    "traits": {
+     "genus": "Phragmites",
+     "species": "australis",
+     "native_range": "Phragmites australis, brackish Baltic and Black Sea lagoon (haff, liman) reedbeds, 2-4 m — Wikipedia",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      2,
+      4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Dwarf eelgrass",
@@ -429,7 +410,216 @@
     ],
     "color": "#4AA040",
     "accent": "#3E7A3A",
-    "source": "underwater — Zostera noltei, European Atlantic and Mediterranean lagoon shallows, fine-leaved intertidal seagrass 10-30 cm — Wikipedia"
+    "source": "underwater — Zostera noltei, European Atlantic and Mediterranean lagoon shallows, fine-leaved intertidal seagrass 10-30 cm — Wikipedia",
+    "traits": {
+     "genus": "Zostera",
+     "species": "noltei",
+     "native_range": "underwater — Zostera noltei, European Atlantic and Mediterranean lagoon shallows, fine-leaved intertidal seagrass 10-30 ",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Neptune grass",
+    "genus": "Posidonia",
+    "species": "oceanica",
+    "shape": "grass",
+    "temp_c": [
+     13,
+     24
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     1,
+     40
+    ],
+    "color": "#3E9A3A",
+    "accent": "#5A4A30",
+    "source": "underwater — Posidonia oceanica, Mediterranean endemic seagrass meadows on sand, 30-100 cm — Wikipedia",
+    "traits": {
+     "genus": "Posidonia",
+     "species": "oceanica",
+     "native_range": "underwater — Posidonia oceanica, Mediterranean endemic seagrass meadows on sand, 30-100 cm — Wikipedia",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Perennial glasswort",
+    "genus": "Sarcocornia",
+    "species": "fruticosa",
+    "shape": "cushion",
+    "temp_c": [
+     11,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     1.0
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#6AB040",
+    "accent": "#C05040",
+    "source": "Sarcocornia fruticosa, Mediterranean and Atlantic lagoon salt marsh (Venice, Camargue), woody jointed samphire 20-100 cm — Wikipedia",
+    "traits": {
+     "genus": "Sarcocornia",
+     "species": "fruticosa",
+     "native_range": "Sarcocornia fruticosa, Mediterranean and Atlantic lagoon salt marsh (Venice, Camargue), woody jointed samphire 20-100 cm",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.2,
+      1.0
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Saltmarsh rush",
+    "genus": "Juncus",
+    "species": "maritimus",
+    "shape": "reed",
+    "temp_c": [
+     8,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#4A8A40",
+    "accent": "#8A7A50",
+    "source": "Juncus maritimus, European and Mediterranean lagoon fringe, stiff dark-green rush tussocks 0.5-1.2 m — Wikipedia",
+    "traits": {
+     "genus": "Juncus",
+     "species": "maritimus",
+     "native_range": "Juncus maritimus, European and Mediterranean lagoon fringe, stiff dark-green rush tussocks 0",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Sea purslane",
+    "genus": "Sesuvium",
+    "species": "portulacastrum",
+    "shape": "cushion",
+    "temp_c": [
+     20,
+     33
+    ],
+    "moisture": [
+     0.4,
+     1.0
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.2
+    ],
+    "color": "#5AB040",
+    "accent": "#E070A0",
+    "source": "Sesuvium portulacastrum, pantropical lagoon mudflats and sand, succulent mat 5-20 cm — Wikipedia",
+    "traits": {
+     "genus": "Sesuvium",
+     "species": "portulacastrum",
+     "native_range": "Sesuvium portulacastrum, pantropical lagoon mudflats and sand, succulent mat 5-20 cm — Wikipedia",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Tape seagrass",
@@ -460,9 +650,78 @@
     ],
     "color": "#3E9A3A",
     "accent": "#2F7A35",
-    "source": "underwater — Enhalus acoroides, Indo-Pacific lagoons and reef flats, largest tropical seagrass with 1-1.5 m ribbon leaves — Wikipedia"
+    "source": "underwater — Enhalus acoroides, Indo-Pacific lagoons and reef flats, largest tropical seagrass with 1-1.5 m ribbon leaves — Wikipedia",
+    "traits": {
+     "genus": "Enhalus",
+     "species": "acoroides",
+     "native_range": "underwater — Enhalus acoroides, Indo-Pacific lagoons and reef flats, largest tropical seagrass with 1-1",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Turtle grass",
+    "genus": "Thalassia",
+    "species": "testudinum",
+    "shape": "grass",
+    "temp_c": [
+     22,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 1.2,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     10
+    ],
+    "color": "#3E9A3A",
+    "accent": "#2F7A35",
+    "source": "underwater — Thalassia testudinum, Caribbean and Gulf of Mexico lagoon floors, dominant broad-bladed seagrass 20-50 cm — Wikipedia",
+    "traits": {
+     "genus": "Thalassia",
+     "species": "testudinum",
+     "native_range": "underwater — Thalassia testudinum, Caribbean and Gulf of Mexico lagoon floors, dominant broad-bladed seagrass 20-50 cm —",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- }
+ },
+ "hero_species": [
+  "Coconut palm"
+ ],
+ "associations": []
 }

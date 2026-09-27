@@ -1,0 +1,2051 @@
+{
+ "key": "GIANT_HERB_CATALOGUE",
+ "name": "Giant herbs — alocasia, taro, bananas and their kin",
+ "kind": "land",
+ "status": "24 species",
+ "notes": "The big soft-stemmed plants of wet tropical gaps, stream banks and camp edges: elephant ears (Alocasia, Colocasia, Xanthosoma) with metre-wide leaves, and the banana family (wild Musa, Ensete, the traveller's palm, heliconia, torch ginger). None are trees: a stem grows in one season, flowers once and dies, and the clump lives on through suckers, so growth stages run in weeks and a cleared patch is waist-deep in them by the next season — they are the pioneers of gaps and landslides. Bat- and bird-pollinated. Taro, cocoyam, banana and the cultivated elephant ears are camp-followers and the staple roots and fruit of tropical camps; big leaves are roofing and wrapping.",
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Giant highland banana",
+    "genus": "Musa",
+    "species": "ingens",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     1000,
+     2000
+    ],
+    "height_m": [
+     10.0,
+     20.0
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "New Guinea highland forest. Largest herb on Earth; 15 m stems. Kew POWO."
+   },
+   {
+    "name": "Traveller's palm",
+    "genus": "Ravenala",
+    "species": "madagascariensis",
+    "family": "Strelitziaceae",
+    "shape": "palm",
+    "temp_c": [
+     22,
+     27
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     10.0,
+     20.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bird",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Madagascar east coast forest. Fan of banana leaves in one plane; lemur-pollinated; holds water in its leaf bases. Kew POWO."
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Giant taro",
+    "genus": "Alocasia",
+    "species": "macrorrhizos",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     22,
+     29
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "SE Asian and Pacific rainforest edge and streams. Upright elephant ears 2 m long; corm eaten after long cooking. Kew POWO."
+   },
+   {
+    "name": "Alocasia (Himalayan)",
+    "genus": "Alocasia",
+    "species": "odora",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     16,
+     25
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     200,
+     1800
+    ],
+    "height_m": [
+     1.0,
+     2.5
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Indochina and S China hill forest. Night-scented; the hardiest of the giants. Kew POWO."
+   },
+   {
+    "name": "Giant elephant ear",
+    "genus": "Colocasia",
+    "species": "gigantea",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     900
+    ],
+    "height_m": [
+     1.5,
+     3.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Indochina and Malesia.  Kew POWO."
+   },
+   {
+    "name": "Titan elephant ear",
+    "genus": "Leucocasia",
+    "species": "gigantea",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     2.0,
+     3.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Indochina limestone streams.  Kew POWO."
+   },
+   {
+    "name": "Wild banana",
+    "genus": "Musa",
+    "species": "acuminata",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     22,
+     29
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     3.0,
+     7.0
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Malesian rainforest gaps and streams; ancestor of the banana. Seedy fruit; bats pollinate the hanging flower; pioneer of gaps and landslides. Kew POWO."
+   },
+   {
+    "name": "Wild banana (Indian)",
+    "genus": "Musa",
+    "species": "balbisiana",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     20,
+     29
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     4.0,
+     8.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Indian and Indochinese monsoon forest. Hardier, drought-tolerant ancestor; fibre and leaves for camps. Kew POWO."
+   },
+   {
+    "name": "Banana",
+    "genus": "Musa",
+    "species": "× paradisiaca",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     22,
+     29
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "cultivated; camp-follower in tropical lowlands. Seedless; only near camps, spread by planting suckers. Kew POWO.",
+    "camp_follower": true
+   },
+   {
+    "name": "Scarlet banana",
+    "genus": "Musa",
+    "species": "coccinea",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     200,
+     1200
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "S China and Vietnam forest. Red upright flower. Kew POWO."
+   },
+   {
+    "name": "Pink banana",
+    "genus": "Musa",
+    "species": "velutina",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     16,
+     25
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     300,
+     1500
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Assam foothills. Pink furry fruit that peels itself; bird-spread. Kew POWO."
+   },
+   {
+    "name": "Japanese fibre banana",
+    "genus": "Musa",
+    "species": "basjoo",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Ryukyu and S China hills; hardiest banana. Survives frost from the root; fibre cloth. Kew POWO."
+   },
+   {
+    "name": "Abaca",
+    "genus": "Musa",
+    "species": "textilis",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     4.0,
+     7.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Philippine hill forest. Manila hemp; the rope banana. Kew POWO."
+   },
+   {
+    "name": "Enset",
+    "genus": "Ensete",
+    "species": "ventricosum",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     1000,
+     3000
+    ],
+    "height_m": [
+     6.0,
+     12.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Ethiopian highlands and African mountain forest. False banana; the corm is the staple of the Ethiopian highlands; grows huge then dies after flowering. Kew POWO."
+   },
+   {
+    "name": "Snow banana",
+    "genus": "Ensete",
+    "species": "glaucum",
+    "family": "Musaceae",
+    "shape": "palm",
+    "temp_c": [
+     14,
+     22
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     300,
+     2000
+    ],
+    "height_m": [
+     4.0,
+     8.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Himalayan foothills to Yunnan. Swollen blue-grey base. Kew POWO."
+   },
+   {
+    "name": "Bird of paradise tree",
+    "genus": "Strelitzia",
+    "species": "nicolai",
+    "family": "Strelitziaceae",
+    "shape": "palm",
+    "temp_c": [
+     16,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     500
+    ],
+    "height_m": [
+     6.0,
+     10.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bird",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "South African coastal forest. White bird-of-paradise; sunbird-pollinated. Kew POWO."
+   },
+   {
+    "name": "Heliconia (lobster claw)",
+    "genus": "Heliconia",
+    "species": "rostrata",
+    "family": "Heliconiaceae",
+    "shape": "palm",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     1.5,
+     4.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bird",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Andean foothill forest. Hanging red-yellow claws; hummingbird-pollinated; the banana's American cousin. Kew POWO."
+   },
+   {
+    "name": "Torch ginger",
+    "genus": "Etlingera",
+    "species": "elatior",
+    "family": "Zingiberaceae",
+    "shape": "palm",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Malesian rainforest edge. Red torch on a bare stalk; eaten as a spice by camps. Kew POWO."
+   }
+  ],
+  "ground": [
+   {
+    "name": "Alocasia (Bornean)",
+    "genus": "Alocasia",
+    "species": "longiloba",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Borneo and Malay lowland forest. Silver-veined arrowheads on the forest floor. Kew POWO."
+   },
+   {
+    "name": "Zebra alocasia",
+    "genus": "Alocasia",
+    "species": "zebrina",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     700
+    ],
+    "height_m": [
+     0.8,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Philippine rainforest. Tiger-striped stems. Kew POWO."
+   },
+   {
+    "name": "Kris plant",
+    "genus": "Alocasia",
+    "species": "sanderiana",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     100,
+     800
+    ],
+    "height_m": [
+     0.4,
+     0.8
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Mindanao rainforest. Wavy metallic leaves; rare. Kew POWO."
+   },
+   {
+    "name": "Alocasia (Indian)",
+    "genus": "Alocasia",
+    "species": "cucullata",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     0.5,
+     1.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Bengal and Burma villages and streams. Buddha's hand; camp-follower. Kew POWO.",
+    "camp_follower": true
+   },
+   {
+    "name": "Taro",
+    "genus": "Colocasia",
+    "species": "esculenta",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     20,
+     29
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     0.8,
+     2.0
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "SE Asia; wet fields and stream banks everywhere in the tropics. The staple root of the wet tropics; camp folk plant it in water; camp-follower. Kew POWO.",
+    "water_depth_m": [
+     0.05,
+     0.4
+    ],
+    "camp_follower": true
+   },
+   {
+    "name": "Xanthosoma",
+    "genus": "Xanthosoma",
+    "species": "sagittifolium",
+    "family": "Araceae",
+    "shape": "umbrella",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#3E9A3E",
+    "accent": "#8A6A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       30
+      ],
+      [
+       "young",
+       180
+      ],
+      [
+       "mature",
+       365
+      ],
+      [
+       "old",
+       730
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "human"
+     ],
+     "clonal": "tuber_offset",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "wet",
+      "days": 30,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "giant herbs, not trees: each stem grows in a season, fruits or flowers once and dies, replaced by suckers from the clump — fast growth stages, visible in weeks"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "leaf_variegation": [
+      0.0,
+      0.4
+     ],
+     "allocation": [
+      0.5,
+      0.8
+     ]
+    },
+    "source": "Neotropical lowland; cocoyam. New World taro; camp-follower. Kew POWO.",
+    "camp_follower": true
+   }
+  ],
+  "epiphyte": []
+ }
+}

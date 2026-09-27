@@ -1,0 +1,3857 @@
+{
+ "key": "CARNIVORE_CATALOGUE",
+ "name": "Carnivorous plants — pitchers, sundews, snap traps",
+ "kind": "land",
+ "status": "43 species",
+ "notes": "Bog and seep plants that live where the soil has no nitrogen and take it from insects instead. Rule they add: they grow ONLY on nutrient-poor ground (peat, sand, wet rock, tepui summits) with high moisture, and their growth reads the local INSECT count instead of soil fertility — a bog full of midges grows fat pitchers; kill the insects and the sundews starve. Their flowers stand far above the traps so the pollinators survive. Sarracenia and Dionaea live in fire-kept pine savanna and bog and need the burns (Phase 9 reads this). Nepenthes are tropical climbers and cliff plants; the great montane ones drown rats and host tree shrews. Bladderworts float in ponds and eat water fleas.",
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [],
+  "ground": [
+   {
+    "name": "Purple pitcher plant",
+    "genus": "Sarracenia",
+    "species": "purpurea",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     -4,
+     18
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "E North American bogs, Florida to Labrador; the only pitcher in Canada. Squat red-veined pitchers full of rainwater; mosquito larvae live in them. Kew POWO."
+   },
+   {
+    "name": "Yellow pitcher plant",
+    "genus": "Sarracenia",
+    "species": "flava",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     14,
+     21
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     200
+    ],
+    "height_m": [
+     0.4,
+     0.9
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "SE US coastal plain savanna and bog. Tall yellow trumpets; fire-kept pine savanna. Kew POWO."
+   },
+   {
+    "name": "White pitcher plant",
+    "genus": "Sarracenia",
+    "species": "leucophylla",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     17,
+     21
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     100
+    ],
+    "height_m": [
+     0.4,
+     0.9
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Gulf coast bogs. White-topped; the showiest. Kew POWO."
+   },
+   {
+    "name": "Parrot pitcher plant",
+    "genus": "Sarracenia",
+    "species": "psittacina",
+    "family": "Sarraceniaceae",
+    "shape": "rosette",
+    "temp_c": [
+     16,
+     21
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     100
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Gulf coast bogs, often flooded. Lobster-pot traps that work underwater when the bog floods. Kew POWO."
+   },
+   {
+    "name": "Hooded pitcher plant",
+    "genus": "Sarracenia",
+    "species": "minor",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     15,
+     21
+    ],
+    "moisture": [
+     0.65,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     150
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "SE US flatwoods. Hooded, with false windows. Kew POWO."
+   },
+   {
+    "name": "Sweet pitcher plant",
+    "genus": "Sarracenia",
+    "species": "rubra",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     13,
+     20
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "SE US seeps.  Kew POWO."
+   },
+   {
+    "name": "Green pitcher plant",
+    "genus": "Sarracenia",
+    "species": "oreophila",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     12,
+     17
+    ],
+    "moisture": [
+     0.65,
+     0.95
+    ],
+    "altitude_m": [
+     200,
+     700
+    ],
+    "height_m": [
+     0.3,
+     0.7
+    ],
+    "density": 0.1,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Appalachian seeps of Alabama; rare.  Kew POWO."
+   },
+   {
+    "name": "Mountain sweet pitcher",
+    "genus": "Sarracenia",
+    "species": "jonesii",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     10,
+     15
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     600,
+     1000
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.1,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Blue Ridge bogs; rare.  Kew POWO."
+   },
+   {
+    "name": "Cobra lily",
+    "genus": "Darlingtonia",
+    "species": "californica",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     6,
+     14
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "height_m": [
+     0.3,
+     0.9
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Oregon and N California serpentine seeps and cold streams. Hooded cobra heads over cold running water. Kew POWO."
+   },
+   {
+    "name": "Sun pitcher",
+    "genus": "Heliamphora",
+    "species": "nutans",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     8,
+     14
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     2000,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Roraima tepui summits, Venezuela. Marsh pitchers of the table mountains; cloud and rain. Kew POWO."
+   },
+   {
+    "name": "Giant montane pitcher",
+    "genus": "Nepenthes",
+    "species": "rajah",
+    "family": "Nepenthaceae",
+    "shape": "reed",
+    "temp_c": [
+     10,
+     16
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2650
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Mount Kinabalu, Borneo, 1500-2600 m. Largest pitcher on Earth, drowns rats; tree shrews use it as a toilet — a real nutrient exchange. Kew POWO."
+   },
+   {
+    "name": "Slender pitcher",
+    "genus": "Nepenthes",
+    "species": "gracilis",
+    "family": "Nepenthaceae",
+    "shape": "reed",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1100
+    ],
+    "height_m": [
+     1.0,
+     5.0
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Malesian heath forest and swamp edge. The common weedy pitcher; scrambles over heath. Kew POWO."
+   },
+   {
+    "name": "Common swamp pitcher",
+    "genus": "Nepenthes",
+    "species": "mirabilis",
+    "family": "Nepenthaceae",
+    "shape": "reed",
+    "temp_c": [
+     22,
+     29
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     1.0,
+     6.0
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Indochina to Australia; swamps and wet grassland. Widest-ranging pitcher; climbs the reeds. Kew POWO."
+   },
+   {
+    "name": "Highland pitcher",
+    "genus": "Nepenthes",
+    "species": "ventricosa",
+    "family": "Nepenthaceae",
+    "shape": "reed",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "altitude_m": [
+     1000,
+     2000
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Philippine cloud forest. Waisted pitchers on mossy cliffs. Kew POWO."
+   },
+   {
+    "name": "Villose pitcher",
+    "genus": "Nepenthes",
+    "species": "villosa",
+    "family": "Nepenthaceae",
+    "shape": "reed",
+    "temp_c": [
+     6,
+     12
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     2300,
+     3200
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Kinabalu summit zone. Toothed peristome; the highest pitcher. Kew POWO."
+   },
+   {
+    "name": "Madagascar pitcher",
+    "genus": "Nepenthes",
+    "species": "madagascariensis",
+    "family": "Nepenthaceae",
+    "shape": "reed",
+    "temp_c": [
+     22,
+     27
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     500
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Madagascar east coast swamps.  Kew POWO."
+   },
+   {
+    "name": "Indian pitcher",
+    "genus": "Nepenthes",
+    "species": "khasiana",
+    "family": "Nepenthaceae",
+    "shape": "reed",
+    "temp_c": [
+     16,
+     22
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     500,
+     1500
+    ],
+    "height_m": [
+     0.5,
+     2.0
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Khasi Hills, Meghalaya; wettest place on Earth. The only Indian pitcher. Kew POWO."
+   },
+   {
+    "name": "Alata pitcher",
+    "genus": "Nepenthes",
+    "species": "alata",
+    "family": "Nepenthaceae",
+    "shape": "reed",
+    "temp_c": [
+     18,
+     25
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     300,
+     1900
+    ],
+    "height_m": [
+     1.0,
+     4.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Philippine hill forest.  Kew POWO."
+   },
+   {
+    "name": "Round-leaved sundew",
+    "genus": "Drosera",
+    "species": "rotundifolia",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     -6,
+     16
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2000
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Circumboreal bogs and sphagnum. Red sticky discs on sphagnum; the classic sundew. Kew POWO."
+   },
+   {
+    "name": "Great sundew",
+    "genus": "Drosera",
+    "species": "anglica",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     -6,
+     12
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2000
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Northern fens and pool edges.  Kew POWO."
+   },
+   {
+    "name": "Oblong-leaved sundew",
+    "genus": "Drosera",
+    "species": "intermedia",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Atlantic bogs, Europe and E North America.  Kew POWO."
+   },
+   {
+    "name": "Thread-leaved sundew",
+    "genus": "Drosera",
+    "species": "filiformis",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     200
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "NE US coastal bogs. Upright threads. Kew POWO."
+   },
+   {
+    "name": "Cape sundew",
+    "genus": "Drosera",
+    "species": "capensis",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     13,
+     18
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Cape fynbos seeps. Straps that curl round prey. Kew POWO."
+   },
+   {
+    "name": "King sundew",
+    "genus": "Drosera",
+    "species": "regia",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     13,
+     17
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     500,
+     900
+    ],
+    "height_m": [
+     0.3,
+     0.7
+    ],
+    "density": 0.1,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Bainskloof, Western Cape; rare. Sword leaves 60 cm long; one valley. Kew POWO."
+   },
+   {
+    "name": "Forked sundew",
+    "genus": "Drosera",
+    "species": "binata",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "E Australian and NZ swamps. Forked antlers. Kew POWO."
+   },
+   {
+    "name": "Pygmy sundew",
+    "genus": "Drosera",
+    "species": "pygmaea",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     500
+    ],
+    "height_m": [
+     0.005,
+     0.02
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "SW Australian and NZ sand heath. Tiny; spreads by gemmae; Australian winter-wet heath. Kew POWO."
+   },
+   {
+    "name": "Rainbow sundew",
+    "genus": "Drosera",
+    "species": "glanduligera",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     13,
+     18
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     400
+    ],
+    "height_m": [
+     0.01,
+     0.03
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "SW Australian winter-wet flats. Catapult-flypaper; snaps prey in; annual. Kew POWO."
+   },
+   {
+    "name": "Alice sundew",
+    "genus": "Drosera",
+    "species": "aliciae",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     13,
+     18
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     0.03,
+     0.08
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Cape fynbos. Flat rosette. Kew POWO."
+   },
+   {
+    "name": "Tropical sundew",
+    "genus": "Drosera",
+    "species": "burmannii",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     20,
+     29
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     0.01,
+     0.03
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Asian and Australian monsoon wetlands. Fast-snapping; annual. Kew POWO."
+   },
+   {
+    "name": "Venus flytrap",
+    "genus": "Dionaea",
+    "species": "muscipula",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     15,
+     19
+    ],
+    "moisture": [
+     0.65,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     60
+    ],
+    "height_m": [
+     0.05,
+     0.15
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "snap",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Carolina coastal-plain savanna bogs, one small region. The snap trap; fire-kept longleaf pine savanna; needs the burns. Kew POWO."
+   },
+   {
+    "name": "Waterwheel plant",
+    "genus": "Aldrovanda",
+    "species": "vesiculosa",
+    "family": "Droseraceae",
+    "shape": "rosette",
+    "temp_c": [
+     12,
+     26
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.2,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "snap",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Still acidic waters, scattered worldwide. Floating snap-trap; rootless. Kew POWO.",
+    "water_depth_m": [
+     0.1,
+     1.5
+    ]
+   },
+   {
+    "name": "Common bladderwort",
+    "genus": "Utricularia",
+    "species": "vulgaris",
+    "family": "Lentibulariaceae",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     20
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "bladder",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Northern ponds and fens. Floating; sucks in water fleas with bladders; yellow flowers above the water. Kew POWO.",
+    "water_depth_m": [
+     0.1,
+     1.5
+    ]
+   },
+   {
+    "name": "Butterwort",
+    "genus": "Pinguicula",
+    "species": "vulgaris",
+    "family": "Lentibulariaceae",
+    "shape": "rosette",
+    "temp_c": [
+     -4,
+     12
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     2500
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Northern fens and wet rock. Greasy yellow-green rosette; flypaper. Kew POWO."
+   },
+   {
+    "name": "Mexican butterwort",
+    "genus": "Pinguicula",
+    "species": "moranensis",
+    "family": "Lentibulariaceae",
+    "shape": "rosette",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     3000
+    ],
+    "height_m": [
+     0.05,
+     0.15
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Mexican cloud-forest cliffs. Big pink flowers on dripping limestone. Kew POWO."
+   },
+   {
+    "name": "Albany pitcher plant",
+    "genus": "Cephalotus",
+    "species": "follicularis",
+    "family": "Cephalotaceae",
+    "shape": "rosette",
+    "temp_c": [
+     14,
+     18
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     100
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.2,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "SW Australian coastal seeps; one region. Tiny lidded pitchers; unrelated to all the others. Kew POWO."
+   },
+   {
+    "name": "Rainbow plant",
+    "genus": "Byblis",
+    "species": "gigantea",
+    "family": "Byblidaceae",
+    "shape": "rosette",
+    "temp_c": [
+     14,
+     18
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     0.3,
+     0.7
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "SW Australian winter-wet sand. Glistening flypaper stems; fire-germinated. Kew POWO."
+   },
+   {
+    "name": "Dewy pine",
+    "genus": "Drosophyllum",
+    "species": "lusitanicum",
+    "family": "Drosophyllaceae",
+    "shape": "rosette",
+    "temp_c": [
+     13,
+     18
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "altitude_m": [
+     0,
+     900
+    ],
+    "height_m": [
+     0.2,
+     0.4
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Portuguese and Moroccan dry scrub; the dry-land flypaper. The only carnivore of dry ground; smells of honey. Kew POWO."
+   },
+   {
+    "name": "Corkscrew plant",
+    "genus": "Genlisea",
+    "species": "violacea",
+    "family": "Lentibulariaceae",
+    "shape": "rosette",
+    "temp_c": [
+     18,
+     24
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     500,
+     1500
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "corkscrew",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Brazilian sandstone seeps. Underground corkscrew traps for protozoa. Kew POWO."
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Fanged pitcher",
+    "genus": "Nepenthes",
+    "species": "bicalcarata",
+    "family": "Nepenthaceae",
+    "shape": "liana",
+    "temp_c": [
+     24,
+     28
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Bornean peat swamp forest. Two fangs; ants live in its tendrils; climbs trees. Kew POWO."
+   },
+   {
+    "name": "Lowe's pitcher",
+    "genus": "Nepenthes",
+    "species": "lowii",
+    "family": "Nepenthaceae",
+    "shape": "liana",
+    "temp_c": [
+     12,
+     17
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "altitude_m": [
+     1600,
+     2600
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Bornean mossy forest. Toilet pitcher: tree shrews feed on its lid and defecate in it. Kew POWO."
+   },
+   {
+    "name": "Veitch's pitcher",
+    "genus": "Nepenthes",
+    "species": "veitchii",
+    "family": "Nepenthaceae",
+    "shape": "liana",
+    "temp_c": [
+     16,
+     24
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     6.0
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Bornean hill forest; hugs trunks. Climbs by wrapping the trunk; wide gold peristome. Kew POWO."
+   },
+   {
+    "name": "Rafflesiana pitcher",
+    "genus": "Nepenthes",
+    "species": "rafflesiana",
+    "family": "Nepenthaceae",
+    "shape": "liana",
+    "temp_c": [
+     23,
+     28
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     3.0,
+     15.0
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "Bornean and Malay heath and swamp forest. Big lowland pitcher; climbs; scented lids for bats. Kew POWO."
+   },
+   {
+    "name": "Climbing sundew",
+    "genus": "Drosera",
+    "species": "macrantha",
+    "family": "Droseraceae",
+    "shape": "liana",
+    "temp_c": [
+     13,
+     18
+    ],
+    "moisture": [
+     0.45,
+     0.75
+    ],
+    "altitude_m": [
+     0,
+     400
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       1500
+      ],
+      [
+       "old",
+       4000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "carnivore": {
+     "trap": "flypaper",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "source": "SW Australian heath; climbs shrubs. Tuberous, winter-growing, twines up bushes. Kew POWO."
+   }
+  ]
+ }
+}

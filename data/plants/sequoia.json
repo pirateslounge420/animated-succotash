@@ -1,0 +1,310 @@
+{
+ "key": "SEQUOIA_CATALOGUE",
+ "name": "Sequoias — the redwoods",
+ "kind": "land",
+ "status": "3 species",
+ "notes": "Three living genera, three continents' worth of memory: coast redwood (tallest tree), giant sequoia (largest), dawn redwood (thought extinct until 1944). All are landmark trees; groves are places.",
+ "plants": {
+  "emergent": [
+   {
+    "name": "Coast redwood",
+    "genus": "Sequoia",
+    "species": "sempervirens",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     10,
+     16
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     0,
+     900
+    ],
+    "height_m": [
+     70.0,
+     115.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#8A4A30",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "N California fog belt; tallest tree on Earth; resprouts from the stump. Kew POWO.",
+    "landmark": true,
+    "traits": {
+     "genus": "Sequoia",
+     "species": "sempervirens",
+     "native_range": "N California fog belt",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      70.0,
+      115.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Giant sequoia",
+    "genus": "Sequoiadendron",
+    "species": "giganteum",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     6,
+     12
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     1400,
+     2400
+    ],
+    "height_m": [
+     60.0,
+     90.0
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#B04A30",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sierra Nevada groves; largest tree by volume; fire opens its cones. Kew POWO.",
+    "landmark": true,
+    "traits": {
+     "genus": "Sequoiadendron",
+     "species": "giganteum",
+     "native_range": "Sierra Nevada groves",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      60.0,
+      90.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "canopy": [
+   {
+    "name": "Dawn redwood",
+    "genus": "Metasequoia",
+    "species": "glyptostroboides",
+    "family": "Cupressaceae",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     700,
+     1500
+    ],
+    "height_m": [
+     35.0,
+     50.0
+    ],
+    "density": 0.2,
+    "soil": "wet",
+    "needs": [],
+    "color": "#5A9A4A",
+    "accent": "#B06A40",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       60000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Hubei valley bottoms, one region; deciduous; the living fossil. Kew POWO.",
+    "landmark": true,
+    "traits": {
+     "genus": "Metasequoia",
+     "species": "glyptostroboides",
+     "native_range": "Hubei valley bottoms, one region",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      35.0,
+      50.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "shrub": [],
+  "ground": [],
+  "epiphyte": []
+ }
+}

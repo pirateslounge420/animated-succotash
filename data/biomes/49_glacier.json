@@ -22,52 +22,6 @@
   "shrub": [],
   "ground": [
    {
-    "name": "Snow algae",
-    "genus": "Chlamydomonas",
-    "species": "nivalis",
-    "shape": "thermophile_mat",
-    "temp_c": [
-     -30,
-     0
-    ],
-    "moisture": [
-     0.6,
-     1
-    ],
-    "height_m": [
-     0.001,
-     0.002
-    ],
-    "density": 0.2,
-    "soil": "wet",
-    "color": "#D85070",
-    "accent": "#B03050",
-    "source": "Chlamydomonas nivalis (watermelon snow), cosmopolitan snowfield/glacier alga; pink surface film on summer snow (alpine and polar snow-algae literature)"
-   },
-   {
-    "name": "Map lichen",
-    "genus": "Rhizocarpon",
-    "species": "geographicum",
-    "shape": "moss",
-    "temp_c": [
-     -30,
-     5
-    ],
-    "moisture": [
-     0,
-     1
-    ],
-    "height_m": [
-     0.001,
-     0.01
-    ],
-    "density": 0.15,
-    "soil": "thin",
-    "color": "#B8C830",
-    "accent": "#2A2A2A",
-    "source": "Rhizocarpon geographicum, crustose lichen on moraine boulders worldwide, used for lichenometric dating of glacier retreat"
-   },
-   {
     "name": "Glacier buttercup",
     "genus": "Ranunculus",
     "species": "glacialis",
@@ -92,15 +46,107 @@
     "soil": "thin",
     "color": "#3E8A3A",
     "accent": "#F0F0E8",
-    "source": "Ranunculus glacialis, Alps/Scandinavia/Arctic, moraine and snowbed to 4275 m, one of Europe's highest flowering plants, 3-12 cm"
+    "source": "Ranunculus glacialis, Alps/Scandinavia/Arctic, moraine and snowbed to 4275 m, one of Europe's highest flowering plants, 3-12 cm",
+    "traits": {
+     "genus": "Ranunculus",
+     "species": "glacialis",
+     "native_range": "Ranunculus glacialis, Alps/Scandinavia/Arctic, moraine and snowbed to 4275 m, one of Europe's highest flowering plants, ",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Map lichen",
+    "genus": "Rhizocarpon",
+    "species": "geographicum",
+    "shape": "moss",
+    "temp_c": [
+     -30,
+     5
+    ],
+    "moisture": [
+     0,
+     1
+    ],
+    "height_m": [
+     0.001,
+     0.01
+    ],
+    "density": 0.15,
+    "soil": "thin",
+    "color": "#B8C830",
+    "accent": "#2A2A2A",
+    "source": "Rhizocarpon geographicum, crustose lichen on moraine boulders worldwide, used for lichenometric dating of glacier retreat",
+    "traits": {
+     "genus": "Rhizocarpon",
+     "species": "geographicum",
+     "native_range": "Rhizocarpon geographicum, crustose lichen on moraine boulders worldwide, used for lichenometric dating of glacier retrea",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.001,
+      0.01
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Snow algae",
+    "genus": "Chlamydomonas",
+    "species": "nivalis",
+    "shape": "thermophile_mat",
+    "temp_c": [
+     -30,
+     0
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     0.001,
+     0.002
+    ],
+    "density": 0.2,
+    "soil": "wet",
+    "color": "#D85070",
+    "accent": "#B03050",
+    "source": "Chlamydomonas nivalis (watermelon snow), cosmopolitan snowfield/glacier alga; pink surface film on summer snow (alpine and polar snow-algae literature)",
+    "traits": {
+     "genus": "Chlamydomonas",
+     "species": "nivalis",
+     "native_range": "Chlamydomonas nivalis (watermelon snow), cosmopolitan snowfield/glacier alga",
+     "leaf_shape": "none — microbial mat",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.001,
+      0.002
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 0,
-  "names": []
  },
  "associations": [
   {
@@ -132,5 +178,6 @@
    "cover": 0.1,
    "source": "Matthews 1992 Ecology of Recently Deglaciated Terrain; Rhizocarpon lichenometry"
   }
- ]
+ ],
+ "hero_species": []
 }

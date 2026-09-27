@@ -20,29 +20,6 @@
   "emergent": [],
   "canopy": [
    {
-    "name": "Bog pine",
-    "genus": "Pinus",
-    "species": "sylvestris",
-    "shape": "conifer",
-    "temp_c": [
-     -4,
-     6
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "height_m": [
-     1,
-     8
-    ],
-    "density": 0.4,
-    "soil": "peat",
-    "color": "#3A7A40",
-    "accent": "#C86A40",
-    "source": "Pinus sylvestris, stunted bog form on Eurasian raised bogs 1-8 m, sparse crown; Pinus mugo subsp. rotundata on Alpine bogs"
-   },
-   {
     "name": "Black spruce",
     "genus": "Picea",
     "species": "mariana",
@@ -63,7 +40,64 @@
     "soil": "peat",
     "color": "#243F2A",
     "accent": "#5A4A3A",
-    "source": "Picea mariana, dominant stunted tree of N American bog/muskeg 2-10 m, narrow spire"
+    "source": "Picea mariana, dominant stunted tree of N American bog/muskeg 2-10 m, narrow spire",
+    "traits": {
+     "genus": "Picea",
+     "species": "mariana",
+     "native_range": "Picea mariana, dominant stunted tree of N American bog/muskeg 2-10 m, narrow spire",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      2,
+      10
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Bog pine",
+    "genus": "Pinus",
+    "species": "sylvestris",
+    "shape": "conifer",
+    "temp_c": [
+     -4,
+     6
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     1,
+     8
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#3A7A40",
+    "accent": "#C86A40",
+    "source": "Pinus sylvestris, stunted bog form on Eurasian raised bogs 1-8 m, sparse crown; Pinus mugo subsp. rotundata on Alpine bogs",
+    "traits": {
+     "genus": "Pinus",
+     "species": "sylvestris",
+     "native_range": "Pinus sylvestris, stunted bog form on Eurasian raised bogs 1-8 m, sparse crown",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      1,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Tamarack",
@@ -86,56 +120,27 @@
     "soil": "peat",
     "color": "#8AC050",
     "accent": "#7A5030",
-    "source": "Larix laricina, Canada/NE USA bogs and fens, deciduous conifer 3-15 m turning gold"
+    "source": "Larix laricina, Canada/NE USA bogs and fens, deciduous conifer 3-15 m turning gold",
+    "traits": {
+     "genus": "Larix",
+     "species": "laricina",
+     "native_range": "Larix laricina, Canada/NE USA bogs and fens, deciduous conifer 3-15 m turning gold",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      3,
+      15
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "shrub": [
-   {
-    "name": "Heather",
-    "genus": "Calluna",
-    "species": "vulgaris",
-    "shape": "shrub",
-    "temp_c": [
-     -4,
-     8
-    ],
-    "moisture": [
-     0.6,
-     0.9
-    ],
-    "height_m": [
-     0.2,
-     0.6
-    ],
-    "density": 0.9,
-    "soil": "peat",
-    "color": "#4A7A40",
-    "accent": "#C050A0",
-    "source": "Calluna vulgaris, dominant on British/Scandinavian blanket bog hummocks, evergreen 20-60 cm, purple flowers"
-   },
-   {
-    "name": "Bog rosemary",
-    "genus": "Andromeda",
-    "species": "polifolia",
-    "shape": "shrub",
-    "temp_c": [
-     -7,
-     5
-    ],
-    "moisture": [
-     0.7,
-     1
-    ],
-    "height_m": [
-     0.1,
-     0.4
-    ],
-    "density": 0.5,
-    "soil": "peat",
-    "color": "#4A8A6A",
-    "accent": "#E090B0",
-    "source": "Andromeda polifolia, circumboreal bogs, low evergreen shrub 10-40 cm with pink bell flowers"
-   },
    {
     "name": "Bog myrtle",
     "genus": "Myrica",
@@ -160,12 +165,29 @@
     ],
     "color": "#4A8A40",
     "accent": "#7A5A3A",
-    "source": "Myrica gale, N Europe and N America bog margins and wet heath, aromatic deciduous shrub 0.5-2 m"
+    "source": "Myrica gale, N Europe and N America bog margins and wet heath, aromatic deciduous shrub 0.5-2 m",
+    "traits": {
+     "genus": "Myrica",
+     "species": "gale",
+     "native_range": "Myrica gale, N Europe and N America bog margins and wet heath, aromatic deciduous shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Leatherleaf",
-    "genus": "Chamaedaphne",
-    "species": "calyculata",
+    "name": "Bog rosemary",
+    "genus": "Andromeda",
+    "species": "polifolia",
     "shape": "shrub",
     "temp_c": [
      -7,
@@ -176,14 +198,31 @@
      1
     ],
     "height_m": [
-     0.3,
-     1.2
+     0.1,
+     0.4
     ],
-    "density": 0.7,
+    "density": 0.5,
     "soil": "peat",
-    "color": "#3F7A3A",
-    "accent": "#F0F0E0",
-    "source": "Chamaedaphne calyculata, dominant shrub of N American bog mats, circumboreal, evergreen 0.3-1.2 m"
+    "color": "#4A8A6A",
+    "accent": "#E090B0",
+    "source": "Andromeda polifolia, circumboreal bogs, low evergreen shrub 10-40 cm with pink bell flowers",
+    "traits": {
+     "genus": "Andromeda",
+     "species": "polifolia",
+     "native_range": "Andromeda polifolia, circumboreal bogs, low evergreen shrub 10-40 cm with pink bell flowers",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cranberry",
@@ -206,33 +245,107 @@
     "soil": "peat",
     "color": "#2F6A35",
     "accent": "#C02030",
-    "source": "Vaccinium oxycoccos, circumboreal Sphagnum bogs, creeping vine on moss carpets with red berries"
-   }
-  ],
-  "ground": [
+    "source": "Vaccinium oxycoccos, circumboreal Sphagnum bogs, creeping vine on moss carpets with red berries",
+    "traits": {
+     "genus": "Vaccinium",
+     "species": "oxycoccos",
+     "native_range": "Vaccinium oxycoccos, circumboreal Sphagnum bogs, creeping vine on moss carpets with red berries",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
-    "name": "Sphagnum moss",
-    "genus": "Sphagnum",
-    "species": "magellanicum",
-    "shape": "moss",
+    "name": "Heather",
+    "genus": "Calluna",
+    "species": "vulgaris",
+    "shape": "shrub",
     "temp_c": [
-     -7,
+     -4,
      8
     ],
     "moisture": [
-     0.8,
+     0.6,
+     0.9
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "color": "#4A7A40",
+    "accent": "#C050A0",
+    "source": "Calluna vulgaris, dominant on British/Scandinavian blanket bog hummocks, evergreen 20-60 cm, purple flowers",
+    "traits": {
+     "genus": "Calluna",
+     "species": "vulgaris",
+     "native_range": "Calluna vulgaris, dominant on British/Scandinavian blanket bog hummocks, evergreen 20-60 cm, purple flowers",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Leatherleaf",
+    "genus": "Chamaedaphne",
+    "species": "calyculata",
+    "shape": "shrub",
+    "temp_c": [
+     -7,
+     5
+    ],
+    "moisture": [
+     0.7,
      1
     ],
     "height_m": [
-     0.02,
-     0.1
+     0.3,
+     1.2
     ],
-    "density": 1.0,
+    "density": 0.7,
     "soil": "peat",
-    "color": "#B04A40",
-    "accent": "#8A6030",
-    "source": "Sphagnum magellanicum, circumboreal and S American raised bogs, red hummock-forming peat moss"
-   },
+    "color": "#3F7A3A",
+    "accent": "#F0F0E0",
+    "source": "Chamaedaphne calyculata, dominant shrub of N American bog mats, circumboreal, evergreen 0.3-1.2 m",
+    "traits": {
+     "genus": "Chamaedaphne",
+     "species": "calyculata",
+     "native_range": "Chamaedaphne calyculata, dominant shrub of N American bog mats, circumboreal, evergreen 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "ground": [
    {
     "name": "Cottongrass",
     "genus": "Eriophorum",
@@ -254,30 +367,24 @@
     "soil": "peat",
     "color": "#7AA850",
     "accent": "#F4F2E8",
-    "source": "Eriophorum vaginatum (hare's-tail cottongrass), circumboreal bog tussock former, single white cotton head 20-60 cm"
-   },
-   {
-    "name": "Round-leaved sundew",
-    "genus": "Drosera",
-    "species": "rotundifolia",
-    "shape": "rosette",
-    "temp_c": [
-     -7,
-     8
-    ],
-    "moisture": [
-     0.8,
-     1
-    ],
-    "height_m": [
-     0.02,
-     0.06
-    ],
-    "density": 0.4,
-    "soil": "peat",
-    "color": "#C03030",
-    "accent": "#F06060",
-    "source": "Drosera rotundifolia, circumboreal Sphagnum bogs, carnivorous red rosette 2-6 cm"
+    "source": "Eriophorum vaginatum (hare's-tail cottongrass), circumboreal bog tussock former, single white cotton head 20-60 cm",
+    "traits": {
+     "genus": "Eriophorum",
+     "species": "vaginatum",
+     "native_range": "Eriophorum vaginatum (hare's-tail cottongrass), circumboreal bog tussock former, single white cotton head 20-60 cm",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Deergrass",
@@ -300,7 +407,24 @@
     "soil": "peat",
     "color": "#8AA848",
     "accent": "#C8A050",
-    "source": "Trichophorum cespitosum, blanket bogs of British Isles/Scandinavia/N America, wiry tussock 10-40 cm"
+    "source": "Trichophorum cespitosum, blanket bogs of British Isles/Scandinavia/N America, wiry tussock 10-40 cm",
+    "traits": {
+     "genus": "Trichophorum",
+     "species": "cespitosum",
+     "native_range": "Trichophorum cespitosum, blanket bogs of British Isles/Scandinavia/N America, wiry tussock 10-40 cm",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Pitcher plant",
@@ -323,15 +447,107 @@
     "soil": "peat",
     "color": "#7A9A40",
     "accent": "#B03040",
-    "source": "Sarracenia purpurea, N American bogs Canada to Florida, purple-veined pitcher rosette 10-30 cm"
+    "source": "Sarracenia purpurea, N American bogs Canada to Florida, purple-veined pitcher rosette 10-30 cm",
+    "traits": {
+     "genus": "Sarracenia",
+     "species": "purpurea",
+     "native_range": "Sarracenia purpurea, N American bogs Canada to Florida, purple-veined pitcher rosette 10-30 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Round-leaved sundew",
+    "genus": "Drosera",
+    "species": "rotundifolia",
+    "shape": "rosette",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.06
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#C03030",
+    "accent": "#F06060",
+    "source": "Drosera rotundifolia, circumboreal Sphagnum bogs, carnivorous red rosette 2-6 cm",
+    "traits": {
+     "genus": "Drosera",
+     "species": "rotundifolia",
+     "native_range": "Drosera rotundifolia, circumboreal Sphagnum bogs, carnivorous red rosette 2-6 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.06
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Sphagnum moss",
+    "genus": "Sphagnum",
+    "species": "magellanicum",
+    "shape": "moss",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#B04A40",
+    "accent": "#8A6030",
+    "source": "Sphagnum magellanicum, circumboreal and S American raised bogs, red hummock-forming peat moss",
+    "traits": {
+     "genus": "Sphagnum",
+     "species": "magellanicum",
+     "native_range": "Sphagnum magellanicum, circumboreal and S American raised bogs, red hummock-forming peat moss",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 0,
-  "names": []
  },
  "associations": [
   {
@@ -415,5 +631,8 @@
    "cover": 0.45,
    "source": "Pino mugo-Sphagnetum and Vaccinio uliginosi-Pinetum bog woodland (Ellenberg 1988; EU habitat 91D0)"
   }
+ ],
+ "hero_species": [
+  "Round-leaved sundew"
  ]
 }

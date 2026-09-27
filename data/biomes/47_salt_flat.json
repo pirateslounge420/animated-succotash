@@ -21,29 +21,6 @@
   "canopy": [],
   "shrub": [
    {
-    "name": "Iodine bush",
-    "genus": "Allenrolfea",
-    "species": "occidentalis",
-    "shape": "shrub",
-    "temp_c": [
-     8,
-     24
-    ],
-    "moisture": [
-     0.05,
-     0.3
-    ],
-    "height_m": [
-     0.3,
-     1.5
-    ],
-    "density": 0.8,
-    "soil": "sand",
-    "color": "#7FA070",
-    "accent": "#8A7060",
-    "source": "Allenrolfea occidentalis, playa margins of the Great Basin and Mojave, succulent-jointed shrub 0.3-1.5 m — USDA PLANTS"
-   },
-   {
     "name": "Greasewood",
     "genus": "Sarcobatus",
     "species": "vermiculatus",
@@ -64,15 +41,32 @@
     "soil": "sand",
     "color": "#7FA060",
     "accent": "#C0B090",
-    "source": "Sarcobatus vermiculatus, outer rim of alkali flats, western N America, 1-2.5 m — USDA PLANTS"
+    "source": "Sarcobatus vermiculatus, outer rim of alkali flats, western N America, 1-2.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Sarcobatus",
+     "species": "vermiculatus",
+     "native_range": "Sarcobatus vermiculatus, outer rim of alkali flats, western N America, 1-2",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1,
+      2.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Shrubby seablite",
-    "genus": "Suaeda",
-    "species": "vera",
+    "name": "Iodine bush",
+    "genus": "Allenrolfea",
+    "species": "occidentalis",
     "shape": "shrub",
     "temp_c": [
-     12,
+     8,
      24
     ],
     "moisture": [
@@ -81,13 +75,30 @@
     ],
     "height_m": [
      0.3,
-     1.2
+     1.5
     ],
-    "density": 0.7,
+    "density": 0.8,
     "soil": "sand",
-    "color": "#6A8A60",
-    "accent": "#8A6A60",
-    "source": "Suaeda vera, Mediterranean and Saharan chotts and sabkhas, succulent-leaved shrub 0.3-1.2 m — Euro+Med PlantBase"
+    "color": "#7FA070",
+    "accent": "#8A7060",
+    "source": "Allenrolfea occidentalis, playa margins of the Great Basin and Mojave, succulent-jointed shrub 0.3-1.5 m — USDA PLANTS",
+    "traits": {
+     "genus": "Allenrolfea",
+     "species": "occidentalis",
+     "native_range": "Allenrolfea occidentalis, playa margins of the Great Basin and Mojave, succulent-jointed shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Nitre bush",
@@ -110,7 +121,24 @@
     "soil": "sand",
     "color": "#8FA878",
     "accent": "#D04040",
-    "source": "Nitraria retusa, Saharan and Arabian salt flats, spiny mound shrub 0.5-2 m with red berries — Kew POWO"
+    "source": "Nitraria retusa, Saharan and Arabian salt flats, spiny mound shrub 0.5-2 m with red berries — Kew POWO",
+    "traits": {
+     "genus": "Nitraria",
+     "species": "retusa",
+     "native_range": "Nitraria retusa, Saharan and Arabian salt flats, spiny mound shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.5,
+      2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Saltcedar",
@@ -133,10 +161,107 @@
     "soil": "sand",
     "color": "#8AA890",
     "accent": "#E0A0B0",
-    "source": "Tamarix ramosissima, Central Asian sabkha margins, 2-6 m — Flora of China"
+    "source": "Tamarix ramosissima, Central Asian sabkha margins, 2-6 m — Flora of China",
+    "traits": {
+     "genus": "Tamarix",
+     "species": "ramosissima",
+     "native_range": "Tamarix ramosissima, Central Asian sabkha margins, 2-6 m — Flora of China",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Shrubby seablite",
+    "genus": "Suaeda",
+    "species": "vera",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.05,
+     0.3
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#6A8A60",
+    "accent": "#8A6A60",
+    "source": "Suaeda vera, Mediterranean and Saharan chotts and sabkhas, succulent-leaved shrub 0.3-1.2 m — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Suaeda",
+     "species": "vera",
+     "native_range": "Suaeda vera, Mediterranean and Saharan chotts and sabkhas, succulent-leaved shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
+   {
+    "name": "Alkali heath",
+    "genus": "Frankenia",
+    "species": "salina",
+    "shape": "cushion",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.05,
+     0.35
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#7A9A70",
+    "accent": "#E080A0",
+    "source": "Frankenia salina, alkali flats and salt marshes of California and Baja, low mat 10-40 cm — Jepson eFlora",
+    "traits": {
+     "genus": "Frankenia",
+     "species": "salina",
+     "native_range": "Frankenia salina, alkali flats and salt marshes of California and Baja, low mat 10-40 cm — Jepson eFlora",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
     "name": "Glasswort",
     "genus": "Salicornia",
@@ -161,30 +286,64 @@
     ],
     "color": "#7AA050",
     "accent": "#C04040",
-    "source": "Salicornia europaea, succulent annual of salt pans and marshes across Eurasia and N America, 5-30 cm, reddens in autumn — Euro+Med PlantBase"
+    "source": "Salicornia europaea, succulent annual of salt pans and marshes across Eurasia and N America, 5-30 cm, reddens in autumn — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Salicornia",
+     "species": "europaea",
+     "native_range": "Salicornia europaea, succulent annual of salt pans and marshes across Eurasia and N America, 5-30 cm, reddens in autumn ",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Saltgrass",
-    "genus": "Distichlis",
-    "species": "spicata",
-    "shape": "grass",
+    "name": "Halocnemum",
+    "genus": "Halocnemum",
+    "species": "strobilaceum",
+    "shape": "cushion",
     "temp_c": [
-     5,
-     28
+     8,
+     24
     ],
     "moisture": [
-     0.1,
-     0.6
+     0.03,
+     0.3
     ],
     "height_m": [
      0.1,
-     0.4
+     0.5
     ],
-    "density": 0.9,
+    "density": 0.7,
     "soil": "sand",
-    "color": "#8FA868",
-    "accent": "#C8B060",
-    "source": "Distichlis spicata, salt-tolerant sod grass of playa and coastal salt flats in the Americas, 10-40 cm — USDA PLANTS"
+    "color": "#8AA080",
+    "accent": "#A08070",
+    "source": "Halocnemum strobilaceum, dominant of Central Asian and N African sabkhas, jointed succulent cushion 10-50 cm — Flora of China",
+    "traits": {
+     "genus": "Halocnemum",
+     "species": "strobilaceum",
+     "native_range": "Halocnemum strobilaceum, dominant of Central Asian and N African sabkhas, jointed succulent cushion 10-50 cm — Flora of ",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Pickleweed",
@@ -210,53 +369,64 @@
     ],
     "color": "#6A9A58",
     "accent": "#B05050",
-    "source": "Sarcocornia fruticosa, perennial glasswort of Mediterranean and Saharan salt flats, mat 20-80 cm — Euro+Med PlantBase"
+    "source": "Sarcocornia fruticosa, perennial glasswort of Mediterranean and Saharan salt flats, mat 20-80 cm — Euro+Med PlantBase",
+    "traits": {
+     "genus": "Sarcocornia",
+     "species": "fruticosa",
+     "native_range": "Sarcocornia fruticosa, perennial glasswort of Mediterranean and Saharan salt flats, mat 20-80 cm — Euro+Med PlantBase",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.2,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Alkali heath",
-    "genus": "Frankenia",
-    "species": "salina",
-    "shape": "cushion",
+    "name": "Saltgrass",
+    "genus": "Distichlis",
+    "species": "spicata",
+    "shape": "grass",
     "temp_c": [
-     12,
-     24
+     5,
+     28
     ],
     "moisture": [
-     0.05,
-     0.35
+     0.1,
+     0.6
     ],
     "height_m": [
      0.1,
      0.4
     ],
-    "density": 0.5,
+    "density": 0.9,
     "soil": "sand",
-    "color": "#7A9A70",
-    "accent": "#E080A0",
-    "source": "Frankenia salina, alkali flats and salt marshes of California and Baja, low mat 10-40 cm — Jepson eFlora"
-   },
-   {
-    "name": "Halocnemum",
-    "genus": "Halocnemum",
-    "species": "strobilaceum",
-    "shape": "cushion",
-    "temp_c": [
-     8,
-     24
-    ],
-    "moisture": [
-     0.03,
-     0.3
-    ],
-    "height_m": [
-     0.1,
-     0.5
-    ],
-    "density": 0.7,
-    "soil": "sand",
-    "color": "#8AA080",
-    "accent": "#A08070",
-    "source": "Halocnemum strobilaceum, dominant of Central Asian and N African sabkhas, jointed succulent cushion 10-50 cm — Flora of China"
+    "color": "#8FA868",
+    "accent": "#C8B060",
+    "source": "Distichlis spicata, salt-tolerant sod grass of playa and coastal salt flats in the Americas, 10-40 cm — USDA PLANTS",
+    "traits": {
+     "genus": "Distichlis",
+     "species": "spicata",
+     "native_range": "Distichlis spicata, salt-tolerant sod grass of playa and coastal salt flats in the Americas, 10-40 cm — USDA PLANTS",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
@@ -344,5 +514,6 @@
    "cover": 0.15,
    "source": "Zohary 1973 Geobotanical Foundations of the Middle East, Halocnemum strobilaceum sabkha"
   }
- ]
+ ],
+ "hero_species": []
 }

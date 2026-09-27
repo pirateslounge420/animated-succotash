@@ -1,0 +1,437 @@
+{
+ "key": "SAGEBRUSH",
+ "name": "Sagebrush shrubland",
+ "group": "Grass & scrub",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Grey-green big sagebrush 1-2 m dominates with bunchgrasses between shrubs; pinyon and juniper only on slopes; Great Basin and Columbia Plateau of the western USA.",
+ "climate": {
+  "temp_c": [
+   2,
+   17
+  ],
+  "moisture": [
+   0.18,
+   0.32
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Utah juniper",
+    "genus": "Juniperus",
+    "species": "osteosperma",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.18,
+     0.38
+    ],
+    "altitude_m": [
+     1000,
+     2600
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#4A7040",
+    "accent": "#8A6A50",
+    "source": "Juniperus osteosperma, Great Basin/Colorado Plateau, shrubby conifer 3-8 m on rocky slopes — USDA PLANTS"
+   },
+   {
+    "name": "Singleleaf pinyon",
+    "genus": "Pinus",
+    "species": "monophylla",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     15
+    ],
+    "moisture": [
+     0.2,
+     0.4
+    ],
+    "altitude_m": [
+     1200,
+     2700
+    ],
+    "height_m": [
+     5,
+     12
+    ],
+    "density": 0.25,
+    "soil": "thin",
+    "color": "#3A6A3A",
+    "accent": "#7A6050",
+    "source": "Pinus monophylla, Great Basin pinyon-juniper woodland, 5-12 m — USDA PLANTS"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Big sagebrush",
+    "genus": "Artemisia",
+    "species": "tridentata",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     17
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "height_m": [
+     0.6,
+     2.5
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "color": "#9AA890",
+    "accent": "#B8A878",
+    "source": "Artemisia tridentata, dominant Great Basin shrub, grey-green aromatic 0.6-2.5 m — USDA PLANTS"
+   },
+   {
+    "name": "Rubber rabbitbrush",
+    "genus": "Ericameria",
+    "species": "nauseosa",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     19
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.6,
+     2
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#9FAF8A",
+    "accent": "#E8C830",
+    "source": "Ericameria nauseosa, western N America sagebrush steppe, yellow autumn flowers, 0.6-2 m — USDA PLANTS"
+   },
+   {
+    "name": "Antelope bitterbrush",
+    "genus": "Purshia",
+    "species": "tridentata",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     15
+    ],
+    "moisture": [
+     0.18,
+     0.38
+    ],
+    "height_m": [
+     0.6,
+     3
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#7E9A78",
+    "accent": "#F0E0A0",
+    "source": "Purshia tridentata, Great Basin and intermountain west, browse shrub 0.6-3 m, cream flowers — USDA PLANTS"
+   },
+   {
+    "name": "Shadscale",
+    "genus": "Atriplex",
+    "species": "confertifolia",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     18
+    ],
+    "moisture": [
+     0.08,
+     0.28
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#B0B8A0",
+    "accent": "#D0C8A0",
+    "source": "Atriplex confertifolia, Great Basin saline valley floors, spiny grey shrub 0.3-1 m — USDA PLANTS"
+   },
+   {
+    "name": "Greasewood",
+    "genus": "Sarcobatus",
+    "species": "vermiculatus",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     17
+    ],
+    "moisture": [
+     0.1,
+     0.3
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.25,
+    "soil": "sand",
+    "color": "#7FA060",
+    "accent": "#C0B090",
+    "source": "Sarcobatus vermiculatus, alkaline basins of western N America, 1-2.5 m — USDA PLANTS"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Bluebunch wheatgrass",
+    "genus": "Pseudoroegneria",
+    "species": "spicata",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.2,
+     0.4
+    ],
+    "height_m": [
+     0.4,
+     1
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#8FA868",
+    "accent": "#C8B060",
+    "source": "Pseudoroegneria spicata, dominant bunchgrass of the sagebrush steppe, 0.4-1 m — USDA PLANTS"
+   },
+   {
+    "name": "Idaho fescue",
+    "genus": "Festuca",
+    "species": "idahoensis",
+    "shape": "tussock",
+    "temp_c": [
+     1,
+     14
+    ],
+    "moisture": [
+     0.22,
+     0.45
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#6E9A8A",
+    "accent": "#C8B060",
+    "source": "Festuca idahoensis, intermountain west bunchgrass, blue-green, 30-60 cm — USDA PLANTS"
+   },
+   {
+    "name": "Indian ricegrass",
+    "genus": "Achnatherum",
+    "species": "hymenoides",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.1,
+     0.3
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#C8B060",
+    "accent": "#E8DCB0",
+    "source": "Achnatherum hymenoides, western N American sandy soils, airy bunchgrass 30-60 cm — USDA PLANTS"
+   },
+   {
+    "name": "Arrowleaf balsamroot",
+    "genus": "Balsamorhiza",
+    "species": "sagittata",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     14
+    ],
+    "moisture": [
+     0.25,
+     0.45
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#7E9A78",
+    "accent": "#F0C020",
+    "source": "Balsamorhiza sagittata, sagebrush steppe forb with yellow sunflower heads, 20-60 cm — USDA PLANTS"
+   },
+   {
+    "name": "Sandberg bluegrass",
+    "genus": "Poa",
+    "species": "secunda",
+    "shape": "grass",
+    "temp_c": [
+     1,
+     16
+    ],
+    "moisture": [
+     0.18,
+     0.4
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#8FA868",
+    "accent": "#C8B060",
+    "source": "Poa secunda, small early-season bunchgrass throughout the sagebrush steppe, 10-40 cm — USDA PLANTS"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 18,
+  "names": [
+   "Narrowleaf yucca",
+   "Banana yucca",
+   "Navajo yucca",
+   "Palma china",
+   "Soaptree yucca",
+   "Izote",
+   "Soapweed yucca",
+   "Harriman's yucca",
+   "Intermediate yucca",
+   "Luminous yucca",
+   "New Mexico yucca",
+   "Sterile yucca",
+   "Utah yucca",
+   "Trichocereus terscheckii",
+   "Trichocereus validus",
+   "Cannabis - Lashkar Gah",
+   "Cannabis - Uzbek",
+   "Cannabis - Iranian (Mashhad)"
+  ]
+ },
+ "associations": [
+  {
+   "name": "Big sagebrush-bluebunch wheatgrass shrub-steppe",
+   "where": "deep loamy soils of open flats and gentle slopes, no water table",
+   "dominant": [
+    "Big sagebrush"
+   ],
+   "companion": [
+    "Antelope bitterbrush",
+    "Rubber rabbitbrush"
+   ],
+   "ground": [
+    "Bluebunch wheatgrass",
+    "Sandberg bluegrass",
+    "Arrowleaf balsamroot"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Daubenmire 1970 Steppe Vegetation of Washington; USNVC Artemisia tridentata shrub-steppe"
+  },
+  {
+   "name": "Big sagebrush-Idaho fescue steppe",
+   "where": "cooler, moister uplands and north-facing benches at higher elevation",
+   "dominant": [
+    "Big sagebrush"
+   ],
+   "companion": [
+    "Antelope bitterbrush"
+   ],
+   "ground": [
+    "Idaho fescue",
+    "Bluebunch wheatgrass",
+    "Arrowleaf balsamroot"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Daubenmire 1970; West 1983 Ecosystems of the World 5 Great Basin-Colorado Plateau sagebrush semi-desert"
+  },
+  {
+   "name": "Pinyon-juniper woodland",
+   "where": "rocky, shallow-soil foothill slopes and mesa sides above the sage flats",
+   "dominant": [
+    "Utah juniper",
+    "Singleleaf pinyon"
+   ],
+   "companion": [
+    "Big sagebrush",
+    "Antelope bitterbrush"
+   ],
+   "ground": [
+    "Bluebunch wheatgrass",
+    "Indian ricegrass",
+    "Sandberg bluegrass"
+   ],
+   "catalogue": [
+    "Banana yucca",
+    "Utah yucca"
+   ],
+   "cover": 0.5,
+   "source": "West 1988 Intermountain deserts, shrub steppes and woodlands (Barbour & Billings); USNVC Pinus monophylla-Juniperus osteosperma woodland"
+  },
+  {
+   "name": "Shadscale-Indian ricegrass salt desert shrub",
+   "where": "dry lower valley floors and alluvial fans on alkaline, gravelly soil",
+   "dominant": [
+    "Shadscale"
+   ],
+   "companion": [
+    "Big sagebrush",
+    "Rubber rabbitbrush"
+   ],
+   "ground": [
+    "Indian ricegrass",
+    "Sandberg bluegrass"
+   ],
+   "catalogue": [
+    "Narrowleaf yucca",
+    "Harriman's yucca"
+   ],
+   "cover": 0.25,
+   "source": "Billings 1949 Shadscale vegetation zone of Nevada; West 1983 Ecosystems of the World 5"
+  },
+  {
+   "name": "Greasewood flat",
+   "where": "playa margins and valley bottoms with a shallow, saline water table",
+   "dominant": [
+    "Greasewood"
+   ],
+   "companion": [
+    "Shadscale",
+    "Rubber rabbitbrush"
+   ],
+   "ground": [
+    "Indian ricegrass"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Branson et al. 1976; USNVC Sarcobatus vermiculatus shrubland alliance"
+  }
+ ]
+}

@@ -100,89 +100,30 @@
       0.7
      ]
     },
-    "source": "Roraima and Auyán-tepui summits; the tepui's own gnarled tree, twisted by wind, pink flowers; forms the only forest up there in sheltered clefts. Kew POWO."
-   }
-  ],
-  "shrub": [
-   {
-    "name": "Tepui stegolepis",
-    "genus": "Stegolepis",
-    "species": "guianensis",
-    "family": "Rapateaceae",
-    "shape": "spike_rosette",
-    "temp_c": [
-     8,
-     15
-    ],
-    "moisture": [
-     0.85,
-     1.0
-    ],
-    "altitude_m": [
-     1800,
-     2800
-    ],
-    "height_m": [
-     0.5,
-     1.5
-    ],
-    "density": 1.0,
-    "soil": "thin",
-    "needs": [],
-    "color": "#5A8A5A",
-    "accent": "#D8C040",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+    "source": "Roraima and Auyán-tepui summits; the tepui's own gnarled tree, twisted by wind, pink flowers; forms the only forest up there in sheltered clefts. Kew POWO.",
+    "traits": {
+     "genus": "Bonnetia",
+     "species": "roraimae",
+     "native_range": "Roraima and Auyán-tepui summits",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      2.0,
+      8.0
      ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
      "pollinator": "insect",
      "disperser": [
       "wind",
       "bird"
      ],
-     "clonal": "rhizome",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "any",
-      "days": 14,
-      "interval_years": [
-       1,
-       2
-      ]
-     },
-     "dormant": "none"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "allocation": [
-      0.4,
-      0.7
-     ]
-    },
-    "source": "Tepui summits; the dominant rosette herb of the open summit, in vast stands over bare rock. Kew POWO."
-   },
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "shrub": [
    {
     "name": "Giant brocchinia",
     "genus": "Brocchinia",
@@ -260,86 +201,27 @@
       0.7
      ]
     },
-    "source": "Tepui slopes; a 4 m bromeliad with a tree-like stem. Kew POWO."
-   },
-   {
-    "name": "Tepui myrtle",
-    "genus": "Tepuianthus",
-    "species": "auyantepuiensis",
-    "family": "Thymelaeaceae",
-    "shape": "shrub",
-    "temp_c": [
-     9,
-     15
-    ],
-    "moisture": [
-     0.85,
-     1.0
-    ],
-    "altitude_m": [
-     1600,
-     2600
-    ],
-    "height_m": [
-     1.0,
-     3.0
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "needs": [],
-    "color": "#3A6A3A",
-    "accent": "#6A5A4A",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+    "source": "Tepui slopes; a 4 m bromeliad with a tree-like stem. Kew POWO.",
+    "traits": {
+     "genus": "Brocchinia",
+     "species": "micrantha",
+     "native_range": "Tepui slopes",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      2.0,
+      4.0
      ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
      "pollinator": "insect",
      "disperser": [
       "wind",
       "bird"
      ],
-     "clonal": "rhizome",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "any",
-      "days": 14,
-      "interval_years": [
-       1,
-       2
-      ]
-     },
-     "dormant": "none"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "allocation": [
-      0.4,
-      0.7
-     ]
-    },
-    "source": "Auyán-tepui; a shrub genus known from nowhere else. Kew POWO."
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Tepui clusia",
@@ -418,7 +300,225 @@
       0.7
      ]
     },
-    "source": "Tepui rims and cliffs; thick-leaved, roots into cracks, hangs over the drop. Kew POWO."
+    "source": "Tepui rims and cliffs; thick-leaved, roots into cracks, hangs over the drop. Kew POWO.",
+    "traits": {
+     "genus": "Clusia",
+     "species": "tepuiensis",
+     "native_range": "Tepui rims and cliffs",
+     "leaf_shape": "small tough leaves",
+     "trunk": "short twisted trunk, heavy low limbs, wind-shaped",
+     "petiole": "short petiole",
+     "height_m": [
+      1.0,
+      4.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tepui myrtle",
+    "genus": "Tepuianthus",
+    "species": "auyantepuiensis",
+    "family": "Thymelaeaceae",
+    "shape": "shrub",
+    "temp_c": [
+     9,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1600,
+     2600
+    ],
+    "height_m": [
+     1.0,
+     3.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3A6A3A",
+    "accent": "#6A5A4A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Auyán-tepui; a shrub genus known from nowhere else. Kew POWO.",
+    "traits": {
+     "genus": "Tepuianthus",
+     "species": "auyantepuiensis",
+     "native_range": "Auyán-tepui",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      1.0,
+      3.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tepui stegolepis",
+    "genus": "Stegolepis",
+    "species": "guianensis",
+    "family": "Rapateaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1800,
+     2800
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A8A5A",
+    "accent": "#D8C040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits; the dominant rosette herb of the open summit, in vast stands over bare rock. Kew POWO.",
+    "traits": {
+     "genus": "Stegolepis",
+     "species": "guianensis",
+     "native_range": "Tepui summits",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Tepui tree fern",
@@ -497,7 +597,27 @@
       0.7
      ]
     },
-    "source": "Tepui slope forest and summit clefts; Cyathea pungens is the tree fern of the Guiana Highlands. Kew POWO."
+    "source": "Tepui slope forest and summit clefts; Cyathea pungens is the tree fern of the Guiana Highlands. Kew POWO.",
+    "traits": {
+     "genus": "Cyathea",
+     "species": "pungens",
+     "native_range": "Tepui slope forest and summit clefts",
+     "leaf_shape": "huge pinnate fronds",
+     "trunk": "fibrous trunk of old leaf bases",
+     "petiole": "long stipe",
+     "height_m": [
+      2.0,
+      5.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
@@ -586,32 +706,52 @@
     },
     "bromeliad": {
      "tank": true
+    },
+    "traits": {
+     "genus": "Brocchinia",
+     "species": "reducta",
+     "native_range": "Tepui summits and slopes",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.3,
+      0.6
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     }
    },
    {
-    "name": "Sun pitcher",
-    "genus": "Heliamphora",
-    "species": "nutans",
-    "family": "Sarraceniaceae",
+    "name": "Giant montane pitcher",
+    "genus": "Nepenthes",
+    "species": "rajah",
+    "family": "Nepenthaceae",
     "shape": "reed",
     "temp_c": [
-     8,
-     14
+     10,
+     16
     ],
     "moisture": [
-     0.85,
+     0.8,
      1.0
     ],
     "altitude_m": [
-     2000,
-     2800
+     1500,
+     2650
     ],
     "height_m": [
-     0.1,
-     0.3
+     0.3,
+     1.0
     ],
-    "density": 0.8,
-    "soil": "peat",
+    "density": 0.2,
+    "soil": "thin",
     "needs": [],
     "color": "#6AA050",
     "accent": "#C03040",
@@ -619,57 +759,83 @@
      "stages": [
       [
        "sprout",
-       120
+       60
       ],
       [
        "young",
-       1500
+       365
       ],
       [
        "mature",
-       6000
+       1500
       ],
       [
        "old",
-       30000
+       4000
       ]
      ],
      "final_size": 1.0
     },
     "repro": {
-     "mode": "seed",
+     "mode": "both",
      "pollinator": "insect",
      "disperser": [
       "wind",
-      "bird"
+      "water"
      ],
      "clonal": "rhizome",
      "lifespan": "perennial",
      "bloom": {
-      "season": "any",
+      "season": "spring",
       "days": 14,
       "interval_years": [
        1,
-       2
+       1
       ]
      },
-     "dormant": "none"
+     "dormant": "none",
+     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
     },
     "genes": {
      "size": [
       0.3,
       0.7
      ],
+     "trap_colour": [
+      0.2,
+      0.9
+     ],
      "allocation": [
       0.4,
       0.7
      ]
     },
-    "source": "Roraima summit marsh; the tepui pitcher plant, overflow-slotted for the endless rain. Kew POWO.",
     "carnivore": {
      "trap": "pitfall",
      "eats": "insects",
      "nitrogen_from_prey": true
+    },
+    "source": "Mount Kinabalu, Borneo, 1500-2600 m. Largest pitcher on Earth, drowns rats; tree shrews use it as a toilet — a real nutrient exchange. Kew POWO.",
+    "from_catalogue": "carnivore",
+    "traits": {
+     "genus": "Nepenthes",
+     "species": "rajah",
+     "native_range": "Mount Kinabalu, Borneo, 1500-2600 m",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "medium (years)",
+     "reproduction": "both, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     }
    },
    {
@@ -754,6 +920,125 @@
      "trap": "pitfall",
      "eats": "insects",
      "nitrogen_from_prey": true
+    },
+    "traits": {
+     "genus": "Heliamphora",
+     "species": "tatei",
+     "native_range": "Cerro Duida and Marahuaka",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.5,
+      1.5
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Rock lichen",
+    "genus": "Cladonia",
+    "species": "confusa",
+    "family": "Cladoniaceae",
+    "shape": "moss",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.01,
+     0.05
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "needs": [],
+    "color": "#B0C0A0",
+    "accent": "#B0C0A0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui bare rock; Cladonia confusa, the pale tropical-montane reindeer lichen, on black-crusted quartzite. Index Fungorum.",
+    "traits": {
+     "genus": "Cladonia",
+     "species": "confusa",
+     "native_range": "Tepui bare rock",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.01,
+      0.05
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     }
    },
    {
@@ -838,6 +1123,427 @@
      "trap": "flypaper",
      "eats": "insects",
      "nitrogen_from_prey": true
+    },
+    "traits": {
+     "genus": "Drosera",
+     "species": "roraimae",
+     "native_range": "Tepui summits",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Summit moss",
+    "genus": "Sphagnum",
+    "species": "magellanicum",
+    "family": "Sphagnaceae",
+    "shape": "moss",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "needs": [],
+    "color": "#A0B060",
+    "accent": "#C08080",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summit bog mats; the peat maker of the plateau. Kew POWO.",
+    "traits": {
+     "genus": "Sphagnum",
+     "species": "magellanicum",
+     "native_range": "Tepui summit bog mats",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Sun pitcher",
+    "genus": "Heliamphora",
+    "species": "nutans",
+    "family": "Sarraceniaceae",
+    "shape": "reed",
+    "temp_c": [
+     8,
+     14
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     2000,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "needs": [],
+    "color": "#6AA050",
+    "accent": "#C03040",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Roraima summit marsh; the tepui pitcher plant, overflow-slotted for the endless rain. Kew POWO.",
+    "carnivore": {
+     "trap": "pitfall",
+     "eats": "insects",
+     "nitrogen_from_prey": true
+    },
+    "traits": {
+     "genus": "Heliamphora",
+     "species": "nutans",
+     "native_range": "Roraima summit marsh",
+     "leaf_shape": "tall strap leaves",
+     "trunk": "hollow stems rising from water",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tepui bromeliad",
+    "genus": "Navia",
+    "species": "glauca",
+    "family": "Bromeliaceae",
+    "shape": "spike_rosette",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#5A8A5A",
+    "accent": "#E06060",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Navia is almost entirely tepui-endemic; N. glauca forms rock rosettes on Guayana cliffs and summits. Kew POWO.",
+    "traits": {
+     "genus": "Navia",
+     "species": "glauca",
+     "native_range": "Navia is almost entirely tepui-endemic",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tepui cushion",
+    "genus": "Connellia",
+    "species": "augustae",
+    "family": "Bromeliaceae",
+    "shape": "cushion",
+    "temp_c": [
+     8,
+     14
+    ],
+    "moisture": [
+     0.85,
+     1.0
+    ],
+    "altitude_m": [
+     2000,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [],
+    "color": "#7AA070",
+    "accent": "#E08080",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       1500
+      ],
+      [
+       "mature",
+       6000
+      ],
+      [
+       "old",
+       30000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 14,
+      "interval_years": [
+       1,
+       2
+      ]
+     },
+     "dormant": "none"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "source": "Tepui summits; cushion bromeliad on bare quartzite. Kew POWO.",
+    "traits": {
+     "genus": "Connellia",
+     "species": "augustae",
+     "native_range": "Tepui summits",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     }
    },
    {
@@ -917,323 +1623,27 @@
       0.7
      ]
     },
-    "source": "Tepui summit bogs; sceptre-headed rosette endemic to the Guiana Highlands. Kew POWO."
-   },
-   {
-    "name": "Tepui cushion",
-    "genus": "Connellia",
-    "species": "augustae",
-    "family": "Bromeliaceae",
-    "shape": "cushion",
-    "temp_c": [
-     8,
-     14
-    ],
-    "moisture": [
-     0.85,
-     1.0
-    ],
-    "altitude_m": [
-     2000,
-     2800
-    ],
-    "height_m": [
-     0.1,
-     0.3
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "needs": [],
-    "color": "#7AA070",
-    "accent": "#E08080",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+    "source": "Tepui summit bogs; sceptre-headed rosette endemic to the Guiana Highlands. Kew POWO.",
+    "traits": {
+     "genus": "Orectanthe",
+     "species": "sceptrum",
+     "native_range": "Tepui summit bogs",
+     "leaf_shape": "stiff spined sword leaves in a rosette",
+     "trunk": "none or a short woody stem; tall flower spike",
+     "petiole": "none",
+     "height_m": [
+      0.3,
+      0.8
      ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
      "pollinator": "insect",
      "disperser": [
       "wind",
       "bird"
      ],
-     "clonal": "rhizome",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "any",
-      "days": 14,
-      "interval_years": [
-       1,
-       2
-      ]
-     },
-     "dormant": "none"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "allocation": [
-      0.4,
-      0.7
-     ]
-    },
-    "source": "Tepui summits; cushion bromeliad on bare quartzite. Kew POWO."
-   },
-   {
-    "name": "Summit moss",
-    "genus": "Sphagnum",
-    "species": "magellanicum",
-    "family": "Sphagnaceae",
-    "shape": "moss",
-    "temp_c": [
-     6,
-     15
-    ],
-    "moisture": [
-     0.9,
-     1.0
-    ],
-    "altitude_m": [
-     1500,
-     2800
-    ],
-    "height_m": [
-     0.02,
-     0.1
-    ],
-    "density": 0.9,
-    "soil": "peat",
-    "needs": [],
-    "color": "#A0B060",
-    "accent": "#C08080",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "wind",
-      "bird"
-     ],
-     "clonal": "rhizome",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "any",
-      "days": 14,
-      "interval_years": [
-       1,
-       2
-      ]
-     },
-     "dormant": "none"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "allocation": [
-      0.4,
-      0.7
-     ]
-    },
-    "source": "Tepui summit bog mats; the peat maker of the plateau. Kew POWO."
-   },
-   {
-    "name": "Rock lichen",
-    "genus": "Cladonia",
-    "species": "confusa",
-    "family": "Cladoniaceae",
-    "shape": "moss",
-    "temp_c": [
-     6,
-     15
-    ],
-    "moisture": [
-     0.7,
-     1.0
-    ],
-    "altitude_m": [
-     1500,
-     2800
-    ],
-    "height_m": [
-     0.01,
-     0.05
-    ],
-    "density": 0.9,
-    "soil": "thin",
-    "needs": [],
-    "color": "#B0C0A0",
-    "accent": "#B0C0A0",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "wind",
-      "bird"
-     ],
-     "clonal": "rhizome",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "any",
-      "days": 14,
-      "interval_years": [
-       1,
-       2
-      ]
-     },
-     "dormant": "none"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "allocation": [
-      0.4,
-      0.7
-     ]
-    },
-    "source": "Tepui bare rock; Cladonia confusa, the pale tropical-montane reindeer lichen, on black-crusted quartzite. Index Fungorum."
-   },
-   {
-    "name": "Tepui bromeliad",
-    "genus": "Navia",
-    "species": "glauca",
-    "family": "Bromeliaceae",
-    "shape": "spike_rosette",
-    "temp_c": [
-     8,
-     15
-    ],
-    "moisture": [
-     0.85,
-     1.0
-    ],
-    "altitude_m": [
-     1500,
-     2800
-    ],
-    "height_m": [
-     0.1,
-     0.4
-    ],
-    "density": 0.6,
-    "soil": "thin",
-    "needs": [],
-    "color": "#5A8A5A",
-    "accent": "#E06060",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "wind",
-      "bird"
-     ],
-     "clonal": "rhizome",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "any",
-      "days": 14,
-      "interval_years": [
-       1,
-       2
-      ]
-     },
-     "dormant": "none"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "allocation": [
-      0.4,
-      0.7
-     ]
-    },
-    "source": "Navia is almost entirely tepui-endemic; N. glauca forms rock rosettes on Guayana cliffs and summits. Kew POWO."
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": [
@@ -1320,7 +1730,27 @@
      "eats": "insects",
      "nitrogen_from_prey": true
     },
-    "tank_dweller": true
+    "tank_dweller": true,
+    "traits": {
+     "genus": "Utricularia",
+     "species": "humboldtii",
+     "native_range": "Tepui summits",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "insect",
+     "disperser": [
+      "wind",
+      "bird"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ]
  },
@@ -1417,5 +1847,8 @@
    "cover": 0.5,
    "source": "Huber 1995 tepui shrublands"
   }
+ ],
+ "hero_species": [
+  "Giant montane pitcher"
  ]
 }

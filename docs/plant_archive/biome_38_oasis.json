@@ -1,0 +1,490 @@
+{
+ "key": "OASIS",
+ "name": "Oasis",
+ "group": "Freshwater",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Date palms over a fringe of tamarisk, poplar and fig with reeds and sedges at the water's edge, surrounded by bare desert; Saharan, Arabian and Central Asian oases.",
+ "climate": {
+  "temp_c": [
+   15,
+   35
+  ],
+  "moisture": [
+   0,
+   0.3
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Date palm",
+    "genus": "Phoenix",
+    "species": "dactylifera",
+    "shape": "palm",
+    "temp_c": [
+     18,
+     32
+    ],
+    "moisture": [
+     0.1,
+     0.6
+    ],
+    "height_m": [
+     15,
+     25
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4F8A45",
+    "accent": "#8A7050",
+    "source": "Phoenix dactylifera, N Africa and Middle East oases, 15-25 m palm — Kew POWO"
+   },
+   {
+    "name": "Doum palm",
+    "genus": "Hyphaene",
+    "species": "thebaica",
+    "shape": "palm",
+    "temp_c": [
+     22,
+     32
+    ],
+    "moisture": [
+     0.1,
+     0.5
+    ],
+    "height_m": [
+     8,
+     15
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#7FA060",
+    "accent": "#8A7A60",
+    "source": "Hyphaene thebaica, Sahel and Nile valley oases, branching fan palm 8-15 m — Kew POWO"
+   },
+   {
+    "name": "Athel tamarisk",
+    "genus": "Tamarix",
+    "species": "aphylla",
+    "shape": "gnarled",
+    "temp_c": [
+     18,
+     32
+    ],
+    "moisture": [
+     0.05,
+     0.5
+    ],
+    "height_m": [
+     8,
+     15
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#7A9A80",
+    "accent": "#8A7A60",
+    "source": "Tamarix aphylla, N Africa to Iran, salt-tolerant evergreen tree 8-15 m — Kew POWO"
+   },
+   {
+    "name": "Euphrates poplar",
+    "genus": "Populus",
+    "species": "euphratica",
+    "shape": "broadleaf",
+    "temp_c": [
+     10,
+     28
+    ],
+    "moisture": [
+     0.15,
+     0.6
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#8FA870",
+    "accent": "#A09070",
+    "source": "Populus euphratica, Central Asian and Middle Eastern desert rivers/oases, 10-20 m — Flora of China"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Fig",
+    "genus": "Ficus",
+    "species": "carica",
+    "shape": "gnarled",
+    "temp_c": [
+     14,
+     28
+    ],
+    "moisture": [
+     0.15,
+     0.5
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#8A8070",
+    "source": "Ficus carica, Middle East and Mediterranean, spreading small tree 3-8 m — Kew POWO"
+   },
+   {
+    "name": "Oleander",
+    "genus": "Nerium",
+    "species": "oleander",
+    "shape": "shrub",
+    "temp_c": [
+     14,
+     28
+    ],
+    "moisture": [
+     0.15,
+     0.6
+    ],
+    "height_m": [
+     2,
+     5
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#3F8038",
+    "accent": "#E06090",
+    "source": "Nerium oleander, wadis and oasis banks from Morocco to Iran, evergreen 2-5 m, pink flowers — Kew POWO"
+   },
+   {
+    "name": "Camelthorn",
+    "genus": "Alhagi",
+    "species": "maurorum",
+    "shape": "shrub",
+    "temp_c": [
+     14,
+     30
+    ],
+    "moisture": [
+     0.05,
+     0.35
+    ],
+    "height_m": [
+     0.4,
+     1
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#8FA860",
+    "accent": "#C060A0",
+    "source": "Alhagi maurorum, Sahara to Central Asia oasis margins, spiny sub-shrub 40-100 cm — Kew POWO"
+   },
+   {
+    "name": "Saltcedar",
+    "genus": "Tamarix",
+    "species": "ramosissima",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     28
+    ],
+    "moisture": [
+     0.1,
+     0.5
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#8AA890",
+    "accent": "#E0A0B0",
+    "source": "Tamarix ramosissima, Central Asian and Middle Eastern oasis and salt-flat margins, feathery shrub 2-6 m — Flora of China"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Common reed",
+    "genus": "Phragmites",
+    "species": "australis",
+    "shape": "reed",
+    "temp_c": [
+     0,
+     32
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     2,
+     4
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#6A9A50",
+    "accent": "#C8B060",
+    "source": "Phragmites australis, cosmopolitan reed of oasis pools and channels, 2-4 m — Kew POWO"
+   },
+   {
+    "name": "Smooth flatsedge",
+    "genus": "Cyperus",
+    "species": "laevigatus",
+    "shape": "reed",
+    "temp_c": [
+     14,
+     32
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#5AB040",
+    "accent": "#A08050",
+    "source": "Cyperus laevigatus, salt-tolerant sedge of oasis springs in Africa and Arabia, 30-100 cm — Kew POWO"
+   },
+   {
+    "name": "Desert rush",
+    "genus": "Juncus",
+    "species": "rigidus",
+    "shape": "reed",
+    "temp_c": [
+     14,
+     32
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5A8A48",
+    "accent": "#8A7A50",
+    "source": "Juncus rigidus, Saharan and Arabian oasis and sabkha margins, stiff rush 0.5-1.5 m — Kew POWO"
+   },
+   {
+    "name": "Halfa grass",
+    "genus": "Desmostachya",
+    "species": "bipinnata",
+    "shape": "tussock",
+    "temp_c": [
+     16,
+     32
+    ],
+    "moisture": [
+     0.2,
+     0.6
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#9AB060",
+    "accent": "#C8B060",
+    "source": "Desmostachya bipinnata, N African and Middle Eastern oasis margins, tough tussock 0.5-1.5 m — Kew POWO"
+   },
+   {
+    "name": "Bermuda grass",
+    "genus": "Cynodon",
+    "species": "dactylon",
+    "shape": "grass",
+    "temp_c": [
+     12,
+     32
+    ],
+    "moisture": [
+     0.2,
+     0.7
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#6A9A45",
+    "accent": "#C8B060",
+    "source": "Cynodon dactylon, Old World tropics/subtropics, creeping turf grass at oasis edges, 5-30 cm — Kew POWO"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 38,
+  "names": [
+   "Date palm",
+   "Doum palm",
+   "Red cabbage palm",
+   "California fan palm",
+   "Mexican fan palm",
+   "Guadalupe palm",
+   "Mexican blue palm",
+   "Banana yucca",
+   "Joshua tree",
+   "Plains yucca",
+   "Cape yucca",
+   "Giant Spanish dagger",
+   "Carr's yucca",
+   "Coahuila yucca",
+   "Palma china",
+   "Declined yucca",
+   "Blue-boy yucca",
+   "Soaptree yucca",
+   "Endlich's yucca",
+   "Faxon yucca",
+   "Feeanouki's yucca",
+   "Izote",
+   "Sahuiliqui",
+   "Eastern Joshua tree",
+   "Linear-leaf yucca",
+   "Luminous yucca",
+   "Mixtec yucca",
+   "Perilous yucca",
+   "Potosí yucca",
+   "Querétaro yucca",
+   "Beaked yucca",
+   "Mojave yucca",
+   "Thompson's yucca",
+   "Torrey yucca",
+   "Datilillo",
+   "Trichocereus terscheckii",
+   "Trichocereus chalaensis",
+   "Cannabis - Lashkar Gah"
+  ]
+ },
+ "associations": [
+  {
+   "name": "Date palm-fig oasis garden",
+   "where": "irrigated flats around the spring or well, deep moist soil in the oasis core",
+   "dominant": [
+    "Date palm"
+   ],
+   "companion": [
+    "Fig",
+    "Doum palm"
+   ],
+   "ground": [
+    "Bermuda grass"
+   ],
+   "catalogue": [
+    "Date palm",
+    "Doum palm"
+   ],
+   "cover": 0.8,
+   "source": "Battesti 2005 Jardins au desert; Zaid 2002 FAO Date Palm Cultivation, traditional three-storey oasis"
+  },
+  {
+   "name": "Euphrates poplar-tamarisk riparian tugai",
+   "where": "river banks and wadi floors with shallow groundwater, seasonally flooded sand and silt",
+   "dominant": [
+    "Euphrates poplar",
+    "Athel tamarisk"
+   ],
+   "companion": [
+    "Saltcedar",
+    "Oleander"
+   ],
+   "ground": [
+    "Common reed",
+    "Halfa grass"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Thevs et al. 2008 Tugai forests of the Tarim basin; Walter & Box 1983 Central Asian riparian woodland"
+  },
+  {
+   "name": "Reed-flatsedge spring margin",
+   "where": "waterlogged ground at the spring outflow and pool edges",
+   "dominant": [
+    "Common reed"
+   ],
+   "companion": [],
+   "ground": [
+    "Common reed",
+    "Smooth flatsedge",
+    "Desert rush",
+    "Bermuda grass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Zohary 1973 Geobotanical Foundations of the Middle East, Phragmites-Cyperus hydrophilous vegetation"
+  },
+  {
+   "name": "Camelthorn-saltcedar oasis fringe",
+   "where": "dry saline outer rim of the oasis where groundwater is deep, bare sand around",
+   "dominant": [
+    "Camelthorn",
+    "Saltcedar"
+   ],
+   "companion": [],
+   "ground": [
+    "Halfa grass",
+    "Desert rush"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Zohary 1973; Walter & Box 1983 Alhagi-Tamarix halophytic desert fringe"
+  },
+  {
+   "name": "Doum palm wadi",
+   "where": "sandy wadi beds of the Sahara-Sahel with intermittent flow",
+   "dominant": [
+    "Doum palm"
+   ],
+   "companion": [
+    "Athel tamarisk"
+   ],
+   "ground": [
+    "Halfa grass"
+   ],
+   "catalogue": [
+    "Doum palm"
+   ],
+   "cover": 0.4,
+   "source": "Ozenda 1991 Flore et vegetation du Sahara, Hyphaene thebaica wadi groves"
+  }
+ ]
+}

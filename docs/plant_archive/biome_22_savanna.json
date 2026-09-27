@@ -1,0 +1,576 @@
+{
+ "key": "SAVANNA",
+ "name": "Savanna",
+ "group": "Tropical",
+ "size": "vast",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Tropical grassland with scattered fire-adapted trees: continuous C4 grass layer under flat-crowned acacias, baobabs and palms. Drawn on the East African Serengeti/miombo, Brazilian Cerrado, Australian tropical savanna and Indian savanna-woodland.",
+ "climate": {
+  "temp_c": [
+   18,
+   33
+  ],
+  "moisture": [
+   0.26,
+   0.47
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Acacia",
+    "genus": "Vachellia",
+    "species": "tortilis",
+    "shape": "umbrella",
+    "temp_c": [
+     18,
+     32
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     4,
+     14
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "color": "#4E9A3C",
+    "accent": "#5C4A38",
+    "source": "Vachellia (Acacia) tortilis, umbrella thorn, flat-topped icon of East African savanna, 4-14 m — Wikipedia / Kew"
+   },
+   {
+    "name": "Baobab",
+    "genus": "Adansonia",
+    "species": "digitata",
+    "shape": "gnarled",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     8,
+     25
+    ],
+    "density": 0.2,
+    "soil": "sand",
+    "color": "#5AA040",
+    "accent": "#8A7A64",
+    "source": "Adansonia digitata, African baobab, scattered giant of sub-Saharan savanna, 8-25 m — Wikipedia"
+   },
+   {
+    "name": "Miombo tree",
+    "genus": "Brachystegia",
+    "species": "spiciformis",
+    "shape": "broadleaf",
+    "temp_c": [
+     19,
+     26
+    ],
+    "moisture": [
+     0.3,
+     0.5
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#C06A40",
+    "source": "Brachystegia spiciformis, msasa, dominant of miombo woodland-savanna in southern-central Africa, red spring flush, 10-20 m — Wikipedia / PROTA"
+   },
+   {
+    "name": "Darwin stringybark",
+    "genus": "Eucalyptus",
+    "species": "tetrodonta",
+    "shape": "broadleaf",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.3,
+     0.5
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#6A9A60",
+    "accent": "#A09080",
+    "source": "Eucalyptus tetrodonta, Darwin stringybark, dominant tree of Australian tropical savanna woodland, 15-30 m — Wikipedia"
+   },
+   {
+    "name": "Cerrado pequi",
+    "genus": "Caryocar",
+    "species": "brasiliense",
+    "shape": "gnarled",
+    "temp_c": [
+     20,
+     26
+    ],
+    "moisture": [
+     0.3,
+     0.5
+    ],
+    "height_m": [
+     6,
+     12
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#4E9A3C",
+    "accent": "#6A5A48",
+    "source": "Caryocar brasiliense, pequi, twisted thick-barked tree typical of Brazilian Cerrado, 6-12 m — Wikipedia"
+   },
+   {
+    "name": "Palmyra palm",
+    "genus": "Borassus",
+    "species": "flabellifer",
+    "shape": "palm",
+    "temp_c": [
+     22,
+     32
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#5A9A50",
+    "accent": "#4A3A2E",
+    "source": "Borassus flabellifer, palmyra/toddy palm, fan palm of Indian and SE Asian savanna plains, 15-30 m; B. aethiopum the African equivalent — Wikipedia"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Sicklebush",
+    "genus": "Dichrostachys",
+    "species": "cinerea",
+    "shape": "shrub",
+    "temp_c": [
+     18,
+     30
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     2,
+     7
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#5AA040",
+    "accent": "#E0A0C0",
+    "source": "Dichrostachys cinerea, sicklebush, thorny savanna shrub across Africa/India, 2-7 m — Wikipedia / PROTA"
+   },
+   {
+    "name": "Savanna bamboo",
+    "genus": "Oxytenanthera",
+    "species": "abyssinica",
+    "shape": "bamboo",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.3,
+     0.5
+    ],
+    "height_m": [
+     5,
+     12
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#7AB840",
+    "accent": "#B0A040",
+    "source": "Oxytenanthera abyssinica, African lowland/savanna bamboo, clumps in seasonally dry African savanna woodland, 5-12 m — Wikipedia / PROTA"
+   },
+   {
+    "name": "Whistling thorn",
+    "genus": "Vachellia",
+    "species": "drepanolobium",
+    "shape": "shrub",
+    "temp_c": [
+     16,
+     26
+    ],
+    "moisture": [
+     0.25,
+     0.45
+    ],
+    "height_m": [
+     1.5,
+     6
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#4E9A3C",
+    "accent": "#3A2E28",
+    "source": "Vachellia drepanolobium, whistling thorn, ant-galled acacia forming near-monoculture stands on East African black-cotton savanna, 1.5-6 m — Wikipedia"
+   },
+   {
+    "name": "Candelabra tree",
+    "genus": "Euphorbia",
+    "species": "candelabrum",
+    "shape": "cactus",
+    "temp_c": [
+     18,
+     28
+    ],
+    "moisture": [
+     0.2,
+     0.4
+    ],
+    "height_m": [
+     4,
+     12
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5A9A50",
+    "accent": "#8A9A70",
+    "source": "Euphorbia candelabrum, candelabra tree, succulent spurge on rocky East African savanna, 4-12 m — Wikipedia"
+   },
+   {
+    "name": "Australian screw pine",
+    "genus": "Pandanus",
+    "species": "spiralis",
+    "shape": "spike_rosette",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     3,
+     10
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#5AB040",
+    "accent": "#9A8A60",
+    "source": "Pandanus spiralis, common screw pine, stilt-rooted rosette tree of northern Australian savanna floodplains, 3-10 m — Wikipedia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Savanna grass",
+    "genus": "Themeda",
+    "species": "triandra",
+    "shape": "tussock",
+    "temp_c": [
+     16,
+     30
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#B06A40",
+    "source": "Themeda triandra, red oat/kangaroo grass, dominant grass of African, Indian and Australian savanna, 0.3-1.5 m — Wikipedia"
+   },
+   {
+    "name": "Red grass",
+    "genus": "Hyparrhenia",
+    "species": "rufa",
+    "shape": "grass",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#B8A850",
+    "accent": "#C07040",
+    "source": "Hyparrhenia rufa, jaragua/thatching grass, tall dominant of African wet savanna, 1-2.5 m — Wikipedia"
+   },
+   {
+    "name": "Elephant grass",
+    "genus": "Cenchrus",
+    "species": "purpureus",
+    "shape": "tussock",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.35,
+     0.55
+    ],
+    "height_m": [
+     2,
+     4
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#7AB840",
+    "accent": "#9A8A50",
+    "source": "Cenchrus (Pennisetum) purpureus, elephant/napier grass, giant tussocks in moist African savanna and river margins, 2-4 m — Wikipedia"
+   },
+   {
+    "name": "Spear grass",
+    "genus": "Heteropogon",
+    "species": "contortus",
+    "shape": "grass",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#9A7A40",
+    "source": "Heteropogon contortus, black spear grass, dominant of Australian and Indian dry savanna, 0.3-1 m — Wikipedia"
+   },
+   {
+    "name": "Spinifex",
+    "genus": "Triodia",
+    "species": "pungens",
+    "shape": "cushion",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#A8B860",
+    "accent": "#C8B060",
+    "source": "Triodia pungens, soft spinifex, hummock grass of northern Australian sandy savanna, 0.3-1 m mounds — Wikipedia"
+   },
+   {
+    "name": "Fire lily",
+    "genus": "Gloriosa",
+    "species": "superba",
+    "shape": "liana",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.3,
+     0.5
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#E03A2A",
+    "source": "Gloriosa superba, flame lily, tendril-climbing savanna herb across Africa/Asia, 0.5-3 m — Wikipedia"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 42,
+  "names": [
+   "African fan palm",
+   "Palmyra palm",
+   "Carnauba",
+   "Cretan date palm",
+   "Amorphophallus abyssinicus",
+   "Amorphophallus andranogidroensis",
+   "Amorphophallus angolensis",
+   "Amorphophallus ankarana",
+   "Amorphophallus antsingyensis",
+   "Amorphophallus aphyllus",
+   "Amorphophallus asterostigmatus",
+   "Amorphophallus baumannii",
+   "Amorphophallus consimilis",
+   "Amorphophallus dracontioides",
+   "Amorphophallus eichleri",
+   "Amorphophallus elliotii",
+   "Amorphophallus gallaensis",
+   "Amorphophallus goetzei",
+   "Amorphophallus gomboczianus",
+   "Amorphophallus hildebrandtii",
+   "Amorphophallus impressus",
+   "Amorphophallus johnsonii",
+   "Amorphophallus lewallei",
+   "Amorphophallus mangelsdorffii",
+   "Amorphophallus maximus",
+   "Amorphophallus mildbraedii",
+   "Amorphophallus mossambicensis",
+   "Amorphophallus perrieri",
+   "Amorphophallus richardsiae",
+   "Amorphophallus stuhlmannii",
+   "Amorphophallus taurostigma",
+   "Amorphophallus teuszii",
+   "Buckley's yucca",
+   "Spineless yucca",
+   "Jalisco yucca",
+   "Glen Rose yucca",
+   "Pale-leaf yucca",
+   "San Angelo yucca",
+   "Twistleaf yucca",
+   "White-rim yucca",
+   "Trecul yucca",
+   "Cannabis - Sinaloan"
+  ]
+ },
+ "associations": [
+  {
+   "name": "Acacia-red grass savanna",
+   "where": "open flat to gently rolling plains, seasonally dry, frequent fire",
+   "dominant": [
+    "Acacia"
+   ],
+   "companion": [
+    "Whistling thorn",
+    "Sicklebush"
+   ],
+   "ground": [
+    "Red grass",
+    "Savanna grass",
+    "Spear grass",
+    "Fire lily"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Serengeti Acacia-Themeda grassland (Sinclair & Norton-Griffiths 1979; White 1983 Vegetation of Africa)"
+  },
+  {
+   "name": "Miombo woodland",
+   "where": "dry plateau uplands on poor sandy soil, burned in the dry season",
+   "dominant": [
+    "Miombo tree"
+   ],
+   "companion": [
+    "Sicklebush",
+    "Candelabra tree"
+   ],
+   "ground": [
+    "Savanna grass",
+    "Red grass",
+    "Spear grass"
+   ],
+   "catalogue": [
+    "Amorphophallus goetzei",
+    "Amorphophallus stuhlmannii"
+   ],
+   "cover": 0.5,
+   "source": "Zambezian miombo (White 1983; Campbell 1996 The Miombo in Transition)"
+  },
+  {
+   "name": "Baobab-palm savanna",
+   "where": "low dry plains and river terraces, deep sandy soil, seasonally wet",
+   "dominant": [
+    "Baobab",
+    "Palmyra palm"
+   ],
+   "companion": [
+    "Acacia",
+    "Sicklebush"
+   ],
+   "ground": [
+    "Elephant grass",
+    "Savanna grass",
+    "Red grass"
+   ],
+   "catalogue": [
+    "African fan palm",
+    "Palmyra palm"
+   ],
+   "cover": 0.3,
+   "source": "Sudanian and Sahelian palm-baobab savanna (White 1983; Aubreville 1949)"
+  },
+  {
+   "name": "Cerrado woodland-savanna",
+   "where": "well-drained plateau with deep acid soil, frequent fire",
+   "dominant": [
+    "Cerrado pequi"
+   ],
+   "companion": [
+    "Candelabra tree"
+   ],
+   "ground": [
+    "Savanna grass",
+    "Fire lily"
+   ],
+   "catalogue": [
+    "Carnauba"
+   ],
+   "cover": 0.4,
+   "source": "Brazilian cerrado sensu stricto (Eiten 1972; Oliveira & Marquis 2002)"
+  },
+  {
+   "name": "Stringybark-spinifex savanna",
+   "where": "sandy plains and low rises of the tropical north, annual fire",
+   "dominant": [
+    "Darwin stringybark"
+   ],
+   "companion": [
+    "Australian screw pine",
+    "Savanna bamboo"
+   ],
+   "ground": [
+    "Spinifex",
+    "Spear grass",
+    "Savanna grass"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Australian tropical eucalypt savanna (Williams et al. 1996; Specht 1970)"
+  }
+ ]
+}

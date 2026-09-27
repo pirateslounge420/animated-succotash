@@ -2,21 +2,21 @@
  "key": "CYCAD_CATALOGUE",
  "name": "Cycads — sagos and relatives",
  "kind": "land",
- "status": "24 species",
+ "status": "5 archetypal species (full list archived in docs/plant_archive)",
  "notes": "Living fossils: palm-like crowns, cones not flowers, beetle-pollinated, seeds by birds, rodents and sea. Centuries-old; a cycad grove is an old place. Seeds toxic unless leached, which camp folk know. Wood's cycad is a one-clone mythic plant.",
  "plants": {
   "emergent": [],
   "canopy": [],
   "shrub": [
    {
-    "name": "Bread tree",
-    "genus": "Encephalartos",
-    "species": "altensteinii",
+    "name": "Sago cycad",
+    "genus": "Cycas",
+    "species": "revoluta",
     "family": "Cycadaceae/Zamiaceae",
     "shape": "palm",
     "temp_c": [
-     15,
-     20
+     14,
+     22
     ],
     "moisture": [
      0.5,
@@ -24,13 +24,13 @@
     ],
     "altitude_m": [
      0,
-     600
+     500
     ],
     "height_m": [
-     3.0,
-     5.0
+     1.0,
+     3.0
     ],
-    "density": 0.3,
+    "density": 0.5,
     "soil": "thin",
     "needs": [],
     "color": "#2A5A38",
@@ -91,7 +91,134 @@
       0.6
      ]
     },
-    "source": "Eastern Cape forest. Cones the size of a child. Kew POWO."
+    "source": "Ryukyu cliffs and S Japan. A cycad, not a palm. Kew POWO.",
+    "traits": {
+     "genus": "Cycas",
+     "species": "revoluta",
+     "native_range": "Ryukyu cliffs and S Japan",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      1.0,
+      3.0
+     ],
+     "growth_rate": "very slow (centuries)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Australian cycad",
+    "genus": "Cycas",
+    "species": "media",
+    "family": "Cycadaceae/Zamiaceae",
+    "shape": "palm",
+    "temp_c": [
+     24,
+     29
+    ],
+    "moisture": [
+     0.35,
+     0.65
+    ],
+    "altitude_m": [
+     0,
+     600
+    ],
+    "height_m": [
+     2.0,
+     6.0
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       365
+      ],
+      [
+       "young",
+       5000
+      ],
+      [
+       "mature",
+       20000
+      ],
+      [
+       "old",
+       80000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "water"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 21,
+      "interval_years": [
+       2,
+       5
+      ]
+     },
+     "dormant": "none",
+     "note": "weevil-pollinated: reads the beetle count"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "N Australian savanna; fire-resprouting.  Kew POWO.",
+    "traits": {
+     "genus": "Cycas",
+     "species": "media",
+     "native_range": "N Australian savanna",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      2.0,
+      6.0
+     ],
+     "growth_rate": "very slow (centuries)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Modjadji cycad",
@@ -176,34 +303,55 @@
       0.6
      ]
     },
-    "source": "Modjadji, Limpopo; a forest of them. Tallest cycad. Kew POWO."
+    "source": "Modjadji, Limpopo; a forest of them. Tallest cycad. Kew POWO.",
+    "traits": {
+     "genus": "Encephalartos",
+     "species": "transvenosus",
+     "native_range": "Modjadji, Limpopo",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      8.0,
+      13.0
+     ],
+     "growth_rate": "very slow (centuries)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Kaffir bread",
-    "genus": "Encephalartos",
-    "species": "longifolius",
+    "name": "Coontie",
+    "genus": "Zamia",
+    "species": "integrifolia",
     "family": "Cycadaceae/Zamiaceae",
     "shape": "palm",
     "temp_c": [
-     14,
-     19
+     18,
+     24
     ],
     "moisture": [
-     0.3,
-     0.55
+     0.45,
+     0.8
     ],
     "altitude_m": [
-     200,
-     1200
+     0,
+     50
     ],
     "height_m": [
-     2.0,
-     4.0
+     0.3,
+     1.0
     ],
-    "density": 0.3,
+    "density": 0.6,
     "soil": "thin",
     "needs": [],
-    "color": "#5A8A5A",
+    "color": "#3E7A44",
     "accent": "#8A7A50",
     "growth": {
      "stages": [
@@ -261,31 +409,52 @@
       0.6
      ]
     },
-    "source": "Eastern Cape fynbos.  Kew POWO."
+    "source": "Florida flatwoods. Starch root of the Seminole. Kew POWO.",
+    "traits": {
+     "genus": "Zamia",
+     "species": "integrifolia",
+     "native_range": "Florida flatwoods",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "very slow (centuries)",
+     "reproduction": "both, clonal by sucker",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal",
+      "water"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Wood's cycad",
-    "genus": "Encephalartos",
-    "species": "woodii",
+    "name": "Burrawang",
+    "genus": "Macrozamia",
+    "species": "communis",
     "family": "Cycadaceae/Zamiaceae",
     "shape": "palm",
     "temp_c": [
-     17,
-     21
+     14,
+     19
     ],
     "moisture": [
-     0.6,
-     0.9
+     0.5,
+     0.85
     ],
     "altitude_m": [
-     100,
-     500
+     0,
+     600
     ],
     "height_m": [
-     4.0,
-     6.0
+     1.0,
+     2.0
     ],
-    "density": 0.02,
+    "density": 0.7,
     "soil": "thin",
     "needs": [],
     "color": "#2A5A38",
@@ -346,92 +515,28 @@
       0.6
      ]
     },
-    "source": "Ngoye Forest; extinct in the wild — one clone. Mythic-rare plant. Kew POWO."
-   },
-   {
-    "name": "Blue cycad",
-    "genus": "Encephalartos",
-    "species": "horridus",
-    "family": "Cycadaceae/Zamiaceae",
-    "shape": "palm",
-    "temp_c": [
-     15,
-     20
-    ],
-    "moisture": [
-     0.25,
-     0.45
-    ],
-    "altitude_m": [
-     100,
-     800
-    ],
-    "height_m": [
-     0.5,
-     1.2
-    ],
-    "density": 0.3,
-    "soil": "thin",
-    "needs": [],
-    "color": "#7A9AB0",
-    "accent": "#8A7A50",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       365
-      ],
-      [
-       "young",
-       5000
-      ],
-      [
-       "mature",
-       20000
-      ],
-      [
-       "old",
-       80000
-      ]
+    "source": "NSW eucalypt forest understory. Seeds toxic unless leached. Kew POWO.",
+    "traits": {
+     "genus": "Macrozamia",
+     "species": "communis",
+     "native_range": "NSW eucalypt forest understory",
+     "leaf_shape": "fan or feather fronds in a terminal crown",
+     "trunk": "single unbranched columnar trunk (doum forks; clumpers sucker)",
+     "petiole": "long fibrous petiole with a leaf sheath",
+     "height_m": [
+      1.0,
+      2.0
      ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "both",
+     "growth_rate": "very slow (centuries)",
+     "reproduction": "both, clonal by sucker",
      "pollinator": "insect",
      "disperser": [
       "bird",
       "mammal",
       "water"
      ],
-     "clonal": "sucker",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "late_spring",
-      "days": 21,
-      "interval_years": [
-       2,
-       5
-      ]
-     },
-     "dormant": "none",
-     "note": "weevil-pollinated: reads the beetle count"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Eastern Cape thicket. Blue spiny leaves. Kew POWO."
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [],

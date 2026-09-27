@@ -1,0 +1,602 @@
+{
+ "key": "TEMPERATE_RAINFOREST",
+ "name": "Temperate rainforest",
+ "group": "Forest",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Cool, very wet coastal forest of giant evergreen conifers (or southern beeches) with a dense fern-and-shrub understory and every trunk draped in moss and lichen; drawn on the Pacific Northwest, Valdivian Chile, New Zealand and Hokkaido.",
+ "climate": {
+  "temp_c": [
+   2,
+   16
+  ],
+  "moisture": [
+   0.78,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Coast redwood",
+    "genus": "Sequoia",
+    "species": "sempervirens",
+    "shape": "conifer",
+    "temp_c": [
+     10,
+     16
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     60,
+     110
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#2A6A38",
+    "accent": "#8A3A2A",
+    "source": "Sequoia sempervirens, coast redwood, coastal N California-S Oregon fog belt, tallest tree on Earth 60-115 m — Wikipedia / Gymnosperm Database"
+   },
+   {
+    "name": "Sitka spruce",
+    "genus": "Picea",
+    "species": "sitchensis",
+    "shape": "conifer",
+    "temp_c": [
+     5,
+     12
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     50,
+     80
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "color": "#2F6E3A",
+    "accent": "#8A7A6A",
+    "source": "Picea sitchensis, Sitka spruce, Pacific coast Alaska-N California, temperate rainforest dominant, 50-90 m — Wikipedia / Gymnosperm Database"
+   },
+   {
+    "name": "Hemlock",
+    "genus": "Tsuga",
+    "species": "heterophylla",
+    "shape": "conifer",
+    "temp_c": [
+     4,
+     13
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     40,
+     70
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "color": "#2A6A38",
+    "accent": "#6E5A44",
+    "source": "Tsuga heterophylla, western hemlock, Pacific NW Alaska-California, shade-tolerant climax conifer of coastal rainforest, 40-70 m — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Douglas fir",
+    "genus": "Pseudotsuga",
+    "species": "menziesii",
+    "shape": "conifer",
+    "temp_c": [
+     5,
+     14
+    ],
+    "moisture": [
+     0.7,
+     0.95
+    ],
+    "height_m": [
+     50,
+     90
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#7A5A3A",
+    "source": "Pseudotsuga menziesii, Douglas fir, western North America, coastal variety in moist conifer forest, 50-90 m deeply furrowed bark — Wikipedia / Gymnosperm Database"
+   },
+   {
+    "name": "Coihue",
+    "genus": "Nothofagus",
+    "species": "dombeyi",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     13
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     30,
+     45
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#7A7A6A",
+    "source": "Nothofagus dombeyi, coihue, evergreen southern beech, Valdivian temperate rainforest of Chile/Argentina, 30-45 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Rimu",
+    "genus": "Dacrydium",
+    "species": "cupressinum",
+    "shape": "conifer",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     35,
+     50
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#3A7A3A",
+    "accent": "#8A6A4A",
+    "source": "Dacrydium cupressinum, rimu, endemic New Zealand lowland podocarp rainforest, 35-50 m weeping foliage — Wikipedia / NZ Plant Conservation Network"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Salal",
+    "genus": "Gaultheria",
+    "species": "shallon",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     14
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#4A3A5A",
+    "source": "Gaultheria shallon, salal, Pacific NW coast, dominant evergreen understory shrub of conifer rainforest, 0.5-3 m — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Vine maple",
+    "genus": "Acer",
+    "species": "circinatum",
+    "shape": "gnarled",
+    "temp_c": [
+     6,
+     13
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#C8542A",
+    "source": "Acer circinatum, vine maple, Pacific NW, sprawling understory tree of moist conifer forest, 3-8 m — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Devil's club",
+    "genus": "Oplopanax",
+    "species": "horridus",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     12
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "color": "#4E9A3C",
+    "accent": "#C83A3A",
+    "source": "Oplopanax horridus, devil's club, Alaska-Oregon, wet seeps and stream banks under rainforest canopy, 1-3 m spiny stems, red berries — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Colihue",
+    "genus": "Chusquea",
+    "species": "culeou",
+    "shape": "bamboo",
+    "temp_c": [
+     6,
+     13
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     3,
+     6
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#A8B860",
+    "source": "Chusquea culeou, colihue, Valdivian rainforest understory of Chile/Argentina, clumping bamboo 3-6 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Kuril bamboo",
+    "genus": "Sasa",
+    "species": "kurilensis",
+    "shape": "bamboo",
+    "temp_c": [
+     2,
+     10
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#C8C880",
+    "source": "Sasa kurilensis, chishima-zasa, Hokkaido, Kurils, Sakhalin & N Honshu, dense dwarf-bamboo understory of cool wet forest, 1-3 m — Wikipedia / Flora of Japan"
+   },
+   {
+    "name": "Silver tree fern",
+    "genus": "Cyathea",
+    "species": "dealbata",
+    "shape": "tree_fern",
+    "temp_c": [
+     9,
+     16
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     4,
+     10
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#B8B8A8",
+    "source": "Cyathea dealbata, ponga/silver fern, endemic New Zealand lowland and montane rainforest, trunk 4-10 m, silver frond undersides — Wikipedia / NZPCN"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Sword fern",
+    "genus": "Polystichum",
+    "species": "munitum",
+    "shape": "fern",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#7A6A4A",
+    "source": "Polystichum munitum, western sword fern, Pacific NW, dominant evergreen ground fern of redwood/hemlock forest, fronds 0.5-1.5 m — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Oregon oxalis",
+    "genus": "Oxalis",
+    "species": "oregana",
+    "shape": "cushion",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     0.05,
+     0.15
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#F0D8E8",
+    "source": "Oxalis oregana, redwood sorrel, coastal Oregon-California redwood forest floor, dense 5-15 cm carpet — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Stair-step moss",
+    "genus": "Hylocomium",
+    "species": "splendens",
+    "shape": "moss",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     0.05,
+     0.15
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "color": "#4E9A3C",
+    "accent": "#8A7A5A",
+    "source": "Hylocomium splendens, stair-step moss, circumboreal, thick carpets on rainforest floor and logs, 5-15 cm — Wikipedia"
+   },
+   {
+    "name": "Skunk cabbage",
+    "genus": "Lysichiton",
+    "species": "americanus",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     13
+    ],
+    "moisture": [
+     0.9,
+     1
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.2
+    ],
+    "color": "#4A9A3A",
+    "accent": "#E8D030",
+    "source": "Lysichiton americanus, western skunk cabbage, Pacific NW swampy rainforest ground, huge leaves 0.5-1.2 m, yellow spathe — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Deer fern",
+    "genus": "Blechnum",
+    "species": "spicant",
+    "shape": "fern",
+    "temp_c": [
+     4,
+     13
+    ],
+    "moisture": [
+     0.78,
+     1
+    ],
+    "height_m": [
+     0.3,
+     0.7
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#5A4A38",
+    "source": "Blechnum spicant (Struthiopteris spicant), deer fern, Pacific NW & Atlantic Europe, wet conifer forest floor, 30-70 cm — Wikipedia / USDA Plants"
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Cat-tail moss",
+    "genus": "Isothecium",
+    "species": "stoloniferum",
+    "shape": "hanging_moss",
+    "temp_c": [
+     6,
+     14
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#8A7A5A",
+    "source": "Isothecium stoloniferum, cat-tail moss, Pacific NW coast, festoons hanging from bigleaf maple and conifer branches, strands 10-50 cm — Wikipedia / E-Flora BC"
+   },
+   {
+    "name": "Licorice fern",
+    "genus": "Polypodium",
+    "species": "glycyrrhiza",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     7,
+     15
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.15,
+     0.5
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#5A4A38",
+    "source": "Polypodium glycyrrhiza, licorice fern, Pacific NW, epiphytic on mossy trunks and branches of maple/alder, fronds 15-50 cm — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Old man's beard",
+    "genus": "Usnea",
+    "species": "longissima",
+    "shape": "hanging_moss",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#A8C890",
+    "accent": "#C8D8B0",
+    "source": "Usnea longissima, Methuselah's beard lichen, old-growth conifer rainforests of the Pacific NW & Scandinavia, pale hanging strands to 3 m — Wikipedia"
+   }
+  ]
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 0,
+  "names": []
+ },
+ "associations": [
+  {
+   "name": "Sitka spruce-hemlock fog forest",
+   "where": "coastal fog belt, lower slopes and terraces, very wet",
+   "dominant": [
+    "Sitka spruce",
+    "Hemlock"
+   ],
+   "companion": [
+    "Salal",
+    "Vine maple",
+    "Devil's club",
+    "Cat-tail moss",
+    "Licorice fern",
+    "Kuril bamboo"
+   ],
+   "ground": [
+    "Sword fern",
+    "Deer fern",
+    "Stair-step moss",
+    "Skunk cabbage"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Franklin & Dyrness 1973 Natural Vegetation of Oregon and Washington (Picea sitchensis zone)"
+  },
+  {
+   "name": "Redwood alluvial flat forest",
+   "where": "river flats and lower slopes with deep alluvial soil, summer fog",
+   "dominant": [
+    "Coast redwood"
+   ],
+   "companion": [
+    "Douglas fir",
+    "Vine maple"
+   ],
+   "ground": [
+    "Oregon oxalis",
+    "Sword fern"
+   ],
+   "catalogue": [],
+   "cover": 0.95,
+   "source": "Sawyer et al. 2000 Redwood Forest; Franklin & Dyrness 1973"
+  },
+  {
+   "name": "Douglas-fir salal slope forest",
+   "where": "drier south slopes and ridges, well drained, after old fire",
+   "dominant": [
+    "Douglas fir"
+   ],
+   "companion": [
+    "Hemlock",
+    "Salal",
+    "Old man's beard"
+   ],
+   "ground": [
+    "Sword fern",
+    "Deer fern"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Franklin & Dyrness 1973 (Tsuga heterophylla zone, Pseudotsuga/Gaultheria)"
+  },
+  {
+   "name": "Coihue-colihue Valdivian forest",
+   "where": "mid-slopes and valleys of the southern Andes, high rainfall",
+   "dominant": [
+    "Coihue"
+   ],
+   "companion": [
+    "Colihue",
+    "Old man's beard",
+    "Cat-tail moss"
+   ],
+   "ground": [
+    "Stair-step moss",
+    "Deer fern"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Veblen et al. 1996 Ecology and Biogeography of Nothofagus Forests"
+  },
+  {
+   "name": "Rimu-tree fern podocarp forest",
+   "where": "lowland and low hill country of New Zealand, wet deep soil",
+   "dominant": [
+    "Rimu"
+   ],
+   "companion": [
+    "Silver tree fern",
+    "Old man's beard"
+   ],
+   "ground": [
+    "Stair-step moss"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Wardle 1991 Vegetation of New Zealand"
+  }
+ ]
+}

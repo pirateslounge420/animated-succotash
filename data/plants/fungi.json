@@ -7,6 +7,116 @@
  "plants": {
   "ground": [
    {
+    "name": "Turkey tail",
+    "genus": "Trametes",
+    "species": "versicolor",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     24
+    ],
+    "moisture": [
+     0.45,
+     0.95
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "needs": [],
+    "color": "#7A6A50",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "worldwide temperate; Banded bracket on dead hardwood; the commonest wood-rotter on Earth.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Trametes",
+     "species": "versicolor",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
     "name": "Tinder fungus",
     "genus": "Fomes",
     "species": "fomentarius",
@@ -95,7 +205,246 @@
       0.0
      ]
     },
-    "source": "northern forests, birch and beech; Hoof bracket on birch snags; fire-starter tinder for camp folk.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "northern forests, birch and beech; Hoof bracket on birch snags; fire-starter tinder for camp folk.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Fomes",
+     "species": "fomentarius",
+     "native_range": "northern forests, birch and beech",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Birch polypore",
+    "genus": "Fomitopsis",
+    "species": "betulina",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     16
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     0.08,
+     0.25
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D8CBB0",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "boreal and temperate birch; On dying birch; razor strop.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Fomitopsis",
+     "species": "betulina",
+     "native_range": "boreal and temperate birch",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.08,
+      0.25
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Chicken of the woods",
+    "genus": "Laetiporus",
+    "species": "sulphureus",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     6,
+     24
+    ],
+    "moisture": [
+     0.45,
+     0.9
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#F0A020",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate oak and cherry; Bright orange shelves on oak snags; a meal.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Laetiporus",
+     "species": "sulphureus",
+     "native_range": "temperate oak and cherry",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Honey fungus",
@@ -186,7 +535,466 @@
       1.0
      ]
     },
-    "source": "worldwide temperate; Clumps at the base of dying trees; its mycelium glows faintly — foxfire — on rotting wood.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide temperate; Clumps at the base of dying trees; its mycelium glows faintly — foxfire — on rotting wood.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Armillaria",
+     "species": "mellea",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Oyster mushroom",
+    "genus": "Pleurotus",
+    "species": "ostreatus",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     24
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#C8C0B0",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "worldwide temperate; Shelving clusters on dead beech and poplar; a meal.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Pleurotus",
+     "species": "ostreatus",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Shiitake",
+    "genus": "Lentinula",
+    "species": "edodes",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     8,
+     24
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     0.05,
+     0.15
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#8A5A30",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "East Asian oak forests; On fallen oak and chinquapin.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Lentinula",
+     "species": "edodes",
+     "native_range": "East Asian oak forests",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Sulphur tuft",
+    "genus": "Hypholoma",
+    "species": "fasciculare",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     0.02,
+     0.06
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D8C040",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "poison",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "worldwide temperate; Dense yellow tufts on stumps; bitter, poisonous.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Hypholoma",
+     "species": "fasciculare",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.06
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Velvet shank",
+    "genus": "Flammulina",
+    "species": "velutipes",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     -5,
+     12
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     0.02,
+     0.06
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#C87A30",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "northern temperate, winter; Fruits through frost on elm and willow snags — the winter mushroom.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Flammulina",
+     "species": "velutipes",
+     "native_range": "northern temperate, winter",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.06
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Artist's conk",
@@ -277,7 +1085,26 @@
       0.0
      ]
     },
-    "source": "worldwide temperate; Huge flat bracket on old snags; lasts for years.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide temperate; Huge flat bracket on old snags; lasts for years.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Ganoderma",
+     "species": "applanatum",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.15,
+      0.5
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Reishi",
@@ -368,7 +1195,796 @@
       0.0
      ]
     },
-    "source": "East Asian and warm temperate hardwood; Lacquered red bracket at the base of oaks and maples; camp medicine.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "East Asian and warm temperate hardwood; Lacquered red bracket at the base of oaks and maples; camp medicine.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Ganoderma",
+     "species": "lucidum",
+     "native_range": "East Asian and warm temperate hardwood",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Dryad's saddle",
+    "genus": "Cerioporus",
+    "species": "squamosus",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#C8B080",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "cook",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate elm, ash, maple; Pheasant-back shelves in spring.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Cerioporus",
+     "species": "squamosus",
+     "native_range": "temperate elm, ash, maple",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Red-belted conk",
+    "genus": "Fomitopsis",
+    "species": "pinicola",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     -4,
+     16
+    ],
+    "moisture": [
+     0.45,
+     0.95
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#8A4A28",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "boreal and mountain conifer; On spruce and fir snags; the boreal wood-rotter.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Fomitopsis",
+     "species": "pinicola",
+     "native_range": "boreal and mountain conifer",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Beefsteak fungus",
+    "genus": "Fistulina",
+    "species": "hepatica",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     8,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     0.1,
+     0.25
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#A02020",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate oak and chestnut; Bleeds red when cut; on old oaks.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Fistulina",
+     "species": "hepatica",
+     "native_range": "temperate oak and chestnut",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.25
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Lion's mane",
+    "genus": "Hericium",
+    "species": "erinaceus",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     6,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#F0EAD8",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate beech and oak; White spines on wounded hardwood.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Hericium",
+     "species": "erinaceus",
+     "native_range": "temperate beech and oak",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Coral tooth",
+    "genus": "Hericium",
+    "species": "coralloides",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#F0EAD8",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "boreal and temperate; On fallen beech and birch.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Hericium",
+     "species": "coralloides",
+     "native_range": "boreal and temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Split gill",
+    "genus": "Schizophyllum",
+    "species": "commune",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     0,
+     32
+    ],
+    "moisture": [
+     0.3,
+     0.95
+    ],
+    "height_m": [
+     0.01,
+     0.04
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D0C8B8",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "every continent; Tiny fan on any dead wood, from tundra edge to tropics; the widest-ranging fungus known.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Schizophyllum",
+     "species": "commune",
+     "native_range": "every continent",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.04
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tropical oyster",
+    "genus": "Pleurotus",
+    "species": "djamor",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     20,
+     32
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     0.03,
+     0.12
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#F0B8B8",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "tropics worldwide; Pink oyster on fallen tropical wood.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Pleurotus",
+     "species": "djamor",
+     "native_range": "tropics worldwide",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Ghost fungus",
@@ -459,7 +2075,26 @@
       1.0
      ]
     },
-    "source": "Australian eucalypt forest; Glows green in the dark at the base of dead eucalypts.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "Australian eucalypt forest; Glows green in the dark at the base of dead eucalypts.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Omphalotus",
+     "species": "nidiformis",
+     "native_range": "Australian eucalypt forest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Jack-o'-lantern",
@@ -550,7 +2185,796 @@
       1.0
      ]
     },
-    "source": "eastern North America oak; Orange clumps on buried roots; gills glow at night.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "eastern North America oak; Orange clumps on buried roots; gills glow at night.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Omphalotus",
+     "species": "illudens",
+     "native_range": "eastern North America oak",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Bitter bracket",
+    "genus": "Trametes",
+    "species": "hirsuta",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     26
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#C8C0A8",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "snag_log",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.6
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "worldwide; . Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Trametes",
+     "species": "hirsuta",
+     "native_range": "worldwide",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Fairy ring champignon",
+    "genus": "Marasmius",
+    "species": "oreades",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     22
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "height_m": [
+     0.02,
+     0.05
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D8B880",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate grassland; Rings in meadows and prairie that widen a little every year — a ring's age is readable.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Marasmius",
+     "species": "oreades",
+     "native_range": "temperate grassland",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.05
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Horsehair parachute",
+    "genus": "Marasmius",
+    "species": "rotula",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "moss",
+    "temp_c": [
+     4,
+     24
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     0.005,
+     0.015
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "needs": [],
+    "color": "#F0EAD8",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate leaf litter; Tiny white parachutes on fallen twigs and leaves; the leaf-mould worker.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Marasmius",
+     "species": "rotula",
+     "native_range": "temperate leaf litter",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.005,
+      0.015
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Shaggy inkcap",
+    "genus": "Coprinus",
+    "species": "comatus",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     22
+    ],
+    "moisture": [
+     0.4,
+     0.85
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#E8E0D0",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate disturbed ground and camp edges; Rises overnight on middens and paths, dissolves to ink by evening.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Coprinus",
+     "species": "comatus",
+     "native_range": "temperate disturbed ground and camp edges",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Wood blewit",
+    "genus": "Lepista",
+    "species": "nuda",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     0.04,
+     0.1
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#8A70B0",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "cook",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate deciduous litter, autumn; Lilac; in deep leaf mould after the first frosts.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Lepista",
+     "species": "nuda",
+     "native_range": "temperate deciduous litter, autumn",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.04,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Parasol mushroom",
+    "genus": "Macrolepiota",
+    "species": "procera",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     8,
+     22
+    ],
+    "moisture": [
+     0.35,
+     0.75
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#C8B090",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate meadow and open wood; Tall drumstick then a parasol; grassland edges.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Macrolepiota",
+     "species": "procera",
+     "native_range": "temperate meadow and open wood",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Common puffball",
+    "genus": "Lycoperdon",
+    "species": "perlatum",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     22
+    ],
+    "moisture": [
+     0.45,
+     0.9
+    ],
+    "height_m": [
+     0.02,
+     0.06
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#E8E4D8",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "litter",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "worldwide temperate; Puffs spores when trodden.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Lycoperdon",
+     "species": "perlatum",
+     "native_range": "worldwide temperate",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.06
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Giant puffball",
@@ -641,7 +3065,686 @@
       0.0
      ]
     },
-    "source": "temperate meadow; A white boulder in a meadow; feeds a camp.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate meadow; A white boulder in a meadow; feeds a camp.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Calvatia",
+     "species": "gigantea",
+     "native_range": "temperate meadow",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Death cap",
+    "genus": "Amanita",
+    "species": "phalloides",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     6,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     0.05,
+     0.12
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "needs": [],
+    "color": "#9AA870",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "mycorrhizal",
+     "edible": "deadly",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "Eurasian oak and beech, spread worldwide; Under oaks; the deadliest mushroom. Camp folk with the knowledge warn of it.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Amanita",
+     "species": "phalloides",
+     "native_range": "Eurasian oak and beech, spread worldwide",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Fly agaric",
+    "genus": "Amanita",
+    "species": "muscaria",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     18
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#D02020",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "mycorrhizal",
+     "edible": "poison",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "boreal and temperate birch, pine, spruce; Red with white flecks under birch and pine; the storybook toadstool.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Amanita",
+     "species": "muscaria",
+     "native_range": "boreal and temperate birch, pine, spruce",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Penny bun",
+    "genus": "Boletus",
+    "species": "edulis",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     0.06,
+     0.25
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#8A5A30",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "mycorrhizal",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "northern conifer and oak; With spruce, pine and oak; the prize of any forager.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Boletus",
+     "species": "edulis",
+     "native_range": "northern conifer and oak",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.06,
+      0.25
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Chanterelle",
+    "genus": "Cantharellus",
+    "species": "cibarius",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#F0B020",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "mycorrhizal",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "temperate and boreal forest; Golden funnels in mossy conifer and beech woods.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Cantharellus",
+     "species": "cibarius",
+     "native_range": "temperate and boreal forest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Saffron milkcap",
+    "genus": "Lactarius",
+    "species": "deliciosus",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     0.04,
+     0.12
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#E08040",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "mycorrhizal",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "pine forest; Under pines; bleeds orange.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Lactarius",
+     "species": "deliciosus",
+     "native_range": "pine forest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.04,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Matsutake",
+    "genus": "Tricholoma",
+    "species": "matsutake",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     0.05,
+     0.15
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [],
+    "color": "#C8A880",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "mycorrhizal",
+     "edible": "yes",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "autumn",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "East Asian and boreal pine; Under old pines; spicy scent; rare.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Tricholoma",
+     "species": "matsutake",
+     "native_range": "East Asian and boreal pine",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.15
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Truffle",
@@ -732,7 +3835,26 @@
       0.0
      ]
     },
-    "source": "Mediterranean oak and hazel, limestone; Underground; pigs and dogs find it by scent — the camp's most valued trade good.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "Mediterranean oak and hazel, limestone; Underground; pigs and dogs find it by scent — the camp's most valued trade good.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Tuber",
+     "species": "melanosporum",
+     "native_range": "Mediterranean oak and hazel, limestone",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.08
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Morel",
@@ -823,7 +3945,26 @@
       0.0
      ]
     },
-    "source": "temperate spring, burned ground; Spring; floods burned ground the year after a fire.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "temperate spring, burned ground; Spring; floods burned ground the year after a fire.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Morchella",
+     "species": "esculenta",
+     "native_range": "temperate spring, burned ground",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.04,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Fire morel",
@@ -914,7 +4055,26 @@
       0.0
      ]
     },
-    "source": "western North American conifer burns; Fruits by the thousand on last year's fire scar, then vanishes.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "western North American conifer burns; Fruits by the thousand on last year's fire scar, then vanishes.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Morchella",
+     "species": "exuberans",
+     "native_range": "western North American conifer burns",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.04,
+      0.12
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Dung roundhead",
@@ -1005,7 +4165,26 @@
       0.0
      ]
     },
-    "source": "worldwide pasture; On herbivore dung wherever herds graze.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide pasture; On herbivore dung wherever herds graze.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Protostropharia",
+     "species": "semiglobata",
+     "native_range": "worldwide pasture",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.04
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Carcass cup",
@@ -1096,7 +4275,26 @@
       0.0
      ]
     },
-    "source": "worldwide, rich decaying ground; Cup fungus on midden, dung and carcass ground.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide, rich decaying ground; Cup fungus on midden, dung and carcass ground.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Peziza",
+     "species": "vesiculosa",
+     "native_range": "worldwide, rich decaying ground",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.02,
+      0.08
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Bonnet",
@@ -1187,7 +4385,26 @@
       0.0
      ]
     },
-    "source": "worldwide on stumps; Tiny bonnets in troops on stumps.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "worldwide on stumps; Tiny bonnets in troops on stumps.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Mycena",
+     "species": "galericulata",
+     "native_range": "worldwide on stumps",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.03
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Glowing bonnet",
@@ -1278,7 +4495,26 @@
       1.0
      ]
     },
-    "source": "tropical Asian and Pacific rainforest; Bright green-glowing caps on wet fallen wood.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "tropical Asian and Pacific rainforest; Bright green-glowing caps on wet fallen wood.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Mycena",
+     "species": "chlorophos",
+     "native_range": "tropical Asian and Pacific rainforest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.03
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Cave bonnet",
@@ -1369,7 +4605,136 @@
       1.0
      ]
     },
-    "source": "Brazilian Atlantic forest; cave mouths and deep shade; Eternal light: stems glow in the dark; deep shade and cave entrances.. Standard mycological references (Kew POWO/Index Fungorum for the name)."
+    "source": "Brazilian Atlantic forest; cave mouths and deep shade; Eternal light: stems glow in the dark; deep shade and cave entrances.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Mycena",
+     "species": "luxaeterna",
+     "native_range": "Brazilian Atlantic forest",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.005,
+      0.02
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Cordyceps",
+    "genus": "Ophiocordyceps",
+    "species": "unilateralis",
+    "kingdom": "Fungi",
+    "family": "",
+    "shape": "rosette",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     0.01,
+     0.05
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "needs": [],
+    "color": "#C89060",
+    "accent": "#E8E0D0",
+    "fungus": {
+     "substrate": "carcass",
+     "edible": "no",
+     "glow": false,
+     "fruit_after_rain_days": [
+      2,
+      5
+     ],
+     "fruit_season": "wet",
+     "decay_rate": 0.3
+    },
+    "growth": {
+     "stages": [
+      [
+       "pin",
+       1
+      ],
+      [
+       "button",
+       2
+      ],
+      [
+       "cap",
+       4
+      ],
+      [
+       "spent",
+       3
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "clonal": "rhizome",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 5,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "none",
+     "note": "The mycelium is the organism and lives in the substrate for years; the mushroom is a days-long fruiting body. 'rhizome' here = the mycelium spreading through connected dead wood or litter; 'wind' = spores."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "cap_colour": [
+      0.0,
+      0.3
+     ],
+     "glow": [
+      0.0,
+      0.0
+     ]
+    },
+    "source": "tropical rainforest; Grows from dead insects clamped to the undersides of leaves — fed by the insect ledger.. Standard mycological references (Kew POWO/Index Fungorum for the name).",
+    "traits": {
+     "genus": "Ophiocordyceps",
+     "species": "unilateralis",
+     "native_range": "tropical rainforest",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.01,
+      0.05
+     ],
+     "growth_rate": "fast (weeks to months)",
+     "reproduction": "seed, clonal by rhizome",
+     "pollinator": "self",
+     "disperser": [
+      "wind"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ]
  }

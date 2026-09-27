@@ -49,7 +49,24 @@
     "soil": "thin",
     "color": "#2F6A30",
     "accent": "#E03060",
-    "source": "Rhododendron ferrugineum, Alps/Pyrenees subalpine 1500-2800 m on acid soils, evergreen shrub 0.3-1 m with rose-red flowers"
+    "source": "Rhododendron ferrugineum, Alps/Pyrenees subalpine 1500-2800 m on acid soils, evergreen shrub 0.3-1 m with rose-red flowers",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "ferrugineum",
+     "native_range": "Rhododendron ferrugineum, Alps/Pyrenees subalpine 1500-2800 m on acid soils, evergreen shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Dwarf juniper",
@@ -76,44 +93,34 @@
     "soil": "thin",
     "color": "#3A6A40",
     "accent": "#4A4A6A",
-    "source": "Juniperus communis var. saxatilis, alpine ridges Eurasia and N America, prostrate mat 20-80 cm"
+    "source": "Juniperus communis var. saxatilis, alpine ridges Eurasia and N America, prostrate mat 20-80 cm",
+    "traits": {
+     "genus": "Juniperus",
+     "species": "communis",
+     "native_range": "Juniperus communis var",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      0.2,
+      0.8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
    {
-    "name": "Mat grass",
-    "genus": "Nardus",
-    "species": "stricta",
-    "shape": "tussock",
-    "temp_c": [
-     -2,
-     5
-    ],
-    "moisture": [
-     0.5,
-     0.9
-    ],
-    "altitude_m": [
-     1200,
-     2800
-    ],
-    "height_m": [
-     0.1,
-     0.3
-    ],
-    "density": 1.0,
-    "soil": "peat",
-    "color": "#9AB050",
-    "accent": "#C8B060",
-    "source": "Nardus stricta, dominant of acid subalpine/alpine meadows Alps, Pyrenees, Scandinavia 1500-2600 m, wiry tussocks 10-30 cm"
-   },
-   {
-    "name": "Tibetan alpine sedge",
-    "genus": "Kobresia",
-    "species": "pygmaea",
+    "name": "Alpine paintbrush",
+    "genus": "Castilleja",
+    "species": "rhexiifolia",
     "shape": "grass",
     "temp_c": [
-     -4,
+     -2,
      4
     ],
     "moisture": [
@@ -121,41 +128,35 @@
      0.8
     ],
     "altitude_m": [
-     3200,
-     5600
+     2500,
+     3800
     ],
     "height_m": [
-     0.02,
-     0.1
+     0.1,
+     0.4
     ],
-    "density": 0.9,
+    "density": 0.5,
     "soil": "thin",
-    "color": "#8AB048",
-    "accent": "#B8A050",
-    "source": "Kobresia pygmaea, dominant turf of Tibetan Plateau/Himalayan alpine meadows 3200-5600 m, largest alpine ecosystem on Earth"
-   },
-   {
-    "name": "Tufted hairgrass",
-    "genus": "Deschampsia",
-    "species": "cespitosa",
-    "shape": "tussock",
-    "temp_c": [
-     -2,
-     6
-    ],
-    "moisture": [
-     0.5,
-     0.95
-    ],
-    "height_m": [
-     0.3,
-     1
-    ],
-    "density": 0.7,
-    "soil": "wet",
-    "color": "#6AA850",
-    "accent": "#C0B060",
-    "source": "Deschampsia cespitosa, dominant in moist alpine meadows Rockies, Alps, Scandinavia, tussock 30-100 cm"
+    "color": "#4A9A45",
+    "accent": "#E03050",
+    "source": "Castilleja rhexiifolia, Rocky Mountain subalpine/alpine meadows 2500-3800 m, magenta bracts 10-40 cm",
+    "traits": {
+     "genus": "Castilleja",
+     "species": "rhexiifolia",
+     "native_range": "Castilleja rhexiifolia, Rocky Mountain subalpine/alpine meadows 2500-3800 m, magenta bracts 10-40 cm",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.4
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Alpine wildflowers",
@@ -182,61 +183,24 @@
     "soil": "thin",
     "color": "#4A9A40",
     "accent": "#F0D030",
-    "source": "Ranunculus adoneus (snow buttercup), Rocky Mountain alpine meadows 3000-4000 m, yellow flowers at snowmelt 5-25 cm"
-   },
-   {
-    "name": "Alpine paintbrush",
-    "genus": "Castilleja",
-    "species": "rhexiifolia",
-    "shape": "grass",
-    "temp_c": [
-     -2,
-     4
-    ],
-    "moisture": [
-     0.4,
-     0.8
-    ],
-    "altitude_m": [
-     2500,
-     3800
-    ],
-    "height_m": [
-     0.1,
-     0.4
-    ],
-    "density": 0.5,
-    "soil": "thin",
-    "color": "#4A9A45",
-    "accent": "#E03050",
-    "source": "Castilleja rhexiifolia, Rocky Mountain subalpine/alpine meadows 2500-3800 m, magenta bracts 10-40 cm"
-   },
-   {
-    "name": "Gentian",
-    "genus": "Gentiana",
-    "species": "acaulis",
-    "shape": "rosette",
-    "temp_c": [
-     -2,
-     4
-    ],
-    "moisture": [
-     0.4,
-     0.8
-    ],
-    "altitude_m": [
-     1400,
-     3000
-    ],
-    "height_m": [
-     0.03,
-     0.1
-    ],
-    "density": 0.4,
-    "soil": "thin",
-    "color": "#3E8A3A",
-    "accent": "#2040C0",
-    "source": "Gentiana acaulis (trumpet gentian), Alps/Pyrenees/Carpathians 1400-3000 m, deep blue trumpet 3-10 cm"
+    "source": "Ranunculus adoneus (snow buttercup), Rocky Mountain alpine meadows 3000-4000 m, yellow flowers at snowmelt 5-25 cm",
+    "traits": {
+     "genus": "Ranunculus",
+     "species": "adoneus",
+     "native_range": "Ranunculus adoneus (snow buttercup), Rocky Mountain alpine meadows 3000-4000 m, yellow flowers at snowmelt 5-25 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.05,
+      0.25
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Edelweiss",
@@ -263,17 +227,199 @@
     "soil": "thin",
     "color": "#A0B0A0",
     "accent": "#F0F0E0",
-    "source": "Leontopodium nivale (alpinum), Alps/Carpathians/Pyrenees 1800-3000 m limestone meadows, woolly white star flowers 5-20 cm"
+    "source": "Leontopodium nivale (alpinum), Alps/Carpathians/Pyrenees 1800-3000 m limestone meadows, woolly white star flowers 5-20 cm",
+    "traits": {
+     "genus": "Leontopodium",
+     "species": "nivale",
+     "native_range": "Leontopodium nivale (alpinum), Alps/Carpathians/Pyrenees 1800-3000 m limestone meadows, woolly white star flowers 5-20 c",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Gentian",
+    "genus": "Gentiana",
+    "species": "acaulis",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     1400,
+     3000
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3E8A3A",
+    "accent": "#2040C0",
+    "source": "Gentiana acaulis (trumpet gentian), Alps/Pyrenees/Carpathians 1400-3000 m, deep blue trumpet 3-10 cm",
+    "traits": {
+     "genus": "Gentiana",
+     "species": "acaulis",
+     "native_range": "Gentiana acaulis (trumpet gentian), Alps/Pyrenees/Carpathians 1400-3000 m, deep blue trumpet 3-10 cm",
+     "leaf_shape": "leaves in a ground rosette",
+     "trunk": "none — stemless",
+     "petiole": "short or none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Mat grass",
+    "genus": "Nardus",
+    "species": "stricta",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     5
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     1200,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#9AB050",
+    "accent": "#C8B060",
+    "source": "Nardus stricta, dominant of acid subalpine/alpine meadows Alps, Pyrenees, Scandinavia 1500-2600 m, wiry tussocks 10-30 cm",
+    "traits": {
+     "genus": "Nardus",
+     "species": "stricta",
+     "native_range": "Nardus stricta, dominant of acid subalpine/alpine meadows Alps, Pyrenees, Scandinavia 1500-2600 m, wiry tussocks 10-30 c",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tibetan alpine sedge",
+    "genus": "Kobresia",
+    "species": "pygmaea",
+    "shape": "grass",
+    "temp_c": [
+     -4,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     3200,
+     5600
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#8AB048",
+    "accent": "#B8A050",
+    "source": "Kobresia pygmaea, dominant turf of Tibetan Plateau/Himalayan alpine meadows 3200-5600 m, largest alpine ecosystem on Earth",
+    "traits": {
+     "genus": "Kobresia",
+     "species": "pygmaea",
+     "native_range": "Kobresia pygmaea, dominant turf of Tibetan Plateau/Himalayan alpine meadows 3200-5600 m, largest alpine ecosystem on Ear",
+     "leaf_shape": "narrow blades",
+     "trunk": "hollow jointed culms",
+     "petiole": "sheath",
+     "height_m": [
+      0.02,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Tufted hairgrass",
+    "genus": "Deschampsia",
+    "species": "cespitosa",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     6
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "color": "#6AA850",
+    "accent": "#C0B060",
+    "source": "Deschampsia cespitosa, dominant in moist alpine meadows Rockies, Alps, Scandinavia, tussock 30-100 cm",
+    "traits": {
+     "genus": "Deschampsia",
+     "species": "cespitosa",
+     "native_range": "Deschampsia cespitosa, dominant in moist alpine meadows Rockies, Alps, Scandinavia, tussock 30-100 cm",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.3,
+      1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 1,
-  "names": [
-   "Cannabis - Altai"
-  ]
  },
  "associations": [
   {
@@ -342,9 +488,7 @@
     "Gentian",
     "Alpine wildflowers"
    ],
-   "catalogue": [
-    "Cannabis - Altai"
-   ],
+   "catalogue": [],
    "cover": 0.4,
    "source": "Miehe et al. 2019 The Kobresia pygmaea ecosystem of the Tibetan highlands (Science of the Total Environment); Chang 1981"
   },
@@ -364,5 +508,8 @@
    "cover": 0.3,
    "source": "Ellenberg 1988 (Seslerietalia); Ozenda 1985"
   }
+ ],
+ "hero_species": [
+  "Alpenrose"
  ]
 }

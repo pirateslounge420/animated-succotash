@@ -20,6 +20,192 @@
   "emergent": [],
   "canopy": [
    {
+    "name": "Dahurian larch",
+    "genus": "Larix",
+    "species": "gmelinii",
+    "shape": "conifer",
+    "temp_c": [
+     -6,
+     2
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     3,
+     10
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#7AB050",
+    "accent": "#7A5A3A",
+    "source": "Larix gmelinii, northern Siberia treeline on permafrost, world's northernmost tree; stunted 3-10 m at forest-tundra edge",
+    "traits": {
+     "genus": "Larix",
+     "species": "gmelinii",
+     "native_range": "Larix gmelinii, northern Siberia treeline on permafrost, world's northernmost tree",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      3,
+      10
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Lodgepole pine",
+    "genus": "Pinus",
+    "species": "contorta",
+    "family": "Pinaceae",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     10
+    ],
+    "moisture": [
+     0.35,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     3500
+    ],
+    "height_m": [
+     20.0,
+     35.0
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "needs": [],
+    "color": "#3E7A44",
+    "accent": "#8A7A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 10,
+      "interval_years": [
+       1,
+       3
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "western North American mountains; 20–35 m. Dense even-aged stands after fire; cones open in heat. Kew POWO for the name; standard floras for range.",
+    "from_catalogue": "pine",
+    "traits": {
+     "genus": "Pinus",
+     "species": "contorta",
+     "native_range": "western North American mountains",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      20.0,
+      35.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "wind",
+     "disperser": [
+      "wind",
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Mountain birch",
+    "genus": "Betula",
+    "species": "pubescens",
+    "shape": "broadleaf",
+    "temp_c": [
+     -4,
+     6
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#E8E0D0",
+    "source": "Betula pubescens (subsp. czerepanovii), Fennoscandian and Icelandic treeline, crooked multi-stemmed birch 2-8 m",
+    "traits": {
+     "genus": "Betula",
+     "species": "pubescens",
+     "native_range": "Betula pubescens (subsp",
+     "leaf_shape": "simple or compound broad leaves, most deciduous in cold bands",
+     "trunk": "single trunk dividing into a rounded crown",
+     "petiole": "short petiole",
+     "height_m": [
+      2,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
     "name": "Wind-stunted conifer",
     "genus": "Picea",
     "species": "engelmannii",
@@ -44,56 +230,251 @@
     "soil": "thin",
     "color": "#2A5A30",
     "accent": "#6A5040",
-    "source": "Picea engelmannii, Rocky Mountain treeline 2700-3600 m, forms krummholz mats and flagged trees 1-8 m"
-   },
+    "source": "Picea engelmannii, Rocky Mountain treeline 2700-3600 m, forms krummholz mats and flagged trees 1-8 m",
+    "traits": {
+     "genus": "Picea",
+     "species": "engelmannii",
+     "native_range": "Picea engelmannii, Rocky Mountain treeline 2700-3600 m, forms krummholz mats and flagged trees 1-8 m",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      1,
+      8
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   }
+  ],
+  "shrub": [
    {
-    "name": "Mountain birch",
-    "genus": "Betula",
-    "species": "pubescens",
-    "shape": "broadleaf",
+    "name": "Alpenrose",
+    "genus": "Rhododendron",
+    "species": "ferrugineum",
+    "family": "Ericaceae",
+    "shape": "shrub",
     "temp_c": [
-     -4,
+     -1,
      6
     ],
     "moisture": [
      0.5,
-     1
+     0.9
+    ],
+    "altitude_m": [
+     1500,
+     2800
     ],
     "height_m": [
-     2,
-     8
+     0.3,
+     1.0
     ],
-    "density": 0.8,
-    "soil": "thin",
-    "color": "#5AB040",
-    "accent": "#E8E0D0",
-    "source": "Betula pubescens (subsp. czerepanovii), Fennoscandian and Icelandic treeline, crooked multi-stemmed birch 2-8 m"
+    "density": 0.9,
+    "soil": "peat",
+    "needs": [],
+    "color": "#2A5A38",
+    "accent": "#D03050",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "spring",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Alps subalpine; Heath above the trees. Kew POWO; standard floras.",
+    "from_catalogue": "rhododendron",
+    "traits": {
+     "genus": "Rhododendron",
+     "species": "ferrugineum",
+     "native_range": "Alps subalpine",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.0
+     ],
+     "growth_rate": "slow (decades)",
+     "reproduction": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "bird",
+      "mammal"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
-    "name": "Dahurian larch",
-    "genus": "Larix",
-    "species": "gmelinii",
-    "shape": "conifer",
+    "name": "Dwarf birch",
+    "genus": "Betula",
+    "species": "nana",
+    "shape": "shrub",
     "temp_c": [
-     -6,
-     2
+     -8,
+     3
     ],
     "moisture": [
      0.4,
      0.9
     ],
     "height_m": [
-     3,
-     10
+     0.3,
+     1.2
     ],
-    "density": 0.5,
+    "density": 0.7,
     "soil": "peat",
-    "color": "#7AB050",
-    "accent": "#7A5A3A",
-    "source": "Larix gmelinii, northern Siberia treeline on permafrost, world's northernmost tree; stunted 3-10 m at forest-tundra edge"
-   }
-  ],
-  "shrub": [
+    "color": "#3F8A3A",
+    "accent": "#7A4A2A",
+    "source": "Betula nana, circumpolar forest-tundra and bog, 0.2-1.2 m",
+    "traits": {
+     "genus": "Betula",
+     "species": "nana",
+     "native_range": "Betula nana, circumpolar forest-tundra and bog, 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.2
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Dwarf willow",
+    "genus": "Salix",
+    "species": "glauca",
+    "shape": "shrub",
+    "temp_c": [
+     -6,
+     4
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "color": "#7AA070",
+    "accent": "#8A7A5A",
+    "source": "Salix glauca, circumboreal treeline and tundra, grey-leaved shrub 0.3-1.5 m along streams",
+    "traits": {
+     "genus": "Salix",
+     "species": "glauca",
+     "native_range": "Salix glauca, circumboreal treeline and tundra, grey-leaved shrub 0",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.3,
+      1.5
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Heath",
+    "genus": "Vaccinium",
+    "species": "myrtillus",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "color": "#4A9A3A",
+    "accent": "#3A3A5A",
+    "source": "Vaccinium myrtillus (bilberry), Eurasian subalpine heath and birch forest floor, 20-60 cm; Empetrum/Vaccinium heath dominant at treeline",
+    "traits": {
+     "genus": "Vaccinium",
+     "species": "myrtillus",
+     "native_range": "Vaccinium myrtillus (bilberry), Eurasian subalpine heath and birch forest floor, 20-60 cm",
+     "leaf_shape": "small leaves on many stems",
+     "trunk": "multi-stemmed from the base",
+     "petiole": "short petiole",
+     "height_m": [
+      0.2,
+      0.6
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
    {
     "name": "Mountain pine",
     "genus": "Pinus",
@@ -119,76 +500,24 @@
     "soil": "thin",
     "color": "#2F6A30",
     "accent": "#6A5040",
-    "source": "Pinus mugo, Alps/Carpathians/Balkans subalpine 1400-2700 m, prostrate multi-stem krummholz 1-3 m"
-   },
-   {
-    "name": "Dwarf willow",
-    "genus": "Salix",
-    "species": "glauca",
-    "shape": "shrub",
-    "temp_c": [
-     -6,
-     4
-    ],
-    "moisture": [
-     0.5,
-     1
-    ],
-    "height_m": [
-     0.3,
-     1.5
-    ],
-    "density": 0.7,
-    "soil": "wet",
-    "color": "#7AA070",
-    "accent": "#8A7A5A",
-    "source": "Salix glauca, circumboreal treeline and tundra, grey-leaved shrub 0.3-1.5 m along streams"
-   },
-   {
-    "name": "Dwarf birch",
-    "genus": "Betula",
-    "species": "nana",
-    "shape": "shrub",
-    "temp_c": [
-     -8,
-     3
-    ],
-    "moisture": [
-     0.4,
-     0.9
-    ],
-    "height_m": [
-     0.3,
-     1.2
-    ],
-    "density": 0.7,
-    "soil": "peat",
-    "color": "#3F8A3A",
-    "accent": "#7A4A2A",
-    "source": "Betula nana, circumpolar forest-tundra and bog, 0.2-1.2 m"
-   },
-   {
-    "name": "Heath",
-    "genus": "Vaccinium",
-    "species": "myrtillus",
-    "shape": "shrub",
-    "temp_c": [
-     -4,
-     8
-    ],
-    "moisture": [
-     0.4,
-     0.9
-    ],
-    "height_m": [
-     0.2,
-     0.6
-    ],
-    "density": 0.9,
-    "soil": "peat",
-    "color": "#4A9A3A",
-    "accent": "#3A3A5A",
-    "source": "Vaccinium myrtillus (bilberry), Eurasian subalpine heath and birch forest floor, 20-60 cm; Empetrum/Vaccinium heath dominant at treeline"
+    "source": "Pinus mugo, Alps/Carpathians/Balkans subalpine 1400-2700 m, prostrate multi-stem krummholz 1-3 m",
+    "traits": {
+     "genus": "Pinus",
+     "species": "mugo",
+     "native_range": "Pinus mugo, Alps/Carpathians/Balkans subalpine 1400-2700 m, prostrate multi-stem krummholz 1-3 m",
+     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
+     "trunk": "single straight trunk, whorled branches, conical crown",
+     "petiole": "none — leaves sessile",
+     "height_m": [
+      1,
+      3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "ground": [
@@ -213,30 +542,24 @@
     "soil": "thin",
     "color": "#3A7A35",
     "accent": "#F8F8F0",
-    "source": "Dryas octopetala, Arctic-alpine Eurasia/N America, evergreen mat on calcareous ground"
-   },
-   {
-    "name": "Star reindeer lichen",
-    "genus": "Cladonia",
-    "species": "stellaris",
-    "shape": "moss",
-    "temp_c": [
-     -8,
-     5
-    ],
-    "moisture": [
-     0.2,
-     0.7
-    ],
-    "height_m": [
-     0.05,
-     0.12
-    ],
-    "density": 0.8,
-    "soil": "thin",
-    "color": "#D8E0C8",
-    "accent": "#B8C0A8",
-    "source": "Cladonia stellaris, circumboreal forest-tundra, pale star-shaped lichen mats dominant on dry lichen heath"
+    "source": "Dryas octopetala, Arctic-alpine Eurasia/N America, evergreen mat on calcareous ground",
+    "traits": {
+     "genus": "Dryas",
+     "species": "octopetala",
+     "native_range": "Dryas octopetala, Arctic-alpine Eurasia/N America, evergreen mat on calcareous ground",
+     "leaf_shape": "tiny leaves packed in a dome",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.03,
+      0.1
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    },
    {
     "name": "Sheep fescue",
@@ -259,20 +582,67 @@
     "soil": "thin",
     "color": "#8AB050",
     "accent": "#C8B060",
-    "source": "Festuca ovina, Eurasian and N American mountain heath, fine-leaved tussock grass 10-30 cm"
+    "source": "Festuca ovina, Eurasian and N American mountain heath, fine-leaved tussock grass 10-30 cm",
+    "traits": {
+     "genus": "Festuca",
+     "species": "ovina",
+     "native_range": "Festuca ovina, Eurasian and N American mountain heath, fine-leaved tussock grass 10-30 cm",
+     "leaf_shape": "narrow grass blades in a dense tussock",
+     "trunk": "none",
+     "petiole": "sheath",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
+   },
+   {
+    "name": "Star reindeer lichen",
+    "genus": "Cladonia",
+    "species": "stellaris",
+    "shape": "moss",
+    "temp_c": [
+     -8,
+     5
+    ],
+    "moisture": [
+     0.2,
+     0.7
+    ],
+    "height_m": [
+     0.05,
+     0.12
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#D8E0C8",
+    "accent": "#B8C0A8",
+    "source": "Cladonia stellaris, circumboreal forest-tundra, pale star-shaped lichen mats dominant on dry lichen heath",
+    "traits": {
+     "genus": "Cladonia",
+     "species": "stellaris",
+     "native_range": "Cladonia stellaris, circumboreal forest-tundra, pale star-shaped lichen mats dominant on dry lichen heath",
+     "leaf_shape": "tiny leaves on thread stems",
+     "trunk": "none",
+     "petiole": "none",
+     "height_m": [
+      0.05,
+      0.12
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    }
    }
   ],
   "epiphyte": []
- },
- "special": {
-  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 4,
-  "names": [
-   "Cannabis - Russian ruderalis",
-   "Cannabis - Altai",
-   "Cannabis - Mongolian",
-   "Cannabis - Central Russian hemp"
-  ]
  },
  "associations": [
   {
@@ -363,5 +733,9 @@
    "cover": 0.4,
    "source": "Dahl 1957 Rondane; Ellenberg 1988 (Loiseleurio-Vaccinion)"
   }
+ ],
+ "hero_species": [
+  "Alpenrose",
+  "Lodgepole pine"
  ]
 }

@@ -1,0 +1,391 @@
+{
+ "key": "FRESHWATER_MARSH",
+ "name": "Freshwater marsh",
+ "group": "Wetlands",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Treeless emergent wetland on mineral soil with standing fresh water: tall stands of cattail, reed and bulrush grade into sedge tussocks, iris and sweet-grass at the margins with scattered willow/sweet-gale; drawn on the North American prairie potholes and Great Lakes marshes and the European reedbeds (Danube, Norfolk Broads).",
+ "climate": {
+  "temp_c": [
+   3,
+   18
+  ],
+  "moisture": [
+   0.66,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Grey willow",
+    "genus": "Salix",
+    "species": "cinerea",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     3,
+     7
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.2
+    ],
+    "color": "#7AA860",
+    "accent": "#8A7A5A",
+    "source": "Salix cinerea, grey willow, Europe & W Asia, willow carr invading fen and marsh margins, 3-7 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Sweet gale",
+    "genus": "Myrica",
+    "species": "gale",
+    "shape": "shrub",
+    "temp_c": [
+     3,
+     14
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.6,
+     2
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#3E8F3A",
+    "accent": "#8A6A4A",
+    "source": "Myrica gale, bog myrtle, circumboreal, scented shrub of marsh and fen margins, 0.6-2 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Buttonbush",
+    "genus": "Cephalanthus",
+    "species": "occidentalis",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     1.5,
+     4
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.5
+    ],
+    "color": "#4A9A3A",
+    "accent": "#F0F0E0",
+    "source": "Cephalanthus occidentalis, buttonbush, eastern North America, shrub of marsh edges standing in shallow water, 1.5-4 m, white ball flowers — USDA Plants / Wikipedia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Cattail",
+    "genus": "Typha",
+    "species": "latifolia",
+    "shape": "reed",
+    "temp_c": [
+     3,
+     18
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     1.5,
+     3
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.8
+    ],
+    "color": "#5AB040",
+    "accent": "#7A5A3A",
+    "source": "Typha latifolia, broadleaf cattail, circumboreal (N America, Eurasia), dominant emergent of freshwater marsh, 1.5-3 m, brown sausage heads — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Common reed",
+    "genus": "Phragmites",
+    "species": "australis",
+    "shape": "reed",
+    "temp_c": [
+     3,
+     18
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     2,
+     4
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1.0
+    ],
+    "color": "#7AA860",
+    "accent": "#C8B060",
+    "source": "Phragmites australis, common reed, cosmopolitan, vast reedbeds in freshwater and brackish marsh, 2-4 m feathery plumes — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Soft-stem bulrush",
+    "genus": "Schoenoplectus",
+    "species": "tabernaemontani",
+    "shape": "reed",
+    "temp_c": [
+     3,
+     18
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.1,
+     1.0
+    ],
+    "color": "#4A9A3A",
+    "accent": "#8A6A4A",
+    "source": "Schoenoplectus tabernaemontani, softstem bulrush, cosmopolitan, leafless round culms in shallow open water of marshes, 1-3 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Yellow flag iris",
+    "genus": "Iris",
+    "species": "pseudacorus",
+    "shape": "spike_rosette",
+    "temp_c": [
+     5,
+     18
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     0.7,
+     1.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#4A9A3A",
+    "accent": "#F0C820",
+    "source": "Iris pseudacorus, yellow flag, Europe, W Asia & N Africa, marsh margins and ditches, 0.7-1.5 m sword leaves, yellow flowers — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Tussock sedge",
+    "genus": "Carex",
+    "species": "stricta",
+    "shape": "tussock",
+    "temp_c": [
+     3,
+     16
+    ],
+    "moisture": [
+     0.75,
+     1
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#4A9A3A",
+    "accent": "#A8B860",
+    "source": "Carex stricta, tussock sedge, eastern & central North America, dense tussocks in sedge meadows and marsh edges, 0.5-1.2 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Reed sweet-grass",
+    "genus": "Glyceria",
+    "species": "maxima",
+    "shape": "grass",
+    "temp_c": [
+     5,
+     16
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.6
+    ],
+    "color": "#5AB040",
+    "accent": "#C8C880",
+    "source": "Glyceria maxima, reed sweet-grass, Europe & W Asia, lush stands on nutrient-rich marsh and river margins, 1-2.5 m — Wikipedia / Kew POWO"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 23,
+  "names": [
+   "Andean wax palm",
+   "Nikau palm",
+   "Windmill palm",
+   "Needle palm",
+   "Dwarf palmetto",
+   "Amorphophallus albus",
+   "Amorphophallus coaetaneus",
+   "Amorphophallus dunnii",
+   "Amorphophallus henryi",
+   "Amorphophallus hirtus",
+   "Amorphophallus kiusianus",
+   "Amorphophallus konjac",
+   "Amorphophallus krausei",
+   "Amorphophallus mekongensis",
+   "Amorphophallus tonkinensis",
+   "Amorphophallus verticillatus",
+   "Amorphophallus xiei",
+   "Amorphophallus yaoi",
+   "Amorphophallus yuloensis",
+   "Amorphophallus yunnanensis",
+   "Cannabis - Japanese hemp (asa)",
+   "Cannabis - Korean hemp (Andong)",
+   "Cannabis - Kentucky feral hemp"
+  ]
+ },
+ "associations": [
+  {
+   "name": "Cattail-bulrush deep marsh",
+   "where": "standing water most of the year, mineral mud, open basin center",
+   "dominant": [
+    "Cattail",
+    "Soft-stem bulrush"
+   ],
+   "companion": [],
+   "ground": [
+    "Cattail",
+    "Soft-stem bulrush",
+    "Common reed"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Prairie pothole deep-marsh zone (Stewart & Kantrud 1971; USNVC)"
+  },
+  {
+   "name": "Common reed bed",
+   "where": "shallow water and wet basin margins, sheltered, silty",
+   "dominant": [
+    "Common reed"
+   ],
+   "companion": [],
+   "ground": [
+    "Common reed",
+    "Reed sweet-grass",
+    "Yellow flag iris"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Phragmition reedswamp (Ellenberg 1988; Rodwell 1995 British Plant Communities S4)"
+  },
+  {
+   "name": "Tussock sedge meadow",
+   "where": "seasonally flooded outer margin, saturated but rarely deep",
+   "dominant": [
+    "Tussock sedge"
+   ],
+   "companion": [
+    "Sweet gale"
+   ],
+   "ground": [
+    "Tussock sedge",
+    "Yellow flag iris",
+    "Reed sweet-grass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Carex stricta sedge meadow (Curtis 1959 Vegetation of Wisconsin; USNVC)"
+  },
+  {
+   "name": "Willow-buttonbush marsh edge",
+   "where": "shrubby marsh margin and drainage lines, waterlogged soil",
+   "dominant": [
+    "Grey willow",
+    "Buttonbush"
+   ],
+   "companion": [
+    "Sweet gale"
+   ],
+   "ground": [
+    "Tussock sedge",
+    "Cattail"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Shrub-carr and buttonbush swamp (Curtis 1959; Rodwell 1991 W1 Salix cinerea woodland)"
+  }
+ ]
+}
