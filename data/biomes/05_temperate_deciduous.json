@@ -440,5 +440,51 @@
     "source": "Hedera helix, common ivy, Europe & W Asia, climbs trunks of oak/ash woodland up to 25 m — Wikipedia / Kew POWO"
    }
   ]
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 40,
+  "names": [
+   "Andean wax palm",
+   "Cabbage-tree palm",
+   "Nikau palm",
+   "Windmill palm",
+   "Needle palm",
+   "Dwarf palmetto",
+   "Amorphophallus albus",
+   "Amorphophallus coaetaneus",
+   "Amorphophallus dunnii",
+   "Amorphophallus henryi",
+   "Amorphophallus hirtus",
+   "Amorphophallus kiusianus",
+   "Amorphophallus konjac",
+   "Amorphophallus krausei",
+   "Amorphophallus mekongensis",
+   "Amorphophallus tonkinensis",
+   "Amorphophallus verticillatus",
+   "Amorphophallus xiei",
+   "Amorphophallus yaoi",
+   "Amorphophallus yuloensis",
+   "Amorphophallus yunnanensis",
+   "Adam's needle",
+   "Weak-leaf yucca",
+   "Spanish dagger",
+   "Cannabis - Manali",
+   "Cannabis - Parvati (Malana)",
+   "Cannabis - Nepalese",
+   "Cannabis - Yunnan",
+   "Cannabis - Durban",
+   "Cannabis - Transkei (Rooibaard)",
+   "Cannabis - Swazi",
+   "Cannabis - Kilimanjaro",
+   "Cannabis - Ethiopian",
+   "Cannabis - Northern Chinese hemp",
+   "Cannabis - Japanese hemp (asa)",
+   "Cannabis - Korean hemp (Andong)",
+   "Cannabis - Central Russian hemp",
+   "Cannabis - Carmagnola",
+   "Cannabis - Anatolian hemp (Kastamonu)",
+   "Cannabis - Kentucky feral hemp"
+  ]
  }
 }

@@ -278,5 +278,26 @@
    }
   ],
   "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 15,
+  "names": [
+   "Arkansas yucca",
+   "Adam's needle",
+   "Weak-leaf yucca",
+   "Spanish dagger",
+   "Sierra Madre yucca",
+   "Chiapas yucca",
+   "Glen Rose yucca",
+   "Pale-leaf yucca",
+   "Pine-woods yucca",
+   "Twistleaf yucca",
+   "Trichocereus pachanoi",
+   "Cannabis - Durban",
+   "Cannabis - Ethiopian",
+   "Cannabis - Rif (Ketama)",
+   "Cannabis - Turkish"
+  ]
  }
 }

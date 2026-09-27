@@ -417,5 +417,34 @@
     "source": "Tillandsia recurvata, ball moss, grey air-plant clumps on mesquite and acacia in Texas/Mexico thornscrub and Chaco — Wikipedia / USDA"
    }
   ]
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 23,
+  "names": [
+   "Date palm",
+   "Doum palm",
+   "Red cabbage palm",
+   "California fan palm",
+   "Mexican fan palm",
+   "Guadalupe palm",
+   "Giant Spanish dagger",
+   "Carr's yucca",
+   "Coahuila yucca",
+   "Declined yucca",
+   "Blue-boy yucca",
+   "Endlich's yucca",
+   "Faxon yucca",
+   "Feeanouki's yucca",
+   "Sahuiliqui",
+   "Linear-leaf yucca",
+   "Mixtec yucca",
+   "Perilous yucca",
+   "Potosí yucca",
+   "Querétaro yucca",
+   "Beaked yucca",
+   "Thompson's yucca",
+   "Torrey yucca"
+  ]
  }
 }

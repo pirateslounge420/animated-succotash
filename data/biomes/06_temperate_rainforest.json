@@ -493,5 +493,10 @@
     "source": "Usnea longissima, Methuselah's beard lichen, old-growth conifer rainforests of the Pacific NW & Scandinavia, pale hanging strands to 3 m — Wikipedia"
    }
   ]
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 0,
+  "names": []
  }
 }
