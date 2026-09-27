@@ -204,10 +204,9 @@ func _index_some() -> void:
 		while k < stop:
 			var j := k * 20
 			var key := Vector3i((Vector3(buf[j + 3], buf[j + 7], buf[j + 11]) / CELL_M).floor())
-			var list = cells.get(key)
-			if list == null:
-				list = PackedInt32Array()
-			(list as PackedInt32Array).append(k)
+			# Packed arrays are values: take it out, add to it, put it back.
+			var list: PackedInt32Array = cells.get(key, PackedInt32Array())
+			list.append(k)
 			cells[key] = list
 			k += 1
 		budget -= stop - e.next
