@@ -957,9 +957,15 @@ the way Godot draws a front face.)
 
 - **Movement** (`PlanetPlayer`): walk 6 km/h; sprint 5.5 m/s by
   double-tapping forward and holding it (or the pad's left stick held
-  in); crouch (hold Shift or pad B) lowers the capsule and camera to
-  1.05 m, slows to 0.8 m/s and stands back up only with headroom; holding
-  jump jumps again on each landing. `noise_level` (0 crouched and still ..
+  in), ended by releasing forward or drawing the bow; crouch (hold Shift
+  or pad B) lowers the capsule and camera to 1.05 m, slows to 0.8 m/s and
+  stands back up only with headroom; holding jump jumps again on each
+  landing. Speed has momentum (spec D5): it builds at 11 m/s² (a sprint in
+  about half a second) and bleeds off at 18 m/s² (a short slide to a
+  stop). Turns at speed are wider. In the air you keep your momentum and
+  steer at 3 m/s², so a sprinting jump carries; water is 4 m/s² both ways.
+  Walls and trunks stop the part of the momentum that runs into them.
+  `noise_level` (0 crouched and still ..
   1 sprinting, eased) and `still_time` are what wildlife reads.
   `anim_state` (idle, walk, sprint, crouch, crouch_walk, air, swim,
   climb) is the hook for a future rigged model's animation tree, with the

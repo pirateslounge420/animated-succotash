@@ -8,12 +8,15 @@ extends CharacterBody3D
 ##   walk     6 km/h (PlanetConst.WALK_SPEED_MPS, the pace DESIGN.md's
 ##            biome walk-across times assume)
 ##   sprint   double-tap forward and keep holding it (or hold the pad's
-##            left stick in); ends when forward is released
+##            left stick in); ends when forward is released or the bow is
+##            drawn
 ##   crouch   hold crouch (Shift): lower, slower and nearly silent
 ##   jump     hold to keep jumping each time you land
 ##   swim     in water deeper than chest height
 ##   climb    E facing a tree trunk: W/S up and down, A/D around it, E or
 ##            jump to let go (capped just into the crown)
+## Speed has momentum: it builds up and bleeds off rather than snapping, and
+## in the air you keep it (ACCEL_MPS2 and the constants below it).
 ## There is no fast travel: the world is crossed on foot.
 ##
 ## Trees (TreeContact): trunks block you, crowns you brush through or
@@ -40,6 +43,15 @@ const SPRINT_SPEED := 5.5
 const CROUCH_SPEED := 0.8
 const SWIM_SPEED := 1.6
 const JUMP_SPEED := 4.6
+## Momentum (spec D5: the F-Zero GX / Melee spirit). On the ground speed
+## builds at ACCEL_MPS2 and bleeds off at FRICTION_MPS2: a sprint takes
+## about half a second to reach and a short slide to stop, and turns at
+## speed are wider. In the air you keep your momentum and only steer
+## (AIR_ACCEL_MPS2), so a sprinting jump carries. Water is slow both ways.
+const ACCEL_MPS2 := 11.0
+const FRICTION_MPS2 := 18.0
+const AIR_ACCEL_MPS2 := 3.0
+const SWIM_ACCEL_MPS2 := 4.0
 ## Two forward presses closer together than this start a sprint.
 const DOUBLE_TAP_S := 0.3
 const STAND_HEIGHT := 1.7
@@ -81,6 +93,9 @@ var bow: Bow
 var _since_hit := 99.0
 var _invulnerable := 0.0
 var _fall_speed := 0.0
+## Horizontal momentum (m/s, along the ground): what the movement keys
+## steer, as opposed to knockback and gravity.
+var _move := Vector3.ZERO
 var up := Vector3.UP
 var surface_dir := Vector3.UP
 var swimming := false
@@ -193,6 +208,7 @@ func spawn_at(d: Vector3, look_toward := Vector3.ZERO) -> void:
 	_facing = _heading
 	_yaw = 0.0
 	velocity = Vector3.ZERO
+	_move = Vector3.ZERO
 	_orient()
 
 
@@ -269,7 +285,7 @@ func _physics_process(delta: float) -> void:
 	var speed := WALK_SPEED
 	if crouching:
 		speed = CROUCH_SPEED
-	elif sprinting and not bow.drawing:
+	elif sprinting:
 		speed = SPRINT_SPEED
 	if bow.drawing:
 		# Drawing a bow, you creep (as in Minecraft).
@@ -277,8 +293,23 @@ func _physics_process(delta: float) -> void:
 	if swimming:
 		speed = minf(speed, SWIM_SPEED)
 
+	# Momentum: steer the current speed toward what the keys ask for rather
+	# than jumping to it. Braking and reversing use friction; speeding up
+	# and turning use acceleration. Off the ground, no key means no braking.
+	var target := wish * speed
+	var rate := ACCEL_MPS2
+	if swimming:
+		rate = SWIM_ACCEL_MPS2
+	elif not is_on_floor():
+		rate = AIR_ACCEL_MPS2
+		if wish.length() < 0.1:
+			target = _move
+	elif target.length() < _move.length() or target.dot(_move) < 0.0:
+		rate = FRICTION_MPS2
+	_move -= up * _move.dot(up) # stay along the ground as "up" turns
+	_move = _move.move_toward(target, rate * delta)
 	var vertical := up * velocity.dot(up)
-	var horizontal := wish * speed
+	var horizontal := _move
 	if swimming:
 		# Float up to the surface, head above water.
 		vertical = up * clampf((depth - 1.2) * 2.0, -2.0, 2.0)
@@ -300,6 +331,11 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	for k in get_slide_collision_count():
 		var col := get_slide_collision(k)
+		# Running into a wall or a trunk stops the part of your momentum
+		# that goes into it; the rest slides along.
+		var n := col.get_normal()
+		if n.dot(up) < 0.7 and _move.dot(n) < 0.0:
+			_move -= n * _move.dot(n)
 		var body := col.get_collider()
 		if body is CollisionObject3D and (body as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER:
 			trees.bumped(body, col.get_collider_shape_index(), horizontal.length())
@@ -361,6 +397,7 @@ func try_climb() -> bool:
 	crouching = false
 	_set_crouch(false)
 	velocity = Vector3.ZERO
+	_move = Vector3.ZERO
 	trees.rustle(_climb_chunk, _climb_tree, 0.6)
 	return true
 
@@ -371,6 +408,7 @@ func stop_climb(push := false) -> void:
 		return
 	climbing = false
 	velocity = (_climb_out * 2.5 + up * 2.5) if push else Vector3.ZERO
+	_move = _climb_out * 2.5 if push else Vector3.ZERO
 	_climb_chunk = null
 	_climb_tree = -1
 
@@ -426,13 +464,13 @@ func _update_stance() -> void:
 		if now - _last_forward_ms < int(DOUBLE_TAP_S * 1000.0):
 			_sprint_latched = true
 		_last_forward_ms = now
-	if not Input.is_action_pressed("move_forward"):
+	if not Input.is_action_pressed("move_forward") or bow.drawing:
 		_sprint_latched = false
 	var want_crouch := Input.is_action_pressed("crouch") and not swimming
 	if want_crouch != crouching:
 		if want_crouch or _headroom():
 			_set_crouch(want_crouch)
-	sprinting = not crouching and (_sprint_latched or Input.is_action_pressed("sprint"))
+	sprinting = not crouching and not bow.drawing and (_sprint_latched or Input.is_action_pressed("sprint"))
 
 
 func _set_crouch(on: bool) -> void:
