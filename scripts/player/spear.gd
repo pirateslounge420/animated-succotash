@@ -202,9 +202,10 @@ func thrust() -> void:
 
 
 ## Let it fly toward the crosshair.
-func throw() -> void:
+## Where a spear thrown now would leave from and how fast, as [start,
+## velocity] (the throw itself and the aim arc, AimArc, both use it).
+func launch() -> Array:
 	var p := power()
-	player.make_noise(NOISE)
 	var cam := player.camera()
 	var from: Vector3
 	if player.first_person:
@@ -212,7 +213,14 @@ func throw() -> void:
 	else:
 		from = player.global_position + player.up * 1.75 + player.global_basis.x * 0.25 - player.global_basis.z * 0.3
 	var speed := lerpf(MIN_SPEED, MAX_SPEED, p)
-	var dir := _loft(from, _aim_point(), speed)
+	return [from, _loft(from, _aim_point(), speed) * speed + player.velocity * 0.5]
+
+
+func throw() -> void:
+	var p := power()
+	player.make_noise(NOISE)
+	var shot := launch()
+	var from: Vector3 = shot[0]
 	var s := ThrownSpear.new()
 	s.world = player.world
 	s.chunks = player.chunks
@@ -220,7 +228,7 @@ func throw() -> void:
 	s.exclude = [player.get_rid()]
 	s.damage = THROW_DAMAGE * p
 	player.world.world_root.add_child(s)
-	s.launch(from, dir * speed + player.velocity * 0.5)
+	s.launch(from, shot[1])
 	thrown = s
 	raising = false
 	charge = 0.0
@@ -252,7 +260,8 @@ func _loft(from: Vector3, target: Vector3, speed: float) -> Vector3:
 func in_reach() -> bool:
 	if thrown == null or not is_instance_valid(thrown) or not thrown.landed or player.dead:
 		return false
-	var chest := player.global_position + player.up * 0.9
+	# From your chest, or climbing, from your hands on the tree.
+	var chest := player.reach_from()
 	var tip := thrown.global_position
 	var butt := tip + thrown.global_basis.z.normalized() * LENGTH
 	return Geometry3D.get_closest_point_to_segment(chest, tip, butt).distance_to(chest) < PICK_M

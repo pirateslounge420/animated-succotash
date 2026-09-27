@@ -90,7 +90,9 @@ func update_bow(delta: float) -> void:
 	_carry()
 
 
-func _loose() -> void:
+## Where an arrow loosed now would leave from and how fast, as [start,
+## velocity] (the shot itself and the aim arc, AimArc, both use it).
+func launch() -> Array:
 	var p := power()
 	var cam := player.camera()
 	var from: Vector3
@@ -100,6 +102,13 @@ func _loose() -> void:
 		from = player.global_position + player.up * 1.35 - player.global_basis.z * 0.55
 	# Aim at what's under the crosshair.
 	var dir := (player.crosshair_point() - from).normalized()
+	return [from, dir * MAX_SPEED * p + player.velocity * 0.5]
+
+
+func _loose() -> void:
+	var p := power()
+	var shot := launch()
+	var from: Vector3 = shot[0]
 	var arrow := Arrow.new()
 	arrow.world = player.world
 	arrow.chunks = player.chunks
@@ -110,7 +119,7 @@ func _loose() -> void:
 		dmg *= 1.0 + randf() * 0.5 # a critical hit, now and then
 	arrow.damage = dmg
 	player.world.world_root.add_child(arrow)
-	arrow.launch(from, dir * MAX_SPEED * p + player.velocity * 0.5)
+	arrow.launch(from, shot[1])
 	_play("bow_release")
 	# Loud enough for wildlife round you to hear (PlanetPlayer.noise_level).
 	player.make_noise(Spear.NOISE)

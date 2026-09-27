@@ -1,13 +1,16 @@
 class_name PlanetPlayer
 extends CharacterBody3D
-## Third-person explorer on a round planet. Gravity pulls toward the
+## Explorer on a round planet, seen in first person by default (V or F5:
+## third person). Gravity pulls toward the
 ## planet's center, so "up" is recomputed every frame and the body turns to
 ## stand upright wherever it is.
 ##
 ## Movement (Controls has the bindings):
-##   walk     6 km/h (PlanetConst.WALK_SPEED_MPS, the pace DESIGN.md's
-##            biome walk-across times assume)
-##   sprint   double-tap forward and keep holding it (or hold the pad's
+##   walk     5.5 m/s (the designer's first play: the old sprint became
+##            the walk; DESIGN.md's walk-across times still use
+##            PlanetConst.WALK_SPEED_MPS, 6 km/h)
+##   sprint   8.8 m/s, 1.6 times the walk: double-tap forward and keep
+##            holding it (or hold the pad's
 ##            left stick in); ends when forward is released, the bow is
 ##            drawn or the spear raised
 ##   crouch   hold crouch (Shift): lower, slower and nearly silent
@@ -54,9 +57,21 @@ extends CharacterBody3D
 ## the mouse, press release_mouse (Esc) to free it.
 
 const GRAVITY := 9.8
-const WALK_SPEED := PlanetConst.WALK_SPEED_MPS
-const SPRINT_SPEED := 5.5
+const WALK_SPEED := 5.5
+const SPRINT_SPEED := 8.8
 const CROUCH_SPEED := 0.8
+## Creeping with the bow drawn or the spear raised.
+const AIM_SPEED := 0.75
+## How long a hand takes to reach for something and come back (grab_toward).
+const GRAB_S := 0.45
+## Unstick rule (_unstick): barely moving (under STUCK_MPS) while pushing
+## against two or more colliders for STUCK_S, you're nudged UNSTICK_M free.
+const STUCK_S := 0.5
+const STUCK_MPS := 0.15
+const UNSTICK_M := 0.35
+## The camera looks all the way up and all the way down, in first person and
+## orbiting in third (a hair short of vertical so the view never flips).
+const PITCH_MAX := PI * 0.5 - 0.002
 const SWIM_SPEED := 1.6
 const JUMP_SPEED := 4.6
 ## Momentum (spec D5: the F-Zero GX / Melee spirit). On the ground speed
@@ -64,8 +79,10 @@ const JUMP_SPEED := 4.6
 ## about half a second to reach and a short slide to stop, and turns at
 ## speed are wider. In the air you keep your momentum and only steer
 ## (AIR_ACCEL_MPS2), so a sprinting jump carries. Water is slow both ways.
-const ACCEL_MPS2 := 11.0
-const FRICTION_MPS2 := 18.0
+## (Scaled by 1.6 with the speeds, so the feel stays: a sprint still takes
+## about half a second to reach.)
+const ACCEL_MPS2 := 17.6
+const FRICTION_MPS2 := 28.8
 const AIR_ACCEL_MPS2 := 3.0
 const SWIM_ACCEL_MPS2 := 4.0
 ## Two forward presses closer together than this start a sprint.
@@ -104,11 +121,18 @@ var spawner: CreatureSpawner
 var camps: Camps
 var hp := MAX_HP
 var dead := false
-var first_person := false
+var first_person := true
+var _grab_at := Vector3.ZERO
+var _stuck_t := 0.0
+## How many times the unstick rule has freed you (tests read it).
+var unsticks := 0
+var _grab_t := 0.0
 var bow: Bow
 var spear: Spear
 ## What the crosshair rests on, named (the HUD shows its binomial).
 var look: LookTarget
+## The dotted arc of where the shot will go, while drawing or raising.
+var aim_arc: AimArc
 ## The weapon in hand: "bow" or "spear" (swap_weapon()).
 var weapon := "bow"
 var _since_hit := 99.0
@@ -225,6 +249,10 @@ func _ready() -> void:
 	spear.name = "Spear"
 	add_child(spear)
 	spear.setup(self)
+	aim_arc = AimArc.new()
+	aim_arc.name = "AimArc"
+	aim_arc.player = self
+	add_child(aim_arc)
 	look = LookTarget.new()
 	look.name = "LookTarget"
 	add_child(look)
@@ -282,7 +310,7 @@ func shake(amount: float) -> void:
 ## Point the camera: `pitch` (radians, negative looks down) and `yaw`
 ## relative to where the body faces.
 func set_view(pitch: float, yaw: float) -> void:
-	_pitch = clampf(pitch, -1.3, 0.6)
+	_pitch = clampf(pitch, -PITCH_MAX, PITCH_MAX)
 	_yaw = yaw
 
 
@@ -301,14 +329,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		_apply_view()
 	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		_yaw -= event.relative.x * MOUSE_SENSITIVITY
-		_pitch = clampf(_pitch - event.relative.y * MOUSE_SENSITIVITY, -_pitch_limit(), 0.6 if not first_person else 1.45)
+		_pitch = clampf(_pitch - event.relative.y * MOUSE_SENSITIVITY, -PITCH_MAX, PITCH_MAX)
 
 
 func _physics_process(delta: float) -> void:
 	var stick := Vector2(Input.get_joy_axis(0, JOY_AXIS_RIGHT_X), Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y))
 	if stick.length() > 0.15:
 		_yaw -= stick.x * STICK_SENSITIVITY * delta
-		_pitch = clampf(_pitch - stick.y * STICK_SENSITIVITY * delta, -_pitch_limit(), 0.6 if not first_person else 1.45)
+		_pitch = clampf(_pitch - stick.y * STICK_SENSITIVITY * delta, -PITCH_MAX, PITCH_MAX)
 
 	surface_dir = world.dir_of(global_position)
 	up = surface_dir
@@ -325,6 +353,7 @@ func _physics_process(delta: float) -> void:
 	_update_health(delta)
 	bow.update_bow(delta)
 	spear.update_spear(delta)
+	aim_arc.update_arc()
 	_update_camera(delta)
 	if dead:
 		_dead_step(delta)
@@ -356,7 +385,7 @@ func _physics_process(delta: float) -> void:
 		speed = SPRINT_SPEED
 	if aiming():
 		# Drawing a bow (or raising the spear), you creep (as in Minecraft).
-		speed = minf(speed, WALK_SPEED * 0.45)
+		speed = minf(speed, AIM_SPEED)
 	if swimming:
 		speed = minf(speed, SWIM_SPEED)
 
@@ -412,6 +441,7 @@ func _physics_process(delta: float) -> void:
 			trees.bumped(body, col.get_collider_shape_index(), horizontal.length())
 	trees.update_contact(delta, global_position, get_world_3d().direct_space_state)
 	var moved := get_real_velocity() - up * get_real_velocity().dot(up)
+	_unstick(delta, wish, moved)
 	footsteps.step_update(self, moved.length() * delta, is_on_floor(), delta)
 
 	# Safety net: never fall through unloaded ground.
@@ -548,7 +578,12 @@ func _graph_climb_step(delta: float) -> void:
 		_face(c.facing.normalized(), delta * 0.6)
 	_climb_out = c.push_dir
 	_orient()
-	_reach_arms(c.hands)
+	var hands := c.hands.duplicate()
+	if _grab_t > 0.0:
+		_grab_t -= delta
+		var s := 0 if hands[0].distance_to(_grab_at) < hands[1].distance_to(_grab_at) else 1
+		hands[s] = hands[s].lerp(_grab_at, sin(clampf(1.0 - _grab_t / GRAB_S, 0.0, 1.0) * PI))
+	_reach_arms(hands)
 	trees.climb_sounds(global_position + up * EYE_Y)
 	if Input.is_action_just_pressed("jump"):
 		stop_climb(true)
@@ -574,6 +609,58 @@ func _reach_arms(hands: Array[Vector3]) -> void:
 		x = x.normalized() if x.length() > 0.1 else y.cross(Vector3.BACK).normalized()
 		var z := x.cross(y)
 		arm.transform.basis = Basis(x, y * clampf(length / TreeClimb.ARM_M, 0.4, 1.3), z)
+
+
+## Unstick rule: pressed against two or more colliders at once (a trunk
+## and a bush stem, say), trying to move and barely moving for STUCK_S, the
+## capsule is nudged UNSTICK_M out along the nearest free direction to the
+## one you're pushing (of 16 round you, tested with test_move), or up if
+## none is free. Never while swimming or climbing.
+func _unstick(delta: float, wish: Vector3, moved: Vector3) -> void:
+	var pushing := wish.length() > 0.1 and not swimming and not climbing
+	var touching := get_slide_collision_count() >= 2
+	if not pushing or not touching or moved.length() > STUCK_MPS:
+		_stuck_t = 0.0
+		return
+	_stuck_t += delta
+	if _stuck_t < STUCK_S:
+		return
+	_stuck_t = 0.0
+	unsticks += 1
+	var want := (wish - up * wish.dot(up)).normalized()
+	var side := want.cross(up).normalized()
+	var best := Vector3.ZERO
+	var best_dot := -INF
+	for k in 16:
+		var a := TAU * k / 16.0
+		var d := (want * cos(a) + side * sin(a)).normalized()
+		if test_move(global_transform, d * UNSTICK_M):
+			continue
+		if d.dot(want) > best_dot:
+			best_dot = d.dot(want)
+			best = d
+	if best == Vector3.ZERO:
+		global_position += up * 0.3
+	else:
+		global_position += best * UNSTICK_M
+	_move = best * minf(_move.length(), WALK_SPEED * 0.5)
+
+
+## Where your reach is measured from: your chest, or while climbing the
+## middle of your two hands (you take things from the tree).
+func reach_from() -> Vector3:
+	if climbing and _climb_graph:
+		var c := trees.climb
+		return (c.hands[0] + c.hands[1]) * 0.5
+	return global_position + up * 0.9
+
+
+## Take something at `point`: while climbing, the hand nearer it lets go of
+## the wood and reaches for it for a moment (GRAB_S) while the other hand
+## holds on.
+func grab_toward(point: Vector3) -> void:
+	_grab_at = point
+	_grab_t = GRAB_S
 
 
 ## Where each of the elf's hands is (scene), for tests.
@@ -716,16 +803,12 @@ func _apply_view() -> void:
 		_spring.spring_length = 0.0
 		_spring.position = Vector3(0, CROUCH_EYE_Y if crouching else EYE_Y, 0)
 		_camera.cull_mask &= ~BODY_LAYER
-		_pitch = clampf(_pitch, -_pitch_limit(), 1.45)
+		_pitch = clampf(_pitch, -PITCH_MAX, PITCH_MAX)
 	else:
 		_spring.spring_length = 4.5
 		_spring.position = Vector3(0, CROUCH_CAMERA_Y if crouching else CAMERA_Y, 0)
 		_camera.cull_mask |= BODY_LAYER
-		_pitch = clampf(_pitch, -_pitch_limit(), 0.6)
-
-
-func _pitch_limit() -> float:
-	return 1.45 if first_person else 1.3
+		_pitch = clampf(_pitch, -PITCH_MAX, PITCH_MAX)
 
 
 ## Per frame: shake, and in third person the over-the-shoulder aim while

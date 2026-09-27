@@ -238,9 +238,12 @@ func _process(delta: float) -> void:
 		view = cam
 	ripples.update_ripples(delta, view.global_position, -view.global_basis.z, weather, sky.cloud_light_dir)
 	var prompt: String = creatures.prompt
-	# The thrown spear within reach (Spear) comes before a log, as E does.
-	if player.spear.prompt != "" and not player.climbing:
+	# What's in reach (the thrown spear, a stuck arrow) comes before a log
+	# or the climb prompt, as E does, climbing too.
+	if player.spear.prompt != "":
 		prompt = player.spear.prompt
+	elif Arrow.stuck_in_reach(player.reach_from(), Arrow.PICK_M) != null:
+		prompt = "E: take the arrow back"
 	if prompt == "":
 		prompt = player.prompt if player.prompt != "" else landmarks.nearby
 	hud.set_prompt(prompt)
@@ -298,13 +301,20 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("dev_howl") and world.dev_mode:
 		creatures.dev_howl()
 	elif event.is_action_pressed("interact"):
-		# Let go of a tree; else a log within reach; else climb the tree
-		# in front of you.
-		if player.climbing:
-			player.stop_climb()
-		# The thrown spear within reach: take it back (Spear).
-		elif player.spear.in_reach():
+		# E works from any state (climbing, swimming, crouched). What's in
+		# reach comes first: the thrown spear (Spear), then a stuck arrow;
+		# climbing, one hand keeps the wood and the other takes it. Else let
+		# go of a tree; else a log within reach; else climb the tree in
+		# front of you.
+		var arrow := Arrow.stuck_in_reach(player.reach_from(), Arrow.PICK_M)
+		if player.spear.in_reach():
+			player.grab_toward(player.spear.thrown.global_position)
 			player.spear.pick_up()
+		elif arrow != null:
+			player.grab_toward(arrow.global_position)
+			arrow.pick_up()
+		elif player.climbing:
+			player.stop_climb()
 		elif creatures.log_in_reach(player.global_position):
 			creatures.interact(player.global_position)
 		else:

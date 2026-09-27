@@ -26,6 +26,10 @@ const NOISE_M := 8.0
 
 ## Arrows in flight (hitboxes near one wake up: Hitboxes.wanted_at()).
 static var flying: Array[Arrow] = []
+## Arrows stuck where they hit, which the player can take back (E).
+static var stuck: Array[Arrow] = []
+## How far from you a stuck arrow can be taken back (m).
+const PICK_M := 2.0
 
 var world: Node
 var chunks: ChunkManager
@@ -37,6 +41,7 @@ var exclude: Array[RID] = []
 var _stuck := false
 var _life := 0.0
 var _voice: AudioStreamPlayer3D
+var _trail: AimArc.Trail
 
 
 func launch(from: Vector3, vel: Vector3) -> void:
@@ -44,12 +49,35 @@ func launch(from: Vector3, vel: Vector3) -> void:
 	global_position = from
 	velocity = vel
 	_voice = Audio3D.make("arrow", self)
+	_trail = AimArc.Trail.new()
+	add_child(_trail)
 	_orient()
 	flying.append(self)
 
 
 func _exit_tree() -> void:
 	flying.erase(self)
+	stuck.erase(self)
+
+
+## The stuck arrow nearest `pos` within `radius`, or null.
+static func stuck_in_reach(pos: Vector3, radius: float) -> Arrow:
+	var best: Arrow = null
+	var best_d := radius
+	for a in stuck:
+		if not is_instance_valid(a):
+			continue
+		var d := a.global_position.distance_to(pos)
+		if d < best_d:
+			best_d = d
+			best = a
+	return best
+
+
+## Taken back by the player: gone from where it was stuck.
+func pick_up() -> void:
+	stuck.erase(self)
+	queue_free()
 
 
 ## Is an arrow in flight within `radius` m of `pos`?
@@ -61,6 +89,9 @@ static func near(pos: Vector3, radius: float) -> bool:
 
 
 func _physics_process(delta: float) -> void:
+	# A brief faint trail behind it in flight (AimArc.Trail).
+	if _trail != null and _life < STUCK_S * 0.1:
+		_trail.track(global_position, delta, not _stuck)
 	_life += delta
 	if _stuck:
 		if _life > STUCK_S:
@@ -171,6 +202,7 @@ func _stick() -> void:
 	_stuck = true
 	velocity = Vector3.ZERO
 	flying.erase(self)
+	stuck.append(self)
 
 
 func _orient() -> void:

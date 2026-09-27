@@ -32,6 +32,11 @@ enum Kind { TRUNK, ROOT, LIMB, BRANCH, SOLID }
 
 ## Knee height (m): plants whose wood stays below it get no collider.
 const KNEE_M := 0.5
+## Bushes (shrub-like shapes that grow in the tree tiers) collide only with
+## their woody stem, at most this thick (radius, m); the foliage is walk-
+## through and rustles (TreeContact).
+const BUSH_STEM_R_M := 0.07
+const BUSH_SHAPES := [S.SHRUB, S.CUSHION, S.FERN, S.TUSSOCK, S.GRASS, S.REED, S.EPIPHYTE_CLUMP, S.KNEES]
 ## Limbs and branches at least this thick (radius, m) get a collider near
 ## the player, so arrows stick in them.
 const LIMB_COLLIDER_R_M := 0.05
@@ -101,6 +106,8 @@ class Skeleton:
 	var vines := 5
 	## Cypress: the buttress cone at the foot ([radius, height]; 0 = none).
 	var buttress := Vector2.ZERO
+	## A bush: its solid piece is only its woody stem (BUSH_STEM_R_M).
+	var bush := false
 
 	func add(p: Piece) -> int:
 		p.finish()
@@ -481,6 +488,7 @@ static func _fixed(sp: PlantSpecies) -> Skeleton:
 		_:
 			var dims := PlantMeshes.tree_dims(sp.shape)
 			sk.add(_solid([Vector3.ZERO, Vector3(0, dims.y, 0)], dims.x))
+	sk.bush = BUSH_SHAPES.has(sp.shape)
 	return sk
 
 
@@ -560,6 +568,8 @@ static func collider_segments(sk: Skeleton, h: float, mirrored: bool, near: bool
 				continue
 			var s_mid := (pc.arc[i0] + pc.arc[k]) * 0.5
 			var r := float(pc.at(s_mid)[2]) * COLLIDER_FIT * h
+			if sk.bush and pc.kind == Kind.SOLID:
+				r = minf(r, BUSH_STEM_R_M)
 			var a := pc.pts[i0] * mx * h
 			var b := pc.pts[k] * mx * h
 			if r >= 0.02 and a.distance_to(b) > 0.05:

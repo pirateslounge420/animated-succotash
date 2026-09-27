@@ -42,6 +42,7 @@ var host: Creature = null
 var _life := 0.0
 var _float_at := Vector3.ZERO
 var _voice: AudioStreamPlayer3D
+var _trail: AimArc.Trail
 
 
 func launch(from: Vector3, vel: Vector3) -> void:
@@ -53,10 +54,15 @@ func launch(from: Vector3, vel: Vector3) -> void:
 	global_position = from
 	velocity = vel
 	_voice = Audio3D.make("spear_impact", self)
+	_trail = AimArc.Trail.new()
+	add_child(_trail)
 	_orient()
 
 
 func _physics_process(delta: float) -> void:
+	# A brief faint trail behind it in flight (AimArc.Trail).
+	if _trail != null:
+		_trail.track(global_position, delta, not landed)
 	if landed:
 		_rest()
 		return
