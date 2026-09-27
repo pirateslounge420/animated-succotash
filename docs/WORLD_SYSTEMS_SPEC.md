@@ -12,7 +12,7 @@ Ordered the way it is *used*: how to work → where the project is → what to d
 1. Read this spec, then `docs/PROGRESS.md`. State in one line: *"Phase N. Last sign-off: ___. Any agents still working in copies: ___."*
 2. **Audit first, build second.** Before any change, list in plain English what you found and what you propose, then stop and wait for "go."
 3. Build only the current phase's deliverable. Nothing from later phases — not even scaffolding.
-4. Every change ships with **a visible way to verify it**: screenshot, recording, or a debug overlay on a hotkey. If it can't be seen, it isn't done.
+4. Every change ships with **a visible way to verify it**: a screenshot, a measured number from a headless tool, or a debug overlay on a hotkey. If it can't be seen or measured, it isn't done. No recordings unless the designer asks for one (A3).
 5. **Parallel agents:** if restyle/set-piece agents are working in separate copies, their changes are audited against this spec (Appendix R1 for anything visual) *before* merging. Nothing merges blind. One phase = one branch; land it, sign off, then start the next.
 6. End of session: prepend 3–6 lines to `docs/PROGRESS.md` — what changed, what's verified, what's next, open questions. Commit with the phase number in the message.
 
@@ -43,7 +43,10 @@ Ordered the way it is *used*: how to work → where the project is → what to d
 ### A3. The two-prompt rhythm (designer)
 1. Paste the phase's **Prompt A**. Claude Code audits, proposes, waits.
 2. Say *"Go. Show me [the deliverable] when done."*
-Look at the screenshot/recording. Right → *"Sign off Phase N."* Wrong → describe it in plain words and "Go" again. Never approve on a description.
+Look at the evidence. Right → *"Sign off Phase N."* Wrong → describe it in plain words and "Go" again. Never approve on a description.
+- **Done-when evidence** is the designer playing the build on the stamp, or a screenshot or a measured number from a headless tool. A card's "done when" names what to look at, not a video.
+- **No recordings unless asked.** Claude Code records a clip only when the designer asks for one.
+- **Verification stays under 10% of build time.** Prefer one screenshot or one headless number over a long render; if a check would cost more, say so and let the designer play it.
 
 ### A4. Dev settings (always on during development; one file, `data/dev.json` or project settings)
 - `DEV_DAY_LENGTH = 20 min` (game: 120 min).
@@ -81,6 +84,8 @@ The build is far past "prototype." Most layers of the stack already exist. The j
 ## Current phase: **Phase 1 — Player feel, hitboxes, audio** (card in Part E)
 
 Phase 0 — Look & Light was signed off on 2026-09-26 (the dusk river shot). Its notes stay below for reference.
+
+Phase 1 is signed off (2026-09-27) for hitboxes, 3D audio, ripples, the Night Rider and the Pond Crawler. **Player feel** (sprint, sneak, bow, spear, climbing, momentum) is held until the designer has played it on the stamp. When Phase 1 closes, **Phase 1.5** (the R1a second-batch render changes) comes next; the Phase 2 audit runs meanwhile, audit only.
 
 Target: **late-90s/early-2000s console 3D, saturated dark-fantasy**. Low-poly but rounded. See Appendix R1 and R1a.
 
@@ -154,7 +159,10 @@ PlanetData is ~119 bytes per cell: 6.6 MB on the full planet, 1.6 MB on the stam
 | flora.biomass[species] | `World.flora.biomass`, same sparse layout: the weighted sum of `age_structure`, kept as a cache | ~20–60 × f32 | ledger (derived from `age_structure`) | 6 |
 | flora.seedbank[species] | `World.flora.seedbank`, same sparse layout, annuals only | ~0–30 × f32 | ledger | 6 |
 | flora.genome_mean[species][gene] | `World.flora.genome_mean`, same sparse layout | present species × 6–10 u8 | ledger | 6 |
-| flora.snags, flora.logs | `World.flora.snags`, `World.flora.logs` | u16 each | ledger; tree ages seed them | 6 |
+| flora.snags, flora.logs | `World.flora.snags`, `World.flora.logs` | u16 each | ledger; tree ages seed them; fungi decay them (Phase 7) | 6 |
+| flora.litter | `World.flora.litter` | f32 (kg) | ledger: leaf fall from the age structure each autumn and at dormancy; fungi decay it | 7 |
+| soil.dung | `World.soil.dung` | f32 (kg) | ledger: from herbivore counts; dung fungi and beetles decay it | 7 |
+| fungi.biomass[species] | `World.fungi.biomass`, sparse like flora: per region only the fungi present | ~5–20 × f32 | ledger (decay rules) | 7 |
 | flora.cavities ⚑ | `World.flora.cavities` | 2× u8 (free, used) | ledger | 7 |
 | flora.burn_scar | `World.flora.burn_scar` | u16 (days since burn, 0 = none) | ledger (fire) | 9 |
 | water level (seasonal) | `World.hydro.level_offset` (added to `planet.water_level`) | f32 (m) | ledger (living water) | 9 |
@@ -198,7 +206,11 @@ data/plants/<catalogue>.json  plant catalogues, laid out like a biome file (key,
                              own temp_c / moisture / altitude_m bands. The keys regions, types and
                              family_defaults are ignored by species_db. Today: amorphophallus.json (246
                              species), cannabis.json (64 landraces of one species), trichocereus.json (18
-                             Andean torch cacti). Loaded from Phase 6.
+                             Andean torch cacti), yucca.json (all 55 Kew-accepted species), palms.json (43
+                             curated regional dominants), fungi.json (43 species, fungus block below).
+                             469 entries in all. Loaded from Phase 6.
+biome file `special`         computed list of the catalogue plants whose climate centre falls inside that
+                             biome (informational; Phase 6 may raise their density there so they are findable)
 plant                      { name, genus, species, invented?, stratum(canopy|under|ground), temp_min/max,
                              moisture_min/max, soil_min, slope_max, sway_stiffness, seasonal_color,
                              lifespan_years, snag_years, log_years,
@@ -226,12 +238,22 @@ plant                      { name, genus, species, invented?, stratum(canopy|und
   aroid                    { petiole: {pattern, base, spots}, spathe: {outside, inside}, bloom_with_leaf }
   cannabis                 { leaf_width, flowering: {trigger, hours, days}, uses, camp_follower }
   shape                    + aroid (catalogue entries use umbrella until the aroid shape exists)
+  fungus                   { substrate: snag_log|litter|dung|carcass|burn|mycorrhizal, edible: yes|cook|no|
+                             poison|deadly, glow, fruit_after_rain_days: [min, max], fruit_season, decay_rate }
+                             fungi.json entries only. Fungi read dead matter, not climate (Phase 6, 7)
 data/creatures/creatures.json
 creature                   { name, genus, species, invented?, id, trophic(insect|herbivore|small_pred|apex|scavenger|fish),
                              diet:[ids or "seeds"|"insects"|"leaves"|"fish"], temp_min/max, water_bound,
                              activity(day|night|dusk), temperament(friendly|skittish|aggressive|pack),
                              light_response, herd_min/max, nest:{type, site}, reproduce_days,
-                             biome_lock (mythic only), rare_variant, underground (cave fauna) }
+                             biome_lock (mythic only), rare_variant, underground (cave fauna),
+                             range_m?, senses_m?, seed_carry_h? }
+  diet (Phase 7)           names food object kinds: bloom (nectar), fruit, seed, leaves, sprouts, insects,
+                             carcass, dung, fungi, or prey creature ids
+  range_m / senses_m       how far it forages from home, and how far it notices each food kind (a bee sees
+                             blooms within tens of metres; a fruit bat smells ripe fruit across a valley)
+  seed_carry_h             how long eaten seed rides in the gut before it is dropped (frugivores)
+  nest.type                + hive (bees)
 ```
 **Binomials (every entry, from now on).** Every plant and creature entry has `genus` and `species`; `name` stays the display name. Real organisms use their real binomial — the accepted name in Kew's Plants of the World Online for plants (*Tsuga heterophylla* for the hemlock, *Canis lupus* for the wolf). Invented ones — mythics, Night Rider, Pond Crawler, the placeholder plants named by habitat and form ("Understory shrub") — get an invented binomial in the same Linnaean style and `"invented": true`. No entry is valid without them. Entries sharing a binomial are one interbreeding species. One exception to Kew: the torch cacti keep the name *Trichocereus*, with Kew's *Echinopsis* name recorded as `synonym`. (`repro.lifespan` — annual or perennial — is separate from `lifespan_years`, a tree's age at death.)
 
@@ -257,7 +279,7 @@ See Part C.
 - Implement D5 in full: double-tap sprint, Shift sneak with reduced noise radius, hitbox audit on player/creatures/trees/ruins/projectiles, spear (thrust/throw/retrieve), all sounds 3D with attenuation.
 - **(i) Branch graph:** canopy trees get individual branch meshes instead of a leaf blob; each tree exposes a branch graph — handhold points plus which ones are reachable from which — generated deterministically from seed + tree position, NEAR only.
   - **See-through crowns.** Leaves are clusters on the outer third of each limb and branch (noisy alpha-cutout cards per R1, no per-leaf geometry), with open air between them: from the ground you see the limbs, sky through the gaps and anything moving in them. Cluster count and size follow the species' `leaf_density` and, per tree, its growth and how dry its site is; the ground under a crown is dappled, shade broken by sun flecks. The far LOD keeps the solid crown.
-- **(ii) Climbing:** the player climbs trunks and shimmies along thick branches: slow, effortful, no swinging; extend `tree_contact`.
+- **(ii) Climbing:** the player climbs trunks and shimmies along thick branches: slow, effortful, no swinging; extend `tree_contact`. About 0.5 m/s up a trunk and ~0.3 m/s along a limb.
 - **(iii) Monkey:** a gibbon-type monkey rig that brachiates along the branch graph — arc-and-release with momentum, next handhold chosen by reach and swing arc; monkey-only; it goes in R3's warm–wet band.
 - **(iv) Ripple system, Night Rider, Pond Crawler** — the designer's spec, verbatim:
 > Two new creature templates, plus the ripple system they depend on. Add both to `data/creatures/creatures.json` under the existing schema; nothing spawns until [Phase 7], but the movement rigs and ripple system are Phase 1 work.
@@ -281,10 +303,18 @@ See Part C.
   - Dev keys (dev mode only): F4 collision shapes, F6 branch graphs, F7 spawns the next rig, F8 makes the nearest wolf pack howl.
   - Deferred: creatures steering around trunks and ruin walls (pathfinding, Phase 7/8), wind sound, campfire crackle.
   - Fire light on folk and props is #FFA050 (R1a updated).
+  - The bow and the spear both aim along the crosshair ray (from where the over-the-shoulder view is centred, not from the camera); every 3D sound, the Night Rider's, the Pond Crawler's and the gibbon's included, takes its falloff from `data/audio.json`.
 - **Do not build:** new creatures or systems beyond the ones on this card, combat balancing.
-- **Done when:** a recording shows double-tap sprint, sneak past a deer that would otherwise flee, an arrow and a thrown spear sticking where they visibly hit, and a howl that pans and fades as you walk away; the player climbs a tree while a monkey passes overhead, and a wading creature leaves rings.
+- **Done when:** the designer, playing on the stamp, can double-tap sprint, sneak past a deer that would otherwise flee, see an arrow and a thrown spear stick where they visibly hit, hear a howl pan and fade walking away (F8), climb a tree while a monkey passes overhead (F7), and see a wading creature leave rings (F7). Headless numbers back each one (A3).
 - **Prompt A:**
 > Phase 1. Audit the input map, player movement states, collision shapes on player/creatures/trees/ruins/arrows, how world sounds are played (2D vs 3D, attenuation), and how plant_meshes builds canopy trees today. Then audit the ripple and creature agents already running in copies against the patched Phase 1 card. Propose the minimal changes to hit D5 and the new card exactly, in plain English. Wait.
+
+## Phase 1.5 — R1a second-batch look
+- **When:** after Phase 1 closes (player feel signed off). Held until then.
+- **Touches:** `sky_system` and the sky shaders, `post_grade`, `palette.gdshaderinc`, `storm_fx`, the water shader.
+- Apply the R1a second-batch additions (Appendix R1a, verbatim there): day zenith `#0A1AE0` with hard-edged white clouds and grass `#4CC03A` in full sun, no haze washing the day out; deep night a full-blue grade toward `#1B2ED8` with local colour nearly gone, sliding from the dusk/moonrise values through the night; storm and volcanic skies purple-magenta `#5A1AA0` → `#C030C0`; warm light tiny, one or two points per scene; `#A01020` a rare dread accent; snow scenes fully blue.
+- **Do not build:** the new remnant kinds (stairways, hung bells, idol gates, hollow-tree dwellings, wells, candlelit chapels) — Phase 10.
+- **Done when:** two screenshots on the stamp — a dusk river and a deep-night scene — sit beside the batch-2 stills in `docs/references/batch2/` and belong.
 
 ## Phase 2 — World generation alignment
 - **Touches:** `planet/passes/*`, `river_network`, `biome_templates`, `data/biomes`.
@@ -363,13 +393,23 @@ See Part C.
   - Each entry carries a `ceremonial` tag — `documented` (pachanoi, peruvianus, bridgesii, scopulicola), `reported`, or `trace` — that the ceremony system reads.
   - The `cactus` shape exists already; verify it can do a many-armed column and a trunked tree form.
   - ⚑ Checked, and it can't yet. Today's `cactus` is one fixed saguaro-like silhouette — a single column with two elbow arms, the same for every cactus species. It makes no many-armed column, no basal clump and no trunked tree. This phase gives it parameters (arm count and heights, basal pups, a trunked candelabra) along with the growth stages.
-  - ⚑ The file differs from this text in four places:
-    - it tags five species `documented`, macrogonus as well;
+  - Macrogonus is `reported` (set in the file 2026-09-27, as the designer ruled); four species are `documented`, as above.
+  - ⚑ The file differs from this text in three places:
     - validus is 4–8 m tall, not 6–12;
     - chalaensis grows at 100–1,200 m, not high ground;
     - six entries share Kew's *Echinopsis macrogona* but count as separate species under the binomial rule.
+- **Plant groups.** Every biome has four groups, and they overlap freely across biomes because plants read climate, not biome names: **trees** (canopy, emergent), **bushes** (shrub), **grasses and low plants** (ground), and **the catalogue plants** (aroids, cannabis, torch cacti, yuccas, palms, fungi), which carry their own bands and land wherever they fit. The biome files hold 661 researched entries (537 binomials, 558 names); the catalogues 469.
+- **Species pre-filter per cell (R6 performance gate) — required.** 661 + 469 entries is too many to test per site. At load, bin species by climate (temperature × moisture bins per tier, with margins for aspect, lapse across a chunk and the water boost); a chunk takes the union of the bins it covers, then drops what its soil and needs exclude. Report per-site candidate counts and chunk timings before and after.
+- **Shape work** (with the growth stages, which every plant shows):
+  - `palm`: fan versus feather crowns, a clustering (multi-stem) form, and the doum palm's forking trunk.
+  - `cactus` / `gnarled` builder: a dagger-crown yucca tree (Joshua-tree form: forking arms, each ending in a ball of stiff leaves), besides the torch-cactus forms above.
+  - `aroid`, as specified above.
+- **Fungi — data and look** (`data/plants/fungi.json`, 43 species with a `fungus` block, D4). Fungi are not plants: they read **dead matter** — `substrate` snag_log, litter, dung, carcass or burn — or are `mycorrhizal`, living on the roots of named living trees and fruiting under them. Climate only gates **when** they fruit: `fruit_after_rain_days` after rain, in `fruit_season`. `species_db` loads them apart from the plants: never placed by climate bands, only on their substrate.
+  - NEAR: fruiting bodies appear on the actual snag, log, litter patch, dung or carcass a few days after rain and run pin → button → cap → spent over days. Fairy rings widen each year. Glowing kinds (honey-fungus foxfire, ghost fungus, jack-o'-lantern, the glowing bonnets) light the forest floor and cave mouths at night as small teal-green points in the R1a accent. Morels flood last year's fire scar.
+  - The player can forage them, reading `edible` (yes, cook, no, poison, deadly). Hooks for Phase 10: camp folk who know the woods warn of the deadly ones; tinder fungus lights fires; reishi and truffle are trade goods; a giant puffball feeds a camp.
+  - ⚑ The seven mycorrhizal entries don't name their host trees yet; the host list is a data pass before Phase 7 reads it.
 - **Do not build:** fauna in the ledger (Phase 7), spreading fire (Phase 9; this phase has only the harness's scripted test burn), camp and player uses of plants (Phase 10).
-- **Done when:** a fertility overlay explains why a valley is lush and a ridge is bare; walking the stamp shows the right plant sizes in the right places; an old-growth patch on the stamp shows live trees, snags and logs together, and a young patch shows none; a runner plant shows visible stems linking a uniform patch; a bird-dispersed berry appears across a river its parent can't cross; a test burn regrows grass, then shrub, then trees with no stage coded; an aroid blooms, stinks, draws flies, and vanishes for the dry season; a female cannabis plant flowers on the day the sky says it should for that latitude; a forest patch on the stamp shows all four stages at once and a burn scar shows only the first two; a sapling browsed by deer never becomes a tree; a camp's planted plot is visibly taller each dev day.
+- **Done when:** a fertility overlay explains why a valley is lush and a ridge is bare; walking the stamp shows the right plant sizes in the right places; an old-growth patch on the stamp shows live trees, snags and logs together, and a young patch shows none; a runner plant shows visible stems linking a uniform patch; a bird-dispersed berry appears across a river its parent can't cross; a test burn regrows grass, then shrub, then trees with no stage coded; an aroid blooms, stinks, draws flies, and vanishes for the dry season; a female cannabis plant flowers on the day the sky says it should for that latitude; a forest patch on the stamp shows all four stages at once and a burn scar shows only the first two; a sapling browsed by deer never becomes a tree; a camp's planted plot is visibly taller each dev day; the species pre-filter's candidate counts and chunk timings are reported before and after; brackets appear on a wet-forest snag a few days after rain, and foxfire glows on it at night.
 
 ## Phase 7 — Ecology core
 - **Touches:** `ecology/ledger`, `ecology/events` and `tools/eco_sim.gd` (all from Phase 6), `creature_spawner`, `creatures.json`.
@@ -377,8 +417,16 @@ See Part C.
 - Add fauna to Phase 6's ledger and harness: food web (R3), diet caps, nests, fauna in the warm start; the harness (a headless run of N years on the stamp at max speed, CSV plus PNG charts, fixed seed with a multi-seed flag) gains population by species and region, camp food and the events timeline.
 - **Cave fauna:** bats that roost by day and pour out at dusk, cave fish, blind salamanders and spiders join the ledger with `underground: true`; their regions are the cave-bearing cells from Phase 3.
 - **Cavity chain:** snags are habitat. Wood-boring beetles and grubs live in snags and logs (insect count capped by snag count). Woodpeckers eat them and carve cavities — a snag gains a cavity slot when a woodpecker nests there. Owls, squirrels and other cavity nesters use old cavities; they can't nest without one. Owls hunt rodents at night. So `nest.site: cavity` requires a snag with a free cavity in the region.
+- **Foraging is the interaction** (part of the creature loop). Every creature's "seek food" step is a real trip to a real food object, not a number from the ledger.
+  - NEAR food objects: blooms, fruit and seed on mature plants; leaves and sprouts by growth stage; insects on their substrates; carcasses; fungi; prey.
+  - Each creature's `diet` names object kinds (D4). It searches its range for the nearest reachable match — bees see blooms within tens of metres, a fruit bat smells ripe fruit across a valley — goes there and eats it, and the object visibly changes.
+  - **Pollination is a side effect of feeding.** A nectar-feeder carries pollen from one bloom to the next same-species bloom it visits; a matching visit sets seed. `pollinator` says who can: insect (bees, beetles, butterflies by day, moths by night), carrion_fly, bird, bat, wind (no visit — pollen drifts along `wind_avg` and sets seed if a same-species plant is in range), self. No matching feeders in range means no seed: the yucca without moths spreads only by offsets, and the aroid without flies never fruits.
+  - **Dispersal is a side effect of eating fruit.** A frugivore carries seed for `seed_carry_h` and drops it where it is then — a bird at its roost or over water, a mammal on its trails, a fish downstream — as a real seed-bank entry at that spot. Gravity, wind and water need no creature. Human dispersal is camp folk dropping seed on the midden.
+  - **MID** runs the same rules as rates from feeder counts and bloom counts; the harness checks that both tiers agree on average.
+  - **Insects are creatures:** bees with hives (a nest type) and a range, butterflies following blooms, beetles and flies following carrion and dung, moths at night on pale blooms. Ledger counts like everything else; eaten by birds; the base of the food web.
+- **Decay loop (fungi, ledger side).** Dead-matter pools: `flora.snags`, `flora.logs`, new `flora.litter` (leaf fall from the age structure each autumn and at dormancy), `soil.carcass`, and `soil.dung` from herbivore counts (D3). Fungi are the only thing that moves matter out of those pools into soil fertility, at `decay_rate` × moisture, per region, for the fungi present — this **replaces** Phase 6's fixed snag and log timers. No fungi in a dry region means logs sit for decades; a wet forest eats its dead in years. Mycorrhizal species raise their host trees' growth rate slightly.
 - **Do not build:** fauna genetics, migration, fire, camps.
-- **Done when:** the harness shows a stable 100-year run, a new world already has nests, the population overlay balances over dev days, a cat takes a rodent, a wolf pack shows up where deer are; a woodpecker is seen on a snag by day, an owl leaves a cavity at dusk.
+- **Done when:** the harness shows a stable 100-year run, a new world already has nests, the population overlay balances over dev days, a cat takes a rodent, a wolf pack shows up where deer are; a woodpecker is seen on a snag by day, an owl leaves a cavity at dusk; a flowering shrub with bees sets fruit and one without doesn't; a berry bush's seedlings come up under the birds' roost tree; a wind-pollinated grass sets seed on a windy day with no insects; a wet-forest snag sprouts brackets after rain and is gone in a few dev years while a dry-ridge snag stands for decades; a fairy ring is wider next year; foxfire glows at night.
 
 ## Phase 8 — Living populations
 - **Touches:** ledger, `creature`, creature shader, `creatures.json`, `creature_spawner` (packs and dens).
@@ -407,7 +455,7 @@ See Part C.
 - Camps are night safe zones. Interaction proximity-based; no dialogue trees.
 - **Firewood:** camp folk gather snags and logs for firewood first, so old wood thins near camps.
 - **Culture:** each camp holds culture sliders {fish, hunt, forage, wary, range, ritual_smoke, ceremony} seeded from biome and the landmark it formed around, and moved by events — a wolf raid raises wary, a rich river raises fish. Goods, chatter, and how folk react to the player read from the sliders.
-- **Camps form around remnants:** camps already sit in inhabited ruins, wild sites and cliff sites. Make it a scored rule: every landmark — tower, castle, aqueduct, pyramid, graveyard, barrow, boardwalk, treehouse, igloo, bridges (unpark `hold/set-pieces` for this phase), cave mouths, springs, river fords, waterfalls — gives nearby sites a camp score from water, flat ground, food (flora biomass and ledger fauna), shelter, and distance from other camps. The highest scores get camps. The landmark's kind seeds the camp: aqueduct → water and farming; ford or bridge → crossing and trade; graveyard or barrow → small, wary, afraid of the night; cave mouth → shelter and mining, wary of the dark; castle or tower → largest and best defended. Camp folk salvage from the remnant (worked stone, timber, metal scraps) — the remnants are the work of an older, more advanced people, and salvage is where a camp's rarer tools come from. Culture sliders start from the landmark kind. Camps never form inside a landmark; the fire sits where the ruin builder left it.
+- **Camps form around remnants:** camps already sit in inhabited ruins, wild sites and cliff sites. Make it a scored rule: every landmark — tower, castle, aqueduct, pyramid, graveyard, barrow, boardwalk, treehouse, igloo, bridges (unpark `hold/set-pieces` for this phase), cave mouths, springs, river fords, waterfalls — gives nearby sites a camp score from water, flat ground, food (flora biomass and ledger fauna), shelter, and distance from other camps. The highest scores get camps. The landmark's kind seeds the camp: aqueduct → water and farming; ford or bridge → crossing and trade; graveyard or barrow → small, wary, afraid of the night; cave mouth → shelter and mining, wary of the dark; castle or tower → largest and best defended. Camp folk salvage from the remnant (worked stone, timber, metal scraps) — the remnants are the work of an older, more advanced people, and salvage is where a camp's rarer tools come from. Culture sliders start from the landmark kind. New camps at remnants never form inside a landmark; the fire sits where the ruin builder left it. Camps already inside ruins (the inhabited-ruin camps) stay where they are — the rule is for new camps only.
   - New remnant kinds, built in this phase (R1a, second reference batch): stone stairways up cliffs, hung bells, a stone giant or idol gate, hollow-tree dwellings, wells, chapels with candlelit interiors. The parked set pieces already hold a chapel.
   - ⚑ Today the ruin builder puts tepees, lean-tos and a fire inside some ruins. Read as: the builder's fire stays where it is and scored camps form beside landmarks, not in them — confirm whether those inhabited-ruin camps move out. Fords don't exist yet (derive them from river width and depth); cave mouths come from Phase 3.
 - **Cannabis — the loop:** three uses through the ordinary R4 carry rules — hemp types give fibre (stems → cordage and cloth for camp folk) and seed (food, oil); resinous types give smoke. Player: cut flowering females → carry a bundle (one inventory item) → hang it by a campfire or in a hut, where it dries over several in-game days as a visible state (the reference: dried herb bundles hanging from rafters, R1a second batch) → smoke it in a pipe (bone or clay; craftable, or a camp folk hands one over) at the fire. No numbers in the UI; strength comes from the plant's resin gene and how much is smoked.
@@ -463,6 +511,9 @@ The designer should be **surprised**. If any of these had to be hard-coded, the 
 - The landrace that crossed the mountains with a tribe doesn't flower in time.
 - Where the deer are thick there are no saplings, and the forest ages without children.
 - The valley with no wolves gets its wolves from the pack next door's grown children.
+- Kill the bees and the orchard stops.
+- The fig's children grow where the bats sleep.
+- The forest that keeps its fungi keeps its soil.
 
 ---
 
@@ -556,3 +607,4 @@ Werewolf/vampire transformation, grappling hook, underwater exploration/breath m
 7. **Every rate lives in `data/sim.json`.** The designer tunes; code never hard-codes a number.
 8. **Merge gate:** a system merges only when `eco_sim` shows, across 3 seeds and 100 years, no species at zero, none above 3× baseline, and every older chart unchanged in shape.
 9. **World age** is random at generation (warm start 50–200 years), so worlds differ in how much history they carry.
+10. **Performance gate: species pre-filter.** No per-site loop tests every species. Placement and the ledger read per-cell (or per-chunk) candidate lists built once at load from climate bins (Phase 6). Required from Phase 6: 661 biome entries + 469 catalogue entries.
