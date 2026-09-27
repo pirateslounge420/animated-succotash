@@ -52,10 +52,7 @@ func launch(from: Vector3, vel: Vector3) -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	global_position = from
 	velocity = vel
-	_voice = AudioStreamPlayer3D.new()
-	_voice.unit_size = 6.0
-	_voice.max_distance = 70.0
-	add_child(_voice)
+	_voice = Audio3D.make("spear_impact", self)
 	_orient()
 
 

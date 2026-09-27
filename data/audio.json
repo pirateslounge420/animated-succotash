@@ -14,6 +14,8 @@
 		"player_voice": {"unit_size": 4, "max_distance": 40, "model": "inverse", "max_db": 0, "muffle": null},
 		"bow": {"unit_size": 4, "max_distance": 40, "model": "inverse", "max_db": 0, "muffle": null},
 		"arrow": {"unit_size": 6, "max_distance": 60, "model": "inverse", "max_db": 3, "muffle": null},
+		"spear": {"unit_size": 4, "max_distance": 40, "model": "inverse", "max_db": 0, "muffle": null},
+		"spear_impact": {"unit_size": 6, "max_distance": 70, "model": "inverse", "max_db": 3, "muffle": null},
 		"rustle": {"unit_size": 6, "max_distance": 60, "model": "inverse", "max_db": 3, "muffle": null},
 		"rain": {"unit_size": 6, "max_distance": 60, "model": "inverse", "max_db": 0, "muffle": null},
 		"wildlife_call": {"unit_size": 8, "max_distance": 60, "model": "inverse", "max_db": 3, "muffle": [25, 60]},

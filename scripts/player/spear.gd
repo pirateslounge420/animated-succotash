@@ -79,9 +79,7 @@ func setup(p: PlanetPlayer) -> void:
 	vs.name = "Spear"
 	_view.add_child(vs)
 	Bow._no_shadow(_view)
-	_voice = AudioStreamPlayer3D.new()
-	_voice.unit_size = 4.0
-	add_child(_voice)
+	_voice = Audio3D.make("spear", self, "Voice")
 	_carry()
 
 
