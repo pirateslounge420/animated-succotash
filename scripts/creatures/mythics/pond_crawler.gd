@@ -230,22 +230,28 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 ## what it is; then the blocker the player bumps into, inside the lump.
 ## Points are in each node's own space, REF meters (the body's scale
 ## applies).
+## Hit parts (Hits): the hood is its head, the arms and hands its limbs,
+## the lump its body; its one slit eye (PondCrawlerBody.EYE) a sphere of
+## the slit's half-height times hits.eye_radius_scale, standing just
+## proud of the hood, marked "eye" (no side: hit, it's blind all round).
 func _make_hitboxes(attach: Dictionary) -> void:
 	hitboxes.clear()
 	_hitbox("Lump", Hitboxes.capsule(self, _skel, Vector3(0, -0.05, 0.32), Vector3(0, -0.05, -0.12), 0.52))
-	_hitbox("Hood", Hitboxes.sphere(self, _skel, Vector3(0, 0.46, -0.16), 0.42))
+	_hitbox("Hood", Hitboxes.sphere(self, _skel, Vector3(0, 0.46, -0.16), 0.42), "head")
+	_hitbox("Eye", Hitboxes.sphere(self, _skel, PondCrawlerBody.EYE, Hits.eye_radius(PondCrawlerBody.EYE_SIZE.y, _k)), "eye")
 	for sd: float in [-1.0, 1.0]:
 		var n := PondCrawlerBody.side_name(sd)
 		var r: Dictionary = _rest[sd]
-		_hitbox("UpperArm" + n, Hitboxes.capsule(self, attach["Shoulder" + n], Vector3.ZERO, r.e - r.s, 0.095))
-		_hitbox("Forearm" + n, Hitboxes.capsule(self, attach["Elbow" + n], Vector3.ZERO, r.w - r.e, 0.07))
+		_hitbox("UpperArm" + n, Hitboxes.capsule(self, attach["Shoulder" + n], Vector3.ZERO, r.e - r.s, 0.095), "limb")
+		_hitbox("Forearm" + n, Hitboxes.capsule(self, attach["Elbow" + n], Vector3.ZERO, r.w - r.e, 0.07), "limb")
 		var fwd := PondCrawlerBody.hand_fwd(sd)
-		_hitbox("Hand" + n, Hitboxes.capsule(self, attach["Wrist" + n], r.palm - r.w - fwd * 0.04, r.palm - r.w + fwd * 0.2, 0.09))
+		_hitbox("Hand" + n, Hitboxes.capsule(self, attach["Wrist" + n], r.palm - r.w - fwd * 0.04, r.palm - r.w + fwd * 0.2, 0.09), "limb")
 	_hitbox("Blocker", Hitboxes.blocker(self, _skel, Vector3(0, -0.05, 0.28), Vector3(0, -0.05, -0.08), 0.44))
 
 
-func _hitbox(part: String, body: StaticBody3D) -> void:
+func _hitbox(part: String, body: StaticBody3D, kind := "body") -> void:
 	body.name = part
+	Hits.mark(body, kind)
 	hitboxes.append(body)
 
 
@@ -281,8 +287,8 @@ func tick(delta: float, ctx: Dictionary) -> void:
 
 ## Shot: it flares and turns on you (Creature.hurt sets `angry`, since it
 ## bites); killed, it slumps (_dead_step).
-func hurt(amount: float, from_pos: Vector3) -> void:
-	super.hurt(amount, from_pos)
+func hurt(amount: float, from_pos: Vector3, part := "body", at := Vector3.INF) -> void:
+	super.hurt(amount, from_pos, part, at)
 	if dead:
 		Hitboxes.set_active(hitboxes, false)
 		return
@@ -307,7 +313,8 @@ func _think(delta: float, ctx: Dictionary) -> void:
 	var body := _to_g(_body_l)
 	var to_player := INF if pp == Vector3.INF else _flat(pp - body).length()
 	var noise: float = ctx.get("player_noise", 0.4)
-	var notice := float(rig.notice_m) * (0.45 + 1.1 * noise)
+	# Blinded (its eye hit, Creature.sight_toward()), it notices you late.
+	var notice := float(rig.notice_m) * (0.45 + 1.1 * noise) * sight_toward(ctx.get("player_dir", dir))
 	_strike_cd -= delta
 	if angry > 0.0:
 		angry -= delta
@@ -397,8 +404,9 @@ func _hands_step(delta: float) -> void:
 				busy = true
 			elif lurch:
 				# Stride from the species' speed: each hand covers a stride
-				# per swing, so the body keeps pace at speed_mps.
-				var stride := minf(species.speed_mps * float(rig.lurch_step_s) / _k, 1.6)
+				# per swing, so the body keeps pace at speed_mps (times
+				# `lame` once an arm is hurt: shorter strides).
+				var stride := minf(species.speed_mps * lame * float(rig.lurch_step_s) / _k, 1.6)
 				if _step(h, stride, float(rig.lurch_step_s), float(rig.lurch_lift_m)):
 					_blocked = false
 					return

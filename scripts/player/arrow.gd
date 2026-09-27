@@ -39,6 +39,8 @@ var damage := 10.0
 var exclude: Array[RID] = []
 
 var _stuck := false
+## Glanced off a camp person already (a second touch isn't another hit).
+var _glanced := false
 var _life := 0.0
 var _voice: AudioStreamPlayer3D
 var _trail: AimArc.Trail
@@ -146,7 +148,8 @@ func _physics_process(delta: float) -> void:
 	NoiseEvents.emit(hit_pos, NOISE_M)
 	match hit_kind:
 		"creature":
-			hit_obj.hurt(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
+			# Hurt in the part it met (Hits: head, eye, limb, body).
+			Hits.strike(ray.collider, ray.shape, damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a, hit_pos, camps)
 			var cr := hit_obj as Creature
 			if cr and cr.species.role == "swarm":
 				# Through a cloud of fireflies: on it flies.
@@ -160,8 +163,12 @@ func _physics_process(delta: float) -> void:
 			reparent(hit_part, true)
 			_stick()
 		"folk":
-			if camps:
-				camps.shot_at(hit_obj)
+			# They complain (Camps.shot_at()); the hit reads like any other
+			# (Hits), but no one's harmed. Only the first touch counts: a
+			# glancing arrow that clips them again on the way down doesn't.
+			if not _glanced:
+				Hits.strike(ray.collider, ray.shape, damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a, hit_pos, camps)
+			_glanced = true
 			# Off the part it hit, back the way it came, and down.
 			exclude.append((ray.collider as CollisionObject3D).get_rid())
 			global_position = hit_pos - velocity.normalized() * 0.03

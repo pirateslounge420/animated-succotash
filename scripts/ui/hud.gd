@@ -117,8 +117,9 @@ func _process(delta: float) -> void:
 
 
 ## Context prompt near the bottom of the screen ("E: turn over the log").
-## Hearts, crosshair, the bow's draw (or the spear's raise) and the
-## weapon in hand from the player, every frame.
+## The health meter, crosshair, the bow's draw (or the spear's raise) and
+## the weapon in hand from the player, every frame (the hits' numbers and
+## X StatusHud reads for itself, Hits).
 func update_status(player: PlanetPlayer) -> void:
 	_status.hp = player.hp
 	_status.max_hp = PlanetPlayer.MAX_HP

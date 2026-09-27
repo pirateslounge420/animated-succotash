@@ -196,7 +196,8 @@ func _update_state(leader: NightRider, ctx: Dictionary, delta: float) -> void:
 		angry = angry or (r.angry > 0.0 and not r.dead)
 	var dist := leader.distance_to(ctx.player_dir)
 	var night := float(ctx.get("daylight", 0.0)) < 0.3
-	var notice := float(_hunt.get("notice_m", 40.0)) * (0.6 + 0.8 * float(ctx.get("player_noise", 0.4)))
+	# Later on a side the leader's been blinded on (Creature.sight_toward()).
+	var notice := float(_hunt.get("notice_m", 40.0)) * (0.6 + 0.8 * float(ctx.get("player_noise", 0.4))) * leader.sight_toward(ctx.player_dir)
 	if aggressive and (angry or (night and dist < notice)):
 		state = "hunt"
 	elif state == "hunt" and dist > float(_hunt.get("give_up_m", 90.0)):

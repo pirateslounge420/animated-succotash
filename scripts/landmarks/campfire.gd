@@ -31,6 +31,9 @@ const RING_STONE := Color(0.4, 0.45, 0.52) # R1a blue-grey stone
 const TONGUES := [[0.62, 1.0, 0.0, 0.0, 0.0], [0.42, 0.66, 0.13, 0.06, 1.7],
 	[0.4, 0.6, -0.11, 0.08, 3.1], [0.36, 0.52, 0.02, -0.13, 4.6]]
 
+## Every campfire in the scene is in this group (lit_near()).
+const GROUP := "campfires"
+
 ## 0 by day, 1 at night (Main sets it each frame from the sky).
 static var night := 1.0
 static var _flame_mats: Array[ShaderMaterial] = []
@@ -45,6 +48,10 @@ static var _warm_mat: ShaderMaterial
 static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3, seat := true) -> Node3D:
 	var root := Node3D.new()
 	root.name = "Campfire"
+	# Every fire, wherever it was built (camps, the opening camp, mythic
+	# folk), for lit_near(); "lit" until something puts it out.
+	root.add_to_group(GROUP)
+	root.set_meta("lit", true)
 	parent.add_child(root)
 	root.global_position = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
 	root.global_basis = Basis.looking_at(CubeSphere.north(d), d)
@@ -133,6 +140,16 @@ static func _flame_material(i: int) -> ShaderMaterial:
 		m.set_shader_parameter("phase", TONGUES[_flame_mats.size()][4])
 		_flame_mats.append(m)
 	return _flame_mats[i]
+
+
+## Is a lit campfire within `radius` m of scene position `pos` (resting
+## there heals the player: PlanetPlayer)?
+static func lit_near(tree: SceneTree, pos: Vector3, radius: float) -> bool:
+	for f in tree.get_nodes_in_group(GROUP):
+		var fire := f as Node3D
+		if fire and fire.is_inside_tree() and fire.get_meta("lit", true) and fire.global_position.distance_to(pos) < radius:
+			return true
+	return false
 
 
 ## Flicker the flames and light (call every frame with a running time).

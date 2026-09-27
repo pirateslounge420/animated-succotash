@@ -1,14 +1,28 @@
 class_name StatusHud
 extends Control
-## Health and aim, drawn over the view (Hud owns it): ten hearts at the
-## bottom left (half hearts too, Minecraft-style) that shiver when you're
-## low, a crosshair while aiming or in first person with the bow's draw as
-## a filling arc beneath it (or the spear's raise), the weapon in hand
-## beside the hearts, a red flash at the screen's edge when you're hurt,
-## and the dark "You died" curtain. Otherwise a small dot marks the middle
-## of the view; when it rests on an animal or a plant near you it opens
-## into a ring and the species' binomial shows beneath it in small
-## italics (LookTarget).
+## Health, aim and hits, drawn over the view (Hud owns it):
+##   * the health meter at the bottom left: a slim R1a-blue bar and a small
+##     numeral beside it, pulsing when you're low (feedback.meter). Health
+##     never comes back on its own (PlanetPlayer: resting at a fire, food,
+##     medicine);
+##   * the weapon in hand above the meter;
+##   * a crosshair while aiming or in first person, with the bow's draw as
+##     a filling arc beneath it (or the spear's raise); otherwise a small
+##     dot marks the middle of the view, and when it rests on an animal or
+##     a plant near you it opens into a ring and the species' binomial
+##     shows beneath it in small italics (LookTarget);
+##   * hits (Hits.since(): one event per hit, several at once on one
+##     target added up): a small number rising from the impact point for
+##     about a second, white, yellow on a critical (a head or an eye),
+##     sized by distance within min_px..max_px so it stays readable but
+##     never dominates (feedback.number, feedback.colors); on a critical
+##     the crosshair (or the dot) flashes into an X for crit_x.hold_s with a
+##     short sharp tick (SoundSynth "hitmarker", a UI sound), and a kill
+##     holds the X for kill_hold_s. Creature health is never shown as a
+##     bar: numbers and behaviour are the readout;
+##   * a red flash at the screen's edge when you're hurt, and the dark
+##     "You died" curtain.
+## All the numbers are data/combat.json "feedback" (Hits.feedback()).
 
 var hp := 100.0
 var max_hp := 100.0
@@ -19,12 +33,19 @@ var draw_power := 0.0 # 0-1 bow power
 var weapon := ""
 ## The binomial under the crosshair (LookTarget), or "".
 var look_name := ""
+## The X now: seconds left, and whether it's a kill's (tests read these).
+var x_left := 0.0
+var x_kill := false
+## Numbers on screen: [{"e": a Hits event, "t": seconds shown}].
+var numbers: Array = []
+var _last_hit := 0
 var _italic: FontVariation
 var _hurt := 0.0
 var _death := 0.0
 var _dead := false
 var _time := 0.0
 var _death_label: Label
+var _tick: AudioStreamPlayer
 
 
 func _ready() -> void:
@@ -43,6 +64,15 @@ func _ready() -> void:
 	_death_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_death_label.visible = false
 	add_child(_death_label)
+	# The hit marker's tick: a UI sound, not placed in the world.
+	_tick = AudioStreamPlayer.new()
+	_tick.name = "HitTick"
+	_tick.stream = SoundSynth.stream("hitmarker", 0)
+	add_child(_tick)
+	# Nothing reported before the HUD existed shows.
+	var old := Hits.since(0)
+	if not old.is_empty():
+		_last_hit = int(old.back().id)
 
 
 func flash_hurt() -> void:
@@ -61,7 +91,44 @@ func _process(delta: float) -> void:
 	_hurt = maxf(_hurt - delta * 1.8, 0.0)
 	_death = move_toward(_death, 0.85 if _dead else 0.0, delta * 0.6)
 	_death_label.modulate.a = clampf(_death * 1.5, 0.0, 1.0)
+	_update_hits(delta)
 	queue_redraw()
+
+
+## New hits (Hits.since()): a number each, and the X on a critical or a
+## kill; numbers age and go.
+func _update_hits(delta: float) -> void:
+	var fb := Hits.feedback()
+	var num: Dictionary = fb.number
+	var cx: Dictionary = fb.crit_x
+	x_left = maxf(x_left - delta, 0.0)
+	for n in numbers:
+		n.t += delta
+	numbers = numbers.filter(func(n): return n.t < float(num.life_s))
+	for e in Hits.since(_last_hit):
+		_last_hit = int(e.id)
+		numbers.append({"e": e, "t": 0.0})
+		if e.killed:
+			x_left = maxf(x_left, float(cx.kill_hold_s))
+			x_kill = true
+			_play_tick(true)
+		elif e.crit:
+			# A kill's X showing stays a kill's (never cut short).
+			if x_left <= 0.0:
+				x_kill = false
+			x_left = maxf(x_left, float(cx.hold_s))
+			_play_tick(false)
+	while numbers.size() > int(num.max_on_screen):
+		numbers.pop_front()
+
+
+func _play_tick(kill: bool) -> void:
+	if _tick == null or _tick.stream == null:
+		return
+	var s: Dictionary = Hits.feedback().sound
+	_tick.volume_db = float(s.volume_db)
+	_tick.pitch_scale = float(s.kill_pitch) if kill else float(s.pitch)
+	_tick.play()
 
 
 func _draw() -> void:
@@ -76,34 +143,30 @@ func _draw() -> void:
 		draw_rect(Rect2(w, size.y * 0.9, size.x - 2 * w, size.y * 0.1), c)
 	if _death > 0.0:
 		draw_rect(Rect2(Vector2.ZERO, size), Color(0.08, 0.0, 0.0, _death))
-	# Hearts, bottom left above the key hints.
-	var n := 10
-	var per := max_hp / n
-	var low := hp < max_hp * 0.25
-	for i in n:
-		var p := Vector2(24 + i * 22, size.y - 96)
-		if low and not _dead:
-			p.y += sin(_time * 18.0 + i * 1.7) * 1.5
-		var fill := clampf((hp - i * per) / per, 0.0, 1.0)
-		_heart(p, 9.0, Color(0.12, 0.05, 0.06, 0.8), 1.0)
-		if fill > 0.0:
-			_heart(p, 7.0, Color(0.9, 0.12, 0.14), 1.0 if fill >= 0.75 else 0.5)
-	# The weapon in hand, above the hearts.
+	var fb := Hits.feedback()
+	var ink := Color.from_string(str(fb.colors.outline), Color(0.04, 0.07, 0.31))
+	_draw_meter(size, fb.meter, ink)
+	# The weapon in hand, above the meter.
 	if weapon != "" and not _dead:
 		var font := get_theme_default_font()
 		var at := Vector2(16, size.y - 114)
 		draw_string_outline(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, 4, Color(0.05, 0.07, 0.15))
 		draw_string(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(0.95, 0.97, 1.0))
-	# The small dot in the middle of the view, and the name of what it rests on.
+	if not _dead:
+		_draw_numbers(fb, ink)
+	# The small dot in the middle of the view (or the X), and the name of
+	# what it rests on.
 	if not _dead:
 		var c := size * 0.5
-		var ink := Color(0.05, 0.07, 0.15, 0.7)
-		if not show_crosshair:
+		var dot_ink := Color(0.05, 0.07, 0.15, 0.7)
+		if x_left > 0.0:
+			_draw_x(c, fb.crit_x, ink)
+		elif not show_crosshair:
 			if look_name != "":
-				draw_arc(c, 4.5, 0.0, TAU, 20, ink, 3.0)
+				draw_arc(c, 4.5, 0.0, TAU, 20, dot_ink, 3.0)
 				draw_arc(c, 4.5, 0.0, TAU, 20, Color(1, 1, 1, 0.9), 1.5)
 			else:
-				draw_circle(c, 2.6, ink)
+				draw_circle(c, 2.6, dot_ink)
 				draw_circle(c, 1.6, Color(1, 1, 1, 0.8))
 		if look_name != "":
 			if _italic == null:
@@ -117,27 +180,85 @@ func _draw() -> void:
 	if show_crosshair and not _dead:
 		var c := size * 0.5
 		var col := Color(1, 1, 1, 0.85)
-		draw_line(c + Vector2(-8, 0), c + Vector2(-3, 0), col, 2.0)
-		draw_line(c + Vector2(3, 0), c + Vector2(8, 0), col, 2.0)
-		draw_line(c + Vector2(0, -8), c + Vector2(0, -3), col, 2.0)
-		draw_line(c + Vector2(0, 3), c + Vector2(0, 8), col, 2.0)
+		if x_left <= 0.0:
+			draw_line(c + Vector2(-8, 0), c + Vector2(-3, 0), col, 2.0)
+			draw_line(c + Vector2(3, 0), c + Vector2(8, 0), col, 2.0)
+			draw_line(c + Vector2(0, -8), c + Vector2(0, -3), col, 2.0)
+			draw_line(c + Vector2(0, 3), c + Vector2(0, 8), col, 2.0)
 		if aiming:
 			draw_arc(c, 16.0, PI * 0.25, PI * 0.75, 16, Color(1, 1, 1, 0.3), 3.0)
 			var full := draw_power >= 1.0
 			draw_arc(c, 16.0, PI * 0.75 - PI * 0.5 * draw_power, PI * 0.75, 16, Color(1.0, 0.85, 0.3) if full else Color(1, 1, 1, 0.9), 3.0)
 
 
-## A heart at `p`, radius `r`; `part` 0.5 draws only its left half.
-func _heart(p: Vector2, r: float, col: Color, part: float) -> void:
-	var pts := PackedVector2Array()
-	var steps := 24
-	for k in steps + 1:
-		var t := PI * 2.0 * k / steps
-		# The classic heart curve, scaled to r.
-		var x := 16.0 * pow(sin(t), 3.0)
-		var y := -(13.0 * cos(t) - 5.0 * cos(2.0 * t) - 2.0 * cos(3.0 * t) - cos(4.0 * t))
-		var q := Vector2(x, y) * (r / 16.0)
-		if part < 1.0 and q.x > 0.0:
-			q.x = 0.0
-		pts.append(p + q)
-	draw_colored_polygon(pts, col)
+## The health meter, bottom left where the hearts were: a slim bar on a
+## dark blue track, a bright edge along its top, the numeral beside it;
+## below low_share of full health the fill pulses toward the edge color.
+func _draw_meter(size: Vector2, m: Dictionary, ink: Color) -> void:
+	var w := float(m.width_px)
+	var h := float(m.height_px)
+	var at := Vector2(16.0, size.y - 96.0 - h * 0.5)
+	var share := clampf(hp / maxf(max_hp, 1.0), 0.0, 1.0)
+	var fill := Color.from_string(str(m.fill), Color(0.3, 0.49, 1.0))
+	var edge := Color.from_string(str(m.edge), Color(0.5, 0.69, 1.0))
+	var track := Color.from_string(str(m.track), Color(0.04, 0.08, 0.63))
+	if share < float(m.low_share) and not _dead:
+		fill = fill.lerp(edge, 0.5 + 0.5 * sin(_time * 7.0))
+	draw_rect(Rect2(at - Vector2(1, 1), Vector2(w + 2, h + 2)), Color(ink, 0.85))
+	draw_rect(Rect2(at, Vector2(w, h)), Color(track, 0.8))
+	if share > 0.0:
+		draw_rect(Rect2(at, Vector2(w * share, h)), fill)
+		draw_rect(Rect2(at, Vector2(w * share, 1.0)), edge)
+	var font := get_theme_default_font()
+	var px := int(m.numeral_px)
+	var text := str(ceili(hp)) if hp > 0.0 else "0"
+	var tp := Vector2(at.x + w + 7.0, at.y + h * 0.5 + px * 0.36)
+	draw_string_outline(font, tp, text, HORIZONTAL_ALIGNMENT_LEFT, -1, px, 4, ink)
+	draw_string(font, tp, text, HORIZONTAL_ALIGNMENT_LEFT, -1, px, Color(0.93, 0.96, 1.0))
+
+
+## Each number where its impact point is now (Hits.where(): riding the
+## animal it's on), risen along the view's up by rise_m over its life,
+## sized by the distance, fading over its last fade_s.
+func _draw_numbers(fb: Dictionary, ink: Color) -> void:
+	if numbers.is_empty():
+		return
+	var cam := get_viewport().get_camera_3d()
+	if cam == null:
+		return
+	var num: Dictionary = fb.number
+	var font := get_theme_default_font()
+	var life := float(num.life_s)
+	var normal := Color.from_string(str(fb.colors.normal), Color.WHITE)
+	var crit := Color.from_string(str(fb.colors.critical), Color(1.0, 0.82, 0.23))
+	for n in numbers:
+		var e: Dictionary = n.e
+		var k := clampf(n.t / life, 0.0, 1.0)
+		var world := Hits.where(e) + cam.global_basis.y * float(num.rise_m) * (1.0 - pow(1.0 - k, 2.0))
+		if cam.is_position_behind(world):
+			continue
+		var d := maxf(cam.global_position.distance_to(world), 0.5)
+		var px := int(round(clampf(float(num.size_px) * pow(float(num.ref_distance_m) / d, float(num.distance_power)), float(num.min_px), float(num.max_px))))
+		var alpha := clampf((life - n.t) / maxf(float(num.fade_s), 0.01), 0.0, 1.0)
+		var text := str(maxi(roundi(float(e.amount)), 1))
+		var p := cam.unproject_position(world)
+		var sz := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, px)
+		var at := p + Vector2(-sz.x * 0.5, px * 0.35)
+		var col: Color = crit if e.crit else normal
+		draw_string_outline(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, px, maxi(3, px / 4), Color(ink, alpha * 0.9))
+		draw_string(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, px, Color(col, alpha))
+
+
+## The Black Ops-style X over the middle of the view: four short strokes
+## out from a small gap, on a dark edge; the kill's color for a kill.
+func _draw_x(c: Vector2, x: Dictionary, ink: Color) -> void:
+	var col := Color.from_string(str(x.kill_color if x_kill else x.color), Color.WHITE)
+	var reach := float(x.size_px)
+	var gap := float(x.gap_px)
+	var wpx := float(x.width_px)
+	for d: Vector2 in [Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
+		var u := d.normalized()
+		draw_line(c + u * (gap - 0.5), c + u * (reach + 0.5), ink, wpx + 2.0)
+	for d: Vector2 in [Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
+		var u := d.normalized()
+		draw_line(c + u * gap, c + u * reach, col, wpx)

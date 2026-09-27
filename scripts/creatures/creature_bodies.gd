@@ -305,9 +305,12 @@ static func limb(b: Dictionary, parent: Node3D, hip: Vector3, length: float, thi
 	return pivot
 
 
+## A pair of eyes `spread` either side of `pos`, each tagged with its side
+## (the "eye" meta, "r" at +X: the body faces -Z), which CreatureHitboxes
+## fits an eye's hit sphere to (Hits).
 static func eyes(parent: Node3D, pos: Vector3, spread: float, r: float, c := Color(0.05, 0.05, 0.05), glow := 0.0) -> void:
-	ball(parent, Vector3.ONE * r, pos + Vector3(spread, 0, 0), c, glow)
-	ball(parent, Vector3.ONE * r, pos - Vector3(spread, 0, 0), c, glow)
+	ball(parent, Vector3.ONE * r, pos + Vector3(spread, 0, 0), c, glow).set_meta("eye", "r")
+	ball(parent, Vector3.ONE * r, pos - Vector3(spread, 0, 0), c, glow).set_meta("eye", "l")
 
 
 # --- Animals -------------------------------------------------------------------

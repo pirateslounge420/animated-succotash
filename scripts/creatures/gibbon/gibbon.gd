@@ -1205,9 +1205,13 @@ func _go_away() -> void:
 
 ## Hit (an arrow: Arrow finds it through its hitboxes' "creature" meta,
 ## Hitboxes.creature_of): an alarm call, a start, and for FLEE_S it heads
-## away from where the shot came from. It isn't hurt (no combat yet).
-func hurt(_amount: float, from_pos: Vector3) -> void:
+## away from where the shot came from. It isn't hurt (it has no health
+## yet), but the hit reads like any creature's (Hits): its part's number
+## rises from where it landed, and a head or eye hit flashes the X.
+func hurt(amount: float, from_pos: Vector3, part := "body", at := Vector3.INF) -> void:
 	stats.hits += 1
+	var table := species.hit_table() if species else CreatureSpecies.HIT_FALLBACK
+	Hits.report(self, at if at != Vector3.INF else global_position, Hits.dealt(table, part, amount), Hits.critical(part), false)
 	_flee_from = from_pos
 	_flee_t = FLEE_S
 	hoot("hoot")

@@ -68,6 +68,10 @@ const KNEE_R := Vector3(0.058, -0.275, -0.004)
 const ANKLE_R := Vector3(0.06, -0.395, 0.006)
 const CHEST_AT := Vector3(0.0, 0.07, 0.0)
 const HEAD_AT := Vector3(0.0, 0.215, -0.005)
+## The right eye's center (the left mirrors it) and each eye's radius,
+## half out of the face; GibbonHitboxes fits the eyes' hit spheres here.
+const EYE_R_AT := Vector3(0.019, 0.287, -0.069)
+const EYE_RADIUS := 0.0105
 ## The palm faces forward in the rest pose.
 const PALM_N := Vector3(0.0, 0.0, -1.0)
 
@@ -338,8 +342,8 @@ static func build(coat := COAT, pale := PALE) -> Dictionary:
 	head.bone_name = "Head"
 	skel.add_child(head)
 	var eye_mesh := SphereMesh.new()
-	eye_mesh.radius = 0.0105
-	eye_mesh.height = 0.021
+	eye_mesh.radius = EYE_RADIUS
+	eye_mesh.height = EYE_RADIUS * 2.0
 	eye_mesh.radial_segments = 10
 	eye_mesh.rings = 5
 	var eye_mat := eye_material()
@@ -350,7 +354,7 @@ static func build(coat := COAT, pale := PALE) -> Dictionary:
 		e.material_override = eye_mat
 		e.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		# Half out of the face (whose surface is at z -0.0725 here).
-		e.position = Vector3(0.019 * sd, 0.287, -0.069) - HEAD_AT
+		e.position = Vector3(EYE_R_AT.x * sd, EYE_R_AT.y, EYE_R_AT.z) - HEAD_AT
 		e.visibility_range_end = FAR_M
 		head.add_child(e)
 	return out

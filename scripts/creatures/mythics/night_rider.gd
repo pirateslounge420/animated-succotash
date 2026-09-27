@@ -154,8 +154,8 @@ func body_length_m() -> float:
 	return 2.55 * _scale_m
 
 
-func hurt(amount: float, from_pos: Vector3) -> void:
-	super.hurt(amount, from_pos)
+func hurt(amount: float, from_pos: Vector3, part := "body", at := Vector3.INF) -> void:
+	super.hurt(amount, from_pos, part, at)
 	if dead:
 		Hitboxes.set_active(hitboxes, false)
 		for e in body.get("eyes", []):
@@ -207,7 +207,8 @@ func _steer(delta: float) -> void:
 	var want_rate := clampf(ang * 0.6, -max_rate, max_rate)
 	turn_rate = move_toward(turn_rate, want_rate, TURN_ACCEL * delta)
 	heading = heading.rotated(dir, turn_rate * delta)
-	var target := want_speed * clampf(1.0 - absf(ang) / PI, 0.3, 1.0)
+	# A lame horse (a leg hit, Creature.lame) walks that much slower.
+	var target := want_speed * lame * clampf(1.0 - absf(ang) / PI, 0.3, 1.0)
 	var rate := accel_mps2 if target > speed else accel_mps2 * 1.5
 	speed = move_toward(speed, target, rate * delta)
 
@@ -380,28 +381,37 @@ func _make_hitboxes() -> Array:
 	var pv: Dictionary = body.pivots
 	var bones: Dictionary = body.bones
 	var out: Array = []
-	var cap := func(bone: String, a: Vector3, b: Vector3, r: float) -> void:
+	# Each part marked with its kind (Hits): heads, limbs (legs, arms),
+	# else the body.
+	var cap := func(bone: String, a: Vector3, b: Vector3, r: float, kind := "body") -> void:
 		var at: Vector3 = bones[bone].world
-		out.append(Hitboxes.capsule(self, pv[bone], a / h - at, b / h - at, r / h))
+		out.append(Hits.mark(Hitboxes.capsule(self, pv[bone], a / h - at, b / h - at, r / h), kind))
 	cap.call("Root", Vector3(0, 1.2, -0.72), Vector3(0, 1.25, 0.78), 0.4)
 	cap.call("Neck", Vector3(0, 1.4, -0.64), Vector3(0, 1.93, -0.97), 0.2)
-	cap.call("Head", Vector3(0, 1.93, -1.07), Vector3(0, 1.56, -1.38), 0.13)
+	cap.call("Head", Vector3(0, 1.93, -1.07), Vector3(0, 1.56, -1.38), 0.13, "head")
 	cap.call("Tail", Vector3(0, 1.45, 0.92), Vector3(0, 0.8, 1.1), 0.12)
 	for i in NightRiderBody.LEGS.size():
 		var names: Array = NightRiderBody.LEGS[i]
 		var x := 0.19 * (-1.0 if (names[0] as String).ends_with("L") else 1.0)
 		if (names[0] as String).begins_with("Fore"):
-			cap.call(names[0], Vector3(x, 1.1, -0.53), Vector3(x, 0.56, -0.55), 0.105)
-			cap.call(names[1], Vector3(x, 0.52, -0.55), Vector3(x, 0.08, -0.55), 0.09)
+			cap.call(names[0], Vector3(x, 1.1, -0.53), Vector3(x, 0.56, -0.55), 0.105, "limb")
+			cap.call(names[1], Vector3(x, 0.52, -0.55), Vector3(x, 0.08, -0.55), 0.09, "limb")
 		else:
-			cap.call(names[0], Vector3(x, 1.05, 0.62), Vector3(x, 0.58, 0.73), 0.115)
-			cap.call(names[1], Vector3(x, 0.53, 0.72), Vector3(x, 0.08, 0.64), 0.09)
+			cap.call(names[0], Vector3(x, 1.05, 0.62), Vector3(x, 0.58, 0.73), 0.115, "limb")
+			cap.call(names[1], Vector3(x, 0.53, 0.72), Vector3(x, 0.08, 0.64), 0.09, "limb")
 	cap.call("Rider", Vector3(0, 1.66, -0.1), Vector3(0, 2.15, -0.13), 0.25)
 	for arm in ["ArmL", "ArmR"]:
 		var sx := -1.0 if arm == "ArmL" else 1.0
-		cap.call(arm, Vector3(0.25 * sx, 2.1, -0.13), Vector3(0.15 * sx, 1.8, -0.47), 0.09)
+		cap.call(arm, Vector3(0.25 * sx, 2.1, -0.13), Vector3(0.15 * sx, 1.8, -0.47), 0.09, "limb")
 	var hat: Vector3 = bones.RiderHead.world
-	out.append(Hitboxes.sphere(self, pv.RiderHead, Vector3(0, 2.4, -0.13) / h - hat, 0.19 / h))
+	out.append(Hits.mark(Hitboxes.sphere(self, pv.RiderHead, Vector3(0, 2.4, -0.13) / h - hat, 0.19 / h), "head"))
+	# The glowing eyes, horse's and rider's (NightRiderBody.EYES): a small
+	# sphere over each, marked with its side (+X is the right).
+	for e in NightRiderBody.EYES:
+		var eat: Vector3 = bones[e[0]].world
+		var p: Vector3 = e[1]
+		var eye := Hitboxes.sphere(self, pv[e[0]], p / h - eat, Hits.eye_radius(float(e[2]) / h, species.size_m))
+		out.append(Hits.mark(eye, "eye_r" if p.x > 0.0 else "eye_l"))
 	var rat: Vector3 = bones.Root.world
 	out.append(Hitboxes.blocker(self, pv.Root, Vector3(0, 1.2, -0.6) / h - rat, Vector3(0, 1.25, 0.66) / h - rat, 0.34 / h))
 	return out
