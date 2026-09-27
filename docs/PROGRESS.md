@@ -4,6 +4,23 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-27 — Spec: plant growth stages (docs only, nothing built)
+- Phase 6 Lifecycle gains growth stages:
+  - trees go sprout, sapling, mature, old; herbs and shrubs go sprout, young, mature;
+  - growth runs 0–1, and plant_meshes changes the silhouette per stage;
+  - only old trees carry the branch graph and are climbable;
+  - growth rate follows fertility, suitability and dormancy;
+  - browsing holds saplings back;
+  - only mature plants yield;
+  - crops use the same block.
+- The ledger gains `flora.age_structure` (counts per stage); biomass becomes its weighted sum; the warm start yields a real age mix. D4 gains the `growth` block.
+- Done-when gains: all four stages in a forest patch; a browsed sapling never becomes a tree; a camp plot grows each dev day. Part F gains: where deer are thick, no saplings.
+- Open:
+  - `lifespan_years` becomes the sum of the stages (derive it?);
+  - browsing needs Phase 7's herbivore counts;
+  - camp plots are Phase 10 (a dev test plot until then);
+  - plants germinated in play are stored as cohorts.
+
 ## 2026-09-27 — Spec v4: caves, renumbering, plant life, catalogues, binomials (docs + data pass; nothing built)
 - **New Phase 3 — Caves and underground**; the old Phases 3–11 are now 4–12 (Wind 4, Seasons 5, Soil & flora 6, Ecology 7, Living populations 8, Disturbance 9, Camp life 10, Memory 11, Persistence 12). Cross-references fixed in D1, D3, the cards, R4, R5 and this log. Snags and dead wood sit on Phases 6, 7, 9 and 10 exactly as re-sent.
 - **Phase 6** gains plant reproduction, lifecycle, the flora ledger (per species, sparse per region), plant genetics, `eco_sim`'s flora half, the Amorphophallus catalogue and the cannabis rules. The ledger core therefore moves up from Phase 7, which now adds fauna and cave fauna. **Phase 10** gains camps formed around remnants (set pieces unpark there) and the cannabis loop with `player.haze`. Part F gains four checks.

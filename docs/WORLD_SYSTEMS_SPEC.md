@@ -136,7 +136,8 @@ PlanetData is ~119 bytes per cell: 6.6 MB on the full planet, 1.6 MB on the stam
 | regions | `World.regions`: `cell_to_region` (per cell), `center`, `area_km2`, `neighbors` | i32 per cell; vec3, f32, 8×i32 | ecology/ledger, at generation | 6 |
 | soil.fertility | `World.soil.fertility` | f32 | ledger (soil rules); the soil pass seeds it | 6 |
 | soil.carcass | `World.soil.carcass` | f32 (kg) | ledger | 8 |
-| flora.biomass[species] | `World.flora.biomass`, sparse: per region only the species present (id + value) | ~20–60 × (u16 + f32) | ledger (flora rules); vegetation_placer seeds it | 6 |
+| flora.age_structure[species] | `World.flora.age_structure`, sparse: per region only the species present (id + a count per growth stage) | ~20–60 × (u16 + 4× u16) | ledger (flora rules); the warm start seeds it | 6 |
+| flora.biomass[species] | `World.flora.biomass`, same sparse layout: the weighted sum of `age_structure`, kept as a cache | ~20–60 × f32 | ledger (derived from `age_structure`) | 6 |
 | flora.seedbank[species] | `World.flora.seedbank`, same sparse layout, annuals only | ~0–30 × f32 | ledger | 6 |
 | flora.genome_mean[species][gene] | `World.flora.genome_mean`, same sparse layout | present species × 6–10 u8 | ledger | 6 |
 | flora.snags, flora.logs | `World.flora.snags`, `World.flora.logs` | u16 each | ledger; tree ages seed them | 6 |
@@ -151,16 +152,16 @@ PlanetData is ~119 bytes per cell: 6.6 MB on the full planet, 1.6 MB on the stam
 | player.haze | `World.player.haze` (a small player-state object; nothing else on it yet) | one f32, 0–1 | player (writes); `post_grade`, audio, creatures read | 10 |
 | creature.memory[] | on each NEAR creature node; saved as a region delta in `World.fauna.memory_delta` (sparse, by region) | ≤5 × {what, where, day, good/bad} | creature | 11 |
 
-**Regions: PlanetData cells or a fixed coarsening.** Option A: one region per cell. Option B: a fixed k×k block of cells within a cube face, k in `data/sim.json`. Per region the fauna fields, soil, water and events come to about 2.4 KB at a planning roster of S = 64 species (25 today), G = 15 genes and ~24 event kinds (5.3 KB if genomes are f32). Flora is per species from Phase 6, but a region holds only the species actually present there: about 20–60 of them × ~20 bytes (id, biomass, seed bank, 6–10 gene means), so 0.4–1.2 KB more; stored densely for all 417 plant entries (107 biome plants + the two catalogues) it would be ~8 KB more per region. Totals at ~3.6 KB per region:
+**Regions: PlanetData cells or a fixed coarsening.** Option A: one region per cell. Option B: a fixed k×k block of cells within a cube face, k in `data/sim.json`. Per region the fauna fields, soil, water and events come to about 2.4 KB at a planning roster of S = 64 species (25 today), G = 15 genes and ~24 event kinds (5.3 KB if genomes are f32). Flora is per species from Phase 6, but a region holds only the species actually present there: about 20–60 of them × ~28 bytes (id, counts per growth stage, biomass, seed bank, 6–10 gene means), so 0.6–1.7 KB more; stored densely for all 417 plant entries (107 biome plants + the two catalogues) it would be ~12 KB more per region. Totals at ~4.1 KB per region:
 
 | | Regions | Ledger memory |
 |---|---|---|
-| Full planet, A (cells, ~1 km) | 55,296 | ~200 MB |
-| Full planet, B k=2 (~2 km) | 13,824 | ~50 MB |
-| Full planet, B k=4 (~4 km) | 3,456 | ~12 MB |
-| Stamp, A (cells, ~208 m) | 13,824 | ~50 MB |
-| Stamp, B k=4 (~830 m) | 864 | ~3 MB |
-| 10× planet with ~1 km cells, B k=4 | 345,600 | ~1.2 GB dense (see ⚑) |
+| Full planet, A (cells, ~1 km) | 55,296 | ~225 MB |
+| Full planet, B k=2 (~2 km) | 13,824 | ~57 MB |
+| Full planet, B k=4 (~4 km) | 3,456 | ~14 MB |
+| Stamp, A (cells, ~208 m) | 13,824 | ~57 MB |
+| Stamp, B k=4 (~830 m) | 864 | ~3.5 MB |
+| 10× planet with ~1 km cells, B k=4 | 345,600 | ~1.4 GB dense (see ⚑) |
 
 Proposed: **B, k = 4.** It keeps the ledger small and, above all, keeps the warm start affordable: 50–200 years of `tick_region` over 3,456 regions is 16× less work than over 55,296. Rules work in densities per km², so the region size can change later without retuning. (At 10× the planet PlanetData itself is ~660 MB at ~1 km cells, so a bigger planet also means coarser cells.)
 
@@ -169,7 +170,7 @@ Proposed: **B, k = 4.** It keeps the ledger small and, above all, keeps the warm
 - The ledger core (regions, `tick_region`, events, `data/sim.json`, the warm start, `eco_sim`) now starts in Phase 6, because the flora ledger and the harness's flora half are Phase 6 work; Phase 7 adds fauna to the same ledger and run. `soil.fertility` and `flora.*` are seeded by generation passes and change live from Phase 6.
 - `flora.cavities` isn't in the designer's list, but the cavity chain (Phase 7) needs somewhere to keep cavity slots.
 - A 10× planet can't hold dense ledger arrays; FAR regions would store nothing until first simulated (regenerated deterministically per R6.5, then kept as a delta). That needs a region-id indirection from the start (Phase 6) so storage can go sparse without touching `tick_region`. Flora is sparse per region from day one.
-- Stored deltas beyond D1's list: felled and burned trees (chopping and fire make snags that tree age can't derive), placed items (a bundle drying by a fire or in a hut for days), and possibly remnant salvage (if salvaging uses a landmark up, `salvage_left` per landmark is a delta).
+- Stored deltas beyond D1's list: felled and burned trees (chopping and fire make snags that tree age can't derive), plants that germinated during play and crops (as cohorts per region: species, germination day, count), placed items (a bundle drying by a fire or in a hut for days), and possibly remnant salvage (if salvaging uses a landmark up, `salvage_left` per landmark is a delta).
 - `cave_density`: GLACIAL_TILL isn't in the designer's rock list; proposed none (loose glacial deposits), like alluvial.
 - `player.haze` needs a home for player state on World; `World.player` is proposed, holding only `haze` for now.
 - Human seed dispersal "along camp foraging ranges and paths" needs Phase 10's ranges; until then it uses each camp's position and a table radius.
@@ -185,7 +186,10 @@ data/plants/<catalogue>.json  plant catalogues, laid out like a biome file (key,
 plant                      { name, genus, species, invented?, stratum(canopy|under|ground), temp_min/max,
                              moisture_min/max, soil_min, slope_max, sway_stiffness, seasonal_color,
                              lifespan_years, snag_years, log_years,
-                             repro?, genes?, family?, aroid?, cannabis?, landrace?, landrace_id?, type? }
+                             growth?, repro?, genes?, family?, aroid?, cannabis?, landrace?, landrace_id?, type? }
+  growth                   { stages: [{name, days}], final_size } — default trees: sprout, sapling, mature, old;
+                             herbs and shrubs: sprout, young, mature. Growth runs 0–1 through the stages; the
+                             size gene scales final_size. Crops use the same block.
   repro                    { mode: seed|clonal|both,
                              pollinator: insect|wind|carrion_fly|bird|bat|self,
                              disperser: bird|mammal|wind|water|gravity|human, or a list (each adds its kernel),
@@ -301,7 +305,18 @@ See Part C.
 - **Ledger core:** the flora ledger needs R6 rules 1–7, regions and `tick_region` in this phase; Phase 7 adds fauna to the same ledger and the same harness run.
 - **Plant catalogues:** `species_db` loads `data/plants/*.json` exactly like a biome file: entries carry their own bands, there is no biome climate block, and the `regions`, `types` and `family_defaults` keys are ignored (so is the biome-key check). `species_db` warns on any entry without `genus` and `species` (D4).
 - **Reproduction data:** each plant entry may add a `repro` block; entries without one get their tier's default (fields in D4). `dormant`: the plant withdraws to its root and shows nothing, or a withered stem, until its season returns; `seed` means an annual that dies and comes back from the seed bank. `dioecious`: each plant is male or female and only females fruit.
-- **Lifecycle (NEAR):** each plant has an age from seed + position + world day, nothing stored. States seedling → vegetative → bloom → fruit → dormant on the species' calendar, offset by a timing gene. Bloom and fruit are visible states with their own mesh part; dormant plants vanish or wither. Some species bloom before they leaf. Flowering may be triggered by day length (a `flower_trigger` gene read against the sky system's day length at that latitude) or by age.
+- **Lifecycle (NEAR):** each plant has an age from seed + position + world day for generated plants (nothing stored), and from the region delta for plants that germinated during play. States seedling → vegetative → bloom → fruit → dormant on the species' calendar, offset by a timing gene. Bloom and fruit are visible states with their own mesh part; dormant plants vanish or wither. Some species bloom before they leaf. Flowering may be triggered by day length (a `flower_trigger` gene read against the sky system's day length at that latitude) or by age.
+  - **Growth stages:** every plant has a growth level. Each species' table gives a `growth` block: a list of stages with the days each lasts — default four for trees (sprout, sapling, mature, old) and three for herbs and shrubs (sprout, young, mature) — plus a `final_size` the size gene scales. Growth is a 0–1 value through the stages, so the mesh builder gets a continuous number, not a switch. (The yearly states above run inside the stages; a sprout is the seedling.)
+  - **Stages change silhouette, not just scale.** `plant_meshes` takes growth as a parameter per shape: a sprout is a single thin stem with two or three leaves; a sapling is a narrow whip with a small crown; mature is the current full shape; old is wider, gnarled, with a broken limb or two and moss, and in trees it's the stage that carries the branch graph — only old trees are climbable and only old forest has the canopy world. Meshes are cached per species, stage and LOD, so the cost is memory, not per-frame work.
+  - **What growth reads and writes.** Growth rate scales with soil fertility and climate suitability and pauses during dormancy, so the same species grows fast in a valley and slow on a ridge. Herbivores browse sprouts and saplings — a region with heavy grazing keeps its saplings from ever reaching maturity, which is how meadows stay open and old forests fail to replace themselves. Only mature plants yield: berries, fruit, fibre, seed, the aroid bloom, the cannabis harvest; only mature and old trees give real timber, and old trees pass into the snag lifecycle. Crops use the same block, so anything camp folk plant visibly grows day by day.
+  - **Ledger side.** `flora.age_structure[region][species]` holds counts per stage, and biomass is the weighted sum, so a region knows whether its forest is young, mature or ancient. Warm start produces a real age mix — a new world has sprouts, saplings, giants and snags together, never a plantation of identical trees. Fire scars regrow through the stages; that is the succession the player sees.
+  - ⚑ Notes:
+    - Until this phase every canopy tree carries the Phase 1 branch graph; from here only old trees do.
+    - With Phase 1's ~6 branch layouts per species the mesh cache is species × layout × stage × LOD — report its memory.
+    - A tree's `lifespan_years` is the sum of its stages; proposed: derive it from the `growth` block rather than keep both.
+    - Browsing reads herbivore counts, a table value until Phase 7.
+    - Camp plots arrive with Phase 10; here a dev-planted test plot shows crops growing.
+    - Plants germinated during play are stored as cohorts per region (species, germination day, count), not one record per plant; NEAR places them deterministically.
 - **Ledger (MID):** `flora.biomass[region][species]` grows toward a cap set by soil fertility and climate suitability. Annuals also keep `flora.seedbank[region][species]`, which decays over a few years and germinates each spring — the general rule for all annuals, grasses included. Spread differs by strategy:
   - Clonal spreads only into adjacent regions through continuous suitable ground, slowly, but recovers fast from the root after fire, grazing or harvest.
   - Seed spread is propagules = biomass × bloom success × disperser availability, with a kernel by disperser — gravity 0–1 region, wind 1–3 regions downwind along `wind_avg`, water downstream along `flow_to`, bird 1–5 regions toward forest and water, mammal 1–3, human along camp foraging ranges and paths.
@@ -312,7 +327,7 @@ See Part C.
 - **Aroids — the Amorphophallus catalogue:** new shape `aroid`: one petiole with a dissected umbrella leaf; bloom part is a spathe and spadix; dormant shows nothing. Carrion-fly pollinated — the bloom writes a short-lived scent record (`world.events`, kind `scent`) that draws the same insects the carcass chain uses; berries dispersed by birds; tuber offsets, and bulbils on the leaf for some species; dormant in the dry season; the giants bloom every 3–10 years for two or three days. `data/plants/amorphophallus.json` holds all 246 species accepted by Kew, each with its own temp_c/moisture/altitude band, height, density, soil, an `aroid` block (petiole pattern and colours, spathe colours), a `repro` block and `genes` ranges. Its shape is `umbrella` for now — switch every entry to `aroid` once that shape exists. Do not hand-place any of them; they grow wherever their bands allow, which will be the warm–hot bands only. (⚑ 15 East Asian species, konjac among them, are banded down to 12 °C, so they also reach the warm edge of the mild band.)
 - **Cannabis:** `data/plants/cannabis.json` holds 64 landrace populations of the single species *Cannabis sativa*, loaded like the aroid catalogue. All entries interbreed as one species. Each plant is male or female — only females carry the harvestable flower, and on windy days a faint yellow drift blows downwind from a male stand. Wind-pollinated, annual, seed bank. Flowering starts when the day length at that latitude drops below the plant's `flower_trigger` (ruderal types flower by age), so a tropical landrace carried north by a camp may never finish before the cold — that failure is allowed. Camp-follower dispersal, so it grows on middens and trail edges near camps that use it. Genes gain `leaf_width`, `resin`, `fibre`, `flower_trigger`, `purple`; broad-leaf types purple in cold. (Its uses are Phase 10.)
 - **Do not build:** fauna in the ledger (Phase 7), spreading fire (Phase 9; this phase has only the harness's scripted test burn), camp and player uses of plants (Phase 10).
-- **Done when:** a fertility overlay explains why a valley is lush and a ridge is bare; walking the stamp shows the right plant sizes in the right places; an old-growth patch on the stamp shows live trees, snags and logs together, and a young patch shows none; a runner plant shows visible stems linking a uniform patch; a bird-dispersed berry appears across a river its parent can't cross; a test burn regrows grass, then shrub, then trees with no stage coded; an aroid blooms, stinks, draws flies, and vanishes for the dry season; a female cannabis plant flowers on the day the sky says it should for that latitude.
+- **Done when:** a fertility overlay explains why a valley is lush and a ridge is bare; walking the stamp shows the right plant sizes in the right places; an old-growth patch on the stamp shows live trees, snags and logs together, and a young patch shows none; a runner plant shows visible stems linking a uniform patch; a bird-dispersed berry appears across a river its parent can't cross; a test burn regrows grass, then shrub, then trees with no stage coded; an aroid blooms, stinks, draws flies, and vanishes for the dry season; a female cannabis plant flowers on the day the sky says it should for that latitude; a forest patch on the stamp shows all four stages at once and a burn scar shows only the first two; a sapling browsed by deer never becomes a tree; a camp's planted plot is visibly taller each dev day.
 
 ## Phase 7 — Ecology core
 - **Touches:** `ecology/ledger`, `ecology/events` and `tools/eco_sim.gd` (all from Phase 6), `creature_spawner`, `creatures.json`.
@@ -331,7 +346,7 @@ See Part C.
 
 ## Phase 9 — Disturbance and living water
 - **Touches:** `weather_sim`, ledger, soil, `vegetation_placer`, `river_network`, `terrain_chunk` water.
-- **(a) Fire:** lightning or a camp fire, plus dryness and flora density, ignites; spreads per region by wind and dryness; consumes flora biomass, adds fertility, writes `burn_scar`; NEAR shows burning trees, smoke, blackened ground; scars regrow over years — grass, then shrub, then young trees — by Phase 6's seed and clonal rules, never as scripted stages. A burned patch becomes a field of snags at once.
+- **(a) Fire:** lightning or a camp fire, plus dryness and flora density, ignites; spreads per region by wind and dryness; consumes flora biomass, adds fertility, writes `burn_scar`; NEAR shows burning trees, smoke, blackened ground; scars regrow over years — grass, then shrub, then young trees — by Phase 6's seed, clonal and growth rules, never as scripted stages. A burned patch becomes a field of snags at once.
 - **(b) Flood:** storm plus swollen river floods low regions; flattens ground flora, deposits fertility, drowns burrow nests.
 - **(c) Living water:** lake level and river width follow season and recent rain; boats read width for passability; the water mesh height updates when a chunk streams.
 - **Done when:** on the stamp a dry-season strike burns a patch that comes back as meadow, the harness shows fires as bounded pulses, and a river you could paddle in spring is a rocky bed in late summer.
@@ -384,6 +399,7 @@ The designer should be **surprised**. If any of these had to be hard-coded, the 
 - The plant that survives the fires is the one that spreads underground.
 - The camp that smokes gets raided more.
 - The landrace that crossed the mountains with a tribe doesn't flower in time.
+- Where the deer are thick there are no saplings, and the forest ages without children.
 
 ---
 
