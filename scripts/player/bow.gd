@@ -9,8 +9,9 @@ extends Node3D
 ## drawing.
 ##
 ## The arrow flies from the bow toward whatever is under the crosshair
-## (a ray from the camera), so it lands where you aim at any range, then
-## falls away with distance.
+## (a ray from the camera, over every layer: the world, trees, and the
+## creatures' and people's hitbox parts, Hitboxes), so it lands where you
+## aim at any range, then falls away with distance.
 ##
 ## The bow is carried slung on the back, raised when you draw; in first
 ## person it's in view in front of you and the string comes back as you
@@ -101,13 +102,15 @@ func _loose() -> void:
 	var aim_dir := -cam.global_basis.z
 	var q := PhysicsRayQueryParameters3D.create(aim_from, aim_from + aim_dir * 400.0)
 	q.exclude = [player.get_rid()]
+	# Creatures' parts too (Hitboxes; the default mask has every layer):
+	# aim at the deer, not the ground behind it.
+	q.collision_mask |= Hitboxes.LAYER
 	var hit := player.get_world_3d().direct_space_state.intersect_ray(q)
 	var target: Vector3 = hit.position if not hit.is_empty() else aim_from + aim_dir * 400.0
 	var dir := (target - from).normalized()
 	var arrow := Arrow.new()
 	arrow.world = player.world
 	arrow.chunks = player.chunks
-	arrow.spawner = player.spawner
 	arrow.camps = player.camps
 	arrow.exclude = [player.get_rid()]
 	var dmg := DAMAGE * p

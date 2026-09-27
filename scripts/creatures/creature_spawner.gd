@@ -955,46 +955,10 @@ func player_hit(amount: float, from_pos: Vector3) -> void:
 	player.take_hit(amount, from_pos)
 
 
-## The live creature an arrow flying from `a` to `b` (scene positions)
-## hits first: [creature, fraction along a..b], or []. Creatures with
-## real hitboxes (Hitboxes: the Pond Crawler) are left to the arrow's
-## physics ray, which meets the part it hits.
-func creature_on_segment(a: Vector3, b: Vector3) -> Array:
-	var best: Array = []
-	var best_t := INF
-	var all: Array = _ambient.values()
-	all.append_array(_by_hand)
-	for key in _dens:
-		all.append_array(_dens[key].wolves)
-	for key in _territories:
-		var t: Dictionary = _territories[key]
-		if t.creature and is_instance_valid(t.creature) and t.state == "visible":
-			all.append(t.creature)
-	var ab := b - a
-	var l2 := maxf(ab.length_squared(), 1e-6)
-	for c in all:
-		var cr := c as Creature
-		if cr == null or cr.dead or cr.done or cr.species.role == "swarm":
-			continue
-		var hb = cr.get("hitboxes")
-		if hb is Array and not (hb as Array).is_empty():
-			continue # its own hitboxes (Hitboxes), found by the ray
-		var sz := cr.species.size_m
-		var tall := cr.species.role == "mythical"
-		var up: Vector3 = world.dir_of(cr.global_position)
-		var center := cr.global_position + up * sz * (0.5 if tall else 0.33)
-		var radius := maxf(0.18, sz * (0.28 if tall else 0.3))
-		var t := clampf((center - a).dot(ab) / l2, 0.0, 1.0)
-		if (a + ab * t).distance_to(center) < radius and t < best_t:
-			best_t = t
-			best = [cr, t]
-	return best
-
-
 ## Take charge of a creature placed by hand (tools, debugging; species
 ## held back from play with `"spawn": "disabled"`, such as the Pond
-## Crawler until Phase 7): it's ticked every frame and hit by arrows like
-## the rest, and freed when it finishes. Call before its setup().
+## Crawler until Phase 7): it's ticked every frame, and freed when it
+## finishes. Call before its setup().
 func adopt(cr: Creature) -> void:
 	if cr.get_parent() == null:
 		_root.add_child(cr)

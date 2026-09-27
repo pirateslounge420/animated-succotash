@@ -17,7 +17,9 @@ extends Node3D
 ## Layout, around the fire: the player's sleeping mat a few meters to one
 ## side, facing it; the two NPCs across the fire, turning toward the
 ## player when they're close. The fire's stones and logs and the two seat
-## logs collide (PropCollision); the flat mat doesn't.
+## logs collide (PropCollision); the flat mat doesn't. The two people have
+## hitbox parts and a blocker (CreatureHitboxes): the player can't walk
+## through them, and an arrow glances off them (Arrow, Camps.shot_at()).
 
 const CANDIDATES := 12
 const MIN_SEPARATION_M := 20000.0
@@ -38,6 +40,7 @@ var player_spot := Vector3.UP
 var _fire: Node3D
 var _npcs: Array[Node3D] = []
 var _time := 0.0
+var _hitboxes_on := true
 
 
 ## The best first-camp cells of the planet, spread apart (directions).
@@ -145,9 +148,12 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 		var holder := Node3D.new()
 		holder.name = sp.name
 		add_child(holder)
-		var body: Node3D = CreatureBodies.build(sp).root
+		var b := CreatureBodies.build(sp)
+		var body: Node3D = b.root
 		body.name = "Body"
 		holder.add_child(body)
+		holder.set_meta("speaker", sp.name)
+		holder.set_meta("hitboxes", CreatureHitboxes.build(holder, b, sp, true))
 		var f := BlobShadow.footprint(sp)
 		BlobShadow.make(holder, f.x, f.y)
 		var at := CreatureSpawner._offset(site, side + PI + (0.75 if i == 0 else -0.75), NPC_M)
@@ -170,6 +176,12 @@ func update_camp(delta: float, player_pos: Vector3) -> void:
 	_time += delta
 	Campfire.flicker(_fire, _time)
 	var player_dir: Vector3 = world.dir_of(player_pos)
+	# Their hitboxes only while someone's near (Hitboxes.wanted_at()).
+	var want := Hitboxes.wanted_at(_fire.global_position, player_pos)
+	if want != _hitboxes_on:
+		_hitboxes_on = want
+		for n in _npcs:
+			Hitboxes.set_active(n.get_meta("hitboxes", []), want)
 	for i in _npcs.size():
 		var n := _npcs[i]
 		var at: Vector3 = n.get_meta("dir")

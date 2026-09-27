@@ -140,9 +140,11 @@ func _process(delta: float) -> void:
 	# Follow the bodies (creatures move; a floating-origin shift moves all).
 	for s in _shown:
 		var mi: MeshInstance3D = s[0]
-		var b: CollisionObject3D = s[1]
-		if is_instance_valid(b) and b.is_inside_tree():
-			mi.global_transform = b.global_transform * b.shape_owner_get_transform(s[2])
+		# A creature's hitboxes go with it (freed as it leaves) or leave the
+		# space while it's hidden, dead or far (Hitboxes.set_active()).
+		var b = s[1]
+		if is_instance_valid(b) and (b as CollisionObject3D).is_inside_tree() and (b as Node).can_process():
+			mi.global_transform = (b as CollisionObject3D).global_transform * (b as CollisionObject3D).shape_owner_get_transform(s[2])
 		else:
 			mi.visible = false
 

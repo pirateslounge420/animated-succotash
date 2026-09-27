@@ -99,8 +99,6 @@ class Hand:
 	var above := -1.0
 	var voice: AudioStreamPlayer3D
 
-## Its hitbox bodies (Hitboxes): the parts, then the blocker.
-var hitboxes: Array[AnimatableBody3D] = []
 ## Rig tunables (DEFAULTS, overridden by the data's "rig").
 var rig := {}
 ## Everything each ripple call carried, for tools to check the wiring
@@ -247,7 +245,7 @@ func _make_hitboxes(attach: Dictionary) -> void:
 	_hitbox("Blocker", Hitboxes.blocker(self, _skel, Vector3(0, -0.05, 0.28), Vector3(0, -0.05, -0.08), 0.44))
 
 
-func _hitbox(part: String, body: AnimatableBody3D) -> void:
+func _hitbox(part: String, body: StaticBody3D) -> void:
 	body.name = part
 	hitboxes.append(body)
 

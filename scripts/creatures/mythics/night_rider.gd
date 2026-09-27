@@ -70,8 +70,6 @@ var blocked_t := 0.0
 
 ## NightRiderBody.build()'s result: root, pivots, bones, eyes.
 var body := {}
-## The collision bodies riding the pivots (Hitboxes).
-var hitboxes: Array = []
 
 var _legs: Array = []
 var _voices: Array[AudioStreamPlayer3D] = []
