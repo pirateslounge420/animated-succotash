@@ -207,15 +207,29 @@ data/plants/<catalogue>.json  plant catalogues, laid out like a biome file (key,
                              family_defaults are ignored by species_db. Today: amorphophallus.json (246
                              species), cannabis.json (64 landraces of one species), trichocereus.json (18
                              Andean torch cacti), yucca.json (all 55 Kew-accepted species), palms.json (43
-                             curated regional dominants), fungi.json (43 species, fungus block below).
-                             469 entries in all. Loaded from Phase 6.
+                             curated regional dominants), fungi.json (43 species, fungus block below),
+                             pine 39, magnolia 18, rhododendron 22, citrus 15, cycad 24, baobab 8 + ginkgo,
+                             acacia 24, vine 30, orchid 60, bromeliad 30, giant_herbs 24 (alocasia, taro,
+                             Musa). 17 files, 764 entries, every one with a binomial. Loaded from Phase 6.
 biome file `special`         computed list of the catalogue plants whose climate centre falls inside that
                              biome (informational; Phase 6 may raise their density there so they are findable)
 plant                      { name, genus, species, invented?, stratum(canopy|under|ground), temp_min/max,
                              moisture_min/max, soil_min, slope_max, sway_stiffness, seasonal_color,
                              lifespan_years, snag_years, log_years,
                              growth?, repro?, genes?, family?, aroid?, cannabis?, landrace?, landrace_id?, type?,
-                             cannot_be_browsed?, synonym?, display?, ceremonial?, leaf_density? }
+                             cannot_be_browsed?, synonym?, display?, ceremonial?, leaf_density?,
+                             landmark?, climber?, camp_follower?, orchid?, bromeliad? }
+  growth (default)         entries without a growth block get their tier's default stages (Phase 6)
+  landmark                 true: individually rare and nameable by the lore system (baobab, ginkgo,
+                             Puya raimondii, Wood's cycad)
+  climber                  true: placed at the base of a host (tree, snag, ruin wall, cliff) and grows up it
+                             along the branch graph; stranglers kill old hosts over decades
+  camp_follower            true: appears only near camps and old ruins, by human dispersal (banana, taro,
+                             oranges, cultivated cannabis, pineapple)
+  orchid                   { mycoheterotroph, specific_pollinator } — germinates only where its fungus lives
+  bromeliad                { tank, air_plant } — tanks are frog nest sites and insect breeding pools
+  repro.note               free text today; carries the pollinator specifics (yucca moth, beetle,
+                             hummingbird, one specific pollinator per orchid) ⚑ see Phase 7
   leaf_density             0–1, how leafy a branchy tree's crown is: how many leaf clusters its limbs carry
                              and how big (plant_meshes). Default by shape (broadleaf 0.8, gnarled and emergent
                              0.7, umbrella 0.6, cypress 0.85); set today on beech 0.9, holm oak 0.85, dry-season
@@ -247,7 +261,15 @@ creature                   { name, genus, species, invented?, id, trophic(insect
                              activity(day|night|dusk), temperament(friendly|skittish|aggressive|pack),
                              light_response, herd_min/max, nest:{type, site}, reproduce_days,
                              biome_lock (mythic only), rare_variant, underground (cave fauna),
-                             range_m?, senses_m?, seed_carry_h? }
+                             range_m?, senses_m?, seed_carry_h?, venom?, hibernate?, lifecycle?, migration? }
+  data/creatures/*.json    creatures.json plus catalogue files in the same schema; today
+                             catalogue_dragonflies_snakes.json (33: 6 dragonflies and damselflies, 27
+                             venomous snakes). The loader reads every file from Phase 7
+  venom                    { potency 0–1, effect }: under 0.5 pain and a slow day; 0.5–0.8 serious, needs
+                             camp medicine; over 0.8 deadly without it
+  sound                    for snakes, the warning before a strike: rattle, hiss, rasp, or none
+  hibernate                cold-band snakes: winter in rock dens
+  lifecycle                dragonflies: years as an underwater larva, then a flying adult
   diet (Phase 7)           names food object kinds: bloom (nectar), fruit, seed, leaves, sprouts, insects,
                              carcass, dung, fungi, or prey creature ids
   range_m / senses_m       how far it forages from home, and how far it notices each food kind (a bee sees
@@ -361,7 +383,7 @@ See Part C.
 - **Tree lifecycle:** every tree has an age derived from seed + position + world day (nothing stored). Each species has a lifespan in its table. Past lifespan a tree becomes a **snag** — standing dead, bare, broken top, own mesh in `plant_meshes` — for a species-set number of years, then a fallen log, then it's gone and its region gets a fertility bump. Chopping or fire (Phase 9) makes a snag immediately. Add `flora.snags[region]` and `flora.logs[region]` to the ledger so other systems can read them.
 - **Ledger core:** the flora ledger needs R6 rules 1–7, regions and `tick_region` in this phase; Phase 7 adds fauna to the same ledger and the same harness run.
 - **Life from life (A2):** placement grows patches outward from parent plants and the seed bank instead of scattering by suitability and noise; a region with no seed source stays bare.
-- **Plant catalogues:** `species_db` loads `data/plants/*.json` exactly like a biome file: entries carry their own bands, there is no biome climate block, and the `regions`, `types` and `family_defaults` keys are ignored (so is the biome-key check). `species_db` warns on any entry without `genus` and `species` (D4).
+- **Plant catalogues:** `species_db` loads `data/plants/*.json` (17 files) exactly like a biome file: entries carry their own bands, there is no biome climate block, and top-level keys other than `plants` are documentation (so is the biome-key check skipped). Fungi load apart from the plants (below). `species_db` warns on any entry without `genus` and `species` (D4).
 - **Reproduction data:** each plant entry may add a `repro` block; entries without one get their tier's default (fields in D4). `dormant`: the plant withdraws to its root and shows nothing, or a withered stem, until its season returns; `seed` means an annual that dies and comes back from the seed bank. `dioecious`: each plant is male or female and only females fruit.
 - **Lifecycle (NEAR):** each plant has an age from seed + position + world day for generated plants (nothing stored), and from the region delta for plants that germinated during play. States seedling → vegetative → bloom → fruit → dormant on the species' calendar, offset by a timing gene. Bloom and fruit are visible states with their own mesh part; dormant plants vanish or wither. Some species bloom before they leaf. Flowering may be triggered by day length (a `flower_trigger` gene read against the sky system's day length at that latitude) or by age.
   - **Growth stages:** every plant has a growth level. Each species' table gives a `growth` block: a list of stages with the days each lasts — default four for trees (sprout, sapling, mature, old) and three for herbs and shrubs (sprout, young, mature) — plus a `final_size` the size gene scales. Growth is a 0–1 value through the stages, so the mesh builder gets a continuous number, not a switch. (The yearly states above run inside the stages; a sprout is the seedling.)
@@ -398,12 +420,22 @@ See Part C.
     - validus is 4–8 m tall, not 6–12;
     - chalaensis grows at 100–1,200 m, not high ground;
     - six entries share Kew's *Echinopsis macrogona* but count as separate species under the binomial rule.
-- **Plant groups.** Every biome has four groups, and they overlap freely across biomes because plants read climate, not biome names: **trees** (canopy, emergent), **bushes** (shrub), **grasses and low plants** (ground), and **the catalogue plants** (aroids, cannabis, torch cacti, yuccas, palms, fungi), which carry their own bands and land wherever they fit. The biome files hold 661 researched entries (537 binomials, 558 names); the catalogues 469.
-- **Species pre-filter per cell (R6 performance gate) — required.** 661 + 469 entries is too many to test per site. At load, bin species by climate (temperature × moisture bins per tier, with margins for aspect, lapse across a chunk and the water boost); a chunk takes the union of the bins it covers, then drops what its soil and needs exclude. Report per-site candidate counts and chunk timings before and after.
+- **Plant groups.** Every biome has four groups, and they overlap freely across biomes because plants read climate, not biome names: **trees** (canopy, emergent), **bushes** (shrub), **grasses and low plants** (ground), and **the catalogue plants** (aroids, cannabis, torch cacti, yuccas, palms, fungi), which carry their own bands and land wherever they fit. The biome files hold 661 researched entries (537 binomials, 558 names); the 17 catalogues 764. Loaded together that is 1,285 species (36 catalogue names match a biome plant and fold into it; Rattan is in both palms and vine).
+- **Species pre-filter per cell (R6 performance gate) — required.** 661 + 764 entries is too many to test per site. At load, bin species by climate (temperature × moisture bins per tier, with margins for aspect, lapse across a chunk and the water boost); a chunk takes the union of the bins it covers, then drops what its soil and needs exclude. Report per-site candidate counts and chunk timings before and after.
 - **Shape work** (with the growth stages, which every plant shows):
   - `palm`: fan versus feather crowns, a clustering (multi-stem) form, and the doum palm's forking trunk.
-  - `cactus` / `gnarled` builder: a dagger-crown yucca tree (Joshua-tree form: forking arms, each ending in a ball of stiff leaves), besides the torch-cactus forms above.
-  - `aroid`, as specified above.
+  - `cactus` / `gnarled` builder: a dagger-crown yucca tree (Joshua-tree form: forking arms, each ending in a ball of stiff leaves) and many-armed columns, besides the torch-cactus forms above.
+  - `aroid`, as specified above; `umbrella` at herb scale for the elephant ears.
+  - Bromeliads and tillandsias hang from limbs in the branch graph.
+- **Rules that ride with the catalogues:**
+  - `growth` blocks give per-species stage timings; entries without one get the tier default. Giant herbs (alocasia, taro, Musa) cycle in weeks: a stem grows, flowers once and dies, and the clump lives on by suckers — they pioneer gaps and landslides.
+  - `landmark: true` trees (baobab, ginkgo, Puya raimondii, Wood's cycad) are individually rare; the lore system (Phase 11) can name them.
+  - `climber: true` plants are placed at the base of a host — tree, snag, ruin wall, cliff — and grow up it along the branch graph; stranglers kill old hosts over decades. Ivy and creeper on ruins is the reference look.
+  - `camp_follower: true` plants (banana, taro, oranges, cultivated cannabis, pineapple) appear only near camps and old ruins, by human dispersal.
+  - `cannot_be_browsed` plants (cacti, yuccas, thorn scrub) spread where browsers are heavy (A2).
+  - Savanna biomes are acacia-dominated at low density with open grass between — never a closed canopy.
+  - Pines: lodgepole and jack pine reseed burns in even-aged stands; longleaf and ponderosa need fire to keep their savanna open (Phase 9 reads this).
+  - Orchids germinate only where their fungus already lives: they read the fungi ledger (Phase 7), so until then they place only where a mycorrhizal fungus could.
 - **Fungi — data and look** (`data/plants/fungi.json`, 43 species with a `fungus` block, D4). Fungi are not plants: they read **dead matter** — `substrate` snag_log, litter, dung, carcass or burn — or are `mycorrhizal`, living on the roots of named living trees and fruiting under them. Climate only gates **when** they fruit: `fruit_after_rain_days` after rain, in `fruit_season`. `species_db` loads them apart from the plants: never placed by climate bands, only on their substrate.
   - NEAR: fruiting bodies appear on the actual snag, log, litter patch, dung or carcass a few days after rain and run pin → button → cap → spent over days. Fairy rings widen each year. Glowing kinds (honey-fungus foxfire, ghost fungus, jack-o'-lantern, the glowing bonnets) light the forest floor and cave mouths at night as small teal-green points in the R1a accent. Morels flood last year's fire scar.
   - The player can forage them, reading `edible` (yes, cook, no, poison, deadly). Hooks for Phase 10: camp folk who know the woods warn of the deadly ones; tinder fungus lights fires; reishi and truffle are trade goods; a giant puffball feeds a camp.
@@ -424,6 +456,11 @@ See Part C.
   - **Dispersal is a side effect of eating fruit.** A frugivore carries seed for `seed_carry_h` and drops it where it is then — a bird at its roost or over water, a mammal on its trails, a fish downstream — as a real seed-bank entry at that spot. Gravity, wind and water need no creature. Human dispersal is camp folk dropping seed on the midden.
   - **MID** runs the same rules as rates from feeder counts and bloom counts; the harness checks that both tiers agree on average.
   - **Insects are creatures:** bees with hives (a nest type) and a range, butterflies following blooms, beetles and flies following carrion and dung, moths at night on pale blooms. Ledger counts like everything else; eaten by birds; the base of the food web.
+- **Pollinator specifics** (from the catalogues): yuccas only by yucca moths; magnolias and cycads by beetles (read the beetle count, not bees); baobabs and bananas by bats at night; heliconia, bromeliads and the bird-of-paradise by hummingbirds and sunbirds; aroids by carrion flies; orchids mostly by one specific pollinator each. Bromeliad tanks are nest sites for tree frogs and breeding pools for insects.
+  - ⚑ Today these specifics live only in each entry's `repro.note` text; `pollinator` itself is coarse (insect, carrion_fly, bird, bat, wind, self). Proposed: a `pollinated_by` list of creature ids or kinds (yucca_moth, beetle, hummingbird…) added in a data pass before this phase reads it.
+- **Creature catalogues:** the creature loader reads every `data/creatures/*.json` (today `creatures.json` and `catalogue_dragonflies_snakes.json`). Catalogue entries stay out of play until this phase, like the other rigs: their files say `"spawn": "ambient"`, so the loader holds them back until the ledger spawner deals them.
+- **Snakes:** `venom.potency` sets what a bite costs (under 0.5 pain and a slow day; 0.5–0.8 serious, needs camp medicine; over 0.8 deadly without it). Most warn by `sound` (rattle, hiss, rasp) before striking; skittish ones bite only when stepped on. Cold-band snakes hibernate in rock dens. All follow rodent counts. Tree species live in the branch graph.
+- **Dragonflies:** larvae live underwater for years, so a pond needs to persist through the seasons to have dragonflies; adults hunt insects over water and meadows and are eaten by birds.
 - **Decay loop (fungi, ledger side).** Dead-matter pools: `flora.snags`, `flora.logs`, new `flora.litter` (leaf fall from the age structure each autumn and at dormancy), `soil.carcass`, and `soil.dung` from herbivore counts (D3). Fungi are the only thing that moves matter out of those pools into soil fertility, at `decay_rate` × moisture, per region, for the fungi present — this **replaces** Phase 6's fixed snag and log timers. No fungi in a dry region means logs sit for decades; a wet forest eats its dead in years. Mycorrhizal species raise their host trees' growth rate slightly.
 - **Do not build:** fauna genetics, migration, fire, camps.
 - **Done when:** the harness shows a stable 100-year run, a new world already has nests, the population overlay balances over dev days, a cat takes a rodent, a wolf pack shows up where deer are; a woodpecker is seen on a snag by day, an owl leaves a cavity at dusk; a flowering shrub with bees sets fruit and one without doesn't; a berry bush's seedlings come up under the birds' roost tree; a wind-pollinated grass sets seed on a windy day with no insects; a wet-forest snag sprouts brackets after rain and is gone in a few dev years while a dry-ridge snag stands for decades; a fairy ring is wider next year; foxfire glows at night.
@@ -443,7 +480,7 @@ See Part C.
 
 ## Phase 9 — Disturbance and living water
 - **Touches:** `weather_sim`, ledger, soil, `vegetation_placer`, `river_network`, `terrain_chunk` water.
-- **(a) Fire:** lightning or a camp fire, plus dryness and flora density, ignites; spreads per region by wind and dryness; consumes flora biomass, adds fertility, writes `burn_scar`; NEAR shows burning trees, smoke, blackened ground; scars regrow over years — grass, then shrub, then young trees — by Phase 6's seed, clonal and growth rules, never as scripted stages. A burned patch becomes a field of snags at once.
+- **(a) Fire:** lightning or a camp fire, plus dryness and flora density, ignites; spreads per region by wind and dryness; consumes flora biomass, adds fertility, writes `burn_scar`; NEAR shows burning trees, smoke, blackened ground; scars regrow over years — grass, then shrub, then young trees — by Phase 6's seed, clonal and growth rules, never as scripted stages. A burned patch becomes a field of snags at once. Fire-adapted pines read here: lodgepole and jack pine reseed a burn as an even-aged stand; longleaf and ponderosa savanna stays open only where fire returns.
 - **(b) Flood:** storm plus swollen river floods low regions; flattens ground flora, deposits fertility, drowns burrow nests.
 - **(c) Living water:** lake level and river width follow season and recent rain; boats read width for passability; the water mesh height updates when a chunk streams.
 - **Done when:** on the stamp a dry-season strike burns a patch that comes back as meadow, the harness shows fires as bounded pulses, and a river you could paddle in spring is a rocky bed in late summer.
@@ -482,7 +519,7 @@ See Part C.
 ## Phase 11 — Memory and lore
 - **Touches:** `creature` (NEAR), `camps`, scrolls, HUD place names.
 - **(a) Creature memory:** each NEAR creature keeps up to ~5 memories {what, where, when, good or bad} that decay over days; a wolf that lost packmates near the campfire avoids it, a fed fox returns.
-- **(b) Lore:** place names, scroll text, and camp chatter are generated from `world.events` — "the meadow where the herd died," "the ridge fire of year 12" — so the world's story is what actually happened in this seed.
+- **(b) Lore:** place names, scroll text, and camp chatter are generated from `world.events` — "the meadow where the herd died," "the ridge fire of year 12" — so the world's story is what actually happened in this seed. Landmark trees (`landmark: true`: baobab, ginkgo, Puya raimondii, Wood's cycad) are individually rare and get names of their own.
 - **Done when:** a creature visibly changes behaviour toward the player after an encounter, and a camp folk mentions an event the harness log shows really happened nearby.
 
 ## Phase 12 — Persistence
