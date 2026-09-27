@@ -159,20 +159,9 @@ func update_spear(delta: float) -> void:
 	_carry()
 
 
-## Where the crosshair is: the first thing a ray from the camera meets
-## (the world, trees, creatures' and people's parts), else far along it.
-## The ray starts where the view is centered: over the shoulder while
-## aiming, the camera's offset (h_offset) shifts the picture, not the
-## camera's position.
+## Where the crosshair is (PlanetPlayer.crosshair_point()).
 func _aim_point() -> Vector3:
-	var cam := player.camera()
-	var from := cam.global_position + cam.global_basis.x * cam.h_offset + cam.global_basis.y * cam.v_offset
-	var dir := -cam.global_basis.z
-	var q := PhysicsRayQueryParameters3D.create(from, from + dir * 400.0)
-	q.exclude = [player.get_rid()]
-	q.collision_mask |= Hitboxes.LAYER
-	var hit := player.get_world_3d().direct_space_state.intersect_ray(q)
-	return hit.position if not hit.is_empty() else from + dir * 400.0
+	return player.crosshair_point()
 
 
 ## Jab: a sphere cast REACH_M from the chest toward the crosshair; the

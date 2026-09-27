@@ -35,10 +35,10 @@ const GRIP_R_M := 0.06
 const REACH_M := 1.2
 ## The body's speed while a reach is under way (m/s) and the beat after
 ## each reach (s): with a handhold every ~0.5 m, about 0.5 m/s up a trunk
-## and 0.3-0.45 m/s along a limb (the hands shuffle there, so the body
+## and about 0.3 m/s along a limb (the hands shuffle there, so the body
 ## moves on every other reach).
 const TRUNK_MPS := 0.72
-const LIMB_MPS := 0.45
+const LIMB_MPS := 0.3
 const TRUNK_BEAT_S := 0.3
 const LIMB_BEAT_S := 0.3
 const MIN_REACH_S := 0.35

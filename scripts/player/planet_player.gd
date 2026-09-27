@@ -230,6 +230,23 @@ func camera() -> Camera3D:
 	return _camera
 
 
+## Where the crosshair is, for the bow and the spear alike: the first
+## thing a ray along the view meets (the world, trees, creatures' and
+## people's parts, Hitboxes), else 400 m along it. The ray starts where the
+## picture is centered: over the shoulder while aiming, the camera's
+## h_offset shifts the picture, not the camera, so a ray from the camera
+## itself would land 0.55 m beside the crosshair.
+func crosshair_point() -> Vector3:
+	var cam := camera()
+	var from := cam.global_position + cam.global_basis.x * cam.h_offset + cam.global_basis.y * cam.v_offset
+	var dir := -cam.global_basis.z
+	var q := PhysicsRayQueryParameters3D.create(from, from + dir * 400.0)
+	q.exclude = [get_rid()]
+	q.collision_mask |= Hitboxes.LAYER
+	var hit := get_world_3d().direct_space_state.intersect_ray(q)
+	return hit.position if not hit.is_empty() else from + dir * 400.0
+
+
 ## Stand on the ground at a surface direction, facing `look_toward` (a
 ## surface direction) if given.
 func spawn_at(d: Vector3, look_toward := Vector3.ZERO) -> void:

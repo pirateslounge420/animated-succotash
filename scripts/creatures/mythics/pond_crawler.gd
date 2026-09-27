@@ -209,12 +209,11 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 		h.plant = _to_l(spot)
 		h.pos = h.plant
 		h.wet = _wadeable(spot, _wade.x)
+		# Falloff and distance muffling: the table's "crawler_hands" (Audio3D).
 		h.voice = AudioStreamPlayer3D.new()
 		h.voice.name = "Plant" + PondCrawlerBody.side_name(sd)
 		h.voice.top_level = true
-		h.voice.unit_size = 5.0
-		h.voice.max_distance = 50.0
-		h.voice.attenuation_filter_cutoff_hz = 5000.0
+		Audio3D.apply(h.voice, "crawler_hands")
 		add_child(h.voice)
 		_hands.append(h)
 	_body_l = _to_l(_body_target(_to_g(_body_l), false))

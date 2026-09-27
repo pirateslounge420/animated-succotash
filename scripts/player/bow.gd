@@ -99,16 +99,7 @@ func _loose() -> void:
 	else:
 		from = player.global_position + player.up * 1.35 - player.global_basis.z * 0.55
 	# Aim at what's under the crosshair.
-	var aim_from := cam.global_position
-	var aim_dir := -cam.global_basis.z
-	var q := PhysicsRayQueryParameters3D.create(aim_from, aim_from + aim_dir * 400.0)
-	q.exclude = [player.get_rid()]
-	# Creatures' parts too (Hitboxes; the default mask has every layer):
-	# aim at the deer, not the ground behind it.
-	q.collision_mask |= Hitboxes.LAYER
-	var hit := player.get_world_3d().direct_space_state.intersect_ray(q)
-	var target: Vector3 = hit.position if not hit.is_empty() else aim_from + aim_dir * 400.0
-	var dir := (target - from).normalized()
+	var dir := (player.crosshair_point() - from).normalized()
 	var arrow := Arrow.new()
 	arrow.world = player.world
 	arrow.chunks = player.chunks

@@ -82,9 +82,6 @@ const LOOKAHEAD_M := 4.0
 const SEAT_H := 0.2
 ## Blob shadow only this close to the ground (m).
 const BLOB_H := 3.0
-## Hoots: full volume within HOOT_UNIT_M, gone past HOOT_MAX_M.
-const HOOT_UNIT_M := 12.0
-const HOOT_MAX_M := 160.0
 ## Climbing: hand over hand along steep or thick wood, and walking upright
 ## along the top of wood flatter than WALK_SLOPE (m/s; |tangent . up|);
 ## the center of mass off the wood's surface when clinging, and above its
@@ -281,10 +278,10 @@ func _ready() -> void:
 		species = CreatureSpecies.find("Gibbon")
 	_rng.seed = seed_value if seed_value != 0 else hash([Time.get_ticks_usec(), get_instance_id()])
 	GibbonBody.prewarm()
+	# Falloff and distance muffling: the table's "gibbon_hoot" (Audio3D).
 	voice = AudioStreamPlayer3D.new()
 	voice.name = "Voice"
-	voice.unit_size = HOOT_UNIT_M
-	voice.max_distance = HOOT_MAX_M
+	Audio3D.apply(voice, "gibbon_hoot")
 	voice.volume_db = -4.0
 	voice.position = Vector3(0.0, 0.27, -0.05)
 	add_child(voice)

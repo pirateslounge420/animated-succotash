@@ -110,12 +110,8 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 	_blob_size = Vector2(0.5, 1.2) * _scale_m
 	_blob = BlobShadow.make(self, _blob_size.x, _blob_size.y)
 	for i in 3:
-		var v := AudioStreamPlayer3D.new()
-		v.unit_size = 5.0
-		v.max_distance = 110.0
-		v.attenuation_filter_cutoff_hz = 9000.0
-		add_child(v)
-		_voices.append(v)
+		# Falloff and distance muffling: the table's "rider_hooves" (Audio3D).
+		_voices.append(Audio3D.make("rider_hooves", self))
 	for i in NightRiderBody.LEGS.size():
 		var ch := NightRiderBody.leg_chain(body.bones, i)
 		var names: Array = NightRiderBody.LEGS[i]
