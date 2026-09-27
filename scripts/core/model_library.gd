@@ -2,8 +2,8 @@ class_name ModelLibrary
 ## Hand-made or generated character models (e.g. from Summer Engine's
 ## image-to-3D) dropped into assets/models/, used in place of the
 ## procedural bodies:
-##   player.glb           the player (PlanetPlayer; else the elf,
-##                        PlayerBody)
+##   player.glb           the player (PlanetPlayer; else the
+##                        wanderer, PlayerBody)
 ##   <species>.glb        a creature or NPC, by name in snake case:
 ##                        goblin.glb, deer.glb, arctic_wolf.glb,
 ##                        elder.glb, hunter.glb, skeleton.glb,

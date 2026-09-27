@@ -309,7 +309,7 @@ func _hand() -> Vector3:
 	var body := player.get_node_or_null("Body")
 	if body is PlayerBody:
 		var arm: Node3D = (body as PlayerBody).arms[1]
-		return player.to_local(arm.to_global(Vector3(0, -0.6, 0)))
+		return player.to_local(arm.to_global(Vector3(0, -PlayerBody.ARM_M, 0)))
 	if raising:
 		return Vector3(0.28, 1.9, 0.2)
 	return Vector3(0.3, 0.85 if _thrust <= 0.0 else 1.35, -0.2 - 0.3 * _thrust)

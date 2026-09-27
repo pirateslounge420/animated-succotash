@@ -637,7 +637,10 @@ func _set_crouch(on: bool) -> void:
 	_shape.height = h
 	_shape_node.position = Vector3(0, h * 0.5, 0)
 	_apply_view()
-	_body.scale = Vector3(1.0, h / STAND_HEIGHT, 1.0)
+	if _body is PlayerBody:
+		(_body as PlayerBody).set_crouch(1.0 if on else 0.0)
+	else:
+		_body.scale = Vector3(1.0, h / STAND_HEIGHT, 1.0)
 
 
 # --- Health -----------------------------------------------------------------
@@ -885,6 +888,9 @@ func _update_noise(delta: float, move_speed: float) -> void:
 	# plays the clip for the pose.
 	if _body is PlayerBody:
 		(_body as PlayerBody).set_motion(move_speed / SPRINT_SPEED, delta)
+		(_body as PlayerBody).set_velocity(velocity)
+		var wind: Variant = PlantMeshes.material().get_shader_parameter("wind_vector")
+		(_body as PlayerBody).set_wind(wind if wind is Vector3 else Vector3.ZERO)
 	elif _animator:
 		var rate := 1.0
 		if anim_state == "walk" or anim_state == "sprint" or anim_state == "crouch_walk":

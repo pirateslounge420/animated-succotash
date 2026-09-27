@@ -5,7 +5,7 @@ procedural body. No code changes needed.
 
 | File | Replaces |
 |---|---|
-| `player.glb` | the player (the elf, `PlayerBody`) |
+| `player.glb` | the player (the wanderer, `PlayerBody`) |
 | `<name>.glb` | a creature or NPC, by its name in snake case: `goblin.glb`, `deer.glb`, `arctic_wolf.glb`, `unicorn.glb`, `werewolf.glb`, `elder.glb`, `hunter.glb`, `skeleton.glb`, `hooded_one.glb`, `northerner.glb`, `marsh_dweller.glb`, ... (names from `data/creatures/creatures.json` and the camp folk in `scripts/landmarks/camps.gd`) |
 
 ## What the game does with it
