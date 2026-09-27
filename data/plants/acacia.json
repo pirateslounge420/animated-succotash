@@ -1,0 +1,2008 @@
+{
+ "key": "ACACIA_CATALOGUE",
+ "name": "Acacias — savanna thorn trees and Australian wattles",
+ "kind": "land",
+ "status": "24 species",
+ "notes": "The trees that make a savanna read as savanna: flat-topped umbrella thorns, fever trees along pans, whistling thorns with their ants, camel thorn in the Kalahari, babul and cutch in India, mulga, brigalow and gidgee across Australia, huisache and catclaw in the Americas. Savanna biomes should be dominated by these at low density with grass between — never a closed canopy.",
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Umbrella thorn",
+    "genus": "Vachellia",
+    "species": "tortilis",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.15,
+     0.45
+    ],
+    "altitude_m": [
+     0,
+     1800
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sahel to South Africa savanna; the flat-top. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Fever tree",
+    "genus": "Vachellia",
+    "species": "xanthophloea",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     18,
+     27
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     1800
+    ],
+    "height_m": [
+     10.0,
+     25.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "African river margins and pans; yellow bark. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Camel thorn",
+    "genus": "Vachellia",
+    "species": "erioloba",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     17,
+     25
+    ],
+    "moisture": [
+     0.1,
+     0.3
+    ],
+    "altitude_m": [
+     700,
+     1500
+    ],
+    "height_m": [
+     8.0,
+     16.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Kalahari. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Sweet thorn",
+    "genus": "Vachellia",
+    "species": "karroo",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     14,
+     24
+    ],
+    "moisture": [
+     0.2,
+     0.55
+    ],
+    "altitude_m": [
+     0,
+     1800
+    ],
+    "height_m": [
+     4.0,
+     12.0
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "southern African savanna and karoo. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Gum arabic tree",
+    "genus": "Senegalia",
+    "species": "senegal",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.1,
+     0.3
+    ],
+    "altitude_m": [
+     100,
+     1000
+    ],
+    "height_m": [
+     4.0,
+     10.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sahel. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Knob thorn",
+    "genus": "Senegalia",
+    "species": "nigrescens",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     19,
+     26
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "altitude_m": [
+     100,
+     1200
+    ],
+    "height_m": [
+     8.0,
+     18.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "southern African lowveld. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Paperbark thorn",
+    "genus": "Vachellia",
+    "species": "sieberiana",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     18,
+     26
+    ],
+    "moisture": [
+     0.4,
+     0.65
+    ],
+    "altitude_m": [
+     0,
+     1800
+    ],
+    "height_m": [
+     8.0,
+     20.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "African moist savanna. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Red thorn",
+    "genus": "Vachellia",
+    "species": "gerrardii",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     17,
+     25
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "altitude_m": [
+     600,
+     2000
+    ],
+    "height_m": [
+     5.0,
+     12.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "East African grassland. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Egyptian thorn",
+    "genus": "Vachellia",
+    "species": "nilotica",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sahel to India, river plains. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Gum acacia",
+    "genus": "Vachellia",
+    "species": "seyal",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     24,
+     31
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "altitude_m": [
+     100,
+     1200
+    ],
+    "height_m": [
+     6.0,
+     12.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sahel wadis; red bark. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Babul",
+    "genus": "Vachellia",
+    "species": "nilotica",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     5.0,
+     15.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Indian plains. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Cutch tree",
+    "genus": "Senegalia",
+    "species": "catechu",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     22,
+     29
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     8.0,
+     15.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Indian and Burmese dry forest. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Mulga",
+    "genus": "Acacia",
+    "species": "aneura",
+    "family": "Fabaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     19,
+     26
+    ],
+    "moisture": [
+     0.08,
+     0.25
+    ],
+    "altitude_m": [
+     100,
+     900
+    ],
+    "height_m": [
+     4.0,
+     10.0
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Australian arid interior. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Gidgee",
+    "genus": "Acacia",
+    "species": "cambagei",
+    "family": "Fabaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     20,
+     26
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "altitude_m": [
+     100,
+     500
+    ],
+    "height_m": [
+     6.0,
+     12.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "central Queensland clay plains. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Brigalow",
+    "genus": "Acacia",
+    "species": "harpophylla",
+    "family": "Fabaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     18,
+     24
+    ],
+    "moisture": [
+     0.3,
+     0.5
+    ],
+    "altitude_m": [
+     100,
+     600
+    ],
+    "height_m": [
+     10.0,
+     25.0
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Queensland-NSW clay woodland. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Myall",
+    "genus": "Acacia",
+    "species": "pendula",
+    "family": "Fabaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     16,
+     22
+    ],
+    "moisture": [
+     0.2,
+     0.4
+    ],
+    "altitude_m": [
+     100,
+     500
+    ],
+    "height_m": [
+     6.0,
+     12.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "inland NSW; weeping silver. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Golden wattle",
+    "genus": "Acacia",
+    "species": "pycnantha",
+    "family": "Fabaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "altitude_m": [
+     0,
+     900
+    ],
+    "height_m": [
+     4.0,
+     8.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE Australian woodland. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Blackwood",
+    "genus": "Acacia",
+    "species": "melanoxylon",
+    "family": "Fabaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     15.0,
+     35.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE Australian wet forest. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Coastal wattle",
+    "genus": "Acacia",
+    "species": "longifolia",
+    "family": "Fabaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     13,
+     19
+    ],
+    "moisture": [
+     0.35,
+     0.65
+    ],
+    "altitude_m": [
+     0,
+     300
+    ],
+    "height_m": [
+     2.0,
+     8.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "SE Australian dunes. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Koa",
+    "genus": "Acacia",
+    "species": "koa",
+    "family": "Fabaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     14,
+     20
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     300,
+     2000
+    ],
+    "height_m": [
+     15.0,
+     30.0
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Hawaiian montane forest. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Huisache",
+    "genus": "Vachellia",
+    "species": "farnesiana",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     18,
+     28
+    ],
+    "moisture": [
+     0.2,
+     0.55
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     3.0,
+     8.0
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "sapling",
+       1500
+      ],
+      [
+       "mature",
+       8000
+      ],
+      [
+       "old",
+       40000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "tropical American thorn scrub. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Whistling thorn",
+    "genus": "Vachellia",
+    "species": "drepanolobium",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     18,
+     26
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "altitude_m": [
+     600,
+     2000
+    ],
+    "height_m": [
+     2.0,
+     6.0
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "East African black-cotton savanna; ant galls. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Prairie acacia",
+    "genus": "Senegalia",
+    "species": "angustissima",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     16,
+     24
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     100,
+     2000
+    ],
+    "height_m": [
+     0.5,
+     2.0
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Texas-Mexico grassland. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   },
+   {
+    "name": "Catclaw acacia",
+    "genus": "Senegalia",
+    "species": "greggii",
+    "family": "Fabaceae",
+    "shape": "umbrella",
+    "temp_c": [
+     16,
+     24
+    ],
+    "moisture": [
+     0.08,
+     0.3
+    ],
+    "altitude_m": [
+     0,
+     1800
+    ],
+    "height_m": [
+     2.0,
+     6.0
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "needs": [],
+    "color": "#6A9A4A",
+    "accent": "#8A7A50",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       90
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       4000
+      ],
+      [
+       "old",
+       12000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "insect",
+     "disperser": [
+      "mammal",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_dry",
+      "days": 14,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "dry"
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.5
+     ],
+     "allocation": [
+      0.3,
+      0.6
+     ]
+    },
+    "source": "Sonoran and Chihuahuan washes. Kew POWO (African acacias are now Vachellia/Senegalia; Acacia is the Australian wattles). Thorny (African), flat crowns, insect-pollinated, pods eaten by browsers which spread the seed; giraffe and goat browse; fire-adapted."
+   }
+  ],
+  "ground": [],
+  "epiphyte": []
+ }
+}
