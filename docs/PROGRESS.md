@@ -4,6 +4,24 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-27 — Carnivorous plants and the tepui (the 52nd biome); data + spec, one template added
+- **Merged:** `data/plants/carnivore.json` (0881fb9, 43 species) and `data/biomes/51_tepui.json` (4398f90, 16 endemics).
+- **`biome_templates.gd`:** TEPUI added last (id 51, group Mountain, small), so existing ids are unchanged. Nothing classifies as it until the Phase 2 landform. This resolves 51 vs 52.
+- **Dry run:** load_all "bad scripts: 0". Biome files: 0 warnings (TEPUI is a known key now), 677 entries, 574 names. Catalogues: 18 files, 807 entries, parse OK; the only warnings are the 18 expected "unknown biome key" ones. 1,342 species loaded together.
+  - Carnivore clashes: Sun pitcher and Round-leaved sundew, already biome plants.
+  - Trap types: pitfall 23, flypaper 16, snap 2, bladder 1, corkscrew 1.
+- **stamp_check:** PASS, 48 of 51 surface templates present (Puna, Maritime forest and Tepui absent; Tepui as designed).
+- **Spec:**
+  - Phase 2: the tepui landform; 52 biomes resolved.
+  - Phase 3: quartzite caves in tepuis.
+  - D4: the carnivore block and tank_dweller.
+  - Phase 6: carnivorous plants. Phase 7: they read the insect ledger. Phase 9: savanna carnivores need burns.
+  - Phase 11: the tepui is the oldest land.
+  - Part F: one new line.
+- **Open:**
+  - Three tepui entries (Cyathea spp., Cladonia spp., Navia spp.) have no species name (binomial rule).
+  - No tepui mythic exists yet.
+
 ## 2026-09-27 — Merged data/plant-catalogues at 5a4ad60 (data + spec only; nothing built)
 - 17 plant catalogues, 764 entries, all with binomials (adds pine, magnolia, rhododendron, citrus, cycad, baobab + ginkgo, acacia, vine, orchid, bromeliad, giant_herbs), plus `data/creatures/catalogue_dragonflies_snakes.json` (33). No conflicts; leaf densities and macrogonus `reported` intact.
 - **Plant dry run** (the real loader's `_load_file`, read-only):

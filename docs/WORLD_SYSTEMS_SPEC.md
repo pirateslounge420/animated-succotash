@@ -68,7 +68,7 @@ The build is far past "prototype." Most layers of the stack already exist. The j
 | Climate | `passes/climate`; `weather_sim` grid with wind | Partly | Verify wind is **pressure-gradient** driven; verify **ridge-blocked moisture** (windward wet / leeward dry) |
 | Weather | rain, snow, storms, lightning, thunder; clouds driven by weather | Yes | **Seasons do not exist** |
 | Soil | — | No | No fertility layer; `vegetation_placer` uses suitability/shade/clumping only |
-| Flora | `species_db`, `vegetation_placer`, 25 plant meshes at 3 LODs; 51 biome plant lists | Mostly | 51 biomes in data vs **52** in design — reconcile. Foliage sway must read live wind |
+| Flora | `species_db`, `vegetation_placer`, 25 plant meshes at 3 LODs; 51 biome plant lists | Mostly | 52 biomes (resolved: the 52nd is Tepui, 2026-09-27). Foliage sway must read live wind |
 | Fauna | `creature_spawner` (spawn/despawn near player), behaviors (wander/flee/drink/perch/hunt/attack), `territories` for mythicals, `sound_synth` | Partly | Spawner is **proximity-based, not population-based** — no regional ledger, no food web, no reproduction, no nests |
 | Society | `camps` (folk + guards + chatter), `encampment` (elder, hunter), `campfire`; ruins | Partly | Camp folk don't forage/hunt; no cooking; no economy |
 | Persistence | — | No | Not started |
@@ -210,7 +210,8 @@ data/plants/<catalogue>.json  plant catalogues, laid out like a biome file (key,
                              curated regional dominants), fungi.json (43 species, fungus block below),
                              pine 39, magnolia 18, rhododendron 22, citrus 15, cycad 24, baobab 8 + ginkgo,
                              acacia 24, vine 30, orchid 60, bromeliad 30, giant_herbs 24 (alocasia, taro,
-                             Musa). 17 files, 764 entries, every one with a binomial. Loaded from Phase 6.
+                             Musa), carnivore 43. 18 files, 807 entries, every one with a binomial.
+                             Loaded from Phase 6.
 biome file `special`         computed list of the catalogue plants whose climate centre falls inside that
                              biome (informational; Phase 6 may raise their density there so they are findable)
 plant                      { name, genus, species, invented?, stratum(canopy|under|ground), temp_min/max,
@@ -228,6 +229,8 @@ plant                      { name, genus, species, invented?, stratum(canopy|und
                              oranges, cultivated cannabis, pineapple)
   orchid                   { mycoheterotroph, specific_pollinator } — germinates only where its fungus lives
   bromeliad                { tank, air_plant } — tanks are frog nest sites and insect breeding pools
+  carnivore                { trap: pitfall|flypaper|snap|bladder|corkscrew, eats, nitrogen_from_prey }
+  tank_dweller             true: lives inside bromeliad tanks (the tepui bladderwort)
   repro.note               free text today; carries the pollinator specifics (yucca moth, beetle,
                              hummingbird, one specific pollinator per orchid) ⚑ see Phase 7
   leaf_density             0–1, how leafy a branchy tree's crown is: how many leaf clusters its limbs carry
@@ -343,7 +346,8 @@ See Part C.
 - Add a **tectonic skeleton** pass before terrain (plate boundaries on the sphere; ranges and ravines follow them; plates never move).
 - Verify hydrology produces a **current direction** per river segment.
 - Verify climate pass does **ridge-blocked moisture** (windward wet+fog, leeward dry) using prevailing wind.
-- Reconcile **51 vs 52 biomes**; make sure biome lookup is Whittaker (temp × moisture) with smooth noise blending.
+- **52 biomes** (resolved): the 52nd is Tepui (`data/biomes/51_tepui.json`, template added last in `biome_templates.gd`, group Mountain). Make sure biome lookup is Whittaker (temp × moisture) with smooth noise blending.
+- **Tepui landform** (geology): a tepui is an isolated plateau on SANDSTONE in the warm–wet band — a flat summit that reads TEPUI by altitude (climate 8–16 °C, moisture 0.8–1, 1,500–3,000 m), sheer bare cliffs on every side, tropical rainforest on the slopes and at the foot, and waterfalls shed off the rim, the tallest falls on the planet. Rare: a handful per planet, none on the stamp unless the designer asks. Nothing classifies as TEPUI until this landform exists.
 - Confirm the two-tier generation in D1; report PlanetData memory at the current resolution and at a 10× planet; confirm `flow_to` gives boats and swimmers a usable current direction per river segment.
 - **Do not build:** seasons, soil, ecology.
 - **Done when:** postage-stamp overlays for temperature/moisture/biome make sense, mountain ranges visibly follow plate edges, and a coastal range is green on the sea side and brown behind.
@@ -359,6 +363,7 @@ See Part C.
 - **(d) Look, per R1/R1a:** never black. Deep ultramarine haze that thickens with distance, cold #3E4C8C stone, water near self-lit, warm light only from the player's torch or a fire. Depth bands: shallow root-and-soil caves; limestone with stalactites, pools and underground rivers; deep volcanic with lava glow (#FF4A00) under BASALT_VOLCANIC. Teal fungi at depth reuse `magic_sites`.
 - **(e) Underground biome:** `50_caves.json` becomes real — moss, fungi and glow fungi by depth band. Cave fauna (bats that roost by day and pour out at dusk, cave fish, blind salamanders, spiders) join the ledger in Phase 7 with `underground: true`. Cave ambience: the drone, drips, echoing footsteps, all 3D.
 - **(f) Hooks only, not built:** sunken temples in flooded rooms; the rare deep tribe by the lava, later.
+- **Tepui caves:** quartzite caves and sinkholes thread tepui summits (Phase 2 raises the tepuis).
 - **Do not build:** cave creatures, ruins inside caves, the lava tribe.
 - **Done when:** on the stamp, a karst cliff mouth leads through tunnels to a room with a pool and an underground river; a ravine splits the surface somewhere; a mouth exists behind a waterfall; F3 shows `cave_density`; frame rate underground matches the surface.
 - **Prompt A:**
@@ -435,6 +440,7 @@ See Part C.
   - `cannot_be_browsed` plants (cacti, yuccas, thorn scrub) spread where browsers are heavy (A2).
   - Savanna biomes are acacia-dominated at low density with open grass between — never a closed canopy.
   - Pines: lodgepole and jack pine reseed burns in even-aged stands; longleaf and ponderosa need fire to keep their savanna open (Phase 9 reads this).
+  - **Carnivorous plants** (`data/plants/carnivore.json`, 43: all 8 Sarracenia plus the cobra lily and sun pitcher, 12 Nepenthes, 12 sundews, Venus flytrap, waterwheel, bladderworts, butterworts, the Albany pitcher, rainbow plant, dewy pine, corkscrew plant; `carnivore` block, D4). They grow only on nutrient-poor ground — peat, sand, wet rock — at high moisture, and their growth reads the local insect count instead of soil fertility (a table value until Phase 7 fills the ledger). Flowers stand far above the traps so pollinators survive. Sarracenia and Dionaea live in fire-kept pine savanna and need the burns (Phase 9). Nepenthes are tropical climbers (`climber`) and cliff plants. Bladderworts float in ponds and eat water fleas; the tepui bladderwort lives inside bromeliad tanks (`tank_dweller`).
   - Orchids germinate only where their fungus already lives: they read the fungi ledger (Phase 7), so until then they place only where a mycorrhizal fungus could.
 - **Fungi — data and look** (`data/plants/fungi.json`, 43 species with a `fungus` block, D4). Fungi are not plants: they read **dead matter** — `substrate` snag_log, litter, dung, carcass or burn — or are `mycorrhizal`, living on the roots of named living trees and fruiting under them. Climate only gates **when** they fruit: `fruit_after_rain_days` after rain, in `fruit_season`. `species_db` loads them apart from the plants: never placed by climate bands, only on their substrate.
   - NEAR: fruiting bodies appear on the actual snag, log, litter patch, dung or carcass a few days after rain and run pin → button → cap → spent over days. Fairy rings widen each year. Glowing kinds (honey-fungus foxfire, ghost fungus, jack-o'-lantern, the glowing bonnets) light the forest floor and cave mouths at night as small teal-green points in the R1a accent. Morels flood last year's fire scar.
@@ -459,6 +465,7 @@ See Part C.
 - **Pollinator specifics** (from the catalogues): yuccas only by yucca moths; magnolias and cycads by beetles (read the beetle count, not bees); baobabs and bananas by bats at night; heliconia, bromeliads and the bird-of-paradise by hummingbirds and sunbirds; aroids by carrion flies; orchids mostly by one specific pollinator each. Bromeliad tanks are nest sites for tree frogs and breeding pools for insects.
   - ⚑ Today these specifics live only in each entry's `repro.note` text; `pollinator` itself is coarse (insect, carrion_fly, bird, bat, wind, self). Proposed: a `pollinated_by` list of creature ids or kinds (yucca_moth, beetle, hummingbird…) added in a data pass before this phase reads it.
 - **Creature catalogues:** the creature loader reads every `data/creatures/*.json` (today `creatures.json` and `catalogue_dragonflies_snakes.json`). Catalogue entries stay out of play until this phase, like the other rigs: their files say `"spawn": "ambient"`, so the loader holds them back until the ledger spawner deals them.
+- **Carnivorous plants read the insect ledger:** a bog full of midges grows fat pitchers; kill the insects and the sundews starve. Bladderworts read the pond's water-flea count.
 - **Snakes:** `venom.potency` sets what a bite costs (under 0.5 pain and a slow day; 0.5–0.8 serious, needs camp medicine; over 0.8 deadly without it). Most warn by `sound` (rattle, hiss, rasp) before striking; skittish ones bite only when stepped on. Cold-band snakes hibernate in rock dens. All follow rodent counts. Tree species live in the branch graph.
 - **Dragonflies:** larvae live underwater for years, so a pond needs to persist through the seasons to have dragonflies; adults hunt insects over water and meadows and are eaten by birds.
 - **Decay loop (fungi, ledger side).** Dead-matter pools: `flora.snags`, `flora.logs`, new `flora.litter` (leaf fall from the age structure each autumn and at dormancy), `soil.carcass`, and `soil.dung` from herbivore counts (D3). Fungi are the only thing that moves matter out of those pools into soil fertility, at `decay_rate` × moisture, per region, for the fungi present — this **replaces** Phase 6's fixed snag and log timers. No fungi in a dry region means logs sit for decades; a wet forest eats its dead in years. Mycorrhizal species raise their host trees' growth rate slightly.
@@ -480,7 +487,7 @@ See Part C.
 
 ## Phase 9 — Disturbance and living water
 - **Touches:** `weather_sim`, ledger, soil, `vegetation_placer`, `river_network`, `terrain_chunk` water.
-- **(a) Fire:** lightning or a camp fire, plus dryness and flora density, ignites; spreads per region by wind and dryness; consumes flora biomass, adds fertility, writes `burn_scar`; NEAR shows burning trees, smoke, blackened ground; scars regrow over years — grass, then shrub, then young trees — by Phase 6's seed, clonal and growth rules, never as scripted stages. A burned patch becomes a field of snags at once. Fire-adapted pines read here: lodgepole and jack pine reseed a burn as an even-aged stand; longleaf and ponderosa savanna stays open only where fire returns.
+- **(a) Fire:** lightning or a camp fire, plus dryness and flora density, ignites; spreads per region by wind and dryness; consumes flora biomass, adds fertility, writes `burn_scar`; NEAR shows burning trees, smoke, blackened ground; scars regrow over years — grass, then shrub, then young trees — by Phase 6's seed, clonal and growth rules, never as scripted stages. A burned patch becomes a field of snags at once. Fire-adapted pines read here: lodgepole and jack pine reseed a burn as an even-aged stand; longleaf and ponderosa savanna stays open only where fire returns, and the Sarracenia and Venus flytraps of that savanna need those burns.
 - **(b) Flood:** storm plus swollen river floods low regions; flattens ground flora, deposits fertility, drowns burrow nests.
 - **(c) Living water:** lake level and river width follow season and recent rain; boats read width for passability; the water mesh height updates when a chunk streams.
 - **Done when:** on the stamp a dry-season strike burns a patch that comes back as meadow, the harness shows fires as bounded pulses, and a river you could paddle in spring is a rocky bed in late summer.
@@ -519,7 +526,7 @@ See Part C.
 ## Phase 11 — Memory and lore
 - **Touches:** `creature` (NEAR), `camps`, scrolls, HUD place names.
 - **(a) Creature memory:** each NEAR creature keeps up to ~5 memories {what, where, when, good or bad} that decay over days; a wolf that lost packmates near the campfire avoids it, a fed fox returns.
-- **(b) Lore:** place names, scroll text, and camp chatter are generated from `world.events` — "the meadow where the herd died," "the ridge fire of year 12" — so the world's story is what actually happened in this seed. Landmark trees (`landmark: true`: baobab, ginkgo, Puya raimondii, Wood's cycad) are individually rare and get names of their own.
+- **(b) Lore:** place names, scroll text, and camp chatter are generated from `world.events` — "the meadow where the herd died," "the ridge fire of year 12" — so the world's story is what actually happened in this seed. Landmark trees (`landmark: true`: baobab, ginkgo, Puya raimondii, Wood's cycad) are individually rare and get names of their own. Tepuis are the oldest land on the planet — never glaciated, never drowned — so the events log's world age starts earliest there, and the mythic there is the oldest thing alive (⚑ no tepui mythic exists in `creatures.json` yet).
 - **Done when:** a creature visibly changes behaviour toward the player after an encounter, and a camp folk mentions an event the harness log shows really happened nearby.
 
 ## Phase 12 — Persistence
@@ -551,6 +558,7 @@ The designer should be **surprised**. If any of these had to be hard-coded, the 
 - Kill the bees and the orchard stops.
 - The fig's children grow where the bats sleep.
 - The forest that keeps its fungi keeps its soil.
+- A bog full of midges grows fat pitchers; kill the insects and the sundews starve.
 
 ---
 

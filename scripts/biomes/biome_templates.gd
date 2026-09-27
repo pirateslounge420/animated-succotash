@@ -1,10 +1,13 @@
 class_name BiomeTemplates
 ## The biome template list from DESIGN.md "Biome Templates": the real-world
 ## biome list with only near-identical biomes merged (e.g. Taiga +
-## Coniferous, Swamp + Bayou). 51 slots: 49 surface biomes, a fresh-water
+## Coniferous, Swamp + Bayou). 52 slots: 50 surface biomes, a fresh-water
 ## label for rivers and lakes, and Karst/caves, which is reserved for the
 ## separate underground system (not placed by BiomePass; GeologyPass's
-## karst rock marks where caves would be densest).
+## karst rock marks where caves would be densest). Tepui, the 52nd, comes
+## last: the flat summit of an isolated sandstone table mountain. It is a
+## landform label, so nothing classifies as it until the Phase 2 geology
+## raises tepuis (a handful per planet, none on the stamp).
 ##
 ## Each slot has a matching plant data file in data/biomes/ (see the README
 ## there), keyed by the names in KEYS.
@@ -33,6 +36,7 @@ enum {
 	VOLCANIC_FIELD, BADLANDS, CANYON, SALT_FLAT, HOT_SPRING,
 	GLACIER,
 	CAVES,
+	TEPUI,
 	COUNT,
 }
 
@@ -50,6 +54,7 @@ const KEYS: Array[String] = [
 	"SHELF_SEA", "CORAL_REEF", "KELP_FOREST", "DEEP_OCEAN", "SEA_ICE",
 	"VOLCANIC_FIELD", "BADLANDS", "CANYON", "SALT_FLAT", "HOT_SPRING",
 	"GLACIER", "CAVES",
+	"TEPUI",
 ]
 
 ## id -> [name, group, map color, size]
@@ -105,6 +110,7 @@ const INFO := [
 	["Hot spring", "Special", Color(0.7, 0.62, 0.35), Size.SMALL],
 	["Glacier", "Glaciers", Color(0.8, 0.88, 0.96), Size.SMALL],
 	["Karst / caves", "Caves", Color(0.4, 0.36, 0.34), Size.SMALL],
+	["Tepui", "Mountain", Color(0.36, 0.44, 0.34), Size.SMALL],
 ]
 
 
