@@ -1121,6 +1121,112 @@ Spawn tiers:
   textures, and its clips play by state. Tested with a rigged stand-in
   exported to a real .glb: read raw at runtime, scaled to its sidecar
   height, relit, Idle and Walk switching as the player moved.
+- **Night Rider** (Phase 1 rig; `scripts/creatures/mythics/`, data "Night
+  rider", *Nyctequus gemellus*, invented): two riders on dark horses,
+  always a pair, boreal forest (taiga) at night, aggressive. Held back from
+  play until Phase 7 (`spawn: disabled`: CreatureSpawner skips it and
+  Territories leaves it out of the odds, so every other territory is
+  unchanged; all 53 on the dev stamp hash the same with and without the
+  entry). Seen through the dev spawn (`NightRiderPair.debug_spawn()`; F7
+  in dev mode) and `tools/night_rider_demo.gd`.
+  - Body (`NightRiderBody`): horse and hooded, cloaked rider as one
+    sculpted skinned mesh, reusing SculptedBodies' shapes, surface nets and
+    skinning with its own spec, cache and rig (no change to the shared
+    sculpt code). A heavy horse (deep chest, arched neck, long mane to one
+    side, full tail, thick legs with the hair flaring over broad hooves);
+    the rider's deep pointed hood with a dark void for a face, broad
+    shoulders, sleeves to gloved hands at the reins, the cloak over the
+    horse's back and down its flanks with a torn hem. 16 bones in a real
+    hierarchy (each leg two: shoulder or hip to knee or hock, then to the
+    hoof), mirrored by nested pivots, so a pivot's rotation is its bone's
+    local pose. Triangles (near / far, switching at 55 m): 9,756 / 2,420;
+    the far mesh's shapes are thickened to at least its cell size so legs
+    don't break up. Built in about 4 s on a worker the first time it's
+    needed (at startup in dev mode, for F7).
+  - Look (`shaders/night_rider.gdshader`): vertex-lit like the world, with
+    Look's fur strokes and a hard-edged grain triplanar at a scale where a
+    texel is one to three screen pixels at walking distance (crunchy
+    texture on smooth shapes). The texture is bound to the rest pose: each
+    vertex carries its rest position and normal (CUSTOM0, CUSTOM1) and the
+    strokes and grain are looked up there, so they ride on the skin
+    instead of sliding over the legs as they walk. Palette (data) deep
+    ultramarine and indigo, every color at or above the night sky's
+    darkest, #0A14A0, and the shader eases creases and dark strokes onto
+    that floor rather than below it. At night they are "lit only by blue
+    sheen", as in the designer's references (a dark armoured figure, a
+    dark horse): the world's night light reaches them only `night_shade`
+    as much (data "look"), so they stand as deep blue masses darker than
+    the trunks, and a cold blue sheen (emitted; strongest on the edges
+    turned away from you, across the planes facing up and toward you, and
+    on what faces the sky, broken into streaks by the strokes and grain,
+    like the era's sphere-mapped gloss) carries their shapes. The rider's
+    face and the horse's eye sockets and nostrils are a void: untextured,
+    catching no sheen, the darkest thing on them. The world's own
+    materials have no sheen (look.gdshaderinc); this is the riders' alone.
+    Eyes:
+    `shaders/eye_glow.gdshader`, small camera-facing points of #FF2A2A
+    with a soft halo that never shrink below about three pixels, drawn a
+    little toward the camera so the head doesn't swallow them (it still
+    hides them from behind). They are the only light on the riders; no
+    light sources.
+  - Movement (`NightRider`, a Creature): heavy momentum. Speed eases at
+    `accel_mps2` (0.25 m/s²: four seconds to walking pace), and the heading
+    turns no tighter than an 8 m circle, the turn rate itself easing (a
+    heavy body swinging round); nearly stopped it can turn slowly on the
+    spot. It wades up to 0.7 m and won't step deeper. The body pitches to
+    the slope between fore and hind hooves.
+  - Gait: a slow four-beat walk only (left hind, left fore, right hind,
+    right fore, a quarter cycle apart). Each hoof is placed by two-bone IK
+    on its leg's pivots, fore knees bending forward, hind hocks back. In
+    stance the hoof sweeps back exactly as fast as the body moves on (the
+    stride scales with speed), so planted hooves don't slide; out of reach
+    at the ends of the stride the leg points straight at it, so the hoof
+    settles onto the ground and peels off it rather than skating. In swing
+    the hoof lifts 13 cm, folding the knee or hock, and sets down softly
+    (no spray). The head dips as each fore hoof lands, the body bobs
+    1.5 cm and rolls a touch, the rider sways, the tail swings, and each
+    hoof follows the ground under it.
+  - Pair (`NightRiderPair`): the follower rides in the leader's tracks two
+    horse lengths behind (5.1 m nose to nose), steering for the leader's
+    recorded track and easing its speed to hold the gap, its gait held 0.4
+    of a cycle out of step (so the eight hoofbeats never coincide). The
+    leader patrols (waypoints ahead within its territory, in its biome,
+    steering round trunks early with rays on the tree layer), walks a
+    route, or hunts: at night within `notice_m` (more if you're loud), or
+    once shot, it walks at you and strikes in reach
+    (`CreatureSpawner.player_hit`, the species' `bite`; no balancing).
+  - Hitboxes (`Hitboxes`, generic; meant to become every creature's): one
+    kinematic body (`AnimatableBody3D`) per part riding its pivot, sized
+    to the mesh: barrel, neck, head, tail, each leg's two segments, the
+    rider's body, arms and hood. The parts are on their own physics layer,
+    3 (`Hitboxes.LAYER`, bit value 4), not the world's layer 1, so the
+    player's movement (mask 1) never snags on a leg. Arrows find them: the
+    arrow's physics ray includes layer 3 in its mask (and the bow's aim
+    ray looks at every layer), and a ray that meets a part hurts that
+    creature (`Hitboxes.creature_of()`) and the arrow sticks in that part,
+    riding with it; the gap between the legs is a miss. For the player to
+    bump into there is one simple body per creature on layer 1
+    (`Hitboxes.blocker()`: a capsule through the horse's barrel, inside
+    the parts, so a shot always meets a part first). All off when it dies.
+  - Sound (`NightRiderSounds`): each hoof landing is a soft synthesized
+    thud (a low falling thump, a dark press of noise, a brief hush of
+    needles; no clop) on a 3D player moved to that hoof (unit size 5 m,
+    heard to 110 m). A hoof in water sends `Ripples.splash` as it lands and
+    `Ripples.wake` while it wades (no-ops until the ripple simulation is
+    attached).
+  - Biome cue (`Mythics`): on walking into a `biome_lock` biome during the
+    species' hours (or when they begin while you're there), at most every
+    `cooldown_s`, a 12 s recording of the pair walking far off
+    ("hoofbeats_far": both four-beat walks, out of step, darkened and
+    echoed) plays on a 3D player 280-420 m away, in the direction the
+    biome runs deepest from you, moving across as they walk, muffled by
+    distance. It reads the player's biome cell and the sky's daylight and
+    spawns nothing.
+  - Dev spawn: `NightRiderPair.debug_spawn(mythics, from, facing)` (from
+    code) brings a pair across the view about 30 m ahead, on dry ground.
+    F7 calls it in dev mode while the input map has no shared `dev_spawn`
+    action; once it has (the main branch's, for every Phase 1 rig), Mythics
+    stands down and the shared handler should call `debug_spawn()`.
 
 Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
 howl, drone and whisper. Bodies are placeholders (`CreatureBodies`)

@@ -40,6 +40,25 @@ var hp := 0.0
 ## hunters and hostile mythicals default to one by size ("bite").
 var bite := 0.0
 
+# Spec D4 fields (docs/WORLD_SYSTEMS_SPEC.md D4; data/creatures/README.md).
+# Read by the systems that need them; nothing else changes behavior yet.
+## Place in the food web: insect, herbivore, small_pred, apex, scavenger,
+## fish, or mythic.
+var trophic := ""
+## D4's name for when it's out: day, night or dusk (sets `active` when the
+## entry has no `active` of its own).
+var activity := ""
+## How it reacts to light (a torch, a campfire); "none" ignores it.
+var light_response := ""
+## Mythic only: the biomes it's bound to (BiomeTemplates ids, from biome
+## keys like "TAIGA"); empty = not bound.
+var biome_lock := PackedInt32Array()
+## Group size (D4 herd_min / herd_max); a pair is [2, 2].
+var herd := Vector2i(1, 1)
+## The entry as written, for a species' own extra fields (a rig's tuning,
+## a cue).
+var data := {}
+
 ## 0-1 how full the moon is right now (CreatureSpawner sets it), for
 ## `active: full_moon`.
 static var moon_full := 0.0
@@ -109,8 +128,21 @@ static func _from(e: Dictionary) -> CreatureSpecies:
 	sp.campfire = bool(e.get("campfire", false))
 	sp.rarity = float(e.get("rarity", 1.0))
 	sp.hp = float(e.get("hp", 0.0))
-	var hunter := sp.role == "pack" or sp.temperament == "hostile"
+	var hunter := sp.role == "pack" or sp.temperament in ["hostile", "aggressive"]
 	sp.bite = float(e.get("bite", (6.0 + 5.0 * sp.size_m) if hunter else 0.0))
+	# Spec D4 fields.
+	sp.data = e
+	sp.trophic = str(e.get("trophic", ""))
+	sp.activity = str(e.get("activity", ""))
+	if sp.activity != "" and not e.has("active"):
+		sp.active = sp.activity
+	sp.light_response = str(e.get("light_response", ""))
+	var lock = e.get("biome_lock", [])
+	for k in ([lock] if lock is String else lock):
+		var id := BiomeTemplates.id_of_key(str(k))
+		if id >= 0:
+			sp.biome_lock.append(id)
+	sp.herd = Vector2i(int(e.get("herd_min", 1)), int(e.get("herd_max", e.get("herd_min", 1))))
 	return sp
 
 
@@ -128,6 +160,17 @@ func hp_max() -> float:
 	if role == "mythical":
 		return 30.0 + 30.0 * size_m
 	return maxf(6.0, 26.0 * size_m)
+
+
+## False for species held back from normal play (`"spawn": "disabled"`:
+## the Night Rider until Phase 7); only a debug spawn shows them.
+func spawns() -> bool:
+	return spawn != "disabled"
+
+
+## Is this biome (a BiomeTemplates id) one it may live in?
+func biome_ok(biome_id: int) -> bool:
+	return biome_lock.is_empty() or biome_lock.has(biome_id)
 
 
 ## Climate filter: temperature (°C at the exact spot), moisture 0-1 and
