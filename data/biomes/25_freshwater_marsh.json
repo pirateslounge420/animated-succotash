@@ -316,5 +316,76 @@
    "Cannabis - Korean hemp (Andong)",
    "Cannabis - Kentucky feral hemp"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Cattail-bulrush deep marsh",
+   "where": "standing water most of the year, mineral mud, open basin center",
+   "dominant": [
+    "Cattail",
+    "Soft-stem bulrush"
+   ],
+   "companion": [],
+   "ground": [
+    "Cattail",
+    "Soft-stem bulrush",
+    "Common reed"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Prairie pothole deep-marsh zone (Stewart & Kantrud 1971; USNVC)"
+  },
+  {
+   "name": "Common reed bed",
+   "where": "shallow water and wet basin margins, sheltered, silty",
+   "dominant": [
+    "Common reed"
+   ],
+   "companion": [],
+   "ground": [
+    "Common reed",
+    "Reed sweet-grass",
+    "Yellow flag iris"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Phragmition reedswamp (Ellenberg 1988; Rodwell 1995 British Plant Communities S4)"
+  },
+  {
+   "name": "Tussock sedge meadow",
+   "where": "seasonally flooded outer margin, saturated but rarely deep",
+   "dominant": [
+    "Tussock sedge"
+   ],
+   "companion": [
+    "Sweet gale"
+   ],
+   "ground": [
+    "Tussock sedge",
+    "Yellow flag iris",
+    "Reed sweet-grass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Carex stricta sedge meadow (Curtis 1959 Vegetation of Wisconsin; USNVC)"
+  },
+  {
+   "name": "Willow-buttonbush marsh edge",
+   "where": "shrubby marsh margin and drainage lines, waterlogged soil",
+   "dominant": [
+    "Grey willow",
+    "Buttonbush"
+   ],
+   "companion": [
+    "Sweet gale"
+   ],
+   "ground": [
+    "Tussock sedge",
+    "Cattail"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Shrub-carr and buttonbush swamp (Curtis 1959; Rodwell 1991 W1 Salix cinerea woodland)"
+  }
+ ]
 }

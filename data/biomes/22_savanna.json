@@ -468,5 +468,110 @@
    "Trecul yucca",
    "Cannabis - Sinaloan"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Acacia-red grass savanna",
+   "where": "open flat to gently rolling plains, seasonally dry, frequent fire",
+   "dominant": [
+    "Acacia"
+   ],
+   "companion": [
+    "Whistling thorn",
+    "Sicklebush"
+   ],
+   "ground": [
+    "Red grass",
+    "Savanna grass",
+    "Spear grass",
+    "Fire lily"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Serengeti Acacia-Themeda grassland (Sinclair & Norton-Griffiths 1979; White 1983 Vegetation of Africa)"
+  },
+  {
+   "name": "Miombo woodland",
+   "where": "dry plateau uplands on poor sandy soil, burned in the dry season",
+   "dominant": [
+    "Miombo tree"
+   ],
+   "companion": [
+    "Sicklebush",
+    "Candelabra tree"
+   ],
+   "ground": [
+    "Savanna grass",
+    "Red grass",
+    "Spear grass"
+   ],
+   "catalogue": [
+    "Amorphophallus goetzei",
+    "Amorphophallus stuhlmannii"
+   ],
+   "cover": 0.5,
+   "source": "Zambezian miombo (White 1983; Campbell 1996 The Miombo in Transition)"
+  },
+  {
+   "name": "Baobab-palm savanna",
+   "where": "low dry plains and river terraces, deep sandy soil, seasonally wet",
+   "dominant": [
+    "Baobab",
+    "Palmyra palm"
+   ],
+   "companion": [
+    "Acacia",
+    "Sicklebush"
+   ],
+   "ground": [
+    "Elephant grass",
+    "Savanna grass",
+    "Red grass"
+   ],
+   "catalogue": [
+    "African fan palm",
+    "Palmyra palm"
+   ],
+   "cover": 0.3,
+   "source": "Sudanian and Sahelian palm-baobab savanna (White 1983; Aubreville 1949)"
+  },
+  {
+   "name": "Cerrado woodland-savanna",
+   "where": "well-drained plateau with deep acid soil, frequent fire",
+   "dominant": [
+    "Cerrado pequi"
+   ],
+   "companion": [
+    "Candelabra tree"
+   ],
+   "ground": [
+    "Savanna grass",
+    "Fire lily"
+   ],
+   "catalogue": [
+    "Carnauba"
+   ],
+   "cover": 0.4,
+   "source": "Brazilian cerrado sensu stricto (Eiten 1972; Oliveira & Marquis 2002)"
+  },
+  {
+   "name": "Stringybark-spinifex savanna",
+   "where": "sandy plains and low rises of the tropical north, annual fire",
+   "dominant": [
+    "Darwin stringybark"
+   ],
+   "companion": [
+    "Australian screw pine",
+    "Savanna bamboo"
+   ],
+   "ground": [
+    "Spinifex",
+    "Spear grass",
+    "Savanna grass"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Australian tropical eucalypt savanna (Williams et al. 1996; Specht 1970)"
+  }
+ ]
 }

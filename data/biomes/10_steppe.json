@@ -342,5 +342,92 @@
    "Cannabis - Chuy Valley",
    "Cannabis - Mongolian"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Feather grass-fescue meadow steppe",
+   "where": "rolling plains and gentle slopes with deep black earth",
+   "dominant": [
+    "Feather grass",
+    "Valais fescue"
+   ],
+   "companion": [
+    "Steppe spiraea"
+   ],
+   "ground": [
+    "Steppe tulip",
+    "Crested wheatgrass"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Lavrenko 1956 Steppes of the USSR; Walter 1974"
+  },
+  {
+   "name": "Wormwood-needlegrass dry steppe",
+   "where": "dry flats and south slopes with thin stony soil, grazed",
+   "dominant": [
+    "Krylov needlegrass",
+    "Steppe wormwood"
+   ],
+   "companion": [],
+   "ground": [
+    "Crested wheatgrass",
+    "Valais fescue"
+   ],
+   "catalogue": [
+    "Soapweed yucca",
+    "Narrowleaf yucca"
+   ],
+   "cover": 0.25,
+   "source": "Hilbig 1995 Vegetation of Mongolia; Lavrenko 1956"
+  },
+  {
+   "name": "Siberian elm ravine woodland",
+   "where": "ravines, gullies and river terraces with a water table",
+   "dominant": [
+    "Siberian elm"
+   ],
+   "companion": [
+    "Siberian pea shrub",
+    "Steppe spiraea"
+   ],
+   "ground": [
+    "Feather grass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Hilbig 1995 Vegetation of Mongolia; Walter 1974"
+  },
+  {
+   "name": "Pea shrub-spiraea shrub steppe",
+   "where": "stony ridges and rocky slopes, dry",
+   "dominant": [
+    "Siberian pea shrub"
+   ],
+   "companion": [
+    "Steppe spiraea",
+    "Steppe wormwood"
+   ],
+   "ground": [
+    "Krylov needlegrass",
+    "Valais fescue"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Hilbig 1995; Lavrenko 1956 (shrub steppe)"
+  },
+  {
+   "name": "Coiron-neneo Patagonian steppe",
+   "where": "windswept plateaus and dry slopes of Patagonia, gravelly soil",
+   "dominant": [
+    "Coiron",
+    "Neneo"
+   ],
+   "companion": [],
+   "ground": [],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Soriano 1956; Leon et al. 1998 Grandes unidades de vegetacion de la Patagonia"
+  }
+ ]
 }

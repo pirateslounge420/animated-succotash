@@ -325,5 +325,91 @@
    "Cannabis - Anatolian hemp (Kastamonu)",
    "Cannabis - Kentucky feral hemp"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Cordgrass low marsh",
+   "where": "creek banks and mudflat edge flooded twice daily, soft mud",
+   "dominant": [
+    "Cordgrass"
+   ],
+   "companion": [],
+   "ground": [
+    "Cordgrass",
+    "Glasswort"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Spartina alterniflora low marsh (Chapman 1960; Teal 1962; USNVC)"
+  },
+  {
+   "name": "Salt hay high marsh",
+   "where": "flat marsh platform flooded only on spring tides, firm peat",
+   "dominant": [
+    "Salt hay"
+   ],
+   "companion": [
+    "Marsh elder",
+    "Groundsel bush"
+   ],
+   "ground": [
+    "Salt hay",
+    "Black needlerush",
+    "Sea lavender"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Spartina patens high marsh (Niering & Warren 1980; Bertness 1991)"
+  },
+  {
+   "name": "Needlerush marsh",
+   "where": "brackish high marsh and pan margins, irregularly flooded",
+   "dominant": [
+    "Black needlerush"
+   ],
+   "companion": [
+    "Marsh elder"
+   ],
+   "ground": [
+    "Black needlerush",
+    "Salt hay"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Juncus roemerianus marsh of the Gulf and South Atlantic coasts (Eleuterius 1976; USNVC)"
+  },
+  {
+   "name": "Glasswort-sea lavender pioneer marsh",
+   "where": "open mudflat and salt pans at the lowest marsh edge, bare mud",
+   "dominant": [
+    "Glasswort"
+   ],
+   "companion": [],
+   "ground": [
+    "Glasswort",
+    "Sea lavender",
+    "Common cordgrass"
+   ],
+   "catalogue": [],
+   "cover": 0.25,
+   "source": "Salicornia pioneer marsh (Rodwell 2000 SM8/SM13; Wadden Sea Beeftink 1977)"
+  },
+  {
+   "name": "Halimione-cordgrass European saltmarsh",
+   "where": "creek levees and upper marsh of NW European saltings, well-drained mud",
+   "dominant": [
+    "Sea purslane shrub (halimione)",
+    "Common cordgrass"
+   ],
+   "companion": [],
+   "ground": [
+    "Sea lavender",
+    "Glasswort",
+    "Common cordgrass"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Halimionetum portulacoidis and Spartina anglica marsh (Rodwell 2000 SM6/SM14; Beeftink 1977)"
+  }
+ ]
 }

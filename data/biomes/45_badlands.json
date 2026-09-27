@@ -431,5 +431,111 @@
    "Cannabis - Iranian (Mashhad)",
    "Cannabis - Mongolian"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Rocky Mountain juniper ravine woodland",
+   "where": "shaded north-facing draws and ravine heads with extra runoff moisture",
+   "dominant": [
+    "Rocky Mountain juniper"
+   ],
+   "companion": [
+    "Skunkbush sumac",
+    "Rubber rabbitbrush"
+   ],
+   "ground": [
+    "Little bluestem",
+    "Western wheatgrass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Butler et al. 1986 Badlands NP vegetation; USNVC Juniperus scopulorum badlands woodland"
+  },
+  {
+   "name": "Western wheatgrass-blue grama flat",
+   "where": "gentle clay flats and tablelands between the eroded slopes",
+   "dominant": [
+    "Western wheatgrass",
+    "Blue grama"
+   ],
+   "companion": [],
+   "ground": [
+    "Western wheatgrass",
+    "Blue grama",
+    "Little bluestem"
+   ],
+   "catalogue": [
+    "Soapweed yucca"
+   ],
+   "cover": 0.35,
+   "source": "Kuchler 1964 wheatgrass-needlegrass; Butler et al. 1986 Badlands NP"
+  },
+  {
+   "name": "Silver sagebrush-greasewood bench",
+   "where": "low benches and alkaline flats along drainages, heavy clay, seasonal moisture",
+   "dominant": [
+    "Silver sagebrush",
+    "Greasewood"
+   ],
+   "companion": [
+    "Rubber rabbitbrush"
+   ],
+   "ground": [
+    "Western wheatgrass",
+    "Gumbo evening primrose"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Hansen & Hoffman 1988 Sarcobatus-Artemisia cana bottomland; USNVC"
+  },
+  {
+   "name": "Prickly pear-yucca eroded slope",
+   "where": "bare clay and shale slopes and sod tables, dry and unstable",
+   "dominant": [
+    "Plains prickly pear",
+    "Soapweed yucca"
+   ],
+   "companion": [],
+   "ground": [
+    "Gumbo evening primrose",
+    "Blue grama"
+   ],
+   "catalogue": [
+    "Soapweed yucca",
+    "Plains yucca"
+   ],
+   "cover": 0.15,
+   "source": "Butler et al. 1986 Badlands NP sparse vegetation; Hansen & Hoffman 1988"
+  },
+  {
+   "name": "Plains cottonwood draw",
+   "where": "creek bottoms and wet draws with groundwater at the base of the badlands",
+   "dominant": [
+    "Plains cottonwood"
+   ],
+   "companion": [
+    "Skunkbush sumac"
+   ],
+   "ground": [
+    "Western wheatgrass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Hansen & Hoffman 1988 Populus deltoides floodplain woodland"
+  },
+  {
+   "name": "Aleppo pine-esparto gully scrub",
+   "where": "clay gullies of Bardenas Reales, dry Mediterranean semi-desert, scattered pine on gully sides",
+   "dominant": [
+    "Aleppo pine"
+   ],
+   "companion": [],
+   "ground": [
+    "Esparto grass"
+   ],
+   "catalogue": [],
+   "cover": 0.25,
+   "source": "Rivas-Martinez Pinus halepensis-Stipa tenacissima steppe, Ebro valley badlands"
+  }
+ ]
 }

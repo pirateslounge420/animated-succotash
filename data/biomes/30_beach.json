@@ -391,5 +391,98 @@
    }
   ],
   "epiphyte": []
- }
+ },
+ "associations": [
+  {
+   "name": "Beach morning glory-spinifex strand",
+   "where": "upper beach just above the tide line on tropical shores, loose sand",
+   "dominant": [
+    "Beach morning glory",
+    "Beach spinifex"
+   ],
+   "companion": [
+    "Beach naupaka"
+   ],
+   "ground": [
+    "Beach morning glory",
+    "Beach spinifex",
+    "Sea purslane"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Ipomoea pes-caprae strand (Pes-caprae formation; Schimper 1903; Whistler 1992)"
+  },
+  {
+   "name": "Coconut-screw pine littoral wood",
+   "where": "stable back-beach above the storm line on tropical shores, sandy",
+   "dominant": [
+    "Coconut palm",
+    "Screw pine"
+   ],
+   "companion": [
+    "Sea grape",
+    "Beach naupaka",
+    "Beach heliotrope"
+   ],
+   "ground": [
+    "Beach morning glory",
+    "Sea purslane"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Barringtonia-Pandanus-Cocos littoral forest (Schimper 1903; Whistler 1992; Stoddart 1992)"
+  },
+  {
+   "name": "She-oak beach wood",
+   "where": "sandy shores and beach ridges of the tropical Pacific, well-drained",
+   "dominant": [
+    "Beach she-oak"
+   ],
+   "companion": [
+    "Beach naupaka",
+    "Screw pine"
+   ],
+   "ground": [
+    "Beach spinifex",
+    "Beach morning glory"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Casuarina equisetifolia littoral forest (Whistler 1992; Mueller-Dombois & Fosberg 1998)"
+  },
+  {
+   "name": "Sea rocket strandline",
+   "where": "drift line at the top of temperate beaches, bare sand with tide wrack",
+   "dominant": [
+    "Sea rocket"
+   ],
+   "companion": [],
+   "ground": [
+    "Sea rocket",
+    "Sea holly",
+    "Sea purslane"
+   ],
+   "catalogue": [],
+   "cover": 0.15,
+   "source": "Cakiletea maritimae strandline (Rodwell 2000 SD2; Ellenberg 1988)"
+  },
+  {
+   "name": "Sea buckthorn-maritime pine back-beach",
+   "where": "dry sandy back-beach and low beach ridges of temperate Atlantic shores, exposed",
+   "dominant": [
+    "Maritime pine",
+    "Sea buckthorn"
+   ],
+   "companion": [
+    "Wax myrtle"
+   ],
+   "ground": [
+    "Sea holly",
+    "Bitter panicgrass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Hippophae scrub and Pinus pinaster coastal wood (Rodwell 2000 SD18; Gehu 1977)"
+  }
+ ]
 }

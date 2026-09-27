@@ -487,5 +487,106 @@
    "Cannabis - Anatolian hemp (Kastamonu)",
    "Cannabis - Kentucky feral hemp"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Beech-maple cove forest",
+   "where": "sheltered valleys and north slopes, deep moist soil",
+   "dominant": [
+    "Beech",
+    "Maple"
+   ],
+   "companion": [
+    "Ash",
+    "Elm",
+    "Spicebush"
+   ],
+   "ground": [
+    "Spring herbs",
+    "Mayapple",
+    "Wood sorrel"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Braun 1950 Deciduous Forests of Eastern North America (beech-maple region)"
+  },
+  {
+   "name": "Oak-hazel dry ridge woodland",
+   "where": "ridge tops, south slopes and sandy or thin soil, fire-prone",
+   "dominant": [
+    "Oak",
+    "Red oak"
+   ],
+   "companion": [
+    "Hazel",
+    "Hawthorn"
+   ],
+   "ground": [
+    "Bluebell",
+    "Wood sorrel"
+   ],
+   "catalogue": [],
+   "cover": 0.75,
+   "source": "Rodwell 1991 British Plant Communities W10; Braun 1950 oak-hickory region"
+  },
+  {
+   "name": "Ash-elm streamside forest",
+   "where": "valley bottoms and stream banks, rich wet soil",
+   "dominant": [
+    "Ash",
+    "Elm"
+   ],
+   "companion": [
+    "Maple",
+    "Elderberry",
+    "Hazel",
+    "Ivy"
+   ],
+   "ground": [
+    "Lady fern",
+    "Spring herbs"
+   ],
+   "catalogue": [],
+   "cover": 0.85,
+   "source": "Ellenberg 1988 (Alno-Ulmion, Fraxino-Ulmetum); Rodwell 1991 W8"
+  },
+  {
+   "name": "Hawthorn-elderberry edge scrub",
+   "where": "forest edges, hedgerows and abandoned fields, sunny",
+   "dominant": [
+    "Hawthorn"
+   ],
+   "companion": [
+    "Elderberry",
+    "Hazel",
+    "Ivy"
+   ],
+   "ground": [
+    "Bluebell"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Ellenberg 1988 (Prunetalia spinosae); Rodwell 1991 W21"
+  },
+  {
+   "name": "Moso bamboo and Sasa grove",
+   "where": "warm low slopes and valley foot of the East Asian hills, moist deep soil",
+   "dominant": [
+    "Moso bamboo"
+   ],
+   "companion": [
+    "Oak",
+    "Maple"
+   ],
+   "ground": [
+    "Kuma bamboo grass"
+   ],
+   "catalogue": [
+    "Windmill palm",
+    "Amorphophallus kiusianus"
+   ],
+   "cover": 0.8,
+   "source": "Miyawaki 1980-89 Vegetation of Japan; Numata 1974 Flora and Vegetation of Japan"
+  }
+ ]
 }

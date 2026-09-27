@@ -470,5 +470,110 @@
    "Torrey yucca",
    "Datilillo"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Saguaro-paloverde Arizona Upland",
+   "where": "rocky bajadas and hill slopes of the Sonoran Desert, coarse well-drained soil",
+   "dominant": [
+    "Saguaro cactus",
+    "Yellow paloverde"
+   ],
+   "companion": [
+    "Cardon",
+    "Ocotillo",
+    "Prickly pear",
+    "Barrel cactus",
+    "Whitethorn acacia"
+   ],
+   "ground": [
+    "Brittlebush",
+    "Bursage"
+   ],
+   "catalogue": [
+    "Mexican blue palm",
+    "Datilillo"
+   ],
+   "cover": 0.3,
+   "source": "Shreve & Wiggins 1964 Vegetation and Flora of the Sonoran Desert (Arizona Upland); Turner & Brown 1982 Sonoran desertscrub"
+  },
+  {
+   "name": "Creosote-bursage desert flat",
+   "where": "wide flat valley bottoms, fine-soil plains and limestone fans, hottest and driest ground",
+   "dominant": [
+    "Creosote bush"
+   ],
+   "companion": [
+    "Ocotillo"
+   ],
+   "ground": [
+    "Bursage",
+    "Brittlebush",
+    "Lechuguilla"
+   ],
+   "catalogue": [
+    "Mojave yucca",
+    "Giant Spanish dagger",
+    "Torrey yucca",
+    "Faxon yucca"
+   ],
+   "cover": 0.15,
+   "source": "Shreve & Wiggins 1964 Lower Colorado Valley subdivision; Turner & Brown 1982"
+  },
+  {
+   "name": "Mesquite-acacia wash woodland (bosque)",
+   "where": "desert wash margins, wadis and floodplain terraces with a shallow water table",
+   "dominant": [
+    "Velvet mesquite"
+   ],
+   "companion": [
+    "Whitethorn acacia",
+    "Umbrella thorn",
+    "Prickly pear"
+   ],
+   "ground": [
+    "Bursage",
+    "Tabush grass"
+   ],
+   "catalogue": [
+    "California fan palm",
+    "Mexican fan palm",
+    "Date palm"
+   ],
+   "cover": 0.5,
+   "source": "Stromberg 1993 Riparian mesquite forests (J. Ariz.-Nev. Acad. Sci.); Turner & Brown 1982"
+  },
+  {
+   "name": "Quiver tree-welwitschia Namib rock desert",
+   "where": "rocky ridges, gravel plains and fog-belt slopes of the Namib",
+   "dominant": [
+    "Quiver tree"
+   ],
+   "companion": [],
+   "ground": [
+    "Welwitschia"
+   ],
+   "catalogue": [
+    "Cape yucca"
+   ],
+   "cover": 0.1,
+   "source": "Jurgens et al. 1997 Desert (Vegetation of Southern Africa, Cowling et al.); Giess 1971 Vegetation map of South West Africa"
+  },
+  {
+   "name": "Mulga-spinifex sandplain",
+   "where": "red sandplains and low dunes of the Australian arid zone, burned every few decades",
+   "dominant": [
+    "Mulga"
+   ],
+   "companion": [],
+   "ground": [
+    "Hard spinifex"
+   ],
+   "catalogue": [
+    "Red cabbage palm"
+   ],
+   "cover": 0.25,
+   "source": "Beadle 1981 The Vegetation of Australia; Specht 1970 Vegetation (Australian Environment)"
+  }
+ ]
 }

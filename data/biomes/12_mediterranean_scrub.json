@@ -488,5 +488,107 @@
    "Cannabis - Lebanese (Bekaa)",
    "Cannabis - Turkish"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Holm oak sclerophyll forest",
+   "where": "deep-soil valleys and shaded north slopes of the Mediterranean basin",
+   "dominant": [
+    "Holm oak"
+   ],
+   "companion": [
+    "Strawberry tree",
+    "Mastic",
+    "Kermes oak"
+   ],
+   "ground": [
+    "Ramose false brome",
+    "Asphodel"
+   ],
+   "catalogue": [
+    "Mediterranean fan palm"
+   ],
+   "cover": 0.85,
+   "source": "Quezel & Medail 2003 Ecologie et biogeographie des forets du bassin mediterraneen; Braun-Blanquet Quercetum ilicis"
+  },
+  {
+   "name": "Cork oak-wild olive open woodland",
+   "where": "acid sandy lowlands and warm sunny lower slopes, thin soil",
+   "dominant": [
+    "Cork oak",
+    "Wild olive"
+   ],
+   "companion": [
+    "Mastic",
+    "Gum rockrose",
+    "Strawberry tree"
+   ],
+   "ground": [
+    "French lavender",
+    "Asphodel",
+    "Ramose false brome"
+   ],
+   "catalogue": [
+    "Mediterranean fan palm"
+   ],
+   "cover": 0.6,
+   "source": "Rivas-Martinez 1987 Memoria del mapa de series de vegetacion de Espana; Quezel & Medail 2003"
+  },
+  {
+   "name": "Aleppo pine-kermes oak garrigue",
+   "where": "hot dry limestone hillsides and rocky ridges, frequently burned",
+   "dominant": [
+    "Aleppo pine"
+   ],
+   "companion": [
+    "Kermes oak",
+    "Mastic",
+    "Gum rockrose",
+    "Stone pine"
+   ],
+   "ground": [
+    "Common thyme",
+    "Esparto grass",
+    "French lavender",
+    "Asphodel"
+   ],
+   "catalogue": [
+    "Cretan date palm",
+    "Mediterranean fan palm"
+   ],
+   "cover": 0.5,
+   "source": "Tomaselli 1977 Degradation of the Mediterranean maquis (UNESCO MAB); Quezel & Medail 2003"
+  },
+  {
+   "name": "Coast live oak-chaparral mosaic",
+   "where": "canyon bottoms and north slopes of the California coast ranges, oak grove with chaparral on hot exposed slopes",
+   "dominant": [
+    "Coast live oak"
+   ],
+   "companion": [
+    "Chamise",
+    "Bigberry manzanita"
+   ],
+   "ground": [
+    "Ramose false brome"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Barbour & Major 1977 Terrestrial Vegetation of California; Sawyer, Keeler-Wolf & Evens 2009 Manual of California Vegetation"
+  },
+  {
+   "name": "Proteoid fynbos",
+   "where": "wet sandy south-facing mountain slopes of the Cape, nutrient-poor soil, fire every 10-20 years",
+   "dominant": [
+    "Sugarbush protea"
+   ],
+   "companion": [],
+   "ground": [
+    "Sugarbush protea"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Cowling 1992 The Ecology of Fynbos; Mucina & Rutherford 2006 Vegetation of South Africa"
+  }
+ ]
 }

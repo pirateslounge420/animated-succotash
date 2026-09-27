@@ -273,5 +273,95 @@
    "Cannabis - Mongolian",
    "Cannabis - Central Russian hemp"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Spruce-fir krummholz ribbon",
+   "where": "upper treeline slopes and wind-exposed shoulders, snow-drift lee",
+   "dominant": [
+    "Wind-stunted conifer"
+   ],
+   "companion": [
+    "Dwarf willow",
+    "Heath"
+   ],
+   "ground": [
+    "Sheep fescue",
+    "Star reindeer lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Arno & Hammerly 1984 Timberline; Peet 1981 Colorado Front Range"
+  },
+  {
+   "name": "Mountain birch forest-tundra",
+   "where": "gentle upper slopes and valley sides of the subarctic mountains, moist acid soil",
+   "dominant": [
+    "Mountain birch"
+   ],
+   "companion": [
+    "Dwarf birch",
+    "Heath"
+   ],
+   "ground": [
+    "Star reindeer lichen",
+    "Sheep fescue"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Hamet-Ahti 1963; Wielgolaski 2005 Plant Ecology of the Fennoscandian Birch Forest"
+  },
+  {
+   "name": "Dahurian larch open forest-tundra",
+   "where": "permafrost lowlands and north slopes of the Siberian treeline, cold wet soil",
+   "dominant": [
+    "Dahurian larch"
+   ],
+   "companion": [
+    "Dwarf birch",
+    "Dwarf willow"
+   ],
+   "ground": [
+    "Star reindeer lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Walter 1974 Vegetation of Eastern Europe and Northern Asia; Abaimov 2010"
+  },
+  {
+   "name": "Mountain pine krummholz",
+   "where": "steep subalpine slopes, avalanche tracks and limestone screes of the Alps",
+   "dominant": [
+    "Mountain pine"
+   ],
+   "companion": [
+    "Heath"
+   ],
+   "ground": [
+    "Mountain avens",
+    "Sheep fescue"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Ellenberg 1988 (Erico-Pinion mugo, Rhododendro-Vaccinietum); Grabherr & Mucina 1993"
+  },
+  {
+   "name": "Wind-exposed lichen-heath",
+   "where": "bare ridges and summits above the last trees, dry thin soil",
+   "dominant": [
+    "Heath",
+    "Mountain avens"
+   ],
+   "companion": [
+    "Dwarf willow"
+   ],
+   "ground": [
+    "Star reindeer lichen",
+    "Sheep fescue"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Dahl 1957 Rondane; Ellenberg 1988 (Loiseleurio-Vaccinion)"
+  }
+ ]
 }

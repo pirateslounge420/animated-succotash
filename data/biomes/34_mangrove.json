@@ -800,5 +800,129 @@
    "Cannabis - Manga Rosa",
    "Cannabis - Hawaiian (Kona / Puna)"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Red mangrove fringe",
+   "where": "the seaward edge and creek banks flooded by every tide, soft mud",
+   "dominant": [
+    "Red mangrove"
+   ],
+   "companion": [
+    "Mangrove orchid",
+    "Mangrove bromeliad"
+   ],
+   "ground": [
+    "Mangrove seedling",
+    "Turtle grass"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Lugo & Snedaker 1974 fringe and riverine mangroves; Tomlinson 1986 Botany of Mangroves"
+  },
+  {
+   "name": "Black mangrove-white mangrove basin forest",
+   "where": "flat inner basins behind the fringe, flooded only by higher tides, salty mud",
+   "dominant": [
+    "Black mangrove",
+    "White mangrove"
+   ],
+   "companion": [
+    "Buttonwood"
+   ],
+   "ground": [
+    "Saltwort",
+    "Sea purslane",
+    "Mangrove seedling"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Lugo & Snedaker 1974 basin mangroves; Odum et al. 1982 Ecology of the Mangroves of South Florida"
+  },
+  {
+   "name": "Rhizophora-Bruguiera Indo-Pacific mangrove",
+   "where": "sheltered estuaries and deltas of the Indo-West Pacific, seaward stilt-root belt grading landward",
+   "dominant": [
+    "Asian stilt mangrove",
+    "Orange mangrove"
+   ],
+   "companion": [
+    "Grey mangrove",
+    "Mangrove apple",
+    "Holly mangrove",
+    "Ant plant",
+    "Mangrove orchid"
+   ],
+   "ground": [
+    "Mangrove seedling"
+   ],
+   "catalogue": [],
+   "cover": 0.85,
+   "source": "Watson 1928 Mangrove Forests of the Malay Peninsula; Tomlinson 1986; Duke 2006 Australia's Mangroves"
+  },
+  {
+   "name": "Sonneratia-Avicennia pioneer mudflat",
+   "where": "newly accreting mudflats and open river mouths, deep daily flooding",
+   "dominant": [
+    "Mangrove apple",
+    "Grey mangrove"
+   ],
+   "companion": [],
+   "ground": [
+    "Mangrove seedling"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Watson 1928; Sundarbans and Bangladesh delta accretion zones (Chaffey et al. 1985)"
+  },
+  {
+   "name": "Nipa-mangrove fern back-mangrove",
+   "where": "brackish upper estuary and freshwater fringe landward of the mangrove, tidal but low salinity",
+   "dominant": [
+    "Nipa palm"
+   ],
+   "companion": [
+    "Mangrove fern",
+    "Holly mangrove"
+   ],
+   "ground": [],
+   "catalogue": [
+    "Nipa palm"
+   ],
+   "cover": 0.7,
+   "source": "Watson 1928 Nipa fruticans and Acrostichum back-mangrove; Tomlinson 1986"
+  },
+  {
+   "name": "Buttonwood-saltwort salt flat edge",
+   "where": "hypersaline sun-baked flats on the landward mangrove margin, rarely flooded",
+   "dominant": [
+    "Buttonwood"
+   ],
+   "companion": [],
+   "ground": [
+    "Saltwort",
+    "Sea purslane"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Odum et al. 1982 Ecology of the Mangroves of South Florida, scrub mangrove and salt flat"
+  },
+  {
+   "name": "Cordgrass-mangrove transition",
+   "where": "low marsh at the cool northern limit of mangroves, tidal muddy shore",
+   "dominant": [
+    "Smooth cordgrass"
+   ],
+   "companion": [
+    "Black mangrove"
+   ],
+   "ground": [
+    "Smooth cordgrass",
+    "Saltwort"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Stevens et al. 2006 Spartina-Avicennia ecotone, Gulf and NE Florida coasts"
+  }
+ ]
 }

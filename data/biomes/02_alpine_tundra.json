@@ -276,5 +276,87 @@
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
   "count": 0,
   "names": []
- }
+ },
+ "associations": [
+  {
+   "name": "Curved sedge alpine heath",
+   "where": "windswept acid ridges and plateaus above treeline, thin soil",
+   "dominant": [
+    "Curved sedge"
+   ],
+   "companion": [
+    "Alpine azalea"
+   ],
+   "ground": [
+    "Map lichen",
+    "Moss campion"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Ellenberg 1988 (Caricetum curvulae); Grabherr & Mucina 1993"
+  },
+  {
+   "name": "Cushion-plant fellfield",
+   "where": "exposed gravelly summits and wind-scoured slopes, no snow cover",
+   "dominant": [
+    "Moss campion"
+   ],
+   "companion": [
+    "Alpine azalea",
+    "Net-leaved willow"
+   ],
+   "ground": [
+    "Purple saxifrage",
+    "Map lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Billings 1973; Komarkova 1979 Colorado alpine vegetation"
+  },
+  {
+   "name": "Mountain-avens dwarf willow mat",
+   "where": "limestone slopes and ledges, calcareous gravel, sunny",
+   "dominant": [
+    "Mountain avens",
+    "Net-leaved willow"
+   ],
+   "companion": [],
+   "ground": [
+    "Purple saxifrage",
+    "Alpine sedge"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Ellenberg 1988 (Dryadetum octopetalae / Elynion); Komarkova 1979"
+  },
+  {
+   "name": "Snow willow snowbed",
+   "where": "hollows and lee slopes with late-lying snow, moist",
+   "dominant": [
+    "Snow willow"
+   ],
+   "companion": [],
+   "ground": [
+    "Alpine sedge",
+    "Moss campion"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Ellenberg 1988 (Salicetum herbaceae); Billings & Bliss 1959"
+  },
+  {
+   "name": "Purple saxifrage scree and rock crevice",
+   "where": "unstable scree, cliff ledges and bare rock",
+   "dominant": [
+    "Purple saxifrage"
+   ],
+   "companion": [],
+   "ground": [
+    "Map lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.1,
+   "source": "Ellenberg 1988 (Thlaspion rotundifolii, Androsacion alpinae); Grabherr & Mucina 1993"
+  }
+ ]
 }

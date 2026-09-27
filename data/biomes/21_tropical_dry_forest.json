@@ -553,5 +553,120 @@
    "Cannabis - Michoacán",
    "Cannabis - Manga Rosa"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Guanacaste-bursera Pacific dry forest",
+   "where": "gently rolling lowlands and low hills of the Mesoamerican Pacific coast, deep soil",
+   "dominant": [
+    "Guanacaste",
+    "Dry-season deciduous tree"
+   ],
+   "companion": [
+    "Frangipani",
+    "Coral bean",
+    "Jatropha",
+    "Spanish moss",
+    "Air plant",
+    "Dry-forest orchid"
+   ],
+   "ground": [
+    "Bluestem",
+    "Wild pineapple",
+    "Resurrection fern"
+   ],
+   "catalogue": [
+    "Foxtail palm",
+    "Bottle palm"
+   ],
+   "cover": 0.7,
+   "source": "Janzen 1988 Tropical dry forests (Biodiversity, ed. Wilson); Murphy & Lugo 1986 Ecology of tropical dry forest (Ann. Rev. Ecol. Syst.)"
+  },
+  {
+   "name": "Rosewood-flame of the forest dry deciduous forest",
+   "where": "plains and low hill slopes of central India and Burma on shallow soil, burned in the dry season",
+   "dominant": [
+    "Indian rosewood",
+    "Flame of the forest"
+   ],
+   "companion": [
+    "Common bamboo",
+    "Dwarf date palm"
+   ],
+   "ground": [
+    "Bamboo grass",
+    "Bluestem"
+   ],
+   "catalogue": [
+    "Palmyra palm",
+    "Wild date palm",
+    "Amorphophallus paeoniifolius"
+   ],
+   "cover": 0.6,
+   "source": "Champion & Seth 1968 A Revised Survey of the Forest Types of India (tropical dry deciduous forest); Puri 1960"
+  },
+  {
+   "name": "Chiquitano silk-floss dry forest",
+   "where": "low hills and plains of eastern Bolivia on rocky, well-drained soil",
+   "dominant": [
+    "Silk floss tree",
+    "Dry-season deciduous tree"
+   ],
+   "companion": [
+    "Jatropha",
+    "Coral bean"
+   ],
+   "ground": [
+    "Bluestem",
+    "Wild pineapple"
+   ],
+   "catalogue": [
+    "Carnauba"
+   ],
+   "cover": 0.7,
+   "source": "Killeen et al. 1998 Diversity, composition and structure of a tropical semideciduous forest in the Chiquitania region of Bolivia; Prado & Gibbs 1993"
+  },
+  {
+   "name": "Grandidier's baobab dry forest",
+   "where": "sandy plains and limestone of western Madagascar, long dry season",
+   "dominant": [
+    "Grandidier's baobab"
+   ],
+   "companion": [
+    "Kalanchoe",
+    "Jatropha"
+   ],
+   "ground": [
+    "Bluestem"
+   ],
+   "catalogue": [
+    "Amorphophallus hildebrandtii",
+    "Amorphophallus ankarana"
+   ],
+   "cover": 0.5,
+   "source": "Koechlin, Guillaumet & Morat 1974 Flore et vegetation de Madagascar; Moat & Smith 2007 Atlas of the Vegetation of Madagascar"
+  },
+  {
+   "name": "Coastal dry forest edge and strand",
+   "where": "sandy coastal terraces and beach ridges behind the shore, wind-exposed",
+   "dominant": [
+    "Frangipani",
+    "Dry-season deciduous tree"
+   ],
+   "companion": [
+    "Coral bean",
+    "Dwarf date palm"
+   ],
+   "ground": [
+    "Beach morning glory",
+    "Wild pineapple"
+   ],
+   "catalogue": [
+    "African fan palm",
+    "Foxtail palm"
+   ],
+   "cover": 0.5,
+   "source": "Janzen 1988; Rzedowski 1978 Vegetacion de Mexico (bosque tropical caducifolio)"
+  }
+ ]
 }

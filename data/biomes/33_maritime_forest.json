@@ -530,5 +530,126 @@
    "Cannabis - Anatolian hemp (Kastamonu)",
    "Cannabis - Kentucky feral hemp"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Live oak-cabbage palmetto maritime hammock",
+   "where": "sheltered back-dune flats and swales on barrier islands, sandy soil, salt-pruned edge toward the sea",
+   "dominant": [
+    "Wind-shaped live oak",
+    "Cabbage palmetto"
+   ],
+   "companion": [
+    "Wax myrtle",
+    "Yaupon holly",
+    "Saw palmetto",
+    "Spanish moss",
+    "Resurrection fern",
+    "Muscadine grape"
+   ],
+   "ground": [
+    "Partridgeberry",
+    "Pink muhly grass"
+   ],
+   "catalogue": [
+    "Sabal palmetto",
+    "Saw palmetto",
+    "Spanish bayonet"
+   ],
+   "cover": 0.85,
+   "source": "Bellis 1995 Ecology of Maritime Forests of the Southern Atlantic Coast (USFWS); USNVC Quercus virginiana-Sabal palmetto maritime forest"
+  },
+  {
+   "name": "Loblolly pine-wax myrtle back-dune woodland",
+   "where": "young stabilised dunes and disturbed or burned ground behind the foredune, dry sand",
+   "dominant": [
+    "Loblolly pine"
+   ],
+   "companion": [
+    "Wax myrtle",
+    "Yaupon holly"
+   ],
+   "ground": [
+    "Pink muhly grass",
+    "Bracken",
+    "Seaside goldenrod"
+   ],
+   "catalogue": [
+    "Adam's needle"
+   ],
+   "cover": 0.6,
+   "source": "Bellis 1995; USNVC Pinus taeda maritime forest"
+  },
+  {
+   "name": "Wax myrtle-yaupon salt-shrub thicket",
+   "where": "the wind-sheared seaward forest edge and dune slacks, salt spray, sandy soil",
+   "dominant": [
+    "Wax myrtle",
+    "Yaupon holly"
+   ],
+   "companion": [
+    "Saw palmetto"
+   ],
+   "ground": [
+    "Seaside goldenrod",
+    "Pink muhly grass"
+   ],
+   "catalogue": [
+    "Spanish bayonet"
+   ],
+   "cover": 0.6,
+   "source": "Bellis 1995; USNVC Morella cerifera-Ilex vomitoria maritime shrubland"
+  },
+  {
+   "name": "Monterey cypress-coyote brush headland forest",
+   "where": "fog-swept rocky headlands and coastal terraces on the central California coast, thin soil",
+   "dominant": [
+    "Monterey cypress"
+   ],
+   "companion": [
+    "Coyote brush",
+    "Salal"
+   ],
+   "ground": [
+    "Bracken",
+    "Salal"
+   ],
+   "catalogue": [],
+   "cover": 0.65,
+   "source": "Barbour & Major 1977 Terrestrial Vegetation of California, closed-cone coastal forest; Point Lobos and Cypress Point stands"
+  },
+  {
+   "name": "Sitka spruce-salal coastal forest",
+   "where": "wet, cool shore terraces and slopes just behind the beach on the North Pacific coast",
+   "dominant": [
+    "Sitka spruce"
+   ],
+   "companion": [
+    "Salal"
+   ],
+   "ground": [
+    "Salal",
+    "Bracken"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Franklin & Dyrness 1973 Natural Vegetation of Oregon and Washington, Picea sitchensis zone"
+  },
+  {
+   "name": "Japanese black pine-kuril bamboo coastal pine wood",
+   "where": "sandy shores and low coastal hills of Japan and Hokkaido, wind-exposed, well drained",
+   "dominant": [
+    "Japanese black pine"
+   ],
+   "companion": [
+    "Kuril bamboo"
+   ],
+   "ground": [
+    "Bracken"
+   ],
+   "catalogue": [],
+   "cover": 0.65,
+   "source": "Miyawaki 1980-89 Vegetation of Japan, Pinus thunbergii coastal forest with Sasa understory"
+  }
+ ]
 }

@@ -683,5 +683,117 @@
    "Cannabis - Panama Red",
    "Cannabis - Hawaiian (Kona / Puna)"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Cypress-tupelo slough",
+   "where": "permanently flooded backwater and slough, deep muck",
+   "dominant": [
+    "Bald cypress",
+    "Water tupelo"
+   ],
+   "companion": [
+    "Water elm",
+    "Buttonbush",
+    "Spanish moss",
+    "Resurrection fern",
+    "Butterfly orchid"
+   ],
+   "ground": [
+    "Cypress knees",
+    "Duckweed",
+    "Water hyacinth",
+    "Pickerelweed"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Taxodium-Nyssa swamp forest (Wharton et al. 1982 Bottomland Hardwood Swamps; USNVC)"
+  },
+  {
+   "name": "Pond-cypress dome",
+   "where": "shallow rain-fed depressions in flat pineland, acid peat",
+   "dominant": [
+    "Pond cypress"
+   ],
+   "companion": [
+    "Wax myrtle",
+    "Virginia willow",
+    "Spanish moss"
+   ],
+   "ground": [
+    "Royal fern",
+    "Lizard's tail",
+    "Cypress knees"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Florida cypress dome (Ewel & Odum 1984; Myers & Ewel 1990 Ecosystems of Florida)"
+  },
+  {
+   "name": "Black willow-buttonbush shore",
+   "where": "frequently flooded shorelines and sand bars, open light",
+   "dominant": [
+    "Black willow",
+    "Buttonbush"
+   ],
+   "companion": [
+    "Virginia willow"
+   ],
+   "ground": [
+    "Lizard's tail",
+    "Pickerelweed",
+    "Duckweed"
+   ],
+   "catalogue": [],
+   "cover": 0.55,
+   "source": "Salix nigra shrub swamp (Wharton et al. 1982; USNVC)"
+  },
+  {
+   "name": "Cabbage palm hammock",
+   "where": "slightly raised islands within the swamp, rarely flooded",
+   "dominant": [
+    "Cabbage palm"
+   ],
+   "companion": [
+    "Saw palmetto",
+    "Wax myrtle",
+    "Giant cane",
+    "Spanish moss",
+    "Resurrection fern"
+   ],
+   "ground": [
+    "Royal fern"
+   ],
+   "catalogue": [
+    "Sabal palmetto",
+    "Needle palm",
+    "Dwarf palmetto"
+   ],
+   "cover": 0.8,
+   "source": "Florida hydric hammock (Vince et al. 1989; Myers & Ewel 1990)"
+  },
+  {
+   "name": "Tropical palm swamp",
+   "where": "warm lowland swamp margins and river backwaters, permanently wet",
+   "dominant": [
+    "Cabbage palm"
+   ],
+   "companion": [
+    "Buttonbush"
+   ],
+   "ground": [
+    "Water hyacinth",
+    "Duckweed",
+    "Pickerelweed"
+   ],
+   "catalogue": [
+    "Moriche palm",
+    "Buriti-do-brejo",
+    "Açaí palm",
+    "Raffia palm"
+   ],
+   "cover": 0.7,
+   "source": "Mauritia palm swamp (buritizal/aguajal) of the Amazon and Pantanal (Kahn 1988; Pott & Pott 1994)"
+  }
+ ]
 }

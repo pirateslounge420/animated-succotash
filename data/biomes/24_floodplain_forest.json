@@ -736,5 +736,89 @@
    "Cannabis - Anatolian hemp (Kastamonu)",
    "Cannabis - Kentucky feral hemp"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Cottonwood-willow pioneer forest",
+   "where": "fresh sand and gravel bars at the river edge, flooded every year",
+   "dominant": [
+    "Cottonwood",
+    "White willow"
+   ],
+   "companion": [
+    "Grey willow",
+    "Red-osier dogwood"
+   ],
+   "ground": [
+    "Reed canary grass",
+    "Sedge"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Salicion albae softwood floodplain forest (Ellenberg 1988) and Populus deltoides-Salix bottoms (Hosner & Minckler 1963)"
+  },
+  {
+   "name": "Silver maple-sycamore bottomland",
+   "where": "low first bottoms flooded most springs, silty soil",
+   "dominant": [
+    "Silver maple",
+    "Sycamore"
+   ],
+   "companion": [
+    "Cottonwood",
+    "Elderberry",
+    "Riverbank grape",
+    "Virginia creeper"
+   ],
+   "ground": [
+    "Stinging nettle",
+    "Jewelweed",
+    "Ostrich fern"
+   ],
+   "catalogue": [],
+   "cover": 0.85,
+   "source": "Acer saccharinum floodplain forest (Braun 1950; USNVC Silver Maple-Sycamore Floodplain Forest)"
+  },
+  {
+   "name": "Black poplar-white willow riverside wood",
+   "where": "riverbank levees and islands of European lowland rivers, gravelly alluvium",
+   "dominant": [
+    "Black poplar",
+    "White willow"
+   ],
+   "companion": [
+    "Grey willow",
+    "Elderberry"
+   ],
+   "ground": [
+    "Stinging nettle",
+    "Reed canary grass"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Rhine/Danube Salici-Populetum softwood forest (Ellenberg 1988)"
+  },
+  {
+   "name": "Pecan-cane ridge forest",
+   "where": "higher natural levees and terraces, rarely flooded, deep loam",
+   "dominant": [
+    "Pecan"
+   ],
+   "companion": [
+    "Sycamore",
+    "Giant river cane",
+    "Elderberry",
+    "Riverbank grape",
+    "Virginia creeper"
+   ],
+   "ground": [
+    "Ostrich fern",
+    "Jewelweed",
+    "Stinging nettle"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Mississippi bottomland canebrake and pecan flats (Wharton et al. 1982; Platt & Brantley 1997)"
+  }
+ ]
 }

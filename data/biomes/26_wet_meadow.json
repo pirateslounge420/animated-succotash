@@ -290,5 +290,82 @@
    "Cannabis - Anatolian hemp (Kastamonu)",
    "Cannabis - Kentucky feral hemp"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Purple moor-grass fen meadow",
+   "where": "gently sloping, seasonally waterlogged, peaty base-poor soil, traditionally mown",
+   "dominant": [
+    "Purple moor-grass"
+   ],
+   "companion": [
+    "Meadowsweet"
+   ],
+   "ground": [
+    "Common sedge",
+    "Soft rush",
+    "Ragged robin",
+    "Marsh marigold"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Molinion caeruleae meadow (Ellenberg 1988; Rodwell 1991 M24/M26)"
+  },
+  {
+   "name": "Tufted hair-grass rush meadow",
+   "where": "flat, poorly drained mineral soil, wet in winter, grazed",
+   "dominant": [
+    "Tufted hair-grass",
+    "Soft rush"
+   ],
+   "companion": [
+    "Meadowsweet"
+   ],
+   "ground": [
+    "Common sedge",
+    "Marsh marigold",
+    "Ragged robin"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Deschampsia-Juncus rush pasture (Rodwell 1992 MG10; Ellenberg 1988 Calthion)"
+  },
+  {
+   "name": "Bluejoint-sedge meadow",
+   "where": "low prairie swales and lake margins, saturated in spring",
+   "dominant": [
+    "Bluejoint reed grass"
+   ],
+   "companion": [
+    "Joe-pye weed",
+    "Grey willow"
+   ],
+   "ground": [
+    "Common sedge",
+    "Marsh marigold"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Calamagrostis canadensis wet meadow (Curtis 1959; USNVC)"
+  },
+  {
+   "name": "Meadowsweet tall-herb fringe",
+   "where": "ditch banks, stream edges and ungrazed corners, wet rich soil",
+   "dominant": [
+    "Meadowsweet",
+    "Joe-pye weed"
+   ],
+   "companion": [
+    "Grey willow"
+   ],
+   "ground": [
+    "Ragged robin",
+    "Soft rush",
+    "Tufted hair-grass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Filipendulion tall-herb community (Ellenberg 1988; Rodwell 1991 M27)"
+  }
+ ]
 }

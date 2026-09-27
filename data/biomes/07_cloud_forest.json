@@ -568,5 +568,110 @@
    "Cannabis - Carmagnola",
    "Cannabis - Anatolian hemp (Kastamonu)"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Andean upper montane cloud forest",
+   "where": "steep mid-slopes in the persistent fog belt, wet",
+   "dominant": [
+    "Gnarled cloud-forest tree",
+    "Clusia"
+   ],
+   "companion": [
+    "Andean chusquea",
+    "Andean tree fern",
+    "Andean miconia",
+    "Tank bromeliad",
+    "Epiphytic moss and liverworts"
+   ],
+   "ground": [
+    "Moss carpet",
+    "Filmy fern",
+    "Begonia"
+   ],
+   "catalogue": [
+    "Andean wax palm"
+   ],
+   "cover": 0.85,
+   "source": "Gentry 1995 in Hamilton et al. Tropical Montane Cloud Forests; Grubb 1977"
+  },
+  {
+   "name": "Oak-podocarp cloud forest",
+   "where": "high ridges and slopes of Central America, fog-soaked",
+   "dominant": [
+    "Cloud-forest oak",
+    "Podocarp"
+   ],
+   "companion": [
+    "Mountain bamboo",
+    "Fuchsia",
+    "Epidendrum orchid",
+    "Beard lichen"
+   ],
+   "ground": [
+    "Hard fern",
+    "Peperomia",
+    "Moss carpet"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Kappelle 1996 Los Bosques de Roble de la Cordillera de Talamanca; Hamilton et al. 1995"
+  },
+  {
+   "name": "Hagenia Afromontane forest",
+   "where": "upper slopes of the East African volcanoes, moist",
+   "dominant": [
+    "Hagenia"
+   ],
+   "companion": [
+    "Mountain bamboo",
+    "Beard lichen"
+   ],
+   "ground": [
+    "Hard fern",
+    "Moss carpet"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Hedberg 1951 Vegetation belts of the East African mountains"
+  },
+  {
+   "name": "Montane bamboo thicket",
+   "where": "landslide scars, ridge crests and gaps after disturbance",
+   "dominant": [
+    "Mountain bamboo",
+    "Andean chusquea"
+   ],
+   "companion": [
+    "Fuchsia",
+    "Andean miconia"
+   ],
+   "ground": [
+    "Begonia",
+    "Peperomia"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Hedberg 1951 (bamboo zone); Young 1991 Chusquea in the Andes"
+  },
+  {
+   "name": "Elfin mossy ridge forest",
+   "where": "windswept ridge tops and summits, waterlogged thin soil",
+   "dominant": [
+    "Gnarled cloud-forest tree"
+   ],
+   "companion": [
+    "Epiphytic moss and liverworts",
+    "Beard lichen",
+    "Tank bromeliad"
+   ],
+   "ground": [
+    "Moss carpet",
+    "Filmy fern"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Grubb 1977 Control of forest growth on wet tropical mountains; Bruijnzeel et al. 2011"
+  }
+ ]
 }

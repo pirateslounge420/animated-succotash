@@ -402,5 +402,96 @@
    "Cannabis - Altai",
    "Cannabis - Central Russian hemp"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Spruce-fir feathermoss forest",
+   "where": "mesic mid-slopes and moist loamy flats, sheltered",
+   "dominant": [
+    "Spruce",
+    "Fir"
+   ],
+   "companion": [
+    "Bilberry",
+    "Paper birch"
+   ],
+   "ground": [
+    "Feather moss",
+    "Lingonberry"
+   ],
+   "catalogue": [],
+   "cover": 0.85,
+   "source": "Cajander 1926 forest site types (Myrtillus type); La Roi 1967 boreal spruce forests"
+  },
+  {
+   "name": "Scots pine lichen woodland",
+   "where": "dry sandy ridges, eskers and outwash plains, fire-prone",
+   "dominant": [
+    "Scots pine"
+   ],
+   "companion": [
+    "Juniper"
+   ],
+   "ground": [
+    "Reindeer lichen",
+    "Lingonberry"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Cajander 1926 (Cladina type); Walter 1974"
+  },
+  {
+   "name": "Black spruce muskeg",
+   "where": "wet flats, peat basins and permafrost lowlands with standing water",
+   "dominant": [
+    "Black spruce"
+   ],
+   "companion": [
+    "Labrador tea",
+    "Dwarf birch"
+   ],
+   "ground": [
+    "Rusty bog-moss",
+    "Reindeer lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Viereck et al. 1992 Alaska Vegetation Classification; La Roi 1967"
+  },
+  {
+   "name": "Larch dwarf-birch open forest",
+   "where": "cold permafrost plains and north slopes of eastern Siberia",
+   "dominant": [
+    "Larch"
+   ],
+   "companion": [
+    "Dwarf birch",
+    "Labrador tea"
+   ],
+   "ground": [
+    "Reindeer lichen",
+    "Lingonberry"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Walter 1974 Vegetation of Eastern Europe and Northern Asia; Abaimov 2010"
+  },
+  {
+   "name": "Post-fire birch-fireweed stand",
+   "where": "recently burned ground and clearings, any slope",
+   "dominant": [
+    "Paper birch"
+   ],
+   "companion": [
+    "Taiga willow",
+    "Bilberry"
+   ],
+   "ground": [
+    "Fireweed"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Viereck 1973 Wildfire in the taiga of Alaska; Johnson 1992 Fire and Vegetation Dynamics"
+  }
+ ]
 }

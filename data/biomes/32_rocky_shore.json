@@ -406,5 +406,97 @@
    }
   ],
   "epiphyte": []
- }
+ },
+ "associations": [
+  {
+   "name": "Thrift-sea campion cliff-ledge sward",
+   "where": "spray-zone ledges and crevices of exposed sea cliffs, thin skeletal soil",
+   "dominant": [
+    "Thrift",
+    "Sea campion"
+   ],
+   "companion": [
+    "Rock samphire",
+    "Sea spleenwort"
+   ],
+   "ground": [
+    "Thrift",
+    "Sea campion",
+    "Rock samphire",
+    "Sea spleenwort",
+    "Sea ivory lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Rodwell 2000 British Plant Communities vol. 5, MC1/MC8 maritime cliff communities"
+  },
+  {
+   "name": "Sea ivory lichen splash zone",
+   "where": "bare rock faces just above high tide, constant salt spray, no soil",
+   "dominant": [
+    "Sea ivory lichen"
+   ],
+   "companion": [],
+   "ground": [
+    "Sea ivory lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.2,
+   "source": "Fletcher 1973 lichen zonation of rocky shores; Lewis 1964 Ecology of Rocky Shores"
+  },
+  {
+   "name": "Gorse-tree mallow cliff-top scrub",
+   "where": "wind-sheared slopes and cliff tops above the spray zone, deeper soil on sheltered aspects",
+   "dominant": [
+    "Gorse",
+    "Tree mallow"
+   ],
+   "companion": [
+    "Coastal rosemary"
+   ],
+   "ground": [
+    "Thrift",
+    "Sea fig"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Rodwell 2000 British Plant Communities vol. 5 (W23 Ulex europaeus scrub); Mediterranean cliff garrigue (Rivas-Martinez)"
+  },
+  {
+   "name": "Sitka spruce-salal headland forest",
+   "where": "exposed rocky headlands and cliff tops on the wet Pacific coast, wind-pruned, well-drained",
+   "dominant": [
+    "Sitka spruce",
+    "Coastal cypress"
+   ],
+   "companion": [
+    "Salal"
+   ],
+   "ground": [
+    "Sea spleenwort"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Franklin & Dyrness 1973 Natural Vegetation of Oregon and Washington, Picea sitchensis zone; Monterey cypress headland stands"
+  },
+  {
+   "name": "Rockweed-kelp intertidal",
+   "where": "wave-washed intertidal rock below the lichen zone, underwater at high tide",
+   "dominant": [
+    "Bladder wrack",
+    "Feather boa kelp"
+   ],
+   "companion": [
+    "Sea lettuce"
+   ],
+   "ground": [
+    "Bladder wrack",
+    "Sea lettuce",
+    "Feather boa kelp"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Stephenson & Stephenson 1972 Life Between Tidemarks on Rocky Shores; Lewis 1964"
+  }
+ ]
 }

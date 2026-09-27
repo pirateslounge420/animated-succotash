@@ -333,5 +333,105 @@
    "Cannabis - Uzbek",
    "Cannabis - Iranian (Mashhad)"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Big sagebrush-bluebunch wheatgrass shrub-steppe",
+   "where": "deep loamy soils of open flats and gentle slopes, no water table",
+   "dominant": [
+    "Big sagebrush"
+   ],
+   "companion": [
+    "Antelope bitterbrush",
+    "Rubber rabbitbrush"
+   ],
+   "ground": [
+    "Bluebunch wheatgrass",
+    "Sandberg bluegrass",
+    "Arrowleaf balsamroot"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Daubenmire 1970 Steppe Vegetation of Washington; USNVC Artemisia tridentata shrub-steppe"
+  },
+  {
+   "name": "Big sagebrush-Idaho fescue steppe",
+   "where": "cooler, moister uplands and north-facing benches at higher elevation",
+   "dominant": [
+    "Big sagebrush"
+   ],
+   "companion": [
+    "Antelope bitterbrush"
+   ],
+   "ground": [
+    "Idaho fescue",
+    "Bluebunch wheatgrass",
+    "Arrowleaf balsamroot"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Daubenmire 1970; West 1983 Ecosystems of the World 5 Great Basin-Colorado Plateau sagebrush semi-desert"
+  },
+  {
+   "name": "Pinyon-juniper woodland",
+   "where": "rocky, shallow-soil foothill slopes and mesa sides above the sage flats",
+   "dominant": [
+    "Utah juniper",
+    "Singleleaf pinyon"
+   ],
+   "companion": [
+    "Big sagebrush",
+    "Antelope bitterbrush"
+   ],
+   "ground": [
+    "Bluebunch wheatgrass",
+    "Indian ricegrass",
+    "Sandberg bluegrass"
+   ],
+   "catalogue": [
+    "Banana yucca",
+    "Utah yucca"
+   ],
+   "cover": 0.5,
+   "source": "West 1988 Intermountain deserts, shrub steppes and woodlands (Barbour & Billings); USNVC Pinus monophylla-Juniperus osteosperma woodland"
+  },
+  {
+   "name": "Shadscale-Indian ricegrass salt desert shrub",
+   "where": "dry lower valley floors and alluvial fans on alkaline, gravelly soil",
+   "dominant": [
+    "Shadscale"
+   ],
+   "companion": [
+    "Big sagebrush",
+    "Rubber rabbitbrush"
+   ],
+   "ground": [
+    "Indian ricegrass",
+    "Sandberg bluegrass"
+   ],
+   "catalogue": [
+    "Narrowleaf yucca",
+    "Harriman's yucca"
+   ],
+   "cover": 0.25,
+   "source": "Billings 1949 Shadscale vegetation zone of Nevada; West 1983 Ecosystems of the World 5"
+  },
+  {
+   "name": "Greasewood flat",
+   "where": "playa margins and valley bottoms with a shallow, saline water table",
+   "dominant": [
+    "Greasewood"
+   ],
+   "companion": [
+    "Shadscale",
+    "Rubber rabbitbrush"
+   ],
+   "ground": [
+    "Indian ricegrass"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Branson et al. 1976; USNVC Sarcobatus vermiculatus shrubland alliance"
+  }
+ ]
 }

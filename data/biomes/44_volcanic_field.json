@@ -452,5 +452,143 @@
    }
   ],
   "epiphyte": []
- }
+ },
+ "associations": [
+  {
+   "name": "Ohia-amaumau fern lava pioneer forest",
+   "where": "young Hawaiian pahoehoe and aa lava flows on the wet side, rain-fed",
+   "dominant": [
+    "Ohia lehua"
+   ],
+   "companion": [
+    "Volcanic pioneer shrub"
+   ],
+   "ground": [
+    "Amaumau fern",
+    "Lava moss",
+    "Swordfern"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Mueller-Dombois & Fosberg 1998 Vegetation of the Tropical Pacific Islands; Kitayama et al. 1995 Metrosideros succession"
+  },
+  {
+   "name": "Lyme grass-sea buckthorn ash pioneer",
+   "where": "raw tephra and ash plains, wind-blown, dry and nutrient-poor",
+   "dominant": [
+    "Lyme grass",
+    "Sea buckthorn"
+   ],
+   "companion": [
+    "Volcanic pioneer shrub"
+   ],
+   "ground": [
+    "Lyme grass",
+    "Lava moss",
+    "Map lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.25,
+   "source": "Fridriksson 1975 Surtsey; Magnusson et al. 2014 Icelandic tephra colonisation"
+  },
+  {
+   "name": "Lava moss-map lichen crust",
+   "where": "bare lava rock and cinder with no soil, exposed to sun and wind",
+   "dominant": [
+    "Lava moss",
+    "Map lichen"
+   ],
+   "companion": [],
+   "ground": [
+    "Lava moss",
+    "Map lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.2,
+   "source": "Bjarnason 1991 Racomitrium moss heath on Icelandic lava; Kitayama Hawaii lava lichen crust"
+  },
+  {
+   "name": "Downy birch-tea-leaved willow moss heath scrub",
+   "where": "older lava and ash where moss and soil have built up, moist hollows",
+   "dominant": [
+    "Downy birch"
+   ],
+   "companion": [
+    "Tea-leaved willow",
+    "Sea buckthorn"
+   ],
+   "ground": [
+    "Lava moss",
+    "Fireweed"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Aradottir & Arnalds 2001 Icelandic birch woodland succession; Magnusson 2014"
+  },
+  {
+   "name": "Lupine-fireweed blast-zone meadow",
+   "where": "pumice and blast deposits recovering after eruption, open ground",
+   "dominant": [
+    "Pumice lupine",
+    "Fireweed"
+   ],
+   "companion": [],
+   "ground": [
+    "Fireweed",
+    "Lava moss"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "del Moral & Wood 1993 Mount St Helens primary succession, Lupinus lepidus patches"
+  },
+  {
+   "name": "Lodgepole pine pumice woodland",
+   "where": "well-drained pumice and cinder slopes after the pioneers, dry",
+   "dominant": [
+    "Lodgepole pine"
+   ],
+   "companion": [
+    "Pumice lupine"
+   ],
+   "ground": [
+    "Fireweed",
+    "Swordfern"
+   ],
+   "catalogue": [],
+   "cover": 0.55,
+   "source": "Franklin & Dyrness 1973; del Moral & Wood 1993 Mount St Helens conifer establishment"
+  },
+  {
+   "name": "Japanese larch-Fuji knotweed scoria scrub",
+   "where": "cinder cones and scoria slopes of Mt Fuji, dry and loose",
+   "dominant": [
+    "Japanese larch"
+   ],
+   "companion": [
+    "Fuji knotweed"
+   ],
+   "ground": [
+    "Map lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Ohsawa 1984 Vegetation of Mt Fuji, Polygonum cuspidatum-Larix kaempferi succession"
+  },
+  {
+   "name": "Etna broom-soapwort lava scrub",
+   "where": "old lava flows on Etna above the cultivated zone, dry Mediterranean slopes",
+   "dominant": [
+    "Etna broom tree"
+   ],
+   "companion": [
+    "Etna soapwort"
+   ],
+   "ground": [
+    "Map lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Poli Marchese 1991 Vegetation of Mt Etna, Genista aetnensis broom on lava"
+  }
+ ]
 }

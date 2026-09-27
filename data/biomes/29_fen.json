@@ -315,5 +315,102 @@
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
   "count": 0,
   "names": []
- }
+ },
+ "associations": [
+  {
+   "name": "Saw sedge fen",
+   "where": "open groundwater-fed flats with calcareous water, deep peat",
+   "dominant": [
+    "Saw sedge"
+   ],
+   "companion": [
+    "Fen willow"
+   ],
+   "ground": [
+    "Saw sedge",
+    "Marsh marigold",
+    "Brown moss"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Cladium mariscus swamp (Rodwell 1995 S2; Wheeler 1980 Fenland)"
+  },
+  {
+   "name": "Black bog-rush rich fen",
+   "where": "spring-fed seepage slopes and flushes, marl, base-rich",
+   "dominant": [
+    "Black bog-rush"
+   ],
+   "companion": [
+    "Shrubby cinquefoil"
+   ],
+   "ground": [
+    "Black bog-rush",
+    "Brown moss",
+    "Grass of Parnassus",
+    "Bottle sedge"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Schoenus nigricans calcareous mire (Rodwell 1991 M13; Ellenberg 1988 Caricion davallianae)"
+  },
+  {
+   "name": "Bottle sedge-brown moss poor fen",
+   "where": "lake margins and quaking mats, neutral peat, permanently wet",
+   "dominant": [
+    "Bottle sedge",
+    "Brown moss"
+   ],
+   "companion": [
+    "Bog birch"
+   ],
+   "ground": [
+    "Bottle sedge",
+    "Brown moss",
+    "Marsh marigold"
+   ],
+   "catalogue": [],
+   "cover": 0.45,
+   "source": "Carex rostrata-brown moss fen (Rodwell 1991 M9; Sjors 1948)"
+  },
+  {
+   "name": "Tamarack-cedar rich swamp",
+   "where": "forested fen edge with slow groundwater flow, peat over marl",
+   "dominant": [
+    "Tamarack",
+    "Northern white cedar"
+   ],
+   "companion": [
+    "Bog birch",
+    "Shrubby cinquefoil"
+   ],
+   "ground": [
+    "Bottle sedge",
+    "Marsh marigold",
+    "Brown moss"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Larix laricina-Thuja occidentalis rich conifer swamp (Curtis 1959; Kost et al. 2007 Michigan NFI)"
+  },
+  {
+   "name": "Grey alder-willow carr",
+   "where": "stream-side fen and drainage lines, wet mineral-rich peat",
+   "dominant": [
+    "Grey alder",
+    "Fen willow"
+   ],
+   "companion": [
+    "Bog birch"
+   ],
+   "ground": [
+    "Bottle sedge",
+    "Marsh marigold",
+    "Saw sedge"
+   ],
+   "catalogue": [],
+   "cover": 0.75,
+   "source": "Alnion glutinosae-incanae fen carr (Ellenberg 1988; Rodwell 1991 W2/W3)"
+  }
+ ]
 }
