@@ -51,8 +51,8 @@ const CLING_SLOPE := 0.7
 ## Body: shoulder height over the feet and arm length (PlayerBody); the
 ## body's middle off the bark when hugging steep wood, how far the hands
 ## are over the shoulders then and when hanging (m).
-const SHOULDER_Y := 1.385
-const ARM_M := 0.6
+const SHOULDER_Y := PlayerBody.SHOULDER_Y
+const ARM_M := PlayerBody.ARM_M
 const HUG_M := 0.26
 const TRUNK_REACH_Y := 0.3
 const HANG_REACH_Y := 0.5

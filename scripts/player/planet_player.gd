@@ -48,9 +48,10 @@ extends CharacterBody3D
 ##
 ## Animation hook: `anim_state` names the current pose ("idle", "walk",
 ## "sprint", "crouch", "crouch_walk", "air", "swim", "climb"). The body
-## (PlayerBody, an elf in a robe) is unrigged placeholder geometry with
-## Head and ArmL/ArmR pivots. Drop a rigged model in as
-## assets/models/player.glb (ModelLibrary) and it replaces the elf, its
+## (PlayerBody, the short hooded wanderer in a cloak) has its own simple
+## rig (hips, knees, torso, shoulder pivots) and a cloth cloak. Drop a
+## rigged model in as assets/models/player.glb (ModelLibrary) and it
+## replaces the wanderer, its
 ## clips playing by this state (ModelAnimator).
 ##
 ## Mouse or right stick turns the camera; click the game window to capture
@@ -113,8 +114,8 @@ const CROUCH_CAMERA_Y := 0.95
 static var CLIMB_SPEED := Tuning.num("movement", "climb", "simple_mps")
 static var CLIMB_REACH_M := Tuning.num("movement", "climb", "reach_m")
 ## First person: eye height standing and crouched.
-const EYE_Y := 1.6
-const CROUCH_EYE_Y := 0.98
+const EYE_Y := 1.45
+const CROUCH_EYE_Y := 0.9
 ## Hit points; a drop of more than FALL_SAFE_M hurts (by the height, so a
 ## fast-fall out of a hop doesn't).
 const MAX_HP := 100.0
@@ -223,7 +224,7 @@ var _heading := Vector3.FORWARD # tangent direction the camera faces
 var _spring: SpringArm3D
 var _camera: Camera3D
 ## The body: an imported model (ModelLibrary "player") if there is one,
-## else the elf (PlayerBody).
+## else the wanderer (PlayerBody).
 var _body: Node3D
 var _animator: ModelAnimator
 ## Soft shadow on the ground under the player (BlobShadow).
@@ -895,7 +896,10 @@ func _set_crouch(on: bool) -> void:
 	_shape.height = h
 	_shape_node.position = Vector3(0, h * 0.5, 0)
 	_apply_view()
-	_body.scale = Vector3(1.0, h / STAND_HEIGHT, 1.0)
+	if _body is PlayerBody:
+		(_body as PlayerBody).set_crouch(1.0 if on else 0.0)
+	else:
+		_body.scale = Vector3(1.0, h / STAND_HEIGHT, 1.0)
 
 
 # --- Health -----------------------------------------------------------------
@@ -1289,6 +1293,9 @@ func _update_noise(delta: float, move_speed: float) -> void:
 	# plays the clip for the pose.
 	if _body is PlayerBody:
 		(_body as PlayerBody).set_motion(move_speed / SPRINT_SPEED, delta)
+		(_body as PlayerBody).set_velocity(velocity)
+		var wind: Variant = PlantMeshes.material().get_shader_parameter("wind_vector")
+		(_body as PlayerBody).set_wind(wind if wind is Vector3 else Vector3.ZERO)
 	elif _animator:
 		var rate := 1.0
 		if anim_state == "walk" or anim_state == "sprint" or anim_state == "crouch_walk":

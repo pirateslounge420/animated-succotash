@@ -1765,24 +1765,86 @@ yet (deferred).
   `anim_state` (idle, walk, sprint, crouch, crouch_walk, air, swim,
   climb) is the hook for a future rigged model's animation tree, with the
   `crouching` / `sprinting` / `climbing` flags.
-- **Body** (`PlayerBody`, `shaders/player.gdshader`): an elf wanderer,
-  still unrigged placeholder geometry. He has long chestnut hair with two
-  locks down the chest, pointed ears angled out and back, and a leather
-  headband with a feather. His ankle-length robe is woven plant fiber,
-  with pleats that deepen toward a leather hem and creases painted darker
-  in the vertex colors. A fur mantle carries bone and wooden beads with a
-  tooth pendant. A hide belt with a bone toggle holds a satchel. Every
-  part is a smooth surface of revolution with its color, material and
-  sway baked per vertex, and about twice as many sides around as he had
-  (30 round the robe, 36 round the ragged mantle, 22 × 13 for the head
-  and hair), so his outline is smooth. The parts merge into four meshes,
-  so four draw calls: the robe and gear, then Head at the neck and
-  ArmL/ArmR at the shoulders (pivots for later animation). The shader
-  lights him like the creatures and gives each material one of `Look`'s
-  painterly textures, including `weave` and `fur`.
-  The hem, sleeve ends and hair trail behind and flutter with
-  `set_motion()` (the player's speed). Crouching still squashes the body
-  vertically.
+- **Body** (`PlayerBody`, `shaders/player.gdshader`): the wanderer, who
+  replaced the elf. Short (about 1.57 m to the hood's crown), hooded and
+  cloaked like a Fire Emblem mage; the face is never seen. Colors follow
+  R1a (blue plus one warm accent, nothing pure black): a deep
+  ultramarine cloak to the shins, open down the front, lined darker, with
+  a rust band round the hem (the one warm accent); a capelet over the
+  shoulders; a deep hood with a pointed back whose opening is a hollow in
+  shadow. The hollow is drawn as a flat dark indigo that no light
+  changes, and there is no head or face inside it. Straight into the
+  hood from 0.6 m by day, the brightest pixel in the opening's middle is
+  0.03 on a 0-1 scale. Wide sleeves in the cloak's blue and slate gloves;
+  the hands rest in front at the belt. Under the cloak, a slate-blue tunic
+  to mid-thigh with a belt, a cool grey satchel at the front right hip,
+  dark trousers and dark boots.
+  - **Built like the sculpted creatures.** The tunic, legs, boots,
+    sleeves, gloves and satchel are `SculptedBodies` signed-distance
+    shapes, meshed by its surface nets with creases baked into the vertex
+    colors. The hood and capelet are smooth surfaces of revolution,
+    because the hood needs its hollow. The meshes are built once (about
+    0.6 s) and shared; about 18,000 triangles in all, 4,000 of them the
+    cloak. The shader lights the body like the creatures, with Look's
+    weave on cloth and broad painted mottling over everything.
+  - **Its own rig.** Hips hold LegL/R, KneeL/R and AnkleL/R: a walk cycle
+    driven by the body's own velocity, with strides lengthening with
+    speed, and a crouch with knees forward and hips dropped and back. The
+    Torso leans with speed and crouch and carries the Head (the hood).
+    ArmL/R sit at the shoulders as children of the body; they follow the
+    torso and are the `arms` PlanetPlayer poses (both forward for the
+    bow, the right one for the spear, reaches when climbing). Each arm has
+    an ElbowL/R holding the forearm and glove. At rest the elbows bend so
+    the hands sit in front. Once an arm is posed, its elbow straightens,
+    so the hand lies `ARM_M` (0.56 m) down the arm's -Y, where the spear
+    and `TreeClimb` expect it: 6 mm off with the bow drawn.
+    `TreeClimb.SHOULDER_Y` and `ARM_M` now read PlayerBody's constants
+    (shoulders 1.26 m, arm 0.56 m).
+  - **The cloak is cloth**, simulated on the CPU at 60 Hz. It is a grid
+    of 8 rows by 16 columns. The top two rows are pinned to the neck and
+    shoulders; the other 96 points take Verlet steps. The forces are:
+    gravity (along the player's up, not world Y); the frame's own
+    acceleration and turning, so it swings as you start, stop and turn;
+    air drag against the body's velocity and the wind, so it trails at a
+    sprint and lifts downwind, with a flutter that grows with air speed;
+    and a soft pull toward its drape, so it settles when still. Distance
+    constraints hold stretch firmly and compression softly, so the cloth
+    can bunch. It collides with the torso (an elliptic column), both arms
+    and both legs (capsules), the satchel, and the ground plane under the
+    feet, where it grips a little. The points go to the shader as an
+    array. Its vertex stage lays a smooth double-sided sheet through them
+    (Catmull-Rom): the outer face with folds deepening toward the hem,
+    the lining inside, the rust hem and the front edges. The weave is
+    textured in the sheet's own grid, so it doesn't swim. The simulation
+    skips while the body is more than 25 m away and off screen, or more
+    than 80 m away.
+  - **Measured** (`tools/wanderer_check.gd`, headless):
+    - Cost: about 0.23 ms per step (median over a sprint), 0.32-0.39 ms
+      at the 95th percentile, on this machine's headless build.
+    - Standing: the hem hangs 0.17 m above the ground.
+    - Sprinting at 8.8 m/s: it trails 0.39 m behind its drape and rises
+      0.11 m. Walking at 5.5 m/s: 0.30 m behind.
+    - Wind from the side: 0.32 m downwind at 8 m/s, and 0.64 m downwind
+      and 0.24 m up at 15 m/s.
+    - Crouched: every hem point lies on the ground (0.018 m, the cloth's
+      standoff).
+    - Dead, the body tipped face down: no free cloak point is under the
+      ground.
+  - **Inputs** from PlanetPlayer, every frame:
+    - `set_motion(speed / SPRINT_SPEED)` sets the lean.
+    - `set_velocity(velocity)` drives the cloth and the stride.
+    - `set_wind()` takes the `wind_vector` WeatherFX sets on
+      `PlantMeshes.material()`.
+    - `set_crouch()` comes from `_set_crouch()`, replacing the vertical
+      squash an imported model still gets.
+  - **First person.** The hood, capelet, chest, tunic, upper sleeves and
+    the cloak above the chest stay on `BODY_LAYER`, hidden from the
+    eyes. The forearms, gloves, the cloak from the chest down, satchel,
+    legs and boots are on `PlayerBody.VIEW_LAYER` (layer 12), which the
+    first-person camera sees. Looking down, you see your hands in front,
+    the cloak's front edges and its ring, and your legs and boots.
+    Nothing comes within 0.3 m of the eyes, so nothing clips the 0.1 m
+    near plane.
 - **Trees** (`TerrainChunk` trunk colliders, `TreeContact`): canopy and
   emergent trees in the detail ring get colliders that follow the drawn
   wood (D5: no invisible walls, no ghost-through), built from the same
@@ -2328,8 +2390,10 @@ latest results:
   from 5.2-5.7 to 4.1-4.2 ms on average and from 7.4-8.9 to 6.0-6.7 ms
   at the 95th percentile, mostly from building plant buffers on the
   workers; attaching a chunk's undergrowth dropped from ~90 to ~20 ms.
-- **Player model (rig deferred).** The elf (`PlayerBody`) and the camp's
-  NPCs are unrigged placeholder shapes. A rigged humanoid with an animation tree (idle,
+- **Player model (rig deferred).** The wanderer (`PlayerBody`) has its
+  own procedural rig (a walk cycle, crouch, arm poses, cloth cloak), but
+  the camp's NPCs are unrigged placeholder shapes. A rigged humanoid with
+  an animation tree (idle,
   walk, sprint, crouch, climb) needs an asset pipeline first (which tool
   exports to Godot, who makes the model). The hooks are in place:
   `PlanetPlayer.anim_state` plus the `crouching`, `sprinting` and

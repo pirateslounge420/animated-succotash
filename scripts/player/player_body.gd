@@ -1,72 +1,211 @@
 class_name PlayerBody
 extends Node3D
-## The player's placeholder body: an elf wanderer in a long robe. It's
-## built procedurally, like CreatureBodies, but as a few merged meshes,
-## not a node per part.
+## The player's body: the wanderer. Short (about 1.57 m to the hood's
+## crown), hooded and cloaked in the spirit of a Fire Emblem mage; the
+## face is never seen.
 ##
-## Look: lean, long chestnut hair to mid-back with two locks framing the
-## face down over the chest, a leather headband and a feather, and pointed
-## ears angled out and back past the hair. A single-piece robe of woven
-## plant fiber in moss green flares to the ankles. Its folds are painted into the vertex colors as creases, and
-## a leather band trims the hem. A grey-brown fur mantle covers the
-## shoulders, with a necklace of bone and wooden beads and a tooth pendant.
-## A hide belt with a bone toggle holds a satchel on the right hip, and
-## boot toes show under the hem. Colors are earthy, for a tribal traveler,
-## not nobility.
+## Look (spec R1a: blue plus one warm accent, nothing pure black): a deep
+## ultramarine cloak to the shins, open down the front, with a darker
+## lining and a rust band round the hem (the one warm accent). A short
+## capelet over the shoulders, and a deep hood whose opening is a hollow
+## in shadow: its inside is a dark indigo that no light reaches (drawn as
+## a flat dark color, not lit), and there is no head or face in it. Wide
+## sleeves in the cloak's blue, dark slate gloves; the hands rest in front
+## at the belt. Under the cloak a slate-blue tunic with a belt, a cool
+## grey satchel at the front right hip, dark trousers, dark boots.
 ##
-## Technique: every part is a smooth-shaded surface of revolution
-## (_lathe) with its color, material and sway baked per vertex into four
-## meshes, so the body costs four draw calls:
-##   Body     robe, hem, mantle, belt, satchel, beads, boots;
-##   Head     at the neck: face, eyes, ears, hair, headband, feather;
-##   ArmL/R   at the shoulders: sleeve and hand.
-## The pivots are there for the rigged model or animation to come
-## (PlanetPlayer.anim_state names the pose). shaders/player.gdshader lights
-## it like the creatures and adds each material's low-res texture. Robe
-## hem, sleeve ends and hair trail and flutter by `set_motion()`.
+## Built like the sculpted creatures (SculptedBodies' signed-distance
+## shapes, surface nets, creases baked into the vertex colors): the
+## tunic, legs, boots, sleeves, gloves and satchel. The hood and capelet
+## are smooth surfaces of revolution (the hood needs its hollow). Colors
+## are sRGB, taken linear; shaders/player.gdshader lights it like the
+## creatures, with Look's weave texture on cloth and a coarse grain over
+## everything.
 ##
-## Faces -Z, +Y up, feet at y = 0, about 1.75 m tall.
+## Rig (every part rides a pivot; PlanetPlayer poses `arms`):
+##   Hips      at the hip joint; drops and moves back to crouch
+##     LegL/R > KneeL/R > AnkleL/R: thigh, shin and boot, foot. A walk
+##              cycle from the body's own velocity (strides lengthen with
+##              speed), knees forward to crouch.
+##     Torso   leans forward with speed and crouch
+##       Head  the hood
+##   ArmL/R    at the shoulders (children of the body, following the
+##             torso): the upper sleeve. PlanetPlayer rotates them: both
+##             forward to draw the bow, the right one for the spear, both
+##             toward the handholds when climbing (it may stretch them).
+##     ElbowL/R the forearm, bell sleeve and glove. At rest the elbows
+##             bend so the hands rest in front; once PlanetPlayer poses an
+##             arm, its elbow straightens, so the hand is ARM_M down the
+##             arm's -Y, where the spear and the climbing expect it.
+##   Cloak     the cloth (below).
+##
+## The cloak is cloth, simulated on the CPU (_simulate()): ROWS x COLS
+## points, the top two rows pinned to the neck and shoulders, the rest
+## moved by Verlet steps under gravity (the player's up, not world Y),
+## the frame's own acceleration and turning (it swings as you start, stop
+## and turn), air drag against the body's velocity and the wind (it trails
+## behind at a sprint and lifts and flutters downwind), a soft pull toward
+## its drape (it settles when still), distance constraints (stretch hard,
+## compression soft, so it can bunch), and collisions with the torso,
+## arms, legs, satchel and the ground plane under the feet (crouched, the
+## hem drapes and spreads on the ground). The points go to the cloak's
+## shader as an array; its vertex stage draws a smooth double-sided sheet
+## through them (Catmull-Rom), with folds deepening toward the hem, the
+## lining inside and a rust hem. The simulation skips while the body is
+## far and off screen.
+##
+## Inputs, each frame (PlanetPlayer): set_motion() (0 still .. 1 sprint),
+## set_velocity() (scene m/s), set_wind() (scene m/s, WeatherFX's
+## `wind_vector`), set_crouch() (0 .. 1).
+##
+## First person: the hood, capelet, tunic, upper sleeves and the cloak
+## above the chest stay on PlanetPlayer.BODY_LAYER (hidden from the
+## eyes); the forearms and gloves, the cloak from the chest down, the
+## satchel, legs and boots are on VIEW_LAYER, which the first-person
+## camera sees: looking down you see your hands, the cloak's front edges
+## and ring, and your boots. Nothing it sees comes within 0.3 m of the
+## eyes (the camera's near plane is 0.1 m).
+##
+## Faces -Z, +Y up, feet at y = 0.
 
-const SKIN := Color(0.8, 0.63, 0.48)
-const ROBE := Color(0.42, 0.52, 0.28) # moss-green woven fiber
-const HIDE := Color(0.46, 0.32, 0.2)
-const DARK_HIDE := Color(0.3, 0.2, 0.13)
-const FUR := Color(0.55, 0.47, 0.37)
-const HAIR := Color(0.55, 0.32, 0.16) # chestnut
-const BONE := Color(0.87, 0.83, 0.71)
-const WOOD := Color(0.47, 0.3, 0.17)
-const OCHRE := Color(0.66, 0.33, 0.18)
-const EYE := Color(0.13, 0.2, 0.14) # dark green-hazel
-const EYE_WHITE := Color(0.9, 0.87, 0.8)
+# --- Proportions (m, standing) -------------------------------------------------
 
-enum { SKIN_K, WEAVE_K, FUR_K, LEATHER_K, BONE_K, HAIR_K }
+const HIP_Y := 0.76
+const HIP_X := 0.085
+const THIGH_M := 0.35
+const SHIN_M := 0.34
+## The shoulder joints (the arm pivots), over the feet and out from the
+## middle (TreeClimb reaches for holds from here).
+const SHOULDER_Y := 1.26
+const SHOULDER_X := 0.175
+const UPPER_ARM_M := 0.27
+## Shoulder to the middle of the hand, arm straight (where a hand holds
+## the spear or a handhold).
+const ARM_M := 0.56
+## The neck (the Head pivot) over the hips.
+const NECK_UP := 0.54
+## Arms' rest pose (the right arm; the left mirrors z), and the elbows'.
+const ARM_REST := Vector3(0.06, 0.0, 0.13)
+const ELBOW_REST := Vector3(1.1, 0.0, -0.35)
 
-## Rings of the robe, neck to hem: [half-width, half-depth, y, z offset
-## (the skirt hangs back a little), sway].
-const ROBE_RINGS := [
-	[0.065, 0.065, 1.5, 0.0, 0.0],
-	[0.12, 0.1, 1.46, 0.0, 0.0],
-	[0.2, 0.125, 1.39, 0.0, 0.0],
-	[0.19, 0.125, 1.27, 0.0, 0.0],
-	[0.165, 0.11, 1.12, 0.0, 0.0],
-	[0.15, 0.105, 1.0, 0.0, 0.0],
-	[0.18, 0.13, 0.88, 0.005, 0.05],
-	[0.215, 0.165, 0.62, 0.015, 0.3],
-	[0.25, 0.2, 0.36, 0.03, 0.65],
-	[0.285, 0.245, 0.12, 0.045, 0.92],
-	[0.29, 0.25, 0.03, 0.05, 1.0],
+## Render layer of the parts the first-person camera sees (see the class
+## notes).
+const VIEW_LAYER := 1 << 11
+
+# --- Colors (sRGB) --------------------------------------------------------------
+
+const CLOAK := Color("222a6c") # deep ultramarine, toward indigo
+const LINING := Color("161a4c")
+const RUST := Color("a4492b") # the one warm accent: the hem band
+const TUNIC := Color("4a5079")
+const TROUSERS := Color("363a55")
+const BOOT := Color("3e3643")
+const GLOVE := Color("4c4764")
+const SATCHEL := Color("5b5872")
+const STRAP := Color("3b3850")
+const CLASP := Color("6f7390")
+## The hood's hollow: flat, unlit.
+const HOLLOW := Color("0d0f2f")
+
+## Materials (UV.x in the shader).
+enum { LEATHER_K, CLOTH_K, TRIM_K, HOLLOW_K }
+
+# --- The cloak ------------------------------------------------------------------
+
+const COLS := 16
+const ROWS := 8
+## Rows pinned to the body (neck, shoulders).
+const PINNED := 2
+## Rows above this one are hidden in first person (BODY_LAYER).
+const SPLIT_ROW := 2
+## Rest rings, neck to hem: [y (standing), half-width, half-depth, back
+## offset, half the front opening (rad)].
+const CLOAK_RINGS := [
+	[1.28, 0.105, 0.095, 0.0, 0.14],
+	[1.235, 0.25, 0.155, 0.005, 0.2],
+	[1.07, 0.285, 0.19, 0.012, 0.28],
+	[0.895, 0.3, 0.21, 0.02, 0.32],
+	[0.72, 0.31, 0.225, 0.026, 0.36],
+	[0.545, 0.322, 0.24, 0.032, 0.39],
+	[0.37, 0.335, 0.255, 0.038, 0.42],
+	[0.2, 0.35, 0.27, 0.045, 0.45],
 ]
-const PLEATS := 5.0
-const HEAD_RINGS := 13
-const HEAD_RADIAL := 22
+## Pull toward the drape per row (1/s^2): firm near the shoulders, loose
+## at the hem.
+const DRAPE_K := [0.0, 0.0, 14.0, 10.0, 7.5, 6.0, 5.0, 4.0]
+const GRAVITY := 9.8
+## Air drag (1/s): at a sprint (8.8 m/s) the hem trails well back.
+const DRAG := 0.85
+## Velocity kept per step (Verlet).
+const DAMP := 0.985
+## Flutter in moving air (m/s^2 per m/s of air).
+const FLUTTER := 0.45
+const CLOTH_R := 0.018 # how far the cloth keeps off what it lies on
+const SIM_HZ := 60.0
+## Render sub-steps per simulated cell (around, down).
+const SUB_U := 3
+const SUB_V := 3
+## The cloth's folds: how many round the cloak.
+const FOLDS := 9.0
 
 var head: Node3D
 var arms: Array[Node3D] = []
 ## Triangles in the whole body (for the budget).
 var triangles := 0
+## Cloth cost: the last step and a running average (microseconds).
+var sim_usec := 0
+var sim_usec_avg := 0.0
+## Whether the cloth stepped this frame (it skips far off screen).
+var simulating := false
 
 var _mat: ShaderMaterial
+var _cloth_mat: ShaderMaterial
+var _hips: Node3D
+var _torso: Node3D
+var _legs: Array[Node3D] = []
+var _knees: Array[Node3D] = []
+var _ankles: Array[Node3D] = []
+var _elbows: Array[Node3D] = []
+var _view_parts: Array[GeometryInstance3D] = []
+var _body_parts: Array[GeometryInstance3D] = []
+
 var _motion := 0.0
+var _vel := Vector3.ZERO
+var _vel_prev := Vector3.ZERO
+var _vel_fresh := false
+var _wind := Vector3.ZERO
+var _crouch_target := 0.0
+var _crouch := 0.0
+var _phase := 0.0
+var _stride := 0.0
+var _time := 0.0
+
+# Cloth state, body space.
+var _x := PackedVector3Array()
+var _xp := PackedVector3Array()
+var _rest := PackedVector3Array() # standing drape, body space
+var _len_v := PackedFloat32Array() # to the point above
+var _len_h := PackedFloat32Array() # to the next column
+var _out := PackedVector3Array() # per column: outward (flutter)
+var _basis_prev := Basis.IDENTITY
+var _cloth_ready := false
+var _skipped := true
+# Colliders this step (body space).
+var _cap_a := PackedVector3Array() # capsules: one end, the other minus it,
+var _cap_ab := PackedVector3Array() # 1 / its length squared, radius and
+var _cap_il2 := PackedFloat32Array() # bounds
+var _cap_r := PackedFloat32Array()
+var _cap_lo := PackedVector3Array()
+var _cap_hi := PackedVector3Array()
+var _torso_o := Vector3.ZERO
+var _torso_x := Vector3.RIGHT
+var _torso_y := Vector3.UP
+var _torso_z := Vector3.BACK
+var _satchel_c := Vector3.ZERO
+var _ground_p := Vector3.ZERO
+var _ground_n := Vector3.UP
+
+static var _meshes := {}
 
 
 func _init() -> void:
@@ -75,213 +214,619 @@ func _init() -> void:
 	_mat.shader = preload("res://shaders/player.gdshader")
 	Look.register(_mat)
 	_mat.set_shader_parameter("look_tex_weave", Look.texture("weave"))
-	_mat.set_shader_parameter("look_tex_fur", Look.texture("fur"))
-	_build_torso()
-	head = Node3D.new()
-	head.name = "Head"
-	head.position = Vector3(0, 1.55, 0)
-	add_child(head)
-	_build_head()
-	for s: float in [-1.0, 1.0]:
-		var arm := Node3D.new()
-		arm.name = "ArmL" if s < 0.0 else "ArmR"
-		arm.position = Vector3(0.205 * s, 1.385, 0.0)
-		arm.rotation = Vector3(0.06, 0.0, 0.13 * s)
-		add_child(arm)
-		_build_arm(arm)
-		arms.append(arm)
+	_cloth_mat = ShaderMaterial.new()
+	_cloth_mat.shader = _mat.shader
+	Look.register(_cloth_mat)
+	_cloth_mat.set_shader_parameter("look_tex_weave", Look.texture("weave"))
+	_cloth_mat.set_shader_parameter("cloth", true)
+	if _meshes.is_empty():
+		_build_meshes()
+	_build_rig()
+	_init_cloth()
 
 
-## Per frame: how fast the player is going, 0 (still) to 1 (sprinting).
-## The robe hem, sleeve ends and hair trail behind, eased.
+func _ready() -> void:
+	# PlanetPlayer puts everything under the body on its BODY_LAYER once
+	# it's added; sort the parts after that.
+	_apply_layers.call_deferred()
+
+
+## Per frame: how fast the player is going, 0 (still) to 1 (sprinting):
+## how far the body leans into the run.
 func set_motion(speed_frac: float, delta: float) -> void:
 	_motion = lerpf(_motion, clampf(speed_frac, 0.0, 1.0), clampf(delta * 3.0, 0.0, 1.0))
-	_mat.set_shader_parameter("motion", _motion)
 
 
-# --- Parts -------------------------------------------------------------------
-
-func _build_torso() -> void:
-	var g := Geo.new()
-	# The robe: pleats deepen toward the hem, creases painted darker, a
-	# wrap seam down the front, shade under the mantle and belt.
-	var robe_ys: Array[float] = [1.5, 1.46, 1.39, 1.27, 1.12, 1.0, 0.88, 0.62, 0.36, 0.14]
-	_lathe(g, robe_ys.size(), 30, func(i: int, a: float) -> Array:
-		var y := robe_ys[i]
-		var p := _robe_at(y, a, 1.0)
-		var sway: float = p[1]
-		var crease := 0.5 - 0.5 * sin(PLEATS * a + 0.8 * sway + 0.4)
-		var shade := 1.0 - 0.28 * pow(sway, 0.6) * crease
-		if y > 1.2 and y < 1.3:
-			shade *= 0.8 # under the fur
-		elif absf(y - 1.0) < 0.13:
-			shade *= 0.9 # around the belt
-		# The wrap's overlap, left of center in front, below the belt.
-		if y < 1.0 and absf(wrapf(a - (1.5 * PI + 0.45), -PI, PI)) < 0.2:
-			shade *= 0.72
-		return [p[0], ROBE * shade, sway],
-		WEAVE_K, Vector3(0, 1.52, 0), Vector3(0, 0.12, 0.03))
-	# Leather hem band, just outside the robe's last rings.
-	var hem_ys: Array[float] = [0.2, 0.12, 0.045]
-	_lathe(g, hem_ys.size(), 30, func(i: int, a: float) -> Array:
-		var p := _robe_at(hem_ys[i], a, 1.03)
-		var crease := 0.5 - 0.5 * sin(PLEATS * a + 0.8 * float(p[1]) + 0.4)
-		return [p[0], HIDE * (1.0 - 0.22 * crease) * (0.85 if i == 2 else 1.0), p[1]],
-		LEATHER_K, Vector3(0, 0.21, 0.04), Vector3(0, 0.07, 0.05))
-	# Fur mantle over the shoulders, ragged at its lower edge and hanging
-	# a little lower front and back.
-	var mantle := [[0.085, 0.08, 1.555], [0.17, 0.14, 1.51], [0.25, 0.18, 1.44], [0.275, 0.195, 1.36], [0.255, 0.185, 1.29]]
-	_lathe(g, mantle.size(), 36, func(i: int, a: float) -> Array:
-		var m: Array = mantle[i]
-		var r := 1.0
-		var y: float = m[2]
-		if i == mantle.size() - 1:
-			r = 1.0 + 0.05 * sin(9.0 * a)
-			y += -0.05 * absf(sin(a)) + 0.02 * sin(7.0 * a + 1.0)
-		var shade := 0.72 if i == mantle.size() - 1 else 1.0 - 0.05 * i
-		return [Vector3(cos(a) * m[0] * r, y, sin(a) * m[1] * r + 0.01), FUR * shade, 0.12 if i == mantle.size() - 1 else 0.0],
-		FUR_K, Vector3(0, 1.57, 0.01), Vector3(0, 1.28, 0.01))
-	# Belt, its bone toggle and two hanging ends.
-	var belt := [[0.157, 0.111, 1.03], [0.165, 0.118, 1.0], [0.157, 0.111, 0.97]]
-	_lathe(g, belt.size(), 28, func(i: int, a: float) -> Array:
-		var b: Array = belt[i]
-		return [Vector3(cos(a) * b[0], b[2], sin(a) * b[1]), DARK_HIDE, 0.0],
-		LEATHER_K, Vector3(0, 1.035, 0), Vector3(0, 0.965, 0))
-	_ellipsoid(g, Vector3(0.035, 1.0, -0.122), Vector3(0.03, 0.011, 0.011), BONE, BONE_K, 10, 4)
-	_ellipsoid(g, Vector3(0.05, 0.91, -0.118), Vector3(0.016, 0.075, 0.006), DARK_HIDE, LEATHER_K, 8, 4, Basis(Vector3.FORWARD, 0.12), 0.25)
-	_ellipsoid(g, Vector3(0.075, 0.92, -0.112), Vector3(0.014, 0.065, 0.006), DARK_HIDE, LEATHER_K, 8, 4, Basis(Vector3.FORWARD, -0.1), 0.25)
-	# Satchel on the right hip, slightly behind.
-	var out := Vector3(0.92, 0, 0.4).normalized()
-	var sb := Basis(Vector3.UP.cross(out).normalized(), Vector3.UP, out)
-	_ellipsoid(g, out * 0.215 + Vector3(0, 0.86, 0.01), Vector3(0.075, 0.085, 0.035), HIDE.darkened(0.08), LEATHER_K, 16, 7, sb, 0.15)
-	_ellipsoid(g, out * 0.245 + Vector3(0, 0.905, 0.01), Vector3(0.07, 0.035, 0.012), HIDE.darkened(0.25), LEATHER_K, 12, 4, sb, 0.15)
-	# Necklace on the mantle: bone and wood beads and a tooth.
-	var beads := [[-0.058, 1.415, BONE], [0.058, 1.415, BONE], [-0.03, 1.375, WOOD], [0.03, 1.375, WOOD]]
-	for b: Array in beads:
-		var c: Color = b[2]
-		_ellipsoid(g, Vector3(b[0], b[1], -0.19), Vector3.ONE * 0.013, c, BONE_K, 8, 4)
-	_cone(g, Vector3(0, 1.365, -0.195), Vector3(0, -1, -0.15), 0.05, Vector3(0.012, 0, 0.008), BONE, BONE_K, 8, Vector3.FORWARD)
-	# Boot toes under the hem.
-	for s: float in [-1.0, 1.0]:
-		_ellipsoid(g, Vector3(0.085 * s, 0.035, -0.19), Vector3(0.048, 0.036, 0.075), DARK_HIDE, LEATHER_K, 14, 7)
-	_add(self, g, "Robe")
+## Per frame: the player's velocity (scene space, m/s). The cloak feels
+## its changes (swinging as you start, stop and turn) and the air it
+## moves through (trailing behind); the legs stride by it.
+func set_velocity(v: Vector3) -> void:
+	_vel = v
+	_vel_fresh = true
 
 
-func _build_head() -> void:
-	var g := Geo.new()
-	# Neck, mostly hidden by the mantle.
-	var neck := [[0.043, 0.041, 0.06], [0.046, 0.044, -0.06]]
-	_lathe(g, 2, 16, func(i: int, a: float) -> Array:
-		var n: Array = neck[i]
-		return [Vector3(cos(a) * n[0], n[2], sin(a) * n[1]), SKIN * 0.82, 0.0],
-		SKIN_K, Vector3(0, 0.06, 0), Vector3(0, -0.06, 0))
-	# The head: an egg narrowing to a long jaw and a pointed chin.
-	_lathe(g, HEAD_RINGS, HEAD_RADIAL, func(i: int, a: float) -> Array:
-		var p := _head_at(i, a)
-		return [p, SKIN * (1.0 - 0.1 * clampf((0.12 - p.y) / 0.115, 0.0, 1.0)), 0.0],
-		SKIN_K, Vector3(0, 0.237, 0), Vector3(0, 0.014, -0.026))
-	# Slanted eyes, brows, a small nose, ochre paint on the cheeks.
-	for s: float in [-1.0, 1.0]:
-		var eb := Basis(Vector3.FORWARD, 0.22 * s)
-		_ellipsoid(g, Vector3(0.032 * s, 0.132, -0.088), Vector3(0.019, 0.01, 0.007), EYE_WHITE, SKIN_K, 10, 4, eb)
-		_ellipsoid(g, Vector3(0.03 * s, 0.132, -0.093), Vector3(0.009, 0.0095, 0.005), EYE, SKIN_K, 8, 4, eb)
-		_ellipsoid(g, Vector3(0.034 * s, 0.153, -0.091), Vector3(0.021, 0.004, 0.007), HAIR, HAIR_K, 8, 3, Basis(Vector3.FORWARD, 0.3 * s))
-		_ellipsoid(g, Vector3(0.047 * s, 0.1, -0.078), Vector3(0.018, 0.0045, 0.006), OCHRE, SKIN_K, 8, 3, Basis(Vector3.UP, -0.55 * s))
-	_cone(g, Vector3(0, 0.133, -0.093), Vector3(0, -0.55, -1), 0.032, Vector3(0.012, 0, 0.01), SKIN * 0.95, SKIN_K, 8, Vector3.UP)
-	# Hair: a shell over the head, tucked under the skin where the face
-	# and jaw show (the surfaces' crossing draws the hairline), a long fall
-	# down the back to the shoulder blades, a leather headband and a
-	# feather tied at the back.
-	_lathe(g, HEAD_RINGS, HEAD_RADIAL, func(i: int, a: float) -> Array:
-		var p := _head_at(i, a)
-		var front := -sin(a)
-		var face := clampf((front - 0.3) / 0.3, 0.0, 1.0) * clampf((0.19 - p.y) / 0.02, 0.0, 1.0)
-		var jaw := clampf((0.3 - sin(a)) / 0.3, 0.0, 1.0) * clampf((0.085 - p.y) / 0.02, 0.0, 1.0)
-		var grow := lerpf(1.07 + 0.05 * clampf(sin(a), 0.0, 1.0), 0.86, maxf(face, jaw))
-		var c := Vector3(0, 0.12, 0)
-		return [c + (p - c) * grow + Vector3(0, 0.006, 0.004), HAIR, 0.0],
-		HAIR_K, Vector3(0, 0.25, 0.004), Vector3(0, 0.03, 0.01))
-	var fall := 9
-	_lathe(g, fall, 16, func(i: int, a: float) -> Array:
-		var t := float(i) / (fall - 1)
-		var c := Vector3(0, 0.12 - 0.46 * t, 0.07 + 0.19 * pow(t, 0.8))
-		var strand := 1.0 + 0.1 * sin(4.0 * a) * t
-		var p := c + Vector3(cos(a) * 0.088 * (1.0 - 0.35 * t) * strand, 0, sin(a) * 0.032 * (1.0 - 0.3 * t))
-		return [p, HAIR * (1.0 - 0.15 * t), t],
-		HAIR_K, Vector3(0, 0.16, 0.06), Vector3(0, -0.36, 0.265))
-	var band := [[0.073, 0.087, 0.197], [0.079, 0.093, 0.185], [0.075, 0.089, 0.173]]
-	_lathe(g, band.size(), HEAD_RADIAL, func(i: int, a: float) -> Array:
-		var b: Array = band[i]
-		return [Vector3(cos(a) * b[0], b[2], sin(a) * b[1] + 0.004), DARK_HIDE, 0.0],
-		LEATHER_K, Vector3(0, 0.2, 0.004), Vector3(0, 0.17, 0.004))
-	var fb := Basis(Vector3.RIGHT, 0.5) * Basis(Vector3.BACK, -0.3)
-	_ellipsoid(g, Vector3(-0.06, 0.1, 0.115), Vector3(0.004, 0.055, 0.014), BONE, BONE_K, 8, 5, fb, 0.6)
-	_ellipsoid(g, Vector3(-0.047, 0.052, 0.14), Vector3(0.0045, 0.014, 0.011), HAIR, HAIR_K, 8, 3, fb, 0.8)
-	# Two long locks from the temples, over the mantle, down the chest.
-	for s: float in [-1.0, 1.0]:
-		_lock(g, s)
-	# Pointed ears: up, back and a little out, past the hair.
-	for s: float in [-1.0, 1.0]:
-		_ear(g, s)
-	_add(head, g, "Head")
+## The wind at the player (scene space, m/s; WeatherFX's wind_vector):
+## the cloak lifts and flutters downwind.
+func set_wind(wind_vector: Vector3) -> void:
+	_wind = wind_vector
 
 
-## A lock of hair falling from the temple on side `s`, out over the
-## mantle and down the chest, a flat tapering strand.
-func _lock(g: Geo, s: float) -> void:
-	var path: Array[Vector3] = [Vector3(0.078, 0.11, -0.035), Vector3(0.1, 0.02, -0.08),
-		Vector3(0.125, -0.08, -0.148), Vector3(0.13, -0.19, -0.178), Vector3(0.126, -0.3, -0.182),
-		Vector3(0.118, -0.42, -0.16)]
-	_lathe(g, path.size(), 10, func(i: int, a: float) -> Array:
-		var t := float(i) / (path.size() - 1)
-		var c := path[i] * Vector3(s, 1, 1)
-		var w := 0.04 * (1.0 - 0.45 * t)
-		return [c + Vector3(cos(a) * w, 0, sin(a) * 0.012), HAIR * (1.0 - 0.1 * t), t * 0.7],
-		HAIR_K, Vector3(0.07 * s, 0.13, -0.03), Vector3(0.114 * s, -0.45, -0.155))
+## 0 standing .. 1 crouched: the knees bend, the body folds forward and
+## the cloak's hem settles on the ground. Eased here.
+func set_crouch(amount: float) -> void:
+	_crouch_target = clampf(amount, 0.0, 1.0)
 
 
-## A point on the head's surface: ring `i` (of HEAD_RINGS, top to
-## bottom) at angle `a`, in head space.
-static func _head_at(i: int, a: float) -> Vector3:
-	var phi := PI * (i + 1) / (HEAD_RINGS + 1)
-	var y := 0.115 * cos(phi)
-	var s := sin(phi)
-	var low := clampf(-y / 0.115, 0.0, 1.0)
-	var x := cos(a) * s * 0.082 * (1.0 - 0.3 * low)
-	var z := sin(a) * s * 0.098 * (1.0 - 0.12 * low) - 0.012 * low
-	return Vector3(x, 0.12 + y, z)
+func _physics_process(delta: float) -> void:
+	_time += delta
+	if not _vel_fresh:
+		# Nobody's feeding the velocity (dead, a test): let it die away.
+		_vel = _vel.lerp(Vector3.ZERO, clampf(delta * 4.0, 0.0, 1.0))
+	_vel_fresh = false
+	_pose(delta)
+	var t0 := Time.get_ticks_usec()
+	simulating = _should_simulate()
+	if simulating:
+		if _skipped:
+			_reset_cloth()
+		_simulate(delta)
+		_cloth_mat.set_shader_parameter("cloak_nodes", _x)
+		sim_usec = Time.get_ticks_usec() - t0
+		sim_usec_avg = lerpf(sim_usec_avg, float(sim_usec), 0.05) if sim_usec_avg > 0.0 else float(sim_usec)
+	_skipped = not simulating
+	_basis_prev = global_basis.orthonormalized()
+	_vel_prev = _vel
 
 
-func _ear(g: Geo, s: float) -> void:
-	var base := Vector3(0.084 * s, 0.122, 0.004)
-	var dir := Vector3(0.75 * s, 0.5, 0.45).normalized()
-	var length := 0.09
-	var basis := _basis_y(dir, Vector3(s, 0, -0.35))
-	var prof := [[0.024, 0.0], [0.03, 0.3], [0.014, 0.72]]
-	_lathe(g, prof.size(), 10, func(i: int, a: float) -> Array:
-		var p: Array = prof[i]
-		return [base + basis * Vector3(cos(a) * p[0], float(p[1]) * length, sin(a) * 0.008), SKIN * (0.9 if i == 0 else 1.0), 0.0],
-		SKIN_K, base + basis * Vector3(0, length, 0), base - basis * Vector3(0, 0.01, 0))
+func _should_simulate() -> bool:
+	if not is_inside_tree():
+		return false
+	var cam := get_viewport().get_camera_3d()
+	if cam == null:
+		return true
+	var d := cam.global_position.distance_to(global_position)
+	if d > 80.0:
+		return false
+	return d < 25.0 or cam.is_position_in_frustum(global_position + global_basis.y * 0.8)
 
 
-func _build_arm(arm: Node3D) -> void:
-	var g := Geo.new()
-	# A long sleeve widening to a bell at the wrist.
-	var sleeve := [[0.058, 0.055, 0.02, 0.0], [0.062, 0.06, -0.12, 0.0], [0.068, 0.066, -0.3, 0.1], [0.1, 0.095, -0.47, 0.5], [0.112, 0.105, -0.55, 1.0]]
-	_lathe(g, sleeve.size(), 20, func(i: int, a: float) -> Array:
-		var sl: Array = sleeve[i]
-		var sway: float = sl[3]
-		var crease := 0.5 - 0.5 * sin(3.0 * a + 1.0)
-		var shade := (1.0 - 0.25 * sway * crease) * (0.85 if i == 0 else 1.0)
-		return [Vector3(cos(a) * sl[0], sl[2], sin(a) * sl[1]), ROBE * shade, sway],
-		WEAVE_K, Vector3(0, 0.06, 0), Vector3(0, -0.51, 0))
-	_ellipsoid(g, Vector3(0, -0.6, -0.005), Vector3(0.036, 0.052, 0.042), SKIN, SKIN_K, 14, 7)
-	_add(arm, g, "Sleeve")
+# --- Pose ------------------------------------------------------------------------
+
+## The legs' stride, the crouch, the lean, the elbows and where the arms
+## hang from.
+func _pose(delta: float) -> void:
+	_crouch = move_toward(_crouch, _crouch_target, delta * 4.0)
+	var c := smoothstep(0.0, 1.0, _crouch)
+	var local_v := global_basis.orthonormalized().inverse() * _vel
+	var speed := Vector2(local_v.x, local_v.z).length()
+	# Strides: one step per half cycle, longer the faster you go.
+	var step_m := 0.55 + 0.12 * speed
+	_phase = wrapf(_phase + speed / step_m * PI * delta, 0.0, TAU)
+	_stride = move_toward(_stride, clampf(speed * 0.1, 0.0, 0.55) * (1.0 - 0.5 * c), delta * 2.0)
+	var a := _stride
+	var bob := 0.018 * a * absf(sin(_phase * 2.0))
+	_hips.position = Vector3(0.0, HIP_Y - 0.34 * c - bob, 0.1 * c)
+	_torso.rotation = Vector3(-0.5 * c - 0.14 * _motion, 0.0, 0.0)
+	for s in 2:
+		var ph := _phase + PI * s
+		var swing := a * sin(ph)
+		var lift := a * 1.5 * maxf(cos(ph), 0.0) # the knee bends as the leg swings through
+		_legs[s].rotation = Vector3(1.3 * c + swing, 0.0, 0.0)
+		_knees[s].rotation = Vector3(-2.05 * c - lift - 0.05, 0.0, 0.0)
+		_ankles[s].rotation = Vector3(0.75 * c + 0.5 * lift - 0.3 * swing, 0.0, 0.0)
+	# Shoulders ride the torso; an arm PlanetPlayer hasn't posed rests
+	# bent, hands in front, swaying a little with the stride.
+	var tt := _torso.transform
+	for s in 2:
+		var sx := -1.0 if s == 0 else 1.0
+		var arm := arms[s]
+		arm.position = _hips.transform * (tt * Vector3(SHOULDER_X * sx, SHOULDER_Y - HIP_Y, 0.0))
+		var rest_y := Basis.from_euler(Vector3(ARM_REST.x, 0.0, ARM_REST.z * sx)).y
+		var off := arm.transform.basis.y.normalized().angle_to(rest_y)
+		var w := 1.0 - smoothstep(0.08, 0.25, off)
+		var sway := 0.12 * a * sin(_phase + PI * (1 - s)) + 0.03 * sin(_time * 1.3 + s)
+		_elbows[s].rotation = Vector3((ELBOW_REST.x + sway) * w, 0.0, ELBOW_REST.z * sx * w)
 
 
-# --- Geometry ------------------------------------------------------------------
+# --- The cloak ------------------------------------------------------------------
 
-## Vertices of the parts merged into one mesh.
+func _init_cloth() -> void:
+	var n := ROWS * COLS
+	_x.resize(n)
+	_xp.resize(n)
+	_rest.resize(n)
+	_len_v.resize(n)
+	_len_h.resize(n)
+	_out.resize(COLS)
+	for r in ROWS:
+		for c in COLS:
+			_rest[r * COLS + c] = _ring_point(r, c, 0.0)
+	for c in COLS:
+		var p := _rest[(ROWS - 1) * COLS + c]
+		_out[c] = Vector3(p.x, 0.0, p.z).normalized()
+	for r in ROWS:
+		for c in COLS:
+			var i := r * COLS + c
+			_len_v[i] = _rest[i].distance_to(_rest[i - COLS]) if r > 0 else 0.0
+			_len_h[i] = _rest[i].distance_to(_rest[i + 1]) if c < COLS - 1 else 0.0
+	_reset_cloth()
+	_cloth_mat.set_shader_parameter("cloak_nodes", _x)
+
+
+## A point of the cloak's standing drape: row `r`, column `c` (0 the
+## right front edge, round the back to COLS - 1 the left front edge),
+## `off` out from the surface.
+static func _ring_point(r: int, c: float, off: float) -> Vector3:
+	var ring: Array = CLOAK_RINGS[r]
+	var gap: float = ring[4]
+	var phi := gap + (TAU - 2.0 * gap) * c / (COLS - 1)
+	var rx: float = ring[1] + off
+	var rz: float = ring[2] + off
+	return Vector3(sin(phi) * rx, ring[0], -cos(phi) * rz + float(ring[3]))
+
+
+func _reset_cloth() -> void:
+	var hip_off := _hips.position - Vector3(0, HIP_Y, 0)
+	var tt := _hips.transform * _torso.transform
+	for r in ROWS:
+		for c in COLS:
+			var i := r * COLS + c
+			var p := _rest[i]
+			if r < PINNED:
+				p = tt * (p - Vector3(0, HIP_Y, 0))
+			else:
+				p += hip_off
+			_x[i] = p
+			_xp[i] = p
+	_basis_prev = global_basis.orthonormalized() if is_inside_tree() else Basis.IDENTITY
+
+
+func _simulate(delta: float) -> void:
+	var dt := 1.0 / SIM_HZ
+	var dt2 := dt * dt
+	var basis := global_basis.orthonormalized()
+	var inv := basis.inverse()
+	var parent := get_parent() as Node3D
+	var up_w := parent.global_basis.y.normalized() if parent else Vector3.UP
+	var grav := inv * (-up_w * GRAVITY)
+	# The frame's own acceleration (felt as a push the other way) and the
+	# air it moves through, in body space.
+	var acc := (_vel - _vel_prev) / maxf(delta, 1e-4)
+	acc = acc.limit_length(30.0)
+	var air := inv * (_wind - _vel)
+	var steady := grav + inv * (-acc) + air * DRAG
+	# The frame turned: free points keep their heading in the world.
+	var turn := inv * _basis_prev
+	var turned := not turn.is_equal_approx(Basis.IDENTITY)
+	if turned and turn.get_euler().length() > 1.0:
+		_reset_cloth()
+		turned = false
+	_colliders(parent)
+	var hip_off := _hips.position - Vector3(0, HIP_Y, 0)
+	var tt := _hips.transform * _torso.transform
+	var air_speed := Vector2(air.x, air.z).length()
+	var x := _x
+	var xp := _xp
+	var rest := _rest
+	var outs := _out
+	var len_v := _len_v
+	var len_h := _len_h
+	var keep := DAMP - DRAG * dt # drag against the cloth's own motion
+	# Pinned rows follow the torso.
+	for i in PINNED * COLS:
+		var p := tt * (rest[i] - Vector3(0, HIP_Y, 0))
+		x[i] = p
+		xp[i] = p
+	for r in range(PINNED, ROWS):
+		var k: float = DRAPE_K[r]
+		var fl := FLUTTER * air_speed * float(r - 1) / (ROWS - 2)
+		var ph := _time * 7.3 + r * 0.9
+		var ph2 := _time * 12.1
+		for c in COLS:
+			var i := r * COLS + c
+			var p := x[i]
+			var q := xp[i]
+			if turned:
+				p = turn * p
+				q = turn * q
+			var f := steady + (rest[i] + hip_off - p) * k
+			f += outs[c] * (fl * (sin(ph + c * 1.7) + 0.35 * sin(ph2 + c * 2.9)))
+			xp[i] = p
+			x[i] = p + (p - q) * keep + f * dt2
+	# Constraints: hold the cloth's lengths (stretch firmly, compress
+	# softly so it can bunch), twice.
+	for it in 2:
+		for r in range(PINNED, ROWS):
+			var pinned_above := r == PINNED
+			for c in COLS:
+				var i := r * COLS + c
+				var d := x[i] - x[i - COLS]
+				var l := d.length()
+				if l > 1e-6:
+					var e := (l - len_v[i]) / l
+					if e < 0.0:
+						e *= 0.25
+					if pinned_above:
+						x[i] -= d * e
+					else:
+						x[i] -= d * (e * 0.5)
+						x[i - COLS] += d * (e * 0.5)
+				if c < COLS - 1:
+					var dh := x[i + 1] - x[i]
+					var lh := dh.length()
+					if lh > len_h[i]:
+						var eh := (lh - len_h[i]) / lh * 0.5
+						x[i] += dh * eh
+						x[i + 1] -= dh * eh
+	# Collisions: out of the torso (an elliptic column, hips to shoulders),
+	# the satchel, the arms and legs (capsules), and up out of the ground,
+	# where it also sticks a little (friction).
+	var to := _torso_o
+	var tx := _torso_x
+	var ty := _torso_y
+	var tz := _torso_z
+	var sc := _satchel_c
+	var sr := 0.095 + CLOTH_R
+	var gp := _ground_p
+	var gn := _ground_n
+	var ca := _cap_a
+	var cab := _cap_ab
+	var cil := _cap_il2
+	var cr := _cap_r
+	var clo := _cap_lo
+	var chi := _cap_hi
+	var ncap := ca.size()
+	var near := PackedInt32Array()
+	for i in range(PINNED * COLS, ROWS * COLS):
+		if i % COLS == 0:
+			# The capsules this row can reach (by height).
+			var ylo := INF
+			var yhi := -INF
+			for k in COLS:
+				var y := x[i + k].y
+				ylo = minf(ylo, y)
+				yhi = maxf(yhi, y)
+			near.clear()
+			for j in ncap:
+				if clo[j].y <= yhi and chi[j].y >= ylo:
+					near.append(j)
+		var p := x[i]
+		var d := p - to
+		var h := d.dot(ty)
+		if h > -0.2 and h < 0.62:
+			var rx := 0.2 + CLOTH_R + 0.05 * clampf((h - 0.35) * 5.0, 0.0, 1.0) - 0.03 * clampf(1.0 - absf(h - 0.1) * 6.667, 0.0, 1.0)
+			var rz := 0.155 + CLOTH_R
+			var dx := d.dot(tx)
+			var dz := d.dot(tz)
+			var e := (dx * dx) / (rx * rx) + (dz * dz) / (rz * rz)
+			if e < 1.0 and e > 1e-6:
+				var kk := 1.0 / sqrt(e) - 1.0
+				p += tx * (dx * kk) + tz * (dz * kk)
+		var ds := p - sc
+		if ds.length_squared() < sr * sr:
+			p = sc + ds.normalized() * sr
+		for j in near:
+			var lo := clo[j]
+			var hi := chi[j]
+			if p.y < lo.y or p.y > hi.y or p.x < lo.x or p.x > hi.x or p.z < lo.z or p.z > hi.z:
+				continue
+			var a := ca[j]
+			var ab := cab[j]
+			var t := clampf((p - a).dot(ab) * cil[j], 0.0, 1.0)
+			var cp := a + ab * t
+			var dc := p - cp
+			var rr := cr[j]
+			var l2 := dc.length_squared()
+			if l2 < rr * rr and l2 > 1e-10:
+				p = cp + dc * (rr / sqrt(l2))
+		var g := (p - gp).dot(gn) - CLOTH_R
+		if g < 0.0:
+			p -= gn * g
+			var slide := p - xp[i]
+			xp[i] += (slide - gn * slide.dot(gn)) * 0.6
+		x[i] = p
+	_x = x
+	_xp = xp
+
+
+## Where the colliders are this step (body space).
+func _colliders(parent: Node3D) -> void:
+	var ht := _hips.transform
+	var tt := ht * _torso.transform
+	_torso_o = tt.origin
+	_torso_x = tt.basis.x.normalized()
+	_torso_y = tt.basis.y.normalized()
+	_torso_z = tt.basis.z.normalized()
+	_satchel_c = ht * Vector3(0.1, -0.08, -0.175)
+	_cap_a.clear()
+	_cap_ab.clear()
+	_cap_il2.clear()
+	_cap_r.clear()
+	_cap_lo.clear()
+	_cap_hi.clear()
+	for s in 2:
+		var arm := arms[s]
+		var at := arm.transform
+		var et := at * _elbows[s].transform
+		var sh := at.origin
+		var el := et.origin
+		var wr := et * Vector3(0, -0.24, 0)
+		_add_cap(sh, el, 0.075)
+		_add_cap(el, wr, 0.08)
+		var lt := ht * _legs[s].transform
+		var kt := lt * _knees[s].transform
+		_add_cap(lt.origin, kt.origin, 0.1)
+		_add_cap(kt.origin, kt * Vector3(0, -SHIN_M, 0), 0.08)
+	# The ground under the feet: the player's origin and up, in body space.
+	var inv := transform.affine_inverse()
+	_ground_p = inv * Vector3.ZERO
+	_ground_n = (inv.basis * Vector3.UP).normalized()
+	if parent == null:
+		_ground_n = Vector3.UP
+
+
+func _add_cap(a: Vector3, b: Vector3, r: float) -> void:
+	var rr := r + CLOTH_R
+	var m := Vector3.ONE * rr
+	_cap_a.append(a)
+	_cap_ab.append(b - a)
+	_cap_il2.append(1.0 / maxf((b - a).length_squared(), 1e-8))
+	_cap_r.append(rr)
+	_cap_lo.append(a.min(b) - m)
+	_cap_hi.append(a.max(b) + m)
+
+
+## The hem's height over the ground plane (m): [lowest, mean].
+func hem_ground_gap() -> Vector2:
+	var lo := INF
+	var sum := 0.0
+	for c in COLS:
+		var g := (_x[(ROWS - 1) * COLS + c] - _ground_p).dot(_ground_n)
+		lo = minf(lo, g)
+		sum += g
+	return Vector2(lo, sum / COLS)
+
+
+## The hem's mean offset from its standing drape (body space: +z behind,
+## +y up), and the mean of its back half alone.
+func hem_offset() -> Vector3:
+	var hip_off := _hips.position - Vector3(0, HIP_Y, 0)
+	var sum := Vector3.ZERO
+	for c in COLS:
+		var i := (ROWS - 1) * COLS + c
+		sum += _x[i] - (_rest[i] + hip_off)
+	return sum / COLS
+
+
+## The cloth points (body space), for tests.
+func cloak_points() -> PackedVector3Array:
+	return _x
+
+
+# --- Rig ----------------------------------------------------------------------
+
+func _build_rig() -> void:
+	_hips = _pivot(self, "Hips", Vector3(0, HIP_Y, 0))
+	for s in 2:
+		var sx := -1.0 if s == 0 else 1.0
+		var side := "L" if s == 0 else "R"
+		var leg := _pivot(_hips, "Leg" + side, Vector3(HIP_X * sx, 0, 0))
+		_part(leg, "thigh", "Thigh", true)
+		var knee := _pivot(leg, "Knee" + side, Vector3(0, -THIGH_M, 0))
+		_part(knee, "shin", "Shin", true)
+		var ankle := _pivot(knee, "Ankle" + side, Vector3(0, -SHIN_M, 0))
+		_part(ankle, "foot", "Foot", true)
+		_legs.append(leg)
+		_knees.append(knee)
+		_ankles.append(ankle)
+	_part(_hips, "satchel", "Satchel", true)
+	_torso = _pivot(_hips, "Torso", Vector3.ZERO)
+	_part(_torso, "chest", "Chest", false)
+	_part(_torso, "waist", "Waist", false)
+	_part(_torso, "capelet", "Capelet", false)
+	head = _pivot(_torso, "Head", Vector3(0, NECK_UP, 0))
+	_part(head, "hood", "Hood", false)
+	for s in 2:
+		var sx := -1.0 if s == 0 else 1.0
+		var side := "L" if s == 0 else "R"
+		var arm := _pivot(self, "Arm" + side, Vector3(SHOULDER_X * sx, SHOULDER_Y, 0.0))
+		arm.rotation = Vector3(ARM_REST.x, 0.0, ARM_REST.z * sx)
+		_part(arm, "upper_arm", "Sleeve", false)
+		var elbow := _pivot(arm, "Elbow" + side, Vector3(0, -UPPER_ARM_M, 0))
+		elbow.rotation = Vector3(ELBOW_REST.x, 0.0, ELBOW_REST.z * sx)
+		_part(elbow, "forearm", "Forearm", true)
+		_part(elbow, "glove_" + side, "Glove", true)
+		arms.append(arm)
+		_elbows.append(elbow)
+	for which in ["cloak_upper", "cloak_lower"]:
+		var mi := MeshInstance3D.new()
+		mi.name = "Cloak" if which == "cloak_lower" else "CloakTop"
+		mi.mesh = _meshes[which]
+		mi.material_override = _cloth_mat
+		add_child(mi)
+		(_view_parts if which == "cloak_lower" else _body_parts).append(mi)
+		triangles += _meshes[which].get_meta("tris", 0)
+
+
+func _pivot(parent: Node3D, pname: String, at: Vector3) -> Node3D:
+	var n := Node3D.new()
+	n.name = pname
+	n.position = at
+	parent.add_child(n)
+	return n
+
+
+func _part(parent: Node3D, key: String, pname: String, view: bool) -> void:
+	var mi := MeshInstance3D.new()
+	mi.name = pname
+	mi.mesh = _meshes[key]
+	mi.material_override = _mat
+	parent.add_child(mi)
+	(_view_parts if view else _body_parts).append(mi)
+	triangles += _meshes[key].get_meta("tris", 0)
+
+
+func _apply_layers() -> void:
+	for p in _view_parts:
+		p.layers = VIEW_LAYER
+	for p in _body_parts:
+		p.layers = PlanetPlayer.BODY_LAYER
+
+
+# --- Meshes -------------------------------------------------------------------
+
+## Every part's mesh, built once and shared (a few hundred ms).
+static func _build_meshes() -> void:
+	var t0 := Time.get_ticks_msec()
+	_meshes["chest"] = _sculpt(_chest_spec())
+	_meshes["waist"] = _sculpt(_waist_spec())
+	_meshes["thigh"] = _sculpt(_thigh_spec())
+	_meshes["shin"] = _sculpt(_shin_spec())
+	_meshes["foot"] = _sculpt(_foot_spec())
+	_meshes["satchel"] = _sculpt(_satchel_spec())
+	_meshes["upper_arm"] = _sculpt(_upper_arm_spec())
+	_meshes["forearm"] = _sculpt(_forearm_spec())
+	_meshes["glove_L"] = _sculpt(_glove_spec(-1.0))
+	_meshes["glove_R"] = _sculpt(_glove_spec(1.0))
+	_meshes["hood"] = _hood_mesh()
+	_meshes["capelet"] = _capelet_mesh()
+	_meshes["cloak_upper"] = _cloak_mesh(0, SPLIT_ROW)
+	_meshes["cloak_lower"] = _cloak_mesh(SPLIT_ROW, ROWS - 1)
+	_meshes["ms"] = Time.get_ticks_msec() - t0
+
+
+## How long the meshes took to build (ms).
+static func build_ms() -> int:
+	return _meshes.get("ms", 0)
+
+
+static func _lin(c: Color) -> Color:
+	return c.srgb_to_linear()
+
+
+## A signed-distance part meshed by SculptedBodies (smooth unions,
+## creases darkened), as a plain mesh on its pivot.
+static func _sculpt(s: SculptedBodies.Spec) -> ArrayMesh:
+	for pr in s.prims + s.paints:
+		pr.color = _lin(pr.color)
+	var d: Dictionary = SculptedBodies._mesh_arrays(s, s.cell)
+	var arrays: Array = d.arrays
+	arrays[Mesh.ARRAY_TEX_UV2] = null
+	arrays[Mesh.ARRAY_BONES] = null
+	arrays[Mesh.ARRAY_WEIGHTS] = null
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	mesh.set_meta("tris", d.tris)
+	return mesh
+
+
+## Tunic chest, shoulders and neck (torso space: the hip joint at 0).
+static func _chest_spec() -> SculptedBodies.Spec:
+	var s := SculptedBodies.Spec.new()
+	s.cell = 0.036
+	s.cap(Vector3(0, 0.18, 0.005), Vector3(0, 0.4, 0.0), 0.125, 0.135, 0, TUNIC, 0.06, CLOTH_K)
+	s.ell(Vector3(0, 0.33, -0.01), Vector3(0.15, 0.12, 0.1), 0, TUNIC, 0.05, Basis.IDENTITY, CLOTH_K)
+	s.ell(Vector3(0, 0.46, 0.0), Vector3(0.19, 0.055, 0.095), 0, TUNIC, 0.05, Basis.IDENTITY, CLOTH_K)
+	s.cap(Vector3(0, 0.47, 0.0), Vector3(0, 0.6, -0.005), 0.05, 0.045, 0, HOLLOW, 0.03, HOLLOW_K) # in the hood's shadow
+	s.paint(Vector3(0, 0.47, -0.09), Vector3(0.07, 0.05, 0.05), TUNIC.darkened(0.3), 0.02)
+	return s
+
+
+## Belly, belt and the tunic's short skirt over the hips.
+static func _waist_spec() -> SculptedBodies.Spec:
+	var s := SculptedBodies.Spec.new()
+	s.cell = 0.03
+	s.cap(Vector3(0, 0.0, 0.0), Vector3(0, 0.2, -0.005), 0.14, 0.125, 0, TUNIC, 0.05, CLOTH_K)
+	s.ell(Vector3(0, -0.03, 0.005), Vector3(0.165, 0.075, 0.13), 0, TUNIC.darkened(0.08), 0.04, Basis.IDENTITY, CLOTH_K)
+	s.cap(Vector3(0, -0.02, 0.005), Vector3(0, -0.24, 0.01), 0.15, 0.165, 0, TUNIC.darkened(0.08), 0.03, CLOTH_K) # skirt
+	s.paint(Vector3(0, -0.27, 0.01), Vector3(0.25, 0.035, 0.25), TUNIC.darkened(0.35), 0.01) # its hem
+	s.paint(Vector3(0, 0.07, 0.0), Vector3(0.2, 0.02, 0.2), STRAP, 0.006, Basis.IDENTITY, LEATHER_K)
+	s.ell(Vector3(0, 0.07, -0.135), Vector3(0.024, 0.02, 0.012), 0, CLASP, 0.006, Basis.IDENTITY, LEATHER_K)
+	return s
+
+
+## Leg pivot space: the hip joint at 0, the leg down -Y.
+static func _thigh_spec() -> SculptedBodies.Spec:
+	var s := SculptedBodies.Spec.new()
+	s.cell = 0.03
+	s.cap(Vector3(0, 0.02, 0.0), Vector3(0, -THIGH_M, 0.0), 0.078, 0.058, 0, TROUSERS, 0.04, CLOTH_K)
+	s.ell(Vector3(0, -THIGH_M, -0.008), Vector3(0.056, 0.05, 0.055), 0, TROUSERS, 0.03, Basis.IDENTITY, CLOTH_K)
+	return s
+
+
+static func _shin_spec() -> SculptedBodies.Spec:
+	var s := SculptedBodies.Spec.new()
+	s.cell = 0.024
+	s.cap(Vector3(0, 0.0, 0.0), Vector3(0, -0.17, 0.004), 0.056, 0.05, 0, TROUSERS, 0.03, CLOTH_K)
+	s.cap(Vector3(0, -0.13, 0.004), Vector3(0, -SHIN_M + 0.01, 0.0), 0.056, 0.048, 0, BOOT, 0.02, LEATHER_K)
+	s.ell(Vector3(0, -0.13, 0.004), Vector3(0.062, 0.022, 0.062), 0, BOOT.darkened(0.15), 0.012, Basis.IDENTITY, LEATHER_K)
+	return s
+
+
+## Ankle pivot space: the ankle at 0, the sole at -0.07.
+static func _foot_spec() -> SculptedBodies.Spec:
+	var s := SculptedBodies.Spec.new()
+	s.cell = 0.018
+	s.ell(Vector3(0, -0.028, -0.05), Vector3(0.048, 0.04, 0.1), 0, BOOT, 0.03, Basis.IDENTITY, LEATHER_K)
+	s.ell(Vector3(0, -0.025, 0.018), Vector3(0.045, 0.043, 0.045), 0, BOOT, 0.03, Basis.IDENTITY, LEATHER_K)
+	s.cap(Vector3(0, 0.03, 0.0), Vector3(0, -0.02, -0.01), 0.048, 0.046, 0, BOOT, 0.03, LEATHER_K)
+	s.paint(Vector3(0, -0.075, -0.03), Vector3(0.07, 0.014, 0.16), BOOT.darkened(0.35), 0.006)
+	return s
+
+
+## Hips space: at the front right hip, hung from the belt.
+static func _satchel_spec() -> SculptedBodies.Spec:
+	var s := SculptedBodies.Spec.new()
+	s.cell = 0.016
+	var b := Basis(Vector3.UP, -0.45)
+	var c := Vector3(0.1, -0.08, -0.175)
+	s.ell(c, Vector3(0.085, 0.07, 0.038), 0, SATCHEL, 0.03, b, LEATHER_K)
+	s.ell(c + b * Vector3(0, 0.03, -0.022), Vector3(0.082, 0.045, 0.014), 0, SATCHEL.darkened(0.18), 0.01, b, LEATHER_K) # flap
+	s.ell(c + b * Vector3(0, 0.0, -0.038), Vector3(0.013, 0.016, 0.006), 0, CLASP, 0.004, b, LEATHER_K) # toggle
+	for sd: float in [-1.0, 1.0]:
+		s.cap(c + b * Vector3(0.05 * sd, 0.05, -0.005), c + b * Vector3(0.05 * sd, 0.15, 0.02), 0.011, 0.011, 0, STRAP, 0.008, LEATHER_K)
+	return s
+
+
+## Arm pivot space: the shoulder at 0, the arm down -Y. A wide sleeve.
+static func _upper_arm_spec() -> SculptedBodies.Spec:
+	var s := SculptedBodies.Spec.new()
+	s.cell = 0.024
+	s.ell(Vector3(0, -0.035, 0.0), Vector3(0.064, 0.06, 0.066), 0, CLOAK, 0.04, Basis.IDENTITY, CLOTH_K)
+	s.cap(Vector3(0, -0.02, 0.0), Vector3(0, -UPPER_ARM_M - 0.01, 0.0), 0.068, 0.062, 0, CLOAK, 0.04, CLOTH_K)
+	s.paint(Vector3(0.0, -0.16, 0.07), Vector3(0.03, 0.12, 0.03), CLOAK.darkened(0.2), 0.03) # a crease behind
+	return s
+
+
+## Elbow pivot space: a bell sleeve open at the wrist, its dark lining
+## showing.
+static func _forearm_spec() -> SculptedBodies.Spec:
+	var s := SculptedBodies.Spec.new()
+	s.cell = 0.022
+	s.ell(Vector3(0, 0.0, 0.0), Vector3(0.064, 0.06, 0.064), 0, CLOAK, 0.03, Basis.IDENTITY, CLOTH_K)
+	s.cap(Vector3(0, 0.0, 0.0), Vector3(0, -0.2, 0.0), 0.062, 0.084, 0, CLOAK, 0.03, CLOTH_K)
+	s.ell(Vector3(0, -0.205, 0.0), Vector3(0.078, 0.014, 0.078), 0, LINING, 0.008, Basis.IDENTITY, CLOTH_K)
+	s.paint(Vector3(0, -0.21, 0.0), Vector3(0.1, 0.012, 0.1), LINING.darkened(0.3), 0.006)
+	s.paint(Vector3(0.0, -0.1, 0.07), Vector3(0.035, 0.1, 0.03), CLOAK.darkened(0.2), 0.03)
+	return s
+
+
+## Elbow pivot space: a gloved hand out of the sleeve, the palm flat and
+## facing in, fingers loosely curled, the thumb forward (`sx` the side).
+static func _glove_spec(sx: float) -> SculptedBodies.Spec:
+	var s := SculptedBodies.Spec.new()
+	s.cell = 0.012
+	s.cap(Vector3(0, -0.19, 0.0), Vector3(0, -0.25, -0.004), 0.029, 0.027, 0, GLOVE, 0.012, LEATHER_K)
+	s.ell(Vector3(0.0, -0.285, -0.006), Vector3(0.022, 0.047, 0.036), 0, GLOVE, 0.016, Basis.IDENTITY, LEATHER_K)
+	s.cap(Vector3(0.0, -0.315, -0.012), Vector3(-0.012 * sx, -0.345, 0.0), 0.02, 0.016, 0, GLOVE, 0.012, LEATHER_K)
+	s.cap(Vector3(-0.012 * sx, -0.268, -0.03), Vector3(-0.018 * sx, -0.3, -0.05), 0.012, 0.01, 0, GLOVE, 0.008, LEATHER_K)
+	s.paint(Vector3(0, -0.245, 0.0), Vector3(0.035, 0.01, 0.035), GLOVE.darkened(0.3), 0.005) # cuff seam
+	return s
+
+
+# --- Surfaces of revolution (hood, capelet) --------------------------------
+
+## Vertices of a part (one mesh).
 class Geo:
 	var verts := PackedVector3Array()
 	var colors := PackedColorArray()
@@ -289,40 +834,108 @@ class Geo:
 	var idx := PackedInt32Array()
 
 
-## The robe's surface at height `y` and angle `a` (0 = +X, 1.5 PI = front),
-## `grow` times its radius: [position, sway].
-static func _robe_at(y: float, a: float, grow: float) -> Array:
-	var i := 0
-	while i < ROBE_RINGS.size() - 2 and ROBE_RINGS[i + 1][2] > y:
-		i += 1
-	var r0: Array = ROBE_RINGS[i]
-	var r1: Array = ROBE_RINGS[i + 1]
-	var t := clampf((r0[2] - y) / (r0[2] - r1[2]), 0.0, 1.0)
-	var rx := lerpf(r0[0], r1[0], t)
-	var rz := lerpf(r0[1], r1[1], t)
-	var oz := lerpf(r0[3], r1[3], t)
-	var sway := lerpf(r0[4], r1[4], t)
-	# Pleats: the fabric in and out around the skirt, deeper lower down,
-	# with a gentle wave in the hem so it doesn't read as a stiff cone.
-	var pleat := 1.0 + 0.065 * pow(sway, 0.7) * sin(PLEATS * a + 0.8 * sway + 0.4)
-	pleat += 0.03 * sway * sin(3.0 * a + 2.0)
-	return [Vector3(cos(a) * rx * pleat * grow, y, sin(a) * rz * pleat * grow + oz), sway]
+## The hood (Head space: the neck at 0), round the forward axis, back to
+## front then back inside: [z (+ behind), half-width, half-height, height
+## of the middle, part (0 outside, 1 the lip, 2 the hollow)].
+const HOOD_RINGS := [
+	[0.15, 0.045, 0.06, 0.15, 0],
+	[0.115, 0.095, 0.12, 0.135, 0],
+	[0.05, 0.126, 0.15, 0.13, 0],
+	[-0.02, 0.133, 0.156, 0.127, 0],
+	[-0.085, 0.128, 0.151, 0.124, 0],
+	[-0.125, 0.118, 0.141, 0.122, 1],
+	[-0.13, 0.104, 0.127, 0.121, 1],
+	[-0.105, 0.096, 0.119, 0.119, 2],
+	[-0.035, 0.09, 0.11, 0.117, 2],
+	[0.03, 0.064, 0.085, 0.117, 2],
+]
 
 
-## A closed, smooth-shaded surface around a (possibly bent) axis:
-## `rings` rings of `radial` points, top to bottom, closed by poles at
-## `top` and `bottom`. f.call(ring, angle) -> [position, color, sway].
-static func _lathe(g: Geo, rings: int, radial: int, f: Callable, kind: int, top: Vector3, bottom: Vector3) -> void:
+static func _hood_mesh() -> ArrayMesh:
+	var g := Geo.new()
+	var n := HOOD_RINGS.size()
+	_lathe(g, n, 28, func(i: int, a: float) -> Array:
+		var h: Array = HOOD_RINGS[i]
+		var part: int = h[4]
+		var up := sin(a)
+		var ry: float = h[2]
+		if part == 0:
+			# A soft peak over the crown and a fold down each side.
+			ry *= 1.0 + 0.1 * pow(maxf(up, 0.0), 3.0)
+		var rx: float = h[1] * (1.0 + (0.03 * sin(3.0 * a + 0.5) if part == 0 else 0.0))
+		var z: float = h[0]
+		if i >= 4 and i <= 7:
+			z -= 0.03 * up # the brim overhangs at the top
+		var p := Vector3(cos(a) * rx, float(h[3]) + up * ry, z)
+		var col: Color
+		var kind := CLOTH_K
+		match part:
+			0:
+				var crease := 0.5 - 0.5 * sin(3.0 * a + 0.5)
+				col = CLOAK * (1.1 - 0.25 * crease) * (0.85 + 0.15 * clampf(up + 0.6, 0.0, 1.0))
+			1:
+				# The brim's edge catches the light; inside it, the lining.
+				col = CLOAK * 1.25 if i == 5 else LINING * 0.8
+			_:
+				col = HOLLOW
+				kind = HOLLOW_K
+		return [p, _lin(col), kind],
+		Vector3(0, 0.17, 0.19), Vector3(0, 0.117, 0.065))
+	return _geo_mesh(g)
+
+
+## The capelet over the shoulders (torso space), a ragged hem hanging a
+## little lower front and back, lined.
+const CAPELET_RINGS := [
+	[0.52, 0.115, 0.1, 0.0],
+	[0.5, 0.2, 0.14, 0.0],
+	[0.465, 0.265, 0.17, 0.005],
+	[0.41, 0.3, 0.195, 0.01],
+	[0.34, 0.312, 0.205, 0.012],
+	[0.345, 0.294, 0.187, 0.012],
+]
+
+
+static func _capelet_mesh() -> ArrayMesh:
+	var g := Geo.new()
+	var n := CAPELET_RINGS.size()
+	_lathe(g, n, 36, func(i: int, a: float) -> Array:
+		var r: Array = CAPELET_RINGS[i]
+		var y: float = r[0]
+		var k := 1.0
+		if i >= n - 2:
+			y += -0.03 * absf(sin(a)) + 0.012 * sin(7.0 * a + 1.0)
+			k = 1.0 + 0.035 * sin(7.0 * a + 1.0)
+		var p := Vector3(cos(a) * r[1] * k, y, sin(a) * r[2] * k + float(r[3]))
+		var crease := 0.5 - 0.5 * sin(7.0 * a + 1.0)
+		var col := CLOAK * (1.0 - 0.2 * crease * float(i) / (n - 1)) * (0.75 if i == n - 2 else 1.0)
+		if i == n - 1:
+			col = LINING
+		return [p, _lin(col), CLOTH_K],
+		Vector3(0, 0.54, 0), Vector3(0, 0.44, 0))
+	# Clasp at the throat.
+	_lathe(g, 4, 10, func(i: int, a: float) -> Array:
+		var phi := PI * (i + 1) / 5.0
+		var s := sin(phi)
+		return [Vector3(0, 0.5, -0.1) + Vector3(cos(a) * s * 0.022, cos(phi) * 0.022, sin(a) * s * 0.01), _lin(CLASP), LEATHER_K],
+		Vector3(0, 0.522, -0.1), Vector3(0, 0.478, -0.1))
+	return _geo_mesh(g)
+
+
+## A closed, smooth-shaded surface round a (possibly bent) axis: `rings`
+## rings of `radial` points, closed by poles at `top` and `bottom`.
+## f.call(ring, angle) -> [position, color (linear), material].
+static func _lathe(g: Geo, rings: int, radial: int, f: Callable, top: Vector3, bottom: Vector3) -> void:
 	var start := g.verts.size()
 	var first := g.idx.size()
 	var p0: Array = f.call(0, 0.0)
-	_vert(g, top, p0[1], kind, p0[2])
+	_vert(g, top, p0[1], p0[2])
 	for i in rings:
 		for k in radial:
 			var p: Array = f.call(i, TAU * k / radial)
-			_vert(g, p[0], p[1], kind, p[2])
+			_vert(g, p[0], p[1], p[2])
 	var pl: Array = f.call(rings - 1, 0.0)
-	_vert(g, bottom, pl[1], kind, pl[2])
+	_vert(g, bottom, pl[1], pl[2])
 	var last := g.verts.size() - 1
 	for k in radial:
 		var k1 := (k + 1) % radial
@@ -352,39 +965,14 @@ static func _lathe(g: Geo, rings: int, radial: int, f: Callable, kind: int, top:
 			g.idx[t + 2] = tmp
 
 
-static func _vert(g: Geo, p: Vector3, c: Color, kind: int, sway: float) -> void:
+static func _vert(g: Geo, p: Vector3, c: Color, kind: int) -> void:
 	g.verts.append(p)
-	# Raw, like the terrain's and ruins' vertex colors (the world's grade
-	# is tuned for those; converted to linear the elf read near black).
 	g.colors.append(c)
-	g.uv.append(Vector2(kind, sway))
+	g.uv.append(Vector2(kind, 0.0))
 
 
-static func _ellipsoid(g: Geo, c: Vector3, r: Vector3, col: Color, kind: int, radial: int, rings: int, basis := Basis(), sway := 0.0) -> void:
-	_lathe(g, rings, radial, func(i: int, a: float) -> Array:
-		var phi := PI * (i + 1) / (rings + 1)
-		var s := sin(phi)
-		return [c + basis * Vector3(cos(a) * s * r.x, cos(phi) * r.y, sin(a) * s * r.z), col, sway],
-		kind, c + basis * Vector3(0, r.y, 0), c - basis * Vector3(0, r.y, 0))
-
-
-## A cone from `base` along `dir`: `r` is its base's half-width (x) and
-## half-depth (z); `hint` sets which way the depth faces.
-static func _cone(g: Geo, base: Vector3, dir: Vector3, length: float, r: Vector3, col: Color, kind: int, radial: int, hint: Vector3) -> void:
-	var basis := _basis_y(dir.normalized(), hint)
-	_lathe(g, 1, radial, func(_i: int, a: float) -> Array:
-		return [base + basis * Vector3(cos(a) * r.x, 0, sin(a) * r.z), col, 0.0],
-		kind, base + basis * Vector3(0, length, 0), base)
-
-
-## A basis with Y along `y` and Z as close to `hint` as it can be.
-static func _basis_y(y: Vector3, hint: Vector3) -> Basis:
-	var x := y.cross(hint).normalized()
-	return Basis(x, y, x.cross(y).normalized())
-
-
-## Smooth normals, then the mesh on its own MeshInstance3D under `parent`.
-func _add(parent: Node3D, g: Geo, part: String) -> void:
+## Smooth normals, then the mesh.
+static func _geo_mesh(g: Geo) -> ArrayMesh:
 	var normals := PackedVector3Array()
 	normals.resize(g.verts.size())
 	for t in range(0, g.idx.size(), 3):
@@ -403,9 +991,153 @@ func _add(parent: Node3D, g: Geo, part: String) -> void:
 	arrays[Mesh.ARRAY_INDEX] = g.idx
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var mi := MeshInstance3D.new()
-	mi.name = part
-	mi.mesh = mesh
-	mi.material_override = _mat
-	parent.add_child(mi)
-	triangles += g.idx.size() / 3
+	mesh.set_meta("tris", g.idx.size() / 3)
+	return mesh
+
+
+# --- The cloak's sheet ----------------------------------------------------------
+
+## The cloak between rows `r0` and `r1` as a sheet the cloth shader lays
+## through the simulated points: an outer face and the lining (CUSTOM0.y
+## +1, -1), the hem's edge (2) and the two front edges (3 right, 4 left).
+## UV2 is the point on the grid (column, row); CUSTOM0.x how far off the
+## middle of the cloth (half its thickness plus the fold), CUSTOM0.z the
+## fold's slope along the columns (to tilt the normal). VERTEX is only the
+## standing drape (the shader moves it).
+static func _cloak_mesh(r0: int, r1: int) -> ArrayMesh:
+	var verts := PackedVector3Array()
+	var normals := PackedVector3Array()
+	var colors := PackedColorArray()
+	var uv := PackedVector2Array()
+	var uv2 := PackedVector2Array()
+	var custom := PackedFloat32Array()
+	var idx := PackedInt32Array()
+	var nu := (COLS - 1) * SUB_U + 1
+	var nv := (r1 - r0) * SUB_V + 1
+	var half := 0.006
+	var hem := r1 == ROWS - 1
+	var add := func(gu: float, gv: float, off: float, mode: float, slope: float, col: Color, kind: int) -> int:
+		var p := _grid_point(gu, gv, off)
+		verts.append(p)
+		normals.append(Vector3(p.x, 0.0, p.z).normalized() * signf(mode if absf(mode) < 1.5 else 1.0))
+		colors.append(_lin(col))
+		uv.append(Vector2(kind, 0.0))
+		uv2.append(Vector2(gu, gv))
+		custom.append_array([off, mode, slope, 0.0])
+		return verts.size() - 1
+	# Faces.
+	for side: float in [1.0, -1.0]:
+		var grid := PackedInt32Array()
+		for j in nv:
+			var gv := r0 + float(j) / SUB_V
+			for i in nu:
+				var gu := float(i) / SUB_U
+				var fold := _fold(gu, gv)
+				var col: Color
+				var kind := CLOTH_K
+				var band := gv > ROWS - 1 - 0.3
+				if band:
+					col = RUST * (1.0 - 0.18 * _crease(gu))
+					kind = TRIM_K
+				elif side > 0.0:
+					col = CLOAK * (1.0 - 0.45 * _crease(gu) * _fold_amp(gv) / _fold_amp(ROWS - 1))
+					if gv < 1.6:
+						col *= 0.85 # in the capelet's shade
+				else:
+					col = LINING * (1.0 - 0.2 * _crease(gu))
+				grid.append(add.call(gu, gv, side * half + fold.x, side, fold.y, col, kind))
+		for j in nv - 1:
+			for i in nu - 1:
+				var a := grid[j * nu + i]
+				var b := grid[j * nu + i + 1]
+				var c := grid[(j + 1) * nu + i]
+				var d := grid[(j + 1) * nu + i + 1]
+				var o := normals[a]
+				_tri(idx, verts, a, b, d, o)
+				_tri(idx, verts, a, d, c, o)
+	# Edges: the hem (on the lower part), and both front edges.
+	if hem:
+		var gv := float(r1)
+		var e_out := PackedInt32Array()
+		var e_in := PackedInt32Array()
+		for i in nu:
+			var gu := float(i) / SUB_U
+			var fold := _fold(gu, gv)
+			var col := RUST * 0.8
+			e_out.append(add.call(gu, gv, half + fold.x, 2.0, 0.0, col, TRIM_K))
+			e_in.append(add.call(gu, gv, -half + fold.x, 2.0, 0.0, col, TRIM_K))
+		for i in nu - 1:
+			_tri(idx, verts, e_out[i], e_out[i + 1], e_in[i + 1], Vector3.DOWN)
+			_tri(idx, verts, e_out[i], e_in[i + 1], e_in[i], Vector3.DOWN)
+	for edge in 2:
+		var i := 0 if edge == 0 else nu - 1
+		var gu := float(i) / SUB_U
+		var e_out := PackedInt32Array()
+		var e_in := PackedInt32Array()
+		for j in nv:
+			var gv := r0 + float(j) / SUB_V
+			var fold := _fold(gu, gv)
+			var band := gv > ROWS - 1 - 0.3
+			var col := RUST * 0.85 if band else LINING * 1.2
+			e_out.append(add.call(gu, gv, half + fold.x, 3.0 + edge, 0.0, col, TRIM_K if band else CLOTH_K))
+			e_in.append(add.call(gu, gv, -half + fold.x, 3.0 + edge, 0.0, col, TRIM_K if band else CLOTH_K))
+		# Outward at the right front edge (column 0) is toward -u.
+		var p0 := _grid_point(gu, r0 + 0.5, 0.0)
+		var p1 := _grid_point(gu + (0.1 if edge == 0 else -0.1), r0 + 0.5, 0.0)
+		var o := (p0 - p1).normalized()
+		for j in nv - 1:
+			_tri(idx, verts, e_out[j], e_out[j + 1], e_in[j + 1], o)
+			_tri(idx, verts, e_out[j], e_in[j + 1], e_in[j], o)
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_COLOR] = colors
+	arrays[Mesh.ARRAY_TEX_UV] = uv
+	arrays[Mesh.ARRAY_TEX_UV2] = uv2
+	arrays[Mesh.ARRAY_CUSTOM0] = custom
+	arrays[Mesh.ARRAY_INDEX] = idx
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays, [], {},
+		Mesh.ARRAY_CUSTOM_RGBA_FLOAT << Mesh.ARRAY_FORMAT_CUSTOM0_SHIFT)
+	# The shader moves every vertex anywhere within reach of the body.
+	mesh.custom_aabb = AABB(Vector3(-1.6, -1.2, -1.6), Vector3(3.2, 3.2, 3.2))
+	mesh.set_meta("tris", idx.size() / 3)
+	return mesh
+
+
+## Append triangle a, b, c wound to face `out` (see _lathe).
+static func _tri(idx: PackedInt32Array, verts: PackedVector3Array, a: int, b: int, c: int, out: Vector3) -> void:
+	var fn := (verts[b] - verts[a]).cross(verts[c] - verts[a])
+	if fn.dot(out) > 0.0:
+		idx.append_array([a, c, b])
+	else:
+		idx.append_array([a, b, c])
+
+
+## The standing drape at a point of the grid (bilinear between rings).
+static func _grid_point(gu: float, gv: float, off: float) -> Vector3:
+	var r := clampi(int(floor(gv)), 0, ROWS - 2)
+	var t := gv - r
+	var a := _ring_point(r, gu, off)
+	var b := _ring_point(r + 1, gu, off)
+	return a.lerp(b, t)
+
+
+static func _fold_amp(gv: float) -> float:
+	return 0.003 + 0.022 * pow(clampf(gv / (ROWS - 1), 0.0, 1.0), 1.3)
+
+
+static func _crease(gu: float) -> float:
+	return 0.5 - 0.5 * sin(FOLDS * TAU * gu / (COLS - 1) + 0.6)
+
+
+## The fold's offset from the cloth's middle and its slope along the
+## columns: [offset, d offset / d column].
+static func _fold(gu: float, gv: float) -> Vector2:
+	var w := FOLDS * TAU / (COLS - 1)
+	var amp := _fold_amp(gv)
+	var ph := w * gu + 0.6
+	# Folds fade out at the front edges so the edges hang clean.
+	var edge := clampf(minf(gu, COLS - 1 - gu) / 0.6, 0.0, 1.0)
+	return Vector2(amp * sin(ph) * edge, amp * w * cos(ph) * edge)
