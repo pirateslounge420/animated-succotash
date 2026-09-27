@@ -103,3 +103,39 @@ look_site_count={
 "type": "int",
 "value": 0
 }
+ripple_tex={
+"type": "sampler2D",
+"value": ""
+}
+ripple_center={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+ripple_axis_u={
+"type": "vec3",
+"value": Vector3(1, 0, 0)
+}
+ripple_axis_v={
+"type": "vec3",
+"value": Vector3(0, 0, 1)
+}
+ripple_window={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+ripple_band={
+"type": "vec4",
+"value": Vector4(0, 0.25, 0.7, 0.35)
+}
+ripple_ring={
+"type": "vec4",
+"value": Vector4(0.1, 0.45, 0.85, 3)
+}
+ripple_light={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+ripple_brush={
+"type": "vec2",
+"value": Vector2(1.2, 0.4)
+}

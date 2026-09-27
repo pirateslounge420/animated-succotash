@@ -23,6 +23,9 @@ extends CharacterBody3D
 ## trunks you bump rustle, and standing under a crown is `under_canopy`
 ## (rain shelter).
 ##
+## Water (Ripples): wading, swimming and dropping in ring the water
+## (_water_contacts).
+##
 ## `noise_level` (0 silent .. 1 sprinting) is what wildlife hears
 ## (CreatureSpawner scales how close creatures let you come by it), and
 ## `still_time` how long you've stood still (wary animals calm down).
@@ -137,6 +140,11 @@ var _prompt_timer := 0.0
 var _shake := 0.0
 var _knock := Vector3.ZERO
 var _aim_blend := 0.0
+## Water contacts (Ripples): in the water last frame, and the swimming
+## stroke's timer and hand.
+var _in_water := false
+var _stroke_t := 0.0
+var _stroke_hand := 0
 
 
 func _ready() -> void:
@@ -278,6 +286,8 @@ func _physics_process(delta: float) -> void:
 	var water := chunks.water_level_at(surface_dir)
 	var depth := (PlanetConst.RADIUS_M + water) - radius
 	swimming = depth > 1.2
+	# How fast you were coming down (a splash into water).
+	var sink := -velocity.dot(up)
 
 	_update_stance()
 	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
@@ -348,6 +358,7 @@ func _physics_process(delta: float) -> void:
 	if radius < PlanetConst.RADIUS_M + ground - 2.0:
 		global_position = world.to_scene(surface_dir, PlanetConst.RADIUS_M + ground + 0.5)
 		velocity = Vector3.ZERO
+	_water_contacts(delta, water, ground, moved.length(), sink)
 
 	if first_person or bow.drawing:
 		# Aiming (or seeing through your own eyes): face where you look.
@@ -597,6 +608,51 @@ func _update_blob(ground: float) -> void:
 		var k := maxf(1.0 - maxf(h, 0.0) / 3.0, 0.001)
 		_blob.position.y = BlobShadow.LIFT - h
 		_blob.scale = Vector3(BLOB_R * k, 1.0, BLOB_R * k)
+
+
+## Water contacts (Ripples): dropping into water (a jump or a fall)
+## splashes with the whole body, harder the faster you come down, while
+## wading in from the bank is just a step; wading legs drag a wake, and
+## each step plants a splash (Footsteps, foot_splash()); a swimmer's body
+## drags a wake and the hands splash as they stroke. Masses, the drop
+## speed and the stroke's rhythm: data/water/ripples.json "contacts".
+func _water_contacts(delta: float, water: float, ground: float, speed: float, sink: float) -> void:
+	var r: float = world.radius_of(global_position)
+	var surface_r := PlanetConst.RADIUS_M + water
+	var wet := water > ground + 0.03 and r < surface_r + 0.02
+	if not wet or not Ripples.near(global_position):
+		_in_water = wet
+		return
+	var surface := global_position + up * (surface_r - r)
+	var mass := RippleSim.contact("player_kg")
+	if not _in_water:
+		if sink > RippleSim.contact("player_drop_mps"):
+			Ripples.splash(surface, mass, sink)
+		else:
+			Ripples.splash(surface, RippleSim.contact("player_foot_kg"), maxf(speed, 1.0))
+	_in_water = true
+	var key := get_instance_id() * 8
+	var right := global_basis.x
+	if swimming:
+		Ripples.wake(key, surface, mass, speed)
+		_stroke_t -= delta
+		if speed > 0.3 and _stroke_t <= 0.0:
+			_stroke_t = RippleSim.contact("player_stroke_s")
+			_stroke_hand = 1 - _stroke_hand
+			var side := 0.3 if _stroke_hand == 0 else -0.3
+			Ripples.splash(surface - global_basis.z * 0.5 + right * side, RippleSim.contact("player_hand_kg"), speed + 1.0)
+	else:
+		Ripples.wake(key + 1, surface - right * 0.12, mass * 0.5, speed)
+		Ripples.wake(key + 2, surface + right * 0.12, mass * 0.5, speed)
+
+
+## A foot coming down in water (Footsteps, each step while wading): a
+## small splash, the feet taking turns by `n`.
+func foot_splash(n: int) -> void:
+	var r: float = world.radius_of(global_position)
+	var surface := global_position + up * (PlanetConst.RADIUS_M + chunks.water_level_at(surface_dir) - r)
+	var side := 0.12 if n % 2 == 0 else -0.12
+	Ripples.splash(surface + global_basis.x * side, RippleSim.contact("player_foot_kg"), maxf(get_real_velocity().length(), 1.0))
 
 
 ## Put a body (and all it holds) on the player's own visual layer.
