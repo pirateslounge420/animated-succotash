@@ -1,36 +1,392 @@
 {
-	"key": "HOT_SPRING",
-	"name": "Hot spring",
-	"group": "Special",
-	"size": "small",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [-10, 35],
-		"moisture": [0, 1]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [],
-		"ground": [
-			{
-				"name": "Thermophile mat",
-				"genus": "Thermostroma",
-				"species": "calidum",
-				"invented": true,
-				"shape": "thermophile_mat",
-				"temp_c": [-10, 35],
-				"moisture": [0.2, 1],
-				"height_m": [0.02, 0.05],
-				"color": "#e68c26",
-				"accent": "#4c9959",
-				"needs": ["hot_ground"],
-				"density": 2,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): hot springs"
-			}
-		],
-		"epiphyte": []
-	}
+ "key": "HOT_SPRING",
+ "name": "Hot spring",
+ "group": "Special",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Geothermal ground: colour-banded thermophile microbial mats in the runoff channels, heat-tolerant mosses and grasses on warm ground, and specialist wetland plants where the water cools. Drawn on Yellowstone, Iceland (Hveravellir, Reykjadalur), New Zealand (Rotorua) and Japanese onsen valleys.",
+ "climate": {
+  "temp_c": [
+   -10,
+   35
+  ],
+  "moisture": [
+   0,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Lodgepole pine",
+    "genus": "Pinus",
+    "species": "contorta",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     10
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#2F6A35",
+    "accent": "#7A5A40",
+    "source": "Pinus contorta, lodgepole pine, dominant tree ringing Yellowstone geyser basins (stunted near hot ground), 10-25 m — Wikipedia / NPS"
+   },
+   {
+    "name": "Manuka",
+    "genus": "Leptospermum",
+    "species": "scoparium",
+    "shape": "gnarled",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [
+     "hot_ground"
+    ],
+    "color": "#5A9A60",
+    "accent": "#F0E0E0",
+    "source": "Leptospermum scoparium, manuka, dominant shrub-tree on warm geothermal ground at Rotorua/Taupo, NZ, 2-8 m — Wikipedia / NZ DOC"
+   },
+   {
+    "name": "Downy birch",
+    "genus": "Betula",
+    "species": "pubescens",
+    "shape": "broadleaf",
+    "temp_c": [
+     -2,
+     10
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     3,
+     10
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#E8E8E0",
+    "source": "Betula pubescens, downy birch, scrub near Icelandic geothermal valleys, 3-10 m — Wikipedia"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Prostrate kanuka",
+    "genus": "Kunzea",
+    "species": "ericoides",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [
+     "hot_ground"
+    ],
+    "color": "#5AA040",
+    "accent": "#F0F0E0",
+    "source": "Kunzea ericoides, kanuka (prostrate geothermal form), on heated soils of NZ Taupo Volcanic Zone, 0.5-3 m — Wikipedia / NZ DOC"
+   },
+   {
+    "name": "Geothermal willow",
+    "genus": "Salix",
+    "species": "lanata",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "color": "#8AB0A0",
+    "accent": "#8A7A50",
+    "source": "Salix lanata, woolly willow, dwarf willow on warm wet ground beside Icelandic hot springs, 0.3-1.5 m — Wikipedia"
+   },
+   {
+    "name": "Shrubby cinquefoil",
+    "genus": "Dasiphora",
+    "species": "fruticosa",
+    "shape": "shrub",
+    "temp_c": [
+     -3,
+     10
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#5A9A50",
+    "accent": "#E8D040",
+    "source": "Dasiphora fruticosa, shrubby cinquefoil, common in wet meadows fringing Yellowstone thermal areas, 0.3-1.2 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Umbrella fern",
+    "genus": "Dicranopteris",
+    "species": "linearis",
+    "shape": "fern",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "needs": [
+     "hot_ground"
+    ],
+    "color": "#5AB040",
+    "accent": "#8A6A40",
+    "source": "Dicranopteris linearis, Old World forked fern, thicket-forming on heated ground in NZ and Asian geothermal fields, 0.5-2 m — Wikipedia / NZ DOC"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Thermophile mat",
+    "genus": "Thermus",
+    "species": "aquaticus",
+    "shape": "thermophile_mat",
+    "temp_c": [
+     -10,
+     35
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "height_m": [
+     0.0,
+     0.02
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "hot_ground",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.1
+    ],
+    "color": "#E8A020",
+    "accent": "#D04020",
+    "source": "Thermus aquaticus (with cyanobacteria Synechococcus/Phormidium), orange-red microbial mat in hot spring outflow channels at 50-80 C, Yellowstone/Iceland/NZ — Wikipedia / NPS"
+   },
+   {
+    "name": "Green cyanobacteria mat",
+    "genus": "Synechococcus",
+    "species": "lividus",
+    "shape": "thermophile_mat",
+    "temp_c": [
+     -10,
+     35
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "height_m": [
+     0.0,
+     0.02
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "hot_ground",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.1
+    ],
+    "color": "#7AC040",
+    "accent": "#3F8A38",
+    "source": "Synechococcus lividus, green thermophilic cyanobacterial mat in cooler (45-70 C) hot spring channels, Yellowstone — Wikipedia / NPS"
+   },
+   {
+    "name": "Hot-spring moss",
+    "genus": "Bryum",
+    "species": "argenteum",
+    "shape": "moss",
+    "temp_c": [
+     -8,
+     25
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "height_m": [
+     0.01,
+     0.03
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "needs": [
+     "hot_ground"
+    ],
+    "color": "#8AC050",
+    "accent": "#B0C0A0",
+    "source": "Bryum argenteum, silver moss, cosmopolitan moss on warm geothermal soil in Iceland/Yellowstone — Wikipedia"
+   },
+   {
+    "name": "Ross' bentgrass",
+    "genus": "Agrostis",
+    "species": "rossiae",
+    "shape": "grass",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "needs": [
+     "hot_ground"
+    ],
+    "color": "#8AB840",
+    "accent": "#C8B060",
+    "source": "Agrostis rossiae, Ross' bentgrass, endemic annual grass growing only on heated ground in Yellowstone thermal areas, 5-20 cm — Wikipedia / NPS"
+   },
+   {
+    "name": "Geothermal kanuka moss",
+    "genus": "Campylopus",
+    "species": "introflexus",
+    "shape": "moss",
+    "temp_c": [
+     5,
+     18
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "height_m": [
+     0.01,
+     0.05
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "needs": [
+     "hot_ground"
+    ],
+    "color": "#5AB040",
+    "accent": "#8A9A70",
+    "source": "Campylopus introflexus and geothermal moss carpets on hot soil at Rotorua, NZ, 1-5 cm — NZ DOC geothermal vegetation"
+   },
+   {
+    "name": "Tufted hairgrass",
+    "genus": "Deschampsia",
+    "species": "cespitosa",
+    "shape": "tussock",
+    "temp_c": [
+     -5,
+     12
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#6AB050",
+    "accent": "#C8B060",
+    "source": "Deschampsia cespitosa, tufted hairgrass, tussock of wet meadows around cooled hot spring outflows, Holarctic, 0.3-1.2 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Broad-leaved cattail",
+    "genus": "Typha",
+    "species": "latifolia",
+    "shape": "reed",
+    "temp_c": [
+     0,
+     25
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.1,
+     0.8
+    ],
+    "color": "#5AB040",
+    "accent": "#6A4A2E",
+    "source": "Typha latifolia, cattail, in warm outflow pools below hot springs, Holarctic, 1-3 m — Wikipedia"
+   }
+  ],
+  "epiphyte": []
+ }
 }

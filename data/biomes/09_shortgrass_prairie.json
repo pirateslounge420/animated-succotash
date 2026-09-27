@@ -1,35 +1,262 @@
 {
-	"key": "SHORTGRASS_PRAIRIE",
-	"name": "Shortgrass prairie",
-	"group": "Grass & scrub",
-	"size": "mid",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [4, 19],
-		"moisture": [0.28, 0.45]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [],
-		"ground": [
-			{
-				"name": "Shortgrass",
-				"genus": "Brevigramen",
-				"species": "aridum",
-				"invented": true,
-				"shape": "grass",
-				"temp_c": [2, 21],
-				"moisture": [0.22, 0.46],
-				"height_m": [0.15, 0.35],
-				"color": "#a8a861",
-				"accent": "#5c422e",
-				"density": 1.6,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): shortgrass prairie"
-			}
-		],
-		"epiphyte": []
-	}
+ "key": "SHORTGRASS_PRAIRIE",
+ "name": "Shortgrass prairie",
+ "group": "Grass & scrub",
+ "size": "mid",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Sod-forming grasses under 0.5 m (blue grama, buffalograss) with scattered yucca, cactus and low sage on the dry western Great Plains (Colorado, Wyoming, Texas panhandle); treeless except along draws.",
+ "climate": {
+  "temp_c": [
+   4,
+   19
+  ],
+  "moisture": [
+   0.28,
+   0.45
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Plains cottonwood",
+    "genus": "Populus",
+    "species": "deltoides",
+    "shape": "broadleaf",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.1,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB040",
+    "accent": "#A09070",
+    "source": "Populus deltoides ssp. monilifera, N American plains along streams, 15-30 m — USDA PLANTS"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Soapweed yucca",
+    "genus": "Yucca",
+    "species": "glauca",
+    "shape": "spike_rosette",
+    "temp_c": [
+     3,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#6E9A8A",
+    "accent": "#F0E8C8",
+    "source": "Yucca glauca, Great Plains from Alberta to Texas, stemless rosette 0.5-1.2 m with white flower stalk — USDA PLANTS"
+   },
+   {
+    "name": "Plains prickly pear",
+    "genus": "Opuntia",
+    "species": "polyacantha",
+    "shape": "cactus",
+    "temp_c": [
+     2,
+     19
+    ],
+    "moisture": [
+     0.15,
+     0.45
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#6A9A50",
+    "accent": "#E0C040",
+    "source": "Opuntia polyacantha, western N America grasslands, low clumps 0.2-0.5 m, yellow flowers — USDA PLANTS"
+   },
+   {
+    "name": "Fringed sage",
+    "genus": "Artemisia",
+    "species": "frigida",
+    "shape": "shrub",
+    "temp_c": [
+     -2,
+     18
+    ],
+    "moisture": [
+     0.15,
+     0.45
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#A0B0A0",
+    "accent": "#C8B878",
+    "source": "Artemisia frigida, N American plains and Eurasian steppe, silver sub-shrub 0.2-0.5 m — USDA PLANTS"
+   },
+   {
+    "name": "Rubber rabbitbrush",
+    "genus": "Ericameria",
+    "species": "nauseosa",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     19
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.6,
+     2
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#9FAF8A",
+    "accent": "#E8C830",
+    "source": "Ericameria nauseosa, western N America, 0.6-2 m shrub with yellow autumn flowers — USDA PLANTS"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Blue grama",
+    "genus": "Bouteloua",
+    "species": "gracilis",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     20
+    ],
+    "moisture": [
+     0.22,
+     0.45
+    ],
+    "height_m": [
+     0.15,
+     0.4
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "color": "#9AAE6A",
+    "accent": "#C8B060",
+    "source": "Bouteloua gracilis, dominant shortgrass prairie grass, central N America, 0.15-0.4 m, eyelash seed heads — USDA PLANTS"
+   },
+   {
+    "name": "Buffalograss",
+    "genus": "Bouteloua",
+    "species": "dactyloides",
+    "shape": "grass",
+    "temp_c": [
+     4,
+     22
+    ],
+    "moisture": [
+     0.22,
+     0.45
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "color": "#8FA860",
+    "accent": "#C8B060",
+    "source": "Bouteloua dactyloides, sod-forming shortgrass co-dominant, Great Plains, 5-20 cm — USDA PLANTS"
+   },
+   {
+    "name": "Western wheatgrass",
+    "genus": "Pascopyrum",
+    "species": "smithii",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     0.3,
+     0.9
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#6E9A8A",
+    "accent": "#C8B060",
+    "source": "Pascopyrum smithii, cool-season rhizomatous grass of the northern plains, 0.3-0.9 m, blue-green — USDA PLANTS"
+   },
+   {
+    "name": "Scarlet globemallow",
+    "genus": "Sphaeralcea",
+    "species": "coccinea",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     19
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#8FA08A",
+    "accent": "#E86A40",
+    "source": "Sphaeralcea coccinea, western N American plains forb, 10-30 cm, orange flowers — USDA PLANTS"
+   },
+   {
+    "name": "Needle-and-thread",
+    "genus": "Hesperostipa",
+    "species": "comata",
+    "shape": "tussock",
+    "temp_c": [
+     1,
+     18
+    ],
+    "moisture": [
+     0.2,
+     0.42
+    ],
+    "height_m": [
+     0.3,
+     0.9
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#C8B060",
+    "accent": "#E8D8A0",
+    "source": "Hesperostipa comata, cool-season bunchgrass of the western plains, 0.3-0.9 m, long awns — USDA PLANTS"
+   }
+  ],
+  "epiphyte": []
+ }
 }

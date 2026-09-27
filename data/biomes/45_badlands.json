@@ -1,35 +1,354 @@
 {
-	"key": "BADLANDS",
-	"name": "Badlands",
-	"group": "Special",
-	"size": "small",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [0, 25],
-		"moisture": [0.05, 0.35]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [
-			{
-				"name": "Juniper",
-				"genus": "Juniperus",
-				"species": "communis",
-				"shape": "conifer",
-				"temp_c": [4, 21],
-				"moisture": [0.14, 0.46],
-				"height_m": [2, 6],
-				"color": "#406147",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.35,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): badlands, canyons"
-			}
-		],
-		"shrub": [],
-		"ground": [],
-		"epiphyte": []
-	}
+ "key": "BADLANDS",
+ "name": "Badlands",
+ "group": "Special",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Eroded clay and shale slopes mostly bare, with junipers in ravines, low sage and prickly pear on benches and short grasses in the flats; Dakota/Montana badlands with Bardenas Reales (Spain) and Patagonian analogues.",
+ "climate": {
+  "temp_c": [
+   0,
+   25
+  ],
+  "moisture": [
+   0.05,
+   0.35
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Rocky Mountain juniper",
+    "genus": "Juniperus",
+    "species": "scopulorum",
+    "shape": "conifer",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     5,
+     12
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#4A7040",
+    "accent": "#8A6A50",
+    "source": "Juniperus scopulorum (Rocky Mountain juniper), N American plains breaks and badland ravines, 5-12 m — USDA PLANTS"
+   },
+   {
+    "name": "Plains cottonwood",
+    "genus": "Populus",
+    "species": "deltoides",
+    "shape": "broadleaf",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.15,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB040",
+    "accent": "#A09070",
+    "source": "Populus deltoides, badland creek bottoms, 15-30 m — USDA PLANTS"
+   },
+   {
+    "name": "Aleppo pine",
+    "genus": "Pinus",
+    "species": "halepensis",
+    "shape": "conifer",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#4A8040",
+    "accent": "#A08060",
+    "source": "Pinus halepensis, Bardenas Reales and Spanish gypsum badlands, 8-20 m — Euro+Med PlantBase"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Silver sagebrush",
+    "genus": "Artemisia",
+    "species": "cana",
+    "shape": "shrub",
+    "temp_c": [
+     0,
+     14
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#A8B4A0",
+    "accent": "#B8A878",
+    "source": "Artemisia cana, northern Great Plains badland flats and draws, silver shrub 0.5-1.5 m — USDA PLANTS"
+   },
+   {
+    "name": "Skunkbush sumac",
+    "genus": "Rhus",
+    "species": "trilobata",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3F8C38",
+    "accent": "#D04030",
+    "source": "Rhus trilobata, western N America ravines and rocky slopes, 1-2.5 m, red autumn foliage — USDA PLANTS"
+   },
+   {
+    "name": "Plains prickly pear",
+    "genus": "Opuntia",
+    "species": "polyacantha",
+    "shape": "cactus",
+    "temp_c": [
+     2,
+     19
+    ],
+    "moisture": [
+     0.08,
+     0.4
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#6A9A50",
+    "accent": "#E0C040",
+    "source": "Opuntia polyacantha, badland benches and clay slopes, 20-50 cm clumps — USDA PLANTS"
+   },
+   {
+    "name": "Rubber rabbitbrush",
+    "genus": "Ericameria",
+    "species": "nauseosa",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     19
+    ],
+    "moisture": [
+     0.1,
+     0.4
+    ],
+    "height_m": [
+     0.6,
+     2
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#9FAF8A",
+    "accent": "#E8C830",
+    "source": "Ericameria nauseosa, badland washes and disturbed slopes, 0.6-2 m — USDA PLANTS"
+   },
+   {
+    "name": "Greasewood",
+    "genus": "Sarcobatus",
+    "species": "vermiculatus",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     17
+    ],
+    "moisture": [
+     0.08,
+     0.3
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#7FA060",
+    "accent": "#C0B090",
+    "source": "Sarcobatus vermiculatus, saline badland bottoms, 1-2.5 m — USDA PLANTS"
+   },
+   {
+    "name": "Soapweed yucca",
+    "genus": "Yucca",
+    "species": "glauca",
+    "shape": "spike_rosette",
+    "temp_c": [
+     3,
+     19
+    ],
+    "moisture": [
+     0.1,
+     0.4
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#6E9A8A",
+    "accent": "#F0E8C8",
+    "source": "Yucca glauca, dry badland slopes of the Great Plains, 0.5-1.2 m — USDA PLANTS"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Western wheatgrass",
+    "genus": "Pascopyrum",
+    "species": "smithii",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     0.3,
+     0.9
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#6E9A8A",
+    "accent": "#C8B060",
+    "source": "Pascopyrum smithii, dominant grass of northern badland flats on clay, 0.3-0.9 m — USDA PLANTS"
+   },
+   {
+    "name": "Blue grama",
+    "genus": "Bouteloua",
+    "species": "gracilis",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     20
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.15,
+     0.4
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#9AAE6A",
+    "accent": "#C8B060",
+    "source": "Bouteloua gracilis, badland benches and prairie tables, 15-40 cm — USDA PLANTS"
+   },
+   {
+    "name": "Little bluestem",
+    "genus": "Schizachyrium",
+    "species": "scoparium",
+    "shape": "tussock",
+    "temp_c": [
+     3,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     0.5,
+     1
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#8FA070",
+    "accent": "#B05A40",
+    "source": "Schizachyrium scoparium, badland slopes and tables, 0.5-1 m, red-brown in autumn — USDA PLANTS"
+   },
+   {
+    "name": "Gumbo evening primrose",
+    "genus": "Oenothera",
+    "species": "caespitosa",
+    "shape": "rosette",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.08,
+     0.3
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#8FA08A",
+    "accent": "#F8F8F0",
+    "source": "Oenothera caespitosa, bare clay badland slopes of western N America, rosette 10-30 cm with white flowers — USDA PLANTS"
+   },
+   {
+    "name": "Esparto grass",
+    "genus": "Macrochloa",
+    "species": "tenacissima",
+    "shape": "tussock",
+    "temp_c": [
+     14,
+     20
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#E0D090",
+    "source": "Macrochloa tenacissima, Spanish gypsum badlands, tussock 0.5-1.2 m — Euro+Med PlantBase"
+   }
+  ],
+  "epiphyte": []
+ }
 }

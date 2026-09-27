@@ -1,20 +1,468 @@
 {
-	"key": "LAGOON",
-	"name": "Lagoon",
-	"group": "Coastal",
-	"size": "small",
-	"status": "empty",
-	"kind": "water",
-	"notes": "No plants yet. Add some below (see data/biomes/README.md). Aquatic: plants listed here only grow where they can reach land or shallow water; an underwater/aquatic tier is not implemented yet.",
-	"climate": {
-		"temp_c": [5, 33],
-		"moisture": [0, 1]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [],
-		"ground": [],
-		"epiphyte": []
-	}
+ "key": "LAGOON",
+ "name": "Lagoon",
+ "group": "Coastal",
+ "size": "small",
+ "status": "researched",
+ "kind": "water",
+ "notes": "Sheltered coastal lagoons: mangroves and sea purslane on tropical lagoon shores, samphire/saltwort and reeds on temperate barrier lagoons (Venice, Baltic haffs), and dense seagrass meadows in the shallow water. Drawn on Caribbean and Indo-Pacific atoll lagoons, Mediterranean and Baltic lagoons; underwater species flagged.",
+ "climate": {
+  "temp_c": [
+   5,
+   33
+  ],
+  "moisture": [
+   0,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Black mangrove",
+    "genus": "Avicennia",
+    "species": "germinans",
+    "shape": "mangrove",
+    "temp_c": [
+     20,
+     32
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     3,
+     15
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.8
+    ],
+    "color": "#5A9A50",
+    "accent": "#9A9A8A",
+    "source": "Avicennia germinans, Caribbean, Gulf of Mexico and W African lagoon shores, pneumatophore mats, 3-15 m — Wikipedia"
+   },
+   {
+    "name": "Red mangrove",
+    "genus": "Rhizophora",
+    "species": "mangle",
+    "shape": "mangrove",
+    "temp_c": [
+     21,
+     32
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     4,
+     20
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     1.5
+    ],
+    "color": "#3E8E3A",
+    "accent": "#8A5A3A",
+    "source": "Rhizophora mangle, Neotropical and W African lagoon edges (R. stylosa in Indo-Pacific), stilt-rooted, 4-20 m — Wikipedia"
+   },
+   {
+    "name": "Coconut palm",
+    "genus": "Cocos",
+    "species": "nucifera",
+    "shape": "palm",
+    "temp_c": [
+     21,
+     33
+    ],
+    "moisture": [
+     0.35,
+     0.9
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4CA040",
+    "accent": "#A88A5A",
+    "source": "Cocos nucifera, atoll lagoon rims throughout the tropical Pacific and Indian Ocean, 15-30 m — Wikipedia"
+   },
+   {
+    "name": "Tamarisk",
+    "genus": "Tamarix",
+    "species": "gallica",
+    "shape": "gnarled",
+    "temp_c": [
+     12,
+     22
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#7FA07A",
+    "accent": "#E8A0C0",
+    "source": "Tamarix gallica, Mediterranean lagoon shores (Camargue, Venice littorals), feathery pink-flowered small tree 3-8 m — Wikipedia"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Buttonwood",
+    "genus": "Conocarpus",
+    "species": "erectus",
+    "shape": "shrub",
+    "temp_c": [
+     21,
+     32
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     2,
+     10
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5A9A50",
+    "accent": "#7A6A50",
+    "source": "Conocarpus erectus, Caribbean/Florida/W Africa lagoon back-shores just above tide, shrub or small tree 2-10 m — Wikipedia"
+   },
+   {
+    "name": "Shrubby seablite",
+    "genus": "Suaeda",
+    "species": "vera",
+    "shape": "shrub",
+    "temp_c": [
+     11,
+     20
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5A9A50",
+    "accent": "#7A6A5A",
+    "source": "Suaeda vera, Mediterranean and S Atlantic European lagoon shores and shingle, evergreen fleshy subshrub 0.5-1.2 m — Wikipedia"
+   },
+   {
+    "name": "Beach naupaka",
+    "genus": "Scaevola",
+    "species": "taccada",
+    "shape": "shrub",
+    "temp_c": [
+     21,
+     33
+    ],
+    "moisture": [
+     0.35,
+     0.9
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5AB040",
+    "accent": "#E8E8D0",
+    "source": "Scaevola taccada, Indo-Pacific atoll lagoon rims, mounding succulent-leaved shrub 1-3 m — Wikipedia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Sea purslane",
+    "genus": "Sesuvium",
+    "species": "portulacastrum",
+    "shape": "cushion",
+    "temp_c": [
+     20,
+     33
+    ],
+    "moisture": [
+     0.4,
+     1.0
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.2
+    ],
+    "color": "#5AB040",
+    "accent": "#E070A0",
+    "source": "Sesuvium portulacastrum, pantropical lagoon mudflats and sand, succulent mat 5-20 cm — Wikipedia"
+   },
+   {
+    "name": "Perennial glasswort",
+    "genus": "Sarcocornia",
+    "species": "fruticosa",
+    "shape": "cushion",
+    "temp_c": [
+     11,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     1.0
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#6AB040",
+    "accent": "#C05040",
+    "source": "Sarcocornia fruticosa, Mediterranean and Atlantic lagoon salt marsh (Venice, Camargue), woody jointed samphire 20-100 cm — Wikipedia"
+   },
+   {
+    "name": "Common reed",
+    "genus": "Phragmites",
+    "species": "australis",
+    "shape": "reed",
+    "temp_c": [
+     0,
+     30
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     2,
+     4
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#8AB860",
+    "accent": "#C8B060",
+    "source": "Phragmites australis, brackish Baltic and Black Sea lagoon (haff, liman) reedbeds, 2-4 m — Wikipedia"
+   },
+   {
+    "name": "Saltmarsh rush",
+    "genus": "Juncus",
+    "species": "maritimus",
+    "shape": "reed",
+    "temp_c": [
+     8,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#4A8A40",
+    "accent": "#8A7A50",
+    "source": "Juncus maritimus, European and Mediterranean lagoon fringe, stiff dark-green rush tussocks 0.5-1.2 m — Wikipedia"
+   },
+   {
+    "name": "Turtle grass",
+    "genus": "Thalassia",
+    "species": "testudinum",
+    "shape": "grass",
+    "temp_c": [
+     22,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 1.2,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     10
+    ],
+    "color": "#3E9A3A",
+    "accent": "#2F7A35",
+    "source": "underwater — Thalassia testudinum, Caribbean and Gulf of Mexico lagoon floors, dominant broad-bladed seagrass 20-50 cm — Wikipedia"
+   },
+   {
+    "name": "Neptune grass",
+    "genus": "Posidonia",
+    "species": "oceanica",
+    "shape": "grass",
+    "temp_c": [
+     13,
+     24
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     1,
+     40
+    ],
+    "color": "#3E9A3A",
+    "accent": "#5A4A30",
+    "source": "underwater — Posidonia oceanica, Mediterranean endemic seagrass meadows on sand, 30-100 cm — Wikipedia"
+   },
+   {
+    "name": "Dwarf eelgrass",
+    "genus": "Zostera",
+    "species": "noltei",
+    "shape": "grass",
+    "temp_c": [
+     8,
+     22
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0,
+     3
+    ],
+    "color": "#4AA040",
+    "accent": "#3E7A3A",
+    "source": "underwater — Zostera noltei, European Atlantic and Mediterranean lagoon shallows, fine-leaved intertidal seagrass 10-30 cm — Wikipedia"
+   },
+   {
+    "name": "Tape seagrass",
+    "genus": "Enhalus",
+    "species": "acoroides",
+    "shape": "grass",
+    "temp_c": [
+     24,
+     32
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     5
+    ],
+    "color": "#3E9A3A",
+    "accent": "#2F7A35",
+    "source": "underwater — Enhalus acoroides, Indo-Pacific lagoons and reef flats, largest tropical seagrass with 1-1.5 m ribbon leaves — Wikipedia"
+   }
+  ],
+  "epiphyte": []
+ }
 }

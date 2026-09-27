@@ -1,51 +1,439 @@
 {
-	"key": "FLOODPLAIN_FOREST",
-	"name": "Floodplain forest",
-	"group": "Wetlands",
-	"size": "small",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [4, 26],
-		"moisture": [0.48, 1]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [
-			{
-				"name": "Cottonwood",
-				"genus": "Populus",
-				"species": "deltoides",
-				"shape": "broadleaf",
-				"temp_c": [5, 24],
-				"moisture": [0.3, 1],
-				"height_m": [15, 25],
-				"color": "#598c40",
-				"accent": "#807a70",
-				"needs": ["river_bank"],
-				"soil": "wet",
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): floodplain forest, gallery forest"
-			}
-		],
-		"shrub": [
-			{
-				"name": "Giant river cane",
-				"genus": "Arundinaria",
-				"species": "gigantea",
-				"shape": "bamboo",
-				"temp_c": [10, 22],
-				"moisture": [0.55, 1],
-				"altitude_m": [0, 800],
-				"height_m": [2, 8],
-				"color": "#3f7430",
-				"accent": "#8a9448",
-				"density": 1.2,
-				"needs": ["river_bank"],
-				"source": "Arundinaria gigantea, south-eastern US floodplains: forms canebrakes along rivers, 2-8 m"
-			}
-		],
-		"ground": [],
-		"epiphyte": []
-	}
+ "key": "FLOODPLAIN_FOREST",
+ "name": "Floodplain forest",
+ "group": "Wetlands",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Riparian bottomland forest of fast-growing cottonwoods, willows, sycamore and silver maple that tolerate seasonal flooding, over cane, dogwood and tall nettle/fern ground cover threaded with vines; drawn on the Mississippi/Missouri bottoms and the Rhine/Danube floodplains.",
+ "climate": {
+  "temp_c": [
+   4,
+   26
+  ],
+  "moisture": [
+   0.48,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Cottonwood",
+    "genus": "Populus",
+    "species": "deltoides",
+    "shape": "broadleaf",
+    "temp_c": [
+     5,
+     22
+    ],
+    "moisture": [
+     0.55,
+     1
+    ],
+    "height_m": [
+     25,
+     40
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#8A8A7A",
+    "source": "Populus deltoides, eastern cottonwood, central & eastern North America, pioneer of river floodplains and sandbars, 25-40 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Sycamore",
+    "genus": "Platanus",
+    "species": "occidentalis",
+    "shape": "broadleaf",
+    "temp_c": [
+     7,
+     24
+    ],
+    "moisture": [
+     0.55,
+     1
+    ],
+    "height_m": [
+     25,
+     40
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#E8E0C8",
+    "source": "Platanus occidentalis, American sycamore, eastern North America, bottomland and riverbank forest, 25-40 m mottled white bark — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Silver maple",
+    "genus": "Acer",
+    "species": "saccharinum",
+    "shape": "broadleaf",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     20,
+     30
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "color": "#5AB040",
+    "accent": "#A8A898",
+    "source": "Acer saccharinum, silver maple, eastern North America, flood-tolerant floodplain forest and stream banks, 20-30 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "White willow",
+    "genus": "Salix",
+    "species": "alba",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     15,
+     25
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#7AA860",
+    "accent": "#8A7A5A",
+    "source": "Salix alba, white willow, Europe to Central Asia, softwood floodplain forest along large rivers, 15-25 m silvery leaves — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Black poplar",
+    "genus": "Populus",
+    "species": "nigra",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     20,
+     30
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#6E5A44",
+    "source": "Populus nigra, black poplar, Europe to W Asia, riverine floodplain woodland on gravel and sand, 20-30 m — Wikipedia / EUFORGEN"
+   },
+   {
+    "name": "Pecan",
+    "genus": "Carya",
+    "species": "illinoinensis",
+    "shape": "broadleaf",
+    "temp_c": [
+     12,
+     26
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     25,
+     40
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#7A5A3A",
+    "source": "Carya illinoinensis, pecan, Mississippi valley to Mexico, bottomland hardwood forest on rich alluvium, 25-40 m — USDA Plants / Wikipedia"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Giant river cane",
+    "genus": "Arundinaria",
+    "species": "gigantea",
+    "shape": "bamboo",
+    "temp_c": [
+     10,
+     24
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "color": "#5AB040",
+    "accent": "#C8C880",
+    "source": "Arundinaria gigantea, giant river cane, southeastern USA, dense canebrakes on floodplains, 2-8 m native bamboo — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Red-osier dogwood",
+    "genus": "Cornus",
+    "species": "sericea",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     1.5,
+     4
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#C83A3A",
+    "source": "Cornus sericea, red-osier dogwood, northern & western North America, thickets on stream banks and floodplains, 1.5-4 m red stems — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Grey willow",
+    "genus": "Salix",
+    "species": "cinerea",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#7AA860",
+    "accent": "#8A7A5A",
+    "source": "Salix cinerea, grey willow, Europe & W Asia, willow carr on floodplains and wet ground, 3-8 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Elderberry",
+    "genus": "Sambucus",
+    "species": "nigra",
+    "shape": "shrub",
+    "temp_c": [
+     7,
+     17
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "height_m": [
+     3,
+     6
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#E8E8D0",
+    "source": "Sambucus nigra, elder, Europe & W Asia, nutrient-rich riverside woodland and levees, 3-6 m — Wikipedia / Kew POWO"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Stinging nettle",
+    "genus": "Urtica",
+    "species": "dioica",
+    "shape": "grass",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#5A7A3A",
+    "source": "Urtica dioica, stinging nettle, Eurasia & North America, dominant tall herb on nitrogen-rich floodplain soils, 0.5-1.5 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Reed canary grass",
+    "genus": "Phalaris",
+    "species": "arundinacea",
+    "shape": "grass",
+    "temp_c": [
+     3,
+     18
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     0.6,
+     2
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB040",
+    "accent": "#C8B060",
+    "source": "Phalaris arundinacea, reed canary grass, circumboreal, wet floodplain margins and ditches, 0.6-2 m — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Ostrich fern",
+    "genus": "Matteuccia",
+    "species": "struthiopteris",
+    "shape": "fern",
+    "temp_c": [
+     2,
+     16
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "height_m": [
+     1,
+     1.7
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#7A6A4A",
+    "source": "Matteuccia struthiopteris, ostrich fern, circumboreal, colonies on shaded river floodplains, vase of fronds 1-1.7 m — Wikipedia / USDA Plants"
+   },
+   {
+    "name": "Jewelweed",
+    "genus": "Impatiens",
+    "species": "capensis",
+    "shape": "grass",
+    "temp_c": [
+     5,
+     20
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "color": "#5AB040",
+    "accent": "#E8901E",
+    "source": "Impatiens capensis, orange jewelweed, eastern North America, dense stands on wet shaded floodplain ground, 0.5-1.5 m orange flowers — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Sedge",
+    "genus": "Carex",
+    "species": "grayi",
+    "shape": "tussock",
+    "temp_c": [
+     6,
+     20
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.4,
+     0.9
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "color": "#4A9A3A",
+    "accent": "#A8B860",
+    "source": "Carex grayi, Gray's sedge, eastern North America, floodplain forest floor and swampy woods, 40-90 cm, spiky mace-like heads — USDA Plants / Wikipedia"
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Riverbank grape",
+    "genus": "Vitis",
+    "species": "riparia",
+    "shape": "liana",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     5,
+     25
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#5A3A5A",
+    "source": "Vitis riparia, riverbank grape, central & eastern North America, drapes floodplain trees to 25 m, dark purple fruit — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Virginia creeper",
+    "genus": "Parthenocissus",
+    "species": "quinquefolia",
+    "shape": "liana",
+    "temp_c": [
+     5,
+     24
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     5,
+     20
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#C83A3A",
+    "source": "Parthenocissus quinquefolia, Virginia creeper, eastern North America to Mexico, climbs trunks in bottomland forest to 20 m, scarlet autumn — USDA Plants / Wikipedia"
+   }
+  ]
+ }
 }

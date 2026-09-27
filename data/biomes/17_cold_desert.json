@@ -1,35 +1,258 @@
 {
-	"key": "COLD_DESERT",
-	"name": "Cold desert",
-	"group": "Desert",
-	"size": "mid",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [-2, 18],
-		"moisture": [0.02, 0.22]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [
-			{
-				"name": "Saltbush",
-				"genus": "Atriplex",
-				"species": "confertifolia",
-				"shape": "shrub",
-				"temp_c": [-2, 18],
-				"moisture": [0.03, 0.26],
-				"height_m": [0.4, 1.2],
-				"color": "#999e85",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.6,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): cold desert"
-			}
-		],
-		"ground": [],
-		"epiphyte": []
-	}
+ "key": "COLD_DESERT",
+ "name": "Cold desert",
+ "group": "Desert",
+ "size": "mid",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Sparse grey chenopod shrubs (saltbush, saxaul, winterfat) and scattered bunchgrasses with cold winters; Gobi and Central Asian deserts, Great Basin/Colorado Plateau lowlands, Patagonian monte.",
+ "climate": {
+  "temp_c": [
+   -2,
+   18
+  ],
+  "moisture": [
+   0.02,
+   0.22
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Saltbush",
+    "genus": "Atriplex",
+    "species": "canescens",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.05,
+     0.25
+    ],
+    "height_m": [
+     0.5,
+     2.5
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "color": "#AEB8A0",
+    "accent": "#D8D0A8",
+    "source": "Atriplex canescens (fourwing saltbush), western N American deserts, grey shrub 0.5-2.5 m — USDA PLANTS"
+   },
+   {
+    "name": "Saxaul",
+    "genus": "Haloxylon",
+    "species": "ammodendron",
+    "shape": "gnarled",
+    "temp_c": [
+     2,
+     14
+    ],
+    "moisture": [
+     0.03,
+     0.2
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#8FA878",
+    "accent": "#8A7A60",
+    "source": "Haloxylon ammodendron, Gobi and Central Asian sand/gravel deserts, leafless twisted shrub-tree 2-8 m — Flora of China"
+   },
+   {
+    "name": "Winterfat",
+    "genus": "Krascheninnikovia",
+    "species": "ceratoides",
+    "shape": "shrub",
+    "temp_c": [
+     -2,
+     16
+    ],
+    "moisture": [
+     0.05,
+     0.25
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#B8C0A8",
+    "accent": "#E8E0D0",
+    "source": "Krascheninnikovia ceratoides, Eurasian and N American cold deserts, woolly grey sub-shrub 0.3-1 m — Flora of China / USDA PLANTS"
+   },
+   {
+    "name": "Blackbrush",
+    "genus": "Coleogyne",
+    "species": "ramosissima",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.08,
+     0.25
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#6A7A60",
+    "accent": "#3A3A38",
+    "source": "Coleogyne ramosissima, Mojave-Great Basin transition, dark twiggy shrub 0.3-1.5 m — USDA PLANTS"
+   },
+   {
+    "name": "Mormon tea",
+    "genus": "Ephedra",
+    "species": "nevadensis",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     18
+    ],
+    "moisture": [
+     0.05,
+     0.25
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#7FA060",
+    "accent": "#9A9070",
+    "source": "Ephedra nevadensis, Great Basin and Mojave, leafless jointed green shrub 0.5-1.5 m — USDA PLANTS"
+   },
+   {
+    "name": "Reaumuria",
+    "genus": "Reaumuria",
+    "species": "soongarica",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.03,
+     0.18
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#9AAA90",
+    "accent": "#D0A0A0",
+    "source": "Reaumuria soongarica, dominant dwarf shrub of Gobi gravel deserts, 20-60 cm — Flora of China"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Indian ricegrass",
+    "genus": "Achnatherum",
+    "species": "hymenoides",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.05,
+     0.25
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#C8B060",
+    "accent": "#E8DCB0",
+    "source": "Achnatherum hymenoides, sandy cold deserts of western N America, 30-60 cm — USDA PLANTS"
+   },
+   {
+    "name": "Galleta grass",
+    "genus": "Pleuraphis",
+    "species": "jamesii",
+    "shape": "grass",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.06,
+     0.25
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#9AA870",
+    "accent": "#C8B060",
+    "source": "Pleuraphis jamesii, Colorado Plateau and Great Basin desert grass, 20-50 cm — USDA PLANTS"
+   },
+   {
+    "name": "Gobi needlegrass",
+    "genus": "Stipa",
+    "species": "glareosa",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     10
+    ],
+    "moisture": [
+     0.03,
+     0.2
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#D8C890",
+    "source": "Stipa glareosa, gravel deserts of Mongolia and Xinjiang, small tussock 10-30 cm — Flora of China"
+   },
+   {
+    "name": "Desert halogeton",
+    "genus": "Anabasis",
+    "species": "brevifolia",
+    "shape": "cushion",
+    "temp_c": [
+     0,
+     12
+    ],
+    "moisture": [
+     0.02,
+     0.15
+    ],
+    "height_m": [
+     0.05,
+     0.25
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#8FA080",
+    "accent": "#B0A080",
+    "source": "Anabasis brevifolia, Gobi and Kazakh stony deserts, succulent dwarf cushion 5-25 cm — Flora of China"
+   }
+  ],
+  "epiphyte": []
+ }
 }

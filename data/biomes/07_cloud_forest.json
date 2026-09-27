@@ -1,108 +1,523 @@
 {
-	"key": "CLOUD_FOREST",
-	"name": "Montane / cloud forest",
-	"group": "Forest",
-	"size": "small",
-	"status": "researched",
-	"kind": "land",
-	"notes": "Species from the DESIGN.md research table.",
-	"climate": {
-		"temp_c": [6, 21],
-		"moisture": [0.55, 1],
-		"altitude_m": [800, 3700]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [
-			{
-				"name": "Gnarled cloud-forest tree",
-				"genus": "Nephelodendron",
-				"species": "tortuosum",
-				"invented": true,
-				"shape": "gnarled",
-				"temp_c": [7, 22],
-				"moisture": [0.6, 1],
-				"height_m": [6, 14],
-				"color": "#296b4c",
-				"accent": "#807a70",
-				"altitude_m": [800, 3700],
-				"density": 1.2,
-				"source": "Cloud forest (en.wikipedia.org/wiki/Cloud_forest)"
-			},
-			{
-				"name": "Mountain bamboo",
-				"genus": "Oldeania",
-				"species": "alpina",
-				"shape": "bamboo",
-				"temp_c": [9, 16],
-				"moisture": [0.6, 1],
-				"altitude_m": [2200, 3400],
-				"height_m": [8, 16],
-				"color": "#3f742c",
-				"accent": "#7a8a4a",
-				"density": 1.0,
-				"source": "Yushania alpina, East African montane bamboo zone (2,400-3,200 m): dense stands to ~20 m"
-			}
-		],
-		"shrub": [
-			{
-				"name": "Andean chusquea",
-				"genus": "Chusquea",
-				"species": "scandens",
-				"shape": "bamboo",
-				"temp_c": [7, 18],
-				"moisture": [0.65, 1],
-				"altitude_m": [1500, 3500],
-				"height_m": [3, 8],
-				"color": "#44782e",
-				"accent": "#9a9a48",
-				"density": 1.2,
-				"source": "Chusquea spp., Andean montane cloud forest: arching climbing bamboos dominating the understory and gaps, 3-10 m"
-			}
-		],
-		"ground": [
-			{
-				"name": "Moss carpet",
-				"genus": "Tapetomuscus",
-				"species": "mollis",
-				"invented": true,
-				"shape": "moss",
-				"temp_c": [-2, 26],
-				"moisture": [0.7, 1],
-				"height_m": [0.1, 0.2],
-				"color": "#4c8c33",
-				"accent": "#5c422e",
-				"soil": "wet",
-				"source": "Cloud forest (en.wikipedia.org/wiki/Cloud_forest)"
-			},
-			{
-				"name": "Filmy fern",
-				"genus": "Hymenophyllum",
-				"species": "polyanthos",
-				"shape": "fern",
-				"temp_c": [6, 24],
-				"moisture": [0.75, 1],
-				"height_m": [0.2, 0.5],
-				"color": "#599959",
-				"accent": "#5c422e",
-				"source": "Cloud forest (en.wikipedia.org/wiki/Cloud_forest)"
-			}
-		],
-		"epiphyte": [
-			{
-				"name": "Epiphytic moss and liverworts",
-				"genus": "Nubibryum",
-				"species": "pendulum",
-				"invented": true,
-				"shape": "hanging_moss",
-				"temp_c": [0, 24],
-				"moisture": [0.72, 1],
-				"height_m": [1.5, 3.5],
-				"color": "#4c8538",
-				"accent": "#5c422e",
-				"density": 1.4,
-				"source": "Cloud forest (en.wikipedia.org/wiki/Cloud_forest) (epiphytes can outweigh the host's leaves)"
-			}
-		]
-	}
+ "key": "CLOUD_FOREST",
+ "name": "Montane / cloud forest",
+ "group": "Forest",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Persistently fog-soaked montane forest of low, gnarled, moss-laden trees with bamboo thickets, tree ferns and a heavy epiphyte load of bromeliads, orchids and liverworts; drawn on the Andes, Central America and the Afromontane belt.",
+ "climate": {
+  "temp_c": [
+   6,
+   21
+  ],
+  "moisture": [
+   0.55,
+   1
+  ],
+  "altitude_m": [
+   800,
+   3700
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Gnarled cloud-forest tree",
+    "genus": "Weinmannia",
+    "species": "tomentosa",
+    "shape": "gnarled",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     2000,
+     3500
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#3E8F3A",
+    "accent": "#6E5A44",
+    "source": "Weinmannia tomentosa, encenillo, northern Andes (Colombia/Venezuela) cloud forest 2400-3400 m, twisted moss-covered trunks 8-20 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Cloud-forest oak",
+    "genus": "Quercus",
+    "species": "costaricensis",
+    "shape": "broadleaf",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     2000,
+     3300
+    ],
+    "height_m": [
+     20,
+     35
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#6B4A2E",
+    "source": "Quercus costaricensis, Talamanca cloud-forest oak, Costa Rica/Panama 2000-3300 m, dominant 20-35 m with bromeliad-laden limbs — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Podocarp",
+    "genus": "Podocarpus",
+    "species": "oleifolius",
+    "shape": "conifer",
+    "temp_c": [
+     9,
+     18
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "altitude_m": [
+     1500,
+     3500
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#2A6A38",
+    "accent": "#8A6A4A",
+    "source": "Podocarpus oleifolius, Andean podocarp, Mexico to Bolivia montane cloud forest 1500-3500 m, 15-30 m — Wikipedia / Gymnosperm Database"
+   },
+   {
+    "name": "Clusia",
+    "genus": "Clusia",
+    "species": "multiflora",
+    "shape": "umbrella",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "altitude_m": [
+     1200,
+     3200
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#3A8535",
+    "accent": "#E8B0B0",
+    "source": "Clusia multiflora, gaque, northern Andes cloud forest 1500-3200 m, thick leathery leaves, stilt roots, 8-20 m — Kew POWO / Wikipedia"
+   },
+   {
+    "name": "Hagenia",
+    "genus": "Hagenia",
+    "species": "abyssinica",
+    "shape": "umbrella",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     2000,
+     3600
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#C86A4A",
+    "source": "Hagenia abyssinica, African redwood, Afromontane cloud forest 2400-3600 m (Ethiopia-Malawi), spreading crown 10-20 m, red flower panicles — Wikipedia / PROTA"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Mountain bamboo",
+    "genus": "Yushania",
+    "species": "alpina",
+    "shape": "bamboo",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "altitude_m": [
+     2000,
+     3400
+    ],
+    "height_m": [
+     6,
+     15
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#A8B860",
+    "source": "Yushania alpina, African alpine bamboo, Afromontane belt 2400-3300 m (Kenya, Uganda, Ethiopia, Rwanda), dense stands 6-15 m — Wikipedia / PROTA"
+   },
+   {
+    "name": "Andean chusquea",
+    "genus": "Chusquea",
+    "species": "scandens",
+    "shape": "bamboo",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     1500,
+     3500
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#C8C880",
+    "source": "Chusquea scandens, chusque, northern Andes cloud forest 1800-3500 m, scrambling clump bamboo 3-8 m — Kew POWO / Wikipedia"
+   },
+   {
+    "name": "Andean tree fern",
+    "genus": "Cyathea",
+    "species": "caracasana",
+    "shape": "tree_fern",
+    "temp_c": [
+     10,
+     19
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     800,
+     3000
+    ],
+    "height_m": [
+     4,
+     12
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#7A5A3A",
+    "source": "Cyathea caracasana, Andean tree fern, Central America to Bolivia cloud forest 1000-3000 m, trunk 4-12 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Andean miconia",
+    "genus": "Miconia",
+    "species": "theizans",
+    "shape": "shrub",
+    "temp_c": [
+     9,
+     19
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "altitude_m": [
+     800,
+     3000
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#8A5A6A",
+    "source": "Miconia theizans, melastome shrub, Neotropical montane forest 1000-3000 m, common gap coloniser 2-6 m — Kew POWO / Tropicos"
+   },
+   {
+    "name": "Fuchsia",
+    "genus": "Fuchsia",
+    "species": "boliviana",
+    "shape": "shrub",
+    "temp_c": [
+     10,
+     18
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     1000,
+     3000
+    ],
+    "height_m": [
+     2,
+     4
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#D83A5A",
+    "source": "Fuchsia boliviana, Bolivian fuchsia, Andes of Peru/Bolivia/Argentina cloud forest 1000-3000 m, 2-4 m, hanging red flowers — Wikipedia / Kew POWO"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Moss carpet",
+    "genus": "Thuidium",
+    "species": "delicatulum",
+    "shape": "moss",
+    "temp_c": [
+     6,
+     20
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#4E9A3C",
+    "accent": "#8A7A5A",
+    "source": "Thuidium delicatulum, delicate fern moss, cosmopolitan, forms dense carpets on cloud-forest floor and logs, 3-10 cm — Wikipedia / Tropicos"
+   },
+   {
+    "name": "Filmy fern",
+    "genus": "Hymenophyllum",
+    "species": "polyanthos",
+    "shape": "fern",
+    "temp_c": [
+     8,
+     20
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "color": "#4A9A3A",
+    "accent": "#3A5A38",
+    "source": "Hymenophyllum polyanthos, filmy fern, pantropical montane cloud forest, translucent one-cell-thick fronds 5-20 cm on rocks, logs and trunks — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Hard fern",
+    "genus": "Blechnum",
+    "species": "occidentale",
+    "shape": "fern",
+    "temp_c": [
+     10,
+     21
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#3E8F3A",
+    "accent": "#8A4A3A",
+    "source": "Blechnum occidentale, hammock fern, Neotropics lowland to montane forest, 30-60 cm fronds, red-tinged new growth — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Begonia",
+    "genus": "Begonia",
+    "species": "foliosa",
+    "shape": "cushion",
+    "temp_c": [
+     10,
+     19
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     1200,
+     3000
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#4A9A3A",
+    "accent": "#F0B8C8",
+    "source": "Begonia foliosa, fern-leaf begonia, northern Andes cloud forest 1500-3000 m, shaded banks, 20-60 cm, pink flowers — Kew POWO / Wikipedia"
+   },
+   {
+    "name": "Peperomia",
+    "genus": "Peperomia",
+    "species": "galioides",
+    "shape": "cushion",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "altitude_m": [
+     1000,
+     3500
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#C8D880",
+    "source": "Peperomia galioides, Andean peperomia, Mexico to Bolivia montane forest 1000-3500 m, succulent whorled leaves 10-40 cm — Kew POWO / Tropicos"
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Epiphytic moss and liverworts",
+    "genus": "Plagiochila",
+    "species": "bifaria",
+    "shape": "hanging_moss",
+    "temp_c": [
+     6,
+     20
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#4E9A3C",
+    "accent": "#6A8A4A",
+    "source": "Plagiochila bifaria, leafy liverwort, pantropical and oceanic cloud forests, hangs in dense mats from branches with mosses, 5-30 cm — Wikipedia / Tropicos"
+   },
+   {
+    "name": "Tank bromeliad",
+    "genus": "Guzmania",
+    "species": "monostachia",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     10,
+     21
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#4A9A3A",
+    "accent": "#E84A3A",
+    "source": "Guzmania monostachia, West Indian tufted airplant, Florida & Neotropics to Andes 0-2500 m, epiphytic water-tank rosette 30-60 cm, red-tipped spike — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Epidendrum orchid",
+    "genus": "Epidendrum",
+    "species": "secundum",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     8,
+     20
+    ],
+    "moisture": [
+     0.65,
+     1
+    ],
+    "altitude_m": [
+     800,
+     3400
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#3E8F3A",
+    "accent": "#E85A8A",
+    "source": "Epidendrum secundum, crucifix orchid, Andes and Central America 800-3400 m, epiphytic or on mossy banks, 30-100 cm, pink-orange flowers — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Beard lichen",
+    "genus": "Usnea",
+    "species": "barbata",
+    "shape": "hanging_moss",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#A8C890",
+    "accent": "#C8D8B0",
+    "source": "Usnea barbata, beard lichen, cosmopolitan in humid montane forest, pale grey-green tufts hanging from twigs 10-50 cm — Wikipedia"
+   }
+  ]
+ }
 }

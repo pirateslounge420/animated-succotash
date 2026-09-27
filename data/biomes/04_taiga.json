@@ -1,180 +1,397 @@
 {
-	"key": "TAIGA",
-	"name": "Taiga / coniferous forest",
-	"group": "Forest",
-	"size": "vast",
-	"status": "researched",
-	"kind": "land",
-	"notes": "Shrub and ground tiers researched (taiga understory sources per entry). The canopy entries (Spruce, Fir, Larch) and Bilberry are still placeholders.",
-	"climate": {
-		"temp_c": [-2, 8],
-		"moisture": [0.38, 1]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [
-			{
-				"name": "Spruce",
-				"genus": "Picea",
-				"species": "mariana",
-				"shape": "conifer",
-				"temp_c": [-5, 8],
-				"moisture": [0.4, 1],
-				"height_m": [15, 30],
-				"color": "#1f4c38",
-				"accent": "#5c422e",
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): taiga"
-			},
-			{
-				"name": "Fir",
-				"genus": "Abies",
-				"species": "balsamea",
-				"shape": "conifer",
-				"temp_c": [-3, 9],
-				"moisture": [0.5, 1],
-				"height_m": [15, 28],
-				"color": "#245742",
-				"accent": "#5c422e",
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): taiga"
-			},
-			{
-				"name": "Larch",
-				"genus": "Larix",
-				"species": "laricina",
-				"shape": "conifer",
-				"temp_c": [-9, 5],
-				"moisture": [0.35, 0.9],
-				"height_m": [10, 22],
-				"color": "#668040",
-				"accent": "#5c422e",
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): taiga"
-			}
-		],
-		"shrub": [
-			{
-				"name": "Bilberry",
-				"genus": "Vaccinium",
-				"species": "myrtillus",
-				"shape": "shrub",
-				"temp_c": [-6, 10],
-				"moisture": [0.45, 1],
-				"height_m": [0.2, 0.5],
-				"color": "#406638",
-				"accent": "#5c422e",
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): taiga"
-			},
-			{
-				"name": "Labrador tea",
-				"genus": "Rhododendron",
-				"species": "groenlandicum",
-				"shape": "shrub",
-				"temp_c": [-4, 8],
-				"moisture": [0.45, 1],
-				"height_m": [0.4, 1],
-				"color": "#4c664c",
-				"accent": "#5c422e",
-				"soil": "peat",
-				"density": 0.7,
-				"source": "Taiga understory (Britannica: taiga flora; What Plants Live In The Taiga)"
-			},
-			{
-				"name": "Dwarf birch",
-				"genus": "Betula",
-				"species": "nana",
-				"shape": "shrub",
-				"temp_c": [-6, 7],
-				"moisture": [0.4, 0.95],
-				"height_m": [0.5, 1.5],
-				"color": "#738059",
-				"accent": "#c9beac",
-				"density": 0.5,
-				"source": "Taiga understory (compagnie-des-sens.fr: Betula spp. as shrub in harsher zones)"
-			},
-			{
-				"name": "Taiga willow",
-				"genus": "Salix",
-				"species": "glauca",
-				"shape": "shrub",
-				"temp_c": [-5, 9],
-				"moisture": [0.5, 1],
-				"height_m": [0.6, 2],
-				"color": "#668059",
-				"accent": "#5c422e",
-				"needs": ["river_bank"],
-				"density": 0.4,
-				"source": "Taiga understory (Britannica taiga flora: willows near wetlands/riverbanks)"
-			},
-			{
-				"name": "Juniper",
-				"genus": "Juniperus",
-				"species": "communis",
-				"shape": "conifer",
-				"temp_c": [-3, 9],
-				"moisture": [0.3, 0.85],
-				"height_m": [0.5, 1.5],
-				"color": "#40593d",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.3,
-				"source": "Taiga understory (compagnie-des-sens.fr taiga flora)"
-			}
-		],
-		"ground": [
-			{
-				"name": "Reindeer lichen",
-				"genus": "Cladonia",
-				"species": "rangiferina",
-				"shape": "moss",
-				"temp_c": [-9, 6],
-				"moisture": [0.15, 0.7],
-				"height_m": [0.05, 0.12],
-				"color": "#a6ab8c",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 1.5,
-				"source": "Taiga floor (Britannica taiga flora; Cladonia rangiferina, primary winter forage lichen)"
-			},
-			{
-				"name": "Sphagnum moss",
-				"genus": "Sphagnum",
-				"species": "fuscum",
-				"shape": "moss",
-				"temp_c": [-8, 8],
-				"moisture": [0.6, 1],
-				"height_m": [0.08, 0.15],
-				"color": "#8c9166",
-				"accent": "#5c422e",
-				"soil": "peat",
-				"density": 1.4,
-				"source": "Taiga floor (Britannica taiga flora: peaty wetland accumulations)"
-			},
-			{
-				"name": "Lingonberry",
-				"genus": "Vaccinium",
-				"species": "vitis-idaea",
-				"shape": "shrub",
-				"temp_c": [-7, 8],
-				"moisture": [0.4, 0.9],
-				"height_m": [0.1, 0.25],
-				"color": "#4c664c",
-				"accent": "#a62626",
-				"density": 0.9,
-				"source": "Taiga understory (Britannica taiga flora: Vaccinium vitis-idaea, dominant ground species)"
-			},
-			{
-				"name": "Fireweed",
-				"genus": "Chamaenerion",
-				"species": "angustifolium",
-				"shape": "grass",
-				"temp_c": [-5, 12],
-				"moisture": [0.3, 0.85],
-				"height_m": [0.5, 1.2],
-				"color": "#668052",
-				"accent": "#cc4d99",
-				"density": 0.25,
-				"source": "Taiga (Britannica taiga flora: Epilobium angustifolium, rapid colonizer of burned ground)"
-			}
-		],
-		"epiphyte": []
-	}
+ "key": "TAIGA",
+ "name": "Taiga / coniferous forest",
+ "group": "Forest",
+ "size": "vast",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Boreal coniferous forest: spruce, fir, pine and larch canopy over feathermoss, lichen and ericaceous dwarf shrubs. Eurasian (Norway spruce, Scots pine, Siberian larch) and North American (black/white spruce, balsam fir, jack pine) variants included.",
+ "climate": {
+  "temp_c": [
+   -2,
+   8
+  ],
+  "moisture": [
+   0.38,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Spruce",
+    "genus": "Picea",
+    "species": "abies",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     20,
+     50
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#1F4A2A",
+    "accent": "#6A4A3A",
+    "source": "Picea abies (Norway spruce), Scandinavia to Urals, dominant boreal conifer 20-50 m, narrow conical crown"
+   },
+   {
+    "name": "Black spruce",
+    "genus": "Picea",
+    "species": "mariana",
+    "shape": "conifer",
+    "temp_c": [
+     -5,
+     5
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     5,
+     20
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "color": "#243F2A",
+    "accent": "#5A4A3A",
+    "source": "Picea mariana, Canada/Alaska boreal muskeg and uplands, narrow spire crown 5-20 m, dominant N American taiga tree"
+   },
+   {
+    "name": "Fir",
+    "genus": "Abies",
+    "species": "balsamea",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     6
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     12,
+     25
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#2A5A34",
+    "accent": "#7A7A6A",
+    "source": "Abies balsamea, eastern Canada/NE USA boreal forest, dense conical fir 12-25 m, smooth grey bark"
+   },
+   {
+    "name": "Larch",
+    "genus": "Larix",
+    "species": "sibirica",
+    "shape": "conifer",
+    "temp_c": [
+     -6,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "height_m": [
+     20,
+     45
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#8AC050",
+    "accent": "#7A5030",
+    "source": "Larix sibirica, western Siberia/Urals, deciduous conifer 20-45 m, golden in autumn; vast light taiga stands"
+   },
+   {
+    "name": "Scots pine",
+    "genus": "Pinus",
+    "species": "sylvestris",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.35,
+     0.7
+    ],
+    "height_m": [
+     15,
+     35
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "color": "#3A7A40",
+    "accent": "#C86A40",
+    "source": "Pinus sylvestris, Scotland to Siberia, dry sandy boreal sites, 15-35 m with orange upper bark and flat crown"
+   },
+   {
+    "name": "Paper birch",
+    "genus": "Betula",
+    "species": "papyrifera",
+    "shape": "broadleaf",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     15,
+     25
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#F0EEE6",
+    "source": "Betula papyrifera, Canada/Alaska boreal, pioneer after fire, white bark 15-25 m; Betula pendula fills the Eurasian role"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Dwarf birch",
+    "genus": "Betula",
+    "species": "nana",
+    "shape": "shrub",
+    "temp_c": [
+     -6,
+     4
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#3F8A3A",
+    "accent": "#7A4A2A",
+    "source": "Betula nana, boreal bogs and open taiga, 0.3-1.2 m"
+   },
+   {
+    "name": "Labrador tea",
+    "genus": "Rhododendron",
+    "species": "groenlandicum",
+    "shape": "shrub",
+    "temp_c": [
+     -6,
+     5
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "color": "#3A6A35",
+    "accent": "#F0F0E0",
+    "source": "Rhododendron groenlandicum, N American boreal bogs and black spruce forest, evergreen shrub 0.3-1 m with white flower clusters"
+   },
+   {
+    "name": "Taiga willow",
+    "genus": "Salix",
+    "species": "bebbiana",
+    "shape": "shrub",
+    "temp_c": [
+     -6,
+     8
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "color": "#6AA050",
+    "accent": "#8A7A5A",
+    "source": "Salix bebbiana, N American boreal wet margins and clearings, 2-6 m shrub willow"
+   },
+   {
+    "name": "Juniper",
+    "genus": "Juniperus",
+    "species": "communis",
+    "shape": "conifer",
+    "temp_c": [
+     -6,
+     8
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3A6A40",
+    "accent": "#4A4A6A",
+    "source": "Juniperus communis, circumboreal open pine forest and rocky ground, spreading evergreen shrub 0.5-3 m"
+   },
+   {
+    "name": "Bilberry",
+    "genus": "Vaccinium",
+    "species": "myrtillus",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#4A9A3A",
+    "accent": "#3A3A5A",
+    "source": "Vaccinium myrtillus, dominant field layer of Eurasian spruce/pine taiga, 20-60 cm deciduous dwarf shrub"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Lingonberry",
+    "genus": "Vaccinium",
+    "species": "vitis-idaea",
+    "shape": "shrub",
+    "temp_c": [
+     -6,
+     8
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "color": "#2F7A35",
+    "accent": "#C82A30",
+    "source": "Vaccinium vitis-idaea, circumboreal pine/spruce forest floor, evergreen mat 10-30 cm with red berries"
+   },
+   {
+    "name": "Reindeer lichen",
+    "genus": "Cladonia",
+    "species": "rangiferina",
+    "shape": "moss",
+    "temp_c": [
+     -8,
+     6
+    ],
+    "moisture": [
+     0.2,
+     0.6
+    ],
+    "height_m": [
+     0.05,
+     0.12
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "color": "#C8D8C0",
+    "accent": "#A8B8A0",
+    "source": "Cladonia rangiferina, dominant ground cover of dry lichen pine woodland across boreal zone"
+   },
+   {
+    "name": "Rusty bog-moss",
+    "genus": "Sphagnum",
+    "species": "fuscum",
+    "shape": "moss",
+    "temp_c": [
+     -8,
+     6
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "color": "#8A9A30",
+    "accent": "#A05A30",
+    "source": "Sphagnum fuscum, hummock peat moss of boreal bogs and black-spruce muskeg"
+   },
+   {
+    "name": "Feather moss",
+    "genus": "Pleurozium",
+    "species": "schreberi",
+    "shape": "moss",
+    "temp_c": [
+     -6,
+     8
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#5A9A35",
+    "accent": "#B04030",
+    "source": "Pleurozium schreberi (red-stemmed feathermoss), dominant carpet moss of closed spruce/pine taiga worldwide"
+   },
+   {
+    "name": "Fireweed",
+    "genus": "Chamaenerion",
+    "species": "angustifolium",
+    "shape": "grass",
+    "temp_c": [
+     -4,
+     10
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "color": "#4A9A40",
+    "accent": "#D8409A",
+    "source": "Chamaenerion angustifolium, circumboreal burns and clearings, magenta flower spikes 0.5-2 m"
+   }
+  ],
+  "epiphyte": []
+ }
 }

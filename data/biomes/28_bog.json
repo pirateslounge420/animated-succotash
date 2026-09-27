@@ -1,50 +1,331 @@
 {
-	"key": "BOG",
-	"name": "Bog",
-	"group": "Wetlands",
-	"size": "small",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [-7, 5],
-		"moisture": [0.66, 1]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [
-			{
-				"name": "Bog pine",
-				"genus": "Pinus",
-				"species": "sylvestris",
-				"shape": "conifer",
-				"temp_c": [-4, 10],
-				"moisture": [0.68, 1],
-				"height_m": [2, 6],
-				"color": "#2e573d",
-				"accent": "#5c422e",
-				"soil": "peat",
-				"density": 0.5,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): bog"
-			}
-		],
-		"shrub": [],
-		"ground": [
-			{
-				"name": "Cottongrass",
-				"genus": "Eriophorum",
-				"species": "vaginatum",
-				"shape": "grass",
-				"temp_c": [-9, 9],
-				"moisture": [0.62, 1],
-				"height_m": [0.2, 0.5],
-				"color": "#808c4c",
-				"accent": "#f7f7f2",
-				"soil": "peat",
-				"density": 1.2,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): bog, fen"
-			}
-		],
-		"epiphyte": []
-	}
+ "key": "BOG",
+ "name": "Bog",
+ "group": "Wetlands",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Ombrotrophic raised/blanket bog: rain-fed acid peat, Sphagnum carpets, cottongrass, heath dwarf shrubs, carnivorous sundews, stunted bog pines. Drawn on Scandinavia/British Isles/Baltic and Canadian muskeg.",
+ "climate": {
+  "temp_c": [
+   -7,
+   5
+  ],
+  "moisture": [
+   0.66,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Bog pine",
+    "genus": "Pinus",
+    "species": "sylvestris",
+    "shape": "conifer",
+    "temp_c": [
+     -4,
+     6
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     1,
+     8
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#3A7A40",
+    "accent": "#C86A40",
+    "source": "Pinus sylvestris, stunted bog form on Eurasian raised bogs 1-8 m, sparse crown; Pinus mugo subsp. rotundata on Alpine bogs"
+   },
+   {
+    "name": "Black spruce",
+    "genus": "Picea",
+    "species": "mariana",
+    "shape": "conifer",
+    "temp_c": [
+     -7,
+     4
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     2,
+     10
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#243F2A",
+    "accent": "#5A4A3A",
+    "source": "Picea mariana, dominant stunted tree of N American bog/muskeg 2-10 m, narrow spire"
+   },
+   {
+    "name": "Tamarack",
+    "genus": "Larix",
+    "species": "laricina",
+    "shape": "conifer",
+    "temp_c": [
+     -7,
+     5
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     3,
+     15
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#8AC050",
+    "accent": "#7A5030",
+    "source": "Larix laricina, Canada/NE USA bogs and fens, deciduous conifer 3-15 m turning gold"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Heather",
+    "genus": "Calluna",
+    "species": "vulgaris",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.6,
+     0.9
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "color": "#4A7A40",
+    "accent": "#C050A0",
+    "source": "Calluna vulgaris, dominant on British/Scandinavian blanket bog hummocks, evergreen 20-60 cm, purple flowers"
+   },
+   {
+    "name": "Bog rosemary",
+    "genus": "Andromeda",
+    "species": "polifolia",
+    "shape": "shrub",
+    "temp_c": [
+     -7,
+     5
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#4A8A6A",
+    "accent": "#E090B0",
+    "source": "Andromeda polifolia, circumboreal bogs, low evergreen shrub 10-40 cm with pink bell flowers"
+   },
+   {
+    "name": "Bog myrtle",
+    "genus": "Myrica",
+    "species": "gale",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#4A8A40",
+    "accent": "#7A5A3A",
+    "source": "Myrica gale, N Europe and N America bog margins and wet heath, aromatic deciduous shrub 0.5-2 m"
+   },
+   {
+    "name": "Leatherleaf",
+    "genus": "Chamaedaphne",
+    "species": "calyculata",
+    "shape": "shrub",
+    "temp_c": [
+     -7,
+     5
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1.2
+    ],
+    "density": 0.7,
+    "soil": "peat",
+    "color": "#3F7A3A",
+    "accent": "#F0F0E0",
+    "source": "Chamaedaphne calyculata, dominant shrub of N American bog mats, circumboreal, evergreen 0.3-1.2 m"
+   },
+   {
+    "name": "Cranberry",
+    "genus": "Vaccinium",
+    "species": "oxycoccos",
+    "shape": "shrub",
+    "temp_c": [
+     -7,
+     6
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "color": "#2F6A35",
+    "accent": "#C02030",
+    "source": "Vaccinium oxycoccos, circumboreal Sphagnum bogs, creeping vine on moss carpets with red berries"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Sphagnum moss",
+    "genus": "Sphagnum",
+    "species": "magellanicum",
+    "shape": "moss",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#B04A40",
+    "accent": "#8A6030",
+    "source": "Sphagnum magellanicum, circumboreal and S American raised bogs, red hummock-forming peat moss"
+   },
+   {
+    "name": "Cottongrass",
+    "genus": "Eriophorum",
+    "species": "vaginatum",
+    "shape": "tussock",
+    "temp_c": [
+     -7,
+     6
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.9,
+    "soil": "peat",
+    "color": "#7AA850",
+    "accent": "#F4F2E8",
+    "source": "Eriophorum vaginatum (hare's-tail cottongrass), circumboreal bog tussock former, single white cotton head 20-60 cm"
+   },
+   {
+    "name": "Round-leaved sundew",
+    "genus": "Drosera",
+    "species": "rotundifolia",
+    "shape": "rosette",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.06
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#C03030",
+    "accent": "#F06060",
+    "source": "Drosera rotundifolia, circumboreal Sphagnum bogs, carnivorous red rosette 2-6 cm"
+   },
+   {
+    "name": "Deergrass",
+    "genus": "Trichophorum",
+    "species": "cespitosum",
+    "shape": "tussock",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "color": "#8AA848",
+    "accent": "#C8A050",
+    "source": "Trichophorum cespitosum, blanket bogs of British Isles/Scandinavia/N America, wiry tussock 10-40 cm"
+   },
+   {
+    "name": "Pitcher plant",
+    "genus": "Sarracenia",
+    "species": "purpurea",
+    "shape": "rosette",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "peat",
+    "color": "#7A9A40",
+    "accent": "#B03040",
+    "source": "Sarracenia purpurea, N American bogs Canada to Florida, purple-veined pitcher rosette 10-30 cm"
+   }
+  ],
+  "epiphyte": []
+ }
 }

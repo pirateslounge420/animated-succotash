@@ -1,20 +1,444 @@
 {
-	"key": "CANYON",
-	"name": "Canyon",
-	"group": "Special",
-	"size": "small",
-	"status": "empty",
-	"kind": "land",
-	"notes": "No plants yet. Add some below (see data/biomes/README.md).",
-	"climate": {
-		"temp_c": [0, 30],
-		"moisture": [0.05, 0.35]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [],
-		"ground": [],
-		"epiphyte": []
-	}
+ "key": "CANYON",
+ "name": "Canyon",
+ "group": "Special",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Pinyon-juniper and scrub on rocky rims and slopes, cottonwood and willow galleries along the canyon floor stream, ferns at seeps; Colorado Plateau canyons (Grand Canyon, Zion) with Copper Canyon and Fish River Canyon analogues.",
+ "climate": {
+  "temp_c": [
+   0,
+   30
+  ],
+  "moisture": [
+   0.05,
+   0.35
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Fremont cottonwood",
+    "genus": "Populus",
+    "species": "fremontii",
+    "shape": "broadleaf",
+    "temp_c": [
+     10,
+     24
+    ],
+    "moisture": [
+     0.35,
+     0.9
+    ],
+    "height_m": [
+     12,
+     30
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB040",
+    "accent": "#A09070",
+    "source": "Populus fremontii, SW USA canyon streams, 12-30 m, bright green — USDA PLANTS"
+   },
+   {
+    "name": "Two-needle pinyon",
+    "genus": "Pinus",
+    "species": "edulis",
+    "shape": "conifer",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.18,
+     0.4
+    ],
+    "altitude_m": [
+     1400,
+     2700
+    ],
+    "height_m": [
+     5,
+     12
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#3A6A3A",
+    "accent": "#7A6050",
+    "source": "Pinus edulis, Colorado Plateau canyon rims and slopes, 5-12 m — USDA PLANTS"
+   },
+   {
+    "name": "Utah juniper",
+    "genus": "Juniperus",
+    "species": "osteosperma",
+    "shape": "conifer",
+    "temp_c": [
+     6,
+     17
+    ],
+    "moisture": [
+     0.12,
+     0.35
+    ],
+    "altitude_m": [
+     900,
+     2600
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#4A7040",
+    "accent": "#8A6A50",
+    "source": "Juniperus osteosperma, canyon rims and slopes of the Colorado Plateau, 3-8 m — USDA PLANTS"
+   },
+   {
+    "name": "Gambel oak",
+    "genus": "Quercus",
+    "species": "gambelii",
+    "shape": "broadleaf",
+    "temp_c": [
+     6,
+     15
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     1200,
+     2800
+    ],
+    "height_m": [
+     5,
+     15
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3F8C38",
+    "accent": "#7A6A55",
+    "source": "Quercus gambelii, side canyons and north slopes of the SW USA, clonal deciduous oak 5-15 m — USDA PLANTS"
+   },
+   {
+    "name": "Netleaf hackberry",
+    "genus": "Celtis",
+    "species": "reticulata",
+    "shape": "gnarled",
+    "temp_c": [
+     10,
+     22
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "height_m": [
+     5,
+     12
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#3F8C38",
+    "accent": "#8A7A65",
+    "source": "Celtis reticulata, canyon bottoms and rocky slopes, SW USA and N Mexico, 5-12 m — USDA PLANTS"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Coyote willow",
+    "genus": "Salix",
+    "species": "exigua",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     22
+    ],
+    "moisture": [
+     0.5,
+     1
+    ],
+    "height_m": [
+     2,
+     5
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#8FB070",
+    "accent": "#A08060",
+    "source": "Salix exigua, sandbars and stream edges of western N American canyons, narrow-leaved thicket 2-5 m — USDA PLANTS"
+   },
+   {
+    "name": "Cliffrose",
+    "genus": "Purshia",
+    "species": "stansburiana",
+    "shape": "gnarled",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.12,
+     0.35
+    ],
+    "height_m": [
+     1,
+     4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#6A8A60",
+    "accent": "#F0E8B0",
+    "source": "Purshia stansburiana, cliffs and rocky slopes of the Colorado Plateau, gnarled shrub 1-4 m, cream flowers — USDA PLANTS"
+   },
+   {
+    "name": "Green Mormon tea",
+    "genus": "Ephedra",
+    "species": "viridis",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.1,
+     0.3
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#5A9A50",
+    "accent": "#9A9070",
+    "source": "Ephedra viridis, canyon slopes and rims of the SW USA, jointed green shrub 0.5-1.5 m — USDA PLANTS"
+   },
+   {
+    "name": "Big sagebrush",
+    "genus": "Artemisia",
+    "species": "tridentata",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     17
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "height_m": [
+     0.6,
+     2.5
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#9AA890",
+    "accent": "#B8A878",
+    "source": "Artemisia tridentata, canyon benches and rims, 0.6-2.5 m — USDA PLANTS"
+   },
+   {
+    "name": "Blackbrush",
+    "genus": "Coleogyne",
+    "species": "ramosissima",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.08,
+     0.25
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#6A7A60",
+    "accent": "#3A3A38",
+    "source": "Coleogyne ramosissima, dark low shrub of canyon terraces and lower slopes, 0.3-1.5 m — USDA PLANTS"
+   },
+   {
+    "name": "Prickly pear",
+    "genus": "Opuntia",
+    "species": "engelmannii",
+    "shape": "cactus",
+    "temp_c": [
+     10,
+     24
+    ],
+    "moisture": [
+     0.05,
+     0.3
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#6A9A50",
+    "accent": "#E0C040",
+    "source": "Opuntia engelmannii, lower canyon slopes of the SW USA, 0.5-2 m — USDA PLANTS"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Indian ricegrass",
+    "genus": "Achnatherum",
+    "species": "hymenoides",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     18
+    ],
+    "moisture": [
+     0.08,
+     0.3
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#C8B060",
+    "accent": "#E8DCB0",
+    "source": "Achnatherum hymenoides, sandy canyon benches, 30-60 cm — USDA PLANTS"
+   },
+   {
+    "name": "Galleta grass",
+    "genus": "Pleuraphis",
+    "species": "jamesii",
+    "shape": "grass",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.08,
+     0.3
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#9AA870",
+    "accent": "#C8B060",
+    "source": "Pleuraphis jamesii, canyon flats and rims of the Colorado Plateau, 20-50 cm — USDA PLANTS"
+   },
+   {
+    "name": "Sand dropseed",
+    "genus": "Sporobolus",
+    "species": "cryptandrus",
+    "shape": "tussock",
+    "temp_c": [
+     4,
+     22
+    ],
+    "moisture": [
+     0.1,
+     0.35
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#9AB070",
+    "accent": "#C8B060",
+    "source": "Sporobolus cryptandrus, sandy canyon floors and washes, 30-100 cm — USDA PLANTS"
+   },
+   {
+    "name": "Maidenhair fern",
+    "genus": "Adiantum",
+    "species": "capillus-veneris",
+    "shape": "fern",
+    "temp_c": [
+     8,
+     26
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB040",
+    "accent": "#2A2A2A",
+    "source": "Adiantum capillus-veneris, dripping seeps and hanging gardens on canyon walls, 20-50 cm — USDA PLANTS"
+   },
+   {
+    "name": "Desert globemallow",
+    "genus": "Sphaeralcea",
+    "species": "ambigua",
+    "shape": "grass",
+    "temp_c": [
+     10,
+     24
+    ],
+    "moisture": [
+     0.05,
+     0.3
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#8FA08A",
+    "accent": "#E86A40",
+    "source": "Sphaeralcea ambigua, rocky canyon slopes of the SW USA, orange-flowered forb 30-100 cm — USDA PLANTS"
+   },
+   {
+    "name": "Scarlet monkeyflower",
+    "genus": "Erythranthe",
+    "species": "cardinalis",
+    "shape": "grass",
+    "temp_c": [
+     8,
+     22
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.2,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB040",
+    "accent": "#E03030",
+    "source": "Erythranthe cardinalis, streamsides and seeps in SW USA canyons, red-flowered herb 30-80 cm — USDA PLANTS"
+   }
+  ],
+  "epiphyte": []
+ }
 }
