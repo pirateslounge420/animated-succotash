@@ -18,6 +18,7 @@
 				"genus": "Vachellia",
 				"species": "tortilis",
 				"shape": "umbrella",
+				"leaf_density": 0.5,
 				"temp_c": [20, 33],
 				"moisture": [0.2, 0.56],
 				"height_m": [5, 10],

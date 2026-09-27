@@ -13,6 +13,11 @@
 // and snow are pulled toward their targets by day and cooled toward their
 // night targets as night falls.
 //
+// Under trees (vertex alpha: 1 - how much canopy is overhead, baked by
+// TerrainChunk.bake_canopy_shade) the ground is in dappled shade: patches
+// of shadow with sun flecks between them, the light coming through the
+// gaps between the leaf clusters, a meter or two across; faint by night.
+//
 // Near magical sites, patches of moss glow at night.
 shader_type spatial;
 render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
@@ -91,6 +96,15 @@ void fragment() {
 	c = pal_pull(c, pal_bark_night, 0.6 * nk * dirt_w);
 	c = pal_pull(c, pal_stone_night, 0.75 * nk * rocky);
 	ALBEDO = c * t * 2.0 * (1.0 + dapple * 0.35);
+	// Dappled canopy shade: shadow, broken by sun flecks.
+	float canopy = 1.0 - COLOR.a;
+	if (canopy > 0.002) {
+		float fn = texture(look_grain_soft, UV * 0.37 + vec2(0.13, 0.71)).r * 0.65
+			+ texture(look_grain_soft, UV * 0.9 + vec2(0.52, 0.27)).r * 0.35;
+		float fleck = smoothstep(0.54, 0.6, fn);
+		float sun = 1.0 - 0.75 * nk;
+		ALBEDO *= mix(1.0, mix(0.66, 0.66 + 0.5 * sun, fleck), canopy);
+	}
 	ROUGHNESS = 1.0;
 	// Glowing moss creeps over the ground at magical places, in patches a
 	// few meters across.

@@ -9,8 +9,16 @@
 // Textured (Look, painted, linear-filtered): bark streaks on trunks,
 // a leafy surface on crowns, and alpha-cutout leaf-cluster cards around
 // the crowns so silhouettes are ragged and dappled instead of round. The material
-// comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine, 4 bamboo culm);
-// card UVs are in UV.
+// comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine, 4 bamboo culm,
+// 5 a branchy tree's leaf-cluster card); card UVs are in UV.
+//
+// Branchy trees' leaf clusters (PlantMeshes.leaf_clusters) thin and shrink
+// per tree: the MultiMesh custom data's alpha is how bare the tree is (0
+// full leaf; PlantMeshes.leaf_amount(): growth and a dry site), times
+// `leaf_season` (1 until seasons exist). A cluster whose key (CUSTOM0.w)
+// is above the leaf amount is hidden; the rest scale about their center
+// (CUSTOM0.xyz), smaller on a sparse tree. Their cut-out edges are broken
+// up with noise so no two read alike.
 //
 // Wet places (per plant, from the MultiMesh's custom data: r = moss,
 // g = vines): moss creeps over the bark, thickest low down and on upward
@@ -33,6 +41,9 @@ render_mode world_vertex_coords, cull_disabled, vertex_lighting, diffuse_lambert
 #include "res://shaders/palette.gdshaderinc"
 
 uniform vec3 wind_vector = vec3(0.0);
+// Leaf left on the trees for the season, 0-1 (Phase 5 sets it; 1 = full).
+uniform float leaf_season = 1.0;
+uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_bark : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_leaves : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_leaf_card : filter_linear_mipmap, repeat_enable;
@@ -44,6 +55,7 @@ varying vec3 obj_pos; // meters, in the plant's own frame
 varying vec3 obj_normal;
 varying float mat_id;
 varying float moss;
+varying float cluster_key;
 
 void vertex() {
 	// Texture space: the plant's own frame (so textures ride with it),
@@ -54,6 +66,13 @@ void vertex() {
 	obj_normal = normalize((inv * vec4(NORMAL, 0.0)).xyz);
 	mat_id = UV2.x;
 	moss = INSTANCE_CUSTOM.r;
+	cluster_key = CUSTOM0.w;
+	float leaf = (1.0 - INSTANCE_CUSTOM.a) * leaf_season;
+	if (mat_id > 4.5) {
+		// A leaf cluster, smaller on a sparse tree.
+		vec3 c = (MODEL_MATRIX * vec4(CUSTOM0.xyz, 1.0)).xyz;
+		VERTEX = c + (VERTEX - c) * mix(0.6, 1.0, smoothstep(0.1, 0.8, leaf));
+	}
 	float sway = COLOR.a;
 	float speed = length(wind_vector);
 	vec3 dir = speed > 0.01 ? wind_vector / speed : vec3(0.0);
@@ -78,12 +97,23 @@ void vertex() {
 	if (mat_id > 2.5 && mat_id < 3.5 && UV2.y >= INSTANCE_CUSTOM.g) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
+	// So do the leaf clusters this tree has shed.
+	if (mat_id > 4.5 && CUSTOM0.w >= leaf) {
+		VERTEX = MODEL_MATRIX[3].xyz;
+	}
 }
 
 void fragment() {
 	vec3 an = abs(obj_normal);
 	vec4 tex;
-	if (mat_id > 3.5) {
+	if (mat_id > 4.5) {
+		// Leaf-cluster card: the ragged leaf cluster, its cut-out edge
+		// pushed in and out by noise (per cluster), so the clusters are
+		// noisy and each one different.
+		tex = texture(look_tex_leaf_card, UV);
+		float nz = texture(look_grain_soft, UV * 0.9 + vec2(cluster_key * 7.31, cluster_key * 3.17)).r;
+		tex.a *= 0.7 + 0.6 * nz;
+	} else if (mat_id > 3.5) {
 		// Bamboo culm: smooth, faintly streaked, ringed with a node every
 		// ~35 cm (a dark ridge with a pale band under it).
 		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
@@ -122,11 +152,11 @@ void fragment() {
 		vec3 moss_col = pal_pull(pal_moss, pal_grass_night, 0.7 * nk) * texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3).rgb * 2.0;
 		ALBEDO = mix(ALBEDO, moss_col, m * moss);
 	}
-	ALPHA = (mat_id > 1.5 && mat_id < 2.5) ? tex.a : 1.0;
+	ALPHA = ((mat_id > 1.5 && mat_id < 2.5) || mat_id > 4.5) ? tex.a : 1.0;
 	ALPHA_SCISSOR_THRESHOLD = 0.5;
 	// Leaves are translucent: light shining through from behind lights
 	// them too, so crowns seen from below stay green instead of black.
-	float leafy = step(0.5, mat_id) * step(mat_id, 3.5);
+	float leafy = max(step(0.5, mat_id) * step(mat_id, 3.5), step(4.5, mat_id));
 	BACKLIGHT = ALBEDO * 0.6 * leafy;
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;

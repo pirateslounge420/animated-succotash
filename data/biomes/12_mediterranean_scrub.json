@@ -18,6 +18,7 @@
 				"genus": "Quercus",
 				"species": "ilex",
 				"shape": "gnarled",
+				"leaf_density": 0.85,
 				"temp_c": [11, 21],
 				"moisture": [0.26, 0.56],
 				"height_m": [6, 12],

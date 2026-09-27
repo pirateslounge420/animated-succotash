@@ -60,7 +60,7 @@ const CLUMP_M := 60.0
 const EPIPHYTE_RATE := 0.9
 
 ## Instance record layout in the per-species PackedFloat32Array.
-const STRIDE := 10 # dir.xyz, radius, yaw, lean_x, lean_z, height, moss, vines
+const STRIDE := 11 # dir.xyz, radius, yaw, lean_x, lean_z, height, moss, vines, bare
 const MM_STRIDE := 20 # MultiMesh buffer floats per instance: 3x4 transform, color, custom
 
 ## Built once on the main thread (warm()) and only read by the chunk
@@ -187,20 +187,26 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 			# per plant; the foliage shader shows them).
 			var moss := smoothstep(0.45, 0.85, site.m)
 			var vines := smoothstep(0.62, 0.92, site.m) * smoothstep(4.0, 16.0, site.t)
-			_emit(out, sp_idx, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, height, 0.09, moss, vines)
+			# How much leaf a tree carries (its growth, how dry its site is):
+			# the foliage shader thins its leaf clusters by it.
+			var leaf := 1.0
 			if tier == T.EMERGENT or tier == T.CANOPY:
-				hosts.append([site.dir, PlanetConst.RADIUS_M + site.h, height, sp_idx, site.depth])
+				var growth := PlantMeshes.stand_in_growth(sp, height / float(SIZE_SCALE[tier]))
+				leaf = PlantMeshes.leaf_amount(growth, site.m)
+			_emit(out, sp_idx, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, height, 0.09, moss, vines, 1.0 - leaf)
+			if tier == T.EMERGENT or tier == T.CANOPY:
+				hosts.append([site.dir, PlanetConst.RADIUS_M + site.h, height, sp_idx, site.depth, leaf])
 				if tier == T.EMERGENT:
 					ctx.add_emergent(site.dir)
 
 
 static func _emit(out: Dictionary, sp_idx: int, d: Vector3, radius: float, rng: RandomNumberGenerator, height: float,
-		lean_max := 0.09, moss := 0.0, vines := 0.0) -> void:
+		lean_max := 0.09, moss := 0.0, vines := 0.0, bare := 0.0) -> void:
 	if not out.has(sp_idx):
 		out[sp_idx] = PackedFloat32Array()
 	var arr: PackedFloat32Array = out[sp_idx]
 	arr.append_array([d.x, d.y, d.z, radius, rng.randf() * TAU,
-		rng.randf_range(-lean_max, lean_max), rng.randf_range(-lean_max, lean_max), height, moss, vines])
+		rng.randf_range(-lean_max, lean_max), rng.randf_range(-lean_max, lean_max), height, moss, vines, bare])
 	out[sp_idx] = arr
 
 
@@ -300,7 +306,7 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts 
 			basis = basis.rotated(basis.x, arr[o + 5]).rotated(basis.z, arr[o + 6])
 			var rot := basis
 			basis = basis.scaled(Vector3.ONE * arr[o + 7])
-			_put(buf, i * MM_STRIDE, basis, pos, arr[o + 8], arr[o + 9])
+			_put(buf, i * MM_STRIDE, basis, pos, arr[o + 8], arr[o + 9], arr[o + 10])
 			if tall:
 				var pick := TreeLayouts.pick(world_seed, key, d) if branchy else -1
 				trees.append([pos, arr[o + 7], i, pick, -1, rot, ords[i] if i < ords.size() else -1])
@@ -324,7 +330,7 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts 
 					var mirror := -h if TreeLayouts.is_mirrored(t[3]) else h
 					var o: int = int(t[2]) * STRIDE
 					_put(lbuf, int(t[4]) * MM_STRIDE, (t[5] as Basis) * Basis.from_scale(Vector3(mirror, h, h)), t[0],
-						arr[o + 8], arr[o + 9])
+						arr[o + 8], arr[o + 9], arr[o + 10])
 				layouts[l] = [lbuf, counts[l]]
 		out[sp_idx] = [buf, count, trees, layouts]
 	return out
@@ -332,8 +338,8 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts 
 
 ## One instance into a MultiMesh buffer at float `k`: the transform as the
 ## rows of its 3x4 matrix, then color (white), then custom data (moss,
-## vines, 0, 0): Godot's MultiMesh layout.
-static func _put(buf: PackedFloat32Array, k: int, basis: Basis, pos: Vector3, moss: float, vines: float) -> void:
+## vines, rustle 0, bare): Godot's MultiMesh layout.
+static func _put(buf: PackedFloat32Array, k: int, basis: Basis, pos: Vector3, moss: float, vines: float, bare := 0.0) -> void:
 	buf[k] = basis.x.x
 	buf[k + 1] = basis.y.x
 	buf[k + 2] = basis.z.x
@@ -352,6 +358,7 @@ static func _put(buf: PackedFloat32Array, k: int, basis: Basis, pos: Vector3, mo
 	buf[k + 15] = 1.0
 	buf[k + 16] = moss
 	buf[k + 17] = vines
+	buf[k + 19] = bare
 
 
 ## Main thread: one MultiMeshInstance3D per species under `parent`, from
@@ -411,7 +418,7 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 static func _multimesh(mesh: Mesh, buf: PackedFloat32Array, count: int) -> MultiMesh:
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
-	mm.use_custom_data = true # (moss, vines, 0, 0)
+	mm.use_custom_data = true # (moss, vines, rustle, bare)
 	# Instance colors (all white) too: without them the compatibility
 	# renderer garbles vertex colors when custom data is on.
 	mm.use_colors = true

@@ -19,6 +19,7 @@
 				"species": "caducum",
 				"invented": true,
 				"shape": "broadleaf",
+				"leaf_density": 0.55,
 				"temp_c": [20, 33],
 				"moisture": [0.4, 0.64],
 				"height_m": [8, 16],

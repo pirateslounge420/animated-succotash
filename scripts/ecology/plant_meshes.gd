@@ -9,10 +9,18 @@ class_name PlantMeshes
 ##
 ## Branchy canopy trees (TreeLayouts.branchy) are drawn from their layout's
 ## skeleton in the detail ring: a trunk forking into limbs and branches,
-## with leaf clumps at the branch ends. Wood you can hold (trunks, limbs,
-## branches, and the trunks of palms, conifers and mangroves) has a sway
-## weight of 0, so a handhold never drifts off it in the wind; leaves,
-## fronds and vines still sway.
+## and leaf clusters on the outer third of each limb and branch with open
+## air between them, not a solid crown, so from below you see the limbs,
+## sky through the gaps and whatever moves up there (leaf_clusters()).
+## Wood you can hold (trunks, limbs, branches, and the trunks of palms,
+## conifers and mangroves) has a sway weight of 0, so a handhold never
+## drifts off it in the wind; leaves, fronds and vines still sway.
+##
+## How leafy a crown is: the species' `leaf_density` sets how many clusters
+## its mesh carries; each tree's leaf amount (leaf_amount(): its growth and
+## how dry its site is, in the MultiMesh custom data) thins and shrinks
+## them in the foliage shader, and the shader's `leaf_season` will thin
+## them for winter once seasons exist.
 
 const S := PlantSpecies.Shape
 
@@ -47,6 +55,11 @@ const LOD_FAR := 2
 const CROWN_FREQ := [3, 2, 2]
 
 static var _ico := {}
+
+## Every plant mesh carries CUSTOM0 per vertex: for a leaf cluster's cards,
+## the cluster's center (unit frame) and its 0-1 thinning key; (0, 0, 0,
+## -1) elsewhere.
+const FORMAT := Mesh.ARRAY_CUSTOM_RGBA_FLOAT << Mesh.ARRAY_FORMAT_CUSTOM0_SHIFT
 
 
 ## Unit icosphere [vertices, triangle indices], subdivided `level` times,
@@ -195,7 +208,7 @@ static func mesh_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> ArrayMe
 	if _cache.has(key):
 		return _cache[key]
 	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays_for(sp, lod, layout))
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays_for(sp, lod, layout), [], {}, FORMAT)
 	_cache[key] = mesh
 	return mesh
 
@@ -251,6 +264,26 @@ static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> Array
 	return out
 
 
+## A tree's growth, 0-1 through its stages (spec Phase 6: sprout, sapling,
+## mature, old). Until Phase 6 gives plants real ages every generated tree
+## is mature or old, read off where its height sits in its species' range
+## (`height_m`, before the tier's size scale): 0.55 for the smallest, 1 for
+## the tallest.
+static func stand_in_growth(sp: PlantSpecies, height_m: float) -> float:
+	var t := inverse_lerp(sp.height_m.x, sp.height_m.y, height_m)
+	return lerpf(0.55, 1.0, clampf(t, 0.0, 1.0))
+
+
+## How much of its leaf clusters a tree shows, 0-1 (the foliage shader
+## hides the rest and shrinks what's left): few and small on a sprout, full
+## on a mature tree, thinning a little as it grows old; sparser on a dry
+## site (moisture 0-1), down to less than half in the driest bands.
+static func leaf_amount(growth: float, moisture: float) -> float:
+	var g := smoothstep(0.05, 0.5, growth) * (1.0 - 0.2 * smoothstep(0.85, 1.0, growth))
+	var dry := lerpf(0.4, 1.0, smoothstep(0.15, 0.6, moisture))
+	return clampf(g * dry, 0.0, 1.0)
+
+
 ## A branchy tree's layout (TreeLayouts) at the hero or near level: the
 ## same skeleton and the same random draws at both, so only the detail
 ## changes between them and the silhouette doesn't pop.
@@ -263,7 +296,7 @@ static func _build_layout(sp: PlantSpecies, idx: int, lod: int, layout: int) -> 
 	# Vines as the old crowns had them: beard lichen on cypress, lianas on
 	# the rest.
 	var vine_col := Color(0.5, 0.55, 0.42) if sp.shape == S.CYPRESS else sp.color.darkened(0.3)
-	b.skeleton(TreeLayouts.skeleton(idx, layout), sp.color, vine_col)
+	b.skeleton(TreeLayouts.skeleton(idx, layout), sp.color, vine_col, sp.leaf_density_of())
 	return b.commit_arrays()
 
 
@@ -405,7 +438,9 @@ class _Builder:
 	var n := PackedVector3Array()
 	var c := PackedColorArray()
 	var uv := PackedVector2Array() # card texture coordinates
-	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card)
+	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 3 vine, 4 culm, 5 cluster card)
+	## CUSTOM0, 4 floats a vertex: a cluster card's cluster center and key.
+	var cu := PackedFloat32Array()
 	var wood := Color.BLACK # this species' wood color: cylinders/cones in it are bark
 	var mat := 1.0
 	var rng := RandomNumberGenerator.new()
@@ -434,6 +469,7 @@ class _Builder:
 		var m := Vector2(mat, strand_key)
 		uv2.append_array([m, m, m])
 		parts.append_array([part, part, part])
+		cu.append_array([0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, -1.0])
 
 	## A leaf-cluster card (alpha cutout), square with half-size `s`, facing
 	## `facing`, spun randomly.
@@ -455,6 +491,7 @@ class _Builder:
 				uv.append(q[k])
 				uv2.append(Vector2(2.0, 0.0))
 				parts.append(-1)
+				cu.append_array([0.0, 0.0, 0.0, -1.0])
 
 	## Round parts get half as many sides again right around the player:
 	## smooth silhouettes up close, light meshes farther off.
@@ -602,12 +639,11 @@ class _Builder:
 
 	## A branchy tree from its layout's skeleton (TreeLayouts): the trunk
 	## (flared foot, capped top), the limbs (capped ends) and the branches
-	## as smooth bark tubes that don't sway, and a leaf clump at each branch
-	## end, the old crowns' lobe (noise-displaced, top-lit, with leaf cards)
-	## at a smaller size, that does. Faces buried in a neighboring clump are
-	## dropped. Near the player every ring of the skeleton is drawn;
-	## farther, every other one, so the main limbs keep their silhouette.
-	func skeleton(sk: TreeLayouts.Skeleton, col: Color, vine_col: Color) -> void:
+	## as smooth bark tubes that don't sway, and leaf clusters along the
+	## outer third of the limbs and branches (leaf_clusters()), that do.
+	## Near the player every ring of the skeleton is drawn; farther, every
+	## other one, so the main limbs keep their silhouette.
+	func skeleton(sk: TreeLayouts.Skeleton, col: Color, vine_col: Color, density: float) -> void:
 		if sk.buttress != Vector2.ZERO:
 			cone(Vector3.ZERO, sk.buttress.x, sk.buttress.y, 8, wood, 0.0, 0.0)
 		for pc in sk.pieces:
@@ -627,20 +663,139 @@ class _Builder:
 				_:
 					ring = 6 if hero else 5
 			wood_tube(pts, rad, ring, pc.kind != TreeLayouts.Kind.BRANCH)
-		var specs: Array = []
-		for c in sk.clumps:
-			var tone := col
-			if int(c[2]) == 1:
-				tone = col.lightened(0.08)
-			elif int(c[2]) == 2:
-				tone = col.darkened(0.06)
-			specs.append([c[0], c[1], tone])
-			hang_from.append([c[0], c[1]])
-		for i in specs.size():
-			var others: Array = specs.duplicate()
-			others.remove_at(i)
-			lobe(specs[i][0], specs[i][1], specs[i][2], sk.sway, freq, others, 3)
+		leaf_clusters(sk, col, density)
 		vines(sk.vines, vine_col)
+
+	## Leaf clusters on the outer third of every limb and branch: each a few
+	## crossed alpha-cutout cards (the leaf-card texture's ragged cluster of
+	## leaves; no per-leaf geometry), sitting on and a little above the wood,
+	## one side then the other like leaves along a twig, so the limb shows
+	## beneath them; at each branch tip a leafy species also fans out a
+	## twig or two, each ending in a cluster. Open air between clusters: none
+	## closer to another than the gap, wider on a sparse species. So from
+	## below the crown reads as limbs, twigs, leaves and sky, not a solid
+	## ball. A column crown (cypress) also gets them up the top of its
+	## leader. `density` (the species' leaf_density, 0-1) sets their size,
+	## how closely they follow along the wood, the gap and the twigs. Each
+	## cluster gets a 0-1 key, shuffled, so the shader can thin a tree
+	## evenly by hiding the clusters whose key is above its leaf amount.
+	func leaf_clusters(sk: TreeLayouts.Skeleton, col: Color, density: float) -> void:
+		var d := clampf(density, 0.05, 1.0)
+		var cr: Vector3 = sk.clump_r
+		var r := cr.x * lerpf(0.46, 0.6, d)
+		# Plate crowns (umbrella, emergent) grow flat clusters.
+		var flat := clampf(cr.y / cr.x * 1.4, 0.45, 1.0)
+		var step := r * lerpf(2.8, 1.25, d)
+		var gap := r * lerpf(2.6, 1.8, d)
+		var twigs := int(d * 2.5)
+		var column := sk.buttress != Vector2.ZERO
+		var centers: Array[Vector3] = []
+		var fits := func(at: Vector3) -> bool:
+			for o in centers:
+				if (o - at).length() < gap:
+					return false
+			return true
+		for pc in sk.pieces:
+			var wood_kind := pc.kind == TreeLayouts.Kind.LIMB or pc.kind == TreeLayouts.Kind.BRANCH
+			var leader := column and pc.kind == TreeLayouts.Kind.TRUNK
+			if not wood_kind and not leader:
+				continue
+			var total := pc.length()
+			var s0 := total * (0.85 if leader else 2.0 / 3.0)
+			# From the tip inward, so every piece ends in leaves.
+			var s := total
+			var flip := 1.0 if rng.randf() < 0.5 else -1.0
+			while s >= s0 - 1e-6:
+				var q := pc.at(s)
+				var p: Vector3 = q[0]
+				var axis: Vector3 = q[1]
+				var side := axis.cross(Vector3.UP)
+				side = side.normalized() if side.length() > 0.05 else Vector3.RIGHT
+				var tip := s >= total - 1e-6
+				# Up off the wood and out to one side (the tip's sits on it).
+				var off := (0.0 if tip else flip * r * rng.randf_range(0.9, 1.15)) + r * rng.randf_range(-0.2, 0.2)
+				var at := p + Vector3.UP * r * flat * rng.randf_range(0.35, 0.6) + side * off
+				if fits.call(at):
+					centers.append(at)
+				if tip and pc.kind == TreeLayouts.Kind.BRANCH:
+					for k in twigs:
+						# A twig out from the tip, forward and up, fanned.
+						var fan := rng.randf_range(0.6, 1.2) * (1.0 if k % 2 == 0 else -1.0)
+						var dir := (axis * 0.7 + side * fan * 0.7 + Vector3.UP * rng.randf_range(0.2, 0.5)).normalized()
+						var end := p + dir * r * rng.randf_range(1.7, 2.3)
+						var tc := end + Vector3.UP * r * flat * 0.3
+						if not fits.call(tc):
+							continue
+						var tr := maxf(float(q[2]) * 0.55, 0.002)
+						tube([[p, tr, sk.sway * 0.3], [p.lerp(end, 0.5) + Vector3.UP * r * 0.15, tr * 0.8, sk.sway * 0.5], [end, tr * 0.5, sk.sway * 0.7]], 4, wood)
+						centers.append(tc)
+				flip = -flip
+				s -= step
+		# Thinning keys: a shuffled even spread over 0-1.
+		var order: Array[int] = []
+		for i in centers.size():
+			order.append(i)
+		for i in range(order.size() - 1, 0, -1):
+			var j := rng.randi_range(0, i)
+			var t := order[i]
+			order[i] = order[j]
+			order[j] = t
+		for rank in order.size():
+			var i := order[rank]
+			var key := (rank + 0.5) / order.size()
+			var tone := col
+			match i % 3:
+				1:
+					tone = col.lightened(0.08)
+				2:
+					tone = col.darkened(0.08)
+			var size := r * rng.randf_range(0.85, 1.15)
+			cluster(centers[i], size, flat, tone, sk.sway, key)
+			hang_from.append([centers[i], Vector3(size, size * flat, size)])
+
+	## One leaf cluster: crossed alpha-cutout cards around `center`, one
+	## lying nearly flat (what you see from below), two upright at right
+	## angles, and near the player one more tilted between them, each
+	## nudged off the middle so the clump is lumpy, not a ball. Normals
+	## point out from the cluster's middle (and up a little), so it shades
+	## like a rounded clump, not flat cards. Material 5: the foliage shader
+	## hides it when `key` is above the tree's leaf amount, else scales it
+	## about its center by that amount.
+	func cluster(center: Vector3, r: float, flat: float, col: Color, sway: float, key: float) -> void:
+		var spin := rng.randf() * TAU
+		var facings: Array[Vector3] = [
+			Vector3(rng.randf_range(-0.25, 0.25), 1.0, rng.randf_range(-0.25, 0.25)),
+			Vector3(cos(spin), 0.15, sin(spin)),
+			Vector3(cos(spin + PI * 0.5), 0.15, sin(spin + PI * 0.5)),
+		]
+		if hero:
+			facings.append(Vector3(cos(spin + PI * 0.25), 0.8, sin(spin + PI * 0.25)))
+		for k in facings.size():
+			var f := facings[k].normalized()
+			var t1 := f.cross(Vector3.UP if absf(f.y) < 0.9 else Vector3.RIGHT).normalized()
+			var t2 := f.cross(t1)
+			var a := rng.randf() * TAU
+			var size := r * (1.15 if k == 0 else 1.0)
+			var a1 := (t1 * cos(a) + t2 * sin(a)) * size
+			var a2 := (-t1 * sin(a) + t2 * cos(a)) * size
+			var squash := Vector3(1.0, flat, 1.0)
+			var mid := center + Vector3(rng.randfn(), rng.randfn() * 0.5, rng.randfn()) * r * 0.22 * squash
+			var p := [mid + (-a1 - a2) * squash, mid + (a1 - a2) * squash, mid + (a1 + a2) * squash, mid + (-a1 + a2) * squash]
+			# Mirror the texture on some cards so neighbours don't repeat.
+			var q := [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
+			if rng.randf() < 0.5:
+				q = [Vector2(1, 0), Vector2(0, 0), Vector2(0, 1), Vector2(1, 1)]
+			for idx in [[0, 1, 2], [0, 2, 3]]:
+				for j in idx:
+					var pv: Vector3 = p[j]
+					var nrm := (pv - center + Vector3.UP * r * 0.6).normalized()
+					v.append(pv)
+					n.append(nrm)
+					c.append(Color(col * (0.88 + 0.12 * nrm.y), sway))
+					uv.append(q[j])
+					uv2.append(Vector2(5.0, 0.0))
+					parts.append(-1)
+					cu.append_array([center.x, center.y, center.z, key])
 
 	## Bark tube along a centerline (`pts`, radius `rad` at each point),
 	## `ring` sides, no sway. Each ring's orientation is carried along from
@@ -878,7 +1033,7 @@ class _Builder:
 
 	func commit() -> ArrayMesh:
 		var mesh := ArrayMesh.new()
-		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, commit_arrays())
+		mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, commit_arrays(), [], {}, PlantMeshes.FORMAT)
 		return mesh
 
 	func commit_arrays() -> Array:
@@ -898,6 +1053,7 @@ class _Builder:
 		arrays[Mesh.ARRAY_COLOR] = c
 		arrays[Mesh.ARRAY_TEX_UV] = uv
 		arrays[Mesh.ARRAY_TEX_UV2] = uv2
+		arrays[Mesh.ARRAY_CUSTOM0] = cu
 		return arrays
 
 	## Smooth shading: every vertex of a part gets the area-weighted mean

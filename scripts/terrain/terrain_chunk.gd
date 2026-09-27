@@ -429,8 +429,12 @@ static func _bake_hollow_ao(h: PackedFloat32Array, cols: PackedColorArray) -> vo
 			cols[i] = Color(c.r * k, c.g * k, c.b * k, c.a)
 
 
-## Baked canopy shade: ground under tree crowns is darkened (called after
-## the trees are placed, before the mesh is built). Worker-thread safe.
+## Baked canopy shade: ground under tree crowns is darkened a little, and
+## how much canopy is overhead (0-1, weighted by how leafy each tree is,
+## hosts' leaf amount) goes in the vertex color's alpha as 1 - canopy: the
+## terrain shader breaks that shade into sun flecks, light through the gaps
+## between the leaf clusters. Called after the trees are placed, before the
+## mesh is built. Worker-thread safe.
 static func bake_canopy_shade(data: Dictionary, hosts: Array) -> void:
 	var key: Vector3i = data.key
 	var cols: PackedColorArray = data.colors
@@ -443,16 +447,17 @@ static func bake_canopy_shade(data: Dictionary, hosts: Array) -> void:
 		var gx := (uv.x + 1.0) * 0.5 * CHUNKS_PER_FACE * QUADS - key.y * QUADS
 		var gy := (uv.y + 1.0) * 0.5 * CHUNKS_PER_FACE * QUADS - key.z * QUADS
 		var r: float = maxf(float(host[2]) * 0.3, 2.0) / quad_m # crown radius in quads
+		var leaf: float = float(host[5]) if host.size() > 5 else 1.0
 		for y in range(maxi(0, int(gy - r)), mini(n, int(gy + r) + 2)):
 			for x in range(maxi(0, int(gx - r)), mini(n, int(gx + r) + 2)):
 				var d := Vector2(x - gx, y - gy).length() / r
 				if d < 1.0:
-					shade[y * n + x] = maxf(shade[y * n + x], 1.0 - d * d)
+					shade[y * n + x] = maxf(shade[y * n + x], (1.0 - d * d) * leaf)
 	for i in n * n:
 		if shade[i] > 0.0:
-			var k := 1.0 - 0.3 * shade[i]
+			var k := 1.0 - 0.12 * shade[i]
 			var c := cols[i]
-			cols[i] = Color(c.r * k, c.g * k, c.b * k, c.a)
+			cols[i] = Color(c.r * k, c.g * k, c.b * k, 1.0 - shade[i])
 
 
 ## Bilinear blend of the four nearest blueprint cells' biome colors, so

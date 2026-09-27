@@ -43,6 +43,10 @@ var accent := Color(0.35, 0.25, 0.15) # trunk/stem/flower
 ## Water depth range (m) this species can root in, if STANDING_WATER.
 var water_depth_m := Vector2(0.05, 1.5)
 var source := "" # research note / citation from DESIGN.md
+## How leafy its crown is, 0-1 (`leaf_density` in the table; -1: the
+## shape's default, leaf_density_of()): how many leaf clusters a branchy
+## tree carries along its limbs (PlantMeshes).
+var leaf_density := -1.0
 
 
 ## Smooth band membership: 1 in the middle, easing to 0 at the edges.
@@ -78,3 +82,22 @@ func need_bits() -> int:
 ## Climate suitability at a site, before clumping and dominance.
 func suitability(temp: float, moist: float, altitude: float, rock: int) -> float:
 	return density * band(temp, temp_c) * band(moist, moisture) * band(altitude, altitude_m) * soil_factor(rock)
+
+
+## The crown's leafiness, 0-1: the table's `leaf_density`, else the shape's
+## default (dense beech-like broadleaves, open umbrella crowns).
+func leaf_density_of() -> float:
+	if leaf_density >= 0.0:
+		return leaf_density
+	match shape:
+		Shape.BROADLEAF:
+			return 0.8
+		Shape.GNARLED:
+			return 0.7
+		Shape.EMERGENT:
+			return 0.7
+		Shape.UMBRELLA:
+			return 0.6
+		Shape.CYPRESS:
+			return 0.85
+	return 0.75

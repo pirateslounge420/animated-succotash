@@ -30,6 +30,7 @@
 				"genus": "Fagus",
 				"species": "grandifolia",
 				"shape": "broadleaf",
+				"leaf_density": 0.9,
 				"temp_c": [5, 16],
 				"moisture": [0.55, 0.95],
 				"height_m": [20, 30],

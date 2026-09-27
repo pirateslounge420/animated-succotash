@@ -88,8 +88,13 @@ class Piece:
 ## A tree's wood and leaf clumps, unit frame.
 class Skeleton:
 	var pieces: Array[Piece] = []
-	## Leaf clumps: [center, radii, tone (0 the species color, 1 lighter, 2 darker)].
+	## Leaf clumps: [center, radii, tone (0 the species color, 1 lighter, 2 darker)]:
+	## where the crown's leaves gather (the branches grow into them;
+	## PlantMeshes hangs its leaf clusters along the limbs and branches).
 	var clumps: Array = []
+	## A clump's radii for this shape: PlantMeshes sizes the leaf clusters
+	## from it.
+	var clump_r := Vector3(0.12, 0.1, 0.12)
 	## How much the clumps sway (the old crown's value for the shape).
 	var sway := 0.8
 	## Hanging vine strands for the mesh.
@@ -219,6 +224,7 @@ static func _grow(sp: PlantSpecies, idx: int, layout: int, world_seed: int) -> S
 	var sk := Skeleton.new()
 	sk.sway = p.sway
 	sk.vines = p.vines
+	sk.clump_r = p.clump
 	var r0: float = p.r0
 	var fork := rng.randf_range(p.fork.x, p.fork.y)
 	var bend: float = p.bend * rng.randf_range(0.7, 1.3)

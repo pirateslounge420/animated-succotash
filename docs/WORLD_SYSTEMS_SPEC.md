@@ -203,7 +203,11 @@ plant                      { name, genus, species, invented?, stratum(canopy|und
                              moisture_min/max, soil_min, slope_max, sway_stiffness, seasonal_color,
                              lifespan_years, snag_years, log_years,
                              growth?, repro?, genes?, family?, aroid?, cannabis?, landrace?, landrace_id?, type?,
-                             cannot_be_browsed?, synonym?, display?, ceremonial? }
+                             cannot_be_browsed?, synonym?, display?, ceremonial?, leaf_density? }
+  leaf_density             0–1, how leafy a branchy tree's crown is: how many leaf clusters its limbs carry
+                             and how big (plant_meshes). Default by shape (broadleaf 0.8, gnarled and emergent
+                             0.7, umbrella 0.6, cypress 0.85); set today on beech 0.9, holm oak 0.85, dry-season
+                             deciduous 0.55, acacia 0.5, mesquite 0.45, paloverde 0.3
   cannot_be_browsed        true: browsers never eat it (cacti, thorn scrub); it spreads where browsers are heavy
   synonym                  the accepted Kew name when the game uses another (Trichocereus → Echinopsis)
   display                  the name shown in the game when `name` holds the binomial ("San Pedro cactus")
@@ -252,6 +256,7 @@ See Part C.
 - **Touches:** `player/*`, `core/controls`, `project.godot` input map, `creatures/sound_synth`, audio players, `plant_meshes`, `tree_contact`, `World.ripples`; for the D5 hitbox and sound audits also `terrain_chunk` (tree colliders), `vegetation_placer`, the foliage and water shaders, `ruin_builder`, `camps`, `campfire`, `encampment`, `creature`, `creature_spawner`, `creature_species`, `creatures.json`, `weather_fx`, `storm_fx`, `sky_events`.
 - Implement D5 in full: double-tap sprint, Shift sneak with reduced noise radius, hitbox audit on player/creatures/trees/ruins/projectiles, spear (thrust/throw/retrieve), all sounds 3D with attenuation.
 - **(i) Branch graph:** canopy trees get individual branch meshes instead of a leaf blob; each tree exposes a branch graph — handhold points plus which ones are reachable from which — generated deterministically from seed + tree position, NEAR only.
+  - **See-through crowns.** Leaves are clusters on the outer third of each limb and branch (noisy alpha-cutout cards per R1, no per-leaf geometry), with open air between them: from the ground you see the limbs, sky through the gaps and anything moving in them. Cluster count and size follow the species' `leaf_density` and, per tree, its growth and how dry its site is; the ground under a crown is dappled, shade broken by sun flecks. The far LOD keeps the solid crown.
 - **(ii) Climbing:** the player climbs trunks and shimmies along thick branches: slow, effortful, no swinging; extend `tree_contact`.
 - **(iii) Monkey:** a gibbon-type monkey rig that brachiates along the branch graph — arc-and-release with momentum, next handhold chosen by reach and swing arc; monkey-only; it goes in R3's warm–wet band.
 - **(iv) Ripple system, Night Rider, Pond Crawler** — the designer's spec, verbatim:
@@ -316,6 +321,7 @@ See Part C.
 ## Phase 5 — Seasons
 - **Touches:** `sky_system` (season clock), `weather_sim` (temp modulation, odds), foliage shader (`seasonal_color`).
 - 4 seasons with transition periods; season shifts the temperature field → weather odds → foliage color. Biomes stay fixed.
+- Winter thins the leaf clusters of deciduous trees: the foliage shader's `leaf_season` (1 today) multiplies each tree's leaf amount.
 - **Done when:** on the dev clock, the deciduous forest turns and snow reaches lower altitude in winter.
 
 ## Phase 6 — Soil & flora strata
@@ -330,6 +336,7 @@ See Part C.
 - **Lifecycle (NEAR):** each plant has an age from seed + position + world day for generated plants (nothing stored), and from the region delta for plants that germinated during play. States seedling → vegetative → bloom → fruit → dormant on the species' calendar, offset by a timing gene. Bloom and fruit are visible states with their own mesh part; dormant plants vanish or wither. Some species bloom before they leaf. Flowering may be triggered by day length (a `flower_trigger` gene read against the sky system's day length at that latitude) or by age.
   - **Growth stages:** every plant has a growth level. Each species' table gives a `growth` block: a list of stages with the days each lasts — default four for trees (sprout, sapling, mature, old) and three for herbs and shrubs (sprout, young, mature) — plus a `final_size` the size gene scales. Growth is a 0–1 value through the stages, so the mesh builder gets a continuous number, not a switch. (The yearly states above run inside the stages; a sprout is the seedling.)
   - **Stages change silhouette, not just scale.** `plant_meshes` takes growth as a parameter per shape: a sprout is a single thin stem with two or three leaves; a sapling is a narrow whip with a small crown; mature is the current full shape; old is wider, gnarled, with a broken limb or two and moss, and in trees it's the stage that carries the branch graph — only old trees are climbable and only old forest has the canopy world. Meshes are cached per species, stage and LOD, so the cost is memory, not per-frame work.
+    - Leaf clusters already read growth: `PlantMeshes.leaf_amount(growth, moisture)` thins and shrinks a tree's clusters. Until this phase, growth is a stand-in read off the tree's height within its species' range (every generated tree mature or old); swap in the real growth value here.
   - **What growth reads and writes.** Growth rate scales with soil fertility and climate suitability and pauses during dormancy, so the same species grows fast in a valley and slow on a ridge. Herbivores browse sprouts and saplings — a region with heavy grazing keeps its saplings from ever reaching maturity, which is how meadows stay open and old forests fail to replace themselves. Only mature plants yield: berries, fruit, fibre, seed, the aroid bloom, the cannabis harvest; only mature and old trees give real timber, and old trees pass into the snag lifecycle. Crops use the same block, so anything camp folk plant visibly grows day by day.
   - **Ledger side.** `flora.age_structure[region][species]` holds counts per stage, and biomass is the weighted sum, so a region knows whether its forest is young, mature or ancient. Warm start produces a real age mix — a new world has sprouts, saplings, giants and snags together, never a plantation of identical trees. Fire scars regrow through the stages; that is the succession the player sees.
   - ⚑ Notes:

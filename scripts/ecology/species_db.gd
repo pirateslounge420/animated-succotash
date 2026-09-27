@@ -174,6 +174,7 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	sp.color = Color.from_string(e.get("color", ""), d.color)
 	sp.accent = Color.from_string(e.get("accent", ""), Color(0.36, 0.26, 0.18))
 	sp.source = e.get("source", "")
+	sp.leaf_density = clampf(float(e.get("leaf_density", -1.0)), -1.0, 1.0)
 	by_name[p_name] = sp
 	_all.append(sp)
 

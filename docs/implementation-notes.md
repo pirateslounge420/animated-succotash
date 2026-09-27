@@ -485,7 +485,9 @@ Verified:
 - **Depth**, the era's way: nothing screen-space.
   - **Baked ambient occlusion** in vertex colors, which works in every
     renderer: terrain darkens in hollows and channels (up to 35%),
-    ground under tree crowns (30%), the base of every plant, and the
+    ground under tree crowns (12%, plus dappled shade in the terrain
+    shader: patches of shadow broken by sun flecks, as deep as the crowns
+    overhead are leafy), the base of every plant, and the
     lowest courses of ruin walls. No SSAO, SSIL, SSR or SDFGI.
   - **Blob shadows** under characters (above); no shadow maps.
   - **No rim light and no glow:** the Environment's glow is off, so
@@ -1006,10 +1008,22 @@ against the simulated buffer.
 - **Branchy canopy trees** (Phase 1 (i); `TreeLayouts`). Broadleaf,
   gnarled, emergent, umbrella and cypress canopy and emergent trees are
   drawn from a skeleton instead of one leaf blob: the trunk forks into
-  3-5 thick limbs, each limb splits into branches, and a smaller leaf
-  clump (the same lobe, colors and leaf cards) sits at each branch end,
-  so limbs show between the clumps. Cypress keeps its column: a leader
-  to the top with short upturned limbs. Each species grows
+  3-5 thick limbs, each limb splits into branches, and the leaves are
+  clusters on the outer third of each limb and branch (and twigs fanning
+  from the branch tips on leafy species), each 3-4 crossed alpha-cutout
+  leaf cards, lumpy, with open air between clusters: from below you see
+  the limbs, the sky through the gaps and whatever moves in them, not a
+  solid crown. Cypress keeps its column: a leader to the top with short
+  upturned limbs, leaves up the top of the leader. How many clusters and
+  how big: the species' `leaf_density` (table, else a shape default) in
+  the mesh (about 8 on a cypress, 12-16 on paloverde or mesquite, 17-27
+  on leafy broadleaves); per tree, `PlantMeshes.leaf_amount(growth,
+  moisture)` in the MultiMesh custom data's alpha (as bareness) thins
+  them (each cluster has a shuffled 0-1 key in CUSTOM0.w; the shader
+  hides those above the tree's amount) and shrinks the rest about their
+  centers (CUSTOM0.xyz), so dry sites carry thin crowns. Growth is a
+  stand-in until Phase 6 (height within the species' range: mature to
+  old); the shader's `leaf_season` (1) is the hook for winter. Each species grows
   `TreeLayouts.COUNT` (6) layouts from the world seed and the species;
   each tree picks one, mirrored or not, by hashing the world seed, its
   chunk and where it stands (`TreeLayouts.pick`), so the same tree grows
@@ -1018,13 +1032,14 @@ against the simulated buffer.
   MultiMesh per layout it uses; beyond it, with the species' old
   single-crown far mesh in one MultiMesh (both sets are built on attach,
   and `set_fine` shows one or the other). Hero draws every ring of the
-  skeleton (12-sided trunk, 9-sided limbs, 6-sided branches, 180-triangle
-  clumps); near draws every other ring and 80-triangle clumps with the
-  same limbs, so nothing pops between them. Wood you can hold (trunk,
+  skeleton (12-sided trunk, 9-sided limbs, 6-sided branches, four cards
+  a cluster; about 1,000 triangles a tree); near draws every other ring
+  and three cards a cluster with the same limbs and clusters, so nothing
+  pops between them. Wood you can hold (trunk,
   limbs, branches; palm stems, mangrove roots and stems, conifer trunks)
   has zero sway weight, so it holds still in the wind and a handhold
-  never drifts off it; leaf clumps, leaf cards, fronds and vines sway as
-  before. The same skeleton gives the mesh, the colliders and the branch
+  never drifts off it; leaf clusters, twigs, leaf cards, fronds and vines
+  sway as before. The same skeleton gives the mesh, the colliders and the branch
   graph, so all three agree.
 - **Branch graphs** (`BranchGraph`, `BranchGraphs`; the contract other
   systems read). Per layout, handholds are laid along the skeleton every
