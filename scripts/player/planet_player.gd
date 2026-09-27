@@ -107,6 +107,8 @@ var dead := false
 var first_person := false
 var bow: Bow
 var spear: Spear
+## What the crosshair rests on, named (the HUD shows its binomial).
+var look: LookTarget
 ## The weapon in hand: "bow" or "spear" (swap_weapon()).
 var weapon := "bow"
 var _since_hit := 99.0
@@ -223,6 +225,10 @@ func _ready() -> void:
 	spear.name = "Spear"
 	add_child(spear)
 	spear.setup(self)
+	look = LookTarget.new()
+	look.name = "LookTarget"
+	add_child(look)
+	look.setup(self, chunks)
 	_apply_view()
 
 

@@ -27,6 +27,9 @@ enum Needs {
 }
 
 var name: String
+## The binomial (spec D4): real, or invented for placeholder plants.
+var genus := ""
+var species := ""
 var tier: Tier
 var shape: Shape
 var temp_c := Vector2(-50.0, 50.0) # band, °C (mean annual)
@@ -101,3 +104,9 @@ func leaf_density_of() -> float:
 		Shape.CYPRESS:
 			return 0.85
 	return 0.75
+
+
+## "Genus species" (the HUD shows it for the plant under the crosshair),
+## or "" if the table gives none.
+func binomial() -> String:
+	return ("%s %s" % [genus, species]).strip_edges()

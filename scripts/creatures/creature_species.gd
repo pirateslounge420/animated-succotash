@@ -199,3 +199,8 @@ func active_now(daylight: float) -> bool:
 			# Only on the nights round the full moon.
 			return daylight < 0.3 and moon_full > 0.85
 	return true
+
+
+## "Genus species" from the table (spec D4), or "".
+func binomial() -> String:
+	return ("%s %s" % [str(data.get("genus", "")), str(data.get("species", ""))]).strip_edges()

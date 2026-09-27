@@ -5,7 +5,10 @@ extends Control
 ## low, a crosshair while aiming or in first person with the bow's draw as
 ## a filling arc beneath it (or the spear's raise), the weapon in hand
 ## beside the hearts, a red flash at the screen's edge when you're hurt,
-## and the dark "You died" curtain.
+## and the dark "You died" curtain. Otherwise a small dot marks the middle
+## of the view; when it rests on an animal or a plant near you it opens
+## into a ring and the species' binomial shows beneath it in small
+## italics (LookTarget).
 
 var hp := 100.0
 var max_hp := 100.0
@@ -14,6 +17,9 @@ var show_crosshair := false
 var draw_power := 0.0 # 0-1 bow power
 ## The weapon in hand ("Bow", "Spear", "Spear (thrown)").
 var weapon := ""
+## The binomial under the crosshair (LookTarget), or "".
+var look_name := ""
+var _italic: FontVariation
 var _hurt := 0.0
 var _death := 0.0
 var _dead := false
@@ -88,6 +94,25 @@ func _draw() -> void:
 		var at := Vector2(16, size.y - 114)
 		draw_string_outline(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, 4, Color(0.05, 0.07, 0.15))
 		draw_string(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(0.95, 0.97, 1.0))
+	# The small dot in the middle of the view, and the name of what it rests on.
+	if not _dead:
+		var c := size * 0.5
+		var ink := Color(0.05, 0.07, 0.15, 0.7)
+		if not show_crosshair:
+			if look_name != "":
+				draw_arc(c, 4.5, 0.0, TAU, 20, ink, 3.0)
+				draw_arc(c, 4.5, 0.0, TAU, 20, Color(1, 1, 1, 0.9), 1.5)
+			else:
+				draw_circle(c, 2.6, ink)
+				draw_circle(c, 1.6, Color(1, 1, 1, 0.8))
+		if look_name != "":
+			if _italic == null:
+				_italic = FontVariation.new()
+				_italic.base_font = get_theme_default_font()
+				_italic.variation_transform = Transform2D(Vector2(1, 0), Vector2(0.22, 1), Vector2.ZERO)
+			var at := Vector2(c.x - 200.0, c.y + (30.0 if show_crosshair else 22.0))
+			draw_string_outline(_italic, at, look_name, HORIZONTAL_ALIGNMENT_CENTER, 400.0, 13, 4, Color(0.05, 0.07, 0.15))
+			draw_string(_italic, at, look_name, HORIZONTAL_ALIGNMENT_CENTER, 400.0, 13, Color(0.95, 0.97, 1.0, 0.95))
 	# Crosshair and draw.
 	if show_crosshair and not _dead:
 		var c := size * 0.5
