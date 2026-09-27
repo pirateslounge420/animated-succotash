@@ -278,6 +278,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		hud.toggle_debug()
 	elif event.is_action_pressed("toggle_branch_view") and world.dev_mode:
 		BranchGraphView.toggle(self, player)
+	elif event.is_action_pressed("toggle_collision_view") and world.dev_mode:
+		CollisionView.toggle_for(self, player)
 	elif event.is_action_pressed("interact"):
 		# Let go of a tree; else a log within reach; else climb the tree
 		# in front of you.

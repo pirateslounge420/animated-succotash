@@ -234,7 +234,8 @@ Verified:
   and the first camp fixed (`spawn_choice` 0). A missing file means the
   game's own settings. F3 shows a debug overlay (`Hud.debug_text`):
   clock, solar time, phase and minutes into it, sky speed, sun and moon
-  elevation, moon age, phase and mansion, eased cloud cover.
+  elevation, moon age, phase and mansion, eased cloud cover. F4, in dev
+  mode only, shows the collision view (see Landmarks).
 - **No snapping.** Besides the smooth warp: the local weather is
   resampled four times a second and steps every in-game quarter hour,
   so `main.gd` eases a copy of it (`WeatherSim.ease_toward`, time
@@ -628,8 +629,9 @@ Verified:
   icosphere boulders. Moss greens the upward faces and low courses, and
   ivy hangs from broken tops, both scaled by the site's moisture: dry
   ruins are bare stone, wet ones mossy all over and curtained in ivy.
-  Collision uses plain boxes, and so does the far level of detail past
-  150 m (12 triangles a block in its face colors, no ivy). Sites are picked without the terrain's
+  Blocks collide as plain boxes (boulders as hulls; see Hitboxes), and
+  the far level of detail past 150 m is plain boxes too (12 triangles a
+  block in its face colors, no ivy). Sites are picked without the terrain's
   roll layer, so 2 m of noise never moves a ruin. Geometry is built on worker threads out to 2.6 km, beyond the
   terrain chunks, so silhouettes rise out of the fog bands. Deep footings
   keep them from floating over the coarser far terrain. Vegetation keeps
@@ -640,7 +642,8 @@ Verified:
   fire ring: tepees (seven leaning poles, woven-vine and hide panels, a
   door gap) and lean-tos (forked uprights, a ridge pole, a vine-thatched
   roof to the ground), built from the same block primitives, so they get
-  collision, the far LOD and the vines' night glow.
+  the far LOD and the vines' night glow. Their collision follows the
+  cover, with the door left open (see Hitboxes below).
   `Landmarks.sheltered_at()` tells when you're inside one (igloos,
   huts and the cabin count too).
 - **Living camps** (`Camps`): a fire burning and two to four folk seated
@@ -665,6 +668,54 @@ Verified:
   snow, hooded marsh folk, and at about 45% of inhabited stone ruins the
   restless dead, skeletons and a blue-robed hooded one keeping them
   company.
+- **Hitboxes** (spec D5: a proper hitbox on everything, no ghost-through,
+  no invisible walls). Ruins and props collide as simple shapes fitted
+  to what's drawn, all on physics layer 1 with the ground, so the
+  player walks into them, the camera's spring arm stops at them and
+  arrows stick in them. Props use `PropCollision`; ruins keep their
+  triangles and add convex hulls (`RuinBuilder._ch`), built after the
+  triangles, 32 a frame, once the player is within 400 m.
+  - Blocks, walls and the hidden ramps under stairs are plain boxes;
+    mounds, the cased pyramid and the barrow are their own one-sided
+    triangles (as before).
+  - Boulders (ruin rubble, cold fire rings, urns) are the convex hull of
+    the drawn stone taken at the 42 corners of a once-divided icosphere
+    (`boulder_hull()`), within a few cm of it. Stones over 0.9 m in
+    radius (den stones, a rock shelter's slab and its boulders,
+    `rock_hull()`) take all 162 drawn corners, since there the drawn
+    bulges would stand up to 0.4 m proud of the coarse hull. The old
+    boxes (0.8 of the radii) stuck out at the corners and left the
+    sides sunk in: by about 0.25 m on a 1.3 m stone and about 1 m on a
+    rock shelter's slab.
+  - Tepees: the poles, except the two framing the door, and a 6 cm shell
+    behind each panel of vines or hide. The two panels beside the door are trimmed
+    back to 45 cm from the door's middle line, where the drawn doorway
+    narrows toward the top, so you walk in at the door and stand
+    inside. Before, a solid box filled the tepee. Lean-tos: a slab
+    under the roof, and the poles.
+  - Giant jungle trees: a hull round each pair of the trunk's 12-sided
+    rings, so the collision is the drawn trunk and its flare exactly,
+    plus the buttresses and limbs. The leaf crowns don't collide (they
+    were solid boxes); decks, ramps and bridges do. Deck and bridge
+    handrails get a thin box along each rope (`_rail()`); other ropes
+    and hanging vines don't collide.
+  - Grave mounds: a low hull with sides at 40 degrees, so you walk over
+    a mound instead of through it (a straight 19 cm step would stop
+    you). Grave goods collide only when over about 30 cm (urns, long
+    bones); skulls and gold don't.
+  - Camp props: capsules along campfire stones and logs (a low ring you
+    bump into), seat logs and seat stones, leaning spears (thin, so
+    arrows stick) and fallen logs (on the part that rolls over). A wolf
+    den's boulders are hulls and its lintel a box.
+- **Collision view** (F4, dev mode only; `CollisionView`): wireframes
+  of every collision shape within 40 m of the player, in Godot's own
+  line meshes for each shape, colored by physics layer: the world
+  (layer 1) cyan, trees (layers 1 and 2) green, anything on another
+  layer (creature hitboxes) magenta, the player's capsule yellow, the
+  terrain faint. Lines behind something show dimmed. Off, it costs
+  nothing: it's made on the first press and doesn't process until
+  turned on. On, it asks the physics space what's near four times a
+  second and moves the lines with their bodies every frame.
 - **Glowing places** (`MagicSites`, `Landmarks`): every ruin, every
   mythical territory, and about a third of fresh lakes and wetland cells
   (glow ponds).
@@ -1381,6 +1432,8 @@ the player's shoulder so the fire is in view.
 - **HUD:**
   - time of day, moon phase and mansion;
   - F3: the debug overlay (see Dev settings);
+  - F4, dev mode only: the collision view's legend, with shape counts
+    by layer (see Landmarks);
   - biome, temperature now and on average (°C), weather, rainfall, wind,
     elevation and coordinates;
   - a context prompt.
@@ -1452,6 +1505,40 @@ latest results:
   leaves, the pack retreats and is home within about 16 m of the den.
 - **Mythical calls** go from low-pass 700 Hz with 0.05 stereo panning at
   900 m to 20 kHz with full panning at 60 m.
+- **Hitboxes** (headless, `--fixed-fps 60`):
+  - Tepees: a body set up like the player (capsule 0.35 x 1.7 m, 50°
+    floor limit, 0.6 m snap, walking pace, `move_and_slide`) walks from
+    1.2 m outside the door to the middle and back out, then toward the
+    middle from nine bearings 60-300° off the door. Tried on every
+    tepee on the seed 42 and 24 stamps (8) and on 16 at the size limits
+    (r 1.4-1.8 m, h 2.8-3.5 m): it gets in to within 0.1 m of the middle
+    and out again, and from every other side the cover stops it 1.4-1.8
+    m from the middle. Two seed-42 tepees have a drawn obstacle on the
+    straight line out from the door (a fallen castle block, a fire-ring
+    stone), which you walk round.
+  - Lean-tos (5): a ray down over the middle of the floor meets the
+    roof's collision within 1 cm of the drawn roof, and the space under
+    it is free.
+  - Stones, by rays from 642 directions at the drawn stone and at its
+    hull: the 42-corner hull stands 1-2 cm proud at most and sinks in by
+    up to 7 cm on a 1.3 m stone (the drawn bulges between its corners);
+    the 162-corner hull of big stones never sinks in and bridges dips of
+    up to 6 cm on a 2.5 m boulder and 14 cm on the 7.5 m slab.
+  - Nothing drawn moved: an MD5 over the ruins' meshes, far LOD,
+    shelters, camp spots and lights (three sites of each kind per
+    stamp) is the same before and after on seeds 42, 2, 6 and 4. Only
+    the collision lists changed.
+  - Cost, measured on a machine shared with other jobs (load ~20), so
+    these are upper bounds: a piece of 32 hulls builds in 1.3 ms on average, 5.4 ms at worst, against
+    1.8-2.0 and 10.7 ms for the 2,500-face pieces. A castle has about
+    50 hulls, a graveyard 32 (its mounds), a treehouse village 24 (the
+    trunks). The collision view at a castle camp: 4.3 ms per refresh
+    (four a second), 0.09 ms a frame moving the lines, 15 ms on the
+    first press; nothing when off.
+  - Rendered with F4 on, before and after, on seed 24's stamp: a tepee,
+    a lean-to, a ruin boulder, a giant jungle tree, a cliff camp's fire
+    and its rock shelter, and a graveyard; and a recording of the player
+    walking into the tepee and out.
 
 
 - **Headless.** The full game loop was run headless:
@@ -1547,6 +1634,23 @@ latest results:
   `PlanetPlayer.anim_state` plus the `crouching`, `sprinting` and
   `climbing` flags; footsteps then should follow the animation's foot
   contacts instead of the stride timer.
+- **Hitboxes, rough edges.**
+  - With the 50° floor limit and no step-up, a walking player can't get
+    over anything much above 12 cm with steep sides. Fire-ring stones
+    (18-22 cm) and small rubble stop you: you go round or jump.
+  - A tepee's collision leaves its door at least 0.9 m wide, so near
+    head height up to ~20 cm of drawn hide beside the door can be walked
+    through (the body is slimmer than the capsule, so it barely shows).
+  - Hulls bridge a boulder's dips (up to 14 cm on a rock shelter's
+    slab). A grave mound's hull stands ~8 cm out at its foot and ~7 cm
+    inside its top edge.
+  - Camp folk, guards and the opening camp's NPCs have no physics body
+    (arrows find them by distance to the arrow's path); a bow laid by a
+    seat doesn't collide.
+  - In dense ruins the collision view is busy: lines behind walls show
+    through, and a ruin's triangle piece (2,500 faces, often spread
+    over much of the ruin) is drawn whole once any part of it is within
+    40 m, fading out past 30 m.
 - **Storm fakes.** Rain doesn't collide with crowns; under cover the
   falling rain thins instead. Thunder's distance is made up per strike
   (there is no bolt), and flooding is visual only.
