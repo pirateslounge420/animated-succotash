@@ -19,7 +19,10 @@ extends Node
 ##
 ## Built when the player comes within BUILD_M, freed past DROP_M. The
 ## folk are placeholder bodies (CreatureBodies), seated by bending the
-## leg and arm pivots. The props collide (PropCollision): capsules along
+## leg and arm pivots. Each has hitbox parts (torso, head, limbs, riding
+## the pivots) and a blocker (CreatureHitboxes), so the player can't walk
+## through them and an arrow glances off the part it meets (Arrow,
+## shot_at()). The props collide (PropCollision): capsules along
 ## the seat logs, seat stones and leaning spears (arrows stick in them),
 ## hulls round the rock shelter's slab and boulders.
 
@@ -306,6 +309,7 @@ func _guard(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) ->
 	var body: Node3D = b.root
 	body.name = "Body"
 	holder.add_child(body)
+	holder.set_meta("hitboxes", CreatureHitboxes.build(holder, b, sp, true))
 	holder.set_meta("arms", b.wings)
 	holder.set_meta("head", body.get_node_or_null("Head"))
 	holder.set_meta("speaker", "Guard")
@@ -402,6 +406,7 @@ func _sitter(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -
 	if animator:
 		body.position.y = 0.0
 		animator.set_state("sit")
+	holder.set_meta("hitboxes", CreatureHitboxes.build(holder, b, sp, true))
 	holder.set_meta("arms", b.wings)
 	holder.set_meta("head", body.get_node_or_null("Head"))
 	holder.set_meta("speaker", sp.name)
@@ -418,6 +423,7 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 	Campfire.flicker(camp.get_meta("fire"), _time)
 	var sitters: Array = camp.get_meta("sitters")
 	var near := camp.global_position.distance_to(pp)
+	_hitboxes(camp, Hitboxes.wanted_at(camp.global_position, pp))
 	for i in sitters.size():
 		var s: Node3D = sitters[i]
 		var ph: float = s.get_meta("phase")
@@ -454,28 +460,14 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 		hud.say(s0.get_meta("speaker"), lines[randi() % lines.size()], 0.2, 4.0)
 
 
-## The camp folk (seated or on guard) an arrow flying from `a` to `b` hits
-## first: [holder, fraction along a..b], or [].
-func folk_on_segment(a: Vector3, b: Vector3) -> Array:
-	var best: Array = []
-	var best_t := INF
-	var ab := b - a
-	var l2 := maxf(ab.length_squared(), 1e-6)
-	for key in _camps:
-		var camp: Node3D = _camps[key]
-		if camp.global_position.distance_to(a) > 60.0:
-			continue
-		var folk: Array = camp.get_meta("sitters", [])
-		folk = folk + camp.get_meta("guards", [])
-		for f in folk:
-			var n: Node3D = f
-			var up: Vector3 = world.dir_of(n.global_position)
-			var center := n.global_position + up * (0.9 if n.get_meta("standing", false) else 0.55)
-			var t := clampf((center - a).dot(ab) / l2, 0.0, 1.0)
-			if (a + ab * t).distance_to(center) < 0.45 and t < best_t:
-				best_t = t
-				best = [n, t]
-	return best
+## The folk's hitboxes (CreatureHitboxes) in the physics space only while
+## the camp is near the player or an arrow (Hitboxes.wanted_at()).
+func _hitboxes(camp: Node3D, on: bool) -> void:
+	if camp.get_meta("hitboxes_on", true) == on:
+		return
+	camp.set_meta("hitboxes_on", on)
+	for f in camp.get_meta("sitters") + camp.get_meta("guards", []):
+		Hitboxes.set_active((f as Node).get_meta("hitboxes", []), on)
 
 
 const SHOT_LINES := ["Hey! Watch where you shoot!", "Oi! Put that bow down!", "Are you trying to get yourself killed?", "Aim at the deer, not at us!"]

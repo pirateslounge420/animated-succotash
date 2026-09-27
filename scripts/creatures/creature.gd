@@ -27,6 +27,12 @@ extends Node3D
 ## In water they ring it (Ripples): wading legs and paddling hulls drag
 ## wakes, footfalls splash (_water_contacts).
 ##
+## Hitboxes (spec D5; CreatureHitboxes): parts on the body that arrows
+## and the bow's aim meet (Hitboxes), and for the bigger ones a blocker
+## the player bumps into. They're on only while it's shown, alive, faded
+## in, and within Hitboxes.ACTIVE_M of the player or near an arrow in
+## flight (_sync_hitboxes()).
+##
 ## Arrows hurt them (hurt()): hit points by size (CreatureSpecies.hp_max()).
 ## Prey bolts; pack hunters and hostile creatures turn on you (`angry`:
 ## chase and bite, CreatureSpawner.player_hit()); at 0 they die, tip over
@@ -72,6 +78,14 @@ var _panic := 0.0 # seconds it keeps bolting after being hit, however far
 
 var _parts := {}
 var _body: Node3D
+## Its collision bodies (Hitboxes): the parts, then the blocker if it has
+## one. The Night Rider and the Pond Crawler make their own.
+var hitboxes: Array = []
+var _hitboxes_on := true
+## Near enough for its hitboxes to be wanted, each tick: within
+## Hitboxes.ACTIVE_M of the player or Hitboxes.ARROW_WAKE_M of an arrow in
+## flight.
+var _hitboxes_near := true
 ## Soft shadow on the ground under it (BlobShadow); null for none.
 var _blob: MeshInstance3D
 var _blob_size := Vector2.ZERO
@@ -128,6 +142,9 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 	_parts = CreatureBodies.build(sp)
 	_body = _parts.root
 	add_child(_body)
+	hitboxes = CreatureHitboxes.build(self, _parts, sp, CreatureHitboxes.blocks(sp))
+	# Off until it has faded in.
+	_set_hitboxes(false)
 	_blob_size = BlobShadow.footprint(sp)
 	if _blob_size != Vector2.ZERO:
 		_blob = BlobShadow.make(self, _blob_size.x, _blob_size.y)
@@ -177,6 +194,20 @@ func leave() -> void:
 func set_visible_body(v: bool) -> void:
 	_body.visible = v
 	_update_blob()
+	_sync_hitboxes()
+
+
+## Hitboxes on only while it's shown, alive, at least half faded in (not
+## while hidden, dead, fading in or leaving) and near the player or an
+## arrow.
+func _sync_hitboxes() -> void:
+	_set_hitboxes(_body.visible and not dead and not leaving and _fade >= 0.5 and _hitboxes_near)
+
+
+func _set_hitboxes(on: bool) -> void:
+	if on != _hitboxes_on:
+		_hitboxes_on = on
+		Hitboxes.set_active(hitboxes, on)
 
 
 func say() -> void:
@@ -201,6 +232,7 @@ func tick(delta: float, ctx: Dictionary) -> void:
 	_timer -= delta
 	var player_dir: Vector3 = ctx.player_dir
 	var to_player := distance_to(player_dir)
+	_hitboxes_near = to_player < Hitboxes.ACTIVE_M or Arrow.near(global_position, Hitboxes.ARROW_WAKE_M)
 
 	if _life > 0.0:
 		_life -= delta
@@ -270,6 +302,7 @@ func hurt(amount: float, from_pos: Vector3) -> void:
 		angry = 0.0
 		mode = "dead"
 		lift = 0.0
+		_set_hitboxes(false)
 		if voice and voice.stream:
 			voice.pitch_scale *= 0.8
 			voice.play()
@@ -673,6 +706,7 @@ func _place(delta: float) -> void:
 		_body.rotation.z = lerpf(_body.rotation.z, PI * 0.5, clampf(delta * 5.0, 0.0, 1.0))
 	_animate(delta)
 	_water_contacts()
+	_sync_hitboxes()
 
 
 ## Water contacts (Ripples), only where the ripples run (water near the

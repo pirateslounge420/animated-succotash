@@ -1180,6 +1180,56 @@ Spawn tiers:
   textures, and its clips play by state. Tested with a rigged stand-in
   exported to a real .glb: read raw at runtime, scaled to its sidecar
   height, relit, Idle and Walk switching as the player moved.
+- **Hitboxes** (spec D5; `CreatureHitboxes`, on the shared `Hitboxes`):
+  every creature and every camp person has collision parts matching its
+  visible body, each riding the node that moves that piece (a leg's, arm's
+  or tail's pivot, the head, the body's root), so they follow the gait, a
+  seated pose, a turned head, the body's size and fade. Arrows and the
+  bow's aim meet them (below, the bow); the sphere tests that stood in
+  for them (`CreatureSpawner.creature_on_segment`,
+  `Camps.folk_on_segment`) are gone, not kept as a fallback: nothing
+  lacks parts.
+  - Sculpted bodies (wolf, deer, goblin, people) have their parts written
+    out from the sculpt's own shapes, one capsule or sphere per bone: a
+    deer's torso, neck, head, each front leg, each hind leg's thigh and
+    shin, tail and both antler beams (13 bodies with its blocker); a
+    wolf the same without antlers (11); a goblin its torso, head, nose,
+    ears, legs, arms and lantern (11); a person torso, head, legs, arms
+    and the biggest two pieces of gear (a spear, a bow, a quiver, the
+    elder's staff; 7-9).
+  - Primitive bodies (everything else, and the sculpted kinds until
+    their mesh is built) are fitted from their own meshes: each piece's
+    bounds on the node it rides, a capsule when it's long (a limb, a
+    torso, a neck), a sphere when it's round (a head), a box when it's
+    flat (a wing, a shell, a hat brim), a hull round a tapering cone (a
+    robe, a horn); the biggest few, up to 3 for small animals, 10 for
+    the rest, 12 for mythicals and people, leaving out eyes, noses and
+    claws. The tiniest (a beetle, a tree frog, a songbird) keep at least
+    their biggest piece; fireflies a 0.35 m sphere in the heart of the
+    cloud (an arrow through it hurts the swarm and flies on). Imported
+    models get one shape over the whole model.
+  - A blocker on the world's layer, inside the torso, for everything
+    0.6 m or bigger, every mythical and every person: the player can't
+    walk through a deer or a person (stopped 0.5 m from its middle in
+    test). Small animals have none.
+  - Parts are static bodies moved with their nodes (a moving static body
+    costs the physics step about a sixth of a moving kinematic one:
+    it isn't checked against the terrain's bodies). They're in the
+    physics space only while they could be hit: shown, alive, at least
+    half faded in, and within 90 m of the player (`Hitboxes.ACTIVE_M`)
+    or 25 m of an arrow in flight (`Arrow.flying`), so a long shot at a
+    far animal still lands. Otherwise they're taken out of the space
+    (`Hitboxes.set_active()`, disabled, not just on no layer).
+  - Counts: 395-407 part bodies and 23-24 blockers in a busy daytime
+    scene at the stamp's opening camp (87-89 creatures, 18 of them a
+    herd of deer and a wolf pack added for the test, plus the camp's two
+    people), 310-322 of them in the space. Cost: 520 parts on 40
+    walking bodies, all moving every frame, add about 0.5 ms to the
+    physics step (0.77-0.87 against 0.23-0.40 ms without; a kinematic
+    version cost 5.4-5.8 ms), 0.04 ms to move; taken out of the space
+    they add ~0.1-0.2 ms. A busy scene has ~20 creatures walking at
+    once, ~220 moving parts, so about 0.2 ms a step. The whole-game A/B
+    was lost in the noise of the shared machine (±3 ms either way).
 - **Pond Crawler** (spec Phase 1 rig; `scripts/creatures/mythics/`
   `pond_crawler.gd`, `pond_crawler_body.gd`;
   `shaders/pond_crawler.gdshader`). *Limnoreptor cucullatus* (invented), a
@@ -1244,7 +1294,7 @@ Spawn tiers:
       fades.
   - Hitboxes (spec D5): the shared `Hitboxes` helper, as the Night Rider
     (below). Capsules and spheres on the lump, hood, upper arms, forearms
-    and hands, one kinematic body each on layer 3, riding the skeleton and
+    and hands, one body each on layer 3, riding the skeleton and
     each arm's bone attachments. An arrow's ray meets the part it visibly
     hits and sticks in it, moving with it. The player bumps into one
     `Hitboxes.blocker()` capsule through the lump (layer 1); the arms,
@@ -1324,8 +1374,9 @@ Spawn tiers:
     route, or hunts: at night within `notice_m` (more if you're loud), or
     once shot, it walks at you and strikes in reach
     (`CreatureSpawner.player_hit`, the species' `bite`; no balancing).
-  - Hitboxes (`Hitboxes`, generic; meant to become every creature's): one
-    kinematic body (`AnimatableBody3D`) per part riding its pivot, sized
+  - Hitboxes (`Hitboxes`, generic, now every creature's: Creatures,
+    Hitboxes, above): one body (a static body, moved with it) per part
+    riding its pivot, sized
     to the mesh: barrel, neck, head, tail, each leg's two segments, the
     rider's body, arms and hood. The parts are on their own physics layer,
     3 (`Hitboxes.LAYER`, bit value 4), not the world's layer 1, so the
@@ -1336,7 +1387,8 @@ Spawn tiers:
     riding with it; the gap between the legs is a miss. For the player to
     bump into there is one simple body per creature on layer 1
     (`Hitboxes.blocker()`: a capsule through the horse's barrel, inside
-    the parts, so a shot always meets a part first). All off when it dies.
+    the parts, so a shot always meets a part first). All off (out of the
+    physics space) when it dies.
   - Sound (`NightRiderSounds`): each hoof landing is a soft synthesized
     thud (a low falling thump, a dark press of noise, a brief hush of
     needles; no clop) on a 3D player moved to that hoof (unit size 5 m,
@@ -1468,12 +1520,14 @@ the way Godot draws a front face.)
     of a critical hit up to half again; under 0.1, nothing is loosed.
   - Walking slows to under half pace while drawing. Third person closes in
     over the shoulder, and a full draw zooms a little.
-  - Arrows aim at whatever is under the crosshair, fall with the planet's
-    gravity and stick in the ground, trees and ruins (60 s, at most 40
-    about), ride in a creature they hit (in the very part they hit, for a
-    creature with real hitboxes, `Hitboxes`: the Night Rider and the Pond
-    Crawler), and sink in water.
-    Camp folk you hit complain.
+  - Arrows aim at whatever is under the crosshair (the aim ray meets
+    creatures' parts too, so it aims at the deer, not the ground behind
+    it), fall with the planet's gravity and stick in the ground, trees and
+    ruins (60 s, at most 40 about), ride in a creature they hit, in the
+    very part they hit (Creatures, Hitboxes), and sink in water. One
+    physics ray per step finds all of it.
+    Camp folk you hit complain, and the arrow glances back off the part
+    it met (a head, an arm, the torso).
   - In test, a full draw landed 103 m away after 1.9 s, and one arrow
     killed a hare.
 - **First person** (V, F5, the right stick click): the camera at eye
@@ -1493,7 +1547,9 @@ there (off water, rivers and wetlands, level across the camp), plants
 keep a 12 m clearing, and the camp is a campfire (`Campfire`, shared with
 the other camps), the player's hide mat facing it, and an elder and a
 hunter (sculpted bodies) across the fire on log seats, who breathe and
-turn toward the player when near. The fire is a ring of stones and
+turn toward the player when near. Both have hitboxes and a blocker
+(`CreatureHitboxes`): you can't walk through them, and an arrow glances
+off them. The fire is a ring of stones and
 crossed logs on a bed of glowing coals under four tongues of flame
 (`shaders/flame.gdshader`): cards that turn to face the camera, drawn
 additively so they build an orange-gold core (R1a #FFB020) through the
@@ -1559,6 +1615,10 @@ sprinting a fixed path, before and after:
   every species is weighed. The draws and results are unchanged (a hash
   of 30 chunks' output, terrain and plants, matches bit for bit).
   Terrain 58 → 40 ms, vegetation 350 → 210 ms per chunk.
+- **Creature hitboxes** cost the physics step ~1 µs per moving part
+  as static bodies (about six times less than as kinematic ones), and
+  are in the space only near the player or an arrow (Creatures,
+  Hitboxes): ~0.2 ms a step in a busy scene.
 - **Ruins build 3x faster** (127 → 43 ms each on a worker): a block's
   24 vertices, 6 normals and colors are worked out once instead of by
   ~300 lambda calls. Output matches bit for bit (hashed over 32 ruins).
@@ -1622,6 +1682,23 @@ latest results:
     a lean-to, a ruin boulder, a giant jungle tree, a cliff camp's fire
     and its rock shelter, and a graveyard; and a recording of the player
     walking into the tepee and out.
+  - Creatures and people (seed 42 stamp, standing still, side on,
+    arrows at full speed): arrows at a deer's torso middle (1.03 m up;
+    the old sphere topped out at 0.88 m), head and antler, a wolf's head,
+    a goblin's torso from behind and its arm from the side each stuck
+    in that part, 0.01-0.09 m from the aim point. The bow's aim ray
+    met the deer's torso and the real bow's arrow stuck there. Walking
+    at a deer, at the opening camp's elder (from the side: behind him
+    is his seat log) and at a camp guard, the player stopped 0.49-0.51 m
+    from its middle. Arrows at the elder's side and head and a seated
+    hunter's torso glanced back off the arm, head and torso they met.
+    A deer 130 m off had all 13 bodies out of the space; an arrow from
+    30 m woke them and stuck in its torso; killed, they went off. The
+    Night Rider and the Pond Crawler, on the static parts, still take
+    arrows in their barrel and lump.
+  - Rendered with F4 on: a deer mid-stride, a wolf pack, a goblin,
+    birds (heron, duck, toucan), folk at a camp, the opening camp's two;
+    and a recording of an arrow sticking in a deer's flank.
 
 
 - **Headless.** The full game loop was run headless:
@@ -1727,9 +1804,17 @@ latest results:
   - Hulls bridge a boulder's dips (up to 14 cm on a rock shelter's
     slab). A grave mound's hull stands ~8 cm out at its foot and ~7 cm
     inside its top edge.
-  - Camp folk, guards and the opening camp's NPCs have no physics body
-    (arrows find them by distance to the arrow's path); a bow laid by a
-    seat doesn't collide.
+  - A bow laid by a seat doesn't collide.
+  - Creatures' parts are fixed shapes on rigid pivots: a sculpted body's
+    skin that bends across a joint can bulge a centimeter or two past
+    them, and a primitive body is fitted with its biggest pieces only (a
+    unicorn keeps two of its five mane tufts). Ears, tails of small
+    animals and beaks are often left out.
+  - Past 90 m a creature's parts wake only when an arrow comes within
+    25 m, so the bow's aim ray doesn't see a far animal: it aims at the
+    ground behind it (at that range the drop matters more).
+  - The blockers are on the world's layer, so the third-person camera's
+    spring arm pulls in when a deer walks between it and the player.
   - In dense ruins the collision view is busy: lines behind walls show
     through, and a ruin's triangle piece (2,500 faces, often spread
     over much of the ruin) is drawn whole once any part of it is within

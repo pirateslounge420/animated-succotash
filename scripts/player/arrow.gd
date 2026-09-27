@@ -1,14 +1,15 @@
 class_name Arrow
 extends Node3D
 ## An arrow in flight (Bow): falls under the planet's gravity, points
-## along its path, and on the first thing it meets:
-##   * a creature (CreatureSpawner.creature_on_segment, or a physics hit on
-##     a creature's hitbox, Hitboxes): hurts it and sticks in it (in the
-##     part it hit), riding along;
-##   * camp folk (Camps.folk_on_segment): a glancing shot they complain
-##     about, and it drops;
-##   * ground, trees, ruins (physics): buries its head there and stays a
-##     while;
+## along its path, and on the first thing it meets (one physics ray per
+## step, over every layer: the world, trees, and creatures' and people's
+## hitbox parts, Hitboxes):
+##   * a creature's part: hurts it and sticks in that part, riding along
+##     with it (fireflies: it hurts the swarm and flies on through);
+##   * a camp person's part (Hitboxes.creature_of() names a holder, not a
+##     Creature): a glancing shot they complain about (Camps.shot_at()),
+##     and it bounces back off that part and drops;
+##   * ground, trees, ruins: buries its head there and stays a while;
 ##   * water: splashes (Ripples) and sinks.
 ## Lives under World.world_root, so it moves with the floating origin.
 
@@ -16,9 +17,11 @@ const GRAVITY := 9.8
 const STUCK_S := 60.0
 const MAX_FLIGHT_S := 12.0
 
+## Arrows in flight (hitboxes near one wake up: Hitboxes.wanted_at()).
+static var flying: Array[Arrow] = []
+
 var world: Node
 var chunks: ChunkManager
-var spawner: CreatureSpawner
 var camps: Camps
 var velocity := Vector3.ZERO
 var damage := 10.0
@@ -38,6 +41,19 @@ func launch(from: Vector3, vel: Vector3) -> void:
 	_voice.max_distance = 60.0
 	add_child(_voice)
 	_orient()
+	flying.append(self)
+
+
+func _exit_tree() -> void:
+	flying.erase(self)
+
+
+## Is an arrow in flight within `radius` m of `pos`?
+static func near(pos: Vector3, radius: float) -> bool:
+	for a in flying:
+		if is_instance_valid(a) and a.global_position.distance_to(pos) < radius:
+			return true
+	return false
 
 
 func _physics_process(delta: float) -> void:
@@ -53,43 +69,24 @@ func _physics_process(delta: float) -> void:
 	velocity -= up * GRAVITY * delta
 	var a := global_position
 	var b := a + velocity * delta
-	# The nearest of: a creature, camp folk, the world.
-	var hit_t := INF
-	var hit_kind := ""
-	var hit_obj = null
-	var hit_pos := b
-	var hit_normal := up
-	if spawner:
-		var c: Array = spawner.creature_on_segment(a, b)
-		if not c.is_empty():
-			hit_t = c[1]
-			hit_kind = "creature"
-			hit_obj = c[0]
-	if camps:
-		var f: Array = camps.folk_on_segment(a, b)
-		if not f.is_empty() and f[1] < hit_t:
-			hit_t = f[1]
-			hit_kind = "folk"
-			hit_obj = f[0]
 	var q := PhysicsRayQueryParameters3D.create(a, b)
 	q.exclude = exclude
-	# The world, and creatures' hitboxes on their own layer (Hitboxes).
+	# The world, and creatures' and people's parts on their own layer
+	# (Hitboxes; the default mask has every layer, this says so).
 	q.collision_mask |= Hitboxes.LAYER
 	var ray := get_world_3d().direct_space_state.intersect_ray(q)
+	var hit_kind := ""
+	var hit_obj: Node = null
+	var hit_pos := b
 	var hit_part: Node3D = null
 	if not ray.is_empty():
-		var t := a.distance_to(ray.position) / maxf(a.distance_to(b), 1e-6)
-		if t < hit_t:
-			hit_t = t
-			hit_kind = "world"
-			hit_pos = ray.position
-			hit_normal = ray.normal
-			# A creature's hitbox (Hitboxes): the creature is hit, there.
-			var owner := Hitboxes.creature_of(ray.collider)
-			if owner:
-				hit_kind = "creature"
-				hit_obj = owner
-				hit_part = ray.collider
+		hit_kind = "world"
+		hit_pos = ray.position
+		# A creature's or a person's part (Hitboxes): who it belongs to.
+		hit_obj = Hitboxes.creature_of(ray.collider)
+		if hit_obj:
+			hit_part = ray.collider as Node3D
+			hit_kind = "creature" if hit_obj is Creature else "folk"
 	if hit_kind == "":
 		# Water: sinks where it meets the surface.
 		var d: Vector3 = world.dir_of(b)
@@ -106,18 +103,25 @@ func _physics_process(delta: float) -> void:
 	match hit_kind:
 		"creature":
 			var cr := hit_obj as Creature
-			global_position = a.lerp(b, hit_t)
-			if hit_part:
-				# In the part it hit, a little way in, riding along with it.
-				global_position = hit_pos + velocity.normalized() * 0.1
 			cr.hurt(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
+			if cr.species.role == "swarm":
+				# Through a cloud of fireflies: on it flies.
+				exclude.append((hit_part as CollisionObject3D).get_rid())
+				global_position = b
+				_orient()
+				return
+			# In the part it hit, a little way in, riding along with it.
+			global_position = hit_pos + velocity.normalized() * 0.1
 			_sound("arrow_hit")
-			reparent(hit_part if hit_part else cr, true)
+			reparent(hit_part, true)
 			_stick()
 		"folk":
-			camps.shot_at(hit_obj)
+			if camps:
+				camps.shot_at(hit_obj)
+			# Off the part it hit, back the way it came, and down.
+			exclude.append((hit_part as CollisionObject3D).get_rid())
+			global_position = hit_pos - velocity.normalized() * 0.03
 			velocity *= -0.15
-			global_position = a.lerp(b, hit_t)
 		"world":
 			# Down through shallow water onto its bed in one step: it still
 			# rings the water where it went in.
@@ -147,6 +151,7 @@ func _splash_crossing(a: Vector3, b: Vector3) -> void:
 func _stick() -> void:
 	_stuck = true
 	velocity = Vector3.ZERO
+	flying.erase(self)
 
 
 func _orient() -> void:

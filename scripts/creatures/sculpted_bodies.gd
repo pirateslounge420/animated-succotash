@@ -15,7 +15,8 @@ class_name SculptedBodies
 ##
 ## Meshes are built once per body kind on a worker thread (prewarm(),
 ## from CreatureSpawner) and shared; build() returns CreatureBodies'
-## dictionary shape ({"root", "legs", "wings", "tail", "light"}) with
+## dictionary shape ({"root", "legs", "wings", "tail", "light"}, plus
+## "sculpted": the kind, which CreatureHitboxes fits its parts to) with
 ## plain pivot nodes at the joints, and a SculptRig copies the pivots'
 ## rotations onto the skeleton every frame, so Creature's leg, arm and
 ## tail swings drive the bones unchanged. Until a kind's mesh is ready
@@ -153,7 +154,7 @@ static func build(sp: CreatureSpecies) -> Dictionary:
 		_make_meshes(key)
 	var data: Dictionary = _cache[key]
 	var res: Array = _meshes[key]
-	var b := {"root": Node3D.new(), "legs": [], "wings": [], "tail": null, "light": null}
+	var b := {"root": Node3D.new(), "legs": [], "wings": [], "tail": null, "light": null, "sculpted": kind}
 	var root: Node3D = b.root
 	var skel := Skeleton3D.new()
 	skel.name = "Skeleton"
