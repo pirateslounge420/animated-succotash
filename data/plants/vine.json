@@ -1359,7 +1359,7 @@
    {
     "name": "Wild grape (Eurasian)",
     "genus": "Vitis",
-    "species": "vinifera subsp. sylvestris",
+    "species": "vinifera",
     "family": "",
     "shape": "liana",
     "temp_c": [
@@ -1437,7 +1437,7 @@
       0.6
      ]
     },
-    "source": "Caucasus and Mediterranean river forest.  Kew POWO.",
+    "source": "Vitis vinifera subsp. sylvestris — the wild grape of Caucasus and Mediterranean river forest. Caucasus and Mediterranean river forest.  Kew POWO.",
     "climber": true
    },
    {

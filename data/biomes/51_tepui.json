@@ -423,7 +423,7 @@
    {
     "name": "Tepui tree fern",
     "genus": "Cyathea",
-    "species": "spp.",
+    "species": "pungens",
     "family": "Cyatheaceae",
     "shape": "tree_fern",
     "temp_c": [
@@ -497,7 +497,7 @@
       0.7
      ]
     },
-    "source": "Tepui slope forest below the cliffs and in summit clefts."
+    "source": "Tepui slope forest and summit clefts; Cyathea pungens is the tree fern of the Guiana Highlands. Kew POWO."
    }
   ],
   "ground": [
@@ -1080,7 +1080,7 @@
    {
     "name": "Rock lichen",
     "genus": "Cladonia",
-    "species": "spp.",
+    "species": "confusa",
     "family": "Cladoniaceae",
     "shape": "moss",
     "temp_c": [
@@ -1154,12 +1154,12 @@
       0.7
      ]
     },
-    "source": "Tepui bare rock; black-crusted quartzite with pale lichen; the 'ancient' look of the summit."
+    "source": "Tepui bare rock; Cladonia confusa, the pale tropical-montane reindeer lichen, on black-crusted quartzite. Index Fungorum."
    },
    {
     "name": "Tepui bromeliad",
     "genus": "Navia",
-    "species": "spp.",
+    "species": "glauca",
     "family": "Bromeliaceae",
     "shape": "spike_rosette",
     "temp_c": [
@@ -1233,7 +1233,7 @@
       0.7
      ]
     },
-    "source": "Navia is almost entirely tepui-endemic: rock rosettes on the cliffs and summit. Kew POWO."
+    "source": "Navia is almost entirely tepui-endemic; N. glauca forms rock rosettes on Guayana cliffs and summits. Kew POWO."
    }
   ],
   "epiphyte": [
