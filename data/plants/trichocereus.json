@@ -122,7 +122,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus peruvianus",
@@ -240,7 +242,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus bridgesii",
@@ -358,7 +362,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus scopulicola",
@@ -476,7 +482,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus macrogonus",
@@ -593,7 +601,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus cuzcoensis",
@@ -710,7 +720,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus terscheckii",
@@ -827,7 +839,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus tacaquirensis",
@@ -944,7 +958,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus taquimbalensis",
@@ -1061,7 +1077,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus santaensis",
@@ -1178,7 +1196,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus puquiensis",
@@ -1295,7 +1315,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus huanucoensis",
@@ -1412,7 +1434,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus riomizquensis",
@@ -1529,7 +1553,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus werdermannianus",
@@ -1646,7 +1672,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus validus",
@@ -1763,7 +1791,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus knuthianus",
@@ -1880,7 +1910,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus glaucus",
@@ -1997,7 +2029,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Trichocereus chalaensis",
@@ -2114,7 +2148,9 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    }
   ]
  }

@@ -107,7 +107,9 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "pink_smooth",
+    "leaf_type": "palmate"
    },
    {
     "name": "Grandidier's baobab",
@@ -209,7 +211,9 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "pink_smooth",
+    "leaf_type": "palmate"
    },
    {
     "name": "Boab",
@@ -311,7 +315,9 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "pink_smooth",
+    "leaf_type": "palmate"
    },
    {
     "name": "Ginkgo",
@@ -414,7 +420,9 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    }
   ],
   "shrub": [],

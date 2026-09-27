@@ -1,0 +1,38 @@
+{
+ "bark": [
+  "bamboo",
+  "beech",
+  "birch",
+  "cactus",
+  "dead",
+  "fibrous",
+  "furry",
+  "green_stem",
+  "mangrove",
+  "oak",
+  "palm",
+  "peeling",
+  "pine",
+  "pink_smooth",
+  "scaly",
+  "smooth_grey"
+ ],
+ "leaf": [
+  "aroid",
+  "autumn",
+  "broadleaf",
+  "dry_grass",
+  "frond",
+  "glossy",
+  "grass",
+  "moss",
+  "needle",
+  "palmate",
+  "purple",
+  "spine",
+  "succulent"
+ ],
+ "size": 128,
+ "style": "painted, posterized to ~28 levels, light grain; tileable; R1a-leaning colours. Species carry bark_type and leaf_type naming a tile; the foliage shader samples the tile and multiplies by the species colour/accent so tint still varies per individual and by genes.",
+ "notes": "Patterns are stylised from real bark classes: birch (white peel, black lenticel bands), pine (orange-brown plates), oak (deep vertical furrows), beech (smooth grey, faint mottling), palm (leaf-scar rings + fibre), fibrous (shredding red-brown: cypress, redwood, juniper), smooth_grey (fig, magnolia, baobab), pink_smooth (Grandidier's baobab, gums), scaly (spruce, fir, araucaria plates), cactus (ribs + areoles), green_stem (herbs, aroids, bananas), bamboo (culm rings), mangrove (dark furrowed), peeling (eucalyptus, arbutus, plane), furry (tree fern, cycad, yucca trunks), dead (snags). Leaves: needle, broadleaf, glossy, palmate, frond, aroid (ribbed), grass, dry_grass, moss, spine, succulent, autumn, purple (the last two are seasonal/gene swaps)."
+}
