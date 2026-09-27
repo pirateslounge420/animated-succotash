@@ -15,6 +15,9 @@
 		"canopy": [
 			{
 				"name": "Wind-stunted conifer",
+				"genus": "Anemopitys",
+				"species": "prostrata",
+				"invented": true,
 				"shape": "conifer",
 				"temp_c": [-4, 5],
 				"moisture": [0.3, 1],
@@ -27,6 +30,8 @@
 		"shrub": [
 			{
 				"name": "Heath",
+				"genus": "Phyllodoce",
+				"species": "empetriformis",
 				"shape": "shrub",
 				"temp_c": [-7, 6],
 				"moisture": [0.35, 1],
@@ -38,6 +43,8 @@
 			},
 			{
 				"name": "Dwarf willow",
+				"genus": "Salix",
+				"species": "herbacea",
 				"shape": "shrub",
 				"temp_c": [-9, 4],
 				"moisture": [0.55, 1],
@@ -51,6 +58,8 @@
 		"ground": [
 			{
 				"name": "Mountain avens",
+				"genus": "Dryas",
+				"species": "octopetala",
 				"shape": "cushion",
 				"temp_c": [-11, 3],
 				"moisture": [0.1, 0.6],

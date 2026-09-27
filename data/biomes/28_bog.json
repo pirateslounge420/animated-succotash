@@ -15,6 +15,8 @@
 		"canopy": [
 			{
 				"name": "Bog pine",
+				"genus": "Pinus",
+				"species": "sylvestris",
 				"shape": "conifer",
 				"temp_c": [-4, 10],
 				"moisture": [0.68, 1],
@@ -30,6 +32,8 @@
 		"ground": [
 			{
 				"name": "Cottongrass",
+				"genus": "Eriophorum",
+				"species": "vaginatum",
 				"shape": "grass",
 				"temp_c": [-9, 9],
 				"moisture": [0.62, 1],

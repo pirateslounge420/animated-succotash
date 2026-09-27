@@ -1,4 +1,4 @@
-# WORLD SYSTEMS SPEC — v3 (Godot project, aligned to commit `fe6ee3e`)
+# WORLD SYSTEMS SPEC — v4 (Godot project; v3 was aligned to commit `fe6ee3e`)
 
 **Read this whole file before touching code. It is the source of truth.** Where it conflicts with `DESIGN.md`, `README.md`, or anything in the repo, this file wins. Then read `docs/PROGRESS.md` to find the current phase, and work on that phase only.
 
@@ -45,7 +45,7 @@ The build is far past "prototype." Most layers of the stack already exist. The j
 
 | Stack layer | Exists in repo | Aligned to spec? | Gap / risk |
 |---|---|---|---|
-| Geology / terrain | `planet/passes/terrain, geology`; cube-sphere 400 km; continents, mountains, ravines, cliffs, cave mouths | Mostly | No **tectonic skeleton** — mountains not placed by plate boundaries |
+| Geology / terrain | `planet/passes/terrain, geology`; cube-sphere 400 km; continents, mountains, ravines, cliffs, cave mouths | Mostly | No **tectonic skeleton** — mountains not placed by plate boundaries. No caves: the only "cave mouths" are wolf-den props (Phase 3 replaces them) |
 | Water | `passes/hydrology`; `river_network` (widths, rapids, waterfalls); rivers swell in storms | Yes | Verify rivers carry a **current direction** boats/swimmers can feel |
 | Energy (clock/sky) | `sky_system` 2-hour day, moon phases, real sun+moon lights; `astro`; `lunar_mansions`; `cloud_layers` | Mostly | Day split must be **45/20/35/20**; verify smooth lerps; lunar cycle ~29.5 days |
 | Climate | `passes/climate`; `weather_sim` grid with wind | Partly | Verify wind is **pressure-gradient** driven; verify **ridge-blocked moisture** (windward wet / leeward dry) |
@@ -58,7 +58,7 @@ The build is far past "prototype." Most layers of the stack already exist. The j
 | Look | `post_grade` (sharpening, **dithered color depth**, night tint); `look_textures` procedural; 15 shaders | **No** | Dither + sharpen is a PS1 look, not GameCube. Likely the main cause of the "pixely" complaint. Check texture filtering too |
 | Player | walk/sprint/crouch/jump/swim/climb, 1st/3rd person, health/death, bow, footsteps by material, tree contact | Mostly | Rebind controls (C5); verify **hitboxes** on everything; add **spear**; audio must be 3D proximity |
 
-**Cut or hold:** Rare-event dice, sky events, magic sites, ruins, sculpted bodies all stay as they are — don't touch, don't expand.
+**Cut or hold:** Rare-event dice, sky events, magic sites, ruins, sculpted bodies all stay as they are — don't touch, don't expand. Exceptions written into the cards: Phase 3 reuses `magic_sites` for the teal fungi at depth; Phase 10 unparks the set pieces (`hold/set-pieces`) and lets camps salvage from ruins.
 
 ---
 
@@ -90,11 +90,11 @@ Target: **late-90s/early-2000s console 3D, saturated dark-fantasy**. Low-poly bu
 ### D1. World scale (locked)
 Spherical wraparound cube-sphere, **400 km** circumference, relief ≈ 1/10 Earth, floating origin around the player. Already built — keep it.
 
-The planet stays 400 km (1/100 Earth) through Phase 11; it may scale to 1/10–1/30 Earth later because boats will be the main way to travel. Therefore: everything global lives in PlanetData at coarse resolution; everything the player sees is derived per chunk from seed + PlanetData and discarded on stream-out; nothing at detail scale is ever stored except region deltas (ledger counts, nests, carcasses, scars, memories, culture). Scaling the planet up must change only radius/resolution constants and PlanetData's memory, never the streaming or detail code.
+The planet stays 400 km (1/100 Earth) through Phase 12; it may scale to 1/10–1/30 Earth later because boats will be the main way to travel. Therefore: everything global lives in PlanetData at coarse resolution; everything the player sees is derived per chunk from seed + PlanetData and discarded on stream-out; nothing at detail scale is ever stored except region deltas (ledger counts, nests, carcasses, scars, memories, culture). Scaling the planet up must change only radius/resolution constants and PlanetData's memory, never the streaming or detail code.
 
 ### D2. The emergence stack (mirrors Earth; the dependency order)
 ```
-1. Geology    seed → tectonic skeleton → heightmap → rock type      (static)
+1. Geology    seed → tectonic skeleton → heightmap → rock type → caves  (static)
 2. Water      oceans, lakes, rivers (with current), groundwater     (static shape)
 3. Energy     sun & moon, day length by latitude                    (sky_system, astro)
 4. Climate    temperature, pressure, wind, humidity                 (climate pass, weather_sim)
@@ -131,55 +131,80 @@ PlanetData is ~119 bytes per cell: 6.6 MB on the full planet, 1.6 MB on the stam
 
 | Field | Home | Per region | Owner | Phase |
 |---|---|---|---|---|
-| season | derived from `World.days` and `year_days` in `data/sim.json`; nothing stored | — | World clock | 4 |
+| cave_density | `World.planet.cave_density` (PlanetData, per cell) | u8 per cell (0–1 in 1/255 steps) | geology pass, once at generation | 3 |
+| season | derived from `World.days` and `year_days` in `data/sim.json`; nothing stored | — | World clock | 5 |
 | regions | `World.regions`: `cell_to_region` (per cell), `center`, `area_km2`, `neighbors` | i32 per cell; vec3, f32, 8×i32 | ecology/ledger, at generation | 6 |
-| soil.fertility | `World.soil.fertility` | f32 | ledger (soil rules); the soil pass seeds it | 5, live from 6 |
-| soil.carcass | `World.soil.carcass` | f32 (kg) | ledger | 7 |
-| flora.biomass[stratum] | `World.flora.biomass` | 3× f32 | ledger (flora rules); vegetation_placer seeds it | 5, live from 6 |
-| flora.snags, flora.logs | `World.flora.snags`, `World.flora.logs` | u16 each | ledger; Phase 5 fills them from tree ages | 5 |
-| flora.cavities ⚑ | `World.flora.cavities` | 2× u8 (free, used) | ledger | 6 |
-| flora.burn_scar | `World.flora.burn_scar` | u16 (days since burn, 0 = none) | ledger (fire) | 8 |
-| water level (seasonal) | `World.hydro.level_offset` (added to `planet.water_level`) | f32 (m) | ledger (living water) | 8 |
-| fauna.pop[species] | `World.fauna.pop` | S× f32 | ledger | 6 |
-| fauna.sex_ratio[species] | `World.fauna.sex_ratio` | S× u8 | ledger | 7 |
-| fauna.genome_mean[species][gene] | `World.fauna.genome_mean` | S×G× u8 (0–1 in 1/255 steps) | ledger | 7 |
-| events | `World.events`: per region a ring of the last ~50 records {day, kind, params} + a per-kind summary (count, first day, last day) | ~1.1 KB | ecology/events: append-only, every system adds records through it | 6 |
-| society[camp] pop/food/roles/culture | `World.society`: packed arrays per camp id (camps are few) | per camp: a few f32; culture {fish, hunt, forage, wary, range} 5× f32 | camps | 9 |
-| creature.memory[] | on each NEAR creature node; saved as a region delta in `World.fauna.memory_delta` (sparse, by region) | ≤5 × {what, where, day, good/bad} | creature | 10 |
+| soil.fertility | `World.soil.fertility` | f32 | ledger (soil rules); the soil pass seeds it | 6 |
+| soil.carcass | `World.soil.carcass` | f32 (kg) | ledger | 8 |
+| flora.biomass[species] | `World.flora.biomass`, sparse: per region only the species present (id + value) | ~20–60 × (u16 + f32) | ledger (flora rules); vegetation_placer seeds it | 6 |
+| flora.seedbank[species] | `World.flora.seedbank`, same sparse layout, annuals only | ~0–30 × f32 | ledger | 6 |
+| flora.genome_mean[species][gene] | `World.flora.genome_mean`, same sparse layout | present species × 6–10 u8 | ledger | 6 |
+| flora.snags, flora.logs | `World.flora.snags`, `World.flora.logs` | u16 each | ledger; tree ages seed them | 6 |
+| flora.cavities ⚑ | `World.flora.cavities` | 2× u8 (free, used) | ledger | 7 |
+| flora.burn_scar | `World.flora.burn_scar` | u16 (days since burn, 0 = none) | ledger (fire) | 9 |
+| water level (seasonal) | `World.hydro.level_offset` (added to `planet.water_level`) | f32 (m) | ledger (living water) | 9 |
+| fauna.pop[species] | `World.fauna.pop` | S× f32 | ledger | 7 |
+| fauna.sex_ratio[species] | `World.fauna.sex_ratio` | S× u8 | ledger | 8 |
+| fauna.genome_mean[species][gene] | `World.fauna.genome_mean` | S×G× u8 (0–1 in 1/255 steps) | ledger | 8 |
+| events | `World.events`: per region a ring of the last ~50 records {day, kind, params} + a per-kind summary (count, first day, last day). Kinds include `scent` (a blooming aroid or a carcass: strength, until-day) | ~1.1 KB | ecology/events: append-only, every system adds records through it | 6 |
+| society[camp] | `World.society`: packed arrays per camp id (camps are few): pop, food, roles; culture {fish, hunt, forage, wary, range, ritual_smoke}; `landmark` (kind + id of the remnant it formed around); `salvage` {worked stone, timber, metal}; `standing` (the player's standing with the camp) | per camp: ~15 f32 + 2 i32 | camps | 10 |
+| player.haze | `World.player.haze` (a small player-state object; nothing else on it yet) | one f32, 0–1 | player (writes); `post_grade`, audio, creatures read | 10 |
+| creature.memory[] | on each NEAR creature node; saved as a region delta in `World.fauna.memory_delta` (sparse, by region) | ≤5 × {what, where, day, good/bad} | creature | 11 |
 
-**Regions: PlanetData cells or a fixed coarsening.** Option A: one region per cell. Option B: a fixed k×k block of cells within a cube face, k in `data/sim.json`. Memory for the proposed per-region fields at a planning roster of S = 64 species (25 today), G = 15 genes, 3 strata and ~24 event kinds is about 2.4 KB per region (the events ring and genome means are most of it; 5.3 KB if genomes are f32):
+**Regions: PlanetData cells or a fixed coarsening.** Option A: one region per cell. Option B: a fixed k×k block of cells within a cube face, k in `data/sim.json`. Per region the fauna fields, soil, water and events come to about 2.4 KB at a planning roster of S = 64 species (25 today), G = 15 genes and ~24 event kinds (5.3 KB if genomes are f32). Flora is per species from Phase 6, but a region holds only the species actually present there: about 20–60 of them × ~20 bytes (id, biomass, seed bank, 6–10 gene means), so 0.4–1.2 KB more; stored densely for all 417 plant entries (107 biome plants + the two catalogues) it would be ~8 KB more per region. Totals at ~3.6 KB per region:
 
 | | Regions | Ledger memory |
 |---|---|---|
-| Full planet, A (cells, ~1 km) | 55,296 | ~130 MB |
-| Full planet, B k=2 (~2 km) | 13,824 | ~33 MB |
-| Full planet, B k=4 (~4 km) | 3,456 | ~8 MB |
-| Stamp, A (cells, ~208 m) | 13,824 | ~33 MB |
-| Stamp, B k=4 (~830 m) | 864 | ~2 MB |
-| 10× planet with ~1 km cells, B k=4 | 345,600 | ~830 MB dense (see ⚑) |
+| Full planet, A (cells, ~1 km) | 55,296 | ~200 MB |
+| Full planet, B k=2 (~2 km) | 13,824 | ~50 MB |
+| Full planet, B k=4 (~4 km) | 3,456 | ~12 MB |
+| Stamp, A (cells, ~208 m) | 13,824 | ~50 MB |
+| Stamp, B k=4 (~830 m) | 864 | ~3 MB |
+| 10× planet with ~1 km cells, B k=4 | 345,600 | ~1.2 GB dense (see ⚑) |
 
 Proposed: **B, k = 4.** It keeps the ledger small and, above all, keeps the warm start affordable: 50–200 years of `tick_region` over 3,456 regions is 16× less work than over 55,296. Rules work in densities per km², so the region size can change later without retuning. (At 10× the planet PlanetData itself is ~660 MB at ~1 km cells, so a bigger planet also means coarser cells.)
 
 ⚑ Unsure / flagged:
 - Sky and eased weather are not on World today (a SkySystem node and main.gd). Proposed: publish read-only copies as `World.sky` and `World.weather_local` so systems never reach into main.
-- `soil.fertility` and `flora.biomass` are seeded by generation passes (Phase 5) but change live from Phase 6 (grazing, carcasses, fire, floods), so their live owner is the ledger.
-- `flora.cavities` isn't in the designer's list, but the cavity chain (Phase 6) needs somewhere to keep cavity slots.
-- A 10× planet can't hold dense ledger arrays; FAR regions would store nothing until first simulated (regenerated deterministically per R6.5, then kept as a delta). That needs a region-id indirection from Phase 6 so storage can go sparse without touching `tick_region`.
-- Snags from chopping or fire aren't derivable from tree age; they're per-tree region deltas. D1's list of stored deltas may need "felled and burned trees".
+- The ledger core (regions, `tick_region`, events, `data/sim.json`, the warm start, `eco_sim`) now starts in Phase 6, because the flora ledger and the harness's flora half are Phase 6 work; Phase 7 adds fauna to the same ledger and run. `soil.fertility` and `flora.*` are seeded by generation passes and change live from Phase 6.
+- `flora.cavities` isn't in the designer's list, but the cavity chain (Phase 7) needs somewhere to keep cavity slots.
+- A 10× planet can't hold dense ledger arrays; FAR regions would store nothing until first simulated (regenerated deterministically per R6.5, then kept as a delta). That needs a region-id indirection from the start (Phase 6) so storage can go sparse without touching `tick_region`. Flora is sparse per region from day one.
+- Stored deltas beyond D1's list: felled and burned trees (chopping and fire make snags that tree age can't derive), placed items (a bundle drying by a fire or in a hut for days), and possibly remnant salvage (if salvaging uses a landmark up, `salvage_left` per landmark is a delta).
+- `cave_density`: GLACIAL_TILL isn't in the designer's rock list; proposed none (loose glacial deposits), like alluvial.
+- `player.haze` needs a home for player state on World; `World.player` is proposed, holding only `haze` for now.
+- Human seed dispersal "along camp foraging ranges and paths" needs Phase 10's ranges; until then it uses each camp's position and a table radius.
 
 ### D4. Data schemas (extend existing files; don't rename)
 ```
 data/biomes/<biome>.json   + weather_odds, mythic_creature, (keep plant lists; add per-plant stratum)
-plant                      { id, stratum(canopy|under|ground), temp_min/max, moisture_min/max,
-                             soil_min, slope_max, sway_stiffness, seasonal_color,
-                             lifespan_years, snag_years, log_years }
+data/plants/<catalogue>.json  plant catalogues, laid out like a biome file (key, name, kind, status, notes,
+                             plants{stratum: [entries]}) but with no climate block: every entry carries its
+                             own temp_c / moisture / altitude_m bands. The keys regions, types and
+                             family_defaults are ignored by species_db. Today: amorphophallus.json (246
+                             species), cannabis.json (64 landraces of one species). Loaded from Phase 6.
+plant                      { name, genus, species, invented?, stratum(canopy|under|ground), temp_min/max,
+                             moisture_min/max, soil_min, slope_max, sway_stiffness, seasonal_color,
+                             lifespan_years, snag_years, log_years,
+                             repro?, genes?, family?, aroid?, cannabis?, landrace?, landrace_id?, type? }
+  repro                    { mode: seed|clonal|both,
+                             pollinator: insect|wind|carrion_fly|bird|bat|self,
+                             disperser: bird|mammal|wind|water|gravity|human, or a list (each adds its kernel),
+                             clonal: runner|rhizome|tuber_offset|bulbil|sucker|none,
+                             bloom: {season, days (or [min, max]), interval_years: [min, max]},
+                             dormant: dry|cold|seed|none, lifespan: annual|perennial, dioecious: bool }
+                             entries without repro get their tier's default
+  genes                    { <gene>: [min, max] } 6–10 genes in 0–1; the species table maps each to a visible trait
+  aroid                    { petiole: {pattern, base, spots}, spathe: {outside, inside}, bloom_with_leaf }
+  cannabis                 { leaf_width, flowering: {trigger, hours, days}, uses, camp_follower }
+  shape                    + aroid (catalogue entries use umbrella until the aroid shape exists)
 data/creatures/creatures.json
-creature                   { id, trophic(insect|herbivore|small_pred|apex|scavenger|fish),
+creature                   { name, genus, species, invented?, id, trophic(insect|herbivore|small_pred|apex|scavenger|fish),
                              diet:[ids or "seeds"|"insects"|"leaves"|"fish"], temp_min/max, water_bound,
                              activity(day|night|dusk), temperament(friendly|skittish|aggressive|pack),
                              light_response, herd_min/max, nest:{type, site}, reproduce_days,
-                             biome_lock (mythic only), rare_variant }
+                             biome_lock (mythic only), rare_variant, underground (cave fauna) }
 ```
+**Binomials (every entry, from now on).** Every plant and creature entry has `genus` and `species`; `name` stays the display name. Real organisms use their real binomial — the accepted name in Kew's Plants of the World Online for plants (*Tsuga heterophylla* for the hemlock, *Canis lupus* for the wolf). Invented ones — mythics, Night Rider, Pond Crawler, the placeholder plants named by habitat and form ("Understory shrub") — get an invented binomial in the same Linnaean style and `"invented": true`. No entry is valid without them. Entries sharing a binomial are one interbreeding species. (`repro.lifespan` — annual or perennial — is separate from `lifespan_years`, a tree's age at death.)
 
 ### D5. Player & controls (locked)
 - **Sprint = Minecraft-style:** tap W, then tap-and-hold W again quickly (double-tap window ~0.3 s). No Shift-to-sprint.
@@ -205,7 +230,7 @@ See Part C.
 - **(ii) Climbing:** the player climbs trunks and shimmies along thick branches: slow, effortful, no swinging; extend `tree_contact`.
 - **(iii) Monkey:** a gibbon-type monkey rig that brachiates along the branch graph — arc-and-release with momentum, next handhold chosen by reach and swing arc; monkey-only; it goes in R3's warm–wet band.
 - **(iv) Ripple system, Night Rider, Pond Crawler** — the designer's spec, verbatim:
-> Two new creature templates, plus the ripple system they depend on. Add both to `data/creatures/creatures.json` under the existing schema; nothing spawns until Phase 6, but the movement rigs and ripple system are Phase 1 work.
+> Two new creature templates, plus the ripple system they depend on. Add both to `data/creatures/creatures.json` under the existing schema; nothing spawns until [Phase 7], but the movement rigs and ripple system are Phase 1 work.
 >
 > Both creatures and the ripple rings follow Appendix R1/R1a exactly — crunchy noisy textures on smooth rounded shapes, bodies tinted into the night ultramarine, the eye glows as the single accent (#2A6AFF for the crawler's eye, #FF2A2A for the riders' eyes), nothing pure black, water flat and dark with no sky reflection. If a creature would not sit beside the R1a reference stills and belong, it isn't done.
 >
@@ -216,7 +241,7 @@ See Part C.
 > **Pond Crawler** — trophic: mythic, biome_lock: swamp/bog, water_bound: true, activity: night, temperament: aggressive at close range, otherwise still. Body is a rounded hooded lump with one large blue slit eye that is a real point light. Locomotion: bipedal on two long arms with splayed fingers, wading not swimming. Each hand lifts and re-plants slowly; each plant fires a ripple, and the body's slow drift fires a wide wake ring. It mostly waits motionless in water; when the player is near it lurches — a faster arm-over-arm crawl that stacks overlapping rings. Physics: hands are contact points on the water surface and pond floor; the body follows with lag so it sways.
 >
 > Both get proper hitboxes per D5. Show me a short recording of each moving on the test planet at night, with rings visible under the crawler.
-- All rigs are testable on the stamp via a dev spawn key; nothing spawns in normal play until Phase 6.
+- All rigs are testable on the stamp via a dev spawn key; nothing spawns in normal play until Phase 7.
 - **Agreed at Go (2026-09-27).** The designer said Go without answering these; the recommendations below stand until the designer overrides them:
   - Ripples keep one ~256×256 buffer (0.25 m a texel, 64 m across) centred on the camera instead of one per nearby water chunk; beyond ~40 m the static wave shader takes over.
   - `World.ripples` gives readers the recent disturbances (where, how big, how long ago) through `Ripples.height_at()` and `disturbance_at()`; the height buffer itself stays on the GPU.
@@ -224,7 +249,7 @@ See Part C.
   - Climbing is effortful by rhythm (a beat between reaches, breath sounds); no stamina meter.
   - Spear: Q (pad Y) swaps bow and spear; tap to thrust, hold and release to throw; E picks it back up.
   - Dev keys (dev mode only): F4 collision shapes, F6 branch graphs, F7 spawns the next rig, F8 makes the nearest wolf pack howl.
-  - Deferred: creatures steering around trunks and ruin walls (pathfinding, Phase 6/7), wind sound, campfire crackle.
+  - Deferred: creatures steering around trunks and ruin walls (pathfinding, Phase 7/8), wind sound, campfire crackle.
   - Fire light on folk and props is #FFA050 (R1a updated).
 - **Do not build:** new creatures or systems beyond the ones on this card, combat balancing.
 - **Done when:** a recording shows double-tap sprint, sneak past a deer that would otherwise flee, an arrow and a thrown spear sticking where they visibly hit, and a howl that pans and fades as you walk away; the player climbs a tree while a monkey passes overhead, and a wading creature leaves rings.
@@ -243,62 +268,100 @@ See Part C.
 - **Prompt A:**
 > Phase 2. Audit the five planet passes and river_network against the Phase 2 card: is there a tectonic skeleton, do rivers store current direction, is moisture blocked by ridges, how many biomes are in data and how are they looked up. List gaps, propose minimal changes. Wait.
 
-## Phase 3 — Wind into the world
+## Phase 3 — Caves and underground
+- **Touches:** geology pass, `terrain_field`, `terrain_chunk`, `chunk_manager`, look shaders, `data/biomes/50_caves.json`.
+- **(a) Blueprint:** PlanetData gains `cave_density[cell]` from rock plus noise — high in LIMESTONE_KARST (karst systems, underground rivers), medium in BASALT_VOLCANIC (lava tubes), low in granite and sandstone, none in alluvial, coastal sand and clay/peat. Nothing hand-placed.
+- **(b) Cave field:** a seeded 3D density field under the surface, evaluated only in chunks whose cell has `cave_density` > 0. Wide rooms at depth, winding tunnels linking them, narrow crawls, and open ravines that split the surface — the Minecraft 1.18 model. Tunnels drift toward the water table; rooms below `water_level` fill with water. Where the field meets the surface it makes a real opening — cliff-side mouths, sinkholes, and behind waterfalls — and the surface mesh gets a hole there.
+  - Cave-mouth logic today: the only cave mouths are the wolf dens' props (`creature_spawner` `_find_den` / `_den_prop`: two boulders and a lintel around a near-black ball on a steep, cold slope, no tunnel). Replace them with this: dens pick a real mouth from the field. The cliff camps' overhang (`camps`) is a rock shelter, not a cave, and stays.
+- **(c) Meshing:** caves are a separate mesh per chunk, marching cubes, NEAR only, with collision, unloaded with the chunk. Cave geometry is never stored — regenerate from seed. Report the per-chunk cost and keep it under the surface mesh's.
+- **(d) Look, per R1/R1a:** never black. Deep ultramarine haze that thickens with distance, cold #3E4C8C stone, water near self-lit, warm light only from the player's torch or a fire. Depth bands: shallow root-and-soil caves; limestone with stalactites, pools and underground rivers; deep volcanic with lava glow (#FF4A00) under BASALT_VOLCANIC. Teal fungi at depth reuse `magic_sites`.
+- **(e) Underground biome:** `50_caves.json` becomes real — moss, fungi and glow fungi by depth band. Cave fauna (bats that roost by day and pour out at dusk, cave fish, blind salamanders, spiders) join the ledger in Phase 7 with `underground: true`. Cave ambience: the drone, drips, echoing footsteps, all 3D.
+- **(f) Hooks only, not built:** sunken temples in flooded rooms; the rare deep tribe by the lava, later.
+- **Do not build:** cave creatures, ruins inside caves, the lava tribe.
+- **Done when:** on the stamp, a karst cliff mouth leads through tunnels to a room with a pool and an underground river; a ravine splits the surface somewhere; a mouth exists behind a waterfall; F3 shows `cave_density`; frame rate underground matches the surface.
+- **Prompt A:**
+> Phase 3. Audit the geology pass, terrain_field, terrain_chunk meshing and chunk_manager for how a second, volumetric mesh layer can be added per chunk without slowing the surface. Propose the noise model, the mouth logic, and a marching-cubes budget. Wait.
+
+## Phase 4 — Wind into the world
 - **Touches:** `weather_sim`, foliage shader, `cloud_layers`, `weather_fx`.
 - Verify wind = **pressure gradient** with latitude deflection. Foliage shader reads live wind at its position; sway/rustle scale with magnitude and per-plant `sway_stiffness`. Clouds and fog drift with wind.
 - **Do not build:** seasons, ecology.
 - **Done when:** pressure/wind overlay shows cells moving; the forest visibly sways harder as a low approaches; fog rolls in the wind's direction.
 
-## Phase 4 — Seasons
+## Phase 5 — Seasons
 - **Touches:** `sky_system` (season clock), `weather_sim` (temp modulation, odds), foliage shader (`seasonal_color`).
 - 4 seasons with transition periods; season shifts the temperature field → weather odds → foliage color. Biomes stay fixed.
 - **Done when:** on the dev clock, the deciduous forest turns and snow reaches lower altitude in winter.
 
-## Phase 5 — Soil & flora strata
-- **Touches:** new soil pass, `species_db`, `vegetation_placer`, `data/biomes/*.json`, `plant_meshes`.
+## Phase 6 — Soil & flora strata
+- **Touches:** new soil pass, `species_db`, `vegetation_placer`, `data/biomes/*.json`, `data/plants/*.json`, `plant_meshes`, foliage shader; NEW `ecology/ledger` (core and flora rules), `ecology/events`, `tools/eco_sim.gd` (flora half), `data/sim.json`.
 - Soil fertility accumulates where warm, moist, flat, littered; thin on steep rock, cold, dry. `vegetation_placer` adds fertility to suitability.
 - Tag every plant with a **stratum**; ensure each biome has canopy / understory / ground per Appendix R2. Small counts.
-- **Tree lifecycle:** every tree has an age derived from seed + position + world day (nothing stored). Each species has a lifespan in its table. Past lifespan a tree becomes a **snag** — standing dead, bare, broken top, own mesh in `plant_meshes` — for a species-set number of years, then a fallen log, then it's gone and its region gets a fertility bump. Chopping or fire (Phase 8) makes a snag immediately. Add `flora.snags[region]` and `flora.logs[region]` to the ledger so other systems can read them.
-- **Done when:** a fertility overlay explains why a valley is lush and a ridge is bare; walking the stamp shows the right plant sizes in the right places; an old-growth patch on the stamp shows live trees, snags and logs together, and a young patch shows none.
+- **Tree lifecycle:** every tree has an age derived from seed + position + world day (nothing stored). Each species has a lifespan in its table. Past lifespan a tree becomes a **snag** — standing dead, bare, broken top, own mesh in `plant_meshes` — for a species-set number of years, then a fallen log, then it's gone and its region gets a fertility bump. Chopping or fire (Phase 9) makes a snag immediately. Add `flora.snags[region]` and `flora.logs[region]` to the ledger so other systems can read them.
+- **Ledger core:** the flora ledger needs R6 rules 1–7, regions and `tick_region` in this phase; Phase 7 adds fauna to the same ledger and the same harness run.
+- **Plant catalogues:** `species_db` loads `data/plants/*.json` exactly like a biome file: entries carry their own bands, there is no biome climate block, and the `regions`, `types` and `family_defaults` keys are ignored (so is the biome-key check). `species_db` warns on any entry without `genus` and `species` (D4).
+- **Reproduction data:** each plant entry may add a `repro` block; entries without one get their tier's default (fields in D4). `dormant`: the plant withdraws to its root and shows nothing, or a withered stem, until its season returns; `seed` means an annual that dies and comes back from the seed bank. `dioecious`: each plant is male or female and only females fruit.
+- **Lifecycle (NEAR):** each plant has an age from seed + position + world day, nothing stored. States seedling → vegetative → bloom → fruit → dormant on the species' calendar, offset by a timing gene. Bloom and fruit are visible states with their own mesh part; dormant plants vanish or wither. Some species bloom before they leaf. Flowering may be triggered by day length (a `flower_trigger` gene read against the sky system's day length at that latitude) or by age.
+- **Ledger (MID):** `flora.biomass[region][species]` grows toward a cap set by soil fertility and climate suitability. Annuals also keep `flora.seedbank[region][species]`, which decays over a few years and germinates each spring — the general rule for all annuals, grasses included. Spread differs by strategy:
+  - Clonal spreads only into adjacent regions through continuous suitable ground, slowly, but recovers fast from the root after fire, grazing or harvest.
+  - Seed spread is propagules = biomass × bloom success × disperser availability, with a kernel by disperser — gravity 0–1 region, wind 1–3 regions downwind along `wind_avg`, water downstream along `flow_to`, bird 1–5 regions toward forest and water, mammal 1–3, human along camp foraging ranges and paths.
+  - Bloom success reads the ledger's insect count for insect and carrion-fly pollinators and bird count for birds; wind and self are 1. Until Phase 7 fills the ledger those counts are a table value.
+  - Seeders die out locally with no seed source in range — that is what makes fire-scar succession emerge (wind-seeded grasses first, bird-seeded berries later, trees last). **Do not script succession stages.**
+- **Genetics:** 6–10 genes per plant in 0–1; the species table maps each to a visible trait — size, leaf colour shift, pattern intensity (petiole mottling on aroids, bark on trees), bloom colour, scent strength, timing offset, dormancy length, and allocation (how much goes to blooms versus offsets when mode is both). Seed offspring mix two parents plus mutation; clonal offspring copy the parent with tiny mutation, so a clonal patch is visibly uniform and a seeded population visibly varied. Allocation is heritable, so strategy evolves: where fire is frequent or pollinators scarce, clonal genes win; where insects are rich, seeders win. Entries sharing a binomial are one interbreeding species; a landrace or regional form is a starting genome for its region, and where two ranges overlap, hybrids appear by the ordinary seed rules. The harness must show this per region.
+- **Harness:** build `eco_sim`'s flora half in this phase — biomass by species and region over years, spread maps, succession after a scripted test burn, allocation gene means by region. Phase 7 adds fauna to the same run.
+- **Aroids — the Amorphophallus catalogue:** new shape `aroid`: one petiole with a dissected umbrella leaf; bloom part is a spathe and spadix; dormant shows nothing. Carrion-fly pollinated — the bloom writes a short-lived scent record (`world.events`, kind `scent`) that draws the same insects the carcass chain uses; berries dispersed by birds; tuber offsets, and bulbils on the leaf for some species; dormant in the dry season; the giants bloom every 3–10 years for two or three days. `data/plants/amorphophallus.json` holds all 246 species accepted by Kew, each with its own temp_c/moisture/altitude band, height, density, soil, an `aroid` block (petiole pattern and colours, spathe colours), a `repro` block and `genes` ranges. Its shape is `umbrella` for now — switch every entry to `aroid` once that shape exists. Do not hand-place any of them; they grow wherever their bands allow, which will be the warm–hot bands only. (⚑ 15 East Asian species, konjac among them, are banded down to 12 °C, so they also reach the warm edge of the mild band.)
+- **Cannabis:** `data/plants/cannabis.json` holds 64 landrace populations of the single species *Cannabis sativa*, loaded like the aroid catalogue. All entries interbreed as one species. Each plant is male or female — only females carry the harvestable flower, and on windy days a faint yellow drift blows downwind from a male stand. Wind-pollinated, annual, seed bank. Flowering starts when the day length at that latitude drops below the plant's `flower_trigger` (ruderal types flower by age), so a tropical landrace carried north by a camp may never finish before the cold — that failure is allowed. Camp-follower dispersal, so it grows on middens and trail edges near camps that use it. Genes gain `leaf_width`, `resin`, `fibre`, `flower_trigger`, `purple`; broad-leaf types purple in cold. (Its uses are Phase 10.)
+- **Do not build:** fauna in the ledger (Phase 7), spreading fire (Phase 9; this phase has only the harness's scripted test burn), camp and player uses of plants (Phase 10).
+- **Done when:** a fertility overlay explains why a valley is lush and a ridge is bare; walking the stamp shows the right plant sizes in the right places; an old-growth patch on the stamp shows live trees, snags and logs together, and a young patch shows none; a runner plant shows visible stems linking a uniform patch; a bird-dispersed berry appears across a river its parent can't cross; a test burn regrows grass, then shrub, then trees with no stage coded; an aroid blooms, stinks, draws flies, and vanishes for the dry season; a female cannabis plant flowers on the day the sky says it should for that latitude.
 
-## Phase 6 — Ecology core
-- **Touches:** NEW `ecology/ledger`, `ecology/events`, `tools/eco_sim.gd`, `creature_spawner`, `creatures.json`.
-- Build R6 rules 1–7 first, then the ledger, food web (R3), diet caps, nests, warm start, and the harness: a headless run of N years on the stamp at max speed, outputting CSV plus PNG charts (population by species and region, camp food, events timeline), fixed seed with a multi-seed flag.
+## Phase 7 — Ecology core
+- **Touches:** `ecology/ledger`, `ecology/events` and `tools/eco_sim.gd` (all from Phase 6), `creature_spawner`, `creatures.json`.
+- Add fauna to Phase 6's ledger and harness: food web (R3), diet caps, nests, fauna in the warm start; the harness (a headless run of N years on the stamp at max speed, CSV plus PNG charts, fixed seed with a multi-seed flag) gains population by species and region, camp food and the events timeline.
+- **Cave fauna:** bats that roost by day and pour out at dusk, cave fish, blind salamanders and spiders join the ledger with `underground: true`; their regions are the cave-bearing cells from Phase 3.
 - **Cavity chain:** snags are habitat. Wood-boring beetles and grubs live in snags and logs (insect count capped by snag count). Woodpeckers eat them and carve cavities — a snag gains a cavity slot when a woodpecker nests there. Owls, squirrels and other cavity nesters use old cavities; they can't nest without one. Owls hunt rodents at night. So `nest.site: cavity` requires a snag with a free cavity in the region.
-- **Do not build:** genetics, migration, fire, camps.
+- **Do not build:** fauna genetics, migration, fire, camps.
 - **Done when:** the harness shows a stable 100-year run, a new world already has nests, the population overlay balances over dev days, a cat takes a rodent, a wolf pack shows up where deer are; a woodpecker is seen on a snag by day, an owl leaves a cavity at dusk.
 
-## Phase 7 — Living populations
+## Phase 8 — Living populations
 - **Touches:** ledger, `creature`, creature shader, `creatures.json`.
 - **(a) Genetics:** 8–15 genes per creature in 0–1; the species table maps each gene to a visible trait (size, coat, marking, leg length, speed, temperament bias) with a clamped range; newborns take each gene from either parent plus small mutation; the shader reads tint, pattern, and scale from genes; the rare variant is a gene past normal range and is heritable. Sex is one bit; the species table has male and female rows for range, nest-tending, and aggression; breeding needs both in a region.
 - **(b) Migration:** food location shifts with season; herbivores follow food downhill and warmward, predators follow prey — no new behaviour, only seasonal food.
 - **(c) Carcass chain:** any death leaves a carcass record {region, position, mass, day}; scavengers seek it, predators are drawn by it, it decays into soil fertility over days.
 - **Done when:** the harness shows genome means drifting apart between separated regions, herds visibly move in winter on the stamp, and a carcass draws a scavenger and leaves a green patch.
 
-## Phase 8 — Disturbance and living water
+## Phase 9 — Disturbance and living water
 - **Touches:** `weather_sim`, ledger, soil, `vegetation_placer`, `river_network`, `terrain_chunk` water.
-- **(a) Fire:** lightning or a camp fire, plus dryness and flora density, ignites; spreads per region by wind and dryness; consumes flora biomass, adds fertility, writes `burn_scar`; NEAR shows burning trees, smoke, blackened ground; scars regrow in stages (grass → shrub → young trees) over years. A burned patch becomes a field of snags at once.
+- **(a) Fire:** lightning or a camp fire, plus dryness and flora density, ignites; spreads per region by wind and dryness; consumes flora biomass, adds fertility, writes `burn_scar`; NEAR shows burning trees, smoke, blackened ground; scars regrow over years — grass, then shrub, then young trees — by Phase 6's seed and clonal rules, never as scripted stages. A burned patch becomes a field of snags at once.
 - **(b) Flood:** storm plus swollen river floods low regions; flattens ground flora, deposits fertility, drowns burrow nests.
 - **(c) Living water:** lake level and river width follow season and recent rain; boats read width for passability; the water mesh height updates when a chunk streams.
 - **Done when:** on the stamp a dry-season strike burns a patch that comes back as meadow, the harness shows fires as bounded pulses, and a river you could paddle in spring is a rocky bed in late summer.
 
-## Phase 9 — Camp life and culture
-- **Touches:** `camps`, `encampment`, `campfire`, `player/*`, light inventory.
+## Phase 10 — Camp life and culture
+- **Touches:** `camps`, `encampment`, `campfire`, `player/*`, light inventory, `landmarks`, `ruin_builder`, the parked set pieces (`hold/set-pieces`), `post_grade`, audio.
 - **Player loop:** fish (rivers/lakes/coast, by water temp), forage (berries/fruit/roots by biome), hunt (bow/spear) → carry a few things (Appendix R4) → bring to a campfire → **cook at night with the camp folk**. Cooked food restores health; the fire is the ambient social moment.
 - **Camp folk loop:** foragers/hunters/fishers go out by day, gather from the ledger and flora, return by dusk; food surplus → camp grows → more pressure on nearby prey → range farther or shrink. Background camp-to-camp trade. **Do not script outcomes.**
 - Camps are night safe zones. Interaction proximity-based; no dialogue trees.
 - **Firewood:** camp folk gather snags and logs for firewood first, so old wood thins near camps.
-- **Culture:** each camp holds culture sliders {fish, hunt, forage, wary, range} seeded from biome and moved by events — a wolf raid raises wary, a rich river raises fish. Goods, chatter, and how folk react to the player read from the sliders.
-- **Done when:** you catch a fish, bring it to the opening camp, cook it at dusk with the folk, and the camp's own hunters are seen leaving and returning; plus two camps with different histories visibly behave differently.
+- **Culture:** each camp holds culture sliders {fish, hunt, forage, wary, range, ritual_smoke} seeded from biome and the landmark it formed around, and moved by events — a wolf raid raises wary, a rich river raises fish. Goods, chatter, and how folk react to the player read from the sliders.
+- **Camps form around remnants:** camps already sit in inhabited ruins, wild sites and cliff sites. Make it a scored rule: every landmark — tower, castle, aqueduct, pyramid, graveyard, barrow, boardwalk, treehouse, igloo, bridges (unpark `hold/set-pieces` for this phase), cave mouths, springs, river fords, waterfalls — gives nearby sites a camp score from water, flat ground, food (flora biomass and ledger fauna), shelter, and distance from other camps. The highest scores get camps. The landmark's kind seeds the camp: aqueduct → water and farming; ford or bridge → crossing and trade; graveyard or barrow → small, wary, afraid of the night; cave mouth → shelter and mining, wary of the dark; castle or tower → largest and best defended. Camp folk salvage from the remnant (worked stone, timber, metal scraps) — the remnants are the work of an older, more advanced people, and salvage is where a camp's rarer tools come from. Culture sliders start from the landmark kind. Camps never form inside a landmark; the fire sits where the ruin builder left it.
+  - ⚑ Today the ruin builder puts tepees, lean-tos and a fire inside some ruins. Read as: the builder's fire stays where it is and scored camps form beside landmarks, not in them — confirm whether those inhabited-ruin camps move out. Fords don't exist yet (derive them from river width and depth); cave mouths come from Phase 3.
+- **Cannabis — the loop:** three uses through the ordinary R4 carry rules — hemp types give fibre (stems → cordage and cloth for camp folk) and seed (food, oil); resinous types give smoke. Player: cut flowering females → carry a bundle (one inventory item) → hang it by a campfire or in a hut, where it dries over several in-game days as a visible state → smoke it in a pipe (bone or clay; craftable, or a camp folk hands one over) at the fire. No numbers in the UI; strength comes from the plant's resin gene and how much is smoked.
+- **Haze, on the player:** one status, `player.haze`, 0–1, in WorldState so other systems read it; decays over about an in-game hour.
+  - Visual, in `post_grade` as a temporary grade shift within R1: the world goes more R1a — night bluer, fire warmer, saturation up, edges soften, the camera sways slowly, stars swim, distance haze thickens. Audio muffles with more reverb and footsteps go hollow.
+  - Status: hunger rises faster, fear cues soften (the howl still comes but the panic vignette doesn't), sprint starts slower, the bow sways, and an occasional cough is a real noise event creatures hear — sneaking while hazed is worse.
+  - Overdo it and the vignette closes in, the ground tilts, and the player stumbles for a while; nothing lethal. It's a trade — calm and company against slow and loud — never a plain buff.
+  - ⚑ Hunger, a fear/panic vignette and oracle tribes don't exist yet; they arrive with this phase or stay hooks.
+- **Haze, in camps:** culture slider `ritual_smoke` (0–1), seeded from whether a resinous landrace grows in the camp's range, moved by history like the others. In a camp with the habit the pipe goes round at the fire after cooking: folk sit longer, chatter turns to laughter and slower speech, they sleep later, guards are drowsier — the camp is a little less safe that night, which the ledger's predators may notice. Astrology tribes with oracles smoke before reading the moon. Sharing the pipe is a proximity interaction, no dialogue tree, and raises standing with that camp the way sharing food does. Camps without the habit ignore the bundle; a few wary ones dislike the smell.
+- **Done when:** you catch a fish, bring it to the opening camp, cook it at dusk with the folk, and the camp's own hunters are seen leaving and returning; plus two camps with different histories visibly behave differently; on the stamp, every large landmark has a camp near it or a visible reason it doesn't (no water, too steep), and camps at two different landmark kinds look and act differently; a hemp stand near a camp becomes rope on its huts; the player dries a bundle by the fire, smokes it, the grade shifts and a cough spooks a deer; the camp folk pass a pipe and their guard nods off.
 
-## Phase 10 — Memory and lore
+## Phase 11 — Memory and lore
 - **Touches:** `creature` (NEAR), `camps`, scrolls, HUD place names.
 - **(a) Creature memory:** each NEAR creature keeps up to ~5 memories {what, where, when, good or bad} that decay over days; a wolf that lost packmates near the campfire avoids it, a fed fox returns.
 - **(b) Lore:** place names, scroll text, and camp chatter are generated from `world.events` — "the meadow where the herd died," "the ridge fire of year 12" — so the world's story is what actually happened in this seed.
 - **Done when:** a creature visibly changes behaviour toward the player after an encounter, and a camp folk mentions an event the harness log shows really happened nearby.
 
-## Phase 11 — Persistence
-- Elapsed-time catch-up on login using the Phase 6 warm-start code. **Done when:** log out, wait, log in — crops/nests/populations/moon advanced, nothing exploded.
+## Phase 12 — Persistence
+- Elapsed-time catch-up on login using the warm-start code (Phases 6–7). **Done when:** log out, wait, log in — crops/nests/populations/moon advanced, nothing exploded.
 - Catch-up runs `tick_region` and applies region deltas (ledger, nests, carcasses, scars, memories, culture).
 
 ---
@@ -317,6 +380,10 @@ The designer should be **surprised**. If any of these had to be hard-coded, the 
 - The river you rowed up in spring is unrowable in late summer.
 - A burned hillside is full of woodpeckers three years later and owls ten years later.
 - There are no owls near a big camp.
+- No bees in the valley, no fruit in the valley.
+- The plant that survives the fires is the one that spreads underground.
+- The camp that smokes gets raided more.
+- The landrace that crossed the mountains with a tribe doesn't flower in time.
 
 ---
 
@@ -382,13 +449,13 @@ Rules: generalists (wolf, deer, bear, hawk, cats, rats) span many bands; cold-bl
 
 Nesting habits (examples for `nest.site`): tree-fork, cavity, cliff-ledge, ground-scrape, reed-bed, burrow. Different birds pick different sites; that's the whole rule.
 
-## R4. Inventory principle (built in Phase 9, kept tiny)
+## R4. Inventory principle (built in Phase 10, kept tiny)
 - A **handful** of items; visibly overburdened — slower, worse climbing, louder — past a low threshold. No grid.
 - Every carried item changes a decision (torch, spear, tonight's food, one trade good).
 - Equipment slot-based: one equipped + two spares per slot (rings: two worn + two spares).
 - Weight felt in movement, never read in a menu.
 
-## R5. Out of scope until Phase 11 is stable
+## R5. Out of scope until Phase 12 is stable
 Werewolf/vampire transformation, grappling hook, underwater exploration/breath meter, player-founded tribes, advanced tech tiers (rail carts, forges), crafting quality tiers, combat damage balancing, any weapon beyond bow and spear. All remain in the long-term design.
 
 ## R6. Simulation tiers and living-world rules

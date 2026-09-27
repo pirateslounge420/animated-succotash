@@ -18,6 +18,9 @@
 		"ground": [
 			{
 				"name": "Alpine wildflowers",
+				"genus": "Alpiflora",
+				"species": "variegata",
+				"invented": true,
 				"shape": "grass",
 				"temp_c": [-3, 8],
 				"moisture": [0.35, 0.95],

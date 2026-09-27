@@ -6,7 +6,9 @@ Edit or add entries; changes apply the next time you run the game.
 
 | Field | Meaning |
 |---|---|
-| `name` | Unique name. |
+| `name` | Unique name, the one shown in the game. |
+| `genus`, `species` | The binomial (spec D4), e.g. `"Canis"`, `"lupus"`. Real animals use their real name; mythical and other invented creatures get an invented binomial in the same style plus `"invented": true`. No entry is valid without them. |
+| `invented` | `true` marks an invented binomial. Leave it out for real animals. |
 | `role` | `canopy` (lives on a specific tree), `ground`, `water_edge` (shore or open water), `swarm` (fireflies etc.), `insect` (hidden until you inspect a log), `pack` (den-tethered pack hunters), `mythical`. |
 | `body` | Placeholder model: `quadruped`, `wolf`, `rodent`, `deer`, `tortoise`, `bird`, `wader`, `duck`, `frog`, `swarm`, `beetle`. Mythical creatures use `shape` instead. `wolf`, `deer` and the `goblin` shape are sculpted single meshes (SculptedBodies); the rest are still assembled from primitives. |
 | `spawn` | `ambient` (around you all the time, spaced by `one_per_radius_m`), `interaction` (only when you inspect something), `long_range` (mythical: dormant far away, aware at mid range, visible close). |

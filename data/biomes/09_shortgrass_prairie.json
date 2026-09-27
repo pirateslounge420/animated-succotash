@@ -17,6 +17,9 @@
 		"ground": [
 			{
 				"name": "Shortgrass",
+				"genus": "Brevigramen",
+				"species": "aridum",
+				"invented": true,
 				"shape": "grass",
 				"temp_c": [2, 21],
 				"moisture": [0.22, 0.46],

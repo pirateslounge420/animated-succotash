@@ -17,6 +17,9 @@
 		"ground": [
 			{
 				"name": "Tallgrass",
+				"genus": "Altigramen",
+				"species": "praticola",
+				"invented": true,
 				"shape": "grass",
 				"temp_c": [6, 21],
 				"moisture": [0.38, 0.62],

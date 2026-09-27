@@ -17,6 +17,8 @@
 		"ground": [
 			{
 				"name": "Feather grass",
+				"genus": "Stipa",
+				"species": "pennata",
 				"shape": "tussock",
 				"temp_c": [-3, 16],
 				"moisture": [0.17, 0.42],

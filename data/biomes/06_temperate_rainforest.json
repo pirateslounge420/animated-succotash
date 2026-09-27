@@ -14,6 +14,9 @@
 		"emergent": [
 			{
 				"name": "Giant rainforest conifer",
+				"genus": "Megapitys",
+				"species": "hygrophila",
+				"invented": true,
 				"shape": "conifer",
 				"temp_c": [3, 14],
 				"moisture": [0.75, 1],
@@ -27,6 +30,8 @@
 		"canopy": [
 			{
 				"name": "Hemlock",
+				"genus": "Tsuga",
+				"species": "heterophylla",
 				"shape": "conifer",
 				"temp_c": [2, 14],
 				"moisture": [0.65, 1],
@@ -39,6 +44,8 @@
 		"shrub": [
 			{
 				"name": "Colihue",
+				"genus": "Chusquea",
+				"species": "culeou",
 				"shape": "bamboo",
 				"temp_c": [4, 14],
 				"moisture": [0.7, 1],
@@ -51,6 +58,8 @@
 			},
 			{
 				"name": "Kuril bamboo",
+				"genus": "Sasa",
+				"species": "kurilensis",
 				"shape": "bamboo",
 				"temp_c": [0, 12],
 				"moisture": [0.65, 1],

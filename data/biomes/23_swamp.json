@@ -15,6 +15,8 @@
 		"canopy": [
 			{
 				"name": "Bald cypress",
+				"genus": "Taxodium",
+				"species": "distichum",
 				"shape": "cypress",
 				"temp_c": [12, 28],
 				"moisture": [0.6, 1],
@@ -28,6 +30,8 @@
 			},
 			{
 				"name": "Water tupelo",
+				"genus": "Nyssa",
+				"species": "aquatica",
 				"shape": "broadleaf",
 				"temp_c": [13, 28],
 				"moisture": [0.62, 1],
@@ -41,6 +45,8 @@
 			},
 			{
 				"name": "Black willow",
+				"genus": "Salix",
+				"species": "nigra",
 				"shape": "broadleaf",
 				"temp_c": [2, 26],
 				"moisture": [0.5, 1],
@@ -55,6 +61,8 @@
 		"shrub": [
 			{
 				"name": "Buttonbush",
+				"genus": "Cephalanthus",
+				"species": "occidentalis",
 				"shape": "shrub",
 				"temp_c": [8, 28],
 				"moisture": [0.6, 1],
@@ -67,6 +75,8 @@
 			},
 			{
 				"name": "Virginia willow",
+				"genus": "Itea",
+				"species": "virginica",
 				"shape": "shrub",
 				"temp_c": [10, 27],
 				"moisture": [0.6, 1],
@@ -79,6 +89,8 @@
 			},
 			{
 				"name": "Water elm",
+				"genus": "Planera",
+				"species": "aquatica",
 				"shape": "broadleaf",
 				"temp_c": [12, 28],
 				"moisture": [0.6, 1],
@@ -93,6 +105,8 @@
 		"ground": [
 			{
 				"name": "Cypress knees",
+				"genus": "Taxodium",
+				"species": "distichum",
 				"shape": "knees",
 				"temp_c": [-50, 50],
 				"moisture": [-1, 1],
@@ -106,6 +120,8 @@
 		"epiphyte": [
 			{
 				"name": "Spanish moss",
+				"genus": "Tillandsia",
+				"species": "usneoides",
 				"shape": "hanging_moss",
 				"temp_c": [14, 30],
 				"moisture": [0.6, 1],

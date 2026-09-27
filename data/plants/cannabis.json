@@ -1,0 +1,6930 @@
+{
+ "key": "CANNABIS_CATALOGUE",
+ "name": "Cannabis sativa - landrace catalogue",
+ "kind": "land",
+ "status": "64 landrace populations; one species, all interbreed",
+ "notes": "Cannabis sativa L. is the single species accepted by Kew POWO; 'indica' and 'ruderalis' are treated here as types, not species. There is no authoritative registry of landraces: these are the regional populations consistently named in ethnobotany (Clarke & Merlin, Cannabis: Evolution and Ethnobotany, 2013) and public landrace lists, each tagged with how well it is attested. Every entry is the SAME species: a landrace is a starting genome for a region, and where two ranges meet, hybrids appear on their own. Loaded like the aroid catalogue (data/plants/*.json). 'cannabis', 'repro' and 'genes' blocks are read by the plant lifecycle/genetics system; the current loader ignores them. flower_trigger gene: 0 = flowers by age (ruderal), otherwise maps to the day length in hours at which flowering starts (12 h + gene * 4 h).",
+ "types": {
+  "broad_leaf": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering",
+  "narrow_leaf_tropical": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length",
+  "narrow_leaf_subtropical": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations",
+  "ruderal": "ruderal steppe type: small, weedy, flowers by age regardless of day length; disturbed ground, roadsides, middens",
+  "hemp": "temperate fibre/seed type: very tall single stems, little resin, heavy seed"
+ },
+ "plants": {
+  "shrub": [
+   {
+    "name": "Cannabis - Hindu Kush",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Hindu Kush",
+    "landrace_id": "hindu_kush",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     900,
+     2600
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Hindu Kush range, Afghanistan and Pakistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. The archetypal mountain broad-leaf population; hash culture."
+   },
+   {
+    "name": "Cannabis - Afghani",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Afghani",
+    "landrace_id": "afghani",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     700,
+     1800
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kandahar and Helmand, Afghanistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Lowland-valley Afghan population; broad, heavy plants."
+   },
+   {
+    "name": "Cannabis - Mazar-i-Sharif",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Mazar-i-Sharif",
+    "landrace_id": "mazar-i-sharif",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     10,
+     19
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     300,
+     1500
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Balkh, northern Afghanistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Northern plains population; very tall for a broad-leaf type."
+   },
+   {
+    "name": "Cannabis - Lashkar Gah",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Lashkar Gah",
+    "landrace_id": "lashkar_gah",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     13,
+     21
+    ],
+    "moisture": [
+     0.1,
+     0.35
+    ],
+    "altitude_m": [
+     600,
+     1400
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Helmand, Afghanistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Desert-edge irrigated valley population."
+   },
+   {
+    "name": "Cannabis - Chitral",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Chitral",
+    "landrace_id": "chitral",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     16
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1100,
+     2600
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Chitral, northern Pakistan; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Purple and red phenotypes common."
+   },
+   {
+    "name": "Cannabis - Swat Valley",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Swat Valley",
+    "landrace_id": "swat_valley",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     900,
+     2600
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Swat, northern Pakistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Tirah Valley",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Tirah Valley",
+    "landrace_id": "tirah_valley",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     900,
+     2600
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Khyber, Pakistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Kashmir",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Kashmir",
+    "landrace_id": "kashmir",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     7,
+     15
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1400,
+     2600
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kashmir valley; attestation: well attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. High-valley population; among the coldest-adapted drug types."
+   },
+   {
+    "name": "Cannabis - Uzbek",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Uzbek",
+    "landrace_id": "uzbek",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     10,
+     17
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "altitude_m": [
+     300,
+     1500
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Uzbekistan; attestation: attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Central Asian oasis population."
+   },
+   {
+    "name": "Cannabis - Pamir",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Pamir",
+    "landrace_id": "pamir",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     12
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1800,
+     3000
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Tajikistan / Pamirs; attestation: less attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement. Highest documented cultivation range."
+   },
+   {
+    "name": "Cannabis - Manali",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Manali",
+    "landrace_id": "manali",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     10,
+     18
+    ],
+    "moisture": [
+     0.45,
+     0.75
+    ],
+    "altitude_m": [
+     1200,
+     2400
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kullu valley, Himachal Pradesh; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Himalayan foothill population."
+   },
+   {
+    "name": "Cannabis - Parvati (Malana)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Parvati (Malana)",
+    "landrace_id": "parvati_malana",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     9,
+     17
+    ],
+    "moisture": [
+     0.45,
+     0.75
+    ],
+    "altitude_m": [
+     1500,
+     2700
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Parvati valley, Himachal Pradesh; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Hand-rubbed resin culture of the high villages."
+   },
+   {
+    "name": "Cannabis - Nepalese",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Nepalese",
+    "landrace_id": "nepalese",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     800,
+     2200
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Nepal middle hills; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Kerala",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Kerala",
+    "landrace_id": "kerala",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Western Ghats, Kerala, India; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Wet-tropical population; very tall."
+   },
+   {
+    "name": "Cannabis - Mysore",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Mysore",
+    "landrace_id": "mysore",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     19,
+     25
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     500,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Karnataka, India; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Manipur",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Manipur",
+    "landrace_id": "manipur",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     16,
+     23
+    ],
+    "moisture": [
+     0.6,
+     0.85
+    ],
+    "altitude_m": [
+     600,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Manipur, NE India; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Ceylon",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Ceylon",
+    "landrace_id": "ceylon",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Sri Lanka; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Thai (Isan)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Thai (Isan)",
+    "landrace_id": "thai_isan",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     24,
+     28
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Northeast Thailand; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. The 'Thai stick' population; some phenotypes with a dark cocoa cast ('Chocolate Thai')."
+   },
+   {
+    "name": "Cannabis - Meao Thai",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Meao Thai",
+    "landrace_id": "meao_thai",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     18,
+     24
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     700,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Hmong hill villages, northern Thailand; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Hill-tribe population."
+   },
+   {
+    "name": "Cannabis - Luang Prabang",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Luang Prabang",
+    "landrace_id": "luang_prabang",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     25
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     300,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: northern Laos; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Cambodian",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Cambodian",
+    "landrace_id": "cambodian",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     25,
+     28
+    ],
+    "moisture": [
+     0.45,
+     0.75
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Cambodia; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Vietnamese (Vietnam Black)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Vietnamese (Vietnam Black)",
+    "landrace_id": "vietnamese_vietnam_black",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Vietnam; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Dark-leaved phenotypes."
+   },
+   {
+    "name": "Cannabis - Burmese",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Burmese",
+    "landrace_id": "burmese",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Myanmar; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Aceh",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Aceh",
+    "landrace_id": "aceh",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.65,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Aceh, northern Sumatra; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Wet equatorial population."
+   },
+   {
+    "name": "Cannabis - Yunnan",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Yunnan",
+    "landrace_id": "yunnan",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     800,
+     2200
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Yunnan, China; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Also a fibre and seed source; intermediate type."
+   },
+   {
+    "name": "Cannabis - Papua New Guinea",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Papua New Guinea",
+    "landrace_id": "papua_new_guinea",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     17,
+     23
+    ],
+    "moisture": [
+     0.7,
+     0.95
+    ],
+    "altitude_m": [
+     800,
+     2000
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: PNG highlands; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Durban",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Durban",
+    "landrace_id": "durban",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     16,
+     22
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     1400
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: KwaZulu-Natal, South Africa; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Early-flowering for a narrow-leaf type."
+   },
+   {
+    "name": "Cannabis - Transkei (Rooibaard)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Transkei (Rooibaard)",
+    "landrace_id": "transkei_rooibaard",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     15,
+     21
+    ],
+    "moisture": [
+     0.45,
+     0.75
+    ],
+    "altitude_m": [
+     200,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Eastern Cape, South Africa; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. 'Red beard' - red pistils."
+   },
+   {
+    "name": "Cannabis - Swazi",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Swazi",
+    "landrace_id": "swazi",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     15,
+     21
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     600,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Eswatini highlands; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Gold and red phenotypes."
+   },
+   {
+    "name": "Cannabis - Malawi",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Malawi",
+    "landrace_id": "malawi",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     25
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     400,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Nkhotakota and the lake shore, Malawi; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Very long flowering; 'Malawi Gold'."
+   },
+   {
+    "name": "Cannabis - Kilimanjaro",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Kilimanjaro",
+    "landrace_id": "kilimanjaro",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     16,
+     22
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     900,
+     2000
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Kilimanjaro foothills, Tanzania; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Kisumu",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Kisumu",
+    "landrace_id": "kisumu",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     25
+    ],
+    "moisture": [
+     0.5,
+     0.75
+    ],
+    "altitude_m": [
+     1000,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Lake Victoria shore, Kenya; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Ethiopian",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Ethiopian",
+    "landrace_id": "ethiopian",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     14,
+     20
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     1400,
+     2400
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Ethiopian highlands; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Congolese",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Congolese",
+    "landrace_id": "congolese",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.65,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Congo basin; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. 'Red Congolese' phenotypes."
+   },
+   {
+    "name": "Cannabis - Angolan",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Angolan",
+    "landrace_id": "angolan",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     25
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     500,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Angola; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Nigerian",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Nigerian",
+    "landrace_id": "nigerian",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Nigeria; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Ghanaian",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Ghanaian",
+    "landrace_id": "ghanaian",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Ghana; attestation: less attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Zamal",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Zamal",
+    "landrace_id": "zamal",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     19,
+     24
+    ],
+    "moisture": [
+     0.6,
+     0.9
+    ],
+    "altitude_m": [
+     300,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Réunion; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Rif (Ketama)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Rif (Ketama)",
+    "landrace_id": "rif_ketama",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "altitude_m": [
+     800,
+     2000
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Rif mountains, Morocco; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Mediterranean mountain population, dense and short for its type; hashish culture."
+   },
+   {
+    "name": "Cannabis - Lebanese (Bekaa)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Lebanese (Bekaa)",
+    "landrace_id": "lebanese_bekaa",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     18
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     800,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Bekaa valley, Lebanon; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Red and blonde resin cultures."
+   },
+   {
+    "name": "Cannabis - Turkish",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Turkish",
+    "landrace_id": "turkish",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     9,
+     16
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     500,
+     1800
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Anatolia, Turkey; attestation: less attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Iranian (Mashhad)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Iranian (Mashhad)",
+    "landrace_id": "iranian_mashhad",
+    "type": "broad_leaf",
+    "shape": "shrub",
+    "temp_c": [
+     11,
+     17
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "altitude_m": [
+     700,
+     1800
+    ],
+    "height_m": [
+     1.0,
+     2.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8A3A",
+    "accent": "#5A2A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.0,
+      "days": [
+       50,
+       65
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "broad-leaf mountain type: short, dense, wide leaflets, often purpling in cold; short autumn flowering"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       50,
+       65
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.7,
+      0.95
+     ],
+     "resin": [
+      0.7,
+      1.0
+     ],
+     "fibre": [
+      0.1,
+      0.3
+     ],
+     "scent": [
+      0.7,
+      1.0
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.45,
+      0.55
+     ],
+     "purple": [
+      0.4,
+      0.9
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Khorasan, Iran; attestation: less attested. Traits are the type profile (broad_leaf) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Acapulco Gold",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Acapulco Gold",
+    "landrace_id": "acapulco_gold",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     18,
+     25
+    ],
+    "moisture": [
+     0.35,
+     0.65
+    ],
+    "altitude_m": [
+     200,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Guerrero, Mexico; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement. Golden-brown drying colour."
+   },
+   {
+    "name": "Cannabis - Oaxacan",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Oaxacan",
+    "landrace_id": "oaxacan",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     16,
+     23
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     800,
+     2000
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Oaxaca, Mexico; attestation: well attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Michoacán",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Michoacán",
+    "landrace_id": "michoacan",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     16,
+     23
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "altitude_m": [
+     600,
+     2000
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Michoacán, Mexico; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Sinaloan",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Sinaloan",
+    "landrace_id": "sinaloan",
+    "type": "narrow_leaf_subtropical",
+    "shape": "shrub",
+    "temp_c": [
+     19,
+     25
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     100,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     3.5
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#56983E",
+    "accent": "#8A6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 13.0,
+      "days": [
+       70,
+       100
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf highland/subtropical type: tall but earlier than the equatorial populations"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       70,
+       100
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.25,
+      0.5
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.2,
+      0.3
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Sinaloa, Mexico; attestation: attested. Traits are the type profile (narrow_leaf_subtropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Santa Marta Gold",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Santa Marta Gold",
+    "landrace_id": "santa_marta_gold",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     17,
+     24
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     500,
+     1800
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Sierra Nevada de Santa Marta, Colombia; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. 'Colombian Gold'."
+   },
+   {
+    "name": "Cannabis - Punto Rojo",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Punto Rojo",
+    "landrace_id": "punto_rojo",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     18,
+     25
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     300,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Colombia; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Red pistils."
+   },
+   {
+    "name": "Cannabis - Limón Verde",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Limón Verde",
+    "landrace_id": "limon_verde",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     18,
+     25
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     300,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Colombia; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Panama Red",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Panama Red",
+    "landrace_id": "panama_red",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     27
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Panama; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Red-tinged."
+   },
+   {
+    "name": "Cannabis - Lamb's Bread",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Lamb's Bread",
+    "landrace_id": "lambs_bread",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     21,
+     26
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Jamaica; attestation: well attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Manga Rosa",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Manga Rosa",
+    "landrace_id": "manga_rosa",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     22,
+     27
+    ],
+    "moisture": [
+     0.4,
+     0.75
+    ],
+    "altitude_m": [
+     0,
+     800
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: northeast Brazil; attestation: attested. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. Pink-tinged."
+   },
+   {
+    "name": "Cannabis - Hawaiian (Kona / Puna)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Hawaiian (Kona / Puna)",
+    "landrace_id": "hawaiian_kona__puna",
+    "type": "narrow_leaf_tropical",
+    "shape": "shrub",
+    "temp_c": [
+     18,
+     24
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     100,
+     1200
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5AA042",
+    "accent": "#3C6A2A",
+    "cannabis": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 12.5,
+      "days": [
+       90,
+       130
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "narrow-leaf equatorial type: tall, open, thin leaflets; long flowering near the equinox day length"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       90,
+       130
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.15,
+      0.4
+     ],
+     "resin": [
+      0.5,
+      0.8
+     ],
+     "fibre": [
+      0.3,
+      0.5
+     ],
+     "scent": [
+      0.5,
+      0.8
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.07,
+      0.17
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Hawai'i; attestation: heirloom, naturalized - not a true landrace. Traits are the type profile (narrow_leaf_tropical) with regional climate; not a botanical measurement. 1960s-70s introductions that went feral; kept because every landrace list names them."
+   },
+   {
+    "name": "Cannabis - Russian ruderalis",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Russian ruderalis",
+    "landrace_id": "russian_ruderalis",
+    "type": "ruderal",
+    "shape": "shrub",
+    "temp_c": [
+     1,
+     10
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     1800
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5E9A48",
+    "accent": "#7A7A5A",
+    "cannabis": {
+     "leaf_width": [
+      0.4,
+      0.6
+     ],
+     "flowering": {
+      "trigger": "age_days",
+      "days_to_flower": 25,
+      "days": [
+       30,
+       45
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "ruderal steppe type: small, weedy, flowers by age regardless of day length; disturbed ground, roadsides, middens"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       30,
+       45
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.4,
+      0.6
+     ],
+     "resin": [
+      0.1,
+      0.3
+     ],
+     "fibre": [
+      0.2,
+      0.4
+     ],
+     "scent": [
+      0.1,
+      0.3
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.0,
+      0.05
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Volga and southern Siberia; attestation: well attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement. The autoflowering source population."
+   },
+   {
+    "name": "Cannabis - Altai",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Altai",
+    "landrace_id": "altai",
+    "type": "ruderal",
+    "shape": "shrub",
+    "temp_c": [
+     0,
+     7
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     600,
+     2000
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5E9A48",
+    "accent": "#7A7A5A",
+    "cannabis": {
+     "leaf_width": [
+      0.4,
+      0.6
+     ],
+     "flowering": {
+      "trigger": "age_days",
+      "days_to_flower": 25,
+      "days": [
+       30,
+       45
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "ruderal steppe type: small, weedy, flowers by age regardless of day length; disturbed ground, roadsides, middens"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       30,
+       45
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.4,
+      0.6
+     ],
+     "resin": [
+      0.1,
+      0.3
+     ],
+     "fibre": [
+      0.2,
+      0.4
+     ],
+     "scent": [
+      0.1,
+      0.3
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.0,
+      0.05
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Altai mountains; attestation: attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Chuy Valley",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Chuy Valley",
+    "landrace_id": "chuy_valley",
+    "type": "ruderal",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     12
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "altitude_m": [
+     400,
+     1200
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5E9A48",
+    "accent": "#7A7A5A",
+    "cannabis": {
+     "leaf_width": [
+      0.4,
+      0.6
+     ],
+     "flowering": {
+      "trigger": "age_days",
+      "days_to_flower": 25,
+      "days": [
+       30,
+       45
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "ruderal steppe type: small, weedy, flowers by age regardless of day length; disturbed ground, roadsides, middens"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       30,
+       45
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.4,
+      0.6
+     ],
+     "resin": [
+      0.1,
+      0.3
+     ],
+     "fibre": [
+      0.2,
+      0.4
+     ],
+     "scent": [
+      0.1,
+      0.3
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.0,
+      0.05
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Chuy valley, Kazakhstan / Kyrgyzstan; attestation: well attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement. Vast wild stands; intermediate between ruderal and drug types."
+   },
+   {
+    "name": "Cannabis - Mongolian",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Mongolian",
+    "landrace_id": "mongolian",
+    "type": "ruderal",
+    "shape": "shrub",
+    "temp_c": [
+     -2,
+     5
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     700,
+     1800
+    ],
+    "height_m": [
+     0.3,
+     1.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5E9A48",
+    "accent": "#7A7A5A",
+    "cannabis": {
+     "leaf_width": [
+      0.4,
+      0.6
+     ],
+     "flowering": {
+      "trigger": "age_days",
+      "days_to_flower": 25,
+      "days": [
+       30,
+       45
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "ruderal steppe type: small, weedy, flowers by age regardless of day length; disturbed ground, roadsides, middens"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       30,
+       45
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.4,
+      0.6
+     ],
+     "resin": [
+      0.1,
+      0.3
+     ],
+     "fibre": [
+      0.2,
+      0.4
+     ],
+     "scent": [
+      0.1,
+      0.3
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.0,
+      0.05
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Mongolian steppe; attestation: less attested. Traits are the type profile (ruderal) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Northern Chinese hemp",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Northern Chinese hemp",
+    "landrace_id": "northern_chinese_hemp",
+    "type": "hemp",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     17
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5C9C44",
+    "accent": "#A89A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.5,
+      "days": [
+       40,
+       60
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "temperate fibre/seed type: very tall single stems, little resin, heavy seed"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       40,
+       60
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "resin": [
+      0.05,
+      0.2
+     ],
+     "fibre": [
+      0.8,
+      1.0
+     ],
+     "scent": [
+      0.05,
+      0.2
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.57,
+      0.68
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Shandong / Hebei, China; attestation: well attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Ancient fibre and seed populations; the oldest cultivation record."
+   },
+   {
+    "name": "Cannabis - Japanese hemp (asa)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Japanese hemp (asa)",
+    "landrace_id": "japanese_hemp_asa",
+    "type": "hemp",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     15
+    ],
+    "moisture": [
+     0.6,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5C9C44",
+    "accent": "#A89A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.5,
+      "days": [
+       40,
+       60
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "temperate fibre/seed type: very tall single stems, little resin, heavy seed"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       40,
+       60
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "resin": [
+      0.05,
+      0.2
+     ],
+     "fibre": [
+      0.8,
+      1.0
+     ],
+     "scent": [
+      0.05,
+      0.2
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.57,
+      0.68
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Tochigi and Nagano, Japan; attestation: attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Ritual cordage and cloth."
+   },
+   {
+    "name": "Cannabis - Korean hemp (Andong)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Korean hemp (Andong)",
+    "landrace_id": "korean_hemp_andong",
+    "type": "hemp",
+    "shape": "shrub",
+    "temp_c": [
+     9,
+     15
+    ],
+    "moisture": [
+     0.55,
+     0.85
+    ],
+    "altitude_m": [
+     0,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5C9C44",
+    "accent": "#A89A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.5,
+      "days": [
+       40,
+       60
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "temperate fibre/seed type: very tall single stems, little resin, heavy seed"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       40,
+       60
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "resin": [
+      0.05,
+      0.2
+     ],
+     "fibre": [
+      0.8,
+      1.0
+     ],
+     "scent": [
+      0.05,
+      0.2
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.57,
+      0.68
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Andong, Korea; attestation: attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Fine cloth (sambe)."
+   },
+   {
+    "name": "Cannabis - Central Russian hemp",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Central Russian hemp",
+    "landrace_id": "central_russian_hemp",
+    "type": "hemp",
+    "shape": "shrub",
+    "temp_c": [
+     3,
+     9
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     0,
+     1600
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5C9C44",
+    "accent": "#A89A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.5,
+      "days": [
+       40,
+       60
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "temperate fibre/seed type: very tall single stems, little resin, heavy seed"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       40,
+       60
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "resin": [
+      0.05,
+      0.2
+     ],
+     "fibre": [
+      0.8,
+      1.0
+     ],
+     "scent": [
+      0.05,
+      0.2
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.57,
+      0.68
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: central Russia / Ukraine; attestation: well attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Northern short-season fibre population."
+   },
+   {
+    "name": "Cannabis - Carmagnola",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Carmagnola",
+    "landrace_id": "carmagnola",
+    "type": "hemp",
+    "shape": "shrub",
+    "temp_c": [
+     10,
+     15
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     100,
+     900
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.25,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5C9C44",
+    "accent": "#A89A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.5,
+      "days": [
+       40,
+       60
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "temperate fibre/seed type: very tall single stems, little resin, heavy seed"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       40,
+       60
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "resin": [
+      0.05,
+      0.2
+     ],
+     "fibre": [
+      0.8,
+      1.0
+     ],
+     "scent": [
+      0.05,
+      0.2
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.57,
+      0.68
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Piedmont, Italy; attestation: well attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Very tall Italian fibre population."
+   },
+   {
+    "name": "Cannabis - Anatolian hemp (Kastamonu)",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Anatolian hemp (Kastamonu)",
+    "landrace_id": "anatolian_hemp_kastamonu",
+    "type": "hemp",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     14
+    ],
+    "moisture": [
+     0.5,
+     0.8
+    ],
+    "altitude_m": [
+     300,
+     1500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5C9C44",
+    "accent": "#A89A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.5,
+      "days": [
+       40,
+       60
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "temperate fibre/seed type: very tall single stems, little resin, heavy seed"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       40,
+       60
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "resin": [
+      0.05,
+      0.2
+     ],
+     "fibre": [
+      0.8,
+      1.0
+     ],
+     "scent": [
+      0.05,
+      0.2
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.57,
+      0.68
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: northern Turkey; attestation: attested. Traits are the type profile (hemp) with regional climate; not a botanical measurement."
+   },
+   {
+    "name": "Cannabis - Kentucky feral hemp",
+    "genus": "Cannabis",
+    "species": "sativa",
+    "family": "Cannabaceae",
+    "landrace": "Kentucky feral hemp",
+    "landrace_id": "kentucky_feral_hemp",
+    "type": "hemp",
+    "shape": "shrub",
+    "temp_c": [
+     9,
+     15
+    ],
+    "moisture": [
+     0.55,
+     0.85
+    ],
+    "altitude_m": [
+     100,
+     500
+    ],
+    "height_m": [
+     2.0,
+     4.0
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5C9C44",
+    "accent": "#A89A6A",
+    "cannabis": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "flowering": {
+      "trigger": "daylength_h",
+      "hours": 14.5,
+      "days": [
+       40,
+       60
+      ]
+     },
+     "uses": [
+      "fibre",
+      "seed",
+      "smoke"
+     ],
+     "camp_follower": true,
+     "note": "temperate fibre/seed type: very tall single stems, little resin, heavy seed"
+    },
+    "repro": {
+     "mode": "seed",
+     "dioecious": true,
+     "pollinator": "wind",
+     "disperser": [
+      "human",
+      "bird"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "late_summer",
+      "days": [
+       40,
+       60
+      ],
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed"
+    },
+    "genes": {
+     "leaf_width": [
+      0.3,
+      0.55
+     ],
+     "resin": [
+      0.05,
+      0.2
+     ],
+     "fibre": [
+      0.8,
+      1.0
+     ],
+     "scent": [
+      0.05,
+      0.2
+     ],
+     "size": [
+      0.3,
+      0.7
+     ],
+     "flower_trigger": [
+      0.57,
+      0.68
+     ],
+     "purple": [
+      0.0,
+      0.3
+     ]
+    },
+    "source": "Landrace population named in ethnobotanical and seed-preservation literature (Clarke & Merlin 2013 and public landrace lists); native region: Ohio valley, USA; attestation: naturalized escape of old fibre crops. Traits are the type profile (hemp) with regional climate; not a botanical measurement. Roadside 'ditchweed'."
+   }
+  ]
+ }
+}

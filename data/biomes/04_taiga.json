@@ -15,6 +15,8 @@
 		"canopy": [
 			{
 				"name": "Spruce",
+				"genus": "Picea",
+				"species": "mariana",
 				"shape": "conifer",
 				"temp_c": [-5, 8],
 				"moisture": [0.4, 1],
@@ -25,6 +27,8 @@
 			},
 			{
 				"name": "Fir",
+				"genus": "Abies",
+				"species": "balsamea",
 				"shape": "conifer",
 				"temp_c": [-3, 9],
 				"moisture": [0.5, 1],
@@ -35,6 +39,8 @@
 			},
 			{
 				"name": "Larch",
+				"genus": "Larix",
+				"species": "laricina",
 				"shape": "conifer",
 				"temp_c": [-9, 5],
 				"moisture": [0.35, 0.9],
@@ -47,6 +53,8 @@
 		"shrub": [
 			{
 				"name": "Bilberry",
+				"genus": "Vaccinium",
+				"species": "myrtillus",
 				"shape": "shrub",
 				"temp_c": [-6, 10],
 				"moisture": [0.45, 1],
@@ -57,6 +65,8 @@
 			},
 			{
 				"name": "Labrador tea",
+				"genus": "Rhododendron",
+				"species": "groenlandicum",
 				"shape": "shrub",
 				"temp_c": [-4, 8],
 				"moisture": [0.45, 1],
@@ -69,6 +79,8 @@
 			},
 			{
 				"name": "Dwarf birch",
+				"genus": "Betula",
+				"species": "nana",
 				"shape": "shrub",
 				"temp_c": [-6, 7],
 				"moisture": [0.4, 0.95],
@@ -80,6 +92,8 @@
 			},
 			{
 				"name": "Taiga willow",
+				"genus": "Salix",
+				"species": "glauca",
 				"shape": "shrub",
 				"temp_c": [-5, 9],
 				"moisture": [0.5, 1],
@@ -92,6 +106,8 @@
 			},
 			{
 				"name": "Juniper",
+				"genus": "Juniperus",
+				"species": "communis",
 				"shape": "conifer",
 				"temp_c": [-3, 9],
 				"moisture": [0.3, 0.85],
@@ -106,6 +122,8 @@
 		"ground": [
 			{
 				"name": "Reindeer lichen",
+				"genus": "Cladonia",
+				"species": "rangiferina",
 				"shape": "moss",
 				"temp_c": [-9, 6],
 				"moisture": [0.15, 0.7],
@@ -118,6 +136,8 @@
 			},
 			{
 				"name": "Sphagnum moss",
+				"genus": "Sphagnum",
+				"species": "fuscum",
 				"shape": "moss",
 				"temp_c": [-8, 8],
 				"moisture": [0.6, 1],
@@ -130,6 +150,8 @@
 			},
 			{
 				"name": "Lingonberry",
+				"genus": "Vaccinium",
+				"species": "vitis-idaea",
 				"shape": "shrub",
 				"temp_c": [-7, 8],
 				"moisture": [0.4, 0.9],
@@ -141,6 +163,8 @@
 			},
 			{
 				"name": "Fireweed",
+				"genus": "Chamaenerion",
+				"species": "angustifolium",
 				"shape": "grass",
 				"temp_c": [-5, 12],
 				"moisture": [0.3, 0.85],

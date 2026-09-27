@@ -20,18 +20,20 @@ the union of those biomes' climates.
 
 ```json
 "canopy": [
-	{"name": "Kapok tree"}
+	{"name": "Kapok tree", "genus": "Ceiba", "species": "pentandra"}
 ]
 ```
 
 That's enough. It uses the biome's `climate` block for temperature,
 moisture and altitude, and default size, shape and color for its tier.
 
-## All fields (all optional except `name`)
+## All fields (all optional except `name`, `genus` and `species`)
 
 | Field | Example | Meaning |
 |---|---|---|
-| `name` | `"Bald cypress"` | Unique plant name. |
+| `name` | `"Bald cypress"` | Unique plant name, the one shown in the game. |
+| `genus`, `species` | `"Taxodium"`, `"distichum"` | The binomial (spec D4). Real plants use their accepted name (Kew Plants of the World Online). Stand-ins named by habitat and form ("Understory shrub") get an invented binomial in the same style plus `"invented": true`. Entries sharing a binomial are one interbreeding species (spec Phase 6). No entry is valid without them. |
+| `invented` | `true` | Marks an invented binomial. Leave it out for real plants. |
 | `shape` | `"cypress"` | Placeholder silhouette (see list below). Defaults by tier. |
 | `height_m` | `[18, 30]` | Height range in meters; each plant picks a size in it. |
 | `temp_c` | `[12, 28]` | Mean annual temperature range, **°C**. Densest in the middle, fading to zero at the edges. |

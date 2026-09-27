@@ -16,6 +16,9 @@
 		"canopy": [
 			{
 				"name": "Gnarled cloud-forest tree",
+				"genus": "Nephelodendron",
+				"species": "tortuosum",
+				"invented": true,
 				"shape": "gnarled",
 				"temp_c": [7, 22],
 				"moisture": [0.6, 1],
@@ -28,6 +31,8 @@
 			},
 			{
 				"name": "Mountain bamboo",
+				"genus": "Oldeania",
+				"species": "alpina",
 				"shape": "bamboo",
 				"temp_c": [9, 16],
 				"moisture": [0.6, 1],
@@ -42,6 +47,8 @@
 		"shrub": [
 			{
 				"name": "Andean chusquea",
+				"genus": "Chusquea",
+				"species": "scandens",
 				"shape": "bamboo",
 				"temp_c": [7, 18],
 				"moisture": [0.65, 1],
@@ -56,6 +63,9 @@
 		"ground": [
 			{
 				"name": "Moss carpet",
+				"genus": "Tapetomuscus",
+				"species": "mollis",
+				"invented": true,
 				"shape": "moss",
 				"temp_c": [-2, 26],
 				"moisture": [0.7, 1],
@@ -67,6 +77,8 @@
 			},
 			{
 				"name": "Filmy fern",
+				"genus": "Hymenophyllum",
+				"species": "polyanthos",
 				"shape": "fern",
 				"temp_c": [6, 24],
 				"moisture": [0.75, 1],
@@ -79,6 +91,9 @@
 		"epiphyte": [
 			{
 				"name": "Epiphytic moss and liverworts",
+				"genus": "Nubibryum",
+				"species": "pendulum",
+				"invented": true,
 				"shape": "hanging_moss",
 				"temp_c": [0, 24],
 				"moisture": [0.72, 1],

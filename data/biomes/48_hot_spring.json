@@ -17,6 +17,9 @@
 		"ground": [
 			{
 				"name": "Thermophile mat",
+				"genus": "Thermostroma",
+				"species": "calidum",
+				"invented": true,
 				"shape": "thermophile_mat",
 				"temp_c": [-10, 35],
 				"moisture": [0.2, 1],

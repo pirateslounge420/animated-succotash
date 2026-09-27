@@ -17,6 +17,8 @@
 		"ground": [
 			{
 				"name": "Cordgrass",
+				"genus": "Sporobolus",
+				"species": "alterniflorus",
 				"shape": "reed",
 				"temp_c": [3, 26],
 				"moisture": [0.3, 1],

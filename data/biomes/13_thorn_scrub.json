@@ -16,6 +16,9 @@
 		"shrub": [
 			{
 				"name": "Thorn shrub",
+				"genus": "Spinifrutex",
+				"species": "horridus",
+				"invented": true,
 				"shape": "shrub",
 				"temp_c": [18, 33],
 				"moisture": [0.14, 0.36],

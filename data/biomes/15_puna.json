@@ -16,6 +16,8 @@
 		"canopy": [
 			{
 				"name": "Queen of the Andes",
+				"genus": "Puya",
+				"species": "raimondii",
 				"shape": "spike_rosette",
 				"temp_c": [2, 11],
 				"moisture": [0.16, 0.52],
@@ -30,6 +32,9 @@
 		"shrub": [
 			{
 				"name": "Puna daisy shrub",
+				"genus": "Punaster",
+				"species": "fruticosus",
+				"invented": true,
 				"shape": "shrub",
 				"temp_c": [0, 12],
 				"moisture": [0.14, 0.52],
@@ -44,6 +49,9 @@
 		"ground": [
 			{
 				"name": "Bunch grass",
+				"genus": "Caespitigramen",
+				"species": "altiplanum",
+				"invented": true,
 				"shape": "tussock",
 				"temp_c": [-4, 14],
 				"moisture": [0.1, 0.52],
@@ -57,6 +65,9 @@
 			},
 			{
 				"name": "Ground rosette",
+				"genus": "Humirosula",
+				"species": "punensis",
+				"invented": true,
 				"shape": "rosette",
 				"temp_c": [-6, 10],
 				"moisture": [0.08, 0.52],
