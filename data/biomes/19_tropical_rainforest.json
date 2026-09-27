@@ -585,28 +585,12 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 228,
+  "count": 212,
   "names": [
    "Coconut palm",
-   "Oil palm",
-   "Raffia palm",
-   "Sago palm",
-   "Betel palm",
    "Fishtail palm",
-   "Talipot palm",
-   "Chinese fan palm",
-   "Açaí palm",
-   "Moriche palm",
-   "Babassu",
-   "Royal palm",
-   "Sabal palmetto",
    "Senegal date palm",
-   "Buriti-do-brejo",
-   "Peach palm",
-   "Walking palm",
-   "Coco de mer",
    "Nipa palm",
-   "Rattan",
    "Amorphophallus decus-silvae",
    "Amorphophallus gigas",
    "Amorphophallus hewittii",
@@ -838,11 +822,7 @@
     "Selaginella",
     "Marantaceae herb"
    ],
-   "catalogue": [
-    "Peach palm",
-    "Walking palm",
-    "Babassu"
-   ],
+   "catalogue": [],
    "cover": 0.95,
    "source": "Pires & Prance 1985 Vegetation types of the Brazilian Amazon (Key Environments: Amazonia); Richards 1996 The Tropical Rain Forest"
   },
@@ -862,11 +842,7 @@
     "Amazon sword",
     "Marantaceae herb"
    ],
-   "catalogue": [
-    "Açaí palm",
-    "Moriche palm",
-    "Buriti-do-brejo"
-   ],
+   "catalogue": [],
    "cover": 0.85,
    "source": "Prance 1979 Notes on the vegetation of Amazonia III (Brittonia); Junk 1989 Flood tolerance and tree distribution in central Amazonian floodplains"
   },
@@ -891,8 +867,6 @@
     "Selaginella"
    ],
    "catalogue": [
-    "Rattan",
-    "Sago palm",
     "Nipa palm",
     "Amorphophallus titanum"
    ],
@@ -913,10 +887,7 @@
     "Marantaceae herb",
     "Forest-floor fern"
    ],
-   "catalogue": [
-    "Oil palm",
-    "Raffia palm"
-   ],
+   "catalogue": [],
    "cover": 0.7,
    "source": "White 1983 Vegetation of Africa (Guineo-Congolian rain forest); Letouzey 1968 Etude phytogeographique du Cameroun"
   },
@@ -935,9 +906,7 @@
     "Selaginella",
     "Forest-floor fern"
    ],
-   "catalogue": [
-    "Walking palm"
-   ],
+   "catalogue": [],
    "cover": 0.7,
    "source": "Richards 1996 The Tropical Rain Forest (gap phase); Whitmore 1984"
   }

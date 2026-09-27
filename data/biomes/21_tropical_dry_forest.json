@@ -490,14 +490,10 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 60,
+  "count": 56,
   "names": [
-   "African fan palm",
    "Palmyra palm",
-   "Carnauba",
    "Wild date palm",
-   "Foxtail palm",
-   "Bottle palm",
    "Amorphophallus abyssinicus",
    "Amorphophallus andranogidroensis",
    "Amorphophallus angolensis",
@@ -575,10 +571,7 @@
     "Wild pineapple",
     "Resurrection fern"
    ],
-   "catalogue": [
-    "Foxtail palm",
-    "Bottle palm"
-   ],
+   "catalogue": [],
    "cover": 0.7,
    "source": "Janzen 1988 Tropical dry forests (Biodiversity, ed. Wilson); Murphy & Lugo 1986 Ecology of tropical dry forest (Ann. Rev. Ecol. Syst.)"
   },
@@ -620,9 +613,7 @@
     "Bluestem",
     "Wild pineapple"
    ],
-   "catalogue": [
-    "Carnauba"
-   ],
+   "catalogue": [],
    "cover": 0.7,
    "source": "Killeen et al. 1998 Diversity, composition and structure of a tropical semideciduous forest in the Chiquitania region of Bolivia; Prado & Gibbs 1993"
   },
@@ -661,10 +652,7 @@
     "Beach morning glory",
     "Wild pineapple"
    ],
-   "catalogue": [
-    "African fan palm",
-    "Foxtail palm"
-   ],
+   "catalogue": [],
    "cover": 0.5,
    "source": "Janzen 1988; Rzedowski 1978 Vegetacion de Mexico (bosque tropical caducifolio)"
   }

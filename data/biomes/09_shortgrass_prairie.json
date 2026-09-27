@@ -261,11 +261,9 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 39,
+  "count": 37,
   "names": [
-   "Chilean wine palm",
    "Cretan date palm",
-   "Mediterranean fan palm",
    "Arkansas yucca",
    "Jalisco yucca",
    "Sierra Madre yucca",

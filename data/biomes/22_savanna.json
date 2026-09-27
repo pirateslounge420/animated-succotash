@@ -423,11 +423,9 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 42,
+  "count": 40,
   "names": [
-   "African fan palm",
    "Palmyra palm",
-   "Carnauba",
    "Cretan date palm",
    "Amorphophallus abyssinicus",
    "Amorphophallus andranogidroensis",
@@ -529,7 +527,6 @@
     "Red grass"
    ],
    "catalogue": [
-    "African fan palm",
     "Palmyra palm"
    ],
    "cover": 0.3,
@@ -548,9 +545,7 @@
     "Savanna grass",
     "Fire lily"
    ],
-   "catalogue": [
-    "Carnauba"
-   ],
+   "catalogue": [],
    "cover": 0.4,
    "source": "Brazilian cerrado sensu stricto (Eiten 1972; Oliveira & Marquis 2002)"
   },

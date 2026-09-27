@@ -4,6 +4,19 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-27 — Catalogues trimmed to the genera the designer named (data only)
+- **Designer:** "keep it simple … reduce the amount of actual variety". Biome files unchanged. Catalogue entries 807 → 623.
+- **Trimmed:**
+  - magnolia 18→16, giant_herbs 24→18, vine 30→3, bromeliad 30→14, cycad 24→5, palms 43→8, orchid 60→9, fungi 43→15.
+  - The single-genus catalogues, baobab + ginkgo, acacia (all three acacia genera) and carnivore (all 13 genera were named) are unchanged.
+- **My picks where nothing was named:**
+  - Palms: one genus per crown form in the shape work (doum, coconut, date palms, Washingtonia).
+  - Orchids: lady's slippers and Dendrobium.
+  - Bromeliads: one tank bromeliad, so the frog-tank rule has a plant.
+  - Fungi: the one dung and one carcass fungus, so those pools can decay.
+- **References:** removed names stripped from 37 association `catalogue` entries and 138 `special` entries; no association lost a dominant.
+- **Dry run:** 0 warnings beyond the 18 "unknown biome key"; 1,166 species. stamp_check PASS.
+
 ## 2026-09-27 — Plant associations (data + spec; nothing built)
 - **Merged:** `data/plant-catalogues` at 859d296. 213 plant associations across the 42 land biome files (2–8 each, cover 0.1–0.95). Every member name resolves to a loaded plant. cc70585 gives every entry a species-level binomial, so the tepui "spp." entries are fixed.
 - **Spec:**

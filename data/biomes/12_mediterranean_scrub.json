@@ -443,11 +443,9 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 42,
+  "count": 40,
   "names": [
-   "Chilean wine palm",
    "Cretan date palm",
-   "Mediterranean fan palm",
    "Arkansas yucca",
    "Adam's needle",
    "Weak-leaf yucca",
@@ -505,9 +503,7 @@
     "Ramose false brome",
     "Asphodel"
    ],
-   "catalogue": [
-    "Mediterranean fan palm"
-   ],
+   "catalogue": [],
    "cover": 0.85,
    "source": "Quezel & Medail 2003 Ecologie et biogeographie des forets du bassin mediterraneen; Braun-Blanquet Quercetum ilicis"
   },
@@ -528,9 +524,7 @@
     "Asphodel",
     "Ramose false brome"
    ],
-   "catalogue": [
-    "Mediterranean fan palm"
-   ],
+   "catalogue": [],
    "cover": 0.6,
    "source": "Rivas-Martinez 1987 Memoria del mapa de series de vegetacion de Espana; Quezel & Medail 2003"
   },
@@ -553,8 +547,7 @@
     "Asphodel"
    ],
    "catalogue": [
-    "Cretan date palm",
-    "Mediterranean fan palm"
+    "Cretan date palm"
    ],
    "cover": 0.5,
    "source": "Tomaselli 1977 Degradation of the Mediterranean maquis (UNESCO MAB); Quezel & Medail 2003"

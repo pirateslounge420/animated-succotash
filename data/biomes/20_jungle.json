@@ -466,18 +466,11 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 174,
+  "count": 167,
   "names": [
    "Coconut palm",
-   "Talipot palm",
-   "Chinese fan palm",
-   "Babassu",
-   "Royal palm",
-   "Sabal palmetto",
    "Senegal date palm",
-   "Foxtail palm",
    "Saw palmetto",
-   "Bottle palm",
    "Amorphophallus aberrans",
    "Amorphophallus albispathus",
    "Amorphophallus allenii",
@@ -660,9 +653,7 @@
     "Lantana",
     "Bracken"
    ],
-   "catalogue": [
-    "Talipot palm"
-   ],
+   "catalogue": [],
    "cover": 0.7,
    "source": "Champion & Seth 1968 A Revised Survey of the Forest Types of India (moist teak forest); Stamp 1925 Vegetation of Burma"
   },
@@ -680,9 +671,7 @@
     "Cogon grass",
     "Lantana"
    ],
-   "catalogue": [
-    "Chinese fan palm"
-   ],
+   "catalogue": [],
    "cover": 0.75,
    "source": "Champion & Seth 1968 (moist sal forest); Puri 1960 Indian Forest Ecology"
   },
@@ -700,9 +689,7 @@
    "ground": [
     "Spiral ginger"
    ],
-   "catalogue": [
-    "Babassu"
-   ],
+   "catalogue": [],
    "cover": 0.75,
    "source": "Griscom & Ashton 2003 Bamboo control of forest succession (Forest Ecology and Management); Nelson 1994"
   },
@@ -726,9 +713,7 @@
     "Cogon grass",
     "Bracken"
    ],
-   "catalogue": [
-    "Royal palm"
-   ],
+   "catalogue": [],
    "cover": 0.6,
    "source": "Richards 1996 The Tropical Rain Forest (secondary succession); Whitmore 1984"
   },

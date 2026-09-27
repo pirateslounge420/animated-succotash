@@ -276,17 +276,9 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 46,
+  "count": 38,
   "names": [
-   "Andean wax palm",
-   "Chinese fan palm",
-   "Cabbage-tree palm",
-   "Nikau palm",
-   "Sabal palmetto",
-   "Windmill palm",
    "Saw palmetto",
-   "Needle palm",
-   "Dwarf palmetto",
    "Amorphophallus albus",
    "Amorphophallus coaetaneus",
    "Amorphophallus cruddasianus",

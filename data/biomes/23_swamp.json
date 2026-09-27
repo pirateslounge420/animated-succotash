@@ -555,28 +555,10 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 125,
+  "count": 107,
   "names": [
-   "Oil palm",
-   "Raffia palm",
-   "Sago palm",
-   "Betel palm",
    "Fishtail palm",
-   "Talipot palm",
-   "Chinese fan palm",
-   "Cabbage-tree palm",
-   "Açaí palm",
-   "Moriche palm",
-   "Royal palm",
-   "Sabal palmetto",
-   "Buriti-do-brejo",
-   "Peach palm",
-   "Walking palm",
-   "Coco de mer",
    "Nipa palm",
-   "Needle palm",
-   "Dwarf palmetto",
-   "Rattan",
    "Amorphophallus decus-silvae",
    "Amorphophallus gigas",
    "Amorphophallus hewittii",
@@ -764,11 +746,7 @@
    "ground": [
     "Royal fern"
    ],
-   "catalogue": [
-    "Sabal palmetto",
-    "Needle palm",
-    "Dwarf palmetto"
-   ],
+   "catalogue": [],
    "cover": 0.8,
    "source": "Florida hydric hammock (Vince et al. 1989; Myers & Ewel 1990)"
   },
@@ -786,12 +764,7 @@
     "Duckweed",
     "Pickerelweed"
    ],
-   "catalogue": [
-    "Moriche palm",
-    "Buriti-do-brejo",
-    "Açaí palm",
-    "Raffia palm"
-   ],
+   "catalogue": [],
    "cover": 0.7,
    "source": "Mauritia palm swamp (buritizal/aguajal) of the Amazon and Pantanal (Kahn 1988; Pott & Pott 1994)"
   }

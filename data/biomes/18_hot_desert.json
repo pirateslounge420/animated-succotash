@@ -447,13 +447,11 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 20,
+  "count": 18,
   "names": [
    "Date palm",
-   "Red cabbage palm",
    "California fan palm",
    "Mexican fan palm",
-   "Mexican blue palm",
    "Cape yucca",
    "Giant Spanish dagger",
    "Carr's yucca",
@@ -491,7 +489,6 @@
     "Bursage"
    ],
    "catalogue": [
-    "Mexican blue palm",
     "Datilillo"
    ],
    "cover": 0.3,
@@ -569,9 +566,7 @@
    "ground": [
     "Hard spinifex"
    ],
-   "catalogue": [
-    "Red cabbage palm"
-   ],
+   "catalogue": [],
    "cover": 0.25,
    "source": "Beadle 1981 The Vegetation of Australia; Specht 1970 Vegetation (Australian Environment)"
   }

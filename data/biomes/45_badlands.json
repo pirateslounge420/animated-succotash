@@ -353,14 +353,11 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 75,
+  "count": 72,
   "names": [
    "Date palm",
-   "Red cabbage palm",
    "California fan palm",
    "Mexican fan palm",
-   "Guadalupe palm",
-   "Mexican blue palm",
    "Cretan date palm",
    "Narrowleaf yucca",
    "Banana yucca",

@@ -522,11 +522,8 @@
  },
  "special": {
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
-  "count": 43,
+  "count": 40,
   "names": [
-   "Andean wax palm",
-   "Cabbage-tree palm",
-   "Windmill palm",
    "Amorphophallus albus",
    "Amorphophallus coaetaneus",
    "Amorphophallus cruddasianus",
@@ -589,9 +586,7 @@
     "Filmy fern",
     "Begonia"
    ],
-   "catalogue": [
-    "Andean wax palm"
-   ],
+   "catalogue": [],
    "cover": 0.85,
    "source": "Gentry 1995 in Hamilton et al. Tropical Montane Cloud Forests; Grubb 1977"
   },
