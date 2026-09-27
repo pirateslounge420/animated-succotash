@@ -199,7 +199,7 @@ Each card: **Touches / Do not build / Done when / Prompt A.** Sign-off only on t
 See Part C.
 
 ## Phase 1 — Player feel, hitboxes, audio  ← current
-- **Touches:** `player/*`, `core/controls`, `project.godot` input map, `creatures/sound_synth`, audio players, `plant_meshes`, `tree_contact`, `World.ripples`.
+- **Touches:** `player/*`, `core/controls`, `project.godot` input map, `creatures/sound_synth`, audio players, `plant_meshes`, `tree_contact`, `World.ripples`; for the D5 hitbox and sound audits also `terrain_chunk` (tree colliders), `vegetation_placer`, the foliage and water shaders, `ruin_builder`, `camps`, `campfire`, `encampment`, `creature`, `creature_spawner`, `creature_species`, `creatures.json`, `weather_fx`, `storm_fx`, `sky_events`.
 - Implement D5 in full: double-tap sprint, Shift sneak with reduced noise radius, hitbox audit on player/creatures/trees/ruins/projectiles, spear (thrust/throw/retrieve), all sounds 3D with attenuation.
 - **(i) Branch graph:** canopy trees get individual branch meshes instead of a leaf blob; each tree exposes a branch graph — handhold points plus which ones are reachable from which — generated deterministically from seed + tree position, NEAR only.
 - **(ii) Climbing:** the player climbs trunks and shimmies along thick branches: slow, effortful, no swinging; extend `tree_contact`.
@@ -217,6 +217,15 @@ See Part C.
 >
 > Both get proper hitboxes per D5. Show me a short recording of each moving on the test planet at night, with rings visible under the crawler.
 - All rigs are testable on the stamp via a dev spawn key; nothing spawns in normal play until Phase 6.
+- **Agreed at Go (2026-09-27).** The designer said Go without answering these; the recommendations below stand until the designer overrides them:
+  - Ripples keep one ~256×256 buffer (0.25 m a texel, 64 m across) centred on the camera instead of one per nearby water chunk; beyond ~40 m the static wave shader takes over.
+  - `World.ripples` gives readers the recent disturbances (where, how big, how long ago) through `Ripples.height_at()` and `disturbance_at()`; the height buffer itself stays on the GPU.
+  - Canopy trees get about 6 branch layouts per species; each tree picks one by hashing its position, so trees stay batched. Thick limbs don't sway.
+  - Climbing is effortful by rhythm (a beat between reaches, breath sounds); no stamina meter.
+  - Spear: Q (pad Y) swaps bow and spear; tap to thrust, hold and release to throw; E picks it back up.
+  - Dev keys (dev mode only): F4 collision shapes, F6 branch graphs, F7 spawns the next rig, F8 makes the nearest wolf pack howl.
+  - Deferred: creatures steering around trunks and ruin walls (pathfinding, Phase 6/7), wind sound, campfire crackle.
+  - Fire light on folk and props is #FFA050 (R1a updated).
 - **Do not build:** new creatures or systems beyond the ones on this card, combat balancing.
 - **Done when:** a recording shows double-tap sprint, sneak past a deer that would otherwise flee, an arrow and a thrown spear sticking where they visibly hit, and a howl that pans and fades as you walk away; the player climbs a tree while a monkey passes overhead, and a wading creature leaves rings.
 - **Prompt A:**
@@ -337,7 +346,7 @@ The references have crunchy textures on smooth, rounded shapes. Grain, dither an
 | Grass | day #3FA83A / shadow #1F5A22, cooling toward #1E4A6A at night |
 | Dirt / bark | #6B4A2E → #A07A4A — the one warm ground colour |
 | Stone | #6F7A8A day, #3E4C8C night; moss #3F7A3A |
-| Fire | #FFB020 core, #FF4A00 coals, #FF7A2A light |
+| Fire | #FFB020 core, #FF4A00 coals, #FFA050 light on folk and props, #FF7A2A ground pool |
 | Windows / lanterns | #FF3A2A / #FFC040 |
 | Snow | #C8D8F0 with #6A82C0 shadows |
 

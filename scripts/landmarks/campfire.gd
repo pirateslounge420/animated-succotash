@@ -10,11 +10,12 @@ class_name Campfire
 ## tongue materials.
 
 ## R1a fire (docs/WORLD_SYSTEMS_SPEC.md): coals #FF4A00 (the flames' core
-## #FFB020 is in the flame shader) and the light #FF7A2A, strong enough to
-## paint the ground and the folk round the fire clearly orange against the
-## blue night.
+## #FFB020 is in the flame shader) and the light #FFA050, strong enough to
+## paint the folk and props round the fire warm orange against the blue
+## night without turning skin red. The pool on the ground stays the deeper
+## #FF7A2A (shaders/fire_glow.gdshader).
 const COALS := Color("#ff4a00")
-const LIGHT := Color("#ff7a2a")
+const LIGHT := Color("#ffa050")
 const LIGHT_ENERGY := 7.0
 ## By day the sun drowns the fire: its light falls to this share of
 ## LIGHT_ENERGY in full daylight.

@@ -1,5 +1,5 @@
 // Firelight pooled on the ground round a campfire (Campfire): a flat disc
-// drawn additively in the R1a fire-light orange (#FF7A2A), brightest at
+// drawn additively in the R1a ground-pool orange (#FF7A2A), brightest at
 // the fire and fading out over its radius, flickering with the flames.
 // The fire's OmniLight lights the folk and props; on its own it can't make
 // green grass read orange (green ground under orange light goes olive), so

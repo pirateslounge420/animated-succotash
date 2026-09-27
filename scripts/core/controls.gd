@@ -21,8 +21,18 @@ const DEFAULTS := {
 	# First / third person.
 	"toggle_view": [KEY_V, KEY_F5],
 	# Hold to draw the bow, release to shoot (the left mouse button; see
-	# MOUSE_BUTTONS).
+	# MOUSE_BUTTONS). With the spear in hand: tap to thrust, hold and
+	# release to throw.
 	"shoot": [],
+	# Swap between the bow and the spear.
+	"weapon_swap": [KEY_Q],
+	# Dev mode only (data/dev.json): F4 shows collision shapes, F6 the
+	# trees' branch graphs, F7 spawns the next Phase 1 rig beside you (Night
+	# Riders, Pond Crawler, monkey), F8 makes the nearest wolf pack howl.
+	"toggle_collision_view": [KEY_F4],
+	"toggle_branch_view": [KEY_F6],
+	"dev_spawn": [KEY_F7],
+	"dev_howl": [KEY_F8],
 }
 
 ## Mouse buttons per action.
@@ -30,10 +40,12 @@ const MOUSE_BUTTONS := {
 	"shoot": MOUSE_BUTTON_LEFT,
 }
 
-## Gamepad: left stick moves, A jumps, X interacts, B crouches, the left
-## stick held in sprints, the right trigger draws and shoots the bow, the
-## right stick clicked switches first/third person, Back opens the map.
+## Gamepad: left stick moves, A jumps, X interacts, B crouches, Y swaps
+## bow and spear, the left stick held in sprints, the right trigger draws
+## and shoots the bow, the right stick clicked switches first/third person,
+## Back opens the map.
 const PAD_BUTTONS := {
+	"weapon_swap": JOY_BUTTON_Y,
 	"toggle_view": JOY_BUTTON_RIGHT_STICK,
 	"jump": JOY_BUTTON_A,
 	"interact": JOY_BUTTON_X,
