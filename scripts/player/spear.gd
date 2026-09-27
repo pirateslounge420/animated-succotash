@@ -192,11 +192,8 @@ func thrust() -> void:
 	var rest := space.get_rest_info(q)
 	var at: Vector3 = rest.get("point", from + dir * REACH_M * frac[1])
 	var collider: Object = instance_from_id(rest.collider_id) if rest.has("collider_id") else null
-	var who := Hitboxes.creature_of(collider)
-	if who and who.has_method("hurt"):
-		who.hurt(THRUST_DAMAGE, player.global_position)
-	elif who and player.camps:
-		player.camps.shot_at(who)
+	# A creature is hurt in the part it met, a camp person complains (Hits).
+	Hits.strike(collider, int(rest.get("shape", 0)), THRUST_DAMAGE, player.global_position, at, player.camps)
 	_play("arrow_hit", 0.7)
 	NoiseEvents.emit(at, THRUST_NOISE_M)
 

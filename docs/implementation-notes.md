@@ -1245,6 +1245,15 @@ Spawn tiers:
     their biggest piece; fireflies a 0.35 m sphere in the heart of the
     cloud (an arrow through it hurts the swarm and flies on). Imported
     models get one shape over the whole model.
+  - Hit parts (`Hits`; see Health, hits and the view): every part is
+    marked with its kind in a `hit_part` meta: head (with the nose and
+    the goblin's ears), limb (legs, arms, wings) or body (torso, neck,
+    tail, antlers, gear). Creatures of 0.3 m and up
+    (`hits.eyes_from_size_m`) also get a small sphere over each drawn
+    eye (the eye meshes carry their side, `eye_l` / `eye_r`), 2.5 times
+    the drawn eye's radius and at least 2 cm, so it stands a little
+    proud of the head's part and a ray aimed at the eye meets it first.
+    A deer has 15 bodies now (13 + two eyes).
   - A blocker on the world's layer, inside the torso, for everything
     0.6 m or bigger, every mythical and every person: the player can't
     walk through a deer or a person (stopped 0.5 m from its middle in
@@ -1335,7 +1344,10 @@ Spawn tiers:
     each arm's bone attachments. An arrow's ray meets the part it visibly
     hits and sticks in it, moving with it. The player bumps into one
     `Hitboxes.blocker()` capsule through the lump (layer 1); the arms,
-    like the rider's legs, don't snag you.
+    like the rider's legs, don't snag you. Hit parts (`Hits`): the hood
+    is its head, arms and hands its limbs (a hurt arm shortens its lurch
+    strides), and its one slit eye a sphere just proud of the hood,
+    marked `eye` with no side: hit, it notices you late all round.
   - Tunables are the entry's `rig` (data/creatures/README.md).
 - **Night Rider** (Phase 1 rig; `scripts/creatures/mythics/`, data "Night
   rider", *Nyctequus gemellus*, invented): two riders on dark horses,
@@ -1425,7 +1437,11 @@ Spawn tiers:
     bump into there is one simple body per creature on layer 1
     (`Hitboxes.blocker()`: a capsule through the horse's barrel, inside
     the parts, so a shot always meets a part first). All off (out of the
-    physics space) when it dies.
+    physics space) when it dies. Hit parts (`Hits`): the horse's head and
+    the rider's hood are heads, the legs and the rider's arms limbs (a
+    lame horse walks slower), and each glowing eye, horse's and
+    rider's, has a small sphere marked with its side (a blinded leader
+    notices you later on that side).
   - Sound (`NightRiderSounds`): each hoof landing is a soft synthesized
     thud (a low falling thump, a dark press of noise, a brief hush of
     needles; no clop) on a 3D player moved to that hoof (unit size 5 m,
@@ -1532,7 +1548,9 @@ Spawn tiers:
     `creature` meta (`Hitboxes.creature_of()`); it gives an alarm call,
     breaks off a rest or a sit, gives up a goal toward the shooter and for
     20 s prefers goals away from where the shot came from. It takes no
-    damage (no combat yet). The arrow sticks in the part it hit: Arrow
+    damage (it has no health yet), but the hit reads like any creature's
+    (`Hits`): the part's number rises and a head or eye hit flashes the
+    X. The arrow sticks in the part it hit: Arrow
     now parents itself to the collision shape the ray met (its shape
     owner), which GibbonHitboxes moves with its bone every frame, so it
     rides along with that arm or leg.
@@ -1542,9 +1560,10 @@ Spawn tiers:
     volume within 12 m and gone at 160 m.
   - A blob shadow only within 3 m of the ground (a ray down against the
     world's layer; tree trunks don't count).
-  - Hitboxes (`GibbonHitboxes`, D5): 13 capsules and spheres fitted to the
-    body (hips, chest, head, and per side upper arm, forearm, hand, thigh,
-    shin), in one kinematic body that follows the posed bones every
+  - Hitboxes (`GibbonHitboxes`, D5): 15 capsules and spheres fitted to the
+    body (hips, chest, head, the two eyes, and per side upper arm, forearm,
+    hand, thigh, shin; each shape marked with its hit kind), in one
+    kinematic body that follows the posed bones every
     frame. It's on physics layer 3, named `creature_hitboxes` in
     project.godot, not layer 1, so the player never snags on it; rays that
     don't filter layers (the bow's aim, the arrow) meet it. The body
@@ -1799,12 +1818,34 @@ yet (deferred).
   synthesized sounds, on a 3D player at the feet; a step in shallow
   water also splashes (`PlanetPlayer.foot_splash`, `Ripples`).
 
-## Health, the bow and the view
+## Health, hits, the bow and the view
 
-- **Health** (`PlanetPlayer`): 100 HP, shown as ten hearts (half hearts
-  too) at the bottom left (`StatusHud`), shivering when low, with a red
-  flash at the screen's edge on a hit, and a thump and a gasp from a 3D
-  player at the chest.
+The designer's item 10, "PSO-style health and hit feedback". Every number
+below is in `data/combat.json` (`hits`, `feedback`, `healing`, each
+explained in its `_help`) or `data/creatures/creatures.json`
+(`hit_parts`); `Hits` (`scripts/creatures/hits.gd`) loads the first.
+
+- **Health** (`PlanetPlayer`): 100 HP, shown as a health meter at the
+  bottom left where the hearts were (`StatusHud`): a slim bar, 150 x 5 px,
+  R1a blue (#4C7CFF on a #0A14A0 track, a #7FB0FF edge along its top,
+  an #0A1250 outline, never black), and a small numeral beside it (13 px,
+  whole HP rounded up). Under a quarter of full health the fill pulses
+  toward the edge color. A red flash at the screen's edge on a hit, a
+  thump and a gasp from a 3D player at the chest, and the "You died"
+  curtain are as before; the weapon label sits above the meter.
+  - **No regeneration.** Health comes back only three ways:
+    - resting at a fire: standing or crouching still on the ground (not
+      climbing, swimming or aiming) for 2 s within 4 m of a lit campfire
+      (any: the camps', the opening camp's, mythic folk's; `Campfire`
+      puts every fire in the `campfires` group, `Campfire.lit_near()`,
+      each carrying a `lit` meta for a later fire system to put out)
+      heals 1.5 HP/s. There is no sit action yet; crouching counts.
+    - cooked food and camp medicine: hooks for Phase 10's inventory.
+      `PlanetPlayer.heal(amount, source)` is the one entry point (returns
+      what it healed, never past 100; `healed_by` counts per source), and
+      `PlanetPlayer.heal_for(source)` gives the table's usual amount
+      (`healing.sources`: cooked_food 20, camp_medicine 45).
+    - waking by the fire after dying, at full health.
   - Falls faster than 11 m/s (about a 6 m drop) hurt 7 HP per extra m/s:
     15 m costs about 43.
   - Bites: a pack that turns on you (you shot one, or walked into them at
@@ -1813,7 +1854,6 @@ yet (deferred).
   - The knock-back is added fresh each frame and fades. It used to
     compound: a hit's upward shove taken in the air re-added itself every
     frame and threw you tens of meters.
-  - After 8 s without a hit, health returns at 2 HP/s.
   - At 0 you slump, the screen goes dark ("You died"), and you wake by the
     opening camp's fire with full health and 3 s of grace.
 - **Creatures can be hurt** (`Creature.hurt`): hit points by size
@@ -1823,7 +1863,52 @@ yet (deferred).
   until you're 70 m off. Neutral mythicals vanish for five minutes. The
   dead topple (the side the killing blow came from facing up, so the
   arrow or spear in it stays in view) and fade after 14 s; a killed pack or mythical stays gone
-  half an hour.
+  half an hour. Their health is never drawn: the rising numbers and
+  their behaviour (limping, fleeing, going down) are the only readout.
+- **Hit parts** (`Hits`): every hitbox part carries its kind (body,
+  head, limb, or an eye with its side; see Creatures, Hitboxes). The
+  weapons have one way in, `Hits.strike()` (the arrow, the thrown spear,
+  the thrust), which calls the creature's own
+  `hurt(amount, from_pos, part, at)`; that applies the species'
+  multiplier (`hit_parts` in creatures.json: a species-level block, with
+  a species' own entries over it; the tortoise's shell takes 0.4x) and
+  the wound, and reports the hit.
+  - body 1x; head 2x, critical; eye 4x, critical, and it blinds that
+    side (`Creature.blind`): the animal notices you there at 0.3 of its
+    flight distance (`hits.blind_notice`; the Pond Crawler's one eye
+    blinds it all round, a Night Rider leader notices you later on that
+    side); limb 1x and lames it: its speed times 0.5 each limb hit, never
+    under 0.25 (`limb_slow`, `limb_slow_floor`; `Creature.lame`), and it
+    limps: once a stride its body rolls down toward the side it was hit
+    on, up to 7° (`hits.limp_roll_deg`). Critical parts are
+    `hits.critical_parts`.
+  - Camp folk and mythics use the same system. The Night Rider and the
+    Pond Crawler are Creatures and take it all. Camp folk still can't be
+    harmed (they had no health before, and none was added): a hit on
+    them shows its number (the species-level table: a head is 2x and
+    critical) and the X, and they complain as before (`Camps.shot_at()`);
+    a glancing arrow or spear counts only its first touch. The gibbon
+    (no health yet either) shows numbers and the X too.
+- **Hit feedback** (`StatusHud`, reading `Hits.since()`: the creatures
+  write the events, the HUD reads them, as with `NoiseEvents`):
+  - a small number rises 0.7 m from the impact point over a second,
+    riding the animal it's on, fading over its last 0.35 s: whole
+    damage dealt ("12"), white, yellow (#FFD23A, the one warm accent) on
+    a critical, edged in dark blue. Its size follows the camera
+    distance, 15 px at 8 m times (8 / distance)^0.5, kept within
+    11-19 px, so it's readable far off and never big up close. At most 4
+    on screen (the oldest goes); hits on one target in the same physics
+    frame (`combine_s`, one frame) add up to one number.
+  - on a critical (head or eye) the crosshair, or the small dot, flashes
+    into a Black Ops-style X (four short strokes out from a 3 px gap, 10
+    px long) for 0.12 s, with a short sharp tick (SoundSynth
+    "hitmarker": a bright ping over a click, 70 ms; a UI sound, the one
+    sound not placed in the world). A kill holds the X 0.4 s, in the
+    warm yellow, with the tick a little lower. An ordinary hit that
+    doesn't kill shows only its number.
+  - The bow's own random "critical" (a full draw's damage up to half
+    again, `Bow._loose()`) is untouched: it's a damage roll, not a
+    critical here.
 - **The bow** (`Bow`, `Arrow`, `BowMesh`), as simple as Minecraft's: hold
   the left mouse button (or the pad's right trigger) to draw, release to
   loose.
@@ -1864,7 +1949,7 @@ yet (deferred).
     "Spear (thrown)"). Within 2 m of its shaft, E takes it back into your
     hand ("E: take the spear back"): main's E lets go of a tree first,
     then picks up the spear, then turns a log, then climbs.
-  - The HUD names the weapon in hand above the hearts; the raise fills
+  - The HUD names the weapon in hand above the health meter; the raise fills
     the same arc under the crosshair as the bow's draw.
 - **First person** (V, F5, the right stick click): the camera at eye
   height (1.6 m, 0.98 crouched), wider pitch, your body hidden from the
@@ -1914,7 +1999,13 @@ the player's shoulder so the fire is in view.
     by layer (see Landmarks);
   - biome, temperature now and on average (°C), weather, rainfall, wind,
     elevation and coordinates;
-  - a context prompt.
+  - a context prompt;
+  - `StatusHud`, drawn under the rest: the health meter (a slim blue bar
+    and numeral, bottom left) with the weapon in hand above it, the
+    crosshair or the middle dot with the binomial of what it rests on,
+    the hits' rising numbers and the critical / kill X, the red hurt
+    flash and the "You died" curtain (see Health, hits, the bow and the
+    view). No creature health bars, ever.
 - **Map (M):** a globe lit by the real sun, colored by biome, elevation,
   temperature, rainfall or live weather.
 
@@ -2086,9 +2177,41 @@ latest results:
   Loosing, thrusting and throwing raise `noise_level` to 0.6, back under
   0.3 a second later. Recorded: swapping to the spear, throwing it into a
   deer's flank, sprinting over and taking it back.
+- **Hits and health** (`tools/hits_check.gd`, headless, `--fixed-fps 60`,
+  on the stamp; a fresh deer, 36.4 HP, for each arrow, loosed 2.5 m from
+  the part at full speed): an arrow carrying 10 into the torso deals 10,
+  not critical, and the deer flees at 7.0 m/s; into the head 20 (2x),
+  critical; one carrying 5 into the right eye 20 (4x), critical, blind on
+  the right only: it bolts from a quiet, still player at 4.0 m on its
+  right and 13.5 m on its left; into a hind shin 10, lame 0.5, and it
+  flees at 3.5 m/s (5.2 m in 1.5 s against 10.5 m). The X holds 0.10 s
+  counted for a critical (0.12 s in the table; the first frame is spent
+  reading the hit) and 0.38 s for a kill (0.40), in the kill color. Two
+  hits on one deer in one physics frame (4 on the body, 6 on the head)
+  make one number, 16, critical. An arrow into the opening camp's elder's
+  head: 20, critical, a complaint, no harm. 60 s idle 60 m from any fire
+  at 50 health: still 50. 20 s standing 3.3 m from the opening camp's
+  fire: 50 to 77, resting 18 s at 1.50 HP/s (from 2 s still).
+  `heal(heal_for("cooked_food"), "cooked_food")`: +20. Stills
+  (`-- --shots`): the X and a yellow number over a head-shot deer, the
+  number risen with the meter at 64, a white body-hit number.
 
 ## Known gaps and next steps
 
+- **Hits and health (item 10).**
+  - Cooked food and camp medicine don't exist yet (Phase 10): only their
+    hook, `PlanetPlayer.heal()`, and their amounts in the table.
+  - No sit action: resting counts standing or crouching still.
+  - Camp folk and the gibbon have no health, so their numbers are what the
+    hit would have dealt; nothing is harmed.
+  - A limb hit doesn't know which leg: the whole gait slows and the body
+    rolls toward the side the arrow came in on. Wounds never heal.
+  - Mythic rigs slow when lamed (the horse's walk, the crawler's strides)
+    but don't roll into a limp.
+  - A number whose target is freed mid-rise goes back to where the hit
+    landed; a floating-origin rebase in that second would misplace it.
+  - The bow's random full-draw damage bonus is still called a "critical"
+    in `Bow`; it's a damage roll, unrelated to head and eye criticals.
 - **Spear and noise (Phase 1, D5).**
   - Damage numbers are placeholders (no balancing, per the card). The
     thrust and throw reuse the bow's synthesized sounds, pitched down.

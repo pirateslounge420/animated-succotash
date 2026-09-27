@@ -40,6 +40,8 @@ var afloat := false
 var host: Creature = null
 
 var _life := 0.0
+## Glanced off a camp person already (a second touch isn't another hit).
+var _glanced := false
 var _float_at := Vector3.ZERO
 var _voice: AudioStreamPlayer3D
 var _trail: AimArc.Trail
@@ -96,8 +98,9 @@ func _physics_process(delta: float) -> void:
 	var who := Hitboxes.creature_of(ray.collider)
 	var part := ray.collider as Node3D
 	if who and who.has_method("hurt"):
-		# A creature, or a rig of its own such as the gibbon.
-		who.hurt(damage * clampf(velocity.length() / Spear.MAX_SPEED, 0.4, 1.0), a)
+		# A creature, or a rig of its own such as the gibbon: hurt in the
+		# part it met (Hits).
+		Hits.strike(ray.collider, ray.shape, damage * clampf(velocity.length() / Spear.MAX_SPEED, 0.4, 1.0), a, hit_pos, camps)
 		var cr := who as Creature
 		if cr and cr.species.role == "swarm":
 			exclude.append((part as CollisionObject3D).get_rid())
@@ -110,8 +113,11 @@ func _physics_process(delta: float) -> void:
 		host = cr
 		_land(hit_pos)
 	elif who:
-		if camps:
-			camps.shot_at(who)
+		# A camp person: they complain, no one's harmed (Hits.strike());
+		# only the first touch counts as a hit.
+		if not _glanced:
+			Hits.strike(ray.collider, ray.shape, damage * clampf(velocity.length() / Spear.MAX_SPEED, 0.4, 1.0), a, hit_pos, camps)
+		_glanced = true
 		exclude.append((part as CollisionObject3D).get_rid())
 		global_position = hit_pos - velocity.normalized() * 0.05
 		velocity *= -0.15

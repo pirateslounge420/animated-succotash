@@ -1,0 +1,44 @@
+{
+	"_help": {
+		"hits": "Where a hit lands and what that means, for every creature, camp person and mythic alike. How much each part multiplies the damage and what it does to the animal is in data/creatures/creatures.json (hit_parts); this block holds the rules that are the same for everyone.",
+		"hits.critical_parts": "The parts whose hits are critical: they show a yellow number and flash the crosshair into an X.",
+		"hits.eye_radius_scale": "Each eye is a small hit sphere this many times the drawn eye's radius, so an eye can be aimed at without being a pixel hunt.",
+		"hits.eye_min_radius_m": "No eye's hit sphere is smaller than this (meters).",
+		"hits.eyes_from_size_m": "Only creatures at least this big (size_m) get eye spheres; on a beetle or a songbird the head is the smallest target.",
+		"hits.blind_notice": "A creature blinded on one side notices you there only this close, as a share of its usual flight distance (1: not blinded at all; 0.3: you can walk up within a third of the distance on the blind side).",
+		"hits.limp_roll_deg": "How far a lamed animal's body rolls toward its bad leg on each stride as it limps (degrees, at full lameness).",
+		"feedback": "What the player sees and hears when a hit lands: the rising number, the crosshair's X, the X's sound, and the health meter.",
+		"feedback.number": "The damage number that rises from the impact point. rise_m: how far it rises (m) over life_s seconds; fade_s: the last seconds of its life it fades out; size_px: its size (pixels) at ref_distance_m meters away; distance_power: how strongly size follows distance (0: never changes, 1: shrinks in proportion); min_px / max_px: never smaller or larger than this; max_on_screen: at most this many at once (the oldest goes first); combine_s: hits on one target closer together than this (seconds; 0.017 is one frame) add up to one number.",
+		"feedback.colors": "normal: an ordinary hit's number; critical: a critical hit's number (the one warm accent); outline: the dark edge round every number and the X (R1a night blue, never black).",
+		"feedback.crit_x": "The crosshair's X on a critical hit or a kill. hold_s: how long a critical's X shows; kill_hold_s: how long a kill's does (a beat longer); size_px: each stroke's reach from the middle; gap_px: the empty middle; width_px: stroke thickness; color / kill_color: the X for a critical, and for a kill.",
+		"feedback.sound": "The X's short sharp hit sound (a UI sound, not placed in the world). volume_db: its loudness; pitch: its pitch; kill_pitch: a kill's (lower is heavier).",
+		"feedback.meter": "The player's health meter at the bottom left: a slim bar and a small numeral. width_px / height_px: the bar; fill / track / edge: its colors (R1a blues); low_share: below this share of full health the bar pulses; numeral_px: the numeral's size.",
+		"healing": "How the player gets health back. There is no healing on its own.",
+		"healing.rest_radius_m": "Resting at a fire: standing, crouching or sitting still within this many meters of a lit campfire.",
+		"healing.rest_still_s": "After this many seconds still there, health starts to come back.",
+		"healing.rest_hp_per_s": "How fast resting at a fire heals (health a second).",
+		"healing.sources": "Health each kind of healing gives at once, for the things that will call it: cooked food and camp medicine (Phase 10, inventory)."
+	},
+	"hits": {
+		"critical_parts": ["head", "eye"],
+		"eye_radius_scale": 2.5,
+		"eye_min_radius_m": 0.02,
+		"eyes_from_size_m": 0.3,
+		"blind_notice": 0.3,
+		"limp_roll_deg": 7.0
+	},
+	"feedback": {
+		"number": {"rise_m": 0.7, "life_s": 1.0, "fade_s": 0.35, "size_px": 15, "ref_distance_m": 8.0, "distance_power": 0.5,
+			"min_px": 11, "max_px": 19, "max_on_screen": 4, "combine_s": 0.017},
+		"colors": {"normal": "#FFFFFF", "critical": "#FFD23A", "outline": "#0A1250"},
+		"crit_x": {"hold_s": 0.12, "kill_hold_s": 0.4, "size_px": 10, "gap_px": 3, "width_px": 2.0, "color": "#FFFFFF", "kill_color": "#FFD23A"},
+		"sound": {"volume_db": -8.0, "pitch": 1.0, "kill_pitch": 0.78},
+		"meter": {"width_px": 150, "height_px": 5, "fill": "#4C7CFF", "track": "#0A14A0", "edge": "#7FB0FF", "low_share": 0.25, "numeral_px": 13}
+	},
+	"healing": {
+		"rest_radius_m": 4.0,
+		"rest_still_s": 2.0,
+		"rest_hp_per_s": 1.5,
+		"sources": {"cooked_food": 20, "camp_medicine": 45}
+	}
+}

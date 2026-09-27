@@ -60,12 +60,18 @@ var herd := Vector2i(1, 1)
 ## The entry as written, for a species' own extra fields (a rig's tuning,
 ## a cue).
 var data := {}
+## Where a hit lands and what it does (hit_table()), built on first use.
+var _hits := {}
 
 ## 0-1 how full the moon is right now (CreatureSpawner sets it), for
 ## `active: full_moon`.
 static var moon_full := 0.0
 
 static var _all: Array[CreatureSpecies] = []
+## The file's species-level "hit_parts" block, which every species starts
+## from (hit_table()); HIT_FALLBACK if the file has none.
+static var _hit_defaults := {}
+const HIT_FALLBACK := {"body": 1.0, "head": 2.0, "eye": 4.0, "limb": 1.0, "limb_slow": 0.5, "limb_slow_floor": 0.25, "eye_blinds": true}
 
 
 ## Every species, loaded once.
@@ -99,6 +105,8 @@ static func _load() -> void:
 	if not parsed is Dictionary or not parsed.has("creatures"):
 		push_warning("CreatureSpecies: %s is not valid creature data" % DATA_PATH)
 		return
+	if parsed.get("hit_parts") is Dictionary:
+		_hit_defaults = parsed.hit_parts
 	for e in parsed.creatures:
 		if e is Dictionary and e.has("name"):
 			_all.append(_from(e))
@@ -165,6 +173,24 @@ func hp_max() -> float:
 	if role == "mythical":
 		return 30.0 + 30.0 * size_m
 	return maxf(6.0, 26.0 * size_m)
+
+
+## Where a hit lands and what it does (data "hit_parts"; Hits): the
+## damage multiplier for each part kind (body, head, eye, limb),
+## limb_slow (the share of its speed an animal keeps after each limb
+## hit), limb_slow_floor (never slower than this share) and eye_blinds.
+## The file's species-level block with this entry's own over it; folk
+## made in code (Camps, Encampment) take the file's block.
+func hit_table() -> Dictionary:
+	if _hits.is_empty():
+		if _all.is_empty():
+			_load()
+		_hits = HIT_FALLBACK.duplicate()
+		_hits.merge(_hit_defaults, true)
+		var own = data.get("hit_parts")
+		if own is Dictionary:
+			_hits.merge(own, true)
+	return _hits
 
 
 ## False for species held back from normal play (`"spawn": "disabled"`:

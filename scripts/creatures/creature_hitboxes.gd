@@ -28,6 +28,11 @@ class_name CreatureHitboxes
 ## Blockers (blocks()): every mythical, and anything 0.6 m or bigger; a
 ## capsule tucked inside the torso part.
 ##
+## Hit parts (Hits): every part is marked with its kind, head (and what it
+## carries: nose, ears), limb (legs, arms, wings) or body (torso, neck,
+## tail, antlers, gear), and creatures from hits.eyes_from_size_m up get a
+## small sphere over each drawn eye, marked with its side (_eyes()).
+##
 ## Off, every body is built without them (for measuring their cost).
 static var enabled := true
 
@@ -99,6 +104,10 @@ const SCULPTED_BLOCKER := {
 	"tribal": [Vector3(0, 0.5, 0.0), Vector3(0, 0.72, -0.005), 0.08],
 }
 
+## Each sculpted part's kind (Hits): what the head carries is the head,
+## legs and arms are limbs, the rest (torso, neck, tail) the body.
+const PART_KINDS := {"Head": "head", "Nose": "head", "Leg": "limb", "Thigh": "limb", "Shin": "limb", "Arm": "limb"}
+
 
 ## Does this species get a blocker (the player can't walk through it)?
 static func blocks(sp: CreatureSpecies) -> bool:
@@ -115,7 +124,7 @@ static func build(owner: Node, b: Dictionary, sp: CreatureSpecies, block: bool) 
 	var root: Node3D = b.root
 	var out: Array = []
 	if b.get("sculpted", "") != "":
-		_sculpted(owner, b, str(b.sculpted), block, out)
+		_sculpted(owner, b, str(b.sculpted), block, out, sp.size_m)
 	elif b.get("animator") != null:
 		_model(owner, root, block, out)
 	elif sp.body == "swarm" and sp.role == "swarm":
@@ -130,7 +139,7 @@ static func build(owner: Node, b: Dictionary, sp: CreatureSpecies, block: bool) 
 
 # --- Sculpted bodies -----------------------------------------------------------
 
-static func _sculpted(owner: Node, b: Dictionary, kind: String, block: bool, out: Array) -> void:
+static func _sculpted(owner: Node, b: Dictionary, kind: String, block: bool, out: Array, size_m: float) -> void:
 	var root: Node3D = b.root
 	var table: String = "tribal" if kind == "elder" else kind
 	for p: Array in SCULPTED[table]:
@@ -144,6 +153,7 @@ static func _sculpted(owner: Node, b: Dictionary, kind: String, block: bool, out
 		var part := Hitboxes.sphere(owner, at, a, r) if a == c else Hitboxes.capsule(owner, at, a, c, r)
 		# "Torso", "Head", "LegFrontL", "ThighHindR", "ArmL" ...
 		part.name = str(p[0]) + ("" if p[1] in ["Root", "Head", "Tail"] else str(p[1]).trim_prefix(str(p[0])))
+		Hits.mark(part, PART_KINDS.get(p[0], "body"))
 		out.append(part)
 	if kind == "goblin":
 		# The big ears, along their long axis (SculptedBodies._goblin()).
@@ -154,8 +164,10 @@ static func _sculpted(owner: Node, b: Dictionary, kind: String, block: bool, out
 			var u := ear_b * Vector3.RIGHT
 			var ear := Hitboxes.capsule(owner, head, c - u * 0.07, c + u * 0.07, 0.035)
 			ear.name = "Ear" + ("L" if sd < 0.0 else "R")
+			Hits.mark(ear, "head")
 			out.append(ear)
 	_extras(owner, b, {"deer": "Antler", "goblin": "Lantern"}.get(kind, "Gear"), out)
+	_eyes(owner, root, size_m, out)
 	if block:
 		var k: Array = SCULPTED_BLOCKER[table]
 		out.append(Hitboxes.blocker(owner, root, k[0], k[1], k[2]))
@@ -179,6 +191,32 @@ static func _extras(owner: Node, b: Dictionary, what: String, out: Array) -> voi
 		var part := _fit(owner, pieces[i])
 		part.name = what + str(i + 1)
 		out.append(part)
+
+
+## An eye's hit sphere over each drawn eye (CreatureBodies.eyes(), the
+## "eye" meta: its side), on the node the eye rides, marked "eye_l" or
+## "eye_r" (Hits): the drawn eye's radius times hits.eye_radius_scale,
+## never under hits.eye_min_radius_m, so it stands a little proud of the
+## head's part and a ray aimed at the eye meets it first. Only on bodies
+## of hits.eyes_from_size_m or more (`size_m`).
+static func _eyes(owner: Node, root: Node3D, size_m: float, out: Array) -> void:
+	if size_m < float(Hits.hits().eyes_from_size_m):
+		return
+	var stack: Array = [root]
+	while not stack.is_empty():
+		var n: Node = stack.pop_back()
+		for c in n.get_children():
+			stack.append(c)
+		var mi := n as MeshInstance3D
+		if mi == null or not mi.has_meta("eye"):
+			continue
+		var at := mi.get_parent() as Node3D
+		# The ball's mesh is a unit-wide sphere scaled to the eye.
+		var r := Hits.eye_radius(mi.scale.x * 0.5, size_m)
+		var eye := Hitboxes.sphere(owner, at, mi.position, r)
+		eye.name = "Eye" + str(mi.get_meta("eye")).to_upper()
+		Hits.mark(eye, "eye_" + str(mi.get_meta("eye")))
+		out.append(eye)
 
 
 # --- Primitive bodies ----------------------------------------------------------
@@ -205,9 +243,17 @@ static func _primitive(owner: Node, b: Dictionary, sp: CreatureSpecies, block: b
 		var label: String = anchors[pc.anchor]
 		used[label] = int(used.get(label, 0)) + 1
 		part.name = label + (str(used[label]) if used[label] > 1 else "")
+		# By what it rides: the head, a leg, arm or wing, else the body.
+		var kind := "body"
+		if label == "Head":
+			kind = "head"
+		elif label.begins_with("Leg") or label.begins_with("Arm") or label.begins_with("Wing"):
+			kind = "limb"
+		Hits.mark(part, kind)
 		out.append(part)
 		if torso.is_empty() and pc.anchor == root:
 			torso = pc
+	_eyes(owner, root, sp.size_m, out)
 	if block and not torso.is_empty():
 		out.append(_blocker_in(owner, torso))
 

@@ -11,8 +11,9 @@ extends Node3D
 ## against, so a gibbon swinging past never snags the player. Rays that
 ## don't filter layers (the bow's aim, the arrow's flight) do meet it; the
 ## body carries the gibbon as its "creature" meta and part_name() names
-## the part a ray met, for the shared hitbox code to route hits by when
-## it lands. Kept to the gibbon until then.
+## the part a ray met. Each shape carries its kind (Hits: the "hit_part"
+## meta, kind_of()), plus a small sphere over each eye, so a hit reads
+## like any creature's (Hits.part_of() finds the shape a ray met).
 
 ## Physics layer 3 (bit value 4), "creature_hitboxes".
 const LAYER := 1 << 2
@@ -34,7 +35,21 @@ static func parts() -> Array:
 		out.append(["hand_" + side, GibbonBody.HAND[s], GibbonBody.wrist(s) + a * 0.02, GibbonBody.knuckle(s) + a * 0.03, 0.027])
 		out.append(["thigh_" + side, GibbonBody.THIGH[s], GibbonBody.hip(s), GibbonBody.knee(s), 0.04])
 		out.append(["shin_" + side, GibbonBody.SHIN[s], GibbonBody.knee(s), GibbonBody.ankle(s) + Vector3(0, -0.02, -0.03), 0.03])
+	# The eyes (GibbonBody.EYE_R_AT, mirrored), a little proud of the head.
+	for sd: float in [-1.0, 1.0]:
+		var e := Vector3(GibbonBody.EYE_R_AT.x * sd, GibbonBody.EYE_R_AT.y, GibbonBody.EYE_R_AT.z)
+		out.append(["eye_" + ("r" if sd > 0.0 else "l"), GibbonBody.HEAD, e, e, Hits.eye_radius(GibbonBody.EYE_RADIUS, 1.0)])
 	return out
+
+
+## A part's kind (Hits), from its name: hips and chest the body, the head,
+## an eye with its side, the rest limbs.
+static func kind_of(part_name: String) -> String:
+	if part_name in ["hips", "chest", "head"]:
+		return "body" if part_name != "head" else "head"
+	if part_name.begins_with("eye_"):
+		return part_name
+	return "limb"
 
 
 var body: AnimatableBody3D
@@ -68,6 +83,7 @@ func setup(creature: Node, skel: Skeleton3D) -> void:
 		var r: float = p[4]
 		var cs := CollisionShape3D.new()
 		cs.name = p[0]
+		Hits.mark(cs, kind_of(p[0]))
 		var xf := Transform3D(Basis.IDENTITY, (a + b) * 0.5 - joints[bone])
 		if a.distance_to(b) < 1e-4:
 			var sph := SphereShape3D.new()

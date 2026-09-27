@@ -39,6 +39,11 @@ extends Node3D
 ## flight (_sync_hitboxes()).
 ##
 ## Arrows hurt them (hurt()): hit points by size (CreatureSpecies.hp_max()).
+## Where the hit lands matters (Hits: the part's multiplier from the
+## species' "hit_parts"): a head or eye hit is a critical, an eye hit
+## blinds that side (`blind`: it notices you there late), a limb hit lames
+## it (`lame`: slower, and it limps). Its health is never drawn; the
+## HUD's rising number and its behaviour are the readout.
 ## Prey bolts; pack hunters and hostile creatures turn on you (`angry`:
 ## chase and bite, CreatureSpawner.player_hit()); at 0 they die, tip over
 ## and fade after a while.
@@ -80,6 +85,13 @@ var _bite_cd := 0.0
 var _dead_t := 0.0
 var _flash := 0.0
 var _panic := 0.0 # seconds it keeps bolting after being hit, however far
+## Wounds (hurt(), _wound()): the share of its speed a hurt leg leaves it
+## (1: sound; it limps below 1), and the sides it's blind on ("l", "r",
+## or "both" for a single eye) and so notices you there late
+## (sight_toward()).
+var lame := 1.0
+var blind := {}
+var _limp_side := 1.0
 ## Fleeing from a noise (NoiseEvents) at this surface direction, not from
 ## the player; ZERO for the player.
 var _scare := Vector3.ZERO
@@ -308,12 +320,22 @@ func tick(delta: float, ctx: Dictionary) -> void:
 	_place(delta)
 
 
-## Hit for `amount` (an arrow from the player at scene position
-## `from_pos`).
-func hurt(amount: float, from_pos: Vector3) -> void:
+## Hit for `amount` (an arrow or the spear from the player at scene
+## position `from_pos`) on `part` (Hits: "body", "head", "limb", "eye_l",
+## "eye_r", "eye") at scene position `at` (INF: its middle). The part's
+## multiplier from the species' hit table applies, and its wound (_wound():
+## a limb lames it, an eye blinds that side); the hit is reported for the
+## HUD's number and X (Hits.report()).
+func hurt(amount: float, from_pos: Vector3, part := "body", at := Vector3.INF) -> void:
 	if dead or done:
 		return
-	hp -= amount
+	var table := species.hit_table()
+	var dealt := Hits.dealt(table, part, amount)
+	_wound(table, part, at)
+	hp -= dealt
+	if at == Vector3.INF:
+		at = global_position + global_basis.y * species.size_m * 0.5
+	Hits.report(self, at, dealt, Hits.critical(part), hp <= 0.0)
 	_flash = 1.0
 	suspicion = 1.0
 	if hp <= 0.0:
@@ -337,6 +359,34 @@ func hurt(amount: float, from_pos: Vector3) -> void:
 		_timer = 6.0
 		_panic = 5.0
 	hurt_by_player.emit(self, false)
+
+
+## What a hit on `part` leaves (the hit table's rules): a limb lames it
+## (its speed times limb_slow each time, never under limb_slow_floor; it
+## limps, rolling toward the side it was hit on, `at`), an eye blinds that
+## side (a single eye, both) if eye_blinds.
+func _wound(table: Dictionary, part: String, at: Vector3) -> void:
+	match Hits.kind_of(part):
+		"limb":
+			lame = maxf(lame * float(table.get("limb_slow", 1.0)), float(table.get("limb_slow_floor", 0.0)))
+			if at != Vector3.INF:
+				_limp_side = 1.0 if global_basis.x.dot(at - global_position) >= 0.0 else -1.0
+		"eye":
+			if bool(table.get("eye_blinds", false)):
+				var side := Hits.side_of(part)
+				blind[side if side != "" else "both"] = true
+
+
+## How well it sees toward surface direction `d`: 1, or on a side it's
+## blind on, hits.blind_notice (it notices you there only that much
+## closer).
+func sight_toward(d: Vector3) -> float:
+	if blind.is_empty():
+		return 1.0
+	if blind.has("both"):
+		return float(Hits.hits().blind_notice)
+	var side := "r" if _tangent_to(d).dot(heading.cross(dir)) >= 0.0 else "l"
+	return float(Hits.hits().blind_notice) if blind.has(side) else 1.0
 
 
 ## Chase the player and bite when in reach; give up when they're far.
@@ -371,10 +421,11 @@ func _call_interval() -> float:
 # --- Roles ---------------------------------------------------------------------
 
 ## Flight distance now: shy_m scaled by the player's noise, widened by
-## suspicion.
+## suspicion, and narrowed where it's blind (sight_toward()).
 func _shy_m(ctx: Dictionary) -> float:
 	var noise: float = ctx.get("player_noise", 0.4)
-	return species.shy_m * (0.35 + 1.25 * noise) * (1.0 + suspicion)
+	var sight := sight_toward(ctx.player_dir) if ctx.has("player_dir") else 1.0
+	return species.shy_m * (0.35 + 1.25 * noise) * (1.0 + suspicion) * sight
 
 
 ## Noises out in the world (NoiseEvents: an arrow or the spear landing):
@@ -663,7 +714,9 @@ func _tangent_to(d: Vector3) -> Vector3:
 
 ## Step toward a surface direction; returns the remaining distance in m.
 ## Land walkers refuse to step into water; swimmers refuse to leave it.
+## A lame animal goes at `lame` of the speed asked.
 func _walk(target: Vector3, speed: float, delta: float, in_water := false, turn := true) -> float:
+	speed *= lame
 	var left := distance_to(target)
 	if left < 0.05:
 		_speed_now = 0.0
@@ -692,7 +745,7 @@ func _hop(to_dir: Vector3, to_lift: float) -> void:
 	_hop_to = to_dir
 	_hop_lift = Vector2(lift, to_lift)
 	_hop_t = 0.0
-	_hop_len = maxf(CubeSphere.surface_distance_m(dir, to_dir) / species.speed_mps, 0.4)
+	_hop_len = maxf(CubeSphere.surface_distance_m(dir, to_dir) / (species.speed_mps * lame), 0.4)
 	heading = _tangent_to(to_dir)
 	mode = "hop"
 
@@ -853,7 +906,19 @@ func _animate(delta: float) -> void:
 			if absf(x - target) > 0.002:
 				_legs_moving = true
 			leg.rotation.x = x
-	var flying := mode == "hop" and species.body in ["bird", "wader", "duck"] or fly_off
+	# A limp (lame < 1, _wound()): once a stride the body rolls down toward
+	# the side it was hit on, more the lamer it is (hits.limp_roll_deg at
+	# limb_slow_floor), so the slower gait reads uneven.
+	if not dead and (lame < 1.0 or _body.rotation.z != 0.0):
+		var floor_k := float(species.hit_table().get("limb_slow_floor", 0.0))
+		var k := clampf((1.0 - lame) / maxf(1.0 - floor_k, 0.05), 0.0, 1.0)
+		var roll := 0.0
+		if moving:
+			roll = -_limp_side * deg_to_rad(float(Hits.hits().limp_roll_deg)) * k * maxf(sin(_anim), 0.0)
+		_body.rotation.z = lerpf(_body.rotation.z, roll, clampf(delta * 12.0, 0.0, 1.0))
+		if absf(_body.rotation.z) < 1e-4 and roll == 0.0:
+			_body.rotation.z = 0.0
+	var flying :=mode == "hop" and species.body in ["bird", "wader", "duck"] or fly_off
 	var wings: Array = _parts.wings
 	for i in wings.size():
 		var w: Node3D = wings[i]

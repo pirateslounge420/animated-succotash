@@ -21,12 +21,14 @@ class_name SoundSynth
 ##   bow_release  the string's twang and the arrow's whoosh
 ##   arrow_hit    a dull thunk of an arrow biting into wood or earth
 ##   hurt         a blunt thump and a gasp of breath (the player hit)
+##   hitmarker    a short sharp tick: the crosshair's X on a critical or
+##                a kill (StatusHud; a UI sound, not placed in the world)
 ##   murmur       camp talk from a little way off: three or four soft
 ##                voices overlapping, no words (Camps); murmur_one, one
 ##                voice alone (Encampment: one of the two speaking)
 ##
 ## Every one of them plays on a 3D player tuned by the falloff table,
-## data/audio.json (Audio3D).
+## data/audio.json (Audio3D), except the hitmarker, a UI sound.
 
 const RATE := 22050
 const VARIANTS := 5
@@ -74,6 +76,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _arrow_hit(rng)
 		"hurt":
 			samples = _hurt(rng)
+		"hitmarker":
+			samples = _hitmarker(rng)
 		"murmur", "murmur_one":
 			samples = _murmur(rng, rng.randi_range(3, 4) if kind == "murmur" else 1)
 		_:
@@ -469,4 +473,18 @@ static func _hurt(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		lp = lerpf(lp, rng.randf_range(-1, 1), 0.25)
 		var gasp := lp * smoothstep(0.03, 0.08, t) * exp(-t * 9.0) * 0.7
 		s[i] = thump + gasp
+	return s
+
+
+## The hit marker (StatusHud's X on a critical or a kill): a short, sharp
+## tick, a bright ping over a click that's gone in a few hundredths of a
+## second.
+static func _hitmarker(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.07)
+	var f := rng.randf_range(2300.0, 2500.0)
+	for i in s.size():
+		var t := float(i) / RATE
+		var ping := sin(TAU * f * t) * exp(-t * 70.0) + sin(TAU * f * 1.5 * t) * exp(-t * 110.0) * 0.4
+		var click := rng.randf_range(-1, 1) * exp(-t * 400.0) * 0.6
+		s[i] = ping + click
 	return s

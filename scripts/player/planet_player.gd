@@ -100,9 +100,9 @@ const CROUCH_EYE_Y := 0.98
 const MAX_HP := 100.0
 const FALL_SAFE_MPS := 11.0
 const FALL_DAMAGE_PER_MPS := 7.0
-## After a hit, health comes back at REGEN_PER_S once REGEN_DELAY_S pass.
-const REGEN_DELAY_S := 8.0
-const REGEN_PER_S := 2.0
+## Health never comes back on its own: only resting by a lit fire
+## (_update_health()), and cooked food and camp medicine (heal()).
+## data/combat.json "healing" has the numbers.
 ## Visual layer of the player's own body and its blob shadow: hidden from
 ## the camera in first person.
 const BODY_LAYER := 1 << 10
@@ -136,6 +136,12 @@ var aim_arc: AimArc
 ## The weapon in hand: "bow" or "spear" (swap_weapon()).
 var weapon := "bow"
 var _since_hit := 99.0
+## Resting at a fire (_update_health()): a lit campfire within reach, and
+## healing now; health healed so far by each source (tests, heal()).
+var near_fire := false
+var resting := false
+var healed_by := {}
+var _fire_check_t := 0.0
 var _invulnerable := 0.0
 var _fall_speed := 0.0
 ## Horizontal momentum (m/s, along the ground): what the movement keys
@@ -769,11 +775,42 @@ func revive() -> void:
 	_body.rotation = Vector3.ZERO
 
 
+## No regeneration. Resting at a fire heals: standing or crouching still
+## on the ground (not climbing, swimming or aiming) for rest_still_s
+## within rest_radius_m of a lit campfire (Campfire.lit_near(), checked a
+## few times a second), health comes back at rest_hp_per_s
+## (data/combat.json "healing").
 func _update_health(delta: float) -> void:
 	_invulnerable = maxf(_invulnerable - delta, 0.0)
 	_since_hit += delta
-	if not dead and _since_hit > REGEN_DELAY_S and hp < MAX_HP:
-		hp = minf(hp + REGEN_PER_S * delta, MAX_HP)
+	var rules := Hits.healing()
+	_fire_check_t -= delta
+	if _fire_check_t <= 0.0:
+		_fire_check_t = 0.25
+		near_fire = Campfire.lit_near(get_tree(), global_position, float(rules.rest_radius_m))
+	resting = near_fire and not dead and not climbing and not swimming and not aiming() \
+		and is_on_floor() and still_time >= float(rules.rest_still_s)
+	if resting and hp < MAX_HP:
+		heal(float(rules.rest_hp_per_s) * delta, "rest")
+
+
+## Health back (up to MAX_HP): `amount` from `source` ("rest" at a fire;
+## hooks for Phase 10's inventory: "cooked_food" and "camp_medicine",
+## whose usual amounts are data/combat.json healing.sources, heal_for()).
+## Returns what was actually healed.
+func heal(amount: float, source: String) -> float:
+	if dead or amount <= 0.0:
+		return 0.0
+	var before := hp
+	hp = minf(hp + amount, MAX_HP)
+	healed_by[source] = float(healed_by.get(source, 0.0)) + hp - before
+	return hp - before
+
+
+## A healing source's usual amount (data/combat.json healing.sources;
+## 0 for one it doesn't list).
+static func heal_for(source: String) -> float:
+	return float((Hits.healing().sources as Dictionary).get(source, 0.0))
 
 
 ## Landing: a hard enough fall hurts.
