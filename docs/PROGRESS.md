@@ -14,9 +14,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   The designer's text is quoted verbatim in R1a.
 - Phase 10 gains new remnant kinds (stone stairways, hung bells, a stone giant/idol gate, hollow-tree dwellings, wells, candlelit chapels) and names herb bundles hanging from rafters as the reference for the drying state.
 - Phase 8 gains (d) Pack order: family packs, ranks derived from age, sex, parentage and a dominance gene; leaders choose, eat first and howl first; splits found new packs; rank is visible; killing a leader breaks the pack. D3 gains `fauna.packs`. Done-when and Part F gain a check each.
-- Open:
-  - the R1a batch changes the signed-off look; the renderer is unchanged until the designer says when;
-  - the second-batch images weren't attached, so there are none in the repo for agents to match.
+- Open: the R1a batch changes the signed-off look; the renderer is unchanged until the designer says when. The designer then attached five stills; they're in `docs/references/batch2/`, linked from R1a.
 
 ## 2026-09-27 — Spec: plant growth stages (docs only, nothing built)
 - Phase 6 Lifecycle gains growth stages:
