@@ -6,7 +6,8 @@ extends Node3D
 ## draw, capped at 1: a tap barely lobs an arrow, a full draw sends it at
 ## MAX_SPEED with full damage and a chance of a critical hit. Too short a
 ## draw (power under MIN_POWER) looses nothing. Walking slows while
-## drawing.
+## drawing. It's in hand while PlanetPlayer.weapon is "bow" (Q swaps it
+## with the Spear); loosing is loud (PlanetPlayer.make_noise()).
 ##
 ## The arrow flies from the bow toward whatever is under the crosshair
 ## (a ray from the camera, over every layer: the world, trees, and the
@@ -74,7 +75,7 @@ func update_bow(delta: float) -> void:
 	var held := Input.is_action_pressed("shoot") and (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or not need_capture)
 	if not Input.is_action_pressed("shoot"):
 		_blocked = false
-	var can := not player.dead and not player.climbing and not player.swimming
+	var can := player.weapon == "bow" and not player.dead and not player.climbing and not player.swimming
 	if held and can and not _blocked:
 		if not drawing:
 			drawing = true
@@ -120,6 +121,8 @@ func _loose() -> void:
 	player.world.world_root.add_child(arrow)
 	arrow.launch(from, dir * MAX_SPEED * p + player.velocity * 0.5)
 	_play("bow_release")
+	# Loud enough for wildlife round you to hear (PlanetPlayer.noise_level).
+	player.make_noise(Spear.NOISE)
 	# Only so many arrows lie about.
 	var arrows: Array = player.world.world_root.get_children().filter(func(n): return n is Arrow)
 	for i in maxi(0, arrows.size() - MAX_ARROWS):
@@ -131,7 +134,7 @@ func _loose() -> void:
 func _carry() -> void:
 	var d := power() if drawing else 0.0
 	var fp := player.first_person
-	_view.visible = fp
+	_view.visible = fp and player.weapon == "bow"
 	_bow.visible = not fp
 	if fp:
 		# In view: low left at rest, raised to the middle and canted when

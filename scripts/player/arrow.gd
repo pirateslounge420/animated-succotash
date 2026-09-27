@@ -11,11 +11,15 @@ extends Node3D
 ##     and it bounces back off that part and drops;
 ##   * ground, trees, ruins: buries its head there and stays a while;
 ##   * water: splashes (Ripples) and sinks.
+## Where it lands makes a noise wildlife hears (NoiseEvents, NOISE_M): a
+## miss can spook the animal it lands by.
 ## Lives under World.world_root, so it moves with the floating origin.
 
 const GRAVITY := 9.8
 const STUCK_S := 60.0
 const MAX_FLIGHT_S := 12.0
+## How far off its landing is heard (NoiseEvents).
+const NOISE_M := 8.0
 
 ## Arrows in flight (hitboxes near one wake up: Hitboxes.wanted_at()).
 static var flying: Array[Arrow] = []
@@ -93,13 +97,16 @@ func _physics_process(delta: float) -> void:
 		var water := chunks.water_level_at(d)
 		if water > chunks.ground_height(d) and world.radius_of(b) < PlanetConst.RADIUS_M + water:
 			global_position = b
-			Ripples.splash(world.to_scene(d, PlanetConst.RADIUS_M + water), RippleSim.contact("arrow_kg"), velocity.length())
+			var surface: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + water)
+			Ripples.splash(surface, RippleSim.contact("arrow_kg"), velocity.length())
+			NoiseEvents.emit(surface, NOISE_M * 0.75)
 			_stick()
 			_life = STUCK_S - 3.0
 			return
 		global_position = b
 		_orient()
 		return
+	NoiseEvents.emit(hit_pos, NOISE_M)
 	match hit_kind:
 		"creature":
 			var cr := hit_obj as Creature

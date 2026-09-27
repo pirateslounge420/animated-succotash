@@ -1513,7 +1513,7 @@ the way Godot draws a front face.)
 
 - **Movement** (`PlanetPlayer`): walk 6 km/h; sprint 5.5 m/s by
   double-tapping forward and holding it (or the pad's left stick held
-  in), ended by releasing forward or drawing the bow; crouch (hold Shift
+  in), ended by releasing forward, drawing the bow or raising the spear; crouch (hold Shift
   or pad B) lowers the capsule and camera to 1.05 m, slows to 0.8 m/s and
   stands back up only with headroom; holding jump jumps again on each
   landing. Speed has momentum (spec D5): it builds at 11 m/s² (a sprint in
@@ -1522,7 +1522,22 @@ the way Godot draws a front face.)
   steer at 3 m/s², so a sprinting jump carries; water is 4 m/s² both ways.
   Walls and trunks stop the part of the momentum that runs into them.
   `noise_level` (0 crouched and still ..
-  1 sprinting, eased) and `still_time` are what wildlife reads.
+  1 sprinting, eased) and `still_time` are what wildlife reads. Loosing
+  an arrow, a spear thrust and a throw raise it to at least 0.6 for a
+  moment (`make_noise()`); it eases back down within about a second.
+- **Noises out in the world** (`NoiseEvents`, spec D5: "player noise ...
+  bow, spear ... is what creatures hear"): a tiny static facade.
+  `NoiseEvents.emit(scene_pos, loudness_m)` records a noise for 8 frames;
+  the player and its projectiles write them, creatures read them
+  (`Creature._hear()`), each noise once. Where an arrow lands is heard
+  8 m off (6 m when it splashes into water), the spear 12 m (9 m in
+  water), a thrust's knock 5 m. Within that radius, widened by the
+  creature's suspicion the way its flight distance is, ground, canopy and
+  water-edge animals startle as if you'd come too close, but run, hop or
+  fly from the noise rather than from you; within twice the radius they
+  grow suspicious (a grazer stops and watches). Packs and mythicals are
+  driven by the spawner and don't listen yet. So a missed shot spooks the
+  deer it lands beside.
   `anim_state` (idle, walk, sprint, crouch, crouch_walk, air, swim,
   climb) is the hook for a future rigged model's animation tree, with the
   `crouching` / `sprinting` / `climbing` flags.
@@ -1594,7 +1609,8 @@ the way Godot draws a front face.)
   arrow, a deer takes two, mythical creatures several. Prey bolts from the
   shot. Hunters (`bite` > 0: packs and hostile mythicals) turn on you
   until you're 70 m off. Neutral mythicals vanish for five minutes. The
-  dead topple and fade after 14 s; a killed pack or mythical stays gone
+  dead topple (the side the killing blow came from facing up, so the
+  arrow or spear in it stays in view) and fade after 14 s; a killed pack or mythical stays gone
   half an hour.
 - **The bow** (`Bow`, `Arrow`, `BowMesh`), as simple as Minecraft's: hold
   the left mouse button (or the pad's right trigger) to draw, release to
@@ -1614,10 +1630,35 @@ the way Godot draws a front face.)
     it met (a head, an arm, the torso).
   - In test, a full draw landed 103 m away after 1.9 s, and one arrow
     killed a hare.
+- **The spear** (`Spear`, `ThrownSpear`; agreed at Go). Q (the pad's Y)
+  swaps bow and spear (`PlanetPlayer.weapon`, `swap_weapon()`); the one
+  not in hand is slung on the back. With the spear in hand:
+  - a tap of the shoot button (under 0.22 s) thrusts: a 12 cm sphere cast
+    2 m from the chest toward the crosshair, over the world and the
+    creatures' and people's parts (Hitboxes). A creature it meets is
+    hurt (25, a placeholder); a camp person complains, as for an arrow.
+  - Holding raises it over the shoulder (the right arm up and back, the
+    camera over the shoulder, a slow walk, no sprint); releasing throws
+    it. Power follows the bow's curve over 0.8 s, 9 to 24 m/s, 45 damage
+    at full. It flies much slower than an arrow, so it's thrown lofted
+    (the flatter arc that comes down on the crosshair; out of reach, 45°
+    toward it) and visibly arcs. It sticks where it hits, point 22 cm in:
+    ground, trunk, limb, ruin, or the very part of a creature it hit,
+    riding along with it. When a carcass fades, the spear drops to the
+    ground where it lay. In water it splashes (`spear_kg` in
+    data/water/ripples.json) and floats, riding the ripples. A throw
+    doesn't touch the player's momentum.
+  - There is one spear. While it's out the hand is empty (the HUD says
+    "Spear (thrown)"). Within 2 m of its shaft, E takes it back into your
+    hand ("E: take the spear back"): main's E lets go of a tree first,
+    then picks up the spear, then turns a log, then climbs.
+  - The HUD names the weapon in hand above the hearts; the raise fills
+    the same arc under the crosshair as the bow's draw.
 - **First person** (V, F5, the right stick click): the camera at eye
   height (1.6 m, 0.98 crouched), wider pitch, your body hidden from the
   camera (its own visual layer, with its blob shadow), and the bow
-  in view, its string coming back as you draw.
+  in view, its string coming back as you draw, or the spear to the right,
+  raised level over the shoulder and jabbing forward on a thrust.
 
 ## The opening encampment
 
@@ -1818,8 +1859,34 @@ latest results:
   - A mirrored and a plain copy of the same layout, side by side, light
     alike (`cull_disabled` with vertex lighting and a flat-colour
     ambient).
+- **The spear and noise** (headless, on the dev stamp): Q swaps to the
+  spear; a tap thrusts and hurts a deer 1.5 m in front, not one 5 m off;
+  held half a second and released, the spear sticks in the deer's Torso
+  part (0.1 m from the aim point) and moves 3 m with it, unmoved in the
+  part's frame; E 6 m off does nothing, E beside it takes it back into
+  your hand; thrown again it lands 0.2 m from the aim point in the ground
+  and is picked up; stuck in a carcass that fades, it drops to the ground
+  and is picked up there; into water it floats. A throw leaves `_move`
+  as it was; raising ends a sprint. A missed arrow landing 3 m from a
+  grazing deer makes it bolt, 12 m makes it wary, 30 m does nothing.
+  Loosing, thrusting and throwing raise `noise_level` to 0.6, back under
+  0.3 a second later. Recorded: swapping to the spear, throwing it into a
+  deer's flank, sprinting over and taking it back.
 
 ## Known gaps and next steps
+
+- **Spear and noise (Phase 1, D5).**
+  - Damage numbers are placeholders (no balancing, per the card). The
+    thrust and throw reuse the bow's synthesized sounds, pitched down.
+  - The elf's right arm lifts to hold and throw; an imported player model
+    gets no spear pose yet, only fixed hand positions.
+  - A spear stuck in a creature that is freed without fading out first
+    returns to the hand (a safety net), rather than dropping there.
+  - Noises keep scene positions for their 8 frames; a floating-origin
+    rebase inside those frames would misplace one. Packs and mythicals
+    don't hear them.
+  - The bow's aim ray still starts at the camera, not the over-the-shoulder
+    view centre (0.55 m to its right while drawing); the spear's does.
 
 - **Branchy trees and branch graphs (Phase 1 (i)).**
   - Climbing still uses the old trunk climb (`PlanetPlayer`, radius from

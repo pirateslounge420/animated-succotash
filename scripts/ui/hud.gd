@@ -33,7 +33,7 @@ func _ready() -> void:
 	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 16)
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_hint.text = "WASD move · W W sprint · Shift crouch · Space jump · E inspect\nHold left click: draw the bow, release to shoot · V first person\nM map · H hide HUD · F3 debug · click to look, Esc frees mouse"
+	_hint.text = "WASD move · W W sprint · Shift crouch · Space jump · E inspect\nHold left click: draw the bow, release to shoot · V first person\nQ bow / spear: tap to thrust, hold and release to throw, E takes it back\nM map · H hide HUD · F3 debug · click to look, Esc frees mouse"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 70)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -117,13 +117,18 @@ func _process(delta: float) -> void:
 
 
 ## Context prompt near the bottom of the screen ("E: turn over the log").
-## Hearts, crosshair and bow draw from the player, every frame.
+## Hearts, crosshair, the bow's draw (or the spear's raise) and the
+## weapon in hand from the player, every frame.
 func update_status(player: PlanetPlayer) -> void:
 	_status.hp = player.hp
 	_status.max_hp = PlanetPlayer.MAX_HP
-	_status.aiming = player.bow.drawing
-	_status.draw_power = player.bow.power() if player.bow.drawing else 0.0
-	_status.show_crosshair = player.first_person or player.bow.drawing
+	_status.aiming = player.aiming()
+	_status.draw_power = player.aim_power()
+	_status.show_crosshair = player.first_person or player.aiming()
+	if player.weapon == "bow":
+		_status.weapon = "Bow"
+	else:
+		_status.weapon = "Spear" if player.spear.thrown == null else "Spear (thrown)"
 
 
 func flash_hurt() -> void:

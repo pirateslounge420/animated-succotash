@@ -3,14 +3,17 @@ extends Control
 ## Health and aim, drawn over the view (Hud owns it): ten hearts at the
 ## bottom left (half hearts too, Minecraft-style) that shiver when you're
 ## low, a crosshair while aiming or in first person with the bow's draw as
-## a filling arc beneath it, a red flash at the screen's edge when you're
-## hurt, and the dark "You died" curtain.
+## a filling arc beneath it (or the spear's raise), the weapon in hand
+## beside the hearts, a red flash at the screen's edge when you're hurt,
+## and the dark "You died" curtain.
 
 var hp := 100.0
 var max_hp := 100.0
 var aiming := false
 var show_crosshair := false
 var draw_power := 0.0 # 0-1 bow power
+## The weapon in hand ("Bow", "Spear", "Spear (thrown)").
+var weapon := ""
 var _hurt := 0.0
 var _death := 0.0
 var _dead := false
@@ -79,6 +82,12 @@ func _draw() -> void:
 		_heart(p, 9.0, Color(0.12, 0.05, 0.06, 0.8), 1.0)
 		if fill > 0.0:
 			_heart(p, 7.0, Color(0.9, 0.12, 0.14), 1.0 if fill >= 0.75 else 0.5)
+	# The weapon in hand, above the hearts.
+	if weapon != "" and not _dead:
+		var font := get_theme_default_font()
+		var at := Vector2(16, size.y - 114)
+		draw_string_outline(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, 4, Color(0.05, 0.07, 0.15))
+		draw_string(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(0.95, 0.97, 1.0))
 	# Crosshair and draw.
 	if show_crosshair and not _dead:
 		var c := size * 0.5

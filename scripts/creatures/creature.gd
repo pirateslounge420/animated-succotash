@@ -24,6 +24,11 @@ extends Node3D
 ## suspicion (1 after it's been startled). Suspicion fades while you keep
 ## still near it (a few seconds) or stay well away (slowly).
 ##
+## It also hears noises out in the world (NoiseEvents: an arrow or the
+## spear landing, _hear()): close enough, it startles and runs from the
+## noise as if you'd come too close; a little farther, it grows
+## suspicious.
+##
 ## In water they ring it (Ripples): wading legs and paddling hulls drag
 ## wakes, footfalls splash (_water_contacts).
 ##
@@ -75,6 +80,14 @@ var _bite_cd := 0.0
 var _dead_t := 0.0
 var _flash := 0.0
 var _panic := 0.0 # seconds it keeps bolting after being hit, however far
+## Fleeing from a noise (NoiseEvents) at this surface direction, not from
+## the player; ZERO for the player.
+var _scare := Vector3.ZERO
+## The last noise it has heard (NoiseEvents), so each is heard once.
+var _heard_id := 0
+## Dead, it falls onto this side (1: its left, the right side up; -1: its
+## right), away from the killing blow.
+var _topple := 1.0
 
 var _parts := {}
 var _body: Node3D
@@ -258,6 +271,7 @@ func tick(delta: float, ctx: Dictionary) -> void:
 
 	var shy := _shy_m(ctx)
 	_calm(delta, ctx, to_player, shy)
+	_hear()
 	match species.role:
 		"ground":
 			_ground(delta, player_dir, to_player, shy)
@@ -301,6 +315,7 @@ func hurt(amount: float, from_pos: Vector3) -> void:
 		dead = true
 		angry = 0.0
 		mode = "dead"
+		_topple = 1.0 if _body.global_basis.x.dot(from_pos - global_position) >= 0.0 else -1.0
 		lift = 0.0
 		_set_hitboxes(false)
 		if voice and voice.stream:
@@ -357,6 +372,60 @@ func _shy_m(ctx: Dictionary) -> float:
 	return species.shy_m * (0.35 + 1.25 * noise) * (1.0 + suspicion)
 
 
+## Noises out in the world (NoiseEvents: an arrow or the spear landing):
+## within the noise's radius, widened by suspicion the way the flight
+## distance is (_shy_m), prey startles as if you'd come too close and
+## runs from the noise; within twice that it grows suspicious (a grazer
+## stops and watches). Pack and mythical creatures are driven by the
+## spawner and don't; nor do fireflies and beetles.
+func _hear() -> void:
+	var events := NoiseEvents.since(_heard_id)
+	if events.is_empty():
+		return
+	for e in events:
+		_heard_id = e.id
+		if species.shy_m <= 0.0 or not species.role in ["ground", "canopy", "water_edge"]:
+			continue
+		var d := global_position.distance_to(e.pos)
+		var r: float = e.radius * (1.0 + suspicion)
+		if d < r:
+			_startle(world.dir_of(e.pos))
+		elif d < r * 2.0:
+			suspicion = maxf(suspicion, 0.5)
+			if species.role == "ground" and mode in ["idle", "walk", "to_water", "drink"]:
+				_body.rotation.x = 0.0
+				mode = "wary"
+
+
+## Startled by a noise at surface direction `from`: the same as the
+## player coming too close (_ground, _canopy, _water_edge), away from the
+## noise.
+func _startle(from: Vector3) -> void:
+	suspicion = 1.0
+	match species.role:
+		"ground":
+			# Already running from you (or hit): it keeps to that.
+			if mode == "flee" and _scare == Vector3.ZERO:
+				return
+			if mode != "flee":
+				mode = "flee"
+				_body.rotation.x = 0.0
+				_timer = _rng.randf_range(3.0, 6.0)
+			_scare = from
+			_panic = maxf(_panic, 2.5)
+		"canopy":
+			if mode == "perch":
+				var next: Dictionary = spawner.host_near(dir, 25.0, host, from)
+				if not next.is_empty():
+					_hop(_perch_dir(next), _perch_lift(next))
+					host = next
+		"water_edge":
+			if not fly_off:
+				fly_off = true
+				heading = -_tangent_to(from)
+				spawner.cooldown(self)
+
+
 ## Suspicion fades while the player keeps still nearby (it's watching you
 ## and nothing happens), slowly when you're far off.
 func _calm(delta: float, ctx: Dictionary, to_player: float, shy: float) -> void:
@@ -371,17 +440,20 @@ func _calm(delta: float, ctx: Dictionary, to_player: float, shy: float) -> void:
 
 
 func _ground(delta: float, player_dir: Vector3, to_player: float, shy: float) -> void:
-	if species.shy_m > 0.0 and to_player < shy and mode != "flee":
+	if species.shy_m > 0.0 and to_player < shy and (mode != "flee" or _scare != Vector3.ZERO):
 		mode = "flee"
 		suspicion = 1.0
+		_scare = Vector3.ZERO
 		_body.rotation.x = 0.0
 		_timer = _rng.randf_range(3.0, 6.0)
 	match mode:
 		"flee":
-			var away := -_tangent_to(player_dir)
+			# From you, or from a noise (_startle()).
+			var away := -_tangent_to(player_dir if _scare == Vector3.ZERO else _scare)
 			_walk(dir + away * 0.001, species.speed_mps, delta)
 			_panic -= delta
 			if (_timer <= 0.0 or to_player > shy * 2.5) and _panic <= 0.0:
+				_scare = Vector3.ZERO
 				mode = "wary"
 				home = dir
 				_timer = _rng.randf_range(2.0, 6.0)
@@ -702,8 +774,9 @@ func _place(delta: float) -> void:
 		_body.scale = Vector3.ONE * scale_now
 		_update_blob()
 	if dead:
-		# Topples onto its side.
-		_body.rotation.z = lerpf(_body.rotation.z, PI * 0.5, clampf(delta * 5.0, 0.0, 1.0))
+		# Topples onto its side, the side the killing blow came from up
+		# (an arrow or the spear in it stays in view).
+		_body.rotation.z = lerpf(_body.rotation.z, PI * 0.5 * _topple, clampf(delta * 5.0, 0.0, 1.0))
 	_animate(delta)
 	_water_contacts()
 	_sync_hitboxes()
