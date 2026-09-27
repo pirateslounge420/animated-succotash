@@ -845,6 +845,14 @@ you stay away). Now and then a grazer walks to open water within 45 m,
 drinks with its head down and wanders back. Wolf packs notice you by
 noise too.
 
+The data (`data/creatures/README.md`) also takes the spec's D4 fields
+(`trophic`, `activity`, `biome_lock`, `water_bound`, `light_response`),
+loaded for the ecology ledger to read later, and each entry's Linnaean
+binomial (`genus`, `species`; invented organisms get an invented one and
+`invented: true`). `"spawn": "disabled"` holds a species back from normal
+play: no spawn tier or territory picks it, and the others' odds don't
+change.
+
 Spawn tiers:
 
 - **Interaction.** Fallen logs lie near trees in forests. Pressing E
@@ -936,6 +944,76 @@ Spawn tiers:
   textures, and its clips play by state. Tested with a rigged stand-in
   exported to a real .glb: read raw at runtime, scaled to its sidecar
   height, relit, Idle and Walk switching as the player moved.
+- **Pond Crawler** (spec Phase 1 rig; `scripts/creatures/mythics/`
+  `pond_crawler.gd`, `pond_crawler_body.gd`, `pond_crawler_hitboxes.gd`,
+  `shaders/pond_crawler.gdshader`). *Limnoreptor cucullatus* (invented), a
+  mythic of swamp and bog water, out at night. It's held back from normal
+  play (`"spawn": "disabled"`) until Phase 7: `PondCrawler.debug_spawn()`
+  places one and `tools/pond_crawler_demo.gd` records it. Dev mode's F7
+  will place one too once the Phase 1 rigs share that key.
+  `CreatureSpawner.adopt()` ticks a creature placed by hand and lets
+  arrows hit it.
+  - Body (`PondCrawlerBody`): sculpted like SculptedBodies (signed-distance
+    shapes, surface nets, baked occlusion, skinned), in two passes so the
+    thin fingers get a finer grid than the body.
+    - A low sack sits in the water with a mantle behind.
+    - The hood's brim and cowl flaps stand proud of a dark face set back
+      inside them.
+    - Two long arms (shoulder, a high elbow, wrist) end in four splayed
+      fingers with pale claws.
+    - 5,832 triangles near, 1,640 past 45 m, 15 bones. It's built once on
+      a worker (about 1.5 s) and shared by every crawler.
+  - Hide (`pond_crawler.gdshader`): vertex-lit Lambert like the world.
+    - Three of Look's painted textures (mottled stone, pebbly dirt, soft
+      grain) are sampled triplanar in the body's rest pose, stored per
+      vertex, so the crunch rides the skin as the arms bend.
+    - Its `color`, #6E7590, is a slate albedo: under the blue night light
+      and grade it lands on the trunks' deep ultramarine (screen #081D8D
+      on the hood against the trunks' #0C1B7E, texture showing in every
+      channel). A saturated blue albedo came out flat violet-blue, because
+      the night light and grade crush red and green.
+  - Eye: drawn per pixel across the recessed face in #2A6AFF, an almond
+    slit with a hotter core.
+    - It's narrow while it waits, with a slow blink; it opens wide when it
+      lurches, flares when hit and goes out when it dies.
+    - Its real light (an OmniLight3D, 5.5 m) hangs just outside the hood,
+      lighting the water, its hands and whoever comes close.
+  - Movement: the hands are contact points on the pond floor.
+    - A step lifts one hand in an arc out of the water and down again.
+      Where it breaks the surface it calls `Ripples.splash` (hand mass,
+      speed) and plays a soft wet slap (3D, synthesized, six variants).
+    - The body hangs from the planted hands on a loose spring: it lags,
+      overshoots, sways, leans onto the planted arm and breathes. Its
+      drift calls `Ripples.wake` every frame it's in the water.
+    - Two-bone IK bends each arm, elbow high and outward. A planted hand
+      lies flat with its fingers splayed and curls as it lifts.
+  - Behavior:
+    - It waits, still, re-planting a hand now and then, and drifts rarely.
+    - It lurches when you come within `notice_m`, scaled by your noise:
+      arm over arm at `speed_mps`, the next hand lifting before the last
+      lands, so the rings stack.
+    - Within `strike_m` a hand rears up and slams down where you stand
+      (`bite`). It holds its next step until a hand is down to strike
+      with; lurching, one hand lifts as the other lands, so otherwise
+      neither would ever be free.
+    - It never leaves wadeable swamp or bog water (`wade_m`,
+      `biome_lock`). Where the water ends before it reaches you, it stops
+      at the edge and settles its hands, looking for a way on every half
+      second. A step that gets a hand less than 0.2 m further isn't
+      taken (it used to paw in place there), and a drift or a return
+      that can't go on ends where it is.
+    - Shot, it turns on you; killed, the eye goes out and it slumps and
+      fades.
+  - Hitboxes (spec D5, `PondCrawlerHitboxes`): capsules and spheres on the
+    lump, hood, upper arms, forearms and hands, following the bones.
+    - They are one static body on physics layer 5, which the player
+      collides with.
+    - Arrows use an exact segment test
+      (`CreatureSpawner.creature_on_segment`), so an arrow sticks in the
+      part it visibly hits and moves with it.
+    - They're kept to the crawler for now and move onto the shared hitbox
+      helper when the Phase 1 rigs merge.
+  - Tunables are the entry's `rig` (data/creatures/README.md).
 
 Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
 howl, drone and whisper. Bodies are placeholders (`CreatureBodies`)
@@ -1012,6 +1090,9 @@ the way Godot draws a front face.)
   - Bites: a pack that turns on you (you shot one, or walked into them at
     night) and werewolves on full-moon nights chase and bite, knocking you
     back. Anything hostile that you shoot fights back.
+  - The knock-back is added fresh each frame and fades. It used to
+    compound: a hit's upward shove taken in the air re-added itself every
+    frame and threw you tens of meters.
   - After 8 s without a hit, health returns at 2 HP/s.
   - At 0 you slump, the screen goes dark ("You died"), and you wake by the
     opening camp's fire with full health and 3 s of grace.
@@ -1032,8 +1113,9 @@ the way Godot draws a front face.)
     over the shoulder, and a full draw zooms a little.
   - Arrows aim at whatever is under the crosshair, fall with the planet's
     gravity and stick in the ground, trees and ruins (60 s, at most 40
-    about), ride in a creature they hit, and sink in water. Camp folk you
-    hit complain.
+    about), ride in a creature they hit (in the very part they hit, for a
+    creature with real hitboxes: the Pond Crawler), and sink in water.
+    Camp folk you hit complain.
   - In test, a full draw landed 103 m away after 1.9 s, and one arrow
     killed a hare.
 - **First person** (V, F5, the right stick click): the camera at eye

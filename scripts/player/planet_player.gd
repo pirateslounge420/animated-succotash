@@ -127,6 +127,9 @@ var _aim_blend := 0.0
 func _ready() -> void:
 	floor_max_angle = deg_to_rad(50.0)
 	floor_snap_length = 0.6
+	# The Pond Crawler's hitboxes (PondCrawlerHitboxes) block you like
+	# trees do.
+	collision_mask |= PondCrawlerHitboxes.LAYER
 	_shape = CapsuleShape3D.new()
 	_shape.radius = 0.35
 	_shape.height = STAND_HEIGHT
@@ -277,7 +280,10 @@ func _physics_process(delta: float) -> void:
 	if swimming:
 		speed = minf(speed, SWIM_SPEED)
 
-	var vertical := up * velocity.dot(up)
+	# Last frame's own vertical motion, without the knockback (added fresh
+	# below each frame; carried over too, a hit's upward shove compounded
+	# every airborne frame and flung the player tens of meters up).
+	var vertical := up * (velocity - _knock).dot(up)
 	var horizontal := wish * speed
 	if swimming:
 		# Float up to the surface, head above water.

@@ -58,12 +58,16 @@ func _physics_process(delta: float) -> void:
 	var hit_obj = null
 	var hit_pos := b
 	var hit_normal := up
+	var hit_part: Node3D = null
 	if spawner:
 		var c: Array = spawner.creature_on_segment(a, b)
 		if not c.is_empty():
 			hit_t = c[1]
 			hit_kind = "creature"
 			hit_obj = c[0]
+			# Real hitboxes name the part hit (an arm, a hand): the arrow
+			# sticks in that and moves with it.
+			hit_part = c[2] if c.size() > 2 else null
 	if camps:
 		var f: Array = camps.folk_on_segment(a, b)
 		if not f.is_empty() and f[1] < hit_t:
@@ -72,6 +76,9 @@ func _physics_process(delta: float) -> void:
 			hit_obj = f[0]
 	var q := PhysicsRayQueryParameters3D.create(a, b)
 	q.exclude = exclude
+	# The Pond Crawler's hitboxes were tested exactly above (the creature
+	# segment test); the world ray skips them.
+	q.collision_mask &= ~PondCrawlerHitboxes.LAYER
 	var ray := get_world_3d().direct_space_state.intersect_ray(q)
 	if not ray.is_empty():
 		var t := a.distance_to(ray.position) / maxf(a.distance_to(b), 1e-6)
@@ -98,7 +105,7 @@ func _physics_process(delta: float) -> void:
 			global_position = a.lerp(b, hit_t)
 			cr.hurt(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
 			_sound("arrow_hit")
-			reparent(cr, true)
+			reparent(hit_part if hit_part else cr, true)
 			_stick()
 		"folk":
 			camps.shot_at(hit_obj)

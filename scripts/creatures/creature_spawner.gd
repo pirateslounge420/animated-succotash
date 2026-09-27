@@ -73,6 +73,8 @@ var _prompt_t := 0.0
 var _slain := {}
 ## The dead, lying where they fell until they fade.
 var _corpses: Array[Creature] = []
+## Creatures placed by hand (adopt()), not by the spawn tiers.
+var _by_hand: Array[Creature] = []
 
 ## Glowing hoofprints a unicorn leaves: [node, time left].
 var _prints: Array = []
@@ -97,6 +99,8 @@ func setup(p_world: Node, p_chunks: ChunkManager, p_player: PlanetPlayer) -> voi
 	SculptedBodies.prewarm(_species)
 	for i in _species.size():
 		var sp := _species[i]
+		if not sp.spawns():
+			continue # held back until its phase (only a debug spawn shows it)
 		match sp.role:
 			"pack":
 				_pack_ids.append(i)
@@ -165,6 +169,9 @@ func update_creatures(delta: float, daylight: float) -> void:
 	_update_packs(delta, pd, ctx)
 	_update_territories(delta, pd, ctx)
 	for c in _corpses.duplicate():
+		if is_instance_valid(c):
+			c.tick(delta, ctx)
+	for c in _by_hand.duplicate():
 		if is_instance_valid(c):
 			c.tick(delta, ctx)
 	_run_calls()
@@ -939,11 +946,13 @@ func player_hit(amount: float, from_pos: Vector3) -> void:
 
 
 ## The live creature an arrow flying from `a` to `b` (scene positions)
-## hits first: [creature, fraction along a..b], or [].
+## hits first: [creature, fraction along a..b], or []. A creature with
+## real hitboxes adds the node of the part hit: [creature, t, node].
 func creature_on_segment(a: Vector3, b: Vector3) -> Array:
 	var best: Array = []
 	var best_t := INF
 	var all: Array = _ambient.values()
+	all.append_array(_by_hand)
 	for key in _dens:
 		all.append_array(_dens[key].wolves)
 	for key in _territories:
@@ -956,6 +965,15 @@ func creature_on_segment(a: Vector3, b: Vector3) -> Array:
 		var cr := c as Creature
 		if cr == null or cr.dead or cr.done or cr.species.role == "swarm":
 			continue
+		var hb = cr.get("hitboxes")
+		if hb is PondCrawlerHitboxes:
+			# Real hitboxes (the Pond Crawler's): the part it actually
+			# meets, which the arrow then sticks in.
+			var h: Dictionary = (hb as PondCrawlerHitboxes).segment_hit(a, b)
+			if not h.is_empty() and h.t < best_t:
+				best_t = h.t
+				best = [cr, h.t, h.node]
+			continue
 		var sz := cr.species.size_m
 		var tall := cr.species.role == "mythical"
 		var up: Vector3 = world.dir_of(cr.global_position)
@@ -966,6 +984,19 @@ func creature_on_segment(a: Vector3, b: Vector3) -> Array:
 			best_t = t
 			best = [cr, t]
 	return best
+
+
+## Take charge of a creature placed by hand (tools, debugging; species
+## held back from play with `"spawn": "disabled"`, such as the Pond
+## Crawler until Phase 7): it's ticked every frame and hit by arrows like
+## the rest, and freed when it finishes. Call before its setup().
+func adopt(cr: Creature) -> void:
+	if cr.get_parent() == null:
+		_root.add_child(cr)
+	_by_hand.append(cr)
+	cr.finished.connect(func(c: Creature) -> void:
+		_by_hand.erase(c)
+		NodeRelease.free_later(c), CONNECT_ONE_SHOT)
 
 
 func _adopt_corpse(c: Creature) -> void:

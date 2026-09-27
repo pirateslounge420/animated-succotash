@@ -40,6 +40,26 @@ var hp := 0.0
 ## hunters and hostile mythicals default to one by size ("bite").
 var bite := 0.0
 
+# Spec D4 fields (docs/WORLD_SYSTEMS_SPEC.md D4; data/creatures/README.md).
+# Loaded now; the ecology ledger will read most of them. `spawn:
+# "disabled"` and the biome lock are already honored.
+## Food-web level: insect, herbivore, small_pred, apex, scavenger, fish,
+## or mythic. "" = not given yet.
+var trophic := ""
+## D4's name for when it's out: day, night or dusk (sets `active` when the
+## entry has no `active` of its own).
+var activity := ""
+## Mythic only: the biomes it's bound to (BiomeTemplates ids, from biome
+## keys like "SWAMP"); empty = not bound.
+var biome_lock := PackedInt32Array()
+## Lives in the water and never leaves it.
+var water_bound := false
+## How it answers light (fire, torches): "" until the spec sets values.
+var light_response := ""
+## The entry as written: species-specific tunables (the Pond Crawler's
+## "rig") live here.
+var data := {}
+
 ## 0-1 how full the moon is right now (CreatureSpawner sets it), for
 ## `active: full_moon`.
 static var moon_full := 0.0
@@ -109,9 +129,41 @@ static func _from(e: Dictionary) -> CreatureSpecies:
 	sp.campfire = bool(e.get("campfire", false))
 	sp.rarity = float(e.get("rarity", 1.0))
 	sp.hp = float(e.get("hp", 0.0))
-	var hunter := sp.role == "pack" or sp.temperament == "hostile"
+	var hunter := sp.role == "pack" or sp.temperament in ["hostile", "aggressive"]
 	sp.bite = float(e.get("bite", (6.0 + 5.0 * sp.size_m) if hunter else 0.0))
+	_read_d4(sp, e)
 	return sp
+
+
+## The spec D4 fields.
+static func _read_d4(sp: CreatureSpecies, e: Dictionary) -> void:
+	sp.data = e
+	sp.trophic = str(e.get("trophic", ""))
+	sp.activity = str(e.get("activity", ""))
+	if sp.activity != "" and not e.has("active"):
+		sp.active = sp.activity
+	sp.water_bound = bool(e.get("water_bound", false))
+	sp.light_response = str(e.get("light_response", ""))
+	var lock = e.get("biome_lock", [])
+	for key in ([lock] if lock is String else lock):
+		var id := BiomeTemplates.id_of_key(str(key).to_upper())
+		if id < 0:
+			push_warning("CreatureSpecies: %s: unknown biome_lock \"%s\"" % [sp.name, key])
+			continue
+		sp.biome_lock.append(id)
+
+
+## False for species held back from normal play (`"spawn": "disabled"`:
+## the Pond Crawler until Phase 7): no spawner or territory picks them,
+## and they don't change the odds for the others. Tools can still place
+## them (PondCrawler.debug_spawn()).
+func spawns() -> bool:
+	return spawn != "disabled"
+
+
+## Does biome `b` (a BiomeTemplates id) suit it? Always, without a lock.
+func biome_ok(b: int) -> bool:
+	return biome_lock.is_empty() or b in biome_lock
 
 
 static func _range(v, fallback: Vector2) -> Vector2:
