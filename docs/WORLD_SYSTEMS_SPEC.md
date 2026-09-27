@@ -147,6 +147,7 @@ PlanetData is ~119 bytes per cell: 6.6 MB on the full planet, 1.6 MB on the stam
 | fauna.pop[species] | `World.fauna.pop` | S× f32 | ledger | 7 |
 | fauna.sex_ratio[species] | `World.fauna.sex_ratio` | S× u8 | ledger | 8 |
 | fauna.genome_mean[species][gene] | `World.fauna.genome_mean` | S×G× u8 (0–1 in 1/255 steps) | ledger | 8 |
+| fauna.packs ⚑ | `World.fauna.packs`: per pack its territory (regions) and members {age, sex, parents, genes incl. dominance}; ranks are derived from it, never stored | a few packs per region × ≤12 members × ~24 B | ledger | 8 |
 | events | `World.events`: per region a ring of the last ~50 records {day, kind, params} + a per-kind summary (count, first day, last day). Kinds include `scent` (a blooming aroid or a carcass: strength, until-day) | ~1.1 KB | ecology/events: append-only, every system adds records through it | 6 |
 | society[camp] | `World.society`: packed arrays per camp id (camps are few): pop, food, roles; culture {fish, hunt, forage, wary, range, ritual_smoke}; `landmark` (kind + id of the remnant it formed around); `salvage` {worked stone, timber, metal}; `standing` (the player's standing with the camp) | per camp: ~15 f32 + 2 i32 | camps | 10 |
 | player.haze | `World.player.haze` (a small player-state object; nothing else on it yet) | one f32, 0–1 | player (writes); `post_grade`, audio, creatures read | 10 |
@@ -338,11 +339,17 @@ See Part C.
 - **Done when:** the harness shows a stable 100-year run, a new world already has nests, the population overlay balances over dev days, a cat takes a rodent, a wolf pack shows up where deer are; a woodpecker is seen on a snag by day, an owl leaves a cavity at dusk.
 
 ## Phase 8 — Living populations
-- **Touches:** ledger, `creature`, creature shader, `creatures.json`.
+- **Touches:** ledger, `creature`, creature shader, `creatures.json`, `creature_spawner` (packs and dens).
 - **(a) Genetics:** 8–15 genes per creature in 0–1; the species table maps each gene to a visible trait (size, coat, marking, leg length, speed, temperament bias) with a clamped range; newborns take each gene from either parent plus small mutation; the shader reads tint, pattern, and scale from genes; the rare variant is a gene past normal range and is heritable. Sex is one bit; the species table has male and female rows for range, nest-tending, and aggression; breeding needs both in a region.
 - **(b) Migration:** food location shifts with season; herbivores follow food downhill and warmward, predators follow prey — no new behaviour, only seasonal food.
 - **(c) Carcass chain:** any death leaves a carcass record {region, position, mass, day}; scavengers seek it, predators are drawn by it, it decays into soil fertility over days.
-- **Done when:** the harness shows genome means drifting apart between separated regions, herds visibly move in winter on the stamp, and a carcass draws a scavenger and leaves a green patch.
+- **(d) Pack order** (any species with temperament: pack — wolves, wild dogs, jackals, hyenas, lions). A pack is a family: a breeding pair leads, their surviving offspring rank below them by age, and the youngest are last. Rank is derived, not stored: age, sex, and parentage from the ledger, plus a dominance gene. No alpha stat.
+  - **Rank decides who does what.** Leaders choose the target, the direction of travel, and eat first at a kill; the rest eat in order and the lowest wait — a big pack at a small carcass leaves its youngest hungry, which the memory system turns into scavenging or leaving. Leaders howl first; the pack answers. Mid-rank adults flank and drive prey; the lowest hang back and yip. Only the leading pair breeds.
+  - **Order changes.** When a leader dies or grows old, the strongest adult offspring takes over, or a pack splits — an older offspring leaves with a few siblings and founds a new pack in an empty region if one is free. Two packs meeting at a border posture and, rarely, fight; the loser's territory shrinks. All of it writes to the events log.
+  - **Visible.** Rank reads on screen: leaders larger with tail and head up, the lowest crouched with tail down; the pack moves in file behind the leader; at a kill the order is watchable.
+  - **Player.** The pack targets whoever the leader targets; kill a leader and the pack breaks off and regroups; a leaderless pack is bolder around camps and worse at hunting for a season.
+  - ⚑ "Age, sex and parentage from the ledger" means packs are kept as families: `fauna.packs` (D3), and ranks are computed from it. The memory system is Phase 11; until then the hungry youngest scavenge or leave by rule.
+- **Done when:** the harness shows genome means drifting apart between separated regions, herds visibly move in winter on the stamp, and a carcass draws a scavenger and leaves a green patch; on the stamp, a wolf pack walks in file, feeds in order, and a new pack appears in an empty valley within a few dev years of the old one growing.
 
 ## Phase 9 — Disturbance and living water
 - **Touches:** `weather_sim`, ledger, soil, `vegetation_placer`, `river_network`, `terrain_chunk` water.
@@ -359,8 +366,9 @@ See Part C.
 - **Firewood:** camp folk gather snags and logs for firewood first, so old wood thins near camps.
 - **Culture:** each camp holds culture sliders {fish, hunt, forage, wary, range, ritual_smoke} seeded from biome and the landmark it formed around, and moved by events — a wolf raid raises wary, a rich river raises fish. Goods, chatter, and how folk react to the player read from the sliders.
 - **Camps form around remnants:** camps already sit in inhabited ruins, wild sites and cliff sites. Make it a scored rule: every landmark — tower, castle, aqueduct, pyramid, graveyard, barrow, boardwalk, treehouse, igloo, bridges (unpark `hold/set-pieces` for this phase), cave mouths, springs, river fords, waterfalls — gives nearby sites a camp score from water, flat ground, food (flora biomass and ledger fauna), shelter, and distance from other camps. The highest scores get camps. The landmark's kind seeds the camp: aqueduct → water and farming; ford or bridge → crossing and trade; graveyard or barrow → small, wary, afraid of the night; cave mouth → shelter and mining, wary of the dark; castle or tower → largest and best defended. Camp folk salvage from the remnant (worked stone, timber, metal scraps) — the remnants are the work of an older, more advanced people, and salvage is where a camp's rarer tools come from. Culture sliders start from the landmark kind. Camps never form inside a landmark; the fire sits where the ruin builder left it.
+  - New remnant kinds, built in this phase (R1a, second reference batch): stone stairways up cliffs, hung bells, a stone giant or idol gate, hollow-tree dwellings, wells, chapels with candlelit interiors. The parked set pieces already hold a chapel.
   - ⚑ Today the ruin builder puts tepees, lean-tos and a fire inside some ruins. Read as: the builder's fire stays where it is and scored camps form beside landmarks, not in them — confirm whether those inhabited-ruin camps move out. Fords don't exist yet (derive them from river width and depth); cave mouths come from Phase 3.
-- **Cannabis — the loop:** three uses through the ordinary R4 carry rules — hemp types give fibre (stems → cordage and cloth for camp folk) and seed (food, oil); resinous types give smoke. Player: cut flowering females → carry a bundle (one inventory item) → hang it by a campfire or in a hut, where it dries over several in-game days as a visible state → smoke it in a pipe (bone or clay; craftable, or a camp folk hands one over) at the fire. No numbers in the UI; strength comes from the plant's resin gene and how much is smoked.
+- **Cannabis — the loop:** three uses through the ordinary R4 carry rules — hemp types give fibre (stems → cordage and cloth for camp folk) and seed (food, oil); resinous types give smoke. Player: cut flowering females → carry a bundle (one inventory item) → hang it by a campfire or in a hut, where it dries over several in-game days as a visible state (the reference: dried herb bundles hanging from rafters, R1a second batch) → smoke it in a pipe (bone or clay; craftable, or a camp folk hands one over) at the fire. No numbers in the UI; strength comes from the plant's resin gene and how much is smoked.
 - **Haze, on the player:** one status, `player.haze`, 0–1, in WorldState so other systems read it; decays over about an in-game hour.
   - Visual, in `post_grade` as a temporary grade shift within R1: the world goes more R1a — night bluer, fire warmer, saturation up, edges soften, the camera sways slowly, stars swim, distance haze thickens. Audio muffles with more reverb and footsteps go hollow.
   - Status: hunger rises faster, fear cues soften (the howl still comes but the panic vignette doesn't), sprint starts slower, the bow sways, and an occasional cough is a real noise event creatures hear — sneaking while hazed is worse.
@@ -400,6 +408,7 @@ The designer should be **surprised**. If any of these had to be hard-coded, the 
 - The camp that smokes gets raided more.
 - The landrace that crossed the mountains with a tribe doesn't flower in time.
 - Where the deer are thick there are no saplings, and the forest ages without children.
+- The valley with no wolves gets its wolves from the pack next door's grown children.
 
 ---
 
@@ -425,15 +434,21 @@ The references have crunchy textures on smooth, rounded shapes. Grain, dither an
 | Night fog | #1E30C0 at ~40%; distance dissolves to blue |
 | Night water | #1B3CFF with #7FB0FF highlights — near self-lit; waterfalls near-white at the crest |
 | Moonlight on stone/snow | #8FA8FF |
-| Day sky | #1436FF zenith → #4C7CFF horizon |
-| Grass | day #3FA83A / shadow #1F5A22, cooling toward #1E4A6A at night |
+| Day sky | #0A1AE0 zenith (was #1436FF) → #4C7CFF horizon — as saturated as night; clouds hard-edged white; no haze washing the day out |
+| Grass | day #3FA83A, #4CC03A in full sun / shadow #1F5A22, cooling toward #1E4A6A at night |
 | Dirt / bark | #6B4A2E → #A07A4A — the one warm ground colour |
 | Stone | #6F7A8A day, #3E4C8C night; moss #3F7A3A |
 | Fire | #FFB020 core, #FF4A00 coals, #FFA050 light on folk and props, #FF7A2A ground pool |
 | Windows / lanterns | #FF3A2A / #FFC040 |
-| Snow | #C8D8F0 with #6A82C0 shadows |
+| Snow | #C8D8F0 with #6A82C0 shadows; snow scenes go fully blue, no white |
+| Deep night (grade) | full blue: every surface tinted toward #1B2ED8, local colour nearly gone. The night rows above are the dusk/moonrise end of the range; the grade slides between the two through the night |
+| Storm / volcanic sky | purple-magenta, #5A1AA0 → #C030C0 streaks, instead of grey |
+| Dread accent | #A01020, a single deep red, rare |
 
-Rules: saturate, never desaturate; scenes are blue plus one warm accent; nothing pure black.
+Rules: saturate, never desaturate; scenes are blue plus one warm accent; nothing pure black. Warm light stays tiny — candles, hearths, windows — one or two points per scene. The tone ceiling is dread, not gore.
+
+**Second reference batch (designer, 2026-09-27), verbatim:**
+> R1a additions from the second reference batch. Day sky is as saturated as night: zenith `#0A1AE0`, clouds hard-edged white, grass `#4CC03A` in full sun; no haze washing the day out. Deep night is a full-blue grade: every surface tinted toward `#1B2ED8` with local colour nearly gone; current R1a night values are the dusk/moonrise end of the range and the grade slides between them through the night. Storm and volcanic skies go purple-magenta (`#5A1AA0` → `#C030C0` streaks) instead of grey. Warm light stays tiny — candles, hearths, windows — one or two points per scene; a single deep red (`#A01020`) is allowed as a rare accent for dread. Snow scenes go fully blue, no white. New remnant kinds for the ruin builder, to be built in the Camp life phase, not now: stone stairways up cliffs, hung bells, stone giant/idol gate, hollow-tree dwellings, wells, chapels with candlelit interiors. Dried herb bundles hanging from rafters are the reference for the drying state in camp huts.
 
 ## R2. Plant strata by Whittaker region (tolerance guide)
 

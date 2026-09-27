@@ -4,6 +4,20 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-27 — Spec: R1a second reference batch; pack order (docs only, nothing built)
+- R1a changes:
+  - day sky zenith #0A1AE0, hard-edged white clouds, grass #4CC03A in full sun;
+  - a deep-night full-blue grade toward #1B2ED8, with the old night values as the dusk end;
+  - purple-magenta storm and volcanic skies (#5A1AA0 → #C030C0);
+  - a rare dread red #A01020;
+  - warm light tiny (one or two points per scene); snow fully blue.
+  The designer's text is quoted verbatim in R1a.
+- Phase 10 gains new remnant kinds (stone stairways, hung bells, a stone giant/idol gate, hollow-tree dwellings, wells, candlelit chapels) and names herb bundles hanging from rafters as the reference for the drying state.
+- Phase 8 gains (d) Pack order: family packs, ranks derived from age, sex, parentage and a dominance gene; leaders choose, eat first and howl first; splits found new packs; rank is visible; killing a leader breaks the pack. D3 gains `fauna.packs`. Done-when and Part F gain a check each.
+- Open:
+  - the R1a batch changes the signed-off look; the renderer is unchanged until the designer says when;
+  - the second-batch images weren't attached, so there are none in the repo for agents to match.
+
 ## 2026-09-27 — Spec: plant growth stages (docs only, nothing built)
 - Phase 6 Lifecycle gains growth stages:
   - trees go sprout, sapling, mature, old; herbs and shrubs go sprout, young, mature;
