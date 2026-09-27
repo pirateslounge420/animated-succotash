@@ -89,7 +89,8 @@ var mat := STONE_M
 ## Stone colors for block() and rubble().
 var palette: Array = STONES
 ## Off: box() and boulder() add no collision (stair steps, which a ramp
-## stands in for; grave mounds and things on a tomb's floor).
+## stands in for; grave mounds and tepee poles, which get their own; leaf
+## crowns; grave goods too small to trip on).
 var solid := true
 ## 0-1 darkening for stone that's only ever seen from inside (a barrow's
 ## passage, the pyramid's corridor and chamber): the flat ambient light
@@ -98,8 +99,13 @@ var shade := 0.0
 ## Lights inside tombs: [local position, color, range m, energy]
 ## (make_node() adds an OmniLight3D for each).
 var _lights: Array = []
-## Collision triangles: plain boxes, much cheaper than the drawn blocks.
+## Collision triangles: plain boxes and thin slabs behind covers, much
+## cheaper than the drawn blocks.
 var _cv := PackedVector3Array()
+## Collision for the round parts: point sets whose convex hulls stand in
+## for boulders, giant trunks and grave mounds (make_node() turns each
+## into a ConvexPolygonShape3D).
+var _ch: Array[PackedVector3Array] = []
 ## Far LOD (past LOD_M): plain boxes too, in the blocks' face colors, and
 ## the mound as is; no ivy.
 var _lv := PackedVector3Array()
@@ -167,7 +173,7 @@ static func compute(p_map: PlanetData, p_site: Dictionary) -> Dictionary:
 		b._camp(p_site.kind)
 	elif p_site.kind <= Ruins.Kind.AQUEDUCT:
 		b._stone_camp_spot()
-	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv,
+	return {"site": p_site, "v": b._v, "n": b._n, "c": b._c, "m": b._m, "cv": b._cv, "ch": b._ch,
 		"lv": b._lv, "ln": b._ln, "lc": b._lc, "lm": b._lm, "up": b.up, "ex": b.ex, "ez": b.ez, "base_e": b.base_e,
 		"shelters": b._shelters, "camp_spot": b._camp_spot, "lights": b._lights}
 
@@ -190,6 +196,15 @@ static func rock_mesh(size: Vector3, p_seed: int, col: Color, block := false) ->
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	return mesh
+
+
+## Collision for rock_mesh(size, p_seed, ...) as a boulder (not a block):
+## points in the rock's own space whose convex hull is the stone
+## (boulder_hull()), for a ConvexPolygonShape3D.
+static func rock_hull(size: Vector3, p_seed: int) -> PackedVector3Array:
+	var r := RandomNumberGenerator.new()
+	r.seed = p_seed
+	return boulder_hull(Vector3.ZERO, size * 0.5, Basis(), _bump_phase(r))
 
 
 ## Main thread: mesh and collision (see placement()).
@@ -243,35 +258,55 @@ static func make_node(data: Dictionary, world: Node) -> Node3D:
 	# too slow to build in one frame, and ruins are built kilometers out.
 	var body := StaticBody3D.new()
 	body.name = "Collision"
+	body.collision_layer = PropCollision.WORLD_LAYER
 	root.add_child(body)
 	root.set_meta("collision_faces", data.cv)
 	root.set_meta("collision_next", 0)
+	root.set_meta("collision_hulls", data.get("ch", []))
+	root.set_meta("hull_next", 0)
 	return root
 
 
 ## Faces per collision piece: ~1.5 ms of BVH each.
 const COLLISION_PIECE := 2500
+## Convex hulls per collision piece (Godot works each hull out as it's
+## made).
+const HULL_PIECE := 32
 
 
 ## Does this ruin node still lack some of its collision?
 static func wants_collision(node: Node3D) -> bool:
-	return int(node.get_meta("collision_next", 0)) < (node.get_meta("collision_faces", PackedVector3Array()) as PackedVector3Array).size()
+	return int(node.get_meta("collision_next", 0)) < (node.get_meta("collision_faces", PackedVector3Array()) as PackedVector3Array).size() \
+		or int(node.get_meta("hull_next", 0)) < (node.get_meta("collision_hulls", []) as Array).size()
 
 
-## Add the next piece of a ruin node's collision (make_node leaves it out).
+## Add the next piece of a ruin node's collision (make_node leaves it out):
+## the triangles first, then the hulls.
 static func build_collision_part(node: Node3D) -> void:
 	var faces: PackedVector3Array = node.get_meta("collision_faces")
 	var from: int = node.get_meta("collision_next")
-	var to := mini(from + COLLISION_PIECE * 3, faces.size())
-	var shape := ConcavePolygonShape3D.new()
-	shape.set_faces(faces.slice(from, to))
-	var cs := CollisionShape3D.new()
-	cs.shape = shape
-	node.get_node("Collision").add_child(cs)
-	node.set_meta("collision_next", to)
-	if to >= faces.size():
-		node.set_meta("collision_faces", PackedVector3Array())
-		node.set_meta("collision_next", 0)
+	if from < faces.size():
+		var to := mini(from + COLLISION_PIECE * 3, faces.size())
+		var shape := ConcavePolygonShape3D.new()
+		shape.set_faces(faces.slice(from, to))
+		var cs := CollisionShape3D.new()
+		cs.shape = shape
+		node.get_node("Collision").add_child(cs)
+		node.set_meta("collision_next", to)
+		if to >= faces.size():
+			node.set_meta("collision_faces", PackedVector3Array())
+			node.set_meta("collision_next", 0)
+		return
+	var hulls: Array = node.get_meta("collision_hulls", [])
+	var h0: int = node.get_meta("hull_next", 0)
+	var h1 := mini(h0 + HULL_PIECE, hulls.size())
+	var body: StaticBody3D = node.get_node("Collision")
+	for i in range(h0, h1):
+		PropCollision.hull(body, hulls[i])
+	node.set_meta("hull_next", h1)
+	if h1 >= hulls.size():
+		node.set_meta("collision_hulls", [])
+		node.set_meta("hull_next", 0)
 
 
 ## Where the node goes, in scene space (set it after adding the node to
@@ -473,6 +508,63 @@ func _collision_box(xf: Transform3D, h: Vector3) -> void:
 		_cv.append_array([p[f[0]], p[f[1]], p[f[2]], p[f[0]], p[f[2]], p[f[3]]])
 
 
+## One collision triangle, solid on the side away from `inside` (wound
+## as _collide_since() explains).
+func _ctri(a: Vector3, b: Vector3, c: Vector3, inside: Vector3) -> void:
+	if (b - a).cross(c - a).dot((a + b + c) / 3.0 - inside) > 0.0:
+		_cv.append_array([a, c, b])
+	else:
+		_cv.append_array([a, b, c])
+
+
+## Collision for a thin cover (a tepee panel, a lean-to roof): a slab
+## `thick` m deep whose outer face is the drawn polygon `pts` (convex, in
+## order round it) and whose inner face lies behind it toward `inside`,
+## closed round the edges, so it's solid from either side and you touch
+## the cover itself from outside.
+func _collision_slab(pts: PackedVector3Array, thick: float, inside: Vector3) -> void:
+	var n := pts.size()
+	if n < 3:
+		return
+	var c := Vector3.ZERO
+	for p in pts:
+		c += p
+	c /= n
+	var nrm := Vector3.ZERO
+	for i in n:
+		nrm += (pts[i] - c).cross(pts[(i + 1) % n] - c)
+	nrm = nrm.normalized()
+	if nrm.dot(c - inside) < 0.0:
+		nrm = -nrm
+	var back := PackedVector3Array()
+	for p in pts:
+		back.append(p - nrm * thick)
+	var mid := c - nrm * thick * 0.5
+	for i in range(1, n - 1):
+		_ctri(pts[0], pts[i], pts[i + 1], mid)
+		_ctri(back[0], back[i], back[i + 1], mid)
+	for i in n:
+		var j := (i + 1) % n
+		_ctri(pts[i], pts[j], back[j], mid)
+		_ctri(pts[i], back[j], back[i], mid)
+
+
+## The part of convex polygon `pts` on the side of the plane through `o`
+## that normal `n` points to.
+static func _clip(pts: PackedVector3Array, o: Vector3, n: Vector3) -> PackedVector3Array:
+	var out := PackedVector3Array()
+	for i in pts.size():
+		var p := pts[i]
+		var q := pts[(i + 1) % pts.size()]
+		var dp := (p - o).dot(n)
+		var dq := (q - o).dot(n)
+		if dp >= 0.0:
+			out.append(p)
+		if (dp >= 0.0) != (dq >= 0.0):
+			out.append(p.lerp(q, dp / (dp - dq)))
+	return out
+
+
 ## A far-LOD box: 12 flat-shaded triangles, top/side/bottom colored.
 func _lod_box(xf: Transform3D, h: Vector3, top: Color, side: Color, bottom: Color) -> void:
 	var p: Array[Vector3] = []
@@ -499,18 +591,18 @@ func _lod_box(xf: Transform3D, h: Vector3, top: Color, side: Color, bottom: Colo
 
 
 ## A rough stone: a noise-displaced icosphere (320 triangles, so its
-## outline is round, not faceted), smooth shaded, mossy on top.
+## outline is round, not faceted), smooth shaded, mossy on top. Its
+## collision is boulder_hull().
 func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: float) -> void:
 	var sphere: Array = PlantMeshes.icosphere(2)
 	var verts: PackedVector3Array = sphere[0]
 	var faces: PackedInt32Array = sphere[1]
-	var ph := Vector3(rng.randf() * TAU, rng.randf() * TAU, rng.randf() * TAU)
+	var ph := _bump_phase(rng)
 	var pos := PackedVector3Array()
 	var nrm := PackedVector3Array()
 	nrm.resize(verts.size())
 	for u in verts:
-		var bump := 0.16 * sin(u.x * 2.3 + ph.x) * sin(u.z * 2.9 + ph.y) + 0.08 * sin(u.y * 5.1 + ph.z)
-		pos.append(center + basis * (u * radii * (1.0 + bump)))
+		pos.append(center + basis * (u * radii * (1.0 + _bump(u, ph))))
 	for f in range(0, faces.size(), 3):
 		var fn := (pos[faces[f + 1]] - pos[faces[f]]).cross(pos[faces[f + 2]] - pos[faces[f]])
 		for k in 3:
@@ -528,12 +620,43 @@ func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: fl
 		var d := faces[f + 2]
 		_tri_n(pos[a], pos[b2], pos[d], nrm[a], nrm[b2], nrm[d], cols[a], cols[b2], cols[d], center)
 	if solid:
-		_collision_box(Transform3D(basis, center), radii * 0.8)
+		_ch.append(boulder_hull(center, radii, basis, ph))
 	var top := col.lerp(MOSS, moss)
 	top.a = moss
 	var side := col.lerp(MOSS, moss * 0.2)
 	side.a = moss * 0.2
 	_lod_box(Transform3D(basis, center), radii * 0.85, top, side, col)
+
+
+## Radius, m, past which a boulder's hull takes every corner of the drawn
+## stone: on a big one (a den's stones, a rock shelter's slab) the drawn
+## bulges between the 42 coarse corners stand up to 0.4 m proud of their
+## hull, enough to put your head into the overhang. Ruin rubble stays under
+## it.
+const FINE_HULL_M := 0.9
+
+
+## A boulder's collision: the convex hull of the same bumpy stone sampled
+## at the 42 corners of a once-divided icosphere (each of them a corner of
+## the drawn stone too), or at all 162 drawn corners past FINE_HULL_M, so
+## it's as round as the stone with no corners sticking out, and only
+## bridges its shallow dips.
+static func boulder_hull(center: Vector3, radii: Vector3, basis: Basis, ph: Vector3) -> PackedVector3Array:
+	var pts := PackedVector3Array()
+	var level := 2 if maxf(radii.x, maxf(radii.y, radii.z)) > FINE_HULL_M else 1
+	for u in (PlantMeshes.icosphere(level)[0] as PackedVector3Array):
+		pts.append(center + basis * (u * radii * (1.0 + _bump(u, ph))))
+	return pts
+
+
+## A boulder's bumps: a share of its radius at unit direction `u`, for
+## phases `ph` (_bump_phase()).
+static func _bump(u: Vector3, ph: Vector3) -> float:
+	return 0.16 * sin(u.x * 2.3 + ph.x) * sin(u.z * 2.9 + ph.y) + 0.08 * sin(u.y * 5.1 + ph.z)
+
+
+static func _bump_phase(r: RandomNumberGenerator) -> Vector3:
+	return Vector3(r.randf() * TAU, r.randf() * TAU, r.randf() * TAU)
 
 
 ## A block at a position, its length (size.x) running along `dir`
@@ -923,21 +1046,39 @@ func _camp(kind: int) -> void:
 		fire_ring(fire, floor_y)
 
 
+## Half the width a tepee's collision leaves open at its door, m: the
+## player's capsule (0.35 m) and a little room. The drawn doorway narrows
+## toward the top, so without this a standing player's shoulders would
+## catch on it in the smaller tepees; the body is slimmer than the
+## capsule, so it still doesn't pass through the cover.
+const DOOR_HALF_M := 0.45
+## Thickness of the collision behind thin covers (tepee panels, a lean-to
+## roof), m.
+const COVER_M := 0.06
+
+
 ## A tepee: poles leaning in to a crossing at the top, covered in woven
-## vines and hide panels, with a door gap.
+## vines and hide panels, with a door gap. Collision follows it: the poles
+## (bar the two framing the door) and a thin shell behind each panel, so
+## you can walk in at the door and stand inside.
 func tepee(center: Vector2, r: float, h: float, floor_y := 0.0) -> void:
 	var g := maxf(ground(center.x, center.y), floor_y)
 	var apex := Vector3(center.x, g + h, center.y)
 	var poles := 7
 	var a0 := rng.randf() * TAU
 	var feet: Array[Vector3] = []
+	var tips: Array[Vector3] = []
+	# The poles' collision goes in once the door is known (below).
+	solid = false
 	for i in poles:
 		var a := a0 + TAU * i / poles + rng.randf_range(-0.08, 0.08)
 		var foot := Vector3(center.x + cos(a) * r, 0.0, center.y + sin(a) * r)
 		foot.y = maxf(ground(foot.x, foot.z), floor_y) - 0.1
 		feet.append(foot)
 		var along := (apex - foot).normalized()
-		_pole(foot, apex + along * rng.randf_range(0.35, 0.6), 0.09)
+		tips.append(apex + along * rng.randf_range(0.35, 0.6))
+		_pole(foot, tips[i], 0.09)
+	solid = true
 	# Cover: panels between neighboring poles up to near the top; one gap
 	# is the door.
 	var inside := Vector3(center.x, g + h * 0.4, center.y)
@@ -960,12 +1101,31 @@ func tepee(center: Vector2, r: float, h: float, floor_y := 0.0) -> void:
 	_ln.append_array(_n.slice(start))
 	_lc.append_array(_c.slice(start))
 	_lm.append_array(_m.slice(start))
-	_collision_box(Transform3D(Basis.IDENTITY, Vector3(center.x, g + h * 0.3, center.y)), Vector3(r * 0.6, h * 0.3, r * 0.6))
+	# Collision. The door's poles are left out, and the panels either side
+	# are trimmed back to DOOR_HALF_M from the door's middle line (only
+	# where the drawn doorway is narrower than that, near head height).
+	var door_mid := (feet[door] + feet[(door + 1) % poles]) * 0.5
+	var out := Vector3(door_mid.x - center.x, 0.0, door_mid.z - center.y).normalized()
+	var across := Vector3.UP.cross(out)
+	var c3 := Vector3(center.x, g, center.y)
+	for i in poles:
+		if i != door and i != (door + 1) % poles:
+			_pole_collision(feet[i], tips[i], 0.09)
+		if i == door:
+			continue
+		var a := feet[i]
+		var b := feet[(i + 1) % poles]
+		var panel := PackedVector3Array([a, b, b.lerp(apex, 0.86), a.lerp(apex, 0.86)])
+		if i == (door + poles - 1) % poles or i == (door + 1) % poles:
+			var s := signf((a + b - c3 * 2.0).dot(across))
+			panel = _clip(panel, c3 + across * s * DOOR_HALF_M, across * s)
+		_collision_slab(panel, COVER_M, inside)
 	_shelters.append([Vector3(center.x, g, center.y), r, h])
 
 
 ## A lean-to: two forked uprights and a ridge pole, a roof of vine thatch
-## sloping down to the ground behind.
+## sloping down to the ground behind. Collision: the poles, and a thin
+## slab under the roof, so you can shelter beneath it (or climb it).
 func lean_to(center: Vector2, heading: float, floor_y := 0.0) -> void:
 	var fwd := Vector3(cos(heading), 0.0, sin(heading))
 	var side := Vector3(-fwd.z, 0.0, fwd.x)
@@ -991,14 +1151,14 @@ func lean_to(center: Vector2, heading: float, floor_y := 0.0) -> void:
 	var col := IVY.lerp(IVY_LIGHT, rng.randf())
 	col.a = 0.75
 	mat = LEAF_M
-	_face(tops[0], tops[1], backs[1], backs[0], col, c + Vector3(0, -3.0, 0) - fwd * depth * 0.5)
+	var under := c + Vector3(0, -3.0, 0) - fwd * depth * 0.5
+	_face(tops[0], tops[1], backs[1], backs[0], col, under)
 	mat = STONE_M
 	_lv.append_array(_v.slice(start))
 	_ln.append_array(_n.slice(start))
 	_lc.append_array(_c.slice(start))
 	_lm.append_array(_m.slice(start))
-	var mid := (tops[0] + tops[1] + backs[0] + backs[1]) * 0.25
-	_collision_box(Transform3D(Basis(side, Vector3.UP, side.cross(Vector3.UP)), mid), Vector3(w * 0.5, hh * 0.3, depth * 0.35))
+	_collision_slab(PackedVector3Array([tops[0], tops[1], backs[1], backs[0]]), COVER_M, under)
 	var floor_c := c - fwd * depth * 0.5
 	floor_c.y = maxf(ground(floor_c.x, floor_c.z), floor_y)
 	_shelters.append([floor_c, maxf(w, depth) * 0.5, hh])
@@ -1006,14 +1166,25 @@ func lean_to(center: Vector2, heading: float, floor_y := 0.0) -> void:
 
 ## A straight pole (a thin, barely bevelled wooden block).
 func _pole(a: Vector3, b: Vector3, thick: float) -> void:
-	var y := (b - a).normalized()
-	var x := y.cross(Vector3.UP if absf(y.y) < 0.95 else Vector3.RIGHT).normalized()
-	var basis := Basis(x, y, x.cross(y))
+	var basis := _along(b - a)
 	var col := WOOD.lightened(rng.randf_range(-0.08, 0.08))
 	var was := mat
 	mat = WOOD_M
 	box(Transform3D(basis, (a + b) * 0.5), Vector3(thick, a.distance_to(b), thick), col, 0.1, 0.02, 0.01)
 	mat = was
+
+
+## The collision _pole() adds, on its own (for poles drawn with `solid`
+## off).
+func _pole_collision(a: Vector3, b: Vector3, thick: float) -> void:
+	_collision_box(Transform3D(_along(b - a), (a + b) * 0.5), Vector3(thick, a.distance_to(b), thick) * 0.5)
+
+
+## A basis whose Y runs along `axis`.
+static func _along(axis: Vector3) -> Basis:
+	var y := axis.normalized()
+	var x := y.cross(Vector3.UP if absf(y.y) < 0.95 else Vector3.RIGHT).normalized()
+	return Basis(x, y, x.cross(y))
 
 
 ## A ring of stones around old ash.
@@ -1203,6 +1374,8 @@ func _treehouse() -> void:
 
 
 ## A huge buttressed trunk with limbs, a leafy crown and hanging vines.
+## The trunk collides as drawn (round, flaring at the foot), and so do the
+## buttresses and limbs; the leaves and vines don't.
 func giant_tree(base: Vector3, r: float, h: float) -> void:
 	mat = WOOD_M
 	var sides := 12
@@ -1232,9 +1405,14 @@ func giant_tree(base: Vector3, r: float, h: float) -> void:
 	_ln.append_array(_n.slice(start))
 	_lc.append_array(_c.slice(start))
 	_lm.append_array(_m.slice(start))
-	for k in 3:
-		var yk := h * 0.26 * k
-		_collision_box(Transform3D(Basis.IDENTITY, base + Vector3(0, yk + h * 0.13, 0)), Vector3(r, h * 0.13, r) * (1.0 - 0.15 * k))
+	# Collision: a hull round each pair of rings, the drawn trunk exactly.
+	for k in rings.size() - 1:
+		var pts := PackedVector3Array()
+		for ring in [rings[k], rings[k + 1]]:
+			for i in sides:
+				var a := TAU * i / sides + tw
+				pts.append(base + Vector3(cos(a) * ring[1], ring[0], sin(a) * ring[1]))
+		_ch.append(pts)
 	# Buttress roots.
 	for k in rng.randi_range(4, 5):
 		var a := TAU * k / 5.0 + rng.randf_range(-0.3, 0.3)
@@ -1265,11 +1443,14 @@ func _limb(a: Vector3, b: Vector3, thick: float) -> void:
 	box(Transform3D(Basis(x, y, x.cross(y)), (a + b) * 0.5), Vector3(thick, a.distance_to(b), thick), col, 0.3, 0.12, 0.05)
 
 
+## A leafy crown (no collision: leaves, like the forest's crowns).
 func _crown_blob(c: Vector3, radius: float) -> void:
 	var was := mat
 	mat = LEAF_M
 	var col := JUNGLE_LEAF.lightened(rng.randf_range(-0.06, 0.08))
+	solid = false
 	boulder(c, Vector3(radius, radius * 0.6, radius), Basis.from_euler(Vector3(0, rng.randf() * TAU, 0)), col, 0.0)
+	solid = true
 	mat = was
 
 
@@ -1317,7 +1498,7 @@ func platform(p: Vector2, tr: float, y: float, pr: float, openings: Array) -> vo
 			_pole(q, q + Vector3(0, 1.05, 0), 0.08)
 		var top := q + Vector3(0, 0.95, 0)
 		if prev_ok:
-			_rope(prev, top)
+			_rail(prev, top)
 		prev = top
 		prev_ok = true
 	mat = STONE_M
@@ -1396,8 +1577,8 @@ func rope_bridge(a: Vector3, b: Vector3, snapped: bool) -> void:
 		# Rope rails: posts of rope every few planks.
 		var rails: Array = [p + side * 0.62 + Vector3(0, 0.95, 0), p - side * 0.62 + Vector3(0, 0.95, 0)]
 		if not prev_rail.is_empty() and not snapped:
-			_rope(prev_rail[0], rails[0])
-			_rope(prev_rail[1], rails[1])
+			_rail(prev_rail[0], rails[0])
+			_rail(prev_rail[1], rails[1])
 			if k % 3 == 0:
 				_rope(p + side * 0.6, rails[0])
 				_rope(p - side * 0.6, rails[1])
@@ -1436,7 +1617,14 @@ func spiral_ramp(p: Vector2, ramp_r: float, deck_y: float, g: float, end_a: floa
 	mat = STONE_M
 
 
-## A thin rope segment.
+## A rope rail (a deck's or a bridge's handrail): a rope with a thin box
+## of collision along it, so it keeps you on. Other ropes don't collide.
+func _rail(a: Vector3, b: Vector3) -> void:
+	_rope(a, b)
+	_collision_box(Transform3D(_along(b - a), (a + b) * 0.5), Vector3(0.03, a.distance_to(b) * 0.5, 0.03))
+
+
+## A thin rope segment (no collision).
 func _rope(a: Vector3, b: Vector3) -> void:
 	var was := mat
 	mat = WOOD_M
@@ -2002,28 +2190,34 @@ func _glow(p: Vector3, col: Color, range_m: float, energy: float) -> void:
 
 
 ## Things left with the dead round `c` (on the floor at c.y): clay urns,
-## bones and a skull, and a glint of gold. No collision.
+## bones and a skull, and a glint of gold. Only the things over ~30 cm
+## collide (the urns, round like boulders, and the long bones); the skull
+## and the gold don't.
 func _grave_goods(c: Vector3, spread: float, count: int) -> void:
-	solid = false
 	var was_shade := shade
 	shade = 0.0 # the gold should still glint
 	for i in count:
 		var p := c + Vector3(rng.randf_range(-spread, spread), 0.0, rng.randf_range(-spread, spread))
 		match rng.randi() % 4:
 			0:
+				# Urns 60 and 40 cm tall.
 				boulder(p + Vector3(0.0, 0.28, 0.0), Vector3(0.2, 0.3, 0.2), Basis.IDENTITY, CLAY, 0.0)
 				if rng.randf() < 0.5:
 					boulder(p + Vector3(0.45, 0.2, 0.1), Vector3(0.14, 0.2, 0.14), Basis.IDENTITY, CLAY.darkened(0.1), 0.0)
 			1:
+				# Bones 45 cm long (thin enough to step over).
 				for k in 3:
 					box(Transform3D(Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), p + Vector3(rng.randf_range(-0.3, 0.3), 0.04, rng.randf_range(-0.3, 0.3))), Vector3(0.45, 0.06, 0.06), BONE, 0.0, 0.02, 0.01)
 			2:
+				solid = false
 				boulder(p + Vector3(0.0, 0.1, 0.0), Vector3(0.11, 0.1, 0.13), Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), BONE, 0.0)
+				solid = true
 			_:
+				solid = false
 				for k in 4:
 					box(Transform3D(Basis.from_euler(Vector3(0.0, rng.randf() * TAU, 0.0)), p + Vector3(rng.randf_range(-0.2, 0.2), 0.02 + k * 0.03, rng.randf_range(-0.2, 0.2))), Vector3(0.12, 0.025, 0.12), GOLD, 0.0, 0.01, 0.005)
+				solid = true
 	shade = was_shade
-	solid = true
 
 
 ## A stone coffin at `p` (on the floor), long along `yaw`, its lid
@@ -2157,9 +2351,27 @@ func _grave(p: Vector2, tilt: float, snowy: bool) -> void:
 			earth = SNOW
 			mat = SNOW_M
 		solid = false
-		box(Transform3D(Basis(Vector3.UP, rng.randf_range(-0.05, 0.05)), Vector3(p.x, g + 0.02, p.y - 0.1)), Vector3(0.9, 0.34, 1.8), earth, 0.0 if snowy else _growth(0.6), 0.16, 0.06)
+		var xf := Transform3D(Basis(Vector3.UP, rng.randf_range(-0.05, 0.05)), Vector3(p.x, g + 0.02, p.y - 0.1))
+		box(xf, Vector3(0.9, 0.34, 1.8), earth, 0.0 if snowy else _growth(0.6), 0.16, 0.06)
 		solid = true
 		mat = STONE_M
+		_mound_hull(xf)
+
+
+## Collision for a grave mound (a 0.9 x 0.34 x 1.8 m box placed by `xf`,
+## half sunk): a low hull whose sides slope at 40 degrees from a top a
+## little inside the drawn one, so it sits within a few cm of the mound
+## and you walk over it (a straight 19 cm step would stop you) instead of
+## through it.
+func _mound_hull(xf: Transform3D) -> void:
+	var slope := 1.0 / tan(deg_to_rad(40.0))
+	var pts := PackedVector3Array()
+	for y: float in [0.17, -0.17]:
+		var grow := (0.17 - y) * slope
+		for sx: float in [-1.0, 1.0]:
+			for sz: float in [-1.0, 1.0]:
+				pts.append(xf * Vector3(sx * (0.3 + grow), y, sz * (0.75 + grow)))
+	_ch.append(pts)
 
 
 ## A bare, twisted dead tree: a leaning trunk and a few crooked limbs.

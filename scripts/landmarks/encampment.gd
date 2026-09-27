@@ -16,7 +16,8 @@ extends Node3D
 ##
 ## Layout, around the fire: the player's sleeping mat a few meters to one
 ## side, facing it; the two NPCs across the fire, turning toward the
-## player when they're close.
+## player when they're close. The fire's stones and logs and the two seat
+## logs collide (PropCollision); the flat mat doesn't.
 
 const CANDIDATES := 12
 const MIN_SEPARATION_M := 20000.0
@@ -160,6 +161,7 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 		var seat := CreatureBodies.cone(self, 0.16, 0.16, 1.2, Vector3.ZERO, Color(0.36, 0.25, 0.16))
 		seat.global_position = world.to_scene(seat_at, PlanetConst.RADIUS_M + chunks.ground_height(seat_at) + 0.14)
 		seat.global_basis = Basis.looking_at(_tangent(seat_at, site), seat_at) * Basis(Vector3(0, 0, 1), PI * 0.5)
+		PropCollision.capsule(PropCollision.body(seat), Transform3D(), 0.16, 1.2)
 
 
 ## Per frame: the fire flickers; the NPCs breathe and turn to face the

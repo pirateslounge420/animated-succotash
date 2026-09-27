@@ -3,6 +3,8 @@ class_name Campfire
 ## flames, a warm light, firelight pooled on the ground and a log to sit
 ## on (DESIGN.md: the warm "pop" against the blue night). Used by the camps
 ## (Camps), the mythical creatures' fires and the opening encampment.
+## The stones and logs collide (PropCollision): low capsules you bump into
+## at the ring's edge, and the seat log.
 ##
 ## The flames are tongues of shaders/flame.gdshader: cards that turn to
 ## the camera, drawn additively, so they read as fire from any side and
@@ -46,12 +48,17 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 	parent.add_child(root)
 	root.global_position = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
 	root.global_basis = Basis.looking_at(CubeSphere.north(d), d)
+	var body := PropCollision.body(root)
 	for i in 8:
 		var a := i * TAU / 8.0
-		CreatureBodies.box(root, Vector3(0.28, 0.18, 0.22), Vector3(cos(a) * 0.62, 0.09, sin(a) * 0.62), RING_STONE).rotation.y = a
+		var stone := CreatureBodies.box(root, Vector3(0.28, 0.18, 0.22), Vector3(cos(a) * 0.62, 0.09, sin(a) * 0.62), RING_STONE)
+		stone.rotation.y = a
+		# Along the stone's length (its x).
+		PropCollision.capsule(body, Transform3D(stone.basis * Basis(Vector3(0, 0, 1), -PI * 0.5), stone.position), 0.09, 0.28)
 	for i in 3:
 		var l := CreatureBodies.cone(root, 0.06, 0.06, 0.9, Vector3(0, 0.12, 0), Color(0.3, 0.2, 0.12))
 		l.rotation = Vector3(PI * 0.5, i * TAU / 3.0, 0)
+		PropCollision.capsule(body, l.transform, 0.06, 0.9)
 	CreatureBodies.ball(root, Vector3(0.3, 0.06, 0.3), Vector3(0, 0.08, 0), COALS, 1.0) # coals
 	var flames := Node3D.new()
 	flames.name = "Flames"
@@ -79,6 +86,7 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 	if seat:
 		var log_seat := CreatureBodies.cone(root, 0.18, 0.18, 1.5, Vector3(0, 0.18, 2.0), Color(0.36, 0.25, 0.16))
 		log_seat.rotation.z = PI * 0.5
+		PropCollision.capsule(body, log_seat.transform, 0.18, 1.5)
 	return root
 
 

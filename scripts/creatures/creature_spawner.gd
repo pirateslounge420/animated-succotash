@@ -468,10 +468,13 @@ func _den_prop(den: Dictionary) -> Node3D:
 		fwd = no - normal * no.dot(normal)
 	root.global_basis = Basis.looking_at(fwd.normalized(), normal)
 	var rock := Color(0.42, 0.42, 0.45)
-	# Two boulders and a lintel slab framing a dark hole in the slope.
+	# Two boulders and a lintel slab framing a dark hole in the slope. They
+	# collide: the boulders as the hulls of their stones, the lintel as a
+	# box.
 	var stones := [[Vector3(1.9, 2.8, 2.2), Vector3(-1.7, 1.0, 0.2), Vector3(0, 0, 0.12), rock, false],
 		[Vector3(1.8, 2.5, 2.2), Vector3(1.7, 0.9, 0.3), Vector3(0, 0, -0.15), rock.darkened(0.1), false],
 		[Vector3(5.0, 1.1, 2.4), Vector3(0, 2.5, 0.4), Vector3(0.1, 0, 0), rock.lightened(0.05), true]]
+	var body := PropCollision.body(root)
 	for k in stones.size():
 		var st: Array = stones[k]
 		var mi := MeshInstance3D.new()
@@ -480,6 +483,10 @@ func _den_prop(den: Dictionary) -> Node3D:
 		mi.position = st[1]
 		mi.rotation = st[2]
 		root.add_child(mi)
+		if st[4]:
+			PropCollision.box(body, mi.transform, st[0])
+		else:
+			PropCollision.hull(body, RuinBuilder.rock_hull(st[0], den.seed + k), mi.transform)
 	CreatureBodies.ball(root, Vector3(1.6, 1.3, 1.2), Vector3(0, 0.9, 0.6), Color(0.03, 0.03, 0.05))
 	CreatureBodies.box(root, Vector3(4.6, 0.25, 1.4), Vector3(0, 3.05, 0.4), Color(0.92, 0.94, 0.98))
 	var voice := AudioStreamPlayer3D.new()
@@ -854,6 +861,9 @@ func _log_node(rng: RandomNumberGenerator) -> Node3D:
 	root.add_child(log_node)
 	var trunk := CreatureBodies.cone(log_node, 0.16, 0.14, length, Vector3.ZERO, bark)
 	trunk.rotation.x = PI * 0.5
+	# A capsule along it, on the part that rolls, so it moves when the log
+	# is turned over.
+	PropCollision.capsule(PropCollision.body(log_node), trunk.transform, 0.15, length)
 	var moss := CreatureBodies.box(log_node, Vector3(0.18, 0.05, length * 0.7), Vector3(0, 0.14, 0.1), Color(0.3, 0.5, 0.2))
 	moss.rotation.z = 0.2
 	CreatureBodies.box(log_node, Vector3(0.12, 0.12, 0.3), Vector3(0.14, 0.02, -length * 0.3), bark.darkened(0.2)).rotation.y = 0.8

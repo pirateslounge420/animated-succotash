@@ -19,7 +19,9 @@ extends Node
 ##
 ## Built when the player comes within BUILD_M, freed past DROP_M. The
 ## folk are placeholder bodies (CreatureBodies), seated by bending the
-## leg and arm pivots.
+## leg and arm pivots. The props collide (PropCollision): capsules along
+## the seat logs, seat stones and leaning spears (arrows stick in them),
+## hulls round the rock shelter's slab and boulders.
 
 const BUILD_M := 220.0
 const DROP_M := 280.0
@@ -219,6 +221,7 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 	var count := rng.randi_range(2, 4)
 	var a0 := rng.randf() * TAU
 	var sitters: Array[Node3D] = []
+	var body := PropCollision.body(root)
 	for i in count:
 		var a := a0 + TAU * i / count + rng.randf_range(-0.25, 0.25)
 		var seat_pos := Vector3(cos(a), 0, sin(a)) * SEAT_R
@@ -228,9 +231,12 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 		elif folk == "dead":
 			var stone := CreatureBodies.box(root, Vector3(0.6, 0.4, 0.5), seat_pos + Vector3(0, 0.2, 0), Color(0.42, 0.42, 0.44))
 			stone.rotation.y = -a
+			# Along the stone's length (its x).
+			PropCollision.capsule(body, Transform3D(stone.basis * Basis(Vector3(0, 0, 1), -PI * 0.5), stone.position), 0.2, 0.6)
 		else:
 			var log_seat := CreatureBodies.cone(root, 0.17, 0.17, 1.1, seat_pos + Vector3(0, 0.17, 0), Color(0.36, 0.25, 0.16))
 			log_seat.rotation = Vector3(0, -a, PI * 0.5)
+			PropCollision.capsule(body, log_seat.transform, 0.17, 1.1)
 		var holder := _sitter(root, folk, i, rng)
 		holder.position = seat_pos
 		# Face the fire.
@@ -248,7 +254,7 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 				bow.position = seat_pos * 1.25 + side + Vector3(0, 0.05, 0)
 				bow.rotation = Vector3(PI * 0.5, -a, 0.0)
 			else:
-				_spear(root, seat_pos * 1.3 + side, Vector3(cos(a), 0, sin(a)), 1.9)
+				_spear(root, seat_pos * 1.3 + side, Vector3(cos(a), 0, sin(a)), 1.9, body)
 	root.set_meta("sitters", sitters)
 	# Guards: tribal and northern camps post one or two on their feet at
 	# the edge of the firelight, spear or bow in hand, watching the dark.
@@ -268,14 +274,16 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 	return root
 
 
-## A spear leaning out from `base` (camp space) along `lean`, `length` m.
-func _spear(parent: Node3D, base: Vector3, lean: Vector3, length: float) -> void:
+## A spear leaning out from `base` (camp space) along `lean`, `length` m,
+## with a thin capsule from butt to tip on `body` (so arrows stick).
+func _spear(parent: Node3D, base: Vector3, lean: Vector3, length: float, body: StaticBody3D) -> void:
 	var shaft := CreatureBodies.cone(parent, 0.018, 0.015, length, Vector3.ZERO, Color(0.42, 0.3, 0.18), 0.0, 5)
 	var dirv := (Vector3.UP + lean * 0.35).normalized()
 	var x := dirv.cross(Vector3.FORWARD if absf(dirv.z) < 0.9 else Vector3.RIGHT).normalized()
 	shaft.transform = Transform3D(Basis(x, dirv, x.cross(dirv)), base + dirv * length * 0.5)
 	var head := CreatureBodies.cone(parent, 0.035, 0.0, 0.16, Vector3.ZERO, Color(0.34, 0.35, 0.38), 0.0, 4)
 	head.transform = Transform3D(Basis(x, dirv, x.cross(dirv)), base + dirv * (length + 0.08))
+	PropCollision.capsule_between(body, base, base + dirv * (length + 0.16), 0.03)
 
 
 ## A standing guard: a hunter with a spear or an archer with a bow.
@@ -308,7 +316,8 @@ func _guard(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) ->
 
 
 ## A rock shelter over a cliff camp: a great slab jutting out from the
-## cliff above the fire, and boulders either side.
+## cliff above the fire, and boulders either side. Each collides as the
+## hull of its own stone (RuinBuilder.rock_hull()).
 func _overhang(camp: Node3D, cs: Dictionary) -> void:
 	var d: Vector3 = cs.dir
 	var up: Vector3 = d
@@ -322,17 +331,12 @@ func _overhang(camp: Node3D, cs: Dictionary) -> void:
 	rng.seed = cs.seed
 	var col := Color(0.44, 0.43, 0.42)
 	var slab := MeshInstance3D.new()
-	slab.mesh = RuinBuilder.rock_mesh(Vector3(7.5, 1.8, 6.0), cs.seed, col)
+	var slab_size := Vector3(7.5, 1.8, 6.0)
+	slab.mesh = RuinBuilder.rock_mesh(slab_size, cs.seed, col)
 	slab.material_override = RuinBuilder.material()
 	camp.add_child(slab)
 	slab.global_transform = Transform3D(Basis(along, up, -toward).rotated(along, 0.12), at + toward * 3.2 + up * (h * 0.8))
-	var body := StaticBody3D.new()
-	var shape := CollisionShape3D.new()
-	var bs := BoxShape3D.new()
-	bs.size = Vector3(6.5, 1.4, 5.0)
-	shape.shape = bs
-	body.add_child(shape)
-	slab.add_child(body)
+	PropCollision.hull(PropCollision.body(slab), RuinBuilder.rock_hull(slab_size, cs.seed))
 	for s in [-1.0, 1.0]:
 		var rock := MeshInstance3D.new()
 		var size := Vector3(rng.randf_range(1.6, 2.4), rng.randf_range(1.8, 2.8), rng.randf_range(1.6, 2.2))
@@ -340,6 +344,7 @@ func _overhang(camp: Node3D, cs: Dictionary) -> void:
 		rock.material_override = RuinBuilder.material()
 		camp.add_child(rock)
 		rock.global_transform = Transform3D(Basis(along, up, -toward).rotated(up, rng.randf() * TAU), at + along * s * 3.6 + toward * 1.8 + up * size.y * 0.35)
+		PropCollision.hull(PropCollision.body(rock), RuinBuilder.rock_hull(size, cs.seed + int(s * 7.0)))
 
 
 ## One seated figure (an unscaled holder, the body under it).
