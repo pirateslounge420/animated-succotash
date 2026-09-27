@@ -36,7 +36,9 @@ static func find(map: PlanetData, c: Vector3i) -> Dictionary:
 		var fits: Array[CreatureSpecies] = []
 		var total := 0.0
 		for sp in CreatureSpecies.all():
-			if sp.role == "mythical" and sp.climate_ok(t, m, e):
+			# Species held back from play ("spawn": "disabled") never
+			# claim a territory, and don't shift the others' odds.
+			if sp.role == "mythical" and sp.spawns() and sp.climate_ok(t, m, e):
 				fits.append(sp)
 				total += sp.rarity
 		if fits.is_empty():

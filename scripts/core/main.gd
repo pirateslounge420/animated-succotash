@@ -8,6 +8,7 @@ extends Node
 ##   SkySystem         sun, moon, sky, ambient, fog
 ##   WeatherFX         rain/snow and wind on plants
 ##   CreatureSpawner   ambient wildlife, packs, mythical creatures
+##   Mythics           mythics not yet in play: biome cues, dev spawn (F7)
 ##   Landmarks         ruins, glowing places (the bioluminescent night)
 ##   PostGrade, Hud, MapOverlay
 ##
@@ -24,6 +25,7 @@ var sky: SkySystem
 var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
+var mythics: Mythics
 var landmarks: Landmarks
 var camps: Camps
 var post: PostGrade
@@ -135,6 +137,11 @@ func _on_planet_ready() -> void:
 	creatures.name = "Creatures"
 	add_child(creatures)
 	creatures.setup(world, chunks, player)
+	# Mythic creatures before they spawn: biome cues, the dev spawn (F7).
+	mythics = Mythics.new()
+	mythics.name = "Mythics"
+	add_child(mythics)
+	mythics.setup(world, chunks, player, sky, creatures)
 
 	post = PostGrade.new()
 	add_child(post)

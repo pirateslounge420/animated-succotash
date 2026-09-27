@@ -97,6 +97,8 @@ func setup(p_world: Node, p_chunks: ChunkManager, p_player: PlanetPlayer) -> voi
 	SculptedBodies.prewarm(_species)
 	for i in _species.size():
 		var sp := _species[i]
+		if not sp.spawns():
+			continue # held back until its phase (only a debug spawn shows it)
 		match sp.role:
 			"pack":
 				_pack_ids.append(i)
