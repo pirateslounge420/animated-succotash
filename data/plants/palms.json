@@ -113,7 +113,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "ringed",
+      "base": "#e8e8e0",
+      "secondary": "#a8a898",
+      "feature_cm": 8,
+      "roughness": 0.15,
+      "notes": "smooth waxy white to pale grey trunk with dark evenly spaced leaf-scar rings; wax coating makes it shine"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.05,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#4a7a48",
+      "underside": "#a8b8a0",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#4a7a48",
+      "margin": "entire",
+      "size_cm": [
+       300,
+       500
+      ],
+      "notes": "long pinnate fronds, dark green above, silvery-grey waxy beneath; leaflets drooping"
+     },
+     "flower": {
+      "colour": "#e8d8a0",
+      "secondary": "#c8b880",
+      "form": "large branched cream inflorescences among the leaves",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#e86a30",
+      "form": "small round orange-red fruits 2 cm in big hanging bunches"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "an impossibly tall thin white pole 40-60 m rising above the cloud forest with a small dark feather-duster crown",
+     "confidence": "documented",
+     "refs": "Wikipedia Ceroxylon quindiuense; Kew POWO; Palmpedia"
+    }
    }
   ],
   "canopy": [
@@ -228,7 +271,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "ringed",
+      "base": "#9a8a78",
+      "secondary": "#7a6a5a",
+      "feature_cm": 6,
+      "roughness": 0.35,
+      "notes": "grey-brown fibrous trunk with close ring scars; bulbous base; often curved"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.2,
+      "lean": 0.35
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#5e9a3e",
+      "underside": "#78aa58",
+      "gloss": 0.5,
+      "veins": "parallel",
+      "vein_colour": "#5e9a3e",
+      "margin": "entire",
+      "size_cm": [
+       400,
+       600
+      ],
+      "notes": "long arching pinnate fronds with stiff glossy leaflets in one plane; yellow-green rachis"
+     },
+     "flower": {
+      "colour": "#e8d880",
+      "secondary": "#c8b860",
+      "form": "creamy branched spadix from a boat-shaped spathe among the leaves",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8ac840",
+      "form": "big three-sided nuts 25-35 cm, green to yellow-orange to brown, in clusters below the crown"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "a leaning slender grey trunk with a loose spherical crown of 25-30 arching feather fronds; nuts clustered under it",
+     "confidence": "documented",
+     "refs": "Wikipedia Cocos nucifera; Kew POWO; Palmpedia"
+    }
    },
    {
     "name": "Date palm",
@@ -337,7 +423,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#8a7a60",
+      "secondary": "#5e5040",
+      "feature_cm": 15,
+      "roughness": 0.7,
+      "notes": "trunk covered in persistent diamond-shaped leaf bases in a spiralling pattern, brown, fibrous between; base ringed with suckers"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#6a8a6a",
+      "underside": "#7a9a7a",
+      "gloss": 0.25,
+      "veins": "parallel",
+      "vein_colour": "#6a8a6a",
+      "margin": "spiny",
+      "size_cm": [
+       300,
+       500
+      ],
+      "notes": "stiff grey-green pinnate fronds with V-folded leaflets in several planes; lower leaflets become sharp spines"
+     },
+     "flower": {
+      "colour": "#e8e0b0",
+      "secondary": "#c8c090",
+      "form": "cream-yellow branched spikes bursting from a spathe among the leaves",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#e89830",
+      "form": "dates 3-7 cm, yellow to orange ripening amber-brown, in big hanging bunches on orange stalks"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "a stout rough-scaled column with a full spherical crown of stiff grey-green fronds and hanging orange fruit bunches; suckers at the base; oasis groves",
+     "confidence": "documented",
+     "refs": "Wikipedia Phoenix dactylifera; Kew POWO; Palmpedia"
+    }
    },
    {
     "name": "Doum palm",
@@ -446,7 +575,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "ringed",
+      "base": "#8a7a68",
+      "secondary": "#5e5248",
+      "feature_cm": 8,
+      "roughness": 0.5,
+      "notes": "grey-brown trunk marked with leaf-base ring scars, fibrous; trunk forks dichotomously"
+     },
+     "trunk": {
+      "form": "branching-columnar",
+      "taper": 0.15,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "fan",
+      "colour": "#5a8a5a",
+      "underside": "#6a9a6a",
+      "gloss": 0.3,
+      "veins": "palmate",
+      "vein_colour": "#5a8a5a",
+      "margin": "spiny",
+      "size_cm": [
+       100,
+       150
+      ],
+      "notes": "stiff fan leaves grey-green, on long spiny petioles; crowns at each branch tip"
+     },
+     "flower": {
+      "colour": "#d8c890",
+      "secondary": "#b8a870",
+      "form": "brown-cream branched spikes among leaves",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#c87830",
+      "form": "shiny orange-brown oval fruits 6-8 cm in dense clusters; gingerbread smell"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "the only branching palm: a trunk that forks in Ys two or three times, each fork tipped with a round tuft of fan leaves; candelabra of tufts",
+     "confidence": "documented",
+     "refs": "Wikipedia Hyphaene thebaica; Kew POWO; Palmpedia"
+    }
    },
    {
     "name": "Moriche palm",
@@ -563,7 +735,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "ringed",
+      "base": "#7a7060",
+      "secondary": "#5a5248",
+      "feature_cm": 5,
+      "roughness": 0.4,
+      "notes": "smooth grey-brown trunk with faint ring scars; straight and columnar"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.1,
+      "lean": 0.02
+     },
+     "leaf": {
+      "form": "fan",
+      "colour": "#4e8a48",
+      "underside": "#6a9a62",
+      "gloss": 0.35,
+      "veins": "palmate",
+      "vein_colour": "#4e8a48",
+      "margin": "entire",
+      "size_cm": [
+       200,
+       300
+      ],
+      "notes": "huge costapalmate fan leaves 2-3 m across, deeply split into drooping segments, on long petioles; big rounded crown"
+     },
+     "flower": {
+      "colour": "#d8c890",
+      "secondary": "#b8a870",
+      "form": "long branched pendant spikes among the leaves",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#c84a30",
+      "form": "oval fruits 5-7 cm covered in glossy red-brown overlapping scales, in huge hanging bunches"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "tall straight grey column 20-35 m with a big spherical crown of huge fan leaves; stands in flooded swamps in vast groves",
+     "confidence": "documented",
+     "refs": "Wikipedia Mauritia flexuosa; Kew POWO; Palmpedia"
+    }
    }
   ],
   "shrub": [],

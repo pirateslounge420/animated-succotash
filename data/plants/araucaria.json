@@ -104,7 +104,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "peeling",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "mottled",
+      "base": "#8a8a80",
+      "secondary": "#b0a898",
+      "feature_cm": 8,
+      "roughness": 0.3,
+      "notes": "smooth grey-blue-mauve bark shedding in thick hammer-marked flakes, leaving a mottled patchwork of grey, cream and rust; huge resin drips"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.1,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4a7a48",
+      "underside": "#5a8a58",
+      "gloss": 0.4,
+      "veins": "parallel",
+      "vein_colour": "#4a7a48",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       7
+      ],
+      "notes": "thick leathery oblong to lance leaves, blunt, parallel-veined; bronze-red juvenile foliage; dull mid green adult"
+     },
+     "flower": {
+      "colour": "#b09a60",
+      "secondary": "#6a8a5a",
+      "form": "cylindrical tan pollen cones 2-5 cm; round green female cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a8a5a",
+      "form": "round green cones 5-7 cm ripening brown, disintegrate on the tree"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "a colossal grey untapered column bare for 20 m, then a massive rounded broad crown of thick radiating limbs; a forest cathedral pillar",
+     "confidence": "documented",
+     "refs": "Wikipedia Agathis australis; NZ Plant Conservation Network; Kew POWO"
+    }
    }
   ],
   "canopy": [
@@ -206,7 +249,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "scaly",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "ringed",
+      "base": "#6a6a60",
+      "secondary": "#8a8878",
+      "feature_cm": 6,
+      "roughness": 0.5,
+      "notes": "grey-brown bark in horizontal ridged rings and wrinkles (like elephant hide), old leaf scars persisting; resin-crusted"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.25,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#2e6a3a",
+      "underside": "#2e6a3a",
+      "gloss": 0.6,
+      "veins": "parallel",
+      "vein_colour": "#2e6a3a",
+      "margin": "spiny",
+      "size_cm": [
+       3,
+       5
+      ],
+      "notes": "thick, stiff, glossy triangular scale leaves with a sharp spine tip, overlapping spirally to sheath the whole branch like reptile scales"
+     },
+     "flower": {
+      "colour": "#b09060",
+      "secondary": "#6a8a5a",
+      "form": "long cylindrical tan pollen cones; round spiky female cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a8a4a",
+      "form": "big round cones 10-18 cm, green then brown, shatter; large edible nuts"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "straight trunk with whorls of rope-like, upcurved snakey branches; young trees a full pyramid, old trees a bare pole with a flat-topped umbrella of tufts",
+     "confidence": "documented",
+     "refs": "Wikipedia Araucaria araucana; Kew POWO; Gymnosperm Database"
+    }
    },
    {
     "name": "Paraná pine",
@@ -306,7 +392,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "scaly",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#7a5a48",
+      "secondary": "#5a4438",
+      "feature_cm": 5,
+      "roughness": 0.6,
+      "notes": "thick dark grey-brown to red-brown bark, scaly and shallowly furrowed, flaking in thin plates; resinous"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.2,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#2f6a3c",
+      "underside": "#2f6a3c",
+      "gloss": 0.5,
+      "veins": "parallel",
+      "vein_colour": "#2f6a3c",
+      "margin": "spiny",
+      "size_cm": [
+       3,
+       6
+      ],
+      "notes": "narrow stiff lance-shaped scale leaves, sharp-tipped, dark green, spiralling densely round the branch tips"
+     },
+     "flower": {
+      "colour": "#b09060",
+      "secondary": "#6a8a5a",
+      "form": "cylindrical tan pollen cones; round female cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a8a4a",
+      "form": "big round cones 10-25 cm, green to brown, of large edible pinhao nuts"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "the candelabra: tall bare trunk topped by a flat, wide umbrella of long upturned branches ending in tufts; unmistakable in the southern Brazilian highlands",
+     "confidence": "documented",
+     "refs": "Wikipedia Araucaria angustifolia; Kew POWO; Gymnosperm Database"
+    }
    },
    {
     "name": "Bunya pine",
@@ -406,7 +535,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "scaly",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#5a4a3e",
+      "secondary": "#7a6a5a",
+      "feature_cm": 4,
+      "roughness": 0.6,
+      "notes": "dark brown to black-brown bark, thick, scaly and roughly furrowed, flaking in thin brittle scales"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.2,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#2e6e3c",
+      "underside": "#3e7a48",
+      "gloss": 0.6,
+      "veins": "parallel",
+      "vein_colour": "#2e6e3c",
+      "margin": "spiny",
+      "size_cm": [
+       2,
+       5
+      ],
+      "notes": "glossy stiff lance-shaped leaves with a sharp point, in two flattened ranks along the shoot; dark green"
+     },
+     "flower": {
+      "colour": "#b09060",
+      "secondary": "#6a8a5a",
+      "form": "long cylindrical pollen cones; massive round female cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#6a8a4a",
+      "form": "football-sized green cones 20-35 cm, up to 10 kg, drop whole; large edible nuts"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "tall straight trunk with a dome or egg-shaped crown of layered horizontal tufted branches; from afar a dark symmetrical dome with a lumpy outline",
+     "confidence": "documented",
+     "refs": "Wikipedia Araucaria bidwillii; Kew POWO; Gymnosperm Database"
+    }
    },
    {
     "name": "Norfolk Island pine",
@@ -506,7 +678,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "scaly",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#7a6a5a",
+      "secondary": "#5a4a3e",
+      "feature_cm": 3,
+      "roughness": 0.5,
+      "notes": "grey-brown bark flaking in small thin scales; young trees smooth grey"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.15,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#3e7a42",
+      "underside": "#3e7a42",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#3e7a42",
+      "margin": "entire",
+      "size_cm": [
+       0.5,
+       1.5
+      ],
+      "notes": "soft awl-shaped juvenile leaves in neat rows; adult scale leaves overlapping; bright green"
+     },
+     "flower": {
+      "colour": "#b09060",
+      "secondary": "#6a8a5a",
+      "form": "cylindrical tan pollen cones; round female cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a8a4a",
+      "form": "round cones 10-12 cm, green then brown, shatter"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "perfectly symmetrical tiered spire: whorls of horizontal branches in evenly spaced storeys, each a flat fern-like plane; a giant Christmas tree 50 m tall",
+     "confidence": "documented",
+     "refs": "Wikipedia Araucaria heterophylla; Kew POWO; Gymnosperm Database"
+    }
    }
   ],
   "shrub": [],

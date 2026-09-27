@@ -118,7 +118,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#7fa83a",
+      "underside": "#7fa83a",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#a0203a",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       30
+      ],
+      "notes": "squat decumbent pitchers, green flushed red-purple with dark red-purple net veins, wide hood held open; rosette holds rainwater"
+     },
+     "flower": {
+      "colour": "#8a2040",
+      "secondary": "#7a4a5a",
+      "form": "single nodding maroon-red globe on 30-50 cm stalk, umbrella-shaped style",
+      "scent": "none"
+     },
+     "seasonal": "evergreen; pitchers redden strongly in sun and cold, deep purple by autumn",
+     "silhouette": "low red-green rosette of fat tubes on sphagnum, one dark flower on a stick",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Sarracenia purpurea"
+    }
    },
    {
     "name": "Yellow pitcher plant",
@@ -229,7 +260,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#c8d83a",
+      "underside": "#c8d83a",
+      "gloss": 0.4,
+      "veins": "pinnate",
+      "vein_colour": "#9a2020",
+      "margin": "entire",
+      "size_cm": [
+       50,
+       100
+      ],
+      "notes": "tall erect yellow-green trumpets widening to the top, red-veined throat and a red blotch at the column, wide flaring lid"
+     },
+     "flower": {
+      "colour": "#e8d020",
+      "secondary": "#d8c030",
+      "form": "large nodding yellow flower 8 cm on tall stalk before the pitchers, musky",
+      "scent": "musky"
+     },
+     "seasonal": "pitchers die back brown in winter; flat winter phyllodia; spring flush",
+     "silhouette": "cluster of yellow-green trumpets 1 m tall in wet pine savanna",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Sarracenia flava"
+    }
    },
    {
     "name": "White pitcher plant",
@@ -340,7 +402,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#6aa040",
+      "underside": "#6aa040",
+      "gloss": 0.5,
+      "veins": "pinnate",
+      "vein_colour": "#b02a2a",
+      "margin": "wavy",
+      "size_cm": [
+       40,
+       90
+      ],
+      "notes": "tall slender trumpets green below, upper third white with green and red net-veining, ruffled red-edged lid"
+     },
+     "flower": {
+      "colour": "#a02030",
+      "secondary": "#8a3040",
+      "form": "nodding deep red flower on tall stalk in spring",
+      "scent": "none"
+     },
+     "seasonal": "spring and autumn pitcher flushes; winter dieback",
+     "silhouette": "cluster of white-topped trumpets, red-netted, in Gulf bog",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Sarracenia leucophylla"
+    }
    },
    {
     "name": "Parrot pitcher plant",
@@ -451,7 +544,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#7aa83a",
+      "underside": "#7aa83a",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#a02838",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       25
+      ],
+      "notes": "prostrate radiating pitchers with a beaked closed hood, green-red with white translucent windows and red netting"
+     },
+     "flower": {
+      "colour": "#9a2030",
+      "secondary": "#8a3a4a",
+      "form": "small nodding maroon flower on 20-30 cm stalk",
+      "scent": "none"
+     },
+     "seasonal": "evergreen; reddens in sun",
+     "silhouette": "flat star of red-green beaked tubes on wet ground",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Sarracenia psittacina"
+    }
    },
    {
     "name": "Giant montane pitcher",
@@ -562,7 +686,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4a8a3a",
+      "underside": "#4a8a3a",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#3a6a2a",
+      "margin": "entire",
+      "size_cm": [
+       40,
+       80
+      ],
+      "notes": "large leathery green leaves on a sprawling stem; tendril ends in a huge squat pitcher to 40 cm, deep red-purple to maroon outside, green-purple inside, broad ribbed red peristome with T-shaped teeth, big vaulted lid"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#4a8a3a",
+      "markings": "#4a8a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "winged petiole clasping the stem"
+     },
+     "flower": {
+      "colour": "#7a4a2a",
+      "secondary": "#b0803a",
+      "form": "tall raceme of small brownish-red starry flowers with yellow pollen, musky",
+      "scent": "musky"
+     },
+     "fruit": {
+      "colour": "#8a6a3a",
+      "form": "dry brown capsules on the spike"
+     },
+     "seasonal": "evergreen; pitchers persist for months",
+     "silhouette": "sprawling green rosette-climber with huge dark red urns sitting on mossy ground",
+     "confidence": "documented",
+     "refs": "Wikipedia Nepenthes rajah, Clarke Nepenthes of Borneo"
+    }
    },
    {
     "name": "Slender pitcher",
@@ -673,7 +840,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0,
+      "lean": 0.6
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#5a9a48",
+      "underside": "#5a9a48",
+      "gloss": 0.5,
+      "veins": "pinnate",
+      "vein_colour": "#4a8a3a",
+      "margin": "entire",
+      "size_cm": [
+       8,
+       15
+      ],
+      "notes": "narrow lance leaves on thin wiry climbing stems; small slender pitchers 5-12 cm, green to red-spotted or all red, thin peristome, small lid"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#5a9a48",
+      "markings": "#5a9a48",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "leaf base clasps the triangular stem"
+     },
+     "flower": {
+      "colour": "#8a5a3a",
+      "secondary": "#b8a060",
+      "form": "slender raceme of small brown-green flowers",
+      "scent": "musky"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "thin scrambling green tangle over heath with dangling little green-red flasks",
+     "confidence": "documented",
+     "refs": "Wikipedia Nepenthes gracilis, Kew POWO"
+    }
    },
    {
     "name": "Common swamp pitcher",
@@ -784,7 +990,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0,
+      "lean": 0.5
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#5aa050",
+      "underside": "#5aa050",
+      "gloss": 0.5,
+      "veins": "pinnate",
+      "vein_colour": "#4a8a3a",
+      "margin": "toothed",
+      "size_cm": [
+       10,
+       30
+      ],
+      "notes": "thin papery green leaves on climbing stems; pitchers 10-20 cm, pale green to red flushed, narrow peristome, oval lid, often pink-red in sun"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#5aa050",
+      "markings": "#5aa050",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "leaf narrows to a short petiole"
+     },
+     "flower": {
+      "colour": "#9a5a3a",
+      "secondary": "#c8a860",
+      "form": "tall raceme of small brown-red flowers",
+      "scent": "musky"
+     },
+     "seasonal": "evergreen; reddens in open sun",
+     "silhouette": "pale green scrambler in wet grass with hanging green-pink pitchers",
+     "confidence": "documented",
+     "refs": "Wikipedia Nepenthes mirabilis, Kew POWO"
+    }
    },
    {
     "name": "Round-leaved sundew",
@@ -895,7 +1140,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "round",
+      "colour": "#c82a38",
+      "underside": "#8ab04a",
+      "gloss": 0.9,
+      "veins": "none",
+      "vein_colour": "#c82a38",
+      "margin": "entire",
+      "size_cm": [
+       0.5,
+       1
+      ],
+      "notes": "flat rosette of tiny round pads on slender green-red stalks, each fringed with red glandular hairs tipped by glistening dew drops"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8ab04a",
+      "markings": "#c82a38",
+      "marking_size": "fine",
+      "texture": "hairy",
+      "notes": "long thin hairy stalk"
+     },
+     "flower": {
+      "colour": "#fbf7f5",
+      "secondary": "#fbf7f5",
+      "form": "small white flowers on a 10-20 cm nodding-topped stalk, open briefly",
+      "scent": "none"
+     },
+     "seasonal": "dies back to a winter bud; redder in full sun",
+     "silhouette": "tiny red-sparkling rosette 5 cm across on sphagnum",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Drosera rotundifolia"
+    }
    },
    {
     "name": "Cape sundew",
@@ -1006,7 +1290,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "strap",
+      "colour": "#8ab84a",
+      "underside": "#8ab84a",
+      "gloss": 0.9,
+      "veins": "parallel",
+      "vein_colour": "#c82a38",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       7
+      ],
+      "notes": "narrow straps on longer petioles, upper surface covered in red tentacles with glistening dew; leaves curl round prey"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8ab84a",
+      "markings": "#8ab84a",
+      "marking_size": "fine",
+      "texture": "hairy",
+      "notes": "flat green petiole, hairy"
+     },
+     "flower": {
+      "colour": "#e878a8",
+      "secondary": "#e878a8",
+      "form": "pink 2 cm flowers along a 30 cm stalk, opening in turn",
+      "scent": "none"
+     },
+     "seasonal": "evergreen; sprawling dead leaves form a brown skirt",
+     "silhouette": "loose 15 cm mop of red-fringed straps with pink flower stalk",
+     "confidence": "documented",
+     "refs": "Wikipedia Drosera capensis, Kew POWO"
+    }
    },
    {
     "name": "Forked sundew",
@@ -1117,7 +1440,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#8ab84a",
+      "underside": "#8ab84a",
+      "gloss": 0.9,
+      "veins": "none",
+      "vein_colour": "#c82a38",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       40
+      ],
+      "notes": "tall petiole forking into 2-8 narrow antler-like lobes each covered with red dewy tentacles"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8ab84a",
+      "markings": "#8ab84a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "long erect wiry petiole"
+     },
+     "flower": {
+      "colour": "#fbf7f5",
+      "secondary": "#f8d8e0",
+      "form": "white to pale pink flowers on a 30-60 cm stalk",
+      "scent": "none"
+     },
+     "seasonal": "dies back in winter in cool sites",
+     "silhouette": "erect forked red-green antlers 30 cm above swamp",
+     "confidence": "documented",
+     "refs": "Wikipedia Drosera binata, Kew POWO"
+    }
    },
    {
     "name": "Pygmy sundew",
@@ -1228,7 +1590,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "round",
+      "colour": "#c83a3a",
+      "underside": "#7aa848",
+      "gloss": 0.9,
+      "veins": "none",
+      "vein_colour": "#c83a3a",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.2
+      ],
+      "notes": "minute rosette 1-2 cm across of tiny round dewy red pads, central cluster of green gemmae in autumn"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#7aa848",
+      "markings": "#7aa848",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "short thread petiole"
+     },
+     "flower": {
+      "colour": "#fbf7f5",
+      "secondary": "#fbf7f5",
+      "form": "single tiny 4-petalled white flower on a short stalk",
+      "scent": "none"
+     },
+     "seasonal": "gemmae in autumn; summer dormancy",
+     "silhouette": "red sparkle dots on bare sand, barely visible",
+     "confidence": "documented",
+     "refs": "Wikipedia Drosera pygmaea, Kew POWO"
+    }
    },
    {
     "name": "Venus flytrap",
@@ -1339,7 +1740,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#7ab848",
+      "underside": "#7ab848",
+      "gloss": 0.6,
+      "veins": "none",
+      "vein_colour": "#c82a2a",
+      "margin": "spiny",
+      "size_cm": [
+       3,
+       10
+      ],
+      "notes": "rosette of flat green petioles ending in hinged two-lobed traps, inner lobes red, margin of long teeth; 3-7 traps per plant"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#7ab848",
+      "markings": "#7ab848",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "flat winged green petiole"
+     },
+     "flower": {
+      "colour": "#fbf7f5",
+      "secondary": "#fbf7f5",
+      "form": "cluster of white 5-petalled flowers on a 20-30 cm stalk in late spring",
+      "scent": "none"
+     },
+     "seasonal": "winter dormancy: small flat traps; summer traps erect and red inside",
+     "silhouette": "small green-red rosette of open jaws 10-15 cm across on wet sand",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Dionaea muscipula"
+    }
    }
   ],
   "epiphyte": [
@@ -1452,7 +1892,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0,
+      "lean": 0.7
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4a8a3a",
+      "underside": "#4a8a3a",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#3a6a2a",
+      "margin": "entire",
+      "size_cm": [
+       15,
+       30
+      ],
+      "notes": "leathery green leaves on a climbing stem; upper pitchers hourglass shaped, olive-green to yellow outside, purple-brown inside, constricted waist, reflexed lid with white bristles underneath"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#4a8a3a",
+      "markings": "#4a8a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "petiole clasping the stem"
+     },
+     "flower": {
+      "colour": "#7a4a2a",
+      "secondary": "#b0803a",
+      "form": "raceme of small brown-red flowers",
+      "scent": "musky"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "climbing green stem in mossy trees with odd waisted olive-brown goblets",
+     "confidence": "documented",
+     "refs": "Wikipedia Nepenthes lowii, Clarke Nepenthes of Borneo"
+    }
    }
   ]
  }

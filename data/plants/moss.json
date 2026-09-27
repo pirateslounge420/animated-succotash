@@ -110,7 +110,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#c83a48",
+      "underside": "#8ab848",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c83a48",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "dense hummocks of pom-pom heads; crimson-red in open sun, pale green in shade, pale straw when dry"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       15
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "red in open sun, green shaded; bleaches pale when dry",
+     "silhouette": "red and green hummocky carpet in the bog",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "fruit": {
+      "colour": "#3a2a20",
+      "form": "tiny brown spore capsules on short stalks, summer"
+     }
+    }
    },
    {
     "name": "Feather moss",
@@ -212,7 +248,47 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather",
+      "colour": "#8ab838",
+      "underside": "#c8a848",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#8ab838",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "loose yellow-green feathery shoots with distinctive red stems, forming deep soft carpets"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       10
+      ],
+      "texture": "feather"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "continuous yellow-green carpet under spruce",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "petiole": {
+      "pattern": "plain",
+      "base": "#c83a3a",
+      "markings": "#c83a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "red-orange stem visible through the leaves"
+     }
+    }
    },
    {
     "name": "Stair-step moss",
@@ -314,7 +390,47 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather",
+      "colour": "#7ab848",
+      "underside": "#c8a860",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#7ab848",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "glossy green fern-like fronds in annual tiers; each year's growth a new storey; red-brown stems"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       15
+      ],
+      "texture": "feather"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "layered glossy green carpet in old forest",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "petiole": {
+      "pattern": "plain",
+      "base": "#a84a3a",
+      "markings": "#a84a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "red-brown wiry stem"
+     }
+    }
    },
    {
     "name": "Cushion moss",
@@ -416,7 +532,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#c8d8b0",
+      "underside": "#8aa878",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c8d8b0",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "tight dense pale grey-green domes, whitish when dry, bright green-grey when wet"
+     },
+     "mat": {
+      "height_cm": [
+       3,
+       10
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "whitish-grey dry, blue-green wet",
+     "silhouette": "pale rounded pincushions on the forest floor",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide"
+    }
    },
    {
     "name": "Wall moss",
@@ -518,7 +666,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#7a9a48",
+      "underside": "#c8c8b0",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#7a9a48",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "tiny grey-green cushions 1-2 cm, leaves with long silver hair-points giving a hoary look; abundant capsules"
+     },
+     "mat": {
+      "height_cm": [
+       0.5,
+       1.5
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "hoary grey when dry, green wet",
+     "silhouette": "grey-green speckling on old stone",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "fruit": {
+      "colour": "#a85a3a",
+      "form": "upright red-brown capsules 1 cm on yellow stalks, spring"
+     }
+    }
    },
    {
     "name": "Haircap moss",
@@ -620,7 +804,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "upright",
+      "colour": "#3a7a3a",
+      "underside": "#5a9a48",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#3a7a3a",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "tall stiff dark green shoots like tiny pine trees with narrow spreading leaves; red-brown stems"
+     },
+     "mat": {
+      "height_cm": [
+       10,
+       40
+      ],
+      "texture": "upright"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "miniature dark green forest on bog",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "fruit": {
+      "colour": "#c8a860",
+      "form": "four-sided capsules with golden hairy calyptra on 5-10 cm red stalks"
+     }
+    }
    },
    {
     "name": "Lava moss",
@@ -722,7 +942,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#a8b8a0",
+      "underside": "#e8ece8",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#a8b8a0",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "thick woolly grey-white mats, leaves with long white hair-points; olive-green when wet"
+     },
+     "mat": {
+      "height_cm": [
+       3,
+       10
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "grey-white dry, olive-green wet",
+     "silhouette": "grey woolly blanket over lava and rock",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide"
+    }
    },
    {
     "name": "Liverwort",
@@ -826,7 +1078,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "thallus",
+      "colour": "#5a9a48",
+      "underside": "#3a7a3a",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#5a9a48",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "flat forking green ribbons 1 cm wide with a dark midline and cup-like gemma cups; umbrella-shaped stalks (male discs, female palm-like) rise 3-5 cm"
+     },
+     "mat": {
+      "height_cm": [
+       0.2,
+       1
+      ],
+      "texture": "thallus"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "flat green scales with little umbrellas on wet burned ground",
+     "confidence": "documented",
+     "refs": "Wikipedia, British Bryological Society field guide",
+     "flower": {
+      "colour": "#7ab848",
+      "secondary": "#7ab848",
+      "form": "stalked green umbrellas 3-5 cm: flat lobed discs and finger-rayed heads",
+      "scent": "none"
+     }
+    }
    },
    {
     "name": "Reindeer lichen",
@@ -929,7 +1219,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "cushion",
+      "colour": "#d8dcc8",
+      "underside": "#b8c0a8",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#d8dcc8",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "pale grey-white densely branched shrubby tufts, branches curved to one side, in spongy mats"
+     },
+     "mat": {
+      "height_cm": [
+       5,
+       10
+      ],
+      "texture": "cushion"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "grey-white spongy mats among dwarf shrubs",
+     "confidence": "documented",
+     "refs": "Wikipedia Cladonia rangiferina, Brodo Lichens of North America"
+    }
    },
    {
     "name": "Map lichen",
@@ -1031,7 +1353,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "crust",
+      "colour": "#c8d838",
+      "underside": "#1a1a1a",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c8d838",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "flat yellow-green crust of small areoles divided by black lines like a map, black margin"
+     },
+     "mat": {
+      "height_cm": [
+       0,
+       0.1
+      ],
+      "texture": "crust"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "yellow-green patches with black borders on bare rock",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhizocarpon geographicum, Brodo Lichens of North America"
+    }
    },
    {
     "name": "Rock tripe",
@@ -1133,7 +1487,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "thallus",
+      "colour": "#4a3a30",
+      "underside": "#2a2020",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#4a3a30",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "leathery brown to black round lobes attached by a central point, edges lifting; olive-green when wet, black underside"
+     },
+     "mat": {
+      "height_cm": [
+       0,
+       0.3
+      ],
+      "texture": "thallus"
+     },
+     "seasonal": "black-brown dry, olive when wet",
+     "silhouette": "dark leathery flakes pasted on cliff",
+     "confidence": "documented",
+     "refs": "Wikipedia Umbilicaria esculenta, Brodo Lichens of North America"
+    }
    }
   ],
   "epiphyte": [
@@ -1237,7 +1623,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "pendent",
+      "colour": "#c8b848",
+      "underside": "#a89838",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#c8b848",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "long golden-yellow to orange-brown pendent strands with tiny leaves, hanging in curtains from branches"
+     },
+     "mat": {
+      "height_cm": [
+       20,
+       60
+      ],
+      "texture": "pendent"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "golden curtains dripping from cloud-forest limbs",
+     "confidence": "partly",
+     "refs": "Papillaria crocea descriptions (Australian/NZ bryophyte floras)"
+    }
    },
    {
     "name": "Tree moss",
@@ -1339,7 +1757,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather",
+      "colour": "#4a8a3a",
+      "underside": "#7aa858",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#4a8a3a",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "dense flat frond-like plumes arching out from trunks, curling inward when dry, like tiny fern fronds"
+     },
+     "mat": {
+      "height_cm": [
+       3,
+       8
+      ],
+      "texture": "feather"
+     },
+     "seasonal": "curls inward brown-green when dry",
+     "silhouette": "green fringing plumes on oak and maple trunks",
+     "confidence": "documented",
+     "refs": "Wikipedia Dendroalsia abietina, Flora of North America"
+    }
    },
    {
     "name": "Old man's beard",
@@ -1441,7 +1891,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "pendent",
+      "colour": "#b8c8a0",
+      "underside": "#d8e0c8",
+      "gloss": 0.15,
+      "veins": "none",
+      "vein_colour": "#b8c8a0",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       1
+      ],
+      "notes": "pale grey-green cord-like strands with a white elastic core, hanging 1 m, few branches, short side fibrils"
+     },
+     "mat": {
+      "height_cm": [
+       30,
+       100
+      ],
+      "texture": "pendent"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "pale grey-green beards streaming from old conifer branches",
+     "confidence": "documented",
+     "refs": "Wikipedia Usnea longissima, Brodo Lichens of North America"
+    }
    }
   ]
  }

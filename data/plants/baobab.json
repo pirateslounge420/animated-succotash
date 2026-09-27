@@ -109,7 +109,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "pink_smooth",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#9a8a78",
+      "secondary": "#c0a890",
+      "feature_cm": 30,
+      "roughness": 0.35,
+      "notes": "smooth, shiny, folded and wrinkled grey to pink-grey, like elephant skin; coppery-pink patches where the surface sloughs; fibrous inside"
+     },
+     "trunk": {
+      "form": "bottle",
+      "taper": 0.5,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "palmate",
+      "colour": "#4e8a3e",
+      "underside": "#6a9a58",
+      "gloss": 0.4,
+      "veins": "palmate",
+      "vein_colour": "#6a9a58",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       20
+      ],
+      "notes": "hand-shaped compound leaves of 5-7 leaflets radiating from one point; medium green; present only in the wet season"
+     },
+     "flower": {
+      "colour": "#f8f4ec",
+      "secondary": "#e8d8b0",
+      "form": "big pendulous white flowers 15-20 cm with crumpled petals and a ball of stamens, opening at night, browning by morning",
+      "scent": "musky"
+     },
+     "fruit": {
+      "colour": "#a89058",
+      "form": "large egg-shaped pods 15-25 cm, velvety yellow-grey-brown, hanging on long stalks; chalky white pulp"
+     },
+     "seasonal": "deciduous, bare for most of the dry season (8-9 months); leaves flush at the rains",
+     "silhouette": "the upside-down tree: a vast grey bottle trunk with a spreading tangle of thick, stubby, root-like branches; leafless most of the year",
+     "confidence": "documented",
+     "refs": "Wikipedia Adansonia digitata; Kew POWO; PlantZAfrica"
+    }
    },
    {
     "name": "Grandidier's baobab",
@@ -213,7 +256,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "pink_smooth",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#a89a88",
+      "secondary": "#c8b8a0",
+      "feature_cm": 40,
+      "roughness": 0.25,
+      "notes": "smooth, pale grey to reddish-grey, faintly ringed horizontally on huge cylinder; flushes pink-red in low sun"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.05,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "palmate",
+      "colour": "#5a8a48",
+      "underside": "#7a9a68",
+      "gloss": 0.4,
+      "veins": "palmate",
+      "vein_colour": "#7a9a68",
+      "margin": "entire",
+      "size_cm": [
+       8,
+       15
+      ],
+      "notes": "palmately compound, 9-11 narrow blue-green leaflets, hairy; brief"
+     },
+     "flower": {
+      "colour": "#f8f4e8",
+      "secondary": "#e8c860",
+      "form": "white flowers with a prominent stamen brush, opening at dusk",
+      "scent": "musky"
+     },
+     "fruit": {
+      "colour": "#a89870",
+      "form": "large oval fruit 20-30 cm, russet velvet, hanging in the crown"
+     },
+     "seasonal": "deciduous, leafless most of the year (dry season); leaves briefly in the wet season",
+     "silhouette": "a smooth untapering grey cylinder 25-30 m tall crowned by a small flat table of horizontal branches at the very top; the Avenue of the Baobabs",
+     "confidence": "documented",
+     "refs": "Wikipedia Adansonia grandidieri; Kew POWO; Baum 1995 Ann Missouri Bot Gard"
+    }
    },
    {
     "name": "Boab",
@@ -317,7 +403,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "pink_smooth",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8070",
+      "secondary": "#b0a490",
+      "feature_cm": 30,
+      "roughness": 0.35,
+      "notes": "smooth grey wrinkled bark, folded at the swollen base; fire-scorched darker patches"
+     },
+     "trunk": {
+      "form": "bottle",
+      "taper": 0.7,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "palmate",
+      "colour": "#4e8a3e",
+      "underside": "#6a9a58",
+      "gloss": 0.4,
+      "veins": "palmate",
+      "vein_colour": "#6a9a58",
+      "margin": "entire",
+      "size_cm": [
+       8,
+       15
+      ],
+      "notes": "palmately compound, 5-9 leaflets; bright green in the wet"
+     },
+     "flower": {
+      "colour": "#f8f6ee",
+      "secondary": "#f0e0a0",
+      "form": "large white flowers with crumpled petals and a stamen ball, opening at night",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#9a8a68",
+      "form": "round to oval woody fruit 10-20 cm, tan-brown velvet, on long stalks"
+     },
+     "seasonal": "deciduous in the dry season (May to October), bare grey silhouette; leaves in the wet",
+     "silhouette": "a fat squat grey bottle, often wider than tall, pinched to a neck then a bushy tangle of short branches; grotesque and cheerful",
+     "confidence": "documented",
+     "refs": "Wikipedia Adansonia gregorii; Kew POWO; Australian Plant Society"
+    }
    },
    {
     "name": "Ginkgo",
@@ -422,7 +551,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "furrowed",
+      "base": "#8a8278",
+      "secondary": "#5e5850",
+      "feature_cm": 3,
+      "roughness": 0.6,
+      "notes": "grey to grey-brown, corky, deeply furrowed into irregular ridges on old trunks; pale grey smooth when young"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.3,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "fan",
+      "colour": "#6aa848",
+      "underside": "#6aa848",
+      "gloss": 0.4,
+      "veins": "parallel",
+      "vein_colour": "#7ab858",
+      "margin": "wavy",
+      "size_cm": [
+       5,
+       8
+      ],
+      "notes": "flat fan leaves with a notch, fine forking parallel veins, clustered on short spur shoots; bright fresh green"
+     },
+     "flower": {
+      "colour": "#c8c860",
+      "secondary": "#8aa860",
+      "form": "small yellowish catkin-like pollen cones on males; tiny paired ovules on females",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#e8b850",
+      "form": "plum-like round seeds 2-3 cm, yellow-orange, fleshy and foul-smelling when they fall in autumn"
+     },
+     "seasonal": "deciduous; turns pure clear gold in autumn and drops nearly all at once",
+     "silhouette": "tall, gaunt, irregular; open pyramidal crown of a few big upswept limbs when young, broader and craggy with age; a column of gold in autumn",
+     "confidence": "documented",
+     "refs": "Wikipedia Ginkgo biloba; Flora of China; Missouri Botanical Garden"
+    }
    }
   ],
   "shrub": [],

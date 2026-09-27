@@ -110,7 +110,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "peeling",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "peeling",
+      "base": "#a86a50",
+      "secondary": "#c89a78",
+      "feature_cm": 2,
+      "roughness": 0.5,
+      "notes": "red-brown to pinkish bark, rough, peeling and shredding in thin flakes and strips; old trunks gnarled"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2e5e34",
+      "underside": "#b89868",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#4a7a50",
+      "margin": "entire",
+      "size_cm": [
+       8,
+       20
+      ],
+      "notes": "leathery oblong-lance leaves, dark green above, underside silvery to cinnamon-fawn felted; in whorls at shoot tips"
+     },
+     "flower": {
+      "colour": "#d0202a",
+      "secondary": "#f0a0b0",
+      "form": "dense rounded trusses 10-15 cm of 15-20 bell flowers, blood red (pink or white at altitude), dark nectar pouches",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a6a48",
+      "form": "brown woody capsules 2-4 cm in clusters"
+     },
+     "seasonal": "evergreen; whole hillsides scarlet in March-April",
+     "silhouette": "a gnarled small tree 10-20 m with a rounded dense dark crown; in flower a dome of red; forest-forming on Himalayan ridges",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhododendron arboreum; Flora of China; Trees and Shrubs Online"
+    }
    },
    {
     "name": "Big-leaf rhododendron",
@@ -215,7 +258,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "peeling",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "peeling",
+      "base": "#8a6a58",
+      "secondary": "#a88a78",
+      "feature_cm": 2,
+      "roughness": 0.4,
+      "notes": "grey-brown, rough, flaking in patches; stout branches"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2a5a32",
+      "underside": "#c0c0b0",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#c8c8b8",
+      "margin": "entire",
+      "size_cm": [
+       40,
+       100
+      ],
+      "notes": "enormous glossy dark green oblong leaves up to 1 m with a pale silvery-fawn suede underside and bold pale midrib; in huge whorls"
+     },
+     "flower": {
+      "colour": "#f0e8b0",
+      "secondary": "#c02040",
+      "form": "big trusses 20-30 cm of 20-30 creamy-yellow bells each with a crimson blotch at the base",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a6a48",
+      "form": "large brown woody capsules 4-6 cm"
+     },
+     "seasonal": "evergreen; none; new growth silvery-white",
+     "silhouette": "a coarse open small tree 6-12 m whose giant glossy leaves in whorls read like a rubber plant in the cloud forest",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhododendron sinogrande; Flora of China; Trees and Shrubs Online"
+    }
    }
   ],
   "shrub": [
@@ -322,7 +408,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "peeling",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#8a6a58",
+      "secondary": "#6a4a3a",
+      "feature_cm": 1,
+      "roughness": 0.4,
+      "notes": "red-brown to grey-brown, thin, scaly; crooked sprawling stems"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2a5a34",
+      "underside": "#7a9a6a",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#5a8a5a",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       25
+      ],
+      "notes": "long leathery dark green oblong leaves, paler beneath; whorled; curl into tubes and droop in freezing cold"
+     },
+     "flower": {
+      "colour": "#f0d0e0",
+      "secondary": "#8ab040",
+      "form": "compact trusses of pale pink to white bells with olive-green spotting, June-July",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a6a48",
+      "form": "small brown sticky capsules 1-2 cm"
+     },
+     "seasonal": "evergreen; leaves droop and roll below freezing",
+     "silhouette": "impenetrable thickets ('hells') of sprawling crooked stems 3-6 m under hemlock; a dark glossy tangle along streams",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhododendron maximum; Flora of North America; USFS"
+    }
    },
    {
     "name": "Alpenrose",
@@ -427,7 +556,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "peeling",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#6a5a4e",
+      "secondary": "#4a3e34",
+      "feature_cm": 0.5,
+      "roughness": 0.3,
+      "notes": "grey-brown thin scaly bark on wiry low stems"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.6,
+      "lean": 0.2
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2e6a38",
+      "underside": "#b06a30",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#4a7a50",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       4
+      ],
+      "notes": "small glossy dark green elliptic leaves, edges rolled under, underside densely rusty-brown scaly (ferrugineum)"
+     },
+     "flower": {
+      "colour": "#e0306a",
+      "secondary": "#f080a0",
+      "form": "clusters of 6-10 small bell flowers, deep rose-pink to crimson, June-July",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a6a48",
+      "form": "small brown capsules"
+     },
+     "seasonal": "evergreen; slopes pink in early summer",
+     "silhouette": "a knee-high (0.5-1 m) dense evergreen heath mat above the treeline, dotted pink in bloom",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhododendron ferrugineum; Flora Europaea; Kew POWO"
+    }
    }
   ],
   "ground": [],
@@ -535,7 +707,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "peeling",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#7a6a5a",
+      "secondary": "#5a4a3e",
+      "feature_cm": 0.5,
+      "roughness": 0.3,
+      "notes": "grey-brown, thin, smooth; slender branches with scaly young shoots"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2e6a38",
+      "underside": "#5a8a5a",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#5a8a5a",
+      "margin": "entire",
+      "size_cm": [
+       6,
+       15
+      ],
+      "notes": "elliptic to lance leaves in pseudo-whorls, mid to dark green, minutely scaly beneath; leathery"
+     },
+     "flower": {
+      "colour": "#f07820",
+      "secondary": "#f8b040",
+      "form": "trusses of 5-12 funnel/trumpet flowers 4-6 cm, bright orange to orange-yellow (red or bicolour in Philippine forms), waxy",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a6a48",
+      "form": "narrow brown capsules 2-5 cm, seeds with tails"
+     },
+     "seasonal": "evergreen; flowers off and on all year",
+     "silhouette": "a loose shrub 1-5 m perched on mossy branches or on the ground in montane forest; glowing orange trumpets against dark leaves",
+     "confidence": "documented",
+     "refs": "Wikipedia Rhododendron javanicum; Trees and Shrubs Online; Kew POWO"
+    }
    }
   ]
  }

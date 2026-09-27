@@ -109,7 +109,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8278",
+      "secondary": "#6a6258",
+      "feature_cm": 2,
+      "roughness": 0.3,
+      "notes": "grey to grey-brown, smooth on young trees, becoming scaly with small thin plates on old trunks"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.3,
+      "lean": 0.02
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#1f5a2c",
+      "underside": "#a8703a",
+      "gloss": 0.9,
+      "veins": "pinnate",
+      "vein_colour": "#3a7a48",
+      "margin": "entire",
+      "size_cm": [
+       12,
+       25
+      ],
+      "notes": "very glossy thick leathery dark green ellipses; underside felted rusty brown; the two-tone signature"
+     },
+     "flower": {
+      "colour": "#f8f4e8",
+      "secondary": "#e8d8a0",
+      "form": "huge cream-white bowls 20-30 cm across, 6-12 thick petals, crown of yellow stamens",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#b04a3a",
+      "form": "cone-like knobbly aggregate 8-12 cm, greenish turning rusty, splitting to hang bright red seeds on threads"
+     },
+     "seasonal": "evergreen; old leaves drop in spring; none",
+     "silhouette": "broad dense dark pyramid to rounded dome, foliage to the ground, glossy highlights; huge white flowers dotted on the canopy in early summer",
+     "confidence": "documented",
+     "refs": "Wikipedia Magnolia grandiflora; Flora of North America; Missouri Botanical Garden"
+    }
    },
    {
     "name": "Yulan magnolia",
@@ -213,7 +256,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8a82",
+      "secondary": "#6e6e66",
+      "feature_cm": 1,
+      "roughness": 0.2,
+      "notes": "smooth pale grey bark, slightly roughened with age; grey-brown twigs with big furry silver buds"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4e8a3e",
+      "underside": "#6a9a58",
+      "gloss": 0.4,
+      "veins": "pinnate",
+      "vein_colour": "#6a9a58",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       18
+      ],
+      "notes": "broad obovate leaves with an abrupt short point, mid green, paler beneath; appear after the flowers"
+     },
+     "flower": {
+      "colour": "#fbf8f0",
+      "secondary": "#f0e8d8",
+      "form": "upright pure white goblet/tulip flowers 12-15 cm, 9 tepals, on bare branches before leaves",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#b85a4a",
+      "form": "knobbly cylindrical aggregate 8-12 cm, pinkish-brown, red seeds"
+     },
+     "seasonal": "deciduous; yellow-brown in autumn; bare grey branches covered in white goblets in early spring",
+     "silhouette": "small to medium rounded tree, often multi-stemmed, a cloud of white cups on bare grey branches in early spring, then a leafy dome",
+     "confidence": "documented",
+     "refs": "Wikipedia Magnolia denudata; Flora of China; Kew POWO"
+    }
    },
    {
     "name": "Campbell's magnolia",
@@ -317,7 +403,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#7a7a72",
+      "secondary": "#5e5e56",
+      "feature_cm": 2,
+      "roughness": 0.3,
+      "notes": "grey to grey-brown, smooth, slightly fissured on old trunks"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.35,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4a8a42",
+      "underside": "#6e9a62",
+      "gloss": 0.4,
+      "veins": "pinnate",
+      "vein_colour": "#6e9a62",
+      "margin": "entire",
+      "size_cm": [
+       15,
+       30
+      ],
+      "notes": "large elliptic-obovate leaves, mid green above, paler and slightly hairy beneath; after flowers"
+     },
+     "flower": {
+      "colour": "#e88ab0",
+      "secondary": "#f8d8e4",
+      "form": "enormous pink cup-and-saucer flowers 20-30 cm across, outer tepals spread flat, inner cupped, on bare branches; white forms exist",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#a85a4a",
+      "form": "cylindrical knobbly aggregate 12-20 cm, purplish-brown, scarlet seeds"
+     },
+     "seasonal": "deciduous; yellow in autumn; pink dinner-plate flowers on bare branches late winter to early spring",
+     "silhouette": "tall broad-crowned forest tree 20-30 m; in flower a leafless canopy stippled entirely pink against the cloud forest",
+     "confidence": "documented",
+     "refs": "Wikipedia Magnolia campbellii; Flora of China; Trees and Shrubs Online"
+    }
    },
    {
     "name": "Tulip tree",
@@ -421,7 +550,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "furrowed",
+      "base": "#8a8078",
+      "secondary": "#5a5048",
+      "feature_cm": 4,
+      "roughness": 0.6,
+      "notes": "pale grey-brown with regular, interlacing, flat-topped ridges and deep furrows; young trees smooth grey with white streaks"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.2,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "lobed",
+      "colour": "#5a9a3e",
+      "underside": "#7ab060",
+      "gloss": 0.5,
+      "veins": "palmate",
+      "vein_colour": "#8ab870",
+      "margin": "lobed",
+      "size_cm": [
+       8,
+       15
+      ],
+      "notes": "square-cut four-lobed leaves with a notched flat tip (tulip outline), bright green, on long petioles that flutter"
+     },
+     "flower": {
+      "colour": "#c8d860",
+      "secondary": "#f08030",
+      "form": "upright tulip-shaped cups 5 cm, pale yellow-green with an orange band at the base of each petal",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#b09a60",
+      "form": "upright cone-like clusters of winged tan samaras, persist through winter"
+     },
+     "seasonal": "deciduous; clear bright golden yellow in autumn",
+     "silhouette": "the tallest eastern hardwood: a huge straight columnar trunk clear of branches for 25 m, narrow oblong crown; a bare mast in winter with upright cone clusters",
+     "confidence": "documented",
+     "refs": "Wikipedia Liriodendron tulipifera; Flora of North America; USFS Silvics"
+    }
    }
   ],
   "shrub": [],

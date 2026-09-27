@@ -108,7 +108,48 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#6a5a48",
+      "secondary": "#3a2a20",
+      "feature_cm": 6,
+      "roughness": 0.7,
+      "notes": "dark trunk with oval leaf-base scars; silver frond stubs"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.05,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#3a7a3a",
+      "underside": "#d8e0e0",
+      "gloss": 0.4,
+      "veins": "pinnate",
+      "vein_colour": "#3a7a3a",
+      "margin": "toothed",
+      "size_cm": [
+       200,
+       400
+      ],
+      "notes": "bipinnate fronds dark green above, striking silver-white beneath; dead fronds fall leaving a clean trunk"
+     },
+     "petiole": {
+      "pattern": "scaly",
+      "base": "#8a7a5a",
+      "markings": "#f0f0e8",
+      "marking_size": "medium",
+      "texture": "rough",
+      "notes": "stipe pale brown with white scales, silver underneath"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "slender 10 m trunk with an umbrella of fronds silver on the underside",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Australian tree fern",
@@ -210,7 +251,48 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#6a5a48",
+      "secondary": "#c8b088",
+      "feature_cm": 8,
+      "roughness": 0.7,
+      "notes": "trunk with coin-shaped frond scars"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.05,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#5aa848",
+      "underside": "#7ab860",
+      "gloss": 0.4,
+      "veins": "pinnate",
+      "vein_colour": "#5aa848",
+      "margin": "toothed",
+      "size_cm": [
+       200,
+       400
+      ],
+      "notes": "large lacy bright green bipinnate fronds; stipe bases with long pale brown scales and hairs"
+     },
+     "petiole": {
+      "pattern": "scaly",
+      "base": "#8a6a48",
+      "markings": "#e8d8b0",
+      "marking_size": "bold",
+      "texture": "hairy",
+      "notes": "stipe covered in shaggy pale straw-brown scales"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "tall slender trunk with a wide bright green lacy crown",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Soft tree fern",
@@ -312,7 +394,48 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#6a4a30",
+      "secondary": "#3a2a18",
+      "feature_cm": 2,
+      "roughness": 0.9,
+      "notes": "massive thick trunk of matted red-brown fibrous roots"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.0,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#3a7a38",
+      "underside": "#5a9a4a",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#3a7a38",
+      "margin": "toothed",
+      "size_cm": [
+       200,
+       400
+      ],
+      "notes": "dark green leathery bipinnate fronds in a wide crown, old fronds hang as a brown skirt"
+     },
+     "petiole": {
+      "pattern": "hairy",
+      "base": "#5a4a30",
+      "markings": "#8a6a3a",
+      "marking_size": "medium",
+      "texture": "hairy",
+      "notes": "stipe base thick with red-brown hairs"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "short massive furry brown trunk with a broad dark green crown",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    }
   ],
   "ground": [
@@ -417,7 +540,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#6aa848",
+      "underside": "#6aa848",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#6aa848",
+      "margin": "toothed",
+      "size_cm": [
+       50,
+       200
+      ],
+      "notes": "large triangular tripinnate fronds on tall wiry stems, held horizontally; whole colonies"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#7a6a3a",
+      "markings": "#7a6a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "stiff brown-green stipe 1 m"
+     },
+     "seasonal": "deciduous: turns rust-orange then brown in autumn and stands dead through winter",
+     "silhouette": "knee-high to head-high green (autumn orange-brown) mass covering whole hillsides",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Sword fern",
@@ -519,7 +675,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "pinnate",
+      "colour": "#2a6a2a",
+      "underside": "#3a7a3a",
+      "gloss": 0.5,
+      "veins": "pinnate",
+      "vein_colour": "#2a6a2a",
+      "margin": "toothed",
+      "size_cm": [
+       50,
+       150
+      ],
+      "notes": "dense shuttlecock of stiff once-pinnate dark green swords, each pinna with an ear lobe at the base"
+     },
+     "petiole": {
+      "pattern": "scaly",
+      "base": "#6a5a3a",
+      "markings": "#8a6a3a",
+      "marking_size": "medium",
+      "texture": "rough",
+      "notes": "stipe densely scaly brown"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "dark green shuttlecocks 1 m tall carpeting conifer floor",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Lady fern",
@@ -621,7 +810,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#7ab848",
+      "underside": "#7ab848",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#7ab848",
+      "margin": "toothed",
+      "size_cm": [
+       30,
+       100
+      ],
+      "notes": "lacy finely bipinnate light green fronds in an arching shuttlecock; delicate"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8a5a4a",
+      "markings": "#8a5a4a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "stipe reddish at base"
+     },
+     "seasonal": "deciduous: yellows and browns in autumn",
+     "silhouette": "soft light green lacy tufts by streams",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Ostrich fern",
@@ -725,7 +947,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#5aa848",
+      "underside": "#5aa848",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#5aa848",
+      "margin": "toothed",
+      "size_cm": [
+       100,
+       170
+      ],
+      "notes": "tall vase-shaped shuttlecock of bright green plume fronds widest near the tip; brown fertile fronds stand in the centre"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#5a8a3a",
+      "markings": "#5a8a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "green stipe, dark at base"
+     },
+     "seasonal": "deciduous; brown fertile fronds persist through winter",
+     "silhouette": "tight tall green vases 1.5 m in floodplain woods",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Royal fern",
@@ -833,7 +1088,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#5aa858",
+      "underside": "#5aa858",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#5aa858",
+      "margin": "toothed",
+      "size_cm": [
+       100,
+       200
+      ],
+      "notes": "large bipinnate fronds with oval separate leaflets; rusty brown fertile tassels at the frond tips"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8a6a4a",
+      "markings": "#8a6a4a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "stipe pinkish-brown when young"
+     },
+     "seasonal": "deciduous: yellow-brown in autumn",
+     "silhouette": "big rounded 1.5 m clump with brown flower-like tassels",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Maidenhair fern",
@@ -937,7 +1225,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#7ab858",
+      "underside": "#7ab858",
+      "gloss": 0.3,
+      "veins": "pinnate",
+      "vein_colour": "#7ab858",
+      "margin": "toothed",
+      "size_cm": [
+       15,
+       40
+      ],
+      "notes": "delicate fan-shaped leaflets on black wiry hair-thin stalks, drooping"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#1a1a1a",
+      "markings": "#1a1a1a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "glossy black wire stipe"
+     },
+     "seasonal": "evergreen in mild sites",
+     "silhouette": "airy green mist of tiny fans on black threads over wet rock",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Hard fern",
@@ -1039,7 +1360,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "pinnate",
+      "colour": "#2a6a30",
+      "underside": "#3a7a3a",
+      "gloss": 0.5,
+      "veins": "pinnate",
+      "vein_colour": "#2a6a30",
+      "margin": "toothed",
+      "size_cm": [
+       20,
+       50
+      ],
+      "notes": "stiff dark green once-pinnate ladder fronds in a flat rosette, with erect narrow brown fertile fronds in the middle"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#5a3a2a",
+      "markings": "#5a3a2a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "dark brown stipe"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "flat dark green rosette 40 cm with upright brown quills",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Mosquito fern",
@@ -1147,7 +1501,32 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#7ab848",
+      "underside": "#7ab848",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#7ab848",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.2
+      ],
+      "notes": "tiny overlapping scale leaves on floating branching fronds 1-3 cm; green in shade, red-crimson in sun and cold"
+     },
+     "seasonal": "green-red mat; turns deep red in autumn",
+     "silhouette": "pond surface carpeted red-green like paint",
+     "confidence": "documented",
+     "refs": "Wikipedia Azolla filiculoides, Kew POWO"
+    }
    }
   ],
   "epiphyte": [
@@ -1251,7 +1630,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "strap",
+      "colour": "#5ab848",
+      "underside": "#5ab848",
+      "gloss": 0.8,
+      "veins": "parallel",
+      "vein_colour": "#1a1a1a",
+      "margin": "wavy",
+      "size_cm": [
+       60,
+       150
+      ],
+      "notes": "wide undivided glossy bright green straps with a black midrib, crinkled edges, in a funnel rosette collecting litter"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#1a1a1a",
+      "markings": "#1a1a1a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "very short black stipe"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "big bright green funnel on a trunk or fork",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Staghorn fern",
@@ -1353,7 +1765,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "lobed",
+      "colour": "#6a9a58",
+      "underside": "#8aa878",
+      "gloss": 0.2,
+      "veins": "palmate",
+      "vein_colour": "#6a9a58",
+      "margin": "toothed",
+      "size_cm": [
+       30,
+       90
+      ],
+      "notes": "grey-green forked antler fronds hanging, felted with white hairs; round brown-green shield fronds pressed against bark"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#6a9a58",
+      "markings": "#6a9a58",
+      "marking_size": "fine",
+      "texture": "hairy",
+      "notes": "short felted stipe"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "grey-green antlers hanging from a brown shield on a trunk",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Resurrection fern",
@@ -1455,7 +1900,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "pinnate",
+      "colour": "#5a9a48",
+      "underside": "#7a8a58",
+      "gloss": 0.2,
+      "veins": "pinnate",
+      "vein_colour": "#5a9a48",
+      "margin": "toothed",
+      "size_cm": [
+       5,
+       25
+      ],
+      "notes": "small once-pinnate fronds with round lobes creeping along limbs; curls brown and dry in drought, unrolls green after rain"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#5a7a3a",
+      "markings": "#5a7a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "short scaly stipe on creeping rhizome"
+     },
+     "seasonal": "grey-brown curled when dry, flat green within hours of rain",
+     "silhouette": "green fur along oak limbs, brown when dry",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Climbing fern",
@@ -1558,7 +2036,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "palmate",
+      "colour": "#6ab048",
+      "underside": "#6ab048",
+      "gloss": 0.3,
+      "veins": "palmate",
+      "vein_colour": "#6ab048",
+      "margin": "toothed",
+      "size_cm": [
+       200,
+       600
+      ],
+      "notes": "twining wiry rachis climbing 3 m carrying pairs of finely divided palmate-lobed pinnae"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#6a8a3a",
+      "markings": "#6a8a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "green twining rachis"
+     },
+     "seasonal": "deciduous in cold; browns",
+     "silhouette": "green lace draped over shrubs and fences",
+     "confidence": "documented",
+     "refs": "Wikipedia, Kew POWO, Flora of North America"
+    }
    },
    {
     "name": "Whisk fern",
@@ -1660,7 +2171,32 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#7ab848",
+      "underside": "#7ab848",
+      "gloss": 0.3,
+      "veins": "none",
+      "vein_colour": "#7ab848",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       50
+      ],
+      "notes": "leafless green repeatedly forked wiry stems 20-50 cm, minute scales, tiny yellow 3-lobed sporangia"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "a green tuft of forking twigs, like a small green whisk broom",
+     "confidence": "documented",
+     "refs": "Wikipedia Psilotum nudum, Kew POWO"
+    }
    }
   ]
  }

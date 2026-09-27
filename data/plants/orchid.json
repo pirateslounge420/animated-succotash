@@ -115,7 +115,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#5a9a48",
+      "underside": "#5a9a48",
+      "gloss": 0.4,
+      "veins": "parallel",
+      "vein_colour": "#4a8a38",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       25
+      ],
+      "notes": "pair of broad ribbed basal leaves, softly hairy"
+     },
+     "flower": {
+      "colour": "#e87aa8",
+      "secondary": "#8a5a3a",
+      "form": "single inflated pink pouch veined darker, brown-green twisted sepals, on a 30 cm stalk",
+      "scent": "sweet"
+     },
+     "seasonal": "dies back after summer; deciduous",
+     "silhouette": "two ribbed leaves and one pink balloon in pine needles",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Cypripedium acaule"
+    }
    },
    {
     "name": "Bee orchid",
@@ -223,7 +254,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#7aa860",
+      "underside": "#7aa860",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#7aa860",
+      "margin": "entire",
+      "size_cm": [
+       4,
+       10
+      ],
+      "notes": "small basal rosette of grey-green leaves, withered by flowering"
+     },
+     "flower": {
+      "colour": "#e888b8",
+      "secondary": "#5a3a20",
+      "form": "3-10 flowers up a 30 cm stem: pink sepals, furry brown-maroon lip with yellow markings like a bee",
+      "scent": "none"
+     },
+     "seasonal": "winter rosette, spring flower, summer dormant",
+     "silhouette": "thin pink-and-brown stem in short grass",
+     "confidence": "documented",
+     "refs": "Wikipedia Ophrys apifera, Kew POWO"
+    }
    }
   ],
   "epiphyte": [
@@ -333,7 +395,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "strap",
+      "colour": "#3a7a3a",
+      "underside": "#3a7a3a",
+      "gloss": 0.7,
+      "veins": "parallel",
+      "vein_colour": "#3a7a3a",
+      "margin": "entire",
+      "size_cm": [
+       20,
+       40
+      ],
+      "notes": "few thick fleshy dark green straps flat against bark; flat grey-green aerial roots"
+     },
+     "flower": {
+      "colour": "#fcfcfc",
+      "secondary": "#e8d040",
+      "form": "arching spray of 5-10 flat white 8 cm moth flowers, lip yellow-marked",
+      "scent": "none"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "white moths hovering on a wire out of a dark green tuft on a trunk",
+     "confidence": "documented",
+     "refs": "Wikipedia Phalaenopsis amabilis, Kew POWO"
+    }
    },
    {
     "name": "Ghost orchid",
@@ -441,7 +534,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "strap",
+      "colour": "#7a9a70",
+      "underside": "#7a9a70",
+      "gloss": 0.3,
+      "veins": "none",
+      "vein_colour": "#7a9a70",
+      "margin": "entire",
+      "size_cm": [
+       0,
+       0
+      ],
+      "notes": "leafless: flat grey-green roots 1 cm wide with white banding sprawl across bark, tiny green growth tips"
+     },
+     "flower": {
+      "colour": "#fcfcfc",
+      "secondary": "#fcfcfc",
+      "form": "one or two white flowers 12 cm with a long twisted forked lip, seemingly floating on a thin stalk",
+      "scent": "sweet"
+     },
+     "seasonal": "flowers June-August; otherwise just roots",
+     "silhouette": "a tangle of grey roots on a trunk, one white ghost in summer",
+     "confidence": "documented",
+     "refs": "Wikipedia Dendrophylax lindenii, Flora of North America"
+    }
    },
    {
     "name": "Leopard orchid",
@@ -549,7 +673,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "strap",
+      "colour": "#5a9a4a",
+      "underside": "#5a9a4a",
+      "gloss": 0.5,
+      "veins": "parallel",
+      "vein_colour": "#5a9a4a",
+      "margin": "entire",
+      "size_cm": [
+       15,
+       50
+      ],
+      "notes": "clump of tall ribbed pseudobulb canes 60 cm with pleated straps; upward-pointing spiky white aerial roots make a litter basket"
+     },
+     "flower": {
+      "colour": "#e8d040",
+      "secondary": "#7a3a20",
+      "form": "branched sprays of yellow flowers heavily blotched brown-maroon like a leopard",
+      "scent": "sweet"
+     },
+     "seasonal": "evergreen; flowers in dry season",
+     "silhouette": "big spiky green clump in a fork of a savanna tree with yellow-spotted sprays",
+     "confidence": "documented",
+     "refs": "Wikipedia Ansellia africana, Kew POWO"
+    }
    }
   ]
  }

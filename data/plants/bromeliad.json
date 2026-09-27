@@ -114,7 +114,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "spine"
+    "leaf_type": "spine",
+    "appearance": {
+     "trunk": {
+      "form": "single",
+      "taper": 0.1,
+      "lean": 0.05
+     },
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#8a7a5a",
+      "secondary": "#5a4a30",
+      "feature_cm": 3,
+      "roughness": 0.7,
+      "notes": "short stout trunk hidden by dead leaf bases"
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#7aa878",
+      "underside": "#8ab890",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#7aa878",
+      "margin": "spiny",
+      "size_cm": [
+       100,
+       150
+      ],
+      "notes": "huge dense globe 3 m of narrow rigid grey-green leaves with hooked marginal spines; dead leaves hang brown below"
+     },
+     "flower": {
+      "colour": "#f6f0e0",
+      "secondary": "#d8e0a0",
+      "form": "single colossal 8-10 m woolly spike bearing thousands of greenish-white 5 cm flowers, once then dies",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a7a5a",
+      "form": "brown dry capsules in millions on the dead spike"
+     },
+     "seasonal": "monocarpic: flowers after ~80 years then the whole plant dies brown and stands for years",
+     "silhouette": "grey-green sphere on a short trunk topped by a towering pale spike like a candle in the puna",
+     "confidence": "documented",
+     "refs": "Wikipedia Puya raimondii, Kew POWO"
+    }
    }
   ],
   "ground": [
@@ -224,7 +267,42 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "spine"
+    "leaf_type": "spine",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#5a9a4a",
+      "underside": "#7aa86a",
+      "gloss": 0.4,
+      "veins": "parallel",
+      "vein_colour": "#5a9a4a",
+      "margin": "spiny",
+      "size_cm": [
+       100,
+       200
+      ],
+      "notes": "long arching narrow leaves with big hooked spines; inner leaves flush scarlet at flowering"
+     },
+     "flower": {
+      "colour": "#e8305a",
+      "secondary": "#f8e0e8",
+      "form": "dense woolly white-pink head at rosette centre, inner leaves blazing red",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#e8b830",
+      "form": "yellow-orange egg-shaped fruits 5 cm in a cluster, edible sour"
+     },
+     "seasonal": "evergreen; red flush at bloom",
+     "silhouette": "impenetrable thicket of arching spiny green straps 1.5 m tall, red hearts in bloom",
+     "confidence": "documented",
+     "refs": "Wikipedia Bromelia pinguin, Kew POWO"
+    }
    }
   ],
   "epiphyte": [
@@ -334,7 +412,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "succulent"
+    "leaf_type": "succulent",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#a8b8a0",
+      "underside": "#a8b8a0",
+      "gloss": 0.05,
+      "veins": "none",
+      "vein_colour": "#a8b8a0",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       6
+      ],
+      "notes": "thin curling grey-green threads 1 mm thick covered in silver scales, chained into festoons; greener when wet"
+     },
+     "flower": {
+      "colour": "#c8d090",
+      "secondary": "#c8d090",
+      "form": "tiny hidden yellow-green 3-petalled flowers",
+      "scent": "sweet"
+     },
+     "seasonal": "grey when dry, green-grey when wet",
+     "silhouette": "long pale grey curtains 1-3 m hanging from every branch",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Tillandsia usneoides"
+    }
    },
    {
     "name": "Ball moss",
@@ -442,7 +551,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "succulent"
+    "leaf_type": "succulent",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#9aa89a",
+      "underside": "#9aa89a",
+      "gloss": 0.05,
+      "veins": "none",
+      "vein_colour": "#9aa89a",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       10
+      ],
+      "notes": "dense grey-green ball 5-15 cm of narrow recurved scaly leaves"
+     },
+     "flower": {
+      "colour": "#a070c8",
+      "secondary": "#a070c8",
+      "form": "small violet flowers on a thin 10 cm spike",
+      "scent": "none"
+     },
+     "seasonal": "evergreen grey",
+     "silhouette": "grey pompoms clustered along bare branches and wires",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Tillandsia recurvata"
+    }
    },
    {
     "name": "Air plant",
@@ -550,7 +690,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "succulent"
+    "leaf_type": "succulent",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#8fa890",
+      "underside": "#8fa890",
+      "gloss": 0.1,
+      "veins": "none",
+      "vein_colour": "#8fa890",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       6
+      ],
+      "notes": "tight 5 cm rosette of silver-scaled green needles; whole plant blushes cherry red at flowering"
+     },
+     "flower": {
+      "colour": "#7040c8",
+      "secondary": "#e83050",
+      "form": "tubular violet flower with yellow stamens emerging from red-flushed leaves",
+      "scent": "none"
+     },
+     "seasonal": "red flush at bloom then pups",
+     "silhouette": "small silvery tuft on bark, red-topped in bloom",
+     "confidence": "documented",
+     "refs": "Wikipedia Tillandsia ionantha, Kew POWO"
+    }
    },
    {
     "name": "Rock tillandsia",
@@ -658,7 +829,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "succulent"
+    "leaf_type": "succulent",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#e8ece8",
+      "underside": "#e8ece8",
+      "gloss": 0.0,
+      "veins": "none",
+      "vein_colour": "#e8ece8",
+      "margin": "entire",
+      "size_cm": [
+       5,
+       15
+      ],
+      "notes": "rosette of narrow leaves so densely covered in long white trichomes it looks snow-white and furry"
+     },
+     "flower": {
+      "colour": "#a080c8",
+      "secondary": "#e88898",
+      "form": "pink-bracted spike with pale violet flowers",
+      "scent": "none"
+     },
+     "seasonal": "evergreen white",
+     "silhouette": "white fuzzy balls on bare rock, greyer when wet",
+     "confidence": "documented",
+     "refs": "Wikipedia Tillandsia tectorum, Kew POWO"
+    }
    },
    {
     "name": "Tank bromeliad",
@@ -766,7 +968,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "strap",
+      "colour": "#5a8a5a",
+      "underside": "#5a8a5a",
+      "gloss": 0.4,
+      "veins": "parallel",
+      "vein_colour": "#5a8a5a",
+      "margin": "spiny",
+      "size_cm": [
+       30,
+       60
+      ],
+      "notes": "broad stiff straps banded crosswise with silver-white scale bands, spiny edged, forming a water-holding tank"
+     },
+     "flower": {
+      "colour": "#f070a0",
+      "secondary": "#6a8ad8",
+      "form": "dense head of stiff pink bracts with small blue flowers, lasts months",
+      "scent": "none"
+     },
+     "seasonal": "evergreen; central tank holds water",
+     "silhouette": "silver-banded green urn with a pink star on top",
+     "confidence": "documented",
+     "refs": "Wikipedia Aechmea fasciata, Kew POWO"
+    }
    },
    {
     "name": "Guzmania",
@@ -874,7 +1107,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "strap",
+      "colour": "#5aa848",
+      "underside": "#5aa848",
+      "gloss": 0.7,
+      "veins": "parallel",
+      "vein_colour": "#5aa848",
+      "margin": "entire",
+      "size_cm": [
+       30,
+       45
+      ],
+      "notes": "smooth glossy green soft straps in a tank rosette"
+     },
+     "flower": {
+      "colour": "#e82820",
+      "secondary": "#f8f0d8",
+      "form": "scarlet-orange star of bracts with small white-yellow flowers, lasts months",
+      "scent": "none"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "glossy green rosette with a scarlet star on a tree limb",
+     "confidence": "documented",
+     "refs": "Wikipedia Guzmania lingulata, Kew POWO"
+    }
    }
   ]
  }

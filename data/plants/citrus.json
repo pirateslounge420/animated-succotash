@@ -112,7 +112,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8272",
+      "secondary": "#6a6252",
+      "feature_cm": 1,
+      "roughness": 0.3,
+      "notes": "grey-brown, smooth, becoming slightly rough and fissured; spiny young shoots"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.4,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2f6a34",
+      "underside": "#5a8a58",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#5a8a58",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       20
+      ],
+      "notes": "large leathery dark green ovate leaves with a broadly winged, heart-shaped petiole; hairy beneath"
+     },
+     "flower": {
+      "colour": "#f8f8f0",
+      "secondary": "#e8e0a0",
+      "form": "large white five-petalled flowers 3-5 cm in clusters, with a yellow stamen boss",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#c8d840",
+      "form": "huge round to pear-shaped fruit 15-25 cm, thick pale yellow-green rind, hanging heavy in the crown"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "a rounded dense dark green dome 5-15 m with big pale yellow-green globes hanging on it",
+     "confidence": "documented",
+     "refs": "Wikipedia Citrus maxima; Flora of China; Kew POWO"
+    }
    }
   ],
   "shrub": [
@@ -221,7 +264,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8272",
+      "secondary": "#6a6252",
+      "feature_cm": 1,
+      "roughness": 0.3,
+      "notes": "grey-brown smooth, twigs green-purple when young, with stout single spines"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3e7a3c",
+      "underside": "#6a9a62",
+      "gloss": 0.5,
+      "veins": "pinnate",
+      "vein_colour": "#6a9a62",
+      "margin": "toothed",
+      "size_cm": [
+       8,
+       18
+      ],
+      "notes": "large oblong leaves with a serrated margin and no petiole wing; new growth flushed purple"
+     },
+     "flower": {
+      "colour": "#f8f4f4",
+      "secondary": "#c860a0",
+      "form": "large white flowers, buds and petal backs flushed purple-pink",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#e8d030",
+      "form": "big oblong bumpy-rinded yellow fruit 10-20 cm, very thick pith, sometimes fingered (Buddha's hand)"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "an open, straggly, thorny shrub 3-5 m, drooping with big lumpy yellow fruit",
+     "confidence": "documented",
+     "refs": "Wikipedia Citrus medica; Kew POWO; UCR Citrus Variety Collection"
+    }
    },
    {
     "name": "Mandarin",
@@ -328,7 +414,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8272",
+      "secondary": "#6a6252",
+      "feature_cm": 1,
+      "roughness": 0.3,
+      "notes": "grey-brown, smooth; slender twigs, few small thorns"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2e6a34",
+      "underside": "#5a8a58",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#5a8a58",
+      "margin": "entire",
+      "size_cm": [
+       4,
+       8
+      ],
+      "notes": "small narrow glossy dark green lance leaves with a barely winged petiole"
+     },
+     "flower": {
+      "colour": "#f8f8f0",
+      "secondary": "#e8e0a0",
+      "form": "small white five-petalled flowers, single or few",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#f08a20",
+      "form": "small flattened orange globes 5-8 cm with loose rind, borne abundantly"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "small rounded bush 2-5 m with fine twiggy dense foliage speckled orange in fruit",
+     "confidence": "documented",
+     "refs": "Wikipedia Citrus reticulata; Flora of China; Kew POWO"
+    }
    },
    {
     "name": "Ichang papeda",
@@ -435,7 +564,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8a8272",
+      "secondary": "#6a6252",
+      "feature_cm": 1,
+      "roughness": 0.3,
+      "notes": "grey-brown, smooth; slender twigs with sharp spines"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3a7a3e",
+      "underside": "#6a9a62",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#6a9a62",
+      "margin": "entire",
+      "size_cm": [
+       6,
+       12
+      ],
+      "notes": "two-part leaf: broad leaf-like winged petiole nearly as large as the blade (kaffir-lime look); mid-dark green"
+     },
+     "flower": {
+      "colour": "#f8f8f0",
+      "secondary": "#e8e0a0",
+      "form": "white five-petalled flowers, lemon-scented",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#e8c830",
+      "form": "small mandarin-sized rugged-rinded yellow to orange fruit 4-6 cm, oval to flattened, mostly pith and seeds"
+     },
+     "seasonal": "evergreen; leaves bronze in hard cold; none",
+     "silhouette": "large open thorny shrub or small tree 3-4.5 m, foliage in doubled leaflet pairs",
+     "confidence": "documented",
+     "refs": "Wikipedia Citrus cavaleriei; UCR Citrus Variety Collection CRC 2431; Kew POWO"
+    }
    },
    {
     "name": "Australian finger lime",
@@ -542,7 +714,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#7a7268",
+      "secondary": "#5a5248",
+      "feature_cm": 1,
+      "roughness": 0.3,
+      "notes": "grey-brown, smooth; wiry twigs densely set with sharp thorns"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2e6a34",
+      "underside": "#4e8a52",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#4e8a52",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       3
+      ],
+      "notes": "tiny glossy dark green obovate leaves crowded on thorny wiry twigs"
+     },
+     "flower": {
+      "colour": "#f8f4f4",
+      "secondary": "#e8b8c8",
+      "form": "tiny white to pale pink flowers in leaf axils",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#5a8a3a",
+      "form": "finger-shaped fruit 6-10 cm; green, yellow, red-brown or black-purple rind depending on form; pearl-like pulp"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "an understorey thorny shrub 2-6 m, sparse wiry openwork with minute leaves; finger fruits dangle",
+     "confidence": "documented",
+     "refs": "Wikipedia Citrus australasica; Kew POWO; Australian Native Plants Society"
+    }
    }
   ],
   "ground": [],

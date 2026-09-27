@@ -112,7 +112,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "pine",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "plated",
+      "base": "#e0733a",
+      "secondary": "#7a4a3a",
+      "feature_cm": 12,
+      "roughness": 0.6,
+      "notes": "upper trunk and limbs flaky salmon-orange papery plates; lower trunk thick dark red-brown fissured plates with orange in the cracks"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.35,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#4f7f5a",
+      "underside": "#6e8f78",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#4f7f5a",
+      "margin": "entire",
+      "size_cm": [
+       4,
+       7
+      ],
+      "notes": "blue-green needles in pairs, twisted; short and stiff; tufted at branch ends"
+     },
+     "flower": {
+      "colour": "#e8c43a",
+      "secondary": "#c8404a",
+      "form": "yellow pollen cone clusters at shoot bases; tiny red female cones at tips",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a6a4a",
+      "form": "small ovoid cones 3-7 cm, grey-brown, scales with a small flat pyramid; green when young"
+     },
+     "seasonal": "evergreen; old needles shed yellowish in autumn; none visible from range",
+     "silhouette": "tall bare orange trunk with a flat-topped, irregular, rounded crown of dark blue-green clumps held high; young trees conical",
+     "confidence": "documented",
+     "refs": "Wikipedia Pinus sylvestris; Flora of Britain; Kew POWO"
+    }
    },
    {
     "name": "Stone pine",
@@ -219,7 +262,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "pine",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "plated",
+      "base": "#b8683a",
+      "secondary": "#5a3a2e",
+      "feature_cm": 15,
+      "roughness": 0.6,
+      "notes": "thick, deeply fissured into large flat orange-red plates edged with dark grey-brown"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.3,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#5a8a4e",
+      "underside": "#6f9a63",
+      "gloss": 0.35,
+      "veins": "parallel",
+      "vein_colour": "#5a8a4e",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       20
+      ],
+      "notes": "long paired needles, bright mid-green, held in dense brush-like tufts"
+     },
+     "flower": {
+      "colour": "#e6c83c",
+      "secondary": "#b85a3a",
+      "form": "yellow pollen cones in clusters; small reddish ovulate cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#9a6a3e",
+      "form": "big broad globe cones 8-15 cm, glossy chestnut-brown, thick rounded scale tips; 3 years to ripen"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "a broad flat umbrella / mushroom of dense green on a tall bare trunk, low limbs shed; the classic Italian parasol pine",
+     "confidence": "documented",
+     "refs": "Wikipedia Pinus pinea; Kew POWO; Flora Europaea"
+    }
    },
    {
     "name": "Ponderosa pine",
@@ -326,7 +412,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "pine",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "plated",
+      "base": "#d98a4a",
+      "secondary": "#5c3c2e",
+      "feature_cm": 25,
+      "roughness": 0.55,
+      "notes": "huge jigsaw plates of orange-yellow to cinnamon separated by dark black-brown fissures; young trees dark and furrowed; vanilla scent"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#5c8a42",
+      "underside": "#6f9a55",
+      "gloss": 0.35,
+      "veins": "parallel",
+      "vein_colour": "#5c8a42",
+      "margin": "entire",
+      "size_cm": [
+       12,
+       25
+      ],
+      "notes": "very long needles in bundles of three, yellow-green to dark green, in big pom-pom tufts at branch ends"
+     },
+     "flower": {
+      "colour": "#d8b040",
+      "secondary": "#a84c50",
+      "form": "yellow-to-purple pollen cone clusters; small red-purple female cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#8a5a3a",
+      "form": "ovoid cones 8-15 cm, red-brown, each scale tipped with an outward prickle"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "very tall straight orange-plated trunk with sparse open crown of short heavy limbs ending in needle pom-poms; open parkland spacing",
+     "confidence": "documented",
+     "refs": "Wikipedia Pinus ponderosa; Flora of North America; USFS Silvics"
+    }
    },
    {
     "name": "Lodgepole pine",
@@ -433,7 +562,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "pine",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#8a5a3e",
+      "secondary": "#4e3a30",
+      "feature_cm": 3,
+      "roughness": 0.5,
+      "notes": "thin bark of small orange-brown to grey-brown scales; fine flaky, never plated"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.25,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#4e7a3c",
+      "underside": "#5e8a4a",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#4e7a3c",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       7
+      ],
+      "notes": "short paired needles, often twisted, yellow-green to dark green; dense along the twig"
+     },
+     "flower": {
+      "colour": "#d8a83a",
+      "secondary": "#b04a4a",
+      "form": "orange-yellow pollen cones in clusters; small red female cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a5030",
+      "form": "small lopsided ovoid cones 3-6 cm, prickly scales, many held closed (serotinous) on the branches for years"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "slender straight pole trunk with a narrow, sparse, spire-like crown; grows in dense even-aged thickets of identical poles",
+     "confidence": "documented",
+     "refs": "Wikipedia Pinus contorta; Flora of North America; USFS Silvics"
+    }
    },
    {
     "name": "Bristlecone pine",
@@ -540,7 +712,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "pine",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "furrowed",
+      "base": "#b07040",
+      "secondary": "#e8c8a0",
+      "feature_cm": 4,
+      "roughness": 0.8,
+      "notes": "living strips of red-brown scaly bark spiralling up a mostly bare, wind-polished cream-to-gold deadwood trunk"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.6,
+      "lean": 0.35
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#3e6e3a",
+      "underside": "#4e7e48",
+      "gloss": 0.4,
+      "veins": "parallel",
+      "vein_colour": "#3e6e3a",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       4
+      ],
+      "notes": "short stiff needles in fives, dark green, packed along twig like a bottlebrush / foxtail; needles persist 30+ years"
+     },
+     "flower": {
+      "colour": "#c85a4a",
+      "secondary": "#e0b83a",
+      "form": "small dark red-purple female cones; yellow-orange pollen cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#6a4a3a",
+      "form": "ovoid cones 5-9 cm, purple-brown, each scale with a long slender bristle prickle"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "short, twisted, half-dead gnarled sculpture: pale bare deadwood spires with one strip of living bark feeding a few dark bottlebrush limbs",
+     "confidence": "documented",
+     "refs": "Wikipedia Pinus longaeva; Flora of North America; Great Basin NP"
+    }
    }
   ],
   "shrub": [],
