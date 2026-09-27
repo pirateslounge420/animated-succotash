@@ -985,9 +985,8 @@ static func plant_sound(variant: int) -> AudioStreamWAV:
 ## A Pond Crawler waiting in the water at surface direction `d` (which
 ## should be wadeable swamp or bog water, with its chunks loaded: see
 ## find_pool()), handed to `spawner` to tick and to be shot at. For tools
-## and debugging: data/creatures/README.md. There is no key for it here:
-## dev mode's F7 (`dev_spawn`) will call this once the Phase 1 rigs share
-## that key.
+## and debugging: data/creatures/README.md. Dev mode's F7 (DevSpawn)
+## calls this in its turn, in the nearest water it can wade.
 ## `lock` false lets it wade outside its biome lock (for a tool that had to
 ## settle for other wetland water); `facing` turns it that way (else it
 ## faces a random way).

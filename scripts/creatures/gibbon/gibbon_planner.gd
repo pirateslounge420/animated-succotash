@@ -19,6 +19,14 @@ class_name GibbonPlanner
 ## one the gibbon wants wins. Short gaps need no flight at all: the free
 ## hand closes on the next handhold while the body swings under the grip
 ## ("contact"), as gibbons do at a walk.
+##
+## Wood too thick to hook a hand round or too steep to swing from (trunks,
+## the big limbs of an emergent) it climbs instead, hand over hand along
+## the graph's links, or walks upright along the top of it when it lies
+## flat enough (Gibbon's "climb" mode; climbable()). The route search
+## crosses such wood at CLIMB_COST, so it swings where it can and climbs
+## only to get round, up or out of a tree; that is also how it regains
+## height after a leap has carried it down.
 
 const G := 9.8
 ## Wood it hangs from: at least BranchGraph.MIN_RADIUS_M, at most this
@@ -31,18 +39,20 @@ const SIT_R_MIN := 0.06
 const STEEP := 0.85
 ## How far it looks for its next handhold, and its leap limits: the
 ## longest horizontal gap, the most height it can gain in one leap, the
-## deepest drop it leaps down (m).
-const LOOK_M := 6.5
-const LEAP_MAX_M := 5.8
-const RISE_MAX_M := 1.0
-const DROP_MAX_M := 3.5
+## deepest drop it leaps down (m). Wild gibbons clear 8-10 m gaps and drop
+## further than that; the real canopies (tree_layouts) leave gaps of 6-8 m
+## between crowns that a 5.8 m leap never joined.
+const LOOK_M := 10.0
+const LEAP_MAX_M := 8.0
+const RISE_MAX_M := 1.5
+const DROP_MAX_M := 6.0
 ## The widest swing it builds (95 degrees from straight down), and the
 ## widest it swings without an extra push from the arm at the release.
 const AMP_MAX := 1.658
 const AMP_EASY := 1.40
 ## The most extra speed the pulling arm adds at a release (m/s): what
-## turns a swing into a 5-6 m leap.
-const BOOST_MAX := 2.2
+## turns a swing into a 6-8 m leap (a release at up to ~8 m/s).
+const BOOST_MAX := 4.6
 ## Its reach at a catch, as a share of the hang length.
 const REACH := 1.0
 ## A free hand reaches from the shoulder, not the center of mass: the
@@ -53,19 +63,24 @@ const SHOULDER_M := 0.17
 const ARM_M := 0.57
 ## Flight times it will commit to (s).
 const TAU_MIN := 0.12
-const TAU_MAX := 1.35
+const TAU_MAX := 1.6
 ## Route costs: meters of leap cost this many meters of wood, plus a flat
 ## cost per leap, so it keeps to the wood while the wood goes its way.
 const AIR_COST := 1.3
 const LEAP_COST := 0.8
+## Wood it climbs rather than swings along: at most this thick (radius, m;
+## thicker trunks it can't get round), and each meter of it costs this
+## many meters of swinging.
+const CLIMB_R_MAX := 1.2
+const CLIMB_COST := 2.2
 
 ## Grid of which (x, y) gaps a leap or contact can cover, filled lazily
 ## for the standard hang length (route()).
 static var _feasible := PackedByteArray()
 static var _feasible_l := -1.0
 const FEAS_DX := 0.25
-const FEAS_NX := 25 # x 0 .. 6 m
-const FEAS_NY := 19 # y -3.5 .. +1.0 m
+const FEAS_NX := 34 # x 0 .. 8.25 m
+const FEAS_NY := 31 # y -6.0 .. +1.5 m
 
 
 ## Can it hang from handhold `i` (the wood's thickness and slope)?
@@ -74,6 +89,13 @@ static func hangable(g: BranchGraph, i: int, up: Vector3) -> bool:
 	if r < BranchGraph.MIN_RADIUS_M - 1e-4 or r > HANG_R_MAX:
 		return false
 	return absf(g.dir(i).dot(up)) < STEEP
+
+
+## Can it climb along handhold `i` (any slope, hand over hand, or
+## walking on top)? Every handhold it can hang from, and thicker wood up
+## to CLIMB_R_MAX.
+static func climbable(g: BranchGraph, i: int) -> bool:
+	return g.radius[i] >= BranchGraph.MIN_RADIUS_M - 1e-4 and g.radius[i] <= CLIMB_R_MAX
 
 
 ## Can it sit on handhold `i`?
@@ -259,10 +281,12 @@ static func launch(c: Vector3, vel: Vector3, target: Vector3, up: Vector3, extra
 # --- Route ---------------------------------------------------------------------
 
 ## A route through the canopy from handhold (from_g, from_i) to (to_g,
-## to_i), as [graph, index] pairs: along the wood between handholds it
-## can hang from, and across open air to another limb or tree wherever a
-## swing can cross the gap (can_cross()). A* over the handholds of the
-## graphs within `radius_m` of the start. [] if there is no way.
+## to_i), as [graph, index] pairs: along the wood between handholds
+## (swinging where it can hang, climbing where it can't), and across open
+## air from one handhold it can hang from to another on another limb or
+## tree wherever a swing can cross the gap (can_cross()). A* over the
+## handholds of the graphs within `radius_m` of the start. [] if there is
+## no way.
 static func route(from_g: BranchGraph, from_i: int, to_g: BranchGraph, to_i: int, up: Vector3, l: float, radius_m := 80.0) -> Array:
 	var s := search(from_g, from_i, up, l, radius_m, to_g, to_i)
 	if s == null:
@@ -291,15 +315,24 @@ static func search(from_g: BranchGraph, from_i: int, up: Vector3, l: float, radi
 	const CELL := 3.0
 	for gi in s.graphs.size():
 		var g := s.graphs[gi]
+		# A tree with nothing to hang from (a palm, a giant whose thinnest
+		# wood is too thick for a hand) is a dead end: no leap leaves it.
+		if g != from_g and not _has_hang(g, up):
+			continue
 		for i in g.size():
-			if not hangable(g, i, up):
+			if not climbable(g, i):
 				continue
+			var hang := hangable(g, i, up)
 			var n := s.node_g.size()
 			s.node_g.append(gi)
 			s.node_i.append(i)
+			s.node_hang.append(1 if hang else 0)
 			var p := top(g, i, up)
 			s.node_p.append(p)
 			s.index[Vector2i(gi, i)] = n
+			if not hang:
+				# Climbing wood: along its links only, no leaps to or from it.
+				continue
 			var rel := p - start_p
 			var cell := Vector2i(floori(rel.dot(e1) / CELL), floori(rel.dot(e2) / CELL))
 			if not grid.has(cell):
@@ -314,6 +347,8 @@ static func search(from_g: BranchGraph, from_i: int, up: Vector3, l: float, radi
 	s.cost.fill(INF)
 	s.came.resize(count)
 	s.came.fill(-1)
+	s.climb.resize(count)
+	s.climb.fill(0.0)
 	var closed := PackedByteArray()
 	closed.resize(count)
 	var goal_p := s.node_p[dst] if dst >= 0 else Vector3.ZERO
@@ -330,18 +365,25 @@ static func search(from_g: BranchGraph, from_i: int, up: Vector3, l: float, radi
 		var gi := s.node_g[n]
 		var g := s.graphs[gi]
 		var p := s.node_p[n]
-		# Along the wood.
+		# Along the wood: swinging from hand to hand, or climbing.
+		var hang_n := s.node_hang[n] == 1
 		for j in g.links[s.node_i[n]]:
 			var m: int = s.index.get(Vector2i(gi, j), -1)
 			if m >= 0 and closed[m] == 0:
-				_relax(heap, s.cost, s.came, n, m, s.cost[n] + p.distance_to(s.node_p[m]), s.node_p[m].distance_to(goal_p) if dst >= 0 else 0.0)
+				var swing := hang_n and s.node_hang[m] == 1
+				var along := p.distance_to(s.node_p[m])
+				if _relax(heap, s.cost, s.came, n, m, s.cost[n] + along * (1.0 if swing else CLIMB_COST), s.node_p[m].distance_to(goal_p) if dst >= 0 else 0.0):
+					s.climb[m] = s.climb[n] + (0.0 if swing else along)
+		if not hang_n:
+			continue
 		# Across the air, to another limb or tree.
 		var rel := p - start_p
 		var cx := floori(rel.dot(e1) / CELL)
 		var cy := floori(rel.dot(e2) / CELL)
 		var limb := g.limb[s.node_i[n]]
-		for dx in range(-2, 3):
-			for dy in range(-2, 3):
+		var span := ceili(LEAP_MAX_M / CELL)
+		for dx in range(-span, span + 1):
+			for dy in range(-span, span + 1):
 				var cell_nodes = grid.get(Vector2i(cx + dx, cy + dy))
 				if cell_nodes == null:
 					continue
@@ -353,22 +395,33 @@ static func search(from_g: BranchGraph, from_i: int, up: Vector3, l: float, radi
 					var x := (d - up * y).length()
 					if x < 0.5 or not can_cross(x, -y if reverse else y, l):
 						continue
-					_relax(heap, s.cost, s.came, n, m, s.cost[n] + d.length() * AIR_COST + LEAP_COST, s.node_p[m].distance_to(goal_p) if dst >= 0 else 0.0)
+					if _relax(heap, s.cost, s.came, n, m, s.cost[n] + d.length() * AIR_COST + LEAP_COST, s.node_p[m].distance_to(goal_p) if dst >= 0 else 0.0):
+						s.climb[m] = s.climb[n]
 	return s
 
 
-## The result of search(): the handholds it can hang from (nodes), and
-## the cheapest way to each from the start.
+static func _has_hang(g: BranchGraph, up: Vector3) -> bool:
+	for i in g.size():
+		if hangable(g, i, up):
+			return true
+	return false
+
+
+## The result of search(): the handholds it can hang from or climb along
+## (nodes), and the cheapest way to each from the start.
 class Search:
 	var graphs: Array[BranchGraph] = []
-	## Per node: which graph (index into `graphs`), which handhold, where
-	## it grips (the top of the wood), the cost of getting there (INF: no
-	## way found) and the node it comes from (-1 at the start).
+	## Per node: which graph (index into `graphs`), which handhold, whether
+	## it can hang there (1) or only climb past (0), where it grips (the top
+	## of the wood), the cost of getting there (INF: no way found), the node
+	## it comes from (-1 at the start) and the meters of climbing on the way.
 	var node_g := PackedInt32Array()
 	var node_i := PackedInt32Array()
+	var node_hang := PackedByteArray()
 	var node_p := PackedVector3Array()
 	var cost := PackedFloat32Array()
 	var came := PackedInt32Array()
+	var climb := PackedFloat32Array()
 	var index := {} # Vector2i(graph, handhold) -> node
 
 	func node_of(g: BranchGraph, i: int) -> int:
@@ -376,6 +429,10 @@ class Search:
 
 	func reached(n: int) -> bool:
 		return n >= 0 and cost[n] < INF
+
+	## Reached, and a handhold it can hang from (a place to stop).
+	func reached_hang(n: int) -> bool:
+		return reached(n) and node_hang[n] == 1
 
 	## The way to node `n` as [graph, index] pairs from the start, or [].
 	func path_to(n: int) -> Array:
@@ -389,11 +446,13 @@ class Search:
 		return out
 
 
-static func _relax(heap: _Heap, cost: PackedFloat32Array, came: PackedInt32Array, from: int, to: int, c: float, h: float) -> void:
+static func _relax(heap: _Heap, cost: PackedFloat32Array, came: PackedInt32Array, from: int, to: int, c: float, h: float) -> bool:
 	if c < cost[to]:
 		cost[to] = c
 		came[to] = from
 		heap.push(c + h, to)
+		return true
+	return false
 
 
 ## A binary min-heap of (priority, node).

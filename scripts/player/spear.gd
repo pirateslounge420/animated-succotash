@@ -204,8 +204,8 @@ func thrust() -> void:
 	var at: Vector3 = rest.get("point", from + dir * REACH_M * frac[1])
 	var collider: Object = instance_from_id(rest.collider_id) if rest.has("collider_id") else null
 	var who := Hitboxes.creature_of(collider)
-	if who is Creature:
-		(who as Creature).hurt(THRUST_DAMAGE, player.global_position)
+	if who and who.has_method("hurt"):
+		who.hurt(THRUST_DAMAGE, player.global_position)
 	elif who and player.camps:
 		player.camps.shot_at(who)
 	_play("arrow_hit", 0.7)

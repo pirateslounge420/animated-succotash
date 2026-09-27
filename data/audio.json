@@ -17,6 +17,8 @@
 		"spear": {"unit_size": 4, "max_distance": 40, "model": "inverse", "max_db": 0, "muffle": null},
 		"spear_impact": {"unit_size": 6, "max_distance": 70, "model": "inverse", "max_db": 3, "muffle": null},
 		"rustle": {"unit_size": 6, "max_distance": 60, "model": "inverse", "max_db": 3, "muffle": null},
+		"climb_hand": {"unit_size": 2.5, "max_distance": 30, "model": "inverse", "max_db": 0, "muffle": null},
+		"climb_breath": {"unit_size": 2, "max_distance": 20, "model": "inverse", "max_db": 0, "muffle": null},
 		"rain": {"unit_size": 6, "max_distance": 60, "model": "inverse", "max_db": 0, "muffle": null},
 		"wildlife_call": {"unit_size": 8, "max_distance": 60, "model": "inverse", "max_db": 3, "muffle": [25, 60]},
 		"howl": {"unit_size": 40, "max_distance": 1200, "model": "inverse", "max_db": 3, "muffle": [60, 760]},

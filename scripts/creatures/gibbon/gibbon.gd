@@ -24,12 +24,24 @@ extends Node3D
 ##     slows by choosing short ones).
 ##   - The hand holding on stays exactly on the handhold (GibbonRig's arm
 ##     IK) and the body swings below it.
+##   - Wood it can't hang from (a trunk, a limb too thick for a hand) it
+##     climbs where its route goes that way: hand over hand up or down the
+##     trunk's handholds, or walking upright along the top of a thick limb,
+##     arms raised ("climb"; GibbonPlanner.climbable()). That is how it gets
+##     from limb to limb of one tree and back up after a leap down.
 ## What it does: picks a goal handhold 10-38 m off through the canopy
 ## (GibbonPlanner.search()), travels there along the route, pauses, now
 ## and then pulls up to sit on a thick limb, turns round when its next
-## goal is behind it, and hoots (GibbonHoot, 3D sound). No combat, no
+## goal is behind it, and hoots (GibbonHoot, 3D sound). With a `player`
+## to keep near, a gibbon more than LEASH_M off travels back toward them;
+## when its own tree leaves NEAR range (its branch graph is dropped) it
+## rests there, sitting if it can, until the player comes back; if the
+## tree's chunk goes altogether it is out of sight and waits, and hangs on
+## again when the tree's graph (the same BranchGraph.key) returns. Shot
+## (Arrow, through Hitboxes.creature_of), it calls in alarm and heads away
+## from the shot; the arrow stays in the part it hit. No combat damage, no
 ## ecology ledger. Nothing spawns it in normal play (creatures.json:
-## "spawn": "disabled"); debug_spawn() places one.
+## "spawn": "disabled"); debug_spawn() places one (F7, DevSpawn).
 ##
 ## Its whole state is kept relative to handholds (a swing angle under a
 ## grip, a flight relative to the handhold it will catch), and handhold
@@ -62,6 +74,9 @@ const CATCH_AMP := 1.35
 ## Goals: this far away (m, across the ground), and the route's lookahead.
 const GOAL_MIN_M := 10.0
 const GOAL_MAX_M := 38.0
+## The most climbing (m) on the way to a far goal; past it, it takes a
+## nearer one it can swing to.
+const GOAL_CLIMB_M := 8.0
 const LOOKAHEAD_M := 4.0
 ## Sitting: center of mass above the top of the wood (m).
 const SEAT_H := 0.2
@@ -70,6 +85,20 @@ const BLOB_H := 3.0
 ## Hoots: full volume within HOOT_UNIT_M, gone past HOOT_MAX_M.
 const HOOT_UNIT_M := 12.0
 const HOOT_MAX_M := 160.0
+## Climbing: hand over hand along steep or thick wood, and walking upright
+## along the top of wood flatter than WALK_SLOPE (m/s; |tangent . up|);
+## the center of mass off the wood's surface when clinging, and above its
+## top when walking (m).
+const CLIMB_MPS := 0.9
+const WALK_MPS := 1.3
+const WALK_SLOPE := 0.5
+const CLING_M := 0.13
+const WALK_H := 0.36
+## Further than this from `player` (m, across the ground) it heads back
+## toward them.
+const LEASH_M := 35.0
+## Seconds it keeps away from where it was shot from.
+const FLEE_S := 20.0
 
 var species: CreatureSpecies
 ## Seeds its choices (0: a fresh seed each time).
@@ -77,12 +106,17 @@ var seed_value := 0
 ## Draws the chosen handholds, the flight arcs and the route (for stills
 ## and the dev overlay).
 var debug := false
+## The player it stays near (null: it roams where it likes).
+var player: Node3D
 ## "hang" (swinging or pausing under a grip), "fly", "pull_up", "sit",
-## "drop" (sit back down to a hang), "turn" (turning round on the grip).
+## "drop" (sit back down to a hang), "turn" (turning round on the grip),
+## "climb" (along wood it can't swing from), "away" (its tree's chunk is
+## gone: hidden until the tree comes back).
 var mode := "hang"
 var voice: AudioStreamPlayer3D
 ## Counters for tests and the overlay.
-var stats := {"leaps": 0, "reaches": 0, "misses": 0, "goals": 0, "sits": 0, "turns": 0, "hoots": 0, "longest_leap_m": 0.0}
+var stats := {"leaps": 0, "reaches": 0, "misses": 0, "goals": 0, "sits": 0, "turns": 0, "hoots": 0, "longest_leap_m": 0.0,
+	"climbs": 0, "climbed_m": 0.0, "rests": 0, "aways": 0, "hits": 0}
 
 var _rng := RandomNumberGenerator.new()
 var _built := false
@@ -172,6 +206,36 @@ var _let_from: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO]
 var _let_t: Array[float] = [9.0, 9.0]
 var _loose: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO]
 var _legs := PackedFloat32Array([0.4, 0.15, 0.6, 0.2, 0.4, 0.15, 0.6, 0.2])
+# Climbing: the handholds it climbs through ([graph, index], from where
+# it started), the distance along them at each, how far along it is, the
+# side of the wood it clings to, each hand's spot (distance along), where
+# a moving hand set off from (scene) and how long ago, the walking legs'
+# phase, and how upright it is (0 clinging .. 1 walking).
+var _cl_path: Array = []
+var _cl_s := PackedFloat32Array()
+var _cl_at := 0.0
+var _cl_side := Vector3.FORWARD
+var _cl_hand := PackedFloat32Array([0.0, 0.0])
+var _cl_from: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO]
+var _cl_move := PackedFloat32Array([1.0, 1.0])
+var _cl_phase := 0.0
+var _cl_walk := 0.0
+# A pose to ease from (scene), over how long, and how far into it.
+var _bl_c := Vector3.ZERO
+var _bl_b := Basis.IDENTITY
+var _bl_len := 0.0
+var _bl_t := 1.0
+# Resting (its tree out of NEAR range), away (its chunk gone: the key and
+# handhold to hang on again from), the graphs' refresh timer, where it was
+# shot from (scene) and for how long more it keeps away from there.
+var _resting := false
+var _away_key := 0
+var _away_i := -1
+var _away_pos := Vector3.ZERO
+var _away_t := 0.0
+var _refresh_t := 0.0
+var _flee_from := Vector3.ZERO
+var _flee_t := 0.0
 # Debug drawing.
 var _dbg_mi: MeshInstance3D
 var _dbg_im: ImmediateMesh
@@ -183,7 +247,8 @@ var _dbg_pred := PackedVector3Array()
 
 ## Hangs a gibbon (a child of `parent`) on the nearest handhold it can
 ## hang from, of the branch graphs registered near `near_pos`. The dev
-## spawn key calls this. null if no tree has a graph within 200 m.
+## spawn key (F7, DevSpawn) calls this. null if no tree has a graph within
+## 200 m.
 static func debug_spawn(parent: Node, near_pos: Vector3) -> Gibbon:
 	var at := _hangable_near(near_pos, 60.0)
 	if at.is_empty():
@@ -257,6 +322,7 @@ func hang_on(g: BranchGraph, i: int) -> void:
 	_plan = {}
 	_route = []
 	_route_at = {}
+	_cl_path = []
 	mode = "hang"
 	_mode_t = 0.0
 	_lean = LEAN
@@ -313,12 +379,20 @@ func _process(delta: float) -> void:
 		_try_build()
 	if _g == null:
 		return
-	if not _g.valid() or (mode == "fly" and (_tg == null or not _tg.valid())):
-		# Its tree left NEAR range (or the tree it was leaping to did).
-		queue_free()
+	_refresh_t -= delta
+	if _refresh_t <= 0.0:
+		_refresh_t = 0.5
+		_refresh_graphs()
+	if mode == "away":
+		return
+	if not _g.valid() or (mode == "fly" and (_tg == null or not _tg.valid())) or (mode == "climb" and not _climb_valid()):
+		# The chunk of its tree (or of the tree it was leaping to or
+		# climbing through) is gone: out of sight until it comes back.
+		_go_away()
 		return
 	var dt := minf(delta, 0.05)
 	_mode_t += dt
+	_flee_t = maxf(_flee_t - dt, 0.0)
 	_up = _up_of(_g)
 	match mode:
 		"hang":
@@ -331,6 +405,8 @@ func _process(delta: float) -> void:
 			_sit_step(dt)
 		"turn":
 			_turn_step(dt)
+		"climb":
+			_climb_step(dt)
 	_voice_step(dt)
 	_pose(dt)
 	if _built:
@@ -628,6 +704,9 @@ func _on_new_grip(c: Vector3, v: Vector3) -> void:
 ## Picks the next handhold from BranchGraphs.handholds_within() and the
 ## move to it; swings on in its direction. False if there's none.
 func _choose_next(c := Vector3.INF, v := Vector3.INF) -> bool:
+	# The route climbs from here (up a trunk, along a thick limb).
+	if _climb_due():
+		return true
 	var here := _pivot(_g, _i)
 	if c == Vector3.INF:
 		c = here + _swing_dirs()[0] * _r
@@ -840,24 +919,37 @@ func _pick_goal(ahead: bool) -> bool:
 	if s == null:
 		return false
 	var back := GibbonPlanner.search(_g, _i, _up, HANG_M, GOAL_MAX_M + 12.0, null, -1, true)
+	# Too far from the player: the goal that brings it nearest them.
+	var home := Vector3.INF
+	if player != null and is_instance_valid(player) and _horizontal(here - player.global_position).length() > LEASH_M:
+		home = player.global_position
 	var best := -1
 	for band in [Vector2(GOAL_MIN_M, GOAL_MAX_M), Vector2(3.0, GOAL_MAX_M + 12.0)]:
 		var best_score := -INF
 		for n in s.node_g.size():
-			if not s.reached(n):
+			if not s.reached_hang(n):
 				continue
 			var g: BranchGraph = s.graphs[s.node_g[n]]
 			if band.x >= GOAL_MIN_M and not back.reached(back.node_of(g, s.node_i[n])):
+				continue
+			# A far goal only if it's mostly swinging; else a nearer one.
+			if band.x >= GOAL_MIN_M and home == Vector3.INF and s.climb[n] > GOAL_CLIMB_M:
 				continue
 			var d := _horizontal(s.node_p[n] - here)
 			var dist := d.length()
 			if dist < band.x or dist > band.y:
 				continue
 			var score := _rng.randf()
-			if ahead:
+			if home != Vector3.INF:
+				score = _rng.randf() * 0.5 - _horizontal(s.node_p[n] - home).length() * 0.2
+			elif ahead:
 				score += 0.8 * d.normalized().dot(_fwd)
+			if _flee_t > 0.0:
+				score += 0.15 * (s.node_p[n].distance_to(_flee_from) - here.distance_to(_flee_from))
 			if GibbonPlanner.sittable(g, s.node_i[n], _up):
 				score += 0.35
+			# It would rather swing there than climb.
+			score -= 0.12 * s.climb[n]
 			if score > best_score:
 				best_score = score
 				best = n
@@ -867,6 +959,272 @@ func _pick_goal(ahead: bool) -> bool:
 		return false
 	_set_route(s.path_to(best))
 	return _route.size() >= 2
+
+
+# --- Climbing --------------------------------------------------------------------
+
+## The route goes on from here along wood it can't swing from: start
+## climbing through it, as far as the next handhold it can hang from where
+## the route leaves the wood (or swings on). False if the route doesn't
+## climb from here.
+func _climb_due() -> bool:
+	var k := _route_index(_g, _i)
+	if k < 0 or k + 1 >= _route.size():
+		return false
+	var nxt: Array = _route[k + 1]
+	if nxt[0] != _g or not _g.links[_i].has(nxt[1]) or GibbonPlanner.hangable(_g, nxt[1], _up):
+		return false
+	var path: Array = [[_g, _i]]
+	var j := k + 1
+	while j < _route.size():
+		var e: Array = _route[j]
+		var prev: Array = path[path.size() - 1]
+		var g: BranchGraph = prev[0]
+		if e[0] != g or not g.links[prev[1]].has(e[1]):
+			break
+		path.append(e)
+		# It stops at wood it can hang from, unless the climb goes on.
+		if GibbonPlanner.hangable(g, e[1], _up):
+			var on: bool = j + 1 < _route.size() and _route[j + 1][0] == g and g.links[e[1]].has(_route[j + 1][1]) \
+				and not GibbonPlanner.hangable(g, _route[j + 1][1], _up)
+			if not on:
+				break
+		j += 1
+	var last: Array = path[path.size() - 1]
+	if path.size() < 2 or not GibbonPlanner.hangable(last[0], last[1], _up):
+		return false
+	_start_climb(path)
+	return true
+
+
+func _start_climb(path: Array) -> void:
+	_cl_path = path
+	_cl_s = PackedFloat32Array([0.0])
+	for k in range(1, path.size()):
+		var a: Array = path[k - 1]
+		var b: Array = path[k]
+		_cl_s.append(_cl_s[k - 1] + (a[0] as BranchGraph).pos(a[1]).distance_to((b[0] as BranchGraph).pos(b[1])))
+	_cl_at = 0.0
+	var first: Array = path[0]
+	var last: Array = path[path.size() - 1]
+	var h := _horizontal((last[0] as BranchGraph).pos(last[1]) - (first[0] as BranchGraph).pos(first[1]))
+	_cl_side = h.normalized() if h.length() > 0.3 else _fwd
+	var up_first: bool = (_cl_point(0.0)[1] as Vector3).dot(_up) >= 0.0
+	_cl_hand = PackedFloat32Array([0.3, 0.08] if up_first else [0.12, 0.34])
+	_cl_move = PackedFloat32Array([1.0, 1.0])
+	_cl_walk = 1.0 if absf((_cl_point(0.0)[1] as Vector3).dot(_up)) < WALK_SLOPE else 0.0
+	_let_go(_hand)
+	_let_go(1 - _hand)
+	_tg = null
+	_plan = {}
+	_dbg_pred = PackedVector3Array()
+	_blend_from(0.45)
+	mode = "climb"
+	_mode_t = 0.0
+	stats.climbs += 1
+
+
+## Every graph of the climb still has its chunk.
+func _climb_valid() -> bool:
+	for e in _cl_path:
+		if not (e[0] as BranchGraph).valid():
+			return false
+	return true
+
+
+## The wood `s` m along the climb: [center-line point, direction of
+## travel, radius], all scene space.
+func _cl_point(s: float) -> Array:
+	var k := 0
+	while k < _cl_s.size() - 2 and _cl_s[k + 1] < s:
+		k += 1
+	var a: Array = _cl_path[k]
+	var b: Array = _cl_path[k + 1]
+	var ga: BranchGraph = a[0]
+	var gb: BranchGraph = b[0]
+	var pa := ga.pos(a[1])
+	var pb := gb.pos(b[1])
+	var f := clampf((s - _cl_s[k]) / maxf(_cl_s[k + 1] - _cl_s[k], 1e-4), 0.0, 1.0)
+	return [pa.lerp(pb, f), (pb - pa).normalized(), lerpf(ga.radius[a[1]], gb.radius[b[1]], f)]
+
+
+## Up the wood (or along it, walking) at its pace; the hands move one at a
+## time; at the end it hangs from the last handhold and goes on.
+func _climb_step(dt: float) -> void:
+	var total := _cl_s[_cl_s.size() - 1]
+	var q := _cl_point(_cl_at)
+	var t: Vector3 = q[1]
+	var walk := 1.0 if absf(t.dot(_up)) < WALK_SLOPE else 0.0
+	_cl_walk = move_toward(_cl_walk, walk, dt * 3.0)
+	var speed := lerpf(CLIMB_MPS, WALK_MPS, _cl_walk)
+	var was := _cl_at
+	_cl_at = minf(_cl_at + speed * dt, total)
+	stats.climbed_m += _cl_at - was
+	_cl_phase += (_cl_at - was) / 0.32 * PI
+	# The hands, hand over hand: one lets go once the body has climbed
+	# past it and takes a new hold ahead (above, climbing up; at the body,
+	# climbing down, so the hands stay over the shoulders).
+	var asc := t.dot(_up) >= 0.0
+	for h in 2:
+		_cl_move[h] += dt
+		var above := (_cl_hand[h] - _cl_at) * (1.0 if asc else -1.0)
+		var other := (_cl_hand[1 - h] - _cl_at) * (1.0 if asc else -1.0)
+		var due := above < -0.08 if asc else above > 0.44
+		# Not both at once: the other hand must be holding.
+		if due and _cl_move[1 - h] > 0.22 and (above <= other if asc else above >= other):
+			_cl_from[h] = _cl_hand_point(h)
+			_cl_move[h] = 0.0
+			_cl_hand[h] = clampf(_cl_at + (0.34 if asc else 0.0), 0.0, total)
+	if _cl_at >= total:
+		_end_climb()
+
+
+## Where a clinging hand holds (scene): on the wood at its spot, on the
+## body's side of it, a little to its own side.
+func _cl_hand_point(h: int) -> Vector3:
+	var q := _cl_point(_cl_hand[h])
+	var p: Vector3 = q[0]
+	var t: Vector3 = q[1]
+	var r: float = q[2]
+	var n := _cling_side(t)
+	var across := t.cross(n).normalized()
+	return p + n * (r * 0.85) + across * (0.07 if h == 1 else -0.07)
+
+
+## The side of the wood it clings to: toward where the climb leads.
+func _cling_side(t: Vector3) -> Vector3:
+	var n := _cl_side - t * t.dot(_cl_side)
+	if n.length_squared() < 1e-4:
+		n = _up - t * t.dot(_up)
+	if n.length_squared() < 1e-6:
+		n = t.cross(Vector3.RIGHT if absf(t.x) < 0.9 else Vector3.FORWARD)
+	return n.normalized()
+
+
+func _end_climb() -> void:
+	var last: Array = _cl_path[_cl_path.size() - 1]
+	var t: Vector3 = _cl_point(_cl_s[_cl_s.size() - 1])[1]
+	_g = last[0]
+	_i = last[1]
+	_cl_path = []
+	mode = "hang"
+	_mode_t = 0.0
+	var f := _horizontal(t)
+	if f.length() > 0.2:
+		_fwd = f.normalized()
+	_face = _fwd
+	_theta = 0.0
+	_omega = 0.0
+	_psi = 0.0
+	_psi_v = 0.0
+	_r = HANG_M
+	_hand = 1
+	_lean = LEAN
+	_twist = -TWIST
+	_blend_from(0.5)
+	_on_new_grip(_hang_frame()[0], Vector3.ZERO)
+
+
+## Ease from the pose it has now into whatever comes next, over `secs`.
+func _blend_from(secs: float) -> void:
+	_bl_c = _com
+	_bl_b = _body_b
+	_bl_len = secs
+	_bl_t = 0.0
+
+
+# --- Out of range, shot -----------------------------------------------------------
+
+## Graphs come and go with NEAR range; a tree that comes back gets a new
+## graph with the same key and handholds. Swap to it, so the route search
+## (which only sees the registered graphs) sees the tree it holds; and
+## come back from "away" when its tree does.
+func _refresh_graphs() -> void:
+	if mode == "away":
+		_away_t += 0.5
+		var back := BranchGraphs.find(_away_key)
+		var at := []
+		if back != null and back.valid() and _away_i < back.size():
+			at = [back, _away_i]
+		elif _away_t >= 3.0:
+			at = _hangable_near(_away_pos, 4.0)
+		if not at.is_empty():
+			visible = true
+			if _hit:
+				_hit.set_active(true)
+			hang_on(at[0], at[1])
+		return
+	_g = _current(_g)
+	if _tg != null:
+		_tg = _current(_tg)
+	for e in _cl_path:
+		e[0] = _current(e[0])
+	var changed := false
+	for e in _route:
+		var g2 := _current(e[0])
+		if g2 != e[0]:
+			e[0] = g2
+			changed = true
+	if changed:
+		var k := _route_k
+		_set_route(_route)
+		_route_k = k
+
+
+func _current(g: BranchGraph) -> BranchGraph:
+	var n := BranchGraphs.find(g.key)
+	return n if n != null and n != g and n.valid() else g
+
+
+## Is its tree in NEAR range (its graph registered)?
+func _registered() -> bool:
+	return BranchGraphs.find(_g.key) == _g
+
+
+## Its tree's chunk is gone: hidden, and nothing to hit, until the tree
+## (the same key) is back, or (should the tree come back under another
+## key) until there is wood to hang from where it was.
+func _go_away() -> void:
+	var g := _g
+	var i := _i
+	if mode == "fly" and _tg != null and _tg.valid() and not _g.valid():
+		g = _tg
+		i = _ti
+	_away_key = g.key
+	_away_i = i
+	_away_pos = _com
+	_away_t = 0.0
+	mode = "away"
+	_tg = null
+	_route = []
+	_route_at = {}
+	_cl_path = []
+	visible = false
+	if _hit:
+		_hit.set_active(false)
+	_blob.visible = false
+	stats.aways += 1
+
+
+## Hit (an arrow: Arrow finds it through its hitboxes' "creature" meta,
+## Hitboxes.creature_of): an alarm call, a start, and for FLEE_S it heads
+## away from where the shot came from. It isn't hurt (no combat yet).
+func hurt(_amount: float, from_pos: Vector3) -> void:
+	stats.hits += 1
+	_flee_from = from_pos
+	_flee_t = FLEE_S
+	hoot("hoot")
+	_hoot_t = _rng.randf_range(4.0, 8.0)
+	match mode:
+		"sit":
+			_sit_t = minf(_sit_t, _mode_t)
+		"hang":
+			if _pause_t > 0.3:
+				_pause_t = 0.3
+			elif not _route.is_empty() and (_pivot(_route[_route.size() - 1][0], _route[_route.size() - 1][1]) - from_pos).length() < (_pivot(_g, _i) - from_pos).length():
+				# Its goal is toward the shooter: give it up.
+				_arrive(false)
+				_pause_t = 0.3
 
 
 # --- Behaviour: pauses, sitting, turning, hoots ---------------------------------
@@ -890,6 +1248,20 @@ func _arrive(reached: bool) -> void:
 
 
 func _end_pause() -> void:
+	if not _registered():
+		# Its tree is out of NEAR range: it rests here (sitting up if the
+		# wood takes it) until the player comes back.
+		if not _resting:
+			_resting = true
+			stats.rests += 1
+		_route = []
+		_route_at = {}
+		if GibbonPlanner.sittable(_g, _i, _up) and _amplitude() < 0.35:
+			_start_pull_up()
+		else:
+			_pause(2.0)
+		return
+	_resting = false
 	if _sit_next:
 		_sit_next = false
 		_start_pull_up()
@@ -973,6 +1345,9 @@ func _transition_step(_dt: float) -> void:
 
 
 func _sit_step(_dt: float) -> void:
+	if _resting and not _registered():
+		_mode_t = minf(_mode_t, 0.0)
+		return
 	if _mode_t >= _sit_t:
 		# Drop back to a hang from the holding hand, swinging forward.
 		var top := _pivot(_g, _i)
@@ -1080,6 +1455,30 @@ func _pose(dt: float) -> void:
 		"sit":
 			c = _pivot(_g, _i) + _sit_off
 			b = _body_basis(_up, _sit_f, 0.0)
+		"climb":
+			var q := _cl_point(_cl_at)
+			var p: Vector3 = q[0]
+			var t: Vector3 = q[1]
+			var r: float = q[2]
+			# Clinging beside the wood, head up it...
+			var n := _cling_side(t)
+			var c_cl := p + n * (r + CLING_M)
+			var b_cl := _body_basis(t if t.dot(_up) >= 0.0 else -t, -n, 0.0)
+			# ...or upright on top of it, walking.
+			var top := _up - t * t.dot(_up)
+			var c_wk := p + (top.normalized() * r if top.length_squared() > 1e-6 else Vector3.ZERO) + _up * WALK_H
+			var f := _horizontal(t)
+			var b_wk := _body_basis(_up, f if f.length() > 0.05 else _fwd, 0.0)
+			c = c_cl.lerp(c_wk, _cl_walk)
+			b = Basis(b_cl.get_rotation_quaternion().slerp(b_wk.get_rotation_quaternion(), _cl_walk))
+			if f.length() > 0.05:
+				_fwd = f.normalized()
+				_face = _fwd
+	if _bl_t < _bl_len:
+		_bl_t += dt
+		var u := smoothstep(0.0, 1.0, _bl_t / _bl_len)
+		c = _bl_c.lerp(c, u)
+		b = Basis(_bl_b.get_rotation_quaternion().slerp(b.orthonormalized().get_rotation_quaternion(), u))
 	_com = c
 	_body_b = b.orthonormalized()
 	global_transform = Transform3D(_body_b, _com)
@@ -1089,6 +1488,9 @@ func _pose(dt: float) -> void:
 
 ## The rig's targets (skeleton space) for this frame.
 func _pose_rig(dt: float, k: float) -> void:
+	if mode == "climb":
+		_pose_rig_climb(dt, k)
+		return
 	var inv := Transform3D(_body_b, _com).affine_inverse()
 	var bt := _body_b.transposed()
 	var fwd_b := bt * _face.rotated(_up, _twist)
@@ -1164,6 +1566,54 @@ func _pose_rig(dt: float, k: float) -> void:
 		_rig.palm[s] = palm
 		_rig.curl[s] = curl
 	_pose_legs_head(dt, k, fwd_b)
+
+
+## Climbing: the hands on the wood, one moving at a time (lifted clear of
+## the bark on the way), the legs gripping it frog-like; walking upright,
+## the long arms raised out to the sides for balance and the legs
+## stepping.
+func _pose_rig_climb(dt: float, k: float) -> void:
+	var inv := Transform3D(_body_b, _com).affine_inverse()
+	var bt := _body_b.transposed()
+	var q := _cl_point(_cl_at)
+	var n := _cling_side(q[1])
+	for s in 2:
+		_let_t[s] += dt
+		var sx := 1.0 if s == 1 else -1.0
+		var shoulder := GibbonBody.shoulder(s)
+		# Walking: up and out.
+		var up_arm := shoulder + Vector3(sx * 0.62, 0.55, -0.08).normalized() * 0.56
+		# Clinging: on the wood, moving from the old hold to the new.
+		var hold := _cl_hand_point(s)
+		var u := smoothstep(0.0, 1.0, _cl_move[s] / 0.22)
+		var p := hold if u >= 1.0 else _cl_from[s].lerp(hold, u) + n * (0.07 * sin(u * PI))
+		var target := (inv * p).lerp(up_arm, _cl_walk)
+		_rig.grip[s] = target
+		_rig.pole[s] = Vector3(sx * 0.8, -0.3, 0.3).lerp(Vector3(sx * 0.6, -0.6, 0.2), _cl_walk)
+		_rig.palm[s] = (bt * -n).lerp(Vector3(0, -0.3, -1).normalized(), _cl_walk).normalized()
+		_rig.curl[s] = lerpf(lerpf(0.4, 1.0, u), 0.3, _cl_walk)
+		_loose[s] = Vector3.ZERO
+	var kl := clampf(dt * 8.0, 0.0, 1.0)
+	for s in 2:
+		var ph := _cl_phase + (PI if s == 1 else 0.0)
+		# Clinging: hips and knees drawn up, pushing a little in turn.
+		var cling := [1.25 + 0.22 * sin(ph), 0.5, 1.7 - 0.3 * sin(ph), 0.45]
+		# Walking: a stride.
+		var walk := [0.25 + 0.5 * sin(ph), 0.12, 0.3 + 0.6 * maxf(sin(ph + 1.2), 0.0), 0.2]
+		for j in 4:
+			var want := lerpf(float(cling[j]), float(walk[j]), _cl_walk)
+			_legs[s * 4 + j] = lerpf(_legs[s * 4 + j], want, kl)
+		_rig.hip_flex[s] = _legs[s * 4]
+		_rig.hip_splay[s] = _legs[s * 4 + 1]
+		_rig.knee[s] = _legs[s * 4 + 2]
+		_rig.ankle[s] = _legs[s * 4 + 3]
+	_rig.chest = _rig.chest.lerp(Vector3(lerpf(0.15, -0.05, _cl_walk), 0.0, 0.0), k)
+	# The head: up the wood when clinging, ahead when walking.
+	var t: Vector3 = q[1]
+	var look := (bt * (t if t.dot(_up) >= 0.0 else -t)).lerp(Vector3.FORWARD, _cl_walk)
+	if _hooting > 0.0:
+		look = Vector3(0, 0.9, -1).normalized()
+	_rig.look = _rig.look.lerp(look, clampf(dt * 6.0, 0.0, 1.0)) if _rig.look != Vector3.ZERO else look
 
 
 ## The palm faces the wood from the body's side, square to the hand.
@@ -1363,4 +1813,8 @@ func _on_origin_shifted(offset: Vector3) -> void:
 		c[0] -= offset
 	for h in 2:
 		_let_from[h] -= offset
+		_cl_from[h] -= offset
 	_com -= offset
+	_bl_c -= offset
+	_away_pos -= offset
+	_flee_from -= offset

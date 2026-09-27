@@ -69,11 +69,11 @@ the entry). Code: `scripts/creatures/mythics/`.
 | `cue` | The biome cue: `sound` (`hoofbeats_far`: a pair walking somewhere off in the forest), `when` (`enter_biome`: on walking into a `biome_lock` biome during its `activity` hours, or when those hours begin while you're there), `distance_m` [min, max] (how far off it's heard, in the direction the biome runs deepest; it moves across as they walk), `cooldown_s` (not again sooner). The cue plays in normal play now; the riders themselves don't. |
 
 **Seeing them before Phase 7 (dev mode):** with `dev_mode` on in
-`data/dev.json`, press **F7** in the game: a pair rides across your view
+`data/dev.json`, press **F7** in the game (it spawns the Phase 1 rigs in
+turn: Night Riders, Pond Crawler, gibbon): a pair rides across your view
 about 30 m ahead, then patrols (at night, stay back or they come for you).
-F7 again sends that pair away and brings a new one. From code (tools, the
-shared dev-spawn key once it lands): `NightRiderPair.debug_spawn(mythics,
-from, facing)`. To record them: `tools/night_rider_demo.gd` (run
+Their next turn sends that pair away and brings a new one. From code:
+`NightRiderPair.debug_spawn(mythics, from, facing)`. To record them: `tools/night_rider_demo.gd` (run
 instructions in its header).
 
 ## Pond Crawler
@@ -104,8 +104,11 @@ Its `rig` numbers:
 | `eye_light_m`, `eye_light_energy` | The eye's light: range and strength. |
 | `drift_every_s`, `replant_every_s` | [min, max] seconds between a slow move to another spot nearby, and between re-plants while it waits. |
 
-**Seeing one before Phase 7:** F7 brings the Night Rider only for now;
-the Phase 1 rigs are to share one dev-spawn key later. Until then:
+**Seeing one before Phase 7:**
+
+- **In the game (dev mode):** F7 spawns the Phase 1 rigs in turn; on the
+  crawler's turn it goes in the nearest water it can wade within 120 m
+  (or the console says there is none).
 
 - **Recording or stills:** `tools/pond_crawler_demo.gd` starts the game,
   finds swamp or bog water, makes it night and places a Pond Crawler (run
@@ -128,7 +131,7 @@ branchy trees. It reads:
 | `color` | Its coat (sRGB). |
 | `accent` | The pale ring round its face, its hands and feet. |
 | `speed_mps` | How big a swing it cruises at: faster means longer leaps (3 m/s: about 55 degrees either side). |
-| `spawn` | `disabled`: only `Gibbon.debug_spawn()` places one. |
+| `spawn` | `disabled`: only `Gibbon.debug_spawn()` places one (in dev mode F7, on its turn, hangs one in the nearest rainforest tree within 200 m). |
 
 `size_m` (head and body, 0.5 m) matches the sculpted body, which is built
 at that size; `active`, `one_per_radius_m` and `shy_m` wait for Phase 7,

@@ -89,17 +89,18 @@ func _physics_process(delta: float) -> void:
 	var hit_pos: Vector3 = ray.position
 	var who := Hitboxes.creature_of(ray.collider)
 	var part := ray.collider as Node3D
-	if who is Creature:
+	if who and who.has_method("hurt"):
+		# A creature, or a rig of its own such as the gibbon.
+		who.hurt(damage * clampf(velocity.length() / Spear.MAX_SPEED, 0.4, 1.0), a)
 		var cr := who as Creature
-		cr.hurt(damage * clampf(velocity.length() / Spear.MAX_SPEED, 0.4, 1.0), a)
-		if cr.species.role == "swarm":
+		if cr and cr.species.role == "swarm":
 			exclude.append((part as CollisionObject3D).get_rid())
 			global_position = b
 			_orient()
 			return
-		# In the part it hit, riding along with it.
+		# In the part it hit (the collision shape itself), riding along with it.
 		global_position = hit_pos + velocity.normalized() * BURY_M
-		reparent(part, true)
+		reparent(Arrow._shape_node(ray.collider, ray.shape), true)
 		host = cr
 		_land(hit_pos)
 	elif who:

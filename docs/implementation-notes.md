@@ -1257,8 +1257,8 @@ Spawn tiers:
   `shaders/pond_crawler.gdshader`). *Limnoreptor cucullatus* (invented), a
   mythic of swamp and bog water, out at night. It's held back from normal
   play (`"spawn": "disabled"`) until Phase 7: `PondCrawler.debug_spawn()`
-  places one and `tools/pond_crawler_demo.gd` records it. F7 brings only
-  the Night Rider for now; the Phase 1 rigs are to share one dev-spawn key.
+  places one and `tools/pond_crawler_demo.gd` records it; in dev mode F7
+  (DevSpawn) puts one in the nearest water it can wade within 120 m.
   `CreatureSpawner.adopt()` ticks a creature placed by hand and lets
   arrows hit it.
   - Body (`PondCrawlerBody`): sculpted like SculptedBodies (signed-distance
@@ -1328,8 +1328,8 @@ Spawn tiers:
   play until Phase 7 (`spawn: disabled`: CreatureSpawner skips it and
   Territories leaves it out of the odds, so every other territory is
   unchanged; all 53 on the dev stamp hash the same with and without the
-  entry). Seen through the dev spawn (`NightRiderPair.debug_spawn()`; F7
-  in dev mode) and `tools/night_rider_demo.gd`.
+  entry). Seen through the dev spawn (`NightRiderPair.debug_spawn()`, on
+  its turn of F7 in dev mode) and `tools/night_rider_demo.gd`.
   - Body (`NightRiderBody`): horse and hooded, cloaked rider as one
     sculpted skinned mesh, reusing SculptedBodies' shapes, surface nets and
     skinning with its own spec, cache and rig (no change to the shared
@@ -1427,16 +1427,17 @@ Spawn tiers:
     spawns nothing.
   - Dev spawn: `NightRiderPair.debug_spawn(mythics, from, facing)` (from
     code) brings a pair across the view about 30 m ahead, on dry ground.
-    F7 calls it in dev mode while the input map has no shared `dev_spawn`
-    action; once it has (the main branch's, for every Phase 1 rig), Mythics
-    stands down and the shared handler should call `debug_spawn()`.
+    The shared F7 key (DevSpawn, below) calls it on the riders' turn and
+    sends the pair before away; Mythics no longer handles F7 itself, it
+    only ticks the pairs in `pairs`.
 - **Gibbon** (spec Phase 1 (iii); `scripts/creatures/gibbon/`,
   `shaders/gibbon.gdshader`, the "Gibbon" entry, *Hylobates lar*): R3's
   gibbon-type monkey, travelling by brachiation along the trees' branch
   graphs (BranchGraph, found through BranchGraphs; it only reads them).
   Nothing spawns it in normal play (`"spawn": "disabled"`);
   `Gibbon.debug_spawn(parent, near_pos)` hangs one on the nearest handhold
-  it can hang from, which is what the F7 dev key will call.
+  it can hang from; F7 (DevSpawn) calls it on the gibbon's turn, on the
+  nearest rainforest tree within 200 m.
   - Body (`GibbonBody`): SculptedBodies' shapes and mesher, one smooth
     skinned mesh. A small torso, arms twice its length (1.57 m fingertip
     to fingertip against 0.78 m crown to heel), short legs with long
@@ -1463,13 +1464,30 @@ Spawn tiers:
     `solve()` tries release angles against catch angles and returns the
     swing, the release point and the flight. At that point of a forward
     swing it lets go, flies the exact ballistic arc to the catch
-    (`launch()`, the pulling arm adding up to 2.2 m/s) and catches with
-    the other hand. Short gaps are "contact" moves: the free hand closes
-    on the next handhold as the body swings under it. A catch keeps at
-    most a 77-degree swing (the arm soaks up the rest). It can leap 5.8 m
-    across, climb 1 m and drop 3.5 m in one leap.
+    (`launch()`, the pulling arm adding up to 4.6 m/s, a release at up
+    to ~8 m/s) and catches with the other hand. Short gaps are "contact"
+    moves: the free hand closes on the next handhold as the body swings
+    under it. A catch keeps at most a 77-degree swing (the arm soaks up
+    the rest). It can leap 8 m across (about 6.5 m on the level; the
+    longer ones drop), climb 1.5 m and drop 6 m in one leap. (Built
+    against the fixture it leapt 5.8 m, climbed 1 m and dropped 3.5 m;
+    the real canopies needed more, below.)
+  - Climbing (`Gibbon` "climb", `GibbonPlanner.climbable()`): wood it
+    can't hang from (thicker than 15 cm radius, or steeper than about 58
+    degrees) but no thicker than 1.2 m it climbs where its route goes that
+    way: hand over hand up or down a trunk or steep limb at 0.9 m/s,
+    clinging to the side the route leads to, the hands taking turns on the
+    bark and the legs gripping frog-like; or upright along the top of a
+    thick limb flatter than 30 degrees at 1.3 m/s, arms raised for
+    balance, legs stepping (the gibbon's bipedal walk). At the end it
+    hangs from the next handhold it can hang from and swings on. The
+    route search crosses climbing wood at 2.2 times its length and each
+    goal scores down by its meters of climbing, so it swings where it can
+    and climbs to get round, up (after a leap down) or out of a tree.
+    Trees with nothing to hang from (palms, a giant whose thinnest wood is
+    too thick for a hand) are left out of the search: no leap leaves them.
   - Choosing handholds: at each new grip it asks
-    `BranchGraphs.handholds_within()` for handholds within 6.5 m it can
+    `BranchGraphs.handholds_within()` for handholds within 10 m it can
     hang from (3.5-15 cm radius, no steeper than about 58 degrees) that a
     swing can reach. It prefers those further along its route (any
     direction the route turns), else ones in its direction of travel that
@@ -1485,6 +1503,24 @@ Spawn tiers:
     more) if it's holding some, and turns round on its hand when the next
     goal is behind it. Leaving its route (or finding the way blocked)
     routes it again from where it is.
+  - Staying near (`player`, set by the dev spawn): more than 35 m from
+    the player (across the ground), its next goal is the one that brings
+    it nearest them. When its own tree leaves NEAR range (its graph is
+    dropped at 70 m) it rests: sits up if the wood takes it, else hangs
+    still, until the tree is back in range. Graphs of trees that come back
+    are new objects with the same key and handholds; it swaps to them
+    every half second (its grip, its target, its route), so the route
+    search sees the tree it holds. If its tree's chunk goes altogether it
+    is "away" (hidden, hitboxes off) and hangs on again when a graph with
+    that key returns. (It used to free itself.)
+  - Shot (`hurt()`): the arrow's hit reaches it through its hitboxes'
+    `creature` meta (`Hitboxes.creature_of()`); it gives an alarm call,
+    breaks off a rest or a sit, gives up a goal toward the shooter and for
+    20 s prefers goals away from where the shot came from. It takes no
+    damage (no combat yet). The arrow sticks in the part it hit: Arrow
+    now parents itself to the collision shape the ray met (its shape
+    owner), which GibbonHitboxes moves with its bone every frame, so it
+    rides along with that arm or leg.
   - Hoots (`GibbonHoot`, synthesized like SoundSynth's placeholders): a
     few rising "hoo-wup" notes, or the great call (notes climbing and
     quickening into a trill), from an AudioStreamPlayer3D heard at full
@@ -1498,7 +1534,7 @@ Spawn tiers:
     project.godot, not layer 1, so the player never snags on it; rays that
     don't filter layers (the bow's aim, the arrow) meet it. The body
     carries the gibbon as its `creature` meta and `part_name()` names the
-    part a ray hit, for the shared hitbox code to route hits by at merge.
+    part a ray hit.
   - Test canopy (`GibbonCanopyFixture`): until the real branch graphs
     land, eight synthetic trees 16-30 m tall stand 5.8-6.6 m apart in two
     staggered rows with overlapping crowns. Each has a trunk and 3-5
@@ -1514,6 +1550,43 @@ Spawn tiers:
     Run headless over the fixture for 90 s (5 seeds), it made 22-29 leaps
     and 21-26 reaches and reached 5-6 goals, with sits and turns, no
     failed swings, and the holding hand within 0.1 mm of its handhold.
+  - The real canopies (headless, the dev stamp's rainforest, seed 42).
+    With the old limits the crowns hardly joined: at four spots only 2-7
+    trees with wood it can hang from joined up (of 7-23), most gaps
+    between crowns being 6-8 m, and palms and the big buttressed trees
+    (whose thinnest wood is 15 cm radius or more low down) offer nothing
+    to hang from at all; from the first spot a gibbon could reach one
+    tree. Hence the longer leaps and the climbing. Over 90 s at each of
+    five spots (spawned the dev key's way): 0-9 leaps (longest 7.4 m),
+    0-6 reaches, 1-4 climbs (3-60 m of climbing: at the spots of big
+    buttressed trees it mostly climbs, since their hangable wood is high
+    and sparse), 2-9 goals, sits and turns, no failed swings, never more
+    than 3.2 s without a goal, nothing freed, and the holding hand within
+    1.7 cm of the wood (on steep wood the grip sits round the bark).
+- **Dev spawn key** (F7, the `dev_spawn` action; `DevSpawn`, which main
+  adds only in dev mode, and which checks dev mode again on every press):
+  each press spawns the next Phase 1 rig beside the player, in turn the
+  Night Rider pair (`NightRiderPair.debug_spawn()`, the pair before sent
+  away), the Pond Crawler (`PondCrawler.debug_spawn()` in the nearest
+  water it can wade within 120 m, searched outward in rings on a 3 m grid
+  with 3 m of wadeable water round it; outside its swamp and bog it is
+  placed unlocked and the console says so) and the gibbon
+  (`Gibbon.debug_spawn()` on the nearest wood it can hang from of a
+  rainforest or jungle tree within 200 m, set to stay near the player).
+  It prints what it spawned or why not ("[F7] no gibbon: no rainforest
+  trees within 200 m (you're in Beach)"); a rig that can't be placed
+  doesn't stall the cycle. A new crawler or gibbon replaces the last one
+  the key made. Nothing spawns in normal play.
+  Checked headless on the dev stamp with real F7 key events: at the first
+  camp (a beach) the riders came 37 m off, a crawler went in 0.76 m of
+  water 38 m off (outside its swamp and bog, said so), and the gibbon's
+  turn printed "no rainforest trees within 200 m (you're in Beach)"; in
+  the rainforest all three spawned (the gibbon 10 m up a 15 m tree); by
+  swamp water the crawler went into 0.98 m of Swamp / bayou water; with
+  dev mode off, F7 did nothing. An arrow shot at the spawned gibbon
+  stuck in its chest (the `chest` shape), counted a hit, and over the
+  next 3 s rode 0.30 m with it while staying exactly in place on the
+  part.
 
 Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
 howl, drone and whisper, each on the creature's own 3D player (see
@@ -1643,9 +1716,66 @@ yet (deferred).
   the MultiMesh custom data's b channel). A physics query
   stands in for a trigger volume per tree, which would be thousands of
   nodes.
-- **Climbing**: E facing a trunk (a ray on the tree layer) grabs it; W/S
-  climb at 1.1 m/s up to 90% of the tree's height, A/D circle it; E or
-  jump lets go (jump pushes off). E prefers a fallen log in reach.
+- **Climbing** (spec Phase 1 (ii); `TreeContact`, `TreeClimb`,
+  `ClimbSounds`): E facing a trunk (a ray on the tree layer) takes hold of
+  the tree's branch graph at the handhold nearest your hands that you can
+  hold (wood at least 6 cm in radius, F6's green). Two hands, each on a
+  handhold (on a trunk or other steep wood also at an angle round it); one
+  moves at a time and the body follows the middle of the hands, so it
+  never swings and never leaps.
+  - Trunk: W/S hand over hand up and down the trunk's handholds (which
+    follow its lean and bend: the hands sit on the bark at the handhold,
+    the body hugs the wood off the bark), A/D round it (the hands shuffle,
+    never crossing). At a fork, pushing toward a limb on your side (the
+    camera looking out along it) takes you onto it; the trunk's own top
+    is as high as it goes. Down at the foot of the trunk (hands below
+    1.3 m) S steps off.
+  - Limbs: push along the limb (camera-relative) to shimmy out or back;
+    the hands shuffle (the rear one catches up, then the front one reaches
+    on). You hang under wood thinner than 15 cm radius (side on, shoulders
+    along the line of the hands, as low as the arms allow) and straddle
+    thicker wood flatter than about 33 degrees; limbs steeper than about
+    44 degrees are climbed like the trunk. You stop where the wood gets
+    thinner than a grip ("Too thin to hold any further out"). Push toward
+    another limb of the same tree within 1.2 m of the front hand to reach
+    across to it; push back to return, down onto the trunk from a limb's
+    first handhold.
+  - Every reach must carry the moving hand at least 0.1 m further the way
+    you push (the direction is held while the stick and the camera stay
+    put), so the hands can't dither back and forth.
+  - Effort is rhythm, not a meter (agreed at Go): a reach moves the body
+    at 0.72 m/s on steep wood and 0.45 m/s along a limb, then a beat
+    (0.3 s) before the next; with a handhold every ~0.5 m that is about
+    0.5 m/s up a trunk and 0.3 m/s along a limb. A breath out as a reach
+    starts (every reach along a limb, every other one on the trunk), the
+    bark brushing the hand that lets go, the bark rasping under the hand
+    that takes hold, now and then a breath in: synthesized in
+    `ClimbSounds` (its own, not SoundSynth) and played from three
+    AudioStreamPlayer3Ds on TreeContact, at each hand and the head.
+  - The elf's arms point from the shoulders at the hands and stretch or
+    shorten a little (there are no elbows) so the hands sit on the wood;
+    an imported model plays its "climb" clip. Taking hold eases the body
+    from where it stood onto the tree over 0.4 s.
+  - E lets go (you drop), jump pushes off: away from the trunk, back from
+    under a limb, sideways off a straddle, handed to the momentum (`_move`)
+    as before. Noise while climbing stays 0.3.
+  - `TreeContact.graph_of(chunk, tree)`, `nearest_graph(pos, max_m)` and
+    `nearest_holdable(graph, pos)` are the queries; a tree is found by its
+    graph's key (`BranchGraph.key`), so it is the same tree with the same
+    handholds when you come back, and a graph rebuilt under you is picked
+    up again by key. Holds are kept in the tree's frame, so the floating
+    origin never moves them.
+  - A tree with no graph (bamboo; a tree whose graph isn't built yet) is
+    climbed the old way: W/S at 1.1 m/s up to 90% of its height, A/D round
+    it. E prefers a fallen log in reach.
+  - Checked headless on a 16.7 m dry-season deciduous tree in the stamp's
+    rainforest: E at its foot took the trunk at 1.8 m; W took 9 reaches
+    up the trunk to the fork at 6 m; looking out along the limb, W took it;
+    3 m along it in 2.6 s (0.46 m/s with the beats; 0.36 m/s on another
+    run); a reach across 0.9 m to the next limb; on out along that one
+    until "Too thin to hold any further out" at 7 cm radius. Every hold
+    was logged; over 2,033 frame checks the holding hands stayed within
+    2.9 cm of the bark.
 - **Footsteps** (`Footsteps`): one per stride (0.5 / 0.78 / 1.25 m
   crouched / walking / sprinting), louder with speed, plus a landing.
   The ground: shallow water; else the collider underfoot (ruin stone,

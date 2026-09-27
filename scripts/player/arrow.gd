@@ -4,11 +4,14 @@ extends Node3D
 ## along its path, and on the first thing it meets (one physics ray per
 ## step, over every layer: the world, trees, and creatures' and people's
 ## hitbox parts, Hitboxes):
-##   * a creature's part: hurts it and sticks in that part, riding along
-##     with it (fireflies: it hurts the swarm and flies on through);
-##   * a camp person's part (Hitboxes.creature_of() names a holder, not a
-##     Creature): a glancing shot they complain about (Camps.shot_at()),
-##     and it bounces back off that part and drops;
+##   * a creature's part (Hitboxes.creature_of(): a Creature, or a rig of
+##     its own such as the gibbon, anything with hurt()): hurts it and
+##     sticks in that part (the collision shape itself, so it rides along
+##     with that part as it moves; fireflies: it hurts the swarm and flies
+##     on through);
+##   * a camp person's part (Hitboxes.creature_of() names a holder with no
+##     hurt()): a glancing shot they complain about (Camps.shot_at()), and
+##     it bounces back off that part and drops;
 ##   * ground, trees, ruins: buries its head there and stays a while;
 ##   * water: splashes (Ripples) and sinks.
 ## Where it lands makes a noise wildlife hears (NoiseEvents, NOISE_M): a
@@ -86,8 +89,8 @@ func _physics_process(delta: float) -> void:
 		# A creature's or a person's part (Hitboxes): who it belongs to.
 		hit_obj = Hitboxes.creature_of(ray.collider)
 		if hit_obj:
-			hit_part = ray.collider as Node3D
-			hit_kind = "creature" if hit_obj is Creature else "folk"
+			hit_part = _shape_node(ray.collider, ray.shape)
+			hit_kind = "creature" if hit_obj.has_method("hurt") else "folk"
 	if hit_kind == "":
 		# Water: sinks where it meets the surface.
 		var d: Vector3 = world.dir_of(b)
@@ -106,11 +109,11 @@ func _physics_process(delta: float) -> void:
 	NoiseEvents.emit(hit_pos, NOISE_M)
 	match hit_kind:
 		"creature":
+			hit_obj.hurt(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
 			var cr := hit_obj as Creature
-			cr.hurt(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
-			if cr.species.role == "swarm":
+			if cr and cr.species.role == "swarm":
 				# Through a cloud of fireflies: on it flies.
-				exclude.append((hit_part as CollisionObject3D).get_rid())
+				exclude.append((ray.collider as CollisionObject3D).get_rid())
 				global_position = b
 				_orient()
 				return
@@ -123,7 +126,7 @@ func _physics_process(delta: float) -> void:
 			if camps:
 				camps.shot_at(hit_obj)
 			# Off the part it hit, back the way it came, and down.
-			exclude.append((hit_part as CollisionObject3D).get_rid())
+			exclude.append((ray.collider as CollisionObject3D).get_rid())
 			global_position = hit_pos - velocity.normalized() * 0.03
 			velocity *= -0.15
 		"world":
@@ -134,6 +137,18 @@ func _physics_process(delta: float) -> void:
 			global_position = hit_pos + velocity.normalized() * 0.12
 			_sound("arrow_hit")
 			_stick()
+
+
+## The node of the collision shape a ray met (`shape` of `collider`): the
+## part itself, which follows its bone even when one body carries all of
+## a creature's parts (GibbonHitboxes); else the body (a body per part,
+## Hitboxes, where the body is the part).
+static func _shape_node(collider: Object, shape: int) -> Node3D:
+	var body := collider as CollisionObject3D
+	if body == null or body.get_shape_owners().size() <= 1:
+		return collider as Node3D
+	var owner_node := body.shape_owner_get_owner(body.shape_find_owner(shape)) as Node3D
+	return owner_node if owner_node != null else body
 
 
 ## A splash (Ripples) where the flight from `a` to `b` went down through
