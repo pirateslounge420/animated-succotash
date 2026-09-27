@@ -1356,6 +1356,90 @@ Spawn tiers:
     F7 calls it in dev mode while the input map has no shared `dev_spawn`
     action; once it has (the main branch's, for every Phase 1 rig), Mythics
     stands down and the shared handler should call `debug_spawn()`.
+- **Gibbon** (spec Phase 1 (iii); `scripts/creatures/gibbon/`,
+  `shaders/gibbon.gdshader`, the "Gibbon" entry, *Hylobates lar*): R3's
+  gibbon-type monkey, travelling by brachiation along the trees' branch
+  graphs (BranchGraph, found through BranchGraphs; it only reads them).
+  Nothing spawns it in normal play (`"spawn": "disabled"`);
+  `Gibbon.debug_spawn(parent, near_pos)` hangs one on the nearest handhold
+  it can hang from, which is what the F7 dev key will call.
+  - Body (`GibbonBody`): SculptedBodies' shapes and mesher, one smooth
+    skinned mesh. A small torso, arms twice its length (1.57 m fingertip
+    to fingertip against 0.78 m crown to heel), short legs with long
+    grasping feet, no tail, a round head. The coat and the pale parts
+    (the ring round the face, hands and feet) are tint channels, so the
+    species' `color` and `accent` set them. The face and its ring are
+    drawn per pixel in the shader, in rest-pose space, so they stay crisp
+    on a coarse mesh. Every vertex carries its rest position and normal
+    (CUSTOM0/1) and the fur is textured in those, so it doesn't slide as
+    the arms swing. At night coat and ring ease into the ultramarine and
+    a floor keeps the creases deep blue, never black; the eyes are small
+    dark beads, lit, no glow. 4,604 triangles near, 1,708 past 28 m,
+    built once on a worker (about 2 s).
+  - Rig (`GibbonRig`): each arm reaches its target with two-bone IK, the
+    palm turned to the wood and the fingers hooked round it; the chest
+    bends, the head looks, the legs are set directly.
+  - Swinging (`Gibbon`): a pendulum from the top of the wood to the center
+    of mass (0.78 m) under gravity with a little damping, pumped up by the
+    legs when it wants a bigger swing, braked when it wants to slow. The
+    body hangs from the holding arm, leaning away from it and turned so
+    the free shoulder leads; the arm never stretches past its reach, so
+    the hand stays exactly on the handhold.
+  - Leaping (`GibbonPlanner`): for a handhold x m ahead and y m up,
+    `solve()` tries release angles against catch angles and returns the
+    swing, the release point and the flight. At that point of a forward
+    swing it lets go, flies the exact ballistic arc to the catch
+    (`launch()`, the pulling arm adding up to 2.2 m/s) and catches with
+    the other hand. Short gaps are "contact" moves: the free hand closes
+    on the next handhold as the body swings under it. A catch keeps at
+    most a 77-degree swing (the arm soaks up the rest). It can leap 5.8 m
+    across, climb 1 m and drop 3.5 m in one leap.
+  - Choosing handholds: at each new grip it asks
+    `BranchGraphs.handholds_within()` for handholds within 6.5 m it can
+    hang from (3.5-15 cm radius, no steeper than about 58 degrees) that a
+    swing can reach. It prefers those further along its route (any
+    direction the route turns), else ones in its direction of travel that
+    bring it nearer the route ahead. It also prefers the next handholds
+    along the same limb when the gap is short, and moves its momentum
+    already carries it toward. The swing it has matters: a big swing
+    takes a long leap, and near its goal it slows by choosing short ones.
+  - Behaviour: it picks a goal 10-38 m off through the canopy that it can
+    reach and also get back from (`GibbonPlanner.search()`, forward and
+    reversed, because a leap drops further than it climbs), so it never
+    strands itself on a limb it can only drop out of. It travels there,
+    pauses and often hoots, pulls up to sit on thick wood (6 cm radius or
+    more) if it's holding some, and turns round on its hand when the next
+    goal is behind it. Leaving its route (or finding the way blocked)
+    routes it again from where it is.
+  - Hoots (`GibbonHoot`, synthesized like SoundSynth's placeholders): a
+    few rising "hoo-wup" notes, or the great call (notes climbing and
+    quickening into a trill), from an AudioStreamPlayer3D heard at full
+    volume within 12 m and gone at 160 m.
+  - A blob shadow only within 3 m of the ground (a ray down against the
+    world's layer; tree trunks don't count).
+  - Hitboxes (`GibbonHitboxes`, D5): 13 capsules and spheres fitted to the
+    body (hips, chest, head, and per side upper arm, forearm, hand, thigh,
+    shin), in one kinematic body that follows the posed bones every
+    frame. It's on physics layer 3, named `creature_hitboxes` in
+    project.godot, not layer 1, so the player never snags on it; rays that
+    don't filter layers (the bow's aim, the arrow) meet it. The body
+    carries the gibbon as its `creature` meta and `part_name()` names the
+    part a ray hit, for the shared hitbox code to route hits by at merge.
+  - Test canopy (`GibbonCanopyFixture`): until the real branch graphs
+    land, eight synthetic trees 16-30 m tall stand 5.8-6.6 m apart in two
+    staggered rows with overlapping crowns. Each has a trunk and 3-5
+    limbs (some with side branches), handholds every 0.5 m, the wood
+    tapering from 0.25 m to 0.035 m, links along the wood. They are
+    registered with BranchGraphs under one Node3D chunk and drawn as
+    tapered bark tubes and leafy lobes in the plants' material.
+  - Checks: `tools/gibbon_demo.gd` (stills of the body by day, sitting and
+    at night; a still with the debug lines; a dusk recording, run with
+    `--write-movie` and trimmed at the frame it prints). It stands the
+    fixture in the stamp's rainforest (hiding the planet's canopy trees
+    around its footprint) and spawns through `debug_spawn()`.
+    Run headless over the fixture for 90 s (5 seeds), it made 22-29 leaps
+    and 21-26 reaches and reached 5-6 goals, with sits and turns, no
+    failed swings, and the holding hand within 0.1 mm of its handhold.
 
 Sounds are synthesized placeholders (`SoundSynth`): chirp, call, croak,
 howl, drone and whisper. Bodies are placeholders (`CreatureBodies`)
