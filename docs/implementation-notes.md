@@ -817,6 +817,53 @@ copy.
     120-370 triangles;
   - far, beyond it: 80-triangle lobes, 5-sided trunks, no branches,
     cards or vines; 56-230 triangles.
+- **Branchy canopy trees** (Phase 1 (i); `TreeLayouts`). Broadleaf,
+  gnarled, emergent, umbrella and cypress canopy and emergent trees are
+  drawn from a skeleton instead of one leaf blob: the trunk forks into
+  3-5 thick limbs, each limb splits into branches, and a smaller leaf
+  clump (the same lobe, colors and leaf cards) sits at each branch end,
+  so limbs show between the clumps. Cypress keeps its column: a leader
+  to the top with short upturned limbs. Each species grows
+  `TreeLayouts.COUNT` (6) layouts from the world seed and the species;
+  each tree picks one, mirrored or not, by hashing the world seed, its
+  chunk and where it stands (`TreeLayouts.pick`), so the same tree grows
+  the same way on every visit and neighbours differ. Trees stay batched:
+  in the detail ring each chunk draws a branchy species with one
+  MultiMesh per layout it uses; beyond it, with the species' old
+  single-crown far mesh in one MultiMesh (both sets are built on attach,
+  and `set_fine` shows one or the other). Hero draws every ring of the
+  skeleton (12-sided trunk, 9-sided limbs, 6-sided branches, 180-triangle
+  clumps); near draws every other ring and 80-triangle clumps with the
+  same limbs, so nothing pops between them. Wood you can hold (trunk,
+  limbs, branches; palm stems, mangrove roots and stems, conifer trunks)
+  has zero sway weight, so it holds still in the wind and a handhold
+  never drifts off it; leaf clumps, leaf cards, fronds and vines sway as
+  before. The same skeleton gives the mesh, the colliders and the branch
+  graph, so all three agree.
+- **Branch graphs** (`BranchGraph`, `BranchGraphs`; the contract other
+  systems read). Per layout, handholds are laid along the skeleton every
+  ~0.5 m (`BranchGraph.SPACING_M`): up the trunk from 0.4 m to where the
+  limbs leave, then out along each limb and branch until the wood is
+  thinner than 3.5 cm (`BranchGraph.MIN_RADIUS_M`), each with its
+  tangent, the wood's radius and its limb number, linked to its
+  neighbours along the wood and across each fork (both ways). They're
+  cached per layout and 10% height step in the unit-height frame; a
+  tree's graph scales them by its height, mirrors them if it is, and
+  `xform` places them with the tree's rigid transform (radial up, yaw,
+  lean; no scale). Palms, conifers and mangroves (stilt roots too) get
+  trunk-only graphs; bamboo, cacti and rosettes none. `ChunkManager`
+  gives every tree within 60 m of the player a graph (nearest first,
+  1 ms of work a frame) and drops it past 70 m or when its chunk leaves
+  the detail ring or is freed. The key is a hash of the chunk key and the
+  tree's index in placement order (`chunk.trees` is now in placement
+  order: `trees[i]` is `hosts[i]`). Nothing is stored: a chunk that
+  unloads and reloads gives the same keys and the same handholds, to the
+  millimetre.
+- **F6** (dev mode only; `BranchGraphView`): draws the handholds of the
+  graphs within 30 m of the player over everything, green where the
+  player can hold (wood at least 6 cm thick), yellow where only a monkey
+  can, and the links as lines; redrawn four times a second, and gone
+  entirely when off.
 - **Moss and vines.** Each plant carries its site's moss (moisture) and
   vine (moisture and warmth) amounts in the MultiMesh custom data: moss
   creeps over the bark, and tree meshes' hanging vine strands (lianas;
@@ -828,6 +875,24 @@ copy.
   and ground cover up to 20% closer; shrubs keep their spacing, because
   denser shrubs walled in the view. Ground cover and epiphytes draw out
   to 300 m, which covers the whole detail ring.
+- **What the branchy trees cost.** A branchy tree is 2,100-2,900
+  triangles at hero (was ~760), 900-1,330 at near (was ~350), and the
+  same 160-235 far. Rendering info for the whole frame (shadow passes
+  included), same seed, cameras and time, Forward+ at 960 × 540 on the
+  dev stamp:
+
+  | view | draw calls | primitives |
+  |---|---|---|
+  | rainforest, eye level | 251 → 277 (+10%) | 3.47 → 3.78 M (+9%) |
+  | rainforest hero tree, noon / dusk | 293 → 345, 299 → 351 (+18%) | 4.46 → 4.93 M, 4.48 → 4.96 M (+11%) |
+  | deciduous forest, eye level | 358 → 491 (+37%) | 4.27 → 5.66 M (+32%) |
+  | deciduous hero tree, noon / dusk | 335 → 470, 324 → 465 (+40-44%) | 3.99 → 5.56 M, 3.93 → 5.50 M (+39-40%) |
+  | boreal forest, eye level | 456 → 580 (+27%) | 5.33 → 6.39 M (+20%) |
+  | dusk river (Phase 0 acceptance view) | 300 → 376 (+25%) | 2.30 → 3.32 M (+44%) |
+
+  Draw calls stay well under double everywhere, so the six layouts
+  stay (the agreed fallback was four). The rainforest is mostly palms
+  and bamboo, so it changes least.
 
 ## Creatures
 
@@ -983,10 +1048,19 @@ the way Godot draws a front face.)
   `set_motion()` (the player's speed). Crouching still squashes the body
   vertically.
 - **Trees** (`TerrainChunk` trunk colliders, `TreeContact`): canopy and
-  emergent trees in the detail ring get a cylinder collider each (one
-  static body per chunk, a shape owner per tree, sized from
-  `PlantMeshes.tree_dims`, on physics layer 2 as well as 1), 60 a frame
-  (~0.2 ms; all at once behind the loading screen). One sphere query a few times a second finds trunks near the
+  emergent trees in the detail ring get colliders that follow the drawn
+  wood (D5: no invisible walls, no ghost-through), built from the same
+  skeleton as the mesh (`TreeLayouts.collider_segments`): up to four
+  stacked cylinders along the trunk that lean, turn and taper with it
+  (a flared foot takes two), each just inside the bark; a mangrove's
+  five stilt roots and its stem instead of one fat post; a cactus's
+  trunk and arms; no collider at all for plants whose wood stays below
+  knee height (0.5 m), and no more 2 m minimum. Trees with a branch graph
+  (within 60 m) also get capsules on their limbs and branches at least
+  5 cm thick, so arrows stick in limbs. All on one static body per chunk
+  (a shape owner per piece of wood, on physics layer 2 as well as 1),
+  60 trees a frame (all at once behind the loading screen);
+  `TerrainChunk.tree_up` now follows the tree's lean. One sphere query a few times a second finds trunks near the
   player: under a crown is `under_canopy` (rain shelter); walking through
   a crown or bumping a trunk rustles it (a synthesized rustle and a crown
   shiver through the MultiMesh custom data's b channel). A physics query
@@ -1165,9 +1239,46 @@ latest results:
   coast, plus a sheet of moon phases.
 - **Climate checks.** Weather and climate checks cover the figures listed
   above; 49-50 of the 50 surface templates appear on each tested seed.
+- **Branchy trees and branch graphs** (headless, in the rainforest):
+  - `chunk.trees` is in placement order (0 of 9,622 trees out of step
+    with `hosts`);
+  - every handhold sampled (1,427 on 25 trees, 5 of them mirrored) lies
+    inside the drawn bark: four rays out across the wood from each one
+    all leave through the bark within 7 cm of the wood's radius;
+  - rendered, the MultiMesh transforms of 706 branchy trees match their
+    records exactly (rotation, height, mirror);
+  - after walking away (the chunks unload and the graphs are dropped:
+    none of the 30 old keys stayed registered) and back, all 30 graphs
+    come back with the same keys and handholds within 0.0000 m;
+  - links all run both ways; F6 redraws in ~3.5 ms, the tree-contact
+    scan takes 0.14 ms, a 75 m tree's graph 0.6 ms.
+  - A mirrored and a plain copy of the same layout, side by side, light
+    alike (`cull_disabled` with vertex lighting and a flat-colour
+    ambient).
 
 ## Known gaps and next steps
 
+- **Branchy trees and branch graphs (Phase 1 (i)).**
+  - Climbing still uses the old trunk climb (`PlanetPlayer`, radius from
+    `tree_dims`); climbing and the monkey are built on the graphs
+    separately.
+  - Graphs and limb colliders exist only within 60 m of the player;
+    farther crowns have trunk colliders only, so arrows pass through
+    distant limbs.
+  - Conifers get trunk-only graphs up to where the lowest cone hides the
+    trunk (0.3 of the height); palms their stem; bamboo, cacti and
+    rosettes none.
+  - Leaf clumps sway and branches don't: in a gale (the shader's full
+    0.8 m lean) a small tree's clump can slide off its branch tip.
+  - A mirrored tree is a negative-scale MultiMesh instance. It lights
+    correctly because the foliage material is `cull_disabled`,
+    vertex-lit and has a flat-colour ambient; per-pixel lighting or sky
+    ambient there would need a normal flip for mirrored instances.
+  - Stacked cylinders are sized to the wood halfway along each one, so
+    at the thin end of a tapering piece they stand up to ~6% proud of
+    the bark.
+  - Each branchy species keeps its 12 layout meshes (6 hero, 6 near;
+    ~3.5 MB of arrays) once it has appeared.
 - **Placeholder content.** Mansion star patterns are approximate (the
   star counts are right). Most plant and creature data is placeholder,
   and so are all the models and sounds.
