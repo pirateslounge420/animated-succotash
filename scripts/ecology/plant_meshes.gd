@@ -6,10 +6,17 @@ class_name PlantMeshes
 ## averaged within each part: a trunk, a crown lobe, a frond), and carries
 ## vertex color RGB plus a sway weight in alpha (0 at the roots, 1 at the
 ## crown) that shaders/foliage.gdshader uses for wind.
+##
+## Branchy canopy trees (TreeLayouts.branchy) are drawn from their layout's
+## skeleton in the detail ring: a trunk forking into limbs and branches,
+## with leaf clumps at the branch ends. Wood you can hold (trunks, limbs,
+## branches, and the trunks of palms, conifers and mangroves) has a sway
+## weight of 0, so a handhold never drifts off it in the wind; leaves,
+## fronds and vines still sway.
 
 const S := PlantSpecies.Shape
 
-static var _cache := {} # species index * 3 + lod -> ArrayMesh (main thread)
+static var _cache := {} # Vector3i(species index, lod, layout) -> ArrayMesh (main thread)
 ## The same keys -> mesh arrays, built by workers (warm()) or on demand;
 ## and the icosphere cache. Both behind _mutex: chunk workers build plant
 ## geometry (and ruins, boulders) in parallel.
@@ -176,44 +183,88 @@ static func climbable(shape: int) -> bool:
 	return shape in [S.CONIFER, S.BROADLEAF, S.GNARLED, S.EMERGENT, S.UMBRELLA, S.PALM, S.CYPRESS, S.MANGROVE, S.BAMBOO]
 
 
-## A species' mesh at detail level `lod` (LOD_HERO, LOD_NEAR, LOD_FAR).
-static func mesh_for(sp: PlantSpecies, lod := LOD_NEAR) -> ArrayMesh:
+## A species' mesh at detail level `lod` (LOD_HERO, LOD_NEAR, LOD_FAR);
+## for a branchy tree, `layout` (0 .. TreeLayouts.COUNT - 1) picks one of
+## its layouts (hero and near levels only; -1, and every far mesh, is the
+## old single-crown tree).
+static func mesh_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> ArrayMesh:
 	var idx := SpeciesDB.index_of(sp)
-	var key := idx * 3 + lod
+	if lod == LOD_FAR or not TreeLayouts.branchy(sp):
+		layout = -1
+	var key := Vector3i(idx, lod, layout)
 	if _cache.has(key):
 		return _cache[key]
 	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays_for(sp, lod))
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays_for(sp, lod, layout))
 	_cache[key] = mesh
 	return mesh
 
 
-## Build the geometry of these species (indices), every level, ahead of
-## need: chunk workers call it for the plants they place, so the main
-## thread only uploads meshes (mesh_for) instead of building them.
+## The world seed that grows the branchy trees' layouts. Call on the main
+## thread before any chunk worker runs (ChunkManager.setup); a new seed
+## drops the layouts built for the old one.
+static func use_seed(world_seed: int) -> void:
+	if not TreeLayouts.use_seed(world_seed):
+		return
+	_mutex.lock()
+	for key in _arrays.keys():
+		if (key as Vector3i).z >= 0:
+			_arrays.erase(key)
+	_mutex.unlock()
+	for key in _cache.keys():
+		if (key as Vector3i).z >= 0:
+			_cache.erase(key)
+
+
+## Build the geometry of these species (indices), every level (and every
+## layout of the branchy trees), ahead of need: chunk workers call it for
+## the plants they place, so the main thread only uploads meshes
+## (mesh_for) instead of building them.
 static func warm(species_indices: Array) -> void:
 	var all := SpeciesDB.all()
 	for idx in species_indices:
 		for lod in 3:
-			arrays_for(all[idx], lod)
+			if lod == LOD_FAR or not TreeLayouts.branchy(all[idx]):
+				arrays_for(all[idx], lod)
+			else:
+				for layout in TreeLayouts.COUNT:
+					arrays_for(all[idx], lod, layout)
 
 
 ## A species' mesh arrays (thread-safe; built once and shared).
-static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR) -> Array:
+static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> Array:
 	var idx := SpeciesDB.index_of(sp)
-	var key := idx * 3 + lod
+	if lod == LOD_FAR or not TreeLayouts.branchy(sp):
+		layout = -1
+	var key := Vector3i(idx, lod, layout)
 	_mutex.lock()
 	var cached = _arrays.get(key)
 	_mutex.unlock()
 	if cached != null:
 		return cached
-	var built := _build(sp, idx, lod)
+	var built := _build_layout(sp, idx, lod, layout) if layout >= 0 else _build(sp, idx, lod)
 	_mutex.lock()
 	if not _arrays.has(key):
 		_arrays[key] = built
 	var out: Array = _arrays[key]
 	_mutex.unlock()
 	return out
+
+
+## A branchy tree's layout (TreeLayouts) at the hero or near level: the
+## same skeleton and the same random draws at both, so only the detail
+## changes between them and the silhouette doesn't pop.
+static func _build_layout(sp: PlantSpecies, idx: int, lod: int, layout: int) -> Array:
+	var b := _Builder.new()
+	b.hero = lod == LOD_HERO
+	b.freq = CROWN_FREQ[lod]
+	b.wood = sp.accent
+	b.rng.seed = hash([idx, layout, 7919])
+	# Vines as the old crowns had them: beard lichen on cypress, lianas on
+	# the rest.
+	var vine_col := Color(0.5, 0.55, 0.42) if sp.shape == S.CYPRESS else sp.color.darkened(0.3)
+	b.skeleton(TreeLayouts.skeleton(idx, layout), sp.color, vine_col)
+	return b.commit_arrays()
 
 
 static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
@@ -230,7 +281,7 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 		b.wood = leaf # ribbed: the bark streaks read as cactus ribs
 	match sp.shape:
 		S.CONIFER:
-			b.trunk(0.04, 0.3, 0.0, 0.2)
+			b.trunk(0.04, 0.3, 0.0, 0.0)
 			var cs := 6 if far else (12 if b.hero else 8)
 			b.cone(Vector3(0, 0.15, 0), 0.3, 0.45, cs, leaf.darkened(0.1), 0.2, 0.6)
 			b.cone(Vector3(0, 0.4, 0), 0.23, 0.4, cs, leaf, 0.5, 0.85)
@@ -258,12 +309,14 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 			b.crown(Vector3(0.04, 0.82, 0), Vector3(0.6, 0.1, 0.55), 5, leaf, 1.0)
 			b.vines(5, leaf.darkened(0.3))
 		S.PALM:
-			b.cylinder(Vector3.ZERO, 0.03, 0.92, 5, wood, 0.0, 0.6, Vector3(0.08, 1, 0).normalized())
+			# The stem holds still (it can be climbed); the fronds sway from
+			# where they leave it.
+			b.cylinder(Vector3.ZERO, 0.03, 0.92, 5, wood, 0.0, 0.0, Vector3(0.08, 1, 0).normalized())
 			for k in 7:
 				var a := TAU * k / 7.0
-				b.frond(Vector3(0.07, 0.92, 0), Vector3(cos(a), -0.35, sin(a)), 0.45, 0.07, leaf, 1.0)
+				b.frond(Vector3(0.07, 0.92, 0), Vector3(cos(a), -0.35, sin(a)), 0.45, 0.07, leaf, 1.0, 0.0)
 		S.CYPRESS:
-			b.cone(Vector3.ZERO, 0.12, 0.25, 8, wood, 0.0, 0.1)
+			b.cone(Vector3.ZERO, 0.12, 0.25, 8, wood, 0.0, 0.0)
 			b.trunk(0.045, 0.62, 0.0, 0.4)
 			b.crown(Vector3(0, 0.72, 0), Vector3(0.17, 0.3, 0.17), 3, leaf, 0.9)
 			b.vines(4, Color(0.5, 0.55, 0.42))
@@ -271,7 +324,7 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 			for k in 5:
 				var a := TAU * k / 5.0
 				b.strut(Vector3(cos(a) * 0.3, 0, sin(a) * 0.3), Vector3(0, 0.3, 0), 0.02, wood)
-			b.cylinder(Vector3(0, 0.28, 0), 0.04, 0.4, 8, wood, 0.1, 0.4)
+			b.cylinder(Vector3(0, 0.28, 0), 0.04, 0.4, 8, wood, 0.0, 0.0)
 			b.crown(Vector3(0, 0.75, 0), Vector3(0.4, 0.22, 0.4), 3, leaf, 0.9)
 			b.vines(5, leaf.darkened(0.3))
 		S.ROSETTE:
@@ -547,6 +600,83 @@ class _Builder:
 				tri(rings[i][k], rings[i + 1][k], rings[i + 1][k1], col, s0, s1, s1)
 		mat = 1.0
 
+	## A branchy tree from its layout's skeleton (TreeLayouts): the trunk
+	## (flared foot, capped top), the limbs (capped ends) and the branches
+	## as smooth bark tubes that don't sway, and a leaf clump at each branch
+	## end, the old crowns' lobe (noise-displaced, top-lit, with leaf cards)
+	## at a smaller size, that does. Faces buried in a neighboring clump are
+	## dropped. Near the player every ring of the skeleton is drawn;
+	## farther, every other one, so the main limbs keep their silhouette.
+	func skeleton(sk: TreeLayouts.Skeleton, col: Color, vine_col: Color) -> void:
+		if sk.buttress != Vector2.ZERO:
+			cone(Vector3.ZERO, sk.buttress.x, sk.buttress.y, 8, wood, 0.0, 0.0)
+		for pc in sk.pieces:
+			var n := pc.pts.size()
+			var pts := PackedVector3Array()
+			var rad := PackedFloat32Array()
+			for i in n:
+				if hero or i % 2 == 0 or i == n - 1:
+					pts.append(pc.pts[i])
+					rad.append(pc.rad[i])
+			var ring := 0
+			match pc.kind:
+				TreeLayouts.Kind.TRUNK:
+					ring = 12 if hero else 8
+				TreeLayouts.Kind.LIMB:
+					ring = 9 if hero else 6
+				_:
+					ring = 6 if hero else 5
+			wood_tube(pts, rad, ring, pc.kind != TreeLayouts.Kind.BRANCH)
+		var specs: Array = []
+		for c in sk.clumps:
+			var tone := col
+			if int(c[2]) == 1:
+				tone = col.lightened(0.08)
+			elif int(c[2]) == 2:
+				tone = col.darkened(0.06)
+			specs.append([c[0], c[1], tone])
+			hang_from.append([c[0], c[1]])
+		for i in specs.size():
+			var others: Array = specs.duplicate()
+			others.remove_at(i)
+			lobe(specs[i][0], specs[i][1], specs[i][2], sk.sway, freq, others, 3)
+		vines(sk.vines, vine_col)
+
+	## Bark tube along a centerline (`pts`, radius `rad` at each point),
+	## `ring` sides, no sway. Each ring's orientation is carried along from
+	## the one before (no twist where the wood curves); `cap` closes the far
+	## end with a low rounded cone.
+	func wood_tube(pts: PackedVector3Array, rad: PackedFloat32Array, ring: int, cap: bool) -> void:
+		mat = 0.0
+		part += 1
+		var n := pts.size()
+		var rings: Array = []
+		var side := Vector3.ZERO
+		var axis := Vector3.UP
+		for i in n:
+			axis = (pts[mini(i + 1, n - 1)] - pts[maxi(i - 1, 0)]).normalized()
+			if i == 0:
+				side = axis.cross(Vector3.FORWARD if absf(axis.dot(Vector3.FORWARD)) < 0.9 else Vector3.RIGHT).normalized()
+			else:
+				side = (side - axis * side.dot(axis)).normalized()
+			var side2 := axis.cross(side).normalized()
+			var r: Array = []
+			for k in ring:
+				var a := TAU * k / ring
+				r.append(pts[i] + (side * cos(a) + side2 * sin(a)) * rad[i])
+			rings.append(r)
+		for i in n - 1:
+			for k in ring:
+				var k1 := (k + 1) % ring
+				tri(rings[i][k], rings[i + 1][k1], rings[i][k1], wood, 0.0, 0.0, 0.0)
+				tri(rings[i][k], rings[i + 1][k], rings[i + 1][k1], wood, 0.0, 0.0, 0.0)
+		if cap:
+			var tip := pts[n - 1] + axis * rad[n - 1] * 0.6
+			for k in ring:
+				var k1 := (k + 1) % ring
+				tri(rings[n - 1][k], tip, rings[n - 1][k1], wood, 0.0, 0.0, 0.0)
+		mat = 1.0
+
 	## A crown of `lobes` overlapping, noise-displaced icospheres: one big
 	## lobe at `center`, the rest clustered around its upper half. Faces
 	## buried inside another lobe are dropped (the triangles go to the
@@ -567,7 +697,8 @@ class _Builder:
 
 	## One icosphere lobe with a lumpy surface and top-lit vertex shading;
 	## faces inside any of `others` ([center, radii, ...]) are skipped.
-	func lobe(center: Vector3, radii: Vector3, col: Color, sway: float, detail: int, others := []) -> void:
+	## `cards`: leaf cards on it (-1: three on lobes big enough for them).
+	func lobe(center: Vector3, radii: Vector3, col: Color, sway: float, detail: int, others := [], cards := -1) -> void:
 		part += 1
 		var sphere: Array = PlantMeshes.geosphere(detail)
 		var verts: PackedVector3Array = sphere[0]
@@ -587,8 +718,10 @@ class _Builder:
 				continue
 			tri3(disp[a], disp[b2], disp[d], shade[a], shade[b2], shade[d], sway, sway, sway)
 		var mean_r := (radii.x + radii.y + radii.z) / 3.0
-		if mean_r >= 0.1 and not far:
-			for i in 3:
+		if cards < 0:
+			cards = 3 if mean_r >= 0.1 and not far else 0
+		if not far:
+			for i in cards:
 				# Outward and mostly sideways or up: where the silhouette is.
 				var d := Vector3(rng.randfn(), rng.randfn() * 0.6 + 0.3, rng.randfn()).normalized()
 				var p := center + d * radii * 0.95
@@ -693,8 +826,9 @@ class _Builder:
 				var size := h * rng.randf_range(0.045, 0.07) * (1.6 if far else 1.0)
 				card(c + dir * size * 0.8, dir, size, leaf * rng.randf_range(0.8, 1.05), t)
 
-	## Flat leaf from `base` outward along `dir`, drooping at the tip.
-	func frond(base: Vector3, dir: Vector3, length: float, width: float, col: Color, sway: float) -> void:
+	## Flat leaf from `base` outward along `dir`, drooping at the tip. Its
+	## base sways `base_sway` (by default 0.4 of the tip's).
+	func frond(base: Vector3, dir: Vector3, length: float, width: float, col: Color, sway: float, base_sway := -1.0) -> void:
 		part += 1
 		var d := dir.normalized()
 		var side := d.cross(Vector3.UP)
@@ -703,7 +837,7 @@ class _Builder:
 		side = side.normalized() * width
 		var mid := base + d * length * 0.55
 		var tip := base + d * length + Vector3(0, -length * 0.15, 0)
-		tri(base, mid + side, mid - side, col, sway * 0.4, sway, sway)
+		tri(base, mid + side, mid - side, col, sway * 0.4 if base_sway < 0.0 else base_sway, sway, sway)
 		tri(mid - side, mid + side, tip, col.lightened(0.05), sway, sway, sway)
 
 	## Thin grass blade from base to tip.
@@ -714,10 +848,10 @@ class _Builder:
 			side = Vector3(width, 0, 0)
 		tri(base - side, tip, base + side, col, 0.0, sway, 0.0)
 
-	## Straight root/strut from a to b.
+	## Straight root/strut from a to b (wood you can hold: no sway).
 	func strut(a: Vector3, b2: Vector3, r: float, col: Color) -> void:
 		var axis := (b2 - a)
-		cylinder(a, r, axis.length(), 4, col, 0.0, 0.1, axis.normalized())
+		cylinder(a, r, axis.length(), 4, col, 0.0, 0.0, axis.normalized())
 
 	## Hanging strand from `top` down by `length`, sways fully.
 	func strand(top: Vector3, length: float, width: float, col: Color) -> void:

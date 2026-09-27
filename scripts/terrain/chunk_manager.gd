@@ -28,6 +28,17 @@ signal chunk_unloaded(chunk: TerrainChunk)
 ## Chunks within this of the player draw their plants at their smoothest
 ## (PlantMeshes.LOD_HERO); the rest of the detail ring a step lighter.
 const HERO_M := 120.0
+## Trees within GRAPH_M of the player get a branch graph (BranchGraphs:
+## handholds for climbing and monkeys) and colliders on their thick limbs;
+## past GRAPH_OUT_M they lose both again (the gap keeps a tree at the edge
+## from flickering in and out). Well inside HERO_M, so these trees always
+## show their full limbs.
+const GRAPH_M := 60.0
+const GRAPH_OUT_M := 70.0
+## Time per frame (ms) for building branch graphs and limb colliders,
+## nearest trees first; at least one tree a frame (a 70 m emergent's graph
+## takes ~0.6 ms, most trees' far less).
+@export var graph_budget_ms := 1.0
 
 var world: Node
 var map: PlanetData
@@ -54,6 +65,14 @@ var _ring_keep_detail := {}
 ## The chunks within HERO_M of the player, and where that was measured.
 var _hero := {}
 var _hero_at := Vector3.ZERO
+## Branch graphs: where the player stood (planet frame, m) at the last
+## scan for trees coming into or leaving range, the trees still to get a
+## graph ([chunk, tree index, distance], nearest last), and a rescan flag
+## for when new chunks come in.
+var _graph_from := Vector3.ZERO
+var _graph_todo: Array = []
+var _graph_rescan := true
+var _graph_timer := 0.0
 
 
 func setup(p_world: Node) -> void:
@@ -69,6 +88,8 @@ func setup(p_world: Node) -> void:
 	for level in 3:
 		PlantMeshes.icosphere(level)
 	PlantMeshes.geosphere(3)
+	# The branchy trees' layouts grow from the world seed.
+	PlantMeshes.use_seed(map.terrain.world_seed)
 	VegetationPlacer.warm(map.terrain.world_seed)
 
 
@@ -162,6 +183,7 @@ func update_around(player_dir: Vector3) -> void:
 	_attach_detail(max_attach_per_frame)
 	_build_collision(1)
 	_build_tree_colliders(tree_colliders_per_frame)
+	_update_graphs(player_dir, graph_budget_ms)
 
 
 ## Ground collision for the chunks near the player (the detail ring), the
@@ -194,6 +216,52 @@ func _build_tree_colliders(budget: int) -> void:
 			budget -= c.build_tree_colliders(budget)
 
 
+## Branch graphs for the trees around the player (GRAPH_M): rescans which
+## trees are in or out of range when the player has moved a few meters,
+## new chunks came in, or a second has passed; then builds graphs, nearest
+## first, for `budget_ms`. Distances are measured from the ground under the
+## player, in the planet frame (floating origin doesn't matter).
+func _update_graphs(player_dir: Vector3, budget_ms: float) -> void:
+	var p := player_dir * (PlanetConst.RADIUS_M + ground_height(player_dir))
+	_graph_timer -= get_process_delta_time()
+	if _graph_rescan or _graph_timer <= 0.0 or _graph_from.distance_to(p) > 4.0:
+		_graph_rescan = false
+		_graph_timer = 1.0
+		_graph_from = p
+		_scan_graphs(p)
+	var until := Time.get_ticks_usec() + int(budget_ms * 1000.0)
+	var built := 0
+	while not _graph_todo.is_empty() and (built == 0 or Time.get_ticks_usec() < until):
+		var item: Array = _graph_todo.pop_back()
+		var c: TerrainChunk = item[0]
+		if is_instance_valid(c) and c.has_tree_colliders() and not c.graphs.has(item[1]):
+			c.add_graph(item[1])
+			built += 1
+
+
+func _scan_graphs(p: Vector3) -> void:
+	_graph_todo.clear()
+	var reach := GRAPH_OUT_M + chunk_size_m() * 0.75
+	var in2 := GRAPH_M * GRAPH_M
+	var out2 := GRAPH_OUT_M * GRAPH_OUT_M
+	for key in chunks:
+		var c: TerrainChunk = chunks[key]
+		var rel := c.center_dir * c.anchor_radius - p
+		# Only chunks with trunk colliders (the detail ring) hold graphs.
+		if rel.length() > reach or not c.has_tree_colliders():
+			if not c.graphs.is_empty():
+				c.remove_graphs()
+			continue
+		for i in c.trees.size():
+			var d2 := (rel + (c.trees[i][0] as Vector3)).length_squared()
+			if c.graphs.has(i):
+				if d2 > out2:
+					c.remove_graph(i)
+			elif d2 < in2:
+				_graph_todo.append([c, i, d2])
+	_graph_todo.sort_custom(func(a: Array, b: Array) -> bool: return a[2] > b[2])
+
+
 ## Worker: everything a chunk needs before its nodes can be built (not
 ## its collision: see TerrainChunk.build_collision_part). Work abandoned
 ## when the player jumped elsewhere (load_blocking) is skipped.
@@ -209,7 +277,7 @@ func _compute_base(key: Vector3i) -> void:
 	var trees := VegetationPlacer.compute_base(key, map, data)
 	TerrainChunk.bake_canopy_shade(data, trees.hosts)
 	TerrainChunk.prepare_meshes(data)
-	data["plants"] = VegetationPlacer.prepare(trees.plants, data.center, data.anchor_r)
+	data["plants"] = VegetationPlacer.prepare(trees.plants, data.center, data.anchor_r, trees.hosts, key, map.terrain.world_seed)
 	data["hosts"] = trees.hosts
 	# The trees' meshes, if this is the first time a species shows up.
 	PlantMeshes.warm(data.plants.keys())
@@ -257,6 +325,7 @@ func _attach_base(limit: int) -> void:
 		chunk.set_fine(_wanted_detail.has(key), _hero.has(key))
 		chunks[key] = chunk
 		chunk_loaded.emit(chunk)
+		_graph_rescan = true
 		attached += 1
 
 
@@ -325,6 +394,8 @@ func load_blocking(d: Vector3) -> void:
 	_attach_detail(1000)
 	_build_collision(1 << 30)
 	_build_tree_colliders(1 << 30)
+	_graph_rescan = true
+	_update_graphs(d, 1e9)
 
 
 ## Chunk containing a surface direction, if loaded.
