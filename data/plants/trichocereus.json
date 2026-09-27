@@ -1,0 +1,399 @@
+{
+ "key": "TRICHOCEREUS_CATALOGUE",
+ "name": "Trichocereus (Andean torch cacti)",
+ "kind": "land",
+ "status": "4 species, documented",
+ "notes": "Loaded like the other catalogues (data/plants/*.json). Kew POWO files these under Echinopsis; the game uses the Trichocereus name with the synonym recorded. They grow only in cold, dry, high, rocky ground - Andean-type mountain bands - so on the planet they appear on the dry side of high ranges in the mild-temperature band. Bat/moth pollinated, one-night flowers; birds spread the fruit; fallen segments root, so clumps spread along slopes. Goats and other browsers do not eat them (cannot_be_browsed).",
+ "plants": {
+  "shrub": [
+   {
+    "name": "Trichocereus pachanoi",
+    "display": "San Pedro cactus",
+    "genus": "Trichocereus",
+    "species": "pachanoi",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis pachanoi",
+    "shape": "cactus",
+    "temp_c": [
+     9,
+     19
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "altitude_m": [
+     1500,
+     3200
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4E8A5A",
+    "accent": "#6FA870",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Flowers open at night for a single night; fallen segments root where they land (clonal 'sucker' here means basal pups and rooted segments)."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.2,
+      0.8
+     ],
+     "rib_count": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Fast-growing, few-ribbed columns with short spines; branches from the base into a clump. Huge white night-opening flowers; red fruit. Synonym Echinopsis pachanoi."
+   },
+   {
+    "name": "Trichocereus peruvianus",
+    "display": "Peruvian torch",
+    "genus": "Trichocereus",
+    "species": "peruvianus",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis peruviana",
+    "shape": "cactus",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.5
+    ],
+    "altitude_m": [
+     1200,
+     3000
+    ],
+    "height_m": [
+     3.0,
+     6.0
+    ],
+    "density": 0.25,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#5A8C6A",
+    "accent": "#8FA890",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Flowers open at night for a single night; fallen segments root where they land (clonal 'sucker' here means basal pups and rooted segments)."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.2,
+      0.8
+     ],
+     "rib_count": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Blue-green columns with long spines; sprawls and branches heavily. White nocturnal flowers, edible fruit. Synonym Echinopsis peruviana."
+   },
+   {
+    "name": "Trichocereus bridgesii",
+    "display": "Bolivian torch",
+    "genus": "Trichocereus",
+    "species": "bridgesii",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis lageniformis",
+    "shape": "cactus",
+    "temp_c": [
+     8,
+     17
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1800,
+     3400
+    ],
+    "height_m": [
+     2.0,
+     5.0
+    ],
+    "density": 0.25,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#4A8058",
+    "accent": "#7A9A60",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Flowers open at night for a single night; fallen segments root where they land (clonal 'sucker' here means basal pups and rooted segments)."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.2,
+      0.8
+     ],
+     "rib_count": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Pale green, thinner columns with long yellow spines; forms clumps. White night flowers. Synonym Echinopsis lageniformis."
+   },
+   {
+    "name": "Trichocereus scopulicola",
+    "display": "Scopulicola torch",
+    "genus": "Trichocereus",
+    "species": "scopulicola",
+    "family": "Cactaceae",
+    "synonym": "Echinopsis scopulicola",
+    "shape": "cactus",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "altitude_m": [
+     1000,
+     2600
+    ],
+    "height_m": [
+     3.0,
+     4.5
+    ],
+    "density": 0.15,
+    "soil": "thin",
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#3E7A4A",
+    "accent": "#5C8C58",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       120
+      ],
+      [
+       "young",
+       900
+      ],
+      [
+       "mature",
+       3000
+      ],
+      [
+       "old",
+       6000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "both",
+     "pollinator": "bat",
+     "disperser": [
+      "bird",
+      "gravity"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "late_spring",
+      "days": 1,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Flowers open at night for a single night; fallen segments root where they land (clonal 'sucker' here means basal pups and rooted segments)."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "spine_length": [
+      0.0,
+      0.15
+     ],
+     "rib_count": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.0,
+      0.2
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "source": "Andean columnar cactus; native region and habit from the standard cactus literature (Anderson, The Cactus Family, 2001; Kew POWO synonymy). Dark green, almost spineless columns with a smooth skin. White nocturnal flowers. Synonym Echinopsis scopulicola. Rare and local."
+   }
+  ]
+ }
+}

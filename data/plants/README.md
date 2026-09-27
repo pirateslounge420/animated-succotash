@@ -14,5 +14,7 @@ exactly like the biome files in `data/biomes/`.
 | `amorphophallus.json` | All 246 *Amorphophallus* species accepted by Kew POWO (fetched 2026-09-26). 34 with documented traits, 212 with genus defaults and a region-based range; see each `source`. `shape` is `umbrella` until the `aroid` shape exists. | `aroid` (petiole pattern/colours, spathe colours), `repro`, `genes` |
 | `cannabis.json` | 64 *Cannabis sativa* landrace populations — one species, all interbreed; each is a starting genome for its region. Attestation tagged per entry. | `cannabis` (leaf width, photoperiod flowering, uses), `repro` (dioecious, wind, annual, seed bank), `genes` |
 
+| `trichocereus.json` | *Trichocereus* pachanoi, peruvianus, bridgesii, scopulicola — Andean torch cacti, cold dry high rocky ground; not browsable. | `growth`, `repro`, `genes` |
+
 Every entry has `genus` and `species` (real binomials) per the D4 rule.
 Colours are in-game R1a-leaning values, not botanical measurements.
