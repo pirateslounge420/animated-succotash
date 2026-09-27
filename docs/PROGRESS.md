@@ -4,6 +4,17 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-27 — Plant associations (data + spec; nothing built)
+- **Merged:** `data/plant-catalogues` at 859d296. 213 plant associations across the 42 land biome files (2–8 each, cover 0.1–0.95). Every member name resolves to a loaded plant. cc70585 gives every entry a species-level binomial, so the tepui "spp." entries are fixed.
+- **Spec:**
+  - Phase 6: two-step placement replaces per-species placement. Per patch, choose an association by its `where` cue; lay down its members together; outsiders stay at low density. It is the R6 pre-filter; succession reads it; three new done-when lines.
+  - D4: the `associations` block. R6.10 updated.
+  - ⚑ Proposed: a fixed cue vocabulary for `where`, parsed at load.
+- **Species readout (HUD):**
+  - Tree trunks are named correctly (Acer saccharinum, Populus deltoides).
+  - Small plants: the plant index builds (16,769 instances at the tepui spot), but a lookup through a Stegolepis still returns nothing. Being traced.
+  - The animal test froze the squirrel, so its hitboxes never switched on. A test flaw; to redo.
+
 ## 2026-09-27 — Carnivorous plants and the tepui (the 52nd biome); data + spec, one template added
 - **Merged:** `data/plants/carnivore.json` (0881fb9, 43 species) and `data/biomes/51_tepui.json` (4398f90, 16 endemics).
 - **`biome_templates.gd`:** TEPUI added last (id 51, group Mountain, small), so existing ids are unchanged. Nothing classifies as it until the Phase 2 landform. This resolves 51 vs 52.
