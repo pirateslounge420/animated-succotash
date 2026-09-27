@@ -18,6 +18,10 @@ config/icon="res://icon.svg"
 
 World="*res://scripts/core/world.gd"
 
+[layer_names]
+
+3d_physics/layer_3="creature_hitboxes"
+
 [rendering]
 
 renderer/rendering_method="forward_plus"
