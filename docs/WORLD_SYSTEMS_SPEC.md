@@ -204,20 +204,22 @@ data/biomes/<biome>.json   + weather_odds, mythic_creature, (keep plant lists; a
 data/plants/<catalogue>.json  plant catalogues, laid out like a biome file (key, name, kind, status, notes,
                              plants{stratum: [entries]}) but with no climate block: every entry carries its
                              own temp_c / moisture / altitude_m bands. The keys regions, types and
-                             family_defaults are ignored by species_db. Today: amorphophallus.json (246
-                             species), cannabis.json (64 landraces of one species), trichocereus.json (18
-                             Andean torch cacti), yucca.json (all 55 Kew-accepted species), pine 39,
-                             rhododendron 22, citrus 15, acacia 24 (Acacia, Vachellia, Senegalia), baobab 8 +
-                             ginkgo, carnivore 43, and, trimmed to the genera the designer named
-                             (2026-09-27): magnolia 16 (Magnolia), giant_herbs 18 (alocasia, taro, Musa,
-                             heliconia, bird-of-paradise), vine 3 (ivy, Virginia creeper, strangler fig),
-                             bromeliad 14 (tillandsias, Puya, pineapple, one tank bromeliad), cycad 5
-                             (Encephalartos, Wood's cycad's genus), palms 8 (doum, coconut, date palms,
-                             Washingtonia: one per crown form in the palm shape work), orchid 9 (lady's
-                             slippers, Dendrobium), fungi 15 (honey fungus, ghost fungus, jack-o'-lantern,
-                             bonnets, morels, tinder, reishi, truffle, giant puffball, and the one dung and
-                             one carcass fungus the decay loop needs). 18 files, 623 entries, every one with
-                             a binomial. Loaded from Phase 6.
+                             family_defaults are ignored by species_db. Hero-genus world (2026-09-27):
+                             hero genera trimmed to 3–5 archetypal species each (full lists archived in
+                             docs/plant_archive/, not loaded); cannabis 64, amorphophallus 246 and
+                             trichocereus 18 stay complete; fungi 43; new: fern 16, moss 14,
+                             bucephalandra 4, cypress 5, sequoia 3, araucaria 5. 24 files, 499 entries.
+                             Catalogue-only families (the three complete ones, fungi, ferns, mosses,
+                             bucephalandra) are never copied into biomes; they load from here on their own
+                             bands. Loaded from Phase 6.
+biome file `hero_species`   the hero species whose bands sit inside the biome; their entries are copied in
+                             with `from_catalogue: true`, alongside their companions from the associations
+                             (52 files, 911 entries, 234 from catalogues)
+traits (every entry)         { native_range, leaf_shape, trunk, petiole, height_m, growth_rate,
+                             reproduction, pollinator, disperser } — read by plant_meshes and the ecology;
+                             leaf_shape / trunk / petiole derive from the shape class, refined per species
+rheophyte                    true: rock in fast clear streams only; vanishes if the stream silts
+                             (bucephalandra)
 biome file `associations`   2–8 real plant communities per land biome (213 in 42 files): { name, where (plain
                              words: slope, aspect, wetness, soil, rock, fire, edge, altitude), dominant[],
                              companion[], ground[], catalogue[] (plant names), cover 0–1, source }. Read by
@@ -435,8 +437,8 @@ See Part C.
     - validus is 4–8 m tall, not 6–12;
     - chalaensis grows at 100–1,200 m, not high ground;
     - six entries share Kew's *Echinopsis macrogona* but count as separate species under the binomial rule.
-- **Plant groups.** Every biome has four groups, and they overlap freely across biomes because plants read climate, not biome names: **trees** (canopy, emergent), **bushes** (shrub), **grasses and low plants** (ground), and **the catalogue plants** (aroids, cannabis, torch cacti, yuccas, palms, fungi), which carry their own bands and land wherever they fit. The biome files hold 677 entries (574 names, the tepui's 16 included) and 213 associations; the 18 catalogues 623 (trimmed to the genera the designer named). Loaded together that is 1,166 species (31 catalogue names match a biome plant and fold into it). Every entry carries a species-level binomial.
-- **Plant associations replace per-species placement** (and are the species pre-filter the R6 performance gate requires; 677 + 623 entries is too many to test per site). Every land biome file carries `associations` (D4): real plant communities, each with dominant, companion, ground and catalogue name lists, a cover 0–1, and a `where` cue in plain words that maps to terrain fields. The placer works in two steps:
+- **Plant groups.** Every biome has four groups, and they overlap freely across biomes because plants read climate, not biome names: **trees** (canopy, emergent), **bushes** (shrub), **grasses and low plants** (ground), and **the catalogue plants** (aroids, cannabis, torch cacti, yuccas, palms, fungi), which carry their own bands and land wherever they fit. The biome files hold 911 entries in 52 files (each the hero species whose bands sit inside it plus their association companions; 640 names); the 24 catalogues 499. Loaded together that is 1,031 species.
+- **Plant associations replace per-species placement** (and are the species pre-filter the R6 performance gate requires; 911 + 499 entries is too many to test per site). Every land biome file carries `associations` (D4): real plant communities, each with dominant, companion, ground and catalogue name lists, a cover 0–1, and a `where` cue in plain words that maps to terrain fields. The placer works in two steps:
   1. **Per patch** (a few hundred metres, blended at the edges by noise), choose one association from the local biome's list by matching its `where` to the patch's terrain fields — slope, aspect, wetness, soil, rock, fire (burn scar), edge, altitude. Wet ground picks the slough, a ridge picks the dry-ridge woodland, last year's burn picks the post-fire stand.
   2. **Lay down that association's members together:** dominants at its cover, companions and ground beneath, clumped by species.
   - Species outside the chosen association still appear at low density wherever their own bands allow, so nothing is locked out and edges blend.
@@ -457,6 +459,10 @@ See Part C.
   - Savanna biomes are acacia-dominated at low density with open grass between — never a closed canopy.
   - Pines: lodgepole and jack pine reseed burns in even-aged stands; longleaf and ponderosa need fire to keep their savanna open (Phase 9 reads this).
   - **Carnivorous plants** (`data/plants/carnivore.json`, 43: all 8 Sarracenia plus the cobra lily and sun pitcher, 12 Nepenthes, 12 sundews, Venus flytrap, waterwheel, bladderworts, butterworts, the Albany pitcher, rainbow plant, dewy pine, corkscrew plant; `carnivore` block, D4). They grow only on nutrient-poor ground — peat, sand, wet rock — at high moisture, and their growth reads the local insect count instead of soil fertility (a table value until Phase 7 fills the ledger). Flowers stand far above the traps so pollinators survive. Sarracenia and Dionaea live in fire-kept pine savanna and need the burns (Phase 9). Nepenthes are tropical climbers (`climber`) and cliff plants. Bladderworts float in ponds and eat water fleas; the tepui bladderwort lives inside bromeliad tanks (`tank_dweller`).
+  - **Ferns and mosses are spore plants:** no pollinator; spread reads moisture. The resurrection fern greens within hours of rain (a visible weather response). Mosses grow on wood, rock and ruins as well as ground — wall moss on every landmark.
+  - **Bucephalandra** are rheophytes (`rheophyte: true`): rock in fast clear streams only; they vanish if the stream silts.
+  - `landmark: true` also covers sequoias, araucarias, kauri and the big cypresses.
+  - `traits` (every entry) is what `plant_meshes` reads for leaf shape, trunk and petiole, and the ecology for growth rate, reproduction, pollinator and disperser.
   - Orchids germinate only where their fungus already lives: they read the fungi ledger (Phase 7), so until then they place only where a mycorrhizal fungus could.
 - **Fungi — data and look** (`data/plants/fungi.json`, 43 species with a `fungus` block, D4). Fungi are not plants: they read **dead matter** — `substrate` snag_log, litter, dung, carcass or burn — or are `mycorrhizal`, living on the roots of named living trees and fruiting under them. Climate only gates **when** they fruit: `fruit_after_rain_days` after rain, in `fruit_season`. `species_db` loads them apart from the plants: never placed by climate bands, only on their substrate.
   - NEAR: fruiting bodies appear on the actual snag, log, litter patch, dung or carcass a few days after rain and run pin → button → cap → spent over days. Fairy rings widen each year. Glowing kinds (honey-fungus foxfire, ghost fungus, jack-o'-lantern, the glowing bonnets) light the forest floor and cave mouths at night as small teal-green points in the R1a accent. Morels flood last year's fire scar.
@@ -668,4 +674,4 @@ Werewolf/vampire transformation, grappling hook, underwater exploration/breath m
 7. **Every rate lives in `data/sim.json`.** The designer tunes; code never hard-codes a number.
 8. **Merge gate:** a system merges only when `eco_sim` shows, across 3 seeds and 100 years, no species at zero, none above 3× baseline, and every older chart unchanged in shape.
 9. **World age** is random at generation (warm start 50–200 years), so worlds differ in how much history they carry.
-10. **Performance gate: species pre-filter.** No per-site loop tests every species. From Phase 6 the pre-filter is the plant associations: each patch picks one association and places its members, with a low-density band check for the rest (Phase 6). Required: 677 biome entries + 623 catalogue entries.
+10. **Performance gate: species pre-filter.** No per-site loop tests every species. From Phase 6 the pre-filter is the plant associations: each patch picks one association and places its members, with a low-density band check for the rest (Phase 6). Required: 911 biome entries + 499 catalogue entries.

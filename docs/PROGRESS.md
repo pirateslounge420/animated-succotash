@@ -4,6 +4,22 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-27 — Plant world restructured: merged data/plant-catalogues at 1a88bfe (data + spec)
+- **Hero genera:**
+  - 3–5 archetypal species each; the full lists are archived in docs/plant_archive/ (66 files, not loaded).
+  - Cannabis 64, Amorphophallus 246 and Trichocereus 18 stay complete; fungi 43.
+  - New catalogues: fern 16, moss 14, bucephalandra 4, cypress 5, sequoia 3, araucaria 5.
+  - 24 catalogues, 499 entries.
+- **Biomes rebuilt:** 52 files, 911 entries (234 `from_catalogue`); hero_species lists; traits on every entry.
+- **Conflicts:** my earlier trim conflicted in 29 files; the branch's version was taken throughout.
+  - Macrogonus set back to `reported` (designer ruling).
+  - `leaf_density` re-applied where the species survive: holm oak, both umbrella thorns, paloverde, savanna acacia. Beech, mesquite and the dry-season deciduous tree are gone.
+- **Dry run:**
+  - Biome files: 0 warnings, 640 names.
+  - Catalogues: 24 parse OK, no warnings beyond the 24 expected "unknown biome key".
+  - 1,031 species in all; 16 landmark, 4 rheophyte.
+- **Open:** 18 fern and moss names (Bracken, Resurrection fern, Sphagnum moss, Reindeer lichen…) are plain biome entries, although these families are meant to be catalogue-only. The loader folds each catalogue copy into the biome one.
+
 ## 2026-09-27 — Catalogues trimmed to the genera the designer named (data only)
 - **Designer:** "keep it simple … reduce the amount of actual variety". Biome files unchanged. Catalogue entries 807 → 623.
 - **Trimmed:**
