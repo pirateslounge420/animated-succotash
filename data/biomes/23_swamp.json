@@ -1,136 +1,687 @@
 {
-	"key": "SWAMP",
-	"name": "Swamp / bayou",
-	"group": "Wetlands",
-	"size": "small",
-	"status": "researched",
-	"kind": "land",
-	"notes": "Species from the DESIGN.md research table.",
-	"climate": {
-		"temp_c": [16, 32],
-		"moisture": [0.66, 1]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [
-			{
-				"name": "Bald cypress",
-				"genus": "Taxodium",
-				"species": "distichum",
-				"shape": "cypress",
-				"temp_c": [12, 28],
-				"moisture": [0.6, 1],
-				"height_m": [18, 30],
-				"color": "#59804c",
-				"accent": "#807a70",
-				"needs": ["standing_water"],
-				"water_depth_m": [0.05, 2],
-				"soil": "wet",
-				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
-			},
-			{
-				"name": "Water tupelo",
-				"genus": "Nyssa",
-				"species": "aquatica",
-				"shape": "broadleaf",
-				"temp_c": [13, 28],
-				"moisture": [0.62, 1],
-				"height_m": [14, 24],
-				"color": "#387338",
-				"accent": "#807a70",
-				"needs": ["standing_water"],
-				"water_depth_m": [0.05, 1.5],
-				"soil": "wet",
-				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
-			},
-			{
-				"name": "Black willow",
-				"genus": "Salix",
-				"species": "nigra",
-				"shape": "broadleaf",
-				"temp_c": [2, 26],
-				"moisture": [0.5, 1],
-				"height_m": [10, 18],
-				"color": "#598c4c",
-				"accent": "#807a70",
-				"needs": ["river_bank"],
-				"soil": "wet",
-				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
-			}
-		],
-		"shrub": [
-			{
-				"name": "Buttonbush",
-				"genus": "Cephalanthus",
-				"species": "occidentalis",
-				"shape": "shrub",
-				"temp_c": [8, 28],
-				"moisture": [0.6, 1],
-				"height_m": [1.5, 3],
-				"color": "#408040",
-				"accent": "#5c422e",
-				"needs": ["river_bank"],
-				"soil": "wet",
-				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
-			},
-			{
-				"name": "Virginia willow",
-				"genus": "Itea",
-				"species": "virginica",
-				"shape": "shrub",
-				"temp_c": [10, 27],
-				"moisture": [0.6, 1],
-				"height_m": [1.5, 3],
-				"color": "#4c8538",
-				"accent": "#5c422e",
-				"needs": ["river_bank"],
-				"soil": "wet",
-				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
-			},
-			{
-				"name": "Water elm",
-				"genus": "Planera",
-				"species": "aquatica",
-				"shape": "broadleaf",
-				"temp_c": [12, 28],
-				"moisture": [0.6, 1],
-				"height_m": [5, 9],
-				"color": "#3d7a38",
-				"accent": "#5c422e",
-				"soil": "wet",
-				"density": 0.7,
-				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
-			}
-		],
-		"ground": [
-			{
-				"name": "Cypress knees",
-				"genus": "Taxodium",
-				"species": "distichum",
-				"shape": "knees",
-				"temp_c": [-50, 50],
-				"moisture": [-1, 1],
-				"height_m": [0.3, 0.7],
-				"color": "#807a70",
-				"accent": "#807a70",
-				"density": 0,
-				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana) (placed only around bald cypress in water)"
-			}
-		],
-		"epiphyte": [
-			{
-				"name": "Spanish moss",
-				"genus": "Tillandsia",
-				"species": "usneoides",
-				"shape": "hanging_moss",
-				"temp_c": [14, 30],
-				"moisture": [0.6, 1],
-				"height_m": [2, 4],
-				"color": "#999e8c",
-				"accent": "#5c422e",
-				"density": 1.5,
-				"source": "Bayou / cypress swamp (Louisiana WLF, Natural Communities of Louisiana)"
-			}
-		]
-	}
+ "key": "SWAMP",
+ "name": "Swamp / bayou",
+ "group": "Wetlands",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Warm-temperate to subtropical forested wetland: flood-tolerant cypress-tupelo canopy on permanently or seasonally inundated soil, willow and buttonbush fringe, duckweed and floating plants, Spanish moss. Drawn on the Louisiana bayous, Okefenokee, Florida cypress domes and the Pantanal/Amazon varzea fringe.",
+ "climate": {
+  "temp_c": [
+   16,
+   32
+  ],
+  "moisture": [
+   0.66,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Bald cypress",
+    "genus": "Taxodium",
+    "species": "distichum",
+    "shape": "cypress",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     20,
+     40
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1.5
+    ],
+    "color": "#5A9A50",
+    "accent": "#8A6A50",
+    "source": "Taxodium distichum, bald cypress, dominant deciduous conifer of SE US swamps, buttressed with knees, 20-40 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Water tupelo",
+    "genus": "Nyssa",
+    "species": "aquatica",
+    "shape": "broadleaf",
+    "temp_c": [
+     13,
+     24
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "height_m": [
+     20,
+     30
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#3F8A38",
+    "accent": "#6A6A5A",
+    "source": "Nyssa aquatica, water tupelo, swollen-based co-dominant of cypress-tupelo swamps, SE USA, 20-30 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Black willow",
+    "genus": "Salix",
+    "species": "nigra",
+    "shape": "broadleaf",
+    "temp_c": [
+     8,
+     24
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB040",
+    "accent": "#4A3A2E",
+    "source": "Salix nigra, black willow, riverbank and swamp-edge tree of E North America, 10-20 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Pond cypress",
+    "genus": "Taxodium",
+    "species": "ascendens",
+    "shape": "cypress",
+    "temp_c": [
+     16,
+     24
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#5A9A50",
+    "accent": "#8A6A50",
+    "source": "Taxodium ascendens, pond cypress, dominant of Florida cypress domes and Okefenokee, 10-25 m — Wikipedia"
+   },
+   {
+    "name": "Water elm",
+    "genus": "Planera",
+    "species": "aquatica",
+    "shape": "broadleaf",
+    "temp_c": [
+     16,
+     24
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     8,
+     15
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "color": "#4E9A3C",
+    "accent": "#6A5A48",
+    "source": "Planera aquatica, water elm/planertree, small tree of SE US swamp margins, 8-15 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Cabbage palm",
+    "genus": "Sabal",
+    "species": "palmetto",
+    "shape": "palm",
+    "temp_c": [
+     18,
+     25
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "color": "#4E9A3C",
+    "accent": "#8A7A60",
+    "source": "Sabal palmetto, cabbage palmetto, fan palm of Florida/Gulf coast swamp hammocks, 10-20 m — Wikipedia"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Buttonbush",
+    "genus": "Cephalanthus",
+    "species": "occidentalis",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     24
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "height_m": [
+     1.5,
+     4
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.6
+    ],
+    "color": "#3F8A38",
+    "accent": "#F0F0E0",
+    "source": "Cephalanthus occidentalis, buttonbush, shrub standing in shallow swamp water across E North America, 1.5-4 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Virginia willow",
+    "genus": "Itea",
+    "species": "virginica",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "color": "#4E9A3C",
+    "accent": "#F0F0E0",
+    "source": "Itea virginica, Virginia sweetspire, swamp understory shrub of SE USA, 1-3 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Wax myrtle",
+    "genus": "Morella",
+    "species": "cerifera",
+    "shape": "shrub",
+    "temp_c": [
+     14,
+     25
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#5A9A50",
+    "accent": "#7A8A60",
+    "source": "Morella cerifera, southern wax myrtle, evergreen shrub of SE US swamp margins, 2-6 m — Wikipedia"
+   },
+   {
+    "name": "Saw palmetto",
+    "genus": "Serenoa",
+    "species": "repens",
+    "shape": "palm",
+    "temp_c": [
+     17,
+     25
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#5A9A60",
+    "accent": "#9A8A60",
+    "source": "Serenoa repens, saw palmetto, clumping fan palm of Florida/Gulf coastal swamp hammock edges, 1-3 m — Wikipedia"
+   },
+   {
+    "name": "Giant cane",
+    "genus": "Arundinaria",
+    "species": "gigantea",
+    "shape": "bamboo",
+    "temp_c": [
+     10,
+     24
+    ],
+    "moisture": [
+     0.6,
+     0.9
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "color": "#7AB840",
+    "accent": "#B0A040",
+    "source": "Arundinaria gigantea, giant river cane, native bamboo canebrakes on SE US floodplain and swamp edges, 2-8 m — Wikipedia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Cypress knees",
+    "genus": "Taxodium",
+    "species": "distichum",
+    "shape": "knees",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     1.5
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#8A6A50",
+    "accent": "#6A4A38",
+    "source": "Taxodium distichum pneumatophore 'knees', woody root projections around bald cypress in standing water — Wikipedia"
+   },
+   {
+    "name": "Duckweed",
+    "genus": "Lemna",
+    "species": "minor",
+    "shape": "moss",
+    "temp_c": [
+     5,
+     28
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.0,
+     0.01
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.1,
+     3
+    ],
+    "color": "#7AC840",
+    "accent": "#5AB040",
+    "source": "Lemna minor, common duckweed, floating carpet on still swamp water worldwide — Wikipedia"
+   },
+   {
+    "name": "Lizard's tail",
+    "genus": "Saururus",
+    "species": "cernuus",
+    "shape": "reed",
+    "temp_c": [
+     8,
+     24
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#5AB040",
+    "accent": "#F0F0E0",
+    "source": "Saururus cernuus, lizard's tail, emergent herb of shallow swamp water E North America, 0.3-1 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Royal fern",
+    "genus": "Osmunda",
+    "species": "spectabilis",
+    "shape": "fern",
+    "temp_c": [
+     5,
+     24
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "height_m": [
+     0.6,
+     1.5
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "color": "#4E9A3C",
+    "accent": "#7A5A38",
+    "source": "Osmunda spectabilis (regalis), American royal fern, swamp and bog fern of E North America, 0.6-1.5 m — Wikipedia"
+   },
+   {
+    "name": "Pickerelweed",
+    "genus": "Pontederia",
+    "species": "cordata",
+    "shape": "reed",
+    "temp_c": [
+     6,
+     26
+    ],
+    "moisture": [
+     0.9,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.1,
+     0.6
+    ],
+    "color": "#4E9A3C",
+    "accent": "#6A5AC0",
+    "source": "Pontederia cordata, pickerelweed, emergent of shallow swamp margins, Americas, 0.5-1.2 m — Wikipedia"
+   },
+   {
+    "name": "Water hyacinth",
+    "genus": "Pontederia",
+    "species": "crassipes",
+    "shape": "rosette",
+    "temp_c": [
+     16,
+     30
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.6
+    ],
+    "density": 0.4,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0.2,
+     3
+    ],
+    "color": "#5AB040",
+    "accent": "#9A6AD0",
+    "source": "Pontederia (Eichhornia) crassipes, water hyacinth, floating rosette native to Amazon basin, naturalised in Gulf bayous — Wikipedia"
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Spanish moss",
+    "genus": "Tillandsia",
+    "species": "usneoides",
+    "shape": "hanging_moss",
+    "temp_c": [
+     14,
+     26
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     4
+    ],
+    "density": 1.0,
+    "soil": "thin",
+    "color": "#9AB890",
+    "accent": "#B0B0A0",
+    "source": "Tillandsia usneoides, Spanish moss, grey festoons on cypress and oak in SE US swamps — Wikipedia / USDA"
+   },
+   {
+    "name": "Resurrection fern",
+    "genus": "Pleopeltis",
+    "species": "polypodioides",
+    "shape": "fern",
+    "temp_c": [
+     14,
+     26
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#5AA040",
+    "accent": "#7A6A50",
+    "source": "Pleopeltis polypodioides, resurrection fern, epiphytic on live oak and cypress limbs SE USA — Wikipedia"
+   },
+   {
+    "name": "Butterfly orchid",
+    "genus": "Encyclia",
+    "species": "tampensis",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     18,
+     26
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#B08A40",
+    "source": "Encyclia tampensis, Florida butterfly orchid, epiphyte on cypress and pop ash in Florida swamps — Wikipedia"
+   }
+  ]
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 125,
+  "names": [
+   "Oil palm",
+   "Raffia palm",
+   "Sago palm",
+   "Betel palm",
+   "Fishtail palm",
+   "Talipot palm",
+   "Chinese fan palm",
+   "Cabbage-tree palm",
+   "Açaí palm",
+   "Moriche palm",
+   "Royal palm",
+   "Sabal palmetto",
+   "Buriti-do-brejo",
+   "Peach palm",
+   "Walking palm",
+   "Coco de mer",
+   "Nipa palm",
+   "Needle palm",
+   "Dwarf palmetto",
+   "Rattan",
+   "Amorphophallus decus-silvae",
+   "Amorphophallus gigas",
+   "Amorphophallus hewittii",
+   "Amorphophallus titanum",
+   "Amorphophallus adamsensis",
+   "Amorphophallus albus",
+   "Amorphophallus angulatus",
+   "Amorphophallus annulifer",
+   "Amorphophallus ardii",
+   "Amorphophallus asper",
+   "Amorphophallus barthlottii",
+   "Amorphophallus beccarii",
+   "Amorphophallus bequaertii",
+   "Amorphophallus bognerianus",
+   "Amorphophallus bonaccordensis",
+   "Amorphophallus borneensis",
+   "Amorphophallus brachyphyllus",
+   "Amorphophallus bubenensis",
+   "Amorphophallus calabaricus",
+   "Amorphophallus calcicola",
+   "Amorphophallus cidarioides",
+   "Amorphophallus coaetaneus",
+   "Amorphophallus costatus",
+   "Amorphophallus cruddasianus",
+   "Amorphophallus declinatus",
+   "Amorphophallus discophorus",
+   "Amorphophallus dunnii",
+   "Amorphophallus eburneus",
+   "Amorphophallus fallax",
+   "Amorphophallus forbesii",
+   "Amorphophallus gracilis",
+   "Amorphophallus haematospadix",
+   "Amorphophallus henryi",
+   "Amorphophallus hirtus",
+   "Amorphophallus hottae",
+   "Amorphophallus infundibuliformis",
+   "Amorphophallus josefbogneri",
+   "Amorphophallus julaihii",
+   "Amorphophallus juliae",
+   "Amorphophallus kachinensis",
+   "Amorphophallus khammouanensis",
+   "Amorphophallus kienluongensis",
+   "Amorphophallus kiusianus",
+   "Amorphophallus konjac",
+   "Amorphophallus krausei",
+   "Amorphophallus lambii",
+   "Amorphophallus lanceolatus",
+   "Amorphophallus leptosoma",
+   "Amorphophallus longispathaceus",
+   "Amorphophallus luzoniensis",
+   "Amorphophallus lyratus",
+   "Amorphophallus malkmus-husseinii",
+   "Amorphophallus mekongensis",
+   "Amorphophallus merrillii",
+   "Amorphophallus mirabilis",
+   "Amorphophallus muelleri",
+   "Amorphophallus mullendersii",
+   "Amorphophallus napalensis",
+   "Amorphophallus natolii",
+   "Amorphophallus niahensis",
+   "Amorphophallus obovoideus",
+   "Amorphophallus opalinus",
+   "Amorphophallus palawanensis",
+   "Amorphophallus pendulus",
+   "Amorphophallus perakensis",
+   "Amorphophallus plicatus",
+   "Amorphophallus prainii",
+   "Amorphophallus preussii",
+   "Amorphophallus ranchanensis",
+   "Amorphophallus ravenii",
+   "Amorphophallus rostratus",
+   "Amorphophallus salmoneus",
+   "Amorphophallus samarensis",
+   "Amorphophallus shyamsalilianus",
+   "Amorphophallus sparsiflorus",
+   "Amorphophallus spectabilis",
+   "Amorphophallus staudtii",
+   "Amorphophallus suwidjianus",
+   "Amorphophallus sylvaticus",
+   "Amorphophallus tinekeae",
+   "Amorphophallus tonkinensis",
+   "Amorphophallus variabilis",
+   "Amorphophallus venustus",
+   "Amorphophallus verticillatus",
+   "Amorphophallus xiei",
+   "Amorphophallus yaoi",
+   "Amorphophallus yuloensis",
+   "Amorphophallus yunnanensis",
+   "Amorphophallus zenkeri",
+   "Lacandon yucca",
+   "Cannabis - Kerala",
+   "Cannabis - Manipur",
+   "Cannabis - Ceylon",
+   "Cannabis - Meao Thai",
+   "Cannabis - Luang Prabang",
+   "Cannabis - Vietnamese (Vietnam Black)",
+   "Cannabis - Burmese",
+   "Cannabis - Aceh",
+   "Cannabis - Papua New Guinea",
+   "Cannabis - Congolese",
+   "Cannabis - Nigerian",
+   "Cannabis - Ghanaian",
+   "Cannabis - Zamal",
+   "Cannabis - Panama Red",
+   "Cannabis - Hawaiian (Kona / Puna)"
+  ]
+ }
 }

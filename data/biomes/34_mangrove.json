@@ -1,36 +1,804 @@
 {
-	"key": "MANGROVE",
-	"name": "Mangrove",
-	"group": "Coastal",
-	"size": "small",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [20, 33],
-		"moisture": [0.48, 1]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [
-			{
-				"name": "Red mangrove",
-				"genus": "Rhizophora",
-				"species": "mangle",
-				"shape": "mangrove",
-				"temp_c": [20, 33],
-				"moisture": [0.3, 1],
-				"height_m": [5, 12],
-				"color": "#336b42",
-				"accent": "#5c422e",
-				"needs": ["standing_water", "salt_water"],
-				"water_depth_m": [0.05, 1.8],
-				"soil_default": 0.8,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): mangrove"
-			}
-		],
-		"shrub": [],
-		"ground": [],
-		"epiphyte": []
-	}
+ "key": "MANGROVE",
+ "name": "Mangrove",
+ "group": "Coastal",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Intertidal salt-tolerant forest: stilt-rooted Rhizophora on the seaward edge, pneumatophore-bearing Avicennia/Sonneratia, Laguncularia/Bruguiera landward, nipa palm and ferns at the freshwater fringe. Drawn on the Atlantic-East Pacific (Florida, Caribbean, W Africa) and Indo-West Pacific (Sundarbans, SE Asia, N Australia) mangrove provinces.",
+ "climate": {
+  "temp_c": [
+   20,
+   33
+  ],
+  "moisture": [
+   0.48,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Red mangrove",
+    "genus": "Rhizophora",
+    "species": "mangle",
+    "shape": "mangrove",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     5,
+     20
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "salt_water",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1.5
+    ],
+    "color": "#3F8A38",
+    "accent": "#8A6A50",
+    "source": "Rhizophora mangle, red mangrove, prop-rooted seaward pioneer of Atlantic/E Pacific mangroves, 5-20 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Asian stilt mangrove",
+    "genus": "Rhizophora",
+    "species": "mucronata",
+    "shape": "mangrove",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     8,
+     25
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "needs": [
+     "salt_water",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1.5
+    ],
+    "color": "#3F8A38",
+    "accent": "#7A6A50",
+    "source": "Rhizophora mucronata, loop-root mangrove, dominant seaward Rhizophora of Indo-West Pacific coasts, 8-25 m — Wikipedia"
+   },
+   {
+    "name": "Black mangrove",
+    "genus": "Avicennia",
+    "species": "germinans",
+    "shape": "mangrove",
+    "temp_c": [
+     18,
+     30
+    ],
+    "moisture": [
+     0.55,
+     1.0
+    ],
+    "height_m": [
+     3,
+     15
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5A9A60",
+    "accent": "#4A4A40",
+    "source": "Avicennia germinans, black mangrove, pencil-pneumatophore species of the mid-intertidal, Atlantic Americas/W Africa, 3-15 m; A. marina its Indo-Pacific counterpart — Wikipedia"
+   },
+   {
+    "name": "Grey mangrove",
+    "genus": "Avicennia",
+    "species": "marina",
+    "shape": "mangrove",
+    "temp_c": [
+     16,
+     30
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "height_m": [
+     3,
+     14
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#6AA870",
+    "accent": "#8A9A80",
+    "source": "Avicennia marina, grey/white mangrove, most widespread and cold-tolerant mangrove of the Indo-West Pacific (to NZ, Red Sea), 3-14 m — Wikipedia"
+   },
+   {
+    "name": "White mangrove",
+    "genus": "Laguncularia",
+    "species": "racemosa",
+    "shape": "broadleaf",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.55,
+     1.0
+    ],
+    "height_m": [
+     3,
+     12
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4E9A3C",
+    "accent": "#9A8A70",
+    "source": "Laguncularia racemosa, white mangrove, landward-zone mangrove of Atlantic/E Pacific coasts, 3-12 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Mangrove apple",
+    "genus": "Sonneratia",
+    "species": "alba",
+    "shape": "mangrove",
+    "temp_c": [
+     23,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     5,
+     15
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "salt_water",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     1
+    ],
+    "color": "#5A9A60",
+    "accent": "#7A7A70",
+    "source": "Sonneratia alba, mangrove apple, cone-pneumatophore pioneer of Indo-Pacific mangrove seaward fringe, 5-15 m — Wikipedia"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Nipa palm",
+    "genus": "Nypa",
+    "species": "fruticans",
+    "shape": "palm",
+    "temp_c": [
+     23,
+     30
+    ],
+    "moisture": [
+     0.7,
+     1.0
+    ],
+    "height_m": [
+     4,
+     9
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "river_bank",
+     "salt_water"
+    ],
+    "color": "#5AB040",
+    "accent": "#8A7A50",
+    "source": "Nypa fruticans, nipa palm, trunkless palm of brackish tidal creeks in Indo-West Pacific mangroves, fronds 4-9 m — Wikipedia"
+   },
+   {
+    "name": "Buttonwood",
+    "genus": "Conocarpus",
+    "species": "erectus",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     2,
+     10
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#6AA060",
+    "accent": "#7A6A50",
+    "source": "Conocarpus erectus, buttonwood, mangrove-associate shrub of the upper tidal edge, tropical Americas/W Africa, 2-10 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Orange mangrove",
+    "genus": "Bruguiera",
+    "species": "gymnorhiza",
+    "shape": "mangrove",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     5,
+     20
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#3F8A38",
+    "accent": "#C05A30",
+    "source": "Bruguiera gymnorhiza, large-leafed orange mangrove, knee-rooted landward mangrove of Indo-West Pacific, 5-20 m — Wikipedia"
+   },
+   {
+    "name": "Holly mangrove",
+    "genus": "Acanthus",
+    "species": "ilicifolius",
+    "shape": "shrub",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5AB040",
+    "accent": "#8A7AD0",
+    "source": "Acanthus ilicifolius, sea holly, spiny-leaved shrub of Indo-Pacific mangrove understory and creek banks, 0.5-2 m — Wikipedia"
+   },
+   {
+    "name": "Mangrove fern",
+    "genus": "Acrostichum",
+    "species": "aureum",
+    "shape": "fern",
+    "temp_c": [
+     21,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5AB040",
+    "accent": "#8A6A40",
+    "source": "Acrostichum aureum, golden leather fern, giant fern of brackish mangrove back-swamps pantropically, 1-3 m — Wikipedia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Mangrove seedling",
+    "genus": "Rhizophora",
+    "species": "mangle",
+    "shape": "mangrove",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "salt_water",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.5
+    ],
+    "color": "#5AB040",
+    "accent": "#8A6A50",
+    "source": "Rhizophora mangle propagule/seedling, planted spears on tidal mudflat — Wikipedia"
+   },
+   {
+    "name": "Saltwort",
+    "genus": "Batis",
+    "species": "maritima",
+    "shape": "cushion",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.5,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#7AC060",
+    "accent": "#A0A080",
+    "source": "Batis maritima, saltwort, succulent mat on hypersaline pans behind Americas mangroves, 0.1-0.5 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Sea purslane",
+    "genus": "Sesuvium",
+    "species": "portulacastrum",
+    "shape": "cushion",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.4,
+     1.0
+    ],
+    "height_m": [
+     0.05,
+     0.3
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5AB040",
+    "accent": "#E05A9A",
+    "source": "Sesuvium portulacastrum, shoreline sea purslane, pantropical succulent creeper on mangrove mud and sand, prostrate — Wikipedia"
+   },
+   {
+    "name": "Smooth cordgrass",
+    "genus": "Sporobolus",
+    "species": "alterniflorus",
+    "shape": "reed",
+    "temp_c": [
+     10,
+     28
+    ],
+    "moisture": [
+     0.8,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "salt_water",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.5
+    ],
+    "color": "#7AB840",
+    "accent": "#C8B060",
+    "source": "Sporobolus (Spartina) alterniflorus, smooth cordgrass, tidal marsh grass at the mangrove/salt-marsh ecotone, Atlantic Americas, 0.5-2 m — Wikipedia"
+   },
+   {
+    "name": "Turtle grass",
+    "genus": "Thalassia",
+    "species": "testudinum",
+    "shape": "reed",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     1.0,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "needs": [
+     "standing_water",
+     "salt_water"
+    ],
+    "water_depth_m": [
+     0.5,
+     10
+    ],
+    "color": "#5AB040",
+    "accent": "#3F8A38",
+    "source": "Thalassia testudinum, turtle grass, seagrass meadow seaward of Caribbean/Gulf mangroves, 0.2-0.6 m blades — Wikipedia (underwater)"
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Mangrove orchid",
+    "genus": "Dendrobium",
+    "species": "crumenatum",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     23,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#F0F0E0",
+    "source": "Dendrobium crumenatum, pigeon orchid, epiphyte on Indo-Malesian mangrove and coastal trees — Wikipedia"
+   },
+   {
+    "name": "Mangrove bromeliad",
+    "genus": "Tillandsia",
+    "species": "utriculata",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#8AA860",
+    "accent": "#B0B0A0",
+    "source": "Tillandsia utriculata, giant air plant, epiphyte on black/red mangrove branches in Florida and Caribbean — Wikipedia"
+   },
+   {
+    "name": "Ant plant",
+    "genus": "Myrmecodia",
+    "species": "beccarii",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     23,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#5AA040",
+    "accent": "#8A7A60",
+    "source": "Myrmecodia beccarii, ant-house plant, tuberous epiphyte on Queensland mangrove trunks — Wikipedia"
+   }
+  ]
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 252,
+  "names": [
+   "Coconut palm",
+   "Oil palm",
+   "Raffia palm",
+   "Sago palm",
+   "Betel palm",
+   "Fishtail palm",
+   "Talipot palm",
+   "Chinese fan palm",
+   "Açaí palm",
+   "Moriche palm",
+   "Babassu",
+   "Royal palm",
+   "Sabal palmetto",
+   "Wild date palm",
+   "Senegal date palm",
+   "Buriti-do-brejo",
+   "Foxtail palm",
+   "Peach palm",
+   "Walking palm",
+   "Coco de mer",
+   "Nipa palm",
+   "Saw palmetto",
+   "Bottle palm",
+   "Rattan",
+   "Amorphophallus decus-silvae",
+   "Amorphophallus gigas",
+   "Amorphophallus hewittii",
+   "Amorphophallus titanum",
+   "Amorphophallus aberrans",
+   "Amorphophallus adamsensis",
+   "Amorphophallus albispathus",
+   "Amorphophallus allenii",
+   "Amorphophallus amygdaloides",
+   "Amorphophallus angulatus",
+   "Amorphophallus angustispathus",
+   "Amorphophallus annulifer",
+   "Amorphophallus arcuspadix",
+   "Amorphophallus ardii",
+   "Amorphophallus asper",
+   "Amorphophallus atrorubens",
+   "Amorphophallus atroviridis",
+   "Amorphophallus bangkokensis",
+   "Amorphophallus bantae",
+   "Amorphophallus barbatus",
+   "Amorphophallus barthlottii",
+   "Amorphophallus beccarii",
+   "Amorphophallus bequaertii",
+   "Amorphophallus bognerianus",
+   "Amorphophallus bolikhamxayensis",
+   "Amorphophallus bonaccordensis",
+   "Amorphophallus borneensis",
+   "Amorphophallus boyceanus",
+   "Amorphophallus brachyphyllus",
+   "Amorphophallus brevipetiolatus",
+   "Amorphophallus brevispathus",
+   "Amorphophallus bubenensis",
+   "Amorphophallus bufo",
+   "Amorphophallus bulbifer",
+   "Amorphophallus calabaricus",
+   "Amorphophallus calcicola",
+   "Amorphophallus canaliculatus",
+   "Amorphophallus candidissimus",
+   "Amorphophallus carneus",
+   "Amorphophallus carnosus",
+   "Amorphophallus caudatus",
+   "Amorphophallus chlorospathus",
+   "Amorphophallus cicatricifer",
+   "Amorphophallus cidarioides",
+   "Amorphophallus cirrifer",
+   "Amorphophallus claudelii",
+   "Amorphophallus commutatus",
+   "Amorphophallus costatus",
+   "Amorphophallus coudercii",
+   "Amorphophallus crinitus",
+   "Amorphophallus crispifolius",
+   "Amorphophallus croatii",
+   "Amorphophallus curvistylis",
+   "Amorphophallus declinatus",
+   "Amorphophallus discophorus",
+   "Amorphophallus dumboi",
+   "Amorphophallus dzui",
+   "Amorphophallus eburneus",
+   "Amorphophallus echinatus",
+   "Amorphophallus elatus",
+   "Amorphophallus elegans",
+   "Amorphophallus erythrorrhachis",
+   "Amorphophallus excentricus",
+   "Amorphophallus fallax",
+   "Amorphophallus ferruginosus",
+   "Amorphophallus flammeus",
+   "Amorphophallus flotoi",
+   "Amorphophallus fontarumii",
+   "Amorphophallus forbesii",
+   "Amorphophallus fornicatus",
+   "Amorphophallus fuscus",
+   "Amorphophallus galbra",
+   "Amorphophallus gallowayi",
+   "Amorphophallus glaucophyllus",
+   "Amorphophallus gliruroides",
+   "Amorphophallus glossophyllus",
+   "Amorphophallus gracilior",
+   "Amorphophallus gracilis",
+   "Amorphophallus haematospadix",
+   "Amorphophallus harmandii",
+   "Amorphophallus hayi",
+   "Amorphophallus hemicryptus",
+   "Amorphophallus hirsutus",
+   "Amorphophallus hohenackeri",
+   "Amorphophallus hottae",
+   "Amorphophallus incurvatus",
+   "Amorphophallus infundibuliformis",
+   "Amorphophallus interruptus",
+   "Amorphophallus josefbogneri",
+   "Amorphophallus julaihii",
+   "Amorphophallus juliae",
+   "Amorphophallus khammouanensis",
+   "Amorphophallus kienluongensis",
+   "Amorphophallus konkanensis",
+   "Amorphophallus koratensis",
+   "Amorphophallus kuznetsovii",
+   "Amorphophallus lacourii",
+   "Amorphophallus lambii",
+   "Amorphophallus lanceolatus",
+   "Amorphophallus lanuginosus",
+   "Amorphophallus laoticus",
+   "Amorphophallus leptosoma",
+   "Amorphophallus linearis",
+   "Amorphophallus linguiformis",
+   "Amorphophallus longicomus",
+   "Amorphophallus longiconnectivus",
+   "Amorphophallus longispathaceus",
+   "Amorphophallus longistylus",
+   "Amorphophallus longituberosus",
+   "Amorphophallus lunatus",
+   "Amorphophallus luzoniensis",
+   "Amorphophallus lyratus",
+   "Amorphophallus macrophyllus",
+   "Amorphophallus macrorhizus",
+   "Amorphophallus malkmus-husseinii",
+   "Amorphophallus margaritifer",
+   "Amorphophallus margretae",
+   "Amorphophallus maxwellii",
+   "Amorphophallus mayoi",
+   "Amorphophallus merrillii",
+   "Amorphophallus minimus",
+   "Amorphophallus minor",
+   "Amorphophallus mirabilis",
+   "Amorphophallus muelleri",
+   "Amorphophallus mullendersii",
+   "Amorphophallus myosuroides",
+   "Amorphophallus mysorensis",
+   "Amorphophallus napiger",
+   "Amorphophallus natolii",
+   "Amorphophallus niahensis",
+   "Amorphophallus nicolaii",
+   "Amorphophallus nicolsonianus",
+   "Amorphophallus obovoideus",
+   "Amorphophallus obscurus",
+   "Amorphophallus ochroleucus",
+   "Amorphophallus oncophyllus",
+   "Amorphophallus ongsakulii",
+   "Amorphophallus opalinus",
+   "Amorphophallus operculatus",
+   "Amorphophallus opertus",
+   "Amorphophallus paeoniifolius",
+   "Amorphophallus palawanensis",
+   "Amorphophallus paucisectus",
+   "Amorphophallus pendulus",
+   "Amorphophallus perakensis",
+   "Amorphophallus pilosus",
+   "Amorphophallus plicatus",
+   "Amorphophallus polyanthus",
+   "Amorphophallus prainii",
+   "Amorphophallus preussii",
+   "Amorphophallus prolificus",
+   "Amorphophallus pulchellus",
+   "Amorphophallus purpurascens",
+   "Amorphophallus pusillus",
+   "Amorphophallus putii",
+   "Amorphophallus pygmaeus",
+   "Amorphophallus ranchanensis",
+   "Amorphophallus ravenii",
+   "Amorphophallus rayongii",
+   "Amorphophallus reflexus",
+   "Amorphophallus rhizomatosus",
+   "Amorphophallus rostratus",
+   "Amorphophallus rugosus",
+   "Amorphophallus sagittarius",
+   "Amorphophallus sakonnakhonensis",
+   "Amorphophallus salmoneus",
+   "Amorphophallus samarensis",
+   "Amorphophallus saraburensis",
+   "Amorphophallus saururus",
+   "Amorphophallus scaber",
+   "Amorphophallus schmidtiae",
+   "Amorphophallus scutatus",
+   "Amorphophallus serrulatus",
+   "Amorphophallus shyamsalilianus",
+   "Amorphophallus sinuatus",
+   "Amorphophallus sizemoreae",
+   "Amorphophallus smithsonianus",
+   "Amorphophallus sparsiflorus",
+   "Amorphophallus spectabilis",
+   "Amorphophallus staudtii",
+   "Amorphophallus subcymbiformis",
+   "Amorphophallus sumawongii",
+   "Amorphophallus suwidjianus",
+   "Amorphophallus sylvaticus",
+   "Amorphophallus symonianus",
+   "Amorphophallus synandrifer",
+   "Amorphophallus tenuispadix",
+   "Amorphophallus tenuistylis",
+   "Amorphophallus terrestris",
+   "Amorphophallus thaiensis",
+   "Amorphophallus tinekeae",
+   "Amorphophallus tuberculatus",
+   "Amorphophallus umbrinus",
+   "Amorphophallus urceolatus",
+   "Amorphophallus variabilis",
+   "Amorphophallus venustus",
+   "Amorphophallus villosus",
+   "Amorphophallus vogelianus",
+   "Amorphophallus wasa",
+   "Amorphophallus zenkeri",
+   "Spanish bayonet",
+   "Lacandon yucca",
+   "Cannabis - Kerala",
+   "Cannabis - Mysore",
+   "Cannabis - Ceylon",
+   "Cannabis - Thai (Isan)",
+   "Cannabis - Meao Thai",
+   "Cannabis - Luang Prabang",
+   "Cannabis - Cambodian",
+   "Cannabis - Vietnamese (Vietnam Black)",
+   "Cannabis - Burmese",
+   "Cannabis - Aceh",
+   "Cannabis - Papua New Guinea",
+   "Cannabis - Malawi",
+   "Cannabis - Kisumu",
+   "Cannabis - Congolese",
+   "Cannabis - Angolan",
+   "Cannabis - Nigerian",
+   "Cannabis - Ghanaian",
+   "Cannabis - Zamal",
+   "Cannabis - Acapulco Gold",
+   "Cannabis - Santa Marta Gold",
+   "Cannabis - Punto Rojo",
+   "Cannabis - Limón Verde",
+   "Cannabis - Panama Red",
+   "Cannabis - Lamb's Bread",
+   "Cannabis - Manga Rosa",
+   "Cannabis - Hawaiian (Kona / Puna)"
+  ]
+ }
 }

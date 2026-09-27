@@ -1,36 +1,329 @@
 {
-	"key": "SALT_MARSH",
-	"name": "Salt marsh",
-	"group": "Wetlands",
-	"size": "small",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [3, 21],
-		"moisture": [0.6, 1]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [],
-		"ground": [
-			{
-				"name": "Cordgrass",
-				"genus": "Sporobolus",
-				"species": "alterniflorus",
-				"shape": "reed",
-				"temp_c": [3, 26],
-				"moisture": [0.3, 1],
-				"height_m": [0.5, 1.5],
-				"color": "#8c9959",
-				"accent": "#5c422e",
-				"needs": ["standing_water", "salt_water"],
-				"water_depth_m": [0, 0.8],
-				"density": 1.6,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): salt marsh"
-			}
-		],
-		"epiphyte": []
-	}
+ "key": "SALT_MARSH",
+ "name": "Salt marsh",
+ "group": "Wetlands",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Tidal grassland of salt-tolerant cordgrasses, rushes and succulent glasswort, zoned from the daily-flooded low marsh to a high marsh of salt hay, sea lavender and marsh elder; drawn on the US Atlantic/Gulf coast marshes and NW European (Wadden Sea, UK) saltings.",
+ "climate": {
+  "temp_c": [
+   3,
+   21
+  ],
+  "moisture": [
+   0.6,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Marsh elder",
+    "genus": "Iva",
+    "species": "frutescens",
+    "shape": "shrub",
+    "temp_c": [
+     8,
+     21
+    ],
+    "moisture": [
+     0.6,
+     0.9
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#8A8A6A",
+    "source": "Iva frutescens, marsh elder, US Atlantic & Gulf coasts, shrub fringe at the upper edge of salt marsh, 1-3 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Groundsel bush",
+    "genus": "Baccharis",
+    "species": "halimifolia",
+    "shape": "shrub",
+    "temp_c": [
+     10,
+     21
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "height_m": [
+     1.5,
+     4
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4A9A3A",
+    "accent": "#F0F0E0",
+    "source": "Baccharis halimifolia, groundsel bush, US Atlantic & Gulf coasts, high salt-marsh border, 1.5-4 m, fluffy white seed heads — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Sea purslane shrub (halimione)",
+    "genus": "Atriplex",
+    "species": "portulacoides",
+    "shape": "shrub",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#9AB8A0",
+    "accent": "#B8C8B0",
+    "source": "Atriplex portulacoides (Halimione portulacoides), sea purslane, European Atlantic & Mediterranean coasts, grey-leaved shrublet along creek banks of the mid marsh, 30-80 cm — Wikipedia / Kew POWO"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Cordgrass",
+    "genus": "Spartina",
+    "species": "alterniflora",
+    "shape": "grass",
+    "temp_c": [
+     8,
+     21
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.5,
+     2
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "salt_water",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.6
+    ],
+    "color": "#5AB040",
+    "accent": "#C8B060",
+    "source": "Spartina (Sporobolus) alterniflora, smooth cordgrass, US Atlantic & Gulf coasts, sole dominant of daily-flooded low marsh, 0.5-2 m — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Salt hay",
+    "genus": "Spartina",
+    "species": "patens",
+    "shape": "grass",
+    "temp_c": [
+     6,
+     21
+    ],
+    "moisture": [
+     0.65,
+     0.95
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.9,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#8AA860",
+    "accent": "#C8B060",
+    "source": "Spartina (Sporobolus) patens, saltmeadow cordgrass, US Atlantic & Gulf coasts, fine cowlicked sward of the high marsh, 30-80 cm — USDA Plants / Wikipedia"
+   },
+   {
+    "name": "Common cordgrass",
+    "genus": "Sporobolus",
+    "species": "anglicus",
+    "shape": "grass",
+    "temp_c": [
+     7,
+     16
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1.3
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "needs": [
+     "salt_water",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.5
+    ],
+    "color": "#5AB040",
+    "accent": "#A8B860",
+    "source": "Spartina (Sporobolus) anglica, common cordgrass, NW European estuaries (origin S England), pioneer of intertidal mudflats, 0.3-1.3 m — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Glasswort",
+    "genus": "Salicornia",
+    "species": "europaea",
+    "shape": "cushion",
+    "temp_c": [
+     3,
+     21
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "salt_water",
+     "standing_water"
+    ],
+    "water_depth_m": [
+     0,
+     0.3
+    ],
+    "color": "#5AB040",
+    "accent": "#C84A3A",
+    "source": "Salicornia europaea, common glasswort, coasts of Europe, N America & Asia, succulent annual pioneer of bare intertidal mud, 10-30 cm, reddens in autumn — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Sea lavender",
+    "genus": "Limonium",
+    "species": "vulgare",
+    "shape": "rosette",
+    "temp_c": [
+     6,
+     18
+    ],
+    "moisture": [
+     0.6,
+     0.9
+    ],
+    "height_m": [
+     0.2,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#3E8F3A",
+    "accent": "#9A7AC8",
+    "source": "Limonium vulgare, common sea lavender, European Atlantic & North Sea coasts, mid-high salt marsh, 20-40 cm, lilac flower sprays in summer — Wikipedia / Kew POWO"
+   },
+   {
+    "name": "Black needlerush",
+    "genus": "Juncus",
+    "species": "roemerianus",
+    "shape": "reed",
+    "temp_c": [
+     12,
+     21
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.8,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#3A6A3A",
+    "accent": "#4A4A3A",
+    "source": "Juncus roemerianus, black needlerush, US Gulf & S Atlantic coasts, dark stiff stands of the irregularly flooded high marsh, 0.8-1.5 m — USDA Plants / Wikipedia"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 46,
+  "names": [
+   "Andean wax palm",
+   "Chinese fan palm",
+   "Cabbage-tree palm",
+   "Nikau palm",
+   "Sabal palmetto",
+   "Windmill palm",
+   "Saw palmetto",
+   "Needle palm",
+   "Dwarf palmetto",
+   "Amorphophallus albus",
+   "Amorphophallus coaetaneus",
+   "Amorphophallus cruddasianus",
+   "Amorphophallus dunnii",
+   "Amorphophallus henryi",
+   "Amorphophallus hirtus",
+   "Amorphophallus kachinensis",
+   "Amorphophallus kiusianus",
+   "Amorphophallus konjac",
+   "Amorphophallus krausei",
+   "Amorphophallus mekongensis",
+   "Amorphophallus napalensis",
+   "Amorphophallus tonkinensis",
+   "Amorphophallus verticillatus",
+   "Amorphophallus xiei",
+   "Amorphophallus yaoi",
+   "Amorphophallus yuloensis",
+   "Amorphophallus yunnanensis",
+   "Cannabis - Manali",
+   "Cannabis - Parvati (Malana)",
+   "Cannabis - Nepalese",
+   "Cannabis - Manipur",
+   "Cannabis - Meao Thai",
+   "Cannabis - Yunnan",
+   "Cannabis - Papua New Guinea",
+   "Cannabis - Transkei (Rooibaard)",
+   "Cannabis - Swazi",
+   "Cannabis - Kilimanjaro",
+   "Cannabis - Santa Marta Gold",
+   "Cannabis - Hawaiian (Kona / Puna)",
+   "Cannabis - Northern Chinese hemp",
+   "Cannabis - Japanese hemp (asa)",
+   "Cannabis - Korean hemp (Andong)",
+   "Cannabis - Central Russian hemp",
+   "Cannabis - Carmagnola",
+   "Cannabis - Anatolian hemp (Kastamonu)",
+   "Cannabis - Kentucky feral hemp"
+  ]
+ }
 }

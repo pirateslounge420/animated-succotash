@@ -1,37 +1,278 @@
 {
-	"key": "ALPINE_MEADOW",
-	"name": "Alpine meadow",
-	"group": "High-altitude",
-	"size": "small",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [-2, 4],
-		"moisture": [0.35, 0.95],
-		"altitude_m": [900, 5000]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [],
-		"ground": [
-			{
-				"name": "Alpine wildflowers",
-				"genus": "Alpiflora",
-				"species": "variegata",
-				"invented": true,
-				"shape": "grass",
-				"temp_c": [-3, 8],
-				"moisture": [0.35, 0.95],
-				"height_m": [0.1, 0.3],
-				"color": "#73994c",
-				"accent": "#cc66e6",
-				"altitude_m": [1200, 4500],
-				"density": 1.4,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): alpine meadow"
-			}
-		],
-		"epiphyte": []
-	}
+ "key": "ALPINE_MEADOW",
+ "name": "Alpine meadow",
+ "group": "High-altitude",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Subalpine-alpine herb meadows and grasslands just above treeline: Alps/Pyrenees mat-grass and fescue meadows, Rocky Mountain wildflower meadows, Tibetan/Himalayan Kobresia meadows. Grasses and sedges dominate with showy forbs.",
+ "climate": {
+  "temp_c": [
+   -2,
+   4
+  ],
+  "moisture": [
+   0.35,
+   0.95
+  ],
+  "altitude_m": [
+   900,
+   5000
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [],
+  "shrub": [
+   {
+    "name": "Alpenrose",
+    "genus": "Rhododendron",
+    "species": "ferrugineum",
+    "shape": "shrub",
+    "temp_c": [
+     -2,
+     5
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     1500,
+     2800
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#2F6A30",
+    "accent": "#E03060",
+    "source": "Rhododendron ferrugineum, Alps/Pyrenees subalpine 1500-2800 m on acid soils, evergreen shrub 0.3-1 m with rose-red flowers"
+   },
+   {
+    "name": "Dwarf juniper",
+    "genus": "Juniperus",
+    "species": "communis",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     6
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     1500,
+     3000
+    ],
+    "height_m": [
+     0.2,
+     0.8
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#3A6A40",
+    "accent": "#4A4A6A",
+    "source": "Juniperus communis var. saxatilis, alpine ridges Eurasia and N America, prostrate mat 20-80 cm"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Mat grass",
+    "genus": "Nardus",
+    "species": "stricta",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     5
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     1200,
+     2800
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 1.0,
+    "soil": "peat",
+    "color": "#9AB050",
+    "accent": "#C8B060",
+    "source": "Nardus stricta, dominant of acid subalpine/alpine meadows Alps, Pyrenees, Scandinavia 1500-2600 m, wiry tussocks 10-30 cm"
+   },
+   {
+    "name": "Tibetan alpine sedge",
+    "genus": "Kobresia",
+    "species": "pygmaea",
+    "shape": "grass",
+    "temp_c": [
+     -4,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     3200,
+     5600
+    ],
+    "height_m": [
+     0.02,
+     0.1
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#8AB048",
+    "accent": "#B8A050",
+    "source": "Kobresia pygmaea, dominant turf of Tibetan Plateau/Himalayan alpine meadows 3200-5600 m, largest alpine ecosystem on Earth"
+   },
+   {
+    "name": "Tufted hairgrass",
+    "genus": "Deschampsia",
+    "species": "cespitosa",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     6
+    ],
+    "moisture": [
+     0.5,
+     0.95
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "color": "#6AA850",
+    "accent": "#C0B060",
+    "source": "Deschampsia cespitosa, dominant in moist alpine meadows Rockies, Alps, Scandinavia, tussock 30-100 cm"
+   },
+   {
+    "name": "Alpine wildflowers",
+    "genus": "Ranunculus",
+    "species": "adoneus",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     4
+    ],
+    "moisture": [
+     0.5,
+     0.9
+    ],
+    "altitude_m": [
+     3000,
+     4000
+    ],
+    "height_m": [
+     0.05,
+     0.25
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#4A9A40",
+    "accent": "#F0D030",
+    "source": "Ranunculus adoneus (snow buttercup), Rocky Mountain alpine meadows 3000-4000 m, yellow flowers at snowmelt 5-25 cm"
+   },
+   {
+    "name": "Alpine paintbrush",
+    "genus": "Castilleja",
+    "species": "rhexiifolia",
+    "shape": "grass",
+    "temp_c": [
+     -2,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     2500,
+     3800
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#4A9A45",
+    "accent": "#E03050",
+    "source": "Castilleja rhexiifolia, Rocky Mountain subalpine/alpine meadows 2500-3800 m, magenta bracts 10-40 cm"
+   },
+   {
+    "name": "Gentian",
+    "genus": "Gentiana",
+    "species": "acaulis",
+    "shape": "rosette",
+    "temp_c": [
+     -2,
+     4
+    ],
+    "moisture": [
+     0.4,
+     0.8
+    ],
+    "altitude_m": [
+     1400,
+     3000
+    ],
+    "height_m": [
+     0.03,
+     0.1
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#3E8A3A",
+    "accent": "#2040C0",
+    "source": "Gentiana acaulis (trumpet gentian), Alps/Pyrenees/Carpathians 1400-3000 m, deep blue trumpet 3-10 cm"
+   },
+   {
+    "name": "Edelweiss",
+    "genus": "Leontopodium",
+    "species": "nivale",
+    "shape": "cushion",
+    "temp_c": [
+     -2,
+     4
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     1800,
+     3000
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#A0B0A0",
+    "accent": "#F0F0E0",
+    "source": "Leontopodium nivale (alpinum), Alps/Carpathians/Pyrenees 1800-3000 m limestone meadows, woolly white star flowers 5-20 cm"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 1,
+  "names": [
+   "Cannabis - Altai"
+  ]
+ }
 }

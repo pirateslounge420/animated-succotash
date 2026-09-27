@@ -1,37 +1,305 @@
 {
-	"key": "DUNES",
-	"name": "Dunes",
-	"group": "Coastal",
-	"size": "small",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [0, 33],
-		"moisture": [0, 0.45]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [],
-		"ground": [
-			{
-				"name": "Marram grass",
-				"genus": "Calamagrostis",
-				"species": "arenaria",
-				"shape": "tussock",
-				"temp_c": [2, 27],
-				"moisture": [0.08, 0.7],
-				"height_m": [0.5, 1],
-				"color": "#b2b873",
-				"accent": "#5c422e",
-				"soil": "sand",
-				"soil_default": 0,
-				"density": 1.4,
-				"needs": ["salt_water"],
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): dunes"
-			}
-		],
-		"epiphyte": []
-	}
+ "key": "DUNES",
+ "name": "Dunes",
+ "group": "Coastal",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Coastal and inland sand dunes: sand-binding rhizomatous grasses on mobile foredunes, sedges and creeping herbs behind, and scattered pine/juniper/willow scrub on stabilised grey dunes. Drawn on Atlantic and Baltic Europe, eastern and Pacific North America, and Australian foredunes.",
+ "climate": {
+  "temp_c": [
+   0,
+   33
+  ],
+  "moisture": [
+   0,
+   0.45
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Scots pine",
+    "genus": "Pinus",
+    "species": "sylvestris",
+    "shape": "conifer",
+    "temp_c": [
+     -2,
+     14
+    ],
+    "moisture": [
+     0.25,
+     0.6
+    ],
+    "height_m": [
+     15,
+     35
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#2E6E35",
+    "accent": "#C07A48",
+    "source": "Pinus sylvestris, Eurasia, planted and native on stabilised dunes (Baltic, Dutch coast), 15-35 m — Wikipedia"
+   },
+   {
+    "name": "Dune pine",
+    "genus": "Pinus",
+    "species": "contorta",
+    "shape": "conifer",
+    "temp_c": [
+     3,
+     12
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "height_m": [
+     5,
+     15
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#2F7A35",
+    "accent": "#6E5A48",
+    "source": "Pinus contorta subsp. contorta (shore pine), Pacific NW dunes Alaska-California, wind-stunted 5-15 m — Wikipedia / USDA"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Creeping willow",
+    "genus": "Salix",
+    "species": "repens",
+    "shape": "shrub",
+    "temp_c": [
+     2,
+     14
+    ],
+    "moisture": [
+     0.35,
+     0.8
+    ],
+    "height_m": [
+     0.3,
+     1.5
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#7FA07A",
+    "accent": "#8A7050",
+    "source": "Salix repens (incl. var. argentea), European dune slacks and grey dunes, low creeping willow 0.3-1.5 m — Wikipedia"
+   },
+   {
+    "name": "Coastal juniper",
+    "genus": "Juniperus",
+    "species": "communis",
+    "shape": "shrub",
+    "temp_c": [
+     -2,
+     14
+    ],
+    "moisture": [
+     0.2,
+     0.6
+    ],
+    "height_m": [
+     0.5,
+     4
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#3B6E3A",
+    "accent": "#6A5A4A",
+    "source": "Juniperus communis, circumboreal, common on stabilised European and North American dunes, prostrate to 4 m — Wikipedia"
+   },
+   {
+    "name": "Bayberry",
+    "genus": "Morella",
+    "species": "pensylvanica",
+    "shape": "shrub",
+    "temp_c": [
+     5,
+     15
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#3E8E3A",
+    "accent": "#7A6A50",
+    "source": "Morella pensylvanica, NE North American Atlantic dunes, aromatic thicket shrub 1-3 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Coastal wattle",
+    "genus": "Acacia",
+    "species": "longifolia",
+    "shape": "shrub",
+    "temp_c": [
+     13,
+     22
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "height_m": [
+     1.5,
+     6
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#5A9A40",
+    "accent": "#E8D040",
+    "source": "Acacia longifolia subsp. sophorae, SE Australian dunes (invasive in S Africa/Portugal), sprawling 1.5-6 m — Wikipedia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Marram grass",
+    "genus": "Ammophila",
+    "species": "arenaria",
+    "shape": "tussock",
+    "temp_c": [
+     4,
+     18
+    ],
+    "moisture": [
+     0.15,
+     0.5
+    ],
+    "height_m": [
+     0.6,
+     1.2
+    ],
+    "density": 1.2,
+    "soil": "sand",
+    "color": "#9EB870",
+    "accent": "#C8B060",
+    "source": "Ammophila arenaria, European Atlantic/Mediterranean foredunes (A. breviligulata in NE America), the archetypal sand-binder, 0.6-1.2 m — Wikipedia"
+   },
+   {
+    "name": "American beachgrass",
+    "genus": "Ammophila",
+    "species": "breviligulata",
+    "shape": "tussock",
+    "temp_c": [
+     4,
+     15
+    ],
+    "moisture": [
+     0.15,
+     0.5
+    ],
+    "height_m": [
+     0.6,
+     1.0
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "color": "#9EB870",
+    "accent": "#C8B060",
+    "source": "Ammophila breviligulata, Great Lakes and NE Atlantic dunes, rhizomatous foredune grass 0.6-1 m — USDA Plants"
+   },
+   {
+    "name": "Sea oats",
+    "genus": "Uniola",
+    "species": "paniculata",
+    "shape": "tussock",
+    "temp_c": [
+     16,
+     26
+    ],
+    "moisture": [
+     0.15,
+     0.5
+    ],
+    "height_m": [
+     1,
+     2
+    ],
+    "density": 0.9,
+    "soil": "sand",
+    "color": "#B8B868",
+    "accent": "#C8B060",
+    "source": "Uniola paniculata, SE US Atlantic/Gulf and Caribbean foredunes, tall nodding seed heads 1-2 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Lyme grass",
+    "genus": "Leymus",
+    "species": "arenarius",
+    "shape": "tussock",
+    "temp_c": [
+     0,
+     12
+    ],
+    "moisture": [
+     0.2,
+     0.6
+    ],
+    "height_m": [
+     0.6,
+     1.5
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#8AB0B0",
+    "accent": "#C8B060",
+    "source": "Leymus arenarius, N European and Icelandic coastal dunes, blue-grey rhizomatous grass 0.6-1.5 m — Wikipedia"
+   },
+   {
+    "name": "Sand sedge",
+    "genus": "Carex",
+    "species": "arenaria",
+    "shape": "grass",
+    "temp_c": [
+     3,
+     15
+    ],
+    "moisture": [
+     0.2,
+     0.6
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "color": "#5AA040",
+    "accent": "#C8B060",
+    "source": "Carex arenaria, European dunes, runs in straight lines from long rhizomes across bare sand, 10-40 cm — Wikipedia"
+   },
+   {
+    "name": "Dune evening primrose",
+    "genus": "Oenothera",
+    "species": "drummondii",
+    "shape": "rosette",
+    "temp_c": [
+     15,
+     26
+    ],
+    "moisture": [
+     0.15,
+     0.5
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#5AB040",
+    "accent": "#F0D040",
+    "source": "Oenothera drummondii, Gulf of Mexico dunes (widely naturalised), yellow-flowered sprawling herb 20-60 cm — Wikipedia"
+   }
+  ],
+  "epiphyte": []
+ }
 }

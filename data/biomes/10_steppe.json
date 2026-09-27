@@ -1,35 +1,346 @@
 {
-	"key": "STEPPE",
-	"name": "Steppe",
-	"group": "Grass & scrub",
-	"size": "mid",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [-2, 18],
-		"moisture": [0.2, 0.4]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [],
-		"ground": [
-			{
-				"name": "Feather grass",
-				"genus": "Stipa",
-				"species": "pennata",
-				"shape": "tussock",
-				"temp_c": [-3, 16],
-				"moisture": [0.17, 0.42],
-				"height_m": [0.4, 0.8],
-				"color": "#bfb880",
-				"accent": "#5c422e",
-				"density": 1.3,
-				"soil": "thin",
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): steppe"
-			}
-		],
-		"epiphyte": []
-	}
+ "key": "STEPPE",
+ "name": "Steppe",
+ "group": "Grass & scrub",
+ "size": "mid",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Cold, semi-arid temperate grassland of feather grasses, fescues and wormwoods with rare shrubs, treeless except ravines; Eurasian steppe (Ukraine to Mongolia) with Patagonian and Great Basin analogues.",
+ "climate": {
+  "temp_c": [
+   -2,
+   18
+  ],
+  "moisture": [
+   0.2,
+   0.4
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Siberian elm",
+    "genus": "Ulmus",
+    "species": "pumila",
+    "shape": "broadleaf",
+    "temp_c": [
+     -2,
+     18
+    ],
+    "moisture": [
+     0.25,
+     0.5
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.1,
+    "soil": "rich",
+    "color": "#3F8C38",
+    "accent": "#7A6A55",
+    "source": "Ulmus pumila, Central Asia/Mongolia/N China steppe ravines and river banks, 10-25 m — Flora of China"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Siberian pea shrub",
+    "genus": "Caragana",
+    "species": "arborescens",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     14
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     2,
+     5
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#E8D040",
+    "source": "Caragana arborescens, Siberia/Mongolia steppe and forest-steppe, legume shrub 2-5 m, yellow flowers — Flora of China"
+   },
+   {
+    "name": "Steppe wormwood",
+    "genus": "Artemisia",
+    "species": "austriaca",
+    "shape": "shrub",
+    "temp_c": [
+     0,
+     18
+    ],
+    "moisture": [
+     0.15,
+     0.4
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#A8B4A0",
+    "accent": "#C8B878",
+    "source": "Artemisia austriaca, Eurasian steppe from Austria to Kazakhstan, silver sub-shrub 20-50 cm — Euro+Med PlantBase"
+   },
+   {
+    "name": "Steppe spiraea",
+    "genus": "Spiraea",
+    "species": "hypericifolia",
+    "shape": "shrub",
+    "temp_c": [
+     -2,
+     16
+    ],
+    "moisture": [
+     0.2,
+     0.45
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#3F8C38",
+    "accent": "#F0F0E0",
+    "source": "Spiraea hypericifolia, Eurasian steppe shrub 0.5-1.5 m, white flowers — Flora of China"
+   },
+   {
+    "name": "Neneo",
+    "genus": "Mulinum",
+    "species": "spinosum",
+    "shape": "cushion",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#8FA860",
+    "accent": "#E8D858",
+    "source": "Mulinum spinosum, Patagonian steppe, spiny cushion shrub 0.3-1 m — Flora Argentina"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Feather grass",
+    "genus": "Stipa",
+    "species": "pennata",
+    "shape": "tussock",
+    "temp_c": [
+     0,
+     16
+    ],
+    "moisture": [
+     0.2,
+     0.42
+    ],
+    "height_m": [
+     0.4,
+     0.9
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "color": "#C8B060",
+    "accent": "#F0E8D0",
+    "source": "Stipa pennata, dominant Eurasian steppe grass, feathery silver awns, 0.4-0.9 m — Euro+Med PlantBase"
+   },
+   {
+    "name": "Krylov needlegrass",
+    "genus": "Stipa",
+    "species": "krylovii",
+    "shape": "tussock",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.15,
+     0.35
+    ],
+    "height_m": [
+     0.3,
+     0.7
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#D8C880",
+    "source": "Stipa krylovii, dominant of the Mongolian dry steppe, 0.3-0.7 m — Flora of China"
+   },
+   {
+    "name": "Valais fescue",
+    "genus": "Festuca",
+    "species": "valesiaca",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     16
+    ],
+    "moisture": [
+     0.18,
+     0.4
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#6E9A8A",
+    "accent": "#C8B060",
+    "source": "Festuca valesiaca, Eurasian steppe bunchgrass, blue-grey, 20-50 cm — Euro+Med PlantBase"
+   },
+   {
+    "name": "Crested wheatgrass",
+    "genus": "Agropyron",
+    "species": "cristatum",
+    "shape": "grass",
+    "temp_c": [
+     -2,
+     16
+    ],
+    "moisture": [
+     0.18,
+     0.4
+    ],
+    "height_m": [
+     0.3,
+     0.9
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#8FA868",
+    "accent": "#C8B060",
+    "source": "Agropyron cristatum, Central Asian and Siberian steppe, 0.3-0.9 m — Flora of China"
+   },
+   {
+    "name": "Coiron",
+    "genus": "Pappostipa",
+    "species": "speciosa",
+    "shape": "tussock",
+    "temp_c": [
+     2,
+     12
+    ],
+    "moisture": [
+     0.12,
+     0.35
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#E0D0A0",
+    "source": "Pappostipa speciosa, dominant Patagonian steppe bunchgrass, 30-60 cm — Flora Argentina"
+   },
+   {
+    "name": "Steppe tulip",
+    "genus": "Tulipa",
+    "species": "suaveolens",
+    "shape": "grass",
+    "temp_c": [
+     2,
+     14
+    ],
+    "moisture": [
+     0.2,
+     0.4
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#E03030",
+    "source": "Tulipa suaveolens (T. schrenkii), Pontic-Caspian steppe spring bulb, 10-30 cm, red flowers — Euro+Med PlantBase"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 54,
+  "names": [
+   "Chilean wine palm",
+   "Cretan date palm",
+   "Mediterranean fan palm",
+   "Narrowleaf yucca",
+   "Arkansas yucca",
+   "Navajo yucca",
+   "Plains yucca",
+   "Palma china",
+   "Soaptree yucca",
+   "Endlich's yucca",
+   "Izote",
+   "Soapweed yucca",
+   "Harriman's yucca",
+   "Intermediate yucca",
+   "Linear-leaf yucca",
+   "Luminous yucca",
+   "Sierra Madre yucca",
+   "Mixtec yucca",
+   "New Mexico yucca",
+   "Pine-woods yucca",
+   "Potosí yucca",
+   "Sterile yucca",
+   "Utah yucca",
+   "Trichocereus peruvianus",
+   "Trichocereus bridgesii",
+   "Trichocereus scopulicola",
+   "Trichocereus macrogonus",
+   "Trichocereus cuzcoensis",
+   "Trichocereus terscheckii",
+   "Trichocereus tacaquirensis",
+   "Trichocereus taquimbalensis",
+   "Trichocereus santaensis",
+   "Trichocereus puquiensis",
+   "Trichocereus huanucoensis",
+   "Trichocereus riomizquensis",
+   "Trichocereus werdermannianus",
+   "Trichocereus validus",
+   "Trichocereus knuthianus",
+   "Trichocereus glaucus",
+   "Trichocereus chalaensis",
+   "Cannabis - Hindu Kush",
+   "Cannabis - Afghani",
+   "Cannabis - Mazar-i-Sharif",
+   "Cannabis - Lashkar Gah",
+   "Cannabis - Chitral",
+   "Cannabis - Swat Valley",
+   "Cannabis - Tirah Valley",
+   "Cannabis - Kashmir",
+   "Cannabis - Uzbek",
+   "Cannabis - Pamir",
+   "Cannabis - Lebanese (Bekaa)",
+   "Cannabis - Iranian (Mashhad)",
+   "Cannabis - Chuy Valley",
+   "Cannabis - Mongolian"
+  ]
+ }
 }

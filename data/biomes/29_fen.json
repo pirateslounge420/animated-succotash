@@ -1,20 +1,319 @@
 {
-	"key": "FEN",
-	"name": "Fen",
-	"group": "Wetlands",
-	"size": "small",
-	"status": "empty",
-	"kind": "land",
-	"notes": "No plants yet. Add some below (see data/biomes/README.md).",
-	"climate": {
-		"temp_c": [-7, 5],
-		"moisture": [0.62, 1]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [],
-		"ground": [],
-		"epiphyte": []
-	}
+ "key": "FEN",
+ "name": "Fen",
+ "group": "Wetlands",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Minerotrophic groundwater-fed peatland: alkaline to neutral, sedge-dominated with brown mosses, tall herbs, willow/alder carr and tamarack. Drawn on European calcareous fens (Britain, Alps, Baltic) and N American rich fens.",
+ "climate": {
+  "temp_c": [
+   -7,
+   5
+  ],
+  "moisture": [
+   0.62,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Tamarack",
+    "genus": "Larix",
+    "species": "laricina",
+    "shape": "conifer",
+    "temp_c": [
+     -7,
+     5
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     5,
+     20
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#8AC050",
+    "accent": "#7A5030",
+    "source": "Larix laricina, N American rich fens and swamps, deciduous conifer 5-20 m"
+   },
+   {
+    "name": "Grey alder",
+    "genus": "Alnus",
+    "species": "incana",
+    "shape": "broadleaf",
+    "temp_c": [
+     -5,
+     8
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     5,
+     15
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#4A9A40",
+    "accent": "#8A8A80",
+    "source": "Alnus incana, Eurasian and N American fen carr and stream margins, 5-15 m multi-stemmed"
+   },
+   {
+    "name": "Northern white cedar",
+    "genus": "Thuja",
+    "species": "occidentalis",
+    "shape": "conifer",
+    "temp_c": [
+     -5,
+     6
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     8,
+     20
+    ],
+    "density": 0.4,
+    "soil": "peat",
+    "color": "#3A7A45",
+    "accent": "#8A6A50",
+    "source": "Thuja occidentalis, NE North American calcareous fens and cedar swamps, 8-20 m conical"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Fen willow",
+    "genus": "Salix",
+    "species": "cinerea",
+    "shape": "shrub",
+    "temp_c": [
+     -4,
+     8
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#7AA070",
+    "accent": "#8A7A5A",
+    "source": "Salix cinerea (grey willow), European fen carr and marsh margins, bushy 2-6 m"
+   },
+   {
+    "name": "Shrubby cinquefoil",
+    "genus": "Dasiphora",
+    "species": "fruticosa",
+    "shape": "shrub",
+    "temp_c": [
+     -7,
+     6
+    ],
+    "moisture": [
+     0.6,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#4A8A40",
+    "accent": "#F0D030",
+    "source": "Dasiphora fruticosa, circumboreal calcareous fens, yellow-flowered shrub 0.3-1 m"
+   },
+   {
+    "name": "Bog birch",
+    "genus": "Betula",
+    "species": "pumila",
+    "shape": "shrub",
+    "temp_c": [
+     -7,
+     5
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.5,
+    "soil": "peat",
+    "color": "#4A9A40",
+    "accent": "#7A5A3A",
+    "source": "Betula pumila, N American fens and peatlands, 1-3 m shrub birch (B. humilis in Europe)"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Saw sedge",
+    "genus": "Cladium",
+    "species": "mariscus",
+    "shape": "reed",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.8,
+    "soil": "peat",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#7AA848",
+    "accent": "#A09040",
+    "source": "Cladium mariscus (great fen-sedge), dominant of European calcareous fens (Norfolk Broads), serrated leaves 1-2.5 m"
+   },
+   {
+    "name": "Bottle sedge",
+    "genus": "Carex",
+    "species": "rostrata",
+    "shape": "grass",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 1.0,
+    "soil": "wet",
+    "needs": [
+     "standing_water"
+    ],
+    "color": "#6AA850",
+    "accent": "#A8A050",
+    "source": "Carex rostrata, circumboreal poor and rich fens, dominant sedge lawn 30-100 cm at water's edge"
+   },
+   {
+    "name": "Black bog-rush",
+    "genus": "Schoenus",
+    "species": "nigricans",
+    "shape": "tussock",
+    "temp_c": [
+     -2,
+     8
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.6,
+    "soil": "peat",
+    "color": "#6A9A48",
+    "accent": "#2A2A2A",
+    "source": "Schoenus nigricans, dominant tussock of calcareous fens in Britain/Ireland/continental Europe, dark flower heads 20-60 cm"
+   },
+   {
+    "name": "Brown moss",
+    "genus": "Scorpidium",
+    "species": "scorpioides",
+    "shape": "moss",
+    "temp_c": [
+     -7,
+     6
+    ],
+    "moisture": [
+     0.85,
+     1
+    ],
+    "height_m": [
+     0.02,
+     0.08
+    ],
+    "density": 0.8,
+    "soil": "wet",
+    "color": "#7A6A30",
+    "accent": "#A05A30",
+    "source": "Scorpidium scorpioides, characteristic brown moss carpet of rich fens across the boreal/temperate zone"
+   },
+   {
+    "name": "Marsh marigold",
+    "genus": "Caltha",
+    "species": "palustris",
+    "shape": "rosette",
+    "temp_c": [
+     -7,
+     8
+    ],
+    "moisture": [
+     0.8,
+     1
+    ],
+    "height_m": [
+     0.15,
+     0.5
+    ],
+    "density": 0.5,
+    "soil": "wet",
+    "color": "#3F8A3A",
+    "accent": "#F0C020",
+    "source": "Caltha palustris, circumboreal fens and wet meadows, glossy leaves and yellow flowers 15-50 cm"
+   },
+   {
+    "name": "Grass of Parnassus",
+    "genus": "Parnassia",
+    "species": "palustris",
+    "shape": "rosette",
+    "temp_c": [
+     -7,
+     6
+    ],
+    "moisture": [
+     0.7,
+     1
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "peat",
+    "color": "#4A9A45",
+    "accent": "#F8F8F0",
+    "source": "Parnassia palustris, Eurasian and N American calcareous fens, single white flower 10-30 cm"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 0,
+  "names": []
+ }
 }

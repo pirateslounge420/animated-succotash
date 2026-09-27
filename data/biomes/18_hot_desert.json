@@ -1,180 +1,474 @@
 {
-	"key": "HOT_DESERT",
-	"name": "Hot desert",
-	"group": "Desert",
-	"size": "vast",
-	"status": "researched",
-	"kind": "land",
-	"notes": "Canopy, shrub and ground tiers researched (Sonoran/Mojave desert sources per entry). The original Column cactus entry is still a placeholder.",
-	"climate": {
-		"temp_c": [18, 35],
-		"moisture": [0, 0.2]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [
-			{
-				"name": "Column cactus",
-				"genus": "Columnocereus",
-				"species": "austerus",
-				"invented": true,
-				"shape": "cactus",
-				"temp_c": [17, 33],
-				"moisture": [0.02, 0.26],
-				"height_m": [3, 10],
-				"color": "#4c7a4c",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.35,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): hot desert"
-			},
-			{
-				"name": "Saguaro cactus",
-				"genus": "Carnegiea",
-				"species": "gigantea",
-				"shape": "cactus",
-				"temp_c": [18, 34],
-				"moisture": [0.02, 0.24],
-				"height_m": [3, 12],
-				"color": "#4c7a4c",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.15,
-				"source": "Sonoran Desert (NPS Sonoran Desert Network Ecosystems; Saguaro NP vegetation report)"
-			},
-			{
-				"name": "Yellow paloverde",
-				"genus": "Parkinsonia",
-				"species": "microphylla",
-				"shape": "umbrella",
-				"leaf_density": 0.3,
-				"temp_c": [18, 35],
-				"moisture": [0.05, 0.26],
-				"height_m": [4, 8],
-				"color": "#7a9959",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.25,
-				"source": "Sonoran Desert (NPS SODN; Saguaro NP wooded shrubland association)"
-			},
-			{
-				"name": "Velvet mesquite",
-				"genus": "Neltuma",
-				"species": "velutina",
-				"shape": "gnarled",
-				"leaf_density": 0.45,
-				"temp_c": [18, 35],
-				"moisture": [0.06, 0.3],
-				"height_m": [4, 9],
-				"color": "#5c7a40",
-				"accent": "#5c422e",
-				"needs": ["river_bank"],
-				"density": 0.2,
-				"source": "Sonoran Desert (NPS SODN: phreatophytic shrub, co-dominant canopy species)"
-			}
-		],
-		"shrub": [
-			{
-				"name": "Creosote bush",
-				"genus": "Larrea",
-				"species": "tridentata",
-				"shape": "shrub",
-				"temp_c": [15, 35],
-				"moisture": [0.02, 0.26],
-				"height_m": [1, 2.5],
-				"color": "#597340",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.8,
-				"source": "Sonoran/Mojave Desert (Desert Museum: Plant Ecology of the Sonoran Desert Region; UC Berkeley UCMP)"
-			},
-			{
-				"name": "Whitethorn acacia",
-				"genus": "Vachellia",
-				"species": "constricta",
-				"shape": "shrub",
-				"temp_c": [17, 35],
-				"moisture": [0.05, 0.28],
-				"height_m": [1.5, 3],
-				"color": "#738040",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.35,
-				"source": "Sonoran Desert (Desert Museum: Plant Ecology of the Sonoran Desert Region)"
-			},
-			{
-				"name": "Catclaw acacia",
-				"genus": "Senegalia",
-				"species": "greggii",
-				"shape": "shrub",
-				"temp_c": [16, 35],
-				"moisture": [0.04, 0.26],
-				"height_m": [1.5, 3],
-				"color": "#66803d",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.3,
-				"source": "Sonoran Desert (NPS SODN; CDFW Desert Scrub habitat description)"
-			},
-			{
-				"name": "Ocotillo",
-				"genus": "Fouquieria",
-				"species": "splendens",
-				"shape": "spike_rosette",
-				"temp_c": [16, 35],
-				"moisture": [0.03, 0.24],
-				"height_m": [2, 5],
-				"color": "#597340",
-				"accent": "#66472e",
-				"soil": "thin",
-				"density": 0.2,
-				"source": "Sonoran Desert (leafyplace.com desert plants; azstateparks.com)"
-			}
-		],
-		"ground": [
-			{
-				"name": "Prickly pear",
-				"genus": "Opuntia",
-				"species": "engelmannii",
-				"shape": "cactus",
-				"temp_c": [10, 35],
-				"moisture": [0.02, 0.3],
-				"height_m": [0.3, 1],
-				"color": "#4c8552",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.6,
-				"source": "Sonoran/Mojave Desert (azstateparks.com Desert Plants; leafyplace.com)"
-			},
-			{
-				"name": "Bursage",
-				"genus": "Ambrosia",
-				"species": "dumosa",
-				"shape": "shrub",
-				"temp_c": [15, 35],
-				"moisture": [0.02, 0.22],
-				"height_m": [0.3, 0.6],
-				"color": "#8c9166",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.7,
-				"source": "Sonoran/Mojave Desert (UC Berkeley UCMP deserts; white bursage, Franseria dumosa)"
-			},
-			{
-				"name": "Barrel cactus",
-				"genus": "Ferocactus",
-				"species": "wislizeni",
-				"shape": "cactus",
-				"temp_c": [12, 33],
-				"moisture": [0.02, 0.3],
-				"height_m": [0.4, 1.2],
-				"color": "#597a4c",
-				"accent": "#5c422e",
-				"soil": "thin",
-				"density": 0.15,
-				"source": "Sonoran Desert (azstateparks.com Desert Plants in Arizona)"
-			}
-		],
-		"epiphyte": []
-	}
+ "key": "HOT_DESERT",
+ "name": "Hot desert",
+ "group": "Desert",
+ "size": "vast",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Widely spaced drought shrubs (creosote, acacias) with columnar and barrel cacti, spiny succulents and ephemeral grasses; Sonoran/Chihuahuan/Mojave with Sahara-Arabian, Namib and Australian variants.",
+ "climate": {
+  "temp_c": [
+   18,
+   35
+  ],
+  "moisture": [
+   0,
+   0.2
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Saguaro cactus",
+    "genus": "Carnegiea",
+    "species": "gigantea",
+    "shape": "cactus",
+    "temp_c": [
+     18,
+     25
+    ],
+    "moisture": [
+     0.08,
+     0.2
+    ],
+    "height_m": [
+     6,
+     15
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#5A8A48",
+    "accent": "#F0F0E0",
+    "source": "Carnegiea gigantea, Sonoran Desert (Arizona, Sonora), columnar cactus 6-15 m with arms — Flora of North America"
+   },
+   {
+    "name": "Cardon",
+    "genus": "Pachycereus",
+    "species": "pringlei",
+    "shape": "cactus",
+    "temp_c": [
+     19,
+     25
+    ],
+    "moisture": [
+     0.05,
+     0.18
+    ],
+    "height_m": [
+     8,
+     18
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#4F8A50",
+    "accent": "#F0F0E0",
+    "source": "Pachycereus pringlei, Baja California and Sonora coast, giant columnar cactus 8-18 m — Flora of North America"
+   },
+   {
+    "name": "Yellow paloverde",
+    "genus": "Parkinsonia",
+    "species": "microphylla",
+    "shape": "broadleaf",
+    "leaf_density": 0.3,
+    "temp_c": [
+     19,
+     26
+    ],
+    "moisture": [
+     0.06,
+     0.2
+    ],
+    "height_m": [
+     4,
+     8
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#8AB050",
+    "accent": "#B8C858",
+    "source": "Parkinsonia microphylla, Sonoran Desert, green-barked small tree 4-8 m, yellow flowers — USDA PLANTS"
+   },
+   {
+    "name": "Velvet mesquite",
+    "genus": "Prosopis",
+    "species": "velutina",
+    "shape": "umbrella",
+    "leaf_density": 0.45,
+    "temp_c": [
+     18,
+     25
+    ],
+    "moisture": [
+     0.08,
+     0.25
+    ],
+    "height_m": [
+     6,
+     15
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5A8A45",
+    "accent": "#6A5A45",
+    "source": "Prosopis velutina, Sonoran Desert washes, spreading legume tree 6-15 m — USDA PLANTS"
+   },
+   {
+    "name": "Umbrella thorn",
+    "genus": "Vachellia",
+    "species": "tortilis",
+    "shape": "umbrella",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.05,
+     0.25
+    ],
+    "height_m": [
+     4,
+     14
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#6A9A45",
+    "accent": "#8A7050",
+    "source": "Vachellia tortilis, Sahara, Sahel, Arabia and E Africa, flat-topped umbrella acacia 4-14 m — Kew POWO"
+   },
+   {
+    "name": "Quiver tree",
+    "genus": "Aloidendron",
+    "species": "dichotomum",
+    "shape": "rosette",
+    "temp_c": [
+     18,
+     22
+    ],
+    "moisture": [
+     0.05,
+     0.15
+    ],
+    "height_m": [
+     3,
+     9
+    ],
+    "density": 0.2,
+    "soil": "thin",
+    "color": "#7FA870",
+    "accent": "#C8B080",
+    "source": "Aloidendron dichotomum, Namib and Namaqualand rocky slopes, forked succulent tree 3-9 m — SANBI PlantZAfrica"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Creosote bush",
+    "genus": "Larrea",
+    "species": "tridentata",
+    "shape": "shrub",
+    "temp_c": [
+     16,
+     26
+    ],
+    "moisture": [
+     0.03,
+     0.2
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "color": "#6A9A40",
+    "accent": "#E8C830",
+    "source": "Larrea tridentata, dominant shrub of the Mojave, Sonoran and Chihuahuan deserts, 1-3 m — USDA PLANTS"
+   },
+   {
+    "name": "Ocotillo",
+    "genus": "Fouquieria",
+    "species": "splendens",
+    "shape": "spike_rosette",
+    "temp_c": [
+     18,
+     26
+    ],
+    "moisture": [
+     0.05,
+     0.2
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#7AA050",
+    "accent": "#E03020",
+    "source": "Fouquieria splendens, Sonoran and Chihuahuan deserts, whip-like spiny canes 3-8 m, red flower tips — USDA PLANTS"
+   },
+   {
+    "name": "Prickly pear",
+    "genus": "Opuntia",
+    "species": "engelmannii",
+    "shape": "cactus",
+    "temp_c": [
+     16,
+     26
+    ],
+    "moisture": [
+     0.05,
+     0.25
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#6A9A50",
+    "accent": "#E0C040",
+    "source": "Opuntia engelmannii, SW USA and N Mexico deserts, pad cactus 1-3 m — USDA PLANTS"
+   },
+   {
+    "name": "Barrel cactus",
+    "genus": "Ferocactus",
+    "species": "wislizeni",
+    "shape": "cactus",
+    "temp_c": [
+     18,
+     25
+    ],
+    "moisture": [
+     0.05,
+     0.2
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#4F8A50",
+    "accent": "#D08030",
+    "source": "Ferocactus wislizeni, Sonoran/Chihuahuan deserts, barrel 0.5-1.5 m, hooked red spines — Flora of North America"
+   },
+   {
+    "name": "Whitethorn acacia",
+    "genus": "Vachellia",
+    "species": "constricta",
+    "shape": "shrub",
+    "temp_c": [
+     17,
+     25
+    ],
+    "moisture": [
+     0.06,
+     0.22
+    ],
+    "height_m": [
+     1,
+     4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#6A9A45",
+    "accent": "#F0F0E0",
+    "source": "Vachellia constricta, Sonoran/Chihuahuan deserts, thorny shrub 1-4 m — USDA PLANTS"
+   },
+   {
+    "name": "Mulga",
+    "genus": "Acacia",
+    "species": "aneura",
+    "shape": "shrub",
+    "temp_c": [
+     18,
+     26
+    ],
+    "moisture": [
+     0.06,
+     0.22
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#8A9A70",
+    "accent": "#7A6A50",
+    "source": "Acacia aneura, dominant of arid central Australia, grey-green shrub/tree 3-8 m — Flora of Australia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Bursage",
+    "genus": "Ambrosia",
+    "species": "dumosa",
+    "shape": "shrub",
+    "temp_c": [
+     17,
+     26
+    ],
+    "moisture": [
+     0.03,
+     0.18
+    ],
+    "height_m": [
+     0.3,
+     0.7
+    ],
+    "density": 0.9,
+    "soil": "sand",
+    "color": "#B0B8A0",
+    "accent": "#C8C0A8",
+    "source": "Ambrosia dumosa, co-dominant low shrub with creosote, Mojave/Sonoran, 30-70 cm — USDA PLANTS"
+   },
+   {
+    "name": "Brittlebush",
+    "genus": "Encelia",
+    "species": "farinosa",
+    "shape": "shrub",
+    "temp_c": [
+     18,
+     26
+    ],
+    "moisture": [
+     0.05,
+     0.2
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#AEBCA0",
+    "accent": "#F0D030",
+    "source": "Encelia farinosa, Sonoran and Mojave slopes, silver-leaved 0.5-1.2 m, yellow daisies — USDA PLANTS"
+   },
+   {
+    "name": "Hard spinifex",
+    "genus": "Triodia",
+    "species": "basedowii",
+    "shape": "tussock",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.04,
+     0.2
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "color": "#A8B860",
+    "accent": "#C8B060",
+    "source": "Triodia basedowii, dominant hummock grass of the central Australian sand deserts, 30-100 cm rings — Flora of Australia"
+   },
+   {
+    "name": "Welwitschia",
+    "genus": "Welwitschia",
+    "species": "mirabilis",
+    "shape": "rosette",
+    "temp_c": [
+     17,
+     23
+    ],
+    "moisture": [
+     0.02,
+     0.12
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.15,
+    "soil": "sand",
+    "color": "#6A8A50",
+    "accent": "#A07040",
+    "source": "Welwitschia mirabilis, Namib Desert fog belt, two strap leaves on a woody stump, 0.3-1 m — SANBI PlantZAfrica"
+   },
+   {
+    "name": "Lechuguilla",
+    "genus": "Agave",
+    "species": "lechuguilla",
+    "shape": "spike_rosette",
+    "temp_c": [
+     17,
+     24
+    ],
+    "moisture": [
+     0.05,
+     0.2
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#7FA070",
+    "accent": "#E8D888",
+    "source": "Agave lechuguilla, indicator of the Chihuahuan Desert, spiky rosettes 30-60 cm — USDA PLANTS"
+   },
+   {
+    "name": "Tabush grass",
+    "genus": "Panicum",
+    "species": "turgidum",
+    "shape": "tussock",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.03,
+     0.15
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#A8B878",
+    "accent": "#C8B060",
+    "source": "Panicum turgidum, Sahara and Arabian sand deserts, wiry tussock 30-100 cm — Kew POWO"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 20,
+  "names": [
+   "Date palm",
+   "Red cabbage palm",
+   "California fan palm",
+   "Mexican fan palm",
+   "Mexican blue palm",
+   "Cape yucca",
+   "Giant Spanish dagger",
+   "Carr's yucca",
+   "Coahuila yucca",
+   "Declined yucca",
+   "Blue-boy yucca",
+   "Endlich's yucca",
+   "Faxon yucca",
+   "Feeanouki's yucca",
+   "Linear-leaf yucca",
+   "Beaked yucca",
+   "Mojave yucca",
+   "Thompson's yucca",
+   "Torrey yucca",
+   "Datilillo"
+  ]
+ }
 }

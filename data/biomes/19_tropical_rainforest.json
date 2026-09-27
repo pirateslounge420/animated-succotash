@@ -1,160 +1,820 @@
 {
-	"key": "TROPICAL_RAINFOREST",
-	"name": "Tropical rainforest",
-	"group": "Tropical",
-	"size": "vast",
-	"status": "researched",
-	"kind": "land",
-	"notes": "Species from the DESIGN.md research table.",
-	"climate": {
-		"temp_c": [20, 33],
-		"moisture": [0.62, 1]
-	},
-	"plants": {
-		"emergent": [
-			{
-				"name": "Rainforest emergent",
-				"genus": "Hyperdendron",
-				"species": "excelsum",
-				"invented": true,
-				"shape": "emergent",
-				"temp_c": [21, 33],
-				"moisture": [0.6, 1],
-				"height_m": [40, 55],
-				"color": "#1a7329",
-				"accent": "#5c422e",
-				"altitude_m": [-50, 1300],
-				"density": 0.9,
-				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
-			}
-		],
-		"canopy": [
-			{
-				"name": "Buttressed broadleaf",
-				"genus": "Pterobasis",
-				"species": "latifolia",
-				"invented": true,
-				"shape": "broadleaf",
-				"temp_c": [20, 33],
-				"moisture": [0.55, 1],
-				"height_m": [22, 34],
-				"color": "#146624",
-				"accent": "#5c422e",
-				"altitude_m": [-50, 1500],
-				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
-			},
-			{
-				"name": "Rainforest palm",
-				"genus": "Silvipalma",
-				"species": "umbrosa",
-				"invented": true,
-				"shape": "palm",
-				"temp_c": [20, 33],
-				"moisture": [0.55, 1],
-				"height_m": [12, 20],
-				"color": "#298033",
-				"accent": "#5c422e",
-				"altitude_m": [-50, 1200],
-				"density": 0.6,
-				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
-			},
-			{
-				"name": "Giant bamboo",
-				"genus": "Dendrocalamus",
-				"species": "giganteus",
-				"shape": "bamboo",
-				"temp_c": [20, 30],
-				"moisture": [0.6, 1],
-				"altitude_m": [0, 1200],
-				"height_m": [20, 30],
-				"color": "#3f7a2a",
-				"accent": "#5f7d4a",
-				"density": 1.2,
-				"source": "Dendrocalamus giganteus, SE Asian tropical forest: one of the largest bamboos, clumps of culms to ~30 m tall and 20-30 cm across"
-			}
-		],
-		"shrub": [
-			{
-				"name": "Tree fern",
-				"genus": "Cyathea",
-				"species": "arborea",
-				"shape": "tree_fern",
-				"temp_c": [10, 30],
-				"moisture": [0.6, 1],
-				"height_m": [3, 7],
-				"color": "#338538",
-				"accent": "#5c422e",
-				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes); cloud forest (Wikipedia)"
-			},
-			{
-				"name": "Rainforest sapling",
-				"genus": "Tirodendron",
-				"species": "umbraticum",
-				"invented": true,
-				"shape": "shrub",
-				"temp_c": [18, 33],
-				"moisture": [0.55, 1],
-				"height_m": [2, 5],
-				"color": "#24752e",
-				"accent": "#5c422e",
-				"density": 1.2,
-				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes) (shrub layer densest)"
-			}
-		],
-		"ground": [
-			{
-				"name": "Forest-floor fern",
-				"genus": "Humifilix",
-				"species": "opaca",
-				"invented": true,
-				"shape": "fern",
-				"temp_c": [8, 33],
-				"moisture": [0.55, 1],
-				"height_m": [0.4, 1],
-				"color": "#338038",
-				"accent": "#5c422e",
-				"density": 0.5,
-				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes) (floor dark, fairly bare)"
-			}
-		],
-		"epiphyte": [
-			{
-				"name": "Orchid",
-				"genus": "Cattleya",
-				"species": "labiata",
-				"shape": "epiphyte_clump",
-				"temp_c": [14, 32],
-				"moisture": [0.6, 1],
-				"height_m": [0.3, 0.6],
-				"color": "#d973cc",
-				"accent": "#337333",
-				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
-			},
-			{
-				"name": "Bromeliad",
-				"genus": "Guzmania",
-				"species": "lingulata",
-				"shape": "epiphyte_clump",
-				"temp_c": [10, 32],
-				"moisture": [0.62, 1],
-				"height_m": [0.4, 0.8],
-				"color": "#cc4033",
-				"accent": "#408033",
-				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
-			},
-			{
-				"name": "Liana",
-				"genus": "Restivitis",
-				"species": "longissima",
-				"invented": true,
-				"shape": "liana",
-				"temp_c": [20, 33],
-				"moisture": [0.6, 1],
-				"height_m": [8, 16],
-				"color": "#336b29",
-				"accent": "#5c422e",
-				"source": "Tropical rainforest (nature.com Scitable, terrestrial biomes)"
-			}
-		]
-	}
+ "key": "TROPICAL_RAINFOREST",
+ "name": "Tropical rainforest",
+ "group": "Tropical",
+ "size": "vast",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Ever-wet lowland rainforest: multi-layered evergreen broadleaf forest with buttressed canopy, giant emergents, palms, lianas and heavy epiphyte load. Drawn on the Amazon, Congo Basin and Sundaland (Borneo/Malaya) dipterocarp forest.",
+ "climate": {
+  "temp_c": [
+   20,
+   33
+  ],
+  "moisture": [
+   0.62,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [
+   {
+    "name": "Brazil nut tree",
+    "genus": "Bertholletia",
+    "species": "excelsa",
+    "shape": "emergent",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     30,
+     50
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#5A4A38",
+    "source": "Bertholletia excelsa, Brazil nut, emergent of non-flooded Amazon terra firme forest, 30-50 m — Wikipedia / Kew"
+   },
+   {
+    "name": "Kapok",
+    "genus": "Ceiba",
+    "species": "pentandra",
+    "shape": "emergent",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.55,
+     1.0
+    ],
+    "height_m": [
+     40,
+     70
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#8A8A78",
+    "source": "Ceiba pentandra, kapok, buttressed emergent of neotropical and West African rainforest, up to 70 m — Wikipedia"
+   },
+   {
+    "name": "Tualang",
+    "genus": "Koompassia",
+    "species": "excelsa",
+    "shape": "emergent",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     45,
+     80
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#B0A090",
+    "source": "Koompassia excelsa, tualang/mengaris, tallest emergent of Sundaland lowland rainforest (Borneo, Malaya), up to 80+ m — Wikipedia"
+   },
+   {
+    "name": "Yellow meranti",
+    "genus": "Shorea",
+    "species": "faguetiana",
+    "shape": "emergent",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     40,
+     90
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#7A6A50",
+    "source": "Shorea faguetiana, yellow meranti dipterocarp, Borneo lowland forest emergent, record 100 m tropical tree — Wikipedia / Nature 2019"
+   }
+  ],
+  "canopy": [
+   {
+    "name": "Sapucaia",
+    "genus": "Lecythis",
+    "species": "pisonis",
+    "shape": "broadleaf",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     20,
+     35
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#6A5A48",
+    "source": "Lecythis pisonis, sapucaia (monkey-pot), Amazon/Atlantic forest canopy tree with pink flush, 20-35 m — Wikipedia / Kew"
+   },
+   {
+    "name": "Limba",
+    "genus": "Terminalia",
+    "species": "superba",
+    "shape": "umbrella",
+    "temp_c": [
+     23,
+     29
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     30,
+     50
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#8A8A78",
+    "source": "Terminalia superba, limba/afara, layered-crown canopy tree of Congo Basin and West African rainforest, 30-50 m — Wikipedia / PROTA"
+   },
+   {
+    "name": "Red meranti",
+    "genus": "Shorea",
+    "species": "leprosula",
+    "shape": "broadleaf",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     30,
+     50
+    ],
+    "density": 0.9,
+    "soil": "rich",
+    "color": "#2F7A35",
+    "accent": "#5A3A2E",
+    "source": "Shorea leprosula, light red meranti, dominant dipterocarp of Sundaland lowland forest canopy, 30-50 m — Wikipedia / IUCN"
+   },
+   {
+    "name": "Strangler fig",
+    "genus": "Ficus",
+    "species": "aurea",
+    "shape": "gnarled",
+    "temp_c": [
+     21,
+     30
+    ],
+    "moisture": [
+     0.55,
+     1.0
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#9A9A88",
+    "source": "Ficus aurea, Florida/Caribbean strangler fig; Ficus lianes typical of all tropical rainforests, 15-30 m on host trees — Wikipedia"
+   },
+   {
+    "name": "Assai palm",
+    "genus": "Euterpe",
+    "species": "precatoria",
+    "shape": "palm",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.7,
+    "soil": "wet",
+    "color": "#3F8A38",
+    "accent": "#8A7A60",
+    "source": "Euterpe precatoria, acai palm, most abundant tree species of the Amazon (ter Steege 2013), slender palm 10-25 m — Wikipedia"
+   },
+   {
+    "name": "Rattan palm",
+    "genus": "Calamus",
+    "species": "manan",
+    "shape": "liana",
+    "temp_c": [
+     24,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     10,
+     40
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#8A8A50",
+    "source": "Calamus manan, manau rattan, climbing spiny palm of Malesian rainforest, stems 40+ m long — Wikipedia / PROSEA"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Giant bamboo",
+    "genus": "Dendrocalamus",
+    "species": "giganteus",
+    "shape": "bamboo",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.55,
+     0.95
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#8AA060",
+    "source": "Dendrocalamus giganteus, giant bamboo, SE Asian monsoon and rainforest margins, clumps 15-30 m — Wikipedia"
+   },
+   {
+    "name": "Tree fern",
+    "genus": "Cyathea",
+    "species": "arborea",
+    "shape": "tree_fern",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     3,
+     9
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#5A4A38",
+    "source": "Cyathea arborea, West Indian tree fern, neotropical rainforest understory and gaps, 3-9 m — Wikipedia"
+   },
+   {
+    "name": "Heliconia",
+    "genus": "Heliconia",
+    "species": "bihai",
+    "shape": "shrub",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     1.5,
+     4
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#E03A2A",
+    "source": "Heliconia bihai, red palulu/lobster claw, neotropical rainforest understory herb 1.5-4 m — Wikipedia"
+   },
+   {
+    "name": "Silver miconia",
+    "genus": "Miconia",
+    "species": "argentea",
+    "shape": "shrub",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#B8C8B0",
+    "source": "Miconia argentea, Melastomataceae pioneer shrub/treelet common in neotropical rainforest understory and gaps, 2-8 m — Wikipedia / STRI"
+   },
+   {
+    "name": "Aframomum ginger",
+    "genus": "Aframomum",
+    "species": "melegueta",
+    "shape": "shrub",
+    "temp_c": [
+     23,
+     29
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     1,
+     2.5
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#E04A5A",
+    "source": "Aframomum melegueta, grains of paradise, Zingiberaceae understory herb of West/Central African rainforest, 1-2.5 m — Wikipedia / PROTA"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Forest-floor fern",
+    "genus": "Adiantum",
+    "species": "latifolium",
+    "shape": "fern",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#3A2A20",
+    "source": "Adiantum latifolium, maidenhair fern, common terrestrial fern of shaded neotropical rainforest floor, 0.3-0.8 m — Wikipedia / Tropicos"
+   },
+   {
+    "name": "Selaginella",
+    "genus": "Selaginella",
+    "species": "willdenowii",
+    "shape": "moss",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     0.1,
+     0.5
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#3F8A60",
+    "accent": "#2F6A60",
+    "source": "Selaginella willdenowii, peacock spikemoss, iridescent blue-green ground carpet of SE Asian rainforest floor — Wikipedia"
+   },
+   {
+    "name": "Marantaceae herb",
+    "genus": "Calathea",
+    "species": "lutea",
+    "shape": "shrub",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": "wet",
+    "color": "#4E9A3C",
+    "accent": "#E8C040",
+    "source": "Calathea lutea, cigar calathea, large-leaved neotropical rainforest floor herb 1-3 m — Wikipedia"
+   },
+   {
+    "name": "Amazon sword",
+    "genus": "Echinodorus",
+    "species": "grandiflorus",
+    "shape": "reed",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.75,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.3,
+    "soil": "wet",
+    "needs": [
+     "river_bank"
+    ],
+    "color": "#5AB040",
+    "accent": "#F0F0E0",
+    "source": "Echinodorus grandiflorus, Amazon sword plant, emergent along rainforest creek margins, 0.5-1.5 m — Wikipedia"
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Bromeliad",
+    "genus": "Guzmania",
+    "species": "lingulata",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     21,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.5
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#4E9A3C",
+    "accent": "#E84A2A",
+    "source": "Guzmania lingulata, scarlet star bromeliad, epiphytic tank bromeliad of neotropical rainforest canopy — Wikipedia"
+   },
+   {
+    "name": "Orchid",
+    "genus": "Cattleya",
+    "species": "labiata",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     0.2,
+     0.4
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#C84A9A",
+    "source": "Cattleya labiata, crimson cattleya, epiphytic orchid of Brazilian rainforest canopy — Wikipedia"
+   },
+   {
+    "name": "Bird's nest fern",
+    "genus": "Asplenium",
+    "species": "nidus",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.7,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#3A2A20",
+    "source": "Asplenium nidus, bird's nest fern, large epiphytic fern of Asian/Australasian rainforest trunks and branches — Wikipedia"
+   },
+   {
+    "name": "Monstera",
+    "genus": "Monstera",
+    "species": "deliciosa",
+    "shape": "liana",
+    "temp_c": [
+     21,
+     29
+    ],
+    "moisture": [
+     0.65,
+     1.0
+    ],
+    "height_m": [
+     3,
+     20
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#8A9A70",
+    "source": "Monstera deliciosa, split-leaf philodendron, hemi-epiphytic climber of Central American rainforest, climbing 20 m — Wikipedia"
+   },
+   {
+    "name": "Liana",
+    "genus": "Bauhinia",
+    "species": "guianensis",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.6,
+     1.0
+    ],
+    "height_m": [
+     10,
+     40
+    ],
+    "density": 0.7,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#7A6A50",
+    "source": "Bauhinia guianensis, monkey-ladder liana, flattened woody climber of Amazon canopy, 40 m — Wikipedia / Tropicos"
+   }
+  ]
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 228,
+  "names": [
+   "Coconut palm",
+   "Oil palm",
+   "Raffia palm",
+   "Sago palm",
+   "Betel palm",
+   "Fishtail palm",
+   "Talipot palm",
+   "Chinese fan palm",
+   "Açaí palm",
+   "Moriche palm",
+   "Babassu",
+   "Royal palm",
+   "Sabal palmetto",
+   "Senegal date palm",
+   "Buriti-do-brejo",
+   "Peach palm",
+   "Walking palm",
+   "Coco de mer",
+   "Nipa palm",
+   "Rattan",
+   "Amorphophallus decus-silvae",
+   "Amorphophallus gigas",
+   "Amorphophallus hewittii",
+   "Amorphophallus titanum",
+   "Amorphophallus aberrans",
+   "Amorphophallus adamsensis",
+   "Amorphophallus albispathus",
+   "Amorphophallus allenii",
+   "Amorphophallus amygdaloides",
+   "Amorphophallus angulatus",
+   "Amorphophallus angustispathus",
+   "Amorphophallus annulifer",
+   "Amorphophallus arcuspadix",
+   "Amorphophallus ardii",
+   "Amorphophallus asper",
+   "Amorphophallus atrorubens",
+   "Amorphophallus atroviridis",
+   "Amorphophallus bangkokensis",
+   "Amorphophallus bantae",
+   "Amorphophallus barbatus",
+   "Amorphophallus barthlottii",
+   "Amorphophallus beccarii",
+   "Amorphophallus bequaertii",
+   "Amorphophallus bognerianus",
+   "Amorphophallus bolikhamxayensis",
+   "Amorphophallus bonaccordensis",
+   "Amorphophallus borneensis",
+   "Amorphophallus boyceanus",
+   "Amorphophallus brachyphyllus",
+   "Amorphophallus brevipetiolatus",
+   "Amorphophallus brevispathus",
+   "Amorphophallus bubenensis",
+   "Amorphophallus bufo",
+   "Amorphophallus calabaricus",
+   "Amorphophallus calcicola",
+   "Amorphophallus canaliculatus",
+   "Amorphophallus candidissimus",
+   "Amorphophallus carneus",
+   "Amorphophallus carnosus",
+   "Amorphophallus caudatus",
+   "Amorphophallus chlorospathus",
+   "Amorphophallus cicatricifer",
+   "Amorphophallus cidarioides",
+   "Amorphophallus cirrifer",
+   "Amorphophallus claudelii",
+   "Amorphophallus costatus",
+   "Amorphophallus coudercii",
+   "Amorphophallus crinitus",
+   "Amorphophallus crispifolius",
+   "Amorphophallus croatii",
+   "Amorphophallus curvistylis",
+   "Amorphophallus declinatus",
+   "Amorphophallus discophorus",
+   "Amorphophallus dumboi",
+   "Amorphophallus dzui",
+   "Amorphophallus eburneus",
+   "Amorphophallus echinatus",
+   "Amorphophallus elatus",
+   "Amorphophallus elegans",
+   "Amorphophallus erythrorrhachis",
+   "Amorphophallus excentricus",
+   "Amorphophallus fallax",
+   "Amorphophallus ferruginosus",
+   "Amorphophallus flammeus",
+   "Amorphophallus flotoi",
+   "Amorphophallus fontarumii",
+   "Amorphophallus forbesii",
+   "Amorphophallus fornicatus",
+   "Amorphophallus fuscus",
+   "Amorphophallus gallowayi",
+   "Amorphophallus glaucophyllus",
+   "Amorphophallus gliruroides",
+   "Amorphophallus glossophyllus",
+   "Amorphophallus gracilior",
+   "Amorphophallus gracilis",
+   "Amorphophallus haematospadix",
+   "Amorphophallus harmandii",
+   "Amorphophallus hayi",
+   "Amorphophallus hemicryptus",
+   "Amorphophallus hirsutus",
+   "Amorphophallus hottae",
+   "Amorphophallus incurvatus",
+   "Amorphophallus infundibuliformis",
+   "Amorphophallus interruptus",
+   "Amorphophallus josefbogneri",
+   "Amorphophallus julaihii",
+   "Amorphophallus juliae",
+   "Amorphophallus khammouanensis",
+   "Amorphophallus kienluongensis",
+   "Amorphophallus koratensis",
+   "Amorphophallus kuznetsovii",
+   "Amorphophallus lacourii",
+   "Amorphophallus lambii",
+   "Amorphophallus lanceolatus",
+   "Amorphophallus lanuginosus",
+   "Amorphophallus laoticus",
+   "Amorphophallus leptosoma",
+   "Amorphophallus linearis",
+   "Amorphophallus linguiformis",
+   "Amorphophallus longicomus",
+   "Amorphophallus longiconnectivus",
+   "Amorphophallus longispathaceus",
+   "Amorphophallus longituberosus",
+   "Amorphophallus lunatus",
+   "Amorphophallus luzoniensis",
+   "Amorphophallus lyratus",
+   "Amorphophallus macrophyllus",
+   "Amorphophallus macrorhizus",
+   "Amorphophallus malkmus-husseinii",
+   "Amorphophallus margretae",
+   "Amorphophallus maxwellii",
+   "Amorphophallus mayoi",
+   "Amorphophallus merrillii",
+   "Amorphophallus minimus",
+   "Amorphophallus minor",
+   "Amorphophallus mirabilis",
+   "Amorphophallus muelleri",
+   "Amorphophallus mullendersii",
+   "Amorphophallus myosuroides",
+   "Amorphophallus napiger",
+   "Amorphophallus natolii",
+   "Amorphophallus niahensis",
+   "Amorphophallus nicolaii",
+   "Amorphophallus obovoideus",
+   "Amorphophallus obscurus",
+   "Amorphophallus ochroleucus",
+   "Amorphophallus ongsakulii",
+   "Amorphophallus opalinus",
+   "Amorphophallus operculatus",
+   "Amorphophallus opertus",
+   "Amorphophallus palawanensis",
+   "Amorphophallus paucisectus",
+   "Amorphophallus pendulus",
+   "Amorphophallus perakensis",
+   "Amorphophallus pilosus",
+   "Amorphophallus plicatus",
+   "Amorphophallus polyanthus",
+   "Amorphophallus prainii",
+   "Amorphophallus preussii",
+   "Amorphophallus prolificus",
+   "Amorphophallus pulchellus",
+   "Amorphophallus purpurascens",
+   "Amorphophallus pusillus",
+   "Amorphophallus putii",
+   "Amorphophallus pygmaeus",
+   "Amorphophallus ranchanensis",
+   "Amorphophallus ravenii",
+   "Amorphophallus rayongii",
+   "Amorphophallus reflexus",
+   "Amorphophallus rhizomatosus",
+   "Amorphophallus rostratus",
+   "Amorphophallus rugosus",
+   "Amorphophallus sagittarius",
+   "Amorphophallus sakonnakhonensis",
+   "Amorphophallus salmoneus",
+   "Amorphophallus samarensis",
+   "Amorphophallus saraburensis",
+   "Amorphophallus saururus",
+   "Amorphophallus scaber",
+   "Amorphophallus schmidtiae",
+   "Amorphophallus scutatus",
+   "Amorphophallus serrulatus",
+   "Amorphophallus shyamsalilianus",
+   "Amorphophallus sinuatus",
+   "Amorphophallus sizemoreae",
+   "Amorphophallus sparsiflorus",
+   "Amorphophallus spectabilis",
+   "Amorphophallus staudtii",
+   "Amorphophallus subcymbiformis",
+   "Amorphophallus sumawongii",
+   "Amorphophallus suwidjianus",
+   "Amorphophallus sylvaticus",
+   "Amorphophallus symonianus",
+   "Amorphophallus synandrifer",
+   "Amorphophallus tenuispadix",
+   "Amorphophallus tenuistylis",
+   "Amorphophallus terrestris",
+   "Amorphophallus thaiensis",
+   "Amorphophallus tinekeae",
+   "Amorphophallus tuberculatus",
+   "Amorphophallus umbrinus",
+   "Amorphophallus urceolatus",
+   "Amorphophallus variabilis",
+   "Amorphophallus venustus",
+   "Amorphophallus villosus",
+   "Amorphophallus vogelianus",
+   "Amorphophallus wasa",
+   "Amorphophallus zenkeri",
+   "Lacandon yucca",
+   "Cannabis - Kerala",
+   "Cannabis - Ceylon",
+   "Cannabis - Meao Thai",
+   "Cannabis - Luang Prabang",
+   "Cannabis - Vietnamese (Vietnam Black)",
+   "Cannabis - Burmese",
+   "Cannabis - Aceh",
+   "Cannabis - Papua New Guinea",
+   "Cannabis - Kisumu",
+   "Cannabis - Congolese",
+   "Cannabis - Nigerian",
+   "Cannabis - Ghanaian",
+   "Cannabis - Zamal",
+   "Cannabis - Santa Marta Gold",
+   "Cannabis - Punto Rojo",
+   "Cannabis - Limón Verde",
+   "Cannabis - Panama Red",
+   "Cannabis - Lamb's Bread",
+   "Cannabis - Hawaiian (Kona / Puna)"
+  ]
+ }
 }

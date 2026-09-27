@@ -1,49 +1,557 @@
 {
-	"key": "TROPICAL_DRY_FOREST",
-	"name": "Tropical dry forest",
-	"group": "Tropical",
-	"size": "mid",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [18, 33],
-		"moisture": [0.43, 0.58]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [
-			{
-				"name": "Dry-season deciduous tree",
-				"genus": "Siccidendron",
-				"species": "caducum",
-				"invented": true,
-				"shape": "broadleaf",
-				"leaf_density": 0.55,
-				"temp_c": [20, 33],
-				"moisture": [0.4, 0.64],
-				"height_m": [8, 16],
-				"color": "#738038",
-				"accent": "#5c422e",
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): tropical dry forest"
-			},
-			{
-				"name": "Common bamboo",
-				"genus": "Bambusa",
-				"species": "vulgaris",
-				"shape": "bamboo",
-				"temp_c": [20, 32],
-				"moisture": [0.42, 0.8],
-				"altitude_m": [0, 1200],
-				"height_m": [8, 18],
-				"color": "#4f8a2e",
-				"accent": "#a8a83a",
-				"density": 1.0,
-				"source": "Bambusa vulgaris, pantropical: culms 10-20 m, tolerates a dry season; yellow-green culms"
-			}
-		],
-		"shrub": [],
-		"ground": [],
-		"epiphyte": []
-	}
+ "key": "TROPICAL_DRY_FOREST",
+ "name": "Tropical dry forest",
+ "group": "Tropical",
+ "size": "mid",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Deciduous tropical forest with a long dry season: most trees drop leaves for 4-7 months, thorny/bottle-trunked species, open understory of shrubs and grasses. Drawn on Mesoamerican Pacific dry forest, Bolivian Chiquitano, Indian/Burmese dry deciduous forest, Miombo margins and Madagascar western dry forest.",
+ "climate": {
+  "temp_c": [
+   18,
+   33
+  ],
+  "moisture": [
+   0.43,
+   0.58
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Dry-season deciduous tree",
+    "genus": "Bursera",
+    "species": "simaruba",
+    "shape": "broadleaf",
+    "leaf_density": 0.55,
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     10,
+     25
+    ],
+    "density": 0.9,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#C06A40",
+    "source": "Bursera simaruba, gumbo-limbo, red-peeling-bark deciduous tree characteristic of Mesoamerican/Caribbean dry forest, 10-25 m — Wikipedia"
+   },
+   {
+    "name": "Guanacaste",
+    "genus": "Enterolobium",
+    "species": "cyclocarpum",
+    "shape": "umbrella",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     20,
+     35
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#6A5A48",
+    "source": "Enterolobium cyclocarpum, guanacaste/ear-pod tree, huge spreading crown in Pacific Central American dry forest, 20-35 m — Wikipedia"
+   },
+   {
+    "name": "Indian rosewood",
+    "genus": "Dalbergia",
+    "species": "latifolia",
+    "shape": "broadleaf",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#3F8A38",
+    "accent": "#4A3A2E",
+    "source": "Dalbergia latifolia, Indian rosewood, tropical dry deciduous forest of peninsular India, 15-30 m — Wikipedia"
+   },
+   {
+    "name": "Flame of the forest",
+    "genus": "Butea",
+    "species": "monosperma",
+    "shape": "gnarled",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     8,
+     15
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#5AA040",
+    "accent": "#F05A20",
+    "source": "Butea monosperma, palash/flame of the forest, crooked deciduous tree of Indian dry deciduous forest, bright orange flowers, 8-15 m — Wikipedia"
+   },
+   {
+    "name": "Silk floss tree",
+    "genus": "Ceiba",
+    "species": "speciosa",
+    "shape": "broadleaf",
+    "temp_c": [
+     20,
+     28
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     15,
+     25
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#4E9A3C",
+    "accent": "#8A9A70",
+    "source": "Ceiba speciosa, silk floss tree, bottle-trunked spiny deciduous tree of Chiquitano/Chaco dry forest (Bolivia, Paraguay, Brazil), 15-25 m — Wikipedia"
+   },
+   {
+    "name": "Grandidier's baobab",
+    "genus": "Adansonia",
+    "species": "grandidieri",
+    "shape": "gnarled",
+    "temp_c": [
+     23,
+     29
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     20,
+     30
+    ],
+    "density": 0.2,
+    "soil": "sand",
+    "color": "#5AB040",
+    "accent": "#9A8A74",
+    "source": "Adansonia grandidieri, Grandidier's baobab, Madagascar western dry forest icon, 20-30 m — Wikipedia / IUCN"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Common bamboo",
+    "genus": "Bambusa",
+    "species": "vulgaris",
+    "shape": "bamboo",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "height_m": [
+     10,
+     20
+    ],
+    "density": 0.5,
+    "soil": "rich",
+    "color": "#7AB840",
+    "accent": "#C8B060",
+    "source": "Bambusa vulgaris, common/golden bamboo, pan-tropical clumping bamboo of dry forest streamsides and edges, 10-20 m — Wikipedia"
+   },
+   {
+    "name": "Frangipani",
+    "genus": "Plumeria",
+    "species": "rubra",
+    "shape": "gnarled",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     3,
+     8
+    ],
+    "density": 0.4,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#F0E0E0",
+    "source": "Plumeria rubra, frangipani, succulent-stemmed deciduous shrub/small tree native to Mesoamerican dry forest, 3-8 m — Wikipedia"
+   },
+   {
+    "name": "Coral bean",
+    "genus": "Erythrina",
+    "species": "berteroana",
+    "shape": "shrub",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     4,
+     8
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#5AA040",
+    "accent": "#E0302A",
+    "source": "Erythrina berteroana, pito coral tree, thorny deciduous shrub/small tree of Central American dry forest, 4-8 m — Wikipedia"
+   },
+   {
+    "name": "Jatropha",
+    "genus": "Jatropha",
+    "species": "curcas",
+    "shape": "shrub",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "height_m": [
+     2,
+     6
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#9AA080",
+    "source": "Jatropha curcas, physic nut, drought-deciduous shrub native to Mesoamerican dry forest, 2-6 m — Wikipedia"
+   },
+   {
+    "name": "Dwarf date palm",
+    "genus": "Phoenix",
+    "species": "sylvestris",
+    "shape": "palm",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     4,
+     15
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#5A9A50",
+    "accent": "#8A7A60",
+    "source": "Phoenix sylvestris, wild date palm, Indian dry deciduous forest and scrub, 4-15 m — Wikipedia"
+   },
+   {
+    "name": "Kalanchoe",
+    "genus": "Kalanchoe",
+    "species": "beharensis",
+    "shape": "rosette",
+    "temp_c": [
+     22,
+     28
+    ],
+    "moisture": [
+     0.3,
+     0.5
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#8AA870",
+    "accent": "#C8B090",
+    "source": "Kalanchoe beharensis, felt bush, succulent shrub of Madagascar western dry forest, 1-3 m — Wikipedia"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Bamboo grass",
+    "genus": "Heteropogon",
+    "species": "contortus",
+    "shape": "grass",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     0.3,
+     1
+    ],
+    "density": 0.8,
+    "soil": "thin",
+    "color": "#C8B060",
+    "accent": "#9A7A40",
+    "source": "Heteropogon contortus, spear/tanglehead grass, dominant pan-tropical dry forest floor grass, 0.3-1 m — Wikipedia / USDA"
+   },
+   {
+    "name": "Bluestem",
+    "genus": "Andropogon",
+    "species": "gayanus",
+    "shape": "tussock",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#B8B860",
+    "accent": "#C8A050",
+    "source": "Andropogon gayanus, gamba grass, tall tussock of African dry forest and woodland understory, 1-3 m — Wikipedia"
+   },
+   {
+    "name": "Beach morning glory",
+    "genus": "Ipomoea",
+    "species": "pes-caprae",
+    "shape": "liana",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.3,
+     0.6
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.3,
+    "soil": "sand",
+    "color": "#5AB040",
+    "accent": "#C05AA0",
+    "source": "Ipomoea (Convolvulaceae) trailing morning-glory; I. pes-caprae pan-tropical creeper on dry sandy ground near coast dry forest, prostrate — Wikipedia"
+   },
+   {
+    "name": "Wild pineapple",
+    "genus": "Bromelia",
+    "species": "pinguin",
+    "shape": "spike_rosette",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     0.8,
+     2
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#5AA040",
+    "accent": "#E03A2A",
+    "source": "Bromelia pinguin, wild pinguin, terrestrial spiny bromeliad forming thickets on Mesoamerican dry forest floor, 0.8-2 m — Wikipedia"
+   },
+   {
+    "name": "Resurrection fern",
+    "genus": "Pleopeltis",
+    "species": "polypodioides",
+    "shape": "fern",
+    "temp_c": [
+     16,
+     28
+    ],
+    "moisture": [
+     0.35,
+     0.7
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5AA040",
+    "accent": "#7A6A50",
+    "source": "Pleopeltis polypodioides, resurrection fern, drought-curling fern on rocks and trunks of Americas dry forest — Wikipedia"
+   }
+  ],
+  "epiphyte": [
+   {
+    "name": "Spanish moss",
+    "genus": "Tillandsia",
+    "species": "usneoides",
+    "shape": "hanging_moss",
+    "temp_c": [
+     16,
+     28
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "height_m": [
+     0.5,
+     3
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#9AB890",
+    "accent": "#B0B0A0",
+    "source": "Tillandsia usneoides, Spanish moss, festoons on dry-forest and gallery trees from SE USA to Argentina — Wikipedia"
+   },
+   {
+    "name": "Air plant",
+    "genus": "Tillandsia",
+    "species": "fasciculata",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     20,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.5,
+    "soil": "thin",
+    "color": "#8AA860",
+    "accent": "#E0503A",
+    "source": "Tillandsia fasciculata, cardinal air plant, epiphyte common on dry forest trees of Mesoamerica/Caribbean — Wikipedia"
+   },
+   {
+    "name": "Dry-forest orchid",
+    "genus": "Encyclia",
+    "species": "cordigera",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     22,
+     30
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     0.2,
+     0.4
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5AB040",
+    "accent": "#B04A8A",
+    "source": "Encyclia cordigera, epiphytic orchid characteristic of Mesoamerican Pacific dry forest — Wikipedia"
+   }
+  ]
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 60,
+  "names": [
+   "African fan palm",
+   "Palmyra palm",
+   "Carnauba",
+   "Wild date palm",
+   "Foxtail palm",
+   "Bottle palm",
+   "Amorphophallus abyssinicus",
+   "Amorphophallus andranogidroensis",
+   "Amorphophallus angolensis",
+   "Amorphophallus ankarana",
+   "Amorphophallus antsingyensis",
+   "Amorphophallus aphyllus",
+   "Amorphophallus asterostigmatus",
+   "Amorphophallus baumannii",
+   "Amorphophallus bulbifer",
+   "Amorphophallus commutatus",
+   "Amorphophallus consimilis",
+   "Amorphophallus dracontioides",
+   "Amorphophallus eichleri",
+   "Amorphophallus elliotii",
+   "Amorphophallus galbra",
+   "Amorphophallus gallaensis",
+   "Amorphophallus goetzei",
+   "Amorphophallus gomboczianus",
+   "Amorphophallus hildebrandtii",
+   "Amorphophallus hohenackeri",
+   "Amorphophallus impressus",
+   "Amorphophallus johnsonii",
+   "Amorphophallus konkanensis",
+   "Amorphophallus lewallei",
+   "Amorphophallus longistylus",
+   "Amorphophallus mangelsdorffii",
+   "Amorphophallus margaritifer",
+   "Amorphophallus maximus",
+   "Amorphophallus mildbraedii",
+   "Amorphophallus mossambicensis",
+   "Amorphophallus mysorensis",
+   "Amorphophallus nicolsonianus",
+   "Amorphophallus oncophyllus",
+   "Amorphophallus paeoniifolius",
+   "Amorphophallus perrieri",
+   "Amorphophallus richardsiae",
+   "Amorphophallus smithsonianus",
+   "Amorphophallus stuhlmannii",
+   "Amorphophallus taurostigma",
+   "Amorphophallus teuszii",
+   "Spanish bayonet",
+   "Nodding yucca",
+   "Spineless yucca",
+   "Spanish dagger",
+   "Chiapas yucca",
+   "Cannabis - Mysore",
+   "Cannabis - Thai (Isan)",
+   "Cannabis - Durban",
+   "Cannabis - Malawi",
+   "Cannabis - Angolan",
+   "Cannabis - Acapulco Gold",
+   "Cannabis - Oaxacan",
+   "Cannabis - Michoacán",
+   "Cannabis - Manga Rosa"
+  ]
+ }
 }

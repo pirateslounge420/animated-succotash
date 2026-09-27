@@ -1,35 +1,395 @@
 {
-	"key": "BEACH",
-	"name": "Beach",
-	"group": "Coastal",
-	"size": "small",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [0, 33],
-		"moisture": [0, 1]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [
-			{
-				"name": "Coconut palm",
-				"genus": "Cocos",
-				"species": "nucifera",
-				"shape": "palm",
-				"temp_c": [22, 33],
-				"moisture": [0.25, 1],
-				"height_m": [10, 20],
-				"color": "#408c38",
-				"accent": "#5c422e",
-				"soil": "sand",
-				"needs": ["salt_water"],
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): tropical beach"
-			}
-		],
-		"shrub": [],
-		"ground": [],
-		"epiphyte": []
-	}
+ "key": "BEACH",
+ "name": "Beach",
+ "group": "Coastal",
+ "size": "small",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Sandy beaches above the tide line: salt- and sand-tolerant pioneers (creeping vines, succulent herbs, sea rocket) with coconut, screw pine and sea grape on tropical strands and sea buckthorn/pine on temperate ones. Drawn on Indo-Pacific and Caribbean strands, Atlantic Europe and eastern North America.",
+ "climate": {
+  "temp_c": [
+   0,
+   33
+  ],
+  "moisture": [
+   0,
+   1
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Coconut palm",
+    "genus": "Cocos",
+    "species": "nucifera",
+    "shape": "palm",
+    "temp_c": [
+     21,
+     33
+    ],
+    "moisture": [
+     0.35,
+     0.9
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.9,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4CA040",
+    "accent": "#A88A5A",
+    "source": "Cocos nucifera, pantropical strand palm (Indo-Pacific origin), sandy coasts, 15-30 m — Wikipedia / POWO"
+   },
+   {
+    "name": "Screw pine",
+    "genus": "Pandanus",
+    "species": "tectorius",
+    "shape": "umbrella",
+    "temp_c": [
+     21,
+     33
+    ],
+    "moisture": [
+     0.35,
+     0.95
+    ],
+    "height_m": [
+     4,
+     14
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#3E9A3A",
+    "accent": "#8C7A4A",
+    "source": "Pandanus tectorius, Indo-Pacific coasts (Hawaii to Australia), beach margins with prop roots, 4-14 m — Wikipedia"
+   },
+   {
+    "name": "Sea grape",
+    "genus": "Coccoloba",
+    "species": "uvifera",
+    "shape": "gnarled",
+    "temp_c": [
+     21,
+     30
+    ],
+    "moisture": [
+     0.35,
+     0.8
+    ],
+    "height_m": [
+     3,
+     10
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#3F8E3C",
+    "accent": "#9B6A3E",
+    "source": "Coccoloba uvifera, Caribbean and Florida beaches, round leathery leaves, gnarled 3-10 m tree — Wikipedia / IFAS"
+   },
+   {
+    "name": "Beach she-oak",
+    "genus": "Casuarina",
+    "species": "equisetifolia",
+    "shape": "conifer",
+    "temp_c": [
+     20,
+     33
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "height_m": [
+     6,
+     35
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "color": "#4E8A44",
+    "accent": "#7A6650",
+    "source": "Casuarina equisetifolia, SE Asia/Australia/Pacific beaches (widely naturalised), needle-like branchlets, 6-35 m — Wikipedia"
+   },
+   {
+    "name": "Maritime pine",
+    "genus": "Pinus",
+    "species": "pinaster",
+    "shape": "conifer",
+    "temp_c": [
+     10,
+     19
+    ],
+    "moisture": [
+     0.35,
+     0.7
+    ],
+    "height_m": [
+     20,
+     35
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#2E6E35",
+    "accent": "#8A5A3A",
+    "source": "Pinus pinaster, western Mediterranean and Atlantic coasts (Landes), stabilised beach sands, 20-35 m — Wikipedia"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Beach naupaka",
+    "genus": "Scaevola",
+    "species": "taccada",
+    "shape": "shrub",
+    "temp_c": [
+     21,
+     33
+    ],
+    "moisture": [
+     0.35,
+     0.9
+    ],
+    "height_m": [
+     1,
+     3
+    ],
+    "density": 0.9,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5AB040",
+    "accent": "#E8E8D0",
+    "source": "Scaevola taccada, Indo-Pacific tropical beaches, succulent-leaved mounding shrub 1-3 m — Wikipedia"
+   },
+   {
+    "name": "Sea buckthorn",
+    "genus": "Hippophae",
+    "species": "rhamnoides",
+    "shape": "shrub",
+    "temp_c": [
+     3,
+     14
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "height_m": [
+     1,
+     6
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#8FAF7A",
+    "accent": "#E88A2A",
+    "source": "Hippophae rhamnoides, Eurasian coasts (North Sea, Baltic) and steppes, silver-leaved thorny shrub with orange berries, 1-6 m — Wikipedia"
+   },
+   {
+    "name": "Beach heliotrope",
+    "genus": "Heliotropium",
+    "species": "arboreum",
+    "shape": "shrub",
+    "temp_c": [
+     22,
+     33
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "height_m": [
+     1,
+     5
+    ],
+    "density": 0.5,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#9AB88A",
+    "accent": "#E6E6DC",
+    "source": "Heliotropium (Tournefortia) arboreum, Indo-Pacific beach crests, silvery-leaved shrub/small tree 1-5 m — Wikipedia"
+   },
+   {
+    "name": "Wax myrtle",
+    "genus": "Morella",
+    "species": "cerifera",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.4,
+     0.9
+    ],
+    "height_m": [
+     2,
+     8
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#3E8E3A",
+    "accent": "#7A6A50",
+    "source": "Morella cerifera, SE US Atlantic/Gulf coasts, back-beach thickets, evergreen shrub 2-8 m — Wikipedia / USDA"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Beach morning glory",
+    "genus": "Ipomoea",
+    "species": "pes-caprae",
+    "shape": "grass",
+    "temp_c": [
+     20,
+     33
+    ],
+    "moisture": [
+     0.3,
+     0.9
+    ],
+    "height_m": [
+     0.1,
+     0.3
+    ],
+    "density": 1.0,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#4CA040",
+    "accent": "#C860B0",
+    "source": "Ipomoea pes-caprae, pantropical beach pioneer vine (goat's foot), creeping over open sand, 0.1-0.3 m tall — Wikipedia"
+   },
+   {
+    "name": "Sea rocket",
+    "genus": "Cakile",
+    "species": "maritima",
+    "shape": "grass",
+    "temp_c": [
+     5,
+     20
+    ],
+    "moisture": [
+     0.3,
+     0.8
+    ],
+    "height_m": [
+     0.1,
+     0.4
+    ],
+    "density": 0.7,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5AB040",
+    "accent": "#D8A0E0",
+    "source": "Cakile maritima, European/N African strandline annual (C. edentula in N America), fleshy leaves, lilac flowers, 0.1-0.4 m — Wikipedia"
+   },
+   {
+    "name": "Sea purslane",
+    "genus": "Sesuvium",
+    "species": "portulacastrum",
+    "shape": "cushion",
+    "temp_c": [
+     20,
+     33
+    ],
+    "moisture": [
+     0.3,
+     1.0
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.8,
+    "soil": "sand",
+    "needs": [
+     "salt_water"
+    ],
+    "color": "#5AB040",
+    "accent": "#E070A0",
+    "source": "Sesuvium portulacastrum, pantropical beaches and salt flats, succulent mat-forming herb, 5-20 cm — Wikipedia"
+   },
+   {
+    "name": "Sea holly",
+    "genus": "Eryngium",
+    "species": "maritimum",
+    "shape": "rosette",
+    "temp_c": [
+     7,
+     19
+    ],
+    "moisture": [
+     0.25,
+     0.6
+    ],
+    "height_m": [
+     0.2,
+     0.6
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#8CB0C0",
+    "accent": "#6A78C8",
+    "source": "Eryngium maritimum, European Atlantic and Mediterranean beaches, spiny blue-grey rosette 20-60 cm — Wikipedia"
+   },
+   {
+    "name": "Beach spinifex",
+    "genus": "Spinifex",
+    "species": "sericeus",
+    "shape": "tussock",
+    "temp_c": [
+     15,
+     28
+    ],
+    "moisture": [
+     0.25,
+     0.6
+    ],
+    "height_m": [
+     0.3,
+     0.8
+    ],
+    "density": 0.6,
+    "soil": "sand",
+    "color": "#B8C070",
+    "accent": "#C8B060",
+    "source": "Spinifex sericeus, Australian and NZ beaches, silvery stoloniferous foredune grass 30-80 cm — Wikipedia"
+   },
+   {
+    "name": "Bitter panicgrass",
+    "genus": "Panicum",
+    "species": "amarum",
+    "shape": "grass",
+    "temp_c": [
+     12,
+     24
+    ],
+    "moisture": [
+     0.25,
+     0.6
+    ],
+    "height_m": [
+     0.5,
+     1.5
+    ],
+    "density": 0.4,
+    "soil": "sand",
+    "color": "#8AA870",
+    "accent": "#C8B060",
+    "source": "Panicum amarum, US Atlantic and Gulf beaches, blue-green clumping upper-beach grass 0.5-1.5 m — USDA Plants"
+   }
+  ],
+  "epiphyte": []
+ }
 }

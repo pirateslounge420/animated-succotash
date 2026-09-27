@@ -1,35 +1,303 @@
 {
-	"key": "TALLGRASS_PRAIRIE",
-	"name": "Tallgrass prairie",
-	"group": "Grass & scrub",
-	"size": "mid",
-	"status": "placeholder",
-	"kind": "land",
-	"notes": "PLACEHOLDER species: plausible real-world plants with rough ranges. Replace or extend with your research.",
-	"climate": {
-		"temp_c": [6, 19],
-		"moisture": [0.4, 0.55]
-	},
-	"plants": {
-		"emergent": [],
-		"canopy": [],
-		"shrub": [],
-		"ground": [
-			{
-				"name": "Tallgrass",
-				"genus": "Altigramen",
-				"species": "praticola",
-				"invented": true,
-				"shape": "grass",
-				"temp_c": [6, 21],
-				"moisture": [0.38, 0.62],
-				"height_m": [1, 2],
-				"color": "#8c9e47",
-				"accent": "#5c422e",
-				"density": 1.8,
-				"source": "PLACEHOLDER (DESIGN.md: remaining biomes still to research): tallgrass prairie"
-			}
-		],
-		"epiphyte": []
-	}
+ "key": "TALLGRASS_PRAIRIE",
+ "name": "Tallgrass prairie",
+ "group": "Grass & scrub",
+ "size": "mid",
+ "status": "researched",
+ "kind": "land",
+ "notes": "Warm-season C4 bunchgrasses 1-3 m tall with forbs, fire-maintained, trees only as bur-oak savanna edges; North American Great Plains east (Iowa, Kansas, Illinois) with Pampas/Eurasian meadow-steppe analogues.",
+ "climate": {
+  "temp_c": [
+   6,
+   19
+  ],
+  "moisture": [
+   0.4,
+   0.55
+  ]
+ },
+ "plants": {
+  "emergent": [],
+  "canopy": [
+   {
+    "name": "Bur oak",
+    "genus": "Quercus",
+    "species": "macrocarpa",
+    "shape": "broadleaf",
+    "temp_c": [
+     4,
+     19
+    ],
+    "moisture": [
+     0.35,
+     0.7
+    ],
+    "height_m": [
+     15,
+     30
+    ],
+    "density": 0.15,
+    "soil": "rich",
+    "color": "#3F8C38",
+    "accent": "#6B5A45",
+    "source": "Quercus macrocarpa, central/eastern N America, fire-tolerant savanna oak, 15-30 m — USDA PLANTS / Flora of North America"
+   }
+  ],
+  "shrub": [
+   {
+    "name": "Leadplant",
+    "genus": "Amorpha",
+    "species": "canescens",
+    "shape": "shrub",
+    "temp_c": [
+     4,
+     19
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     0.5,
+     1
+    ],
+    "density": 0.4,
+    "soil": "rich",
+    "color": "#8FA08A",
+    "accent": "#7A5AA0",
+    "source": "Amorpha canescens, Great Plains tallgrass prairie, deep-rooted legume shrub 0.5-1 m — USDA PLANTS"
+   },
+   {
+    "name": "Prairie rose",
+    "genus": "Rosa",
+    "species": "arkansana",
+    "shape": "shrub",
+    "temp_c": [
+     3,
+     18
+    ],
+    "moisture": [
+     0.35,
+     0.6
+    ],
+    "height_m": [
+     0.3,
+     0.6
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "color": "#3F8C38",
+    "accent": "#E07AA0",
+    "source": "Rosa arkansana, central N America prairies, low suckering shrub to 0.6 m — USDA PLANTS"
+   },
+   {
+    "name": "American hazel",
+    "genus": "Corylus",
+    "species": "americana",
+    "shape": "shrub",
+    "temp_c": [
+     5,
+     19
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "height_m": [
+     2,
+     4
+    ],
+    "density": 0.2,
+    "soil": "rich",
+    "color": "#3F8C38",
+    "accent": "#6B5A45",
+    "source": "Corylus americana, eastern/central N America, thicket shrub 2-4 m at prairie-woodland edge — USDA PLANTS"
+   },
+   {
+    "name": "Pampas grass",
+    "genus": "Cortaderia",
+    "species": "selloana",
+    "shape": "tussock",
+    "temp_c": [
+     12,
+     20
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "height_m": [
+     2,
+     3.5
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "color": "#C8B060",
+    "accent": "#F0E8D0",
+    "source": "Cortaderia selloana, S American Pampas, tussock grass with 3 m plumes — Flora Argentina / Kew POWO"
+   }
+  ],
+  "ground": [
+   {
+    "name": "Big bluestem",
+    "genus": "Andropogon",
+    "species": "gerardii",
+    "shape": "grass",
+    "temp_c": [
+     4,
+     20
+    ],
+    "moisture": [
+     0.38,
+     0.6
+    ],
+    "height_m": [
+     1.5,
+     2.5
+    ],
+    "density": 1.0,
+    "soil": "rich",
+    "color": "#5A8C45",
+    "accent": "#8A4C50",
+    "source": "Andropogon gerardii, dominant tallgrass prairie grass, central N America, 1.5-2.5 m, turns bronze in autumn — USDA PLANTS"
+   },
+   {
+    "name": "Indiangrass",
+    "genus": "Sorghastrum",
+    "species": "nutans",
+    "shape": "grass",
+    "temp_c": [
+     5,
+     20
+    ],
+    "moisture": [
+     0.38,
+     0.6
+    ],
+    "height_m": [
+     1,
+     2
+    ],
+    "density": 0.8,
+    "soil": "rich",
+    "color": "#6A9A45",
+    "accent": "#C8A040",
+    "source": "Sorghastrum nutans, N American tallgrass co-dominant, golden plumes, 1-2 m — USDA PLANTS"
+   },
+   {
+    "name": "Switchgrass",
+    "genus": "Panicum",
+    "species": "virgatum",
+    "shape": "grass",
+    "temp_c": [
+     5,
+     22
+    ],
+    "moisture": [
+     0.4,
+     0.7
+    ],
+    "height_m": [
+     1,
+     2
+    ],
+    "density": 0.6,
+    "soil": "rich",
+    "color": "#5AB040",
+    "accent": "#C8B060",
+    "source": "Panicum virgatum, N American prairies and lowlands, 1-2 m bunchgrass — USDA PLANTS"
+   },
+   {
+    "name": "Little bluestem",
+    "genus": "Schizachyrium",
+    "species": "scoparium",
+    "shape": "tussock",
+    "temp_c": [
+     3,
+     20
+    ],
+    "moisture": [
+     0.3,
+     0.55
+    ],
+    "height_m": [
+     0.5,
+     1
+    ],
+    "density": 0.6,
+    "soil": "thin",
+    "color": "#8FA070",
+    "accent": "#B05A40",
+    "source": "Schizachyrium scoparium, N American prairies on drier upland soils, 0.5-1 m, red-brown in autumn — USDA PLANTS"
+   },
+   {
+    "name": "Compass plant",
+    "genus": "Silphium",
+    "species": "laciniatum",
+    "shape": "grass",
+    "temp_c": [
+     5,
+     19
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     1.5,
+     3
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "color": "#3F8C38",
+    "accent": "#F0C830",
+    "source": "Silphium laciniatum, tallgrass prairie forb with yellow sunflower heads, 1.5-3 m — USDA PLANTS"
+   },
+   {
+    "name": "Purple coneflower",
+    "genus": "Echinacea",
+    "species": "purpurea",
+    "shape": "grass",
+    "temp_c": [
+     6,
+     19
+    ],
+    "moisture": [
+     0.4,
+     0.6
+    ],
+    "height_m": [
+     0.6,
+     1.2
+    ],
+    "density": 0.3,
+    "soil": "rich",
+    "color": "#3F8C38",
+    "accent": "#C060A0",
+    "source": "Echinacea purpurea, central/eastern N America prairie forb, 0.6-1.2 m — USDA PLANTS"
+   }
+  ],
+  "epiphyte": []
+ },
+ "special": {
+  "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
+  "count": 15,
+  "names": [
+   "Arkansas yucca",
+   "Adam's needle",
+   "Weak-leaf yucca",
+   "Spanish dagger",
+   "Sierra Madre yucca",
+   "Chiapas yucca",
+   "Glen Rose yucca",
+   "Pale-leaf yucca",
+   "Pine-woods yucca",
+   "Twistleaf yucca",
+   "Trichocereus pachanoi",
+   "Cannabis - Durban",
+   "Cannabis - Ethiopian",
+   "Cannabis - Rif (Ketama)",
+   "Cannabis - Turkish"
+  ]
+ }
 }
