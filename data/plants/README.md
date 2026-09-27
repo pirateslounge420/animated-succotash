@@ -1,26 +1,22 @@
 # Plant catalogues
 
-Big lists of real plants, kept apart from the biome files: one file per group
-(a genus, or one species' landraces). Spec: D4 and Phase 6.
+Genus- or species-level plant catalogues that are NOT tied to one biome.
+Every entry carries its own `temp_c`, `moisture` and `altitude_m` bands, so a
+catalogue file has no `climate` block; plants grow wherever their bands allow,
+exactly like the biome files in `data/biomes/`. Nothing is hand-placed.
 
-- `amorphophallus.json`: all 246 *Amorphophallus* species accepted by Kew's
-  Plants of the World Online.
-- `cannabis.json`: 64 landrace populations of the single species *Cannabis
-  sativa*.
+`species_db` loads `data/plants/*.json` the same way it loads a biome file
+(spec D4 and Phase 6). Top-level keys other than `plants` (`regions`, `types`,
+`family_defaults`, `notes`) are documentation and are ignored.
 
-A catalogue is laid out like a biome file (`key`, `name`, `kind`, `status`,
-`notes`, `plants` by tier), with two differences:
+**Not loaded yet.** `species_db` starts reading this folder in Phase 6.
 
-- It has no `climate` block. Every entry carries its own `temp_c`,
-  `moisture` and `altitude_m` bands, so it grows wherever those allow,
-  anywhere on the planet. Nothing is hand-placed.
-- The loader ignores the `regions`, `types` and `family_defaults` keys,
-  which are notes for people and for the plant lifecycle system.
+| File | Contents | Extra blocks (read by the Phase 6 plant lifecycle/genetics system; ignored until then) |
+|---|---|---|
+| `amorphophallus.json` | All 246 *Amorphophallus* species accepted by Kew POWO (fetched 2026-09-26). 34 with documented traits, 212 with genus defaults and a region-based range; see each `source`. `shape` is `umbrella` until the `aroid` shape exists. | `aroid` (petiole pattern/colours, spathe colours), `repro`, `genes` |
+| `cannabis.json` | 64 *Cannabis sativa* landrace populations — one species, all interbreed; each is a starting genome for its region. Attestation tagged per entry. | `cannabis` (leaf width, photoperiod flowering, uses), `repro` (dioecious, wind, annual, seed bank), `genes` |
+| `trichocereus.json` | 18 *Trichocereus* Andean torch cacti, the ones the ethnobotanical literature records as ceremonially active. Kew files them under *Echinopsis*; each entry keeps that name as its `synonym`. Cold, dry, high, rocky ground; never browsed. | `growth`, `repro`, `genes`, `cannot_be_browsed`, `ceremonial` (`documented` / `reported` / `trace`, read by the ceremony system), `display` (common name) |
 
-Entries use the plant fields from `data/biomes/README.md`, plus the Phase 6
-blocks `repro`, `genes`, `aroid` and `cannabis` (D4). Like every plant,
-each entry needs `genus` and `species`. Entries that share a binomial are
-one interbreeding species.
-
-**Not loaded yet.** `species_db` starts reading this folder in Phase 6. Until
-the `aroid` shape exists, the aroids use `umbrella`.
+Every entry has `genus` and `species` (real binomials) per the D4 rule; entries
+that share a binomial are one interbreeding species.
+Colours are in-game R1a-leaning values, not botanical measurements.
