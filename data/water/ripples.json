@@ -56,6 +56,7 @@
 		"player_stroke_s": 0.7,
 		"player_drop_mps": 1.5,
 		"arrow_kg": 0.05,
+		"spear_kg": 1.2,
 		"creature_kg_per_size_m3": 25
 	},
 	"readers": {

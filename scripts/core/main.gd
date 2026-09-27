@@ -228,6 +228,9 @@ func _process(delta: float) -> void:
 		view = cam
 	ripples.update_ripples(delta, view.global_position, -view.global_basis.z, weather, sky.cloud_light_dir)
 	var prompt: String = creatures.prompt
+	# The thrown spear within reach (Spear) comes before a log, as E does.
+	if player.spear.prompt != "" and not player.climbing:
+		prompt = player.spear.prompt
 	if prompt == "":
 		prompt = player.prompt if player.prompt != "" else landmarks.nearby
 	hud.set_prompt(prompt)
@@ -289,6 +292,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		# in front of you.
 		if player.climbing:
 			player.stop_climb()
+		# The thrown spear within reach: take it back (Spear).
+		elif player.spear.in_reach():
+			player.spear.pick_up()
 		elif creatures.log_in_reach(player.global_position):
 			creatures.interact(player.global_position)
 		else:

@@ -8,8 +8,8 @@ extends CharacterBody3D
 ##   walk     6 km/h (PlanetConst.WALK_SPEED_MPS, the pace DESIGN.md's
 ##            biome walk-across times assume)
 ##   sprint   double-tap forward and keep holding it (or hold the pad's
-##            left stick in); ends when forward is released or the bow is
-##            drawn
+##            left stick in); ends when forward is released, the bow is
+##            drawn or the spear raised
 ##   crouch   hold crouch (Shift): lower, slower and nearly silent
 ##   jump     hold to keep jumping each time you land
 ##   swim     in water deeper than chest height
@@ -26,9 +26,14 @@ extends CharacterBody3D
 ## Water (Ripples): wading, swimming and dropping in ring the water
 ## (_water_contacts).
 ##
+## Weapons (spec D5): the Bow and the Spear; `weapon` says which is in
+## hand, weapon_swap (Q, the pad's Y) swaps them (swap_weapon()).
+##
 ## `noise_level` (0 silent .. 1 sprinting) is what wildlife hears
-## (CreatureSpawner scales how close creatures let you come by it), and
-## `still_time` how long you've stood still (wary animals calm down).
+## (CreatureSpawner scales how close creatures let you come by it; loosing
+## an arrow, thrusting or throwing the spear raise it for a moment,
+## make_noise()), and `still_time` how long you've stood still (wary
+## animals calm down).
 ##
 ## Animation hook: `anim_state` names the current pose ("idle", "walk",
 ## "sprint", "crouch", "crouch_walk", "air", "swim", "climb"). The body
@@ -93,6 +98,9 @@ var hp := MAX_HP
 var dead := false
 var first_person := false
 var bow: Bow
+var spear: Spear
+## The weapon in hand: "bow" or "spear" (swap_weapon()).
+var weapon := "bow"
 var _since_hit := 99.0
 var _invulnerable := 0.0
 var _fall_speed := 0.0
@@ -197,6 +205,10 @@ func _ready() -> void:
 	add_child(bow)
 	bow.setup(self)
 	_set_layers(bow)
+	spear = Spear.new()
+	spear.name = "Spear"
+	add_child(spear)
+	spear.setup(self)
 	_apply_view()
 
 
@@ -242,6 +254,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		# The click that takes the mouse doesn't also draw the bow.
 		bow.block_until_release()
+		spear.block_until_release()
+	elif event.is_action_pressed("weapon_swap"):
+		swap_weapon()
 	elif event.is_action_pressed("release_mouse"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	elif event.is_action_pressed("toggle_view"):
@@ -272,6 +287,7 @@ func _physics_process(delta: float) -> void:
 	_update_prompt(delta, cam_forward)
 	_update_health(delta)
 	bow.update_bow(delta)
+	spear.update_spear(delta)
 	_update_camera(delta)
 	if dead:
 		_dead_step(delta)
@@ -301,8 +317,8 @@ func _physics_process(delta: float) -> void:
 		speed = CROUCH_SPEED
 	elif sprinting:
 		speed = SPRINT_SPEED
-	if bow.drawing:
-		# Drawing a bow, you creep (as in Minecraft).
+	if aiming():
+		# Drawing a bow (or raising the spear), you creep (as in Minecraft).
 		speed = minf(speed, WALK_SPEED * 0.45)
 	if swimming:
 		speed = minf(speed, SWIM_SPEED)
@@ -368,7 +384,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 	_water_contacts(delta, water, ground, moved.length(), sink)
 
-	if first_person or bow.drawing:
+	if first_person or aiming() or spear.busy():
 		# Aiming (or seeing through your own eyes): face where you look.
 		_face(cam_forward, delta * 2.0)
 	elif wish.length() > 0.1:
@@ -483,13 +499,13 @@ func _update_stance() -> void:
 		if now - _last_forward_ms < int(DOUBLE_TAP_S * 1000.0):
 			_sprint_latched = true
 		_last_forward_ms = now
-	if not Input.is_action_pressed("move_forward") or bow.drawing:
+	if not Input.is_action_pressed("move_forward") or aiming():
 		_sprint_latched = false
 	var want_crouch := Input.is_action_pressed("crouch") and not swimming
 	if want_crouch != crouching:
 		if want_crouch or _headroom():
 			_set_crouch(want_crouch)
-	sprinting = not crouching and not bow.drawing and (_sprint_latched or Input.is_action_pressed("sprint"))
+	sprinting = not crouching and not aiming() and (_sprint_latched or Input.is_action_pressed("sprint"))
 
 
 func _set_crouch(on: bool) -> void:
@@ -526,6 +542,7 @@ func _damage(amount: float) -> void:
 	if hp <= 0.0:
 		dead = true
 		bow.drawing = false
+		spear.cancel()
 		stop_climb()
 		died.emit()
 
@@ -593,17 +610,22 @@ func _pitch_limit() -> float:
 ## draw.
 func _update_camera(delta: float) -> void:
 	_shake = maxf(_shake - delta * 1.1, 0.0)
-	var aiming := bow.drawing and not first_person
-	_aim_blend = move_toward(_aim_blend, 1.0 if aiming else 0.0, delta * 5.0)
+	var over_shoulder := aiming() and not first_person
+	_aim_blend = move_toward(_aim_blend, 1.0 if over_shoulder else 0.0, delta * 5.0)
 	if not first_person:
 		_spring.spring_length = lerpf(4.5, 2.4, _aim_blend)
 	_camera.h_offset = 0.55 * _aim_blend + randf_range(-1.0, 1.0) * _shake * 0.12
 	_camera.v_offset = randf_range(-1.0, 1.0) * _shake * 0.12
-	_camera.fov = lerpf(70.0, 60.0, bow.power() if bow.drawing else 0.0)
-	# The elf raises both arms to aim (an imported model has its own clips).
+	_camera.fov = lerpf(70.0, 60.0, aim_power())
+	# The elf raises both arms to aim the bow, the right one to hold and
+	# throw the spear (an imported model has its own clips).
 	if _body is PlayerBody:
+		var spear_arm := spear.arm_angle()
 		for arm in (_body as PlayerBody).arms:
-			arm.rotation.x = lerpf(arm.rotation.x, 1.35 if bow.drawing else 0.06, clampf(delta * 10.0, 0.0, 1.0))
+			var want := 1.35 if bow.drawing else 0.06
+			if arm.name == "ArmR" and not is_nan(spear_arm):
+				want = spear_arm
+			arm.rotation.x = lerpf(arm.rotation.x, want, clampf(delta * 10.0, 0.0, 1.0))
 
 
 ## Keep the blob shadow on the ground (`ground`: its height at the
@@ -674,6 +696,38 @@ static func _set_layers(n: Node) -> void:
 ## Room to stand up (nothing solid over a crouched player's head)?
 func _headroom() -> bool:
 	return not test_move(global_transform, up * (STAND_HEIGHT - CROUCH_HEIGHT + 0.05))
+
+
+# --- Weapons ------------------------------------------------------------------
+
+## Drawing the bow or raising the spear (you creep, no sprint, the camera
+## comes over your shoulder).
+func aiming() -> bool:
+	return bow.drawing or spear.raising
+
+
+## 0-1: how hard the drawn bow or raised spear would fly.
+func aim_power() -> float:
+	if bow.drawing:
+		return bow.power()
+	return spear.power() if spear.raising else 0.0
+
+
+## Bow to spear and back (weapon_swap), dropping any draw; holding
+## `shoot` through a swap does nothing until it's let go.
+func swap_weapon() -> void:
+	bow.drawing = false
+	bow.charge = 0.0
+	spear.cancel()
+	bow.block_until_release()
+	spear.block_until_release()
+	weapon = "spear" if weapon == "bow" else "bow"
+
+
+## A sudden loud moment (loosing an arrow, a thrust, a throw): the noise
+## wildlife hears jumps to at least `level` and eases back down.
+func make_noise(level: float) -> void:
+	noise_level = maxf(noise_level, level)
 
 
 ## How loud the player is, eased so a moment's sprint lingers a little,
