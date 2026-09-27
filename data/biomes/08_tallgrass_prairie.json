@@ -299,5 +299,93 @@
    "Cannabis - Rif (Ketama)",
    "Cannabis - Turkish"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Big bluestem-Indiangrass mesic prairie",
+   "where": "rolling uplands and gentle slopes with deep loam",
+   "dominant": [
+    "Big bluestem",
+    "Indiangrass"
+   ],
+   "companion": [
+    "Leadplant",
+    "Prairie rose"
+   ],
+   "ground": [
+    "Switchgrass",
+    "Compass plant",
+    "Purple coneflower"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Weaver 1954 North American Prairie; USNVC Andropogon gerardii-Sorghastrum nutans grassland"
+  },
+  {
+   "name": "Little bluestem dry upland prairie",
+   "where": "thin rocky soil on hilltops and limestone slopes, dry",
+   "dominant": [
+    "Little bluestem"
+   ],
+   "companion": [
+    "Leadplant"
+   ],
+   "ground": [
+    "Purple coneflower"
+   ],
+   "catalogue": [
+    "Arkansas yucca",
+    "Pale-leaf yucca"
+   ],
+   "cover": 0.3,
+   "source": "Weaver 1954; Diamond & Smeins 1985 Texas Blackland and Flint Hills prairies"
+  },
+  {
+   "name": "Switchgrass lowland prairie",
+   "where": "wet swales, creek bottoms and seasonally flooded flats",
+   "dominant": [
+    "Switchgrass",
+    "Big bluestem"
+   ],
+   "companion": [
+    "Prairie rose"
+   ],
+   "ground": [
+    "Compass plant"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Weaver 1954 (lowland prairie type); USNVC"
+  },
+  {
+   "name": "Bur oak savanna",
+   "where": "prairie edge and fire-sheltered slopes with scattered trees",
+   "dominant": [
+    "Bur oak"
+   ],
+   "companion": [
+    "American hazel",
+    "Prairie rose"
+   ],
+   "ground": [
+    "Big bluestem",
+    "Little bluestem"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Curtis 1959 Vegetation of Wisconsin (oak openings); Nuzzo 1986"
+  },
+  {
+   "name": "Pampas grass tussock grassland",
+   "where": "moist lowlands and river margins of the humid pampa",
+   "dominant": [
+    "Pampas grass"
+   ],
+   "companion": [],
+   "ground": [],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Soriano 1991 Rio de la Plata grasslands; Cabrera 1976"
+  }
+ ]
 }

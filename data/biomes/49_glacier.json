@@ -101,5 +101,36 @@
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
   "count": 0,
   "names": []
- }
+ },
+ "associations": [
+  {
+   "name": "Snow algae ice field",
+   "where": "the glacier surface and snowfields in summer, red-tinted snow",
+   "dominant": [
+    "Snow algae"
+   ],
+   "companion": [],
+   "ground": [
+    "Snow algae"
+   ],
+   "catalogue": [],
+   "cover": 0.1,
+   "source": "Hoham & Duval 2001 snow algae ecology"
+  },
+  {
+   "name": "Map lichen-glacier buttercup fresh moraine",
+   "where": "bare rock and gravel of the young moraine and ice edge",
+   "dominant": [
+    "Map lichen"
+   ],
+   "companion": [],
+   "ground": [
+    "Map lichen",
+    "Glacier buttercup"
+   ],
+   "catalogue": [],
+   "cover": 0.1,
+   "source": "Matthews 1992 Ecology of Recently Deglaciated Terrain; Rhizocarpon lichenometry"
+  }
+ ]
 }

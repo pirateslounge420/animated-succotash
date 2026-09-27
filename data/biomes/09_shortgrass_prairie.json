@@ -303,5 +303,97 @@
    "Cannabis - Russian ruderalis",
    "Cannabis - Chuy Valley"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Blue grama-buffalograss shortgrass steppe",
+   "where": "level to rolling uplands with heavy soil, dry",
+   "dominant": [
+    "Blue grama",
+    "Buffalograss"
+   ],
+   "companion": [
+    "Fringed sage",
+    "Plains prickly pear"
+   ],
+   "ground": [
+    "Scarlet globemallow"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Weaver & Albertson 1956 Grasslands of the Great Plains; Lauenroth & Burke 2008 Shortgrass Steppe"
+  },
+  {
+   "name": "Western wheatgrass swale",
+   "where": "clay flats and low swales that catch runoff, moister",
+   "dominant": [
+    "Western wheatgrass"
+   ],
+   "companion": [
+    "Fringed sage"
+   ],
+   "ground": [
+    "Blue grama",
+    "Buffalograss"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Weaver & Albertson 1956; USNVC Pascopyrum smithii grassland"
+  },
+  {
+   "name": "Needle-and-thread sandy prairie",
+   "where": "sandy uplands and dune edges, loose soil",
+   "dominant": [
+    "Needle-and-thread",
+    "Blue grama"
+   ],
+   "companion": [
+    "Soapweed yucca",
+    "Plains prickly pear"
+   ],
+   "ground": [
+    "Scarlet globemallow"
+   ],
+   "catalogue": [
+    "Arkansas yucca"
+   ],
+   "cover": 0.3,
+   "source": "Weaver & Albertson 1956; Lauenroth & Burke 2008"
+  },
+  {
+   "name": "Rabbitbrush disturbed breaks",
+   "where": "eroded slopes, badland edges, overgrazed and disturbed ground",
+   "dominant": [
+    "Rubber rabbitbrush"
+   ],
+   "companion": [
+    "Fringed sage",
+    "Soapweed yucca"
+   ],
+   "ground": [
+    "Blue grama",
+    "Western wheatgrass"
+   ],
+   "catalogue": [],
+   "cover": 0.25,
+   "source": "Weaver & Albertson 1956 (disturbance stages); USNVC"
+  },
+  {
+   "name": "Plains cottonwood draw",
+   "where": "stream draws, river banks and sandbars with shallow water table",
+   "dominant": [
+    "Plains cottonwood"
+   ],
+   "companion": [
+    "Rubber rabbitbrush"
+   ],
+   "ground": [
+    "Western wheatgrass",
+    "Needle-and-thread"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Friedman et al. 1997 Great Plains cottonwood forests; Weaver & Albertson 1956"
+  }
+ ]
 }

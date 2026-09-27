@@ -259,5 +259,96 @@
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
   "count": 0,
   "names": []
- }
+ },
+ "associations": [
+  {
+   "name": "Tussock cottongrass tundra",
+   "where": "moist flat lowland over permafrost, peaty soil",
+   "dominant": [
+    "Arctic cottongrass",
+    "Tundra sedge"
+   ],
+   "companion": [
+    "Dwarf birch",
+    "Bog bilberry"
+   ],
+   "ground": [
+    "Rusty bog-moss",
+    "Reindeer lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Walker et al. 2005 Circumpolar Arctic Vegetation Map; Viereck et al. 1992 Alaska Vegetation Classification"
+  },
+  {
+   "name": "Dwarf birch-crowberry heath tundra",
+   "where": "well-drained gentle slopes and low ridges, acid soil",
+   "dominant": [
+    "Dwarf birch",
+    "Crowberry"
+   ],
+   "companion": [
+    "Bog bilberry",
+    "Arctic willow"
+   ],
+   "ground": [
+    "Reindeer lichen",
+    "Tundra sedge"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Walker et al. 2005 CAVM (erect dwarf-shrub tundra); Viereck et al. 1992"
+  },
+  {
+   "name": "Mountain-avens fellfield barrens",
+   "where": "exposed windswept ridges and gravel, dry thin soil",
+   "dominant": [
+    "Entire-leaf mountain avens"
+   ],
+   "companion": [
+    "Arctic willow"
+   ],
+   "ground": [
+    "Reindeer lichen",
+    "Arctic annuals"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Walker et al. 2005 CAVM (prostrate dwarf-shrub/Dryas tundra); Bliss 1981 Truelove Lowland"
+  },
+  {
+   "name": "Wet sedge meadow tundra",
+   "where": "low basins, thaw-pond margins and drained lake beds with standing water",
+   "dominant": [
+    "Tundra sedge"
+   ],
+   "companion": [
+    "Arctic willow"
+   ],
+   "ground": [
+    "Arctic cottongrass",
+    "Rusty bog-moss"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Walker et al. 2005 CAVM (sedge/moss wetland); Viereck et al. 1992"
+  },
+  {
+   "name": "Riparian arctic willow scrub",
+   "where": "river banks, gravel bars and sheltered stream valleys",
+   "dominant": [
+    "Arctic willow"
+   ],
+   "companion": [
+    "Dwarf birch"
+   ],
+   "ground": [
+    "Tundra sedge",
+    "Arctic annuals"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Viereck et al. 1992 (open low willow scrub); Bliss & Matveyeva 1992"
+  }
+ ]
 }

@@ -332,5 +332,88 @@
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
   "count": 0,
   "names": []
- }
+ },
+ "associations": [
+  {
+   "name": "Sphagnum-cottongrass raised bog",
+   "where": "open bog center and hummock-hollow plain, rain-fed acid peat",
+   "dominant": [
+    "Sphagnum moss",
+    "Cottongrass"
+   ],
+   "companion": [
+    "Heather",
+    "Bog rosemary",
+    "Cranberry"
+   ],
+   "ground": [
+    "Sphagnum moss",
+    "Cottongrass",
+    "Round-leaved sundew"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Oxycocco-Sphagnetea raised bog (Ellenberg 1988; Rodwell 1991 M18)"
+  },
+  {
+   "name": "Heather-deergrass blanket bog",
+   "where": "gently sloping uplands with high rainfall, shallow peat over rock",
+   "dominant": [
+    "Heather",
+    "Deergrass"
+   ],
+   "companion": [
+    "Bog myrtle",
+    "Cranberry"
+   ],
+   "ground": [
+    "Sphagnum moss",
+    "Cottongrass",
+    "Deergrass"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Scirpus cespitosus-Eriophorum blanket mire (Rodwell 1991 M17; Lindsay 1995)"
+  },
+  {
+   "name": "Black spruce-leatherleaf muskeg",
+   "where": "forested bog margin and slow-drained flats, deep peat, cold",
+   "dominant": [
+    "Black spruce",
+    "Tamarack"
+   ],
+   "companion": [
+    "Leatherleaf",
+    "Bog rosemary",
+    "Cranberry"
+   ],
+   "ground": [
+    "Sphagnum moss",
+    "Pitcher plant",
+    "Cottongrass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Picea mariana-Chamaedaphne muskeg (Rowe 1972; Curtis 1959; USNVC)"
+  },
+  {
+   "name": "Bog pine hummock wood",
+   "where": "drier raised hummocks and bog rim on deep peat",
+   "dominant": [
+    "Bog pine"
+   ],
+   "companion": [
+    "Heather",
+    "Bog myrtle",
+    "Bog rosemary"
+   ],
+   "ground": [
+    "Sphagnum moss",
+    "Cottongrass"
+   ],
+   "catalogue": [],
+   "cover": 0.45,
+   "source": "Pino mugo-Sphagnetum and Vaccinio uliginosi-Pinetum bog woodland (Ellenberg 1988; EU habitat 91D0)"
+  }
+ ]
 }

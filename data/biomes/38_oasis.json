@@ -394,5 +394,97 @@
    "Trichocereus chalaensis",
    "Cannabis - Lashkar Gah"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Date palm-fig oasis garden",
+   "where": "irrigated flats around the spring or well, deep moist soil in the oasis core",
+   "dominant": [
+    "Date palm"
+   ],
+   "companion": [
+    "Fig",
+    "Doum palm"
+   ],
+   "ground": [
+    "Bermuda grass"
+   ],
+   "catalogue": [
+    "Date palm",
+    "Doum palm"
+   ],
+   "cover": 0.8,
+   "source": "Battesti 2005 Jardins au desert; Zaid 2002 FAO Date Palm Cultivation, traditional three-storey oasis"
+  },
+  {
+   "name": "Euphrates poplar-tamarisk riparian tugai",
+   "where": "river banks and wadi floors with shallow groundwater, seasonally flooded sand and silt",
+   "dominant": [
+    "Euphrates poplar",
+    "Athel tamarisk"
+   ],
+   "companion": [
+    "Saltcedar",
+    "Oleander"
+   ],
+   "ground": [
+    "Common reed",
+    "Halfa grass"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Thevs et al. 2008 Tugai forests of the Tarim basin; Walter & Box 1983 Central Asian riparian woodland"
+  },
+  {
+   "name": "Reed-flatsedge spring margin",
+   "where": "waterlogged ground at the spring outflow and pool edges",
+   "dominant": [
+    "Common reed"
+   ],
+   "companion": [],
+   "ground": [
+    "Common reed",
+    "Smooth flatsedge",
+    "Desert rush",
+    "Bermuda grass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Zohary 1973 Geobotanical Foundations of the Middle East, Phragmites-Cyperus hydrophilous vegetation"
+  },
+  {
+   "name": "Camelthorn-saltcedar oasis fringe",
+   "where": "dry saline outer rim of the oasis where groundwater is deep, bare sand around",
+   "dominant": [
+    "Camelthorn",
+    "Saltcedar"
+   ],
+   "companion": [],
+   "ground": [
+    "Halfa grass",
+    "Desert rush"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Zohary 1973; Walter & Box 1983 Alhagi-Tamarix halophytic desert fringe"
+  },
+  {
+   "name": "Doum palm wadi",
+   "where": "sandy wadi beds of the Sahara-Sahel with intermittent flow",
+   "dominant": [
+    "Doum palm"
+   ],
+   "companion": [
+    "Athel tamarisk"
+   ],
+   "ground": [
+    "Halfa grass"
+   ],
+   "catalogue": [
+    "Doum palm"
+   ],
+   "cover": 0.4,
+   "source": "Ozenda 1991 Flore et vegetation du Sahara, Hyphaene thebaica wadi groves"
+  }
+ ]
 }

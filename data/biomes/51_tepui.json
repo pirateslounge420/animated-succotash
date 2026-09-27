@@ -1323,5 +1323,99 @@
     "tank_dweller": true
    }
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Stegolepis-brocchinia rosette meadow",
+   "where": "flat peaty summit plateaus, permanently wet, exposed to cloud and wind",
+   "dominant": [
+    "Tepui stegolepis",
+    "Giant brocchinia"
+   ],
+   "companion": [],
+   "ground": [
+    "Brocchinia",
+    "Sun pitcher",
+    "Roraima sundew",
+    "Tepui orectanthe",
+    "Summit moss"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Huber 1995 Flora of the Venezuelan Guayana vol. 1, tepui broad-leaved meadows (Stegolepis)"
+  },
+  {
+   "name": "Bonnetia summit scrub-forest",
+   "where": "sheltered clefts, sinkhole rims and drainage lines with deeper peat",
+   "dominant": [
+    "Bonnetia"
+   ],
+   "companion": [
+    "Tepui clusia",
+    "Tepui myrtle",
+    "Tepui tree fern"
+   ],
+   "ground": [
+    "Summit moss",
+    "Tepui bromeliad"
+   ],
+   "catalogue": [],
+   "cover": 0.75,
+   "source": "Huber 1995; Steyermark 1986 Bonnetia roraimae tepui scrub forests"
+  },
+  {
+   "name": "Sun pitcher-sundew peat bog",
+   "where": "waterlogged hollows and seepage flats on the summit, black peat",
+   "dominant": [
+    "Sun pitcher",
+    "Giant sun pitcher"
+   ],
+   "companion": [
+    "Humboldt's bladderwort"
+   ],
+   "ground": [
+    "Roraima sundew",
+    "Tepui cushion",
+    "Summit moss",
+    "Brocchinia"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Huber 1995 tepui herbaceous bogs; Steyermark 1979 Heliamphora"
+  },
+  {
+   "name": "Rock lichen-bromeliad bare quartzite",
+   "where": "black-crusted bare rock, pinnacles and cliff tops with no soil",
+   "dominant": [
+    "Rock lichen"
+   ],
+   "companion": [],
+   "ground": [
+    "Rock lichen",
+    "Tepui bromeliad",
+    "Tepui cushion"
+   ],
+   "catalogue": [],
+   "cover": 0.15,
+   "source": "Huber 1995 pioneer rock vegetation of the tepui summits"
+  },
+  {
+   "name": "Tepui myrtle-clusia cliff-edge shrubland",
+   "where": "rim edges and rocky slopes with thin peat pockets, wind-swept",
+   "dominant": [
+    "Tepui myrtle",
+    "Tepui clusia"
+   ],
+   "companion": [
+    "Tepui tree fern"
+   ],
+   "ground": [
+    "Tepui bromeliad",
+    "Rock lichen"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Huber 1995 tepui shrublands"
+  }
+ ]
 }

@@ -498,5 +498,105 @@
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
   "count": 0,
   "names": []
- }
+ },
+ "associations": [
+  {
+   "name": "Sitka spruce-hemlock fog forest",
+   "where": "coastal fog belt, lower slopes and terraces, very wet",
+   "dominant": [
+    "Sitka spruce",
+    "Hemlock"
+   ],
+   "companion": [
+    "Salal",
+    "Vine maple",
+    "Devil's club",
+    "Cat-tail moss",
+    "Licorice fern",
+    "Kuril bamboo"
+   ],
+   "ground": [
+    "Sword fern",
+    "Deer fern",
+    "Stair-step moss",
+    "Skunk cabbage"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Franklin & Dyrness 1973 Natural Vegetation of Oregon and Washington (Picea sitchensis zone)"
+  },
+  {
+   "name": "Redwood alluvial flat forest",
+   "where": "river flats and lower slopes with deep alluvial soil, summer fog",
+   "dominant": [
+    "Coast redwood"
+   ],
+   "companion": [
+    "Douglas fir",
+    "Vine maple"
+   ],
+   "ground": [
+    "Oregon oxalis",
+    "Sword fern"
+   ],
+   "catalogue": [],
+   "cover": 0.95,
+   "source": "Sawyer et al. 2000 Redwood Forest; Franklin & Dyrness 1973"
+  },
+  {
+   "name": "Douglas-fir salal slope forest",
+   "where": "drier south slopes and ridges, well drained, after old fire",
+   "dominant": [
+    "Douglas fir"
+   ],
+   "companion": [
+    "Hemlock",
+    "Salal",
+    "Old man's beard"
+   ],
+   "ground": [
+    "Sword fern",
+    "Deer fern"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Franklin & Dyrness 1973 (Tsuga heterophylla zone, Pseudotsuga/Gaultheria)"
+  },
+  {
+   "name": "Coihue-colihue Valdivian forest",
+   "where": "mid-slopes and valleys of the southern Andes, high rainfall",
+   "dominant": [
+    "Coihue"
+   ],
+   "companion": [
+    "Colihue",
+    "Old man's beard",
+    "Cat-tail moss"
+   ],
+   "ground": [
+    "Stair-step moss",
+    "Deer fern"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Veblen et al. 1996 Ecology and Biogeography of Nothofagus Forests"
+  },
+  {
+   "name": "Rimu-tree fern podocarp forest",
+   "where": "lowland and low hill country of New Zealand, wet deep soil",
+   "dominant": [
+    "Rimu"
+   ],
+   "companion": [
+    "Silver tree fern",
+    "Old man's beard"
+   ],
+   "ground": [
+    "Stair-step moss"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Wardle 1991 Vegetation of New Zealand"
+  }
+ ]
 }

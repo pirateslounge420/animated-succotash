@@ -274,5 +274,95 @@
   "names": [
    "Cannabis - Altai"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Mat-grass (Nardus) meadow",
+   "where": "gently sloping acid pastures on leached soil just above treeline, long snow cover",
+   "dominant": [
+    "Mat grass"
+   ],
+   "companion": [
+    "Dwarf juniper"
+   ],
+   "ground": [
+    "Mat grass",
+    "Gentian",
+    "Alpine wildflowers"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Ellenberg 1988 Vegetation Ecology of Central Europe (Nardetalia); Braun-Blanquet 1948"
+  },
+  {
+   "name": "Alpenrose-dwarf juniper heath",
+   "where": "steep slopes and edges of the meadow near treeline where snow lies late, acid soil",
+   "dominant": [
+    "Alpenrose"
+   ],
+   "companion": [
+    "Dwarf juniper"
+   ],
+   "ground": [
+    "Mat grass",
+    "Gentian"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Ellenberg 1988 (Rhododendro-Vaccinietum); Ozenda 1985 La vegetation de la chaine alpine"
+  },
+  {
+   "name": "Subalpine wildflower meadow",
+   "where": "moist, deep-soil slopes and basins below the ridges, snowmelt-fed",
+   "dominant": [
+    "Tufted hairgrass"
+   ],
+   "companion": [],
+   "ground": [
+    "Tufted hairgrass",
+    "Alpine wildflowers",
+    "Alpine paintbrush",
+    "Gentian"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Billings 1988 Alpine vegetation (Barbour & Billings North American Terrestrial Vegetation); Komarkova 1979 Alpine vegetation of the Indian Peaks"
+  },
+  {
+   "name": "Kobresia sedge meadow",
+   "where": "wide flat plateaus and rolling slopes of the Tibetan/Himalayan high plateau, cold and dry",
+   "dominant": [
+    "Tibetan alpine sedge"
+   ],
+   "companion": [
+    "Dwarf juniper"
+   ],
+   "ground": [
+    "Tibetan alpine sedge",
+    "Gentian",
+    "Alpine wildflowers"
+   ],
+   "catalogue": [
+    "Cannabis - Altai"
+   ],
+   "cover": 0.4,
+   "source": "Miehe et al. 2019 The Kobresia pygmaea ecosystem of the Tibetan highlands (Science of the Total Environment); Chang 1981"
+  },
+  {
+   "name": "Edelweiss limestone grassland",
+   "where": "sunny rocky limestone slopes and ledges with thin dry soil",
+   "dominant": [
+    "Edelweiss"
+   ],
+   "companion": [],
+   "ground": [
+    "Edelweiss",
+    "Gentian",
+    "Alpine wildflowers"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Ellenberg 1988 (Seslerietalia); Ozenda 1985"
+  }
+ ]
 }

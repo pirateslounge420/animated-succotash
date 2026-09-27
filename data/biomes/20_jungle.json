@@ -643,5 +643,115 @@
    "Cannabis - Manga Rosa",
    "Cannabis - Hawaiian (Kona / Puna)"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Teak-bamboo moist deciduous forest",
+   "where": "well-drained hill slopes and valley sides of Burma and Thailand with a monsoon dry season",
+   "dominant": [
+    "Teak"
+   ],
+   "companion": [
+    "Giant bamboo",
+    "Bamboo thicket"
+   ],
+   "ground": [
+    "Cogon grass",
+    "Lantana",
+    "Bracken"
+   ],
+   "catalogue": [
+    "Talipot palm"
+   ],
+   "cover": 0.7,
+   "source": "Champion & Seth 1968 A Revised Survey of the Forest Types of India (moist teak forest); Stamp 1925 Vegetation of Burma"
+  },
+  {
+   "name": "Sal forest",
+   "where": "gently sloping foothill terraces and plains of the Indo-Gangetic belt, deep loam",
+   "dominant": [
+    "Sal"
+   ],
+   "companion": [
+    "Bamboo thicket",
+    "Fishtail palm"
+   ],
+   "ground": [
+    "Cogon grass",
+    "Lantana"
+   ],
+   "catalogue": [
+    "Chinese fan palm"
+   ],
+   "cover": 0.75,
+   "source": "Champion & Seth 1968 (moist sal forest); Puri 1960 Indian Forest Ecology"
+  },
+  {
+   "name": "Amazon guadua bamboo forest",
+   "where": "poorly drained lowland and valley floor of SW Amazonia with a shorter open canopy",
+   "dominant": [
+    "Guadua bamboo"
+   ],
+   "companion": [
+    "Trumpet tree",
+    "Umbrella tree",
+    "Hanging lobster-claw"
+   ],
+   "ground": [
+    "Spiral ginger"
+   ],
+   "catalogue": [
+    "Babassu"
+   ],
+   "cover": 0.75,
+   "source": "Griscom & Ashton 2003 Bamboo control of forest succession (Forest Ecology and Management); Nelson 1994"
+  },
+  {
+   "name": "Cecropia secondary growth",
+   "where": "abandoned clearings, landslides and river banks in full sun, a few years after disturbance",
+   "dominant": [
+    "Trumpet tree",
+    "Umbrella tree"
+   ],
+   "companion": [
+    "Wild banana",
+    "Hanging lobster-claw",
+    "Elephant ear",
+    "Rattan vine",
+    "Passion vine",
+    "Staghorn fern"
+   ],
+   "ground": [
+    "Lantana",
+    "Cogon grass",
+    "Bracken"
+   ],
+   "catalogue": [
+    "Royal palm"
+   ],
+   "cover": 0.6,
+   "source": "Richards 1996 The Tropical Rain Forest (secondary succession); Whitmore 1984"
+  },
+  {
+   "name": "Streamside giant-herb jungle",
+   "where": "shaded ravines, stream banks and seepage slopes with wet soil",
+   "dominant": [
+    "Wild banana",
+    "Elephant ear"
+   ],
+   "companion": [
+    "Fishtail palm",
+    "Hanging lobster-claw"
+   ],
+   "ground": [
+    "Torch ginger",
+    "Spiral ginger"
+   ],
+   "catalogue": [
+    "Amorphophallus bulbifer"
+   ],
+   "cover": 0.8,
+   "source": "Whitmore 1984; Champion & Seth 1968 (tropical semi-evergreen and riverine forest)"
+  }
+ ]
 }

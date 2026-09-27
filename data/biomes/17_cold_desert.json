@@ -275,5 +275,105 @@
    "Sterile yucca",
    "Utah yucca"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Saltbush-galleta desert shrub",
+   "where": "dry alkaline valley floors and gravelly fans of the Great Basin and Colorado Plateau",
+   "dominant": [
+    "Saltbush"
+   ],
+   "companion": [
+    "Winterfat",
+    "Mormon tea"
+   ],
+   "ground": [
+    "Galleta grass",
+    "Indian ricegrass",
+    "Desert halogeton"
+   ],
+   "catalogue": [
+    "Narrowleaf yucca",
+    "Utah yucca",
+    "Navajo yucca"
+   ],
+   "cover": 0.2,
+   "source": "Billings 1949 Shadscale vegetation zone of Nevada; West 1983 Ecosystems of the World 5 Intermountain salt-desert shrubland"
+  },
+  {
+   "name": "Blackbrush scrub",
+   "where": "shallow rocky benches and mesa slopes of the Colorado Plateau and Mojave edge",
+   "dominant": [
+    "Blackbrush"
+   ],
+   "companion": [
+    "Mormon tea",
+    "Saltbush"
+   ],
+   "ground": [
+    "Indian ricegrass",
+    "Galleta grass"
+   ],
+   "catalogue": [
+    "Joshua tree",
+    "Mojave yucca",
+    "Banana yucca"
+   ],
+   "cover": 0.3,
+   "source": "Bowns & West 1976 Blackbrush (Coleogyne ramosissima) in southwestern Utah; USNVC Coleogyne ramosissima shrubland"
+  },
+  {
+   "name": "Winterfat flat",
+   "where": "flat clay-loam basins and cold benches with heavy winter frost",
+   "dominant": [
+    "Winterfat"
+   ],
+   "companion": [
+    "Saltbush",
+    "Mormon tea"
+   ],
+   "ground": [
+    "Indian ricegrass",
+    "Galleta grass"
+   ],
+   "catalogue": [
+    "Harriman's yucca"
+   ],
+   "cover": 0.25,
+   "source": "West 1983; Stevens et al. 1977 Winterfat (Utah Div. Wildlife Resources)"
+  },
+  {
+   "name": "Saxaul desert woodland",
+   "where": "sand dunes and sandy plains of the Gobi and Central Asian deserts",
+   "dominant": [
+    "Saxaul"
+   ],
+   "companion": [
+    "Reaumuria"
+   ],
+   "ground": [
+    "Gobi needlegrass",
+    "Desert halogeton"
+   ],
+   "catalogue": [],
+   "cover": 0.2,
+   "source": "Walter & Box 1983 Ecosystems of the World 5 Middle Asian deserts; Hilbig 1995 Vegetation of Mongolia"
+  },
+  {
+   "name": "Reaumuria gravel desert (gobi)",
+   "where": "stony gravel pavements and low hills of the Gobi, very dry",
+   "dominant": [
+    "Reaumuria"
+   ],
+   "companion": [
+    "Saxaul"
+   ],
+   "ground": [
+    "Gobi needlegrass"
+   ],
+   "catalogue": [],
+   "cover": 0.15,
+   "source": "Hilbig 1995 The Vegetation of Mongolia; Walter & Box 1983"
+  }
+ ]
 }

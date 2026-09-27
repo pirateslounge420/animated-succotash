@@ -816,5 +816,130 @@
    "Cannabis - Lamb's Bread",
    "Cannabis - Hawaiian (Kona / Puna)"
   ]
- }
+ },
+ "associations": [
+  {
+   "name": "Amazon terra firme forest",
+   "where": "well-drained interfluve uplands above the flood line on deep clay soil",
+   "dominant": [
+    "Brazil nut tree",
+    "Sapucaia"
+   ],
+   "companion": [
+    "Kapok",
+    "Strangler fig",
+    "Silver miconia",
+    "Heliconia",
+    "Bromeliad",
+    "Liana"
+   ],
+   "ground": [
+    "Forest-floor fern",
+    "Selaginella",
+    "Marantaceae herb"
+   ],
+   "catalogue": [
+    "Peach palm",
+    "Walking palm",
+    "Babassu"
+   ],
+   "cover": 0.95,
+   "source": "Pires & Prance 1985 Vegetation types of the Brazilian Amazon (Key Environments: Amazonia); Richards 1996 The Tropical Rain Forest"
+  },
+  {
+   "name": "Amazon varzea and igapo flooded forest",
+   "where": "river banks and floodplain lowlands flooded for months each year",
+   "dominant": [
+    "Kapok",
+    "Assai palm"
+   ],
+   "companion": [
+    "Strangler fig",
+    "Heliconia",
+    "Monstera"
+   ],
+   "ground": [
+    "Amazon sword",
+    "Marantaceae herb"
+   ],
+   "catalogue": [
+    "Açaí palm",
+    "Moriche palm",
+    "Buriti-do-brejo"
+   ],
+   "cover": 0.85,
+   "source": "Prance 1979 Notes on the vegetation of Amazonia III (Brittonia); Junk 1989 Flood tolerance and tree distribution in central Amazonian floodplains"
+  },
+  {
+   "name": "Bornean lowland dipterocarp forest",
+   "where": "gently rolling hills and ridges below 300 m on well-drained soil",
+   "dominant": [
+    "Yellow meranti",
+    "Red meranti",
+    "Tualang"
+   ],
+   "companion": [
+    "Strangler fig",
+    "Rattan palm",
+    "Tree fern",
+    "Orchid",
+    "Bird's nest fern",
+    "Liana"
+   ],
+   "ground": [
+    "Forest-floor fern",
+    "Selaginella"
+   ],
+   "catalogue": [
+    "Rattan",
+    "Sago palm",
+    "Nipa palm",
+    "Amorphophallus titanum"
+   ],
+   "cover": 0.95,
+   "source": "Whitmore 1984 Tropical Rain Forests of the Far East; Ashton 1964 Ecological studies in the mixed dipterocarp forests of Brunei State"
+  },
+  {
+   "name": "Congo Marantaceae forest",
+   "where": "flat plateaus and old clearings of the Congo basin with an open canopy and giant-herb layer",
+   "dominant": [
+    "Limba"
+   ],
+   "companion": [
+    "Aframomum ginger",
+    "Strangler fig"
+   ],
+   "ground": [
+    "Marantaceae herb",
+    "Forest-floor fern"
+   ],
+   "catalogue": [
+    "Oil palm",
+    "Raffia palm"
+   ],
+   "cover": 0.7,
+   "source": "White 1983 Vegetation of Africa (Guineo-Congolian rain forest); Letouzey 1968 Etude phytogeographique du Cameroun"
+  },
+  {
+   "name": "Rainforest gap and river-edge bamboo thicket",
+   "where": "light gaps, landslide scars, river banks and forest edge with full sun",
+   "dominant": [
+    "Giant bamboo"
+   ],
+   "companion": [
+    "Heliconia",
+    "Silver miconia",
+    "Tree fern"
+   ],
+   "ground": [
+    "Selaginella",
+    "Forest-floor fern"
+   ],
+   "catalogue": [
+    "Walking palm"
+   ],
+   "cover": 0.7,
+   "source": "Richards 1996 The Tropical Rain Forest (gap phase); Whitmore 1984"
+  }
+ ]
 }

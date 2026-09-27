@@ -440,5 +440,114 @@
    }
   ],
   "epiphyte": []
- }
+ },
+ "associations": [
+  {
+   "name": "Pinyon-juniper rim woodland",
+   "where": "rocky canyon rims and mid-slope benches, thin dry soil",
+   "dominant": [
+    "Two-needle pinyon",
+    "Utah juniper"
+   ],
+   "companion": [
+    "Cliffrose",
+    "Green Mormon tea",
+    "Big sagebrush"
+   ],
+   "ground": [
+    "Indian ricegrass",
+    "Galleta grass"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Brown 1994 Biotic Communities of the Southwestern US, Great Basin conifer woodland; USNVC"
+  },
+  {
+   "name": "Blackbrush-Mormon tea slope shrubland",
+   "where": "hot dry lower slopes and talus, south-facing, shallow soil",
+   "dominant": [
+    "Blackbrush"
+   ],
+   "companion": [
+    "Green Mormon tea",
+    "Prickly pear"
+   ],
+   "ground": [
+    "Galleta grass",
+    "Indian ricegrass",
+    "Desert globemallow"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Brown 1994; USNVC Coleogyne ramosissima shrubland, Grand Canyon Tonto Platform"
+  },
+  {
+   "name": "Fremont cottonwood-coyote willow gallery",
+   "where": "canyon floor stream banks and floodplains with shallow water table",
+   "dominant": [
+    "Fremont cottonwood"
+   ],
+   "companion": [
+    "Coyote willow",
+    "Netleaf hackberry"
+   ],
+   "ground": [
+    "Scarlet monkeyflower"
+   ],
+   "catalogue": [],
+   "cover": 0.7,
+   "source": "Brown 1994 Sonoran riparian deciduous forest; Zion and Grand Canyon riparian"
+  },
+  {
+   "name": "Gambel oak-hackberry side-canyon woodland",
+   "where": "shaded north-facing side canyons and moist upper slopes",
+   "dominant": [
+    "Gambel oak"
+   ],
+   "companion": [
+    "Netleaf hackberry",
+    "Big sagebrush"
+   ],
+   "ground": [
+    "Indian ricegrass"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Brown 1994 Great Basin montane scrub; USNVC Quercus gambelii shrubland"
+  },
+  {
+   "name": "Maidenhair fern-monkeyflower hanging garden",
+   "where": "seeps and dripping alcove walls in the sandstone, constantly wet",
+   "dominant": [
+    "Maidenhair fern",
+    "Scarlet monkeyflower"
+   ],
+   "companion": [],
+   "ground": [
+    "Maidenhair fern",
+    "Scarlet monkeyflower"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Welsh 1989 hanging gardens of the Colorado Plateau; Malanson 1980 Zion hanging gardens"
+  },
+  {
+   "name": "Sagebrush-ricegrass sandy bench",
+   "where": "sandy terraces and benches on the canyon floor above flood level",
+   "dominant": [
+    "Big sagebrush"
+   ],
+   "companion": [
+    "Prickly pear"
+   ],
+   "ground": [
+    "Indian ricegrass",
+    "Sand dropseed",
+    "Desert globemallow"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Brown 1994 Great Basin desertscrub; USNVC Artemisia tridentata sandy shrubland"
+  }
+ ]
 }

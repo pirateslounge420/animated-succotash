@@ -301,5 +301,96 @@
    }
   ],
   "epiphyte": []
- }
+ },
+ "associations": [
+  {
+   "name": "Marram foredune",
+   "where": "mobile yellow dunes facing the sea, bare drifting sand",
+   "dominant": [
+    "Marram grass",
+    "Sea oats"
+   ],
+   "companion": [
+    "Bayberry"
+   ],
+   "ground": [
+    "Marram grass",
+    "Lyme grass",
+    "Sea oats",
+    "American beachgrass",
+    "Dune evening primrose"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Ammophila/Uniola mobile dune (Rodwell 2000 SD6; Ellenberg 1988 Ammophilion)"
+  },
+  {
+   "name": "Sand sedge grey dune",
+   "where": "stabilised inland dunes, thin humus over sand, dry",
+   "dominant": [
+    "Sand sedge"
+   ],
+   "companion": [
+    "Creeping willow",
+    "Bayberry"
+   ],
+   "ground": [
+    "Sand sedge",
+    "Dune evening primrose",
+    "Lyme grass"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Carex arenaria fixed dune grassland (Rodwell 2000 SD10/SD11; Koelerion)"
+  },
+  {
+   "name": "Creeping willow dune slack",
+   "where": "wet hollows between dunes reaching the water table",
+   "dominant": [
+    "Creeping willow"
+   ],
+   "companion": [],
+   "ground": [
+    "Sand sedge",
+    "Marram grass"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Salix repens dune slack (Rodwell 2000 SD15/SD16; Ranwell 1972)"
+  },
+  {
+   "name": "Pine-juniper dune wood",
+   "where": "old stabilised dune ridges far from the sea, dry poor sand",
+   "dominant": [
+    "Scots pine",
+    "Dune pine"
+   ],
+   "companion": [
+    "Coastal juniper",
+    "Creeping willow"
+   ],
+   "ground": [
+    "Sand sedge",
+    "Lyme grass"
+   ],
+   "catalogue": [],
+   "cover": 0.65,
+   "source": "Dune pine wood and Juniperus scrub (Rodwell 2000 SD; Ellenberg 1988; EU habitat 2180)"
+  },
+  {
+   "name": "Coastal wattle dune scrub",
+   "where": "sheltered lee slopes and back dunes of Australian foredunes, sandy",
+   "dominant": [
+    "Coastal wattle"
+   ],
+   "companion": [],
+   "ground": [
+    "Marram grass",
+    "Dune evening primrose"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Acacia longifolia var. sophorae foredune scrub (Specht 1970; NSW coastal dune scrub)"
+  }
+ ]
 }

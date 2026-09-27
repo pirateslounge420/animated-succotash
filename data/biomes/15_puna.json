@@ -307,5 +307,97 @@
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
   "count": 0,
   "names": []
- }
+ },
+ "associations": [
+  {
+   "name": "Ichu bunchgrass puna",
+   "where": "wide open slopes and rolling plateaus 3800-4500 m on stony, well-drained soil",
+   "dominant": [
+    "Ichu grass"
+   ],
+   "companion": [
+    "Puna daisy shrub"
+   ],
+   "ground": [
+    "Ichu grass",
+    "Bunch grass",
+    "Puna gentian",
+    "Ground rosette"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Weberbauer 1945 El mundo vegetal de los Andes peruanos; Cabrera 1968 Ecologia vegetal de la puna (Colloquium Geographicum)"
+  },
+  {
+   "name": "Polylepis (quenua) woodland",
+   "where": "sheltered rocky slopes, boulder fields and gullies at 3800-4800 m",
+   "dominant": [
+    "Queñua"
+   ],
+   "companion": [
+    "Puna daisy shrub",
+    "Puna cactus"
+   ],
+   "ground": [
+    "Bunch grass",
+    "Ichu grass",
+    "Ground rosette"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Kessler 1995 Polylepis-Walder Boliviens; Fjeldsa & Kessler 1996 Conserving the biological diversity of Polylepis woodlands"
+  },
+  {
+   "name": "Tola shrub steppe",
+   "where": "dry gravelly plains and gentle slopes of the southern puna and altiplano",
+   "dominant": [
+    "Puna daisy shrub"
+   ],
+   "companion": [
+    "Puna cactus"
+   ],
+   "ground": [
+    "Ichu grass",
+    "Bunch grass"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Cabrera 1968; Navarro & Maldonado 2002 Geografia ecologica de Bolivia"
+  },
+  {
+   "name": "Bofedal cushion bog",
+   "where": "valley floors, spring seeps and glacier-fed flats with year-round saturated soil",
+   "dominant": [
+    "Bofedal cushion"
+   ],
+   "companion": [],
+   "ground": [
+    "Bofedal cushion",
+    "Puna gentian",
+    "Ground rosette"
+   ],
+   "catalogue": [],
+   "cover": 0.9,
+   "source": "Squeo et al. 2006 Bofedales: high altitude peatlands of the central Andes (Rev. Chil. Hist. Nat.); Ruthsatz 2012"
+  },
+  {
+   "name": "Puya raimondii rocky slope",
+   "where": "steep rocky slopes and scree at 3800-4300 m among bunchgrass",
+   "dominant": [
+    "Queen of the Andes"
+   ],
+   "companion": [
+    "Puna daisy shrub",
+    "Puna cactus",
+    "Yareta"
+   ],
+   "ground": [
+    "Ichu grass",
+    "Bunch grass"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Vadillo, Suni & Cano 2004 Puya raimondii (Rev. Peru. Biol.); Weberbauer 1945"
+  }
+ ]
 }

@@ -295,5 +295,97 @@
   "note": "Catalogue plants (data/plants) whose band centres fall inside this biome's climate; computed, informational. Phase 6 may raise their density here so they are findable.",
   "count": 0,
   "names": []
- }
+ },
+ "associations": [
+  {
+   "name": "Frailejon-tussock grass paramo",
+   "where": "open humid slopes and rolling plateaus above treeline, well-drained peaty soil",
+   "dominant": [
+    "Frailejon"
+   ],
+   "companion": [
+    "Paramo dwarf shrub",
+    "Paramo dwarf bamboo"
+   ],
+   "ground": [
+    "Tussock grass",
+    "Paramo lupine",
+    "Paramo club moss"
+   ],
+   "catalogue": [],
+   "cover": 0.5,
+   "source": "Cuatrecasas 1968 Paramo vegetation and its life forms; Cleef 1981 Vegetation of the paramos of the Colombian Cordillera Oriental"
+  },
+  {
+   "name": "Tall frailejon subparamo",
+   "where": "sheltered lower paramo just above the cloud forest edge, deeper soil",
+   "dominant": [
+    "Tall frailejon",
+    "Paramo dwarf bamboo"
+   ],
+   "companion": [
+    "Paramo dwarf shrub"
+   ],
+   "ground": [
+    "Tussock grass",
+    "Paramo lupine"
+   ],
+   "catalogue": [],
+   "cover": 0.6,
+   "source": "Cleef 1981; Cuatrecasas 1968"
+  },
+  {
+   "name": "Cushion bog (paramo turbera)",
+   "where": "flat valley floors, hollows and lake margins with waterlogged peat",
+   "dominant": [
+    "Cushion plant"
+   ],
+   "companion": [
+    "Frailejon"
+   ],
+   "ground": [
+    "Cushion plant",
+    "Bog moss",
+    "Paramo club moss"
+   ],
+   "catalogue": [],
+   "cover": 0.8,
+   "source": "Cleef 1981; Bosman et al. 1993 Paramo cushion bogs of Colombia (Vegetatio)"
+  },
+  {
+   "name": "Puya-dwarf shrub rocky paramo",
+   "where": "rocky ridges, cliffs and dry exposed slopes with thin soil",
+   "dominant": [
+    "Paramo puya",
+    "Paramo dwarf shrub"
+   ],
+   "companion": [
+    "Frailejon"
+   ],
+   "ground": [
+    "Tussock grass",
+    "Paramo lupine"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Cuatrecasas 1968; Luteyn 1999 Paramos: a checklist of plant diversity, geographical distribution and botanical literature"
+  },
+  {
+   "name": "Tussock grass paramo grassland",
+   "where": "wide open slopes and burned or grazed flats, drier and wind-exposed",
+   "dominant": [
+    "Tussock grass"
+   ],
+   "companion": [
+    "Paramo dwarf shrub"
+   ],
+   "ground": [
+    "Tussock grass",
+    "Paramo lupine"
+   ],
+   "catalogue": [],
+   "cover": 0.4,
+   "source": "Hofstede 1995 Effects of burning and grazing on a Colombian paramo ecosystem; Cleef 1981"
+  }
+ ]
 }

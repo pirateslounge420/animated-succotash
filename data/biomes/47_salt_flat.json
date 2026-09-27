@@ -260,5 +260,89 @@
    }
   ],
   "epiphyte": []
- }
+ },
+ "associations": [
+  {
+   "name": "Glasswort-pickleweed inner margin",
+   "where": "the wettest, saltiest ring right at the crust edge, brine-saturated mud",
+   "dominant": [
+    "Glasswort",
+    "Pickleweed"
+   ],
+   "companion": [],
+   "ground": [
+    "Glasswort",
+    "Pickleweed"
+   ],
+   "catalogue": [],
+   "cover": 0.2,
+   "source": "Flowers 1934 Vegetation of the Great Salt Lake region; Hunt 1966 Death Valley salt pan zonation"
+  },
+  {
+   "name": "Iodine bush-seepweed halophyte zone",
+   "where": "raised hummocks and the middle ring of the playa margin, salty crust",
+   "dominant": [
+    "Iodine bush"
+   ],
+   "companion": [
+    "Shrubby seablite"
+   ],
+   "ground": [
+    "Pickleweed",
+    "Saltgrass"
+   ],
+   "catalogue": [],
+   "cover": 0.25,
+   "source": "Hunt 1966 Death Valley; Flowers 1934 Allenrolfea-Suaeda zone"
+  },
+  {
+   "name": "Saltgrass-alkali heath meadow",
+   "where": "damp moderately saline flats with shallow groundwater",
+   "dominant": [
+    "Saltgrass"
+   ],
+   "companion": [],
+   "ground": [
+    "Saltgrass",
+    "Alkali heath"
+   ],
+   "catalogue": [],
+   "cover": 0.35,
+   "source": "Flowers 1934; USNVC Distichlis spicata saline meadow"
+  },
+  {
+   "name": "Greasewood-saltcedar outer rim",
+   "where": "the outer rim and old shorelines where salinity drops, deeper water table",
+   "dominant": [
+    "Greasewood",
+    "Saltcedar"
+   ],
+   "companion": [
+    "Nitre bush"
+   ],
+   "ground": [
+    "Saltgrass"
+   ],
+   "catalogue": [],
+   "cover": 0.3,
+   "source": "Flowers 1934 Sarcobatus zone; Hunt 1966 Death Valley phreatophyte belt"
+  },
+  {
+   "name": "Halocnemum-nitre bush sabkha",
+   "where": "Saharan chott and Central Asian sabkha margins, hard salt crust",
+   "dominant": [
+    "Halocnemum"
+   ],
+   "companion": [
+    "Nitre bush",
+    "Saltcedar"
+   ],
+   "ground": [
+    "Halocnemum"
+   ],
+   "catalogue": [],
+   "cover": 0.15,
+   "source": "Zohary 1973 Geobotanical Foundations of the Middle East, Halocnemum strobilaceum sabkha"
+  }
+ ]
 }
