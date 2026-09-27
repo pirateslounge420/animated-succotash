@@ -103,15 +103,17 @@ func _look() -> Array:
 					var tsp: PlantSpecies = SpeciesDB.all()[int(chunk.trees[i][2])]
 					if tsp.binomial() != "":
 						best = [tsp.binomial(), "tree"]
-	if not best.is_empty():
-		return best
-	# Plants without colliders, in front of whatever the ray hit.
+	# Plants without colliders, in front of whatever the ray hit: the
+	# nearer of the two is what you're looking at.
 	var plant := _plant_on_ray(from, dir, block_t + 0.3, me)
-	return plant
+	if not plant.is_empty() and (best.is_empty() or float(plant[2]) < block_t):
+		return [plant[0], plant[1]]
+	return best
 
 
 ## The nearest indexed plant (not a tree) the ray passes through within
-## `length` of `from` and PLANT_M of the player, as [binomial, "plant"].
+## `length` of `from` and PLANT_M of the player, as [binomial, "plant",
+## distance along the ray].
 func _plant_on_ray(from: Vector3, dir: Vector3, length: float, me: Vector3) -> Array:
 	var best_t := INF
 	var best_sp := -1
@@ -154,7 +156,7 @@ func _plant_on_ray(from: Vector3, dir: Vector3, length: float, me: Vector3) -> A
 	if best_sp < 0:
 		return []
 	var sp: PlantSpecies = SpeciesDB.all()[best_sp]
-	return [] if sp.binomial() == "" else [sp.binomial(), "plant"]
+	return [] if sp.binomial() == "" else [sp.binomial(), "plant", best_t]
 
 
 ## Where along the ray (o + d t, t in [t0, t1], d unit) it passes within
