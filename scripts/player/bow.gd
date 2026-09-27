@@ -49,9 +49,9 @@ func setup(p: PlanetPlayer) -> void:
 	_view.add_child(vb)
 	_nocked = BowMesh.arrow(0.42)
 	vb.add_child(_nocked)
-	_voice = AudioStreamPlayer3D.new()
-	_voice.unit_size = 4.0
-	add_child(_voice)
+	# The draw's creak and the release: 3D at the hands.
+	_voice = Audio3D.make("bow", self, "Voice")
+	_voice.position = Vector3(0, 1.35, -0.3)
 	for n in [_bow, _view]:
 		_no_shadow(n)
 	_carry()

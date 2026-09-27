@@ -7,7 +7,10 @@ extends Node3D
 ##     clouds and the ambient light; the stronger the storm, the more often;
 ##   * thunder after it, delayed ~3 s per km of (made-up) distance: a
 ##     sharp crack and rumble close by, a long low rumble far off; a close
-##     strike shakes the camera;
+##     strike shakes the camera. The thunder is a 3D sound (Audio3D
+##     "thunder") placed at the strike: the lightning's bearing, that many
+##     km off and THUNDER_HEIGHT_M up, so it comes from where the flash
+##     was, and the distance itself makes it quieter and duller;
 ##   * the water answers heavy rain: rivers and waves run faster, drops
 ##     pock the surface, and fresh water (rivers, lakes, wetland pools)
 ##     rises a little, filling over a couple of minutes and draining
@@ -16,6 +19,9 @@ extends Node3D
 const STORM_MIN := 0.55
 const FLASH_COLOR := Color(0.82, 0.88, 1.0)
 const MAX_RISE_M := 0.3
+## Height (m) of the thunder's source above the listener: the lower part
+## of the bolt, where most of what you hear comes from.
+const THUNDER_HEIGHT_M := 300.0
 
 ## 0-1 lightning flash right now (SkySystem, CloudLayers read it).
 var flash := 0.0
@@ -25,12 +31,15 @@ var wetness := 0.0
 var sky: SkySystem
 var player: PlanetPlayer
 var _light: DirectionalLight3D
-var _thunder: AudioStreamPlayer
+## Two, so a new peal doesn't cut the last one's rumble short.
+var _thunder: Array[AudioStreamPlayer3D] = []
+var _next_thunder := 0
 var _rng := RandomNumberGenerator.new()
 var _strike_t := -1.0 # seconds since the current strike, -1 = none
 var _strike_energy := 1.0
-var _pending: Array = [] # [seconds left, distance km]
+var _pending: Array = [] # [seconds left, distance km, bearing (unit, horizontal)]
 var _next := 10.0
+var _up := Vector3.UP
 
 
 func setup(p_sky: SkySystem, p_player: PlanetPlayer) -> void:
@@ -43,12 +52,13 @@ func setup(p_sky: SkySystem, p_player: PlanetPlayer) -> void:
 	_light.shadow_enabled = false
 	_light.visible = false
 	add_child(_light)
-	_thunder = AudioStreamPlayer.new()
-	add_child(_thunder)
+	for i in 2:
+		_thunder.append(Audio3D.make("thunder", self, "Thunder%d" % i))
 
 
 ## Per frame, after SkySystem.update_sky(). `up` is the player's local up.
 func update_storm(delta: float, up: Vector3, weather: Dictionary) -> void:
+	_up = up
 	var storm := float(weather.get("storm", 0.0))
 	var rain := float(weather.get("rain_mm_h", 0.0))
 	var snow: bool = weather.get("snow", false)
@@ -65,7 +75,7 @@ func update_storm(delta: float, up: Vector3, weather: Dictionary) -> void:
 	for p in _pending:
 		p[0] -= delta
 		if p[0] <= 0.0:
-			_boom(p[1])
+			_boom(p[1], p[2])
 	_pending = _pending.filter(func(p): return p[0] > 0.0)
 
 	# The land soaks up rain and drains slowly.
@@ -85,12 +95,13 @@ func _strike(up: Vector3) -> void:
 	var el := deg_to_rad(_rng.randf_range(25.0, 70.0))
 	var north := CubeSphere.north(up)
 	var east := CubeSphere.east(up)
-	var from := ((north * cos(az) + east * sin(az)) * cos(el) + up * sin(el)).normalized()
+	var bearing := north * cos(az) + east * sin(az)
+	var from := (bearing * cos(el) + up * sin(el)).normalized()
 	var hint := up if absf(from.dot(up)) < 0.99 else north
 	_light.global_transform = Transform3D(Basis.looking_at(-from, hint), Vector3.ZERO)
 	_strike_energy = clampf(2.2 / (0.6 + dist_km * 0.5), 0.35, 2.4)
 	_strike_t = 0.0
-	_pending.append([dist_km * 3.0, dist_km])
+	_pending.append([dist_km * 3.0, dist_km, bearing])
 
 
 ## A strike flickers: a bright stroke, a dip, a return stroke, a fade.
@@ -122,11 +133,16 @@ func _flicker(delta: float) -> void:
 		sky.sky_material.set_shader_parameter("lightning", 0.0)
 
 
-func _boom(dist_km: float) -> void:
+func _boom(dist_km: float, bearing: Vector3) -> void:
 	var near := dist_km < 1.2
-	_thunder.stream = SoundSynth.stream("thunder_near" if near else "thunder_far", _rng.randi())
-	_thunder.volume_db = lerpf(0.0, -18.0, clampf(dist_km / 6.0, 0.0, 1.0))
-	_thunder.pitch_scale = _rng.randf_range(0.9, 1.05)
-	_thunder.play()
+	var t := _thunder[_next_thunder]
+	_next_thunder = (_next_thunder + 1) % _thunder.size()
+	var cam := get_viewport().get_camera_3d()
+	var listener: Vector3 = cam.global_position if cam else (player.global_position if player else Vector3.ZERO)
+	t.global_position = listener + bearing * dist_km * 1000.0 + _up * THUNDER_HEIGHT_M
+	t.stream = SoundSynth.stream("thunder_near" if near else "thunder_far", _rng.randi())
+	t.volume_db = 0.0
+	t.pitch_scale = _rng.randf_range(0.9, 1.05)
+	Audio3D.play(t)
 	if dist_km < 0.8 and player:
 		player.shake(lerpf(1.0, 0.35, dist_km / 0.8))

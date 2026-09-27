@@ -22,6 +22,12 @@ extends Node
 ## leg and arm pivots. The props collide (PropCollision): capsules along
 ## the seat logs, seat stones and leaning spears (arrows stick in them),
 ## hulls round the rock shelter's slab and boulders.
+##
+## Chatter is heard as well as read: whenever a line comes up (stepping
+## into the firelight, an arrow in one of them) the folk murmur, a soft
+## synthesized babble of several voices with no words (SoundSynth
+## "murmur") on a 3D player among them (Audio3D "camp_chatter", heard to
+## ~25 m), while the subtitle shows.
 
 const BUILD_M := 220.0
 const DROP_M := 280.0
@@ -34,6 +40,9 @@ const CLIFF_SALT := 778
 const SEAT_R := 2.0
 const NOTICE_M := 12.0
 const TALK_M := 5.0
+## Murmur variants (SoundSynth "murmur" 0..n-1), made while the planet
+## loads (setup()).
+const MURMURS := 3
 
 const FOLK := {
 	"tribal": {"names": ["Hunter", "Elder", "Gatherer", "Scout"],
@@ -78,6 +87,8 @@ func setup(p_world: Node, p_chunks: ChunkManager, p_player: PlanetPlayer, p_land
 	_root = Node3D.new()
 	_root.name = "Camps"
 	world.world_root.add_child(_root)
+	for i in MURMURS:
+		SoundSynth.stream("murmur", i)
 
 
 ## A wild camp in grid cell `c`, or {}: {"dir", "folk", "seed"}.
@@ -271,7 +282,27 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 			guard.set_meta("phase", rng.randf() * TAU)
 			guards.append(guard)
 	root.set_meta("guards", guards)
+	# Their talk: among the seated folk, at head height.
+	var chatter := Audio3D.make("camp_chatter", root, "Chatter")
+	chatter.position = Vector3(0, 0.9, 0)
+	chatter.volume_db = -8.0
+	root.set_meta("chatter", chatter)
 	return root
+
+
+## The folk of `camp` murmur (a line of chatter is up), from `at` (scene
+## position; default among them).
+func _murmur(camp: Node3D, at = null) -> void:
+	var v: AudioStreamPlayer3D = camp.get_meta("chatter", null)
+	if v == null:
+		return
+	if at is Vector3:
+		v.global_position = at
+	else:
+		v.position = Vector3(0, 0.9, 0)
+	v.stream = SoundSynth.stream("murmur", randi() % MURMURS)
+	v.pitch_scale = randf_range(0.95, 1.05)
+	Audio3D.play(v)
 
 
 ## A spear leaning out from `base` (camp space) along `lean`, `length` m,
@@ -452,6 +483,7 @@ func _animate(camp: Node3D, delta: float, pp: Vector3) -> void:
 		var lines: Array = FOLK[folk].lines
 		var s0: Node3D = sitters[0]
 		hud.say(s0.get_meta("speaker"), lines[randi() % lines.size()], 0.2, 4.0)
+		_murmur(camp)
 
 
 ## The camp folk (seated or on guard) an arrow flying from `a` to `b` hits
@@ -491,3 +523,6 @@ func shot_at(folk: Node3D) -> void:
 	var dead := String(folk.get_meta("speaker", "")) in ["Skeleton", "Hooded one"]
 	var lines := SHOT_LINES_DEAD if dead else SHOT_LINES
 	hud.say(folk.get_meta("speaker", "?"), lines[randi() % lines.size()], 0.0, 3.0)
+	var camp := folk.get_parent() as Node3D
+	if camp and camp.has_meta("chatter"):
+		_murmur(camp, folk.global_position + world.dir_of(folk.global_position) * 0.9)

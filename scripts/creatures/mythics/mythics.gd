@@ -63,11 +63,9 @@ func setup(p_world: Node, p_chunks: ChunkManager, p_player: PlanetPlayer, p_sky:
 			NightRiderSounds.prewarm(str((sp.data.cue as Dictionary).get("sound", "hoofbeats_far")))
 	_cue_voice = AudioStreamPlayer3D.new()
 	_cue_voice.name = "BiomeCue"
-	_cue_voice.unit_size = 45.0
-	_cue_voice.max_distance = 1000.0
+	# Falloff and distance muffling: the table's "hoofbeats_far" (Audio3D).
+	Audio3D.apply(_cue_voice, "hoofbeats_far")
 	_cue_voice.volume_db = 3.0
-	_cue_voice.attenuation_filter_cutoff_hz = 2400.0
-	_cue_voice.doppler_tracking = AudioStreamPlayer3D.DOPPLER_TRACKING_DISABLED
 	_root.add_child(_cue_voice)
 	# Dev mode: the body mesh builds now on a worker, so F7 doesn't wait.
 	var rider := CreatureSpecies.find("Night rider")
@@ -152,7 +150,7 @@ func play_cue(sp: CreatureSpecies) -> void:
 		return
 	_cue_left = _cue_voice.stream.get_length()
 	_cue_voice.global_position = world.to_scene(_cue_dir, PlanetConst.RADIUS_M + chunks.ground_height(_cue_dir) + 1.2)
-	_cue_voice.play()
+	Audio3D.play(_cue_voice)
 
 
 ## The cue's source right now (scene position), or null when silent.

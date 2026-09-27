@@ -1,7 +1,9 @@
 class_name Footsteps
-extends AudioStreamPlayer
+extends AudioStreamPlayer3D
 ## The player's footsteps: one per stride (shorter crouched, longer
 ## sprinting), in the sound of what's underfoot, louder the faster you go.
+## A 3D player at the player's feet (Audio3D "footstep"), so they come
+## from below and behind the third-person camera.
 ##
 ## Ground: wading in shallow water (each step also splashes: Ripples);
 ## else what the player stands on (ruin stone, a tree's roots); else the
@@ -19,6 +21,10 @@ var ground := "grass"
 var _dist := 0.0
 var _count := 0
 var _air_s := 0.0
+
+
+func _init() -> void:
+	Audio3D.apply(self, "footstep")
 
 
 ## Per physics frame. `moved` is the distance walked this frame.

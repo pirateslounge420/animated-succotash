@@ -20,7 +20,9 @@ extends Node
 ##   long range    Mythical territories (Territories) on a coarse grid: dormant (nothing
 ##                 exists) far away, aware (heard, pacing, unseen) at
 ##                 medium range, visible close. Their calls are muffled and
-##                 poorly directional far off, sharpening as you approach.
+##                 poorly directional far off, sharpening as you approach
+##                 (Audio3D: every voice is a 3D player tuned by the
+##                 falloff table, data/audio.json).
 ##
 ## Pack hunters (wolves) are tethered to dens: cave mouths on steep, cold
 ## slopes. Packs rest by day, patrol their territory at night, howl in
@@ -37,6 +39,10 @@ const MAX_AMBIENT := 70
 const DEN_SEARCH_M := 900.0
 const PACK_SPAWN_M := 420.0
 const PACK_DESPAWN_M := 520.0
+## Dev howl (F8, dev_howl()): packs this near answer it; one beyond
+## PACK_SPAWN_M comes out for DEV_HOLD_S seconds to howl.
+const DEV_HOWL_M := 800.0
+const DEV_HOLD_S := 45.0
 const AWARE_M := 1000.0
 const VISIBLE_M := 220.0
 const LOG_REACH_M := 2.3
@@ -496,13 +502,6 @@ func _den_prop(den: Dictionary) -> Node3D:
 			PropCollision.hull(body, RuinBuilder.rock_hull(st[0], den.seed + k), mi.transform)
 	CreatureBodies.ball(root, Vector3(1.6, 1.3, 1.2), Vector3(0, 0.9, 0.6), Color(0.03, 0.03, 0.05))
 	CreatureBodies.box(root, Vector3(4.6, 0.25, 1.4), Vector3(0, 3.05, 0.4), Color(0.92, 0.94, 0.98))
-	var voice := AudioStreamPlayer3D.new()
-	voice.stream = SoundSynth.stream("howl", den.seed)
-	voice.unit_size = 30.0
-	voice.max_distance = 350.0
-	voice.position = Vector3(0, 1.5, -1.0)
-	root.add_child(voice)
-	den.voice = voice
 	return root
 
 
@@ -515,23 +514,12 @@ func _update_packs(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 		# Packs hear you too: crouched you can slip past, sprinting they
 		# pick you up from farther off.
 		var notice := float(sp.pack.get("notice_m", 60.0)) * (0.45 + 1.1 * player.noise_level)
-		_fidelity(den.voice, home_dist)
 
-		# Spawn the pack when you're near enough to meet it.
+		# Spawn the pack when you're near enough to meet it (or kept out a
+		# while by the dev howl, dev_howl()).
 		if den.wolves.is_empty() and home_dist < PACK_SPAWN_M and _time >= float(_slain.get(key, 0.0)):
-			var rng := RandomNumberGenerator.new()
-			rng.seed = den.seed
-			var size: Array = sp.pack.get("size", [3, 5])
-			for i in rng.randi_range(int(size[0]), int(size[1])):
-				var w := Creature.new()
-				_root.add_child(w)
-				w.setup(sp, world, chunks, self, _offset(den.dir, rng.randf() * TAU, rng.randf_range(4.0, 14.0)), den.seed + i)
-				w.mode = "rest"
-				w.goal = w.dir
-				w.ring_offset = i * TAU / 5.0
-				w.hurt_by_player.connect(_on_wolf_hurt.bind(key))
-				den.wolves.append(w)
-		elif not den.wolves.is_empty() and home_dist > PACK_DESPAWN_M:
+			_spawn_pack(key)
+		elif not den.wolves.is_empty() and home_dist > PACK_DESPAWN_M and _time >= float(den.get("hold_until", 0.0)):
 			for w in den.wolves:
 				NodeRelease.free_later(w)
 			den.wolves = []
@@ -541,7 +529,6 @@ func _update_packs(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 		var nearest := INF
 		for w in wolves:
 			nearest = minf(nearest, w.distance_to(pd))
-			_fidelity(w.voice, w.distance_to(pd))
 
 		# Howling: the pack calls, members answer, neighbors answer back.
 		den.howl_t -= delta
@@ -605,6 +592,53 @@ func _update_packs(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 					den.patrol_t = randf_range(20.0, 40.0)
 		for w in wolves:
 			w.tick(delta, ctx)
+
+
+## A den's pack comes out: its size and places from the den's seed.
+func _spawn_pack(key: Vector4i) -> void:
+	var den: Dictionary = _dens[key]
+	var sp: CreatureSpecies = den.species
+	var rng := RandomNumberGenerator.new()
+	rng.seed = den.seed
+	var size: Array = sp.pack.get("size", [3, 5])
+	for i in rng.randi_range(int(size[0]), int(size[1])):
+		var w := Creature.new()
+		_root.add_child(w)
+		w.setup(sp, world, chunks, self, _offset(den.dir, rng.randf() * TAU, rng.randf_range(4.0, 14.0)), den.seed + i)
+		w.mode = "rest"
+		w.goal = w.dir
+		w.ring_offset = i * TAU / 5.0
+		w.hurt_by_player.connect(_on_wolf_hurt.bind(key))
+		den.wolves.append(w)
+
+
+## Dev key F8 (dev mode): the nearest wolf pack within DEV_HOWL_M howls
+## now, the leader first and the pack answering. A pack still at its den
+## beyond PACK_SPAWN_M comes out for DEV_HOLD_S so it can. Says what
+## happened on the prompt line and returns it.
+func dev_howl() -> String:
+	var pd := player.surface_dir
+	var best = null
+	var best_d := DEV_HOWL_M
+	for key in _dens:
+		var d := CubeSphere.surface_distance_m(_dens[key].dir, pd)
+		if d < best_d and _time >= float(_slain.get(key, 0.0)):
+			best_d = d
+			best = key
+	var text := ""
+	if best == null:
+		text = "No wolf pack within %d m." % int(DEV_HOWL_M)
+	else:
+		var den: Dictionary = _dens[best]
+		den.hold_until = _time + DEV_HOLD_S
+		if den.wolves.is_empty():
+			_spawn_pack(best)
+		_howl(best)
+		den.howl_t = randf_range(30.0, 70.0)
+		text = "The %s pack %d m off howls." % [(den.species as CreatureSpecies).name.to_lower(), int(best_d)]
+	_say(text)
+	print("dev_howl: ", text)
+	return text
 
 
 ## A pack howls, members joining in, and nearby packs answer. Only packs
@@ -694,7 +728,6 @@ func _update_territories(delta: float, pd: Vector3, ctx: Dictionary) -> void:
 				cr.set_visible_body(true)
 			cr.tick(delta, ctx)
 			continue
-		_fidelity(cr.voice, cr.distance_to(pd))
 		# Calls only when it's close enough to be seen (not from a kilometer
 		# off while it's only "aware" of you).
 		t.call_t -= delta
@@ -796,16 +829,6 @@ func _rest_or_pace(t: Dictionary, cr: Creature, delta: float) -> void:
 static func _bearing(from: Vector3, to: Vector3) -> float:
 	var t := to - from * from.dot(to)
 	return atan2(t.dot(CubeSphere.east(from)), t.dot(CubeSphere.north(from)))
-
-
-## Long-range calls: muffled and nearly mono far away, clear and properly
-## positioned close by.
-static func _fidelity(p: AudioStreamPlayer3D, dist: float) -> void:
-	if p == null:
-		return
-	var near := clampf(1.0 - (dist - 60.0) / 700.0, 0.0, 1.0)
-	p.attenuation_filter_cutoff_hz = lerpf(700.0, 20000.0, near * near)
-	p.panning_strength = lerpf(0.05, 1.0, near)
 
 
 ## Hostile mythicals the camera is pointed at (they freeze while watched).

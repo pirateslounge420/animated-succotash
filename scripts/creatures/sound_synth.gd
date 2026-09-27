@@ -21,6 +21,12 @@ class_name SoundSynth
 ##   bow_release  the string's twang and the arrow's whoosh
 ##   arrow_hit    a dull thunk of an arrow biting into wood or earth
 ##   hurt         a blunt thump and a gasp of breath (the player hit)
+##   murmur       camp talk from a little way off: three or four soft
+##                voices overlapping, no words (Camps); murmur_one, one
+##                voice alone (Encampment: one of the two speaking)
+##
+## Every one of them plays on a 3D player tuned by the falloff table,
+## data/audio.json (Audio3D).
 
 const RATE := 22050
 const VARIANTS := 5
@@ -68,6 +74,8 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _arrow_hit(rng)
 		"hurt":
 			samples = _hurt(rng)
+		"murmur", "murmur_one":
+			samples = _murmur(rng, rng.randi_range(3, 4) if kind == "murmur" else 1)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -391,6 +399,63 @@ static func _arrow_hit(rng: RandomNumberGenerator) -> PackedFloat32Array:
 	for i in s.size():
 		var t := float(i) / RATE
 		s[i] = sin(TAU * f * t) * exp(-t * 30.0) + rng.randf_range(-1, 1) * exp(-t * 60.0) * 0.4
+	return s
+
+
+## Camp talk heard from a little way off: `voices` voices (three or four
+## round a camp fire), each a few phrases of syllables (a buzzy voiced tone whose pitch rises and
+## falls over the phrase, through two vowel resonances that glide from
+## syllable to syllable), overlapping, then low-passed so that no word
+## comes through.
+static func _murmur(rng: RandomNumberGenerator, voices: int) -> PackedFloat32Array:
+	var s := _buffer(4.0)
+	var n := s.size()
+	var r := 0.97
+	for v in voices:
+		var f0 := rng.randf_range(95.0, 230.0)
+		var gain := rng.randf_range(0.5, 1.0)
+		var i := int(rng.randf_range(0.0, 0.9) * RATE)
+		var phase := 0.0
+		# Resonator coefficients (2r cos w), gliding toward each
+		# syllable's vowel, and their states.
+		var c1 := 2.0 * r * cos(TAU * 500.0 / RATE)
+		var c2 := 2.0 * r * cos(TAU * 1500.0 / RATE)
+		var a1 := 0.0
+		var a2 := 0.0
+		var b1 := 0.0
+		var b2 := 0.0
+		while i < n:
+			var syllables := rng.randi_range(3, 7)
+			for k in syllables:
+				var length := int(rng.randf_range(0.11, 0.24) * RATE)
+				var t1 := 2.0 * r * cos(TAU * rng.randf_range(300.0, 800.0) / RATE)
+				var t2 := 2.0 * r * cos(TAU * rng.randf_range(900.0, 2300.0) / RATE)
+				var accent := rng.randf_range(0.6, 1.0)
+				for j in length:
+					if i >= n:
+						break
+					var x := float(j) / length
+					var through := (float(k) + x) / syllables
+					phase = fposmod(phase + f0 * (1.0 + 0.15 * sin(PI * through) - 0.1 * through) / RATE, 1.0)
+					var src := phase * 2.0 - 1.0 + rng.randf_range(-0.15, 0.15)
+					c1 = lerpf(c1, t1, 0.003)
+					c2 = lerpf(c2, t2, 0.003)
+					var y1 := src + c1 * a1 - r * r * a2
+					a2 = a1
+					a1 = y1
+					var y2 := src + c2 * b1 - r * r * b2
+					b2 = b1
+					b1 = y2
+					s[i] += (y1 + 0.6 * y2) * gain * accent * sqrt(sin(PI * x))
+					i += 1
+			# A breath between phrases.
+			i += int(rng.randf_range(0.25, 0.8) * RATE)
+	var lp := 0.0
+	var lp2 := 0.0
+	for i in n:
+		lp = lerpf(lp, s[i], 0.35)
+		lp2 = lerpf(lp2, lp, 0.45)
+		s[i] = lp2 * _env(i, n, 0.3, 0.6)
 	return s
 
 

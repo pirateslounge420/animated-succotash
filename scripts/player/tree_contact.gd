@@ -7,7 +7,9 @@ extends Node3D
 ##   * brushing through a crown (small trees, or climbing into a big one)
 ##     or bumping a trunk rustles it: a leafy rustle sound and a quick
 ##     shake of that one tree (MultiMesh custom data .b, which the foliage
-##     shader turns into a shiver).
+##     shader turns into a shiver). The rustle plays at that tree's crown,
+##     where it stays (its players are top level: they don't ride along
+##     with the player).
 ## Nearby trunks come from one physics query a few times a second, not a
 ## trigger volume per tree (thousands of them).
 
@@ -33,9 +35,9 @@ func _ready() -> void:
 	_query.collision_mask = TerrainChunk.TREE_LAYER
 	for i in 2:
 		var v := AudioStreamPlayer3D.new()
-		v.unit_size = 6.0
-		v.max_distance = 60.0
+		Audio3D.apply(v, "rustle")
 		v.volume_db = -4.0
+		v.top_level = true
 		add_child(v)
 		_voices.append(v)
 

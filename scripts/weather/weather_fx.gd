@@ -9,6 +9,11 @@ extends Node3D
 ##   * the same wind drives foliage sway (PlantMeshes' shared material);
 ##   * the sound of the rain, muffled (and the rain around you thinned)
 ##     when you're sheltered: under a tree's crown or in a camp shelter.
+##     Four 3D players (Audio3D "rain") a few meters out on four sides of
+##     the camera follow it, so the rain is heard all round and stays
+##     balanced as you turn; each plays its own loop (a different seed and
+##     a slightly different speed), so together they don't collapse into
+##     one sound in the middle.
 ## Lightning, thunder and the water's answer to storms: StormFX.
 ##
 ## Keep this node at the scene origin (not under World.world_root); it
@@ -16,11 +21,13 @@ extends Node3D
 
 const RAIN_MAX := 3000
 const SNOW_MAX := 1500
+## How far out (m) the four rain players sit round the camera.
+const RAIN_SPREAD_M := 5.0
 
 var rain: GPUParticles3D
 var snow: GPUParticles3D
 var local: Dictionary = {}
-var _rain_audio: AudioStreamPlayer
+var _rain_audio: Array[AudioStreamPlayer3D] = []
 var _bus := -1
 
 
@@ -39,11 +46,13 @@ func _ready() -> void:
 		var lpf := AudioEffectLowPassFilter.new()
 		lpf.cutoff_hz = 20000.0
 		AudioServer.add_bus_effect(_bus, lpf)
-	_rain_audio = AudioStreamPlayer.new()
-	_rain_audio.stream = SoundSynth.stream("rain_loop", 0)
-	_rain_audio.bus = "Rain"
-	_rain_audio.volume_db = -60.0
-	add_child(_rain_audio)
+	for i in 4:
+		var v := Audio3D.make("rain", self, "Rain%d" % i)
+		v.stream = SoundSynth.stream("rain_loop", i)
+		v.bus = "Rain"
+		v.volume_db = -60.0
+		v.pitch_scale = 0.97 + 0.02 * i
+		_rain_audio.append(v)
 
 
 ## GPU particles: intensity is `amount_ratio`, which changes how many
@@ -114,14 +123,22 @@ func update_fx(camera_pos: Vector3, up: Vector3, weather: Dictionary, sheltered 
 	# Under cover the canopy or roof catches most of what falls around you.
 	active.amount_ratio = intensity * (0.3 if sheltered else 1.0)
 
-	# The rain's sound: louder with intensity, muffled under cover.
+	# The rain's sound: louder with intensity, muffled under cover. Four
+	# sources, each a quarter of it (-6 dB), north, east, south and west
+	# of the camera.
 	var hiss := 0.0 if cold else intensity
-	if hiss > 0.03:
-		if not _rain_audio.playing:
-			_rain_audio.play()
-		_rain_audio.volume_db = lerpf(-34.0, -4.0, sqrt(hiss)) - (5.0 if sheltered else 0.0)
-	elif _rain_audio.playing:
-		_rain_audio.stop()
+	var north := _tangent(up)
+	var east := north.cross(up)
+	for i in _rain_audio.size():
+		var v := _rain_audio[i]
+		var side: Vector3 = [north, east, -north, -east][i]
+		v.global_position = camera_pos + side * RAIN_SPREAD_M + up * 0.5
+		if hiss > 0.03:
+			if not v.playing:
+				v.play(i * 0.9)
+			v.volume_db = lerpf(-34.0, -4.0, sqrt(hiss)) - 6.0 - (5.0 if sheltered else 0.0)
+		elif v.playing:
+			v.stop()
 	var lpf := AudioServer.get_bus_effect(_bus, 0) as AudioEffectLowPassFilter
 	lpf.cutoff_hz = move_toward(lpf.cutoff_hz, 900.0 if sheltered else 20000.0, 20000.0 * get_process_delta_time())
 

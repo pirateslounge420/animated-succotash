@@ -90,6 +90,9 @@ var _call_timer := 0.0
 const CALL_M := 40.0
 ## And no two calls of the same kind within this long of each other.
 const SAME_CALL_GAP_MS := 4000
+## Role -> the voice's row in the falloff table (Audio3D); anything else
+## is "wildlife_call".
+const VOICE_KINDS := {"pack": "howl", "mythical": "mythic_call"}
 static var _last_call := {}
 var _life := -1.0
 
@@ -138,9 +141,10 @@ func setup(sp: CreatureSpecies, p_world: Node, p_chunks: ChunkManager, p_spawner
 		voice.stream = SoundSynth.stream(sp.sound, voice_variant)
 		voice.pitch_scale = clampf(0.9 / pow(maxf(sp.size_m, 0.05), 0.15), 0.6, 1.6) * _rng.randf_range(0.93, 1.07)
 		# Heard about as far as it can be found: small wildlife within a
-		# stone's throw, the big and mythical a few hundred meters off.
-		voice.unit_size = 8.0 if sp.role != "mythical" and sp.role != "pack" else 30.0
-		voice.max_distance = 60.0 if sp.role != "mythical" and sp.role != "pack" else 350.0
+		# stone's throw, a pack's howls and the mythical a few hundred
+		# meters off, dull and hard to place far away (Audio3D, the
+		# falloff table data/audio.json).
+		Audio3D.apply(voice, VOICE_KINDS.get(sp.role, "wildlife_call"))
 		voice.volume_db = -6.0
 		voice.position = Vector3(0, sp.size_m * 0.6, 0)
 		add_child(voice)
@@ -183,12 +187,13 @@ func say() -> void:
 	if voice == null or voice.stream == null or voice.playing:
 		return
 	# The same kind of call never overlaps itself from two creatures: a
-	# chorus of identical chirps reads as a loop, not as wildlife.
+	# chorus of identical chirps reads as a loop, not as wildlife. A pack's
+	# howls are the exception: members answering the leader is the chorus.
 	var now := Time.get_ticks_msec()
-	if now < int(_last_call.get(species.sound, 0)) + SAME_CALL_GAP_MS:
+	if species.role != "pack" and now < int(_last_call.get(species.sound, 0)) + SAME_CALL_GAP_MS:
 		return
 	_last_call[species.sound] = now
-	voice.play()
+	Audio3D.play(voice)
 
 
 func distance_to(d: Vector3) -> float:
@@ -272,7 +277,7 @@ func hurt(amount: float, from_pos: Vector3) -> void:
 		lift = 0.0
 		if voice and voice.stream:
 			voice.pitch_scale *= 0.8
-			voice.play()
+			Audio3D.play(voice)
 		hurt_by_player.emit(self, true)
 		return
 	if species.bite > 0.0:
