@@ -2569,3 +2569,4 @@ overriding them.
 - §AD bird migration (region-count drain/fill by season, V-formation and murmuration sky events, nesting) and flocking (`flocking` field).
 - §AE regional pyramid/monument styles by realm × biome (`data/ruins.json`, `Ruins.pyramid_style()`), one parametrised builder.
 - §AF bats: microbat/megabat archetypes, roosts (caves, snags, ruins, tree camps), dusk emergence stream, guano soil object.
+- §AG reference look: nearest tiny tiles (`look.retro.tile_*`), dither 1.0 / bleed 0.2, pushed sky/water/grass colours, fog 0.0035 + valley height fog, shadows off by day + canopy darkening (A/B), FOV 78.

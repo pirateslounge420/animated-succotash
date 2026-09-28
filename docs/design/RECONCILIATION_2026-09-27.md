@@ -1498,3 +1498,72 @@ flight pattern, not a simulation. Bats are prey for owls and hawks at the roost 
 **Order:** two archetypes + roost field, the dusk emergence stream at caves/snags/ruins
 (one particle-ish flock like §AD's murmuration), then flying-fox camps in the tropics,
 then guano soil object. Phase 7, with §AD.
+
+## AG. The look, tuned to the reference clips — 28 Sept 2026
+
+Five reference frames (a sunset valley with a robed figure, a cottage on a hill, a stone
+gate in a meadow, a graveyard pond, a lizard cook at a campfire) share one recipe. We have
+about half of it (§C, §Y: 480p nearest, saturation, blue shadow tint, vignette, dither at
+0.25, painted cloud pano). What's missing is the **texture half** and **hard colour
+quantisation**. Locked, in order of effect. Data: `data/look.json → retro` (all
+`[NOT WIRED YET — §AG]` until the shaders read it). This section refines §C; where a
+number here differs from §C, this one wins. §C's *dark* stays: our daylight is still a
+stop darker than the reference; what we take is its colour, not its brightness.
+
+1. **Detail lives in tiny tiled textures, not geometry.** Every surface in the clips is a
+   64×64 / 128×128 tile, **nearest-filtered**, tiled hard at 1–2 m per repeat, so the grass
+   is a busy speckle (dark and bright flecks), rock is cracked, the path is dirt with
+   pebbles. Geometry stays flat and low-poly; the richness is 100 % texel noise repeating
+   at close range. Ours is smooth vertex colour + linear/anisotropic detail textures, which
+   reads *modern* low-poly. Change: `terrain.gdshader`, `foliage.gdshader`,
+   `ruin.gdshader`, `model.gdshader` samplers go `filter_nearest_mipmap` (no anisotropy;
+   at most 2 mip levels so the far ground still sparkles), detail tiles resampled to
+   64×64 (128 for stone) with **more contrast** in the tile (flecks 30 % darker/brighter
+   than the mean), `retro.tile_m` per material for the repeat: grass 1.5, dirt 2, sand 2,
+   stone 3, bark 1 (vertical), leaves 0.5. Leaf cards: a noisy 32×32 cluster cutout, not a
+   clean leaf shape (PLANT_SCHEMA §0 already says "structure then textures" — this is the
+   texture rule).
+2. **Quantise + dither, hard.** The banding in their sky and water is 15-bit colour with an
+   ordered dither. `post_grade` already has a 4×4 Bayer toward 5 bits at `dither 0.25`;
+   set **`dither 1.0`** (a true 5-bit floor per channel, dithered) and drop `bleed` from
+   0.6 to **0.2** — the 480p nearest upscale (§Y) already gives the chunk, the bleed was
+   compensating for a smooth upscale that no longer exists. Grain stays 0.025. The
+   dither runs at the internal 480p, so each dither pixel is a screen block.
+3. **Push blue and green harder than feels sane.** Reference values: sky zenith near
+   `#1030FF`, water `#0A20C0`, grass a poison green, shadows navy not black. Locked
+   day colours (`retro.colors`): sky zenith `#1832E0`, horizon `#5C8CFF` (no white haze
+   band), water base `#0C22B8`, grass tint `#3CA020`, canopy `#237A1E`, path dirt
+   `#8A5A2A`, **shadow floor `#141C60`** — nothing is ever true black by daylight (the
+   grade's shadow tint lifts the darks to this). Sunset: sky bands `#FF8A20` / `#FFD060`
+   / `#3050A0` at the horizon and a **big soft sun** ~8° across with a radial falloff,
+   not a point (`retro.sun_disc_deg 8`). Night keeps §C's ultramarine.
+4. **Painted cloud tile, two layers.** The clouds are a hand-painted tile with hard-ish
+   edges, two layers at different speeds and scales (`retro.clouds`: near 1.0× at 1
+   turn/12 min, far 2.2× at 1 turn/40 min), the pano itself 512×128 nearest-filtered so
+   it bands with the dither. `sky.gdshader` `cloud_pano` goes `filter_nearest`. Sunset
+   paints the same tile in the sunset bands (the tile is greyscale, tinted by the sky).
+5. **Fog is the sky colour and starts close.** Their far mountains are flat blue-purple
+   with no detail by ~300 m. `retro.fog`: day density **0.0035**/m (from 0.0008; ~70 %
+   at 300 m, ~90 % by 600 m), fog colour = the horizon colour of the hour (already so),
+   plus height fog pooling in valleys (`height_density 0.01`, `height_m 60` below the
+   local ground mean). Night fog as §C. On the 4,000 km planet this also hides more far
+   terrain — a performance win under §W.
+6. **No shadow maps by day; vertex darkness under trees.** The reference has no cast
+   shadows at all: only darker ground under trees and the blue ambient. Shadow maps are
+   the single biggest tell of a modern renderer. Change `light.shadows false`,
+   `light.blob_shadows true`, and darken ground vertex colour under canopy by a cheap
+   top-down canopy mask (`retro.canopy_dark 0.45`, feathered 3 m). This reverses §W's
+   shadow settings and returns a big slice of the 60 fps budget. *Claude Code: A/B
+   screenshot with and without before locking; the design's default is off.*
+7. **Camera and framing** (level art, not rendering): eye height 1.4 m, FOV **78°**
+   (`retro.fov_deg`), and paths that curve away with a tree flanking each side — bias the
+   path/trail placer to plant a tree within 3 m of each bend (world-gen, Phase 9).
+8. **Sharpening: none. Bloom: none.** Keep §C's rule. The sun's softness comes from the
+   sky shader disc, not a bloom pass.
+
+**Dev check:** stand on the dev spot at 08:00, 14:00 and sunset; the ground must sparkle
+with texel noise at your feet, the sky must band visibly, far hills must be flat
+blue-purple, and no cast shadow anywhere. Compare side by side with the five frames.
+
+**Order:** 2 and 5 (two numbers each, immediate), then 1 (sampler flags + tile scale,
+then the tile art), 3 (colours), 4 (cloud pano), 6 (A/B), 7 (later, Phase 9). Phase 1.5.
