@@ -48,6 +48,27 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
   No FOV kick. Speeds in `data/movement.json` unchanged. Lives in `player_body.gd`.
   Change one thing at a time with a screenshot or clip after each.
 
+- **Wall cling + chain momentum — Phase 1.** Today right-click in the air within
+  `window_s` of a steep face wall-jumps (`_wall_jump()` in `planet_player.gd`,
+  tuning in `data/movement.json` → `wall_jump`). Change to:
+  - **Tap** right-click = wall jump, as now.
+  - **Hold** right-click on a steep face = **cling**: the player stops and holds the
+    wall. Clinging drains slowly (a few seconds, tunable) so you can't camp; when it
+    runs out you slide off. Releasing without jumping = drop.
+  - Jumping **out of a cling** is allowed but is the weak option: it uses a reduced
+    take-off (`cling_jump_scale`, ~0.6 of `speed_mps`) and **resets the chain counter**.
+  - **Chained** wall jumps (consecutive, no ground touch, no cling) are the strong
+    option: each one **keeps or slightly builds** speed rather than decaying.
+    NOTE: this **inverts the existing `chain_decay: 0.72`** — it currently loses 28%
+    per jump. Replace with a `chain_gain` around 1.0–1.05, capped after ~3–4 jumps so
+    it can't run away.
+  - Add to `movement.json` `wall_jump`: `cling_hold_s` (how long a cling lasts),
+    `cling_jump_scale`, `chain_gain`, `chain_cap`.
+  - Cling pose: body flat to the wall, feet planted, one hand reaching — it should
+    read as a rest, not a hang. Coming out of cling into a jump uses the same kick
+    animation but shorter.
+  Keep `window_s`, `angle_deg`, `min_wall_steepness` as they are.
+
 ---
 
 ## 1. Already built — adjust data, do not re-implement
