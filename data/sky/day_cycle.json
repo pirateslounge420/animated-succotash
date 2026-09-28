@@ -1,10 +1,10 @@
 {
 	"day_length_min": 144,
 	"phase_min": {
-		"day": 62,
-		"dusk": 20,
-		"night": 42,
-		"dawn": 20
+		"day": 60,
+		"dusk": 18,
+		"night": 48,
+		"dawn": 18
 	},
 	"twilight_deg": 10,
 	"rate_blend_min": 12,

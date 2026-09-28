@@ -11,7 +11,7 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
 
 ## 0. Locked decisions (new or changed)
 
-- **Day/night cycle: 144 min real time — day 62 / dusk 20 / night 42 / dawn 20.**
+- **Day/night cycle: 144 min real time — day 60 / dusk 18 / night 48 / dawn 18 (10h / 3h / 8h / 3h in game time).**
   One in-game hour = 6 real minutes exactly, so a clock or sundial reads cleanly. Supersedes 150 and 120 (45/20/35/20) and every earlier value.
   Applied in `data/sky/day_cycle.json` in this commit. `data/dev.json` still overrides to 20 min for testing.
 - **Visual target: 1999–2004** (Dreamcast → GameCube/PS2/Xbox). Hard line: before normal maps
@@ -44,7 +44,7 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
 
 | Decision | Where it lives | Status / action |
 |---|---|---|
-| Day/night cycle | `data/sky/day_cycle.json`, `scripts/sky/day_cycle.gd`, `sky_system.gd` | **Values changed to 144 / 62-20-42-20 in this commit.** No code change. |
+| Day/night cycle | `data/sky/day_cycle.json`, `scripts/sky/day_cycle.gd`, `sky_system.gd` | **Values changed to 144 / 60-18-48-18 in this commit.** No code change. |
 | Cube-sphere, 1/100 Earth, 1/10 height | `scripts/planet/planet_const.gd` (400 km, `HEIGHT_SCALE` 0.1) | Done. |
 | Whittaker biomes, all 52 | `scripts/planet/passes/biome_pass.gd`, `data/biomes/00…51` | Done. `tepui` is registered but never assigned. |
 | Rivers, waterfalls, storm swell | `scripts/terrain/river_network.gd` | Done. Gap: no current direction affecting travel (§3). |
