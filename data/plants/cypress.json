@@ -30,7 +30,16 @@
      40.0
     ],
     "density": 0.9,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#5A8A4A",
     "accent": "#8A6A50",
@@ -148,6 +157,35 @@
      "silhouette": "tall flared trunk from standing water with a narrow conical crown when young, flat-topped and irregular when old; knees around the base; Spanish moss drapes it",
      "confidence": "documented",
      "refs": "Wikipedia Taxodium distichum; Flora of North America; USFS Silvics"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "distichous",
+     "size_cm": [
+      1.0,
+      1.8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.15,
+     "autumn": "#b5572a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -173,7 +211,16 @@
      40.0
     ],
     "density": 0.5,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#5A8A4A",
     "accent": "#8A6A50",
@@ -291,6 +338,33 @@
      "silhouette": "enormous squat fluted trunk with a broad spreading crown of pendulous feathery branchlets; wider than tall when ancient",
      "confidence": "documented",
      "refs": "Wikipedia Taxodium mucronatum; Kew POWO; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "distichous",
+     "size_cm": [
+      0.8,
+      1.6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -316,7 +390,18 @@
      30.0
     ],
     "density": 0.6,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "karst",
+      "sandstone",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "tolerant"
+    },
     "needs": [],
     "color": "#2A5A38",
     "accent": "#6A5A4A",
@@ -434,6 +519,33 @@
      "silhouette": "a dark green exclamation mark: a tight narrow column 20-30 m tall and 2-3 m wide, branches held vertical; occasionally a broader spreading horizontal form",
      "confidence": "documented",
      "refs": "Wikipedia Cupressus sempervirens; Kew POWO; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.5
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.12,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 0.7,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -459,7 +571,17 @@
      25.0
     ],
     "density": 0.4,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "granite",
+      "sandstone",
+      "sand"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "tolerant"
+    },
     "needs": [],
     "color": "#2A5A38",
     "accent": "#7A6A5A",
@@ -576,6 +698,33 @@
      "silhouette": "wind-sculpted: massive short trunk with heavy contorted limbs and a flat-topped, one-sided layered crown leaning away from the sea; bonsai-like at 30 m",
      "confidence": "documented",
      "refs": "Wikipedia Hesperocyparis macrocarpa; Kew POWO; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.4
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.3,
+     "layering": "tiered",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -601,7 +750,18 @@
      60.0
     ],
     "density": 0.5,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "granite",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3A7A4A",
     "accent": "#7A6A5A",
@@ -719,6 +879,33 @@
      "silhouette": "tall narrow spire with a distinctly drooping leader and pendulous flat spray tips; feathery dense column to 60 m",
      "confidence": "documented",
      "refs": "Wikipedia Chamaecyparis lawsoniana; Flora of North America; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.2,
+      0.5
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.35
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    }
   ],

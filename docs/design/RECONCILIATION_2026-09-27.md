@@ -480,6 +480,11 @@ Keep all of it. Changes:
   (10°) — short at the equator, long and lingering at high latitude. 18 minutes is what the
   equator gets, not a constant.
 - **The moon follows the same geometry:** winter full moons ride high, summer ones low.
+- **Seasons colour the leaves.** Species that naturally lose their leaves turn in the
+  autumn transition (each species' own `tint.autumn`, PLANT_SCHEMA §3) and drop in the
+  winter transition (`drop: true`, feeding litter and dead wood); **evergreens do not**.
+  Dry-season deciduous species (savanna acacias) turn and drop on the dry season instead
+  of the cold one. The turn is per species, so a mixed forest goes patchwork, not all at once.
 - **The 144-minute day is fixed**; only its division varies. `day_length_min` stays 144;
   `phase_min` becomes the equinox reference the astronomy is calibrated against.
 - Consequence: because spawn biome is random, a tundra spawn and a rainforest spawn get
@@ -566,10 +571,21 @@ Confirmed decisions. Where these contradict anything above, these win.
 - `FULL_CIRCUMFERENCE_M` goes from 400 km (1/100) to **4,000 km (1/10)**. The world is now
   1/10 in every axis: horizontal 1/10, height already 1/10 (`HEIGHT_SCALE` 0.1), and time
   1/10 (144-min day). One consistent ratio.
-- **Biome size does NOT scale with the planet.** Biome patch size is a noise-frequency knob,
-  independent of circumference. Keep patches roughly their current ~10 km scale and raise
-  the biome-noise frequency so there are ~100× more of them — which is more Earth-like
-  anyway (Earth has dozens of temperate forests, not one).
+- **Biomes are at 1/10 Earth scale too** (revised 2026-09-27 late, superseding the
+  fixed-10-km idea): real geography at planet scale — a great rainforest is hundreds of km
+  across, a prairie is a day's chain. Crossing one is a journey the movement system is
+  built for, not a problem. Variety inside a biome comes from the things already planned
+  (rivers, microclimate ecotones, ruins, camps, dead wood, soil changes), not from making
+  the biome small.
+- **Feasibility — the scale costs nothing to render.** Performance is a function of what is
+  in view, not of how big the world is: only chunks near the player exist (`chunk_manager`),
+  the far shell draws the globe as one low mesh, plants fade at `visibility_range_end` and
+  become silhouettes/impostors beyond (PLANT_SCHEMA §5), creatures exist only within
+  `ACTIVE_RADIUS`, and the global passes run on fixed-cell grids that get *coarser*, not
+  denser, per km. A 1/10 planet has a horizon ~1.5 km off for a standing eye (Earth's is
+  4.7 km; a 1/100 planet's only 0.5 km), so the horizon also reads better. What does grow is
+  the persistence store for visited ground (Phase 12) — bounded by where the player has
+  actually been — and the demand on biome-internal content, which is the real design cost.
 - **Consequence to check:** height stays the same while the land spreads 10× wider, so
   slopes become 10× gentler than now — true proportion, but mountains will read as long
   hills rather than walls. Decide by eye after the change; the fix, if wanted, is a modest
@@ -839,16 +855,21 @@ were out there; every time after, it was because you died.
   meter**. Only perfect techs count; a missed or late tech breaks the series (does not
   drain the meter, just stops it filling until the next perfect one). Fill rate scales
   with the chain length so long clean chains fill it fastest.
-- **Spending it — overcharge:** with meter available, **hold the charge past the normal
-  full-charge window** and the tool keeps charging into an **overcharged** state. The
-  overcharge **takes longer** than a normal full charge (a real commitment while moving)
-  and **discharges the meter** when released. Release before the overcharge completes =
-  a normal full-power action, meter untouched.
-- **What overcharge does** (assistant's proposal, tune or replace):
-  - **Bow:** a heavier, faster, flatter arrow that **pierces** (passes through the first
-    body and keeps going) and hits well past the normal damage cap.
-  - **Spear:** a throw past the normal speed cap with the §K impact curve applied at full
-    force — an instant kill on most things it meets; the shaft pins the target.
+- **Filling it, also:** **landing a hit on an opponent** grants meter too (more for a
+  critical), in addition to perfect wall jumps, rolls, hops and swing releases. So a fight
+  feeds the meter the same way a chain does.
+- **Spending it — overcharge, the "super shot":** with meter available, **hold the charge
+  past the normal full-charge window** and the tool keeps charging into an **overcharged**
+  state. The overcharge **takes longer** than a normal full charge (a real commitment while
+  moving) and **discharges the meter** when released. Release before the overcharge
+  completes = a normal full-power action, meter untouched.
+  Every super shot is a **critical hit**, does **triple damage**, **fires faster and
+  farther** than a normal full charge (which is why it's called *over*charge), and leaves a
+  **red tracer** behind the projectile so everyone can see what it was.
+- **Per tool, on top of the shared rules** (assistant's proposal, tune or replace):
+  - **Bow:** the arrow **pierces** (passes through the first body and keeps going).
+  - **Spear:** the throw applies the §K impact curve at full force — an instant kill on
+    most things it meets; the shaft pins the target.
   - **Fishing pole:** a cast well past `cast_max_m`, and the line can **hook and reel a
     creature or figure** (or yank yourself toward a distant branch — a grapple, the
     shinobi's signature trick from §O made available to the player only at overcharge).

@@ -30,7 +30,18 @@
      35.0
     ],
     "density": 1.0,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "sand",
+      "till",
+      "granite",
+      "clay_peat"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3E7A44",
     "accent": "#C87A50",
@@ -155,6 +166,34 @@
      "silhouette": "tall bare orange trunk with a flat-topped, irregular, rounded crown of dark blue-green clumps held high; young trees conical",
      "confidence": "documented",
      "refs": "Wikipedia Pinus sylvestris; Flora of Britain; Kew POWO"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 2,
+     "size_cm": [
+      3,
+      7
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -180,7 +219,17 @@
      25.0
     ],
     "density": 0.5,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "sand",
+      "sandstone",
+      "granite"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "tolerant"
+    },
     "needs": [],
     "color": "#3E7A44",
     "accent": "#B08A60",
@@ -305,6 +354,34 @@
      "silhouette": "a broad flat umbrella / mushroom of dense green on a tall bare trunk, low limbs shed; the classic Italian parasol pine",
      "confidence": "documented",
      "refs": "Wikipedia Pinus pinea; Kew POWO; Flora Europaea"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 2,
+     "size_cm": [
+      10,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -330,7 +407,18 @@
      50.0
     ],
     "density": 0.9,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "granite",
+      "basalt",
+      "till",
+      "sandstone"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#4E8A4A",
     "accent": "#D08A50",
@@ -455,6 +543,34 @@
      "silhouette": "very tall straight orange-plated trunk with sparse open crown of short heavy limbs ending in needle pom-poms; open parkland spacing",
      "confidence": "documented",
      "refs": "Wikipedia Pinus ponderosa; Flora of North America; USFS Silvics"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 3,
+     "size_cm": [
+      12,
+      25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -480,7 +596,19 @@
      35.0
     ],
     "density": 0.9,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "till",
+      "granite",
+      "sand",
+      "basalt",
+      "clay_peat"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3E7A44",
     "accent": "#8A7A60",
@@ -605,6 +733,34 @@
      "silhouette": "slender straight pole trunk with a narrow, sparse, spire-like crown; grows in dense even-aged thickets of identical poles",
      "confidence": "documented",
      "refs": "Wikipedia Pinus contorta; Flora of North America; USFS Silvics"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 2,
+     "size_cm": [
+      3,
+      7
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -630,7 +786,17 @@
      15.0
     ],
     "density": 0.2,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "karst",
+      "granite",
+      "sandstone"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3A7040",
     "accent": "#C0A080",
@@ -755,6 +921,34 @@
      "silhouette": "short, twisted, half-dead gnarled sculpture: pale bare deadwood spires with one strip of living bark feeding a few dark bottlebrush limbs",
      "confidence": "documented",
      "refs": "Wikipedia Pinus longaeva; Flora of North America; Great Basin NP"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 5,
+     "size_cm": [
+      2,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.75,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    }
   ],

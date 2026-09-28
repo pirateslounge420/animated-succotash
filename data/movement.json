@@ -22,7 +22,7 @@
   "burden": "Carrying more than free_items things (the inventory's carry slots), each thing more makes you slow_per_item slower (never below min_speed of your normal speed), climb climb_slow_per_item slower, noise_per_item louder, and lean lean_per_item radians further forward. Felt, never shown as a number.",
   "wet_ground": "soaked_rain_mm_h: rain this heavy (mm per hour) soaks the ground fully (traction falls to 'wet'); lighter rain soaks it partly. dry_s: after the rain stops, how long soaked ground takes to dry.",
   "unstick": "Stuck is touching something and going nowhere: wedged between two walls (a trunk and a shrub's stem), held off the ground (under a root, in a fork), or caught on a crease of the ground. After stall_s moving slower than stall_mps, you're nudged nudge_m out along the free direction nearest to where you push. ground_jam_s: caught on the ground alone, you're freed after only this long (a hitch you barely feel).",
-  "super_meter": "The super meter (design §S): a run of PERFECT techs (wall jump, bounce, roll, swing release inside their windows) fills it; a missed or late tech only stops the run, it doesn't drain. fill_per_perfect: how much one perfect adds (0-1); chain_bonus_per_link: extra per link of the current chain, so long clean chains fill fastest. Spending: with any meter, hold a tool's charge past its normal full window and it overcharges (data/combat.json overcharge), which empties the meter on release. It never decays; only spending or dying (reset_on_death) clears it. NPC shinobi keep the same meter.",
+  "super_meter": "The super meter (design §S): PERFECT techs (wall jump, bounce, roll, hop landing, swing release inside their windows) fill it, and so does LANDING A HIT on an opponent (fill_per_hit, and fill_per_critical for a critical); a missed or late tech only stops the run, it doesn't drain. fill_per_perfect: how much one perfect adds (0-1); chain_bonus_per_link: extra per link of the current chain, so long clean chains fill fastest. Spending: with any meter, hold a tool's charge past its normal full window and it overcharges (data/combat.json overcharge), which empties the meter on release. It never decays; only spending or dying (reset_on_death) clears it. NPC shinobi keep the same meter.",
   "camera": "mouse and stick sensitivity. first_person_body: in first person, see your own hands, cloak edges and boots when you look down (false: nothing of your body shows; it still casts its shadow)."
  },
  "speed": {"walk_mps": 5.5, "sprint_mps": 8.8, "sneak_mps": 0.8, "aim_mps": 8.8, "swim_mps": 1.6, "swim_accel_mps2": 4.0, "double_tap_s": 0.3},
@@ -45,7 +45,7 @@
  "burden": {"free_items": 6, "slow_per_item": 0.08, "min_speed": 0.6, "climb_slow_per_item": 0.12, "noise_per_item": 0.15, "lean_per_item": 0.05},
  "wet_ground": {"soaked_rain_mm_h": 4.0, "dry_s": 90.0},
  "unstick": {"stall_s": 0.5, "stall_mps": 0.15, "nudge_m": 0.35, "ground_jam_s": 0.08},
- "super_meter": {"fill_per_perfect": 0.04, "chain_bonus_per_link": 0.01, "reset_on_death": true},
+ "super_meter": {"fill_per_perfect": 0.04, "chain_bonus_per_link": 0.01, "fill_per_hit": 0.06, "fill_per_critical": 0.12, "reset_on_death": true},
  "camera": {"mouse_sensitivity": 0.0025, "stick_sensitivity": 2.6, "first_person_body": false},
  "body": {"player_scale": 0.92}
 }
