@@ -790,3 +790,35 @@ were out there; every time after, it was because you died.
   in the air still gets clean jumps; the freedom is there to discover. Most won't chase
   the shinobi at the opening, and that is fine — the opening only has to *show* the
   ceiling, not ask for it.
+
+## S. The super meter — perfect movement overcharges your tools — LOCKED
+
+- **Filling it:** a run of **perfect inputs** in a series of movements — perfect wall
+  jumps, bounces, rolls, swing releases within their windows — **slowly fills a super
+  meter**. Only perfect techs count; a missed or late tech breaks the series (does not
+  drain the meter, just stops it filling until the next perfect one). Fill rate scales
+  with the chain length so long clean chains fill it fastest.
+- **Spending it — overcharge:** with meter available, **hold the charge past the normal
+  full-charge window** and the tool keeps charging into an **overcharged** state. The
+  overcharge **takes longer** than a normal full charge (a real commitment while moving)
+  and **discharges the meter** when released. Release before the overcharge completes =
+  a normal full-power action, meter untouched.
+- **What overcharge does** (assistant's proposal, tune or replace):
+  - **Bow:** a heavier, faster, flatter arrow that **pierces** (passes through the first
+    body and keeps going) and hits well past the normal damage cap.
+  - **Spear:** a throw past the normal speed cap with the §K impact curve applied at full
+    force — an instant kill on most things it meets; the shaft pins the target.
+  - **Fishing pole:** a cast well past `cast_max_m`, and the line can **hook and reel a
+    creature or figure** (or yank yourself toward a distant branch — a grapple, the
+    shinobi's signature trick from §O made available to the player only at overcharge).
+- **Rules:** one overcharge empties the meter (no partial spends). The meter persists
+  while alive and **resets to empty on death**. It does not decay with time — only
+  spending or dying clears it. NPC shinobi (§O) have the same meter and the same
+  overcharges, filled the same way, so a master arriving off a long clean chain is
+  arriving loaded.
+- **HUD:** no third element. The meter shows as a **thin ring around the existing charge
+  gauge**, visible only when non-zero, and the speedometer's glow warms as the meter
+  fills so a fast, loaded player reads as such. Overcharge itself reads in the world:
+  the drawn bow creaks and the arrow tip glints; the cloak lifts; the line whistles.
+- **Why:** it turns movement mastery into combat power without touching stats or
+  levels — the only progression the game needs is the player's hands.
