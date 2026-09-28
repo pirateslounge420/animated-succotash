@@ -179,6 +179,37 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     a fixed decay stage so the movement and creature systems have something real to
     use, and let the ledgers drive stage changes later.
 
+- **Tribal folk use the player's body — Phase 1 (fits the Phase 1.5 look pass).**
+  Camp and encampment folk (`camps.gd`, `encampment.gd`, `Ruins.camp_folk()`) are
+  placeholder `CreatureBodies` shapes. Replace them with the **player's procedural
+  rig and cloak** (`scripts/player/player_body.gd`): same proportions, same hood,
+  same cloak sim, seated by bending the same rig. One body, many people.
+  - **Player stays exactly as is:** cloak `#222a6c` (indigo) with the `#a4492b` rust
+    hem band. That combination is **reserved for the player** — no folk may roll it.
+  - **Folk get a randomised palette** per person, seeded from the camp seed so the
+    same camp has the same people on every visit:
+    - **Main cloak colour** from a scale (a hue ramp with the muted, dyed-cloth
+      saturation of the era palette in `palette.gdshaderinc` — ochres, madder reds,
+      bog browns, woad blues, moss greens, undyed greys) — never the player's indigo.
+    - **Hem/edge colour** randomised separately from a second scale, contrasting with
+      the main (warm edge on cool cloak and vice versa). Never the player's rust on
+      an indigo cloak.
+    - `TUNIC`, `TROUSERS`, `LINING` derived from the main colour (darker/desaturated)
+      so each person reads as one outfit, not a random pile.
+  - **Tribe identity through colour:** each camp's folk draw from a **narrow slice**
+    of the scale (a tribe has a look — mostly ochre with green edges, say), with one
+    or two outliers. Different camps → visibly different tribes. Later (Phase 11)
+    the slice can be tied to the biome cultures.
+  - Elders, hunters and guards can carry small marks (a longer hem, a different
+    hood, a spear) but the body is the same rig.
+  - **Goblins keep their own bodies** — this is for the human-shaped tribal folk
+    (tribal / north / marsh). Northerners may keep fur trim over the cloak.
+  - **Melee principle applies:** silhouette is the player-vs-folk tell as much as
+    colour is, so the player's cloak length, hood and hem band stay unique.
+  - Implementation: factor `PlayerBody`'s palette constants into a `Palette`
+    record it takes at build time (player passes its fixed one; folk pass a rolled
+    one). No second rig.
+
 - **Ninja landing roll — Phase 1.** Landing from height already triggers a squat
   (`landing.squat_s` / `heavy_squat_s`, threshold `heavy_fall_m` 1.7) and fall damage
   past `fall_damage.safe_m`. Add a **timed roll**:
