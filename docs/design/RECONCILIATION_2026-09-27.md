@@ -116,10 +116,22 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
 - **Death and respawn — Phase 1 / Phase 10.** Death already exists (`main.respawn()`,
   slump-and-lie-still). Lock the consequence: **you respawn, but your gear drops
   where you died.** Carried inventory (the R4 few-things carry) and equipped items
-  fall as a pickup bundle at the death spot; the player comes back at the last lit
-  campfire (or the opening campfire if none) at full health with an empty carry.
-  The bundle persists until picked up or the world state expires it (Phase 12
-  persistence decides how long). No other penalty — the walk back is the penalty.
+  fall as a pickup bundle at the death spot.
+  **Respawn is diegetic: you wake up by a campfire because tribal folk found you
+  unconscious and brought you in.** The game's signature opening (spawn at a fire in
+  the woods) *is* the respawn. Rules:
+  - You wake at the **nearest camp / lit fire** to where you died (the folk who found
+    you carried you to their fire), not the last one you visited. If none is in range,
+    a small wandering group's fire is placed for the wake-up.
+  - Wake-up is a short unskippable-feeling moment, not a cutscene: fade from black,
+    lying by the fire, one or two camp folk nearby (the ones who "found you"), maybe
+    an elder line of chatter. Then control returns. Reuses `encampment` folk.
+  - Full health, empty carry, no gear — it's all in the bundle back where you fell.
+    The camp folk did not loot you.
+  - The bundle persists until picked up or the world state expires it (Phase 12
+    persistence decides how long). No other penalty — the walk back is the penalty,
+    and it starts from a fire, which is a safe zone, so it's never hopeless.
+  - Later hook (Phase 11 lore/rumours): folk at that camp can remember they found you.
 
 ---
 
