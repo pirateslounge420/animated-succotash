@@ -79,6 +79,30 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     ~2 frames are the crouch pose, then the kick, no ease-in. Tune by feel from there.
   Keep `angle_deg` and `min_wall_steepness` as they are.
 
+- **Ninja landing roll — Phase 1.** Landing from height already triggers a squat
+  (`landing.squat_s` / `heavy_squat_s`, threshold `heavy_fall_m` 1.7) and fall damage
+  past `fall_damage.safe_m`. Add a **timed roll**:
+  - Pressing crouch within a short window around touchdown on a heavy fall
+    (Melee-tight: about **±4–6 frames**, tunable `roll_window_s`) converts the landing
+    into a forward roll instead of a squat.
+  - A successful roll **negates fall damage** up to `roll_safe_m` (well above `safe_m`)
+    and **minimises** it beyond that (`roll_damage_scale`, ~0.25). Above a hard cap
+    (`roll_max_m`) the roll still fires but damage is only reduced, not removed.
+  - A successful roll **converts vertical speed into horizontal speed**: on exit the
+    player carries `roll_carry` (~0.5–0.7) of the fall speed forward, added to
+    run speed and capped by `roll_max_mps`. Higher fall → longer roll → faster exit.
+    This is what lets the player chain wall-jump → drop → roll → sprint and "sling"
+    through terrain. Roll exit feeds straight into the ninja-run lean.
+  - A **missed** roll (no input, or outside the window) is the existing squat and
+    full fall damage. Mistimed input during the squat does nothing — no punish
+    beyond the normal landing.
+  - Roll length scales with fall height (`roll_len_m` per metre fallen, capped).
+    During the roll: no steering, no jump, i-frame-free (creatures can still hit).
+  - **Animation:** reuse the crouch pose → tuck → the cloak does the rest. The roll
+    itself is a rotation of the body root with the cloak wrapping; no new rig.
+  - Add to `movement.json`: a `roll` block with `window_s`, `safe_m`, `max_m`,
+    `damage_scale`, `carry`, `max_mps`, `len_per_m`, `len_cap_m`.
+
 ---
 
 ## 1. Already built — adjust data, do not re-implement
