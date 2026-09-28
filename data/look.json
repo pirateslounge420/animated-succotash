@@ -7,7 +7,7 @@
   "night": "The night preset: the same fields as day. Day and night are two presets, never one curve through the middle; in between (dusk and dawn) the two finished grades crossfade by daylight.",
   "head_look": "Cloaked figures (the player in third person, folk) look around with the hood first (Session 2 section B). head_max_deg: how far the hood turns alone (its shoulders shift shoulder_share of that with it); past it the torso turns too, up to torso_max_deg more. pitch_max_deg: how far the hood tips up or down (the hood alone). head_rate / torso_rate: how quickly each catches up (per second; the torso lags). Folk look at the player within watch_m (scaled by their size) when the player is in front of them; otherwise they glance about up to idle_deg now and then. Not drawn in first person (the body isn't).",
   "render": "Design \u00a7Y: the game renders at a FIXED internal height (internal_lines, 480 by default; max_internal_lines is the most a setting may allow, 720) and is upscaled to the window with nearest-neighbour; integer_scale snaps to whole multiples when the window allows. aspect: '16:9' (854x480) or '4:3' (640x480, letterboxed). hud_in_internal: the HUD is drawn inside the low-res frame and upscaled with it. Post-grade and dither run at the internal size. This replaces scaling_3d/scale in project.godot.",
-  "retro": "[NOT WIRED YET \u2014 design \u00a7AG] The reference-clip look: tiny nearest-filtered tiles, hard 5-bit dither, pushed blue/green, close sky-coloured fog, no shadow maps by day. tile_m: metres per texture repeat per material (nearest_mipmap, max 2 mips, no anisotropy). dither/bleed override post_grade's defaults. colors: locked daylight colours (\u00a7AG 3), shadow_floor is the darkest daylight pixel after the grade. sun_disc_deg: the soft sun's diameter in the sky shader. clouds: two painted layers (scale, turns per game-minute). fog: day exponential density per metre + valley height fog. canopy_dark: ground vertex darkening under canopy (with blob shadows, light.shadows off). fov_deg: camera field of view."
+  "retro": "[NOT WIRED YET \u2014 design \u00a7AG] The reference-clip look: tiny nearest-filtered tiles, hard 5-bit dither, pushed blue/green, close sky-coloured fog, no shadow maps by day. tile_m: metres per texture repeat per material (nearest_mipmap, max 2 mips, no anisotropy). dither/bleed override post_grade's defaults. colors: locked daylight colours (\u00a7AG 3), shadow_floor is the darkest daylight pixel after the grade. sun_disc_deg: the soft sun's diameter in the sky shader. clouds: two painted layers (scale, turns per game-minute). fog: day exponential density per metre + valley height fog. canopy_dark: ground vertex darkening under canopy (with blob shadows, light.shadows off). fov_deg: camera field of view. colors are MEASURED from the batch3 frames (grass is darker than a first guess: base #224A18, lit #3F6E2C). targets: frame statistics to hit. tiles_dir: the pre-made \u00a7AG tiles (tools/look/make_retro_tiles.py), same mid-grey modulation convention as LookTextures, drop-in for Look.texture()."
  },
  "ranges": {
   "grass_m": 40.0,
@@ -105,17 +105,26 @@
   "bleed": 0.2,
   "grain": 0.025,
   "colors": {
-   "sky_zenith": "#1832E0",
-   "sky_horizon": "#5C8CFF",
-   "water": "#0C22B8",
-   "grass": "#3CA020",
-   "canopy": "#237A1E",
-   "path": "#8A5A2A",
-   "shadow_floor": "#141C60",
+   "_measured": "dominant colours measured from docs/references/batch3 (tools/look/measure_look.py); daylight frames 2-4",
+   "sky_zenith": "#0810B8",
+   "sky_mid": "#3560D0",
+   "sky_horizon": "#7A90E0",
+   "far_hills": "#5A92D8",
+   "water": "#04087A",
+   "grass_deep": "#10270A",
+   "grass": "#224A18",
+   "grass_lit": "#3F6E2C",
+   "canopy": "#1A3A14",
+   "path": "#4A4626",
+   "path_lit": "#8F803B",
+   "stone": "#13202A",
+   "stone_lit": "#4977AA",
+   "shadow_floor": "#080C4A",
+   "sunset_sun": "#FBF486",
    "sunset_bands": [
-    "#FF8A20",
-    "#FFD060",
-    "#3050A0"
+    "#E68534",
+    "#A24C1C",
+    "#523726"
    ]
   },
   "sun_disc_deg": 8.0,
@@ -146,6 +155,26 @@
   "fov_deg": 78,
   "eye_m": 1.4,
   "sharpen": false,
-  "bloom": false
+  "bloom": false,
+  "targets": {
+   "_about": "whole-frame statistics of the daylight reference frames, for tools/look/measure_look.py: aim a 14:00 screenshot at these",
+   "mean_luma": [
+    0.18,
+    0.32
+   ],
+   "mean_saturation": [
+    0.55,
+    0.75
+   ],
+   "darkest_5pct_blue_over_red": [
+    2,
+    999
+   ],
+   "grass_share_of_lower_half": [
+    0.3,
+    0.85
+   ]
+  },
+  "tiles_dir": "assets/textures/retro"
  }
 }

@@ -2570,3 +2570,4 @@ overriding them.
 - §AE regional pyramid/monument styles by realm × biome (`data/ruins.json`, `Ruins.pyramid_style()`), one parametrised builder.
 - §AF bats: microbat/megabat archetypes, roosts (caves, snags, ruins, tree camps), dusk emergence stream, guano soil object.
 - §AG reference look: nearest tiny tiles (`look.retro.tile_*`), dither 1.0 / bleed 0.2, pushed sky/water/grass colours, fog 0.0035 + valley height fog, shadows off by day + canopy darkening (A/B), FOV 78.
+- §AG head start: `assets/textures/retro/` tiles + `cloud_pano.png` (drop-in for `Look.texture()` / `sky_paint` clouds), `tools/look/measure_look.py` targets, `docs/references/batch3/`.

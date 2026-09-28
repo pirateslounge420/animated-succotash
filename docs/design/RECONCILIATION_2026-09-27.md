@@ -1507,8 +1507,18 @@ about half of it (§C, §Y: 480p nearest, saturation, blue shadow tint, vignette
 0.25, painted cloud pano). What's missing is the **texture half** and **hard colour
 quantisation**. Locked, in order of effect. Data: `data/look.json → retro` (all
 `[NOT WIRED YET — §AG]` until the shaders read it). This section refines §C; where a
-number here differs from §C, this one wins. §C's *dark* stays: our daylight is still a
-stop darker than the reference; what we take is its colour, not its brightness.
+number here differs from §C, this one wins. §C's *dark* stays — and measured, the
+reference agrees: the frames average **~25 % luma** (dark) at **~0.65 saturation** (very
+high). The frames are in `docs/references/batch3/` (cropped); `tools/look/measure_look.py`
+prints any screenshot's statistics against them (`retro.targets`).
+
+**Head start already in the repo:** `assets/textures/retro/` holds the §AG tiles, generated
+by `tools/look/make_retro_tiles.py` — grass/dirt/sand/bark/leaves/water 64 px, stone
+128, leaf_card 32 (cutout), cloud_pano 512×128 — in `LookTextures`' own mid-grey
+modulation convention and `sky.gdshader`'s cloud channel layout, so `Look.texture(name)`
+can hand them out instead of painting 256 px textures on the worker thread (the class
+comment there, "never pixel-art", is the sentence this section overrules). Preview:
+`docs/references/batch3/retro_tiles_preview.png`.
 
 1. **Detail lives in tiny tiled textures, not geometry.** Every surface in the clips is a
    64×64 / 128×128 tile, **nearest-filtered**, tiled hard at 1–2 m per repeat, so the grass
@@ -1529,14 +1539,17 @@ stop darker than the reference; what we take is its colour, not its brightness.
    0.6 to **0.2** — the 480p nearest upscale (§Y) already gives the chunk, the bleed was
    compensating for a smooth upscale that no longer exists. Grain stays 0.025. The
    dither runs at the internal 480p, so each dither pixel is a screen block.
-3. **Push blue and green harder than feels sane.** Reference values: sky zenith near
-   `#1030FF`, water `#0A20C0`, grass a poison green, shadows navy not black. Locked
-   day colours (`retro.colors`): sky zenith `#1832E0`, horizon `#5C8CFF` (no white haze
-   band), water base `#0C22B8`, grass tint `#3CA020`, canopy `#237A1E`, path dirt
-   `#8A5A2A`, **shadow floor `#141C60`** — nothing is ever true black by daylight (the
-   grade's shadow tint lifts the darks to this). Sunset: sky bands `#FF8A20` / `#FFD060`
-   / `#3050A0` at the horizon and a **big soft sun** ~8° across with a radial falloff,
-   not a point (`retro.sun_disc_deg 8`). Night keeps §C's ultramarine.
+3. **Push blue harder than feels sane; green is dark, not poison.** Measured from the
+   daylight frames (dominant colours, `retro.colors`): sky zenith `#0810B8` → mid
+   `#3560D0` → horizon `#7A90E0` (no white haze band); far hills `#5A92D8`; water
+   `#04087A`; grass deep `#10270A` / base `#224A18` / lit `#3F6E2C` (darker than a first
+   guess — the grass reads bright only against the navy); canopy `#1A3A14`; path
+   `#4A4626` (lit `#8F803B`); stone `#13202A` (lit `#4977AA`); **shadow floor
+   `#080C4A`** — the darkest 5 % of the open-air frames is pure navy, never black (the
+   grade's shadow tint lifts the darks to this; under a dense canopy black is allowed).
+   Sunset: sun `#FBF486`, bands `#E68534` / `#A24C1C` / `#523726`, a **big soft sun**
+   ~8° across with a radial falloff, not a point (`retro.sun_disc_deg 8`). Night keeps
+   §C's ultramarine.
 4. **Painted cloud tile, two layers.** The clouds are a hand-painted tile with hard-ish
    edges, two layers at different speeds and scales (`retro.clouds`: near 1.0× at 1
    turn/12 min, far 2.2× at 1 turn/40 min), the pano itself 512×128 nearest-filtered so
