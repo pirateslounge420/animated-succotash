@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://duga153qn6qo6"
+
+[deps]
+
+files=["res://tools/reference/daylight_table.day.translation", "res://tools/reference/daylight_table.declination.translation", "res://tools/reference/daylight_table.state.translation", "res://tools/reference/daylight_table.season.translation", "res://tools/reference/daylight_table.id.translation", "res://tools/reference/daylight_table.daylight.translation", "res://tools/reference/daylight_table.twilight.translation", "res://tools/reference/daylight_table.night.translation", "res://tools/reference/daylight_table.sunrise.translation", "res://tools/reference/daylight_table.sunset.translation", "res://tools/reference/daylight_table.noon.translation", "res://tools/reference/daylight_table.day.translation", "res://tools/reference/daylight_table.dusk.translation", "res://tools/reference/daylight_table.night.translation", "res://tools/reference/daylight_table.dawn.translation", "res://tools/reference/daylight_table.cannabis.translation"]
+
+source_file="res://tools/reference/daylight_table.csv"
+dest_files=["res://tools/reference/daylight_table.day.translation", "res://tools/reference/daylight_table.declination.translation", "res://tools/reference/daylight_table.state.translation", "res://tools/reference/daylight_table.season.translation", "res://tools/reference/daylight_table.id.translation", "res://tools/reference/daylight_table.daylight.translation", "res://tools/reference/daylight_table.twilight.translation", "res://tools/reference/daylight_table.night.translation", "res://tools/reference/daylight_table.sunrise.translation", "res://tools/reference/daylight_table.sunset.translation", "res://tools/reference/daylight_table.noon.translation", "res://tools/reference/daylight_table.day.translation", "res://tools/reference/daylight_table.dusk.translation", "res://tools/reference/daylight_table.night.translation", "res://tools/reference/daylight_table.dawn.translation", "res://tools/reference/daylight_table.cannabis.translation"]
+
+[params]
+
+compress=true
+delimiter=0

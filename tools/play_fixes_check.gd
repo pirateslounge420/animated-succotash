@@ -653,8 +653,16 @@ func _initialize() -> void:
 		await frames(3)
 		ok(not is_instance_valid(a2) or a2.is_queued_for_deletion(), "E while climbing took a stuck arrow back")
 		ok(player.climbing, "still climbing")
+		# Nothing under the crosshair (a plant by the tree in reach would be
+		# sampled instead, as it should): the look target is held empty.
+		player.look.set_physics_process(false)
+		player.look.set_process(false)
+		player.look.kind = ""
+		print("   before letting go: sample in reach %d" % main._sample_in_reach())
 		main._unhandled_input(e)
 		await frames(10)
+		player.look.set_physics_process(true)
+		player.look.set_process(true)
 		ok(not player.climbing, "E with nothing in reach lets go")
 		await frames(60)
 

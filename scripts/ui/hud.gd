@@ -213,8 +213,8 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 	var now_c: float = weather.get("temp_c", NAN)
 	var avg_c := map.sample(map.temp_c, player_dir) + (map.sample(map.elevation, player_dir) - elevation_m) * PlanetConst.LAPSE_RATE_C_PER_M
 	var wind: Vector3 = weather.get("wind", Vector3.ZERO)
-	_right.text = "%s\n%.1f °C now · %.1f °C average\n%s · %d mm rain a year\nWind %d m/s from %s\nElevation %d m · %.1f°%s %.1f°%s%s" % [
-		BiomeTemplates.name_of(map.biome[c]),
+	_right.text = "%s · %s soil\n%.1f °C now · %.1f °C average\n%s · %d mm rain a year\nWind %d m/s from %s\nElevation %d m · %.1f°%s %.1f°%s%s" % [
+		BiomeTemplates.name_of(map.biome[c]), PlanetData.soil_name(map.soil_at(player_dir)).replace("_", "/"),
 		now_c, avg_c,
 		_weather_word(weather, map.sample(map.fog, player_dir)), int(map.sample(map.precip_mm, player_dir)),
 		int(round(wind.length())), _compass(-wind, player_dir),
@@ -252,7 +252,7 @@ static func debug_text(world: Node, player_dir: Vector3, weather: Dictionary) ->
 		mansion + 1, Astro.MANSION_NAMES[mansion], float(weather.get("cloud", 0.0)),
 		rad_to_deg(lat), int(Astro.year_day(world.days)) + 1, int(DayCycle.year_days()), rad_to_deg(decl),
 		DayCycle.daylight_hours(lat, decl), float(pm.day) * scale, float(pm.dusk) * scale, float(pm.night) * scale, float(pm.dawn) * scale,
-	] + "\nSeason %s · day %d · %+.1f °C · wet x%.2f" % [
+	] + "\nSoil %s (plants gate on it)" % PlanetData.soil_name(world.planet.soil_at(player_dir)).replace("_", "/") + "\nSeason %s · day %d · %+.1f °C · wet x%.2f" % [
 		Seasons.label(world.days, lat), int(Seasons.at(world.days, lat).day_of_season) + 1,
 		Seasons.temp_offset_c(world.days, lat), Seasons.moisture_mult(world.days, lat),
 	]

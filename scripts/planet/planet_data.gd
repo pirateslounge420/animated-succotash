@@ -98,6 +98,36 @@ func index(face: int, i: int, j: int) -> int:
 
 
 ## Nearest cell to a direction.
+## Soil classes by name, in Rock order (data/soil.json "classes"; the
+## names plant data uses).
+const SOIL_NAMES: Array[String] = ["granite", "basalt", "karst", "sandstone", "alluvium", "sand", "clay_peat", "till"]
+static var _soil_warp: FastNoiseLite
+static var _soil_warp_cells := -1.0
+
+
+static func soil_name(rock_class: int) -> String:
+	return SOIL_NAMES[clampi(rock_class, 0, SOIL_NAMES.size() - 1)]
+
+
+## The soil class (a Rock value) at any point: the geology pass's class
+## for the cell there, looked up through a gentle noise warp of
+## data/soil.json boundary_warp_cells of a cell, so soil borders wander
+## instead of following the grid. What plant placement gates on.
+func soil_at(d: Vector3) -> int:
+	if _soil_warp == null:
+		_soil_warp = FastNoiseLite.new()
+		_soil_warp.seed = terrain.world_seed * 31 + 7 if terrain else 7
+		_soil_warp.frequency = 1.0
+		var parsed = JSON.parse_string(FileAccess.get_file_as_string("res://data/soil.json")) if FileAccess.file_exists("res://data/soil.json") else null
+		_soil_warp_cells = float(parsed.get("boundary_warp_cells", 0.6)) if parsed is Dictionary else 0.6
+	# A cell spans about (PI / 2) / res radians.
+	var cell := PI * 0.5 / res
+	var f := 1.0 / cell
+	var p := d * f
+	var w := Vector3(_soil_warp.get_noise_3dv(p), _soil_warp.get_noise_3dv(p + Vector3(31.7, 0.0, 0.0)), _soil_warp.get_noise_3dv(p + Vector3(0.0, 47.3, 0.0)))
+	return rock[cell_at((d + w * cell * _soil_warp_cells).normalized())]
+
+
 func cell_at(d: Vector3) -> int:
 	var f := CubeSphere.face_of(d)
 	var uv := CubeSphere.face_uv(f, d)

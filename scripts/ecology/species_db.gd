@@ -31,6 +31,32 @@ const SOILS := {
 }
 ## Soil factor for rocks a preset doesn't mention.
 const SOIL_DEFAULTS := {"rich": 0.6, "thin": 0.6, "peat": 0.2, "sand": 0.0, "wet": 0.5, "volcanic": 0.05}
+static var _presets := {}
+
+
+## data/soil.json "presets": soil preset name -> allowed class names.
+static func _soil_presets() -> Dictionary:
+	if _presets.is_empty():
+		var parsed = JSON.parse_string(FileAccess.get_file_as_string("res://data/soil.json")) if FileAccess.file_exists("res://data/soil.json") else null
+		_presets = parsed.get("presets", {}) if parsed is Dictionary else {}
+		if _presets.is_empty():
+			push_warning("SpeciesDB: data/soil.json has no presets; every soil allowed")
+			_presets = {"_": []}
+	return _presets
+
+
+## Class names -> bits (1 << PlanetData.Rock); unknown names warn.
+static func _soil_mask(names, path: String, p_name: String) -> int:
+	var mask := 0
+	for n in names:
+		var r := PlanetData.SOIL_NAMES.find(str(n))
+		if r < 0:
+			push_warning("SpeciesDB: %s: '%s' has unknown soil class '%s'" % [path, p_name, n])
+		else:
+			mask |= 1 << r
+	return mask if mask != 0 else 0xFF
+
+
 const NEEDS := {
 	"standing_water": PlantSpecies.Needs.STANDING_WATER,
 	"river_bank": PlantSpecies.Needs.RIVER_BANK,
@@ -159,12 +185,26 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 			sp.shape = s
 	sp.height_m = _range(e.get("height_m"), d.height)
 	sp.density = float(e.get("density", 1.0))
-	var soil: String = e.get("soil", "rich")
-	if not SOILS.has(soil):
-		push_warning("SpeciesDB: %s: '%s' has unknown soil '%s', using rich" % [path, p_name, soil])
-		soil = "rich"
-	sp.soils = (SOILS[soil] as Dictionary).duplicate(true) # own copy: see BiomeTemplates._names
-	sp.soil_default = SOIL_DEFAULTS[soil]
+	# Soil: a preset name (the older data: its preference weights, and the
+	# classes data/soil.json allows it) or the schema's block {"classes":
+	# [...]} (those classes, equally). Either way the classes are a hard
+	# gate (PlantSpecies.soil_mask).
+	var soil_v = e.get("soil", "rich")
+	if soil_v is Dictionary and (soil_v as Dictionary).has("classes"):
+		sp.soils = {}
+		sp.soil_default = 0.0
+		sp.soil_mask = _soil_mask(soil_v.classes, path, p_name)
+		for r in PlanetData.SOIL_NAMES.size():
+			if (sp.soil_mask >> r) & 1:
+				sp.soils[r] = 1.0
+	else:
+		var soil := str(soil_v)
+		if not SOILS.has(soil):
+			push_warning("SpeciesDB: %s: '%s' has unknown soil '%s', using rich" % [path, p_name, soil])
+			soil = "rich"
+		sp.soils = (SOILS[soil] as Dictionary).duplicate(true) # own copy: see BiomeTemplates._names
+		sp.soil_default = SOIL_DEFAULTS[soil]
+		sp.soil_mask = _soil_mask(_soil_presets().get(soil, PlanetData.SOIL_NAMES), path, p_name)
 	for need in e.get("needs", []):
 		if NEEDS.has(need):
 			sp.needs.append(NEEDS[need])

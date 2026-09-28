@@ -1,0 +1,17 @@
+{
+	"_help": {
+		"about": "Soil is a hard spawn gate, co-equal with temperature and moisture (design reconciliation Session 2 section G2, docs/design/PLANT_SCHEMA.md 4b): a plant whose allowed soil classes don't include the ground's soil class never grows there. Inside its classes, the old preference still weights it. The soil class of every point comes from the geology pass (GeologyPass: rock per cell) through PlanetData.soil_at(), whose borders wander by boundary_warp_cells of a cell so they're not grid lines. No depth, fertility, drainage, pH or salinity yet.",
+		"classes": "The soil classes, in PlanetData.Rock order (the names plant data uses in soil.classes).",
+		"presets": "Existing plant data names a soil preset (rich, thin, peat, sand, wet, volcanic); each allows these classes. Plants written in the new form (\"soil\": {\"classes\": [...]}) list their classes directly."
+	},
+	"classes": ["granite", "basalt", "karst", "sandstone", "alluvium", "sand", "clay_peat", "till"],
+	"boundary_warp_cells": 0.6,
+	"presets": {
+		"rich": ["basalt", "alluvium", "granite", "till", "karst", "sandstone"],
+		"thin": ["karst", "sandstone", "granite", "sand", "basalt", "alluvium", "till"],
+		"peat": ["clay_peat", "till", "alluvium"],
+		"sand": ["sand", "sandstone"],
+		"wet": ["alluvium", "clay_peat", "sand", "basalt", "granite", "till", "karst", "sandstone"],
+		"volcanic": ["basalt"]
+	}
+}

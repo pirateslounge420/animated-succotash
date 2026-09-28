@@ -324,6 +324,9 @@ func rain(camp_d: Vector3) -> void:
 		print("rainforest: %d trees with graphs, %d hung with vines (%d vine handholds), %d bamboo, %d dead" % [total, vine_graphs, vines, bamboo, dead])
 		ok(vine_graphs > 0, "vines hang in the rainforest")
 		# Catch a limb or vine: place the player below-behind it, flying.
+		# The first candidate whose starting spot is clear (nothing else in
+		# the way of the approach: which trees stand where depends on the
+		# climate and soil).
 		var target := []
 		for gg: BranchGraph in BranchGraphs.all():
 			if not gg.valid():
@@ -331,6 +334,13 @@ func rain(camp_d: Vector3) -> void:
 			for i in gg.size():
 				var off_axis := Vector2(gg.local[i].x, gg.local[i].z).length()
 				if (gg.is_vine(i) or (gg.limb[i] > 0 and gg.radius[i] < 0.2 and gg.radius[i] > 0.05)) and gg.local[i].y > 4.0 and gg.local[i].y < 12.0 and off_axis > 1.8:
+					var hp0 := gg.pos(i)
+					var hd0: Vector3 = world.dir_of(hp0)
+					var fw0 := hp0 - gg.base()
+					fw0 = (fw0 - hd0 * fw0.dot(hd0)).normalized()
+					var at := Transform3D(player.global_basis, hp0 - hd0 * 1.9 - fw0 * 0.6)
+					if player.test_move(at, fw0 * 0.3) or player.test_move(at, hd0 * 0.3):
+						continue
 					target = [gg, i]
 					break
 			if not target.is_empty():

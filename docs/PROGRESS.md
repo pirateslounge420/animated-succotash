@@ -4,6 +4,32 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Session 2, Step 5: soil as a hard spawn gate (addendum §G2)
+- **Readable soil:**
+  - Each point's soil class comes from the geology pass (granite, basalt, karst, sandstone, alluvium, sand, clay/peat, till: the schema's names).
+  - Read it with `PlanetData.soil_at()`, which jitters the cell lookup by 0.6 of a cell (`data/soil.json`) so borders wander instead of following the grid.
+  - `PlanetData.soil_name()` gives the name. The HUD shows it next to the biome, and F3 shows it too.
+- **The gate:**
+  - `PlantSpecies.suitability()` now checks temperature, moisture and soil class first, as co-equal gates. Outside any of them the species is 0 and never spawns. Then come the weights: the two climate bands, the soil preference within its classes, and altitude.
+  - Placement reads the soil at each candidate point.
+- **Species data:**
+  - Existing entries name a soil preset; `data/soil.json` maps each preset to its allowed classes. For example, rich forest no longer grows on beach sand or peat bog, and sand plants grow only on sand and sandstone.
+  - The schema's `"soil": {"classes": [...]}` form is read too, ready for the data fill.
+  - All 640 species allow at least one class.
+- **Measured** (`tools/soil_check.gd`):
+  - The stamp's cells are 60 % basalt (the sea floor counts), 10 % sand, 8 % granite, 8 % alluvium, 7 % till, 5 % sandstone, 2 % karst, 0.4 % clay/peat.
+  - Around the first camp, 2,369 trees are placed and none stands on a soil its species doesn't allow. Without the gate there were 2,447, so about 3 % are gone, mostly on granite.
+- **No depth, fertility, drainage, pH or salinity yet** (as asked).
+- **Tests:**
+  - Two test fixtures relied on where trees stood, which the gate moved:
+    - tech_check's catch test now picks a branch with a clear approach;
+    - play_fixes_check's "E with nothing in reach lets go" now holds the look target empty (E rightly samples a plant in reach first).
+  - tech_check, inventory_check and stamp_check pass.
+  - play_fixes_check fails only the 2 checks from the other session's data commit (see Step 3).
+- **Reference still has:** ground that shows its soil (sand, peat, scree, karst pavement read at a glance). Ours colors the ground by biome, not by soil class.
+
+---
+
 ## 2026-09-28 — Session 2, Step 4: head-look (addendum §B)
 - **One rig for everyone** (`PlayerBody`, numbers in `data/look.json` "head_look"):
   - Small turns of the look move the hood first, and the shoulders shift a fifth of that with it.

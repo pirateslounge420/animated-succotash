@@ -38,6 +38,9 @@ var altitude_m := Vector2(-INF, INF) # optional band, meters
 var density := 1.0 # peak relative abundance
 var soils := {} # PlanetData.Rock -> factor; rocks not listed use soil_default
 var soil_default := 0.6
+## The soil classes it grows on, as bits (1 << PlanetData.Rock): a hard
+## gate (data/soil.json); outside them it never spawns.
+var soil_mask := 0xFF
 var needs: Array[Needs] = []
 var _need_bits := -1
 var height_m := Vector2(1.0, 2.0) # size range for jitter
@@ -71,6 +74,10 @@ func soil_factor(rock: int) -> float:
 	return soils.get(rock, soil_default)
 
 
+func soil_allowed(rock: int) -> bool:
+	return (soil_mask >> rock) & 1 == 1
+
+
 func has_need(n: Needs) -> bool:
 	return needs.has(n)
 
@@ -85,9 +92,19 @@ func need_bits() -> int:
 	return _need_bits
 
 
-## Climate suitability at a site, before clumping and dominance.
+## Suitability at a site, before clumping and dominance. Three co-equal
+## gates first (design reconciliation Session 2 G2): temperature, moisture
+## and soil class; a species outside any of them is 0. Then the weights:
+## the two climate bands, the soil preference within its classes, and
+## altitude.
 func suitability(temp: float, moist: float, altitude: float, rock: int) -> float:
-	return density * band(temp, temp_c) * band(moist, moisture) * band(altitude, altitude_m) * soil_factor(rock)
+	var bt := band(temp, temp_c)
+	if bt <= 0.0:
+		return 0.0
+	var bm := band(moist, moisture)
+	if bm <= 0.0 or not soil_allowed(rock):
+		return 0.0
+	return density * bt * bm * maxf(soil_factor(rock), 0.05) * band(altitude, altitude_m)
 
 
 ## The crown's leafiness, 0-1: the table's `leaf_density`, else the shape's

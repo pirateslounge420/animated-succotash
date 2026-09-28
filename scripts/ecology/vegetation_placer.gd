@@ -653,7 +653,8 @@ class _Context:
 		var e := _bilerp(_clim_e, k00, w, tx, ty)
 		var wd := _bilerp(_clim_wd, k00, w, tx, ty)
 		s.coast_km = _bilerp(_clim_coast, k00, w, tx, ty)
-		s.rock = _clim_rock[k00]
+		# Soil: the class at this very point (hard gate, PlanetData.soil_at).
+		s.rock = map.soil_at(s.dir)
 		var water_m := minf(wd, river_m)
 		if s.depth > -1.0:
 			water_m = minf(water_m, maxf(-s.depth, 0.0) * 10.0)
