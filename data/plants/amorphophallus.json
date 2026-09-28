@@ -429,7 +429,12 @@
       "colour": "#e8401f",
       "form": "cylinder of red berries (typical of genus)"
      }
-    }
+    },
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus gigas",
@@ -565,7 +570,12 @@
       "colour": "#e8401f",
       "form": "red berries (typical of genus)"
      }
-    }
+    },
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus hewittii",
@@ -701,7 +711,12 @@
       "colour": "#e8401f",
       "form": "red berries (typical of genus)"
      }
-    }
+    },
+    "region": "BORNEO_KARST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus titanum",
@@ -837,7 +852,12 @@
       "colour": "#e02a1a",
       "form": "bright scarlet plum-sized berries in a cylinder like a stack of small tomatoes"
      }
-    }
+    },
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    }
   ],
   "ground": [
@@ -931,7 +951,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus abyssinicus",
@@ -1067,7 +1092,12 @@
       "colour": "#e8401f",
       "form": "red-orange berries (typical of genus)"
      }
-    }
+    },
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus adamsensis",
@@ -1159,7 +1189,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus albispathus",
@@ -1251,7 +1286,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus albus",
@@ -1387,7 +1427,12 @@
       "colour": "#f06a1f",
       "form": "orange-red ovoid berries"
      }
-    }
+    },
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus allenii",
@@ -1479,7 +1524,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus amygdaloides",
@@ -1571,7 +1621,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus andranogidroensis",
@@ -1663,7 +1718,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MADAGASCAR_DRY",
+    "realm": "madagascar",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus angolensis",
@@ -1755,7 +1815,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus angulatus",
@@ -1847,7 +1912,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus angustispathus",
@@ -1939,7 +2009,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus ankarana",
@@ -2031,7 +2106,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MADAGASCAR_DRY",
+    "realm": "madagascar",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus annulifer",
@@ -2123,7 +2203,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus antsingyensis",
@@ -2215,7 +2300,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MADAGASCAR_DRY",
+    "realm": "madagascar",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus aphyllus",
@@ -2307,7 +2397,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus arcuspadix",
@@ -2399,7 +2494,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus ardii",
@@ -2491,7 +2591,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus asper",
@@ -2583,7 +2688,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus asterostigmatus",
@@ -2675,7 +2785,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus atrorubens",
@@ -2767,7 +2882,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus atroviridis",
@@ -2899,7 +3019,12 @@
      "silhouette": "low, few-leafleted dark velvety plant on a brown hairy stalk",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus bangkokensis",
@@ -2991,7 +3116,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus bantae",
@@ -3083,7 +3213,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus barbatus",
@@ -3175,7 +3310,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus barthlottii",
@@ -3267,7 +3407,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_RAINFOREST",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus baumannii",
@@ -3359,7 +3504,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus beccarii",
@@ -3451,7 +3601,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus bequaertii",
@@ -3543,7 +3698,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_RAINFOREST",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus bognerianus",
@@ -3635,7 +3795,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus bolikhamxayensis",
@@ -3727,7 +3892,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus bonaccordensis",
@@ -3819,7 +3989,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus borneensis",
@@ -3911,7 +4086,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus boyceanus",
@@ -4003,7 +4183,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus brachyphyllus",
@@ -4095,7 +4280,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus brevipetiolatus",
@@ -4187,7 +4377,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus brevispathus",
@@ -4279,7 +4474,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus bubenensis",
@@ -4371,7 +4571,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus bufo",
@@ -4503,7 +4708,12 @@
      "silhouette": "grey-green mottled stalk under a mid-size umbrella; warty toad-brown cup in flower",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus bulbifer",
@@ -4639,7 +4849,12 @@
       "colour": "#e8401f",
       "form": "clustered sub-globose berries green ripening to red"
      }
-    }
+    },
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus calabaricus",
@@ -4731,7 +4946,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_RAINFOREST",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus calcicola",
@@ -4823,7 +5043,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "SE_ASIA_KARST",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus canaliculatus",
@@ -4915,7 +5140,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus candidissimus",
@@ -5007,7 +5237,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus carneus",
@@ -5099,7 +5334,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus carnosus",
@@ -5191,7 +5431,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus caudatus",
@@ -5283,7 +5528,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus chlorospathus",
@@ -5375,7 +5625,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus cicatricifer",
@@ -5467,7 +5722,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus cidarioides",
@@ -5559,7 +5819,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus cirrifer",
@@ -5651,7 +5916,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus claudelii",
@@ -5743,7 +6013,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus coaetaneus",
@@ -5879,7 +6154,12 @@
       "colour": "#2f3fa6",
       "form": "dark blue oval berries ~1 cm"
      }
-    }
+    },
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus commutatus",
@@ -6015,7 +6295,12 @@
       "colour": "#e8401f",
       "form": "sub-globose red berries 0.8-1.2 cm"
      }
-    }
+    },
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus consimilis",
@@ -6107,7 +6392,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus costatus",
@@ -6199,7 +6489,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus coudercii",
@@ -6291,7 +6586,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus crinitus",
@@ -6383,7 +6683,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus crispifolius",
@@ -6475,7 +6780,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus croatii",
@@ -6567,7 +6877,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus cruddasianus",
@@ -6659,7 +6974,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus curvistylis",
@@ -6751,7 +7071,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus declinatus",
@@ -6843,7 +7168,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus discophorus",
@@ -6935,7 +7265,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "JAVA_SEASONAL",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus dracontioides",
@@ -7027,7 +7362,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus dumboi",
@@ -7119,7 +7459,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus dunnii",
@@ -7251,7 +7596,12 @@
      "silhouette": "green-and-white speckled cone with a white spadix, later a mid-size umbrella",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts); Plant Delights"
-    }
+    },
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus dzui",
@@ -7343,7 +7693,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus eburneus",
@@ -7435,7 +7790,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus echinatus",
@@ -7527,7 +7887,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus eichleri",
@@ -7619,7 +7984,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus elatus",
@@ -7711,7 +8081,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus elegans",
@@ -7803,7 +8178,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus elliotii",
@@ -7895,7 +8275,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus erythrorrhachis",
@@ -7987,7 +8372,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus excentricus",
@@ -8079,7 +8469,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus fallax",
@@ -8171,7 +8566,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus ferruginosus",
@@ -8263,7 +8663,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus flammeus",
@@ -8355,7 +8760,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus flotoi",
@@ -8447,7 +8857,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus fontarumii",
@@ -8539,7 +8954,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus forbesii",
@@ -8631,7 +9051,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus fornicatus",
@@ -8723,7 +9148,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus fuscus",
@@ -8815,7 +9245,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus galbra",
@@ -8947,7 +9382,12 @@
      "silhouette": "pale green umbrella in monsoon woodland; small yellow-green cup",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "SAHUL_MONSOON",
+    "realm": "australasia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus gallaensis",
@@ -9039,7 +9479,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus gallowayi",
@@ -9131,7 +9576,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus glaucophyllus",
@@ -9223,7 +9673,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus gliruroides",
@@ -9315,7 +9770,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus glossophyllus",
@@ -9407,7 +9867,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus goetzei",
@@ -9499,7 +9964,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus gomboczianus",
@@ -9591,7 +10061,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus gracilior",
@@ -9683,7 +10158,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus gracilis",
@@ -9775,7 +10255,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus haematospadix",
@@ -9867,7 +10352,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus harmandii",
@@ -9959,7 +10449,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus hayi",
@@ -10051,7 +10546,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus hemicryptus",
@@ -10143,7 +10643,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus henryi",
@@ -10279,7 +10784,12 @@
       "colour": "#2f3fa6",
       "form": "blue berries"
      }
-    }
+    },
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus hildebrandtii",
@@ -10371,7 +10881,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MADAGASCAR_DRY",
+    "realm": "madagascar",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus hirsutus",
@@ -10463,7 +10978,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus hirtus",
@@ -10555,7 +11075,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus hohenackeri",
@@ -10647,7 +11172,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus hottae",
@@ -10739,7 +11269,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus impressus",
@@ -10831,7 +11366,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus incurvatus",
@@ -10923,7 +11463,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus infundibuliformis",
@@ -11015,7 +11560,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus interruptus",
@@ -11107,7 +11657,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus johnsonii",
@@ -11243,7 +11798,12 @@
       "colour": "#f07a1f",
       "form": "vivid orange berries ripening from the top down"
      }
-    }
+    },
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus josefbogneri",
@@ -11335,7 +11895,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus julaihii",
@@ -11427,7 +11992,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus juliae",
@@ -11519,7 +12089,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus kachinensis",
@@ -11611,7 +12186,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus khammouanensis",
@@ -11703,7 +12283,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "SE_ASIA_KARST",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus kienluongensis",
@@ -11795,7 +12380,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "SE_ASIA_KARST",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus kiusianus",
@@ -11931,7 +12521,12 @@
       "colour": "#2f3fa6",
       "form": "berries turn bright lilac-pink then shiny deep blue"
      }
-    }
+    },
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus konjac",
@@ -12063,7 +12658,12 @@
      "silhouette": "tall umbrella on a pink-grey-and-green mottled pole; dark maroon spike in spring",
      "confidence": "documented",
      "refs": "Wikipedia; Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus konkanensis",
@@ -12155,7 +12755,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus koratensis",
@@ -12247,7 +12852,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus krausei",
@@ -12379,7 +12989,12 @@
      "silhouette": "large pale-green umbrella with a pink-footed stalk",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus kuznetsovii",
@@ -12471,7 +13086,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus lacourii",
@@ -12563,7 +13183,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus lambii",
@@ -12699,7 +13324,12 @@
       "colour": "#f07a1f",
       "form": "orange berries, eaten fast by birds"
      }
-    }
+    },
+    "region": "BORNEO_KARST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus lanceolatus",
@@ -12791,7 +13421,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus lanuginosus",
@@ -12923,7 +13558,12 @@
      "silhouette": "small umbrella; short woolly-looking spike",
      "confidence": "typical-of-genus",
      "refs": "Aroidpedia archive species page (protologue extracts) (type only; leaf unknown)"
-    }
+    },
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus laoticus",
@@ -13015,7 +13655,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus leptosoma",
@@ -13107,7 +13752,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus lewallei",
@@ -13199,7 +13849,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus linearis",
@@ -13291,7 +13946,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus linguiformis",
@@ -13383,7 +14043,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus longicomus",
@@ -13475,7 +14140,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus longiconnectivus",
@@ -13567,7 +14237,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus longispathaceus",
@@ -13659,7 +14334,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus longistylus",
@@ -13751,7 +14431,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus longituberosus",
@@ -13843,7 +14528,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus lunatus",
@@ -13935,7 +14625,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus luzoniensis",
@@ -14027,7 +14722,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus lyratus",
@@ -14119,7 +14819,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus macrophyllus",
@@ -14211,7 +14916,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus macrorhizus",
@@ -14343,7 +15053,12 @@
      "silhouette": "dark velvety umbrella on a fuzzy mottled stalk",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus malkmus-husseinii",
@@ -14435,7 +15150,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus mangelsdorffii",
@@ -14527,7 +15247,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MADAGASCAR_DRY",
+    "realm": "madagascar",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus margaritifer",
@@ -14619,7 +15344,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus margretae",
@@ -14711,7 +15441,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus maximus",
@@ -14843,7 +15578,12 @@
      "silhouette": "largest African species: waxy purple-grey stalk under a lacy umbrella; twisted purple cup",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus maxwellii",
@@ -14935,7 +15675,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus mayoi",
@@ -15027,7 +15772,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus mekongensis",
@@ -15119,7 +15869,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus merrillii",
@@ -15211,7 +15966,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus mildbraedii",
@@ -15303,7 +16063,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus minimus",
@@ -15395,7 +16160,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus minor",
@@ -15487,7 +16257,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus mirabilis",
@@ -15579,7 +16354,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus mossambicensis",
@@ -15671,7 +16451,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus muelleri",
@@ -15807,7 +16592,12 @@
       "colour": "#f06a1f",
       "form": "orange-red berries (spadix persists dry in fruit)"
      }
-    }
+    },
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus mullendersii",
@@ -15899,7 +16689,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_RAINFOREST",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus myosuroides",
@@ -16035,7 +16830,12 @@
       "colour": "#dfe9c8",
       "form": "berries white at base, pale green above, striate-warty"
      }
-    }
+    },
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus mysorensis",
@@ -16127,7 +16927,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus napalensis",
@@ -16263,7 +17068,12 @@
       "colour": "#e8401f",
       "form": "red berries (typical of genus)"
      }
-    }
+    },
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus napiger",
@@ -16355,7 +17165,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus natolii",
@@ -16447,7 +17262,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus niahensis",
@@ -16583,7 +17403,12 @@
       "colour": "#f07a1f",
       "form": "deep orange ellipsoid berries, 1-seeded"
      }
-    }
+    },
+    "region": "BORNEO_KARST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus nicolaii",
@@ -16675,7 +17500,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus nicolsonianus",
@@ -16767,7 +17597,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus obovoideus",
@@ -16859,7 +17694,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus obscurus",
@@ -16951,7 +17791,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus ochroleucus",
@@ -17043,7 +17888,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus oncophyllus",
@@ -17135,7 +17985,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus ongsakulii",
@@ -17271,7 +18126,12 @@
       "colour": "#c9dcb5",
       "form": "tiny bilobed berries pale green with whitish dots"
      }
-    }
+    },
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus opalinus",
@@ -17363,7 +18223,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus operculatus",
@@ -17455,7 +18320,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus opertus",
@@ -17547,7 +18417,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus paeoniifolius",
@@ -17683,7 +18558,12 @@
       "colour": "#e8401f",
       "form": "red subglobose/ovoid berries"
      }
-    }
+    },
+    "region": "SAHUL_MONSOON",
+    "realm": "australasia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus palawanensis",
@@ -17775,7 +18655,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus paucisectus",
@@ -17867,7 +18752,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus pendulus",
@@ -17959,7 +18849,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus perakensis",
@@ -18051,7 +18946,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus perrieri",
@@ -18143,7 +19043,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MADAGASCAR_DRY",
+    "realm": "madagascar",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus pilosus",
@@ -18235,7 +19140,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus plicatus",
@@ -18327,7 +19237,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus polyanthus",
@@ -18419,7 +19334,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus prainii",
@@ -18551,7 +19471,12 @@
      "silhouette": "pale mottled stalk under a mid-size umbrella; cream club rising from a green cup",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus preussii",
@@ -18643,7 +19568,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_RAINFOREST",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus prolificus",
@@ -18735,7 +19665,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus pulchellus",
@@ -18827,7 +19762,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus purpurascens",
@@ -18919,7 +19859,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus pusillus",
@@ -19011,7 +19956,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus putii",
@@ -19103,7 +20053,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus pygmaeus",
@@ -19235,7 +20190,12 @@
      "silhouette": "hand-high dark velvety leaf on a brown stalk; tiny cream cup",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus ranchanensis",
@@ -19327,7 +20287,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus ravenii",
@@ -19419,7 +20384,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus rayongii",
@@ -19511,7 +20481,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus reflexus",
@@ -19603,7 +20578,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus rhizomatosus",
@@ -19735,7 +20715,12 @@
      "silhouette": "colony of knee-high few-leafleted umbrellas",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus richardsiae",
@@ -19827,7 +20812,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus rostratus",
@@ -19919,7 +20909,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus rugosus",
@@ -20011,7 +21006,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus sagittarius",
@@ -20103,7 +21103,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus sakonnakhonensis",
@@ -20195,7 +21200,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus salmoneus",
@@ -20327,7 +21337,12 @@
      "silhouette": "plain green stalk under an umbrella; salmon-pink cup in flower",
      "confidence": "documented",
      "refs": "Aroidpedia archive species page (protologue extracts)"
-    }
+    },
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus samarensis",
@@ -20419,7 +21434,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "PHILIPPINES",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus saraburensis",
@@ -20511,7 +21531,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus saururus",
@@ -20603,7 +21628,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus scaber",
@@ -20695,7 +21725,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus schmidtiae",
@@ -20787,7 +21822,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus scutatus",
@@ -20879,7 +21919,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus serrulatus",
@@ -20971,7 +22016,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus shyamsalilianus",
@@ -21063,7 +22113,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus sinuatus",
@@ -21155,7 +22210,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus sizemoreae",
@@ -21247,7 +22307,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus smithsonianus",
@@ -21339,7 +22404,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus sparsiflorus",
@@ -21431,7 +22501,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus spectabilis",
@@ -21523,7 +22598,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus staudtii",
@@ -21615,7 +22695,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_RAINFOREST",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus stuhlmannii",
@@ -21707,7 +22792,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus subcymbiformis",
@@ -21799,7 +22889,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus sumawongii",
@@ -21891,7 +22986,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus suwidjianus",
@@ -21983,7 +23083,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus sylvaticus",
@@ -22075,7 +23180,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDIA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus symonianus",
@@ -22167,7 +23277,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus synandrifer",
@@ -22259,7 +23374,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus taurostigma",
@@ -22351,7 +23471,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MADAGASCAR_DRY",
+    "realm": "madagascar",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus tenuispadix",
@@ -22443,7 +23568,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus tenuistylis",
@@ -22535,7 +23665,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus terrestris",
@@ -22627,7 +23762,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus teuszii",
@@ -22719,7 +23859,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_SAVANNA",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus thaiensis",
@@ -22811,7 +23956,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus tinekeae",
@@ -22903,7 +24053,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus tonkinensis",
@@ -22995,7 +24150,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus tuberculatus",
@@ -23087,7 +24247,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus umbrinus",
@@ -23179,7 +24344,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus urceolatus",
@@ -23271,7 +24441,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus variabilis",
@@ -23407,7 +24582,12 @@
       "colour": "#f06a1f",
       "form": "bright orange-red berry, 1-2 seeds"
      }
-    }
+    },
+    "region": "JAVA_SEASONAL",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus venustus",
@@ -23499,7 +24679,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "MALESIA_RAINFOREST",
+    "realm": "malesia",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus verticillatus",
@@ -23591,7 +24776,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus villosus",
@@ -23683,7 +24873,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus vogelianus",
@@ -23775,7 +24970,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus wasa",
@@ -23867,7 +25067,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "INDOCHINA_MONSOON",
+    "realm": "indomalaya",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus xiei",
@@ -23959,7 +25164,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus yaoi",
@@ -24051,7 +25261,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus yuloensis",
@@ -24143,7 +25358,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus yunnanensis",
@@ -24279,7 +25499,12 @@
       "colour": "#2f3fa6",
       "form": "berries green, then blue, finally violet"
      }
-    }
+    },
+    "region": "CHINA_SUBTROPICAL",
+    "realm": "sino_subtropical",
+    "needs": [
+     "dry_ground"
+    ]
    },
    {
     "name": "Amorphophallus zenkeri",
@@ -24371,7 +25596,12 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "region": "AFRICA_RAINFOREST",
+    "realm": "afrotropic",
+    "needs": [
+     "dry_ground"
+    ]
    }
   ]
  },
@@ -24558,5 +25788,6 @@
    "form": "cylinder of tightly packed berries on the old spadix, red/orange ones ripening top-down"
   },
   "seasonal": "leaf and inflorescence never overlap except in coaetaneus/ongsakulii; plant vanishes entirely into the tuber for the dormant season"
- }
+ },
+ "_help_region": "region: the catalogue region (regions table) each species belongs to, from its source text or nearest band; realm: the biogeographic realm used as the continent gate (design: species spawn only in biome associations tagged with the same realm, or untagged ones). needs dry_ground: tubers rot in swamp and marsh."
 }

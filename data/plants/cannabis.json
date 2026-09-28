@@ -141,7 +141,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "central_asia"
    },
    {
     "name": "Cannabis - Afghani",
@@ -271,7 +272,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "central_asia"
    },
    {
     "name": "Cannabis - Mazar-i-Sharif",
@@ -401,7 +403,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "central_asia"
    },
    {
     "name": "Cannabis - Lashkar Gah",
@@ -531,7 +534,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "central_asia"
    },
    {
     "name": "Cannabis - Chitral",
@@ -661,7 +665,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "central_asia"
    },
    {
     "name": "Cannabis - Swat Valley",
@@ -791,7 +796,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "central_asia"
    },
    {
     "name": "Cannabis - Tirah Valley",
@@ -921,7 +927,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "central_asia"
    },
    {
     "name": "Cannabis - Kashmir",
@@ -1051,7 +1058,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "himalaya"
    },
    {
     "name": "Cannabis - Uzbek",
@@ -1181,7 +1189,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "central_asia"
    },
    {
     "name": "Cannabis - Pamir",
@@ -1311,7 +1320,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "central_asia"
    },
    {
     "name": "Cannabis - Manali",
@@ -1441,7 +1451,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "himalaya"
    },
    {
     "name": "Cannabis - Parvati (Malana)",
@@ -1571,7 +1582,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "himalaya"
    },
    {
     "name": "Cannabis - Nepalese",
@@ -1701,7 +1713,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "himalaya"
    },
    {
     "name": "Cannabis - Kerala",
@@ -1831,7 +1844,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "indomalaya"
    },
    {
     "name": "Cannabis - Mysore",
@@ -1961,7 +1975,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "indomalaya"
    },
    {
     "name": "Cannabis - Manipur",
@@ -2091,7 +2106,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "indomalaya"
    },
    {
     "name": "Cannabis - Ceylon",
@@ -2221,7 +2237,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "indomalaya"
    },
    {
     "name": "Cannabis - Thai (Isan)",
@@ -2351,7 +2368,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "indomalaya"
    },
    {
     "name": "Cannabis - Meao Thai",
@@ -2481,7 +2499,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "indomalaya"
    },
    {
     "name": "Cannabis - Luang Prabang",
@@ -2611,7 +2630,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "indomalaya"
    },
    {
     "name": "Cannabis - Cambodian",
@@ -2741,7 +2761,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "indomalaya"
    },
    {
     "name": "Cannabis - Vietnamese (Vietnam Black)",
@@ -2871,7 +2892,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "indomalaya"
    },
    {
     "name": "Cannabis - Burmese",
@@ -3001,7 +3023,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "indomalaya"
    },
    {
     "name": "Cannabis - Aceh",
@@ -3131,7 +3154,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "malesia"
    },
    {
     "name": "Cannabis - Yunnan",
@@ -3261,7 +3285,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "sino_subtropical"
    },
    {
     "name": "Cannabis - Papua New Guinea",
@@ -3391,7 +3416,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "australasia"
    },
    {
     "name": "Cannabis - Durban",
@@ -3521,7 +3547,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Transkei (Rooibaard)",
@@ -3651,7 +3678,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Swazi",
@@ -3781,7 +3809,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Malawi",
@@ -3911,7 +3940,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Kilimanjaro",
@@ -4041,7 +4071,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Kisumu",
@@ -4171,7 +4202,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Ethiopian",
@@ -4301,7 +4333,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Congolese",
@@ -4431,7 +4464,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Angolan",
@@ -4561,7 +4595,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Nigerian",
@@ -4691,7 +4726,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Ghanaian",
@@ -4821,7 +4857,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "afrotropic"
    },
    {
     "name": "Cannabis - Zamal",
@@ -4951,7 +4988,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "madagascar"
    },
    {
     "name": "Cannabis - Rif (Ketama)",
@@ -5081,7 +5119,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "mediterranean"
    },
    {
     "name": "Cannabis - Lebanese (Bekaa)",
@@ -5211,7 +5250,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "west_asia"
    },
    {
     "name": "Cannabis - Turkish",
@@ -5341,7 +5381,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "west_asia"
    },
    {
     "name": "Cannabis - Iranian (Mashhad)",
@@ -5471,7 +5512,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "west_asia"
    },
    {
     "name": "Cannabis - Acapulco Gold",
@@ -5601,7 +5643,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "neotropic"
    },
    {
     "name": "Cannabis - Oaxacan",
@@ -5731,7 +5774,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "neotropic"
    },
    {
     "name": "Cannabis - Michoacán",
@@ -5861,7 +5905,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "neotropic"
    },
    {
     "name": "Cannabis - Sinaloan",
@@ -5991,7 +6036,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "neotropic"
    },
    {
     "name": "Cannabis - Santa Marta Gold",
@@ -6121,7 +6167,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "neotropic"
    },
    {
     "name": "Cannabis - Punto Rojo",
@@ -6251,7 +6298,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "neotropic"
    },
    {
     "name": "Cannabis - Limón Verde",
@@ -6381,7 +6429,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "neotropic"
    },
    {
     "name": "Cannabis - Panama Red",
@@ -6511,7 +6560,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "neotropic"
    },
    {
     "name": "Cannabis - Lamb's Bread",
@@ -6641,7 +6691,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "neotropic"
    },
    {
     "name": "Cannabis - Manga Rosa",
@@ -6771,7 +6822,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "neotropic"
    },
    {
     "name": "Cannabis - Hawaiian (Kona / Puna)",
@@ -6901,7 +6953,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "oceania"
    },
    {
     "name": "Cannabis - Russian ruderalis",
@@ -7031,7 +7084,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "palearctic"
    },
    {
     "name": "Cannabis - Altai",
@@ -7161,7 +7215,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "palearctic"
    },
    {
     "name": "Cannabis - Chuy Valley",
@@ -7291,7 +7346,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "central_asia"
    },
    {
     "name": "Cannabis - Mongolian",
@@ -7421,7 +7477,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "palearctic"
    },
    {
     "name": "Cannabis - Northern Chinese hemp",
@@ -7551,7 +7608,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "sino_subtropical"
    },
    {
     "name": "Cannabis - Japanese hemp (asa)",
@@ -7681,7 +7739,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "east_asia_temperate"
    },
    {
     "name": "Cannabis - Korean hemp (Andong)",
@@ -7811,7 +7870,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "east_asia_temperate"
    },
    {
     "name": "Cannabis - Central Russian hemp",
@@ -7941,7 +8001,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "palearctic"
    },
    {
     "name": "Cannabis - Carmagnola",
@@ -8071,7 +8132,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "mediterranean"
    },
    {
     "name": "Cannabis - Anatolian hemp (Kastamonu)",
@@ -8201,7 +8263,8 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "west_asia"
    },
    {
     "name": "Cannabis - Kentucky feral hemp",
@@ -8331,8 +8394,10 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "realm": "nearctic"
    }
   ]
- }
+ },
+ "_help_realm": "realm: the biogeographic realm of the landrace's native region (from source), used as the continent gate; needs dry_ground: never in swamp or marsh."
 }

@@ -16,121 +16,13 @@
    0.55
   ],
   "altitude_m": [
-   2500,
+   3200,
    5000
   ]
  },
  "plants": {
   "emergent": [],
   "canopy": [
-   {
-    "name": "Bristlecone pine",
-    "genus": "Pinus",
-    "species": "longaeva",
-    "family": "Pinaceae",
-    "shape": "conifer",
-    "temp_c": [
-     -2,
-     6
-    ],
-    "moisture": [
-     0.15,
-     0.4
-    ],
-    "altitude_m": [
-     2600,
-     3600
-    ],
-    "height_m": [
-     5.0,
-     15.0
-    ],
-    "density": 0.2,
-    "soil": "thin",
-    "needs": [],
-    "color": "#3A7040",
-    "accent": "#C0A080",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "wind",
-     "disperser": [
-      "wind",
-      "bird",
-      "mammal"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 10,
-      "interval_years": [
-       1,
-       3
-      ]
-     },
-     "dormant": "cold"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Great Basin high peaks; 5–15 m. Oldest trees on Earth; gnarled, half-dead giants. Kew POWO for the name; standard floras for range.",
-    "from_catalogue": "pine",
-    "traits": {
-     "genus": "Pinus",
-     "species": "longaeva",
-     "native_range": "Great Basin high peaks",
-     "leaf_shape": "needles or scale leaves, evergreen (larch deciduous)",
-     "trunk": "single straight trunk, whorled branches, conical crown",
-     "petiole": "none — leaves sessile",
-     "height_m": [
-      5.0,
-      15.0
-     ],
-     "growth_rate": "slow (decades)",
-     "reproduction": "seed",
-     "pollinator": "wind",
-     "disperser": [
-      "wind",
-      "bird",
-      "mammal"
-     ],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "pine",
-    "leaf_type": "needle"
-   },
    {
     "name": "Queñua",
     "genus": "Polylepis",
@@ -693,8 +585,5 @@
    "source": "Vadillo, Suni & Cano 2004 Puya raimondii (Rev. Peru. Biol.); Weberbauer 1945"
   }
  ],
- "hero_species": [
-  "Bristlecone pine",
-  "Queen of the Andes"
- ]
+ "hero_species": []
 }

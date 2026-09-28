@@ -743,118 +743,6 @@
     "leaf_type": "spine"
    },
    {
-    "name": "Giant montane pitcher",
-    "genus": "Nepenthes",
-    "species": "rajah",
-    "family": "Nepenthaceae",
-    "shape": "reed",
-    "temp_c": [
-     10,
-     16
-    ],
-    "moisture": [
-     0.8,
-     1.0
-    ],
-    "altitude_m": [
-     1500,
-     2650
-    ],
-    "height_m": [
-     0.3,
-     1.0
-    ],
-    "density": 0.2,
-    "soil": "thin",
-    "needs": [],
-    "color": "#6AA050",
-    "accent": "#C03040",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "both",
-     "pollinator": "insect",
-     "disperser": [
-      "wind",
-      "water"
-     ],
-     "clonal": "rhizome",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "none",
-     "note": "flowers held high on a stalk so pollinators aren't eaten; seed by wind and water"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "trap_colour": [
-      0.2,
-      0.9
-     ],
-     "allocation": [
-      0.4,
-      0.7
-     ]
-    },
-    "carnivore": {
-     "trap": "pitfall",
-     "eats": "insects",
-     "nitrogen_from_prey": true
-    },
-    "source": "Mount Kinabalu, Borneo, 1500-2600 m. Largest pitcher on Earth, drowns rats; tree shrews use it as a toilet — a real nutrient exchange. Kew POWO.",
-    "from_catalogue": "carnivore",
-    "traits": {
-     "genus": "Nepenthes",
-     "species": "rajah",
-     "native_range": "Mount Kinabalu, Borneo, 1500-2600 m",
-     "leaf_shape": "tall strap leaves",
-     "trunk": "hollow stems rising from water",
-     "petiole": "sheath",
-     "height_m": [
-      0.3,
-      1.0
-     ],
-     "growth_rate": "medium (years)",
-     "reproduction": "both, clonal by rhizome",
-     "pollinator": "insect",
-     "disperser": [
-      "wind",
-      "water"
-     ],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "grass"
-   },
-   {
     "name": "Giant sun pitcher",
     "genus": "Heliamphora",
     "species": "tatei",
@@ -1882,7 +1770,5 @@
    "source": "Huber 1995 tepui shrublands"
   }
  ],
- "hero_species": [
-  "Giant montane pitcher"
- ]
+ "hero_species": []
 }

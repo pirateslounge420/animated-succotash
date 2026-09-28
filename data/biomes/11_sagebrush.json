@@ -322,120 +322,6 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "broadleaf"
-   },
-   {
-    "name": "Soapweed yucca",
-    "genus": "Yucca",
-    "species": "glauca",
-    "family": "Asparagaceae",
-    "shape": "spike_rosette",
-    "temp_c": [
-     4,
-     16
-    ],
-    "moisture": [
-     0.15,
-     0.4
-    ],
-    "altitude_m": [
-     300,
-     2000
-    ],
-    "height_m": [
-     0.4,
-     1.0
-    ],
-    "density": 0.6,
-    "soil": "thin",
-    "needs": [
-     "dry_ground"
-    ],
-    "color": "#6A9A6A",
-    "accent": "#B8A070",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       200
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       8000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "both",
-     "pollinator": "insect",
-     "disperser": [
-      "mammal",
-      "gravity"
-     ],
-     "clonal": "rhizome",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 10,
-      "interval_years": [
-       1,
-       2
-      ]
-     },
-     "dormant": "none",
-     "note": "Yucca moths are the only pollinator (obligate mutualism); if the insect count in the region is zero, seed set is zero and only offsets spread it."
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "leaf_length": [
-      0.3,
-      0.8
-     ],
-     "trunk": [
-      0.0,
-      1.0
-     ],
-     "allocation": [
-      0.4,
-      0.7
-     ]
-    },
-    "cannot_be_browsed": true,
-    "source": "Kew POWO accepted name. Great Plains to the Rockies; rosette form. Traits documented. The cold-hardy plains yucca; trunkless.",
-    "from_catalogue": "yucca",
-    "traits": {
-     "genus": "Yucca",
-     "species": "glauca",
-     "native_range": "",
-     "leaf_shape": "stiff spined sword leaves in a rosette",
-     "trunk": "none or a short woody stem; tall flower spike",
-     "petiole": "none",
-     "height_m": [
-      0.4,
-      1.0
-     ],
-     "growth_rate": "slow (decades)",
-     "reproduction": "both, clonal by rhizome",
-     "pollinator": "insect",
-     "disperser": [
-      "mammal",
-      "gravity"
-     ],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "furry",
-    "leaf_type": "spine"
    }
   ],
   "ground": [
@@ -746,7 +632,5 @@
    "source": "Branson et al. 1976; USNVC Sarcobatus vermiculatus shrubland alliance"
   }
  ],
- "hero_species": [
-  "Soapweed yucca"
- ]
+ "hero_species": []
 }

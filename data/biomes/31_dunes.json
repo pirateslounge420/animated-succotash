@@ -12,8 +12,8 @@
    33
   ],
   "moisture": [
-   0,
-   0.45
+   0.2,
+   0.8
   ]
  },
  "plants": {
@@ -281,8 +281,8 @@
     "species": "breviligulata",
     "shape": "tussock",
     "temp_c": [
-     4,
-     15
+     2,
+     18
     ],
     "moisture": [
      0.15,
@@ -621,7 +621,5 @@
    "source": "Acacia longifolia var. sophorae foredune scrub (Specht 1970; NSW coastal dune scrub)"
   }
  ],
- "hero_species": [
-  "Scots pine"
- ]
+ "hero_species": []
 }

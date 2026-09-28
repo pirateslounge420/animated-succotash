@@ -399,111 +399,6 @@
     "leaf_type": "broadleaf"
    },
    {
-    "name": "Grandidier's baobab",
-    "genus": "Adansonia",
-    "species": "grandidieri",
-    "family": "Malvaceae",
-    "shape": "umbrella",
-    "temp_c": [
-     23,
-     28
-    ],
-    "moisture": [
-     0.2,
-     0.45
-    ],
-    "altitude_m": [
-     0,
-     300
-    ],
-    "height_m": [
-     25.0,
-     30.0
-    ],
-    "density": 0.3,
-    "soil": "rich",
-    "needs": [],
-    "color": "#5A9A4A",
-    "accent": "#A08A70",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       365
-      ],
-      [
-       "sapling",
-       5000
-      ],
-      [
-       "mature",
-       40000
-      ],
-      [
-       "old",
-       400000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "bat",
-     "disperser": [
-      "mammal"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "late_dry",
-      "days": 7,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "dry"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "SW Madagascar dry forest; the Avenue. Tall smooth cylinders with a flat crown. All 8 Kew-accepted species. Deciduous in the dry season, bat-pollinated white flowers at night, fruit by mammals.",
-    "landmark": true,
-    "from_catalogue": "baobab",
-    "traits": {
-     "genus": "Adansonia",
-     "species": "grandidieri",
-     "native_range": "SW Madagascar dry forest",
-     "leaf_shape": "compound or lobed leaves in a flat spreading crown",
-     "trunk": "single trunk, flat-topped crown or, for herbs, a huge single leaf on a stalk",
-     "petiole": "long petiole",
-     "height_m": [
-      25.0,
-      30.0
-     ],
-     "growth_rate": "very slow (centuries)",
-     "reproduction": "seed",
-     "pollinator": "bat",
-     "disperser": [
-      "mammal"
-     ],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "pink_smooth",
-    "leaf_type": "palmate"
-   },
-   {
     "name": "Miombo tree",
     "genus": "Brachystegia",
     "species": "spiciformis",
@@ -1160,8 +1055,6 @@
  ],
  "hero_species": [
   "African baobab",
-  "Boab",
-  "Grandidier's baobab",
-  "Whistling thorn"
+  "Boab"
  ]
 }

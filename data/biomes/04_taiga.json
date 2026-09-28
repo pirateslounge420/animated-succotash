@@ -382,112 +382,6 @@
   ],
   "shrub": [
    {
-    "name": "Alpenrose",
-    "genus": "Rhododendron",
-    "species": "ferrugineum",
-    "family": "Ericaceae",
-    "shape": "shrub",
-    "temp_c": [
-     -1,
-     6
-    ],
-    "moisture": [
-     0.5,
-     0.9
-    ],
-    "altitude_m": [
-     1500,
-     2800
-    ],
-    "height_m": [
-     0.3,
-     1.0
-    ],
-    "density": 0.9,
-    "soil": "peat",
-    "needs": [],
-    "color": "#2A5A38",
-    "accent": "#D03050",
-    "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
-     ],
-     "final_size": 1.0
-    },
-    "repro": {
-     "mode": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird",
-      "mammal"
-     ],
-     "clonal": "none",
-     "lifespan": "perennial",
-     "bloom": {
-      "season": "spring",
-      "days": 14,
-      "interval_years": [
-       1,
-       1
-      ]
-     },
-     "dormant": "cold"
-    },
-    "genes": {
-     "size": [
-      0.3,
-      0.7
-     ],
-     "bloom_colour": [
-      0.0,
-      0.5
-     ],
-     "allocation": [
-      0.3,
-      0.6
-     ]
-    },
-    "source": "Alps subalpine; Heath above the trees. Kew POWO; standard floras.",
-    "from_catalogue": "rhododendron",
-    "traits": {
-     "genus": "Rhododendron",
-     "species": "ferrugineum",
-     "native_range": "Alps subalpine",
-     "leaf_shape": "small leaves on many stems",
-     "trunk": "multi-stemmed from the base",
-     "petiole": "short petiole",
-     "height_m": [
-      0.3,
-      1.0
-     ],
-     "growth_rate": "slow (decades)",
-     "reproduction": "seed",
-     "pollinator": "insect",
-     "disperser": [
-      "bird",
-      "mammal"
-     ],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "peeling",
-    "leaf_type": "glossy"
-   },
-   {
     "name": "Bilberry",
     "genus": "Vaccinium",
     "species": "myrtillus",
@@ -1004,8 +898,6 @@
   }
  ],
  "hero_species": [
-  "Alpenrose",
-  "Lodgepole pine",
-  "Scots pine"
+  "Lodgepole pine"
  ]
 }
