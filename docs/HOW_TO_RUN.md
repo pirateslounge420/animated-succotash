@@ -28,7 +28,7 @@
   - `postage_stamp: true` gives you the small planet with every kind of biome.
   - `seed: 42` makes it the same planet every time.
   - `spawn_choice: 0` wakes you at the first camp every time.
-  - `day_length_min: 144` is the real cycle: 144 minutes for a full day and night (6 real minutes an in-game hour: day 07:00–17:00, dusk 17:00–20:00, night 20:00–04:00, dawn 04:00–07:00). You wake at the very start of dusk. Lower it (say 20) to see the cycle go by faster.
+  - `day_length_min: 144` is the real cycle: 144 minutes for a full day and night (6 real minutes an in-game hour; at the equator on an equinox: day 07:00–17:00, dusk 17:00–20:00, night 20:00–04:00, dawn 04:00–07:00). You wake at the very start of dusk. Lower it (say 20) to see the cycle go by faster.
 - To stop, press **Esc** to free the mouse and close the game window. Or, back in the editor, press the **■ Stop** button.
 
 ## 5. Keys (keyboard and mouse)
@@ -43,10 +43,10 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | Right mouse button | The tech button, in the air; what you touch decides. On a wall, cliff, trunk or ruin: tap it within 14 frames (about a quarter second) of touching it to wall jump (chained ones keep building speed), or hold it to cling; letting go of a cling (or Space) still springs you off, a little softer than a perfect tap, and Shift drops you off instead. Near a branch, bamboo or vine: hold it to catch and swing, let go to fly on (green bamboo springs you out; dead, grey wood snaps) |
 | Mouse | Look around (straight up and down too) |
 | Left mouse button | Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw. Works in the air too. No aim arc: you learn the drop by eye; a bright streak follows the arrow or spear once it flies. With super meter (the gold ring round the gauge, filled by perfect wall jumps, rolls and swing releases, and by hits), keep holding past full charge until the gauge fills again in red: a super shot (critical, triple damage, faster, farther, a red streak) that empties the meter |
-| Q | Swap between bow, spear and fishing pole |
+| Q | Cycle bow, spear and fishing pole (the pole is bound; casting is not built yet — design §N) |
 | E | Interact, whatever you're doing (climbing, swimming, crouched): take a sample of the plant you're looking at, pick up your spear, an arrow or something you set down, grab a tree to climb it (E again lets go), turn over a fallen log, take your things back from your body after dying |
 | Tab (or I) | Inventory: what you carry and wear. The world doesn't stop. Click a line to choose it; G sets a carried thing down, E wears a spare. Tab or Esc closes it |
-| Mouse wheel | Fishing pole in hand: scroll down to reel the line in, scroll up to let it out |
+| Mouse wheel | Fishing pole in hand: scroll down to reel the line in, scroll up to let it out (bound; the pole itself is not built yet) |
 | V or F5 | Switch between first and third person |
 | M | Map. While it's open, 1 = biomes, 2 = height, 3 = temperature, 4 = rainfall, 5 = live weather |
 | H | Hide or show the on-screen text |

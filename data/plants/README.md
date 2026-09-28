@@ -9,7 +9,15 @@ exactly like the biome files in `data/biomes/`. Nothing is hand-placed.
 (spec D4 and Phase 6). Top-level keys other than `plants` (`regions`, `types`,
 `family_defaults`, `notes`) are documentation and are ignored.
 
-**Not loaded yet.** `species_db` starts reading this folder in Phase 6.
+**Loaded through the biome files:** biome plant lists copy catalogue entries
+(`from_catalogue`), so catalogue species already grow in play; `species_db` reads
+this folder directly from Phase 6.
+
+**New blocks (design, 27 Sept 2026):** every entry is being given `leaf`, `canopy`,
+`tint`, `photoperiod` and an object-form `soil` per `docs/design/PLANT_SCHEMA.md`;
+`tools/plant_schema_check.py` validates them (`--strict` requires them). Filled so
+far: cypress, pine, acacia, trichocereus, and the rainforest, swamp and tallgrass
+prairie biome files. The rest are filled by parallel agents against the same schema.
 
 | File | Contents | Extra blocks (read by the Phase 6 plant lifecycle/genetics system; ignored until then) |
 |---|---|---|
@@ -17,11 +25,9 @@ exactly like the biome files in `data/biomes/`. Nothing is hand-placed.
 | `cannabis.json` | 64 *Cannabis sativa* landrace populations — one species, all interbreed; each is a starting genome for its region. Attestation tagged per entry. | `cannabis` (leaf width, photoperiod flowering, uses), `repro` (dioecious, wind, annual, seed bank), `genes` |
 | `trichocereus.json` | 18 *Trichocereus* Andean torch cacti, the ones the ethnobotanical literature records as ceremonially active. Kew files them under *Echinopsis*; each entry keeps that name as its `synonym`. Cold, dry, high, rocky ground; never browsed. | `growth`, `repro`, `genes`, `cannot_be_browsed`, `ceremonial` (`documented` / `reported` / `trace`, read by the ceremony system), `display` (common name) |
 
-Eighteen catalogues in all (623 entries). Besides the three above: yucca 55,
-pine 39, rhododendron 22, citrus 15, acacia 24, baobab 8 + ginkgo, carnivore 43;
-and, trimmed on 2026-09-27 to the genera the designer named, magnolia 16,
-giant_herbs 18, vine 3, bromeliad 14, cycad 5, palms 8, orchid 9, fungi 15
-(see docs/WORLD_SYSTEMS_SPEC.md D4 for which genera stayed).
+Twenty-four catalogues in all (499 entries; run `python3 tools/plant_schema_check.py`
+for the live count). The per-file counts change as genera are trimmed to the ones the
+designer named (docs/WORLD_SYSTEMS_SPEC.md D4).
 
 Every entry has `genus` and `species` (real binomials) per the D4 rule; entries
 that share a binomial are one interbreeding species.

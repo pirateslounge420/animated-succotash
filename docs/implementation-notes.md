@@ -2543,3 +2543,23 @@ latest results:
   gusts and showers are local detail added at the player, not simulated
   across the planet.
 
+
+
+## Design deltas not yet built (28 Sept 2026 — from docs/design/RECONCILIATION_2026-09-27.md)
+
+Locked in the design doc, present as data/help text, **not yet in code**. Claude Code
+picks these up by section number; nothing else in these notes should be read as
+overriding them.
+- §I planet 4,000 km (1/10 Earth) with biomes at 1/10; global passes keep fixed cell counts.
+- §J asymmetric gravity (`air.gravity_up_mps2` / `gravity_down_mps2`, `jump_release_cut`), branch bounce (`bounce`), alternating feet (`bounds`).
+- §R no air steering (`air_steer_mps` 0), free body rotation in flight, contact re-aims momentum to the look direction with the `redirect.keep_by_angle` curve.
+- §K arrows inherit full velocity (data set), spear strike damage by closing speed (`combat.strike`).
+- §N charging never slows (`aim_mps` = sprint; remove the bow's walk slowdown); fishing pole cast (`combat.fishing`), reel on the mouse wheel.
+- §S super meter (`movement.super_meter`) and overcharge super shot (`combat.overcharge`: critical, 3×, red tracer, faster, farther).
+- §L/§U HUD: speedometer and watch-face clock (`data/hud.json`), typewriter font, scale with window height; loading-screen pixel-art runner.
+- §M/§T starting kit (`items.json starting_kit`): spear, bow + quiver of 20, fishing pole; no spares for tools.
+- §V diagonal movement; crown handhold at every tree top; perch; climbing by right-click cling + move (E no longer starts climbs); wake-up camp folk catch aimed arrows.
+- §U arrow trail keeps `arc.trail_min_m` for the whole flight; fletching takes the shooter's cloak colour.
+- §B head-look on figures; §C look pass items 2–5 (sky presets, leaf-card canopies, nearest filtering, water).
+- §D/PLANT_SCHEMA the leaf-card builder and atlas; §F/F2 derived day/night from tilt (reference: `tools/reference/daylight_reference.py`); §G photoperiod; §G2 soil as a hard gate.
+- §P opening/wake-up scene with fleeing shinobi; §O master shinobi; §Q enemy camp (Phase 8+).

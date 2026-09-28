@@ -1,6 +1,6 @@
 # WORLD SYSTEMS SPEC — v4 (Godot project; v3 was aligned to commit `fe6ee3e`)
 
-**Read this whole file before touching code. It is the source of truth.** Where it conflicts with `DESIGN.md`, `README.md`, or anything in the repo, this file wins. Then read `docs/PROGRESS.md` to find the current phase, and work on that phase only.
+**Read this whole file before touching code.** Where it conflicts with `DESIGN.md`, `README.md`, or anything in the repo, this file wins — **except `docs/design/RECONCILIATION_2026-09-27.md` and `docs/design/PLANT_SCHEMA.md`, which are the locked design and override this file wherever they differ** (scale, time, controls, tools, look, plants; read them first). Then read `docs/PROGRESS.md` to find the current phase, and work on that phase only.
 
 Ordered the way it is *used*: how to work → where the project is → what to do now → architecture → one card per phase → reference tables at the back.
 
@@ -49,9 +49,9 @@ Look at the evidence. Right → *"Sign off Phase N."* Wrong → describe it in p
 - **Verification stays under 10% of build time.** Prefer one screenshot or one headless number over a long render; if a check would cost more, say so and let the designer play it.
 
 ### A4. Dev settings (always on during development; one file, `data/dev.json` or project settings)
-- `DEV_DAY_LENGTH = 20 min` (game: 120 min).
+- `DEV_DAY_LENGTH`: from `data/dev.json` (currently the full 144 min; shorten there for tests). The real day is 144 real minutes, phases derived from tilt and latitude (design §F).
 - `DEV_SEED` fixed, so before/after is apples to apples.
-- `DEV_POSTAGE_STAMP`: a fixed-seed mini-planet that contains one of every major biome band, generating in seconds. Full 400 km planet for milestone checks only.
+- `DEV_POSTAGE_STAMP`: a fixed-seed mini-planet that contains one of every major biome band, generating in seconds. Full planet (4,000 km, 1/10 Earth — design §I) for milestone checks only.
 - Debug overlays on hotkeys: time/moon, temperature, moisture, biome, pressure + wind arrows, creature population per region, camp food/population. The existing **Map overlay** already shows biome/elevation/temperature/rainfall/live weather — extend it rather than building new.
 
 ---
@@ -63,7 +63,7 @@ The build is far past "prototype." Most layers of the stack already exist. The j
 | Stack layer | Exists in repo | Aligned to spec? | Gap / risk |
 |---|---|---|---|
 | Geology / terrain | `planet/passes/terrain, geology`; cube-sphere 400 km; continents, mountains, ravines, cliffs, cave mouths | Mostly | No **tectonic skeleton** — mountains not placed by plate boundaries. No caves: the only "cave mouths" are wolf-den props (Phase 3 replaces them) |
-| Water | `passes/hydrology`; `river_network` (widths, rapids, waterfalls); rivers swell in storms | Yes | Verify rivers carry a **current direction** boats/swimmers can feel |
+| Water | `passes/hydrology`; `river_network` (widths, rapids, waterfalls); rivers swell in storms | Yes | Verify rivers carry a **current direction** swimmers and waders can feel |
 | Energy (clock/sky) | `sky_system` 2-hour day, moon phases, real sun+moon lights; `astro`; `lunar_mansions`; `cloud_layers` | Mostly | Day split must be **45/20/35/20**; verify smooth lerps; lunar cycle ~29.5 days |
 | Climate | `passes/climate`; `weather_sim` grid with wind | Partly | Verify wind is **pressure-gradient** driven; verify **ridge-blocked moisture** (windward wet / leeward dry) |
 | Weather | rain, snow, storms, lightning, thunder; clouds driven by weather | Yes | **Seasons do not exist** |
@@ -75,7 +75,7 @@ The build is far past "prototype." Most layers of the stack already exist. The j
 | Look | `post_grade` (sharpening, **dithered color depth**, night tint); `look_textures` procedural; 15 shaders | **No** | Dither + sharpen is a PS1 look, not GameCube. Likely the main cause of the "pixely" complaint. Check texture filtering too |
 | Player | walk/sprint/crouch/jump/swim/climb, 1st/3rd person, health/death, bow, footsteps by material, tree contact | Mostly | Rebind controls (C5); verify **hitboxes** on everything; add **spear**; audio must be 3D proximity |
 
-**Cut or hold:** Rare-event dice, sky events, magic sites, ruins, sculpted bodies all stay as they are — don't touch, don't expand. Exceptions written into the cards: Phase 3 reuses `magic_sites` for the teal fungi at depth; Phase 10 unparks the set pieces (`hold/set-pieces`) and lets camps salvage from ruins.
+**Cut or hold:** Rare-event dice, sky events, magic sites, ruins stay as they are — don't touch, don't expand. (Sculpted bodies: folk now use the player's cloaked rig, design §0; the old body systems are cleanup, design §4.) Exceptions written into the cards: Phase 3 reuses `magic_sites` for the teal fungi at depth; Phase 10 unparks the set pieces (`hold/set-pieces`) and lets camps salvage from ruins.
 
 ---
 
@@ -90,12 +90,12 @@ Phase 1 is signed off (2026-09-27) for hitboxes, 3D audio, ripples, the Night Ri
 Target: **late-90s/early-2000s console 3D, saturated dark-fantasy**. Low-poly but rounded. See Appendix R1 and R1a.
 
 **Suspected causes of the blocky look, to confirm in audit:**
-1. `post_grade` — dithered color depth and sharpening. Replace with: subtle film grain, slight color bleed, mild fog haze, viewport render scale ~0.75–0.8 for 480p softness. Keep the night tint.
-2. Texture filtering — procedural `look_textures` may be sampled nearest-neighbor. All world materials → **linear with mipmaps** (`texture_filter = LINEAR_MIPMAP`).
+1. `post_grade` — dithered color depth and sharpening. Replace with: subtle film grain, slight color bleed, mild fog haze, viewport render scale ~0.5–0.6 (design §C, §1). Keep the night tint.
+2. Texture filtering — **nearest with mipmaps** for the 1999–2004 look (design §1, §C); the earlier "linear with mipmaps" note is superseded.
 3. Foliage — check that leaf clusters are alpha-cutout quads/low-poly clusters, vertex-colored, not blocky.
 4. Terrain normals — smooth, not faceted; no stepped edges.
 5. Environment — glow/bloom off, SSAO off, MSAA 2x at most.
-6. Sky — 45/20/35/20 split, smooth lerps of sky/sun/ambient/fog through dawn and dusk.
+6. Sky — phases derived from tilt and latitude; 60/18/48/18 (real minutes) is the equator/equinox reference (design §F, §F2); smooth lerps of sky/sun/ambient/fog through dawn and dusk.
 
 **Done when:** a dusk river screenshot could sit beside the R1a references and belong, and a 20-min time-lapse shows sun and moon crossing with no snapping.
 
@@ -107,9 +107,9 @@ Target: **late-90s/early-2000s console 3D, saturated dark-fantasy**. Low-poly bu
 # PART D — Architecture
 
 ### D1. World scale (locked)
-Spherical wraparound cube-sphere, **400 km** circumference, relief ≈ 1/10 Earth, floating origin around the player. Already built — keep it.
+Spherical wraparound cube-sphere, **4,000 km** circumference (1/10 Earth, design §I; the code's 400 km is the pre-change value), relief ≈ 1/10 Earth, floating origin around the player. Already built — keep it.
 
-The planet stays 400 km (1/100 Earth) through Phase 12; it may scale to 1/10–1/30 Earth later because boats will be the main way to travel. Therefore: everything global lives in PlanetData at coarse resolution; everything the player sees is derived per chunk from seed + PlanetData and discarded on stream-out; nothing at detail scale is ever stored except region deltas (ledger counts, nests, carcasses, scars, memories, culture). Scaling the planet up must change only radius/resolution constants and PlanetData's memory, never the streaming or detail code.
+The planet is **4,000 km (1/10 Earth) with biomes at 1/10 Earth scale too** (design §I): movement is the reason the scale works, not boats. Therefore: everything global lives in PlanetData at coarse resolution with **fixed cell counts** (coarser per km, never denser with area); everything the player touches is generated locally on demand from those coarse fields plus noise; nothing is stored per metre.
 
 ### D2. The emergence stack (mirrors Earth; the dependency order)
 ```
@@ -140,7 +140,7 @@ Each field has exactly one owner: the only code that writes it; everything else 
 | biome | `World.planet`: `biome` | biome pass, once | i32 (BiomeTemplates id) |
 | live weather | `World.weather` (WeatherSim, its own grid of 6×10×10 = 600 cells, ~10 km on the full planet): `pressure`, `temp`, `humidity`, `wind`, `precip_rate`, `rel_humidity`, `storm`, `storm_level`, `synoptic`, `clear`; `avg_*` from spin-up | WeatherSim, each in-game quarter hour | |
 | eased local weather | `main._weather_eased` | main.gd, each frame | ⚑ not on World |
-| clock | `World.days` (days since start; the fraction is time of day), `World.day_length_s` | World (`_process`); length from DayCycle / `data/dev.json` | 45/20/35/20 phase warp in Astro + DayCycle |
+| clock | `World.days` (days since start; the fraction is time of day), `World.day_length_s` | World (`_process`); length from DayCycle / `data/dev.json` | warp driven by astronomy: tilt, latitude, day of year (design §F2; `tools/reference/daylight_reference.py`) |
 | sky | SkySystem: `sun_dir`, `moon_dir`, `sun_elevation_deg`, `moon_elevation_deg`, `daylight`, `moonlight`, `cloud_light_dir`, `magic` | SkySystem, each frame | ⚑ a node under main, not on World |
 | ripples | `World.ripples` | ripple system (Phase 1) | interface `scripts/water/ripples.gd`; simulation in progress |
 
@@ -299,7 +299,7 @@ creature                   { name, genus, species, invented?, id, trophic(insect
 - **Shift = crouch/sneak.** Sneaking is quieter: smaller noise radius for creatures' hearing.
 - **Jump** stays. Momentum-based movement stays (F-Zero GX / Melee spirit).
 - **Everything has a proper hitbox.** Player, creatures, trees, ruins, arrows, spear — no ghost-through, no invisible walls. Audit collision shapes against visible meshes.
-- **Weapons for now:** bow and arrow (exists) + **spear** (thrust, throw, retrieve). Nothing else.
+- **Weapons for now:** the three tools, forever (design §T): bow and arrow (exists), **spear** (thrust, throw, retrieve), and the **fishing pole** (cast; fishing itself Phase 10). Nothing else.
 - **Audio is proximity-based:** every world sound is a 3D player with distance attenuation and direction; howls, calls, camp chatter, storms all fall off with distance. Player noise (footsteps, sprint, bow, spear) is what creatures hear.
 
 ---
@@ -316,7 +316,7 @@ See Part C.
 - Implement D5 in full: double-tap sprint, Shift sneak with reduced noise radius, hitbox audit on player/creatures/trees/ruins/projectiles, spear (thrust/throw/retrieve), all sounds 3D with attenuation.
 - **(i) Branch graph:** canopy trees get individual branch meshes instead of a leaf blob; each tree exposes a branch graph — handhold points plus which ones are reachable from which — generated deterministically from seed + tree position, NEAR only.
   - **See-through crowns.** Leaves are clusters on the outer third of each limb and branch (noisy alpha-cutout cards per R1, no per-leaf geometry), with open air between them: from the ground you see the limbs, sky through the gaps and anything moving in them. Cluster count and size follow the species' `leaf_density` and, per tree, its growth and how dry its site is; the ground under a crown is dappled, shade broken by sun flecks. The far LOD keeps the solid crown.
-- **(ii) Climbing:** the player climbs trunks and shimmies along thick branches: slow, effortful, no swinging; extend `tree_contact`. About 0.5 m/s up a trunk and ~0.3 m/s along a limb.
+- **(ii) Climbing:** the player climbs trunks and moves along limbs on the `BranchGraph` handholds by **holding right click (a cling) and moving** (design §V; E is interact only). Catch-and-swing on thin wood is part of the same tech button (design §0).
 - **(iii) Monkey:** a gibbon-type monkey rig that brachiates along the branch graph — arc-and-release with momentum, next handhold chosen by reach and swing arc; monkey-only; it goes in R3's warm–wet band.
 - **(iv) Ripple system, Night Rider, Pond Crawler** — the designer's spec, verbatim:
 > Two new creature templates, plus the ripple system they depend on. Add both to `data/creatures/creatures.json` under the existing schema; nothing spawns until [Phase 7], but the movement rigs and ripple system are Phase 1 work.
@@ -336,7 +336,7 @@ See Part C.
   - `World.ripples` gives readers the recent disturbances (where, how big, how long ago) through `Ripples.height_at()` and `disturbance_at()`; the height buffer itself stays on the GPU.
   - Canopy trees get about 6 branch layouts per species; each tree picks one by hashing its position, so trees stay batched. Thick limbs don't sway.
   - Climbing is effortful by rhythm (a beat between reaches, breath sounds); no stamina meter.
-  - Spear: Q (pad Y) swaps bow and spear; tap to thrust, hold and release to throw; E picks it back up.
+  - Spear: Q (pad Y) cycles bow, spear and fishing pole; tap to thrust, hold and release to throw; E picks it back up.
   - Dev keys (dev mode only): F4 collision shapes, F6 branch graphs, F7 spawns the next rig, F8 makes the nearest wolf pack howl.
   - Deferred: creatures steering around trunks and ruin walls (pathfinding, Phase 7/8), wind sound, campfire crackle.
   - Fire light on folk and props is #FFA050 (R1a updated).
@@ -422,7 +422,7 @@ See Part C.
   - Seeders die out locally with no seed source in range — that is what makes fire-scar succession emerge (wind-seeded grasses first, bird-seeded berries later, trees last). **Do not script succession stages.**
 - **Genetics:** 6–10 genes per plant in 0–1; the species table maps each to a visible trait — size, leaf colour shift, pattern intensity (petiole mottling on aroids, bark on trees), bloom colour, scent strength, timing offset, dormancy length, and allocation (how much goes to blooms versus offsets when mode is both). Seed offspring mix two parents plus mutation; clonal offspring copy the parent with tiny mutation, so a clonal patch is visibly uniform and a seeded population visibly varied. Allocation is heritable, so strategy evolves: where fire is frequent or pollinators scarce, clonal genes win; where insects are rich, seeders win. Entries sharing a binomial are one interbreeding species; a landrace or regional form is a starting genome for its region, and where two ranges overlap, hybrids appear by the ordinary seed rules. The harness must show this per region.
 - **Harness:** build `eco_sim`'s flora half in this phase — biomass by species and region over years, spread maps, succession after a scripted test burn, allocation gene means by region. Phase 7 adds fauna to the same run.
-- **Aroids — the Amorphophallus catalogue:** new shape `aroid`: one petiole with a dissected umbrella leaf; bloom part is a spathe and spadix; dormant shows nothing. Carrion-fly pollinated — the bloom writes a short-lived scent record (`world.events`, kind `scent`) that draws the same insects the carcass chain uses; berries dispersed by birds; tuber offsets, and bulbils on the leaf for some species; dormant in the dry season; the giants bloom every 3–10 years for two or three days. `data/plants/amorphophallus.json` holds all 246 species accepted by Kew, each with its own temp_c/moisture/altitude band, height, density, soil, an `aroid` block (petiole pattern and colours, spathe colours), a `repro` block and `genes` ranges. Its shape is `umbrella` for now — switch every entry to `aroid` once that shape exists. Do not hand-place any of them; they grow wherever their bands allow, which will be the warm–hot bands only. (⚑ 15 East Asian species, konjac among them, are banded down to 12 °C, so they also reach the warm edge of the mild band.)
+- **Aroids — the Amorphophallus catalogue:** new shape `aroid`: one petiole with a dissected umbrella leaf; bloom part is a spathe and spadix; dormant shows nothing. Carrion-fly pollinated — the bloom writes a short-lived scent record (`world.events`, kind `scent`) that draws the same insects the carcass chain uses; berries dispersed by birds; tuber offsets, and bulbils on the leaf for some species; dormant in the dry season; the giants bloom gated by tuber maturity (design §E) for two or three days. `data/plants/amorphophallus.json` holds all 246 species accepted by Kew, each with its own temp_c/moisture/altitude band, height, density, soil, an `aroid` block (petiole pattern and colours, spathe colours), a `repro` block and `genes` ranges. Its shape is `umbrella` for now — switch every entry to `aroid` once that shape exists. Do not hand-place any of them; they grow wherever their bands allow, which will be the warm–hot bands only. (⚑ 15 East Asian species, konjac among them, are banded down to 12 °C, so they also reach the warm edge of the mild band.)
 - **Cannabis:** `data/plants/cannabis.json` holds 64 landrace populations of the single species *Cannabis sativa*, loaded like the aroid catalogue. All entries interbreed as one species. Each plant is male or female — only females carry the harvestable flower, and on windy days a faint yellow drift blows downwind from a male stand. Wind-pollinated, annual, seed bank. Flowering starts when the day length at that latitude drops below the plant's `flower_trigger` (ruderal types flower by age), so a tropical landrace carried north by a camp may never finish before the cold — that failure is allowed. Camp-follower dispersal, so it grows on middens and trail edges near camps that use it. Genes gain `leaf_width`, `resin`, `fibre`, `flower_trigger`, `purple`; broad-leaf types purple in cold. (Its uses are Phase 10.)
 - **Trichocereus — the Andean torch cacti:** `data/plants/trichocereus.json` holds 18 of them, loaded like the other catalogues. Kew files them under *Echinopsis*; the game uses the *Trichocereus* name with the synonym recorded.
   - All of them need cold, dry, high, rocky ground (thin soil, dry ground), so on the planet they appear only on the dry side of high ranges in the mild band.
@@ -524,7 +524,7 @@ See Part C.
 - **Camps form around remnants:** camps already sit in inhabited ruins, wild sites and cliff sites. Make it a scored rule: every landmark — tower, castle, aqueduct, pyramid, graveyard, barrow, boardwalk, treehouse, igloo, bridges (unpark `hold/set-pieces` for this phase), cave mouths, springs, river fords, waterfalls — gives nearby sites a camp score from water, flat ground, food (flora biomass and ledger fauna), shelter, and distance from other camps. The highest scores get camps. The landmark's kind seeds the camp: aqueduct → water and farming; ford or bridge → crossing and trade; graveyard or barrow → small, wary, afraid of the night; cave mouth → shelter and mining, wary of the dark; castle or tower → largest and best defended. Camp folk salvage from the remnant (worked stone, timber, metal scraps) — the remnants are the work of an older, more advanced people, and salvage is where a camp's rarer tools come from. Culture sliders start from the landmark kind. New camps at remnants never form inside a landmark; the fire sits where the ruin builder left it. Camps already inside ruins (the inhabited-ruin camps) stay where they are — the rule is for new camps only.
   - New remnant kinds, built in this phase (R1a, second reference batch): stone stairways up cliffs, hung bells, a stone giant or idol gate, hollow-tree dwellings, wells, chapels with candlelit interiors. The parked set pieces already hold a chapel.
   - ⚑ Today the ruin builder puts tepees, lean-tos and a fire inside some ruins. Read as: the builder's fire stays where it is and scored camps form beside landmarks, not in them — confirm whether those inhabited-ruin camps move out. Fords don't exist yet (derive them from river width and depth); cave mouths come from Phase 3.
-- **Cannabis — the loop:** three uses through the ordinary R4 carry rules — hemp types give fibre (stems → cordage and cloth for camp folk) and seed (food, oil); resinous types give smoke. Player: cut flowering females → carry a bundle (one inventory item) → hang it by a campfire or in a hut, where it dries over several in-game days as a visible state (the reference: dried herb bundles hanging from rafters, R1a second batch) → smoke it in a pipe (bone or clay; craftable, or a camp folk hands one over) at the fire. No numbers in the UI; strength comes from the plant's resin gene and how much is smoked.
+- **Cannabis — the loop:** three uses through the ordinary R4 carry rules — hemp types give fibre (stems → cordage and cloth for camp folk) and seed (food, oil); resinous types give smoke. Player: cut flowering females → carry a bundle (one inventory item) → hang it by a campfire or in a hut, where it dries over several in-game days as a visible state (the reference: dried herb bundles hanging from rafters, R1a second batch) → smoke it in a pipe (bone or clay; a camp folk hands one over — no crafting, design §T) at the fire. No numbers in the UI; strength comes from the plant's resin gene and how much is smoked.
 - **Haze, on the player:** one status, `player.haze`, 0–1, in WorldState so other systems read it; decays over about an in-game hour.
   - Visual, in `post_grade` as a temporary grade shift within R1: the world goes more R1a — night bluer, fire warmer, saturation up, edges soften, the camera sways slowly, stars swim, distance haze thickens. Audio muffles with more reverb and footsteps go hollow.
   - Status: hunger rises faster, fear cues soften (the howl still comes but the panic vignette doesn't), sprint starts slower, the bow sways, and an occasional cough is a real noise event creatures hear — sneaking while hazed is worse.
@@ -593,8 +593,8 @@ The references have crunchy textures on smooth, rounded shapes. Grain, dither an
 |---|---|---|
 | Geometry | Low-poly but rounded, organic silhouettes | Blocky geometry, cube foliage, stepped terrain |
 | Textures | 128–256px painted-style with visible noise; texels never bigger than 2–3 screen pixels; nearest or bilinear both fine | Oversized pixels |
-| Lighting | Directional sun + moon with strong coloured fill — ultramarine at night, warm orange near fire | |
-| Post | Subtle grain, mild haze, night tint, light dither at ~1/4 strength optional; render scale 0.75–0.85 | Sharpening, bloom, SSAO |
+| Lighting | Directional sun + moon, **low deep-blue ambient, hard-edged shadows** (design §C) — ultramarine at night, warm orange near fire | strong fill, soft shadows |
+| Post | Subtle grain, mild haze, night tint, light dither at ~1/4 strength; render scale 0.5–0.6 (design §C) | Sharpening, bloom, SSAO |
 | Sky | Dense speckled stars, big visible moon, painted cloud streaks on pure saturated blue by day | |
 
 **Acceptance test:** a dusk river screenshot could sit beside the R1a references and belong.
@@ -660,10 +660,10 @@ Nesting habits (examples for `nest.site`): tree-fork, cavity, cliff-ledge, groun
 - Every carried item changes a decision (torch, spear, tonight's food, one trade good).
 - Equipment slot-based: one equipped + two spares per slot (rings: two worn + two spares).
 - Weight felt in movement, never read in a menu.
-- **Built early (Phase 1 play feedback, item 11):** I opens a small PSO-plain screen in the R1a palette that doesn't pause the world. Equipment: ranged (bow), melee (spear), amulet, rings, each worn + spares as above. Ten carry slots, one thing each (a bundle of herbs, a plant sample, a cut cactus column, a fish, a mushroom). E on a plant takes a cutting, seed head or leaf that carries the species' binomial and look, so it can be looked at, traded or planted later. Past six carried things: visibly slower, worse climbing, louder. The screen shows what you carry and wear and nothing else. Numbers: `data/items.json`, movement table `burden`.
+- **Built early (Phase 1 play feedback, item 11):** Tab (or I) opens a small PSO-plain screen in the R1a palette that doesn't pause the world. Equipment: ranged (bow), melee (spear), pole (fishing pole) — one each, no spares (design §T) — amulet, rings with spares as above. Ten carry slots, one thing each (a bundle of herbs, a plant sample, a cut cactus column, a fish, a mushroom). E on a plant takes a cutting, seed head or leaf that carries the species' binomial and look, so it can be looked at, traded or planted later. Past six carried things: visibly slower, worse climbing, louder. The screen shows what you carry and wear and nothing else. Numbers: `data/items.json`, movement table `burden`.
 
 ## R5. Out of scope until Phase 12 is stable
-Werewolf/vampire transformation, grappling hook, underwater exploration/breath meter, player-founded tribes, advanced tech tiers (rail carts, forges), crafting quality tiers, combat damage balancing, any weapon beyond bow and spear. All remain in the long-term design.
+Werewolf transformation, underwater exploration, player-founded tribes, combat damage balancing, multiplayer PvP (design §K: a someday) remain in long-term design. **Cut for good (design §0, §T): vampires, breath meter, forges/rail carts/tech tiers, crafting of any kind, any tool beyond the spear, bow and fishing pole.** The grapple exists only as the pole's overcharge (design §S).
 
 ## R6. Simulation tiers and living-world rules
 1. **Three tiers by distance to the player.** NEAR (loaded chunks): individual creatures, physics, animation, memory. MID (regions within a radius set in `data/sim.json`, start ~10 km on the stamp): ledger only — per-region counts and fields, ticked every in-game hour. FAR: frozen; caught up with the warm-start code when the player approaches or logs in. Nothing far away ever has a node.

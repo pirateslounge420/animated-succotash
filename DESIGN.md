@@ -1,3 +1,12 @@
+> **Superseded in part.** This is the original design spec (Sept 2026). The locked, current
+> design is `docs/design/RECONCILIATION_2026-09-27.md` (thesis, §0–V) and
+> `docs/design/PLANT_SCHEMA.md`; they override this file wherever they differ — in particular:
+> the whole game is **dark and moody by day as well as night** (no Frutiger Aero day);
+> the planet and its biomes are **1/10 Earth (4,000 km)**; the day is **144 real minutes**
+> with **23.5° tilt** and derived seasons; there are **no goblins** (all intelligent
+> creatures are cloaked figures at different scales); **three tools, no crafting**; and
+> movement (momentum, wall jumps, swings, rolls) is the point of the game.
+
 # Low-Poly Exploration Game — Design Notes
 
 ## Overview
@@ -8,17 +17,17 @@ An ambient open-world exploration game built in Summer Engine (Godot 4). No end 
 
 GameCube-era low-poly look: Phantasy Star Online episodes 1 and 2, F-Zero GX, Super Smash Bros Melee. Low texture resolution, flat or vertex lighting, leaving out enough detail that the player's brain fills the gaps. Long view distance unless fog, mountains or trees block it.
 
-**Day: Frutiger Aero.** Bright, glossy, optimistic early-2000s look: clear aqua skies, clean saturated greens and blues, shiny water.
+**Day (superseded — see the note at the top).** Originally Frutiger Aero; now the sun is the one hard light, ambient is low and blue, shadows are deep: dark and moody by day too (design §C). The saturated cobalt sky and painted clouds stay.
 
-**Night: moonlit dark fairy tale.** Reference: ozavry\_ on Instagram. The world drowns in deep cobalt and violet moonlight under a huge moon, with fog, mist and reeds for depth. Warm light is rationed to one or two accents per scene (campfire, lit window, glowing doorway), and water glows as if lit from within. Surfaces read crunchy, over-sharpened and wet, like heavily graded PS2 or Oblivion-era 3D. Tone is cozy-eerie, quiet and a little melancholy: boardwalks over marsh, stilt shacks, mushroom villages, overgrown ruins, and folk like witches, goblins and trolls at rest rather than in combat. Night is the showpiece, not just the dark half.
+**Night: moonlit dark fairy tale.** Reference: ozavry\_ on Instagram. The world drowns in deep cobalt and violet moonlight under a huge moon, with fog, mist and reeds for depth. Warm light is rationed to one or two accents per scene (campfire, lit window, glowing doorway), and water glows as if lit from within. Surfaces read crunchy, over-sharpened and wet, like heavily graded PS2 or Oblivion-era 3D. Tone is cozy-eerie, quiet and a little melancholy: boardwalks over marsh, stilt shacks, mushroom villages, overgrown ruins, and cloaked folk of every size (there are no goblins; design §0) at rest rather than in combat. Night is the showpiece, not just the dark half.
 
 **Glow: the third palette, for magical places.** At ruins, glow ponds and mythical creatures' territories, night turns bioluminescent: water, moss and some plant tips emit a saturated teal or cobalt light that actually lights the scene, and the surrounding moonlight falls away, so it reads like neon against black rather than ordinary moonlit night.
 
-**Grading.** Deep, near-cartoonish ultramarine overhead (over the aqua horizon band), punchy greens and water, N64/PS1-era color: smooth, saturated gradients in the sky and the distance haze (like the ozavry references), 15-bit dithered color, intentionally low-res textures, flat Lambert lighting with no PBR sheen.
+**Grading.** Deep, near-cartoonish ultramarine overhead (over the aqua horizon band), punchy greens and water, early-2000s console color (target era 1999–2004, design §0): smooth, saturated gradients in the sky and the distance haze (like the ozavry references), 15-bit dithered color, intentionally low-res textures, flat Lambert lighting with no PBR sheen.
 
 **Ruins as set pieces.** Ivy-choked aqueducts, crumbling towers and lone castles on hills stand as distinct silhouettes that draw the wanderer toward them: moss and vines over the stone, walls partly collapsed into rubble.
 
-**The cycle bridges them.** The 120-minute day-night cycle blends from the bright day palette to the blue night palette through gradual dawn and dusk gradients.
+**The cycle bridges them.** The 144-minute day-night cycle (design §F) blends from the day grade to the night grade as two presets through gradual dawn and dusk gradients.
 
 ## Creatures
 
@@ -195,7 +204,7 @@ This brings the \~59 real-world biomes down to about 52 actual proc-gen content 
 
 ## Biome Sizing
 
-The planet is 1/100th of Earth's circumference (about 400 kilometers around), so linear distances scale by 1/100th — meaning area scales by 1/10,000, the square of the linear factor. Each biome's typical real-world area is scaled down by that factor and treated as a rough circle to get a walk-across time at the game's walking pace of 6 kilometers per hour (a brisk hike). This makes biome size and rarity fall out of real geography for free: biomes that are vast on Earth stay vast and common, and biomes that are naturally rare and small on Earth become rare, small landmarks in-game.
+**Superseded (design §I):** the planet and its biomes are now 1/10 of Earth (about 4,000 km around); the numbers below are the old 1/100 sizing and are kept only for the record. Each biome's typical real-world area is scaled down by that factor and treated as a rough circle to get a walk-across time at the game's walking pace of 6 kilometers per hour (a brisk hike). This makes biome size and rarity fall out of real geography for free: biomes that are vast on Earth stay vast and common, and biomes that are naturally rare and small on Earth become rare, small landmarks in-game.
 
 Vast biomes, about four to seven hours to walk across: taiga, hot desert, tropical rainforest, tundra, and savanna.
 
@@ -203,7 +212,7 @@ Mid-size biomes, roughly two and a quarter to three hours: temperate deciduous a
 
 Small specialty pockets, under thirty minutes and many under four: sagebrush shrubland, Mediterranean scrub, cloud and montane forest, krummholz, alpine meadow, swamp and bayou, páramo and puna, mangrove, freshwater marsh, bog and fen, badlands, salt marsh, salt flats, karst and cave regions, volcanic fields, dune fields, beaches, oases, and hot springs.
 
-For scale, circling the entire planet on foot nonstop comes out to roughly 67 hours, or about 8 days at a realistic 8-hour walking day.
+For scale (old 1/100 numbers): circling on foot nonstop was ~67 hours. At 1/10 it is ~200 hours at a walk, ~33 at the momentum ceiling (design §I).
 
 ## Creature Spawning
 

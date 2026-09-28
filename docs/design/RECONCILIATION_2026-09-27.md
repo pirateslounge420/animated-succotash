@@ -158,7 +158,7 @@ shows anything else (§P).
     `snap_speed_keep` (fraction of speed kept when a handhold breaks under you).
     Per-species values live in the plant data, not here.
 
-- **Dead wood: snags, logs and dead bamboo — Phases 5–8, seeded now.** The spec
+- **Dead wood: snags, logs and dead bamboo — Phases 6–8, seeded now.** The spec
   already plans `flora.snags` and `flora.logs` as ledgers (tree age seeds them,
   fungi decay them, Phase 7) and `flora.litter` for soil. **Promote them from
   numbers to placed objects**, because dead wood does four jobs at once:
@@ -167,7 +167,7 @@ shows anything else (§P).
   2. **Decomposer food** — the decomposer rung of the food web (blueprint) gets a
      physical home. Fungi (shelf fungi on snags, mushrooms on logs) and insects
      (termites, beetle larvae) live on dead wood and **break it down over in-game
-     seasons** into soil fertility (Phase 5 `flora.litter` / soil layer). Decay is a
+     seasons** into soil fertility (Phase 6 `flora.litter` / soil layer). Decay is a
      visible state machine: fresh snag → barked → bare → hollow → rotten → gone,
      each stage changing its material properties and who lives in it.
   3. **Homes** — hollow snags are **cavity sites** for owls, woodpeckers and other
@@ -186,7 +186,7 @@ shows anything else (§P).
   - **Bamboo shoots** exist too: young culms, short and edible (a forage item for
     Phase 10), later becoming green culms. So a grove has shoots, green culms and
     dry culms mixed — three different handhold behaviours in one place.
-  - Do not build the decay simulation before Phase 5 — for now, place dead wood with
+  - Do not build the decay simulation before Phase 6 — for now, place dead wood with
     a fixed decay stage so the movement and creature systems have something real to
     use, and let the ledgers drive stage changes later.
 
@@ -317,7 +317,7 @@ shows anything else (§P).
 | Decision | Where it lives | Status / action |
 |---|---|---|
 | Day/night cycle | `data/sky/day_cycle.json`, `scripts/sky/day_cycle.gd`, `sky_system.gd` | **Values changed to 144 / 60-18-48-18 in this commit.** No code change. |
-| Cube-sphere, 1/100 Earth, 1/10 height | `scripts/planet/planet_const.gd` (400 km, `HEIGHT_SCALE` 0.1) | Done. |
+| Cube-sphere, 1/10 height | `scripts/planet/planet_const.gd` (`HEIGHT_SCALE` 0.1; circumference 400 km until §I's change to 4,000 km lands) | Done; scale change pending (§I). |
 | Whittaker biomes, all 52 | `scripts/planet/passes/biome_pass.gd`, `data/biomes/00…51` | Done. `tepui` is registered but never assigned. |
 | Rivers, waterfalls, storm swell | `scripts/terrain/river_network.gd` | Done. Gap: no current direction affecting travel (§3). |
 | Plants with temp/moisture tolerances | `data/plants/*` (~1,031 species incl. biome lists), `scripts/ecology/species_db.gd`, `vegetation_placer.gd` | Done. Cleanup: 36 plant names clash between catalogues and biome files (loader keeps the biome copy); `docs/plant_archive/` (66 lists) is unused. |
@@ -340,8 +340,8 @@ shows anything else (§P).
 | Per-region population numbers | Phase 8 | Spawner half exists; population layer does not. |
 | Campfire cooking, ingredient status effects, one-meal-a-day rhythm | **Phase 10 Camp life** (fish / forage / hunt → carry → cook at the fire with camp folk) | Only a `PlanetPlayer.heal()` hook today. No hunger meter exists. |
 | Caves | Phase 3 | Wolf dens already mark cave mouths. |
-| Soil / fertility | Phase 5 | Doesn't exist. |
-| Seasons | Phase 4 | Needs axial tilt; none yet. |
+| Soil / fertility | Phase 6 | Doesn't exist. |
+| Seasons | Phase 5 | Needs axial tilt; none yet. |
 
 ---
 
@@ -368,7 +368,7 @@ shows anything else (§P).
 - `data/creatures/catalogue_dragonflies_snakes.json` (33 creatures) is never loaded.
 - `README.md` is stale ("no combat / no quests").
 - Open from the 2026-09-28 play session (`PROGRESS.md`): bow and spear sized for the old
-  taller body; unexplained ground-crease snag; no source yet for fish, mushrooms or stone tools.
+  taller body; unexplained ground-crease snag; no source yet for fish or mushrooms.
 
 ---
 
@@ -453,7 +453,7 @@ Keep all of it. Changes:
   the tuber accumulates mass over good leaf seasons (soil, light); past a species mass
   threshold it *may* bloom; blooming spends the tuber, which drops back. Rich soil → yearly
   blooms; poor soil → skips. The designer grows these and confirms mature tubers can bloom
-  annually. Needs seasons (F) and soil (Phase 5).
+  annually. Needs seasons (F, Phase 5) and soil (Phase 6).
 - **Bloom scent is a pheromone source** on the wind field: carrion mimics draw blowflies,
   carrion/dung beetles, drosophilids; the bloom self-heats to throw scent further. Insects
   drawn in feed whatever eats insects — a real event in the ecology.
@@ -532,7 +532,7 @@ the 20-day window straddling each boundary. Tolerance 0.05 game h.
   **day length / growing-season length** (new). **Elevation** already cools via the lapse
   rate in `planet_const.gd`; add its effect on growing-season length. **Longitude** only
   shifts local solar time — no ecological effect on its own.
-- These feed the tuber-maturity gate (E), the soil layer (Phase 5) and seasons (Phase 4).
+- These feed the tuber-maturity gate (E), the soil layer (Phase 6) and seasons (Phase 5).
 
 ## G2. Soil is a first-class spawn check — LOCKED
 
@@ -542,7 +542,7 @@ the 20-day window straddling each boundary. Tolerance 0.05 game h.
 - The terrain build must **mark soil type explicitly** per point, differentiated and
   readable by plant checks and by the ecology. `geology_pass.gd` already assigns
   rock/soil (basalt, sand, alluvium, clay/peat, till, karst, sandstone, granite); keep
-  that and add the Phase 5 layer on top: **depth**, **fertility/organic content**,
+  that and add the Phase 6 layer on top: **depth**, **fertility/organic content**,
   **drainage**, **pH class** (acid / neutral / alkaline — bogs vs karst limestone), and
   **salinity** (coasts, salt flats). Fertility is fed by `flora.litter`, dead wood decay
   (dead-wood section above) and animal waste; it is what the Amorphophallus tuber gate reads.
@@ -705,6 +705,9 @@ build power, release to act. Power sets both **strength and trajectory**.
   at 120 km/h. The game never nerfs you for trying.
 - The charge gauge, if any, is the same tiny arc for all three tools so the player
   learns one gauge.
+- Note: the small aim wander by movement in `combat.json` `aim` (0.3° still, 1.2° at a
+  sprint, 0° at a jump's apex) is **accuracy physics that applies to every shot**, not a
+  charging handicap; it stays. What §N forbids is any penalty for *holding* a charge.
 - Add to `data/combat.json`: a `fishing` block — `wind_s`, `cast_min_m`, `cast_max_m`,
   `line_max_m`, `reel_mps`, `inherit_velocity` (so casting mid-bound throws the line
   further, same as arrows).
@@ -908,6 +911,12 @@ were out there; every time after, it was because you died.
 - **Why:** progression in this game is the player's hands (§S), not an inventory of
   tools. Three tools, one charge rule (§N), one tech button — the whole kit fits on two
   mouse buttons.
+- **The torch is not a tool.** The torchlight mechanic (torch attracts some creatures,
+  scares others; a torch as a deterrent) stands: a torch is a **burning brand taken from a
+  fire**, carried in the hand like any carried thing, not a crafted or owned tool. It has
+  no slot, no tiers, and burns out. (Designer to confirm.)
+- **Equipment spares:** with exactly three tools that never grow, the ranged/melee/pole
+  slots hold **one item and no spares** (`items.json`); amulet and rings keep theirs.
 
 ## U. Controls, HUD text, loading screen, and two fixes — 28 Sept 2026 (early)
 
