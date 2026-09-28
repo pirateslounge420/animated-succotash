@@ -1241,3 +1241,58 @@ never the live weather or season; land evaporation is a constant; the grid is tu
 Check: a dev overlay on the M map for soil water, snowpack and river discharge; a
 year-long headless run that reports the global water budget (air + soil + snow + rivers)
 staying within a few percent — that is the test the design needs.
+
+## AC. Creatures per biome, body archetypes, and thermals — 28 Sept 2026
+
+**How many per biome.** Not every critter — a **guild budget**, so each biome has the roles
+its food web needs (§X, Phase 7/8) and nothing else:
+
+| guild | per biome | examples |
+|---|---|---|
+| large herbivore | 1–2 | deer, bison, caribou, tapir, kangaroo |
+| mid/apex predator | 1 (plus 1 rare mythic where locked) | wolf pack, jaguar, dingo, lynx |
+| small mammal (prey, cavity/burrow) | 2–3 | fox, squirrel, raccoon, possum, sugar glider, hare |
+| birds | 2–3, **always including one soarer/scavenger** | vulture, hawk, heron, owl, woodpecker, corvid |
+| reptile / amphibian / fish | 1–2 (by water) | alligator, snake, frog, salmon |
+| insects & small stuff | ambient swarms, not individuals | flies at carcasses, fireflies, dragonflies |
+
+That is **8–12 species per biome**, ~52 biomes, with heavy sharing across neighbours →
+roughly **150–200 distinct species in the game**, from far fewer bodies.
+
+**The Falcon/Ganondorf rule for animals.** Each species is a **body archetype × palette
+× scale × behaviour tuning**, never its own model:
+- ~20–25 body archetypes cover the guilds: canid, felid, ursid, cervid, bovid, equid,
+  mustelid, rodent (squirrel), raccoon/possum (climber), glider (sugar glider / flying
+  squirrel), hare, small bird, raptor, soaring bird (vulture/condor/eagle), wader (heron),
+  waterfowl, owl, corvid, snake, lizard, crocodilian, frog, fish, plus the mythics.
+- A **palette** per species (fur/plumage colours, markings: the red fox's white tip, the
+  Arctic fox's winter white, a raccoon's mask) exactly as cloaked folk roll cloak colours
+  (`data/cloaks.json` pattern). **Seasonal palettes** where real (Arctic fox and hare turn
+  white in winter, the season system drives it).
+- **Scale and proportion** per species (a kangaroo is not just a big hare — a few
+  proportion knobs per archetype: leg length, ear size, tail length, bulk).
+- One animation set per archetype; species differ by timing (§0 principle).
+- Data: `data/creatures/creatures.json` entries get `body_archetype`, `palette`,
+  `scale`, `proportions`, and the biome/realm they live in (same realm gate as plants,
+  §AA). The 33-creature `catalogue_dragonflies_snakes.json` is loaded through the same
+  path.
+
+**Thermals and gliding.** Soaring birds (vultures, condors, hawks, eagles, storks) and
+gliders (sugar gliders, flying squirrels) **use the air the weather sim already has:**
+- **Thermals** rise where the surface is warmer than the air — sun on bare rock, dry
+  grassland and dark ground by day, strongest late morning to afternoon, none at night or
+  under rain. Derive a per-cell `thermal_strength` from surface heating (the weather
+  grid's surface temperature minus air temperature, times sun); soarers seek the nearest
+  thermal, **circle inside it to climb** (the vulture spiral — which is also how they
+  circle a carcass, §X), then **glide off** losing height slowly toward the next one or a
+  target. On a still evening they land and roost.
+- **Ridge lift** where the wind field hits a slope on the windward side: birds hang in it.
+- **Gliders** launch from height (a perch, §V; a tree top) and glide on a fixed sink rate,
+  steering, landing on the next trunk — sugar gliders and flying squirrels at night in
+  the canopy, using the same BranchGraph handholds the player and gibbon use.
+- The player reads the sky: circling birds = a thermal (and maybe a carcass); a hawk
+  hanging still = wind on that ridge. Free information, and a real place to shoot from.
+
+**Order:** archetype/palette data first (a scripted pass converting the 28 existing
+creatures), then thermals/ridge lift as a read from the weather grid, then the soaring
+behaviour on the existing wander/hunt state machine. Phase 7.
