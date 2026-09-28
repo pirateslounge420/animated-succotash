@@ -4,9 +4,9 @@
   "speedometer": "Ground/air speed in mph and km/h (dev builds add m/s). It sits dim at alpha dim_alpha below dim_below_mps and brightens toward bright_alpha as speed rises to bright_at_mps (the momentum ceiling), so it only asserts itself when you're moving fast. Its glow warms from glow_cold to glow_warm as the super meter fills. size_px: the numerals. smoothing_s: how quickly the shown number follows the real one. mph_round: the mph readout rounds to this (75 mph at the ceiling, by design).",
   "clock": "A watch face, not digits: a 12-hour inner ring and a 24-hour outer ring (an old pocket watch / field watch), one hand sweep reads both. A game hour is exactly 6 real minutes (144-minute day). dawn_dusk_marks: two marks on the outer ring at the day's dawn and dusk, which move with the season and your latitude (derived day/night, design §F). size_px: the face diameter. hand_color / ring_color / mark_color: R1a blues plus the one warm accent for the marks. alpha: how faint it sits.",
   "super_meter": "No third element: the meter shows as a thin ring around the tool's charge gauge (ring_px wide, ring_color), visible only when non-zero, and the speedometer glow warms with it. show_below: hidden when under this share, to keep the screen clean until it means something.",
-  "text": "Every HUD and UI font (design 2026-09-28): an early-computer / typewriter face — monospaced, slightly uneven, like a teletype or an 8-bit console font — never a clean modern sans. font: the font file under assets/fonts (a free monospaced typewriter-style TTF; the loader falls back to the engine's monospace if it's missing). base_px: the body size at 1280x720; sizes in this file and in combat.json feedback are at that reference. scale_by_height: text and HUD grow with the window: scale = window_height / 720, so fullscreen at 1080p is 1.5x and at 4K 3x (the designer found the HUD tiny in fullscreen). min_scale / max_scale clamp it.",
+  "text": "Every HUD and UI font: an early-computer / typewriter face — monospaced, slightly uneven, like a teletype or an 8-bit console font — never a clean modern sans. font: the font file under assets/fonts (a free monospaced typewriter-style TTF; fallback: the engine monospace). Design §Y: the HUD is drawn INSIDE the 480-line internal frame and upscaled with it, so every px size in this file is at the 480 reference and text is automatically chunky and the right size at any window; scale_by_height is off (the upscale does the scaling). base_px: the body size at 480 lines.",
   "layout": "Where the readouts sit: corner (top_left, top_right, bottom_left, bottom_right), margin_px from the edges. The health meter keeps its own place (data/combat.json feedback.meter).",
-  "reticle": "The crosshair (first person, or while aiming): size_px at the 720 reference (scaled with the HUD), thickness_px, gap_px, color. Made a bit larger 2026-09-28 (design §W).",
+  "reticle": "The crosshair (first person, or while aiming): size_px at the 480 reference (design §Y), thickness_px, gap_px, color. A bit larger than before, per §W.",
   "plant_name": "The genus/species readout for the plant under the reticle: shown only within reach_m of it (about a metre, design §W); nothing beyond that."
  },
  "speedometer": {
@@ -22,7 +22,7 @@
   "bright_at_mps": 33.3,
   "glow_cold": "#4C7CFF",
   "glow_warm": "#FFD23A",
-  "size_px": 13,
+  "size_px": 9,
   "smoothing_s": 0.15,
   "mph_round": 1
  },
@@ -31,7 +31,7 @@
   "inner_ring_hours": 12,
   "outer_ring_hours": 24,
   "dawn_dusk_marks": true,
-  "size_px": 44,
+  "size_px": 30,
   "alpha": 0.55,
   "hand_color": "#7FB0FF",
   "ring_color": "#4C7CFF",
@@ -45,21 +45,21 @@
  },
  "text": {
   "font": "assets/fonts/typewriter.ttf",
-  "base_px": 13,
-  "scale_by_height": true,
-  "ref_height_px": 720,
+  "base_px": 9,
+  "scale_by_height": false,
+  "ref_height_px": 480,
   "min_scale": 1.0,
-  "max_scale": 3.0
+  "max_scale": 1.0
  },
  "layout": {
   "speedometer": "bottom_right",
   "clock": "top_right",
-  "margin_px": 14
+  "margin_px": 9
  },
  "reticle": {
-  "size_px": 14,
-  "thickness_px": 2,
-  "gap_px": 4,
+  "size_px": 10,
+  "thickness_px": 1,
+  "gap_px": 3,
   "color": "#7FB0FF"
  },
  "plant_name": {

@@ -1073,3 +1073,26 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
   now: vultures as a creature with a `carcass` behaviour, a decay-state timer per corpse,
   and the circling reused from the death block (`combat.json death` scavenger fields
   become the generic carcass values).
+
+## Y. Display resolution: 480p internal, never crisper than 720 — LOCKED 28 Sept 2026
+
+- **1080p is too crisp for this look.** The game renders internally at a **fixed 480
+  lines** (854×480 at 16:9; the era's 640×480 letterboxed on 4:3), and is **upscaled to
+  the window with nearest-neighbour** — square, honest pixels, no smoothing. 720 lines
+  is the hard maximum a setting may allow (`data/look.json` `render`); 1080 is never
+  rendered. This replaces the render-scale fractions in §C/§W: the internal height is
+  fixed, so a bigger window only means bigger pixels.
+- **The HUD is drawn inside the low-res frame** and upscaled with it, so the typewriter
+  text, reticle, clock and speedometer are pixel-chunky and automatically the right size
+  at any window — the "too small in fullscreen" problem goes away for good. All HUD px
+  sizes are now at the **480 reference** (`hud.json`), and the window-height scaling is
+  off (the upscale does it).
+- **Integer upscaling when it fits** (2× at 960, 3× at 1440 windows; otherwise nearest
+  at the fractional ratio), so pixels stay even where possible.
+- **Post-grade and dither run at the internal resolution**, before the upscale — grain
+  and Bayer pattern are then pixel-sized, as on a console.
+- **Performance:** 854×480 is ~19 % of 1080p's pixels; fill-bound costs (shadows
+  receiving, cards, post) drop accordingly. This lands before the §W pass so the pass
+  measures the real remaining cost.
+- **Options exposed in settings:** internal lines 480 (default) or 720; aspect (16:9,
+  or 4:3 letterboxed for the purists); integer scaling on/off.

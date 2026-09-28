@@ -4,10 +4,69 @@
   "light": "The sun is the one directional light doing the work by day (the moon by night). sun_energy / moon_energy: full strength. Shadows are real shadow maps, hard-edged (no blur, no soft filtering): shadow_max_m is how far they reach, shadow_bias / shadow_normal_bias keep surfaces from shadowing themselves (too low: a fine crosshatch over trunks and bushes, shadow acne; too high: shadows lift off their casters). blob_shadows: the old dark discs under characters from before there were real shadows (false: off). rake_max_deg: the light never climbs higher than this (the sun's elevation is squeezed smoothly under it), so it rakes across the ground even at noon; rake_bias leans it toward the equator side when the sun is near overhead, where its bearing would otherwise swing (0 = straight from the sun's bearing). The sun disc in the sky stays where the astronomy puts it.",
   "day": "The day preset. ambient_color / ambient_energy: the flat fill every surface gets, which is all that lights a shadow, so it is low and deep blue (blue-tinted shadows). The grade, applied to the finished frame: exposure (multiplies), mids (above 1 pulls the midtones down, keeping black and white), saturation (1 = unchanged; 1.3-1.4 is +30-40 %), teal (0-1: greens toward forest/teal, away from mint and lime), shadow_tint (RGB multiplier over the darks) and shadow_tint_amount (0-1), contrast (about 0.4), vignette (0-1 darkening toward the corners).",
   "night": "The night preset: the same fields as day. Day and night are two presets, never one curve through the middle; in between (dusk and dawn) the two finished grades crossfade by daylight.",
-  "head_look": "Cloaked figures (the player in third person, folk) look around with the hood first (Session 2 section B). head_max_deg: how far the hood turns alone (its shoulders shift shoulder_share of that with it); past it the torso turns too, up to torso_max_deg more. pitch_max_deg: how far the hood tips up or down (the hood alone). head_rate / torso_rate: how quickly each catches up (per second; the torso lags). Folk look at the player within watch_m (scaled by their size) when the player is in front of them; otherwise they glance about up to idle_deg now and then. Not drawn in first person (the body isn't)."
+  "head_look": "Cloaked figures (the player in third person, folk) look around with the hood first (Session 2 section B). head_max_deg: how far the hood turns alone (its shoulders shift shoulder_share of that with it); past it the torso turns too, up to torso_max_deg more. pitch_max_deg: how far the hood tips up or down (the hood alone). head_rate / torso_rate: how quickly each catches up (per second; the torso lags). Folk look at the player within watch_m (scaled by their size) when the player is in front of them; otherwise they glance about up to idle_deg now and then. Not drawn in first person (the body isn't).",
+  "render": "Design §Y: the game renders at a FIXED internal height (internal_lines, 480 by default; max_internal_lines is the most a setting may allow, 720) and is upscaled to the window with nearest-neighbour; integer_scale snaps to whole multiples when the window allows. aspect: '16:9' (854x480) or '4:3' (640x480, letterboxed). hud_in_internal: the HUD is drawn inside the low-res frame and upscaled with it. Post-grade and dither run at the internal size. This replaces scaling_3d/scale in project.godot."
  },
- "light": {"shadows": true, "sun_energy": 1.35, "moon_energy": 1.1, "shadow_max_m": 90.0, "shadow_bias": 0.1, "shadow_normal_bias": 2.5, "blob_shadows": false, "rake_max_deg": 38.0, "rake_bias": 0.45},
- "day": {"ambient_color": "#2448D0", "ambient_energy": 0.42, "exposure": 1.0, "mids": 1.22, "saturation": 1.35, "teal": 0.6, "shadow_tint": [0.55, 1.0, 1.6], "shadow_tint_amount": 0.55, "contrast": 1.12, "vignette": 0.12},
- "night": {"ambient_color": "#1C2A8C", "ambient_energy": 0.2, "exposure": 1.0, "mids": 1.35, "saturation": 1.3, "teal": 0.5, "shadow_tint": [0.55, 0.7, 1.6], "shadow_tint_amount": 0.55, "contrast": 1.1, "vignette": 0.4},
- "head_look": {"enabled": true, "head_max_deg": 45.0, "torso_max_deg": 50.0, "shoulder_share": 0.2, "pitch_max_deg": 30.0, "head_rate": 9.0, "torso_rate": 4.0, "watch_m": 12.0, "idle_deg": 35.0}
+ "light": {
+  "shadows": true,
+  "sun_energy": 1.35,
+  "moon_energy": 1.1,
+  "shadow_max_m": 90.0,
+  "shadow_bias": 0.1,
+  "shadow_normal_bias": 2.5,
+  "blob_shadows": false,
+  "rake_max_deg": 38.0,
+  "rake_bias": 0.45
+ },
+ "day": {
+  "ambient_color": "#2448D0",
+  "ambient_energy": 0.42,
+  "exposure": 1.0,
+  "mids": 1.22,
+  "saturation": 1.35,
+  "teal": 0.6,
+  "shadow_tint": [
+   0.55,
+   1.0,
+   1.6
+  ],
+  "shadow_tint_amount": 0.55,
+  "contrast": 1.12,
+  "vignette": 0.12
+ },
+ "night": {
+  "ambient_color": "#1C2A8C",
+  "ambient_energy": 0.2,
+  "exposure": 1.0,
+  "mids": 1.35,
+  "saturation": 1.3,
+  "teal": 0.5,
+  "shadow_tint": [
+   0.55,
+   0.7,
+   1.6
+  ],
+  "shadow_tint_amount": 0.55,
+  "contrast": 1.1,
+  "vignette": 0.4
+ },
+ "head_look": {
+  "enabled": true,
+  "head_max_deg": 45.0,
+  "torso_max_deg": 50.0,
+  "shoulder_share": 0.2,
+  "pitch_max_deg": 30.0,
+  "head_rate": 9.0,
+  "torso_rate": 4.0,
+  "watch_m": 12.0,
+  "idle_deg": 35.0
+ },
+ "render": {
+  "internal_lines": 480,
+  "max_internal_lines": 720,
+  "aspect": "16:9",
+  "upscale": "nearest",
+  "integer_scale": true,
+  "hud_in_internal": true
+ }
 }
