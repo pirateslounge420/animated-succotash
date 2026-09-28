@@ -38,6 +38,11 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
     - "drawing slows you" became "drawing never slows you" (§N);
     - the deer shot now waits for you to land and stop, since the kick carries about 47 m.
   - super_check passes 12/12.
+  - Last solo run of play_fixes_check: all pass except the intermittent "E with nothing in reach lets go". It leaves you on the tree, so the tree-patch walk after it covers 0 m. Step 8 takes E out of climbing anyway.
+  - hits_check still has its known folk-head failure.
+  - inventory_check's laden walk failed once (you were off the floor) and passed on the re-run.
+  - daylight_check, soil_check and plant_schema_check pass.
+- **Design §Y** (pushed during this step): a 480-line internal render, with HUD px sizes now given at 480. It isn't built yet, so the readouts draw at the new smaller px against the 720 base, about ⅔ size, until §Y lands.
 - **Reference still has:** ragged leaf-card canopies against the sky; ours are still smooth blobs (Step 7).
 
 ---
