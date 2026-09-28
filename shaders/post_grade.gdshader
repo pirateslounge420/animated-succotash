@@ -1,6 +1,8 @@
 // Full-screen grade, the last step of the look (design reconciliation,
-// Session 2 section C: dark and moody at every hour). The 3D renders at
-// 0.8 scale and is upscaled smoothly.
+// Session 2 section C: dark and moody at every hour; §AG: the reference
+// clips' hard colour). It runs at the fixed internal resolution (§Y: 480
+// lines, Display), before the nearest-neighbour upscale to the window, so
+// every dither and grain pixel is a screen block.
 //
 // Two presets, day and night (data/look.json, set by PostGrade), never one
 // curve through the middle: the frame is graded by each preset in full and
@@ -13,9 +15,10 @@
 //
 // Always, after the grade: slight color bleed before it (each pixel's
 // color, not its brightness, averaged with its horizontal neighbors), a
-// faint moving film grain and a light ordered dither (a 4x4 Bayer pattern
-// toward 5 bits per channel, at `dither` strength). No bloom, no
-// sharpening. Inside a magical site at night (`magic`) contrast climbs a
+// faint moving film grain and a hard ordered dither: each channel floored
+// to `levels` steps (2^bits_per_channel - 1, 31 at 5 bits) through a 4x4
+// Bayer pattern, at `dither` strength (1: every pixel on the 5-bit grid,
+// data/look.json retro). No bloom, no sharpening. Inside a magical site at night (`magic`) contrast climbs a
 // little so the glow reads against the dark.
 shader_type canvas_item;
 
@@ -25,6 +28,7 @@ uniform float magic = 0.0;
 uniform float bleed = 0.6; // 0-1: how much color spreads sideways
 uniform float grain = 0.025; // film grain amplitude
 uniform float dither = 0.25; // 0-1 ordered dither strength; 0 = off
+uniform float levels = 31.0; // steps per channel: 2^bits - 1
 // The presets: x day, y night.
 uniform vec2 exposure = vec2(1.0, 1.0);
 uniform vec2 mids = vec2(1.3, 1.35);
@@ -98,11 +102,12 @@ void fragment() {
 	float g = hash(FRAGCOORD.xy + fract(TIME * 7.13) * 91.7) - 0.5;
 	col += g * grain * (1.0 - abs(luma * 2.0 - 1.0) * 0.6);
 
-	// Light ordered dither: each channel rounded to 5 bits through a 4x4
-	// Bayer pattern, mixed in at `dither` (a quarter by default).
+	// Ordered dither: each channel floored to `levels` steps (5 bits)
+	// with a 4x4 Bayer threshold, mixed in at `dither` (1: every pixel
+	// on the grid, the reference's 15-bit colour).
 	ivec2 bp = ivec2(mod(FRAGCOORD.xy, 4.0));
-	float thr = (BAYER[bp.y * 4 + bp.x] + 0.5) / 16.0 - 0.5;
-	vec3 q = floor(clamp(col, 0.0, 1.0) * 31.0 + 0.5 + thr) / 31.0;
+	float thr = (BAYER[bp.y * 4 + bp.x] + 0.5) / 16.0;
+	vec3 q = floor(clamp(col, 0.0, 1.0) * levels + thr) / levels;
 	col = mix(col, q, dither);
 
 	COLOR = vec4(clamp(col, 0.0, 1.0), 1.0);
