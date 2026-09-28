@@ -822,3 +822,27 @@ were out there; every time after, it was because you died.
   the drawn bow creaks and the arrow tip glints; the cloak lifts; the line whistles.
 - **Why:** it turns movement mastery into combat power without touching stats or
   levels — the only progression the game needs is the player's hands.
+
+## T. Three tools, no tool crafting — LOCKED (supersedes §M and the blueprint's tool list)
+
+- **The player's tools are exactly three, for the whole game:** the **spear**, the
+  **bow** (with a **quiver of 20 arrows** at the start), and the **fishing pole**.
+  That is the starting kit (§M) and it never grows.
+- **CUT:** the blueprint's tool progression — axes, pickaxes, shovels, hammers, scythes,
+  skinning knives, mortar and pestle, weaving needles — and any **stone-tool crafting**.
+  No tool tiers, no crafting tree, no durability ladder. (Metallurgy, forges, steam and
+  boats were already cut — §0.) Remove tool-crafting references from the spec's Phase 10
+  card and from any "no source yet for stone tools" open items.
+- **The spear also fishes.** Spear-fishing from the bank, a rock, or wading — a timed
+  thrust at a visible fish — is the fast, skill-based way; the pole is the patient way.
+  Both feed the fish / forage / hunt loop (Phase 10).
+- **What remains is done with hands and the three tools:** forage by hand; hunt with
+  bow or spear; fish with pole or spear; cook at a fire; carry a few things (R4 carry
+  rules). Camp folk supply what needs making (cordage, pipes, dried bundles) — the
+  player does not run a workbench.
+- **Arrows:** recover them (they stick in what they hit, §M); beyond that, arrows come
+  from camp folk (trade, gift, or the folk fletching by the fire — Phase 10), never from
+  a crafting menu. The quiver's cap is a tunable (start 20).
+- **Why:** progression in this game is the player's hands (§S), not an inventory of
+  tools. Three tools, one charge rule (§N), one tech button — the whole kit fits on two
+  mouse buttons.
