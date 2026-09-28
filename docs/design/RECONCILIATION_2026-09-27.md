@@ -768,6 +768,15 @@ were out there; every time after, it was because you died.
   backwards and you go back the way you came, deliberately or not. The wall jump kicks
   toward the cursor (bounded by the wall's normal, you can't kick into it); the bounce
   launches toward the cursor; the swing release throws you toward the cursor.
+- **The redirect costs by angle.** How much momentum survives a contact falls off with
+  the **angle between your incoming velocity and the new direction**: a small
+  correction (≤ 20°) keeps nearly all of it; ~45° keeps most; a right angle keeps
+  perhaps half; a full 180° reversal keeps almost nothing — you leave that contact
+  with little more than a fresh jump. A perfect tech shifts the whole curve up (and
+  can add on top for small angles), a missed tech shifts it down, but **no tech beats
+  the geometry**: turning around is always a big momentum penalty, as it is for a real
+  body. Tunable as a curve in `movement.json` (`redirect_keep` by angle, plus the tech
+  bonus/penalty), so the feel can be dialled without touching code.
   Look direction is therefore also the aim of the next hop, which is why the head-look
   on figures (§B) matters: you can read where a shinobi is about to go.
 - **Same rule for NPC shinobi (§O, §P).** They use this exact code path: their "cursor"
