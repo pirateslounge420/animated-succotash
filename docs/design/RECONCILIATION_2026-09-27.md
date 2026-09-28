@@ -651,3 +651,27 @@ build power, release to act. Power sets both **strength and trajectory**.
 - Add to `data/combat.json`: a `fishing` block — `wind_s`, `cast_min_m`, `cast_max_m`,
   `line_max_m`, `reel_mps`, `inherit_velocity` (so casting mid-bound throws the line
   further, same as arrows).
+
+## O. Master shinobi — momentum-harnessing NPCs (Phase 8+, design locked now)
+
+- A rare, hostile (or neutral-until-provoked) **cloaked figure** that is a **master of
+  the momentum system**: chains wall jumps, bounces, swings and rolls at or near the
+  120 km/h ceiling, **kites the player and their comrades**, and fights on the move with
+  **aimbot-grade** spear throws, arrows, and fishing-pole casts (a cast line that snags,
+  trips, or reels the player off a branch is their signature trick).
+- **Same rig, same rules (Falcon/Ganondorf).** They use the player's rig, the player's
+  animation set, and the **same tunables in `movement.json` and `combat.json`** — same
+  gravity, same tech windows, same impact damage, same terminal velocity. No cheating
+  physics, no ignoring gravity, no teleporting. Their edge is *execution*: perfect
+  windows, perfect release timing, perfect reads of your arc. They can **die the same
+  way you can** — a master who misjudges a rotten branch snaps it and eats the impact.
+- **Readability.** Their approach is heard before it is seen: cloak whip, branch creak,
+  the alternating-foot rhythm at speed. Their palette is distinct (a tribe's colours or a
+  lone black-and-ash look); silhouette is the player's, which is the point.
+- **AI needs:** this is a Phase 7/8 creature behaviour (steering, pathfinding through
+  `BranchGraph`s, target prediction). Build it **after** the player's momentum system is
+  finished and feels right, because the NPC must drive the *same* code paths — if the
+  player's chain works, the master's chain is a planner over it, not a new system.
+- **Why it matters:** it is the proof that the movement system is a combat system, and
+  the mirror the player measures themselves against. Beating one is the game's
+  unspoken mastery test. Groups of them are the only "raid"-tier threat the game needs.
