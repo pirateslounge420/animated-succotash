@@ -1098,3 +1098,29 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
   measures the real remaining cost.
 - **Options exposed in settings:** internal lines 480 (default) or 720; aspect (16:9,
   or 4:3 letterboxed for the purists); integer scaling on/off.
+
+## Z. Sprint slide, and the cloak flurry — 28 Sept 2026
+
+- **Sprint slide.** Crouch (Shift) while sprinting on the ground → the player drops
+  into a **slide**: low, fast, cloak streaming, the Black Ops "dolphin dive" feel without
+  the belly-flop. Rules (`movement.json` `slide`):
+  - starts only above `min_mps` (a sprint), keeps `carry` of your speed and decays by
+    `friction_mps2` (less on wet, sand and snow via `traction`, so a slide down a wet
+    slope is long); ends when speed falls under `end_mps` or you release crouch, standing
+    back up into the run with whatever speed is left;
+  - **downhill adds speed** (`slope_gain`), uphill kills it;
+  - you steer only a little (`steer_deg_per_s`) — a slide is a commitment like a jump;
+  - it fits under things a run can't (low collision capsule) and knocks nothing;
+  - **jump out of a slide** = a low, long hop that keeps the slide's speed (a chain link:
+    slide → hop → roll is a legal ground chain); a slide into a ledge edge + tech = a
+    bounce;
+  - a slide into a trunk or wall at speed without a tech is impact damage (§K).
+  - Animation: the reused crouch pose leaned back on one hip, cloak fanned out behind;
+    first-person camera drops but never tilts.
+- **The ninja roll stands as built** (§J roll block): tap crouch in the window on touchdown
+  from height → no fall damage up to `safe_m`, reduced beyond, and the fall becomes forward
+  speed. (The designer re-stated it; nothing changes.)
+- **Cloak flurry.** Every roll — and every slide start, wall-jump kick and swing release —
+  plays a **"cloak flurry"** sound: a short whip-and-rustle of heavy cloth, synthesized in
+  `sound_synth` like the rest (no samples), pitched by speed (faster = sharper snap), heard
+  by creatures at `noise_m`. It is also how the fleeing shinobi (§P) are heard before seen.

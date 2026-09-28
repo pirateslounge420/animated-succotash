@@ -1,34 +1,191 @@
 {
-	"_help": {
-		"kinds": "One row per kind of world sound; every 3D sound player in the game takes its row (Audio3D.apply).",
-		"unit_size": "Meters within which the sound plays at full loudness; past it, it fades with distance.",
-		"max_distance": "Meters past which it is not heard at all; it also fades out linearly toward this distance, so it never cuts off.",
-		"model": "How it fades past unit_size: inverse (about 6 dB quieter each time the distance doubles, like real sound in the open), inverse_square (12 dB, for small sounds that should die fast), log (steeper still), none (no fading, only max_distance).",
-		"max_db": "Loudest boost (dB) when you are closer than unit_size (0: never louder than set).",
-		"muffle": "[near m, far m] or null: from near to far the sound loses its high end (down to muffle_far.cutoff_hz) and most of its direction (panning down to muffle_far.pan), as a far howl does. null: always clear.",
-		"muffle_far": "Where a muffled sound ends up at its far distance: cutoff_hz (its brightest frequency) and pan (0-1, how much of its left-right direction is left)."
-	},
-	"muffle_far": {"cutoff_hz": 700, "pan": 0.05},
-	"kinds": {
-		"footstep": {"unit_size": 4, "max_distance": 35, "model": "inverse", "max_db": 0, "muffle": null},
-		"player_voice": {"unit_size": 4, "max_distance": 40, "model": "inverse", "max_db": 0, "muffle": null},
-		"bow": {"unit_size": 4, "max_distance": 40, "model": "inverse", "max_db": 0, "muffle": null},
-		"arrow": {"unit_size": 6, "max_distance": 60, "model": "inverse", "max_db": 3, "muffle": null},
-		"spear": {"unit_size": 4, "max_distance": 40, "model": "inverse", "max_db": 0, "muffle": null},
-		"spear_impact": {"unit_size": 6, "max_distance": 70, "model": "inverse", "max_db": 3, "muffle": null},
-		"rustle": {"unit_size": 6, "max_distance": 60, "model": "inverse", "max_db": 3, "muffle": null},
-		"climb_hand": {"unit_size": 2.5, "max_distance": 30, "model": "inverse", "max_db": 0, "muffle": null},
-		"climb_breath": {"unit_size": 2, "max_distance": 20, "model": "inverse", "max_db": 0, "muffle": null},
-		"rain": {"unit_size": 6, "max_distance": 60, "model": "inverse", "max_db": 0, "muffle": null},
-		"wildlife_call": {"unit_size": 8, "max_distance": 60, "model": "inverse", "max_db": 3, "muffle": [25, 60]},
-		"howl": {"unit_size": 40, "max_distance": 1200, "model": "inverse", "max_db": 3, "muffle": [60, 760]},
-		"rider_hooves": {"unit_size": 5, "max_distance": 110, "model": "inverse", "max_db": 3, "muffle": [40, 110]},
-		"crawler_hands": {"unit_size": 5, "max_distance": 50, "model": "inverse", "max_db": 3, "muffle": [20, 50]},
-		"gibbon_hoot": {"unit_size": 12, "max_distance": 160, "model": "inverse", "max_db": 3, "muffle": [40, 160]},
-		"mythic_call": {"unit_size": 30, "max_distance": 400, "model": "inverse", "max_db": 3, "muffle": [60, 760]},
-		"hoofbeats_far": {"unit_size": 45, "max_distance": 1000, "model": "inverse", "max_db": 3, "muffle": [30, 500]},
-		"camp_chatter": {"unit_size": 3, "max_distance": 25, "model": "inverse", "max_db": 0, "muffle": [6, 25]},
-		"thunder": {"unit_size": 1000, "max_distance": 12000, "model": "inverse", "max_db": 0, "muffle": [400, 8000]},
-		"meteor": {"unit_size": 400, "max_distance": 3000, "model": "inverse", "max_db": 0, "muffle": null}
-	}
+ "_help": {
+  "kinds": "One row per kind of world sound; every 3D sound player in the game takes its row (Audio3D.apply).",
+  "unit_size": "Meters within which the sound plays at full loudness; past it, it fades with distance.",
+  "max_distance": "Meters past which it is not heard at all; it also fades out linearly toward this distance, so it never cuts off.",
+  "model": "How it fades past unit_size: inverse (about 6 dB quieter each time the distance doubles, like real sound in the open), inverse_square (12 dB, for small sounds that should die fast), log (steeper still), none (no fading, only max_distance).",
+  "max_db": "Loudest boost (dB) when you are closer than unit_size (0: never louder than set).",
+  "muffle": "[near m, far m] or null: from near to far the sound loses its high end (down to muffle_far.cutoff_hz) and most of its direction (panning down to muffle_far.pan), as a far howl does. null: always clear.",
+  "muffle_far": "Where a muffled sound ends up at its far distance: cutoff_hz (its brightest frequency) and pan (0-1, how much of its left-right direction is left).",
+  "cloak_flurry": "Design §Z: the whip-and-rustle of heavy cloth on every roll, slide start, wall-jump kick and swing release (synthesized in sound_synth, no sample). pitch_by_speed: how much faster movement sharpens the snap (0 = same every time). noise_m: how far creatures hear it. volume_db: loudness."
+ },
+ "muffle_far": {
+  "cutoff_hz": 700,
+  "pan": 0.05
+ },
+ "kinds": {
+  "footstep": {
+   "unit_size": 4,
+   "max_distance": 35,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  },
+  "player_voice": {
+   "unit_size": 4,
+   "max_distance": 40,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  },
+  "bow": {
+   "unit_size": 4,
+   "max_distance": 40,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  },
+  "arrow": {
+   "unit_size": 6,
+   "max_distance": 60,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": null
+  },
+  "spear": {
+   "unit_size": 4,
+   "max_distance": 40,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  },
+  "spear_impact": {
+   "unit_size": 6,
+   "max_distance": 70,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": null
+  },
+  "rustle": {
+   "unit_size": 6,
+   "max_distance": 60,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": null
+  },
+  "climb_hand": {
+   "unit_size": 2.5,
+   "max_distance": 30,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  },
+  "climb_breath": {
+   "unit_size": 2,
+   "max_distance": 20,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  },
+  "rain": {
+   "unit_size": 6,
+   "max_distance": 60,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  },
+  "wildlife_call": {
+   "unit_size": 8,
+   "max_distance": 60,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [
+    25,
+    60
+   ]
+  },
+  "howl": {
+   "unit_size": 40,
+   "max_distance": 1200,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [
+    60,
+    760
+   ]
+  },
+  "rider_hooves": {
+   "unit_size": 5,
+   "max_distance": 110,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [
+    40,
+    110
+   ]
+  },
+  "crawler_hands": {
+   "unit_size": 5,
+   "max_distance": 50,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [
+    20,
+    50
+   ]
+  },
+  "gibbon_hoot": {
+   "unit_size": 12,
+   "max_distance": 160,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [
+    40,
+    160
+   ]
+  },
+  "mythic_call": {
+   "unit_size": 30,
+   "max_distance": 400,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [
+    60,
+    760
+   ]
+  },
+  "hoofbeats_far": {
+   "unit_size": 45,
+   "max_distance": 1000,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": [
+    30,
+    500
+   ]
+  },
+  "camp_chatter": {
+   "unit_size": 3,
+   "max_distance": 25,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": [
+    6,
+    25
+   ]
+  },
+  "thunder": {
+   "unit_size": 1000,
+   "max_distance": 12000,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": [
+    400,
+    8000
+   ]
+  },
+  "meteor": {
+   "unit_size": 400,
+   "max_distance": 3000,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  }
+ },
+ "cloak_flurry": {
+  "pitch_by_speed": 0.6,
+  "noise_m": 9.0,
+  "volume_db": -6.0,
+  "length_s": 0.35
+ }
 }
