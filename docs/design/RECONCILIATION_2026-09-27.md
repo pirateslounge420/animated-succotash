@@ -74,7 +74,8 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
   - **Melee-tight timing, 60 fps.** The game targets a locked 60 fps (`max_fps` 60,
     physics tick 60) and the wall-jump window is counted in **physics frames**, not
     wall-clock seconds, so a hitch cannot widen it. Tighten `window_s` from 0.25 (15 f)
-    to about **0.10–0.13 s (6–8 f)** — Melee-style: a deliberate tap on contact, not a
+    to about **0.23 s (14 f)** — settled by play on 2026-09-27 (6–8 f felt too tight);
+    still a deliberate tap on contact, not a
     grace period. Shorten `kick_s` from 0.18 to about **0.13–0.16 s (8–10 f)**: first
     ~2 frames are the crouch pose, then the kick, no ease-in. Tune by feel from there.
   Keep `angle_deg` and `min_wall_steepness` as they are.
@@ -366,3 +367,128 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
 1. Confirm the new cycle feels right in play (`data/dev.json` still shortens it for testing).
 2. Try `filter_nearest_mipmap` in the shader includes; screenshot; keep or revert.
 3. Finish Phase 1 open items before touching anything in §2 or §3.
+
+
+---
+---
+
+# Session 2 addendum — 27 Sept 2026, evening (after the designer's second play)
+
+Everything below is confirmed. Where it contradicts something above, this wins.
+
+## A. Play feedback → corrections
+
+- **Wall-jump window is 14 frames** (~0.23 s at 60 fps), not 6–8. Corrected above.
+- **Cling keeps some momentum** — it no longer dumps you to a standstill, but it does
+  cost speed versus a tap wall jump. Tap = the snappy skill move that preserves speed;
+  cling = the safer, slower bail-out for long climbs. Both stay ninja-snappy.
+- **First person is clean:** no hands, no cloak, nothing in the periphery — only what is
+  equipped (bow, spear, torch). Already applied in play; keep it that way.
+
+## B. Head-look on cloaked figures (third person and other figures only)
+
+- Small look changes turn the **hood first**; the cloak's shoulders shift with it; the
+  **torso follows only past ~45°** of yaw. Pitch tilts the hood alone within a smaller range.
+- Purpose: a figure clinging to a trunk or wall reads as *looking around* from outside,
+  even though the body is pinned. Same rig for the player in third person and for folk.
+- Not rendered in first person at all (see A). So the head-look rig only ever has to look
+  right from outside.
+
+## C. Aesthetic direction — CHANGE: dark and moody, day included
+
+- The daytime "Frutiger Aero" note above is **superseded**. The whole game is dark and moody
+  at every hour. Day is bright *where the sun hits* and deep everywhere else.
+- **Lighting model, not a grade tweak:** the sun stays the single directional light doing
+  all the work. **Ambient and sky contribution go way down.** Shadows are deep,
+  blue-tinted, **hard-edged** (no soft shadows, no PCF blur). High contrast, not low
+  brightness. Keep the sun low and raking even near noon — never flat overhead.
+- Sky is the most saturated thing in the frame: deep cobalt, bold painted clouds.
+- Look-pass checklist (from the screenshot comparison, in priority order):
+  1. exposure/grade: cut ambient, pull mids down, saturation up ~30–40 %, blue shadows,
+     greens toward forest/teal not mint;
+  2. sky: cobalt + painted clouds by day, indigo + baked stars by night — two presets;
+  3. trees: leaf-card canopies with ragged edges (see D), trunks are already fine;
+  4. texture crunch: nearest filtering, render scale toward 0.5–0.6;
+  5. water: darken the base blue, keep a bright scrolling highlight.
+  Grade day and night as **two presets**, never one curve through the middle.
+
+## D. Plant generation — full revamp on botanical vocabulary
+
+See **`docs/design/PLANT_SCHEMA.md`** for the locked vocabulary and field list.
+Summary of the decision:
+- Canopies are no longer blobs. Every species carries a small set of **taxonomic
+  descriptors** (leaf outline, margin, venation, arrangement, canopy form, colour tint),
+  and a **card builder** draws each species' leaf card **procedurally from those
+  parameters at load time**, baked to a shared atlas. Nobody hand-draws leaves.
+- **Stylised archetype, not photoreal.** The test: a species is recognisable by silhouette
+  or low-res pattern at 64 px. Real taxonomy is the *source*; the output is Melee-clean.
+- **Per-species green tint** (a colour multiplier) so a forest is not one green.
+- **LOD rule:** distance drops leaf detail but **never smooths the silhouette**. The blob
+  is the far LOD we are removing; the ragged edge survives to the horizon.
+- **Process:** the schema is locked first (PLANT_SCHEMA.md). The ~1,000 species are then
+  filled by parallel research agents, split by family/biome, choosing **only** from the
+  fixed vocabulary. The card builder and atlas are built against the schema separately.
+  Merging is trivial because the field names never vary.
+
+## E. Amorphophallus — the petiole is the plant
+
+`data/plants/amorphophallus.json` already holds 246 species with a **genus grammar** for
+petiole pattern (mottled / spotted / streaked / warty / plain), base hues, two-layer
+markings (large blotches + fine dots, confluent low, separating higher), textures
+(smooth / warty / hairy), a pink-grey base zone, spathe colours, and `repro.bloom`.
+Keep all of it. Changes:
+- **Each tuber rolls its own pattern** within the species ranges, seeded per plant
+  (kin, not twins). Already the intent of the grammar; make it per-instance, not per-species.
+- **Bloom is a tuber-maturity gate, not a fixed interval.** Replace `interval_years` with:
+  the tuber accumulates mass over good leaf seasons (soil, light); past a species mass
+  threshold it *may* bloom; blooming spends the tuber, which drops back. Rich soil → yearly
+  blooms; poor soil → skips. The designer grows these and confirms mature tubers can bloom
+  annually. Needs seasons (F) and soil (Phase 5).
+- **Bloom scent is a pheromone source** on the wind field: carrion mimics draw blowflies,
+  carrion/dung beetles, drosophilids; the bloom self-heats to throw scent further. Insects
+  drawn in feed whatever eats insects — a real event in the ecology.
+- Record per species where known: height, inflorescence description, pollinators, bloom
+  duration (`repro.bloom.days`). Spellings: *A. hewittii*, *A. paeoniifolius*.
+- Timing runs on the game clock (1/10 real time), like everything else.
+
+## F. Seasons — LOCKED, and the day split becomes derived
+
+- **Axial tilt 23.5°.** **Year = 365 game days = 36.5 real days** (144 min is exactly one
+  tenth of a real day, so the whole calendar runs at 10×). Game week ≈ 16.8 real h, month
+  ≈ 3 real days, season ≈ 9 real days.
+- **Four seasons — winter, spring, summer, autumn.** Between each pair a **transition**
+  of ~2 real days (~20 game days), with ~7 real days (~71 game days) settled in between.
+  Transitions are where the drama is (leaf turn, first frost, thaw, mass bloom) — make them
+  generous and visible, like dusk and dawn are.
+- **The 60/18/48/18 split is now the equator/equinox reference, not a rule.** With tilt,
+  day and night lengths must **derive from astronomy**: sun declination follows the tilt
+  through the year; daylight at a point is a function of **latitude** and day-of-year.
+  Equator: ~60/48 all year. Temperate: summer solstice ≈ 78 day / 30 night, winter the
+  reverse. High latitudes: **true midnight sun and true polar night** (a 144-minute "day"
+  with no sun) — realistic, per the "world surprises its creator" principle.
+  Dusk/dawn also derive: twilight lasts as long as the sun takes to cross `twilight_deg`
+  (10°) — short at the equator, long and lingering at high latitude. 18 minutes is what the
+  equator gets, not a constant.
+- **The moon follows the same geometry:** winter full moons ride high, summer ones low.
+- **The 144-minute day is fixed**; only its division varies. `day_length_min` stays 144;
+  `phase_min` becomes the equinox reference the astronomy is calibrated against.
+- Consequence: because spawn biome is random, a tundra spawn and a rainforest spawn get
+  different calendars. That is a feature; "night is 48 minutes" is no longer a promise.
+
+## G. Photoperiod, latitude and elevation in the ecology
+
+- Add a **`photoperiod`** field per species: `short_day` (flowers when daylight drops
+  below `threshold_h` — cannabis, chrysanthemum, poinsettia), `long_day` (bolts/flowers
+  when daylight exceeds it — lettuce, many temperate grasses), or `neutral`. Cannabis
+  already carries photoperiod data in `cannabis.json`; map it to this field. Autumn is
+  when cannabis flowers because the days shorten — never scripted.
+- **Latitude** now matters to plants twice: through temperature (already) and through
+  **day length / growing-season length** (new). **Elevation** already cools via the lapse
+  rate in `planet_const.gd`; add its effect on growing-season length. **Longitude** only
+  shifts local solar time — no ecological effect on its own.
+- These feed the tuber-maturity gate (E), the soil layer (Phase 5) and seasons (Phase 4).
+
+## H. Housekeeping
+
+- Pronunciations of *hewittii* and *paeoniifolius*: the designer corrected the assistant
+  twice on the call; phonetics to be added when supplied.
