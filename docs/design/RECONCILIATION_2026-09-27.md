@@ -1142,3 +1142,53 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
   plays a **"cloak flurry"** sound: a short whip-and-rustle of heavy cloth, synthesized in
   `sound_synth` like the rest (no samples), pitched by speed (faster = sharper snap), heard
   by creatures at `noise_m`. It is also how the fleeing shinobi (§P) are heard before seen.
+
+## AA. Earth-accurate plant mapping: the realm gate and direct catalogue loading — 28 Sept 2026
+
+Findings of the species-per-biome check (four botanist review agents + `tools/biome_species_check.py`):
+- The native cores of the 52 biome files are right. The damage was a **hero-species
+  injection**: 234 catalogue "showpiece" plants copied into any biome whose climate band
+  overlapped — sequoias in salt marsh, *Nepenthes rajah* on the tepui, bristlecone pine on
+  the puna. **193 misplaced or duplicate entries removed** by rule; hero lists rebuilt.
+- **`species_db` loads only `data/biomes/`.** Catalogues reach the world only as copies.
+  Amorphophallus (246), Trichocereus (18), Cannabis (64), acacia, yucca, fern, moss, fungi,
+  cycad and araucaria have **no copies anywhere — they are not in the game today.**
+- No continent gate existed: an Asian aroid could spawn in the Amazon by climate alone.
+
+Locked:
+1. **Direct catalogue loading (Phase 6 pulled forward).** `species_db` loads
+   `data/plants/*.json` alongside the biome files. A catalogue species spawns wherever its
+   own `temp_c` / `moisture` / `altitude_m` / `soil` / `needs` allow **and the realm gate
+   passes**. Biome copies of catalogue entries become unnecessary and are removed once the
+   loader reads catalogues (keep `from_catalogue` copies until then).
+2. **The realm gate.** Every catalogue species carries `realm` (done: Amorphophallus from its
+   regions table, Cannabis from each landrace's native region; Trichocereus = `andes`).
+   Every biome **association** carries a `realm` (or a list): `afrotropic`, `neotropic`,
+   `nearctic`, `palearctic`, `indomalaya`, `malesia`, `australasia`, `oceania`,
+   `madagascar`, `andes`, `central_asia`, `west_asia`, `himalaya`, `sino_subtropical`,
+   `east_asia_temperate`, `mediterranean`, `antarctic`, or `any`. A species spawns in an
+   association only if realms match (or the association is `any`). Composite biome files
+   are exactly the ones whose associations carry different realms — no more mixing inside
+   one association.
+3. **Needs:** Amorphophallus and Cannabis carry `needs: dry_ground` (done) — never in swamp
+   or marsh. Trichocereus keeps `cannot_be_browsed` and sharp drainage.
+4. **Where the three priority genera belong (Earth-accurate):**
+   - *Amorphophallus*: forest floor and gaps of tropical/subtropical forest and monsoon
+     woodland in Africa, Madagascar, India, Indochina, Malesia, subtropical China, and
+     Sahul — ground/shrub tier only, never canopy, never temperate, never swamp.
+   - *Trichocereus*: high, dry, rocky Andean slopes and valleys (~1,500–3,600 m): the
+     puna's lower edge, Andean cold desert and dry valleys, canyon walls — realm `andes`.
+   - *Cannabis* landraces: each in its native realm and climate — Hindu Kush / Central
+     Asian mountain and steppe, Himalayan foothill, Indian and Southeast Asian monsoon
+     edges and clearings, African savanna and highland, Latin American clearings; always on
+     dry ground; `photoperiod` from `cannabis` data.
+5. **Seasonality and salinity data fills** for the remaining biome files (deciduous /
+   dry-season drop, halophyte salinity, soil objects) continue by parallel agents against
+   PLANT_SCHEMA; the four review reports' keystone lists are the add-list for those agents.
+6. Coherence splits from the reviews to apply in data: mangrove into Atlantic–East Pacific
+   vs Indo-West Pacific associations; kelp into NE Pacific / North Atlantic / Southern;
+   lagoon and reef by ocean; salt marsh US vs NW Europe; maritime forest SE-US vs PNW vs Japan.
+
+Engine work (Claude Code): (1) and (2) in `species_db` / `vegetation_placer`, reading the
+new `realm` keys; `tools/biome_species_check.py` and `plant_schema_check.py` are the data
+gates. Data work (Claude): association realm tags, the fills, the splits.
