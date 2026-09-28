@@ -511,3 +511,92 @@ Keep all of it. Changes:
 
 - Pronunciations of *hewittii* and *paeoniifolius*: the designer corrected the assistant
   twice on the call; phonetics to be added when supplied.
+
+
+---
+---
+
+# Session 3 addendum — 27 Sept 2026, late (scale, momentum, HUD)
+
+Confirmed decisions. Where these contradict anything above, these win.
+
+## I. Planet scale → one tenth of Earth — LOCKED
+
+- `FULL_CIRCUMFERENCE_M` goes from 400 km (1/100) to **4,000 km (1/10)**. The world is now
+  1/10 in every axis: horizontal 1/10, height already 1/10 (`HEIGHT_SCALE` 0.1), and time
+  1/10 (144-min day). One consistent ratio.
+- **Biome size does NOT scale with the planet.** Biome patch size is a noise-frequency knob,
+  independent of circumference. Keep patches roughly their current ~10 km scale and raise
+  the biome-noise frequency so there are ~100× more of them — which is more Earth-like
+  anyway (Earth has dozens of temperate forests, not one).
+- **Consequence to check:** height stays the same while the land spreads 10× wider, so
+  slopes become 10× gentler than now — true proportion, but mountains will read as long
+  hills rather than walls. Decide by eye after the change; the fix, if wanted, is a modest
+  horizontal exaggeration of relief in the terrain pass, not a change to `HEIGHT_SCALE`.
+- **Numbers for reference:** at walk (5.5 m/s) circling the planet is ~200 real hours;
+  at the momentum cap (below) ~33 hours. A 10 km biome is ~30 min at walk, ~5 min at cap.
+- **Generation does not happen all at once — already true, keep it so.** Terrain is chunked
+  around the player with a floating origin and a far shell; the planet-wide passes (climate,
+  hydrology, biomes, weather at `RES` 10) run on coarse cube-sphere grids. At 10× the
+  circumference keep those grids at a **fixed cell count** (coarser per km) and refine
+  locally from noise; do not scale cell counts with area. Rivers: keep the trunk logic on the
+  coarse grid; tributaries emerge locally as now. The dev postage stamp stays for testing.
+- Scale is now the *reason* the movement is fun, not a problem: crossing a biome is a
+  skill test.
+
+## J. Momentum ceiling and asymmetric gravity — LOCKED
+
+- **Base speeds unchanged:** walk 5.5 m/s, sprint ~8.8 m/s (`movement.json`). Skill, not
+  the floor, is what makes you fast.
+- **Ceiling of a perfect chain: 120 km/h = 33.3 m/s (readout rounds to 75 mph).** This is
+  not a hard wall: it is where trees stop reading as objects at draw distance and where
+  impact damage is reliably lethal, so risk makes the player back off. Set `roll_max_mps`,
+  `chain_cap` and swing `max_mps` sanity values just above it (~36 m/s). Reference: anime
+  shinobi at full tilt are usually reckoned at 30–50 m/s; 33 is the readable bottom of
+  that band.
+- **Asymmetric gravity.** The player is an Earth-strength body on a 1/10 planet:
+  - **Rising:** low gravity, in the spirit of a 1/10-mass world — jumps ~10× Earth height
+    (a 0.5 m standing hop → ~5 m; a running bound at sprint → ~50 m), so the player can
+    reach branches, ledges and canopies.
+  - **Falling:** gravity snaps back to **Earth strength or stronger** (current
+    `gravity_mps2` 19.6 = 2× Earth is fine) so there is no float: the arc is a shark fin —
+    long lazy rise, sharp drop, exactly how the anime draws it.
+  - Implement as two gravity values: `gravity_up_mps2` (applied while vertical speed > 0)
+    and `gravity_down_mps2`. Tune the up value so a sprint bound lands near 50 m.
+  - **Real falling physics on the way down:** speed builds with fall height until
+    terminal velocity (~50 m/s for a body on Earth; keep it in that range). A ~50 m fall
+    already reaches the momentum cap, so the roll (above) is the only safe landing from
+    height. Fall damage as before.
+- **Branch bounce.** Same tech button, same 14-frame window: land on **top** of a branch
+  or ledge and tap within the window → a perfect landing that **adds** momentum (downward
+  speed converts to forward, plus a bonus), like the roll but from a branch. Miss the
+  window → normal landing, no gain. This is the canopy chain: bounce → bounce → swing.
+- **Alternating bounds.** Every landing/bounce alternates feet — left, right, left — like a
+  real runner; the cloak hem and torso lean follow whichever leg is planted, so the whole
+  body lilts in rhythm even though the legs are hidden. Same reused crouch pose, mirrored.
+  **Camera never bobs with it** (first-person lock rule above).
+
+## K. Momentum in combat — LOCKED
+
+- **Arrows inherit the archer's velocity.** A shot from mid-swing or mid-bound flies
+  differently from a standing shot; movement skill becomes shooting skill.
+- **Spear at speed = impact weapon.** A spear thrust or running strike deals damage by
+  closing speed, the same curve as impact damage; at the top of the momentum band it is
+  an instant kill. A spear tip is a wall with a point on it.
+- **It cuts both ways:** whatever kills at speed kills *you* at speed — a missed thrust
+  into a trunk is impact damage on you.
+- **Multiplayer / PvP is a someday**, not a plan: momentum-based canopy PvP would be
+  unusual, but netcode for fast physics is brutal. Build single-player in a way that does
+  not rule it out (deterministic tunables, state that could be replicated), nothing more.
+
+## L. Two always-on HUD readouts — Phase 1
+
+Both **on by default**, each **toggleable in the settings menu**, both small and quiet.
+- **Speedometer:** shows **mph and km/h** (and m/s in dev builds). **Dim when slow,
+  brightens progressively with speed** so it only asserts itself when you're moving fast.
+- **Clock:** a **watch-face**, not digital. **12-hour inner ring, 24-hour outer ring** (old
+  pocket-watch / field-watch style) so both readers get it at a glance. A game hour is
+  exactly 6 real minutes, so the hand sweep is just brisk. **Mark dawn and dusk on the
+  outer ring**, and let those marks **move with the season and latitude** (derived
+  day/night, addendum §F). This is a HUD aid, not an in-world object; the world itself
+  has no clocks.
