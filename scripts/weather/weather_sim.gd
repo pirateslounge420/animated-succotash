@@ -287,6 +287,13 @@ func surface_temp(c: int) -> float:
 
 
 ## One tick of dt_h in-game hours. sun is the planet-fixed sun direction.
+## The world clock (days) for the seasons (Seasons: the seasonal swing of
+## temperature and how wet the season is). NAN while spinning up: the
+## planet's climate maps are annual means, so they're built with no
+## season and the equinox sun.
+var season_days := NAN
+
+
 func step(dt_h: float, sun: Vector3) -> void:
 	_sun = sun
 	_update_systems(dt_h)
@@ -382,9 +389,30 @@ func _sample_anomalies(d: Vector3, anom_p: PackedFloat32Array, anom_t: PackedFlo
 
 
 func _apply_physics(dt_h: float, sun: Vector3) -> void:
+	# The season: per whole degree of latitude (north and south), its
+	# temperature swing (on land; damped over water below) and moisture,
+	# and the sun's declination for today's mean sunshine.
+	var seasonal := not is_nan(season_days)
+	var decl := Astro.declination(season_days) if seasonal else 0.0
+	var season_t := PackedFloat32Array()
+	var season_q := PackedFloat32Array()
+	var ocean_damp := float(Seasons.data().get("temperature", {}).get("ocean_damping", 0.45))
+	if seasonal:
+		season_t.resize(181)
+		season_q.resize(181)
+		for i in 181:
+			var la := deg_to_rad(float(i - 90))
+			season_t[i] = Seasons.temp_offset_c(season_days, la)
+			season_q[i] = Seasons.moisture_mult(season_days, la)
 	for c in cells:
 		var lat := lats[c]
 		var wf := water_frac[c]
+		var s_off := 0.0
+		var s_wet := 1.0
+		if seasonal:
+			var row := clampi(int(round(rad_to_deg(lat))) + 90, 0, 180)
+			s_off = season_t[row] * lerpf(1.0, ocean_damp, wf)
+			s_wet = season_q[row]
 
 		# Radiation: relax toward the latitude norm plus today's sunshine,
 		# dimmed by cloud. Shaded ground cools, raising pressure, which
@@ -392,14 +420,16 @@ func _apply_physics(dt_h: float, sun: Vector3) -> void:
 		# feedbacks that keeps the weather moving instead of settling.
 		var cloud := smoothstep(0.7, 1.0, rel_humidity[c])
 		var sunlight := maxf(0.0, dirs[c].dot(sun)) * (1.0 - CLOUD_SHADE * cloud)
-		var insolation := sunlight - cos(lat) / PI
+		# Against today's mean sunshine at this latitude, so this term is
+		# only day against night; the seasonal swing is Seasons' (s_off).
+		var insolation := sunlight - Astro.daily_insolation(lat, decl)
 		var heating := DIURNAL_HEATING * insolation * lerpf(1.0, 0.18, wf)
-		var target_t := base_temp(lat) + heating
+		var target_t := base_temp(lat) + s_off + heating
 		var tau := lerpf(LAND_TEMP_RELAX_H, WATER_TEMP_RELAX_H, wf)
 		temp[c] += (target_t - temp[c]) * minf(dt_h / tau, 1.0)
 
 		# Pressure: belts plus thermal lows over warm air.
-		var target_p := _belt_pressure(lat) - thermal_pressure * (temp[c] - base_temp(lat))
+		var target_p := _belt_pressure(lat) - thermal_pressure * (temp[c] - base_temp(lat) - s_off)
 		pressure[c] += (target_p - pressure[c]) * minf(dt_h / pressure_relax_h, 1.0)
 
 		# Air rises in low pressure (cooling, so it can hold less water) and
@@ -413,7 +443,7 @@ func _apply_physics(dt_h: float, sun: Vector3) -> void:
 		# Evaporation from water (and a little from land) fills toward what
 		# air at the warm surface can hold, which can exceed q_sat above.
 		var deficit := maxf(saturation(t_surf) - humidity[c], 0.0)
-		humidity[c] += deficit * (EVAPORATION_PER_H * wf + LAND_EVAPORATION_PER_H * (1.0 - wf)) * dt_h
+		humidity[c] += deficit * (EVAPORATION_PER_H * wf + LAND_EVAPORATION_PER_H * (1.0 - wf)) * s_wet * dt_h
 
 		# Condensation and precipitation.
 		var rain := 0.0
@@ -447,7 +477,7 @@ func spin_up(settle_days := 8.0, average_days := 12.0, dt_h := 1.5) -> void:
 	var settle_steps := int(settle_days * 24.0 / dt_h)
 	var avg_steps := int(average_days * 24.0 / dt_h)
 	for s in settle_steps:
-		step(dt_h, Astro.sun_dir(hours / 24.0))
+		step(dt_h, Astro.sun_dir(hours / 24.0, false))
 
 	var sum_t := PackedFloat32Array()
 	var sum_p := PackedFloat32Array()
@@ -471,7 +501,7 @@ func spin_up(settle_days := 8.0, average_days := 12.0, dt_h := 1.5) -> void:
 	var steps_per_day := int(round(24.0 / dt_h))
 
 	for s in avg_steps:
-		step(dt_h, Astro.sun_dir(hours / 24.0))
+		step(dt_h, Astro.sun_dir(hours / 24.0, false))
 		for c in cells:
 			sum_t[c] += temp[c]
 			sum_p[c] += precip_rate[c] * dt_h
@@ -580,6 +610,12 @@ func local_weather(d: Vector3, elevation_m: float) -> Dictionary:
 		"storm": storm_now,
 		"clear": float(clear[c]),
 		"cloud": maxf(cloud, shower * minf(areal * 2.0, 1.0) * 0.95),
+		# The season here, for the climate readers (already in temp_c and
+		# the rain): its name, the change under way, the temperature swing
+		# and how wet it is.
+		"season": Seasons.label(season_days, CubeSphere.latitude(d)) if not is_nan(season_days) else "",
+		"season_temp_c": Seasons.temp_offset_c(season_days, CubeSphere.latitude(d), water_frac[c]) if not is_nan(season_days) else 0.0,
+		"season_moisture": Seasons.moisture_mult(season_days, CubeSphere.latitude(d)) if not is_nan(season_days) else 1.0,
 	}
 
 

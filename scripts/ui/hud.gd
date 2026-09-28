@@ -252,6 +252,9 @@ static func debug_text(world: Node, player_dir: Vector3, weather: Dictionary) ->
 		mansion + 1, Astro.MANSION_NAMES[mansion], float(weather.get("cloud", 0.0)),
 		rad_to_deg(lat), int(Astro.year_day(world.days)) + 1, int(DayCycle.year_days()), rad_to_deg(decl),
 		DayCycle.daylight_hours(lat, decl), float(pm.day) * scale, float(pm.dusk) * scale, float(pm.night) * scale, float(pm.dawn) * scale,
+	] + "\nSeason %s · day %d · %+.1f °C · wet x%.2f" % [
+		Seasons.label(world.days, lat), int(Seasons.at(world.days, lat).day_of_season) + 1,
+		Seasons.temp_offset_c(world.days, lat), Seasons.moisture_mult(world.days, lat),
 	]
 
 

@@ -12,7 +12,8 @@ extends SceneTree
 ##     --rendering-method forward_plus --resolution 1280x720 -s tools/dev_view.gd
 ##
 ## HOURS: comma-separated local solar hours (default "12,0": noon and
-## midnight). OUT_DIR (default /tmp/shots), TAG: file name prefix
+## midnight). YEAR_DAY: the day of the year (0 = northern spring
+## equinox; default tomorrow). DEBUG=1: the F3 overlay on the frame. OUT_DIR (default /tmp/shots), TAG: file name prefix
 ## (default "devview"): writes <TAG>_<hh>h.png. Prints the sun's
 ## elevation, the light's elevation and the mean brightness of each frame.
 
@@ -79,6 +80,10 @@ func _run() -> void:
 	var tag := OS.get_environment("TAG") if OS.get_environment("TAG") != "" else "devview"
 	var lon := CubeSphere.longitude(pd)
 	var base: float = floor(world.days) + 1.0
+	# YEAR_DAY: jump to that day of the year (0 = the northern spring
+	# equinox) instead of tomorrow.
+	if OS.get_environment("YEAR_DAY") != "":
+		base += fposmod(float(OS.get_environment("YEAR_DAY")) - Astro.year_day(base), DayCycle.year_days())
 	for h in hours:
 		var hour := float(h)
 		var days := Astro.days_at_solar_hour(base, hour, lon, CubeSphere.latitude(pd))

@@ -4,6 +4,35 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Session 2, Step 3: seasons (addendum §F)
+- **Calendar:**
+  - Four seasons over the 365-day year: `scripts/sky/seasons.gd`, numbers in `data/seasons.json`.
+  - Each season's middle sits `lag_days` (20) after its solstice or equinox.
+  - A 20-day change straddles each boundary; the rest is settled. Measured at 45° N: 71 / 20 / 71 / 20 / 72 / 20 / 71 / 20 days.
+  - The south runs half a year behind.
+- **Temperature:**
+  - `warmth` is −1 in winter, 0 in spring and autumn and +1 in summer, eased through the changes (plateaus, not a sine).
+  - Times a latitude swing: about ±1.5 °C at the equator, ±15 °C at 45°, ±22 °C at the poles, damped to 45 % over open water.
+- **Moisture:** a multiplier on evaporation (so on cloud and rain), by band:
+  - tropics: wet summer ×1.45, dry winter ×0.55;
+  - temperate: winter ×1.12, summer ×0.85;
+  - polar: summer ×1.2.
+- **Wired into the weather sim:**
+  - Each cell relaxes toward its latitude norm plus the season's offset.
+  - Evaporation is scaled by the season's moisture.
+  - The day/night heating is now measured against that day's mean sunshine at that latitude, so the tilted sun doesn't double-count the season.
+  - The spin-up that builds the climate maps runs season-free with the equinox sun: the maps stay annual means and world gen is unchanged (stamp_check passes).
+- **For the climate code:**
+  - `local_weather()` now also returns `season` (for example "Spring → Summer 40%"), `season_temp_c` and `season_moisture`.
+  - F3 shows the season, the day of the season, the swing and the wetness.
+- **No plant response yet.**
+- **Checks:**
+  - daylight_check (now with the seasons), p0_timelapse, stamp_check and tech_check pass.
+  - play_fixes_check fails 2: "the shot on release hit the deer" and "drawing slows you on the ground". Both come from the other session's data commit 8d508a6 (`aim_mps` 0.75 → 8.8, arrows `inherit_velocity` 1.0, no air steering). The tests encode the old design.
+- **Reference still has:** visible seasons (leaf turn, frost, thaw). Here the season exists only in the numbers until plants respond.
+
+---
+
 ## 2026-09-28 — Session 2, Step 2: derived day/night (addendum §F)
 - **Tilt:**
   - Axial tilt is 23.5° and the year is 365 game days; day of the year 0 is the northern spring equinox. Game day 0 is year day 0 (`year_start_day`); the world clock starts on day 13.6.

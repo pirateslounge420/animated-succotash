@@ -175,6 +175,7 @@ func _process(delta: float) -> void:
 	days += game_hours / 24.0
 	_weather_accum_h += game_hours
 	if _weather_accum_h >= WEATHER_STEP_H:
+		weather.season_days = days
 		weather.step(_weather_accum_h, Astro.sun_dir(days))
 		_weather_accum_h = 0.0
 

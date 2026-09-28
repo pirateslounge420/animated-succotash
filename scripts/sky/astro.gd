@@ -99,9 +99,11 @@ static func subsolar_longitude(days: float) -> float:
 	return PI - TAU * time_of_day(days)
 
 
-static func sun_dir(days: float) -> Vector3:
+## `tilted` false: the equinox sun, whatever the date (the weather's
+## spin-up builds annual means with it).
+static func sun_dir(days: float, tilted := true) -> Vector3:
 	var lon := subsolar_longitude(days)
-	var d := declination(days)
+	var d := declination(days) if tilted else 0.0
 	return Vector3(cos(d) * sin(lon), sin(d), cos(d) * cos(lon))
 
 
@@ -146,6 +148,15 @@ static func mansion_index(days: float) -> int:
 
 static func beast_index(mansion: int) -> int:
 	return mansion / 7
+
+
+## Mean sunshine over a whole day at a latitude with the sun at
+## declination `decl` (the day-averaged cosine of the sun's height,
+## counting night as 0): cos(lat) / PI on an equinox; 0 in polar night.
+static func daily_insolation(lat: float, decl: float) -> float:
+	var x := -tan(lat) * tan(decl)
+	var h0 := 0.0 if x >= 1.0 else (PI if x <= -1.0 else acos(x))
+	return (h0 * sin(lat) * sin(decl) + cos(lat) * cos(decl) * sin(h0)) / PI
 
 
 ## Angle of a body above the local horizon at a surface direction, radians.

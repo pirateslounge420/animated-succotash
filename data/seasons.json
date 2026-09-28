@@ -1,0 +1,16 @@
+{
+	"_help": {
+		"about": "The four seasons (design reconciliation Session 2 section F): winter, spring, summer, autumn over the 365-day year (data/sky/day_cycle.json), with a generous transition between each pair. The southern hemisphere runs half a year behind. Seasons read and the weather sim reads them; plants don't respond yet.",
+		"calendar": "lag_days: how long after each solstice/equinox the season's middle falls (the ground and sea take time to warm and cool). transition_days: the length of each change of season (winter to spring and so on), centred on the boundary; the rest of each ~91-day season is settled.",
+		"temperature": "The seasonal swing added to the weather's temperature: winter is minus amplitude, summer plus, spring and autumn zero, ramping through the transitions. amplitude_c_equator / amplitude_c_pole: the swing at the equator and at the poles (degrees C), in between by latitude^curve; over open water the swing is ocean_damping times smaller (the sea moderates it).",
+		"moisture": "How wet each season is, as a multiplier on evaporation (so on cloud and rain): by climate band. Tropical (up to tropical_deg): the wet season is summer, when the sun stands overhead; temperate (from temperate_deg to polar_deg): a little wetter in winter; polar (past polar_deg): wetter in summer. Between bands they blend."
+	},
+	"calendar": {"lag_days": 20.0, "transition_days": 20.0},
+	"temperature": {"amplitude_c_equator": 1.5, "amplitude_c_pole": 22.0, "curve": 1.3, "ocean_damping": 0.45},
+	"moisture": {
+		"tropical_deg": 20.0, "temperate_deg": 35.0, "polar_deg": 62.0,
+		"tropical": {"winter": 0.55, "spring": 0.9, "summer": 1.45, "autumn": 1.1},
+		"temperate": {"winter": 1.12, "spring": 1.05, "summer": 0.85, "autumn": 1.0},
+		"polar": {"winter": 0.8, "spring": 0.9, "summer": 1.2, "autumn": 1.1}
+	}
+}

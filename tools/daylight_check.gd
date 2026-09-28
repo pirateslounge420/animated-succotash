@@ -62,6 +62,7 @@ func _initialize() -> void:
 		heights[season] = el
 	print("[daylight] full moon at midnight, 45° N: summer %.1f°, winter %.1f° up" % [heights.summer, heights.winter])
 	ok(heights.winter > heights.summer + 20.0, "winter full moons ride high, summer ones low")
+	_seasons()
 	print("[daylight] RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -70,3 +71,49 @@ func ok(cond: bool, what: String) -> void:
 	print("[daylight] %s  %s" % ["PASS" if cond else "FAIL", what])
 	if not cond:
 		fails += 1
+
+
+## Seasons through the year at 45 N, 45 S and 5 N: the season every 15
+## days, its temperature swing and moisture; and how long each change of
+## season lasts.
+func _seasons() -> void:
+	var year := DayCycle.year_days()
+	for lat_deg in [45.0, -45.0, 5.0]:
+		var lat := deg_to_rad(lat_deg)
+		var line := ""
+		for i in range(0, int(year), 30):
+			var d := float(i) - DayCycle.year_start_day()
+			line += " %d:%s %+.0f°C x%.2f |" % [i, Seasons.label(d, lat).replace(" → ", ">"), Seasons.temp_offset_c(d, lat), Seasons.moisture_mult(d, lat)]
+		print("[daylight] seasons at %+.0f°:%s" % [lat_deg, line])
+	# Transition lengths and settled stretches at 45 N, by the day.
+	var lat45 := deg_to_rad(45.0)
+	var runs := []
+	var prev := ""
+	var run := 0
+	for i in int(year) * 2:
+		var s := Seasons.at(float(i) - DayCycle.year_start_day(), lat45)
+		var kind := "settled " + String(s.name) if s.settled else "change %s>%s" % [s.name if float(s.t) < 0.5 else _prev_name(s.next), s.next if float(s.t) < 0.5 else s.next]
+		if kind != prev:
+			if prev != "" and i > int(year):
+				runs.append([prev, run])
+			prev = kind
+			run = 0
+		run += 1
+	var ok_len := true
+	var text := ""
+	for r in runs:
+		text += " %s %d d," % r
+		if String(r[0]).begins_with("change") and absi(int(r[1]) - int(Seasons.data().calendar.transition_days)) > 1:
+			ok_len = false
+	print("[daylight] 45° N through the year:%s" % text)
+	ok(ok_len and runs.size() >= 6, "each change of season lasts transition_days (%s)" % Seasons.data().calendar.transition_days)
+	var w_s := Seasons.temp_offset_c(year * 0.25 + 20.0 - DayCycle.year_start_day(), lat45)
+	var w_n := Seasons.temp_offset_c(year * 0.25 + 20.0 - DayCycle.year_start_day(), -lat45)
+	ok(w_s > 5.0 and w_n < -5.0, "June: summer in the north (%+.1f °C), winter in the south (%+.1f °C)" % [w_s, w_n])
+	var wet := Seasons.moisture_mult(year * 0.25 + 20.0 - DayCycle.year_start_day(), deg_to_rad(5.0))
+	var dry := Seasons.moisture_mult(year * 0.75 + 20.0 - DayCycle.year_start_day(), deg_to_rad(5.0))
+	ok(wet > dry * 1.5, "5° N: a wet summer (x%.2f) and a dry winter (x%.2f)" % [wet, dry])
+
+
+func _prev_name(name: String) -> String:
+	return Seasons.NAMES[(Seasons.NAMES.find(name) + 3) % 4]
