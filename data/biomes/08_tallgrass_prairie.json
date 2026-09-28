@@ -37,7 +37,17 @@
      30
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "karst"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "color": "#3F8C38",
     "accent": "#6B5A45",
     "source": "Quercus macrocarpa, central/eastern N America, fire-tolerant savanna oak, 15-30 m — USDA PLANTS / Flora of North America",
@@ -59,7 +69,44 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "lobes": 7,
+     "aspect": 1.8,
+     "base": "cuneate",
+     "apex": "rounded",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      15,
+      30
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.35,
+     "autumn": "#b08a3c",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    }
    }
   ],
   "shrub": [
@@ -81,7 +128,16 @@
      4
     ],
     "density": 0.2,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "color": "#3F8C38",
     "accent": "#6B5A45",
     "source": "Corylus americana, eastern/central N America, thicket shrub 2-4 m at prairie-woodland edge — USDA PLANTS",
@@ -103,7 +159,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      6,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.2,
+     "autumn": "#d9a23a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    }
    },
    {
     "name": "Leadplant",
@@ -123,7 +215,17 @@
      1
     ],
     "density": 0.4,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "till",
+      "alluvium",
+      "sand"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.4,
+     "salinity": "none"
+    },
     "color": "#8FA08A",
     "accent": "#7A5AA0",
     "source": "Amorpha canescens, Great Plains tallgrass prairie, deep-rooted legume shrub 0.5-1 m — USDA PLANTS",
@@ -145,7 +247,47 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      10
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       15,
+       45
+      ],
+      "leaflet_outline": "elliptic",
+      "leaflet_aspect": 1.8,
+      "leaflet_margin": "entire"
+     },
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.5,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#9a8a6a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Pampas grass",
@@ -165,7 +307,17 @@
      3.5
     ],
     "density": 0.3,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "sand",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.4,
+     "salinity": "tolerant"
+    },
     "color": "#C8B060",
     "accent": "#F0E8D0",
     "source": "Cortaderia selloana, S American Pampas, tussock grass with 3 m plumes — Flora Argentina / Kew POWO",
@@ -187,7 +339,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 40.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      100,
+      200
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#d8c890",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Prairie rose",
@@ -207,7 +395,17 @@
      0.6
     ],
     "density": 0.3,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "till",
+      "alluvium",
+      "sand"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.4,
+     "salinity": "none"
+    },
     "color": "#3F8C38",
     "accent": "#E07AA0",
     "source": "Rosa arkansana, central N America prairies, low suckering shrub to 0.6 m — USDA PLANTS",
@@ -229,7 +427,47 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      10
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.6,
+      "leaflet_margin": "serrate"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#c0603a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
    }
   ],
   "ground": [
@@ -256,7 +494,16 @@
      0.4
     ],
     "density": 0.4,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "karst",
+      "sandstone"
+     ],
+     "drainage": "sharp",
+     "ph": "alkaline",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#4A8A4A",
     "accent": "#D080A0",
@@ -340,7 +587,41 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.7,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Big bluestem",
@@ -360,7 +641,16 @@
      2.5
     ],
     "density": 1.0,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.45,
+     "salinity": "none"
+    },
     "color": "#5A8C45",
     "accent": "#8A4C50",
     "source": "Andropogon gerardii, dominant tallgrass prairie grass, central N America, 1.5-2.5 m, turns bronze in autumn — USDA PLANTS",
@@ -382,7 +672,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 40.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      60
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#9a5844",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Compass plant",
@@ -402,7 +728,16 @@
      3
     ],
     "density": 0.3,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.45,
+     "salinity": "none"
+    },
     "color": "#3F8C38",
     "accent": "#F0C830",
     "source": "Silphium laciniatum, tallgrass prairie forb with yellow sunflower heads, 1.5-3 m — USDA PLANTS",
@@ -424,7 +759,44 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "lobes": 9,
+     "aspect": 1.6,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      45
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.15,
+     "autumn": "#8a6a3c",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Indiangrass",
@@ -444,7 +816,16 @@
      2
     ],
     "density": 0.8,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.45,
+     "salinity": "none"
+    },
     "color": "#6A9A45",
     "accent": "#C8A040",
     "source": "Sorghastrum nutans, N American tallgrass co-dominant, golden plumes, 1-2 m — USDA PLANTS",
@@ -466,7 +847,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 45.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      60
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.15,
+     "autumn": "#c99a4a",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Little bluestem",
@@ -486,7 +903,18 @@
      1
     ],
     "density": 0.6,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "till",
+      "sand",
+      "karst",
+      "sandstone"
+     ],
+     "drainage": "sharp",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "color": "#8FA070",
     "accent": "#B05A40",
     "source": "Schizachyrium scoparium, N American prairies on drier upland soils, 0.5-1 m, red-brown in autumn — USDA PLANTS",
@@ -508,7 +936,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 45.0,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#a8583a",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Purple coneflower",
@@ -528,7 +992,16 @@
      1.2
     ],
     "density": 0.3,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.4,
+     "salinity": "none"
+    },
     "color": "#3F8C38",
     "accent": "#C060A0",
     "source": "Echinacea purpurea, central/eastern N America prairie forb, 0.6-1.2 m — USDA PLANTS",
@@ -550,7 +1023,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.0,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      8,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.15,
+     "autumn": "#8a6a48",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Switchgrass",
@@ -570,7 +1079,17 @@
      2
     ],
     "density": 0.6,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.4,
+     "salinity": "none"
+    },
     "color": "#5AB040",
     "accent": "#C8B060",
     "source": "Panicum virgatum, N American prairies and lowlands, 1-2 m bunchgrass — USDA PLANTS",
@@ -592,7 +1111,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 40.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      30,
+      60
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.15,
+     "autumn": "#d6b65a",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.5,
+     "response": "flower"
+    }
    }
   ],
   "epiphyte": []
