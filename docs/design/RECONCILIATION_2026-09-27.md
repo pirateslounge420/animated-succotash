@@ -1192,3 +1192,52 @@ Locked:
 Engine work (Claude Code): (1) and (2) in `species_db` / `vegetation_placer`, reading the
 new `realm` keys; `tools/biome_species_check.py` and `plant_schema_check.py` are the data
 gates. Data work (Claude): association realm tags, the fills, the splits.
+
+## AB. Close the water cycle — 28 Sept 2026 (audit of `weather_sim.gd`)
+
+**Verdict:** the atmosphere half is real (evaporation by temperature and water cover,
+humidity advected by the wind, condensation on lift with latent-heat storm growth, rain-out,
+emergent rain shadows, seasons shifting the grid, game-clock ticks). The ground half is
+missing: **rain is deleted when it lands.** No soil-moisture field, no lake level, no
+snowpack/melt; river discharge is baked at generation and the storm swell is shader-only;
+ground wetness is a 90-s timer on the player; plants read the baked *equinox* climate and
+never the live weather or season; land evaporation is a constant; the grid is tuned to
+400 km. Locked fixes, in order:
+
+1. **A surface water store per weather cell** (`soil_water`, mm, plus `snowpack`, mm water
+   equivalent): precipitation adds to it (as snow when the surface is below 0 °C); snowpack
+   melts by temperature in spring into soil water and runoff; soil water drains to runoff
+   above field capacity (by soil class, §G2: sand fast, clay/peat slow) and is drawn down by
+   **evapotranspiration** — land evaporation becomes a function of soil water and plant
+   cover, not a constant. This is the missing rung that makes drought, mud seasons and
+   snowmelt real.
+2. **Runoff feeds the rivers.** Each cell's runoff accumulates down the baked drainage
+   graph into a **live discharge** per river reach (baked `flow_accum` as the mean, live
+   runoff as the anomaly). Discharge drives river width/depth and current (the swim depth
+   and the shader), lake level (a per-lake stage), and flood stage in floodplain biomes.
+   The storm swell stops being cosmetic. Water is conserved: what fell either evaporates,
+   sits in soil/snow, or is in a river or lake.
+3. **Plants read the live world.** `vegetation_placer` / species growth read `soil_water`
+   (this season's moisture) and the season's temperature, not the baked band: the baked
+   band decides *where a species can live*, the live values decide *how it is doing* —
+   leaf-out, drought stress, autumn drop (§F), flowering (§G), tuber gain (§E). Spin-up
+   runs a full year with seasons, so the baked climate maps are an annual integral, not
+   an equinox snapshot; `species_db.gd`'s "the planet has no seasons" comment goes.
+4. **Ground wetness is a field, not a timer:** traction, footstep sounds, splash and the
+   "wet" look read the cell's soil water (plus rain in the last hour), the same field the
+   plants read.
+5. **Grid scale for the 1/10 planet (§I):** keep the cell count fixed in principle, but
+   the weather grid is the one global pass that needs *more* cells, not fewer — target
+   ~25–40 km cells at 4,000 km (`RES` ~24–32, cost ∝ RES²; measure), re-tune system radii
+   and relaxation times to the new cell size, and replace the `GEO_CIRCUMFERENCE_M`
+   constant with the planet's actual circumference.
+6. **Conservation and honesty:** switch advection to a conservative scheme or
+   renormalise total water each step; retire `precip_scale` once the surface store
+   closes the budget (rain should average ~1000 mm/yr because the physics does, not
+   because it is rescaled).
+7. Fog: live fog from relative humidity and surface cooling at night in valleys, not the
+   baked `avg_fog`.
+
+Check: a dev overlay on the M map for soil water, snowpack and river discharge; a
+year-long headless run that reports the global water budget (air + soil + snow + rivers)
+staying within a few percent — that is the test the design needs.
