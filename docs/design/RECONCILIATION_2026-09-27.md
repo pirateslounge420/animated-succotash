@@ -79,6 +79,41 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     ~2 frames are the crouch pose, then the kick, no ease-in. Tune by feel from there.
   Keep `angle_deg` and `min_wall_steepness` as they are.
 
+- **Right-click is one context-sensitive "tech" button — Phase 1.** The same
+  Melee-tight timing, the game picks the move by what you're touching:
+  - **Wall / cliff / trunk / ruin face** → wall jump (tap) or cling (hold), as above.
+  - **Branch / vine / anything too thin or loose to kick off** → **catch and swing**.
+  One input, one timing to learn; the terrain decides the result.
+
+- **Branch catch and swing — Phase 1.** Reuses `BranchGraph` (`scripts/ecology/
+  branch_graph.gd`), which already serves player climbing and gibbon brachiation
+  (`scripts/creatures/gibbon/gibbon_planner.gd`). The swing is a third reader of the
+  same handholds — do **not** build a separate grab system.
+  - Moving fast through the air (from a jump, wall chain, or roll exit), tap
+    right-click within the tech window while passing near a handhold that is
+    **too thin for a wall jump** (radius under the wall-jump threshold, or a limb
+    rather than a trunk face): the player **catches** it and swings.
+  - Catch rules: the handhold must be within `catch_reach_m` (~1.2) of the hands,
+    roughly ahead-and-above of travel. Aim matters: the look direction biases which
+    handhold is chosen. Missed timing = no catch, you keep flying (and land as usual).
+  - Swing physics: a pendulum from the handhold, entering with the player's current
+    speed. Release (release right-click, or jump) at the bottom of the arc keeps
+    momentum; release later throws you up. This **preserves or builds momentum**
+    the same way a chain wall jump does, and counts as a chain link.
+  - Chaining swing → swing follows the graph's links (the gibbon planner's next-
+    handhold logic), so canopy travel is possible where the graph allows it.
+  - **Vines** are not in `BranchGraph` yet. Add vines (jungle/rainforest/swamp biomes)
+    as hanging handhold chains registered with `BranchGraphs` so the same catch code
+    finds them. Vine swings are longer and looser than branch swings.
+  - Failure: a swing into a trunk or the ground at speed without a tech is impact
+    damage, same as the wall rule. Speed → risk applies everywhere.
+  - Animation: hands reach and grip (the trailing-arm run pose flips forward on
+    catch), body hangs, cloak trails the arc. Reuse gibbon brachiation timing as the
+    reference for the hang-and-release rhythm.
+  - Add to `movement.json`: a `swing` block with `catch_reach_m`, `max_branch_radius_m`
+    (above this it's a wall-jump surface), `release_carry`, `gravity_scale`,
+    `max_swing_s` (let go automatically after this long — no hanging forever).
+
 - **Ninja landing roll — Phase 1.** Landing from height already triggers a squat
   (`landing.squat_s` / `heavy_squat_s`, threshold `heavy_fall_m` 1.7) and fall damage
   past `fall_damage.safe_m`. Add a **timed roll**:
