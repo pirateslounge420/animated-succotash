@@ -71,7 +71,13 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     it only has to *feel* right and leave the player guessing at the parkour going on
     underneath. Don't add separate wall-jump or cling rigs; adjust the cloak sim
     (bunch at crouch, snap out on the kick) instead of adding bones or poses.
-  Keep `window_s`, `angle_deg`, `min_wall_steepness` as they are.
+  - **Melee-tight timing, 60 fps.** The game targets a locked 60 fps (`max_fps` 60,
+    physics tick 60) and the wall-jump window is counted in **physics frames**, not
+    wall-clock seconds, so a hitch cannot widen it. Tighten `window_s` from 0.25 (15 f)
+    to about **0.10–0.13 s (6–8 f)** — Melee-style: a deliberate tap on contact, not a
+    grace period. Shorten `kick_s` from 0.18 to about **0.13–0.16 s (8–10 f)**: first
+    ~2 frames are the crouch pose, then the kick, no ease-in. Tune by feel from there.
+  Keep `angle_deg` and `min_wall_steepness` as they are.
 
 ---
 
