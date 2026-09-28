@@ -41,11 +41,20 @@ window/stretch/scale_mode="integer"
 
 renderer/rendering_method="forward_plus"
 anti_aliasing/quality/msaa_3d=2
-lights_and_shadows/directional_shadow/size=4096
+lights_and_shadows/directional_shadow/size=2048
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 
 [shader_globals]
+
+look_eye={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+look_leaf_shadow_m={
+"type": "float",
+"value": 15.0
+}
 
 look_fog_color={
 "type": "vec3",

@@ -4,6 +4,38 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Step 5.5: performance pass (design §W)
+- **Measured, not guessed:**
+  - F2 (dev mode) shows a frame-time line: frame ms and fps, the root viewport's cpu and gpu render ms, and the shadow pass (`PerfReadout`). Godot 4.3 gives scripts no per-pass GPU timing, so the shadow pass's ms is sampled by switching the sun's shadows off for a few frames every 4 s; its draw calls and triangles come straight from the renderer.
+  - `tools/perf_bench.gd` times the fixed dev frame with shadows on and off.
+- **The numbers:** this container's GPU is a software rasterizer, so the ms are huge. Read them as ratios; the geometry counts don't depend on the GPU. Dev frame at 480 lines, 15:00:
+
+  | step | frame ms | shadow pass | shadow draws / tris | visible draws / tris |
+  |---|---|---|---|---|
+  | baseline (after 5.4) | 3645 | 1203 ms | 633 / 2.67M | 723 / 2.34M |
+  | (1) shadows | 2939 | 568 ms | 292 / 1.22M | 717 / 2.34M |
+  | (2) plant ranges | 2520 | 417 ms | 288 / 1.22M | 700 / 2.13M |
+  | final | 2551 | 474 ms | 292 / 1.22M | 699 / 2.12M |
+
+  That's −30 % frame and −61 % shadow pass. At 1080 internal (what §Y replaced), 60 frames didn't finish in 15 minutes here, so the internal size was the biggest cost of all.
+- **(1) Shadows** (`look.json` light):
+  - 2 cascades instead of 4 (`shadow_splits`), `shadow_max_m` 90 → 50, shadow map 4096 → 2048.
+  - Leaves can stop casting beyond `leaf_shadow_m` of the eye: in the shadow pass the foliage shader collapses them in the vertex stage, so they cost no raster.
+  - Tried at the design's 15 m, it saved only another ~114 ms of 568 and visibly flattened the midground: crowns stopped shading each other and the trunks. It is left at 50 m, the whole shadow range, so the look is unchanged. The knob is there.
+- **(2) Plants** (`look.json` "ranges", new):
+  - Grasses, tussocks and reeds to 40 m; other ground cover and epiphytes to 80 m (was 300); shrubs to 150 m (had no limit, so they drew out to about 390 m).
+  - A triangle census showed ground cover was 1.38M of the 3.3M triangles around the camp.
+  - One undergrowth MultiMesh spans a 260 m chunk, so a node visibility range can't do this. Each plant is shrunk away by its own distance from the eye in the foliage shader (`draw_range_m` instance uniform, over the last tenth), and the node itself only culls once nothing in it can be in range.
+  - Tree crowns and cards wait for Step 7 (leaf cards with the ragged impostor beyond).
+- **(3) Creatures:** rigs animate only within `ranges.rig_m` (60 m); farther ones still travel but hold their pose. Posing the camp's 69 creatures dropped from 0.82 to 0.59 ms a frame. That is on top of the existing think-less-often stride for far animals.
+- **(4) Render scale:** superseded by 5.4's fixed 480 lines.
+- **HUD:**
+  - The crosshair comes from `hud.json` reticle: arms of `size_px`/2 from `gap_px` out, `thickness_px` wide, in `color` with a dark ink edge. That is larger than before.
+  - Plant and tree names (and so E samples) only show within `plant_name.reach_m` (1.2 m) of you, measured along the ground. Animals are still named to 40 m.
+- **Reference still has:** ragged leaf-card canopies against the sky (Step 7).
+
+---
+
 ## 2026-09-28 — Step 5.4: 480p internal render (design §Y)
 - **Fixed internal frame:**
   - The root window uses the "viewport" content scale (`scripts/core/display.gd`, from `data/look.json` "render"). The whole frame is drawn at 854×480 and upscaled to the window nearest-neighbour: the 3D, the post-grade with its grain and Bayer dither, and the HUD.

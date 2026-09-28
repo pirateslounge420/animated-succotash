@@ -45,6 +45,16 @@ render_mode world_vertex_coords, cull_disabled, vertex_lighting, diffuse_lambert
 #include "res://shaders/palette.gdshaderinc"
 
 uniform vec3 wind_vector = vec3(0.0);
+// The eye (the active camera, scene space) and how far from it leaves
+// still cast shadows (design §W, look.json light.leaf_shadow_m): beyond
+// that, in the shadow pass, leaves and leaf cards collapse to nothing
+// (they still receive shadows); trunks and limbs always cast.
+global uniform vec3 look_eye;
+global uniform float look_leaf_shadow_m;
+// Ground cover and shrubs are drawn only this near the eye (0: always;
+// design §W, look.json "ranges", set per node by VegetationPlacer): each
+// plant shrinks away into its root over the last tenth.
+instance uniform float draw_range_m = 0.0;
 // Leaf left on the trees for the season, 0-1 (Phase 5 sets it; 1 = full).
 uniform float leaf_season = 1.0;
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
@@ -78,6 +88,11 @@ void vertex() {
 		vec3 c = (MODEL_MATRIX * vec4(CUSTOM0.xyz, 1.0)).xyz;
 		VERTEX = c + (VERTEX - c) * mix(0.6, 1.0, smoothstep(0.1, 0.8, leaf));
 	}
+	if (draw_range_m > 0.0) {
+		vec3 root = MODEL_MATRIX[3].xyz;
+		float fade = 1.0 - smoothstep(draw_range_m * 0.9, draw_range_m, distance(root, look_eye));
+		VERTEX = root + (VERTEX - root) * fade;
+	}
 	float sway = COLOR.a;
 	float speed = length(wind_vector);
 	vec3 dir = speed > 0.01 ? wind_vector / speed : vec3(0.0);
@@ -110,6 +125,12 @@ void vertex() {
 	// bamboo keeps only its dry culms.
 	dead_v = step(0.975, INSTANCE_CUSTOM.a);
 	if (dead_v > 0.5 && ((mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)) {
+		VERTEX = MODEL_MATRIX[3].xyz;
+	}
+	// The shadow pass (a directional light's is orthographic): leaves
+	// cast only near the eye.
+	if (PROJECTION_MATRIX[3][3] == 1.0 && ((mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)
+			&& distance(world_pos, look_eye) > look_leaf_shadow_m) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
 }

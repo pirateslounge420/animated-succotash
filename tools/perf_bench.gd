@@ -17,8 +17,10 @@ extends SceneTree
 ## overrides the internal frame for this run only, to compare with what
 ## design §Y replaced.
 
-const WARM := 120
-const MEASURE := 240
+## Frames to settle, then to measure (WARM / MEASURE override: the
+## software rasterizer here is slow).
+var WARM := int(OS.get_environment("WARM")) if OS.get_environment("WARM") != "" else 120
+var MEASURE := int(OS.get_environment("MEASURE")) if OS.get_environment("MEASURE") != "" else 240
 
 
 func _initialize() -> void:
@@ -50,12 +52,12 @@ func _run() -> void:
 	var on := await _measure(vp, WARM)
 	on = await _measure(vp, MEASURE)
 	sun.shadow_enabled = false
-	await _measure(vp, 30)
+	await _measure(vp, mini(30, WARM))
 	var off := await _measure(vp, MEASURE)
 	sun.shadow_enabled = true
 	var label := OS.get_environment("LABEL")
-	print("[perf] %s internal %s: frame %.1f ms, cpu %.1f, gpu %.1f | shadows off: frame %.1f, gpu %.1f | shadow pass ≈ %.1f ms gpu, %d draws, %dk tris; total draws %d, %dk tris" % [
-		label, get_root().content_scale_size, on.frame, on.cpu, on.gpu, off.frame, off.gpu, on.gpu - off.gpu, on.sdraws, on.sprims / 1000, on.draws, on.prims / 1000])
+	print("[perf] %s internal %s: frame %.1f ms, scripts %.1f, cpu %.1f, gpu %.1f | shadows off: frame %.1f, gpu %.1f | shadow pass ≈ %.1f ms gpu, %d draws, %dk tris; total draws %d, %dk tris" % [
+		label, get_root().content_scale_size, on.frame, on.proc, on.cpu, on.gpu, off.frame, off.gpu, on.gpu - off.gpu, on.sdraws, on.sprims / 1000, on.draws, on.prims / 1000])
 	quit()
 
 
@@ -67,6 +69,7 @@ func _measure(vp: RID, n: int) -> Dictionary:
 	var sp := 0
 	var dr := 0
 	var pr := 0
+	var proc := 0.0
 	for i in n:
 		await process_frame
 		cpu += RenderingServer.viewport_get_measured_render_time_cpu(vp)
@@ -75,5 +78,6 @@ func _measure(vp: RID, n: int) -> Dictionary:
 		sp += RenderingServer.viewport_get_render_info(vp, RenderingServer.VIEWPORT_RENDER_INFO_TYPE_SHADOW, RenderingServer.VIEWPORT_RENDER_INFO_PRIMITIVES_IN_FRAME)
 		dr += RenderingServer.viewport_get_render_info(vp, RenderingServer.VIEWPORT_RENDER_INFO_TYPE_VISIBLE, RenderingServer.VIEWPORT_RENDER_INFO_DRAW_CALLS_IN_FRAME)
 		pr += RenderingServer.viewport_get_render_info(vp, RenderingServer.VIEWPORT_RENDER_INFO_TYPE_VISIBLE, RenderingServer.VIEWPORT_RENDER_INFO_PRIMITIVES_IN_FRAME)
+		proc += (Performance.get_monitor(Performance.TIME_PROCESS) + Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS)) * 1000.0
 	return {"frame": (Time.get_ticks_usec() - t0) / 1000.0 / n, "cpu": cpu / n, "gpu": gpu / n,
-		"sdraws": sd / n, "sprims": sp / n, "draws": dr / n, "prims": pr / n}
+		"sdraws": sd / n, "sprims": sp / n, "draws": dr / n, "prims": pr / n, "proc": proc / n}

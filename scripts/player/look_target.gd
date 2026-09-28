@@ -18,13 +18,16 @@ extends Node
 ## species index and the point looked at (`species_index`, `point`: E takes
 ## a sample, Inventory), nothing else.
 ##
-## Animals are named out to ANIMAL_M from you, trees out to TREE_M, other
-## plants out to PLANT_M; the name lingers LINGER_S after the crosshair
-## leaves, so it doesn't flicker at a leaf's edge.
+## Animals are named out to ANIMAL_M from you; trees and other plants only
+## within NAME_M of you, measured along the ground (design §W; hud.json
+## plant_name.reach_m, about a metre: reading a plant means walking up to
+## it, and so does taking a sample). Plants are searched for out to
+## PLANT_M. The name lingers LINGER_S after the crosshair leaves, so it
+## doesn't flicker at a leaf's edge.
 
 const ANIMAL_M := 40.0
-const TREE_M := 20.0
 const PLANT_M := 8.0
+static var NAME_M := Tuning.num("hud", "plant_name", "reach_m")
 const LINGER_S := 0.35
 const LOOK_EVERY_S := 0.1
 ## Grid cell (m) for the plant index, and instances indexed per frame.
@@ -108,7 +111,7 @@ func _look() -> Array:
 				best = [(sp as CreatureSpecies).binomial(), "animal"]
 		else:
 			var chunk := (hit.collider as Node).get_parent() as TerrainChunk if hit.collider is Node else null
-			if chunk != null and at.distance_to(me) <= TREE_M:
+			if chunk != null and _near(at, me):
 				var i := chunk.tree_for_shape(hit.collider, int(hit.shape))
 				if i >= 0:
 					var tsp: PlantSpecies = SpeciesDB.all()[int(chunk.trees[i][2])]
@@ -118,8 +121,16 @@ func _look() -> Array:
 	# nearer of the two is what you're looking at.
 	var plant := _plant_on_ray(from, dir, block_t + 0.3, me)
 	if not plant.is_empty() and (best.is_empty() or float(plant[2]) < block_t):
-		return [plant[0], plant[1], plant[3], from + dir * float(plant[2])]
+		var p_at := from + dir * float(plant[2])
+		return [plant[0], plant[1], plant[3], p_at] if _near(p_at, me) else []
 	return best
+
+
+## Within NAME_M of the player `me`, along the ground (height ignored: a
+## trunk at eye level is as near as its foot).
+func _near(p: Vector3, me: Vector3) -> bool:
+	var off := p - me
+	return (off - player.up * off.dot(player.up)).length() <= NAME_M
 
 
 ## The nearest indexed plant (not a tree) the ray passes through within

@@ -34,6 +34,9 @@ var draw_power := 0.0 # 0-1 bow power
 var meter := 0.0
 var overcharge := 0.0
 static var METER_HUD := Tuning.section("hud", "super_meter")
+## The crosshair (hud.json reticle, 480-line px, design §W): four arms,
+## each size_px / 2 long, starting gap_px out from the middle.
+static var RETICLE := Tuning.section("hud", "reticle")
 ## The weapon in hand ("Bow", "Spear", "Spear (thrown)").
 var weapon := ""
 ## The binomial under the crosshair (LookTarget), or "".
@@ -184,12 +187,14 @@ func _draw() -> void:
 	# Crosshair and draw.
 	if show_crosshair and not _dead:
 		var c := size * 0.5
-		var col := Color(1, 1, 1, 0.85)
 		if x_left <= 0.0:
-			draw_line(c + Vector2(-5, 0), c + Vector2(-2, 0), col, 1.0)
-			draw_line(c + Vector2(2, 0), c + Vector2(5, 0), col, 1.0)
-			draw_line(c + Vector2(0, -5), c + Vector2(0, -2), col, 1.0)
-			draw_line(c + Vector2(0, 2), c + Vector2(0, 5), col, 1.0)
+			var col := Color(str(RETICLE.get("color", "#7FB0FF")))
+			var gap := float(RETICLE.get("gap_px", 3))
+			var tip := gap + float(RETICLE.get("size_px", 10)) * 0.5
+			var w := float(RETICLE.get("thickness_px", 1))
+			for d: Vector2 in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
+				draw_line(c + d * (gap - 1.0), c + d * (tip + 1.0), Color(0.05, 0.07, 0.15, 0.7), w + 2.0)
+				draw_line(c + d * gap, c + d * tip, col, w)
 		if aiming:
 			draw_arc(c, 11.0, PI * 0.25, PI * 0.75, 12, Color(1, 1, 1, 0.3), 2.0)
 			var full := draw_power >= 1.0

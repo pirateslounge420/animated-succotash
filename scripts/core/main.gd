@@ -221,6 +221,11 @@ func _process(delta: float) -> void:
 		player.global_position -= offset
 
 	chunks.update_around(d)
+	# The eye, for the shaders that spend detail by distance from it
+	# (foliage: leaves cast shadows only near it, design §W).
+	var eye_cam := get_viewport().get_camera_3d()
+	if eye_cam:
+		RenderingServer.global_shader_parameter_set("look_eye", eye_cam.global_position)
 
 	_weather_timer -= delta
 	if _weather_timer <= 0.0:

@@ -94,6 +94,10 @@ var blind := {}
 ## Seconds it's still pinned where it stands by a super-thrown spear
 ## (design §S; combat overcharge.spear.pin): it can't move off.
 var pinned_t := 0.0
+## Rigs animate only this near the player (design §W; data/look.json
+## ranges.rig_m); beyond it a creature still moves but holds its pose.
+static var RIG_M := float(Tuning.section("look", "ranges").get("rig_m", 60.0))
+var _rig_near := true
 var _limp_side := 1.0
 ## Fleeing from a noise (NoiseEvents) at this surface direction, not from
 ## the player; ZERO for the player.
@@ -265,6 +269,7 @@ func tick(delta: float, ctx: Dictionary) -> void:
 	_timer -= delta
 	var player_dir: Vector3 = ctx.player_dir
 	var to_player := distance_to(player_dir)
+	_rig_near = to_player < RIG_M
 	_hitboxes_near = to_player < Hitboxes.ACTIVE_M or Arrow.near(global_position, Hitboxes.ARROW_WAKE_M)
 
 	if _life > 0.0:
@@ -848,7 +853,8 @@ func _place(delta: float) -> void:
 		# Topples onto its side, the side the killing blow came from up
 		# (an arrow or the spear in it stays in view).
 		_body.rotation.z = lerpf(_body.rotation.z, PI * 0.5 * _topple, clampf(delta * 5.0, 0.0, 1.0))
-	_animate(delta)
+	if _rig_near:
+		_animate(delta)
 	_water_contacts()
 	_sync_hitboxes()
 

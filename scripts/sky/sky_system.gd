@@ -190,7 +190,8 @@ func _ready() -> void:
 		light.shadow_enabled = bool(LIGHT.get("shadows", true))
 		light.shadow_blur = 0.0
 		light.light_angular_distance = 0.0
-		light.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
+		var splits := int(LIGHT.get("shadow_splits", 4))
+		light.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL if splits <= 1 else (DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS if splits == 2 else DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS)
 		light.directional_shadow_max_distance = float(LIGHT.get("shadow_max_m", 90.0))
 		light.directional_shadow_fade_start = 0.9
 		light.shadow_bias = float(LIGHT.get("shadow_bias", 0.04))
@@ -331,6 +332,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	environment.fog_light_color = fog_color
 	environment.fog_density = density
 	Look.apply({
+		"look_leaf_shadow_m": float(LIGHT.get("leaf_shadow_m", 1e6)),
 		"look_fog_color": fog_color,
 		"look_fog_density": density,
 		"look_mist": mist,

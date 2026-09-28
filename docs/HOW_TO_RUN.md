@@ -44,7 +44,7 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | Mouse | Look around (straight up and down too) |
 | Left mouse button | Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw. Works in the air too. No aim arc: you learn the drop by eye; a bright streak follows the arrow or spear once it flies. With super meter (the gold ring round the gauge, filled by perfect wall jumps, rolls and swing releases, and by hits), keep holding past full charge until the gauge fills again in red: a super shot (critical, triple damage, faster, farther, a red streak) that empties the meter; a super-thrown spear kills what it hits outright and pins it. Arrows and a thrown spear carry your own speed. A spear thrust hurts more the faster you're closing on the target, and at 25 m/s (90 km/h) it kills anything but a mythical creature; a thrust into a trunk or wall at speed hurts you instead |
 | Q | Cycle bow, spear and fishing pole (the pole is bound; casting is not built yet — design §N) |
-| E | Interact, whatever you're doing (climbing, swimming, crouched): take a sample of the plant you're looking at, pick up your spear, an arrow or something you set down, grab a tree to climb it (E again lets go), turn over a fallen log, take your things back from your body after dying |
+| E | Interact, whatever you're doing (climbing, swimming, crouched): take a sample of the plant you're looking at (walk right up to it: plant names and samples only within about a metre), pick up your spear, an arrow or something you set down, grab a tree to climb it (E again lets go), turn over a fallen log, take your things back from your body after dying |
 | Tab (or I) | Inventory: what you carry and wear. The world doesn't stop. Click a line to choose it; G sets a carried thing down, E wears a spare. Tab or Esc closes it |
 | Mouse wheel | Fishing pole in hand: scroll down to reel the line in, scroll up to let it out (bound; the pole itself is not built yet) |
 | V or F5 | Switch between first and third person |
@@ -53,6 +53,7 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | O or F10 | Settings (click a line; O, F10 or Esc closes): the speedometer and the clock on or off; the picture's internal lines (480, or 720 at most), its shape (16:9, or 4:3 with black bars) and integer scaling on or off |
 | Esc | Free the mouse pointer (click in the window to take it back) |
 | F3 | Debug overlay: clock, day phase, sun and moon |
+| F2 (dev) | Frame-time readout at the top: frame ms and fps, the renderer's cpu and gpu ms, and what the shadow pass costs (sampled every few seconds by switching shadows off for a few frames, so they blink briefly while it's on) |
 | F4 (dev) | Show collision shapes |
 | F6 (dev) | Show trees' branch graphs (the handholds) |
 | F7 (dev) | Spawn the next test creature beside you, in turn: the Night Rider pair, the Pond Crawler (in the nearest water), the gibbon (on the nearest rainforest tree). It prints why when it can't |

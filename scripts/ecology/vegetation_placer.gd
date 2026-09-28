@@ -36,6 +36,8 @@ class_name VegetationPlacer
 
 ## Plants other than water plants keep this far above standing water.
 const WATERLINE_M := 0.3
+## How far ground cover is drawn (data/look.json "ranges", design §W).
+static var RANGES := Tuning.section("look", "ranges")
 const T := PlantSpecies.Tier
 ## Plants grow larger than their species' listed heights, for epic,
 ## towering woods: emergent giants most (and now and then a true giant),
@@ -451,13 +453,22 @@ static func _instance(parent: Node3D, sp_idx: int, sp: PlantSpecies, mm: MultiMe
 	mmi.multimesh = mm
 	mmi.material_override = PlantMeshes.material()
 	mmi.set_meta("species", sp_idx)
+	# Detail only near the eye (design §W; data/look.json "ranges"):
+	# grasses to grass_m, the rest of the ground cover and epiphytes to
+	# ground_m, shrubs to shrub_m, each fading out over its last tenth.
+	var reach := 0.0
 	if sp.tier == T.GROUND or sp.tier == T.EPIPHYTE:
 		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		# Out to 300 m so the ground never reads bare (it only exists in
-		# the detail ring anyway, ~390 m).
-		mmi.visibility_range_end = 300.0
-		mmi.visibility_range_end_margin = 40.0
-		mmi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
+		var grassy := sp.shape == PlantSpecies.Shape.GRASS or sp.shape == PlantSpecies.Shape.TUSSOCK or sp.shape == PlantSpecies.Shape.REED
+		reach = float(RANGES.get("grass_m" if grassy else "ground_m", 40.0 if grassy else 80.0))
+	elif sp.tier == T.SHRUB:
+		reach = float(RANGES.get("shrub_m", 150.0))
+	if reach > 0.0:
+		# Each plant by its own distance (the foliage shader shrinks it
+		# away over the last tenth, draw_range_m); the whole node, which
+		# spans its chunk, only once no plant in it can be in range.
+		mmi.set_instance_shader_parameter("draw_range_m", reach)
+		mmi.visibility_range_end = reach + TerrainChunk.CHUNK_M * 0.75
 	parent.add_child(mmi)
 	return mmi
 

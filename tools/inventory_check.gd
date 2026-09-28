@@ -82,6 +82,13 @@ func _initialize() -> void:
 	for n in names:
 		print("   " + n)
 	ok(taken >= 3, "E on a plant took a sample (%d plants)" % taken)
+	# Plant names (and so samples) only within plant_name.reach_m, along
+	# the ground (design §W): a trunk at eye height 1 m off counts, a plant
+	# 2 m off doesn't.
+	var me := player.global_position
+	var ahead := CubeSphere.north(player.surface_dir)
+	ok(look._near(me + ahead * 1.0 + player.up * 1.6, me) and not look._near(me + ahead * 2.0, me) and absf(LookTarget.NAME_M - 1.2) < 0.01,
+		"plant names only within %.1f m (hud.json plant_name.reach_m)" % LookTarget.NAME_M)
 	var s0 = inv.carried[0]
 	ok(s0 != null and str(s0.get("binomial", "")) != "" and s0.has("color") and s0.has("species"), "a sample carries its species' binomial and look")
 

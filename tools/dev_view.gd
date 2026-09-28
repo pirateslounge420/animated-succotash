@@ -19,7 +19,8 @@ extends SceneTree
 ## (design §Y: 854x480 by default). SCREEN=1 also writes
 ## <TAG>_<hh>h_window.png, the window as it shows on the screen (the
 ## frame upscaled, nearest-neighbour); FULLSCREEN=1 makes the window
-## fullscreen first (under xvfb there's no window manager: use
+## fullscreen first; FP=1 looks through your own eyes (first person,
+## the crosshair up) instead of the fixed camera (under xvfb there's no window manager: use
 ## --resolution 1920x1080 --position 0,0 instead). INTEGER=0: the
 ## fractional upscale for this run. Prints the sun's
 ## elevation, the light's elevation and the mean brightness of each frame.
@@ -107,6 +108,12 @@ func _run() -> void:
 		cam.fov = 45.0
 		cam.global_transform = Transform3D(Basis.looking_at((pp - from).normalized(), pd), from)
 	cam.current = true
+	# FP=1: your own eyes instead (first person, the crosshair showing).
+	if OS.get_environment("FP") == "1":
+		cam.current = false
+		player.first_person = true
+		player._apply_view()
+		player.camera().current = true
 	var hours := (OS.get_environment("HOURS") if OS.get_environment("HOURS") != "" else "12,0").split(",")
 	var tag := OS.get_environment("TAG") if OS.get_environment("TAG") != "" else "devview"
 	var lon := CubeSphere.longitude(pd)
