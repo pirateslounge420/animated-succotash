@@ -1244,20 +1244,67 @@ staying within a few percent — that is the test the design needs.
 
 ## AC. Creatures per biome, body archetypes, and thermals — 28 Sept 2026
 
-**How many per biome.** Not every critter — a **guild budget**, so each biome has the roles
-its food web needs (§X, Phase 7/8) and nothing else:
+**How many per biome — research-derived (revised 28 Sept, supersedes the first draft's
+flat table).** The numbers below come from real site inventories and the published
+scaling laws in `docs/design/ECOLOGY_REFERENCE.md` (48 sources); that file is the
+authority for any figure here. Three things the first draft got wrong: richness is not
+flat (it falls ~5× from rainforest to tundra, and reptiles/amphibians vanish above the
+boreal line); **birds are the largest guild everywhere** (45–55 % of a site's vertebrate
+list), not "2–3"; and predator numbers are **derived from prey biomass**, never a fixed
+ratio.
 
-| guild | per biome | examples |
-|---|---|---|
-| large herbivore | 1–2 | deer, bison, caribou, tapir, kangaroo |
-| mid/apex predator | 1 (plus 1 rare mythic where locked) | wolf pack, jaguar, dingo, lynx |
-| small mammal (prey, cavity/burrow) | 2–3 | fox, squirrel, raccoon, possum, sugar glider, hare |
-| birds | 2–3, **always including one soarer/scavenger** | vulture, hawk, heron, owl, woodpecker, corvid |
-| reptile / amphibian / fish | 1–2 (by water) | alligator, snake, frog, salmon |
-| insects & small stuff | ambient swarms, not individuals | flies at carcasses, fireflies, dragonflies |
+*Species budget* (≈10 % of the real site list; floor 6; bodies shared across neighbours):
 
-That is **8–12 species per biome**, ~52 biomes, with heavy sharing across neighbours →
-roughly **150–200 distinct species in the game**, from far fewer bodies.
+| biome group | mammals | birds | herps | total | Earth reference |
+|---|---|---|---|---|---|
+| tropical rainforest | 12 | 20 | 12 | 44 | Manu |
+| savanna / tropical grassland | 10 | 16 | 6 | 32 | Kruger |
+| wetland / swamp / mangrove | 5 | 14 | 6 | 25 | Everglades |
+| temperate forest | 7 | 12 | 5 | 24 | Great Smokies |
+| temperate grassland / steppe / montane | 7 | 10 | 2 | 19 | Yellowstone |
+| desert | 5 | 8 | 5 | 18 | Saguaro |
+| boreal | 4 | 8 | 0–1 | 12 | Denali |
+| tundra / polar / high alpine | 3 | 5 | 0 | 8 | Denali north |
+
+Inside the mammal share: small mammals (rodents, hares, bats) ~60 %, mesopredator ~15 %,
+large herbivore ~15 %, apex ~5–10 % — so a 7-mammal temperate forest is 3–4 small, 1
+mesopredator (fox/raccoon), 1–2 large herbivores, 1 apex (wolf pack or cougar). Every
+biome still gets **one soarer/scavenger** among its birds (§X). Insects stay ambient
+swarms. Total is still ~150–200 species from ~25 bodies.
+
+*Population laws the region sim enforces (Phase 8):*
+- **Carrying capacity** per species from Damuth: `K = 10^4.23 × mass_g^-0.75 × productivity`
+  per km², productivity 1.5 rainforest/wet savanna, 1.0 temperate forest/wetland, 0.6
+  steppe, 0.3 boreal, 0.15 desert, 0.1 tundra. Checks: deer 3–8/km², moose 0.5, bison 1,
+  hare 50–200, squirrel ~100.
+- **Predators from prey** (Hatton 2015): `carnivore_kg = 0.094 × herbivore_kg^0.73` per
+  region, divided by the carnivore's mass for a head count; split ~60 % apex / 40 %
+  mesopredator by biomass. Sanity: ~1 wolf per 50–100 deer-equivalents, ~1 lion per 500
+  ungulates, ~1 fox per km². Predator biomass never above 3 % of prey, count never above
+  prey/10.
+- **Prey size shield:** prey over 150 kg are only taken by pack hunters or big cats;
+  solitary mesopredators take prey under ~20 kg.
+- **Mesopredator release** is the emergent test: kill a region's apex and its foxes,
+  coyotes and raccoons climb toward 5× over a few game years.
+- **Home range:** `range_km2 = a × mass_kg^b`, b = 1.0 herbivores, 1.2 carnivores,
+  anchored so a 100 kg deer holds 2 km², a wolf pack 150 km², a fox 2 km², a squirrel
+  0.02 km²; big animals' ranges overlap (exclusive share ≈ mass^-0.25).
+
+*Fields every creature entry carries* (`data/creatures/creatures.json`, in addition to the
+archetype block below): `mass_kg`, `activity` (diurnal / nocturnal / crepuscular /
+cathemeral — ungulates crepuscular, canids/felids crepuscular-nocturnal, bears cathemeral,
+squirrels and most birds diurnal, owls/bats/raccoons/gliders nocturnal), `social`
+(solitary / pair / family_pack / herd:n), `migration` (none / altitudinal / latitudinal:km
+— see §AD for birds), `hibernation` (none or months), `breeding_season` (months),
+`litter`, `flight_distance_m` (deer 150, elk 100–200, bison 100, pronghorn 235, small
+birds 20–50; longer in open country and for hunted populations). These are the
+behaviours the player actually sees.
+
+*Carcass timeline for §X, with real numbers:* blowflies within minutes; vultures 30–120
+min by day in open country (corvids first under forest); mammals after dark; a deer-sized
+carcass is stripped in ~1 day with vultures, 2–5 without; bones persist a season; water
+carcasses last weeks; vultures don't fly at night or in rain, so a night death is found
+mid-morning.
 
 **The Falcon/Ganondorf rule for animals.** Each species is a **body archetype × palette
 × scale × behaviour tuning**, never its own model:
@@ -1285,7 +1332,12 @@ gliders (sugar gliders, flying squirrels) **use the air the weather sim already 
   grid's surface temperature minus air temperature, times sun); soarers seek the nearest
   thermal, **circle inside it to climb** (the vulture spiral — which is also how they
   circle a carcass, §X), then **glide off** losing height slowly toward the next one or a
-  target. On a still evening they land and roost.
+  target. On a still evening they land and roost. **Numbers** (ECOLOGY_REFERENCE §5):
+  thermals from ~2 h after sunrise to ~1 h before sunset, peak 12:00–15:00 game time;
+  climb 1–2 m/s (up to 4 over bare rock), zero at night, in rain and over water; circle
+  radius ~35 m; top ~1,000–1,500 m above ground; glides between thermals at 13–17 m/s
+  with a 10–15:1 glide ratio, so 1–2 km per glide from a 100–200 m climb; soarers roost
+  from dusk to mid-morning.
 - **Ridge lift** where the wind field hits a slope on the windward side: birds hang in it.
 - **Gliders** launch from height (a perch, §V; a tree top) and glide on a fixed sink rate,
   steering, landing on the next trunk — sugar gliders and flying squirrels at night in
@@ -1296,3 +1348,107 @@ gliders (sugar gliders, flying squirrels) **use the air the weather sim already 
 **Order:** archetype/palette data first (a scripted pass converting the 28 existing
 creatures), then thermals/ridge lift as a read from the weather grid, then the soaring
 behaviour on the existing wander/hunt state machine. Phase 7.
+
+## AD. Birds migrate and flock — 28 Sept 2026
+
+Birds are the biggest guild (§AC), and what makes them read as alive is that **they are
+not always there**. Real birds have a **breeding ground** (where they nest, in the long
+days) and a **wintering ground** (where they wait out the cold or the dry season), and
+they move between them on the season clock (§F). On a 1/10 planet the pole is ~1,000 km
+from the equator, so a temperate summer breeder's winter ground is a few hundred km
+toward the equator — a distance the player can actually travel, and see the same species
+arrive at the other end.
+
+**Data, per bird species** (`data/creatures/creatures.json`, the `migration` field from
+§AC expanded for birds):
+- `migration.kind`: `resident` (stays: owls, woodpeckers, corvids, grouse, most tropical
+  birds), `latitudinal` (breeds poleward, winters equatorward), `altitudinal` (breeds up
+  the mountain, winters in the valley), `nomadic` (follows rain/seed: budgerigars, some
+  finches).
+- `migration.breeds`: a latitude band + biome tags (`[45, 70]`, `taiga|tundra|wetland`);
+  `migration.winters`: the same for the winter ground (`[-10, 30]`, `savanna|wetland`).
+  Tropical residents just carry their biome.
+- `migration.leave_breeding_day` / `arrive_breeding_day`: game-days keyed to the
+  hemisphere's season (mirrored south of the equator), with a ±10-day jitter per flock.
+  Defaults: arrive on the breeding ground in the spring transition, leave in the autumn
+  transition; a few "early" species (geese, cranes) arrive before the thaw is finished.
+- `flocking`: `none` (raptors, herons mostly), `loose` (small feeding flocks: finches,
+  sparrows), `v_formation` (geese, cranes, pelicans, ibis: a chevron at altitude, honking
+  as they pass), `murmuration` (starlings, dunlin, shorebirds: a dense, turning cloud at
+  dusk), `colony` (nest together: herons, terns, vultures at roosts). Flock size range per
+  species.
+
+**How it plays:**
+- The **region sim (Phase 8) moves populations, not entities**: at leave-day the region's
+  count for that species drains toward zero over ~a week and the wintering region's count
+  fills; the spawner near the player draws from the region count, so a species simply
+  becomes rare, then absent, then returns. No bird ever has to fly the whole way in the
+  simulation.
+- **The passage is visible.** During a species' travel window, high **V-formations** cross
+  the sky heading the right way (equatorward in autumn, poleward in spring), spawned as a
+  sky event on the existing `sky_events` path, with their calls; at dusk in the transition
+  weeks, a murmuration over a marsh or reedbed. That is the whole "migration" the player
+  sees, and it's enough: the sky tells you the season is turning before the leaves do.
+- **Nesting** on the breeding ground: nests in trees, cliffs and reeds during the breeding
+  months (a `breeding_season` from §AC); more song at dawn then (the dawn chorus is a
+  breeding-season thing); fledglings in early summer. Wintering birds are quieter and
+  flock more.
+- **Flocks share one body** (§AC): a `v_formation` is one chevron instance with N
+  billboarded birds and one call; a murmuration is a particle-like cloud with a
+  boids-lite steer; only `none`/`loose`/`colony` birds are individual creatures near the
+  player. Cheap, and it's what 2002 did.
+- **Seasonal residents to seed with** (Earth-true, by realm): Arctic tern (tundra ⇄ polar
+  south, the longest), snow goose and Canada goose (tundra/taiga ⇄ temperate wetlands, V),
+  sandhill/common crane (V), barn swallow (temperate ⇄ tropics, everywhere), ruby-throated
+  hummingbird (nearctic ⇄ neotropic), white stork (palearctic ⇄ afrotropic, soars the
+  thermals of §AC on the way), bar-headed goose over the Himalaya, starling murmurations
+  (palearctic/nearctic winter), wildebeest-following storks and vultures on the savanna
+  (nomadic with the rains). Residents: owls, woodpeckers, ravens, ptarmigan, most parrots
+  and tropical forest birds.
+
+**Order:** data fields + region-count seasonal drain/fill (Phase 8), then the passing
+V-formation sky event and murmuration (cheap, high-visibility), then nests/dawn chorus.
+
+## AE. Ruins have a culture: regional pyramid and monument styles — 28 Sept 2026
+
+Today `ruin_builder.gd` has one desert pyramid (cased, sandstone, an entrance corridor
+and chamber) and one generic stepped temple for everywhere else. Real pyramids were built
+by many peoples in very different ways, and each style belongs to a climate and a
+realm — so **the ruin style is picked by realm × biome**, exactly as plants are (§AA).
+The lore system (Phase 11) can name the builders; we never use real peoples' names in
+the game, only their forms. Reference styles:
+
+| style key | real source | form (what the builder makes) | where it spawns (realm × biome) |
+|---|---|---|---|
+| `true_pyramid` | Old Kingdom Egypt (Giza) | smooth-cased, ~52° faces, square base 60–120 m, flat worn top, entrance corridor + chamber, small satellite pyramid, causeway to a ruined valley temple; sandstone/limestone; sand drifts | afrotropic/palearctic desert and desert river banks — the existing desert pyramid |
+| `steep_pyramid` | Nubian (Meroë) | small (8–30 m), **steep ~70°**, many in a cluster (a field of 10–40 in rows), each with a tiny offering chapel at its foot | afrotropic dry savanna / semi-desert |
+| `temple_pyramid` | Maya (Tikal, Chichén Itzá) | steep stepped, 9 tiers, one grand central stair (very steep, high risers), a **temple room on top with a roof comb**, plaza of several pyramids around a ball court; pale limestone; strangler figs and ivy on it (climber plants §AA) | neotropic tropical rainforest / jungle / cloud forest — the existing jungle temple, upgraded |
+| `platform_pyramid` | Aztec / Teotihuacan (Templo Mayor, Sun/Moon) | broad, lower slope, **talud-tablero** tiers (sloped panel under a vertical framed panel), twin stairs or twin shrines on top, a long ceremonial avenue lined with smaller platforms | neotropic highland: tropical dry forest, thorn scrub, montane grassland |
+| `adobe_huaca` | Moche / Lambayeque coast (Huaca del Sol, Túcume) | massive **mud-brick** stepped mound, softened by rain into a rounded hill with ramps, painted-frieze fragments, mostly buried | neotropic coastal desert / dunes |
+| `terrace_platform` | Inca (ushnu platforms, Machu Picchu, Sacsayhuamán) | not a pyramid but a **stepped platform** of fitted polygonal stone with no mortar, on a ridge, surrounded by agricultural **terraces** stepping down the slope, a trapezoid-doored hall; the terraces still hold soil (a spawn gate for camp-follower plants — Cannabis no, but potato/quinoa-type ground plants yes) | andes puna / paramo / alpine meadow |
+| `ziggurat` | Mesopotamia (Ur) | rectangular, 3 receding mud-brick tiers with a triple stair converging on the first landing, baked-brick facing, a shrine on top; on a flat plain by a river | palearctic/central_asia steppe, dry river floodplain |
+| `earth_mound` | Cahokia / Mississippian, Chinese mausoleum mounds | grass-covered flat-topped **earthen** pyramid, a ramp up one side, wooden post circle or thatched hall on top, a cluster of smaller mounds; reads as a hill until you're on it | nearctic temperate deciduous / river plain; east_asia_temperate plain (the mounds there are larger and rectangular, with a walled avenue) |
+| `stone_terrace_shrine` | Javanese (Candi Sukuh, Borobudur's stepped mandala) | small truncated stepped stone pyramid with relief blocks, on a volcanic slope, moss-black andesite | malesia / indomalaya montane forest |
+
+**Rules for the builder:**
+- `Ruins.pyramid_style()` returns one of these keys from (realm, biome); `PYRAMID_CHANCE`
+  becomes per style. Where no style matches, no pyramid (towers/castles/barrows still do).
+- **One builder, parameters per style:** base size, number of tiers, face angle, tier
+  profile (`smooth`, `step`, `talud_tablero`, `rounded_adobe`, `earth`), stair count and
+  steepness, top feature (`none`, `temple_comb`, `twin_shrine`, `hall`, `post_circle`,
+  `chapel_at_foot`), material palette (sandstone / limestone / mud brick / fitted grey
+  granite / turf), cluster (count and layout: `single+satellite`, `field`, `plaza`,
+  `avenue`, `terraces`). Ruin damage rules (jagged tops, breaches, rubble, moss, ivy)
+  stay as they are and read differently on each.
+- **Climbable per §0 physics:** stair risers are ledges; Maya stairs are steep enough to
+  be a real climb; casing on the true pyramid is smooth (cling only at the broken
+  patches); terraces are a staircase for the whole valley.
+- **Interiors** only where the real ones had them: the true pyramid keeps its corridor
+  and chamber; the Maya temple room and the ziggurat shrine are small rooms on top; the
+  rest are solid.
+- Camps (`CAMP_CHANCE`) may squat on any of them, and Phase 10 salvage draws blocks.
+
+**Order:** style table as data (`data/ruins.json`, `[NOT WIRED YET — §AE]`), then
+`pyramid_style()` by realm × biome, then the three cheapest new profiles (talud-tablero,
+earth mound, Nubian field) reusing the step builder, then Inca terraces (they double as
+world-gen terrain edits). Phase 9/11.

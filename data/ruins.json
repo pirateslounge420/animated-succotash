@@ -1,0 +1,269 @@
+{
+ "_help": {
+  "about": "[NOT WIRED YET \u2014 design \u00a7AE] Regional pyramid / monument styles for ruin_builder.gd. Ruins.pyramid_style() should pick a style whose spawn.realm contains the cell's realm (data/biomes realm field, \u00a7AA) AND whose spawn.biomes contains the biome key; no match \u2192 no pyramid. Biome keys are BiomeTemplates enum names (all exist).",
+  "fields": "base_m: side length range. tiers: receding steps (1 = smooth). face_deg: face angle. profile: smooth | step | talud_tablero | rounded_adobe | earth. stairs: number of grand stairs (0 = none). top: none | chapel_at_foot | temple_comb | twin_shrine | hall | shrine | post_circle. interior: none | corridor_chamber | top_room. material: palette key. cluster: single | single+satellite | field | plaza | avenue | terraces (cluster_n = how many). chance: share of that biome's ruins that are this style (replaces PYRAMID_CHANCE).",
+  "climb": "Stair risers are ledges (\u00a70). smooth casing = cling only at broken patches. terraces are a staircase for the valley and hold soil (spawn gate for camp-follower ground plants)."
+ },
+ "styles": {
+  "true_pyramid": {
+   "source": "Old Kingdom Egypt (Giza)",
+   "base_m": [
+    60,
+    120
+   ],
+   "tiers": 1,
+   "face_deg": 52,
+   "profile": "smooth",
+   "stairs": 0,
+   "top": "none",
+   "interior": "corridor_chamber",
+   "material": "sandstone",
+   "cluster": "single+satellite",
+   "spawn": {
+    "realm": [
+     "afrotropic",
+     "palearctic"
+    ],
+    "biomes": [
+     "HOT_DESERT",
+     "OASIS",
+     "DUNES",
+     "BADLANDS"
+    ]
+   },
+   "chance": 0.35
+  },
+  "steep_pyramid": {
+   "source": "Nubian (Meroe)",
+   "base_m": [
+    8,
+    30
+   ],
+   "tiers": 1,
+   "face_deg": 70,
+   "profile": "smooth",
+   "stairs": 0,
+   "top": "chapel_at_foot",
+   "interior": "none",
+   "material": "sandstone",
+   "cluster": "field",
+   "cluster_n": [
+    10,
+    40
+   ],
+   "spawn": {
+    "realm": [
+     "afrotropic"
+    ],
+    "biomes": [
+     "HOT_DESERT",
+     "SAVANNA",
+     "THORN_SCRUB"
+    ]
+   },
+   "chance": 0.2
+  },
+  "temple_pyramid": {
+   "source": "Maya (Tikal, Chichen Itza)",
+   "base_m": [
+    30,
+    60
+   ],
+   "tiers": 9,
+   "face_deg": 60,
+   "profile": "step",
+   "stairs": 1,
+   "stair_riser_m": 0.45,
+   "top": "temple_comb",
+   "interior": "top_room",
+   "material": "limestone",
+   "cluster": "plaza",
+   "cluster_n": [
+    3,
+    6
+   ],
+   "spawn": {
+    "realm": [
+     "neotropic"
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "JUNGLE",
+     "TROPICAL_RAINFOREST"
+    ]
+   },
+   "chance": 0.2
+  },
+  "platform_pyramid": {
+   "source": "Aztec / Teotihuacan",
+   "base_m": [
+    60,
+    120
+   ],
+   "tiers": 4,
+   "face_deg": 40,
+   "profile": "talud_tablero",
+   "stairs": 2,
+   "top": "twin_shrine",
+   "interior": "none",
+   "material": "limestone",
+   "cluster": "avenue",
+   "cluster_n": [
+    4,
+    8
+   ],
+   "spawn": {
+    "realm": [
+     "neotropic"
+    ],
+    "biomes": [
+     "SHORTGRASS_PRAIRIE",
+     "THORN_SCRUB",
+     "TROPICAL_DRY_FOREST"
+    ]
+   },
+   "chance": 0.2
+  },
+  "adobe_huaca": {
+   "source": "Moche / Lambayeque coast",
+   "base_m": [
+    80,
+    160
+   ],
+   "tiers": 5,
+   "face_deg": 30,
+   "profile": "rounded_adobe",
+   "stairs": 1,
+   "top": "none",
+   "interior": "none",
+   "material": "mud_brick",
+   "cluster": "single",
+   "spawn": {
+    "realm": [
+     "neotropic",
+     "andes"
+    ],
+    "biomes": [
+     "DUNES",
+     "BEACH",
+     "HOT_DESERT"
+    ]
+   },
+   "chance": 0.25
+  },
+  "terrace_platform": {
+   "source": "Inca (ushnu, terraces)",
+   "base_m": [
+    20,
+    40
+   ],
+   "tiers": 3,
+   "face_deg": 75,
+   "profile": "step",
+   "stairs": 1,
+   "top": "hall",
+   "interior": "none",
+   "material": "fitted_granite",
+   "cluster": "terraces",
+   "cluster_n": [
+    6,
+    14
+   ],
+   "spawn": {
+    "realm": [
+     "andes"
+    ],
+    "biomes": [
+     "ALPINE_MEADOW",
+     "PARAMO",
+     "PUNA"
+    ]
+   },
+   "chance": 0.3
+  },
+  "ziggurat": {
+   "source": "Mesopotamia (Ur)",
+   "base_m": [
+    40,
+    60
+   ],
+   "tiers": 3,
+   "face_deg": 55,
+   "profile": "step",
+   "stairs": 3,
+   "top": "shrine",
+   "interior": "top_room",
+   "material": "mud_brick",
+   "cluster": "single",
+   "spawn": {
+    "realm": [
+     "palearctic",
+     "central_asia"
+    ],
+    "biomes": [
+     "HOT_DESERT",
+     "OASIS",
+     "STEPPE"
+    ]
+   },
+   "chance": 0.15
+  },
+  "earth_mound": {
+   "source": "Cahokia / Mississippian; Chinese mausoleum mounds",
+   "base_m": [
+    40,
+    200
+   ],
+   "tiers": 2,
+   "face_deg": 25,
+   "profile": "earth",
+   "stairs": 1,
+   "top": "post_circle",
+   "interior": "none",
+   "material": "turf",
+   "cluster": "field",
+   "cluster_n": [
+    3,
+    9
+   ],
+   "spawn": {
+    "realm": [
+     "nearctic",
+     "east_asia_temperate"
+    ],
+    "biomes": [
+     "FLOODPLAIN_FOREST",
+     "TALLGRASS_PRAIRIE",
+     "TEMPERATE_DECIDUOUS"
+    ]
+   },
+   "chance": 0.12
+  },
+  "stone_terrace_shrine": {
+   "source": "Javanese (Candi Sukuh)",
+   "base_m": [
+    10,
+    20
+   ],
+   "tiers": 3,
+   "face_deg": 65,
+   "profile": "step",
+   "stairs": 1,
+   "top": "none",
+   "interior": "none",
+   "material": "andesite",
+   "cluster": "single",
+   "spawn": {
+    "realm": [
+     "malesia",
+     "indomalaya"
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "TEMPERATE_RAINFOREST"
+    ]
+   },
+   "chance": 0.1
+  }
+ }
+}

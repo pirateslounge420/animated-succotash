@@ -2563,3 +2563,8 @@ overriding them.
 - §B head-look on figures; §C look pass items 2–5 (sky presets, leaf-card canopies, nearest filtering, water).
 - §D/PLANT_SCHEMA the leaf-card builder and atlas; §F/F2 derived day/night from tilt (reference: `tools/reference/daylight_reference.py`); §G photoperiod; §G2 soil as a hard gate.
 - §P opening/wake-up scene with fleeing shinobi; §O master shinobi; §Q enemy camp (Phase 8+).
+- §W/§Y/§Z performance at locked 60 fps, 480p internal render (`look.render`), sprint slide / brake / cloak flurry (`movement.slide`, `movement.brake`, `audio.cloak_flurry`).
+- §X carcasses and vultures; §AA realm gate + direct loading of `data/plants/*.json` (`species_db` reads only `data/biomes`); §AB surface water store (`weather_sim.gd`).
+- §AC creature guild budgets, body archetypes and population laws — numbers from `docs/design/ECOLOGY_REFERENCE.md` (Damuth K, Hatton predator law, home-range allometry, activity/social/migration fields, thermal numbers).
+- §AD bird migration (region-count drain/fill by season, V-formation and murmuration sky events, nesting) and flocking (`flocking` field).
+- §AE regional pyramid/monument styles by realm × biome (`data/ruins.json`, `Ruins.pyramid_style()`), one parametrised builder.
