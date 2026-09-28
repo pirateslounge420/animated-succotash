@@ -113,6 +113,10 @@ class Trail:
 	static var _ribbon_mat: StandardMaterial3D
 	var _pts: Array = [] # [position, age]
 	var _im := ImmediateMesh.new()
+	## This streak's length (seconds of flight) and color (a super shot's
+	## is red, combat "overcharge" tracer_color / tracer_s).
+	var length_s := LENGTH_S
+	var color := AimArc.COLOR.lightened(0.4)
 
 	static func ribbon_material() -> StandardMaterial3D:
 		if _ribbon_mat == null:
@@ -136,7 +140,7 @@ class Trail:
 			p[1] += delta
 		if flying:
 			_pts.append([pos, 0.0])
-		_pts = _pts.filter(func(p): return p[1] <= LENGTH_S)
+		_pts = _pts.filter(func(p): return p[1] <= length_s)
 		global_transform = Transform3D.IDENTITY
 		_im.clear_surfaces()
 		if _pts.size() < 2:
@@ -152,11 +156,11 @@ class Trail:
 			var along := p1 - p0
 			var side := along.cross(eye - here)
 			side = side.normalized() if side.length() > 1e-6 else Vector3.ZERO
-			var k := 1.0 - float(_pts[i][1]) / LENGTH_S
+			var k := 1.0 - float(_pts[i][1]) / length_s
 			# Never thinner on screen than MIN_W per metre away (a far shot
 			# still shows as a line).
 			var half := maxf(WIDTH_M, here.distance_to(eye) * MIN_W) * 0.5 * (0.3 + 0.7 * k)
-			var col := Color(AimArc.COLOR.lightened(0.4), ALPHA * k)
+			var col := Color(color, ALPHA * k)
 			_im.surface_set_color(col)
 			_im.surface_add_vertex(here - side * half)
 			_im.surface_set_color(col)

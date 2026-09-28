@@ -128,7 +128,15 @@ static func side_of(part: String) -> String:
 
 
 static func critical(part: String) -> bool:
-	return kind_of(part) in (hits().critical_parts as Array)
+	return force_critical or kind_of(part) in (hits().critical_parts as Array)
+
+
+## A super shot's hits are all critical (design §S): set around its
+## strike().
+static var force_critical := false
+## Called with (critical: bool) whenever a strike lands on a creature (all
+## strikes are the player's weapons): the player's super meter.
+static var on_hit := Callable()
 
 
 ## What `amount` becomes on `part` of a creature with hit table `table`
@@ -157,6 +165,8 @@ static func strike(collider: Object, shape: int, amount: float, from_pos: Vector
 	var part := part_of(collider, shape)
 	if who.has_method("hurt"):
 		who.hurt(amount, from_pos, part, at)
+		if on_hit.is_valid():
+			on_hit.call(critical(part))
 	else:
 		if _folk == null:
 			_folk = CreatureSpecies.new()

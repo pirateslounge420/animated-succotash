@@ -52,6 +52,8 @@ const BINDING := Color(0.66, 0.56, 0.4)
 
 var player: PlanetPlayer
 var raising := false
+## Super throws (tests).
+var super_shots := 0
 ## Seconds raised.
 var charge := 0.0
 ## Out in the world (flying, stuck or lying there), or null (it's yours).
@@ -143,12 +145,16 @@ func update_spear(delta: float) -> void:
 			charge = 0.0
 			_play("bow_draw", 0.7)
 		if raising:
-			charge = minf(charge + delta, RAISE_S * 1.5)
+			var cap := RAISE_S + float(SuperMeter.overcharge("spear").get("extra_s", 1.0)) if player.meter.has() else RAISE_S * 1.5
+			var was_over := overcharge() >= 1.0
+			charge = minf(charge + delta, cap)
+			if overcharge() >= 1.0 and not was_over:
+				_play("bow_draw", 0.5) # the shaft hums: overcharged
 	else:
 		if _press >= 0.0 and can and not _blocked:
 			if raising:
 				if power() >= MIN_POWER:
-					throw()
+					throw(overcharge() >= 1.0)
 			elif _thrust <= 0.0:
 				thrust()
 		cancel()
@@ -157,6 +163,14 @@ func update_spear(delta: float) -> void:
 		_prompt_t = 0.2
 		prompt = "E: take the spear back" if in_reach() else ""
 	_carry()
+
+
+## 0-1: how far into the overcharge the raise is (design §S; 0 without
+## meter or before the full raise; 1 = a super throw on release).
+func overcharge() -> float:
+	if not raising or not player.meter.has():
+		return 0.0
+	return clampf((charge - RAISE_S) / maxf(float(SuperMeter.overcharge("spear").get("extra_s", 1.0)), 0.01), 0.0, 1.0)
 
 
 ## Where the crosshair is (PlanetPlayer.crosshair_point()).
@@ -214,19 +228,30 @@ func launch() -> Array:
 	return [from, dir * speed + player.velocity * Tuning.num("combat", "spear", "inherit_velocity")]
 
 
-func throw() -> void:
+## Throw it; `is_super`: an overcharged throw (design §S): critical,
+## damage_scale, faster, falling less, a red streak; the meter empties.
+func throw(is_super := false) -> void:
 	var p := power()
 	player.make_noise(NOISE)
 	var shot := launch()
 	var from: Vector3 = shot[0]
+	var vel: Vector3 = shot[1]
 	var s := ThrownSpear.new()
 	s.world = player.world
 	s.chunks = player.chunks
 	s.camps = player.camps
 	s.exclude = [player.get_rid()]
 	s.damage = THROW_DAMAGE * p
+	if is_super:
+		var oc := SuperMeter.overcharge("spear")
+		s.damage = THROW_DAMAGE * float(oc.get("damage_scale", 3.0))
+		vel *= float(oc.get("speed_scale", 1.3))
+		s.super_shot = true
+		s.gravity_scale = 1.0 / maxf(float(oc.get("range_scale", 1.5)), 0.01)
+		player.meter.spend()
+		super_shots += 1
 	player.world.world_root.add_child(s)
-	s.launch(from, shot[1])
+	s.launch(from, vel)
 	thrown = s
 	raising = false
 	charge = 0.0

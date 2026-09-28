@@ -9,13 +9,14 @@ class_name CloakedFigure
 ## Beasts stay beasts.
 ##
 ## Palettes: the player's indigo cloak with the rust hem is theirs alone.
-## Folk roll a main cloak color from the dyed-cloth families (ochres,
-## madder reds, bog browns, woad blues, moss greens, undyed greys) and a
-## contrasting trim (a warm edge on a cool cloak, a cool one on a warm);
-## the tunic and trousers follow the main color (the shader keeps their
-## shading). A camp's folk draw mostly from one family, its tribe's look,
-## with an outlier now and then; seeded from the camp, so the same camp has
-## the same people on every visit.
+## Folk roll their cloak at random from the palette in data/cloaks.json
+## (red, orange, yellow, green, blue, indigo, violet, magenta, pink,
+## black, white, grey) and their fringe from it too, a different color,
+## so camps keep looking fresh; seeded from the camp, so the same camp
+## has the same people on every visit. The tunic and trousers follow the
+## cloak (the shader keeps their shading). Only the opening camp's pair
+## draws from the old dyed-cloth families (FAMILIES: ochres, madder
+## reds, ...; roll_palette strict), the designer's pick.
 
 const PLAYER_H := 1.57
 
@@ -37,10 +38,34 @@ static func tribe_family(seed_value: int) -> int:
 	return absi(hash([seed_value, "tribe"])) % FAMILIES.size()
 
 
-## One person's [main, trim] (sRGB), mostly from `family` (always from it
-## if `strict`).
+static var _cloaks := {}
+
+
+## data/cloaks.json.
+static func cloaks() -> Dictionary:
+	if _cloaks.is_empty():
+		var parsed = JSON.parse_string(FileAccess.get_file_as_string("res://data/cloaks.json")) if FileAccess.file_exists("res://data/cloaks.json") else null
+		_cloaks = parsed if parsed is Dictionary else {"colors": {}}
+	return _cloaks
+
+
+## One person's [main, trim] (sRGB). Anyone: a random cloak from the
+## palette (data/cloaks.json) and a random different fringe. `strict`
+## (the opening camp): from the dyed-cloth family `family`, with a
+## contrasting trim.
 static func roll_palette(rng: RandomNumberGenerator, family: int, strict := false) -> Array:
-	var fam := family if strict or rng.randf() < 0.8 else rng.randi_range(0, FAMILIES.size() - 1)
+	if not strict:
+		var cols: Dictionary = cloaks().get("colors", {})
+		var names: Array = cols.keys()
+		if names.size() >= 2:
+			var avoid: Array = cloaks().get("avoid", [])
+			for attempt in 8:
+				var a: String = names[rng.randi_range(0, names.size() - 1)]
+				var b: String = names[rng.randi_range(0, names.size() - 1)]
+				if a == b or avoid.has([a, b]):
+					continue
+				return [Color(str(cols[a])), Color(str(cols[b]))]
+	var fam := family
 	var main := _pick(rng, fam)
 	# A contrasting edge: warm on cool, cool on warm.
 	var warm: bool = FAMILIES[fam][0]

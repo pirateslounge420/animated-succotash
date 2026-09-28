@@ -29,6 +29,11 @@ var max_hp := 100.0
 var aiming := false
 var show_crosshair := false
 var draw_power := 0.0 # 0-1 bow power
+## The super meter (0-1) and how far into an overcharge the draw is (0-1)
+## (design §S: a thin ring round the charge gauge, data/hud.json).
+var meter := 0.0
+var overcharge := 0.0
+static var METER_HUD := Tuning.section("hud", "super_meter")
 ## The weapon in hand ("Bow", "Spear", "Spear (thrown)").
 var weapon := ""
 ## The binomial under the crosshair (LookTarget), or "".
@@ -189,6 +194,15 @@ func _draw() -> void:
 			draw_arc(c, 16.0, PI * 0.25, PI * 0.75, 16, Color(1, 1, 1, 0.3), 3.0)
 			var full := draw_power >= 1.0
 			draw_arc(c, 16.0, PI * 0.75 - PI * 0.5 * draw_power, PI * 0.75, 16, Color(1.0, 0.85, 0.3) if full else Color(1, 1, 1, 0.9), 3.0)
+			# Overcharging: the gauge fills again in red, over the full one.
+			if overcharge > 0.0:
+				var red := Color(str(SuperMeter.overcharge("").get("tracer_color", "#FF2A2A")))
+				draw_arc(c, 16.0, PI * 0.75 - PI * 0.5 * overcharge, PI * 0.75, 16, red, 3.0)
+		# The super meter: a thin ring round the gauge, only when it holds
+		# something.
+		if meter > float(METER_HUD.get("show_below", 0.02)):
+			var ring := Color(str(METER_HUD.get("ring_color", "#FFD23A")))
+			draw_arc(c, 21.0, -PI * 0.5, -PI * 0.5 + TAU * meter, 48, ring, float(METER_HUD.get("ring_px", 2)))
 
 
 ## The health meter, bottom left where the hearts were: a slim bar on a

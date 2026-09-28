@@ -259,6 +259,9 @@ var look: LookTarget
 ## table's burden.free_items carried things you're slower, climb slower
 ## and are louder (burden_*()).
 var inventory := Inventory.new()
+## The super meter (design §S): perfect techs and landed hits fill it; an
+## overcharged bow or spear spends it (SuperMeter).
+var meter := SuperMeter.new()
 ## The inventory screen is open (main sets it): the mouse is free for it.
 var ui_open := false
 ## The dotted arc of where the shot will go, while drawing or raising.
@@ -339,6 +342,7 @@ var _stroke_hand := 0
 
 
 func _ready() -> void:
+	Hits.on_hit = func(critical: bool) -> void: meter.hit(critical)
 	floor_max_angle = deg_to_rad(50.0)
 	floor_snap_length = 0.6
 	_shape = CapsuleShape3D.new()
@@ -637,6 +641,8 @@ func _physics_process(delta: float) -> void:
 			else:
 				_roll_wait_f -= 1
 				if _roll_wait_f == 0:
+					# A heavy landing without the roll: the series is over.
+					meter.broke()
 					_fall_damage(_pending_fell)
 		# Held jump keeps jumping each time you land (after the squat).
 		if Input.is_action_pressed("jump") and not crouching and _squat_t <= 0.0 and _rolling <= 0.0:
@@ -673,6 +679,7 @@ func _physics_process(delta: float) -> void:
 		_impact_f -= 1
 		if _impact_f == 0:
 			impacts += 1
+			meter.broke()
 			_damage(_impact_dmg)
 			_impact_dmg = 0.0
 	for k in get_slide_collision_count():
@@ -1083,6 +1090,7 @@ func _damage(amount: float) -> void:
 	hurt.emit(amount)
 	if hp <= 0.0:
 		dead = true
+		meter.died()
 		bow.drawing = false
 		spear.cancel()
 		stop_climb()
@@ -1186,6 +1194,7 @@ func _fall_damage(fell: float) -> void:
 ## m/s: no damage up to ROLL_SAFE_M, a share of it beyond; the fall turns
 ## into forward speed; ROLL_LEN_PER_M metres of roll per metre fallen.
 func _start_roll(fell: float, fall_v: float) -> void:
+	meter.perfect("roll")
 	if fell > ROLL_SAFE_M:
 		_damage((fell - FALL_SAFE_M) * FALL_DAMAGE_PER_M * ROLL_DAMAGE)
 	var h := _move - up * _move.dot(up)
@@ -1216,6 +1225,9 @@ func _tech(cam_forward: Vector3) -> bool:
 			var bamboo := g0.species >= 0 and SpeciesDB.all()[g0.species].shape == PlantSpecies.Shape.BAMBOO
 			if _wall_limb or bamboo:
 				on_wall = false
+	if not on_wall and _wall_f > WJ_WINDOW_F and _wall_f < WJ_WINDOW_F * 4:
+		# Pressed after the window: a late tech ends the series.
+		meter.broke()
 	if on_wall:
 		clinging = true
 		clings += 1
@@ -1263,10 +1275,14 @@ func _cling_step(delta: float) -> void:
 		if drop:
 			velocity = _wall_n * 0.5
 			_wj_chain = 0
+			meter.broke()
 		elif _cling_f <= WJ_TAP_F:
 			velocity = _wall_jump(1.0, true)
+			meter.perfect("wall_jump")
 		else:
+			# Out of a cling: it springs you off, but it wasn't the tap.
 			velocity = _wall_jump(CLING_JUMP, false)
+			meter.broke()
 		_fall_top = world.radius_of(global_position)
 		return
 	_cling_left -= delta
@@ -1358,6 +1374,8 @@ func _swing_step(delta: float, cam_forward: Vector3) -> void:
 		_end_swing()
 		return
 	if Input.is_action_just_pressed("jump") or not Input.is_action_pressed("wall_jump"):
+		# Let go and fly on: a perfect swing release.
+		meter.perfect("swing")
 		_end_swing()
 		return
 	if _sw_graph.radius[_sw_i] <= 0.0:
@@ -1370,6 +1388,7 @@ func _swing_step(delta: float, cam_forward: Vector3) -> void:
 	if velocity.length() > float(_sw_props.break_speed_mps) or _sw_over_t > SWING_GIVE_S:
 		_snap(_sw_graph, _sw_i)
 		velocity *= SWING_SNAP_KEEP
+		meter.broke()
 		_end_swing()
 		return
 	# The wood springs back toward where it grew.
@@ -1389,6 +1408,7 @@ func _swing_step(delta: float, cam_forward: Vector3) -> void:
 		var into := -before_v.dot(n)
 		if into > IMPACT_SAFE:
 			impacts += 1
+			meter.broke()
 			_damage((into - IMPACT_SAFE) * IMPACT_PER)
 			_end_swing()
 			return

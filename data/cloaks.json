@@ -1,0 +1,21 @@
+{
+	"_help": {
+		"about": "Cloak colors for cloaked folk (CloakedFigure). Every figure outside the opening camp rolls its cloak from `colors` at random, and its fringe (the hem band and trim) from `colors` too, never the same as the cloak, so camps keep looking fresh. The opening camp's pair keeps the designer's pick (the elder ochre yellow, the hunter madder red: Encampment.OPENING_FAMILIES). avoid: cloak and fringe pairs no one else wears (the player's own look: indigo with a rust-orange fringe). Colors are sRGB hex; the shading of the cloth is kept.",
+		"colors": "The palette, by name."
+	},
+	"colors": {
+		"red": "#B3261E",
+		"orange": "#D9661F",
+		"yellow": "#E3B21C",
+		"green": "#3F8F3A",
+		"blue": "#2C62C8",
+		"indigo": "#3B2E8F",
+		"violet": "#7B3FB5",
+		"magenta": "#C2267A",
+		"pink": "#E68AAE",
+		"black": "#1E1E24",
+		"white": "#E6E3DA",
+		"grey": "#8C8C92"
+	},
+	"avoid": [["indigo", "orange"]]
+}

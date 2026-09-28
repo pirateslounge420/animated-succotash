@@ -4,6 +4,35 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Cloak colors for every other camp; the super meter and overcharge (design §S)
+- **Cloaks:**
+  - Every cloaked figure outside the opening camp rolls its cloak at random from `data/cloaks.json`: red, orange, yellow, green, blue, indigo, violet, magenta, pink, black, white, grey.
+  - Its fringe (hem and trim) is another random color from the same list, never the cloak's own, and never the player's indigo-with-orange.
+  - Seeded per camp, so a camp keeps its people.
+  - The opening pair stays the designer's pick: the elder ochre yellow, the hunter madder red.
+- **Super meter** (`scripts/player/super_meter.gd`; numbers in `data/movement.json` "super_meter"):
+  - Perfect techs fill it: a tap wall jump in its window, a landing roll, letting go of a swing. Each perfect in the series adds more (0.04, then +0.01 per earlier link).
+  - A missed or late tech ends the series; the meter keeps its fill. That covers a press after the window, a cling instead of the tap, a heavy landing without the roll, a snapped branch or an impact.
+  - Landed hits on creatures add 0.06, a critical 0.12.
+  - It never decays; dying empties it.
+- **Overcharge** (`data/combat.json` "overcharge"):
+  - With any meter, holding the bow or spear past full charge keeps charging for extra time (bow 1.2 s, spear 1.0 s).
+  - Released then, it's a super shot, and the meter empties: a critical hit, ×3 damage, ×1.3 speed, falling ×1.5 less, and a red streak. The arrow also pierces the first body.
+  - Released earlier, it's a normal full shot and the meter is kept.
+  - The drawn arrow's tip glints red and the bow creaks when overcharged.
+- **HUD:** a thin gold ring round the charge gauge shows the meter (only when it's above 2 %); the gauge fills again in red through the overcharge (`data/hud.json`).
+- **Not yet:**
+  - the spear's pin and impact-kill, and the fishing pole's overcharge (the pole isn't built);
+  - the speedometer glow (no speedometer yet);
+  - NPC shinobi meters;
+  - the bounce and hop-landing perfects (those techs aren't built).
+- **Checks:**
+  - `tools/super_check.gd`: 12/12 pass (fill, chain bonus, cling break, early release keeps meter, super arrow with pierce/fall/red streak, no meter means no overcharge, super spear, hit and critical fill, death reset).
+  - tech_check passes.
+  - play_fixes_check and hits_check fail only their known, earlier failures.
+
+---
+
 ## 2026-09-28 — Session 2, Step 5: soil as a hard spawn gate (addendum §G2)
 - **Readable soil:**
   - Each point's soil class comes from the geology pass (granite, basalt, karst, sandstone, alluvium, sand, clay/peat, till: the schema's names).

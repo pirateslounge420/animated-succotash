@@ -37,6 +37,13 @@ var camps: Camps
 var velocity := Vector3.ZERO
 var damage := 10.0
 var exclude: Array[RID] = []
+## A super shot (design §S, SuperMeter): every hit critical, the fall
+## eased by gravity_scale, a red streak (combat "overcharge").
+var super_shot := false
+var gravity_scale := 1.0
+## Bodies a super arrow passes through before it sticks (overcharge
+## "pierce").
+var pierce := 0
 
 var _stuck := false
 ## What it struck: the collider's name, "ground" or "water" ("" in flight).
@@ -54,6 +61,10 @@ func launch(from: Vector3, vel: Vector3) -> void:
 	velocity = vel
 	_voice = Audio3D.make("arrow", self)
 	_trail = AimArc.Trail.new()
+	if super_shot:
+		var oc := SuperMeter.overcharge("")
+		_trail.color = Color(str(oc.get("tracer_color", "#FF2A2A")))
+		_trail.length_s = float(oc.get("tracer_s", 0.9))
 	add_child(_trail)
 	_orient()
 	flying.append(self)
@@ -105,7 +116,7 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 		return
 	var up: Vector3 = world.dir_of(global_position)
-	velocity -= up * GRAVITY * delta
+	velocity -= up * GRAVITY * gravity_scale * delta
 	var a := global_position
 	var b := a + velocity * delta
 	var q := PhysicsRayQueryParameters3D.create(a, b)
@@ -154,10 +165,17 @@ func _physics_process(delta: float) -> void:
 	match hit_kind:
 		"creature":
 			# Hurt in the part it met (Hits: head, eye, limb, body).
+			Hits.force_critical = super_shot
 			Hits.strike(ray.collider, ray.shape, damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a, hit_pos, camps)
+			Hits.force_critical = false
 			var cr := hit_obj as Creature
-			if cr and cr.species.role == "swarm":
-				# Through a cloud of fireflies: on it flies.
+			if (cr and cr.species.role == "swarm") or pierce > 0:
+				# Through a cloud of fireflies, or a super arrow through
+				# the first body: on it flies.
+				if not (cr and cr.species.role == "swarm"):
+					pierce -= 1
+					for n in hit_obj.find_children("*", "CollisionObject3D", true, false):
+						exclude.append((n as CollisionObject3D).get_rid())
 				exclude.append((ray.collider as CollisionObject3D).get_rid())
 				global_position = b
 				_orient()

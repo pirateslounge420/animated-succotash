@@ -14,6 +14,13 @@ extends Node3D
 ## creatures' and people's hitbox parts, Hitboxes), so it lands where you
 ## aim at any range, then falls away with distance.
 ##
+## Overcharge (design §S, SuperMeter): with any super meter, holding past
+## the full draw keeps drawing for the overcharge's extra_s; released
+## then, the arrow is a super shot (critical, damage_scale, speed_scale,
+## falls range_scale less, pierces the first body, a red streak) and the
+## meter empties. Released before, a normal full shot, meter kept. The
+## nocked arrow's tip glows red while overcharged.
+##
 ## The bow is carried slung on the back, raised when you draw; in first
 ## person it's in view in front of you and the string comes back as you
 ## draw.
@@ -28,6 +35,8 @@ var player: PlanetPlayer
 ## Seconds drawn (0 when not drawing).
 var charge := 0.0
 var drawing := false
+## Super shots loosed (tests).
+var super_shots := 0
 
 var _bow: Node3D # third-person bow, on the player
 var _view: Node3D # first-person bow, on the camera
@@ -59,6 +68,14 @@ func setup(p: PlanetPlayer) -> void:
 	_carry()
 
 
+## 0-1: how far into the overcharge the draw is (0 without meter or
+## before the full draw; 1 = a super shot on release).
+func overcharge() -> float:
+	if not drawing or not player.meter.has():
+		return 0.0
+	return clampf((charge - DRAW_S) / maxf(float(SuperMeter.overcharge("bow").get("extra_s", 1.2)), 0.01), 0.0, 1.0)
+
+
 ## 0-1: how hard an arrow would fly right now.
 func power() -> float:
 	var t := charge / DRAW_S
@@ -81,11 +98,16 @@ func update_bow(delta: float) -> void:
 			drawing = true
 			charge = 0.0
 			_play("bow_draw")
-		charge = minf(charge + delta, DRAW_S * 1.5)
+		var was_over := overcharge() >= 1.0
+		var cap := DRAW_S + float(SuperMeter.overcharge("bow").get("extra_s", 1.2)) if player.meter.has() else DRAW_S * 1.5
+		charge = minf(charge + delta, cap)
+		if overcharge() >= 1.0 and not was_over:
+			_play("bow_draw") # the bow creaks: overcharged
 	elif drawing:
+		var is_super := overcharge() >= 1.0
 		drawing = false
 		if can and power() >= MIN_POWER:
-			_loose()
+			_loose(is_super)
 		charge = 0.0
 	_carry()
 
@@ -107,10 +129,11 @@ func launch() -> Array:
 	return [from, dir * MAX_SPEED * p + player.velocity * Tuning.num("combat", "bow", "inherit_velocity")]
 
 
-func _loose() -> void:
+func _loose(is_super := false) -> void:
 	var p := power()
 	var shot := launch()
 	var from: Vector3 = shot[0]
+	var vel: Vector3 = shot[1]
 	var arrow := Arrow.new()
 	arrow.world = player.world
 	arrow.chunks = player.chunks
@@ -119,9 +142,19 @@ func _loose() -> void:
 	var dmg := DAMAGE * p
 	if p >= 1.0:
 		dmg *= 1.0 + randf() * Tuning.num("combat", "bow", "crit_extra") # a critical hit, now and then
+	if is_super:
+		# The super shot: the meter's spend.
+		var oc := SuperMeter.overcharge("bow")
+		dmg = DAMAGE * float(oc.get("damage_scale", 3.0))
+		vel *= float(oc.get("speed_scale", 1.3))
+		arrow.super_shot = true
+		arrow.gravity_scale = 1.0 / maxf(float(oc.get("range_scale", 1.5)), 0.01)
+		arrow.pierce = 1 if bool(oc.get("pierce", true)) else 0
+		player.meter.spend()
+		super_shots += 1
 	arrow.damage = dmg
 	player.world.world_root.add_child(arrow)
-	arrow.launch(from, shot[1])
+	arrow.launch(from, vel)
 	_play("bow_release")
 	# Loud enough for wildlife round you to hear (PlanetPlayer.noise_level).
 	player.make_noise(Spear.NOISE)
@@ -152,6 +185,10 @@ func _carry() -> void:
 		var vb: Node3D = _view.get_node("Bow")
 		BowMesh.set_draw(vb, d)
 		_nocked.visible = drawing
+		# Overcharged: the arrow glints red.
+		var glint := overcharge() >= 1.0
+		for mi in _nocked.find_children("*", "MeshInstance3D", true, false):
+			(mi as MeshInstance3D).material_overlay = _red() if glint else null
 		var nock: Vector3 = vb.get_meta("nock")
 		_nocked.position = nock + Vector3(0, 0, -0.42)
 	else:
@@ -175,3 +212,16 @@ static func _no_shadow(n: Node) -> void:
 		(n as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	for c in n.get_children():
 		_no_shadow(c)
+
+
+static var _red_mat: StandardMaterial3D
+
+
+## The overcharge's red glint (combat "overcharge" tracer_color).
+static func _red() -> StandardMaterial3D:
+	if _red_mat == null:
+		_red_mat = StandardMaterial3D.new()
+		_red_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		_red_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		_red_mat.albedo_color = Color(Color(str(SuperMeter.overcharge("").get("tracer_color", "#FF2A2A"))), 0.55)
+	return _red_mat

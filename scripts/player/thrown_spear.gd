@@ -33,6 +33,10 @@ var camps: Camps
 var velocity := Vector3.ZERO
 var damage := 30.0
 var exclude: Array[RID] = []
+## A super shot (design §S, SuperMeter): every hit critical, the fall
+## eased by gravity_scale, a red streak (combat "overcharge").
+var super_shot := false
+var gravity_scale := 1.0
 ## Come to rest (stuck, lying or afloat): it can be taken back.
 var landed := false
 var afloat := false
@@ -57,6 +61,10 @@ func launch(from: Vector3, vel: Vector3) -> void:
 	velocity = vel
 	_voice = Audio3D.make("spear_impact", self)
 	_trail = AimArc.Trail.new()
+	if super_shot:
+		var oc := SuperMeter.overcharge("")
+		_trail.color = Color(str(oc.get("tracer_color", "#FF2A2A")))
+		_trail.length_s = float(oc.get("tracer_s", 0.9))
 	add_child(_trail)
 	_orient()
 
@@ -73,7 +81,7 @@ func _physics_process(delta: float) -> void:
 		_lay_down()
 		return
 	var up: Vector3 = world.dir_of(global_position)
-	velocity -= up * GRAVITY * delta
+	velocity -= up * GRAVITY * gravity_scale * delta
 	var a := global_position
 	var b := a + velocity * delta
 	var q := PhysicsRayQueryParameters3D.create(a, b)
@@ -100,7 +108,9 @@ func _physics_process(delta: float) -> void:
 	if who and who.has_method("hurt"):
 		# A creature, or a rig of its own such as the gibbon: hurt in the
 		# part it met (Hits).
+		Hits.force_critical = super_shot
 		Hits.strike(ray.collider, ray.shape, damage * clampf(velocity.length() / Spear.MAX_SPEED, 0.4, 1.0), a, hit_pos, camps)
+		Hits.force_critical = false
 		var cr := who as Creature
 		if cr and cr.species.role == "swarm":
 			exclude.append((part as CollisionObject3D).get_rid())
