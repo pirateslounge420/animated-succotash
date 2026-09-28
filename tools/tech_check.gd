@@ -153,7 +153,8 @@ func _initialize() -> void:
 	ok(player.clings == c0 and player.wall_jumps == w0, "pressed %d frames after touching: too late, no wall jump (window %d frames)" % [PlanetPlayer.WJ_WINDOW_F + 3, PlanetPlayer.WJ_WINDOW_F])
 	await settle(camp_d)
 
-	# --- Cling: hold, drop; cling jump is weak and resets the chain -------
+	# --- Cling: hold; letting go springs you off (weaker than a perfect
+	# tap, and the chain starts over) -------------------------------------
 	g = trunk_near(player.global_position)
 	fly_at_trunk(g, 6.0, 3.0)
 	await wait_contact()
@@ -164,14 +165,12 @@ func _initialize() -> void:
 	var held_m := player.global_position.distance_to(p0)
 	var clung := player.clinging
 	print("cling: held 1 s, moved %.2f m" % held_m)
-	ok(clung and held_m < 0.6, "holding right click on the trunk clings")
-	await press("jump")
-	await frames(2)
-	await release("jump")
+	ok(clung and held_m < 0.8, "holding right click on the trunk clings")
 	await release("wall_jump")
+	await frames(2)
 	var vj := player.velocity.length()
-	print("jump out of a cling: %.1f m/s (a tap kick is %.1f m/s)" % [vj, PlanetPlayer.WJ_SPEED])
-	ok(not player.clinging and vj < PlanetPlayer.WJ_SPEED * 0.75 and player._wj_chain == 0, "jumping out of a cling is weak and starts the chain over")
+	print("let go of a cling: %.1f m/s (a tap kick is %.1f m/s)" % [vj, PlanetPlayer.WJ_SPEED])
+	ok(not player.clinging and vj > PlanetPlayer.WJ_SPEED * 0.7 and vj < PlanetPlayer.WJ_SPEED * 0.99 and player._wj_chain == 0, "letting go of a cling springs you off (a bit less than a tap) and starts the chain over")
 	await settle(camp_d)
 	g = trunk_near(player.global_position)
 	fly_at_trunk(g, 6.0, 3.0)

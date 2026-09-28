@@ -1720,7 +1720,12 @@ yet (deferred).
 - **Aim** (`aim_sway_deg()`, combat table "aim"): the aim wanders a
   little, smoothly: 0.3 degrees standing, up to 1.2 at a sprint, least at
   a jump's apex (0 there, plus 0.45 degrees per m/s rising or falling).
-  The aim arc shows the wander and the shot follows the arc.
+  The shot follows the aim arc, which is worked out every frame but not
+  drawn (combat "arc" show_aim_arc false, the designer's call: players
+  learn the drop by eye). In flight an arrow or spear leaves a streak
+  (AimArc.Trail): a camera-facing ribbon 4.5 cm wide at the head (never
+  thinner than 2.5 mm per metre away, so a far shot still reads),
+  0.45 s of flight long, fading and narrowing to the tail.
 - **Unstick**: stuck is touching something and going nowhere: wedged
   between two walls (a trunk and a shrub's stem), held off the ground
   (under a root), or caught on a crease of the ground's collision mesh
@@ -1754,15 +1759,17 @@ yet (deferred).
   locked at 60 fps with 60 Hz physics (`project.godot`), and windows are
   counted in physics frames (movement table `wall_jump`, `roll`), so a
   hitch can't widen them. In the air, what you touch decides the move:
-  - On a steep face (wall, cliff, trunk, ruin) touched within 7 frames:
+  - On a steep face (wall, cliff, trunk, ruin) touched within 14 frames:
     you plant on it. Let go within 6 frames and it's a wall jump, back
-    the way you came at 7.5 m/s (or your approach speed if faster),
-    58 degrees up. Chained wall jumps (no ground, no cling between) each
+    the way you came at 11 m/s (or your approach speed if faster),
+    58 degrees up (about 1.5 m high at the 28 m/s² gravity, even from a
+    standstill). Chained wall jumps (no ground, no cling between) each
     gain x1.03, up to 4 of them, so a chain keeps or builds speed. Hold
     and it's a cling: you slip at 0.25 m/s for up to 2.5 s, then slide
-    off; letting go drops you; Space kicks off at 0.6 of the speed and
-    starts the chain over. The first two frames of a kick are the crouch
-    pose.
+    off. Letting go of right click (or Space) springs you off at 0.9 of
+    a kick and starts the chain over, so a missed tap still launches;
+    Shift drops you off the face. The first two frames of a kick are
+    the crouch pose.
   - Near a branch, bamboo culm or vine too thin to kick off (a limb up to
     0.22 m radius, never the trunk): catch and swing, held. A pendulum
     from the handhold (a vine swings from where it hangs) at the speed you

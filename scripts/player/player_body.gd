@@ -71,7 +71,9 @@ extends Node3D
 ## satchel, legs and boots are on VIEW_LAYER, which the first-person
 ## camera sees: looking down you see your hands, the cloak's front edges
 ## and ring, and your boots. Nothing it sees comes within 0.3 m of the
-## eyes (the camera's near plane is 0.1 m).
+## eyes (the camera's near plane is 0.1 m). By default the first-person
+## camera hides VIEW_LAYER too (the designer found the cloak's edges got
+## in the way): movement "camera" first_person_body brings it back.
 ##
 ## Faces -Z, +Y up, feet at y = 0.
 
@@ -85,10 +87,13 @@ const SHIN_M := 0.34
 ## middle (TreeClimb reaches for holds from here).
 const SHOULDER_Y := 1.26
 const SHOULDER_X := 0.175
-const UPPER_ARM_M := 0.27
+const UPPER_ARM_M := 0.30
+## How much longer the forearm's sleeve (and so the hand) sits than the
+## first cut of the rig: arms that reach to mid-thigh, in proportion.
+const FOREARM_EXTRA := 0.03
 ## Shoulder to the middle of the hand, arm straight (where a hand holds
 ## the spear or a handhold).
-const ARM_M := 0.56
+const ARM_M := 0.62
 ## The neck (the Head pivot) over the hips.
 const NECK_UP := 0.54
 ## Arms' rest pose (the right arm; the left mirrors z), and the elbows'.
@@ -190,6 +195,9 @@ var seated := false
 ## Stride length as a share of the player's: bigger figures take longer,
 ## slower strides, smaller ones quicker, shorter ones (set to the scale).
 var stride_scale := 1.0
+## The trailing arms' elbow bend (radians), set by whoever trails them
+## (PlanetPlayer's ninja run): added to the elbows over their rest pose.
+var trail_elbow := 0.0
 var _crouch_target := 0.0
 var _crouch := 0.0
 var _tuck := 0.0
@@ -404,6 +412,12 @@ func _pose(delta: float) -> void:
 	_pose_arms_rest(a)
 
 
+## Where the legs are in their stride, 0 .. TAU (the left leg forward at
+## PI/2): arms keep time with it.
+func stride_phase() -> float:
+	return _phase
+
+
 ## Shoulders ride the torso; an arm nobody has posed rests bent, hands in
 ## front, swaying a little with the stride `a`.
 func _pose_arms_rest(a: float) -> void:
@@ -416,7 +430,7 @@ func _pose_arms_rest(a: float) -> void:
 		var off := arm.transform.basis.y.normalized().angle_to(rest_y)
 		var w := 1.0 - smoothstep(0.08, 0.25, off)
 		var sway := 0.12 * a * sin(_phase + PI * (1 - s)) + 0.03 * sin(_time * 1.3 + s)
-		_elbows[s].rotation = Vector3((ELBOW_REST.x + sway) * w, 0.0, ELBOW_REST.z * sx * w)
+		_elbows[s].rotation = Vector3((ELBOW_REST.x + sway) * w + trail_elbow, 0.0, ELBOW_REST.z * sx * w)
 
 
 # --- The cloak ------------------------------------------------------------------
@@ -641,7 +655,7 @@ func _colliders(parent: Node3D) -> void:
 		var et := at * _elbows[s].transform
 		var sh := at.origin
 		var el := et.origin
-		var wr := et * Vector3(0, -0.24, 0)
+		var wr := et * Vector3(0, -0.24 - FOREARM_EXTRA, 0)
 		_add_cap(sh, el, 0.075)
 		_add_cap(el, wr, 0.08)
 		var lt := ht * _legs[s].transform
@@ -897,10 +911,11 @@ static func _forearm_spec() -> SculptedBodies.Spec:
 	var s := SculptedBodies.Spec.new()
 	s.cell = 0.022
 	s.ell(Vector3(0, 0.0, 0.0), Vector3(0.064, 0.06, 0.064), 0, CLOAK, 0.03, Basis.IDENTITY, CLOTH_K)
-	s.cap(Vector3(0, 0.0, 0.0), Vector3(0, -0.2, 0.0), 0.062, 0.084, 0, CLOAK, 0.03, CLOTH_K)
-	s.ell(Vector3(0, -0.205, 0.0), Vector3(0.078, 0.014, 0.078), 0, LINING, 0.008, Basis.IDENTITY, CLOTH_K)
-	s.paint(Vector3(0, -0.21, 0.0), Vector3(0.1, 0.012, 0.1), LINING.darkened(0.3), 0.006)
-	s.paint(Vector3(0.0, -0.1, 0.07), Vector3(0.035, 0.1, 0.03), CLOAK.darkened(0.2), 0.03)
+	var e := FOREARM_EXTRA
+	s.cap(Vector3(0, 0.0, 0.0), Vector3(0, -0.2 - e, 0.0), 0.062, 0.084, 0, CLOAK, 0.03, CLOTH_K)
+	s.ell(Vector3(0, -0.205 - e, 0.0), Vector3(0.078, 0.014, 0.078), 0, LINING, 0.008, Basis.IDENTITY, CLOTH_K)
+	s.paint(Vector3(0, -0.21 - e, 0.0), Vector3(0.1, 0.012, 0.1), LINING.darkened(0.3), 0.006)
+	s.paint(Vector3(0.0, -0.1 - e * 0.5, 0.07), Vector3(0.035, 0.1, 0.03), CLOAK.darkened(0.2), 0.03)
 	return s
 
 
@@ -909,11 +924,12 @@ static func _forearm_spec() -> SculptedBodies.Spec:
 static func _glove_spec(sx: float) -> SculptedBodies.Spec:
 	var s := SculptedBodies.Spec.new()
 	s.cell = 0.012
-	s.cap(Vector3(0, -0.19, 0.0), Vector3(0, -0.25, -0.004), 0.029, 0.027, 0, GLOVE, 0.012, LEATHER_K)
-	s.ell(Vector3(0.0, -0.285, -0.006), Vector3(0.022, 0.047, 0.036), 0, GLOVE, 0.016, Basis.IDENTITY, LEATHER_K)
-	s.cap(Vector3(0.0, -0.315, -0.012), Vector3(-0.012 * sx, -0.345, 0.0), 0.02, 0.016, 0, GLOVE, 0.012, LEATHER_K)
-	s.cap(Vector3(-0.012 * sx, -0.268, -0.03), Vector3(-0.018 * sx, -0.3, -0.05), 0.012, 0.01, 0, GLOVE, 0.008, LEATHER_K)
-	s.paint(Vector3(0, -0.245, 0.0), Vector3(0.035, 0.01, 0.035), GLOVE.darkened(0.3), 0.005) # cuff seam
+	var d := Vector3(0, -FOREARM_EXTRA, 0)
+	s.cap(Vector3(0, -0.19, 0.0) + d, Vector3(0, -0.25, -0.004) + d, 0.029, 0.027, 0, GLOVE, 0.012, LEATHER_K)
+	s.ell(Vector3(0.0, -0.285, -0.006) + d, Vector3(0.022, 0.047, 0.036), 0, GLOVE, 0.016, Basis.IDENTITY, LEATHER_K)
+	s.cap(Vector3(0.0, -0.315, -0.012) + d, Vector3(-0.012 * sx, -0.345, 0.0) + d, 0.02, 0.016, 0, GLOVE, 0.012, LEATHER_K)
+	s.cap(Vector3(-0.012 * sx, -0.268, -0.03) + d, Vector3(-0.018 * sx, -0.3, -0.05) + d, 0.012, 0.01, 0, GLOVE, 0.008, LEATHER_K)
+	s.paint(Vector3(0, -0.245, 0.0) + d, Vector3(0.035, 0.01, 0.035), GLOVE.darkened(0.3), 0.005) # cuff seam
 	return s
 
 

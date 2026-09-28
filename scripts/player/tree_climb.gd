@@ -41,18 +41,19 @@ static var TRUNK_MPS := Tuning.num("movement", "climb", "graph_trunk_mps")
 static var LIMB_MPS := Tuning.num("movement", "climb", "graph_limb_mps")
 static var TRUNK_BEAT_S := Tuning.num("movement", "climb", "trunk_beat_s")
 static var LIMB_BEAT_S := Tuning.num("movement", "climb", "limb_beat_s")
-const MIN_REACH_S := 0.35
+static var MIN_REACH_S := Tuning.num("movement", "climb", "min_reach_s")
 ## A reach round the trunk moves the body about this far (m).
 const AROUND_M := 0.45
 ## The hands on the trunk sit this far apart (m of bark).
 const HANDS_APART_M := 0.24
 ## Wood steeper than this (|tangent . up|) is climbed like a trunk.
 const CLING_SLOPE := 0.7
-## Body: shoulder height over the feet and arm length (PlayerBody); the
-## body's middle off the bark when hugging steep wood, how far the hands
-## are over the shoulders then and when hanging (m).
-const SHOULDER_Y := PlayerBody.SHOULDER_Y
-const ARM_M := PlayerBody.ARM_M
+## Body: shoulder height over the feet and arm length (PlayerBody, at the
+## player's scale); the body's middle off the bark when hugging steep
+## wood, how far the hands are over the shoulders then and when hanging
+## (m).
+static var SHOULDER_Y := PlayerBody.SHOULDER_Y * PlanetPlayer.BODY_K
+static var ARM_M := PlayerBody.ARM_M * PlanetPlayer.BODY_K
 const HUG_M := 0.26
 const TRUNK_REACH_Y := 0.3
 const HANG_REACH_Y := 0.5
@@ -267,8 +268,13 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 	# Round the trunk: the hand on that side goes first, the other follows
 	# up beside it (they never cross).
 	if on_trunk and absf(input.x) > 0.3 and absf(input.x) >= absf(input.y) and _cling(li):
-		var sgn := signf(input.x)
-		var lead_h := 1 if sgn > 0.0 else 0
+		# Which way round the angle goes on screen: D always takes you to
+		# the camera's right, A to its left, whichever way the wood's
+		# angle runs. The hand furthest that way leads.
+		var ba := _body_angle()
+		var rightward := (_around(li, ba + 0.1) - _around(li, ba)).dot(right_l)
+		var sgn := signf(input.x) * (1.0 if rightward >= 0.0 else -1.0)
+		var lead_h := 1 if wrapf(angle[1] - angle[0], -PI, PI) * sgn >= 0.0 else 0
 		var i := hold[lead_h]
 		if not _cling(i):
 			return []

@@ -39,10 +39,10 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | W A S D (or arrow keys) | Walk |
 | W twice quickly, then hold | Sprint |
 | Shift (hold) | Sneak: crouch, slower and quieter. In the air: drop fast. Tap it right as you land from a big fall: a ninja roll (no fall damage, and the fall turns into speed) |
-| Space | Jump (a short hop; a longer one at a sprint); while climbing, push off |
-| Right mouse button | The tech button, in the air; what you touch decides. On a wall, cliff, trunk or ruin: tap it within a few frames of touching it to wall jump (chained ones keep building speed), hold it to cling (Space kicks off weakly, letting go drops you). Near a branch, bamboo or vine: hold it to catch and swing, let go to fly on (green bamboo springs you out; dead, grey wood snaps) |
+| Space | Jump (about a metre, heavy and snappy; longer and higher at a sprint); while climbing, push off |
+| Right mouse button | The tech button, in the air; what you touch decides. On a wall, cliff, trunk or ruin: tap it within 14 frames (about a quarter second) of touching it to wall jump (chained ones keep building speed), or hold it to cling; letting go of a cling (or Space) still springs you off, a little softer than a perfect tap, and Shift drops you off instead. Near a branch, bamboo or vine: hold it to catch and swing, let go to fly on (green bamboo springs you out; dead, grey wood snaps) |
 | Mouse | Look around (straight up and down too) |
-| Left mouse button | Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw. Works in the air too |
+| Left mouse button | Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw. Works in the air too. No aim arc: you learn the drop by eye; a bright streak follows the arrow or spear once it flies |
 | Q | Swap between bow and spear |
 | E | Interact, whatever you're doing (climbing, swimming, crouched): take a sample of the plant you're looking at, pick up your spear, an arrow or something you set down, grab a tree to climb it (E again lets go), turn over a fallen log, take your things back from your body after dying |
 | I | Inventory: what you carry and wear. The world doesn't stop. Click a line to choose it; G sets a carried thing down, E wears a spare. I or Esc closes it |

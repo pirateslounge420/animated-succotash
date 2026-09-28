@@ -144,15 +144,18 @@ static var JAM_S := Tuning.num("movement", "unstick", "ground_jam_s")
 ## orbiting in third (a hair short of vertical so the view never flips).
 const PITCH_MAX := PI * 0.5 - 0.002
 static var DOUBLE_TAP_S := Tuning.num("movement", "speed", "double_tap_s")
-const STAND_HEIGHT := 1.7
-const CROUCH_HEIGHT := 1.05
-const CAMERA_Y := 1.5
-const CROUCH_CAMERA_Y := 0.95
+## The player's height against the rig (movement table "body"): the
+## capsule, the eyes and the camera scale with the body.
+static var BODY_K := Tuning.num("movement", "body", "player_scale")
+static var STAND_HEIGHT := 1.7 * BODY_K
+static var CROUCH_HEIGHT := 1.05 * BODY_K
+static var CAMERA_Y := 1.5 * BODY_K
+static var CROUCH_CAMERA_Y := 0.95 * BODY_K
 static var CLIMB_SPEED := Tuning.num("movement", "climb", "simple_mps")
 static var CLIMB_REACH_M := Tuning.num("movement", "climb", "reach_m")
 ## First person: eye height standing and crouched.
-const EYE_Y := 1.45
-const CROUCH_EYE_Y := 0.9
+static var EYE_Y := 1.45 * BODY_K
+static var CROUCH_EYE_Y := 0.9 * BODY_K
 ## Hit points; a drop of more than FALL_SAFE_M hurts (by the height, so a
 ## fast-fall out of a hop doesn't).
 const MAX_HP := 100.0
@@ -352,6 +355,7 @@ func _ready() -> void:
 		_animator = model.get_node_or_null("Animator")
 	else:
 		_body = PlayerBody.new()
+		_body.scale = Vector3.ONE * BODY_K
 	add_child(_body)
 	_set_layers(_body)
 	_blob = BlobShadow.make(self, BLOB_R)
@@ -817,7 +821,8 @@ func _climb_step(delta: float) -> void:
 		return
 	_climb_y = minf(_climb_y, h * 0.9)
 	var r := clampf(dims.x * h * 0.85, 0.1, 1.6) * lerpf(1.0, 0.6, clampf(_climb_y / h, 0.0, 1.0))
-	_climb_out = _climb_out.rotated(tup, -input.x * CLIMB_SPEED * burden_climb() * delta / (r + 0.4))
+	# Round the trunk: D takes you to your right as you face it.
+	_climb_out = _climb_out.rotated(tup, input.x * CLIMB_SPEED * burden_climb() * delta / (r + 0.4))
 	_climb_out = (_climb_out - tup * _climb_out.dot(tup)).normalized()
 	global_position = base + tup * _climb_y + _climb_out * (r + 0.4)
 	velocity = Vector3.ZERO
@@ -840,7 +845,7 @@ func _graph_climb_step(delta: float) -> void:
 	if c.step(delta, input, fwd, fwd.cross(up), up) != "":
 		stop_climb()
 		return
-	_climb_ease = minf(_climb_ease + delta / 0.4, 1.0)
+	_climb_ease = minf(_climb_ease + delta / 0.25, 1.0)
 	global_position = _climb_from.lerp(c.feet, smoothstep(0.0, 1.0, _climb_ease)) if _climb_ease < 1.0 else c.feet
 	velocity = Vector3.ZERO
 	if c.facing.length() > 0.1:
@@ -852,6 +857,11 @@ func _graph_climb_step(delta: float) -> void:
 		_grab_t -= delta
 		var s := 0 if hands[0].distance_to(_grab_at) < hands[1].distance_to(_grab_at) else 1
 		hands[s] = hands[s].lerp(_grab_at, sin(clampf(1.0 - _grab_t / GRAB_S, 0.0, 1.0) * PI))
+	# Each arm to the hand on its own side (the arms never cross).
+	if (hands[1] - hands[0]).dot(global_basis.x) < 0.0:
+		var h0: Vector3 = hands[0]
+		hands[0] = hands[1]
+		hands[1] = h0
 	_reach_arms(hands)
 	trees.climb_sounds(global_position + up * EYE_Y)
 	if Input.is_action_just_pressed("jump"):
@@ -877,7 +887,7 @@ func _reach_arms(hands: Array[Vector3]) -> void:
 		var x := Vector3.RIGHT - y * y.dot(Vector3.RIGHT)
 		x = x.normalized() if x.length() > 0.1 else y.cross(Vector3.BACK).normalized()
 		var z := x.cross(y)
-		arm.transform.basis = Basis(x, y * clampf(length / TreeClimb.ARM_M, 0.4, 1.3), z)
+		arm.transform.basis = Basis(x, y * clampf(length / PlayerBody.ARM_M, 0.4, 1.3), z)
 
 
 ## Unstick rule: pressed against two or more colliders at once (a trunk
@@ -984,7 +994,7 @@ func hand_positions() -> Array[Vector3]:
 	var out: Array[Vector3] = []
 	if _body is PlayerBody:
 		for arm in (_body as PlayerBody).arms:
-			out.append(arm.global_transform * Vector3(0, -TreeClimb.ARM_M, 0))
+			out.append(arm.global_transform * Vector3(0, -PlayerBody.ARM_M, 0))
 	return out
 
 
@@ -1241,20 +1251,22 @@ var _wall_speed := 0.0
 
 ## Holding a face (right click held): a tap (let go within WJ_TAP_F
 ## frames) kicks off it, a full wall jump that chains; held longer it's a
-## cling: it slips slowly and lets go after CLING_S; letting go drops you;
-## jump kicks off weakly and starts the chain over.
+## cling: it slips slowly and lets go after CLING_S. Letting go of right
+## click (or jump) springs you off it all the same, at CLING_JUMP of a
+## kick, starting the chain over; crouch drops you off it instead.
 func _cling_step(delta: float) -> void:
 	_cling_f += 1
 	var jump := Input.is_action_just_pressed("jump")
-	if jump or not Input.is_action_pressed("wall_jump"):
+	var drop := Input.is_action_just_pressed("crouch") and _cling_f > WJ_TAP_F
+	if jump or drop or not Input.is_action_pressed("wall_jump"):
 		clinging = false
-		if jump and _cling_f > WJ_TAP_F:
-			velocity = _wall_jump(CLING_JUMP, false)
+		if drop:
+			velocity = _wall_n * 0.5
+			_wj_chain = 0
 		elif _cling_f <= WJ_TAP_F:
 			velocity = _wall_jump(1.0, true)
 		else:
-			velocity = -_wall_n * 0.5
-			_wj_chain = 0
+			velocity = _wall_jump(CLING_JUMP, false)
 		_fall_top = world.radius_of(global_position)
 		return
 	_cling_left -= delta
@@ -1493,7 +1505,8 @@ func _update_squat(delta: float) -> void:
 			# middle, once, the cloak wrapping round.
 			var spin := -TAU * (1.0 - _rolling / _roll_total)
 			var b := Basis(Vector3.RIGHT, spin)
-			_body.transform = Transform3D(b, Vector3(0, 0.45, 0) - b * Vector3(0, 0.45, 0))
+			var mid := Vector3(0, 0.45, 0) * _body.scale.y
+			_body.transform = Transform3D(b.scaled(_body.scale), mid - b * mid)
 		else:
 			_body.position = Vector3(0, -_squat_dip, 0)
 			_body.rotation = Vector3(kick + lean, 0.0, 0.0)
@@ -1511,19 +1524,24 @@ func _dead_step(delta: float) -> void:
 
 ## Third person (the camera on a spring arm behind you) or first person
 ## (at your eyes, your own body hidden from the camera but still casting
-## its shadow).
+## its shadow). In first person the whole body is hidden, cloak, hands and
+## boots too, unless movement "camera" first_person_body is on (then the
+## parts on PlayerBody.VIEW_LAYER show: hands, the cloak's front, boots).
 func _apply_view() -> void:
 	if _spring == null:
 		return
+	var hidden := BODY_LAYER
+	if not bool(Tuning.num("movement", "camera", "first_person_body")):
+		hidden |= PlayerBody.VIEW_LAYER
 	if first_person:
 		_spring.spring_length = 0.0
 		_spring.position = Vector3(0, CROUCH_EYE_Y if crouching else EYE_Y, 0)
-		_camera.cull_mask &= ~BODY_LAYER
+		_camera.cull_mask &= ~hidden
 		_pitch = clampf(_pitch, -PITCH_MAX, PITCH_MAX)
 	else:
 		_spring.spring_length = 4.5
 		_spring.position = Vector3(0, CROUCH_CAMERA_Y if crouching else CAMERA_Y, 0)
-		_camera.cull_mask |= BODY_LAYER
+		_camera.cull_mask |= hidden
 		_pitch = clampf(_pitch, -PITCH_MAX, PITCH_MAX)
 
 
@@ -1545,8 +1563,8 @@ func _update_camera(delta: float) -> void:
 	if _body is PlayerBody and not (climbing and _climb_graph) and not swinging:
 		var spear_arm := spear.arm_angle()
 		# The ninja run: between walk and sprint speed, with nothing in
-		# hand to do, the arms trail straight back, a beat behind; any
-		# action takes them at once, and they ease back in after.
+		# hand to do, the arms trail back, a beat behind (through jumps
+		# too); any action takes them at once, and they ease back in after.
 		var rp := Tuning.section("movement", "run_pose")
 		var acting := bow.drawing or not is_nan(spear_arm) or climbing or clinging or aiming()
 		var hs := (velocity - up * velocity.dot(up)).length()
@@ -1557,12 +1575,27 @@ func _update_camera(delta: float) -> void:
 			_arm_trail = move_toward(_arm_trail, trail_to, delta / maxf(float(rp.get("blend_in_s", 0.3)), 0.01))
 		else:
 			_arm_trail = lerpf(_arm_trail, trail_to, clampf(delta / maxf(float(rp.get("arm_lag_s", 0.1)), 0.01), 0.0, 1.0))
-		var trail_rad := -deg_to_rad(float(rp.get("arm_trail_deg", 80.0))) * _arm_trail
-		for arm in (_body as PlayerBody).arms:
-			var want := 1.35 if bow.drawing else lerpf(0.06, trail_rad, _arm_trail)
-			if arm.name == "ArmR" and not is_nan(spear_arm):
+		# Trailing: back and a little out from the sides, elbows a touch
+		# bent, each arm bobbing with the opposite leg's stride.
+		var pb := _body as PlayerBody
+		var trail_rad := deg_to_rad(float(rp.get("arm_trail_deg", 76.0)))
+		var bob_rad := deg_to_rad(float(rp.get("arm_bob_deg", 6.0)))
+		var spread_rad := deg_to_rad(float(rp.get("arm_spread_deg", 14.0)))
+		pb.trail_elbow = deg_to_rad(float(rp.get("elbow_bend_deg", 14.0))) * _arm_trail
+		var k := clampf(delta * (30.0 if acting else 14.0), 0.0, 1.0)
+		for arm in pb.arms:
+			var s := 0 if arm.name == "ArmL" else 1
+			var sx := -1.0 if s == 0 else 1.0
+			var back := -(trail_rad + bob_rad * sin(pb.stride_phase() + PI * (1 - s)))
+			var want := 1.35 if bow.drawing else lerpf(0.06, back, _arm_trail)
+			if s == 1 and not is_nan(spear_arm):
 				want = spear_arm
-			arm.rotation.x = lerpf(arm.rotation.x, want, clampf(delta * (30.0 if acting else 14.0), 0.0, 1.0))
+			arm.rotation.x = lerpf(arm.rotation.x, want, k)
+			arm.rotation.z = lerpf(arm.rotation.z, lerpf(0.13, spread_rad, _arm_trail) * sx, k)
+	elif _body is PlayerBody:
+		# The hands are on the wood: no trailing bend in the elbows.
+		(_body as PlayerBody).trail_elbow = 0.0
+		_arm_trail = 0.0
 
 
 ## Keep the blob shadow on the ground (`ground`: its height at the

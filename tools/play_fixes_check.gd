@@ -228,7 +228,7 @@ func _initialize() -> void:
 		air += 1.0 / 60.0
 		peak = maxf(peak, alt())
 	print("standing hop: %.2f s in the air, %.2f m high (Earth-gravity hop of the same height: %.2f s)" % [air, peak, 2.0 * sqrt(2.0 * peak / 9.8)])
-	ok(air < 0.6 and peak < 0.8, "a standing hop is a tap: short and low")
+	ok(air < 0.6 and peak > 0.85 and peak < 1.3, "a standing hop is snappy: about a metre, down fast")
 	# Landing squat: a couple of frames.
 	ok(player._squat_len > 0.0 and player._squat_len <= 0.07, "a light landing squats %.0f ms" % (player._squat_len * 1000.0))
 	await frames(20)
@@ -575,7 +575,8 @@ func _initialize() -> void:
 		print("aim wander: %.2f deg standing, %.2f deg rising, %.2f deg at the apex" % [s_ground, s_rise, s_min])
 		ok(s_min < s_ground and s_min < s_rise, "aim steadiest at the apex")
 
-	# 4. Aim arc: dots while drawn; its end against where the arrow lands.
+	# 4. Aim arc: worked out while drawn but not shown (players learn the
+	# drop by eye); its end against where the arrow lands.
 	await settle(camp_d)
 	player.set_view(0.15, 0.0)
 	await press("shoot")
@@ -588,7 +589,7 @@ func _initialize() -> void:
 		var verts: PackedVector3Array = arr[Mesh.ARRAY_VERTEX]
 		predicted = verts[verts.size() - 1]
 		print("aim arc: %d dots, ends %.1f m away" % [verts.size(), predicted.distance_to(player.global_position)])
-	ok(dots, "a dotted arc shows while the bow is drawn")
+	ok(dots and player.aim_arc.visible == AimArc.SHOW, "the aim arc is worked out while drawn (shown: %s)" % player.aim_arc.visible)
 	await release("shoot")
 	await frames(2)
 	var arrow: Arrow = null

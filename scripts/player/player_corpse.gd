@@ -54,6 +54,7 @@ static func in_reach(pos: Vector3, radius: float) -> PlayerCorpse:
 func _ready() -> void:
 	lying.append(self)
 	var body := PlayerBody.new()
+	body.scale = Vector3.ONE * PlanetPlayer.BODY_K
 	add_child(body)
 	# Slumped on its face, as you fell.
 	body.rotation = Vector3(-PI * 0.5, 0.0, 0.0)

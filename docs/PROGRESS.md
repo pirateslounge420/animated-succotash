@@ -4,6 +4,32 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Feel pass 2 (the designer's second play)
+- **Jump:** gravity 19.6 → 28 m/s² and take-off 5.2 → 7.6 m/s: a hop is about 1.0–1.1 m high (was 0.7) with the same 0.53 s in the air, so it's higher and less floaty. Fast-fall 26 m/s. Swings keep their old rhythm (swing gravity_scale 0.7).
+- **Wall jump:**
+  - The window is 14 frames (was 7).
+  - The kick is 11 m/s (was 7.5), about 1.5 m up even from a standstill.
+  - Letting go of right click out of a cling now springs you off at 0.9 of a kick (it used to drop you). Shift drops off.
+  - Only a perfect tap chains.
+- **Body:**
+  - The player is 0.92 scale, about 1.44 m to the hood (movement "body" player_scale). The capsule, eyes, camera, climbing reach and your corpse scale with it.
+  - Arms are 0.06 m longer (shoulder to mid-hand 0.62 m), in proportion. Folk keep their own heights.
+- **Ninja run arms:**
+  - The arms trail back 76° from hanging, flared 14° out, elbows bent 14°, and bob 6° with each stride.
+  - They trail through jumps and ease back over 0.22 s. All of it is in movement "run_pose".
+- **Climbing:**
+  - About twice as fast: 4.1 m up in 2 s (was 2.1). Reach speeds are doubled, beats cut to 0.05–0.08 s, and the minimum reach time is now in data (min_reach_s 0.12).
+  - A and D were reversed round the trunk. D now always goes to the camera's right, whichever way the wood's angle runs, and the arms no longer cross.
+- **Bow and spear:** no aim arc before release (combat "arc" show_aim_arc false). After release, a brighter, wider streak follows the shot, and it stays visible far off.
+- **First person:** nothing of your body shows (no cloak edges, hands or boots); your shadow stays. Set movement "camera" first_person_body to true to bring the hands and boots back.
+- **Checks:**
+  - tech_check and inventory_check pass.
+  - play_fixes_check passes except "wall jump out of a sprint jump", which fails the same way on the previous commit (it depends on where creatures wander).
+  - hits_check's "folk head hit reads 2x critical" also fails on the previous commit.
+  - The hop and aim-arc checks now test the new design.
+
+---
+
 ## 2026-09-28 — Design reconciliation built into Phase 1 (from docs/design/RECONCILIATION_2026-09-27.md)
 - **Merged:**
   - All the reconciliation commits.
