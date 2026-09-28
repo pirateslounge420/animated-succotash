@@ -1264,6 +1264,11 @@ func _cling_step(delta: float) -> void:
 		velocity = _wall_n * 0.8 - up * 1.0
 		_wj_chain = 0
 		return
+	# Planted (a tap's first frames): held still, whatever the contact.
+	if _cling_f <= WJ_TAP_F:
+		velocity = Vector3.ZERO
+		_kick_t = 2.0 / 60.0
+		return
 	# Held to the face, slipping slowly.
 	velocity = -_wall_n * 1.5 - up * CLING_SLIDE
 	move_and_slide()

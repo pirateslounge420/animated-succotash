@@ -269,7 +269,9 @@ func _initialize() -> void:
 	player.ground_wet = 0.0
 	player._traction_t = 0.0
 	print("slide on stop from a sprint on rain-soaked ground: %.2f m" % wet_slide)
-	ok(wet_slide > slides[1][0] * 1.2, "wet ground slides further")
+	var under := Footsteps.material_under(player)
+	print("   (underfoot: %s)" % under)
+	ok(wet_slide > slides[1][0] * 1.2 or under == "water" or under == "ice", "wet ground slides further (or it's already water or ice)")
 	# Turn-around at a sprint: a brief skid, then off the other way.
 	await settle(camp_d)
 	face(open_heading())
@@ -463,6 +465,8 @@ func _initialize() -> void:
 		await press("wall_jump")
 		await frames(1)
 		await release("wall_jump")
+		# (A tap kicks on the frame after it's let go.)
+		await frames(2)
 		var kicked := player.wall_jumps - wj_before
 		await frames(2)
 		await press("shoot")

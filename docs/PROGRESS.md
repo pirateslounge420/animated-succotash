@@ -4,6 +4,47 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Design reconciliation built into Phase 1 (from docs/design/RECONCILIATION_2026-09-27.md)
+- **Merged:**
+  - All the reconciliation commits.
+  - `data/plant-catalogues` at edd25cd: bark and leaf tiles, appearance blocks, the fish catalogue. Nothing reads these yet.
+- **Time:**
+  - The game is locked at 60 fps with 60 Hz physics.
+  - You wake at the start of dusk: 17:00 on the 144-minute clock.
+  - `data/dev.json` now plays the real 144-minute day.
+- **The tech button (right click in the air):**
+  - On a wall, cliff, trunk or ruin face: a tap within 7 frames of touching it is a wall jump. Chained wall jumps gain ×1.03 each, up to 4, so a chain keeps or builds speed (was −28% each).
+  - Holding is a cling that lasts 2.5 s. Space out of a cling kicks off weakly and starts the chain over.
+  - Near a limb, bamboo or vine: hold to catch and swing. You can hang as long as you like; let go to fly on.
+  - Handholds behave per species (`data/handholds.json`): break speed, flex, snapback, how much weight they bear.
+    - Green bamboo launches you (breaks at 60 m/s, snapback 0.9).
+    - Dead wood cracks at a third of that.
+  - Vines hang from wet, warm-country trees; on the stamp's rainforest, 7–9 of 83 trees carry 170–220 vine handholds.
+- **Roll, momentum, impact:**
+  - Landing roll: crouch within 5 frames of touchdown. A 10 m drop costs 0 health instead of 28 and exits at 17.5 m/s.
+  - Over sprint speed, momentum carries on the ground.
+  - Hitting a trunk at 22 m/s without a tech: 60 damage. With a tap: none.
+- **Look:**
+  - The ninja run pose.
+  - One crouch pose for the squat, kick, cling and roll.
+  - The first-person view never tumbles.
+- **Dead wood:** 3% of trees stand dead by default (taiga 12%, badlands 18%, swamps 10%) and 15% of bamboo culms. They are bare and grey, and brittle as handholds. There is one fixed decay stage until Phase 5.
+- **Death:**
+  - Your body stays where you fell with all your gear, and birds circle it after 45 s.
+  - You wake by the nearest camp fire with nothing. Test: 1,459 m from the body, full health, no bow.
+  - E by the body takes everything back.
+  - Nothing hostile hurts you within 8 m of a lit fire.
+- **Cloaked folk:**
+  - Tribal, marsh and northern folk, the opening camp's elder and hunter, the small folk (the goblins, renamed, with their lanterns), the Forest troll and the Marsh witch all use the player's rig and cloak, scaled.
+  - Each person wears a rolled dyed-cloth palette, mostly from their tribe's family; the player's indigo and rust is never rolled.
+- **Checks (headless):** tech_check 23 of 23, play_fixes_check 35 of 35, inventory_check and hits_check all pass; every script compiles.
+- **Open:**
+  - Bamboo shoots (a forage item) wait for Phase 10.
+  - Dead wood's decomposers, cavities and residents wait for Phases 5–8.
+  - Northerners' fur trim and the big folk's heavier hood aren't done.
+  - The restless dead at ruins keep their bones.
+  - The era texture tweaks from the reconciliation doc (`filter_nearest_mipmap`, render scale) are still open.
+
 ## 2026-09-28 — Phase 1 play session 1: the designer's eleven items fixed, ready to re-test
 - **Checks:** `tools/play_fixes_check.gd` (items 1–5 and 7–9, every check passes), `tools/inventory_check.gd` (all pass), `tools/hits_check.gd` (all pass); every script compiles.
 - **Tables:** every movement and weapon number now lives in `data/movement.json` and `data/combat.json` (hits, feedback and healing included), each part explained at the top of the file. Items are in `data/items.json`.
