@@ -42,6 +42,9 @@ func settle(d: Vector3) -> void:
 	player.global_position = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) + 0.05)
 	player.velocity = Vector3.ZERO
 	player._move = Vector3.ZERO
+	# A teleport: a tech press from before it isn't a bounce on arrival.
+	player._tech_press_f = -9999
+	player._bounce_wait_f = 0
 	player.hp = PlanetPlayer.MAX_HP
 	await frames(30)
 
@@ -141,15 +144,23 @@ func _initialize() -> void:
 
 	# --- Frame window: too late, nothing ---------------------------------
 	g = trunk_near(player.global_position)
-	fly_at_trunk(g, 6.0, 1.3)
+	var late_out := fly_at_trunk(g, 6.0, 1.3)
 	await wait_contact()
+	# Then off the face and up where the window runs out in the air (the
+	# light up-gravity would otherwise keep you rubbing the trunk as you
+	# rise, and on the ground the press is a branch bounce, design §J).
+	player.global_position += late_out * 4.0 + player.up * 5.0
+	player.velocity = Vector3.ZERO
+	player._move = Vector3.ZERO
 	await frames(PlanetPlayer.WJ_WINDOW_F + 3)
 	var c0 := player.clings
 	var w0 := player.wall_jumps
+	print("late: wall_f %d floor %s alt %.2f clinging %s climbing %s" % [player._wall_f, player.is_on_floor(), alt(), player.clinging, player.climbing])
 	await press("wall_jump")
 	await frames(2)
 	await release("wall_jump")
 	await frames(2)
+	print("late after: clings +%d wj +%d wall_f %d" % [player.clings - c0, player.wall_jumps - w0, player._wall_f])
 	ok(player.clings == c0 and player.wall_jumps == w0, "pressed %d frames after touching: too late, no wall jump (window %d frames)" % [PlanetPlayer.WJ_WINDOW_F + 3, PlanetPlayer.WJ_WINDOW_F])
 	await settle(camp_d)
 

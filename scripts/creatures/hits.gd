@@ -139,6 +139,48 @@ static var force_critical := false
 static var on_hit := Callable()
 
 
+## Momentum in melee (design §K, combat.json "strike"): the extra damage a
+## blow closing at `closing` m/s adds, on the movement.impact curve:
+## nothing under safe_mps, per_mps for each m/s over.
+static func strike_bonus(closing: float) -> float:
+	var s: Dictionary = data().get("strike", {})
+	return maxf(closing - float(s.get("safe_mps", 6.0)), 0.0) * float(s.get("per_mps", 8.0))
+
+
+## Closing at kill_mps or more: a kill, on anything not a mythic.
+static func strike_kills(closing: float, who: Node) -> bool:
+	var s: Dictionary = data().get("strike", {})
+	return closing >= float(s.get("kill_mps", 25.0)) and not mythic(who)
+
+
+## `amount` raised so a blow on `part` of `who` kills it outright (a
+## creature with hit points; anything else keeps `amount`).
+static func kill_amount(who: Node, part: String, amount: float) -> float:
+	if who is Creature:
+		var c := who as Creature
+		var mult := float(c.species.hit_table().get(kind_of(part), 1.0))
+		return maxf(amount, c.hp / maxf(mult, 0.01) + 0.01)
+	return amount
+
+
+## A mythical creature (a kill by momentum alone never takes one).
+static func mythic(who: Node) -> bool:
+	if who is NightRider or who is PondCrawler:
+		return true
+	var sp = who.get("species") if who != null else null
+	return sp is CreatureSpecies and (sp as CreatureSpecies).role == "mythical"
+
+
+## How fast `who` moves (scene space): a creature along its heading at
+## its walking speed, anything else its `velocity` if it has one.
+static func velocity_of(who: Node) -> Vector3:
+	if who is Creature:
+		var c := who as Creature
+		return c.heading * c._speed_now
+	var v = who.get("velocity") if who != null else null
+	return v if v is Vector3 else Vector3.ZERO
+
+
 ## What `amount` becomes on `part` of a creature with hit table `table`
 ## (CreatureSpecies.hit_table()).
 static func dealt(table: Dictionary, part: String, amount: float) -> float:

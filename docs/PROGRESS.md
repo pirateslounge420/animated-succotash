@@ -4,6 +4,44 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Session 3, Step 6: momentum and HUD (design §J, §K, §L, §R)
+- **6a, HUD readouts** (`data/hud.json`; `scripts/ui/readouts.gd`):
+  - A speedometer at the bottom right shows mph and km/h (m/s too in dev mode). It is faint below 6 m/s and brightens toward 33.3 m/s. Its glow goes from cold blue to warm gold as the super meter fills.
+  - A watch-face clock at the top right has a 12-hour hand, a minute hand and a 24-hour outer ring. Two gold marks sit at today's dawn and dusk here (DayCycle, from latitude and season).
+  - Both are on by default. O or F10 opens a small settings panel with a switch for each, saved to `user://settings.cfg`.
+  - All text uses the typewriter font (`assets/fonts/typewriter.ttf`, Special Elite, Apache 2.0) and scales with the window height (project stretch mode, base 1280×720).
+- **6b, asymmetric gravity** (`movement.air`):
+  - The pull is 1.9 m/s² while rising and 28 m/s² while falling. The rising value was tuned from the design's 2.8 so a held sprint bound lands about 50 m out.
+  - Measured: **50.2–50.7 m out, 19 m up, 5.7 s** in the air. A tap is cut by `jump_release_cut` to a hop of about 1.97 m, and the fall from it takes 0.37 s: a shark fin, not a float.
+- **6c, no air steering; the body turns freely; redirect** (`movement.redirect`):
+  - In the air your velocity is fixed. The body faces the look, so you can moonwalk.
+  - Every contact sends the kept speed toward the look: landings, rolls, bounces, wall kicks and swing releases.
+  - The share kept follows `keep_by_angle`, times `perfect_gain` for a perfect tech or `miss_scale` for a missed roll, capped at `sanity_mps`.
+- **6d, branch bounce** (`movement.bounce`):
+  - After a fall of at least 1 m onto anything you can stand on, press right click within 14 frames either side of touchdown. The fall speed turns into forward speed toward the look (carry 0.8, gain 1.05), and you bound again.
+  - A bounce is a chain link, a super-meter perfect, and it plants the other foot.
+  - Fall damage now counts only the drop below where you took off, so your own rise doesn't hurt. The bounce itself uses the whole fall.
+  - A right click already spent on a wall jump, cling or catch no longer also counts as a bounce.
+- **6e, alternating feet** (`movement.bounds`): every landing, bounce and wall kick plants the other foot. The torso and cloak hem lean with it (`PlayerBody.plant()`), and the camera never bobs.
+- **6f, momentum in combat** (`combat.strike`, `overcharge.spear`):
+  - Arrows and a thrown spear inherit your full velocity (this was already the case).
+  - A spear thrust adds `(closing − 6) × 8` damage, and at 25 m/s closing it kills anything but a mythic (`Hits.strike_bonus`, `strike_kills`, `mythic`).
+  - A thrust into a trunk, wall or rock at speed is an impact on you (`PlanetPlayer.thrust_impact`).
+  - A super-thrown spear kills on impact (`impact_kill`) and pins what it's in: `Creature.pinned_t` holds it in place for as long as the shaft is in it.
+- **Tags:** `[NOT WIRED YET]` is removed from `movement` air, redirect, bounce, bounds and super_meter, and from `combat` strike. The overcharge tag now covers only fishing; fishing is still unwired.
+- **Checks:**
+  - New `tools/strike_check.gd`: 6/6 pass.
+  - tech_check passes. Its late-press case now waits in the air clear of the tree: on the light up-gravity you would otherwise still be rubbing the trunk, and on the ground the press is a legitimate bounce.
+  - play_fixes_check has these changes:
+    - new sprint-bound, bounce, foot and no-self-fall-damage checks;
+    - the hop check updated to about 1.9 m;
+    - "drawing slows you" became "drawing never slows you" (§N);
+    - the deer shot now waits for you to land and stop, since the kick carries about 47 m.
+  - super_check passes 12/12.
+- **Reference still has:** ragged leaf-card canopies against the sky; ours are still smooth blobs (Step 7).
+
+---
+
 ## 2026-09-28 — Cloak colors for every other camp; the super meter and overcharge (design §S)
 - **Cloaks:**
   - Every cloaked figure outside the opening camp rolls its cloak at random from `data/cloaks.json`: red, orange, yellow, green, blue, indigo, violet, magenta, pink, black, white, grey.

@@ -41,6 +41,8 @@ var ripples: RippleSim
 var hud: Hud
 var map_overlay: MapOverlay
 var inventory_screen: InventoryScreen
+## The settings panel (O / F10): the HUD switches (design §L).
+var settings_panel: SettingsPanel
 ## A short line in place of the prompt ("Your hands are full"), and how
 ## long it stays.
 var _note := ""
@@ -64,6 +66,7 @@ func _exit_tree() -> void:
 
 func _ready() -> void:
 	Controls.ensure()
+	HudText.install()
 	# The world's textures paint on a worker while the planet generates,
 	# and the camp folk's sculpted bodies build.
 	Look.prepare()
@@ -187,6 +190,9 @@ func _on_planet_ready() -> void:
 	add_child(map_overlay)
 	map_overlay.setup(world)
 
+	settings_panel = SettingsPanel.new()
+	settings_panel.name = "Settings"
+	hud.add_child(settings_panel)
 	inventory_screen = InventoryScreen.new()
 	inventory_screen.name = "Inventory"
 	inventory_screen.inventory = player.inventory
@@ -278,6 +284,14 @@ func _process(delta: float) -> void:
 	hud.set_prompt(prompt)
 	hud.update_readout(world, d, elevation, weather, player.swimming, delta)
 	hud.update_status(player)
+	# The speedometer and the watch face (design §L): speed, meter, the
+	# local clock and today's dawn/dusk here.
+	var lat := CubeSphere.latitude(d)
+	var decl := Astro.declination(world.days)
+	var starts := DayCycle.phase_starts(lat, decl)
+	var clock_h := fposmod(Astro.time_of_day(world.days) + CubeSphere.longitude(d) / TAU, 1.0) * 24.0
+	hud.readouts.feed(player.velocity.length(), player.meter.value, clock_h,
+		starts[0] * 24.0 if starts[0] >= 0.0 else -1.0, starts[2] * 24.0 if starts[2] >= 0.0 else -1.0, world.dev_mode, delta)
 	map_overlay.update_map(d, delta)
 
 
@@ -345,6 +359,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		CollisionView.toggle_for(self, player)
 	elif event.is_action_pressed("dev_howl") and world.dev_mode:
 		creatures.dev_howl()
+	elif event.is_action_pressed("settings") or (event.is_action_pressed("release_mouse") and settings_panel.visible):
+		_toggle_settings(not settings_panel.visible)
+	elif settings_panel.visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		settings_panel.click(event.position)
 	elif event.is_action_pressed("inventory"):
 		_toggle_inventory(not inventory_screen.visible)
 	elif event.is_action_pressed("release_mouse") and inventory_screen.visible:
@@ -424,6 +442,21 @@ func _sample_words(it: Dictionary) -> String:
 func _say_note(text: String) -> void:
 	_note = text
 	_note_t = 2.5
+
+
+## Open or close the settings panel (O / F10); the mouse is freed while
+## it's open, like the inventory's.
+func _toggle_settings(on: bool) -> void:
+	if on:
+		settings_panel.open()
+		player.ui_open = true
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		settings_panel.close()
+		player.ui_open = inventory_screen.visible
+		if not inventory_screen.visible:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			player.bow.block_until_release()
 
 
 ## Open or close the inventory screen (I). The world goes on; the mouse is

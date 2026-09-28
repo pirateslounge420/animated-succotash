@@ -39,10 +39,10 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | W A S D (or arrow keys) | Walk |
 | W twice quickly, then hold | Sprint |
 | Shift (hold) | Sneak: crouch, slower and quieter. In the air: drop fast. Tap it right as you land from a big fall: a ninja roll (no fall damage, and the fall turns into speed) |
-| Space | Jump (about a metre, heavy and snappy; longer and higher at a sprint); while climbing, push off |
-| Right mouse button | The tech button, in the air; what you touch decides. On a wall, cliff, trunk or ruin: tap it within 14 frames (about a quarter second) of touching it to wall jump (chained ones keep building speed), or hold it to cling; letting go of a cling (or Space) still springs you off, a little softer than a perfect tap, and Shift drops you off instead. Near a branch, bamboo or vine: hold it to catch and swing, let go to fly on (green bamboo springs you out; dead, grey wood snaps) |
+| Space | Jump. Tap it for a hop (about 2 m); hold it for the full bound: a long, lazy rise and a fast drop (from a sprint about 50 m out and 19 m up). Nothing steers you in the air: you fly where you took off toward, though your body turns with the mouse. Every landing, bounce and kick sends your speed where you're looking (a sharp turn loses more of it). While climbing, push off |
+| Right mouse button | The tech button, in the air; what you touch decides. On a wall, cliff, trunk or ruin: tap it within 14 frames (about a quarter second) of touching it to wall jump (chained ones keep building speed), or hold it to cling; letting go of a cling (or Space) still springs you off, a little softer than a perfect tap, and Shift drops you off instead. Near a branch, bamboo or vine: hold it to catch and swing, let go to fly on (green bamboo springs you out; dead, grey wood snaps). Landing after a fall on anything you can stand on (a branch, a ledge, the ground): press it just before or just after touchdown for a bounce that turns the fall into speed toward where you look |
 | Mouse | Look around (straight up and down too) |
-| Left mouse button | Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw. Works in the air too. No aim arc: you learn the drop by eye; a bright streak follows the arrow or spear once it flies. With super meter (the gold ring round the gauge, filled by perfect wall jumps, rolls and swing releases, and by hits), keep holding past full charge until the gauge fills again in red: a super shot (critical, triple damage, faster, farther, a red streak) that empties the meter |
+| Left mouse button | Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw. Works in the air too. No aim arc: you learn the drop by eye; a bright streak follows the arrow or spear once it flies. With super meter (the gold ring round the gauge, filled by perfect wall jumps, rolls and swing releases, and by hits), keep holding past full charge until the gauge fills again in red: a super shot (critical, triple damage, faster, farther, a red streak) that empties the meter; a super-thrown spear kills what it hits outright and pins it. Arrows and a thrown spear carry your own speed. A spear thrust hurts more the faster you're closing on the target, and at 25 m/s (90 km/h) it kills anything but a mythical creature; a thrust into a trunk or wall at speed hurts you instead |
 | Q | Cycle bow, spear and fishing pole (the pole is bound; casting is not built yet — design §N) |
 | E | Interact, whatever you're doing (climbing, swimming, crouched): take a sample of the plant you're looking at, pick up your spear, an arrow or something you set down, grab a tree to climb it (E again lets go), turn over a fallen log, take your things back from your body after dying |
 | Tab (or I) | Inventory: what you carry and wear. The world doesn't stop. Click a line to choose it; G sets a carried thing down, E wears a spare. Tab or Esc closes it |
@@ -50,6 +50,7 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | V or F5 | Switch between first and third person |
 | M | Map. While it's open, 1 = biomes, 2 = height, 3 = temperature, 4 = rainfall, 5 = live weather |
 | H | Hide or show the on-screen text |
+| O or F10 | Settings: switch the speedometer and the clock on or off (click a line; O, F10 or Esc closes) |
 | Esc | Free the mouse pointer (click in the window to take it back) |
 | F3 | Debug overlay: clock, day phase, sun and moon |
 | F4 (dev) | Show collision shapes |
@@ -65,6 +66,8 @@ Gamepad:
 - The right trigger draws and shoots.
 - Clicking the right stick switches first and third person.
 - Start opens the inventory, Back the map.
+
+Readouts: your speed at the bottom right (mph and km/h; faint when you're slow, brighter toward 120 km/h, its glow warming as the super meter fills), and a small watch face at the top right: one hand for the hour on a 12-hour dial, with the 24-hour numbers on the outer ring, and two gold marks where today's dawn and dusk fall here (they move with the season and as you travel). All the on-screen text grows with the window.
 
 Health: the thin blue bar at the bottom left, with its number. It doesn't come back on its own; stand or sit still by a lit campfire to heal. Nothing hostile can hurt you by a lit fire. Crashing into a trunk or wall at high speed without a tech hurts, and can kill.
 

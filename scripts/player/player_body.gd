@@ -211,6 +211,8 @@ static var HEAD_LOOK := Tuning.section("look", "head_look")
 ## The player's head (scene), each frame, for other figures to look at.
 static var watch_point := Vector3(INF, INF, INF)
 var _look_in := Vector2.ZERO # wanted (yaw, pitch), radians; yaw + = left
+var _plant_lean := 0.0
+var _plant_hem := 0.0
 var _look_set := false
 var _head_yaw := 0.0
 var _head_pitch := 0.0
@@ -320,6 +322,16 @@ func torso() -> Node3D:
 
 func legs() -> Array[Node3D]:
 	return _legs
+
+
+## The planted foot (design §J bounds): every landing, bounce and kick
+## plants the other one; the torso leans foot_lean_deg toward it (the
+## cloak's hem swings with the torso) and eases back. The camera never
+## follows it.
+func plant(side: int) -> void:
+	var deg := float(Tuning.num("movement", "bounds", "foot_lean_deg"))
+	_plant_lean = deg_to_rad(deg) * (1.0 if side == 1 else -1.0)
+	_plant_hem = deg_to_rad(float(Tuning.num("movement", "bounds", "hem_swing_deg"))) * (1.0 if side == 1 else -1.0)
 
 
 ## Where the player looks, relative to the body's facing (radians: yaw,
@@ -459,7 +471,10 @@ func _pose(delta: float) -> void:
 	var a := _stride
 	var bob := 0.018 * a * absf(sin(_phase * 2.0))
 	_hips.position = Vector3(0.0, HIP_Y - 0.34 * c - bob, 0.1 * c)
-	_hips.rotation = Vector3(0.0, 0.0, _turn_lean)
+	# The planted foot's lilt (plant()), easing out over a stride.
+	_plant_lean = move_toward(_plant_lean, 0.0, delta * 0.35)
+	_plant_hem = move_toward(_plant_hem, 0.0, delta * 0.7)
+	_hips.rotation = Vector3(0.0, _plant_hem * 0.25, _turn_lean + _plant_lean)
 	if seated:
 		# On a seat at knee height: thighs forward, shins down, a little
 		# hunched toward the fire.

@@ -52,6 +52,9 @@ func settle(d: Vector3) -> void:
 	player.global_position = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) + 0.05)
 	player.velocity = Vector3.ZERO
 	player._move = Vector3.ZERO
+	# A teleport: a tech press from before it isn't a bounce on arrival.
+	player._tech_press_f = -9999
+	player._bounce_wait_f = 0
 	await frames(40)
 
 ## Flat, open ground: of 36 headings with nothing in the way for 30 m (rays
@@ -123,6 +126,44 @@ func find_open(d: Vector3) -> Vector3:
 			best = cd
 	print("   open ground: %.0f m from the camp (score %.1f)" % [CubeSphere.surface_distance_m(best, d), best_score])
 	return best
+
+
+## A heading for a held sprint bound from here (design §J: about 19 m up,
+## 50 m out): the predicted arc meets nothing on the way and comes down on
+## dry ground. The flattest-landing clear one of 36; else open_heading().
+func bound_heading() -> Vector3:
+	var here := player.global_position
+	var ss := player.get_world_3d().direct_space_state
+	var v0 := PlanetPlayer.JUMP_SPEED * float(Tuning.num("movement", "air", "sprint_jump"))
+	var t_up := v0 / PlanetPlayer.GRAVITY_UP
+	var peak := v0 * t_up * 0.5
+	var t_all := t_up + sqrt(2.0 * peak / PlanetPlayer.GRAVITY_DOWN)
+	var best := Vector3.ZERO
+	var best_v := INF
+	for k in 36:
+		var h := CubeSphere.north(player.surface_dir).rotated(player.up, TAU * k / 36.0)
+		var prev := here + player.up * 0.9
+		var clear := true
+		for i in range(1, 25):
+			var t := t_all * i / 24.0
+			var y := v0 * t - 0.5 * PlanetPlayer.GRAVITY_UP * t * t if t <= t_up else peak - 0.5 * PlanetPlayer.GRAVITY_DOWN * (t - t_up) * (t - t_up)
+			var pt := here + h * 8.8 * t + player.up * (maxf(y, 0.0) + 0.9)
+			var q := PhysicsRayQueryParameters3D.create(prev, pt)
+			q.exclude = [player.get_rid()]
+			if not ss.intersect_ray(q).is_empty() and i < 23:
+				clear = false
+				break
+			prev = pt
+		if not clear:
+			continue
+		var land: Vector3 = world.dir_of(here + h * 8.8 * t_all)
+		if main.chunks.water_level_at(land) > main.chunks.ground_height(land) - 0.3:
+			continue
+		var v := absf(main.chunks.ground_height(land) - main.chunks.ground_height(player.surface_dir))
+		if v < best_v:
+			best_v = v
+			best = h
+	return best if best != Vector3.ZERO else open_heading()
 
 
 func face(h: Vector3) -> void:
@@ -228,10 +269,66 @@ func _initialize() -> void:
 		air += 1.0 / 60.0
 		peak = maxf(peak, alt())
 	print("standing hop: %.2f s in the air, %.2f m high (Earth-gravity hop of the same height: %.2f s)" % [air, peak, 2.0 * sqrt(2.0 * peak / 9.8)])
-	ok(air < 0.6 and peak > 0.85 and peak < 1.3, "a standing hop is snappy: about a metre, down fast")
+	# Design §J: a tap cuts the rise (jump_release_cut); the light
+	# up-gravity carries it about 1.9 m, then the heavy down-gravity drops
+	# you fast (a shark fin, no float).
+	var fall_s := sqrt(2.0 * peak / PlanetPlayer.GRAVITY_DOWN)
+	ok(peak > 1.4 and peak < 2.5 and fall_s < 0.45, "a tapped hop: about 1.9 m (%.2f), down fast (%.2f s)" % [peak, fall_s])
 	# Landing squat: a couple of frames.
 	ok(player._squat_len > 0.0 and player._squat_len <= 0.07, "a light landing squats %.0f ms" % (player._squat_len * 1000.0))
 	await frames(20)
+	# A held sprint bound (design §J): a long lazy rise on the light
+	# up-gravity, a fast drop; lands about 50 m out. Then the branch
+	# bounce: right click just before the touchdown turns the fall into
+	# forward speed, and the feet alternate.
+	var open_d := find_open(camp_d)
+	await settle(open_d)
+	face(bound_heading())
+	await sprint_start()
+	await frames(70)
+	var p_take := player.global_position
+	var hp_take := player.hp
+	await press("jump")
+	var bound_air := 0
+	var bound_peak := 0.0
+	await frames(2)
+	var lift_f := 0
+	while player.is_on_floor() and lift_f < 10:
+		await frames(1)
+		lift_f += 1
+	var fell_v := 0.0
+	var pressed_tech := false
+	while not player.is_on_floor() and bound_air < 900:
+		await frames(1)
+		bound_air += 1
+		bound_peak = maxf(bound_peak, alt())
+		# Just before the touchdown: the tech button.
+		if player.swimming:
+			break
+		if not pressed_tech and vspeed() < -5.0 and alt() < 1.2:
+			fell_v = -vspeed()
+			var h_in := hspeed()
+			var foot0: int = player._foot
+			var b0: int = player.bounces
+			await press("wall_jump")
+			await frames(1)
+			await release("wall_jump")
+			pressed_tech = true
+			var n_b := 0
+			while player.bounces == b0 and n_b < 20:
+				await frames(1)
+				n_b += 1
+			var bound_d := CubeSphere.surface_distance_m(world.dir_of(p_take), player.surface_dir)
+			await frames(2)
+			print("sprint bound: %.1f m out, %.1f m up, %.2f s in the air; bounce at %.1f m/s down: %.1f -> %.1f m/s forward, foot %d -> %d, hp %.0f -> %.0f" % [bound_d, bound_peak, bound_air / 60.0, fell_v, h_in, player._move.length(), foot0, player._foot, hp_take, player.hp])
+			ok(bound_d > 42.0 and bound_d < 58.0, "a held sprint bound lands about 50 m out (%.1f m)" % bound_d)
+			ok(player.bounces == b0 + 1 and player._move.length() > h_in + 5.0, "right click at the touchdown bounces: the fall turned forward")
+			ok(player._foot != foot0, "the bounce plants the other foot")
+			ok(player.hp >= hp_take - 0.01, "your own rise doesn't count as a fall: no damage")
+			break
+	ok(pressed_tech, "the bound came down in the open (%d frames in the air)" % bound_air)
+	await release_all()
+	await frames(240)
 	# Slide on stop from a walk and from a sprint.
 	var slides := []
 	for gait in ["walk", "sprint"]:
@@ -472,8 +569,21 @@ func _initialize() -> void:
 		await press("shoot")
 		await frames(2)
 		var drew_air := false
+		# Hold the draw through the flight and the landing: the kick rises a
+		# long way on the light up-gravity (design §J), then drops fast, and
+		# the landing keeps your speed (the redirect); up to 10 s, until
+		# you've landed and come to a stop.
+		n = 0
+		var landed_drawing := false
+		while n < 600 and not (landed_drawing and hspeed() < 1.0):
+			await frames(1)
+			n += 1
+			if player.is_on_floor() and player.bow.drawing:
+				landed_drawing = true
+			if not player.is_on_floor() and player.bow.drawing:
+				drew_air = true
 		# The deer stands 12 m off where the line of sight from your eyes is
-		# clear (as you'd pick a shot): moved there now, while you're in the air.
+		# clear (as you'd pick a shot): moved there now.
 		var eye := player.camera().global_position
 		var ss := player.get_world_3d().direct_space_state
 		for j in 24:
@@ -491,11 +601,8 @@ func _initialize() -> void:
 				deer._replace_t = 0.0
 				deer._place(0.6)
 				break
-		# Aim at the deer while the draw builds, and hold through the landing.
-		n = 0
-		var landed_drawing := false
-		while n < 80:
-			# Aim at the body, held over for the drop (as the arc shows).
+		# Aim at the body, held over for the drop (as the arc shows).
+		for k in 20:
 			var body_at: Vector3 = deer.global_position + world.dir_of(deer.global_position) * 1.0
 			var t_fly := body_at.distance_to(player.camera().global_position) / Bow.MAX_SPEED
 			var aim_at: Vector3 = body_at + world.dir_of(body_at) * 0.5 * Arrow.GRAVITY * t_fly * t_fly
@@ -505,11 +612,6 @@ func _initialize() -> void:
 			player._yaw = 0.0
 			player.set_view(asin(clampf(to.dot(player.up), -1.0, 1.0)), 0.0)
 			await frames(1)
-			n += 1
-			if player.is_on_floor() and player.bow.drawing:
-				landed_drawing = true
-			if not player.is_on_floor() and player.bow.drawing:
-				drew_air = true
 		var n_arrows := Arrow.flying.size()
 		var cp_eye := player.crosshair_point().distance_to(player.camera().global_position)
 		print("   at release: on floor %s, drawing %s, power %.2f, deer %.1f m away, crosshair point %.2f m from the deer's body" % [player.is_on_floor(), player.bow.drawing, player.bow.power(), player.global_position.distance_to(deer.global_position), player.crosshair_point().distance_to(deer.global_position + world.dir_of(deer.global_position) * 1.0)])
@@ -545,7 +647,7 @@ func _initialize() -> void:
 		ok(landed_drawing, "the draw held through the landing")
 		ok(hit, "the shot on release hit the deer")
 		deer.queue_free()
-		# Drawing doesn't end a sprint, but slows you on the ground.
+		# Drawing doesn't end a sprint or slow you (design §N).
 		await settle(camp_d)
 		face(open_heading())
 		await sprint_start()
@@ -559,7 +661,7 @@ func _initialize() -> void:
 		var after := hspeed()
 		await release_all()
 		print("sprint, then draw: %.2f m/s while drawn, back to %.2f m/s on release" % [drawn_speed, after])
-		ok(still_sprint and drawn_speed < 1.0 and after > 8.0, "drawing slows you on the ground but doesn't end the sprint")
+		ok(still_sprint and drawn_speed > 8.0 and after > 8.0, "drawing never slows you or ends the sprint (design §N)")
 		# Aim steadiest at the apex.
 		await settle(camp_d)
 		var s_ground := player.aim_sway_deg()

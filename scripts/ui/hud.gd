@@ -17,6 +17,8 @@ var _subtitle: Label
 var _lines: Array = [] # [start_s, speaker, text, seconds]
 var _clock := 0.0
 var _status: StatusHud
+## The speedometer and the watch-face clock (design §L).
+var readouts: Readouts
 ## Debug overlay (F3, spec A4): the clock, the day's phase and the sun and
 ## moon, for checking the day cycle.
 var _debug: Label
@@ -33,7 +35,7 @@ func _ready() -> void:
 	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 16)
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_hint.text = "WASD move · W W sprint · Shift crouch (in the air: drop) · Space jump · right click at a wall: wall jump (hold: cling, let go: spring off)\nHold left click: draw the bow, release to shoot · V third person · E interact / take a sample\nQ bow / spear: tap to thrust, hold and release to throw · I inventory\nM map · H hide HUD · F3 debug · click to look, Esc frees mouse"
+	_hint.text = "WASD move · W W sprint · Shift crouch (in the air: drop) · Space jump (tap: hop, hold: bound) · right click at a wall: wall jump (hold: cling, let go: spring off); as you land: bounce\nHold left click: draw the bow, release to shoot · V third person · E interact / take a sample\nQ bow / spear: tap to thrust, hold and release to throw · I inventory\nM map · H hide HUD · O settings · F3 debug · click to look, Esc frees mouse"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 70)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -52,6 +54,10 @@ func _ready() -> void:
 	_status = StatusHud.new()
 	add_child(_status)
 	move_child(_status, 0)
+	readouts = Readouts.new()
+	readouts.name = "Readouts"
+	add_child(readouts)
+	move_child(readouts, 1)
 	_build_loading()
 
 
@@ -125,6 +131,7 @@ func update_status(player: PlanetPlayer) -> void:
 	_status.max_hp = PlanetPlayer.MAX_HP
 	_status.aiming = player.aiming()
 	_status.draw_power = player.aim_power()
+	readouts.top_right_below = _right.get_rect().end.y if _right.visible and visible else 0.0
 	_status.meter = player.meter.value
 	_status.overcharge = maxf(player.bow.overcharge(), player.spear.overcharge())
 	_status.show_crosshair = player.first_person or player.aiming()

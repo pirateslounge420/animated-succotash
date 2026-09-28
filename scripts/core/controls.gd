@@ -22,6 +22,7 @@ const DEFAULTS := {
 	"toggle_hud": [KEY_H],
 	# Debug overlay (spec A4): clock, phase, sun and moon.
 	"toggle_debug": [KEY_F3],
+	"settings": [KEY_O, KEY_F10],
 	"release_mouse": [KEY_ESCAPE],
 	# First / third person.
 	"toggle_view": [KEY_V, KEY_F5],

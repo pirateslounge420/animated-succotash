@@ -67,6 +67,23 @@ extends CharacterBody3D
 ## than a body length); a sprint carries into a longer slide and a longer
 ## jump. See the table's "_help" for each number.
 static var GRAVITY := Tuning.num("movement", "air", "gravity_mps2")
+## Asymmetric gravity (design §J): a light pull while rising (a long lazy
+## rise, an Earth-strength body on a 1/10 planet), full weight falling (a
+## sharp drop, no float): the shark-fin arc.
+static var GRAVITY_UP := Tuning.num("movement", "air", "gravity_up_mps2")
+static var GRAVITY_DOWN := Tuning.num("movement", "air", "gravity_down_mps2")
+## Letting go of jump while still rising cuts the rise to this share (a
+## tap is a hop, a hold the full bound).
+static var JUMP_CUT := Tuning.num("movement", "air", "jump_release_cut")
+## In flight the body turns with the look (design §R): no air steering,
+## the facing never touches the velocity.
+static var BODY_TURNS_FREE := bool(Tuning.num("movement", "air", "body_turns_free"))
+## Every contact re-aims momentum to the look (design §R): the kept share
+## by turn angle, the tech's factor, the physics limit.
+static var REDIRECT := Tuning.section("movement", "redirect")
+static var SANITY_MPS := Tuning.num("movement", "redirect", "sanity_mps")
+## The branch bounce (design §J).
+static var BOUNCE := Tuning.section("movement", "bounce")
 static var WALK_SPEED := Tuning.num("movement", "speed", "walk_mps")
 static var SPRINT_SPEED := Tuning.num("movement", "speed", "sprint_mps")
 static var CROUCH_SPEED := Tuning.num("movement", "speed", "sneak_mps")
@@ -242,6 +259,27 @@ var ground_wet := 0.0
 ## Counters the tests read.
 var skids := 0
 var landings := 0
+## Branch bounces and contact redirects (design §J, §R), for tests.
+var bounces := 0
+var redirects := 0
+## The camera's look (scene, 3D), each physics frame: where contacts
+## re-aim momentum.
+var _look := Vector3.FORWARD
+## A ground jump still rising with jump held (letting go cuts it).
+var _rising_jump := false
+## The frame right click was last pressed in the air (a bounce's early
+## press), and a bounce still open after touchdown (frames left, the fall).
+var _tech_press_f := -9999
+var _bounce_wait_f := 0
+var _bounce_fell := 0.0
+var _bounce_fall_v := 0.0
+## Height (radius) where you last took off under your own power (a jump,
+## a kick, a bounce, a swing release, running off an edge); INF unknown.
+## Fall damage counts only the drop below it: your own rise never hurts.
+var _takeoff_r := INF
+## The planted foot (0 left, 1 right): every landing, bounce and kick
+## alternates it (design §J bounds).
+var _foot := 0
 var wall_jumps := 0
 var clings := 0
 var swings := 0
@@ -501,6 +539,7 @@ func _physics_process(delta: float) -> void:
 		_heading = CubeSphere.north(up)
 	var cam_forward := _heading.rotated(up, _yaw)
 	var cam_right := cam_forward.cross(up)
+	_look = cam_forward.rotated(cam_right.normalized(), _pitch)
 	_update_prompt(delta, cam_forward)
 	_update_health(delta)
 	bow.update_bow(delta)
@@ -626,8 +665,29 @@ func _physics_process(delta: float) -> void:
 		_jumped = false
 	elif on_floor:
 		vy = 0.0
+		# The branch bounce (design §J): right click pressed within the
+		# window before touchdown, or just after it, turns the landing into
+		# a bound toward the look.
+		var bounced := false
 		if not _was_on_floor:
-			_land()
+			var fell_gross := maxf(_fall_top - radius, 0.0) if _fall_top > -INF else 0.0
+			if fell_gross >= float(BOUNCE.get("min_fall_m", 1.0)) and Engine.get_physics_frames() - _tech_press_f <= int(BOUNCE.get("window_frames", 14)):
+				bounced = _bounce(_fall_speed)
+			else:
+				if fell_gross >= float(BOUNCE.get("min_fall_m", 1.0)):
+					_bounce_wait_f = int(BOUNCE.get("window_frames", 14))
+					_bounce_fall_v = _fall_speed
+				_land()
+		elif _bounce_wait_f > 0:
+			_bounce_wait_f -= 1
+			if Input.is_action_just_pressed("wall_jump"):
+				_bounce_wait_f = 0
+				bounced = _bounce(_bounce_fall_v)
+		if bounced:
+			vy = JUMP_SPEED * float(BOUNCE.get("up_scale", 1.0))
+	if on_floor and not swimming and vy > 0.0:
+		pass # bounced this frame: in the air again below
+	elif on_floor and not swimming:
 		_jumped = false
 		_wj_chain = 0
 		_squat_t = maxf(_squat_t - delta, 0.0)
@@ -641,16 +701,29 @@ func _physics_process(delta: float) -> void:
 			else:
 				_roll_wait_f -= 1
 				if _roll_wait_f == 0:
-					# A heavy landing without the roll: the series is over.
+					# A heavy landing without the roll: the series is over,
+					# and the landing costs its miss (design §R miss_scale).
 					meter.broke()
+					_move *= float(REDIRECT.get("miss_scale", 0.5))
 					_fall_damage(_pending_fell)
 		# Held jump keeps jumping each time you land (after the squat).
 		if Input.is_action_pressed("jump") and not crouching and _squat_t <= 0.0 and _rolling <= 0.0:
 			vy = JUMP_SPEED * (SPRINT_JUMP if sprinting else 1.0)
 			_takeoff = _move
 			_jumped = true
-	else:
-		vy -= GRAVITY * delta
+			_rising_jump = true
+			_takeoff_r = radius
+	elif not swimming and not on_floor:
+		if _was_on_floor and not _jumped:
+			_takeoff_r = radius # ran off an edge
+		# Asymmetric gravity (design §J): let go of jump while rising and
+		# the rise is cut (a tap is a hop); a light pull up, full weight down.
+		if _rising_jump and vy > 0.0 and not Input.is_action_pressed("jump"):
+			vy *= JUMP_CUT
+			_rising_jump = false
+		if vy <= 0.0:
+			_rising_jump = false
+		vy -= (GRAVITY_UP if vy > 0.0 else GRAVITY_DOWN) * delta
 		# Fast-fall: crouch (down) after the apex drops you at once.
 		if Input.is_action_pressed("crouch") and vy < 0.5:
 			vy = minf(vy, -FAST_FALL_MPS)
@@ -663,7 +736,10 @@ func _physics_process(delta: float) -> void:
 		_fall_top = radius
 	# Right click in the air: the tech (wall jump / cling / catch).
 	if Input.is_action_just_pressed("wall_jump") and not on_floor and not swimming:
+		_tech_press_f = Engine.get_physics_frames()
 		if _tech(cam_forward):
+			# Spent on the wall jump, cling or catch: not a bounce as well.
+			_tech_press_f = -9999
 			_was_on_floor = false
 			_update_squat(delta)
 			return
@@ -728,8 +804,10 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 	_water_contacts(delta, water, ground, moved.length(), sink)
 
-	if first_person or aiming() or spear.busy():
-		# Aiming (or seeing through your own eyes): face where you look.
+	if first_person or aiming() or spear.busy() or (BODY_TURNS_FREE and not is_on_floor() and not swimming):
+		# Aiming (or seeing through your own eyes), or in flight (design
+		# §R: the body turns freely with the look, a moonwalk if you turn
+		# round; it never touches the velocity): face where you look.
 		_face(cam_forward, delta * 2.0)
 	elif wish.length() > 0.1:
 		_face(wish.normalized(), delta)
@@ -1079,6 +1157,20 @@ func take_hit(amount: float, from_pos: Vector3) -> void:
 	_damage(amount)
 
 
+## A spear thrust met the world (a trunk, a wall, a rock) closing at
+## `closing` m/s along `dir` (design §K: it cuts both ways): an impact on
+## you, on the movement.impact curve, and your momentum into it stops.
+func thrust_impact(closing: float, dir: Vector3) -> void:
+	var into := _move.dot(dir)
+	if into > 0.0:
+		_move -= dir * into
+	if closing <= IMPACT_SAFE:
+		return
+	impacts += 1
+	meter.broke()
+	_damage((closing - IMPACT_SAFE) * IMPACT_PER)
+
+
 func _damage(amount: float) -> void:
 	if dead or _invulnerable > 0.0:
 		return
@@ -1160,7 +1252,21 @@ static func heal_for(source: String) -> float:
 
 ## Landing: a hard enough fall hurts.
 func _land() -> void:
-	var fell := maxf(_fall_top - world.radius_of(global_position), 0.0) if _fall_top > -INF else 0.0
+	var r_now: float = world.radius_of(global_position)
+	# The drop that counts: from the top of the fall, but never from above
+	# where you took off under your own power (a bound 19 m up and back
+	# down onto the same ground doesn't hurt; a 30 m cliff still does).
+	var top := minf(_fall_top, _takeoff_r) if _takeoff_r < INF else _fall_top
+	var fell := maxf(top - r_now, 0.0) if _fall_top > -INF else 0.0
+	_takeoff_r = INF
+	# Every contact re-aims momentum to the look (design §R): what's kept
+	# falls off with the turn.
+	var h := _move - up * _move.dot(up)
+	var look_h := _look - up * _look.dot(up)
+	if h.length() > 0.5 and look_h.length() > 0.1:
+		_move = look_h.normalized() * minf(h.length() * _keep(h, look_h, 0), SANITY_MPS)
+		redirects += 1
+	_plant_foot()
 	if fell > HEAVY_FALL_M:
 		# A heavy landing: crouch pressed just before touchdown rolls now;
 		# else wait a few frames for a late one before the fall hurts.
@@ -1184,6 +1290,75 @@ func _land() -> void:
 	_fall_top = -INF
 
 
+## The branch bounce (design §J): a perfect landing on top of a branch,
+## ledge or the ground, right click inside the window. The fall turns into
+## forward speed toward the look (carry of the fall speed, times gain; the
+## run you had kept by the turn's angle) and you bound off again
+## (bounce.up_scale of a jump). A chain link, a perfect for the super
+## meter; a fall that would hurt is softened like a roll's.
+func _bounce(fall_v: float) -> bool:
+	var h := _move - up * _move.dot(up)
+	var look_h := _look - up * _look.dot(up)
+	var dir := look_h.normalized() if look_h.length() > 0.1 else (h.normalized() if h.length() > 0.5 else -global_basis.z)
+	var spd := (h.length() * _keep(h, dir, 1) + float(BOUNCE.get("carry", 0.8)) * fall_v) * float(BOUNCE.get("gain", 1.05))
+	_move = dir * minf(spd, SANITY_MPS)
+	_takeoff = _move
+	var r_now: float = world.radius_of(global_position)
+	var top := minf(_fall_top, _takeoff_r) if _takeoff_r < INF else _fall_top
+	var fell := maxf(top - r_now, 0.0) if _fall_top > -INF else 0.0
+	if fell > ROLL_SAFE_M:
+		_damage((fell - FALL_SAFE_M) * FALL_DAMAGE_PER_M * ROLL_DAMAGE)
+	_roll_wait_f = 0
+	_squat_t = 0.0
+	_jumped = true
+	_rising_jump = false
+	_takeoff_r = r_now
+	_wj_chain = mini(_wj_chain + 1, WJ_CAP)
+	_fall_speed = 0.0
+	_fall_top = -INF
+	bounces += 1
+	landings += 1
+	redirects += 1
+	meter.perfect("bounce")
+	_plant_foot()
+	_kick_t = KICK_S
+	footsteps.scuff(self)
+	make_noise(0.5)
+	return true
+
+
+## The share of speed kept turning from `from` to `to` (design §R,
+## movement "redirect" keep_by_angle, interpolated by the angle between
+## them in degrees), times the tech's factor: `tech` 1 perfect
+## (perfect_gain), -1 missed (miss_scale), 0 plain.
+func _keep(from: Vector3, to: Vector3, tech: int) -> float:
+	if from.length() < 0.01 or to.length() < 0.01:
+		return 1.0
+	var ang := rad_to_deg(from.angle_to(to))
+	var pts: Array = REDIRECT.get("keep_by_angle", [[0, 1.0], [180, 0.0]])
+	var k := float(pts[pts.size() - 1][1])
+	for i in range(1, pts.size()):
+		var a0 := float(pts[i - 1][0])
+		var a1 := float(pts[i][0])
+		if ang <= a1:
+			k = lerpf(float(pts[i - 1][1]), float(pts[i][1]), clampf((ang - a0) / maxf(a1 - a0, 1e-3), 0.0, 1.0))
+			break
+	if tech > 0:
+		k *= float(REDIRECT.get("perfect_gain", 1.05))
+	elif tech < 0:
+		k *= float(REDIRECT.get("miss_scale", 0.5))
+	return k
+
+
+## Plant the next foot (design §J bounds): the body lilts toward it.
+func _plant_foot() -> void:
+	if not bool(Tuning.num("movement", "bounds", "alternate_feet")):
+		return
+	_foot = 1 - _foot
+	if _body is PlayerBody:
+		(_body as PlayerBody).plant(_foot)
+
+
 ## Fall damage for a drop of `fell` metres (over FALL_SAFE_M).
 func _fall_damage(fell: float) -> void:
 	if fell > FALL_SAFE_M:
@@ -1198,8 +1373,11 @@ func _start_roll(fell: float, fall_v: float) -> void:
 	if fell > ROLL_SAFE_M:
 		_damage((fell - FALL_SAFE_M) * FALL_DAMAGE_PER_M * ROLL_DAMAGE)
 	var h := _move - up * _move.dot(up)
-	_roll_dir = h.normalized() if h.length() > 0.5 else (_facing - up * _facing.dot(up)).normalized()
-	_roll_speed = minf(maxf(h.length(), WALK_SPEED) + ROLL_CARRY * fall_v, ROLL_MAX_MPS)
+	# The roll goes where you look (design §R), a perfect contact.
+	var look_h := _look - up * _look.dot(up)
+	_roll_dir = look_h.normalized() if look_h.length() > 0.1 else (h.normalized() if h.length() > 0.5 else (_facing - up * _facing.dot(up)).normalized())
+	var kept := h.length() * _keep(h, _roll_dir, 1) if h.length() > 0.5 else h.length()
+	_roll_speed = minf(maxf(kept, WALK_SPEED) + ROLL_CARRY * fall_v, ROLL_MAX_MPS)
 	var length := clampf(ROLL_LEN_PER_M * fell, ROLL_LEN_MIN, ROLL_LEN_CAP)
 	_rolling = length / maxf(_roll_speed, 0.1)
 	_roll_total = _rolling
@@ -1374,9 +1552,9 @@ func _swing_step(delta: float, cam_forward: Vector3) -> void:
 		_end_swing()
 		return
 	if Input.is_action_just_pressed("jump") or not Input.is_action_pressed("wall_jump"):
-		# Let go and fly on: a perfect swing release.
+		# Let go and fly on: a perfect swing release, thrown toward the look.
 		meter.perfect("swing")
-		_end_swing()
+		_end_swing(true)
 		return
 	if _sw_graph.radius[_sw_i] <= 0.0:
 		_end_swing()
@@ -1417,9 +1595,14 @@ func _swing_step(delta: float, cam_forward: Vector3) -> void:
 	_fall_top = world.radius_of(global_position)
 
 
-func _end_swing() -> void:
+## Off the handhold. `released`: let go on purpose, so the swing's speed
+## is re-aimed to the look (design §R), a perfect contact.
+func _end_swing(released := false) -> void:
 	swinging = false
 	_rest_arms()
+	if released and velocity.length() > 0.5:
+		velocity = _look.normalized() * minf(velocity.length() * _keep(velocity, _look, 1), SANITY_MPS)
+		redirects += 1
 	velocity *= SWING_CARRY
 	# Let go on the rebound and the spring gives its snapback as a push.
 	var snap_back := float(_sw_props.get("snapback", 0.0))
@@ -1433,8 +1616,10 @@ func _end_swing() -> void:
 	_move = velocity - up * velocity.dot(up)
 	_takeoff = _move
 	_jumped = true
+	_rising_jump = false
 	_wj_chain += 1
 	_fall_top = world.radius_of(global_position)
+	_takeoff_r = _fall_top
 
 
 ## Handhold `i` of `g` breaks: a crack (dry wood) or a tearing snap, and
@@ -1456,19 +1641,33 @@ func _snap(g: BranchGraph, i: int) -> void:
 func _wall_jump(scale := 1.0, chained := true) -> Vector3:
 	var n_h := _wall_n - up * _wall_n.dot(up)
 	n_h = n_h.normalized() if n_h.length() > 0.1 else -_camera_forward()
-	var away := -(_wall_in - up * _wall_in.dot(up))
-	away = away.normalized() if away.length() > 0.1 else n_h
+	# The kick goes where you look (design §R), bounded by the wall: look
+	# into it and you kick off its mirror; never along it tighter than
+	# 0.3 of the way out.
+	var look_h := _look - up * _look.dot(up)
+	var away := look_h.normalized() if look_h.length() > 0.1 else n_h
+	if away.dot(n_h) < 0.0:
+		away = (away - n_h * 2.0 * away.dot(n_h)).normalized()
 	if away.dot(n_h) < 0.3:
 		away = (away + n_h * (0.3 - away.dot(n_h)) * 2.0).normalized()
-	# Your own approach speed if it's more than a kick's; chained jumps
-	# (no ground, no cling between) build on it, up to WJ_CAP of them.
+	# What survives: your approach turned off the wall (its mirror), kept
+	# by the angle from there to the kick (a tap is a perfect contact).
+	var inc := _wall_in - up * _wall_in.dot(up)
+	var natural := inc - n_h * 2.0 * inc.dot(n_h)
+	var kept := _wall_speed * _keep(natural, away, 1 if chained else 0)
+	redirects += 1
+	# A kick's own speed at least; chained jumps (no ground, no cling
+	# between) build on it, up to WJ_CAP of them.
 	var gain := pow(WJ_GAIN, mini(_wj_chain, WJ_CAP)) if chained else 1.0
-	var spd := minf(maxf(WJ_SPEED, _wall_speed) * gain * scale, WJ_MAX)
+	var spd := minf(maxf(WJ_SPEED, kept) * gain * scale, minf(WJ_MAX, SANITY_MPS))
 	var h := away * spd * cos(WJ_ANGLE)
 	var v := spd * sin(WJ_ANGLE)
 	_move = h
 	_takeoff = h
 	_jumped = true
+	_rising_jump = false
+	_takeoff_r = world.radius_of(global_position)
+	_plant_foot()
 	_fall_speed = 0.0
 	_fall_top = -INF
 	_wj_chain = _wj_chain + 1 if chained else 0

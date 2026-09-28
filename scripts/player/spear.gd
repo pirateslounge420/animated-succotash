@@ -20,8 +20,8 @@ extends Node3D
 ##
 ## Thrusting and throwing are loud (PlanetPlayer.make_noise(), what
 ## wildlife hears round you), and so is where it lands (NoiseEvents).
-## Raising it, like drawing the bow, stops a sprint and slows you; a throw
-## doesn't touch your momentum.
+## Raising it, like drawing the bow, never slows you (design §N); a throw
+## doesn't touch your momentum, and the spear carries it (inherit_velocity).
 ##
 ## In hand it's held upright in the right hand; raised, level over the
 ## shoulder along the aim; with the bow in hand it's slung across the
@@ -54,6 +54,8 @@ var player: PlanetPlayer
 var raising := false
 ## Super throws (tests).
 var super_shots := 0
+## The last thrust's closing speed on what it met, m/s (tests).
+var last_closing := 0.0
 ## Seconds raised.
 var charge := 0.0
 ## Out in the world (flying, stuck or lying there), or null (it's yours).
@@ -179,7 +181,8 @@ func _aim_point() -> Vector3:
 
 
 ## Jab: a sphere cast REACH_M from the chest toward the crosshair; the
-## first thing it meets takes the blow.
+## first thing it meets takes the blow, harder the faster you close on it
+## (design §K, combat "strike"); the world meeting it hurts you instead.
 func thrust() -> void:
 	_thrust = 1.0
 	player.make_noise(NOISE)
@@ -206,8 +209,22 @@ func thrust() -> void:
 	var rest := space.get_rest_info(q)
 	var at: Vector3 = rest.get("point", from + dir * REACH_M * frac[1])
 	var collider: Object = instance_from_id(rest.collider_id) if rest.has("collider_id") else null
-	# A creature is hurt in the part it met, a camp person complains (Hits).
-	Hits.strike(collider, int(rest.get("shape", 0)), THRUST_DAMAGE, player.global_position, at, player.camps)
+	var shape := int(rest.get("shape", 0))
+	var who := Hitboxes.creature_of(collider)
+	last_closing = maxf((player.velocity - (Hits.velocity_of(who) if who else Vector3.ZERO)).dot(dir), 0.0)
+	if who:
+		# Momentum in melee (design §K): the closing speed adds damage on
+		# the impact curve, and at kill_mps it kills anything not a mythic.
+		# A creature is hurt in the part it met, a camp person complains
+		# (Hits).
+		var amount := THRUST_DAMAGE + Hits.strike_bonus(last_closing)
+		if Hits.strike_kills(last_closing, who):
+			amount = Hits.kill_amount(who, Hits.part_of(collider, shape), amount)
+		Hits.strike(collider, shape, amount, player.global_position, at, player.camps)
+	elif collider != null:
+		# A trunk, a wall, a rock: a spear tip is a wall with a point on
+		# it, and so is the world (design §K, it cuts both ways).
+		player.thrust_impact(last_closing, dir)
 	_play("arrow_hit", 0.7)
 	NoiseEvents.emit(at, THRUST_NOISE_M)
 

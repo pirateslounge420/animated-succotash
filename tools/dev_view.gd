@@ -13,7 +13,8 @@ extends SceneTree
 ##
 ## HOURS: comma-separated local solar hours (default "12,0": noon and
 ## midnight). YEAR_DAY: the day of the year (0 = northern spring
-## equinox; default tomorrow). DEBUG=1: the F3 overlay on the frame. OUT_DIR (default /tmp/shots), TAG: file name prefix
+## equinox; default tomorrow). DEBUG=1: the F3 overlay on the frame.
+## HUD=1: the whole HUD; SPEED (m/s) and METER (0-1) feed its readouts. OUT_DIR (default /tmp/shots), TAG: file name prefix
 ## (default "devview"): writes <TAG>_<hh>h.png. Prints the sun's
 ## elevation, the light's elevation and the mean brightness of each frame.
 
@@ -54,10 +55,16 @@ func _run() -> void:
 		main.hud.toggle_debug()
 		main.hud._debug.add_theme_font_size_override("font_size", 20)
 		main.hud._debug.add_theme_constant_override("outline_size", 8)
-	else:
+	elif OS.get_environment("HUD") != "1":
 		main.hud.visible = false
 	var player: PlanetPlayer = main.player
 	player.set_physics_process(false)
+	# HUD=1 keeps the HUD (speedometer, clock); SPEED (m/s) and METER (0-1)
+	# light the readouts up (the player's physics is held still).
+	if OS.get_environment("SPEED") != "":
+		player.velocity = -player.global_basis.z * float(OS.get_environment("SPEED"))
+	if OS.get_environment("METER") != "":
+		player.meter.value = float(OS.get_environment("METER"))
 	# HEADLOOK: the wanderer's look, "yaw,pitch" in degrees from where it
 	# faces (+ left, + up), to show the hood-first head-look.
 	if OS.get_environment("HEADLOOK") != "":

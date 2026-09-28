@@ -37,6 +37,9 @@ var exclude: Array[RID] = []
 ## eased by gravity_scale, a red streak (combat "overcharge").
 var super_shot := false
 var gravity_scale := 1.0
+## A super throw stuck in a creature (combat overcharge.spear.pin): it's
+## pinned where it stands for as long as the shaft is in it.
+var pinning := false
 ## Come to rest (stuck, lying or afloat): it can be taken back.
 var landed := false
 var afloat := false
@@ -108,10 +111,18 @@ func _physics_process(delta: float) -> void:
 	if who and who.has_method("hurt"):
 		# A creature, or a rig of its own such as the gibbon: hurt in the
 		# part it met (Hits).
+		var amount := damage * clampf(velocity.length() / Spear.MAX_SPEED, 0.4, 1.0)
+		var oc := SuperMeter.overcharge("spear") if super_shot else {}
+		if bool(oc.get("impact_kill", false)) and not Hits.mythic(who):
+			# A super throw is the §K impact curve at full force: a kill
+			# on anything not a mythic.
+			amount = Hits.kill_amount(who, Hits.part_of(ray.collider, ray.shape), amount)
 		Hits.force_critical = super_shot
-		Hits.strike(ray.collider, ray.shape, damage * clampf(velocity.length() / Spear.MAX_SPEED, 0.4, 1.0), a, hit_pos, camps)
+		Hits.strike(ray.collider, ray.shape, amount, a, hit_pos, camps)
 		Hits.force_critical = false
 		var cr := who as Creature
+		# And the shaft pins it where it stands while it's in it.
+		pinning = bool(oc.get("pin", false)) and cr != null
 		if cr and cr.species.role == "swarm":
 			exclude.append((part as CollisionObject3D).get_rid())
 			global_position = b
@@ -156,6 +167,8 @@ func _rest() -> void:
 			host = null
 			reparent(world.world_root, true)
 			_lay_down()
+		elif pinning:
+			host.pinned_t = maxf(host.pinned_t, 0.1)
 
 
 ## Lying on the ground (or afloat) where it is, along its length.

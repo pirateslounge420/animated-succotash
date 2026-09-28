@@ -91,6 +91,9 @@ var _panic := 0.0 # seconds it keeps bolting after being hit, however far
 ## (sight_toward()).
 var lame := 1.0
 var blind := {}
+## Seconds it's still pinned where it stands by a super-thrown spear
+## (design §S; combat overcharge.spear.pin): it can't move off.
+var pinned_t := 0.0
 var _limp_side := 1.0
 ## Fleeing from a noise (NoiseEvents) at this surface direction, not from
 ## the player; ZERO for the player.
@@ -279,6 +282,12 @@ func tick(delta: float, ctx: Dictionary) -> void:
 			done = true
 			finished.emit(self)
 			return
+		_place(delta)
+		return
+	if pinned_t > 0.0:
+		# Pinned by a spear: it struggles where it stands.
+		pinned_t -= delta
+		_speed_now = 0.0
 		_place(delta)
 		return
 	if angry > 0.0:
