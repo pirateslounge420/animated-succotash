@@ -1018,3 +1018,32 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
   needed to start or stop climbing (E stays for interact: samples, pickups, corpse, logs).
   A cling on a *climbable* trunk does not drain (`cling_hold_s` applies to bare walls and
   cliffs only); it is the climb. Update `movement.climb` help and `HOW_TO_RUN.md`.
+
+## W. Performance pass, reticle, plant-name reach — 28 Sept 2026
+
+- **The game is choppy.** Likely causes, in order: real shadow maps arrived with the
+  dark-daylight pass (4 cascades to 90 m, cost never measured); plant cards drawn to
+  300 m with fades; hero chunks and creature LOD radii sized before shadows existed.
+  **Rule: performance never comes from removing the look; it comes from spending detail
+  only where the eye is.** Far things are silhouettes; near things get the detail.
+  Do this with numbers first, then measure:
+  1. Add a **dev frame-time readout** (ms, and what the shadow pass costs) so changes
+     are measured, not guessed.
+  2. Shadows: fewer cascades (2–3), `shadow_max_m` ~40–60, lower shadow resolution;
+     only trunks, big limbs, figures and terrain cast; leaf cards and grass **receive**
+     shadows but don't cast them beyond ~15 m.
+  3. Plants: `visibility_range_end` down to ~150–200 m for cards, with the impostor /
+     silhouette LOD taking over beyond (PLANT_SCHEMA §5 — the far look stays ragged);
+     no per-leaf detail past the near band; grass cards to ~40 m.
+  4. Chunks: keep the far shell for the horizon; reduce `HERO_M` if it's the terrain.
+  5. Creatures: keep `ACTIVE_RADIUS`, but skeletal/rig updates only inside ~60 m,
+     posed statics beyond.
+  6. Render scale 0.5–0.6 was already the plan (§C) and halves fill cost.
+  Target: a steady 60 fps at 1080p on the designer's machine with the look intact.
+
+- **Reticle:** the crosshair is too small — make it a bit larger (`hud.json`
+  `reticle.size_px`, scaled with the HUD like all text), same quiet style.
+
+- **Plant names only when close.** The genus/species readout for the plant you're looking
+  at appears only within **about 1 m** (`hud.json` `plant_name.reach_m`), not from far
+  away; beyond that the reticle shows nothing. Reading a plant means walking up to it.

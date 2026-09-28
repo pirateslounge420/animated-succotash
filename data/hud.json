@@ -5,7 +5,9 @@
   "clock": "A watch face, not digits: a 12-hour inner ring and a 24-hour outer ring (an old pocket watch / field watch), one hand sweep reads both. A game hour is exactly 6 real minutes (144-minute day). dawn_dusk_marks: two marks on the outer ring at the day's dawn and dusk, which move with the season and your latitude (derived day/night, design §F). size_px: the face diameter. hand_color / ring_color / mark_color: R1a blues plus the one warm accent for the marks. alpha: how faint it sits.",
   "super_meter": "No third element: the meter shows as a thin ring around the tool's charge gauge (ring_px wide, ring_color), visible only when non-zero, and the speedometer glow warms with it. show_below: hidden when under this share, to keep the screen clean until it means something.",
   "text": "Every HUD and UI font (design 2026-09-28): an early-computer / typewriter face — monospaced, slightly uneven, like a teletype or an 8-bit console font — never a clean modern sans. font: the font file under assets/fonts (a free monospaced typewriter-style TTF; the loader falls back to the engine's monospace if it's missing). base_px: the body size at 1280x720; sizes in this file and in combat.json feedback are at that reference. scale_by_height: text and HUD grow with the window: scale = window_height / 720, so fullscreen at 1080p is 1.5x and at 4K 3x (the designer found the HUD tiny in fullscreen). min_scale / max_scale clamp it.",
-  "layout": "Where the readouts sit: corner (top_left, top_right, bottom_left, bottom_right), margin_px from the edges. The health meter keeps its own place (data/combat.json feedback.meter)."
+  "layout": "Where the readouts sit: corner (top_left, top_right, bottom_left, bottom_right), margin_px from the edges. The health meter keeps its own place (data/combat.json feedback.meter).",
+  "reticle": "The crosshair (first person, or while aiming): size_px at the 720 reference (scaled with the HUD), thickness_px, gap_px, color. Made a bit larger 2026-09-28 (design §W).",
+  "plant_name": "The genus/species readout for the plant under the reticle: shown only within reach_m of it (about a metre, design §W); nothing beyond that."
  },
  "speedometer": {
   "on_by_default": true,
@@ -53,5 +55,14 @@
   "speedometer": "bottom_right",
   "clock": "top_right",
   "margin_px": 14
+ },
+ "reticle": {
+  "size_px": 14,
+  "thickness_px": 2,
+  "gap_px": 4,
+  "color": "#7FB0FF"
+ },
+ "plant_name": {
+  "reach_m": 1.2
  }
 }
