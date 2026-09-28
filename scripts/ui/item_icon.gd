@@ -56,9 +56,11 @@ static func draw_icon(ci: CanvasItem, c: Vector2, r: float, it: Dictionary) -> v
 				var a := PI + PI * k / 12.0
 				cap.append(c + Vector2(cos(a) * r * 0.8, sin(a) * r * 0.6))
 			ci.draw_colored_polygon(cap, main)
-		"stone_tool":
-			ci.draw_line(c + Vector2(-r * 0.7, r * 0.7), c + Vector2(r * 0.2, -r * 0.2), Color(0.5, 0.36, 0.22), w * 2.0)
-			ci.draw_colored_polygon(PackedVector2Array([c + Vector2(0, -r * 0.1), c + Vector2(r * 0.5, -r * 0.9), c + Vector2(r * 0.9, -r * 0.3), c + Vector2(r * 0.3, r * 0.1)]), main)
+		"pole":
+			# The fishing pole: a long cane with a line hanging from the tip.
+			ci.draw_line(c + Vector2(-r * 0.9, r * 0.9), c + Vector2(r * 0.7, -r * 0.8), main, w * 1.3)
+			ci.draw_line(c + Vector2(r * 0.7, -r * 0.8), c + Vector2(r * 0.75, r * 0.2), Color(0.9, 0.88, 0.8), maxf(1.0, w * 0.5))
+			ci.draw_arc(c + Vector2(r * 0.75, r * 0.3), r * 0.1, 0.0, TAU, 8, Color(0.55, 0.56, 0.6), maxf(1.0, w * 0.5))
 		"bow":
 			ci.draw_arc(c + Vector2(-r * 0.5, 0), r * 0.95, -PI * 0.42, PI * 0.42, 14, main, w * 1.6)
 			var t := c + Vector2(-r * 0.5, 0) + Vector2(cos(PI * 0.42), sin(PI * 0.42)) * r * 0.95

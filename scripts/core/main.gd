@@ -353,7 +353,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		inventory_screen.click(event.position)
 	elif event.is_action_pressed("dev_items") and world.dev_mode:
 		# Dev: one of each carried kind, for looking at the screen.
-		for kind in ["herb_bundle", "fish", "mushroom", "stone_tool"]:
+		for kind in ["herb_bundle", "fish", "mushroom", "cactus_column"]:
 			player.inventory.add(Inventory.make(kind))
 	elif event.is_action_pressed("interact"):
 		# E works from any state (climbing, swimming, crouched). What's in

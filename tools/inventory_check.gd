@@ -87,7 +87,7 @@ func _initialize() -> void:
 
 	# Overburden: past six carried things, slower, slower climbing, louder.
 	while inv.count() < 6:
-		inv.add(Inventory.make("stone_tool"))
+		inv.add(Inventory.make("mushroom"))
 	var sp6 := player.burden_speed()
 	var cl6 := player.burden_climb()
 	var no6 := player.burden_noise()

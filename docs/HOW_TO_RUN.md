@@ -55,7 +55,7 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | F6 (dev) | Show trees' branch graphs (the handholds) |
 | F7 (dev) | Spawn the next test creature beside you, in turn: the Night Rider pair, the Pond Crawler (in the nearest water), the gibbon (on the nearest rainforest tree). It prints why when it can't |
 | F8 (dev) | Make the nearest wolf pack howl |
-| F9 (dev) | Put a bundle of herbs, a fish, a mushroom and a stone tool in your pack (to look at the inventory) |
+| F9 (dev) | Put a bundle of herbs, a fish, a mushroom and a cut cactus column in your pack (to look at the inventory) |
 
 Gamepad:
 - Left stick moves, and clicking it in (held) sprints.

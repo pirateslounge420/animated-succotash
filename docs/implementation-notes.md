@@ -1753,7 +1753,7 @@ yet (deferred).
   six carried things, each more is 8% slower (never below 60%), 12%
   slower climbing and 15% louder, and the body leans forward: felt, never
   shown. F9 (dev) puts one of each loose kind in the pack. Fish,
-  mushrooms and stone tools have no source yet.
+  mushrooms have no source yet (stone tools are cut: three tools only, design §T).
 - **The tech button** (design reconciliation, `docs/design/RECONCILIATION_2026-09-27.md`;
   right mouse, pad right shoulder; `PlanetPlayer._tech()`). The game is
   locked at 60 fps with 60 Hz physics (`project.godot`), and windows are

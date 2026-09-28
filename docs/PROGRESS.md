@@ -128,7 +128,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **Open:**
   - The bow and spear are sized for the old taller body.
   - The ground-crease cause is not found.
-  - Fish, mushrooms and stone tools have no source yet.
+  - Fish and mushrooms have no source yet (stone tools are cut: three tools only, design §T).
 
 ## 2026-09-27 — Plant world restructured: merged data/plant-catalogues at 1a88bfe (data + spec)
 - **Hero genera:**
