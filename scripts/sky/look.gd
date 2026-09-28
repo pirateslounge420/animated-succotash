@@ -3,10 +3,13 @@ class_name Look
 ## look.gdshaderinc): banded fog and mist, and the bioluminescent glow.
 ## Materials register once; SkySystem pushes new values each frame.
 ##
-## Also owns the world's textures, painted at startup on a worker thread
-## (LookTextures: 256 px, painted, drawn linear-filtered with mipmaps so
-## they're gently soft, never pixel-art). The
-## shaders add the large-scale light and dark over them with the grain.
+## Also owns the world's textures. Where data/look.json retro.tiles_dir has
+## a tile (§AG: grass, dirt, sand, bark, leaves, leaf_card, stone, water;
+## tools/look/make_retro_tiles.py), that tiny tile is the texture, drawn
+## nearest-filtered with at most retro.max_mips mip levels (the shaders'
+## retro_tex) and repeated every retro.tile_m metres; the rest (weave,
+## fur) are painted at startup on a worker thread (LookTextures, 256 px).
+## The shaders add the large-scale light and dark over them with the grain.
 ## They modulate the vertex colors (0.5 = unchanged, so one texture serves
 ## every species and biome color):
 ##   grain      64 px soft grain (large-scale light and dark, moss patches)
@@ -25,6 +28,8 @@ static var _materials: Array[ShaderMaterial] = []
 static var _params := {}
 static var _grain: ImageTexture
 static var _textures := {}
+static var _retro_set := false
+static var RETRO := Tuning.section("look", "retro")
 
 const GRAIN_SIZE := 64
 
@@ -32,6 +37,12 @@ const GRAIN_SIZE := 64
 ## Add a material to the shared look (call on the main thread): its
 ## textures. The per-frame values are global shader uniforms (apply()).
 static func register(mat: ShaderMaterial) -> ShaderMaterial:
+	if not _retro_set:
+		_retro_set = true
+		var tm: Dictionary = RETRO.get("tile_m", {})
+		apply({"look_max_mips": float(RETRO.get("max_mips", 2)),
+			"look_tile_m": Vector4(tm.get("grass", 1.5), tm.get("dirt", 2.0), tm.get("sand", 2.0), tm.get("stone", 3.0)),
+			"look_tile_m2": Vector2(tm.get("bark", 1.0), tm.get("leaves", 0.5))})
 	if not _materials.has(mat):
 		_materials.append(mat)
 		mat.set_shader_parameter("look_grain", grain())
@@ -113,6 +124,8 @@ static func prepare() -> void:
 		return
 	_task = WorkerThreadPool.add_task(func() -> void:
 		for n in NAMES:
+			if _retro_path(n) != "":
+				continue
 			var img := LookTextures.make(n)
 			_images_mutex.lock()
 			_images[n] = img
@@ -131,6 +144,14 @@ static func finish() -> void:
 static func texture(name: String) -> ImageTexture:
 	if _textures.has(name):
 		return _textures[name]
+	var path := _retro_path(name)
+	if path != "":
+		var tile := (load(path) as Texture2D).get_image()
+		tile.decompress()
+		tile.convert(Image.FORMAT_RGBA8)
+		tile.generate_mipmaps()
+		_textures[name] = ImageTexture.create_from_image(tile)
+		return _textures[name]
 	finish()
 	var img: Image = _images.get(name)
 	if img == null:
@@ -138,3 +159,9 @@ static func texture(name: String) -> ImageTexture:
 	var tex := ImageTexture.create_from_image(img)
 	_textures[name] = tex
 	return tex
+
+
+## The §AG retro tile for `name` (res:// path), or "" if there is none.
+static func _retro_path(name: String) -> String:
+	var path := "res://%s/%s.png" % [String(RETRO.get("tiles_dir", "")), name]
+	return path if RETRO.has("tiles_dir") and ResourceLoader.exists(path) else ""

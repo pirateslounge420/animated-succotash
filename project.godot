@@ -63,6 +63,18 @@ look_height_m={
 "type": "float",
 "value": 60.0
 }
+look_max_mips={
+"type": "float",
+"value": 2.0
+}
+look_tile_m={
+"type": "vec4",
+"value": Vector4(1.5, 2, 2, 3)
+}
+look_tile_m2={
+"type": "vec2",
+"value": Vector2(1, 0.5)
+}
 look_leaf_shadow_m={
 "type": "float",
 "value": 15.0

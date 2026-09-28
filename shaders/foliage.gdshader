@@ -6,9 +6,11 @@
 // one material every plant shares (PlantMeshes.material()); its direction
 // sets which way crowns lean and its strength how far and how fast.
 //
-// Textured (Look, painted, linear-filtered): bark streaks on trunks,
-// a leafy surface on crowns, and alpha-cutout leaf-cluster cards around
-// the crowns so silhouettes are ragged and dappled instead of round. The material
+// Textured with Look's tiny detail tiles (§AG), nearest-filtered with at
+// most two mip levels (retro_tex): bark every look_tile_m2.x metres on
+// trunks, a leafy speckle every look_tile_m2.y on crowns, and noisy 32 px
+// alpha-cutout leaf-cluster cards around the crowns so silhouettes are
+// ragged and dappled instead of round. The material
 // comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine, 4 bamboo culm,
 // 5 a branchy tree's leaf-cluster card); card UVs are in UV.
 //
@@ -58,9 +60,9 @@ instance uniform float draw_range_m = 0.0;
 // Leaf left on the trees for the season, 0-1 (Phase 5 sets it; 1 = full).
 uniform float leaf_season = 1.0;
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_bark : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_leaves : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_leaf_card : filter_linear_mipmap, repeat_enable;
+uniform sampler2D look_tex_bark : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_tex_leaves : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_tex_leaf_card : filter_nearest_mipmap, repeat_enable;
 
 varying float sway_w;
 varying float glow_pick;
@@ -147,30 +149,29 @@ void fragment() {
 	vec3 an = abs(obj_normal);
 	vec4 tex;
 	if (mat_id > 4.5) {
-		// Leaf-cluster card: the ragged leaf cluster, its cut-out edge
-		// pushed in and out by noise (per cluster), so the clusters are
-		// noisy and each one different.
-		tex = texture(look_tex_leaf_card, UV);
-		float nz = texture(look_grain_soft, UV * 0.9 + vec2(cluster_key * 7.31, cluster_key * 3.17)).r;
-		tex.a *= 0.7 + 0.6 * nz;
+		// Leaf-cluster card: the noisy leaf cluster, mirrored and turned
+		// per cluster so neighbours don't match.
+		vec2 cuv = fract(cluster_key * 5.3) > 0.5 ? vec2(1.0 - UV.x, UV.y) : UV;
+		cuv = fract(cluster_key * 9.7) > 0.5 ? cuv.yx : cuv;
+		tex = retro_tex(look_tex_leaf_card, cuv);
 	} else if (mat_id > 3.5) {
 		// Bamboo culm: smooth, faintly streaked, ringed with a node every
 		// ~35 cm (a dark ridge with a pale band under it).
 		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
-		tex = texture(look_tex_bark, vec2(uv.x * 3.0, uv.y * 0.15)) * 0.35 + 0.33;
+		tex = retro_tex(look_tex_bark, vec2(uv.x * 3.0, uv.y * 0.15)) * 0.35 + 0.33;
 		float node = fract(obj_pos.y / 0.35);
 		tex.rgb *= 1.0 - 0.45 * step(0.94, node) + 0.18 * step(0.86, node) * step(node, 0.94);
 	} else if (mat_id > 2.5) {
 		// Vines: the leafy texture running down the strand.
-		tex = texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 2.0);
+		tex = retro_tex(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) / look_tile_m2.y);
 	} else if (mat_id > 1.5) {
-		tex = texture(look_tex_leaf_card, UV);
+		tex = retro_tex(look_tex_leaf_card, UV);
 	} else if (mat_id > 0.5) {
 		vec2 uv = an.y > 0.55 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
-		tex = texture(look_tex_leaves, uv * 0.9);
+		tex = retro_tex(look_tex_leaves, uv / look_tile_m2.y);
 	} else {
 		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
-		tex = texture(look_tex_bark, vec2(uv.x * 1.6, uv.y * 0.5));
+		tex = retro_tex(look_tex_bark, uv / look_tile_m2.x);
 	}
 	// R1a palette: leaves toward grass green, bark toward the warm brown.
 	vec3 base = COLOR.rgb;
@@ -190,10 +191,10 @@ void fragment() {
 	if (mat_id < 0.5 && moss > 0.01) {
 		// Moss on the bark: patchy, low down, on faces turned up and to one
 		// side (the damp side).
-		float n = texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 0.7).g;
+		float n = retro_tex(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 0.7).g;
 		float lowness = 1.0 - clamp(obj_pos.y / 5.0, 0.0, 1.0);
 		float m = smoothstep(0.45, 0.7, n * 0.9 + 0.3 * lowness + 0.25 * obj_normal.y + 0.15 * obj_normal.z + 0.4 * moss - 0.25);
-		vec3 moss_col = pal_pull(pal_moss, pal_grass_night, 0.7 * nk) * texture(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3).rgb * 2.0;
+		vec3 moss_col = pal_pull(pal_moss, pal_grass_night, 0.7 * nk) * retro_tex(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3).rgb * 2.0;
 		ALBEDO = mix(ALBEDO, moss_col, m * moss);
 	}
 	ALPHA = ((mat_id > 1.5 && mat_id < 2.5) || mat_id > 4.5) ? tex.a : 1.0;

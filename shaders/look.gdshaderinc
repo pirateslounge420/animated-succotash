@@ -37,6 +37,13 @@ global uniform float look_mist; // 0-1 extra ground mist
 global uniform float look_ground_m;
 global uniform float look_height_density;
 global uniform float look_height_m;
+// Detail tiles (§AG, look.json retro): the tiny tiles are drawn nearest,
+// tiled hard every look_tile_m metres (x grass, y dirt, z sand, w stone;
+// look_tile_m2 x bark, y leaves), and use at most look_max_mips mip levels
+// (retro_tex) so far ground still sparkles with texel noise.
+global uniform vec4 look_tile_m;
+global uniform vec2 look_tile_m2;
+global uniform float look_max_mips;
 global uniform float look_night;
 // Teal and cobalt (sRGB (0.05, 1.0, 0.85) and (0.15, 0.35, 1.0)), linear.
 const vec3 look_glow_color = vec3(0.00394, 1.0, 0.69207);
@@ -107,4 +114,14 @@ float look_site_glow(vec3 world_pos, float kind_weight) {
 		g = max(g, smoothstep(s.w, s.w * 0.35, distance(world_pos, s.xyz)) * k);
 	}
 	return g;
+}
+
+// A nearest-filtered detail tile at `uv`, its mip level picked as the
+// hardware would but never past look_max_mips (fragment only).
+vec4 retro_tex(sampler2D tex, vec2 uv) {
+	vec2 st = uv * vec2(textureSize(tex, 0));
+	vec2 dx = dFdx(st);
+	vec2 dy = dFdy(st);
+	float lod = 0.5 * log2(max(max(dot(dx, dx), dot(dy, dy)), 1e-8));
+	return textureLod(tex, uv, clamp(lod, 0.0, look_max_mips));
 }

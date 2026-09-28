@@ -1,13 +1,14 @@
 // Ground. Low-poly faces colored per vertex (TerrainChunk), vertex-lit:
 // Lambert diffuse and no specular, like GameCube-era terrain. The
 // surface is texture-led, like the hand-painted ground of GameCube-era
-// games: Look's 256 px painted textures, gently soft (linear-filtered with
-// mipmaps; grass texels about 0.7 cm), picked by the vertex color: streaky grass on green ground,
-// rippled sand on bright warm ground, pebbly dirt on soil, mottled stone
-// on grey rock faces, just a faint grain on snow. Each is sampled twice (a second, turned and
-// rescaled copy) and blended by a slow noise so the tiling doesn't show,
-// and smooth, painterly light and dark patches plus a slight hue drift
-// run over meters to tens of meters, like sun-dappled grass.
+// games (§AG): tiny detail tiles (Look: 64 px, stone 128) drawn
+// nearest-filtered with at most two mip levels (retro_tex) and tiled hard
+// every look_tile_m metres (grass 1.5, dirt 2, sand 2, stone 3), so the
+// ground is a busy speckle of texels right to the fog. Picked by the vertex
+// color: grass on green ground, sand on bright warm ground, dirt on soil,
+// stone on grey rock faces, just a faint grain on snow. Smooth, painterly
+// light and dark patches plus a slight hue drift run over meters to tens
+// of meters, like sun-dappled grass.
 //
 // Colors follow the R1a palette (palette.gdshaderinc): grass, dirt, stone
 // and snow are pulled toward their targets by day and cooled toward their
@@ -26,12 +27,10 @@ render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 #include "res://shaders/palette.gdshaderinc"
 
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-// Anisotropic: stays clear where the ground is seen at a grazing angle,
-// without ring-shaped moire.
-uniform sampler2D look_tex_grass : filter_linear_mipmap_anisotropic, repeat_enable;
-uniform sampler2D look_tex_dirt : filter_linear_mipmap_anisotropic, repeat_enable;
-uniform sampler2D look_tex_sand : filter_linear_mipmap_anisotropic, repeat_enable;
-uniform sampler2D look_tex_stone : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D look_tex_grass : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_tex_dirt : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_tex_sand : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D look_tex_stone : filter_nearest_mipmap, repeat_enable;
 
 varying vec3 world_pos;
 
@@ -39,17 +38,9 @@ void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 }
 
-// The texture at `uv`, plus a turned, rescaled copy blended in by `mixer`
-// (0-1, slow): breaks up the tiling.
-vec3 untiled(sampler2D tex, vec2 uv, float mixer) {
-	vec2 uv2 = mat2(vec2(0.8, -0.6), vec2(0.6, 0.8)) * uv * 0.71 + vec2(0.37, 0.61);
-	return mix(texture(tex, uv).rgb, texture(tex, uv2).rgb, smoothstep(0.35, 0.65, mixer));
-}
-
 void fragment() {
-	// Slow, smooth noise: which copy of the textures shows, and big soft
-	// patches of light and dark (a few meters and a few tens of meters).
-	float mixer = texture(look_grain_soft, UV * 0.043).r;
+	// Slow, smooth noise: big soft patches of light and dark (a few meters
+	// and a few tens of meters).
 	float patch_s = texture(look_grain_soft, UV * 0.09 + 0.3).r;
 	float patch_l = texture(look_grain_soft, UV * 0.011 + 0.7).r;
 	vec3 c = COLOR.rgb;
@@ -59,24 +50,22 @@ void fragment() {
 	float rocky = (1.0 - smoothstep(0.03, 0.09, sat)) * (1.0 - smoothstep(0.72, 0.88, hi));
 	float snow = (1.0 - smoothstep(0.03, 0.09, sat)) * smoothstep(0.72, 0.88, hi);
 	float sandy = smoothstep(0.05, 0.14, c.r - c.b) * smoothstep(0.45, 0.62, hi) * (1.0 - green);
-	// UV is in meters: grass tiles every ~1.8 m, dirt ~1.4 m, sand ~2.5 m,
-	// stone ~3.3 m.
-	vec3 t = mix(untiled(look_tex_dirt, UV * 0.7, mixer), untiled(look_tex_sand, UV * 0.4, mixer), sandy);
-	t = mix(t, untiled(look_tex_grass, UV * 0.55, mixer), green);
-	t = mix(t, untiled(look_tex_stone, UV * 0.3, mixer), rocky);
+	// UV is in meters: each tile repeats every look_tile_m.
+	vec3 t = mix(retro_tex(look_tex_dirt, UV / look_tile_m.y).rgb, retro_tex(look_tex_sand, UV / look_tile_m.z).rgb, sandy);
+	t = mix(t, retro_tex(look_tex_grass, UV / look_tile_m.x).rgb, green);
+	t = mix(t, retro_tex(look_tex_stone, UV / look_tile_m.w).rgb, rocky);
 	// Snow: just under white, with a faint crag grain so it reads as snow
 	// on rock, not blank white.
-	vec3 snow_t = mix(vec3(0.4), texture(look_tex_stone, UV * 0.15).rgb * 0.8, 0.35);
+	vec3 snow_t = mix(vec3(0.4), retro_tex(look_tex_stone, UV / (look_tile_m.w * 2.0)).rgb * 0.8, 0.35);
 	t = mix(t, snow_t, snow * 0.85);
-	// Texture contrast eases off far away, so fine detail doesn't shimmer
-	// toward the horizon, but the ground stays textured well into the
-	// middle distance.
+	// Texture contrast eases off only a little far away: the far ground
+	// is meant to sparkle (§AG), and the fog has it by ~400 m.
 	float dist = distance(world_pos, CAMERA_POSITION_WORLD);
 	float far = smoothstep(60.0, 450.0, dist);
-	t = mix(t, vec3(0.5), far * 0.55);
+	t = mix(t, vec3(0.5), far * 0.2);
 	// Far off, rock turns to crags meters across (as on the far shell), so
 	// distant cliffs read crunchy instead of flat.
-	vec3 crags = texture(look_tex_stone, UV / 90.0).rgb * 0.65 + texture(look_tex_stone, UV / 380.0 + 0.3).rgb * 0.35;
+	vec3 crags = retro_tex(look_tex_stone, UV / 90.0).rgb * 0.65 + retro_tex(look_tex_stone, UV / 380.0 + 0.3).rgb * 0.35;
 	t = mix(t, crags, rocky * smoothstep(200.0, 900.0, dist) * 0.9);
 	// Painterly light and dark: grass drifts a little warmer in the light
 	// patches and cooler in the dark ones.

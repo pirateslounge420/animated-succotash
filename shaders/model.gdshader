@@ -6,7 +6,8 @@ render_mode vertex_lighting, diffuse_lambert, specular_disabled;
 
 #include "res://shaders/look.gdshaderinc"
 
-uniform sampler2D albedo_texture : source_color, filter_linear_mipmap, repeat_enable;
+// Nearest, at most two mips (§AG, retro_tex), like the world's tiles.
+uniform sampler2D albedo_texture : source_color, filter_nearest_mipmap, repeat_enable;
 uniform vec4 albedo_color : source_color = vec4(1.0);
 uniform bool use_texture = false;
 uniform bool use_vertex_color = false;
@@ -23,7 +24,7 @@ void vertex() {
 void fragment() {
 	vec4 c = albedo_color;
 	if (use_texture) {
-		c *= texture(albedo_texture, UV);
+		c *= retro_tex(albedo_texture, UV);
 	}
 	if (use_vertex_color) {
 		c *= COLOR;
