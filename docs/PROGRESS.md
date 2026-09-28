@@ -142,6 +142,18 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Design + data session (Claude, chat; the designer's late-night calls)
+- **Design doc:** `docs/design/RECONCILIATION_2026-09-27.md` now runs Thesis + §0–V. New tonight: §I 1/10 planet with 1/10 biomes; §J momentum ceiling 120 km/h, asymmetric gravity, branch bounce, alternating feet; §K momentum in combat; §L HUD speedometer + watch-face clock; §M/§T three tools only, starting kit; §N hold-to-charge, charging never slows; §O master shinobi; §P opening/wake-up with fleeing shinobi; §Q enemy camp; §R committed air momentum + free body rotation + contact re-aim by angle; §S super meter and the super shot; §U controls/HUD text/loading screen/arrow fixes; §V folk catch arrows, diagonal movement, tree tops + perch, climb on right-click cling.
+- **Data (additive, marked `[NOT WIRED YET]` where code doesn't read it):** `movement.json` air (gravity_up/down, no air steer), redirect, bounce, bounds, super_meter; `combat.json` fishing, overcharge, strike, quiver, trail_min_m, fletching_from_cloak, arrows inherit full velocity; `items.json` starting_kit, pole slot, no tool spares, stone tool gone; new `data/hud.json`.
+- **Controls:** Tab (and I) inventory; mouse wheel reel_in / reel_out bound.
+- **Reference maths:** `tools/reference/daylight_reference.py` + `daylight_table.csv` — tilt, sunrise by latitude, natural twilight, polar cases, the stylised 144-min clock (design §F2 explains why the warp stays), seasons, photoperiod. Claude Code's Step 2 should match it.
+- **Plants:** `docs/design/PLANT_SCHEMA.md` locked; `tools/plant_schema_check.py` validates; pilot fill done by parallel agents on 7 files / 135 species (cypress, pine, acacia, trichocereus, rainforest, swamp, tallgrass prairie), all `--strict` clean.
+- **Consistency audit:** a read-only agent swept README, DESIGN, spec, notes, data help and code headers against the design; fixes applied to precedence (spec now cites the design doc), scale/time, look, tools, phase numbering (design doc aligned to the spec's), Tab, climbing. Code-comment staleness (planet_const, world, planet_player, bow, camps headers) is left for Claude Code to fix as it touches those files.
+- **`docs/WORKING_AGREEMENT.md`** — who owns what between the two agents, pull-before-push, additive data, docs describe the built game.
+- **Open for Claude Code:** the five-step Session 2 prompt (steps 2–5) plus Step 6 (§J/§K/§L data), then §U/§V fixes: arrow trail at the apex, fletching colour, diagonal movement, tree-top handhold + perch, climb on cling, Tab, HUD scale/font, loading runner.
+
+---
+
 ## 2026-09-28 — Session 2, Step 1: dark daylight (addendum §C, lighting model and grade only)
 - **Light:**
   - The sun is the one directional light by day and casts real shadow maps (there were none before): hard-edged, with no blur and soft filtering off; 4 splits over 90 m.
