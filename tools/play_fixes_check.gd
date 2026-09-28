@@ -131,6 +131,8 @@ func find_open(d: Vector3) -> Vector3:
 ## A heading for a held sprint bound from here (design §J: about 19 m up,
 ## 50 m out): the predicted arc meets nothing on the way and comes down on
 ## dry ground. The flattest-landing clear one of 36; else open_heading().
+const RUN_UP_F := 70
+
 func bound_heading() -> Vector3:
 	var here := player.global_position
 	var ss := player.get_world_3d().direct_space_state
@@ -140,14 +142,24 @@ func bound_heading() -> Vector3:
 	var t_all := t_up + sqrt(2.0 * peak / PlanetPlayer.GRAVITY_DOWN)
 	var best := Vector3.ZERO
 	var best_v := INF
+	# The run-up first (the test sprints RUN_UP_F frames, then jumps).
+	var run_up := 8.8 * RUN_UP_F / 60.0 + 1.0
 	for k in 36:
 		var h := CubeSphere.north(player.surface_dir).rotated(player.up, TAU * k / 36.0)
-		var prev := here + player.up * 0.9
 		var clear := true
+		for y in [0.4, 1.0, 1.8]:
+			var rq := PhysicsRayQueryParameters3D.create(here + player.up * y, here + player.up * y + h * run_up)
+			rq.exclude = [player.get_rid()]
+			if not ss.intersect_ray(rq).is_empty():
+				clear = false
+		if not clear:
+			continue
+		var take_off := here + h * run_up
+		var prev := take_off + player.up * 0.9
 		for i in range(1, 25):
 			var t := t_all * i / 24.0
 			var y := v0 * t - 0.5 * PlanetPlayer.GRAVITY_UP * t * t if t <= t_up else peak - 0.5 * PlanetPlayer.GRAVITY_DOWN * (t - t_up) * (t - t_up)
-			var pt := here + h * 8.8 * t + player.up * (maxf(y, 0.0) + 0.9)
+			var pt := take_off + h * 8.8 * t + player.up * (maxf(y, 0.0) + 0.9)
 			var q := PhysicsRayQueryParameters3D.create(prev, pt)
 			q.exclude = [player.get_rid()]
 			if not ss.intersect_ray(q).is_empty() and i < 23:
@@ -156,7 +168,7 @@ func bound_heading() -> Vector3:
 			prev = pt
 		if not clear:
 			continue
-		var land: Vector3 = world.dir_of(here + h * 8.8 * t_all)
+		var land: Vector3 = world.dir_of(take_off + h * 8.8 * t_all)
 		if main.chunks.water_level_at(land) > main.chunks.ground_height(land) - 0.3:
 			continue
 		var v := absf(main.chunks.ground_height(land) - main.chunks.ground_height(player.surface_dir))
@@ -285,7 +297,7 @@ func _initialize() -> void:
 	await settle(open_d)
 	face(bound_heading())
 	await sprint_start()
-	await frames(70)
+	await frames(RUN_UP_F)
 	var p_take := player.global_position
 	var hp_take := player.hp
 	await press("jump")

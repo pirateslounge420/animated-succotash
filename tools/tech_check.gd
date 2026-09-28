@@ -57,16 +57,57 @@ func goto(d: Vector3) -> void:
 	player.spawn_at(d)
 	await frames(240)
 
-## The nearest trunk graph with a low handhold near `here`.
+## The nearest trunk graph with a low handhold near `here` whose approach
+## (where fly_at_trunk comes in, at both heights the checks use) is clear
+## and that forks no lower than 4 m: nothing else there, so a shrub, a
+## neighbour's limb or its own low fork can't break the contact the checks
+## are about.
 func trunk_near(here: Vector3) -> BranchGraph:
-	var g: BranchGraph = null
+	var cands: Array = []
 	for gg: BranchGraph in BranchGraphs.all():
-		if gg.valid() and gg.base().distance_to(here) < 120.0 and (g == null or gg.base().distance_to(here) < g.base().distance_to(here)):
+		if gg.valid() and gg.base().distance_to(here) < 120.0:
 			for i in gg.size():
 				if gg.limb[i] == 0 and gg.radius[i] >= 0.25 and gg.local[i].y < 1.5:
-					g = gg
+					cands.append(gg)
 					break
-	return g
+	cands.sort_custom(func(a, b): return a.base().distance_to(here) < b.base().distance_to(here))
+	for gg: BranchGraph in cands:
+		if approach_clear(gg) and no_low_fork(gg):
+			return gg
+	return cands[0] if not cands.is_empty() else null
+
+## No limb leaves the trunk below 4 m (a cling slides down onto a low
+## fork and stands on it: the cling ends there, as it should).
+func no_low_fork(g: BranchGraph) -> bool:
+	for i in g.size():
+		if g.limb[i] != 0 and g.local[i].y < 4.0:
+			return false
+	return true
+
+func approach_clear(g: BranchGraph) -> bool:
+	var base := g.base()
+	var gd: Vector3 = world.dir_of(base)
+	var out := CubeSphere.north(gd)
+	var r0: float = g.radius[g.nearest(base + gd * 1.0)]
+	var ball := SphereShape3D.new()
+	ball.radius = 0.5
+	var q := PhysicsShapeQueryParameters3D.new()
+	q.shape = ball
+	q.exclude = [player.get_rid()]
+	var ss := player.get_world_3d().direct_space_state
+	for h in [1.3, 3.0]:
+		q.transform = Transform3D(Basis(), base + out * (r0 + 1.1) + gd * h)
+		if not ss.intersect_shape(q, 1).is_empty():
+			return false
+	# And nothing under where you hang (a shrub there is a floor, and the
+	# cling ends on it).
+	for off in [0.45, 0.8]:
+		var top: Vector3 = base + out * (r0 + off) + gd * 3.2
+		var rq := PhysicsRayQueryParameters3D.create(top, top - gd * 2.9)
+		rq.exclude = [player.get_rid()]
+		if not ss.intersect_ray(rq).is_empty():
+			return false
+	return true
 
 ## Put the player in the air beside a trunk, moving into it at `speed`.
 func fly_at_trunk(g: BranchGraph, speed: float, height: float) -> Vector3:
@@ -172,7 +213,16 @@ func _initialize() -> void:
 	await press("wall_jump")
 	await frames(3)
 	var p0 := player.global_position
-	await frames(60)
+	var ended := ""
+	for f in 60:
+		await frames(1)
+		if not player.clinging and ended == "":
+			var hits := []
+			for k in player.get_slide_collision_count():
+				var c := player.get_slide_collision(k)
+				hits.append("%s n.up %.2f" % [(c.get_collider() as Node).name if c.get_collider() is Node else "?", c.get_normal().dot(player.up)])
+			ended = "cling ended at frame %d: floor %s, alt %.2f, touching %s" % [f, player.is_on_floor(), alt(), hits]
+	print("cling trunk: %s, r %.2f; %s" % [SpeciesDB.all()[g.species].name if g.species >= 0 else "?", g.radius[g.nearest(g.base())], ended if ended != "" else "held the whole second"])
 	var held_m := player.global_position.distance_to(p0)
 	var clung := player.clinging
 	print("cling: held 1 s, moved %.2f m" % held_m)

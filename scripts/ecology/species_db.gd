@@ -1,9 +1,19 @@
 class_name SpeciesDB
 ## All plant species, loaded from the biome data files in data/biomes/
-## (one per biome template; see the README there). Each plant entry needs
-## only a name; any field it leaves out comes from its biome's `climate`
-## block or from defaults for its tier. A plant listed in several biome
-## files gets the union of those biomes' climates.
+## (one per biome template; see the README there) and, directly, from the
+## genus catalogues in data/plants/ (design §AA). Each biome plant entry
+## needs only a name; any field it leaves out comes from its biome's
+## `climate` block or from defaults for its tier. A plant listed in several
+## files gets the union of those climates. Catalogue entries carry their
+## own bands, and their `realm` (a name or a list): the realm gate
+## (RealmMap) lets them grow only where the place's realm is theirs and the
+## place's biome has an association for that realm; an entry with no realm
+## yet doesn't grow (UNASSIGNED) until it's tagged. A catalogue entry whose
+## name is already a biome plant (an old copy) only tags that plant with its
+## realm; the copy's bands and needs stand.
+##
+## Each biome file's associations carry a `realm` (or a list, or "any"):
+## realms_of_biome() is which realms that biome hosts.
 ##
 ## Temperatures are °C (mean annual; the planet has no seasons). Moisture
 ## is ClimatePass's 0-1 effective moisture.
@@ -11,6 +21,9 @@ class_name SpeciesDB
 ## Call all() once on the main thread before worker threads use it.
 
 const DATA_DIR := "res://data/biomes"
+const CATALOGUE_DIR := "res://data/plants"
+## The realm of a catalogue entry that has none yet: no place has it.
+const UNASSIGNED := "unassigned"
 
 const TIER_NAMES := {"emergent": 0, "canopy": 1, "shrub": 2, "ground": 3, "epiphyte": 4}
 const SOILS := {
@@ -63,6 +76,7 @@ const NEEDS := {
 	"salt_water": PlantSpecies.Needs.SALT_WATER,
 	"hot_ground": PlantSpecies.Needs.HOT_GROUND,
 	"dry_ground": PlantSpecies.Needs.DRY_GROUND,
+	"forest_floor": PlantSpecies.Needs.FOREST_FLOOR,
 }
 const TIER_DEFAULTS := {
 	0: {"shape": PlantSpecies.Shape.EMERGENT, "height": Vector2(35, 50), "color": Color(0.12, 0.42, 0.18)},
@@ -77,6 +91,9 @@ static var _by_tier := {}
 static var _index := {}
 ## Per biome key: file status and plant count, for tools and the HUD.
 static var biome_status := {}
+## BiomeTemplates id -> the realms its associations are tagged with
+## (PackedStringArray; "any" among them admits every realm).
+static var _biome_realms := {}
 
 
 static func all() -> Array[PlantSpecies]:
@@ -112,6 +129,14 @@ static func _load() -> void:
 	for f in files:
 		if f.ends_with(".json"):
 			_load_file(DATA_DIR + "/" + f, by_name)
+	# NO_CATALOGUES=1 (dev, measuring): the biome files only.
+	var cat := DirAccess.open(CATALOGUE_DIR) if OS.get_environment("NO_CATALOGUES") != "1" else null
+	if cat != null:
+		var cfiles := cat.get_files()
+		cfiles.sort()
+		for f in cfiles:
+			if f.ends_with(".json"):
+				_load_catalogue(CATALOGUE_DIR + "/" + f, by_name)
 	for i in _all.size():
 		_index[_all[i]] = i
 		var t := _all[i].tier
@@ -145,6 +170,84 @@ static func _load_file(path: String, by_name: Dictionary) -> void:
 			_add_entry(entry, TIER_NAMES[tier_name], climate, path, by_name)
 			count += 1
 	biome_status[key] = {"status": doc.get("status", ""), "plants": count, "file": path}
+	var realms := PackedStringArray()
+	for a in doc.get("associations", []):
+		if a is Dictionary:
+			for r in _realm_list(a.get("realm", "")):
+				if not realms.has(r):
+					realms.append(r)
+	var id := BiomeTemplates.id_of_key(key)
+	if id >= 0:
+		_biome_realms[id] = realms
+
+
+## A genus catalogue (data/plants/): entries by tier with their own bands,
+## realm and needs (no biome climate to fall back on).
+static func _load_catalogue(path: String, by_name: Dictionary) -> void:
+	var doc = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if typeof(doc) != TYPE_DICTIONARY:
+		push_warning("SpeciesDB: %s is not valid JSON, skipped" % path)
+		return
+	var plants: Dictionary = doc.get("plants", {})
+	# Needs every entry of the catalogue shares (family_defaults.needs).
+	var fd = doc.get("family_defaults", {})
+	var shared_needs: Array = fd.get("needs", []) if fd is Dictionary else []
+	for tier_name in plants:
+		if not TIER_NAMES.has(tier_name):
+			push_warning("SpeciesDB: %s: unknown tier '%s'" % [path, tier_name])
+			continue
+		for entry in plants[tier_name]:
+			if typeof(entry) != TYPE_DICTIONARY or not entry.has("name"):
+				continue
+			var had: bool = by_name.has(entry.name)
+			if not had:
+				_add_entry(entry, TIER_NAMES[tier_name], {}, path, by_name)
+			# An old biome copy of this entry keeps its biome bands and needs
+			# (the copies stay authoritative until the designer removes
+			# them, design §AA 1); it only takes the catalogue's realm.
+			var sp: PlantSpecies = by_name[entry.name]
+			sp.from_catalogue = sp.from_catalogue or not had
+			var realms := _realm_list(entry.get("realm", ""))
+			for r in realms:
+				if r != "any" and not sp.realms.has(r):
+					sp.realms.append(r)
+			if realms.is_empty() and not had:
+				# No realm yet: the gate can't pass (design §AA), so it
+				# waits for its tag (an old biome copy keeps growing as
+				# its biome file says).
+				sp.realms.append(UNASSIGNED)
+			# The catalogue's shared needs (its own came with _add_entry).
+			for need in (shared_needs if not had else []):
+				if NEEDS.has(need) and not sp.needs.has(NEEDS[need]):
+					sp.needs.append(NEEDS[need])
+				elif not NEEDS.has(need):
+					push_warning("SpeciesDB: %s: unknown need '%s'" % [path, need])
+
+
+## "x", ["x", "y"] or nothing -> the realm names.
+static func _realm_list(v) -> PackedStringArray:
+	var out := PackedStringArray()
+	if v is String:
+		if v != "":
+			out.append(v)
+	elif v is Array:
+		for r in v:
+			out.append(str(r))
+	return out
+
+
+## The realms biome `id`'s associations are tagged with ("any" among them
+## admits every realm); empty if it has none.
+static func realms_of_biome(id: int) -> PackedStringArray:
+	all()
+	return _biome_realms.get(id, PackedStringArray())
+
+
+## Does biome `id` host realm `realm` (an association tagged with it, or
+## with "any")?
+static func biome_hosts(id: int, realm: String) -> bool:
+	var rs := realms_of_biome(id)
+	return rs.has(realm) or rs.has("any")
 
 
 static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: String, by_name: Dictionary) -> void:

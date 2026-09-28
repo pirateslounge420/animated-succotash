@@ -4,6 +4,41 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Step 6.5: realm gate and direct catalogue loading (design §AA)
+- **Direct loading:** `SpeciesDB` reads `data/plants/*.json` after the biome files.
+  - 427 catalogue species are new, giving 1031 in all.
+  - A catalogue entry whose name is already a biome plant (72 old copies) only tags that plant with its realm. The copy's bands and needs stand until the designer removes the copies (§AA 1). Letting the catalogue widen them moved 31 existing plants, the camp's trees among them.
+  - Catalogue `family_defaults.needs` apply to every entry in the file.
+  - The catalogue README's "read directly from Phase 6" is now true.
+- **The realm gate:**
+  - Each biome file's association realms are read (`SpeciesDB.realms_of_biome`, `biome_hosts`).
+  - A realm-tagged species grows only where the site's own realm is one of its realms **and** the site's biome has an association for that realm (or an `any` one). That is checked per site in `VegetationPlacer.weight`, with a chunk-level prefilter at the chunk's middle.
+  - Catalogue entries with no `realm` yet (the 171 outside Amorphophallus, Cannabis and Trichocereus) don't grow until they're tagged. Their old biome copies keep growing as their biome files say, so nothing already in the world disappears.
+- **Where the realms are (`RealmMap`; engine-side, for the designer to confirm):** the design gives no realm map for this noise-continent world, so I proposed one.
+  - 9 continent-scale provinces, a warped Voronoi on the sphere. Each is one "world": New World ×2, Afro-Europe ×2, Asia ×3, Malesia–Australasia, Oceania, dealt in a seeded order.
+  - Within its world, a place's realm follows its own climate and height:
+    - **New World:** high (≥ 1500 m real) and tropical or southern is andes; warm or southern is neotropic; otherwise nearctic.
+    - **Asia:** ≥ 2000 m is himalaya; ≥ 21 °C indomalaya; humid subtropics sino_subtropical; dry central_asia or west_asia; humid temperate east_asia_temperate; otherwise palearctic.
+    - **Afro-Europe:** afrotropic (patches of madagascar in the south), west_asia, mediterranean, palearctic.
+    - **Malesia–Australasia:** hot and wet is malesia, otherwise australasia.
+  - Below 60° S everything is antarctic.
+- **Needs:**
+  - `dry_ground` is now enforced: never in a wetland biome (swamp, marshes, bog, fen, wet meadow, mangrove, estuary) nor within 8 m of water.
+  - New `forest_floor`: only in a forest biome. Amorphophallus carries it through a one-line `family_defaults.needs` in `amorphophallus.json`, for the designer to confirm (§AA 4: "forest floor and gaps"). Without it, the 246 species' own bands let them into riverside desert, beach and hot-spring sites.
+- **A local assemblage:** a chunk holds at most 4 species of one catalogue genus, the ones with the highest local dominance. One valley has its own handful of Amorphophallus and the next a different handful, and each site weighs a bounded list.
+- **Cost:** plant placement (worker threads, 36 chunks averaged) +7 % in an Asian tropical forest (1319 → 1415 ms a chunk) and +15 % round the camp (1619 → 1862 ms), measured before the untagged entries were gated out. `tools/chunk_time.gd`; `NO_CATALOGUES=1` compares.
+- **Verification** (`tools/realm_check.gd`, new): 775 chunks computed exactly as in play, stratified over 288 (biome, realm) groups; every catalogue plant tallied by its own spot. 0 violations.
+  - **Amorphophallus:** 2516 placed, all on forest floors. By realm: indomalaya and malesia rainforest, jungle and dry forest, ground tier (plus 40 shrub-tier). None in the afrotropic sample.
+  - **Cannabis:** 2506 placed, each landrace in its own realm on dry ground. Hindu Kush, Pamir and Chitral in Central Asian steppe and cold desert; Kashmir in Himalayan meadow; Acapulco Gold and Sinaloan in neotropic dry forest and savanna; Kerala in indomalayan jungle; the Russian hemps in palearctic taiga.
+  - **Trichocereus:** 0. Its bands (8–21 °C, moisture 0.15–0.6, to 3400 m) fit no biome with an `andes` association: puna and páramo are −3–5 °C, cloud forest is wet, and cold desert and canyon (where §AA puts it) have only nearctic and central_asia associations. **Data to add: an `andes` association in cold desert, canyon or thorn scrub (Andean dry valleys).**
+  - The tool prints the count of catalogue species placed per biome.
+- **Checks:**
+  - `biome_species_check.py` HARD 0 (SOFT 127, unchanged); `plant_schema_check.py` 0 errors; realm_check, super, strike, inventory, daylight and soil pass; hits keeps its known failure.
+  - **tech_check:** its trunk picker now skips trunks that fork below 4 m or have anything in the approach or under the cling spot. A cling slides down onto a low fork and, rightly, ends there. That happened on a thin acacia once one extra shrub candidate reshuffled the camp's shrubs. It now passes.
+  - **play_fixes:** varies run to run: 1 failure one run, 4 the next, from its known-intermittent list (slides, sprint jump, deer shot, bound in the open). The designer's new biome data alone gave 1 (the tree-patch walk). Its bound check now looks for a clear arc from the actual take-off point.
+
+---
+
 ## 2026-09-28 — Step 5.5: performance pass (design §W)
 - **Measured, not guessed:**
   - F2 (dev mode) shows a frame-time line: frame ms and fps, the root viewport's cpu and gpu render ms, and the shadow pass (`PerfReadout`). Godot 4.3 gives scripts no per-pass GPU timing, so the shadow pass's ms is sampled by switching the sun's shadows off for a few frames every 4 s; its draw calls and triangles come straight from the renderer.

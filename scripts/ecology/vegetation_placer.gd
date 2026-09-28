@@ -20,7 +20,12 @@ class_name VegetationPlacer
 ##                 crowd water and dry grassland gets gallery-forest ribbons
 ##                 along rivers.
 ##   suitability - each species' bell-shaped bands x soil x special needs
-##                 (standing water, river bank, salt, hot ground).
+##                 (standing water, river bank, salt, hot ground, dry
+##                 ground: never in a wetland biome or by the water; forest
+##                 floor: only in a forest biome).
+##   realm       - a catalogue species tagged with realms grows only where
+##                 the site's realm (RealmMap) is one of them and the site's
+##                 biome has an association for it (design §AA).
 ##   dominance   - a slow noise field per species boosts a local favourite:
 ##                 one valley mostly spruce with some fir, the next flipped.
 ##   clumping    - a patch-scale noise mask, so plants grow in patches.
@@ -36,6 +41,16 @@ class_name VegetationPlacer
 
 ## Plants other than water plants keep this far above standing water.
 const WATERLINE_M := 0.3
+## Wetland biomes (BiomeTemplates ids): dry_ground plants never grow in
+## them, nor within DRY_GROUND_M of water.
+static var WETLANDS := PackedInt32Array(["SWAMP", "FRESHWATER_MARSH", "SALT_MARSH", "BOG", "FEN", "WET_MEADOW", "MANGROVE", "ESTUARY"].map(func(k): return BiomeTemplates.id_of_key(k)))
+const DRY_GROUND_M := 8.0
+## Forest biomes: where forest_floor plants grow (their floor and gaps).
+static var FORESTS := PackedInt32Array(["TROPICAL_RAINFOREST", "JUNGLE", "TROPICAL_DRY_FOREST", "CLOUD_FOREST", "TEMPERATE_DECIDUOUS",
+	"TEMPERATE_RAINFOREST", "FLOODPLAIN_FOREST", "MARITIME_FOREST", "TAIGA"].map(func(k): return BiomeTemplates.id_of_key(k)))
+## Species of one catalogue genus a chunk can hold at once (the local
+## assemblage, _Context._local_assemblage).
+const GENUS_LOCAL := 4
 ## How far ground cover is drawn (data/look.json "ranges", design §W).
 static var RANGES := Tuning.section("look", "ranges")
 const T := PlantSpecies.Tier
@@ -81,6 +96,7 @@ static func warm(world_seed: int) -> void:
 	if _warm_seed == world_seed:
 		return
 	_warm_seed = world_seed
+	RealmMap.warm(world_seed)
 	_dominance_noise.clear()
 	for i in SpeciesDB.all().size():
 		var nz := FastNoiseLite.new()
@@ -484,6 +500,8 @@ class _Context:
 	var rng := RandomNumberGenerator.new()
 	var chunk_m: float
 	var dominance := {} # PlantSpecies -> factor for this chunk
+	## This chunk's province (RealmMap.World).
+	var world := 0
 	var _species := {}
 	var _clump := {} # tier -> PackedFloat32Array (CG+1)^2
 	var _shade := PackedFloat32Array() # (G+1)^2
@@ -512,6 +530,7 @@ class _Context:
 			_clearings.append([camp, Territories.CLEARING_M])
 		_clearings.append_array(Ruins.clearings_near(map, data.center, chunk_m * 0.75))
 		_clearings.append_array(Encampment.clearings_near(data.center, chunk_m * 0.75))
+		world = RealmMap.world_at(data.center)
 		_filter_species()
 
 	## Mythical folk camps (Territories), ruins and the opening encampment
@@ -555,6 +574,9 @@ class _Context:
 			tmin = minf(tmin, _clim_t[k] + (_clim_e[k] - hmax) * PlanetConst.LAPSE_RATE_C_PER_M - ASPECT_C)
 			tmax = maxf(tmax, _clim_t[k] + (_clim_e[k] - hmin) * PlanetConst.LAPSE_RATE_C_PER_M + ASPECT_C)
 		var center: Vector3 = data.center
+		# The chunk's middle: its realm and biome decide which realm-tagged
+		# species are candidates at all (each site still checks its own).
+		var mid := site(TerrainChunk.QUADS * 0.5, TerrainChunk.QUADS * 0.5)
 		for tier in [T.EMERGENT, T.CANOPY, T.SHRUB, T.GROUND, T.EPIPHYTE]:
 			var list: Array[PlantSpecies] = []
 			for sp in SpeciesDB.by_tier(tier):
@@ -562,10 +584,40 @@ class _Context:
 					continue
 				if sp.altitude_m.y < hmin or sp.altitude_m.x > hmax:
 					continue
+				if not sp.realms.is_empty() and (not sp.realms.has(mid.realm) or not SpeciesDB.biome_hosts(mid.biome, mid.realm)):
+					continue
 				list.append(sp)
 				var v := VegetationPlacer._dominance_noise[SpeciesDB.index_of(sp)].get_noise_3dv(center * PlanetConst.RADIUS_M)
 				dominance[sp] = 0.35 + 1.3 * smoothstep(-0.2, 0.5, v)
-			_species[tier] = list
+			_species[tier] = _local_assemblage(list)
+
+	## A place holds only a few species of one big catalogue genus (246
+	## Amorphophallus could all fit a tropical Asian forest by climate):
+	## per genus, the GENUS_LOCAL with the highest dominance here, so one
+	## valley has its own handful and the next a different one (and each
+	## site weighs a bounded list).
+	func _local_assemblage(list: Array[PlantSpecies]) -> Array[PlantSpecies]:
+		var by_genus := {}
+		for sp in list:
+			if sp.from_catalogue and sp.genus != "":
+				if not by_genus.has(sp.genus):
+					by_genus[sp.genus] = []
+				by_genus[sp.genus].append(sp)
+		var drop := {}
+		for g in by_genus:
+			var members: Array = by_genus[g]
+			if members.size() <= VegetationPlacer.GENUS_LOCAL:
+				continue
+			members.sort_custom(func(a, b): return dominance[a] > dominance[b])
+			for i in range(VegetationPlacer.GENUS_LOCAL, members.size()):
+				drop[members[i]] = true
+		if drop.is_empty():
+			return list
+		var out: Array[PlantSpecies] = []
+		for sp in list:
+			if not drop.has(sp):
+				out.append(sp)
+		return out
 
 	func species_for(tier: int) -> Array[PlantSpecies]:
 		if _species.has(tier):
@@ -674,6 +726,8 @@ class _Context:
 		s.m = clampf(m + WATER_BOOST * exp(-water_m / WATER_BOOST_M) - ASPECT_MOISTURE * aspect, 0.0, 1.0)
 		s.hot = CubeSphere.geo_distance_m(s.dir, _hot_center) < _hot_r * 0.45
 		s.beach = s.h < 3.0 and s.coast_km < 1.5 and smoothstep(3.0, 0.8, s.h) > 0.35
+		s.biome = map.biome[map.cell_at(s.dir)]
+		s.realm = RealmMap.realm(world, s.dir, s.t, s.m, s.h / PlanetConst.HEIGHT_SCALE)
 
 	static func _bilerp(arr, k00: int, w: int, tx: float, ty: float) -> float:
 		return lerpf(lerpf(arr[k00], arr[k00 + 1], tx), lerpf(arr[k00 + w], arr[k00 + w + 1], tx), ty)
@@ -699,6 +753,16 @@ class _Context:
 		if salty and standing and not s.salt:
 			return 0.0
 		if bits & (1 << PlantSpecies.Needs.HOT_GROUND) != 0 and not s.hot:
+			return 0.0
+		# Dry ground (tubers rot in the wet): never in a wetland biome, nor
+		# right by the water.
+		if bits & (1 << PlantSpecies.Needs.DRY_GROUND) != 0 and (VegetationPlacer.WETLANDS.has(s.biome) or s.water_m < VegetationPlacer.DRY_GROUND_M):
+			return 0.0
+		# Forest floor: under or in the gaps of a forest (a forest biome).
+		if bits & (1 << PlantSpecies.Needs.FOREST_FLOOR) != 0 and not VegetationPlacer.FORESTS.has(s.biome):
+			return 0.0
+		# The realm gate (design §AA).
+		if not sp.realms.is_empty() and (not sp.realms.has(s.realm) or not SpeciesDB.biome_hosts(s.biome, s.realm)):
 			return 0.0
 		var w := sp.suitability(s.t, s.m, s.h, s.rock)
 		if w <= 0.0:
@@ -732,3 +796,5 @@ class _Site:
 	var coast_km: float
 	var hot: bool
 	var beach: bool # on the sand band by the sea
+	var biome: int # BiomeTemplates id of the cell
+	var realm: String # RealmMap.realm() here

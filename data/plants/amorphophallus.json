@@ -5,6 +5,7 @@
  "status": "names researched; traits documented for 34 species, estimated for 212",
  "notes": "All 246 species accepted by Kew's Plants of the World Online (fetched 2026-09-26). Every entry carries its own climate band, so this file needs no biome climate block: species_db should load data/plants/*.json exactly like a biome file. 'shape' is 'umbrella' as a placeholder until the 'aroid' shape exists. 'aroid', 'repro' and 'genes' are read by the plant lifecycle/genetics system (spec Phase 6); the current loader ignores them. Colours are in-game R1a-leaning values, not botanical measurements. Each source line says whether traits are documented or estimated. 'genus_grammar' gives the shared petiole/leaf/spathe rules and ranges; species without an 'appearance' block are painted by the engine from the grammar, seeded by species name so each is stable.",
  "family_defaults": {
+  "needs": ["forest_floor"],
   "shape": "aroid",
   "repro": {
    "mode": "both",

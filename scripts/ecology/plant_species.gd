@@ -24,6 +24,7 @@ enum Needs {
 	DRY_GROUND, # never in standing water
 	SALT_WATER, # tolerates or needs brackish/salt water
 	HOT_GROUND, # thermal areas near volcanic hot springs
+	FOREST_FLOOR, # under or in the gaps of a forest (a forest biome)
 }
 
 var name: String
@@ -56,6 +57,13 @@ var leaf_density := -1.0
 ## How its wood behaves as a handhold (catch and swing; Handholds): the
 ## entry's own `handhold` block, if it has one.
 var handhold := {}
+## The biogeographic realms it's native to (design §AA, the realm gate:
+## RealmMap). Empty: not gated (every biome-file plant, and catalogue
+## entries without a `realm`). Tagged, it grows only where the place's
+## realm is one of these and the place's biome has an association for it.
+var realms := PackedStringArray()
+## Loaded from a catalogue (data/plants/), not a biome file.
+var from_catalogue := false
 
 
 ## Smooth band membership: 1 in the middle, easing to 0 at the edges.
