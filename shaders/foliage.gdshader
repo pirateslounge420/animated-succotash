@@ -20,6 +20,9 @@
 // (CUSTOM0.xyz), smaller on a sparse tree. Their cut-out edges are broken
 // up with noise so no two read alike.
 //
+// Dead trees (custom data alpha 1, DeadWood) lose every leaf and their
+// bark goes grey; dead bamboo culms go dry straw.
+//
 // Wet places (per plant, from the MultiMesh's custom data: r = moss,
 // g = vines): moss creeps over the bark, thickest low down and on upward
 // faces, and vines hang from the crown. Each vine strand has a 0-1 key in
@@ -56,6 +59,7 @@ varying vec3 obj_normal;
 varying float mat_id;
 varying float moss;
 varying float cluster_key;
+varying float dead_v;
 
 void vertex() {
 	// Texture space: the plant's own frame (so textures ride with it),
@@ -101,6 +105,12 @@ void vertex() {
 	if (mat_id > 4.5 && CUSTOM0.w >= leaf) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
+	// A dead tree (bare 1: DeadWood): no leaves at all, a snag; dead
+	// bamboo keeps only its dry culms.
+	dead_v = step(0.975, INSTANCE_CUSTOM.a);
+	if (dead_v > 0.5 && ((mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)) {
+		VERTEX = MODEL_MATRIX[3].xyz;
+	}
 }
 
 void fragment() {
@@ -142,6 +152,10 @@ void fragment() {
 	}
 	base = pal_pull(base, pal_grass, 0.45 * gw);
 	base = pal_pull(base, pal_grass_night, 0.7 * nk * gw);
+	if (dead_v > 0.5) {
+		// Dead wood: grey weathered bark; dry straw-colored bamboo.
+		base = mat_id > 3.5 && mat_id < 4.5 ? mix(base, vec3(0.72, 0.62, 0.40), 0.85) : mix(base, vec3(0.46, 0.44, 0.41), 0.75);
+	}
 	ALBEDO = base * tex.rgb * 2.0;
 	if (mat_id < 0.5 && moss > 0.01) {
 		// Moss on the bark: patchy, low down, on faces turned up and to one

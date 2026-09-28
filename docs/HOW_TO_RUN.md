@@ -28,7 +28,7 @@
   - `postage_stamp: true` gives you the small planet with every kind of biome.
   - `seed: 42` makes it the same planet every time.
   - `spawn_choice: 0` wakes you at the first camp every time.
-  - `day_length_min: 20` makes a full day and night last 20 minutes.
+  - `day_length_min: 144` is the real cycle: 144 minutes for a full day and night (6 real minutes an in-game hour: day 07:00–17:00, dusk 17:00–20:00, night 20:00–04:00, dawn 04:00–07:00). You wake at the very start of dusk. Lower it (say 20) to see the cycle go by faster.
 - To stop, press **Esc** to free the mouse and close the game window. Or, back in the editor, press the **■ Stop** button.
 
 ## 5. Keys (keyboard and mouse)
@@ -38,13 +38,13 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 |---|---|
 | W A S D (or arrow keys) | Walk |
 | W twice quickly, then hold | Sprint |
-| Shift (hold) | Sneak: crouch, slower and quieter. In the air: drop fast |
+| Shift (hold) | Sneak: crouch, slower and quieter. In the air: drop fast. Tap it right as you land from a big fall: a ninja roll (no fall damage, and the fall turns into speed) |
 | Space | Jump (a short hop; a longer one at a sprint); while climbing, push off |
-| Right mouse button | Wall jump: in the air, right after touching a wall, cliff, tree trunk or ruin, kick off it. Chain several |
+| Right mouse button | The tech button, in the air; what you touch decides. On a wall, cliff, trunk or ruin: tap it within a few frames of touching it to wall jump (chained ones keep building speed), hold it to cling (Space kicks off weakly, letting go drops you). Near a branch, bamboo or vine: hold it to catch and swing, let go to fly on (green bamboo springs you out; dead, grey wood snaps) |
 | Mouse | Look around (straight up and down too) |
 | Left mouse button | Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw. Works in the air too |
 | Q | Swap between bow and spear |
-| E | Interact, whatever you're doing (climbing, swimming, crouched): take a sample of the plant you're looking at, pick up your spear, an arrow or something you set down, grab a tree to climb it (E again lets go), turn over a fallen log |
+| E | Interact, whatever you're doing (climbing, swimming, crouched): take a sample of the plant you're looking at, pick up your spear, an arrow or something you set down, grab a tree to climb it (E again lets go), turn over a fallen log, take your things back from your body after dying |
 | I | Inventory: what you carry and wear. The world doesn't stop. Click a line to choose it; G sets a carried thing down, E wears a spare. I or Esc closes it |
 | V or F5 | Switch between first and third person |
 | M | Map. While it's open, 1 = biomes, 2 = height, 3 = temperature, 4 = rainfall, 5 = live weather |
@@ -65,7 +65,9 @@ Gamepad:
 - Clicking the right stick switches first and third person.
 - Start opens the inventory, Back the map.
 
-Health: the thin blue bar at the bottom left, with its number. It doesn't come back on its own; stand or sit still by a lit campfire to heal.
+Health: the thin blue bar at the bottom left, with its number. It doesn't come back on its own; stand or sit still by a lit campfire to heal. Nothing hostile can hurt you by a lit fire. Crashing into a trunk or wall at high speed without a tech hurts, and can kill.
+
+Dying: your body stays where you fell, with everything you carried and wore (no marker; birds start circling over it after a while). You wake by the nearest campfire, carried there by the folk who found you, with nothing. Go back and press E by your body to take it all back.
 
 Carrying: ten things at most. Past six you're slower, climb slower and make more noise.
 

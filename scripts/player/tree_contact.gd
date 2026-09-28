@@ -169,6 +169,16 @@ func bumped(body: Object, shape_idx: int, speed: float) -> void:
 
 
 ## Shake one tree and play a rustle from its crown.
+## Shake the tree whose handhold is nearest `pos` (caught and swung on).
+func rustle_at(pos: Vector3) -> void:
+	var e := BranchGraphs.nearest(pos, 1.5)
+	if e.is_empty():
+		return
+	var g: BranchGraph = e[0]
+	if g.valid():
+		rustle(g.chunk as TerrainChunk, g.key & 0xFFFFF, 1.0)
+
+
 func rustle(chunk: TerrainChunk, i: int, strength: float) -> void:
 	var key := "%d:%d" % [chunk.get_instance_id(), i]
 	var now := Time.get_ticks_msec()

@@ -119,6 +119,8 @@ static func blocks(sp: CreatureSpecies) -> bool:
 ## holder): what an arrow hitting them names (Hitboxes.creature_of()).
 ## Returns every body made, the parts first.
 static func build(owner: Node, b: Dictionary, sp: CreatureSpecies, block: bool) -> Array:
+	if b.get("cloaked", false):
+		return CloakedFigure.hitboxes(owner, b, block) if enabled else []
 	if not enabled:
 		return []
 	var root: Node3D = b.root

@@ -1,6 +1,6 @@
 {
 	"dev_mode": true,
-	"day_length_min": 20,
+	"day_length_min": 144,
 	"seed": 42,
 	"spawn_choice": 0,
 	"postage_stamp": true,

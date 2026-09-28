@@ -75,7 +75,7 @@ func update_bow(delta: float) -> void:
 	var held := Input.is_action_pressed("shoot") and (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or not need_capture)
 	if not Input.is_action_pressed("shoot"):
 		_blocked = false
-	var can := player.weapon == "bow" and not player.dead and not player.climbing and not player.swimming
+	var can := player.weapon == "bow" and player.wears("ranged", "bow") and not player.dead and not player.climbing and not player.swimming
 	if held and can and not _blocked:
 		if not drawing:
 			drawing = true
@@ -136,8 +136,9 @@ func _loose() -> void:
 func _carry() -> void:
 	var d := power() if drawing else 0.0
 	var fp := player.first_person
-	_view.visible = fp and player.weapon == "bow"
-	_bow.visible = not fp
+	var have := player.wears("ranged", "bow")
+	_view.visible = have and fp and player.weapon == "bow"
+	_bow.visible = have and not fp
 	if fp:
 		# In view: low left at rest, raised to the middle and canted when
 		# drawn, the string (and arrow) coming back toward you.

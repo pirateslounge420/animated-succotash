@@ -26,6 +26,15 @@ uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_weave : filter_linear_mipmap, repeat_enable;
 uniform vec3 hollow_color = vec3(0.0042, 0.0048, 0.028);
 uniform bool cloth = false;
+// A cloaked figure other than the player (CloakedFigure; the Falcon /
+// Ganondorf rule: one body, a palette per person): the cloth recolored to
+// `main_color` and the trim to `trim_color`, each keeping its shading
+// (the vertex's brightness against the player's cloak or rust). Linear.
+uniform bool recolor = false;
+uniform vec3 main_color = vec3(0.016, 0.023, 0.15);
+uniform vec3 trim_color = vec3(0.37, 0.06, 0.024);
+uniform float base_lum = 0.03;
+uniform float trim_lum = 0.12;
 
 const int COLS = 16;
 const int ROWS = 8;
@@ -153,6 +162,17 @@ void fragment() {
 		}
 		// Broad painted mottling over everything.
 		float g = texture(look_grain_soft, (tex_pos.xy * 1.3 + tex_pos.zy * 1.7) * 2.2).r;
-		ALBEDO = COLOR.rgb * mix(vec3(1.0), t * 2.0, k) * (0.7 + 0.6 * g);
+		vec3 base = COLOR.rgb;
+		if (recolor && kind > 0) {
+			float l = dot(base, vec3(0.2126, 0.7152, 0.0722));
+			if (kind == 1) {
+				// The whole outfit in the main color's family: the cloak
+				// itself, the tunic and trousers lighter or darker as they were.
+				base = main_color * clamp(l / base_lum, 0.25, 2.2);
+			} else {
+				base = trim_color * clamp(l / trim_lum, 0.3, 1.6);
+			}
+		}
+		ALBEDO = base * mix(vec3(1.0), t * 2.0, k) * (0.7 + 0.6 * g);
 	}
 }

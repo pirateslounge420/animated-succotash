@@ -50,6 +50,9 @@ var source := "" # research note / citation from DESIGN.md
 ## shape's default, leaf_density_of()): how many leaf clusters a branchy
 ## tree carries along its limbs (PlantMeshes).
 var leaf_density := -1.0
+## How its wood behaves as a handhold (catch and swing; Handholds): the
+## entry's own `handhold` block, if it has one.
+var handhold := {}
 
 
 ## Smooth band membership: 1 in the middle, easing to 0 at the edges.

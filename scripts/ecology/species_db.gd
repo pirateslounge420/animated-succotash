@@ -177,6 +177,8 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	sp.genus = str(e.get("genus", ""))
 	sp.species = str(e.get("species", ""))
 	sp.leaf_density = clampf(float(e.get("leaf_density", -1.0)), -1.0, 1.0)
+	var hh = e.get("handhold", {})
+	sp.handhold = hh if hh is Dictionary else {}
 	by_name[p_name] = sp
 	_all.append(sp)
 

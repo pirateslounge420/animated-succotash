@@ -22,6 +22,9 @@ class_name SoundSynth
 ##   arrow_hit    a dull thunk of an arrow biting into wood or earth
 ##   scuff        a sole scraping hard across bark, rock or grit: a wall
 ##                jump's kick, or the skid of a sharp turn (Footsteps)
+##   crack        dry wood snapping: a sharp splintering burst (a handhold
+##                breaking under you)
+##   whip         a green stem springing back: a quick rising swish
 ##   hurt         a blunt thump and a gasp of breath (the player hit)
 ##   hitmarker    a short sharp tick: the crosshair's X on a critical or
 ##                a kill (StatusHud; a UI sound, not placed in the world)
@@ -80,6 +83,10 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _hurt(rng)
 		"scuff":
 			samples = _scuff(rng)
+		"crack":
+			samples = _crack(rng)
+		"whip":
+			samples = _whip(rng)
 		"hitmarker":
 			samples = _hitmarker(rng)
 		"murmur", "murmur_one":
@@ -270,6 +277,32 @@ static func _rustle(rng: RandomNumberGenerator) -> PackedFloat32Array:
 
 ## One footstep on `ground`: a thump (the heel) plus the surface's own
 ## texture, each shaped by a few numbers.
+## Dry wood snapping: a few sharp clicks splintering into a short burst,
+## with a woody knock under it.
+static func _crack(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.35)
+	var phase := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var burst := rng.randf_range(-1, 1) * exp(-t * 18.0)
+		var splinter := rng.randf_range(-1, 1) * 1.6 if rng.randf() < 0.03 * exp(-t * 6.0) else 0.0
+		phase += TAU * 180.0 / RATE
+		s[i] = burst * 0.8 + splinter + sin(phase) * exp(-t * 25.0) * 0.7
+	return s
+
+
+## A green stem springing back: a band of noise sweeping up fast.
+static func _whip(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(0.28)
+	var lp := 0.0
+	for i in s.size():
+		var t := float(i) / RATE
+		var k := clampf(t / 0.28, 0.0, 1.0)
+		lp = lerpf(lp, rng.randf_range(-1, 1), lerpf(0.05, 0.7, k))
+		s[i] = lp * sin(PI * k) * 1.2
+	return s
+
+
 ## A sole dragged hard across a rough face: a gritty scrape that brightens
 ## and fades, with a knock where the foot bites.
 static func _scuff(rng: RandomNumberGenerator) -> PackedFloat32Array:

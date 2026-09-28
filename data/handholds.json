@@ -1,0 +1,25 @@
+{
+ "_help": {
+  "about": "How branches, bamboo and vines behave when you catch and swing on them (design reconciliation: the limit is in the handhold, not the player). A plant entry in data/plants or data/biomes can carry its own \"handhold\" block with any of these keys; otherwise its genus row here, else bamboo or vine, else default. Restart the game after editing.",
+  "break_speed_mps": "Catch or swing faster than this and it snaps: you fly on with movement.swing.snap_speed_keep of your speed, and it's gone. Scaled by the wood's thickness against ref_radius_m (thinner breaks sooner), not for vines and bamboo.",
+  "flex": "How much it bends under you when you catch it (0 rigid .. 1 very whippy).",
+  "snapback": "How much of that bend comes back as a push when you let go on the rebound (0 a plain pendulum .. 1 a launch).",
+  "hold_load": "The load it bears hanging still: you weigh 1 plus 0.15 per carried thing. Under it you can hang forever; over it, it gives way after a moment. Scaled by thickness like break_speed_mps.",
+  "dead": "Dead wood (snags, dry bamboo): break_scale and hold_scale multiply the living values; flex and snapback replace them. It cracks.",
+  "sapling": "Trees shorter than sapling_height_m: break_scale multiplies the break speed, flex_add adds to flex (whippy, fragile)."
+ },
+ "ref_radius_m": 0.08,
+ "sapling_height_m": 6.0,
+ "default": {"break_speed_mps": 14.0, "flex": 0.3, "snapback": 0.2, "hold_load": 3.0},
+ "vine": {"break_speed_mps": 11.0, "flex": 0.6, "snapback": 0.1, "hold_load": 2.5},
+ "bamboo": {"break_speed_mps": 60.0, "flex": 0.9, "snapback": 0.9, "hold_load": 10.0},
+ "genus": {
+  "Quercus": {"break_speed_mps": 22.0, "flex": 0.1, "snapback": 0.05, "hold_load": 8.0},
+  "Taxodium": {"break_speed_mps": 22.0, "flex": 0.1, "snapback": 0.05, "hold_load": 8.0},
+  "Cupressus": {"break_speed_mps": 20.0, "flex": 0.12, "snapback": 0.05, "hold_load": 7.0},
+  "Betula": {"break_speed_mps": 8.0, "flex": 0.8, "snapback": 0.5, "hold_load": 2.0},
+  "Pinus": {"break_speed_mps": 13.0, "flex": 0.35, "snapback": 0.2, "hold_load": 4.0}
+ },
+ "dead": {"break_scale": 0.35, "hold_scale": 0.5, "flex": 0.03, "snapback": 0.0},
+ "sapling": {"break_scale": 0.6, "flex_add": 0.3}
+}

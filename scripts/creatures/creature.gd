@@ -398,6 +398,10 @@ func _attack(delta: float, ctx: Dictionary, to_player: float) -> void:
 		angry = 0.0
 		return
 	var reach := 0.9 + species.size_m * 0.45
+	# By a lit fire you're safe: it gives up and goes.
+	if Campfire.lit_near(get_tree(), world.to_scene(pd, PlanetConst.RADIUS_M + _ground_at(pd)), Tuning.num("combat", "death", "fire_safe_m")):
+		angry = 0.0
+		return
 	if to_player > reach:
 		mode = "go"
 		_walk(pd, species.speed_mps * 1.15, delta)
@@ -888,6 +892,10 @@ func _update_blob() -> void:
 
 func _animate(delta: float) -> void:
 	var moving := _speed_now > 0.05
+	# A cloaked figure's rig strides and its cloak swings by its own
+	# velocity (PlayerBody), the same moves as the player's at its scale.
+	if _body is PlayerBody:
+		(_body as PlayerBody).set_velocity(heading * _speed_now)
 	_anim += delta * (4.0 + _speed_now * 3.0 / maxf(species.size_m, 0.2))
 	# An imported model plays its own clips.
 	var animator: ModelAnimator = _parts.get("animator")

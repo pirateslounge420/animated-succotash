@@ -8,7 +8,7 @@ extends Node
 ## * Clock: `days` advances at `day_length_s` real seconds per in-game
 ##   day (120 minutes, data/sky/day_cycle.json), always in real time.
 ## * Dev settings: data/dev.json (spec A4). When its "dev_mode" is true,
-##   its "day_length_min" (20), "seed" (42) and "spawn_choice" (0: always
+##   its "day_length_min" (144, the real cycle), "seed" (42) and "spawn_choice" (0: always
 ##   the same first camp) replace the game's, so before/after views match.
 ##   A missing file, or dev_mode false, means the game's own settings.
 ## * Dev postage stamp (spec A4): in dev mode, "postage_stamp": true builds

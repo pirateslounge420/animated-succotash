@@ -24,7 +24,8 @@
 		"healing.rest_radius_m": "Resting at a fire: standing, crouching or sitting still within this many meters of a lit campfire.",
 		"healing.rest_still_s": "After this many seconds still there, health starts to come back.",
 		"healing.rest_hp_per_s": "How fast resting at a fire heals (health a second).",
-		"healing.sources": "Health each kind of healing gives at once, for the things that will call it: cooked food and camp medicine (Phase 10, inventory)."
+		"healing.sources": "Health each kind of healing gives at once, for the things that will call it: cooked food and camp medicine (Phase 10, inventory).",
+		"death": "When you die your body stays where it fell with all your gear; you wake at the nearest camp fire within wake_search_m of where you died (or wanderers make a fire wake_place_m off if none), lying there for wake_s before you get up, with full health and nothing on you. After scavenger_delay_s, scavenger_count birds circle circle_radius_m wide, circle_height_m over the body. corpse_pick_m: how near you must be (E) to take your things back. fire_safe_m: within this of a lit fire, nothing hostile hurts you and angry animals give up."
 	},
 	"bow": {"draw_s": 1.0, "max_speed_mps": 55.0, "min_power": 0.1, "damage": 30.0, "crit_extra": 0.5, "max_arrows": 40, "inherit_velocity": 0.5},
 	"spear": {"tap_s": 0.22, "raise_s": 0.8, "min_power": 0.15, "min_speed_mps": 9.0, "max_speed_mps": 24.0, "throw_damage": 45.0, "reach_m": 2.0, "thrust_s": 0.4, "thrust_damage": 25.0, "pick_m": 2.0, "noise": 0.6, "thrust_noise_m": 5.0, "inherit_velocity": 0.5},
@@ -40,5 +41,6 @@
 		"sound": {"volume_db": -8.0, "pitch": 1.0, "kill_pitch": 0.78},
 		"meter": {"width_px": 150, "height_px": 5, "fill": "#4C7CFF", "track": "#0A14A0", "edge": "#7FB0FF", "low_share": 0.25, "numeral_px": 13}
 	},
-	"healing": {"rest_radius_m": 4.0, "rest_still_s": 2.0, "rest_hp_per_s": 1.5, "sources": {"cooked_food": 20, "camp_medicine": 45}}
+	"healing": {"rest_radius_m": 4.0, "rest_still_s": 2.0, "rest_hp_per_s": 1.5, "sources": {"cooked_food": 20, "camp_medicine": 45}},
+	"death": {"wake_search_m": 4000.0, "wake_place_m": 150.0, "wake_s": 2.5, "scavenger_delay_s": 45.0, "scavenger_count": 3, "circle_radius_m": 8.0, "circle_height_m": 18.0, "corpse_pick_m": 2.2, "fire_safe_m": 8.0}
 }

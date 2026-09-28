@@ -77,6 +77,15 @@ func scuff(player: PlanetPlayer) -> void:
 	_scuff_player.play()
 
 
+## A one-off sound at the player on the scuff's player: "crack" (a
+## handhold snapping), "whip" (a green stem springing back).
+func effect(player: PlanetPlayer, kind: String) -> void:
+	scuff(player)
+	_scuff_player.stream = SoundSynth.stream(kind, _count)
+	_scuff_player.volume_db = VOLUME_DB["sprint"] + 2.0
+	_scuff_player.play()
+
+
 ## What the player is standing on.
 static func material_under(player: PlanetPlayer) -> String:
 	var d := player.surface_dir

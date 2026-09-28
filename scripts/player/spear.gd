@@ -100,7 +100,7 @@ static func mesh() -> Node3D:
 
 ## The spear is in your hand (selected, and not out in the world).
 func held() -> bool:
-	return player.weapon == "spear" and thrown == null
+	return player.weapon == "spear" and thrown == null and player.wears("melee", "spear")
 
 
 ## Raised to throw, or mid-thrust: the body turns to the aim.
@@ -282,7 +282,7 @@ func pick_up() -> bool:
 ## first person; nowhere when it's out in the world.
 func _carry() -> void:
 	var fp := player.first_person
-	var have := thrown == null
+	var have := thrown == null and player.wears("melee", "spear")
 	_mesh.visible = have and not fp
 	_view.visible = have and fp and held()
 	if not have:

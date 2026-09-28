@@ -22,6 +22,16 @@ static func build(sp: CreatureSpecies) -> Dictionary:
 		model.scale = Vector3.ONE * sp.size_m
 		var animator: ModelAnimator = model.get_node_or_null("Animator")
 		return {"root": model, "legs": [], "wings": [], "tail": null, "light": null, "animator": animator}
+	# A cloaked figure (the small folk, the Forest troll, the Marsh witch):
+	# the player's own rig at its size, in its color (CloakedFigure).
+	if sp.shape == "cloaked" or sp.body == "cloaked":
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash([sp.name, "cloak"])
+		var pal := CloakedFigure.roll_palette(rng, CloakedFigure.tribe_family(hash(sp.name)))
+		var cb := CloakedFigure.build(sp.size_m, sp.color.lightened(0.1), pal[1])
+		if sp.size_m < 1.3 or sp.name == "Marsh witch":
+			CloakedFigure.add_lantern(cb, sp.accent)
+		return cb
 	# Then a sculpted body (SculptedBodies) when this kind has one and it's
 	# built.
 	var sculpted := SculptedBodies.build(sp)

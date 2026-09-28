@@ -56,7 +56,14 @@ extends Node3D
 ##
 ## Inputs, each frame (PlanetPlayer): set_motion() (0 still .. 1 sprint),
 ## set_velocity() (scene m/s), set_wind() (scene m/s, WeatherFX's
-## `wind_vector`), set_crouch() (0 .. 1).
+## `wind_vector`), set_crouch() (0 .. 1), set_tuck() (the one crouch pose,
+## snapped: a landing squat, a wall-jump wind-up, a cling, a roll).
+##
+## The ninja run (movement table "run_pose"): the torso pitches forward
+## with speed (lean_walk_deg at a walk to lean_sprint_deg at a sprint),
+## more while speeding up, back a little while stopping; the hips lean
+## into turns; the hood counter-rotates to stay level. (The trailing arms
+## are PlanetPlayer's, which owns the arms.)
 ##
 ## First person: the hood, capelet, tunic, upper sleeves and the cloak
 ## above the chest stay on PlanetPlayer.BODY_LAYER (hidden from the
@@ -174,8 +181,22 @@ var _vel := Vector3.ZERO
 var _vel_prev := Vector3.ZERO
 var _vel_fresh := false
 var _wind := Vector3.ZERO
+## False for a cloaked figure that isn't the player (CloakedFigure): its
+## parts stay on the ordinary render layer (the first-person split is the
+## player's own).
+var is_player := true
+## Sitting (camp folk): hips on a seat, thighs forward, shins down.
+var seated := false
+## Stride length as a share of the player's: bigger figures take longer,
+## slower strides, smaller ones quicker, shorter ones (set to the scale).
+var stride_scale := 1.0
 var _crouch_target := 0.0
 var _crouch := 0.0
+var _tuck := 0.0
+var _lean := 0.0
+var _turn_lean := 0.0
+var _fwd_speed_prev := 0.0
+var _fwd_prev := Vector3.FORWARD
 var _phase := 0.0
 var _stride := 0.0
 var _time := 0.0
@@ -251,10 +272,40 @@ func set_wind(wind_vector: Vector3) -> void:
 	_wind = wind_vector
 
 
+## A cloaked figure's own colors (not the player's): the cloth in `main`,
+## the trim in `trim` (sRGB), each keeping its shading.
+func set_palette(main: Color, trim: Color) -> void:
+	for m in [_mat, _cloth_mat]:
+		m.set_shader_parameter("recolor", true)
+		m.set_shader_parameter("main_color", _rgb(_lin(main)))
+		m.set_shader_parameter("trim_color", _rgb(_lin(trim)))
+		m.set_shader_parameter("base_lum", _lin(CLOAK).get_luminance())
+		m.set_shader_parameter("trim_lum", _lin(RUST).get_luminance())
+
+
+static func _rgb(c: Color) -> Vector3:
+	return Vector3(c.r, c.g, c.b)
+
+
+## The torso, hips and legs' pivots (hitboxes ride them).
+func torso() -> Node3D:
+	return _torso
+
+
+func legs() -> Array[Node3D]:
+	return _legs
+
+
 ## 0 standing .. 1 crouched: the knees bend, the body folds forward and
 ## the cloak's hem settles on the ground. Eased here.
 func set_crouch(amount: float) -> void:
 	_crouch_target = clampf(amount, 0.0, 1.0)
+
+
+## The crouch pose right now, 0 .. 1, not eased in (a couple of frames of
+## squat before a kick must show at once); it eases out by itself.
+func set_tuck(amount: float) -> void:
+	_tuck = maxf(_tuck, clampf(amount, 0.0, 1.0))
 
 
 func _physics_process(delta: float) -> void:
@@ -296,17 +347,53 @@ func _should_simulate() -> bool:
 ## hang from.
 func _pose(delta: float) -> void:
 	_crouch = move_toward(_crouch, _crouch_target, delta * 4.0)
-	var c := smoothstep(0.0, 1.0, _crouch)
+	var c := maxf(smoothstep(0.0, 1.0, _crouch), _tuck)
+	_tuck = move_toward(_tuck, 0.0, delta * 6.0)
 	var local_v := global_basis.orthonormalized().inverse() * _vel
 	var speed := Vector2(local_v.x, local_v.z).length()
+	# The ninja run: lean with speed and acceleration, into turns.
+	var rp := Tuning.section("movement", "run_pose")
+	var walk: float = Tuning.num("movement", "speed", "walk_mps")
+	var sprint: float = Tuning.num("movement", "speed", "sprint_mps")
+	var lean_deg := float(rp.get("lean_walk_deg", 5.0)) * clampf(speed / maxf(walk, 0.1), 0.0, 1.0)
+	if speed > walk:
+		lean_deg = lerpf(float(rp.get("lean_walk_deg", 5.0)), float(rp.get("lean_sprint_deg", 20.0)), clampf((speed - walk) / maxf(sprint - walk, 0.1), 0.0, 1.0))
+	var fwd_speed := -local_v.z
+	var accel := (fwd_speed - _fwd_speed_prev) / maxf(delta, 1e-4)
+	_fwd_speed_prev = fwd_speed
+	if accel > 2.0:
+		lean_deg += float(rp.get("lean_accel_deg", 8.0)) * clampf(accel / 20.0, 0.0, 1.0)
+	elif accel < -2.0 and speed > 0.3:
+		lean_deg -= float(rp.get("lean_stop_deg", 4.0)) * clampf(-accel / 20.0, 0.0, 1.0) + lean_deg * 0.5
+	_lean = lerpf(_lean, deg_to_rad(lean_deg), clampf(delta * 8.0, 0.0, 1.0))
+	var fwd := -global_basis.z.normalized()
+	var turn := _fwd_prev.signed_angle_to(fwd, global_basis.y.normalized()) / maxf(delta, 1e-4)
+	_fwd_prev = fwd
+	var turn_to := clampf(-turn * speed / 12.0, -1.0, 1.0) * deg_to_rad(float(rp.get("turn_lean_deg", 10.0)))
+	_turn_lean = lerpf(_turn_lean, turn_to, clampf(delta * 6.0, 0.0, 1.0))
 	# Strides: one step per half cycle, longer the faster you go.
-	var step_m := 0.55 + 0.12 * speed
+	var step_m := (0.55 + 0.12 * speed / maxf(stride_scale, 0.1)) * stride_scale
 	_phase = wrapf(_phase + speed / step_m * PI * delta, 0.0, TAU)
 	_stride = move_toward(_stride, clampf(speed * 0.1, 0.0, 0.55) * (1.0 - 0.5 * c), delta * 2.0)
 	var a := _stride
 	var bob := 0.018 * a * absf(sin(_phase * 2.0))
 	_hips.position = Vector3(0.0, HIP_Y - 0.34 * c - bob, 0.1 * c)
-	_torso.rotation = Vector3(-0.5 * c - 0.14 * _motion, 0.0, 0.0)
+	_hips.rotation = Vector3(0.0, 0.0, _turn_lean)
+	if seated:
+		# On a seat at knee height: thighs forward, shins down, a little
+		# hunched toward the fire.
+		_hips.position = Vector3(0.0, SHIN_M + 0.06, 0.05)
+		_torso.rotation = Vector3(-0.18, 0.0, 0.0)
+		head.rotation.x = 0.12
+		for s in 2:
+			_legs[s].rotation = Vector3(1.5, 0.0, 0.08 * (-1.0 if s == 0 else 1.0))
+			_knees[s].rotation = Vector3(-1.45, 0.0, 0.0)
+			_ankles[s].rotation = Vector3(0.0, 0.0, 0.0)
+		_pose_arms_rest(0.0)
+		return
+	_torso.rotation = Vector3(-0.5 * c - _lean, 0.0, 0.0)
+	# The hood stays level: it turns back by the torso's lean.
+	head.rotation = Vector3(0.5 * c * 0.5 + _lean, 0.0, 0.0)
 	for s in 2:
 		var ph := _phase + PI * s
 		var swing := a * sin(ph)
@@ -314,8 +401,12 @@ func _pose(delta: float) -> void:
 		_legs[s].rotation = Vector3(1.3 * c + swing, 0.0, 0.0)
 		_knees[s].rotation = Vector3(-2.05 * c - lift - 0.05, 0.0, 0.0)
 		_ankles[s].rotation = Vector3(0.75 * c + 0.5 * lift - 0.3 * swing, 0.0, 0.0)
-	# Shoulders ride the torso; an arm PlanetPlayer hasn't posed rests
-	# bent, hands in front, swaying a little with the stride.
+	_pose_arms_rest(a)
+
+
+## Shoulders ride the torso; an arm nobody has posed rests bent, hands in
+## front, swaying a little with the stride `a`.
+func _pose_arms_rest(a: float) -> void:
 	var tt := _torso.transform
 	for s in 2:
 		var sx := -1.0 if s == 0 else 1.0
@@ -667,6 +758,8 @@ func _part(parent: Node3D, key: String, pname: String, view: bool) -> void:
 
 
 func _apply_layers() -> void:
+	if not is_player:
+		return
 	for p in _view_parts:
 		p.layers = VIEW_LAYER
 	for p in _body_parts:

@@ -1,0 +1,11 @@
+{
+ "_help": {
+  "about": "Dead wood placed at world generation (design reconciliation, seeded now; the decay simulation comes with Phase 5): a share of trees stand dead (snags: no leaves, grey bark, brittle handholds), and dead culms stand among living bamboo. Restart after editing.",
+  "share": "The share of trees that are dead, by biome key; default for the rest.",
+  "bamboo_share": "The share of bamboo culms that are dead (dry, straw colored, they shatter).",
+  "decay_stage": "The one decay stage every dead tree is placed at for now (fresh, barked, bare, hollow, rotten); the ledgers will move it later."
+ },
+ "share": {"default": 0.03, "TAIGA": 0.12, "BADLANDS": 0.18, "SWAMP": 0.10, "BOG": 0.10, "FEN": 0.08, "FLOODPLAIN_FOREST": 0.06, "KRUMMHOLZ": 0.08, "SAVANNA": 0.05, "TROPICAL_DRY_FOREST": 0.05},
+ "bamboo_share": 0.15,
+ "decay_stage": "barked"
+}

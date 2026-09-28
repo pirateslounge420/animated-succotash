@@ -13,7 +13,7 @@ extends Node
 ##     under a great slab of rock jutting out overhead.
 ## Who sits there depends on the place (Ruins.camp_folk(), country()):
 ## tribal folk in most land, fur-clad northerners in snow, hooded marsh
-## folk, goblins squatting round the fire with their lanterns (some rock
+## folk, small folk squatting round the fire with their lanterns (some rock
 ## shelters and stone ruins), and at some stone ruins the restless dead,
 ## skeletons and a hooded one keeping them company.
 ##
@@ -57,7 +57,7 @@ const FOLK := {
 	"marsh": {"names": ["Marsh-dweller", "Reed-cutter", "Hooded one"],
 		"lines": ["Mind the planks. Some are rotten.", "Things drift up out of the water at night.",
 			"The frogs go quiet before it comes.", "Stay on the boards, stranger."]},
-	"goblin": {"names": ["Goblin", "Goblin", "Old goblin"],
+	"small_folk": {"names": ["Small one", "Lantern-keeper", "Old small one"],
 		"lines": ["Shinies? You got shinies?", "Hehe. The big one's back.", "Don't touch the pot!",
 			"We saw you coming. We always see.", "Sit, sit. Nobody bites. Much."]},
 	"dead": {"names": ["Skeleton", "Hooded one", "Old bones"],
@@ -78,6 +78,11 @@ var _timer := 0.0
 var _time := 0.0
 var _wild := {} # Vector3i -> site dict or {}
 var _cliff := {} # Vector3i -> site dict or {}
+## The tribe's cloth family of the camp being built (CloakedFigure).
+var _family := 0
+## Fires placed for a wake-up where no camp was near (wanderers()):
+## key -> site dict.
+var _wanderers := {}
 
 
 func setup(p_world: Node, p_chunks: ChunkManager, p_player: PlanetPlayer, p_landmarks: Landmarks, p_hud: Hud) -> void:
@@ -123,6 +128,57 @@ static func wild_site(map: PlanetData, c: Vector3i) -> Dictionary:
 	return {}
 
 
+## Where you wake after dying (the folk who found you carried you to
+## their fire): the nearest camp fire to `d` within `search_m`, wild or
+## rock shelter (the opening camp's fire, `opening`, counts too), as its
+## planet direction. None in range: a small wandering group's fire is put
+## down on dry, level ground `place_m` off, and that's it.
+func wake_fire(d: Vector3, search_m: float, place_m: float, opening: Vector3) -> Vector3:
+	var best := Vector3.ZERO
+	var best_d := search_m
+	if opening != Vector3.ZERO and CubeSphere.surface_distance_m(opening, d) < best_d:
+		best_d = CubeSphere.surface_distance_m(opening, d)
+		best = opening
+	for c in CreatureSpawner._cells_around(d, search_m, WILD_CELL_M):
+		if not _wild.has(c):
+			_wild[c] = wild_site(map, c)
+		var ws: Dictionary = _wild[c]
+		if not ws.is_empty() and CubeSphere.surface_distance_m(ws.dir, d) < best_d:
+			best_d = CubeSphere.surface_distance_m(ws.dir, d)
+			best = ws.dir
+	for c in CreatureSpawner._cells_around(d, search_m, CLIFF_CELL_M):
+		if not _cliff.has(c):
+			_cliff[c] = cliff_site(map, c)
+		var cs: Dictionary = _cliff[c]
+		if not cs.is_empty() and CubeSphere.surface_distance_m(cs.dir, d) < best_d:
+			best_d = CubeSphere.surface_distance_m(cs.dir, d)
+			best = cs.dir
+	for key in _wanderers:
+		var wd: Vector3 = _wanderers[key].dir
+		if CubeSphere.surface_distance_m(wd, d) < best_d:
+			best_d = CubeSphere.surface_distance_m(wd, d)
+			best = wd
+	if best != Vector3.ZERO:
+		return best
+	# Nobody near: wanderers found you and made camp close by.
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([d, "wanderers"])
+	var spot := d
+	for i in 24:
+		var p := CreatureSpawner._offset(d, rng.randf() * TAU, place_m * rng.randf_range(0.6, 1.2))
+		var cell := map.cell_at(p)
+		if map.water[cell] != PlanetData.Water.NONE or map.terrain.elevation(p, true) < 1.0:
+			continue
+		var slope := absf(map.terrain.elevation(CreatureSpawner._offset(p, 0.0, 6.0), true) - map.terrain.elevation(CreatureSpawner._offset(p, PI, 6.0), true)) / 12.0
+		if slope <= 0.15:
+			spot = p
+			break
+	var land := Ruins.country(map, spot)
+	var folk := "north" if land == "snow" else ("marsh" if land == "marsh" else "tribal")
+	_wanderers["wander:%d" % _wanderers.size()] = {"dir": spot, "folk": folk, "seed": hash([spot, "wanderers"])}
+	return spot
+
+
 ## A rock-shelter camp in grid cell `c`, or {}: {"dir" (the fire),
 ## "cliff" (bearing toward the cliff), "height" (m), "folk", "seed"}.
 static func cliff_site(map: PlanetData, c: Vector3i) -> Dictionary:
@@ -152,9 +208,9 @@ static func cliff_site(map: PlanetData, c: Vector3i) -> Dictionary:
 				continue
 			var land := Ruins.country(map, fire)
 			var folk := "north" if land == "snow" else ("marsh" if land == "marsh" else "tribal")
-			# Goblins hole up under rocks in milder country.
+			# Small folk hole up under rocks in milder country.
 			if land == "" and map.sample(map.temp_c, fire) > 8.0 and rng.randf() < 0.45:
-				folk = "goblin"
+				folk = "small_folk"
 			return {"dir": fire, "cliff": a, "height": wall, "folk": folk, "seed": hash([c, "cliff"])}
 	return {}
 
@@ -205,6 +261,12 @@ func _refresh() -> void:
 		var spot: Vector3 = world.to_scene(cs.dir, PlanetConst.RADIUS_M + chunks.ground_height(cs.dir))
 		if spot.distance_to(pp) < BUILD_M:
 			want["cliff:%s" % str(c)] = [spot, cs.folk, cs.seed, cs]
+	# Wanderers' fires placed for a wake-up.
+	for key in _wanderers:
+		var wsd: Dictionary = _wanderers[key]
+		var spot: Vector3 = world.to_scene(wsd.dir, PlanetConst.RADIUS_M + chunks.ground_height(wsd.dir))
+		if spot.distance_to(pp) < BUILD_M:
+			want[key] = [spot, wsd.folk, wsd.seed]
 	for key in want:
 		if not _camps.has(key):
 			var w: Array = want[key]
@@ -220,6 +282,8 @@ func _refresh() -> void:
 
 ## A camp at scene position `at`: the fire, seats, and folk facing it.
 func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
+	# The camp's tribe: which dyed-cloth family its folk mostly wear.
+	_family = CloakedFigure.tribe_family(seed_value)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
 	var d: Vector3 = world.dir_of(at)
@@ -239,8 +303,8 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 	for i in count:
 		var a := a0 + TAU * i / count + rng.randf_range(-0.25, 0.25)
 		var seat_pos := Vector3(cos(a), 0, sin(a)) * SEAT_R
-		# Seat: a log across, a flat stone among the dead; goblins squat.
-		if folk == "goblin":
+		# Seat: a log across, a flat stone among the dead; small folk squat.
+		if folk == "small_folk":
 			pass
 		elif folk == "dead":
 			var stone := CreatureBodies.box(root, Vector3(0.6, 0.4, 0.5), seat_pos + Vector3(0, 0.2, 0), Color(0.42, 0.42, 0.44))
@@ -322,31 +386,26 @@ func _spear(parent: Node3D, base: Vector3, lean: Vector3, length: float, body: S
 
 ## A standing guard: a hunter with a spear or an archer with a bow.
 func _guard(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -> Node3D:
-	var sp := CreatureSpecies.new()
-	sp.name = "Guard"
-	sp.body = "tribal"
-	sp.shape = "archer" if i % 2 == 1 or rng.randf() < 0.4 else "hunter"
-	sp.size_m = rng.randf_range(1.72, 1.85)
-	if folk == "north":
-		sp.color = Color(0.78, 0.62, 0.5).darkened(rng.randf_range(0.0, 0.15))
-		sp.accent = Color(0.82, 0.8, 0.76).darkened(rng.randf_range(0.0, 0.25))
-	else:
-		sp.color = Color(0.62, 0.44, 0.32).darkened(rng.randf_range(-0.1, 0.25))
-		sp.accent = Color(0.55, 0.4, 0.26).lightened(rng.randf_range(-0.1, 0.1))
-	var b := CreatureBodies.build(sp)
+	# A cloaked figure standing watch, a bow on the back of every other.
+	var pal := CloakedFigure.roll_palette(rng, _family)
+	var b := CloakedFigure.build(rng.randf_range(1.66, 1.8), pal[0], pal[1])
 	var holder := Node3D.new()
-	holder.name = sp.name
+	holder.name = "Guard"
 	parent.add_child(holder)
 	var body: Node3D = b.root
 	body.name = "Body"
 	holder.add_child(body)
-	holder.set_meta("hitboxes", CreatureHitboxes.build(holder, b, sp, true))
+	if i % 2 == 1 or rng.randf() < 0.4:
+		var bow := BowMesh.build(1.1)
+		body.add_child(bow)
+		bow.position = Vector3(0.05, 1.05, 0.16)
+		bow.rotation = Vector3(0.0, 0.0, 0.5)
+	holder.set_meta("hitboxes", CloakedFigure.hitboxes(holder, b, true))
 	holder.set_meta("arms", b.wings)
-	holder.set_meta("head", body.get_node_or_null("Head"))
+	holder.set_meta("head", (body as PlayerBody).head)
 	holder.set_meta("speaker", "Guard")
 	holder.set_meta("standing", true)
-	var f := BlobShadow.footprint(sp)
-	BlobShadow.make(holder, f.x, f.y)
+	BlobShadow.make(holder, 0.35, 0.35)
 	return holder
 
 
@@ -382,68 +441,62 @@ func _overhang(camp: Node3D, cs: Dictionary) -> void:
 		PropCollision.hull(PropCollision.body(rock), RuinBuilder.rock_hull(size, cs.seed + int(s * 7.0)))
 
 
-## One seated figure (an unscaled holder, the body under it).
+## One seated figure (an unscaled holder, the body under it). The living
+## are cloaked figures on the player's rig in their tribe's colors (the
+## small folk half the height, squatting, a lantern each); the dead at
+## some ruins keep their bones.
 func _sitter(parent: Node3D, folk: String, i: int, rng: RandomNumberGenerator) -> Node3D:
-	var sp := CreatureSpecies.new()
 	var names: Array = FOLK[folk].names
-	sp.name = names[i % names.size()]
-	sp.size_m = rng.randf_range(1.62, 1.8)
-	match folk:
-		"dead":
-			if i == 0:
-				sp.body = "robed"
-				sp.color = Color(0.12, 0.2, 0.62) # deep blue robe
-				sp.accent = Color(0.86, 0.82, 0.68)
-				sp.name = "Hooded one"
-			else:
-				sp.body = "skeleton"
-				sp.color = Color(0.86, 0.82, 0.68).darkened(rng.randf_range(0.0, 0.12))
-				sp.name = "Skeleton"
-		"goblin":
-			sp.body = "goblin"
-			sp.size_m = rng.randf_range(0.85, 1.05)
-			sp.color = Color(0.43, 0.54, 0.23).lightened(rng.randf_range(-0.1, 0.1))
-			sp.accent = Color(1.0, 0.54, 0.16)
-		"marsh":
-			sp.body = "robed"
-			sp.color = Color(0.28, 0.34, 0.26).lightened(rng.randf_range(-0.05, 0.08))
-			sp.accent = Color(0.72, 0.58, 0.46)
-		"north":
-			sp.body = "tribal"
-			sp.shape = "elder_seated" if i % 2 == 0 else "hunter_seated"
-			sp.color = Color(0.78, 0.62, 0.5).darkened(rng.randf_range(0.0, 0.15))
-			sp.accent = Color(0.82, 0.8, 0.76).darkened(rng.randf_range(0.0, 0.25)) # pale furs
-		_:
-			sp.body = "tribal"
-			sp.shape = "elder_seated" if i % 2 == 0 else "hunter_seated"
-			sp.color = Color(0.62, 0.44, 0.32).darkened(rng.randf_range(-0.1, 0.25))
-			sp.accent = Color(0.55, 0.4, 0.26).lightened(rng.randf_range(-0.1, 0.1))
-	var b := CreatureBodies.build(sp)
+	var sname: String = names[i % names.size()]
 	var holder := Node3D.new()
-	holder.name = sp.name
+	holder.name = sname
 	parent.add_child(holder)
-	var body: Node3D = b.root
+	if folk == "dead":
+		var sp := CreatureSpecies.new()
+		sp.name = sname
+		sp.size_m = rng.randf_range(1.62, 1.8)
+		if i == 0:
+			sp.body = "robed"
+			sp.color = Color(0.12, 0.2, 0.62) # deep blue robe
+			sp.accent = Color(0.86, 0.82, 0.68)
+			sp.name = "Hooded one"
+		else:
+			sp.body = "skeleton"
+			sp.color = Color(0.86, 0.82, 0.68).darkened(rng.randf_range(0.0, 0.12))
+			sp.name = "Skeleton"
+		holder.name = sp.name
+		var bd := CreatureBodies.build(sp)
+		var dbody: Node3D = bd.root
+		dbody.name = "Body"
+		holder.add_child(dbody)
+		dbody.position.y = 0.4 - 0.5 * sp.size_m
+		for leg in bd.legs:
+			(leg as Node3D).rotation.x = 1.05
+		for arm in bd.wings:
+			(arm as Node3D).rotation.x = 0.55
+		holder.set_meta("hitboxes", CreatureHitboxes.build(holder, bd, sp, true))
+		holder.set_meta("arms", bd.wings)
+		holder.set_meta("head", dbody.get_node_or_null("Head"))
+		holder.set_meta("speaker", sp.name)
+		BlobShadow.make(holder, 0.3 * sp.size_m, 0.4 * sp.size_m).position.z = -0.12 * sp.size_m
+		return holder
+	var small := folk == "small_folk"
+	var pal := CloakedFigure.roll_palette(rng, _family)
+	var h := rng.randf_range(0.9, 1.08) if small else rng.randf_range(1.6, 1.78)
+	var b := CloakedFigure.build(h, pal[0], pal[1], true)
+	var body: PlayerBody = b.root
 	body.name = "Body"
 	holder.add_child(body)
-	# Sitting: hips down to seat height, legs forward and down, arms
-	# forward to rest on the knees.
-	body.position.y = (0.05 - 0.3 * sp.size_m) if folk == "goblin" else (0.4 - 0.5 * sp.size_m)
-	for leg in b.legs:
-		(leg as Node3D).rotation.x = 1.05
-	for arm in b.wings:
-		(arm as Node3D).rotation.x = 0.55
-	# An imported model sits with its own clip (and sits on its own feet).
-	var animator: ModelAnimator = b.get("animator")
-	if animator:
-		body.position.y = 0.0
-		animator.set_state("sit")
-	holder.set_meta("hitboxes", CreatureHitboxes.build(holder, b, sp, true))
+	if small:
+		# Squatting on the ground, knees up, with a lantern.
+		body.position.y = -PlayerBody.SHIN_M * body.scale.y * 0.9
+		CloakedFigure.add_lantern(b)
+	holder.set_meta("hitboxes", CloakedFigure.hitboxes(holder, b, true))
 	holder.set_meta("arms", b.wings)
-	holder.set_meta("head", body.get_node_or_null("Head"))
-	holder.set_meta("speaker", sp.name)
-	# Seated: the shadow reaches forward under the knees.
-	var blob := BlobShadow.make(holder, 0.3 * sp.size_m, 0.4 * sp.size_m)
-	blob.position.z = -0.12 * sp.size_m
+	holder.set_meta("head", body.head)
+	holder.set_meta("speaker", sname)
+	var blob := BlobShadow.make(holder, 0.3 * h, 0.4 * h)
+	blob.position.z = -0.12 * h
 	return holder
 
 

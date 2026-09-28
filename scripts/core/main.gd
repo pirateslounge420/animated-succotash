@@ -93,9 +93,10 @@ func _on_planet_ready() -> void:
 	# camps (a different one each game); plants keep clear of it.
 	var spawn_dir := Encampment.site_near(world.planet, world.pick_spawn_dir())
 	Encampment.set_active(spawn_dir)
-	# Start late afternoon wherever that is, the sun low and dusk a minute
-	# or two off, so the first session opens on sunset and then the night.
-	var local_start_h := 17.0
+	# Start at the very beginning of dusk wherever that is (the designer:
+	# "the spawn in time is right at the beginning of dusk"), so the first
+	# session opens on sunset and then the night.
+	var local_start_h := DayCycle.phase_start_hour("dusk")
 	world.days = Astro.days_at_solar_hour(world.days, local_start_h, CubeSphere.longitude(spawn_dir))
 	world.center_on(spawn_dir, PlanetConst.RADIUS_M + world.surface_elevation(spawn_dir))
 
@@ -261,6 +262,8 @@ func _process(delta: float) -> void:
 		prompt = player.spear.prompt
 	elif Arrow.stuck_in_reach(player.reach_from(), Arrow.PICK_M) != null:
 		prompt = "E: take the arrow back"
+	elif PlayerCorpse.in_reach(player.global_position, Tuning.num("combat", "death", "corpse_pick_m")) != null:
+		prompt = "E: take your things back"
 	elif WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M) != null:
 		prompt = "E: take the %s back" % Inventory.title(WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M).item).to_lower()
 	elif _sample_in_reach() >= 0:
@@ -291,22 +294,38 @@ func _above_clouds(w: Dictionary) -> void:
 
 ## Dead: a moment on the ground, then you wake again by the camp fire
 ## where the game began.
+## Death (design reconciliation): your body stays where you fell with
+## everything you carried and wore (PlayerCorpse; no marker). You wake by
+## the nearest camp fire to where you died, the folk who found you
+## having carried you there (Camps.wake_fire(): a wild or rock-shelter
+## camp, the opening camp, or a wandering group's fire put down near by),
+## lying by it a moment, full health and nothing on you.
 func _on_player_died() -> void:
 	hud.show_death()
+	var death_dir: Vector3 = player.surface_dir
+	PlayerCorpse.drop(world, player.global_position, player.global_basis, player.inventory)
 	await get_tree().create_timer(3.5).timeout
-	hud.show_loading("You wake by the fire again...", 0.5)
+	hud.show_loading("", 0.5)
 	await get_tree().process_frame
 	await get_tree().process_frame
-	var d: Vector3 = camp.player_spot
+	var dt := Tuning.section("combat", "death")
+	var fire: Vector3 = camps.wake_fire(death_dir, float(dt.get("wake_search_m", 4000.0)), float(dt.get("wake_place_m", 150.0)), camp.site)
+	# Lying a couple of metres from the fire, feet to it.
+	var d: Vector3 = CreatureSpawner._offset(fire, CubeSphere.longitude(death_dir) * 7.0, 2.4)
+	if fire == camp.site:
+		d = camp.player_spot
 	var offset: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + world.surface_elevation(d))
 	world.rebase(offset)
 	player.global_position -= offset
 	chunks.load_blocking(d)
-	player.spawn_at(d, camp.site)
-	player.set_view(-0.3, 0.3)
+	player.spawn_at(d, fire)
+	player.set_view(-0.3, 0.0)
 	player.revive()
+	player.wake(float(dt.get("wake_s", 2.5)))
 	hud.hide_death()
 	hud.hide_loading()
+	await get_tree().create_timer(1.2).timeout
+	hud.say("Camp folk", "We found you out there, cold as stone, and carried you to the fire.", 0.0, 4.0)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -347,6 +366,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		var arrow := Arrow.stuck_in_reach(player.reach_from(), Arrow.PICK_M)
 		var lying := WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M)
+		var body := PlayerCorpse.in_reach(player.global_position, Tuning.num("combat", "death", "corpse_pick_m"))
 		var plant := _sample_in_reach()
 		if player.spear.in_reach():
 			player.grab_toward(player.spear.thrown.global_position)
@@ -354,6 +374,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif arrow != null:
 			player.grab_toward(arrow.global_position)
 			arrow.pick_up()
+		elif body != null:
+			if body.recover(player.inventory):
+				_say_note("You take your things back.")
+			else:
+				_say_note("Your hands are full.")
 		elif lying != null:
 			player.grab_toward(lying.global_position)
 			if player.inventory.add(lying.item):

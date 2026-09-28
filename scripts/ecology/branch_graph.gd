@@ -21,12 +21,17 @@ extends RefCounted
 const MIN_RADIUS_M := 0.035
 ## Rough spacing of handholds along the wood (m).
 const SPACING_M := 0.5
+## Hanging vines (add_vine()) are handholds too, on "limbs" numbered from
+## here: swung on (PlanetPlayer's catch), too thin to climb.
+const VINE_LIMB := 1000
 
 ## Stable per tree: the same tree gets the same key on every visit.
 var key := 0
-## PlantSpecies index and the tree's height (m).
+## PlantSpecies index and the tree's height (m); dead wood (DeadWood: a
+## snag, a dry culm) is brittle.
 var species := -1
 var height_m := 0.0
+var dead := false
 ## The chunk the tree belongs to, and the tree's frame within the chunk.
 var chunk: Node3D = null
 var xform := Transform3D.IDENTITY
@@ -108,3 +113,63 @@ func nearest(scene_pos: Vector3, min_radius := 0.0) -> int:
 			best_d = d
 			best = i
 	return best
+
+
+## Snap handhold `i` (it broke under someone): gone from every query (no
+## thickness, no links); on a vine, everything hanging below it goes too.
+func snap(i: int) -> void:
+	var todo := [i]
+	while not todo.is_empty():
+		var k: int = todo.pop_back()
+		if radius[k] <= 0.0:
+			continue
+		radius[k] = 0.0
+		for j in links[k]:
+			links[j].remove_at(links[j].find(k))
+			if is_vine(k) and is_vine(j) and local[j].y < local[k].y:
+				todo.append(j)
+		links[k] = PackedInt32Array()
+
+
+## Is handhold `i` on a hanging vine?
+func is_vine(i: int) -> bool:
+	return limb[i] >= VINE_LIMB
+
+
+## The top of the vine handhold `i` hangs on (where it hangs from the
+## wood; a vine swings from there), or `i` if it isn't a vine.
+func vine_top(i: int) -> int:
+	if not is_vine(i):
+		return i
+	var top := i
+	for k in 64:
+		var up_next := -1
+		for j in links[top]:
+			if local[j].y > local[top].y:
+				up_next = j
+		if up_next < 0:
+			return top
+		top = up_next
+		if not is_vine(top):
+			return top
+	return top
+
+
+## Hang a vine from handhold `from`: `count` handholds `step` m apart
+## straight down the tree's frame, `r` thick, linked in a chain and to
+## `from`. Returns the new handholds' indices.
+func add_vine(from: int, count: int, step: float, r: float, vine_no: int) -> PackedInt32Array:
+	var out := PackedInt32Array()
+	var prev := from
+	for k in count:
+		var i := local.size()
+		local.append(local[from] - Vector3.UP * step * (k + 1))
+		tangent.append(Vector3.DOWN)
+		radius.append(r)
+		limb.append(VINE_LIMB + vine_no)
+		links.append(PackedInt32Array([prev]))
+		links[prev].append(i)
+		out.append(i)
+		prev = i
+	_bound_r = -1.0
+	return out

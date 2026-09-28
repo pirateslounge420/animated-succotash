@@ -1749,6 +1749,83 @@ yet (deferred).
   slower climbing and 15% louder, and the body leans forward: felt, never
   shown. F9 (dev) puts one of each loose kind in the pack. Fish,
   mushrooms and stone tools have no source yet.
+- **The tech button** (design reconciliation, `docs/design/RECONCILIATION_2026-09-27.md`;
+  right mouse, pad right shoulder; `PlanetPlayer._tech()`). The game is
+  locked at 60 fps with 60 Hz physics (`project.godot`), and windows are
+  counted in physics frames (movement table `wall_jump`, `roll`), so a
+  hitch can't widen them. In the air, what you touch decides the move:
+  - On a steep face (wall, cliff, trunk, ruin) touched within 7 frames:
+    you plant on it. Let go within 6 frames and it's a wall jump, back
+    the way you came at 7.5 m/s (or your approach speed if faster),
+    58 degrees up. Chained wall jumps (no ground, no cling between) each
+    gain x1.03, up to 4 of them, so a chain keeps or builds speed. Hold
+    and it's a cling: you slip at 0.25 m/s for up to 2.5 s, then slide
+    off; letting go drops you; Space kicks off at 0.6 of the speed and
+    starts the chain over. The first two frames of a kick are the crouch
+    pose.
+  - Near a branch, bamboo culm or vine too thin to kick off (a limb up to
+    0.22 m radius, never the trunk): catch and swing, held. A pendulum
+    from the handhold (a vine swings from where it hangs) at the speed you
+    came in with; hang as long as you like; let go (or jump) and you fly
+    on with 1.05 of the speed, a chain link. What you hold decides the
+    rest (`Handholds`, `data/handholds.json`, per species by genus, with
+    bamboo and vine rows and a plant's own `handhold` block): catch or
+    swing faster than its break speed (thinner wood breaks sooner) and it
+    snaps (a crack; you fly on with 0.6 of your speed; it's gone from the
+    graph). It bends under you by its flex and springs back; let go as it
+    rebounds and its snapback pushes you (a whip): green bamboo (break
+    60 m/s, flex 0.9, snapback 0.9) is a launch. Dead wood is brittle
+    (0.35 of the break speed) and springs nothing. Hanging heavier than
+    it bears (1 plus 0.15 per carried thing) gives way after 0.8 s.
+  - **Vines** (`TerrainChunk._hang_vines()`): trees drawn with vines
+    (wet, warm country) hang up to four from their limbs, 3–7 m, as
+    handholds on their branch graph (`BranchGraph.add_vine()`, limbs from
+    `VINE_LIMB`, 3 cm: swung on, too thin to climb or for the gibbon) and
+    drawn as thin strands. Bamboo clumps get a one-culm graph.
+  - **Landing roll**: crouch within 5 frames either side of touching
+    down after a fall over a body length rolls instead of squatting: no
+    damage up to 14 m (a quarter of it beyond), the fall turned into
+    forward speed (run speed plus 0.6 of the fall speed: a 10 m drop exits
+    at 17.5 m/s), 0.35 m of roll per metre fallen. Missed: the squat and
+    full damage. The body tumbles; the first-person camera never does (it
+    hangs off the player, keeping the look direction; it only dips).
+  - **Momentum** carries: over the sprint speed on the ground and pushing
+    on, you slow only 5 m/s². **Impact**: straight into a wall or trunk
+    faster than 11 m/s without a tech within the window costs 6 health a
+    m/s over (22 m/s: 60, faster kills).
+- **The ninja run** (`PlayerBody`, movement table `run_pose`): the torso
+  pitches forward 5 degrees at a walk to 20 at a sprint, 8 more
+  accelerating, back while stopping; the hips lean into turns; the hood
+  stays level; between walk and sprint speed the arms trail straight back
+  a beat behind, any action taking them at once. One crouch pose serves
+  the landing squat, the kick's wind-up, the cling and the roll.
+- **Dead wood** (`DeadWood`, `data/dead_wood.json`): a share of trees
+  stand dead from generation (3% by default; taiga 12%, badlands 18%,
+  swamp and bog 10%), and 15% of bamboo culms: drawn bare with grey bark
+  (dry straw culms), their handholds brittle. Placed at one decay stage
+  for now; the Phase 5 ledgers will move it.
+- **Death** (`main._on_player_died()`, `PlayerCorpse`): your body stays
+  where you fell, slumped with the cloak over it, holding everything you
+  carried and wore; no marker. After 45 s birds circle over it (18 m up,
+  calling now and then). You wake by the nearest camp fire within 4 km
+  (`Camps.wake_fire()`: wild, rock shelter or the opening camp; else a
+  wandering group's fire put down 150 m off), lying there a moment, full
+  health, nothing on you: no bow or spear until you get them back ("Bare
+  hands"). E by the body takes it all back and it's gone. A lit fire is a
+  safe zone: within 8 m nothing hostile hurts you
+  (`CreatureSpawner.player_hit()`) and angry animals give up.
+- **Cloaked figures** (`CloakedFigure`; the Falcon/Ganondorf rule): the
+  camp and opening-camp folk, the small folk (the goblins, renamed, with
+  their lanterns), the Forest troll and the Marsh witch are the player's
+  own rig (`PlayerBody`, cloak sim and all) at their height (small folk
+  ~1 m, folk ~1.7 m, the troll 3.2 m), striding by their own velocity,
+  longer and slower the bigger they are. Each wears a palette: the
+  shader recolors the cloth to a main color and the trim to an edge
+  color, keeping the shading. Folk roll from dyed-cloth families (ochres,
+  madder reds, bog browns, woad blues, moss greens, undyed greys), mostly
+  their camp's family (a tribe's look), a contrasting edge; the player's
+  indigo with a rust hem is never rolled. Hit parts on the rig's pivots
+  (head, torso, limbs). The restless dead at some ruins keep their bones.
 - **Noises out in the world** (`NoiseEvents`, spec D5: "player noise ...
   bow, spear ... is what creatures hear"): a tiny static facade.
   `NoiseEvents.emit(scene_pos, loudness_m)` records a noise for 8 frames;

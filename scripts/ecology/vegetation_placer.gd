@@ -192,7 +192,15 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 			var leaf := 1.0
 			if tier == T.EMERGENT or tier == T.CANOPY:
 				var growth := PlantMeshes.stand_in_growth(sp, height / float(SIZE_SCALE[tier]))
-				leaf = PlantMeshes.leaf_amount(growth, site.m)
+				# Living trees keep a little leaf; bare 1 means dead.
+				leaf = maxf(PlantMeshes.leaf_amount(growth, site.m), 0.05)
+				# Dead wood (data/dead_wood.json): a share of trees stand dead,
+				# more in beetle-killed taiga, badlands and swamp margins; dry
+				# culms among the bamboo. From the spot, so the rest of the
+				# placement doesn't shift.
+				if DeadWood.is_dead(ctx.map, site.dir, sp):
+					leaf = 0.0
+					vines *= 0.3
 			_emit(out, sp_idx, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, height, 0.09, moss, vines, 1.0 - leaf)
 			if tier == T.EMERGENT or tier == T.CANOPY:
 				hosts.append([site.dir, PlanetConst.RADIUS_M + site.h, height, sp_idx, site.depth, leaf])
@@ -397,8 +405,15 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 				chunk.layout_mm[Vector2i(sp_idx, l)] = lmm
 		if own:
 			chunk.tree_mm[sp_idx] = mm
+		var tbuf: PackedFloat32Array = entry[0]
 		for t in entry[2]:
-			placed.append([t[0], t[1], sp_idx, t[2], t[3], t[4], t[5], t[6]])
+			# Its vines and bareness (custom data g and a: 1 = dead) ride
+			# along in the record (TerrainChunk reads them there, not back
+			# from the MultiMesh).
+			var j: int = int(t[2]) * 20
+			var vines := tbuf[j + 17] if j + 19 < tbuf.size() else 0.0
+			var bare := tbuf[j + 19] if j + 19 < tbuf.size() else 0.0
+			placed.append([t[0], t[1], sp_idx, t[2], t[3], t[4], t[5], t[6], vines, bare])
 	# In placement order when every tree knows its place (compute_base's
 	# trees always do), else in the order they came.
 	var n := placed.size()
@@ -411,7 +426,9 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 			break
 		sorted[at] = t
 	for t in (sorted if not sorted.is_empty() else placed):
+		var extra := [t[8], t[9]]
 		t.resize(7)
+		t.append_array(extra)
 		chunk.trees.append(t)
 
 

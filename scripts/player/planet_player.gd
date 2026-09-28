@@ -88,13 +88,50 @@ static var SQUAT_S := Tuning.num("movement", "landing", "squat_s")
 static var HEAVY_SQUAT_S := Tuning.num("movement", "landing", "heavy_squat_s")
 static var HEAVY_FALL_M := Tuning.num("movement", "landing", "heavy_fall_m")
 static var SQUAT_DIP_M := Tuning.num("movement", "landing", "dip_m")
-## Wall jump (right click in the air by a steep face; _wall_jump()).
-static var WJ_WINDOW_S := Tuning.num("movement", "wall_jump", "window_s")
+## Right click, the tech button (_tech()): on a steep face, a wall jump
+## (tap) or a cling (hold); near a branch or vine, catch and swing. Timed
+## in physics frames (the game runs locked at 60), so a hitch can't widen
+## the window.
+static var WJ_WINDOW_F := int(Tuning.num("movement", "wall_jump", "window_frames"))
+static var WJ_TAP_F := int(Tuning.num("movement", "wall_jump", "tap_frames"))
 static var WJ_SPEED := Tuning.num("movement", "wall_jump", "speed_mps")
 static var WJ_ANGLE := deg_to_rad(Tuning.num("movement", "wall_jump", "angle_deg"))
-static var WJ_DECAY := Tuning.num("movement", "wall_jump", "chain_decay")
+static var WJ_GAIN := Tuning.num("movement", "wall_jump", "chain_gain")
+static var WJ_CAP := int(Tuning.num("movement", "wall_jump", "chain_cap"))
+static var WJ_MAX := Tuning.num("movement", "wall_jump", "max_mps")
 static var WJ_STEEP := Tuning.num("movement", "wall_jump", "min_wall_steepness")
 static var WJ_NOISE_M := Tuning.num("movement", "wall_jump", "noise_m")
+static var CLING_S := Tuning.num("movement", "wall_jump", "cling_hold_s")
+static var CLING_JUMP := Tuning.num("movement", "wall_jump", "cling_jump_scale")
+static var CLING_SLIDE := Tuning.num("movement", "wall_jump", "cling_slide_mps")
+## Landing roll (crouch at touchdown after a big fall; _start_roll()).
+static var ROLL_WINDOW_F := int(Tuning.num("movement", "roll", "window_frames"))
+static var ROLL_SAFE_M := Tuning.num("movement", "roll", "safe_m")
+static var ROLL_DAMAGE := Tuning.num("movement", "roll", "damage_scale")
+static var ROLL_CARRY := Tuning.num("movement", "roll", "carry")
+static var ROLL_MAX_MPS := Tuning.num("movement", "roll", "max_mps")
+static var ROLL_LEN_PER_M := Tuning.num("movement", "roll", "len_per_m")
+static var ROLL_LEN_CAP := Tuning.num("movement", "roll", "len_cap_m")
+static var ROLL_LEN_MIN := Tuning.num("movement", "roll", "min_len_m")
+## Hitting something at speed without a tech (impact).
+static var IMPACT_SAFE := Tuning.num("movement", "impact", "safe_mps")
+static var IMPACT_PER := Tuning.num("movement", "impact", "per_mps")
+## Catch and swing on branches and vines (_try_catch()).
+static var CATCH_M := Tuning.num("movement", "swing", "catch_reach_m")
+static var SWING_MAX_R := Tuning.num("movement", "swing", "max_branch_radius_m")
+static var SWING_MIN_R := Tuning.num("movement", "swing", "min_radius_m")
+static var SWING_CARRY := Tuning.num("movement", "swing", "release_carry")
+static var SWING_G := Tuning.num("movement", "swing", "gravity_scale")
+static var SWING_SNAP_KEEP := Tuning.num("movement", "swing", "snap_speed_keep")
+static var SWING_FLEX_HZ := Tuning.num("movement", "swing", "flex_hz")
+static var SWING_FLEX_DAMP := Tuning.num("movement", "swing", "flex_damping")
+static var SWING_FLEX_GAIN := Tuning.num("movement", "swing", "flex_gain")
+static var SWING_LOAD_PER := Tuning.num("movement", "swing", "load_per_item")
+static var SWING_GIVE_S := Tuning.num("movement", "swing", "give_way_s")
+static var SWING_HANG_DAMP := Tuning.num("movement", "swing", "hang_damping")
+static var SWING_MIN_MPS := Tuning.num("movement", "swing", "min_air_mps")
+## Over your run speed on the ground and pushing on, you slow only this.
+static var OVERSPEED_DECAY := Tuning.num("movement", "overspeed", "decay_mps2")
 ## How long a hand takes to reach for something and come back (grab_toward).
 static var GRAB_S := Tuning.num("movement", "climb", "grab_s")
 ## Unstick rule (_unstick): barely moving (under STUCK_MPS) while pushing
@@ -153,18 +190,60 @@ var _squat_len := 0.0
 var _squat_dip := 0.0
 var _traction := 1.0
 var _traction_t := 0.0
-var _wall_t := INF
+## Frames since a steep face was touched in the air (_tech()), its normal,
+## the approach (velocity when first met), whether it's a tree, where.
+var _wall_f := 9999
 var _wall_n := Vector3.ZERO
 var _wall_in := Vector3.ZERO
+var _wall_tree := false
+var _wall_limb := false
+var _wall_p := Vector3.ZERO
 var _wj_chain := 0
 var _kick_t := 0.0
-static var KICK_S := Tuning.num("movement", "wall_jump", "kick_s")
+static var KICK_S := Tuning.num("movement", "wall_jump", "kick_frames") / 60.0
+## Clinging to a face (right click held): frames held, time left.
+var clinging := false
+var _cling_f := 0
+var _cling_left := 0.0
+## Swinging from a handhold: the graph, the pivot handhold, rope length
+## (pivot to the body's middle), time on it.
+var swinging := false
+var _sw_graph: BranchGraph
+var _sw_i := -1
+var _sw_len := 0.0
+var _sw_t := 0.0
+## What the handhold is like (Handholds.props()), how far it's bent and
+## how fast it's springing (scene m, m/s), and how long it's been
+## overloaded.
+var _sw_props := {}
+var _sw_off := Vector3.ZERO
+var _sw_off_v := Vector3.ZERO
+var _sw_over_t := 0.0
+## Handholds snapped under you (tests).
+var snaps := 0
+## The landing roll: time left and its length, direction and speed; a
+## heavy landing waiting (frames) for a late crouch, and its fall.
+var _rolling := 0.0
+var _roll_total := 0.0
+var _roll_dir := Vector3.ZERO
+var _roll_speed := 0.0
+var _roll_wait_f := 0
+var _pending_fell := 0.0
+var _pending_fall_v := 0.0
+var _crouch_press_f := -9999
+## An impact waiting (frames) to see if a tech saves it, and its damage.
+var _impact_f := 0
+var _impact_dmg := 0.0
 ## How wet the ground is from rain, 0-1 (main sets it from the weather).
 var ground_wet := 0.0
 ## Counters the tests read.
 var skids := 0
 var landings := 0
 var wall_jumps := 0
+var clings := 0
+var swings := 0
+var rolls := 0
+var impacts := 0
 var _stuck_t := 0.0
 ## How many times the unstick rule has freed you (tests read it).
 var unsticks := 0
@@ -247,6 +326,8 @@ var _prompt_timer := 0.0
 var _shake := 0.0
 var _knock := Vector3.ZERO
 var _aim_blend := 0.0
+## The ninja run's trailing arms, 0 .. 1 (_update_camera()).
+var _arm_trail := 0.0
 ## Water contacts (Ripples): in the water last frame, and the swimming
 ## stroke's timer and hand.
 var _in_water := false
@@ -422,6 +503,16 @@ func _physics_process(delta: float) -> void:
 		_dead_step(delta)
 		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
 		return
+	if _wake_t > 0.0:
+		# Lying by the fire, then getting up.
+		_wake_t = maxf(_wake_t - delta, 0.0)
+		var up_k := smoothstep(0.55, 1.0, 1.0 - _wake_t / _wake_total)
+		_body.rotation = Vector3(-PI * 0.5 * (1.0 - up_k), 0.0, 0.0)
+		_body.position = Vector3(0, 0.2 * (1.0 - up_k), 0)
+		velocity = Vector3.ZERO
+		_orient()
+		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
+		return
 	if climbing:
 		_climb_step(delta)
 		_orient()
@@ -439,9 +530,25 @@ func _physics_process(delta: float) -> void:
 	var sink := -velocity.dot(up)
 
 	_update_stance()
+	if Input.is_action_just_pressed("crouch"):
+		_crouch_press_f = Engine.get_physics_frames()
 	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
 	var wish := (cam_right * input.x + cam_forward * input.y)
 	var on_floor := is_on_floor()
+	if clinging or swinging:
+		if clinging:
+			_cling_step(delta)
+		else:
+			_swing_step(delta, cam_forward)
+		_wall_f += 1
+		_update_squat(delta)
+		_face((-_wall_n - up * _wall_n.dot(up)).normalized() if clinging and _wall_n != Vector3.ZERO else (cam_forward if first_person else _facing), delta * 2.0)
+		_orient()
+		_update_blob(chunks.ground_height(surface_dir))
+		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
+		_update_noise(delta, velocity.length())
+		trees.update_contact(delta, global_position, get_world_3d().direct_space_state)
+		return
 	var speed := WALK_SPEED
 	if crouching:
 		speed = CROUCH_SPEED
@@ -478,14 +585,23 @@ func _physics_process(delta: float) -> void:
 		target = _takeoff + steer
 		rate = AIR_ACCEL_MPS2
 	else:
-		if _squat_t > 0.0:
+		if _rolling > 0.0:
+			# Rolling: no steering, the roll's speed along its way.
+			target = _roll_dir * _roll_speed
+			_move = target
+		elif _squat_t > 0.0:
 			target = Vector3.ZERO
+		elif wish.length() > 0.1 and _move.length() > SPRINT_SPEED * burden_speed() + 0.1 and speed >= WALK_SPEED * burden_speed() - 0.01 and wish.normalized().dot(_move.normalized()) > 0.7:
+			# Faster than your run (out of a roll, a chain, a swing) and
+			# pushing on: momentum carries, bleeding off slowly.
+			target = wish.normalized() * maxf(speed, _move.length() - OVERSPEED_DECAY * delta)
+			rate = ACCEL_MPS2 * 4.0
 		elif wish.length() > 0.1 and _move.length() > TURNAROUND_MIN_MPS and wish.normalized().dot(_move.normalized()) < -0.5:
 			# Turn-around: a brief skid, then off the other way.
 			_move *= TURNAROUND_KEEP
 			skids += 1
 			footsteps.scuff(self)
-		if target.length() < _move.length() or target.dot(_move) < 0.0:
+		if _rolling <= 0.0 and (target.length() < _move.length() - 0.01 or target.dot(_move) < 0.0):
 			rate = FRICTION_MPS2 * _traction
 	_move = _move.move_toward(target, rate * delta)
 	# Last frame's own vertical motion, without the knock-back (added fresh
@@ -507,8 +623,19 @@ func _physics_process(delta: float) -> void:
 		_jumped = false
 		_wj_chain = 0
 		_squat_t = maxf(_squat_t - delta, 0.0)
+		_rolling = maxf(_rolling - delta, 0.0)
+		# A heavy landing waits a few frames for a late crouch (a roll);
+		# else the fall damage lands.
+		if _roll_wait_f > 0:
+			if Input.is_action_just_pressed("crouch"):
+				_roll_wait_f = 0
+				_start_roll(_pending_fell, _pending_fall_v)
+			else:
+				_roll_wait_f -= 1
+				if _roll_wait_f == 0:
+					_fall_damage(_pending_fell)
 		# Held jump keeps jumping each time you land (after the squat).
-		if Input.is_action_pressed("jump") and not crouching and _squat_t <= 0.0:
+		if Input.is_action_pressed("jump") and not crouching and _squat_t <= 0.0 and _rolling <= 0.0:
 			vy = JUMP_SPEED * (SPRINT_JUMP if sprinting else 1.0)
 			_takeoff = _move
 			_jumped = true
@@ -524,18 +651,26 @@ func _physics_process(delta: float) -> void:
 		_fall_speed = 0.0
 	if swimming or on_floor:
 		_fall_top = radius
-	# Wall jump (right click) off a face touched in the air just now.
+	# Right click in the air: the tech (wall jump / cling / catch).
 	if Input.is_action_just_pressed("wall_jump") and not on_floor and not swimming:
-		var kick := _wall_jump()
-		if kick != Vector3.INF:
-			horizontal = _move
-			vy = kick.dot(up)
+		if _tech(cam_forward):
+			_was_on_floor = false
+			_update_squat(delta)
+			return
 	_was_on_floor = on_floor
 	velocity = horizontal + up * vy + _knock
 	_knock = _knock.move_toward(Vector3.ZERO, delta * 12.0)
 	var before := horizontal
+	var before_v := velocity
 	move_and_slide()
-	_wall_t += delta
+	_wall_f += 1
+	# An impact waiting for a tech that never came: it hurts now.
+	if _impact_f > 0:
+		_impact_f -= 1
+		if _impact_f == 0:
+			impacts += 1
+			_damage(_impact_dmg)
+			_impact_dmg = 0.0
 	for k in get_slide_collision_count():
 		var col := get_slide_collision(k)
 		# Running into a wall or a trunk stops the part of your momentum
@@ -545,15 +680,27 @@ func _physics_process(delta: float) -> void:
 			_move -= n * _move.dot(n)
 			if not is_on_floor() and _takeoff.dot(n) < 0.0:
 				_takeoff -= n * _takeoff.dot(n)
-		# A steep face touched in the air: a wall jump may kick off it for
-		# WJ_WINDOW_S (cliff, trunk, ruin wall, boulder).
+		# A steep face touched in the air: right click within WJ_WINDOW_F
+		# frames plants on it (cliff, trunk, ruin wall, boulder).
 		if absf(n.dot(up)) < WJ_STEEP and not is_on_floor():
 			_wall_n = n
 			# The approach: what you were moving at when you first met it
 			# (after that the slide has already turned you along it).
-			if _wall_t > delta * 1.5 or _wall_in == Vector3.ZERO:
+			if _wall_f > 1 or _wall_in == Vector3.ZERO:
 				_wall_in = before if before.length() > 0.5 else -n
-			_wall_t = 0.0
+			_wall_f = 0
+			_wall_p = col.get_position()
+			var wb := col.get_collider()
+			_wall_tree = wb is CollisionObject3D and ((wb as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER) != 0
+			var wchunk := (wb as Node).get_parent() as TerrainChunk if wb is Node else null
+			_wall_limb = wchunk != null and wchunk.is_limb_shape(wb, col.get_collider_shape_index())
+		# Straight into a wall, trunk or rock too fast: an impact, unless a
+		# tech comes within the window.
+		if n.dot(up) < 0.7:
+			var into := -before_v.dot(n)
+			if into > IMPACT_SAFE and _impact_f == 0:
+				_impact_dmg = (into - IMPACT_SAFE) * IMPACT_PER
+				_impact_f = WJ_WINDOW_F + WJ_TAP_F
 		var body := col.get_collider()
 		if body is CollisionObject3D and (body as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER:
 			trees.bumped(body, col.get_collider_shape_index(), horizontal.length())
@@ -934,6 +1081,16 @@ func _damage(amount: float) -> void:
 
 ## Back on your feet at full health (main.respawn()); a few seconds'
 ## grace before anything can hurt you again.
+## Waking by the fire after dying: lying there for `seconds`, then up.
+func wake(seconds: float) -> void:
+	_wake_t = seconds
+	_wake_total = maxf(seconds, 0.01)
+
+
+var _wake_t := 0.0
+var _wake_total := 1.0
+
+
 func revive() -> void:
 	dead = false
 	hp = MAX_HP
@@ -986,8 +1143,18 @@ static func heal_for(source: String) -> float:
 ## Landing: a hard enough fall hurts.
 func _land() -> void:
 	var fell := maxf(_fall_top - world.radius_of(global_position), 0.0) if _fall_top > -INF else 0.0
-	if fell > FALL_SAFE_M:
-		_damage((fell - FALL_SAFE_M) * FALL_DAMAGE_PER_M)
+	if fell > HEAVY_FALL_M:
+		# A heavy landing: crouch pressed just before touchdown rolls now;
+		# else wait a few frames for a late one before the fall hurts.
+		if Engine.get_physics_frames() - _crouch_press_f <= ROLL_WINDOW_F:
+			_start_roll(fell, _fall_speed)
+			landings += 1
+			_fall_speed = 0.0
+			_fall_top = -INF
+			return
+		_roll_wait_f = ROLL_WINDOW_F
+		_pending_fell = fell
+		_pending_fall_v = _fall_speed
 	# A couple of frames of landing squat after a jump or a real drop; more
 	# after a fall of more than a body length. Running over a bump (off the
 	# ground for a frame or two) isn't a landing.
@@ -999,30 +1166,276 @@ func _land() -> void:
 	_fall_top = -INF
 
 
-## Wall jump: in the air within WJ_WINDOW_S of touching a steep face,
-## kick off it back the way you came (the reversed approach, turned away
-## from the face if it pointed along it), angled WJ_ANGLE up at WJ_SPEED;
-## each further wall jump before you land keeps WJ_DECAY of the last one's
-## upward speed. A short kick of the body and a scuff creatures hear.
-## Returns the kick's velocity, or INF if there was no wall to kick off.
-func _wall_jump() -> Vector3:
-	if climbing or _wall_t > WJ_WINDOW_S:
-		return Vector3.INF
+## Fall damage for a drop of `fell` metres (over FALL_SAFE_M).
+func _fall_damage(fell: float) -> void:
+	if fell > FALL_SAFE_M:
+		_damage((fell - FALL_SAFE_M) * FALL_DAMAGE_PER_M)
+
+
+## The ninja landing roll after a fall of `fell` m coming down at `fall_v`
+## m/s: no damage up to ROLL_SAFE_M, a share of it beyond; the fall turns
+## into forward speed; ROLL_LEN_PER_M metres of roll per metre fallen.
+func _start_roll(fell: float, fall_v: float) -> void:
+	if fell > ROLL_SAFE_M:
+		_damage((fell - FALL_SAFE_M) * FALL_DAMAGE_PER_M * ROLL_DAMAGE)
+	var h := _move - up * _move.dot(up)
+	_roll_dir = h.normalized() if h.length() > 0.5 else (_facing - up * _facing.dot(up)).normalized()
+	_roll_speed = minf(maxf(h.length(), WALK_SPEED) + ROLL_CARRY * fall_v, ROLL_MAX_MPS)
+	var length := clampf(ROLL_LEN_PER_M * fell, ROLL_LEN_MIN, ROLL_LEN_CAP)
+	_rolling = length / maxf(_roll_speed, 0.1)
+	_roll_total = _rolling
+	_move = _roll_dir * _roll_speed
+	_squat_t = 0.0
+	_roll_wait_f = 0
+	rolls += 1
+	make_noise(0.35)
+
+
+## Right click in the air. A steep face touched within WJ_WINDOW_F frames:
+## plant on it (a tap becomes a wall jump, a hold a cling), unless it's a
+## branch too thin to kick off; then (or with no face) catch a branch or
+## vine in reach and swing. True if something happened.
+func _tech(cam_forward: Vector3) -> bool:
+	var on_wall := _wall_f <= WJ_WINDOW_F and not climbing
+	if on_wall and _wall_tree:
+		# A limb touched (not the trunk): caught and swung on if it's thin
+		# enough; bamboo culms always.
+		var near := BranchGraphs.nearest(_wall_p, 0.5)
+		if not near.is_empty() and _catchable(near[0], near[1]):
+			var g0: BranchGraph = near[0]
+			var bamboo := g0.species >= 0 and SpeciesDB.all()[g0.species].shape == PlantSpecies.Shape.BAMBOO
+			if _wall_limb or bamboo:
+				on_wall = false
+	if on_wall:
+		clinging = true
+		clings += 1
+		_cling_f = 0
+		_cling_left = CLING_S
+		_wall_speed = maxf(_wall_in.length(), (velocity - up * velocity.dot(up)).length())
+		_move = Vector3.ZERO
+		_takeoff = Vector3.ZERO
+		velocity = Vector3.ZERO
+		_impact_f = 0
+		_impact_dmg = 0.0
+		_kick_t = 2.0 / 60.0 # the crouch before the kick
+		return true
+	return _try_catch(cam_forward)
+
+
+## A handhold you catch and swing on rather than kick off: a vine, a
+## bamboo culm, or a limb (not the trunk) thinner than SWING_MAX_R.
+func _catchable(g: BranchGraph, i: int) -> bool:
+	if g.radius[i] <= 0.0:
+		return false
+	if g.is_vine(i):
+		return true
+	var sp: PlantSpecies = SpeciesDB.all()[g.species] if g.species >= 0 else null
+	if sp != null and sp.shape == PlantSpecies.Shape.BAMBOO:
+		return true
+	return g.limb[i] > 0 and g.radius[i] <= SWING_MAX_R
+
+
+## Approach speed at the face (a wall jump keeps it if it's more).
+var _wall_speed := 0.0
+
+
+## Holding a face (right click held): a tap (let go within WJ_TAP_F
+## frames) kicks off it, a full wall jump that chains; held longer it's a
+## cling: it slips slowly and lets go after CLING_S; letting go drops you;
+## jump kicks off weakly and starts the chain over.
+func _cling_step(delta: float) -> void:
+	_cling_f += 1
+	var jump := Input.is_action_just_pressed("jump")
+	if jump or not Input.is_action_pressed("wall_jump"):
+		clinging = false
+		if jump and _cling_f > WJ_TAP_F:
+			velocity = _wall_jump(CLING_JUMP, false)
+		elif _cling_f <= WJ_TAP_F:
+			velocity = _wall_jump(1.0, true)
+		else:
+			velocity = -_wall_n * 0.5
+			_wj_chain = 0
+		_fall_top = world.radius_of(global_position)
+		return
+	_cling_left -= delta
+	if _cling_left <= 0.0:
+		# Worn out: slide off the face.
+		clinging = false
+		velocity = _wall_n * 0.8 - up * 1.0
+		_wj_chain = 0
+		return
+	# Held to the face, slipping slowly.
+	velocity = -_wall_n * 1.5 - up * CLING_SLIDE
+	move_and_slide()
+	var touching := false
+	for k in get_slide_collision_count():
+		if absf(get_slide_collision(k).get_normal().dot(up)) < WJ_STEEP:
+			touching = true
+	if is_on_floor() or not touching:
+		clinging = false
+		velocity = Vector3.ZERO
+	_kick_t = 2.0 / 60.0
+	_fall_top = world.radius_of(global_position)
+
+
+## Catch a handhold in reach and swing: moving at least SWING_MIN_MPS, a
+## handhold within CATCH_M of your hands on wood between SWING_MIN_R and
+## SWING_MAX_R thick (or a vine), ahead of you and not below, toward where
+## you look. A vine swings from where it hangs. True if caught.
+func _try_catch(cam_forward: Vector3) -> bool:
+	if velocity.length() < SWING_MIN_MPS or climbing:
+		return false
+	var hands := global_position + up * 1.6
+	var travel := velocity.normalized()
+	var best := []
+	var best_score := INF
+	for e in BranchGraphs.handholds_within(hands, CATCH_M, SWING_MIN_R):
+		var g: BranchGraph = e[0]
+		var i: int = e[1]
+		if not _catchable(g, i):
+			continue
+		var to: Vector3 = g.pos(i) - hands
+		if to.dot(up) < -0.4:
+			continue
+		var dn := to.normalized() if to.length() > 0.01 else travel
+		var score := float(e[2]) - 0.4 * dn.dot(travel) - 0.4 * dn.dot(cam_forward)
+		if score < best_score:
+			best_score = score
+			best = [g, i]
+	if best.is_empty():
+		return false
+	var g: BranchGraph = best[0]
+	var props := Handholds.props(g, best[1])
+	if velocity.length() > float(props.break_speed_mps):
+		# Too fast for it: it snaps, and you fly on, slower.
+		_snap(g, best[1])
+		velocity *= SWING_SNAP_KEEP
+		_move = velocity - up * velocity.dot(up)
+		_takeoff = _move
+		return true
+	_sw_graph = g
+	_sw_props = props
+	_sw_i = _sw_graph.vine_top(best[1]) if _sw_graph.is_vine(best[1]) else best[1]
+	_sw_len = maxf(_sw_graph.pos(_sw_i).distance_to(global_position + up * 0.9), 0.8)
+	_sw_t = 0.0
+	_sw_over_t = 0.0
+	# It bends under you the way you were going.
+	_sw_off = Vector3.ZERO
+	_sw_off_v = velocity * float(props.flex) * SWING_FLEX_GAIN
+	trees.rustle_at(_sw_graph.pos(_sw_i))
+	swinging = true
+	swings += 1
+	_impact_f = 0
+	_impact_dmg = 0.0
+	return true
+
+
+## A pendulum from the handhold, at the speed you came in with: gravity
+## pulls, the rope holds the body's middle at _sw_len. Let go (release
+## right click, or jump) and you fly on with SWING_CARRY of the speed; a
+## chain link. Lets go by itself after SWING_MAX_S; hitting something at
+## speed is an impact.
+func _swing_step(delta: float, cam_forward: Vector3) -> void:
+	_sw_t += delta
+	if _sw_graph == null or not _sw_graph.valid() or _sw_i < 0 or _sw_i >= _sw_graph.size():
+		_end_swing()
+		return
+	if Input.is_action_just_pressed("jump") or not Input.is_action_pressed("wall_jump"):
+		_end_swing()
+		return
+	if _sw_graph.radius[_sw_i] <= 0.0:
+		_end_swing()
+		return
+	# Too fast for it (a hard swing), or hanging heavier than it bears for
+	# a moment: it gives way.
+	var load := 1.0 + SWING_LOAD_PER * inventory.count()
+	_sw_over_t = _sw_over_t + delta if load > float(_sw_props.hold_load) else 0.0
+	if velocity.length() > float(_sw_props.break_speed_mps) or _sw_over_t > SWING_GIVE_S:
+		_snap(_sw_graph, _sw_i)
+		velocity *= SWING_SNAP_KEEP
+		_end_swing()
+		return
+	# The wood springs back toward where it grew.
+	var w := TAU * SWING_FLEX_HZ
+	_sw_off_v += (-w * w * _sw_off - 2.0 * SWING_FLEX_DAMP * w * _sw_off_v) * delta
+	_sw_off += _sw_off_v * delta
+	var piv := _sw_graph.pos(_sw_i) + _sw_off
+	var p := global_position + up * 0.9
+	var v := (velocity - up * GRAVITY * SWING_G * delta) * (1.0 - SWING_HANG_DAMP * delta)
+	var nxt := p + v * delta
+	nxt = piv + (nxt - piv).normalized() * _sw_len
+	velocity = (nxt - p) / delta
+	var before_v := velocity
+	move_and_slide()
+	for k in get_slide_collision_count():
+		var n := get_slide_collision(k).get_normal()
+		var into := -before_v.dot(n)
+		if into > IMPACT_SAFE:
+			impacts += 1
+			_damage((into - IMPACT_SAFE) * IMPACT_PER)
+			_end_swing()
+			return
+	# Both hands on the handhold.
+	_reach_arms([piv - global_basis.x * 0.08, piv + global_basis.x * 0.08] as Array[Vector3])
+	_fall_top = world.radius_of(global_position)
+
+
+func _end_swing() -> void:
+	swinging = false
+	_rest_arms()
+	velocity *= SWING_CARRY
+	# Let go on the rebound and the spring gives its snapback as a push.
+	var snap_back := float(_sw_props.get("snapback", 0.0))
+	if snap_back > 0.0 and _sw_off_v.dot(velocity) > 0.0:
+		var push := _sw_off_v * snap_back
+		velocity += push
+		if push.length() > 1.0:
+			footsteps.effect(self, "whip")
+	_sw_off = Vector3.ZERO
+	_sw_off_v = Vector3.ZERO
+	_move = velocity - up * velocity.dot(up)
+	_takeoff = _move
+	_jumped = true
+	_wj_chain += 1
+	_fall_top = world.radius_of(global_position)
+
+
+## Handhold `i` of `g` breaks: a crack (dry wood) or a tearing snap, and
+## it's gone from the graph.
+func _snap(g: BranchGraph, i: int) -> void:
+	g.snap(i)
+	snaps += 1
+	footsteps.effect(self, "crack")
+	make_noise(0.6)
+
+
+## Wall jump (from a tap on a face, _cling_step()): kick off it back the
+## way you came (the reversed approach, turned away from the face if it
+## pointed along it), angled WJ_ANGLE up at WJ_SPEED or your approach
+## speed if faster, times `scale`; `chained` jumps build by WJ_GAIN each,
+## up to WJ_CAP of them (WJ_MAX only a sanity limit); unchained (out of a
+## cling) starts the chain over. A kick of the body and a scuff creatures
+## hear. Returns the kick's velocity.
+func _wall_jump(scale := 1.0, chained := true) -> Vector3:
 	var n_h := _wall_n - up * _wall_n.dot(up)
 	n_h = n_h.normalized() if n_h.length() > 0.1 else -_camera_forward()
 	var away := -(_wall_in - up * _wall_in.dot(up))
 	away = away.normalized() if away.length() > 0.1 else n_h
 	if away.dot(n_h) < 0.3:
 		away = (away + n_h * (0.3 - away.dot(n_h)) * 2.0).normalized()
-	var h := away * WJ_SPEED * cos(WJ_ANGLE)
-	var v := WJ_SPEED * sin(WJ_ANGLE) * pow(WJ_DECAY, _wj_chain)
+	# Your own approach speed if it's more than a kick's; chained jumps
+	# (no ground, no cling between) build on it, up to WJ_CAP of them.
+	var gain := pow(WJ_GAIN, mini(_wj_chain, WJ_CAP)) if chained else 1.0
+	var spd := minf(maxf(WJ_SPEED, _wall_speed) * gain * scale, WJ_MAX)
+	var h := away * spd * cos(WJ_ANGLE)
+	var v := spd * sin(WJ_ANGLE)
 	_move = h
 	_takeoff = h
 	_jumped = true
 	_fall_speed = 0.0
 	_fall_top = -INF
-	_wj_chain += 1
-	_wall_t = INF
+	_wj_chain = _wj_chain + 1 if chained else 0
+	_wall_f = 9999
 	_kick_t = KICK_S
 	wall_jumps += 1
 	make_noise(0.55)
@@ -1056,9 +1469,29 @@ func _update_squat(delta: float) -> void:
 	_squat_dip = move_toward(_squat_dip, dip, delta * 3.0)
 	_kick_t = maxf(_kick_t - delta, 0.0)
 	if _body != null and not dead:
-		_body.position = Vector3(0, -_squat_dip, 0)
+		# One crouch pose for everything that needs it: the landing squat,
+		# the kick's first two frames, a cling, a roll.
+		if _body is PlayerBody and (_squat_t > 0.0 or clinging or _rolling > 0.0 or _kick_t > KICK_S - 2.0 / 60.0):
+			(_body as PlayerBody).set_tuck(1.0 if clinging or _rolling > 0.0 else 0.7)
 		var lean := minf(inventory.over() * Tuning.num("movement", "burden", "lean_per_item"), 0.3)
-		_body.rotation.x = (-0.45 * sin(PI * _kick_t / KICK_S) if _kick_t > 0.0 else 0.0) + lean
+		var kick := -0.45 * sin(PI * _kick_t / KICK_S) if _kick_t > 0.0 and not clinging else 0.0
+		# In first person the view never tumbles (the camera hangs off the
+		# player, not the body, and keeps the look direction): it only dips
+		# a little, in a landing squat or a roll.
+		if first_person and _spring != null:
+			var eye_dip := _squat_dip
+			if _rolling > 0.0 and _roll_total > 0.0:
+				eye_dip += SQUAT_DIP_M * 2.0 * sin(PI * (1.0 - _rolling / _roll_total))
+			_spring.position.y = (CROUCH_EYE_Y if crouching else EYE_Y) - eye_dip
+		if _rolling > 0.0 and _roll_total > 0.0:
+			# The roll: the tucked body turns head over heels about its
+			# middle, once, the cloak wrapping round.
+			var spin := -TAU * (1.0 - _rolling / _roll_total)
+			var b := Basis(Vector3.RIGHT, spin)
+			_body.transform = Transform3D(b, Vector3(0, 0.45, 0) - b * Vector3(0, 0.45, 0))
+		else:
+			_body.position = Vector3(0, -_squat_dip, 0)
+			_body.rotation = Vector3(kick + lean, 0.0, 0.0)
 
 
 ## Dead: you slump to the ground and lie still (main respawns you).
@@ -1104,13 +1537,27 @@ func _update_camera(delta: float) -> void:
 	# The elf raises both arms to aim the bow, the right one to hold and
 	# throw the spear (an imported model has its own clips); on a branch
 	# graph they hold the tree (_reach_arms()).
-	if _body is PlayerBody and not (climbing and _climb_graph):
+	if _body is PlayerBody and not (climbing and _climb_graph) and not swinging:
 		var spear_arm := spear.arm_angle()
+		# The ninja run: between walk and sprint speed, with nothing in
+		# hand to do, the arms trail straight back, a beat behind; any
+		# action takes them at once, and they ease back in after.
+		var rp := Tuning.section("movement", "run_pose")
+		var acting := bow.drawing or not is_nan(spear_arm) or climbing or clinging or aiming()
+		var hs := (velocity - up * velocity.dot(up)).length()
+		var trail_to := 0.0 if acting or not is_on_floor() and hs < WALK_SPEED else smoothstep(WALK_SPEED, SPRINT_SPEED, hs)
+		if acting:
+			_arm_trail = 0.0
+		elif trail_to > _arm_trail:
+			_arm_trail = move_toward(_arm_trail, trail_to, delta / maxf(float(rp.get("blend_in_s", 0.3)), 0.01))
+		else:
+			_arm_trail = lerpf(_arm_trail, trail_to, clampf(delta / maxf(float(rp.get("arm_lag_s", 0.1)), 0.01), 0.0, 1.0))
+		var trail_rad := -deg_to_rad(float(rp.get("arm_trail_deg", 80.0))) * _arm_trail
 		for arm in (_body as PlayerBody).arms:
-			var want := 1.35 if bow.drawing else 0.06
+			var want := 1.35 if bow.drawing else lerpf(0.06, trail_rad, _arm_trail)
 			if arm.name == "ArmR" and not is_nan(spear_arm):
 				want = spear_arm
-			arm.rotation.x = lerpf(arm.rotation.x, want, clampf(delta * 10.0, 0.0, 1.0))
+			arm.rotation.x = lerpf(arm.rotation.x, want, clampf(delta * (30.0 if acting else 14.0), 0.0, 1.0))
 
 
 ## Keep the blob shadow on the ground (`ground`: its height at the
@@ -1184,6 +1631,14 @@ func _headroom() -> bool:
 
 
 # --- Weapons ------------------------------------------------------------------
+
+## Wearing a `kind` of item in equipment `slot` (a bow as ranged, a spear
+## as melee): lost with everything else when you die, until you find your
+## body again.
+func wears(slot: String, kind: String) -> bool:
+	var it = inventory.worn_in(slot)
+	return it != null and str(it.get("kind", "")) == kind
+
 
 ## Overburdened (Inventory.over(): carried things past the free handful):
 ## your speed, climbing speed and loudness as shares of normal.

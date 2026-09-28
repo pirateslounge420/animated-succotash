@@ -136,35 +136,30 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	var side := rng.randf() * TAU
 	player_spot = CreatureSpawner._offset(site, side, PLAYER_M)
 	_mat(player_spot)
-	var people := [["Elder", "elder", Color(0.62, 0.44, 0.32), HIDE.lightened(0.1)],
-		["Hunter", "hunter", Color(0.5, 0.35, 0.24), HIDE.darkened(0.1)]]
+	# The elder and the hunter: cloaked figures on the player's own rig
+	# (CloakedFigure), in their tribe's colors, standing by the fire.
+	var names := ["Elder", "Hunter"]
+	var family := CloakedFigure.tribe_family(hash(site))
+	var prng := RandomNumberGenerator.new()
+	prng.seed = hash([site, "folk"])
 	for i in 2:
-		var sp := CreatureSpecies.new()
-		sp.name = people[i][0]
-		sp.body = "tribal"
-		sp.shape = people[i][1]
-		sp.color = people[i][2]
-		sp.accent = people[i][3]
-		sp.size_m = 1.72 if i == 0 else 1.8
-		# The first thing the player sees: the smooth body, not the
-		# stand-in (its build started with the planet's).
-		SculptedBodies.wait_ready(sp)
+		var pal := CloakedFigure.roll_palette(prng, family)
+		var height := 1.66 if i == 0 else 1.74
 		# An unscaled holder turns; the scaled body under it breathes.
 		var holder := Node3D.new()
-		holder.name = sp.name
+		holder.name = names[i]
 		add_child(holder)
-		var b := CreatureBodies.build(sp)
+		var b := CloakedFigure.build(height, pal[0], pal[1])
 		var body: Node3D = b.root
 		body.name = "Body"
 		holder.add_child(body)
-		holder.set_meta("speaker", sp.name)
-		holder.set_meta("hitboxes", CreatureHitboxes.build(holder, b, sp, true))
-		var f := BlobShadow.footprint(sp)
-		BlobShadow.make(holder, f.x, f.y)
+		holder.set_meta("speaker", names[i])
+		holder.set_meta("hitboxes", CloakedFigure.hitboxes(holder, b, true))
+		BlobShadow.make(holder, 0.35, 0.35)
 		var at := CreatureSpawner._offset(site, side + PI + (0.75 if i == 0 else -0.75), NPC_M)
 		holder.global_position = world.to_scene(at, PlanetConst.RADIUS_M + chunks.ground_height(at))
 		holder.set_meta("dir", at)
-		holder.set_meta("size", sp.size_m)
+		holder.set_meta("size", height / CloakedFigure.PLAYER_H)
 		_face(holder, at, site, 1.0)
 		_npcs.append(holder)
 		# A log seat behind each.

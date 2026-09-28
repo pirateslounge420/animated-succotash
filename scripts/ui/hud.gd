@@ -128,7 +128,9 @@ func update_status(player: PlanetPlayer) -> void:
 	_status.show_crosshair = player.first_person or player.aiming()
 	_status.look_name = player.look.text if player.look != null and not player.ui_open else ""
 	if player.weapon == "bow":
-		_status.weapon = "Bow"
+		_status.weapon = "Bow" if player.wears("ranged", "bow") else "Bare hands"
+	elif not player.wears("melee", "spear"):
+		_status.weapon = "Bare hands"
 	else:
 		_status.weapon = "Spear" if player.spear.thrown == null else "Spear (thrown)"
 

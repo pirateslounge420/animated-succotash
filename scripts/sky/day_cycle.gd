@@ -131,6 +131,15 @@ static func phase_at(clock: float) -> Dictionary:
 	return {"name": PHASES[k], "index": k, "into": x - start, "length": end - start}
 
 
+## The local solar hour (0-24, noon 12) at which `phase` begins: when the
+## sun crosses that phase's twilight edge (dusk: twilight_deg above the
+## horizon going down).
+static func phase_start_hour(phase: String) -> float:
+	_ensure()
+	var k := PHASES.find(phase)
+	return _solar[maxi(k, 0)] * 24.0
+
+
 ## The clock fractions where dawn, day, dusk and night begin.
 static func phase_starts() -> Array[float]:
 	_ensure()

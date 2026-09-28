@@ -72,7 +72,7 @@ var _col_body: StaticBody3D
 var _col_parts := 0
 ## Canopy and emergent trees on this chunk, in placement order (trees[i]
 ## is hosts[i]): [local_position, height, species_index, instance, pick,
-## layout_instance, rotation]. `instance` is the tree's index in
+## layout_instance, rotation, vines, bare] (bare 1: dead). `instance` is the tree's index in
 ## tree_mm[species_index]; a branchy tree (TreeLayouts) also has a `pick`
 ## (its layout, maybe mirrored; -1 for other trees) and its index in
 ## layout_mm; `rotation` is its rigid rotation (radial up, yaw and lean,
@@ -88,6 +88,8 @@ var layout_mm := {}
 ## ChunkManager adds and drops them by distance): tree index -> the
 ## BranchGraph, or null for a tree with no wood to hold.
 var graphs := {}
+## Tree index -> the drawn vines hanging from it (_hang_vines()).
+var _vine_nodes := {}
 ## Raw compute() output and tree hosts, kept so the undergrowth layer can
 ## be computed later when the player comes close.
 var data: Dictionary
@@ -927,10 +929,16 @@ func add_graph(i: int) -> void:
 	var t: Array = trees[i]
 	var pick: int = t[4]
 	var g := TreeLayouts.graph(t[2], pick, t[1])
+	var sp: PlantSpecies = SpeciesDB.all()[int(t[2])]
+	if g == null and sp.shape == PlantSpecies.Shape.BAMBOO:
+		g = _culm_graph(int(t[2]), float(t[1]))
 	if g != null:
+		# Dead wood (drawn bare: custom alpha 1) is brittle to hold.
+		g.dead = _tree_custom(i).a > 0.975
 		g.key = graph_key(i)
 		g.chunk = self
 		g.xform = tree_frame(i)
+		_hang_vines(i, g)
 		BranchGraphs.add(g)
 	graphs[i] = g
 	if pick < 0 or _limb_owners.has(i):
@@ -943,8 +951,116 @@ func add_graph(i: int) -> void:
 	_limb_owners[i] = owners
 
 
+## Tree `i`'s vines and bareness as drawn (custom data g and a, kept in
+## its record: VegetationPlacer), as Color(0, vines, 0, bare).
+func _tree_custom(i: int) -> Color:
+	var t: Array = trees[i]
+	if t.size() < 9:
+		return Color(0, 0, 0, 0)
+	return Color(0.0, float(t[7]), 0.0, float(t[8]))
+
+
+## A bamboo clump's graph: one culm of handholds from 1 m up to near its
+## top, a handhold every half metre, as thick as a giant culm (thin enough
+## to catch and swing on, not to kick off).
+func _culm_graph(sp_idx: int, h: float) -> BranchGraph:
+	var g := BranchGraph.new()
+	g.species = sp_idx
+	g.height_m = h
+	var r := clampf(h * 0.006, 0.035, 0.12)
+	var y := 1.0
+	while y < h * 0.92:
+		var k := g.local.size()
+		g.local.append(Vector3(0, y, 0))
+		g.tangent.append(Vector3.UP)
+		g.radius.append(r)
+		g.limb.append(0)
+		g.links.append(PackedInt32Array([k - 1]) if k > 0 else PackedInt32Array())
+		if k > 0:
+			g.links[k - 1].append(k)
+		y += BranchGraph.SPACING_M
+	return g if g.local.size() > 1 else null
+
+
+## A tree hung with vines (wet, warm country: the vine amount drawn on it,
+## movement table "vines"): a few vines hanging from its limbs as handholds
+## on its branch graph (BranchGraph.add_vine()), for the player to catch
+## and swing on, and drawn as thin strands.
+func _hang_vines(i: int, g: BranchGraph) -> void:
+	var amount := _tree_custom(i).g
+	var v := Tuning.section("movement", "vines")
+	if amount < float(v.get("min_vines", 0.3)):
+		return
+	var rng := RandomNumberGenerator.new()
+	rng.seed = g.key
+	var anchors := []
+	for k in g.size():
+		if g.limb[k] > 0 and not g.is_vine(k) and g.radius[k] >= 0.05 and g.local[k].y >= float(v.get("min_anchor_m", 3.0)):
+			anchors.append(k)
+	if anchors.is_empty():
+		return
+	var want := mini(int(ceil(amount * float(v.get("max_per_tree", 4)))), anchors.size())
+	var lens: Array = v.get("len_m", [3.0, 7.0])
+	var step := float(v.get("step_m", 0.5))
+	var strands: Array = []
+	for n in want:
+		var a: int = anchors[rng.randi_range(0, anchors.size() - 1)]
+		anchors.erase(a)
+		var length := minf(rng.randf_range(float(lens[0]), float(lens[1])), g.local[a].y - 1.2)
+		var count := int(length / step)
+		if count < 2:
+			continue
+		var idx := g.add_vine(a, count, step, float(v.get("radius_m", 0.03)), n)
+		strands.append([g.local[a], g.local[idx[idx.size() - 1]]])
+		if anchors.is_empty():
+			break
+	if strands.is_empty():
+		return
+	# Drawn: a thin four-sided strand per vine, in the tree's frame.
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var col := Color(0.2, 0.32, 0.12)
+	for sd in strands:
+		var top: Vector3 = sd[0]
+		var bot: Vector3 = sd[1]
+		for side in 4:
+			var a0 := TAU * side / 4.0
+			var a1 := TAU * (side + 1) / 4.0
+			var o0 := Vector3(cos(a0), 0, sin(a0)) * 0.03
+			var o1 := Vector3(cos(a1), 0, sin(a1)) * 0.03
+			st.set_color(col)
+			for p in [top + o0, bot + o0, bot + o1, top + o0, bot + o1, top + o1]:
+				st.set_normal((o0 + o1).normalized())
+				st.add_vertex(p)
+	var mi := MeshInstance3D.new()
+	mi.name = "Vines_%d" % i
+	mi.mesh = st.commit()
+	var mat := StandardMaterial3D.new()
+	mat.vertex_color_use_as_albedo = true
+	mat.roughness = 1.0
+	mi.material_override = mat
+	mi.transform = g.xform
+	add_child(mi)
+	_vine_nodes[i] = mi
+
+
+## Is shape `shape_idx` of `body` one of a tree's limb colliders (not its
+## trunk or roots)? (A limb is caught and swung on; a trunk kicked off.)
+func is_limb_shape(body: Object, shape_idx: int) -> bool:
+	if body != _tree_body or _tree_body == null:
+		return false
+	var owner := _tree_body.shape_find_owner(shape_idx)
+	for i in _limb_owners:
+		if owner in (_limb_owners[i] as PackedInt32Array):
+			return true
+	return false
+
+
 ## Drop tree `i`'s branch graph and limb colliders.
 func remove_graph(i: int) -> void:
+	if _vine_nodes.has(i):
+		(_vine_nodes[i] as Node).queue_free()
+		_vine_nodes.erase(i)
 	if graphs.has(i):
 		var g: BranchGraph = graphs[i]
 		if g != null:

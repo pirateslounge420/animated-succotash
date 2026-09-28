@@ -319,11 +319,11 @@ static func inhabited(site: Dictionary) -> bool:
 
 
 ## Who sits at an inhabited ruin's fire: at stone ruins "dead" (skeletons
-## and a hooded one, 45%), "goblin" (20%) or "tribal"; "north" at igloos,
+## and a hooded one, 45%), "small_folk" (20%) or "tribal"; "north" at igloos,
 ## "tribal" under treehouses, "marsh" by boardwalks. At pyramids, the
 ## country's own folk ("dead" or "tribal" in the desert, "north" in snow,
 ## the stone ruins' roll on grey ziggurats). The dead keep graveyards;
-## the dead or goblins sit at barrows.
+## the dead or small folk sit at barrows.
 static func camp_folk(site: Dictionary) -> String:
 	match int(site.kind):
 		Kind.IGLOO:
@@ -351,11 +351,11 @@ static func camp_folk(site: Dictionary) -> String:
 			brng.seed = hash([site.seed, "folk"])
 			if site.style == "desert":
 				return "dead" if brng.randf() < 0.5 else "tribal"
-			return "dead" if brng.randf() < 0.5 else "goblin"
+			return "dead" if brng.randf() < 0.5 else "small_folk"
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([site.seed, "folk"])
 	var roll := rng.randf()
-	return "dead" if roll < 0.45 else ("goblin" if roll < 0.65 else "tribal")
+	return "dead" if roll < 0.45 else ("small_folk" if roll < 0.65 else "tribal")
 
 
 ## Ruins whose footprint comes within `radius` m of `d`.
