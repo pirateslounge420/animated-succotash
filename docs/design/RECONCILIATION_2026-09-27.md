@@ -675,3 +675,42 @@ build power, release to act. Power sets both **strength and trajectory**.
 - **Why it matters:** it is the proof that the movement system is a combat system, and
   the mirror the player measures themselves against. Beating one is the game's
   unspoken mastery test. Groups of them are the only "raid"-tier threat the game needs.
+
+## P. The opening scene — and every wake-up — LOCKED
+
+The new-game opening and the post-death wake-up are **the same scene**. You come to by a
+fire because tribal folk found you and brought you in. The first time, nobody says why you
+were out there; every time after, it was because you died.
+
+**Beat by beat (fade from black, ~10–15 s, control returns during it, not after):**
+1. **You wake lying by a lit campfire**, a few cloaked folk near you — the ones who found
+   you. Early dawn or dusk light is preferred for the first spawn; after a death it is
+   whatever hour it is.
+2. **Enemy shinobi are already leaving.** As you come to, two to four **master-shinobi
+   figures (§O)** are visible **moving away through the canopy** — bounding branch to
+   branch, real momentum physics, already at speed — spawned just inside view at the
+   moment of waking, heading out over the trees. Cloak whip and branch creak carry their
+   exit. They do not attack; they were **watching, waiting for the body**, and they flee
+   as you stir. They despawn once out of range.
+3. **The folk tell you what happened**, in the camp's chatter voice (a line or two, not a
+   cutscene): the enemy shinobi were coming for your body; the nearest village's own
+   shinobi (these tribal folk) **always get to you first**; they saw the watchers in the
+   trees; the watchers ran when you woke. First spawn: the same lines, minus any mention of
+   dying.
+4. Control is yours. The fire is safe. Your gear (first spawn: the starting kit §M;
+   after a death: nothing — it is on your corpse) is where the rules say.
+
+**Rules:**
+- The fleeing shinobi use **the real movement system** (same rig, same physics, §O), so
+  the first thing a player sees is the game's ceiling performed honestly. Until the Phase
+  8 AI driver exists, they run on a **scripted branch-to-branch flight path over the
+  `BranchGraph`s** using the real animation set and real speeds — a placeholder that looks
+  identical from the fire.
+- They are always **already going fast and already leaving**; the player never catches
+  them from the fire. A skilled player who sprints after them straight away may glimpse
+  them longer — that is fine and encouraged.
+- This is the recurring hook: the enemy shinobi exist, they want you, and the tribes
+  are the reason you are alive. It sets up the master shinobi (§O) as the game's
+  standing threat without a single line of quest text.
+- Chatter lines live with the camp folk data (`camps.gd` FOLK lines), a few variants per
+  tribe so it does not repeat verbatim.
