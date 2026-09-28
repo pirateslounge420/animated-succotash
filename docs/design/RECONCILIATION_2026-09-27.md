@@ -38,6 +38,16 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
   Populations are simulated as **per-region numbers**, with entities spawned only near the player.
   **Phase 2 of ecology, not now:** sexual/asexual reproduction tags, enforced trophic energy loss.
 
+- **Player run feel ("ninja run") — Phase 1.** Anime ninja sprint / classic Sonic run.
+  Torso pitches forward with speed (~5° walk, ~20° sprint, +8° on acceleration, slight
+  back-lean on stop); head counter-rotates to stay level. When not aiming, attacking,
+  climbing or holding a torch, arms trail straight back at hip height with ~0.1 s lag,
+  fading in between walk and sprint speed. Any action overrides the trailing pose
+  **instantly** (no blend out; ~0.3 s blend back in). Cloak streams with the lean.
+  Sprint stride longer and smoother than walk, slight lateral lean into turns (~10°).
+  No FOV kick. Speeds in `data/movement.json` unchanged. Lives in `player_body.gd`.
+  Change one thing at a time with a screenshot or clip after each.
+
 ---
 
 ## 1. Already built — adjust data, do not re-implement
