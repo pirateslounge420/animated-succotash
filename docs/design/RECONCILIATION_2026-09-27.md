@@ -600,3 +600,17 @@ Both **on by default**, each **toggleable in the settings menu**, both small and
   outer ring**, and let those marks **move with the season and latitude** (derived
   day/night, addendum §F). This is a HUD aid, not an in-world object; the world itself
   has no clocks.
+
+## M. Starting kit — LOCKED
+
+- On a **new game** the player always spawns at the opening campfire carrying:
+  **a spear, a bow with 20 arrows, and a fishing pole.** Nothing else.
+- The fishing pole is the third tool of the fish / forage / hunt loop (Phase 10) and the
+  first fishing item in the game; fishing itself lands with Phase 10, but the pole exists
+  in the inventory from day one.
+- **On respawn after death you wake with nothing** — the kit is on your corpse with the
+  rest of your gear (corpse rule above). The walk back is the penalty; the fire is safe.
+  (Designer's call to confirm: if this feels too harsh early, the fallback is that the
+  folk who found you leave a spear by the fire — one item, not the kit.)
+- Arrows are consumed and recoverable (an arrow that misses sticks in the ground or a
+  trunk and can be picked up; one that hits a creature has a chance to break).
