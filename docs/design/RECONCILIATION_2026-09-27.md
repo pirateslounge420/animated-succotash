@@ -110,9 +110,42 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
   - Animation: hands reach and grip (the trailing-arm run pose flips forward on
     catch), body hangs, cloak trails the arc. Reuse gibbon brachiation timing as the
     reference for the hang-and-release rhythm.
+  - **Hanging is unlimited.** No timer, no stamina drain — you can hang from a
+    branch indefinitely (wait out a wolf, take in the view). The limit lives in the
+    **handhold, not the player**: what you're holding decides whether it holds.
+  - **Handholds have material properties**, from the plant species (extend
+    `species_db` / plant JSON, read by `BranchGraph` per handhold):
+    - `break_speed_mps` — catch or swing faster than this and the branch/vine
+      **snaps**; you keep flying with reduced speed (same as a missed tech) and the
+      handhold is gone from the graph. Thinner wood breaks sooner (scale by radius).
+    - `flex` — how far the handhold bends under load (visual sway on catch).
+    - `snapback` — how much of the flex returns as a push on release. High snapback
+      **maintains or adds momentum**: catching a green, whippy stem and releasing
+      on the rebound is a launch. Zero snapback is a plain pendulum.
+    - `hold_load` — static weight it bears; below this hanging is free forever.
+  - **Alive vs dead matters.** Plants get an `alive` state (new field; dead trees /
+    snags don't exist yet — add as a small fraction of placements, more in badlands,
+    burn scars, and near swamps). Dead wood is **brittle**: lower `break_speed_mps`,
+    near-zero `flex` and `snapback`. Green wood is springy.
+  - **Species examples** (starting values, tune by feel):
+    - **Giant bamboo, green:** effectively **unbreakable** (very high
+      `break_speed_mps`), high `flex`, **high `snapback`** — the premier momentum
+      tool; a bamboo grove is a launch corridor. **Dead/dry bamboo:** brittle, low
+      break speed, no snapback; it shatters.
+    - **Vines (rainforest / jungle / swamp):** long swing, medium break speed that
+      drops with age, low snapback (they stretch, they don't spring).
+    - **Live oak / cypress limbs:** high break speed, low flex, low snapback —
+      reliable, boring pendulums.
+    - **Birch / young saplings:** low break speed, high flex, medium snapback —
+      whippy but fragile; snap if you come in hot.
+    - **Pine:** medium all round; dead pine limbs snap easily.
+  - Snapping and snapback are both **readable at a glance**: a green stem bows and
+    springs; a dry one cracks. Sound: `sound_synth` gets a crack (dry) and a whip
+    (green). This is how the player learns which plants launch and which fail.
   - Add to `movement.json`: a `swing` block with `catch_reach_m`, `max_branch_radius_m`
     (above this it's a wall-jump surface), `release_carry`, `gravity_scale`,
-    `max_swing_s` (let go automatically after this long — no hanging forever).
+    `snap_speed_keep` (fraction of speed kept when a handhold breaks under you).
+    Per-species values live in the plant data, not here.
 
 - **Ninja landing roll — Phase 1.** Landing from height already triggers a squat
   (`landing.squat_s` / `heavy_squat_s`, threshold `heavy_fall_m` 1.7) and fall damage
