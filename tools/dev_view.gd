@@ -15,7 +15,13 @@ extends SceneTree
 ## midnight). YEAR_DAY: the day of the year (0 = northern spring
 ## equinox; default tomorrow). DEBUG=1: the F3 overlay on the frame.
 ## HUD=1: the whole HUD; SPEED (m/s) and METER (0-1) feed its readouts. OUT_DIR (default /tmp/shots), TAG: file name prefix
-## (default "devview"): writes <TAG>_<hh>h.png. Prints the sun's
+## (default "devview"): writes <TAG>_<hh>h.png, the internal frame
+## (design §Y: 854x480 by default). SCREEN=1 also writes
+## <TAG>_<hh>h_window.png, the window as it shows on the screen (the
+## frame upscaled, nearest-neighbour); FULLSCREEN=1 makes the window
+## fullscreen first (under xvfb there's no window manager: use
+## --resolution 1920x1080 --position 0,0 instead). INTEGER=0: the
+## fractional upscale for this run. Prints the sun's
 ## elevation, the light's elevation and the mean brightness of each frame.
 
 var out_dir := "/tmp/shots"
@@ -34,6 +40,9 @@ func _frames(n: int) -> void:
 
 func _run() -> void:
 	DirAccess.make_dir_recursive_absolute(out_dir)
+	if OS.get_environment("FULLSCREEN") == "1":
+		get_root().mode = Window.MODE_FULLSCREEN
+	var integer_env := OS.get_environment("INTEGER")
 	var world = get_root().get_node("World")
 	world.spawn_choice = 0
 	seed(42)
@@ -42,6 +51,9 @@ func _run() -> void:
 	get_root().add_child(main)
 	while not main._playing:
 		await process_frame
+	# INTEGER=0: fractional upscale for this run (the saved setting untouched).
+	if integer_env == "0":
+		get_root().content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
 	var clear := {"wind": Vector3(1, 0, 0.5), "rain_mm_h": 0.0, "snow": false, "temp_c": 18.0, "storm": 0.0, "clear": 1.0, "cloud": 0.15}
 	main._weather_timer = 1e9
 	main._local_weather = clear
@@ -53,8 +65,8 @@ func _run() -> void:
 			if c is CanvasItem:
 				c.visible = false
 		main.hud.toggle_debug()
-		main.hud._debug.add_theme_font_size_override("font_size", 20)
-		main.hud._debug.add_theme_constant_override("outline_size", 8)
+		main.hud._debug.add_theme_font_size_override("font_size", 13)
+		main.hud._debug.add_theme_constant_override("outline_size", 5)
 	elif OS.get_environment("HUD") != "1":
 		main.hud.visible = false
 	var player: PlanetPlayer = main.player
@@ -113,6 +125,15 @@ func _run() -> void:
 		var img := get_root().get_texture().get_image()
 		var path := out_dir.path_join("%s_%02dh.png" % [tag, int(hour)])
 		img.save_png(path)
+		if OS.get_environment("SCREEN") == "1":
+			await process_frame
+			var shot := DisplayServer.screen_get_image(DisplayServer.window_get_current_screen())
+			if shot != null:
+				var wp := DisplayServer.window_get_position()
+				var ws := DisplayServer.window_get_size()
+				var cut := shot.get_region(Rect2i(wp, ws).intersection(Rect2i(Vector2i.ZERO, shot.get_size())))
+				cut.save_png(path.get_basename() + "_window.png")
+				print("[devview] window %s at %s, internal %s, %.2fx %s" % [ws, wp, img.get_size(), Display.scale(), "integer" if get_root().content_scale_stretch == Window.CONTENT_SCALE_STRETCH_INTEGER else "fractional"])
 		var sum := 0.0
 		var cnt := 0
 		for y in range(0, img.get_height(), 8):

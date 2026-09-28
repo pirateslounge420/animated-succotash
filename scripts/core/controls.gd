@@ -49,6 +49,8 @@ const DEFAULTS := {
 	"dev_howl": [KEY_F8],
 	# Dev: one of each carried kind into the pack (to look at the screen).
 	"dev_items": [KEY_F9],
+	# Dev: the frame-time readout (design §W, PerfReadout).
+	"dev_perf": [KEY_F2],
 }
 
 ## Mouse buttons per action.

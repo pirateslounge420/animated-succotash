@@ -50,7 +50,7 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | V or F5 | Switch between first and third person |
 | M | Map. While it's open, 1 = biomes, 2 = height, 3 = temperature, 4 = rainfall, 5 = live weather |
 | H | Hide or show the on-screen text |
-| O or F10 | Settings: switch the speedometer and the clock on or off (click a line; O, F10 or Esc closes) |
+| O or F10 | Settings (click a line; O, F10 or Esc closes): the speedometer and the clock on or off; the picture's internal lines (480, or 720 at most), its shape (16:9, or 4:3 with black bars) and integer scaling on or off |
 | Esc | Free the mouse pointer (click in the window to take it back) |
 | F3 | Debug overlay: clock, day phase, sun and moon |
 | F4 (dev) | Show collision shapes |
@@ -68,6 +68,8 @@ Gamepad:
 - Start opens the inventory, Back the map.
 
 Readouts: your speed at the bottom right (mph and km/h; faint when you're slow, brighter toward 120 km/h, its glow warming as the super meter fills), and a small watch face at the top right: one hand for the hour on a 12-hour dial, with the 24-hour numbers on the outer ring, and two gold marks where today's dawn and dusk fall here (they move with the season and as you travel). All the on-screen text grows with the window.
+
+The picture: the game draws at a fixed 480 lines (854×480) and blows that up to your window with square, unsmoothed pixels, text and all, so a bigger window only means bigger pixels. With integer scaling on (the default) it uses a whole multiple when the window holds at least two (a 1080p screen shows it at exactly 2×, with thin black bars round it); turn it off in settings to fill the screen at 2.25×. 720 lines is the most the settings allow.
 
 Health: the thin blue bar at the bottom left, with its number. It doesn't come back on its own; stand or sit still by a lit campfire to heal. Nothing hostile can hurt you by a lit fire. Crashing into a trunk or wall at high speed without a tech hurts, and can kill.
 

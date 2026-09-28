@@ -97,9 +97,9 @@ func _ready() -> void:
 	_legend.fit_content = true
 	_legend.scroll_active = false
 	_legend.autowrap_mode = TextServer.AUTOWRAP_OFF
-	_legend.add_theme_font_size_override("normal_font_size", 14)
-	_legend.add_theme_font_size_override("bold_font_size", 14)
-	_legend.add_theme_constant_override("outline_size", 5)
+	_legend.add_theme_font_size_override("normal_font_size", 9)
+	_legend.add_theme_font_size_override("bold_font_size", 9)
+	_legend.add_theme_constant_override("outline_size", 3)
 	_legend.add_theme_color_override("font_outline_color", Color(0.03, 0.04, 0.12))
 	_legend.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE, 16)
 	_legend.grow_horizontal = Control.GROW_DIRECTION_BEGIN

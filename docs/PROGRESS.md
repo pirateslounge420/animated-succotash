@@ -4,6 +4,25 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Step 5.4: 480p internal render (design §Y)
+- **Fixed internal frame:**
+  - The root window uses the "viewport" content scale (`scripts/core/display.gd`, from `data/look.json` "render"). The whole frame is drawn at 854×480 and upscaled to the window nearest-neighbour: the 3D, the post-grade with its grain and Bayer dither, and the HUD.
+  - It replaces `scaling_3d/scale` 0.8, which has been removed from project.godot. Checked on screen: fractional upscales are hard-edged too, not filtered.
+- **Integer scaling** (on by default) uses whole multiples when the window holds at least two. A 1080p screen shows exactly 2× (1708×960) with a thin black border; with it off, 2.25× fills the screen.
+- **Settings** (O / F10): internal lines 480 or 720 (720 is the file's max), aspect 16:9 or 4:3 (640×480, letterboxed), and integer scaling on or off. They apply at once and are saved in `user://settings.cfg`.
+- **HUD at the 480 reference:**
+  - `hud.json` and combat `feedback` px are used as they are.
+  - The default label size is `text.base_px` (9).
+  - hud.gd and status_hud.gd constants were converted from the 720 base (×⅔, rounded).
+  - The key hint was reflowed to fit 854 px.
+  - The inventory screen keeps its layout numbers and is drawn through a ⅔ transform, with clicks mapped back.
+  - The settings panel was redrawn at 480, and the map and collision legends were resized.
+  - Window-height text scaling is gone: the upscale does it.
+- **dev_view:** `SCREEN=1` also saves the window as shown on screen (the upscaled frame). `INTEGER=0` gives a fractional run. Under xvfb, fullscreen is taken as a 1920×1080 window at the screen origin, because there's no window manager to switch modes.
+- **Reference still has:** ragged leaf-card canopies against the sky. At 480 lines the smooth blob crowns read even more as solid shapes (Step 7).
+
+---
+
 ## 2026-09-28 — Session 3, Step 6: momentum and HUD (design §J, §K, §L, §R)
 - **6a, HUD readouts** (`data/hud.json`; `scripts/ui/readouts.gd`):
   - A speedometer at the bottom right shows mph and km/h (m/s too in dev mode). It is faint below 6 m/s and brightens toward 33.3 m/s. Its glow goes from cold blue to warm gold as the super meter fills.

@@ -21,6 +21,9 @@ const PICK := Color(0.16, 0.26, 0.62, 0.9)
 const ROW_H := 22.0
 const W := 580.0
 const PAD := 16.0
+## The layout above is at the old 720-line reference; it's drawn scaled
+## into the 480-line internal frame (design §Y, Display).
+const K := 480.0 / 720.0
 
 var inventory: Inventory
 ## [kind, key, index]: "carried", i or "worn", slot, i. Empty: nothing.
@@ -65,6 +68,7 @@ func chosen_item():
 
 ## A click on a row chooses it (called by main with the screen position).
 func click(at: Vector2) -> bool:
+	at /= K
 	for r in _rows:
 		if (r[0] as Rect2).has_point(at):
 			chosen = r[1]
@@ -75,13 +79,15 @@ func click(at: Vector2) -> bool:
 func _panel_rect() -> Rect2:
 	var n := maxi(Inventory.carry_slots(), 12)
 	var h := PAD * 2.0 + 24.0 + ROW_H * n + 96.0
-	return Rect2(Vector2(size.x * 0.5 - W * 0.5, size.y * 0.5 - h * 0.5), Vector2(W, h))
+	var sz := size / K
+	return Rect2(Vector2(sz.x * 0.5 - W * 0.5, sz.y * 0.5 - h * 0.5), Vector2(W, h))
 
 
 func _draw() -> void:
 	if inventory == null:
 		return
 	_rows.clear()
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2(K, K))
 	var font := ThemeDB.fallback_font
 	var r := _panel_rect()
 	draw_rect(r, PANEL)

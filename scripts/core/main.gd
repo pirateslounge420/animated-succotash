@@ -66,6 +66,7 @@ func _exit_tree() -> void:
 
 func _ready() -> void:
 	Controls.ensure()
+	Display.install(get_window())
 	HudText.install()
 	# The world's textures paint on a worker while the planet generates,
 	# and the camp folk's sculpted bodies build.
@@ -353,6 +354,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		hud.toggle()
 	elif event.is_action_pressed("toggle_debug"):
 		hud.toggle_debug()
+	elif event.is_action_pressed("dev_perf") and world.dev_mode:
+		hud.perf.sun = sky.sun
+		hud.perf.toggle()
 	elif event.is_action_pressed("toggle_branch_view") and world.dev_mode:
 		BranchGraphView.toggle(self, player)
 	elif event.is_action_pressed("toggle_collision_view") and world.dev_mode:

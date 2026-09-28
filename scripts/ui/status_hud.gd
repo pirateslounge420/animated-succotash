@@ -58,10 +58,10 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_death_label = Label.new()
 	_death_label.text = "You died"
-	_death_label.add_theme_font_size_override("font_size", 46)
+	_death_label.add_theme_font_size_override("font_size", 31)
 	_death_label.add_theme_color_override("font_color", Color(0.95, 0.4, 0.35))
 	_death_label.add_theme_color_override("font_outline_color", Color(0.1, 0.02, 0.02))
-	_death_label.add_theme_constant_override("outline_size", 8)
+	_death_label.add_theme_constant_override("outline_size", 5)
 	# Fill the screen and center the text in it (a centered preset before
 	# the text has a size puts it off to the top).
 	_death_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -154,9 +154,9 @@ func _draw() -> void:
 	# The weapon in hand, above the meter.
 	if weapon != "" and not _dead:
 		var font := get_theme_default_font()
-		var at := Vector2(16, size.y - 114)
-		draw_string_outline(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, 4, Color(0.05, 0.07, 0.15))
-		draw_string(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(0.95, 0.97, 1.0))
+		var at := Vector2(10, size.y - 76)
+		draw_string_outline(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 9, 3, Color(0.05, 0.07, 0.15))
+		draw_string(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.95, 0.97, 1.0))
 	if not _dead:
 		_draw_numbers(fb, ink)
 	# The small dot in the middle of the view (or the X), and the name of
@@ -168,41 +168,41 @@ func _draw() -> void:
 			_draw_x(c, fb.crit_x, ink)
 		elif not show_crosshair:
 			if look_name != "":
-				draw_arc(c, 4.5, 0.0, TAU, 20, dot_ink, 3.0)
-				draw_arc(c, 4.5, 0.0, TAU, 20, Color(1, 1, 1, 0.9), 1.5)
+				draw_arc(c, 3.0, 0.0, TAU, 16, dot_ink, 2.0)
+				draw_arc(c, 3.0, 0.0, TAU, 16, Color(1, 1, 1, 0.9), 1.0)
 			else:
-				draw_circle(c, 2.6, dot_ink)
-				draw_circle(c, 1.6, Color(1, 1, 1, 0.8))
+				draw_circle(c, 1.8, dot_ink)
+				draw_circle(c, 1.1, Color(1, 1, 1, 0.8))
 		if look_name != "":
 			if _italic == null:
 				_italic = FontVariation.new()
 				_italic.base_font = get_theme_default_font()
 				_italic.variation_transform = Transform2D(Vector2(1, 0), Vector2(0.22, 1), Vector2.ZERO)
-			var at := Vector2(c.x - 200.0, c.y + (30.0 if show_crosshair else 22.0))
-			draw_string_outline(_italic, at, look_name, HORIZONTAL_ALIGNMENT_CENTER, 400.0, 13, 4, Color(0.05, 0.07, 0.15))
-			draw_string(_italic, at, look_name, HORIZONTAL_ALIGNMENT_CENTER, 400.0, 13, Color(0.95, 0.97, 1.0, 0.95))
+			var at := Vector2(c.x - 135.0, c.y + (20.0 if show_crosshair else 15.0))
+			draw_string_outline(_italic, at, look_name, HORIZONTAL_ALIGNMENT_CENTER, 270.0, 9, 3, Color(0.05, 0.07, 0.15))
+			draw_string(_italic, at, look_name, HORIZONTAL_ALIGNMENT_CENTER, 270.0, 9, Color(0.95, 0.97, 1.0, 0.95))
 	# Crosshair and draw.
 	if show_crosshair and not _dead:
 		var c := size * 0.5
 		var col := Color(1, 1, 1, 0.85)
 		if x_left <= 0.0:
-			draw_line(c + Vector2(-8, 0), c + Vector2(-3, 0), col, 2.0)
-			draw_line(c + Vector2(3, 0), c + Vector2(8, 0), col, 2.0)
-			draw_line(c + Vector2(0, -8), c + Vector2(0, -3), col, 2.0)
-			draw_line(c + Vector2(0, 3), c + Vector2(0, 8), col, 2.0)
+			draw_line(c + Vector2(-5, 0), c + Vector2(-2, 0), col, 1.0)
+			draw_line(c + Vector2(2, 0), c + Vector2(5, 0), col, 1.0)
+			draw_line(c + Vector2(0, -5), c + Vector2(0, -2), col, 1.0)
+			draw_line(c + Vector2(0, 2), c + Vector2(0, 5), col, 1.0)
 		if aiming:
-			draw_arc(c, 16.0, PI * 0.25, PI * 0.75, 16, Color(1, 1, 1, 0.3), 3.0)
+			draw_arc(c, 11.0, PI * 0.25, PI * 0.75, 12, Color(1, 1, 1, 0.3), 2.0)
 			var full := draw_power >= 1.0
-			draw_arc(c, 16.0, PI * 0.75 - PI * 0.5 * draw_power, PI * 0.75, 16, Color(1.0, 0.85, 0.3) if full else Color(1, 1, 1, 0.9), 3.0)
+			draw_arc(c, 11.0, PI * 0.75 - PI * 0.5 * draw_power, PI * 0.75, 12, Color(1.0, 0.85, 0.3) if full else Color(1, 1, 1, 0.9), 2.0)
 			# Overcharging: the gauge fills again in red, over the full one.
 			if overcharge > 0.0:
 				var red := Color(str(SuperMeter.overcharge("").get("tracer_color", "#FF2A2A")))
-				draw_arc(c, 16.0, PI * 0.75 - PI * 0.5 * overcharge, PI * 0.75, 16, red, 3.0)
+				draw_arc(c, 11.0, PI * 0.75 - PI * 0.5 * overcharge, PI * 0.75, 12, red, 2.0)
 		# The super meter: a thin ring round the gauge, only when it holds
 		# something.
 		if meter > float(METER_HUD.get("show_below", 0.02)):
 			var ring := Color(str(METER_HUD.get("ring_color", "#FFD23A")))
-			draw_arc(c, 21.0, -PI * 0.5, -PI * 0.5 + TAU * meter, 48, ring, float(METER_HUD.get("ring_px", 2)))
+			draw_arc(c, 14.0, -PI * 0.5, -PI * 0.5 + TAU * meter, 48, ring, float(METER_HUD.get("ring_px", 2)))
 
 
 ## The health meter, bottom left where the hearts were: a slim bar on a
@@ -211,7 +211,7 @@ func _draw() -> void:
 func _draw_meter(size: Vector2, m: Dictionary, ink: Color) -> void:
 	var w := float(m.width_px)
 	var h := float(m.height_px)
-	var at := Vector2(16.0, size.y - 96.0 - h * 0.5)
+	var at := Vector2(10.0, size.y - 64.0 - h * 0.5)
 	var share := clampf(hp / maxf(max_hp, 1.0), 0.0, 1.0)
 	var fill := Color.from_string(str(m.fill), Color(0.3, 0.49, 1.0))
 	var edge := Color.from_string(str(m.edge), Color(0.5, 0.69, 1.0))
@@ -226,8 +226,8 @@ func _draw_meter(size: Vector2, m: Dictionary, ink: Color) -> void:
 	var font := get_theme_default_font()
 	var px := int(m.numeral_px)
 	var text := str(ceili(hp)) if hp > 0.0 else "0"
-	var tp := Vector2(at.x + w + 7.0, at.y + h * 0.5 + px * 0.36)
-	draw_string_outline(font, tp, text, HORIZONTAL_ALIGNMENT_LEFT, -1, px, 4, ink)
+	var tp := Vector2(at.x + w + 5.0, at.y + h * 0.5 + px * 0.36)
+	draw_string_outline(font, tp, text, HORIZONTAL_ALIGNMENT_LEFT, -1, px, 3, ink)
 	draw_string(font, tp, text, HORIZONTAL_ALIGNMENT_LEFT, -1, px, Color(0.93, 0.96, 1.0))
 
 

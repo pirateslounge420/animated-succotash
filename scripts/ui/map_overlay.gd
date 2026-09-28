@@ -78,8 +78,8 @@ func setup(p_world: Node) -> void:
 	_viewport.add_child(_marker)
 
 	_legend = Label.new()
-	_legend.position = Vector2(16, 12)
-	_legend.add_theme_font_size_override("font_size", 16)
+	_legend.position = Vector2(10, 8)
+	_legend.add_theme_font_size_override("font_size", 11)
 	add_child(_legend)
 	_build_mesh()
 

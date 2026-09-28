@@ -23,31 +23,33 @@ var readouts: Readouts
 ## moon, for checking the day cycle.
 var _debug: Label
 var debug_visible := false
+## The dev frame-time readout (F2, design §W).
+var perf: PerfReadout
 
 
 func _ready() -> void:
 	layer = 10
 	_left = _label(HORIZONTAL_ALIGNMENT_LEFT)
-	_left.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE, 16)
+	_left.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE, 9)
 	_right = _label(HORIZONTAL_ALIGNMENT_RIGHT)
-	_right.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 16)
+	_right.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 9)
 	_right.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
-	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 16)
+	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 9)
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_hint.text = "WASD move · W W sprint · Shift crouch (in the air: drop) · Space jump (tap: hop, hold: bound) · right click at a wall: wall jump (hold: cling, let go: spring off); as you land: bounce\nHold left click: draw the bow, release to shoot · V third person · E interact / take a sample\nQ bow / spear: tap to thrust, hold and release to throw · I inventory\nM map · H hide HUD · O settings · F3 debug · click to look, Esc frees mouse"
+	_hint.text = "WASD move · W W sprint · Shift crouch (air: drop) · Space jump (tap hop, hold bound)\nright click at a wall: wall jump (hold: cling) · as you land: bounce\nleft click: draw / release · Q bow, spear · E interact · V view · Tab pack\nM map · H hide HUD · O settings · F3 debug · Esc frees mouse"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
-	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 70)
+	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 47)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_prompt.add_theme_font_size_override("font_size", 18)
+	_prompt.add_theme_font_size_override("font_size", 12)
 	_subtitle = _label(HORIZONTAL_ALIGNMENT_CENTER)
-	_subtitle.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 120)
+	_subtitle.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 80)
 	_subtitle.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_subtitle.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_subtitle.add_theme_font_size_override("font_size", 20)
+	_subtitle.add_theme_font_size_override("font_size", 13)
 	_debug = _label(HORIZONTAL_ALIGNMENT_LEFT)
-	_debug.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT, Control.PRESET_MODE_MINSIZE, 16)
+	_debug.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT, Control.PRESET_MODE_MINSIZE, 9)
 	_debug.grow_vertical = Control.GROW_DIRECTION_BOTH
 	_debug.add_theme_color_override("font_color", Color(1.0, 0.93, 0.6))
 	_debug.visible = false
@@ -58,16 +60,18 @@ func _ready() -> void:
 	readouts.name = "Readouts"
 	add_child(readouts)
 	move_child(readouts, 1)
+	perf = PerfReadout.new()
+	add_child(perf)
 	_build_loading()
 
 
 func _label(align: HorizontalAlignment) -> Label:
 	var l := Label.new()
 	l.horizontal_alignment = align
-	l.add_theme_font_size_override("font_size", 15)
+	l.add_theme_font_size_override("font_size", int(Tuning.num("hud", "text", "base_px")) + 1)
 	l.add_theme_color_override("font_color", Color(0.95, 0.97, 1.0))
 	l.add_theme_color_override("font_outline_color", Color(0.05, 0.07, 0.15))
-	l.add_theme_constant_override("outline_size", 5)
+	l.add_theme_constant_override("outline_size", 3)
 	add_child(l)
 	return l
 
@@ -79,20 +83,20 @@ func _build_loading() -> void:
 	add_child(_loading)
 	var box := VBoxContainer.new()
 	box.set_anchors_preset(Control.PRESET_CENTER)
-	box.custom_minimum_size = Vector2(420, 0)
-	box.position = Vector2(-210, -40)
+	box.custom_minimum_size = Vector2(280, 0)
+	box.position = Vector2(-140, -27)
 	_loading.add_child(box)
 	var title := Label.new()
 	title.text = "Generating planet"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 26)
+	title.add_theme_font_size_override("font_size", 17)
 	box.add_child(title)
 	_loading_label = Label.new()
 	_loading_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(_loading_label)
 	_loading_bar = ProgressBar.new()
 	_loading_bar.max_value = 1.0
-	_loading_bar.custom_minimum_size = Vector2(420, 18)
+	_loading_bar.custom_minimum_size = Vector2(280, 12)
 	box.add_child(_loading_bar)
 
 
