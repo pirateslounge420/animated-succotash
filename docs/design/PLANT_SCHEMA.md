@@ -223,6 +223,16 @@ trunk/structure and `canopy` decides the foliage.
 - `ph`: `acid` · `neutral` · `alkaline` · `any`.
 - `fertility_min`: 0–1, minimum organic content; `salinity`: `none` · `tolerant` · `needs`.
 
+## 4c. Colour and pattern are per species (never one green)
+
+Every species carries its own colour: `tint` (hue shift, saturation, value, underside,
+autumn) on top of the palette green, so a forest is dozens of greens, greys and
+blue-greens because the plants are. Pattern grammars (the Amorphophallus petiole
+grammar in `data/plants/amorphophallus.json`: base hue, two-layer blotches + dots,
+confluence up the stalk, surface, and the **lichen** archetype — pale ragged-rimmed
+islands on a dark ground) are the same idea for stems: real descriptions in, a
+per-plant roll within the species' ranges out. Kin, not twins.
+
 ## 5. LOD contract (for the card builder)
 
 | range | what is drawn |

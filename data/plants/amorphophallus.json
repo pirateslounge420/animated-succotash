@@ -24431,8 +24431,9 @@
   },
   "petiole": {
    "patterns": {
-    "mottled": 0.55,
-    "spotted": 0.2,
+    "mottled": 0.45,
+    "spotted": 0.18,
+    "lichen": 0.12,
     "plain": 0.15,
     "streaked": 0.05,
     "warty": 0.05
@@ -24456,7 +24457,10 @@
     "#e9c7cf",
     "#2e4a25",
     "#4a2a1a",
-    "#1f2a1a"
+    "#1f2a1a",
+    "#b9c4a8",
+    "#cdd6bd",
+    "#9aa48a"
    ],
    "marking_note": "two-layer rule: large elongate/oval blotches (pale on dark ground, or dark on pale ground) plus a fine scatter of tiny dots of the opposite value; blotches often confluent and elongated along the petiole axis",
    "marking_size": {
@@ -24469,7 +24473,8 @@
     "warty": 0.1,
     "hairy": 0.1
    },
-   "base_zone": "lowest 10-20% of petiole often shifts to pink/reddish/grey or whitish, then grades to the main colour"
+   "base_zone": "lowest 10-20% of petiole often shifts to pink/reddish/grey or whitish, then grades to the main colour",
+   "lichen_note": "lichen: the designer's archetype (2026-09-28) — large irregular pale grey-green to whitish blotches with ragged, slightly darker rims on a dark olive or blackish ground, plus the fine dark-dot scatter; reads exactly like crustose lichen on bark. Blotches confluent at the base, breaking into islands up the petiole. Each tuber rolls its own blotch layout within the species' ranges."
   },
   "spathe": {
    "outer_ranges": {
