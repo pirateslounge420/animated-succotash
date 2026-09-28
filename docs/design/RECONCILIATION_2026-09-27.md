@@ -714,3 +714,32 @@ were out there; every time after, it was because you died.
   standing threat without a single line of quest text.
 - Chatter lines live with the camp folk data (`camps.gd` FOLK lines), a few variants per
   tribe so it does not repeat verbatim.
+
+## Q. The enemy shinobi camp — followable, far, creepy — LOCKED
+
+- The shinobi who flee at the opening (§P) are **going somewhere real**: their camp exists
+  in the world, in a **fixed direction** from the village that found you, **far** away.
+  A player can theoretically follow them there.
+- **Distance rule: reachable by dawn only by chaining through the whole night.** Night is
+  48 real minutes (equator); a full-chain player at the 120 km/h ceiling covers ~95 km,
+  a good mortal average (~20 m/s) ~58 km, a sprinter who never techs ~25 km. So the camp
+  sits **50–70 km out** (tune by play). That needs the 1/10 planet (§I); at 400 km it
+  would be a sixth of the way round the world.
+- **They cannot be kept up with**, only tracked. They leave near the ceiling; the player
+  follows the **bearing** and the **trail**: snapped rotten branches, swaying vines, a
+  scuff on bark, disturbed birds ahead, and, at intervals, one of them **pausing on a
+  distant branch to look back** before going on (a glimpse, not a chase). The trail is
+  the world's signs, never a UI marker.
+- **Serious dedication is the price:** it means giving up the safe fire at dusk, crossing
+  biomes in the dark with werewolves, cold, and the momentum risk, and arriving with
+  whatever health is left. Most players won't do it the first time. That's correct.
+- **The camp is a creepy place.** Design later (Phase 10/11 set-piece), but the tone is
+  set now: dark, still, wrong. Ozavry references — the graveyard by the water, the bell
+  tower with the robed skeleton, dead trees standing in blue water. Fires that give no
+  warmth, or none at all. Trophies of past bodies. It is a **safe zone for nobody**.
+  Reaching it by dawn is the reward in itself; what you can do there (spy, steal back
+  something, get a scroll, get killed) comes with the lore phase.
+- **World-gen rule:** each village/wild camp that can recover the player is paired with an
+  enemy camp at a fixed bearing and distance, seeded, so the direction the shinobi flee is
+  always true. Enemy camps are rare, terrain-placed (ridges, dead forest, drowned ground),
+  and the same one serves several villages.
