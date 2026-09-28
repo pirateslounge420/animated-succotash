@@ -259,6 +259,12 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     During the roll: no steering, no jump, i-frame-free (creatures can still hit).
   - **Animation:** reuse the crouch pose → tuck → the cloak does the rest. The roll
     itself is a rotation of the body root with the cloak wrapping; no new rig.
+  - **The first-person camera never tumbles.** During a roll the body rotates but
+    the camera stays **locked to the look direction** (yaw and pitch exactly as the
+    cursor has them), following the body's position only. At most a small vertical
+    dip (like the landing squat's `dip_m`) and a brief blur of cloak across the
+    edges of the view. Same rule for the swing and the wall-jump kick: the body
+    flips, the view doesn't. Third-person shows the full roll.
   - Add to `movement.json`: a `roll` block with `window_s`, `safe_m`, `max_m`,
     `damage_scale`, `carry`, `max_mps` (sanity only), `len_per_m`, `len_cap_m`.
   - **Impact damage:** hitting a wall, trunk or the ground at speed without a tech
