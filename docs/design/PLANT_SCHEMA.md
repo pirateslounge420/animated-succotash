@@ -15,6 +15,28 @@ Existing fields (`name`, `genus`, `species`, `shape`, `temp_c`, `moisture`, `alt
 
 ---
 
+## 0. Build order — shape first, textures layered over it
+
+Every species' leaf is built in this order. **Structure comes from the taxonomy; texture
+is layered on top of whatever structure that gives.** No texture ever changes the outline.
+
+1. **Structure (from the real description):** `type` → `outline` + `aspect` + `lobes` →
+   `base` + `apex` → `margin` (cut into the edge) → `compound` layout if any →
+   `arrangement` on the twig → `canopy` form and gap. This gives the silhouette card.
+2. **Texture layers (drawn onto that card, in order):**
+   a. base green + `tint` (hue/sat/val, per species);
+   b. `venation` lines (dark, thin, follow the outline's midrib/lobes);
+   c. `texture` surface: matte / glossy / velvety / glaucous bloom / tomentose hair /
+      succulent — a shading and grain pass, never geometry;
+   d. `underside` paler backface for wind flips;
+   e. seasonal overlay (`autumn` colour, browning, drop) from the season system;
+   f. wear: spots, holes, nibbles — optional, from age and herbivory (Phase 7+).
+3. **LOD strips layers from the bottom up** (f → e → d → c → b), never the structure.
+
+So two species with the same outline (say, ovate-serrate) differ by their textures;
+two species with the same texture (glossy dark green) differ by their outlines. The
+player learns both.
+
 ## 1. `leaf` block
 
 ```json
