@@ -74,9 +74,10 @@ func update_arc() -> void:
 		if not hit.is_empty():
 			dots.append(hit.position)
 			break
-		# The ground beyond its collision (as the arrow does).
 		var nd: Vector3 = player.world.dir_of(nxt)
-		var gh := player.chunks.ground_height(nd)
+		# The ground beyond its collision, or water (where the arrow stops
+		# too).
+		var gh := maxf(player.chunks.ground_height(nd), player.chunks.water_level_at(nd))
 		if player.world.radius_of(nxt) < PlanetConst.RADIUS_M + gh:
 			dots.append(player.world.to_scene(nd, PlanetConst.RADIUS_M + gh))
 			break

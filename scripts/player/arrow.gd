@@ -39,6 +39,8 @@ var damage := 10.0
 var exclude: Array[RID] = []
 
 var _stuck := false
+## What it struck: the collider's name, "ground" or "water" ("" in flight).
+var struck := ""
 ## Glanced off a camp person already (a second touch isn't another hit).
 var _glanced := false
 var _life := 0.0
@@ -119,6 +121,7 @@ func _physics_process(delta: float) -> void:
 	if not ray.is_empty():
 		hit_kind = "world"
 		hit_pos = ray.position
+		struck = str((ray.collider as Node).name) if ray.collider is Node else "?"
 		# A creature's or a person's part (Hitboxes): who it belongs to.
 		hit_obj = Hitboxes.creature_of(ray.collider)
 		if hit_obj:
@@ -130,6 +133,7 @@ func _physics_process(delta: float) -> void:
 		var water := chunks.water_level_at(d)
 		if water > chunks.ground_height(d) and world.radius_of(b) < PlanetConst.RADIUS_M + water:
 			global_position = b
+			struck = "water"
 			var surface: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + water)
 			Ripples.splash(surface, RippleSim.contact("arrow_kg"), velocity.length())
 			NoiseEvents.emit(surface, NOISE_M * 0.75)
@@ -140,6 +144,7 @@ func _physics_process(delta: float) -> void:
 		# ground itself, from its height.
 		if world.radius_of(b) < PlanetConst.RADIUS_M + chunks.ground_height(d):
 			hit_kind = "world"
+			struck = "ground"
 			hit_pos = world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d))
 	if hit_kind == "":
 		global_position = b

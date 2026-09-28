@@ -4,6 +4,38 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Phase 1 play session 1: the designer's eleven items fixed, ready to re-test
+- **Checks:** `tools/play_fixes_check.gd` (items 1–5 and 7–9, every check passes), `tools/inventory_check.gd` (all pass), `tools/hits_check.gd` (all pass); every script compiles.
+- **Tables:** every movement and weapon number now lives in `data/movement.json` and `data/combat.json` (hits, feedback and healing included), each part explained at the top of the file. Items are in `data/items.json`.
+- **1. Stuck:** shrubs collide only at their woody stem. You are unstuck when wedged between two things, held off the ground (under a root) or caught on a crease of the ground. Headless: 2 minutes through the densest patch, 748 m covered, never held for a second. The creases' cause is not found yet (they happen every few seconds in a forest; freed in 0.08 s).
+- **2. Speeds:** walk 5.5 m/s, sprint 8.8, sneak 0.8.
+- **3. View:** first person by default; you can look straight up and down (89.9 degrees) in both views.
+- **4. Tracers:** a dotted blue-white arc while drawing or raising, and a trail behind the arrow or spear. It now also stops on ground beyond the collision; a shot at 109 m landed 0.7 m from the arc's end.
+- **5. E in any state:** while climbing, one hand takes a stuck spear or arrow and the other keeps the wood.
+- **6. Wanderer:** short, hooded, faceless, with an ultramarine cloak and a rust hem. The cloak is cloth (swings, trails, settles, lifts in wind, lies down when crouched). First-person eye height is lowered to 1.45 m.
+- **7. Feel:**
+  - Standing hop: 0.52 s, 0.74 m.
+  - Stop slide: 0.3 m from a walk, 1 m from a sprint, about 1.6 m when wet.
+  - Turn-around: a 0.2 s skid.
+  - Jump length: 3.2 m from a walk, 5.9 m from a sprint.
+  - A 3 m ledge drops in 0.55 s (0.78 s at Earth's pull).
+  - Fast-fall: 20 m/s.
+  - Landing squat: 50 ms, or 160 ms after a big drop. Bumps no longer count as landings.
+  - Fall damage goes by height, so a fast-fall never hurts.
+- **8. Wall jump (right click):** off a trunk, 4 m/s away and 6.4 m/s up; the next one in a chain keeps 72% of the height. It plays a scuff that creatures hear.
+- **9. Chain:** drawing no longer ends a sprint or jump; it slows you to 0.75 m/s on the ground only. The aim wanders 0.3 degrees standing and about 0 at a jump's apex. Sprint, jump, wall jump, draw in the air, hold through the landing and release all work in one input run, and the arrow killed the deer with a torso hit. Input log: forward at 0.000 s, 0.033 s up and 0.067 s held (the sprint); jump 0.767 s; wall jump 0.950 s; draw 1.000 s; release 2.367 s.
+- **10. Health and hits:** a slim blue bar with a number replaces the hearts; no regeneration; resting at a fire heals. Head 2x, eye 4x and blinds, limbs lame. Rising numbers, and the X on a critical or a kill. tools/hits_check.gd passes.
+- **11. Inventory (I):**
+  - Worn slots: ranged, melee, amulet, rings, each with spares. Ten carry slots.
+  - E on a plant takes a sample carrying its binomial (6 species taken in the test).
+  - G sets a thing down; E takes it back.
+  - Past six things: 8% slower each, climbing 12% slower, 15% louder.
+  - The world doesn't pause while it's open.
+- **Open:**
+  - The bow and spear are sized for the old taller body.
+  - The ground-crease cause is not found.
+  - Fish, mushrooms and stone tools have no source yet.
+
 ## 2026-09-27 — Plant world restructured: merged data/plant-catalogues at 1a88bfe (data + spec)
 - **Hero genera:**
   - 3–5 archetypal species each; the full lists are archived in docs/plant_archive/ (66 files, not loaded).

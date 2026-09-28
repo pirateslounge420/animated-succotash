@@ -126,7 +126,7 @@ func update_status(player: PlanetPlayer) -> void:
 	_status.aiming = player.aiming()
 	_status.draw_power = player.aim_power()
 	_status.show_crosshair = player.first_person or player.aiming()
-	_status.look_name = player.look.text if player.look != null else ""
+	_status.look_name = player.look.text if player.look != null and not player.ui_open else ""
 	if player.weapon == "bow":
 		_status.weapon = "Bow"
 	else:

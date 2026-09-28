@@ -100,7 +100,7 @@ func _draw() -> void:
 		for i in a.size():
 			var spare := i >= n_worn
 			var row := Rect2(Vector2(left.x, y), Vector2(col_w, ROW_H - 2.0))
-			var label := str(info.label) if i == 0 else ("" if not spare else "  spare")
+			var label := str(info.label) if i == 0 else ("  spare" if spare else " ")
 			_row(font, row, ["worn", slot, i], label, a[i], spare)
 			y += ROW_H if not spare else ROW_H - 4.0
 		y += 4.0
@@ -144,7 +144,15 @@ func _row(font: Font, row: Rect2, key: Array, label: String, it, spare: bool) ->
 		_text(font, Vector2(x, row.position.y + 15.0), "—", size_px, Color(DIM, 0.45))
 		return
 	ItemIcon.draw_icon(self, Vector2(x + 7.0, row.position.y + row.size.y * 0.5), 8.0, it)
-	_text(font, Vector2(x + 20.0, row.position.y + 15.0), Inventory.title(it), size_px, DIM if spare else TEXT)
+	var title := Inventory.title(it)
+	_text(font, Vector2(x + 20.0, row.position.y + 15.0), title, size_px, DIM if spare else TEXT)
+	# A sample's species beside it, small, so two cuttings tell apart.
+	var bin := str(it.get("binomial", ""))
+	if bin != "":
+		var bx := x + 28.0 + font.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, size_px).x
+		var room := row.end.x - bx - 4.0
+		if room > 30.0:
+			draw_string(_italic, Vector2(bx, row.position.y + 15.0), bin, HORIZONTAL_ALIGNMENT_LEFT, room, 12, DIM)
 
 
 func _text(font: Font, at: Vector2, s: String, px: int, col: Color) -> void:
