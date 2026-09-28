@@ -745,6 +745,7 @@
  "associations": [
   {
    "name": "Mesquite-blackbrush Tamaulipan thornscrub",
+   "realm": "nearctic",
    "where": "flat to gently rolling uplands on clay and caliche soils, S Texas and NE Mexico",
    "dominant": [
     "Honey mesquite"
@@ -765,6 +766,7 @@
   },
   {
    "name": "Caatinga arborea (catingueira-facheiro)",
+   "realm": "neotropic",
    "where": "crystalline-basement plains and hill slopes with shallow stony soil, NE Brazil",
    "dominant": [
     "Caatinga catingueira"
@@ -783,6 +785,7 @@
   },
   {
    "name": "Quebracho Chaco forest",
+   "realm": "neotropic",
    "where": "flat clay plains of the Gran Chaco with seasonal flooding, deeper soil",
    "dominant": [
     "Red quebracho"
@@ -800,6 +803,7 @@
   },
   {
    "name": "Acacia-Commiphora bushland",
+   "realm": "afrotropic",
    "where": "dry rocky hills and red sandy plains of the Somali-Masai region",
    "dominant": [
     "Umbrella thorn"
@@ -821,6 +825,7 @@
   },
   {
    "name": "Madagascar spiny thicket",
+   "realm": "madagascar",
    "where": "limestone plateaus and red sands of SW Madagascar, very dry",
    "dominant": [
     "Madagascar ocotillo"

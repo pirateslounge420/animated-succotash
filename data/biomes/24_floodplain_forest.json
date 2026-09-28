@@ -1077,6 +1077,10 @@
  "associations": [
   {
    "name": "Cottonwood-willow pioneer forest",
+   "realm": [
+    "palearctic",
+    "nearctic"
+   ],
    "where": "fresh sand and gravel bars at the river edge, flooded every year",
    "dominant": [
     "Cottonwood",
@@ -1096,6 +1100,7 @@
   },
   {
    "name": "Silver maple-sycamore bottomland",
+   "realm": "nearctic",
    "where": "low first bottoms flooded most springs, silty soil",
    "dominant": [
     "Silver maple",
@@ -1118,6 +1123,7 @@
   },
   {
    "name": "Black poplar-white willow riverside wood",
+   "realm": "palearctic",
    "where": "riverbank levees and islands of European lowland rivers, gravelly alluvium",
    "dominant": [
     "Black poplar",
@@ -1137,6 +1143,7 @@
   },
   {
    "name": "Pecan-cane ridge forest",
+   "realm": "nearctic",
    "where": "higher natural levees and terraces, rarely flooded, deep loam",
    "dominant": [
     "Pecan"

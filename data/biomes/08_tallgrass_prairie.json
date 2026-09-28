@@ -1003,6 +1003,7 @@
  "associations": [
   {
    "name": "Big bluestem-Indiangrass mesic prairie",
+   "realm": "nearctic",
    "where": "rolling uplands and gentle slopes with deep loam",
    "dominant": [
     "Big bluestem",
@@ -1023,6 +1024,7 @@
   },
   {
    "name": "Little bluestem dry upland prairie",
+   "realm": "nearctic",
    "where": "thin rocky soil on hilltops and limestone slopes, dry",
    "dominant": [
     "Little bluestem"
@@ -1039,6 +1041,7 @@
   },
   {
    "name": "Switchgrass lowland prairie",
+   "realm": "nearctic",
    "where": "wet swales, creek bottoms and seasonally flooded flats",
    "dominant": [
     "Switchgrass",
@@ -1056,6 +1059,7 @@
   },
   {
    "name": "Bur oak savanna",
+   "realm": "nearctic",
    "where": "prairie edge and fire-sheltered slopes with scattered trees",
    "dominant": [
     "Bur oak"
@@ -1074,6 +1078,7 @@
   },
   {
    "name": "Pampas grass tussock grassland",
+   "realm": "neotropic",
    "where": "moist lowlands and river margins of the humid pampa",
    "dominant": [
     "Pampas grass"

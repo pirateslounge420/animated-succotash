@@ -448,6 +448,10 @@
  "associations": [
   {
    "name": "Tussock cottongrass tundra",
+   "realm": [
+    "nearctic",
+    "palearctic"
+   ],
    "where": "moist flat lowland over permafrost, peaty soil",
    "dominant": [
     "Arctic cottongrass",
@@ -467,6 +471,10 @@
   },
   {
    "name": "Dwarf birch-crowberry heath tundra",
+   "realm": [
+    "nearctic",
+    "palearctic"
+   ],
    "where": "well-drained gentle slopes and low ridges, acid soil",
    "dominant": [
     "Dwarf birch",
@@ -486,6 +494,10 @@
   },
   {
    "name": "Mountain-avens fellfield barrens",
+   "realm": [
+    "nearctic",
+    "palearctic"
+   ],
    "where": "exposed windswept ridges and gravel, dry thin soil",
    "dominant": [
     "Entire-leaf mountain avens"
@@ -503,6 +515,10 @@
   },
   {
    "name": "Wet sedge meadow tundra",
+   "realm": [
+    "nearctic",
+    "palearctic"
+   ],
    "where": "low basins, thaw-pond margins and drained lake beds with standing water",
    "dominant": [
     "Tundra sedge"
@@ -520,6 +536,10 @@
   },
   {
    "name": "Riparian arctic willow scrub",
+   "realm": [
+    "nearctic",
+    "palearctic"
+   ],
    "where": "river banks, gravel bars and sheltered stream valleys",
    "dominant": [
     "Arctic willow"

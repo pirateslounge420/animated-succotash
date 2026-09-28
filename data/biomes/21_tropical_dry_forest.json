@@ -979,6 +979,7 @@
  "associations": [
   {
    "name": "Guanacaste-bursera Pacific dry forest",
+   "realm": "neotropic",
    "where": "gently rolling lowlands and low hills of the Mesoamerican Pacific coast, deep soil",
    "dominant": [
     "Guanacaste",
@@ -1003,6 +1004,7 @@
   },
   {
    "name": "Rosewood-flame of the forest dry deciduous forest",
+   "realm": "indomalaya",
    "where": "plains and low hill slopes of central India and Burma on shallow soil, burned in the dry season",
    "dominant": [
     "Indian rosewood",
@@ -1022,6 +1024,7 @@
   },
   {
    "name": "Chiquitano silk-floss dry forest",
+   "realm": "neotropic",
    "where": "low hills and plains of eastern Bolivia on rocky, well-drained soil",
    "dominant": [
     "Silk floss tree",
@@ -1041,6 +1044,7 @@
   },
   {
    "name": "Grandidier's baobab dry forest",
+   "realm": "madagascar",
    "where": "sandy plains and limestone of western Madagascar, long dry season",
    "dominant": [
     "Grandidier's baobab"
@@ -1058,6 +1062,7 @@
   },
   {
    "name": "Coastal dry forest edge and strand",
+   "realm": "neotropic",
    "where": "sandy coastal terraces and beach ridges behind the shore, wind-exposed",
    "dominant": [
     "Frangipani",

@@ -442,6 +442,7 @@
  "associations": [
   {
    "name": "Mat-grass (Nardus) meadow",
+   "realm": "palearctic",
    "where": "gently sloping acid pastures on leached soil just above treeline, long snow cover",
    "dominant": [
     "Mat grass"
@@ -460,6 +461,7 @@
   },
   {
    "name": "Alpenrose-dwarf juniper heath",
+   "realm": "palearctic",
    "where": "steep slopes and edges of the meadow near treeline where snow lies late, acid soil",
    "dominant": [
     "Alpenrose"
@@ -477,6 +479,7 @@
   },
   {
    "name": "Subalpine wildflower meadow",
+   "realm": "nearctic",
    "where": "moist, deep-soil slopes and basins below the ridges, snowmelt-fed",
    "dominant": [
     "Tufted hairgrass"
@@ -494,6 +497,7 @@
   },
   {
    "name": "Kobresia sedge meadow",
+   "realm": "himalaya",
    "where": "wide flat plateaus and rolling slopes of the Tibetan/Himalayan high plateau, cold and dry",
    "dominant": [
     "Tibetan alpine sedge"
@@ -512,6 +516,7 @@
   },
   {
    "name": "Edelweiss limestone grassland",
+   "realm": "palearctic",
    "where": "sunny rocky limestone slopes and ledges with thin dry soil",
    "dominant": [
     "Edelweiss"

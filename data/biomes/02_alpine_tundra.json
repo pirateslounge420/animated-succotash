@@ -446,6 +446,7 @@
  "associations": [
   {
    "name": "Curved sedge alpine heath",
+   "realm": "palearctic",
    "where": "windswept acid ridges and plateaus above treeline, thin soil",
    "dominant": [
     "Curved sedge"
@@ -463,6 +464,10 @@
   },
   {
    "name": "Cushion-plant fellfield",
+   "realm": [
+    "nearctic",
+    "palearctic"
+   ],
    "where": "exposed gravelly summits and wind-scoured slopes, no snow cover",
    "dominant": [
     "Moss campion"
@@ -481,6 +486,10 @@
   },
   {
    "name": "Mountain-avens dwarf willow mat",
+   "realm": [
+    "palearctic",
+    "nearctic"
+   ],
    "where": "limestone slopes and ledges, calcareous gravel, sunny",
    "dominant": [
     "Mountain avens",
@@ -497,6 +506,10 @@
   },
   {
    "name": "Snow willow snowbed",
+   "realm": [
+    "palearctic",
+    "nearctic"
+   ],
    "where": "hollows and lee slopes with late-lying snow, moist",
    "dominant": [
     "Snow willow"
@@ -512,6 +525,7 @@
   },
   {
    "name": "Purple saxifrage scree and rock crevice",
+   "realm": "palearctic",
    "where": "unstable scree, cliff ledges and bare rock",
    "dominant": [
     "Purple saxifrage"

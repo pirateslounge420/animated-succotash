@@ -929,6 +929,7 @@
  "associations": [
   {
    "name": "Live oak-cabbage palmetto maritime hammock",
+   "realm": "nearctic",
    "where": "sheltered back-dune flats and swales on barrier islands, sandy soil, salt-pruned edge toward the sea",
    "dominant": [
     "Wind-shaped live oak",
@@ -955,6 +956,7 @@
   },
   {
    "name": "Loblolly pine-wax myrtle back-dune woodland",
+   "realm": "nearctic",
    "where": "young stabilised dunes and disturbed or burned ground behind the foredune, dry sand",
    "dominant": [
     "Loblolly pine"
@@ -974,6 +976,7 @@
   },
   {
    "name": "Wax myrtle-yaupon salt-shrub thicket",
+   "realm": "nearctic",
    "where": "the wind-sheared seaward forest edge and dune slacks, salt spray, sandy soil",
    "dominant": [
     "Wax myrtle",
@@ -994,6 +997,7 @@
   },
   {
    "name": "Monterey cypress-coyote brush headland forest",
+   "realm": "nearctic",
    "where": "fog-swept rocky headlands and coastal terraces on the central California coast, thin soil",
    "dominant": [
     "Monterey cypress"
@@ -1012,6 +1016,7 @@
   },
   {
    "name": "Sitka spruce-salal coastal forest",
+   "realm": "nearctic",
    "where": "wet, cool shore terraces and slopes just behind the beach on the North Pacific coast",
    "dominant": [
     "Sitka spruce"
@@ -1029,6 +1034,7 @@
   },
   {
    "name": "Japanese black pine-kuril bamboo coastal pine wood",
+   "realm": "east_asia_temperate",
    "where": "sandy shores and low coastal hills of Japan and Hokkaido, wind-exposed, well drained",
    "dominant": [
     "Japanese black pine"

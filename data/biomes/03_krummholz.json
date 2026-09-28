@@ -671,6 +671,7 @@
  "associations": [
   {
    "name": "Spruce-fir krummholz ribbon",
+   "realm": "nearctic",
    "where": "upper treeline slopes and wind-exposed shoulders, snow-drift lee",
    "dominant": [
     "Wind-stunted conifer"
@@ -689,6 +690,7 @@
   },
   {
    "name": "Mountain birch forest-tundra",
+   "realm": "palearctic",
    "where": "gentle upper slopes and valley sides of the subarctic mountains, moist acid soil",
    "dominant": [
     "Mountain birch"
@@ -707,6 +709,7 @@
   },
   {
    "name": "Dahurian larch open forest-tundra",
+   "realm": "palearctic",
    "where": "permafrost lowlands and north slopes of the Siberian treeline, cold wet soil",
    "dominant": [
     "Dahurian larch"
@@ -724,6 +727,7 @@
   },
   {
    "name": "Mountain pine krummholz",
+   "realm": "palearctic",
    "where": "steep subalpine slopes, avalanche tracks and limestone screes of the Alps",
    "dominant": [
     "Mountain pine"
@@ -741,6 +745,7 @@
   },
   {
    "name": "Wind-exposed lichen-heath",
+   "realm": "palearctic",
    "where": "bare ridges and summits above the last trees, dry thin soil",
    "dominant": [
     "Heath",

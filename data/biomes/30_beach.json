@@ -680,6 +680,11 @@
  "associations": [
   {
    "name": "Beach morning glory-spinifex strand",
+   "realm": [
+    "oceania",
+    "malesia",
+    "australasia"
+   ],
    "where": "upper beach just above the tide line on tropical shores, loose sand",
    "dominant": [
     "Beach morning glory",
@@ -699,6 +704,10 @@
   },
   {
    "name": "Coconut-screw pine littoral wood",
+   "realm": [
+    "oceania",
+    "malesia"
+   ],
    "where": "stable back-beach above the storm line on tropical shores, sandy",
    "dominant": [
     "Coconut palm",
@@ -719,6 +728,7 @@
   },
   {
    "name": "She-oak beach wood",
+   "realm": "oceania",
    "where": "sandy shores and beach ridges of the tropical Pacific, well-drained",
    "dominant": [
     "Beach she-oak"
@@ -737,6 +747,7 @@
   },
   {
    "name": "Sea rocket strandline",
+   "realm": "palearctic",
    "where": "drift line at the top of temperate beaches, bare sand with tide wrack",
    "dominant": [
     "Sea rocket"
@@ -753,6 +764,7 @@
   },
   {
    "name": "Sea buckthorn-maritime pine back-beach",
+   "realm": "palearctic",
    "where": "dry sandy back-beach and low beach ridges of temperate Atlantic shores, exposed",
    "dominant": [
     "Maritime pine",

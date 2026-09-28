@@ -1128,6 +1128,7 @@
  "associations": [
   {
    "name": "Red mangrove fringe",
+   "realm": "neotropic",
    "where": "the seaward edge and creek banks flooded by every tide, soft mud",
    "dominant": [
     "Red mangrove"
@@ -1146,6 +1147,7 @@
   },
   {
    "name": "Black mangrove-white mangrove basin forest",
+   "realm": "neotropic",
    "where": "flat inner basins behind the fringe, flooded only by higher tides, salty mud",
    "dominant": [
     "Black mangrove",
@@ -1165,6 +1167,11 @@
   },
   {
    "name": "Rhizophora-Bruguiera Indo-Pacific mangrove",
+   "realm": [
+    "indomalaya",
+    "malesia",
+    "australasia"
+   ],
    "where": "sheltered estuaries and deltas of the Indo-West Pacific, seaward stilt-root belt grading landward",
    "dominant": [
     "Asian stilt mangrove",
@@ -1186,6 +1193,10 @@
   },
   {
    "name": "Sonneratia-Avicennia pioneer mudflat",
+   "realm": [
+    "indomalaya",
+    "malesia"
+   ],
    "where": "newly accreting mudflats and open river mouths, deep daily flooding",
    "dominant": [
     "Mangrove apple",
@@ -1201,6 +1212,10 @@
   },
   {
    "name": "Nipa-mangrove fern back-mangrove",
+   "realm": [
+    "malesia",
+    "indomalaya"
+   ],
    "where": "brackish upper estuary and freshwater fringe landward of the mangrove, tidal but low salinity",
    "dominant": [
     "Nipa palm"
@@ -1218,6 +1233,7 @@
   },
   {
    "name": "Buttonwood-saltwort salt flat edge",
+   "realm": "neotropic",
    "where": "hypersaline sun-baked flats on the landward mangrove margin, rarely flooded",
    "dominant": [
     "Buttonwood"
@@ -1233,6 +1249,7 @@
   },
   {
    "name": "Cordgrass-mangrove transition",
+   "realm": "nearctic",
    "where": "low marsh at the cool northern limit of mangroves, tidal muddy shore",
    "dominant": [
     "Smooth cordgrass"

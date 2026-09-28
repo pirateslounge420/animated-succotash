@@ -448,6 +448,7 @@
  "associations": [
   {
    "name": "Cordgrass low marsh",
+   "realm": "nearctic",
    "where": "creek banks and mudflat edge flooded twice daily, soft mud",
    "dominant": [
     "Cordgrass"
@@ -463,6 +464,7 @@
   },
   {
    "name": "Salt hay high marsh",
+   "realm": "nearctic",
    "where": "flat marsh platform flooded only on spring tides, firm peat",
    "dominant": [
     "Salt hay"
@@ -482,6 +484,7 @@
   },
   {
    "name": "Needlerush marsh",
+   "realm": "nearctic",
    "where": "brackish high marsh and pan margins, irregularly flooded",
    "dominant": [
     "Black needlerush"
@@ -499,6 +502,7 @@
   },
   {
    "name": "Glasswort-sea lavender pioneer marsh",
+   "realm": "palearctic",
    "where": "open mudflat and salt pans at the lowest marsh edge, bare mud",
    "dominant": [
     "Glasswort"
@@ -515,6 +519,7 @@
   },
   {
    "name": "Halimione-cordgrass European saltmarsh",
+   "realm": "palearctic",
    "where": "creek levees and upper marsh of NW European saltings, well-drained mud",
    "dominant": [
     "Sea purslane shrub (halimione)",

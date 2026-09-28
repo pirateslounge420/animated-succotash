@@ -448,6 +448,7 @@
  "associations": [
   {
    "name": "Purple moor-grass fen meadow",
+   "realm": "palearctic",
    "where": "gently sloping, seasonally waterlogged, peaty base-poor soil, traditionally mown",
    "dominant": [
     "Purple moor-grass"
@@ -467,6 +468,7 @@
   },
   {
    "name": "Tufted hair-grass rush meadow",
+   "realm": "palearctic",
    "where": "flat, poorly drained mineral soil, wet in winter, grazed",
    "dominant": [
     "Tufted hair-grass",
@@ -486,6 +488,7 @@
   },
   {
    "name": "Bluejoint-sedge meadow",
+   "realm": "nearctic",
    "where": "low prairie swales and lake margins, saturated in spring",
    "dominant": [
     "Bluejoint reed grass"
@@ -504,6 +507,7 @@
   },
   {
    "name": "Meadowsweet tall-herb fringe",
+   "realm": "palearctic",
    "where": "ditch banks, stream edges and ungrazed corners, wet rich soil",
    "dominant": [
     "Meadowsweet",

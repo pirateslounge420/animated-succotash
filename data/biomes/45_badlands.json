@@ -620,6 +620,7 @@
  "associations": [
   {
    "name": "Rocky Mountain juniper ravine woodland",
+   "realm": "nearctic",
    "where": "shaded north-facing draws and ravine heads with extra runoff moisture",
    "dominant": [
     "Rocky Mountain juniper"
@@ -638,6 +639,7 @@
   },
   {
    "name": "Western wheatgrass-blue grama flat",
+   "realm": "nearctic",
    "where": "gentle clay flats and tablelands between the eroded slopes",
    "dominant": [
     "Western wheatgrass",
@@ -657,6 +659,7 @@
   },
   {
    "name": "Silver sagebrush-greasewood bench",
+   "realm": "nearctic",
    "where": "low benches and alkaline flats along drainages, heavy clay, seasonal moisture",
    "dominant": [
     "Silver sagebrush",
@@ -675,6 +678,7 @@
   },
   {
    "name": "Prickly pear-yucca eroded slope",
+   "realm": "nearctic",
    "where": "bare clay and shale slopes and sod tables, dry and unstable",
    "dominant": [
     "Plains prickly pear",
@@ -693,6 +697,7 @@
   },
   {
    "name": "Plains cottonwood draw",
+   "realm": "nearctic",
    "where": "creek bottoms and wet draws with groundwater at the base of the badlands",
    "dominant": [
     "Plains cottonwood"
@@ -709,6 +714,7 @@
   },
   {
    "name": "Aleppo pine-esparto gully scrub",
+   "realm": "mediterranean",
    "where": "clay gullies of Bardenas Reales, dry Mediterranean semi-desert, scattered pine on gully sides",
    "dominant": [
     "Aleppo pine"

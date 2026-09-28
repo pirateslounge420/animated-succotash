@@ -790,6 +790,7 @@
  "associations": [
   {
    "name": "Saguaro-paloverde Arizona Upland",
+   "realm": "nearctic",
    "where": "rocky bajadas and hill slopes of the Sonoran Desert, coarse well-drained soil",
    "dominant": [
     "Saguaro cactus",
@@ -812,6 +813,7 @@
   },
   {
    "name": "Creosote-bursage desert flat",
+   "realm": "nearctic",
    "where": "wide flat valley bottoms, fine-soil plains and limestone fans, hottest and driest ground",
    "dominant": [
     "Creosote bush"
@@ -830,6 +832,7 @@
   },
   {
    "name": "Mesquite-acacia wash woodland (bosque)",
+   "realm": "nearctic",
    "where": "desert wash margins, wadis and floodplain terraces with a shallow water table",
    "dominant": [
     "Velvet mesquite"
@@ -851,6 +854,7 @@
   },
   {
    "name": "Quiver tree-welwitschia Namib rock desert",
+   "realm": "afrotropic",
    "where": "rocky ridges, gravel plains and fog-belt slopes of the Namib",
    "dominant": [
     "Quiver tree"
@@ -865,6 +869,7 @@
   },
   {
    "name": "Mulga-spinifex sandplain",
+   "realm": "australasia",
    "where": "red sandplains and low dunes of the Australian arid zone, burned every few decades",
    "dominant": [
     "Mulga"

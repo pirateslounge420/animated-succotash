@@ -496,6 +496,7 @@
  "associations": [
   {
    "name": "Ichu bunchgrass puna",
+   "realm": "andes",
    "where": "wide open slopes and rolling plateaus 3800-4500 m on stony, well-drained soil",
    "dominant": [
     "Ichu grass"
@@ -515,6 +516,7 @@
   },
   {
    "name": "Polylepis (quenua) woodland",
+   "realm": "andes",
    "where": "sheltered rocky slopes, boulder fields and gullies at 3800-4800 m",
    "dominant": [
     "Queñua"
@@ -534,6 +536,7 @@
   },
   {
    "name": "Tola shrub steppe",
+   "realm": "andes",
    "where": "dry gravelly plains and gentle slopes of the southern puna and altiplano",
    "dominant": [
     "Puna daisy shrub"
@@ -551,6 +554,7 @@
   },
   {
    "name": "Bofedal cushion bog",
+   "realm": "andes",
    "where": "valley floors, spring seeps and glacier-fed flats with year-round saturated soil",
    "dominant": [
     "Bofedal cushion"
@@ -567,6 +571,7 @@
   },
   {
    "name": "Puya raimondii rocky slope",
+   "realm": "andes",
    "where": "steep rocky slopes and scree at 3800-4300 m among bunchgrass",
    "dominant": [
     "Queen of the Andes"

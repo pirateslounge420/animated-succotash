@@ -157,6 +157,7 @@
  "associations": [
   {
    "name": "Snow algae ice field",
+   "realm": "any",
    "where": "the glacier surface and snowfields in summer, red-tinted snow",
    "dominant": [
     "Snow algae"
@@ -171,6 +172,7 @@
   },
   {
    "name": "Map lichen-glacier buttercup fresh moraine",
+   "realm": "any",
    "where": "bare rock and gravel of the young moraine and ice edge",
    "dominant": [
     "Map lichen"

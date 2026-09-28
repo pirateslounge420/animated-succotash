@@ -448,6 +448,7 @@
  "associations": [
   {
    "name": "Saltbush-galleta desert shrub",
+   "realm": "nearctic",
    "where": "dry alkaline valley floors and gravelly fans of the Great Basin and Colorado Plateau",
    "dominant": [
     "Saltbush"
@@ -467,6 +468,7 @@
   },
   {
    "name": "Blackbrush scrub",
+   "realm": "nearctic",
    "where": "shallow rocky benches and mesa slopes of the Colorado Plateau and Mojave edge",
    "dominant": [
     "Blackbrush"
@@ -487,6 +489,7 @@
   },
   {
    "name": "Winterfat flat",
+   "realm": "nearctic",
    "where": "flat clay-loam basins and cold benches with heavy winter frost",
    "dominant": [
     "Winterfat"
@@ -505,6 +508,7 @@
   },
   {
    "name": "Saxaul desert woodland",
+   "realm": "central_asia",
    "where": "sand dunes and sandy plains of the Gobi and Central Asian deserts",
    "dominant": [
     "Saxaul"
@@ -522,6 +526,7 @@
   },
   {
    "name": "Reaumuria gravel desert (gobi)",
+   "realm": "central_asia",
    "where": "stony gravel pavements and low hills of the Gobi, very dry",
    "dominant": [
     "Reaumuria"

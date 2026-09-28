@@ -1417,6 +1417,7 @@
  "associations": [
   {
    "name": "Beech-maple cove forest",
+   "realm": "nearctic",
    "where": "sheltered valleys and north slopes, deep moist soil",
    "dominant": [
     "Beech",
@@ -1438,6 +1439,10 @@
   },
   {
    "name": "Oak-hazel dry ridge woodland",
+   "realm": [
+    "palearctic",
+    "nearctic"
+   ],
    "where": "ridge tops, south slopes and sandy or thin soil, fire-prone",
    "dominant": [
     "Oak",
@@ -1457,6 +1462,7 @@
   },
   {
    "name": "Ash-elm streamside forest",
+   "realm": "palearctic",
    "where": "valley bottoms and stream banks, rich wet soil",
    "dominant": [
     "Ash",
@@ -1478,6 +1484,7 @@
   },
   {
    "name": "Hawthorn-elderberry edge scrub",
+   "realm": "palearctic",
    "where": "forest edges, hedgerows and abandoned fields, sunny",
    "dominant": [
     "Hawthorn"
@@ -1496,6 +1503,7 @@
   },
   {
    "name": "Moso bamboo and Sasa grove",
+   "realm": "east_asia_temperate",
    "where": "warm low slopes and valley foot of the East Asian hills, moist deep soil",
    "dominant": [
     "Moso bamboo"

@@ -462,6 +462,7 @@
  "associations": [
   {
    "name": "Cattail-bulrush deep marsh",
+   "realm": "any",
    "where": "standing water most of the year, mineral mud, open basin center",
    "dominant": [
     "Cattail",
@@ -479,6 +480,7 @@
   },
   {
    "name": "Common reed bed",
+   "realm": "any",
    "where": "shallow water and wet basin margins, sheltered, silty",
    "dominant": [
     "Common reed"
@@ -495,6 +497,7 @@
   },
   {
    "name": "Tussock sedge meadow",
+   "realm": "nearctic",
    "where": "seasonally flooded outer margin, saturated but rarely deep",
    "dominant": [
     "Tussock sedge"
@@ -513,6 +516,10 @@
   },
   {
    "name": "Willow-buttonbush marsh edge",
+   "realm": [
+    "nearctic",
+    "palearctic"
+   ],
    "where": "shrubby marsh margin and drainage lines, waterlogged soil",
    "dominant": [
     "Grey willow",

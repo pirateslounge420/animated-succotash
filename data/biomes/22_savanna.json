@@ -957,6 +957,7 @@
  "associations": [
   {
    "name": "Acacia-red grass savanna",
+   "realm": "afrotropic",
    "where": "open flat to gently rolling plains, seasonally dry, frequent fire",
    "dominant": [
     "Acacia"
@@ -977,6 +978,7 @@
   },
   {
    "name": "Miombo woodland",
+   "realm": "afrotropic",
    "where": "dry plateau uplands on poor sandy soil, burned in the dry season",
    "dominant": [
     "Miombo tree"
@@ -996,6 +998,7 @@
   },
   {
    "name": "Baobab-palm savanna",
+   "realm": "afrotropic",
    "where": "low dry plains and river terraces, deep sandy soil, seasonally wet",
    "dominant": [
     "Baobab",
@@ -1018,6 +1021,7 @@
   },
   {
    "name": "Cerrado woodland-savanna",
+   "realm": "neotropic",
    "where": "well-drained plateau with deep acid soil, frequent fire",
    "dominant": [
     "Cerrado pequi"
@@ -1035,6 +1039,7 @@
   },
   {
    "name": "Stringybark-spinifex savanna",
+   "realm": "australasia",
    "where": "sandy plains and low rises of the tropical north, annual fire",
    "dominant": [
     "Darwin stringybark"

@@ -533,6 +533,10 @@
  "associations": [
   {
    "name": "Marram foredune",
+   "realm": [
+    "palearctic",
+    "nearctic"
+   ],
    "where": "mobile yellow dunes facing the sea, bare drifting sand",
    "dominant": [
     "Marram grass",
@@ -554,6 +558,7 @@
   },
   {
    "name": "Sand sedge grey dune",
+   "realm": "palearctic",
    "where": "stabilised inland dunes, thin humus over sand, dry",
    "dominant": [
     "Sand sedge"
@@ -573,6 +578,7 @@
   },
   {
    "name": "Creeping willow dune slack",
+   "realm": "palearctic",
    "where": "wet hollows between dunes reaching the water table",
    "dominant": [
     "Creeping willow"
@@ -588,6 +594,7 @@
   },
   {
    "name": "Pine-juniper dune wood",
+   "realm": "palearctic",
    "where": "old stabilised dune ridges far from the sea, dry poor sand",
    "dominant": [
     "Scots pine",
@@ -607,6 +614,7 @@
   },
   {
    "name": "Coastal wattle dune scrub",
+   "realm": "australasia",
    "where": "sheltered lee slopes and back dunes of Australian foredunes, sandy",
    "dominant": [
     "Coastal wattle"

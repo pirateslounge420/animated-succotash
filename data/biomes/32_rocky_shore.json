@@ -695,6 +695,7 @@
  "associations": [
   {
    "name": "Thrift-sea campion cliff-ledge sward",
+   "realm": "palearctic",
    "where": "spray-zone ledges and crevices of exposed sea cliffs, thin skeletal soil",
    "dominant": [
     "Thrift",
@@ -717,6 +718,7 @@
   },
   {
    "name": "Sea ivory lichen splash zone",
+   "realm": "palearctic",
    "where": "bare rock faces just above high tide, constant salt spray, no soil",
    "dominant": [
     "Sea ivory lichen"
@@ -731,6 +733,7 @@
   },
   {
    "name": "Gorse-tree mallow cliff-top scrub",
+   "realm": "palearctic",
    "where": "wind-sheared slopes and cliff tops above the spray zone, deeper soil on sheltered aspects",
    "dominant": [
     "Gorse",
@@ -749,6 +752,7 @@
   },
   {
    "name": "Sitka spruce-salal headland forest",
+   "realm": "nearctic",
    "where": "exposed rocky headlands and cliff tops on the wet Pacific coast, wind-pruned, well-drained",
    "dominant": [
     "Sitka spruce",
@@ -766,6 +770,10 @@
   },
   {
    "name": "Rockweed-kelp intertidal",
+   "realm": [
+    "palearctic",
+    "nearctic"
+   ],
    "where": "wave-washed intertidal rock below the lichen zone, underwater at high tide",
    "dominant": [
     "Bladder wrack",

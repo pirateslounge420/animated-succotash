@@ -658,6 +658,7 @@
  "associations": [
   {
    "name": "Thermophile microbial mat",
+   "realm": "any",
    "where": "hot runoff channels and pool rims, water too hot for plants",
    "dominant": [
     "Thermophile mat",
@@ -674,6 +675,7 @@
   },
   {
    "name": "Hot-spring moss-bentgrass warm ground",
+   "realm": "nearctic",
    "where": "warm steaming soil around the vents, cooling outflow banks",
    "dominant": [
     "Hot-spring moss",
@@ -690,6 +692,7 @@
   },
   {
    "name": "Geothermal kanuka moss-prostrate kanuka field",
+   "realm": "australasia",
    "where": "warm acidic geothermal ground in the Taupo volcanic zone, dry crust",
    "dominant": [
     "Prostrate kanuka"
@@ -706,6 +709,10 @@
   },
   {
    "name": "Cattail-hairgrass cooling wetland",
+   "realm": [
+    "nearctic",
+    "palearctic"
+   ],
    "where": "wet cooled outflow, marshy ground downstream of the springs",
    "dominant": [
     "Broad-leaved cattail"
@@ -724,6 +731,7 @@
   },
   {
    "name": "Lodgepole pine-cinquefoil thermal margin",
+   "realm": "nearctic",
    "where": "normal cool ground at the edge of the thermal basin, dry",
    "dominant": [
     "Lodgepole pine"
@@ -740,6 +748,7 @@
   },
   {
    "name": "Downy birch-willow geothermal valley",
+   "realm": "palearctic",
    "where": "cool damp slopes of Icelandic geothermal valleys away from the vents",
    "dominant": [
     "Downy birch"
@@ -756,6 +765,7 @@
   },
   {
    "name": "Manuka-umbrella fern geothermal scrub",
+   "realm": "australasia",
    "where": "warm sheltered gully sides in the NZ geothermal zone, moist",
    "dominant": [
     "Manuka"

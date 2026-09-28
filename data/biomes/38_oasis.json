@@ -601,6 +601,10 @@
  "associations": [
   {
    "name": "Date palm-fig oasis garden",
+   "realm": [
+    "west_asia",
+    "palearctic"
+   ],
    "where": "irrigated flats around the spring or well, deep moist soil in the oasis core",
    "dominant": [
     "Date palm"
@@ -621,6 +625,7 @@
   },
   {
    "name": "Euphrates poplar-tamarisk riparian tugai",
+   "realm": "central_asia",
    "where": "river banks and wadi floors with shallow groundwater, seasonally flooded sand and silt",
    "dominant": [
     "Euphrates poplar",
@@ -640,6 +645,7 @@
   },
   {
    "name": "Reed-flatsedge spring margin",
+   "realm": "any",
    "where": "waterlogged ground at the spring outflow and pool edges",
    "dominant": [
     "Common reed"
@@ -657,6 +663,10 @@
   },
   {
    "name": "Camelthorn-saltcedar oasis fringe",
+   "realm": [
+    "west_asia",
+    "central_asia"
+   ],
    "where": "dry saline outer rim of the oasis where groundwater is deep, bare sand around",
    "dominant": [
     "Camelthorn",
@@ -673,6 +683,10 @@
   },
   {
    "name": "Doum palm wadi",
+   "realm": [
+    "afrotropic",
+    "palearctic"
+   ],
    "where": "sandy wadi beds of the Sahara-Sahel with intermittent flow",
    "dominant": [
     "Doum palm"

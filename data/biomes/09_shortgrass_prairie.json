@@ -452,6 +452,7 @@
  "associations": [
   {
    "name": "Blue grama-buffalograss shortgrass steppe",
+   "realm": "nearctic",
    "where": "level to rolling uplands with heavy soil, dry",
    "dominant": [
     "Blue grama",
@@ -470,6 +471,7 @@
   },
   {
    "name": "Western wheatgrass swale",
+   "realm": "nearctic",
    "where": "clay flats and low swales that catch runoff, moister",
    "dominant": [
     "Western wheatgrass"
@@ -487,6 +489,7 @@
   },
   {
    "name": "Needle-and-thread sandy prairie",
+   "realm": "nearctic",
    "where": "sandy uplands and dune edges, loose soil",
    "dominant": [
     "Needle-and-thread",
@@ -505,6 +508,7 @@
   },
   {
    "name": "Rabbitbrush disturbed breaks",
+   "realm": "nearctic",
    "where": "eroded slopes, badland edges, overgrazed and disturbed ground",
    "dominant": [
     "Rubber rabbitbrush"
@@ -523,6 +527,7 @@
   },
   {
    "name": "Plains cottonwood draw",
+   "realm": "nearctic",
    "where": "stream draws, river banks and sandbars with shallow water table",
    "dominant": [
     "Plains cottonwood"

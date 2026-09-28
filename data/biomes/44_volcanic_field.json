@@ -779,6 +779,7 @@
  "associations": [
   {
    "name": "Ohia-amaumau fern lava pioneer forest",
+   "realm": "oceania",
    "where": "young Hawaiian pahoehoe and aa lava flows on the wet side, rain-fed",
    "dominant": [
     "Ohia lehua"
@@ -797,6 +798,7 @@
   },
   {
    "name": "Lyme grass-sea buckthorn ash pioneer",
+   "realm": "palearctic",
    "where": "raw tephra and ash plains, wind-blown, dry and nutrient-poor",
    "dominant": [
     "Lyme grass",
@@ -816,6 +818,7 @@
   },
   {
    "name": "Lava moss-map lichen crust",
+   "realm": "any",
    "where": "bare lava rock and cinder with no soil, exposed to sun and wind",
    "dominant": [
     "Lava moss",
@@ -832,6 +835,7 @@
   },
   {
    "name": "Downy birch-tea-leaved willow moss heath scrub",
+   "realm": "palearctic",
    "where": "older lava and ash where moss and soil have built up, moist hollows",
    "dominant": [
     "Downy birch"
@@ -850,6 +854,7 @@
   },
   {
    "name": "Lupine-fireweed blast-zone meadow",
+   "realm": "nearctic",
    "where": "pumice and blast deposits recovering after eruption, open ground",
    "dominant": [
     "Pumice lupine",
@@ -866,6 +871,7 @@
   },
   {
    "name": "Lodgepole pine pumice woodland",
+   "realm": "nearctic",
    "where": "well-drained pumice and cinder slopes after the pioneers, dry",
    "dominant": [
     "Lodgepole pine"
@@ -883,6 +889,7 @@
   },
   {
    "name": "Japanese larch-Fuji knotweed scoria scrub",
+   "realm": "east_asia_temperate",
    "where": "cinder cones and scoria slopes of Mt Fuji, dry and loose",
    "dominant": [
     "Japanese larch"
@@ -899,6 +906,7 @@
   },
   {
    "name": "Etna broom-soapwort lava scrub",
+   "realm": "mediterranean",
    "where": "old lava flows on Etna above the cultivated zone, dry Mediterranean slopes",
    "dominant": [
     "Etna broom tree"

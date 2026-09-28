@@ -578,6 +578,7 @@
  "associations": [
   {
    "name": "Sphagnum-cottongrass raised bog",
+   "realm": "any",
    "where": "open bog center and hummock-hollow plain, rain-fed acid peat",
    "dominant": [
     "Sphagnum moss",
@@ -599,6 +600,7 @@
   },
   {
    "name": "Heather-deergrass blanket bog",
+   "realm": "palearctic",
    "where": "gently sloping uplands with high rainfall, shallow peat over rock",
    "dominant": [
     "Heather",
@@ -619,6 +621,7 @@
   },
   {
    "name": "Black spruce-leatherleaf muskeg",
+   "realm": "nearctic",
    "where": "forested bog margin and slow-drained flats, deep peat, cold",
    "dominant": [
     "Black spruce",
@@ -640,6 +643,7 @@
   },
   {
    "name": "Bog pine hummock wood",
+   "realm": "palearctic",
    "where": "drier raised hummocks and bog rim on deep peat",
    "dominant": [
     "Bog pine"

@@ -809,6 +809,10 @@
  "associations": [
   {
    "name": "Spruce-fir feathermoss forest",
+   "realm": [
+    "palearctic",
+    "nearctic"
+   ],
    "where": "mesic mid-slopes and moist loamy flats, sheltered",
    "dominant": [
     "Spruce",
@@ -828,6 +832,7 @@
   },
   {
    "name": "Scots pine lichen woodland",
+   "realm": "palearctic",
    "where": "dry sandy ridges, eskers and outwash plains, fire-prone",
    "dominant": [
     "Scots pine"
@@ -845,6 +850,7 @@
   },
   {
    "name": "Black spruce muskeg",
+   "realm": "nearctic",
    "where": "wet flats, peat basins and permafrost lowlands with standing water",
    "dominant": [
     "Black spruce"
@@ -863,6 +869,7 @@
   },
   {
    "name": "Larch dwarf-birch open forest",
+   "realm": "palearctic",
    "where": "cold permafrost plains and north slopes of eastern Siberia",
    "dominant": [
     "Larch"
@@ -881,6 +888,7 @@
   },
   {
    "name": "Post-fire birch-fireweed stand",
+   "realm": "nearctic",
    "where": "recently burned ground and clearings, any slope",
    "dominant": [
     "Paper birch"

@@ -484,6 +484,7 @@
  "associations": [
   {
    "name": "Frailejon-tussock grass paramo",
+   "realm": "andes",
    "where": "open humid slopes and rolling plateaus above treeline, well-drained peaty soil",
    "dominant": [
     "Frailejon"
@@ -503,6 +504,7 @@
   },
   {
    "name": "Tall frailejon subparamo",
+   "realm": "andes",
    "where": "sheltered lower paramo just above the cloud forest edge, deeper soil",
    "dominant": [
     "Tall frailejon",
@@ -521,6 +523,7 @@
   },
   {
    "name": "Cushion bog (paramo turbera)",
+   "realm": "andes",
    "where": "flat valley floors, hollows and lake margins with waterlogged peat",
    "dominant": [
     "Cushion plant"
@@ -539,6 +542,7 @@
   },
   {
    "name": "Puya-dwarf shrub rocky paramo",
+   "realm": "andes",
    "where": "rocky ridges, cliffs and dry exposed slopes with thin soil",
    "dominant": [
     "Paramo puya",
@@ -557,6 +561,7 @@
   },
   {
    "name": "Tussock grass paramo grassland",
+   "realm": "andes",
    "where": "wide open slopes and burned or grazed flats, drier and wind-exposed",
    "dominant": [
     "Tussock grass"

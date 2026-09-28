@@ -541,6 +541,7 @@
  "associations": [
   {
    "name": "Big sagebrush-bluebunch wheatgrass shrub-steppe",
+   "realm": "nearctic",
    "where": "deep loamy soils of open flats and gentle slopes, no water table",
    "dominant": [
     "Big sagebrush"
@@ -560,6 +561,7 @@
   },
   {
    "name": "Big sagebrush-Idaho fescue steppe",
+   "realm": "nearctic",
    "where": "cooler, moister uplands and north-facing benches at higher elevation",
    "dominant": [
     "Big sagebrush"
@@ -578,6 +580,7 @@
   },
   {
    "name": "Pinyon-juniper woodland",
+   "realm": "nearctic",
    "where": "rocky, shallow-soil foothill slopes and mesa sides above the sage flats",
    "dominant": [
     "Utah juniper",
@@ -598,6 +601,7 @@
   },
   {
    "name": "Shadscale-Indian ricegrass salt desert shrub",
+   "realm": "nearctic",
    "where": "dry lower valley floors and alluvial fans on alkaline, gravelly soil",
    "dominant": [
     "Shadscale"
@@ -616,6 +620,7 @@
   },
   {
    "name": "Greasewood flat",
+   "realm": "nearctic",
    "where": "playa margins and valley bottoms with a shallow, saline water table",
    "dominant": [
     "Greasewood"

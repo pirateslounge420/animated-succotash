@@ -877,6 +877,7 @@
  "associations": [
   {
    "name": "Sitka spruce-hemlock fog forest",
+   "realm": "nearctic",
    "where": "coastal fog belt, lower slopes and terraces, very wet",
    "dominant": [
     "Sitka spruce",
@@ -902,6 +903,7 @@
   },
   {
    "name": "Redwood alluvial flat forest",
+   "realm": "nearctic",
    "where": "river flats and lower slopes with deep alluvial soil, summer fog",
    "dominant": [
     "Coast redwood"
@@ -920,6 +922,7 @@
   },
   {
    "name": "Douglas-fir salal slope forest",
+   "realm": "nearctic",
    "where": "drier south slopes and ridges, well drained, after old fire",
    "dominant": [
     "Douglas fir"
@@ -939,6 +942,7 @@
   },
   {
    "name": "Coihue-colihue Valdivian forest",
+   "realm": "neotropic",
    "where": "mid-slopes and valleys of the southern Andes, high rainfall",
    "dominant": [
     "Coihue"
@@ -958,6 +962,7 @@
   },
   {
    "name": "Rimu-tree fern podocarp forest",
+   "realm": "australasia",
    "where": "lowland and low hill country of New Zealand, wet deep soil",
    "dominant": [
     "Rimu"

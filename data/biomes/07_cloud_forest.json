@@ -1744,6 +1744,7 @@
  "associations": [
   {
    "name": "Andean upper montane cloud forest",
+   "realm": "andes",
    "where": "steep mid-slopes in the persistent fog belt, wet",
    "dominant": [
     "Gnarled cloud-forest tree",
@@ -1769,6 +1770,7 @@
   },
   {
    "name": "Oak-podocarp cloud forest",
+   "realm": "neotropic",
    "where": "high ridges and slopes of Central America, fog-soaked",
    "dominant": [
     "Cloud-forest oak",
@@ -1791,6 +1793,7 @@
   },
   {
    "name": "Hagenia Afromontane forest",
+   "realm": "afrotropic",
    "where": "upper slopes of the East African volcanoes, moist",
    "dominant": [
     "Hagenia"
@@ -1809,6 +1812,10 @@
   },
   {
    "name": "Montane bamboo thicket",
+   "realm": [
+    "afrotropic",
+    "andes"
+   ],
    "where": "landslide scars, ridge crests and gaps after disturbance",
    "dominant": [
     "Mountain bamboo",
@@ -1828,6 +1835,10 @@
   },
   {
    "name": "Elfin mossy ridge forest",
+   "realm": [
+    "andes",
+    "neotropic"
+   ],
    "where": "windswept ridge tops and summits, waterlogged thin soil",
    "dominant": [
     "Gnarled cloud-forest tree"

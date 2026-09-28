@@ -767,6 +767,7 @@
  "associations": [
   {
    "name": "Pinyon-juniper rim woodland",
+   "realm": "nearctic",
    "where": "rocky canyon rims and mid-slope benches, thin dry soil",
    "dominant": [
     "Two-needle pinyon",
@@ -787,6 +788,7 @@
   },
   {
    "name": "Blackbrush-Mormon tea slope shrubland",
+   "realm": "nearctic",
    "where": "hot dry lower slopes and talus, south-facing, shallow soil",
    "dominant": [
     "Blackbrush"
@@ -806,6 +808,7 @@
   },
   {
    "name": "Fremont cottonwood-coyote willow gallery",
+   "realm": "nearctic",
    "where": "canyon floor stream banks and floodplains with shallow water table",
    "dominant": [
     "Fremont cottonwood"
@@ -823,6 +826,7 @@
   },
   {
    "name": "Gambel oak-hackberry side-canyon woodland",
+   "realm": "nearctic",
    "where": "shaded north-facing side canyons and moist upper slopes",
    "dominant": [
     "Gambel oak"
@@ -840,6 +844,7 @@
   },
   {
    "name": "Maidenhair fern-monkeyflower hanging garden",
+   "realm": "nearctic",
    "where": "seeps and dripping alcove walls in the sandstone, constantly wet",
    "dominant": [
     "Maidenhair fern",
@@ -856,6 +861,7 @@
   },
   {
    "name": "Sagebrush-ricegrass sandy bench",
+   "realm": "nearctic",
    "where": "sandy terraces and benches on the canyon floor above flood level",
    "dominant": [
     "Big sagebrush"

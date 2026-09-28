@@ -454,6 +454,7 @@
  "associations": [
   {
    "name": "Glasswort-pickleweed inner margin",
+   "realm": "nearctic",
    "where": "the wettest, saltiest ring right at the crust edge, brine-saturated mud",
    "dominant": [
     "Glasswort",
@@ -470,6 +471,7 @@
   },
   {
    "name": "Iodine bush-seepweed halophyte zone",
+   "realm": "nearctic",
    "where": "raised hummocks and the middle ring of the playa margin, salty crust",
    "dominant": [
     "Iodine bush"
@@ -487,6 +489,7 @@
   },
   {
    "name": "Saltgrass-alkali heath meadow",
+   "realm": "nearctic",
    "where": "damp moderately saline flats with shallow groundwater",
    "dominant": [
     "Saltgrass"
@@ -502,6 +505,7 @@
   },
   {
    "name": "Greasewood-saltcedar outer rim",
+   "realm": "nearctic",
    "where": "the outer rim and old shorelines where salinity drops, deeper water table",
    "dominant": [
     "Greasewood",
@@ -519,6 +523,10 @@
   },
   {
    "name": "Halocnemum-nitre bush sabkha",
+   "realm": [
+    "west_asia",
+    "central_asia"
+   ],
    "where": "Saharan chott and Central Asian sabkha margins, hard salt crust",
    "dominant": [
     "Halocnemum"

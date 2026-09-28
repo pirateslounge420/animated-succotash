@@ -542,6 +542,7 @@
  "associations": [
   {
    "name": "Saw sedge fen",
+   "realm": "palearctic",
    "where": "open groundwater-fed flats with calcareous water, deep peat",
    "dominant": [
     "Saw sedge"
@@ -560,6 +561,7 @@
   },
   {
    "name": "Black bog-rush rich fen",
+   "realm": "palearctic",
    "where": "spring-fed seepage slopes and flushes, marl, base-rich",
    "dominant": [
     "Black bog-rush"
@@ -579,6 +581,10 @@
   },
   {
    "name": "Bottle sedge-brown moss poor fen",
+   "realm": [
+    "palearctic",
+    "nearctic"
+   ],
    "where": "lake margins and quaking mats, neutral peat, permanently wet",
    "dominant": [
     "Bottle sedge",
@@ -598,6 +604,7 @@
   },
   {
    "name": "Tamarack-cedar rich swamp",
+   "realm": "nearctic",
    "where": "forested fen edge with slow groundwater flow, peat over marl",
    "dominant": [
     "Tamarack",
@@ -618,6 +625,7 @@
   },
   {
    "name": "Grey alder-willow carr",
+   "realm": "palearctic",
    "where": "stream-side fen and drainage lines, wet mineral-rich peat",
    "dominant": [
     "Grey alder",

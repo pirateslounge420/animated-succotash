@@ -2247,6 +2247,7 @@
  "associations": [
   {
    "name": "Cypress-tupelo slough",
+   "realm": "nearctic",
    "where": "permanently flooded backwater and slough, deep muck",
    "dominant": [
     "Bald cypress",
@@ -2271,6 +2272,7 @@
   },
   {
    "name": "Pond-cypress dome",
+   "realm": "nearctic",
    "where": "shallow rain-fed depressions in flat pineland, acid peat",
    "dominant": [
     "Pond cypress"
@@ -2291,6 +2293,7 @@
   },
   {
    "name": "Black willow-buttonbush shore",
+   "realm": "nearctic",
    "where": "frequently flooded shorelines and sand bars, open light",
    "dominant": [
     "Black willow",
@@ -2310,6 +2313,7 @@
   },
   {
    "name": "Cabbage palm hammock",
+   "realm": "nearctic",
    "where": "slightly raised islands within the swamp, rarely flooded",
    "dominant": [
     "Cabbage palm"
@@ -2330,6 +2334,7 @@
   },
   {
    "name": "Tropical palm swamp",
+   "realm": "neotropic",
    "where": "warm lowland swamp margins and river backwaters, permanently wet",
    "dominant": [
     "Cabbage palm"

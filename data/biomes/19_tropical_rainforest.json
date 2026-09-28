@@ -3768,6 +3768,7 @@
  "associations": [
   {
    "name": "Amazon terra firme forest",
+   "realm": "neotropic",
    "where": "well-drained interfluve uplands above the flood line on deep clay soil",
    "dominant": [
     "Brazil nut tree",
@@ -3792,6 +3793,7 @@
   },
   {
    "name": "Amazon varzea and igapo flooded forest",
+   "realm": "neotropic",
    "where": "river banks and floodplain lowlands flooded for months each year",
    "dominant": [
     "Kapok",
@@ -3814,6 +3816,7 @@
   },
   {
    "name": "Bornean lowland dipterocarp forest",
+   "realm": "malesia",
    "where": "gently rolling hills and ridges below 300 m on well-drained soil",
    "dominant": [
     "Yellow meranti",
@@ -3838,6 +3841,7 @@
   },
   {
    "name": "Congo Marantaceae forest",
+   "realm": "afrotropic",
    "where": "flat plateaus and old clearings of the Congo basin with an open canopy and giant-herb layer",
    "dominant": [
     "Limba"
@@ -3856,6 +3860,10 @@
   },
   {
    "name": "Rainforest gap and river-edge bamboo thicket",
+   "realm": [
+    "indomalaya",
+    "neotropic"
+   ],
    "where": "light gaps, landslide scars, river banks and forest edge with full sun",
    "dominant": [
     "Giant bamboo"

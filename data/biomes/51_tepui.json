@@ -1679,6 +1679,7 @@
  "associations": [
   {
    "name": "Stegolepis-brocchinia rosette meadow",
+   "realm": "neotropic",
    "where": "flat peaty summit plateaus, permanently wet, exposed to cloud and wind",
    "dominant": [
     "Tepui stegolepis",
@@ -1698,6 +1699,7 @@
   },
   {
    "name": "Bonnetia summit scrub-forest",
+   "realm": "neotropic",
    "where": "sheltered clefts, sinkhole rims and drainage lines with deeper peat",
    "dominant": [
     "Bonnetia"
@@ -1717,6 +1719,7 @@
   },
   {
    "name": "Sun pitcher-sundew peat bog",
+   "realm": "neotropic",
    "where": "waterlogged hollows and seepage flats on the summit, black peat",
    "dominant": [
     "Sun pitcher",
@@ -1737,6 +1740,7 @@
   },
   {
    "name": "Rock lichen-bromeliad bare quartzite",
+   "realm": "neotropic",
    "where": "black-crusted bare rock, pinnacles and cliff tops with no soil",
    "dominant": [
     "Rock lichen"
@@ -1753,6 +1757,7 @@
   },
   {
    "name": "Tepui myrtle-clusia cliff-edge shrubland",
+   "realm": "neotropic",
    "where": "rim edges and rocky slopes with thin peat pockets, wind-swept",
    "dominant": [
     "Tepui myrtle",

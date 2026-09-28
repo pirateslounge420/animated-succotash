@@ -828,6 +828,7 @@
  "associations": [
   {
    "name": "Teak-bamboo moist deciduous forest",
+   "realm": "indomalaya",
    "where": "well-drained hill slopes and valley sides of Burma and Thailand with a monsoon dry season",
    "dominant": [
     "Teak"
@@ -847,6 +848,7 @@
   },
   {
    "name": "Sal forest",
+   "realm": "indomalaya",
    "where": "gently sloping foothill terraces and plains of the Indo-Gangetic belt, deep loam",
    "dominant": [
     "Sal"
@@ -865,6 +867,7 @@
   },
   {
    "name": "Amazon guadua bamboo forest",
+   "realm": "neotropic",
    "where": "poorly drained lowland and valley floor of SW Amazonia with a shorter open canopy",
    "dominant": [
     "Guadua bamboo"
@@ -883,6 +886,7 @@
   },
   {
    "name": "Cecropia secondary growth",
+   "realm": "neotropic",
    "where": "abandoned clearings, landslides and river banks in full sun, a few years after disturbance",
    "dominant": [
     "Trumpet tree",
@@ -907,6 +911,10 @@
   },
   {
    "name": "Streamside giant-herb jungle",
+   "realm": [
+    "indomalaya",
+    "malesia"
+   ],
    "where": "shaded ravines, stream banks and seepage slopes with wet soil",
    "dominant": [
     "Wild banana",

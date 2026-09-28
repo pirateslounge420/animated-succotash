@@ -495,6 +495,7 @@
  "associations": [
   {
    "name": "Feather grass-fescue meadow steppe",
+   "realm": "palearctic",
    "where": "rolling plains and gentle slopes with deep black earth",
    "dominant": [
     "Feather grass",
@@ -513,6 +514,7 @@
   },
   {
    "name": "Wormwood-needlegrass dry steppe",
+   "realm": "central_asia",
    "where": "dry flats and south slopes with thin stony soil, grazed",
    "dominant": [
     "Krylov needlegrass",
@@ -531,6 +533,7 @@
   },
   {
    "name": "Siberian elm ravine woodland",
+   "realm": "central_asia",
    "where": "ravines, gullies and river terraces with a water table",
    "dominant": [
     "Siberian elm"
@@ -548,6 +551,7 @@
   },
   {
    "name": "Pea shrub-spiraea shrub steppe",
+   "realm": "central_asia",
    "where": "stony ridges and rocky slopes, dry",
    "dominant": [
     "Siberian pea shrub"
@@ -566,6 +570,7 @@
   },
   {
    "name": "Coiron-neneo Patagonian steppe",
+   "realm": "neotropic",
    "where": "windswept plateaus and dry slopes of Patagonia, gravelly soil",
    "dominant": [
     "Coiron",
