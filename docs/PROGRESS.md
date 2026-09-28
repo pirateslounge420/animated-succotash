@@ -4,6 +4,23 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Session 2, Step 4: head-look (addendum §B)
+- **One rig for everyone** (`PlayerBody`, numbers in `data/look.json` "head_look"):
+  - Small turns of the look move the hood first, and the shoulders shift a fifth of that with it.
+  - Past 45° the torso follows, up to 50° more.
+  - Pitch tilts the hood alone within ±30°.
+  - The hood catches up quickly (9/s) and the torso lags (4/s).
+- **The player:** third person only. The hood follows where the camera looks, including while clinging or climbing, so a pinned figure reads as looking around. In first person it's flat (no body is drawn).
+- **Folk:**
+  - Every cloaked figure (camp folk, the opening pair, cloaked creatures) looks at your head when you're within 12 m (scaled by its size) and in front of it.
+  - Otherwise it glances about now and then (up to 35°).
+  - Seated folk turn the hood and half the torso.
+- **Dev view:** `CLOSE=1` gives a close-up; `HEADLOOK=yaw,pitch` sets the wanderer's look (shot: 70° left and 10° up; the hood in profile, the torso following).
+- **Checks:** tech_check passes; the wanderer's cloth numbers are unchanged.
+- **Reference still has:** hand gestures and idle body language on folk. Ours only turn their heads.
+
+---
+
 ## 2026-09-28 — Session 2, Step 3: seasons (addendum §F)
 - **Calendar:**
   - Four seasons over the 365-day year: `scripts/sky/seasons.gd`, numbers in `data/seasons.json`.

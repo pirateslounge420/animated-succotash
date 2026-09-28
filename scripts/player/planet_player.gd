@@ -1596,6 +1596,16 @@ func _update_camera(delta: float) -> void:
 		# The hands are on the wood: no trailing bend in the elbows.
 		(_body as PlayerBody).trail_elbow = 0.0
 		_arm_trail = 0.0
+	# Head-look (third person only; first person draws no body): the hood
+	# follows where the camera looks, the torso past head_max_deg, even
+	# pinned to a trunk or a wall.
+	if _body is PlayerBody:
+		var pb2 := _body as PlayerBody
+		if first_person or dead or _camera == null:
+			pb2.set_look(0.0, 0.0)
+		else:
+			var f := _body.global_basis.orthonormalized().inverse() * -_camera.global_basis.z
+			pb2.set_look(atan2(-f.x, -f.z), asin(clampf(f.y, -1.0, 1.0)))
 
 
 ## Keep the blob shadow on the ground (`ground`: its height at the

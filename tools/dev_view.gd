@@ -58,6 +58,11 @@ func _run() -> void:
 		main.hud.visible = false
 	var player: PlanetPlayer = main.player
 	player.set_physics_process(false)
+	# HEADLOOK: the wanderer's look, "yaw,pitch" in degrees from where it
+	# faces (+ left, + up), to show the hood-first head-look.
+	if OS.get_environment("HEADLOOK") != "":
+		var hl := OS.get_environment("HEADLOOK").split(",")
+		(player._body as PlayerBody).set_look(deg_to_rad(float(hl[0])), deg_to_rad(float(hl[1]) if hl.size() > 1 else 0.0))
 	player.first_person = false
 	player._apply_view()
 	var pd: Vector3 = main.camp.site
@@ -75,6 +80,13 @@ func _run() -> void:
 	look = (look - pd * look.dot(pd)).normalized()
 	look = (look * cos(deg_to_rad(7.0)) - pd * sin(deg_to_rad(7.0))).normalized()
 	cam.global_transform = Transform3D(Basis.looking_at(look, pd), eye)
+	# CLOSE=1: a close-up of the wanderer from 3.5 m, same side.
+	if OS.get_environment("CLOSE") == "1":
+		var pp := player.global_position + player.global_basis.y * 1.2
+		var from := pp + (eye - pp).normalized() * 3.5
+		from += player.global_basis.y * (0.3 - (from - pp).dot(player.global_basis.y))
+		cam.fov = 45.0
+		cam.global_transform = Transform3D(Basis.looking_at((pp - from).normalized(), pd), from)
 	cam.current = true
 	var hours := (OS.get_environment("HOURS") if OS.get_environment("HOURS") != "" else "12,0").split(",")
 	var tag := OS.get_environment("TAG") if OS.get_environment("TAG") != "" else "devview"

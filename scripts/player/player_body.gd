@@ -198,6 +198,24 @@ var stride_scale := 1.0
 ## The trailing arms' elbow bend (radians), set by whoever trails them
 ## (PlanetPlayer's ninja run): added to the elbows over their rest pose.
 var trail_elbow := 0.0
+
+## Head-look (design reconciliation Session 2 section B; data/look.json
+## "head_look"): small turns of the look turn the hood first, the
+## shoulders shifting a little with it; past head_max_deg the torso
+## follows; pitch tilts the hood alone within pitch_max_deg. So a figure
+## pinned to a trunk still reads as looking around. The player sets its
+## look (set_look(), from the third-person camera); other figures look at
+## the player's head (watch_point) when it's within watch_m and in front
+## of them, and otherwise glance about now and then.
+static var HEAD_LOOK := Tuning.section("look", "head_look")
+## The player's head (scene), each frame, for other figures to look at.
+static var watch_point := Vector3(INF, INF, INF)
+var _look_in := Vector2.ZERO # wanted (yaw, pitch), radians; yaw + = left
+var _look_set := false
+var _head_yaw := 0.0
+var _head_pitch := 0.0
+var _torso_yaw := 0.0
+var _idle_seed := 0.0
 var _crouch_target := 0.0
 var _crouch := 0.0
 var _tuck := 0.0
@@ -304,6 +322,61 @@ func legs() -> Array[Node3D]:
 	return _legs
 
 
+## Where the player looks, relative to the body's facing (radians: yaw,
+## + to the left; pitch, + up). Only the player calls this.
+func set_look(yaw: float, pitch: float) -> void:
+	_look_in = Vector2(yaw, pitch)
+	_look_set = true
+
+
+## The look this frame (radians, relative to facing): the player's as
+## set; anyone else's toward the player's head when near and in front,
+## else an idle glance.
+func _wanted_look() -> Vector2:
+	if is_player or _look_set:
+		return _look_in
+	var watch := float(HEAD_LOOK.get("watch_m", 12.0))
+	if watch_point.x != INF and is_inside_tree():
+		var eye := head.global_position
+		var to := watch_point - eye
+		if to.length() < watch * maxf(scale.x, 0.5) and to.length() > 0.3:
+			var l := global_basis.orthonormalized().inverse() * to.normalized()
+			var yaw := atan2(-l.x, -l.z)
+			if absf(yaw) < deg_to_rad(120.0):
+				return Vector2(yaw, asin(clampf(l.y, -1.0, 1.0)))
+	# Idle: a slow glance one way or the other every few seconds.
+	if _idle_seed == 0.0:
+		_idle_seed = float(get_instance_id() % 997) + 1.0
+	var t := _time * 0.35 + _idle_seed
+	var glance := smoothstep(0.55, 0.9, sin(t * 0.7)) - smoothstep(0.55, 0.9, sin(t * 0.7 + 2.4))
+	return Vector2(glance * deg_to_rad(float(HEAD_LOOK.get("idle_deg", 35.0))), 0.05 * sin(t * 1.3))
+
+
+## Split the look between hood and torso, eased: the hood takes up to
+## head_max_deg (the shoulders a share of it), the torso the rest up to
+## torso_max_deg; pitch is the hood's alone.
+func _update_look(delta: float) -> void:
+	var want := _wanted_look() if _look_enabled() else Vector2.ZERO
+	var head_max := deg_to_rad(float(HEAD_LOOK.get("head_max_deg", 45.0)))
+	var torso_max := deg_to_rad(float(HEAD_LOOK.get("torso_max_deg", 50.0)))
+	var share := float(HEAD_LOOK.get("shoulder_share", 0.2))
+	var yaw := clampf(want.x, -head_max - torso_max, head_max + torso_max)
+	var head_part := clampf(yaw, -head_max, head_max)
+	var torso_want := (yaw - head_part) + head_part * share
+	var pitch_max := deg_to_rad(float(HEAD_LOOK.get("pitch_max_deg", 30.0)))
+	var hr := clampf(delta * float(HEAD_LOOK.get("head_rate", 9.0)), 0.0, 1.0)
+	var tr := clampf(delta * float(HEAD_LOOK.get("torso_rate", 4.0)), 0.0, 1.0)
+	_torso_yaw = lerpf(_torso_yaw, torso_want, tr)
+	_head_yaw = lerpf(_head_yaw, yaw, hr)
+	_head_pitch = lerpf(_head_pitch, clampf(want.y, -pitch_max, pitch_max), hr)
+	if is_player and is_inside_tree():
+		watch_point = head.global_position + global_basis.y * 0.1
+
+
+func _look_enabled() -> bool:
+	return bool(HEAD_LOOK.get("enabled", true))
+
+
 ## 0 standing .. 1 crouched: the knees bend, the body folds forward and
 ## the cloak's hem settles on the ground. Eased here.
 func set_crouch(amount: float) -> void:
@@ -391,17 +464,20 @@ func _pose(delta: float) -> void:
 		# On a seat at knee height: thighs forward, shins down, a little
 		# hunched toward the fire.
 		_hips.position = Vector3(0.0, SHIN_M + 0.06, 0.05)
-		_torso.rotation = Vector3(-0.18, 0.0, 0.0)
-		head.rotation.x = 0.12
+		_update_look(delta)
+		_torso.rotation = Vector3(-0.18, _torso_yaw * 0.5, 0.0)
+		head.rotation = Vector3(0.12 + _head_pitch, _head_yaw - _torso_yaw * 0.5, 0.0)
 		for s in 2:
 			_legs[s].rotation = Vector3(1.5, 0.0, 0.08 * (-1.0 if s == 0 else 1.0))
 			_knees[s].rotation = Vector3(-1.45, 0.0, 0.0)
 			_ankles[s].rotation = Vector3(0.0, 0.0, 0.0)
 		_pose_arms_rest(0.0)
 		return
-	_torso.rotation = Vector3(-0.5 * c - _lean, 0.0, 0.0)
-	# The hood stays level: it turns back by the torso's lean.
-	head.rotation = Vector3(0.5 * c * 0.5 + _lean, 0.0, 0.0)
+	_update_look(delta)
+	_torso.rotation = Vector3(-0.5 * c - _lean, _torso_yaw, 0.0)
+	# The hood stays level: it turns back by the torso's lean; it turns by
+	# the look (what the torso hasn't already taken) and tilts by its pitch.
+	head.rotation = Vector3(0.5 * c * 0.5 + _lean + _head_pitch, _head_yaw - _torso_yaw, 0.0)
 	for s in 2:
 		var ph := _phase + PI * s
 		var swing := a * sin(ph)
