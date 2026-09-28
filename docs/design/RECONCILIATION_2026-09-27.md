@@ -202,8 +202,22 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     the slice can be tied to the biome cultures.
   - Elders, hunters and guards can carry small marks (a longer hem, a different
     hood, a spear) but the body is the same rig.
-  - **Goblins keep their own bodies** — this is for the human-shaped tribal folk
-    (tribal / north / marsh). Northerners may keep fur trim over the cloak.
+  - **There are no goblins.** Every "higher" intelligent creature is a **cloaked
+    figure**, the same rig at a different scale. The current goblin (`size_m` 1.0,
+    lantern-carrying, holes up under rocks, squats at the fire) becomes a **small
+    cloaked folk** — keep the behaviour and the lanterns, drop the goblin body and
+    the word. Rename in `creatures.json` and `camps.gd` (`"goblin"` folk →
+    `"small_folk"` or a proper tribe name).
+  - **Scale is the species.** Cloaked figures at roughly: small folk ~1.0 m,
+    tribal / marsh / north folk ~1.7 m, and the large ones (`Forest troll` 3.2 m,
+    `Mountain yeti` 2.6 m) as **big cloaked figures** with the same rig scaled up
+    and a heavier cloak. The `Marsh witch` (1.7 m, friendly) is already a cloaked
+    figure by nature — same rig.
+  - **Beasts stay beasts.** `Werewolf`, `Desert skinwalker`, `Night rider`,
+    `Pond Crawler`, `Unicorn`, `Bog wisp` are not "higher intelligent" in this
+    sense and keep their creature bodies. If a creature would ever sit at a fire
+    or talk, it's a cloaked figure; if it hunts, haunts or grazes, it's a beast.
+  - Northerners may keep fur trim over the cloak; big folk get a heavier hood.
   - **Melee principle applies:** silhouette is the player-vs-folk tell as much as
     colour is, so the player's cloak length, hood and hem band stay unique.
   - Implementation: factor `PlayerBody`'s palette constants into a `Palette`
