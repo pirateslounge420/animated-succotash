@@ -1122,8 +1122,19 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
     first-person camera drops but never tilts.
 - **The ninja roll moves to the tech button too.** Tap **right click** in the window on
   touchdown from height → the roll (no fall damage up to `safe_m`, reduced beyond, fall
-  becomes forward speed; §J). Shift-tap stays as an alternate for now. So the tech button
-  on the ground reads: sprinting → slide; landing → roll; standing → nothing.
+  becomes forward speed; §J). So the tech button on the ground reads: sprinting → slide;
+  landing → roll; standing → nothing.
+- **Shift is the brake.** Shift is not an alternate for the roll; it is the **braking
+  slide** — the way to *stop* momentum on purpose:
+  - **on the ground at speed:** Shift = a short skidding slide that dumps your speed to a
+    stop (feet dug in, cloak whipping forward), versus right click's slide that keeps it;
+  - **on touchdown from height, even a big one:** Shift in the window = a braking slide
+    that absorbs the fall like a roll (no damage up to `roll.safe_m`, reduced beyond) but
+    **kills the momentum** instead of converting it — you land and stop, right there;
+    versus right click's roll that carries the speed on.
+  So a player screaming toward a cliff edge or a wall has an out: Shift, and they stop.
+  Missing both (no input in the window) is still the heavy squat and full fall damage.
+  Shift still sneaks when slow and fast-falls in the air, as now.
 - **Right click is therefore the whole movement vocabulary:** wall jump / cling / climb /
   swing / bounce in the air or on wood, slide and roll on the ground. One button, one
   hand, timing and context decide.
