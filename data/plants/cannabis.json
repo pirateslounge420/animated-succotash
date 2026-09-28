@@ -39,7 +39,18 @@
      2.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -142,7 +153,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "central_asia"
+    "realm": "central_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Afghani",
@@ -170,7 +221,18 @@
      2.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -273,7 +335,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "central_asia"
+    "realm": "central_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Mazar-i-Sharif",
@@ -301,7 +403,18 @@
      2.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -404,7 +517,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "central_asia"
+    "realm": "central_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Lashkar Gah",
@@ -432,7 +585,18 @@
      2.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -535,7 +699,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "central_asia"
+    "realm": "central_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Chitral",
@@ -563,7 +767,18 @@
      2.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -666,7 +881,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "central_asia"
+    "realm": "central_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Swat Valley",
@@ -694,7 +949,18 @@
      2.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -797,7 +1063,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "central_asia"
+    "realm": "central_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Tirah Valley",
@@ -825,7 +1131,18 @@
      2.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -928,7 +1245,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "central_asia"
+    "realm": "central_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Kashmir",
@@ -956,7 +1313,18 @@
      2.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -1059,7 +1427,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "himalaya"
+    "realm": "himalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Uzbek",
@@ -1087,7 +1495,18 @@
      2.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -1190,7 +1609,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "central_asia"
+    "realm": "central_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Pamir",
@@ -1218,7 +1677,18 @@
      2.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -1321,7 +1791,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "central_asia"
+    "realm": "central_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Manali",
@@ -1349,7 +1859,18 @@
      3.5
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -1452,7 +1973,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "himalaya"
+    "realm": "himalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Parvati (Malana)",
@@ -1480,7 +2041,18 @@
      3.5
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -1583,7 +2155,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "himalaya"
+    "realm": "himalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Nepalese",
@@ -1611,7 +2223,18 @@
      3.5
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -1714,7 +2337,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "himalaya"
+    "realm": "himalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Kerala",
@@ -1742,7 +2405,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -1845,7 +2519,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "indomalaya"
+    "realm": "indomalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Mysore",
@@ -1873,7 +2587,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -1976,7 +2701,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "indomalaya"
+    "realm": "indomalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Manipur",
@@ -2004,7 +2769,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -2107,7 +2883,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "indomalaya"
+    "realm": "indomalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Ceylon",
@@ -2135,7 +2951,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -2238,7 +3065,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "indomalaya"
+    "realm": "indomalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Thai (Isan)",
@@ -2266,7 +3133,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -2369,7 +3247,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "indomalaya"
+    "realm": "indomalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Meao Thai",
@@ -2397,7 +3315,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -2500,7 +3429,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "indomalaya"
+    "realm": "indomalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Luang Prabang",
@@ -2528,7 +3497,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -2631,7 +3611,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "indomalaya"
+    "realm": "indomalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Cambodian",
@@ -2659,7 +3679,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -2762,7 +3793,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "indomalaya"
+    "realm": "indomalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Vietnamese (Vietnam Black)",
@@ -2790,7 +3861,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -2893,7 +3975,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "indomalaya"
+    "realm": "indomalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Burmese",
@@ -2921,7 +4043,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -3024,7 +4157,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "indomalaya"
+    "realm": "indomalaya",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Aceh",
@@ -3052,7 +4225,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -3155,7 +4339,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "malesia"
+    "realm": "malesia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Yunnan",
@@ -3183,7 +4407,18 @@
      3.5
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -3286,7 +4521,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "sino_subtropical"
+    "realm": "sino_subtropical",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Papua New Guinea",
@@ -3314,7 +4589,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -3417,7 +4703,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "australasia"
+    "realm": "australasia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Durban",
@@ -3445,7 +4771,18 @@
      3.5
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -3548,7 +4885,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Transkei (Rooibaard)",
@@ -3576,7 +4953,18 @@
      3.5
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -3679,7 +5067,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Swazi",
@@ -3707,7 +5135,18 @@
      3.5
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -3810,7 +5249,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Malawi",
@@ -3838,7 +5317,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -3941,7 +5431,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Kilimanjaro",
@@ -3969,7 +5499,18 @@
      3.5
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -4072,7 +5613,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Kisumu",
@@ -4100,7 +5681,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -4203,7 +5795,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Ethiopian",
@@ -4231,7 +5863,18 @@
      3.5
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -4334,7 +5977,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Congolese",
@@ -4362,7 +6045,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -4465,7 +6159,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Angolan",
@@ -4493,7 +6227,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -4596,7 +6341,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Nigerian",
@@ -4624,7 +6409,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -4727,7 +6523,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Ghanaian",
@@ -4755,7 +6591,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -4858,7 +6705,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "afrotropic"
+    "realm": "afrotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Zamal",
@@ -4886,7 +6773,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -4989,7 +6887,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "madagascar"
+    "realm": "madagascar",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Rif (Ketama)",
@@ -5017,7 +6955,18 @@
      3.5
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -5120,7 +7069,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "mediterranean"
+    "realm": "mediterranean",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Lebanese (Bekaa)",
@@ -5148,7 +7137,18 @@
      3.5
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -5251,7 +7251,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "west_asia"
+    "realm": "west_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Turkish",
@@ -5279,7 +7319,18 @@
      3.5
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -5382,7 +7433,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "west_asia"
+    "realm": "west_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Iranian (Mashhad)",
@@ -5410,7 +7501,18 @@
      2.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -5513,7 +7615,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "west_asia"
+    "realm": "west_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.2,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      25
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#7a4a8a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Acapulco Gold",
@@ -5541,7 +7683,18 @@
      3.5
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -5644,7 +7797,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "neotropic"
+    "realm": "neotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Oaxacan",
@@ -5672,7 +7865,18 @@
      3.5
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -5775,7 +7979,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "neotropic"
+    "realm": "neotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Michoacán",
@@ -5803,7 +8047,18 @@
      3.5
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -5906,7 +8161,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "neotropic"
+    "realm": "neotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Sinaloan",
@@ -5934,7 +8229,18 @@
      3.5
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -6037,7 +8343,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "neotropic"
+    "realm": "neotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Santa Marta Gold",
@@ -6065,7 +8411,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -6168,7 +8525,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "neotropic"
+    "realm": "neotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Punto Rojo",
@@ -6196,7 +8593,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -6299,7 +8707,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "neotropic"
+    "realm": "neotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Limón Verde",
@@ -6327,7 +8775,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -6430,7 +8889,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "neotropic"
+    "realm": "neotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Panama Red",
@@ -6458,7 +8957,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -6561,7 +9071,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "neotropic"
+    "realm": "neotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Lamb's Bread",
@@ -6589,7 +9139,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -6692,7 +9253,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "neotropic"
+    "realm": "neotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Manga Rosa",
@@ -6720,7 +9321,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -6823,7 +9435,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "neotropic"
+    "realm": "neotropic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Hawaiian (Kona / Puna)",
@@ -6851,7 +9503,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -6954,7 +9617,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "oceania"
+    "realm": "oceania",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Russian ruderalis",
@@ -6982,7 +9685,18 @@
      1.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -7085,7 +9799,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "palearctic"
+    "realm": "palearctic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Altai",
@@ -7113,7 +9867,18 @@
      1.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -7216,7 +9981,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "palearctic"
+    "realm": "palearctic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Chuy Valley",
@@ -7244,7 +10049,18 @@
      1.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -7347,7 +10163,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "central_asia"
+    "realm": "central_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Mongolian",
@@ -7375,7 +10231,18 @@
      1.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -7478,7 +10345,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "palearctic"
+    "realm": "palearctic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Northern Chinese hemp",
@@ -7506,7 +10413,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -7609,7 +10527,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "sino_subtropical"
+    "realm": "sino_subtropical",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Japanese hemp (asa)",
@@ -7637,7 +10595,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -7740,7 +10709,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "east_asia_temperate"
+    "realm": "east_asia_temperate",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Korean hemp (Andong)",
@@ -7768,7 +10777,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -7871,7 +10891,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "east_asia_temperate"
+    "realm": "east_asia_temperate",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Central Russian hemp",
@@ -7899,7 +10959,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -8002,7 +11073,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "palearctic"
+    "realm": "palearctic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Carmagnola",
@@ -8030,7 +11141,18 @@
      4.0
     ],
     "density": 0.25,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -8133,7 +11255,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "mediterranean"
+    "realm": "mediterranean",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Anatolian hemp (Kastamonu)",
@@ -8161,7 +11323,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -8264,7 +11437,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "west_asia"
+    "realm": "west_asia",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
    },
    {
     "name": "Cannabis - Kentucky feral hemp",
@@ -8292,7 +11505,18 @@
      4.0
     ],
     "density": 0.15,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "till",
+      "sand",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
     "needs": [
      "dry_ground"
     ],
@@ -8395,7 +11619,47 @@
     },
     "bark_type": "green_stem",
     "leaf_type": "palmate",
-    "realm": "nearctic"
+    "realm": "nearctic",
+    "leaf": {
+     "type": "compound",
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6.5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.55,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#b8a640",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    }
    }
   ]
  },
