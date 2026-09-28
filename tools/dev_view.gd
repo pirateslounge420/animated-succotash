@@ -20,7 +20,8 @@ extends SceneTree
 ## <TAG>_<hh>h_window.png, the window as it shows on the screen (the
 ## frame upscaled, nearest-neighbour); FULLSCREEN=1 makes the window
 ## fullscreen first; FP=1 looks through your own eyes (first person,
-## the crosshair up) instead of the fixed camera (under xvfb there's no window manager: use
+## the crosshair up) instead of the fixed camera; VISTA=1 looks level
+## from 40 m up toward the longest view (the distance haze) (under xvfb there's no window manager: use
 ## --resolution 1920x1080 --position 0,0 instead). INTEGER=0: the
 ## fractional upscale for this run. Prints the sun's
 ## elevation, the light's elevation and the mean brightness of each frame.
@@ -107,6 +108,20 @@ func _run() -> void:
 		from += player.global_basis.y * (0.3 - (from - pp).dot(player.global_basis.y))
 		cam.fov = 45.0
 		cam.global_transform = Transform3D(Basis.looking_at((pp - from).normalized(), pd), from)
+	# VISTA=1: from 40 m above the same spot, level, toward the lowest
+	# horizon of 12 headings (the longest view): for the distance haze.
+	if OS.get_environment("VISTA") == "1":
+		var hi: Vector3 = world.to_scene(pd, PlanetConst.RADIUS_M + ground + 40.0)
+		var best_h := n
+		var best_e := INF
+		for k in 12:
+			var hh: Vector3 = n.rotated(pd, TAU * k / 12.0)
+			var far_e: float = main.chunks.ground_height((pd + hh * 400.0 / PlanetConst.RADIUS_M).normalized())
+			if far_e < best_e:
+				best_e = far_e
+				best_h = hh
+		cam.fov = 70.0
+		cam.global_transform = Transform3D(Basis.looking_at(best_h, pd), hi)
 	cam.current = true
 	# FP=1: your own eyes instead (first person, the crosshair showing).
 	if OS.get_environment("FP") == "1":

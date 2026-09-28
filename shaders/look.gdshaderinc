@@ -31,6 +31,12 @@ global uniform vec3 look_planet_center;
 global uniform float look_planet_radius;
 const float look_haze_height = 150.0; // 1.5 km times PlanetConst.HEIGHT_SCALE
 global uniform float look_mist; // 0-1 extra ground mist
+// Valley fog (§AG, look.json retro.fog): below the local ground mean
+// (look_ground_m, its height above the planet radius) the air thickens,
+// reaching look_height_density per metre look_height_m below it.
+global uniform float look_ground_m;
+global uniform float look_height_density;
+global uniform float look_height_m;
 global uniform float look_night;
 // Teal and cobalt (sRGB (0.05, 1.0, 0.85) and (0.15, 0.35, 1.0)), linear.
 const vec3 look_glow_color = vec3(0.00394, 1.0, 0.69207);
@@ -67,7 +73,10 @@ vec4 look_fog(vec3 world_pos, vec3 cam_pos) {
 	float hp = length(world_pos - look_planet_center) - look_planet_radius;
 	float k = (hp - hc) / look_haze_height;
 	float thin = exp(-hc / look_haze_height) * (abs(k) < 1e-3 ? 1.0 : (1.0 - exp(-k)) / k);
-	float f = 1.0 - exp(-dist * look_fog_density * min(thin, 1.5) * (1.0 + 2.5 * mist));
+	// Valley fog: how deep the ray's two ends lie below the local ground
+	// mean, averaged, as a share of look_height_m.
+	float below = clamp((look_ground_m - (hc + hp) * 0.5) / max(look_height_m, 1.0), 0.0, 1.0);
+	float f = 1.0 - exp(-dist * (look_fog_density * min(thin, 1.5) * (1.0 + 2.5 * mist) + look_height_density * below));
 	f = min(look_band(f), look_fog_max);
 	return vec4(look_fog_color, f);
 }

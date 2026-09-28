@@ -33,6 +33,9 @@ var dev_spawn: DevSpawn
 var landmarks: Landmarks
 var camps: Camps
 var post: PostGrade
+## The local ground mean (m above the planet radius) for the valley fog.
+var _ground_mean := INF
+var _ground_t := 0.0
 var clouds: CloudLayers
 var camp: Encampment
 var sky_events: SkyEvents
@@ -247,6 +250,17 @@ func _process(delta: float) -> void:
 	camp.update_camp(delta, player.global_position)
 	var fog: float = world.planet.sample(world.planet.fog, d)
 	Look.apply({"look_planet_center": world.planet_center(), "look_planet_radius": PlanetConst.RADIUS_M})
+	# The local ground mean (valley fog pools below it, §AG): 16 points
+	# on a 250 m ring and the spot itself, twice a second, eased.
+	_ground_t -= delta
+	if _ground_t <= 0.0:
+		_ground_t = 0.5
+		var sum := chunks.ground_height(d)
+		for k in 16:
+			sum += chunks.ground_height(CreatureSpawner._offset(d, TAU * k / 16.0, 250.0))
+		var mean := sum / 17.0
+		_ground_mean = mean if _ground_mean == INF else lerpf(_ground_mean, mean, 0.3)
+		Look.apply({"look_ground_m": _ground_mean})
 	var sky_days := Astro.apparent_days(world.days, CubeSphere.longitude(d), CubeSphere.latitude(d))
 	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), sky_days, weather, fog, delta)
 	var cam := player.camera()

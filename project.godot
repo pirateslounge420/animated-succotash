@@ -51,6 +51,18 @@ look_eye={
 "type": "vec3",
 "value": Vector3(0, 0, 0)
 }
+look_ground_m={
+"type": "float",
+"value": 0.0
+}
+look_height_density={
+"type": "float",
+"value": 0.0
+}
+look_height_m={
+"type": "float",
+"value": 60.0
+}
 look_leaf_shadow_m={
 "type": "float",
 "value": 15.0

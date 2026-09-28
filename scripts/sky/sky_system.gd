@@ -118,6 +118,8 @@ static var NIGHT := Tuning.section("look", "night")
 ## Night fog density (per meter) added to the day's haze: about 40% at
 ## 200 m, so the middle distance goes blue and the far distance dissolves.
 const FOG_NIGHT := 0.0017
+## The day haze and valley fog (data/look.json retro.fog, design §AG).
+static var RETRO_FOG := Tuning.section("look", "retro").get("fog", {}) as Dictionary
 
 
 func _ready() -> void:
@@ -327,12 +329,16 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# bright ultramarine, so distance dissolves to blue, never black.
 	var fog_color := horizon.lerp(zenith, 0.5 * warm_band).lerp(NIGHT_FOG, night)
 	fog_color = _scene_color(fog_color).lerp(Color(0.015, 0.03, 0.12), dark_magic * 0.6)
-	var density := 0.0008 + fog_amount * 0.003 + storm * 0.002 + night * FOG_NIGHT
+	# By day the reference's close sky-coloured haze (§AG, retro.fog:
+	# far hills flat blue-purple by ~300-400 m); by night §C's.
+	var density := lerpf(float(RETRO_FOG.get("day_density", 0.0008)), 0.0008, night) + fog_amount * 0.003 + storm * 0.002 + night * FOG_NIGHT
 	var mist := clampf(0.5 * night + fog_amount * 0.6 + storm * 0.3, 0.0, 1.0)
 	environment.fog_light_color = fog_color
 	environment.fog_density = density
 	Look.apply({
 		"look_leaf_shadow_m": float(LIGHT.get("leaf_shadow_m", 1e6)),
+		"look_height_density": float(RETRO_FOG.get("height_density", 0.0)),
+		"look_height_m": float(RETRO_FOG.get("height_m", 60.0)),
 		"look_fog_color": fog_color,
 		"look_fog_density": density,
 		"look_mist": mist,
