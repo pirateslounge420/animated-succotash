@@ -1039,7 +1039,9 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
   5. Creatures: keep `ACTIVE_RADIUS`, but skeletal/rig updates only inside ~60 m,
      posed statics beyond.
   6. Render scale 0.5–0.6 was already the plan (§C) and halves fill cost.
-  Target: a steady 60 fps at 1080p on the designer's machine with the look intact.
+  **Target: a locked 60 fps** — the cap and the floor — at the 480-line internal render
+  (§Y) on the designer's machine, with the look intact. Frame drops are bugs; the tech
+  windows are counted in frames, so a dropped frame is a missed input.
 
 - **Reticle:** the crosshair is too small — make it a bit larger (`hud.json`
   `reticle.size_px`, scaled with the HUD like all text), same quiet style.
