@@ -43,6 +43,9 @@ var player_spot := Vector3.UP
 ## random side). tools/dev_view.gd fixes it so the frame is the same
 ## every time (the folk stand across the fire from the player).
 static var fixed_side := NAN
+## The opening camp's two folk: their cloak families (CloakedFigure.FAMILIES:
+## 0 ochres for the elder, 1 madder reds for the hunter).
+const OPENING_FAMILIES := [0, 1]
 var _fire: Node3D
 var _npcs: Array[Node3D] = []
 var _time := 0.0
@@ -143,13 +146,13 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	player_spot = CreatureSpawner._offset(site, side, PLAYER_M)
 	_mat(player_spot)
 	# The elder and the hunter: cloaked figures on the player's own rig
-	# (CloakedFigure), in their tribe's colors, standing by the fire.
+	# (CloakedFigure), standing by the fire: the elder in ochre yellow, the
+	# hunter in madder red (the designer's pick, every game).
 	var names := ["Elder", "Hunter"]
-	var family := CloakedFigure.tribe_family(hash(site))
 	var prng := RandomNumberGenerator.new()
 	prng.seed = hash([site, "folk"])
 	for i in 2:
-		var pal := CloakedFigure.roll_palette(prng, family)
+		var pal := CloakedFigure.roll_palette(prng, OPENING_FAMILIES[i], true)
 		var height := 1.66 if i == 0 else 1.74
 		# An unscaled holder turns; the scaled body under it breathes.
 		var holder := Node3D.new()

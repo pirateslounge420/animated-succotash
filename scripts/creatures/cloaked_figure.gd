@@ -37,9 +37,10 @@ static func tribe_family(seed_value: int) -> int:
 	return absi(hash([seed_value, "tribe"])) % FAMILIES.size()
 
 
-## One person's [main, trim] (sRGB), mostly from `family`.
-static func roll_palette(rng: RandomNumberGenerator, family: int) -> Array:
-	var fam := family if rng.randf() < 0.8 else rng.randi_range(0, FAMILIES.size() - 1)
+## One person's [main, trim] (sRGB), mostly from `family` (always from it
+## if `strict`).
+static func roll_palette(rng: RandomNumberGenerator, family: int, strict := false) -> Array:
+	var fam := family if strict or rng.randf() < 0.8 else rng.randi_range(0, FAMILIES.size() - 1)
 	var main := _pick(rng, fam)
 	# A contrasting edge: warm on cool, cool on warm.
 	var warm: bool = FAMILIES[fam][0]
