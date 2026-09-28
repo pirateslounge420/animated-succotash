@@ -32,6 +32,10 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **HUD:**
   - The crosshair comes from `hud.json` reticle: arms of `size_px`/2 from `gap_px` out, `thickness_px` wide, in `color` with a dark ink edge. That is larger than before.
   - Plant and tree names (and so E samples) only show within `plant_name.reach_m` (1.2 m) of you, measured along the ground. Animals are still named to 40 m.
+- **Checks:**
+  - tech, super, strike, inventory (with a new name-reach line), daylight and soil pass; hits keeps its known folk-head failure.
+  - play_fixes passes except the intermittent "E with nothing in reach lets go" (Step 8 retires E climbing). Its sprint-slide check is also intermittent: 0.79–1.93 m on runs of the same code, depending on where its open-ground search lands. It failed once here and passed on the re-run.
+- **Not verified here:** the locked 60 fps target (design §W, updated during this step to be at the 480-line render). This container has no real GPU; the designer's F2 readout will tell.
 - **Reference still has:** ragged leaf-card canopies against the sky (Step 7).
 
 ---
