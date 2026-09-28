@@ -2568,3 +2568,4 @@ overriding them.
 - §AC creature guild budgets, body archetypes and population laws — numbers from `docs/design/ECOLOGY_REFERENCE.md` (Damuth K, Hatton predator law, home-range allometry, activity/social/migration fields, thermal numbers).
 - §AD bird migration (region-count drain/fill by season, V-formation and murmuration sky events, nesting) and flocking (`flocking` field).
 - §AE regional pyramid/monument styles by realm × biome (`data/ruins.json`, `Ruins.pyramid_style()`), one parametrised builder.
+- §AF bats: microbat/megabat archetypes, roosts (caves, snags, ruins, tree camps), dusk emergence stream, guano soil object.

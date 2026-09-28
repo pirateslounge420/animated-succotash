@@ -1452,3 +1452,49 @@ the game, only their forms. Reference styles:
 `pyramid_style()` by realm × biome, then the three cheapest new profiles (talud-tablero,
 earth mound, Nubian field) reusing the step builder, then Inca terraces (they double as
 world-gen terrain edits). Phase 9/11.
+
+## AF. Bats — 28 Sept 2026
+
+Bats are ~1 in 5 mammal species on Earth and the ECOLOGY_REFERENCE "small mammals ~60 %
+of the mammal list" already assumes them; they are the **night shift** of the bird guild
+and the one creature that ties Phase 3 caves to the surface. Everywhere except ice sheet,
+sea ice and tundra (they thin out fast north of the taiga).
+
+**Two body archetypes** (§AC):
+- `microbat` — small insect-eaters (wingspan 20–35 cm): the world's default bat. Roost by
+  day in **caves, rock cracks, hollow trees, dead snags (§dead_wood), under ruin
+  vaults**; emerge as a **stream at dusk** from the roost mouth (the player can find a
+  cave by watching where the bats pour out at sunset — free information, like the
+  vultures), hunt over water, meadows and canopy gaps until midnight, a second bout before
+  dawn. Fluttering erratic flight, ultrasonic clicks (a faint tick only, plus a wet
+  "chirr" at the roost). Species by realm: little brown bat / big brown bat (nearctic),
+  pipistrelle / noctule / horseshoe bat (palearctic), free-tailed bat (colonies of
+  thousands to millions in hot-desert and savanna caves, the great evening emergence),
+  vampire bat (neotropic — visits sleeping large herbivores and camp animals at night,
+  §AC prey list), fishing bat (neotropic rivers, trails its feet over water).
+- `megabat` — flying foxes and fruit bats (wingspan 0.8–1.7 m): tropics only
+  (indomalaya, malesia, australasia, afrotropic, madagascar; **none in the neotropic**).
+  Roost in **tree camps** — hundreds hanging in a few big canopy trees, squabbling all
+  day, a loud smelly landmark; fly out at dusk in a slow broad-winged stream to fruiting
+  and flowering trees (they pollinate the baobab and durian; §AA data flag
+  `pollinator: bat` on those plants); no echolocation, big eyes, dog faces.
+
+**Fields** (§AC): `activity: nocturnal`, `social: colony:n` (10–100,000 by species),
+`roost: cave | tree_hollow | tree_camp | cliff | ruin`, `hibernation` in cold bands
+(microbats in caves Oct–Apr in the north, torpor on cold days elsewhere), `migration`
+(a few latitudinal: free-tailed bats and hoary bats move a few hundred km toward the
+equator in autumn; most are resident), `diet: insects | fruit_nectar | blood | fish`,
+`litter: 1`, `mass_kg` 0.005–1.2.
+
+**How it plays:** at dusk over a pond the bats replace the swallows (swallows are the same
+job by day — a nice hand-off to show); a cave mouth or old ruin vault with a bat stream
+at sunset and guano on the floor (a **soil object**, §G2: guano = very fertile, feeds the
+teal fungi at depth from Phase 3); flying foxes make a tropical tree a landmark and a
+fruit-tree indicator; hibernating microbats hang in cave ceilings in winter (do not
+disturb — they don't react, a still ceiling of them); a vampire bat on a sleeping camp
+animal is a night-time thing to shoot. Insects are ambient (§AC), so the hunt is a
+flight pattern, not a simulation. Bats are prey for owls and hawks at the roost mouth.
+
+**Order:** two archetypes + roost field, the dusk emergence stream at caves/snags/ruins
+(one particle-ish flock like §AD's murmuration), then flying-fox camps in the tropics,
+then guano soil object. Phase 7, with §AD.
