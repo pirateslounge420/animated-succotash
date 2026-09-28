@@ -908,3 +908,47 @@ were out there; every time after, it was because you died.
 - **Why:** progression in this game is the player's hands (§S), not an inventory of
   tools. Three tools, one charge rule (§N), one tech button — the whole kit fits on two
   mouse buttons.
+
+## U. Controls, HUD text, loading screen, and two fixes — 28 Sept 2026 (early)
+
+**Controls (locked; keyboard + mouse):**
+| input | does |
+|---|---|
+| W (double-tap and hold = sprint), A S D | move |
+| Space | jump; push off while climbing |
+| Shift | sneak / fast-fall / roll tap on landing |
+| **Left mouse** | **the item in hand:** hold to charge (bow draw, spear raise, pole wind-up), release to act |
+| **Right mouse** | **movement, the tech button:** wall jump / cling / bounce / swing |
+| **Mouse wheel** | **fishing pole: scroll down reels the line in, scroll up lets it out** |
+| **Tab** (I still works) | inventory |
+| **M** | map (exists: biome / height / temperature / rainfall / weather layers on 1–5) |
+| Q | swap bow / spear / pole |
+| E | interact |
+Bound in `scripts/core/controls.gd` (`reel_in` / `reel_out` are wheel buttons). The map
+keeps the no-marker rules: it never shows your corpse or the enemy shinobi (§P, §Q).
+
+**HUD text and scale (locked):** every UI font is an **early-computer / typewriter face** —
+monospaced, slightly uneven, teletype or 8-bit console — never a clean modern sans. Put a
+free TTF at `assets/fonts/typewriter.ttf` (`data/hud.json` `text.font`; fall back to the
+engine monospace if absent). **Text and HUD scale with window height** (`scale =
+height / 720`, clamped 1–3): fullscreen at 1080p is 1.5×, at 4K 3× — the designer found
+the HUD too small in fullscreen. All px sizes in `hud.json` and `combat.json` `feedback`
+are at the 720 reference.
+
+**Loading screen (locked):** while the world generates at startup, show a **pixel-art
+render of the cloaked character running**, in place, on a dark R1a-blue screen with the
+typewriter font for the one line of progress text. Make it from the real rig, not a
+drawing: render the player's run cycle (8 frames, side view, indigo cloak with the rust
+hem) to a tiny viewport (~48–64 px tall) with nearest filtering and no anti-aliasing, then
+draw it upscaled 6–8× so the pixels are honest and square. Loop at the run cadence. Same
+screen on respawn if the wake-up scene (§P) needs a moment to place folk.
+
+**Fixes from play (28 Sept):**
+- **Arrow trail vanishes at the apex.** A full-draw arrow shot straight up loses its streak
+  at the top of the arc, so it can't be seen coming down. Cause: the streak is *time-based*
+  (`arc.trail_s` seconds of flight), and at the apex the arrow is nearly stationary, so the
+  trail collapses to a point. Fix: the trail keeps a **minimum length in metres**
+  (`arc.trail_min_m`, added) and persists for the **whole flight** until the arrow sticks.
+- **Fletching takes the shooter's cloak colour** (`arrow.fletching_from_cloak`, added):
+  the player's arrows carry indigo feathers, a folk's carry their own dye, the master
+  shinobi's their palette — so a stuck arrow tells you whose it was.

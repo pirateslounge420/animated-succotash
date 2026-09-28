@@ -43,9 +43,10 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | Right mouse button | The tech button, in the air; what you touch decides. On a wall, cliff, trunk or ruin: tap it within 14 frames (about a quarter second) of touching it to wall jump (chained ones keep building speed), or hold it to cling; letting go of a cling (or Space) still springs you off, a little softer than a perfect tap, and Shift drops you off instead. Near a branch, bamboo or vine: hold it to catch and swing, let go to fly on (green bamboo springs you out; dead, grey wood snaps) |
 | Mouse | Look around (straight up and down too) |
 | Left mouse button | Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw. Works in the air too. No aim arc: you learn the drop by eye; a bright streak follows the arrow or spear once it flies |
-| Q | Swap between bow and spear |
+| Q | Swap between bow, spear and fishing pole |
 | E | Interact, whatever you're doing (climbing, swimming, crouched): take a sample of the plant you're looking at, pick up your spear, an arrow or something you set down, grab a tree to climb it (E again lets go), turn over a fallen log, take your things back from your body after dying |
-| I | Inventory: what you carry and wear. The world doesn't stop. Click a line to choose it; G sets a carried thing down, E wears a spare. I or Esc closes it |
+| Tab (or I) | Inventory: what you carry and wear. The world doesn't stop. Click a line to choose it; G sets a carried thing down, E wears a spare. Tab or Esc closes it |
+| Mouse wheel | Fishing pole in hand: scroll down to reel the line in, scroll up to let it out |
 | V or F5 | Switch between first and third person |
 | M | Map. While it's open, 1 = biomes, 2 = height, 3 = temperature, 4 = rainfall, 5 = live weather |
 | H | Hide or show the on-screen text |

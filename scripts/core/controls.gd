@@ -14,8 +14,9 @@ const DEFAULTS := {
 	"sprint": [],
 	"interact": [KEY_E],
 	# The inventory screen (what you carry and wear); G sets the chosen
-	# carried thing down while it's open.
-	"inventory": [KEY_I],
+	# carried thing down while it's open. Tab by the designer's call
+	# (2026-09-28); I stays as a second key.
+	"inventory": [KEY_TAB, KEY_I],
 	"inventory_drop": [KEY_G],
 	"toggle_map": [KEY_M],
 	"toggle_hud": [KEY_H],
@@ -31,8 +32,13 @@ const DEFAULTS := {
 	# Wall jump: in the air, by a wall, cliff, trunk or ruin (the right
 	# mouse button; see MOUSE_BUTTONS).
 	"wall_jump": [],
-	# Swap between the bow and the spear.
+	# Swap between the bow, the spear and the fishing pole.
 	"weapon_swap": [KEY_Q],
+	# The fishing pole (design §N): the line is reeled in with the mouse
+	# wheel (scroll down toward you) and let out with scroll up; see
+	# MOUSE_BUTTONS. Godot reports the wheel as button presses.
+	"reel_in": [],
+	"reel_out": [],
 	# Dev mode only (data/dev.json): F4 shows collision shapes, F6 the
 	# trees' branch graphs, F7 spawns the next Phase 1 rig beside you (Night
 	# Riders, Pond Crawler, monkey), F8 makes the nearest wolf pack howl.
@@ -48,6 +54,8 @@ const DEFAULTS := {
 const MOUSE_BUTTONS := {
 	"shoot": MOUSE_BUTTON_LEFT,
 	"wall_jump": MOUSE_BUTTON_RIGHT,
+	"reel_in": MOUSE_BUTTON_WHEEL_DOWN,
+	"reel_out": MOUSE_BUTTON_WHEEL_UP,
 }
 
 ## Gamepad: left stick moves, A jumps, X interacts, B crouches, Y swaps
