@@ -952,3 +952,36 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
 - **Fletching takes the shooter's cloak colour** (`arrow.fletching_from_cloak`, added):
   the player's arrows carry indigo feathers, a folk's carry their own dye, the master
   shinobi's their palette — so a stuck arrow tells you whose it was.
+
+## V. Camp folk catch your arrows; movement fixes from play — 28 Sept 2026
+
+- **Aim at the folk who found you and they catch it.** Any arrow or spear aimed at the
+  tribal shinobi around the wake-up fire (§P) is **perfectly caught** — plucked out of the
+  air in the cloaked rig's own catch animation — and **handed back** with a line ("Watch
+  where you're aiming that."). No damage, no anger, no loss of the arrow. It shows their
+  skill (they are the ones who always reach you first), keeps the safe zone safe, and
+  teaches the catch as a thing cloaked figures can do. Applies to the wake-up camp's folk;
+  other camps' folk get the ordinary hit rules. Chatter variants live with the camp FOLK
+  lines. (Whether master shinobi (§O) can catch too: yes, at a high but not perfect rate —
+  their tell for a super shot.)
+
+- **Diagonal movement.** Movement was straight up/down/left/right only; **W+A must move
+  diagonally forward-left** (and every other combination), with **subtle directional
+  influence** — held direction keys blend, not snap. Standard 8-way blend from the four
+  keys, normalised so diagonals are no faster.
+
+- **Trees have a top, and you can reach it.** Bug: climbing a big tree stopped short of the
+  top. Every climbable tree's `BranchGraph` must run to a **crown handhold** at the top of
+  the trunk (or the highest limb fork), and climbing must reach it.
+- **Perch.** At the top of a tree (or a pole, a snag, a ruin column) the player can
+  **perch** — crouch-sit on the tip, cloak hanging, the Itachi-on-the-pole silhouette —
+  by pressing crouch at the crown handhold. Perching is a rest state: hang there as long
+  as you like, look around (head-look §B reads from outside), aim and shoot from it,
+  jump off into a bound. Same rig pose for folk and master shinobi, who use perches to
+  watch (the "pausing on a distant branch to look back" of §Q is a perch).
+- **Climbing is on the tech button, not E.** To climb: **hold right click against the
+  trunk (a cling) and move** — the movement keys walk you up, down and around the trunk
+  and out along limbs while the cling is held; let go to drop or kick off. E is no longer
+  needed to start or stop climbing (E stays for interact: samples, pickups, corpse, logs).
+  A cling on a *climbable* trunk does not drain (`cling_hold_s` applies to bare walls and
+  cliffs only); it is the climb. Update `movement.climb` help and `HOW_TO_RUN.md`.

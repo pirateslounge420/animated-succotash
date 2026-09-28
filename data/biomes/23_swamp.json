@@ -37,7 +37,16 @@
      40
     ],
     "density": 1.0,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -66,7 +75,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "fibrous",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "distichous",
+     "size_cm": [
+      1.0,
+      1.8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.45,
+     "layering": "tiered",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.15,
+     "autumn": "#b5572a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    }
    },
    {
     "name": "Black willow",
@@ -86,7 +126,16 @@
      20
     ],
     "density": 0.5,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "sand"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [
      "river_bank"
     ],
@@ -111,7 +160,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 6.0,
+     "base": "cuneate",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      7,
+      13
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#c9b840",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    }
    },
    {
     "name": "Cabbage palm",
@@ -131,7 +216,17 @@
      20
     ],
     "density": 0.4,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "sand",
+      "alluvium",
+      "karst"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "tolerant"
+    },
     "color": "#4E9A3C",
     "accent": "#8A7A60",
     "source": "Sabal palmetto, cabbage palmetto, fan palm of Florida/Gulf coast swamp hammocks, 10-20 m — Wikipedia",
@@ -153,7 +248,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      100,
+      200
+     ],
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       40,
+       80
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 25.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Moriche palm",
@@ -178,7 +309,16 @@
      35.0
     ],
     "density": 0.6,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -271,7 +411,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      200,
+      300
+     ],
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       100,
+       200
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 30.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Pond cypress",
@@ -291,7 +467,16 @@
      25
     ],
     "density": 0.5,
-    "soil": "peat",
+    "soil": {
+     "classes": [
+      "clay_peat",
+      "sand"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -320,7 +505,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "fibrous",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.3,
+      1.0
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.05,
+     "autumn": "#b0602a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    }
    },
    {
     "name": "Water elm",
@@ -340,7 +556,16 @@
      15
     ],
     "density": 0.4,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "neutral",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "color": "#4E9A3C",
     "accent": "#6A5A48",
     "source": "Planera aquatica, water elm/planertree, small tree of SE US swamp margins, 8-15 m — Wikipedia / USDA",
@@ -362,7 +587,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.0,
+     "base": "oblique",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      4,
+      7
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#c8b048",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    }
    },
    {
     "name": "Water tupelo",
@@ -382,7 +643,16 @@
      30
     ],
     "density": 0.8,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -411,7 +681,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.0,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      10,
+      20
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.3,
+     "autumn": "#c89030",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    }
    }
   ],
   "shrub": [
@@ -438,7 +744,17 @@
      2.5
     ],
     "density": 0.5,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3E9A3E",
     "accent": "#8A6A40",
@@ -520,7 +836,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "leaf": {
+     "type": "simple",
+     "outline": "peltate",
+     "aspect": 1.3,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      50,
+      100
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Australian finger lime",
@@ -545,7 +893,17 @@
      6.0
     ],
     "density": 0.3,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3E7A44",
     "accent": "#A0C060",
@@ -628,7 +986,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.0,
+     "base": "cuneate",
+     "apex": "emarginate",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1.5,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Buttonbush",
@@ -648,7 +1038,16 @@
      4
     ],
     "density": 0.8,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -677,7 +1076,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.2,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      7,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#b8a848",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    }
    },
    {
     "name": "Giant cane",
@@ -697,7 +1132,15 @@
      8
     ],
     "density": 0.4,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "color": "#7AB840",
     "accent": "#B0A040",
     "source": "Arundinaria gigantea, giant river cane, native bamboo canebrakes on SE US floodplain and swamp edges, 2-8 m — Wikipedia",
@@ -719,7 +1162,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "bamboo",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 9.0,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Giant taro",
@@ -744,7 +1219,17 @@
      4.0
     ],
     "density": 0.7,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat",
+      "basalt"
+     ],
+     "drainage": "poor",
+     "ph": "neutral",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [
      "river_bank"
     ],
@@ -828,7 +1313,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "leaf": {
+     "type": "simple",
+     "outline": "sagittate",
+     "aspect": 1.5,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      60,
+      150
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 1.0,
+     "val": 0.95,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Saw palmetto",
@@ -848,7 +1365,17 @@
      3
     ],
     "density": 0.4,
-    "soil": "sand",
+    "soil": {
+     "classes": [
+      "sand",
+      "sandstone",
+      "alluvium"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "tolerant"
+    },
     "color": "#5A9A60",
     "accent": "#9A8A60",
     "source": "Serenoa repens, saw palmetto, clumping fan palm of Florida/Gulf coastal swamp hammock edges, 1-3 m — Wikipedia",
@@ -870,7 +1397,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      50,
+      100
+     ],
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       18,
+       30
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 15.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Tree philodendron",
@@ -895,7 +1458,17 @@
      4.0
     ],
     "density": 0.5,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3E8A3E",
     "accent": "#7A6A50",
@@ -977,7 +1550,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "aspect": 1.2,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      60,
+      150
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "lobes": 15
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Virginia willow",
@@ -997,7 +1603,16 @@
      3
     ],
     "density": 0.5,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "color": "#4E9A3C",
     "accent": "#F0F0E0",
     "source": "Itea virginica, Virginia sweetspire, swamp understory shrub of SE USA, 1-3 m — Wikipedia / USDA",
@@ -1019,7 +1634,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.5,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      4,
+      10
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#b03028",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    }
    },
    {
     "name": "Wax myrtle",
@@ -1039,7 +1690,17 @@
      6
     ],
     "density": 0.5,
-    "soil": "peat",
+    "soil": {
+     "classes": [
+      "clay_peat",
+      "sand",
+      "alluvium"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "tolerant"
+    },
     "color": "#5A9A50",
     "accent": "#7A8A60",
     "source": "Morella cerifera, southern wax myrtle, evergreen shrub of SE US swamp margins, 2-6 m — Wikipedia",
@@ -1061,7 +1722,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 4.0,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.8,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Wild banana",
@@ -1086,7 +1779,17 @@
      7.0
     ],
     "density": 0.8,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [
      "river_bank"
     ],
@@ -1170,7 +1873,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "oblong",
+     "aspect": 3.5,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      150,
+      300
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ],
   "ground": [
@@ -1197,7 +1932,16 @@
      6.0
     ],
     "density": 0.8,
-    "soil": "peat",
+    "soil": {
+     "classes": [
+      "clay_peat",
+      "sand"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#6AA050",
     "accent": "#C03040",
@@ -1284,7 +2028,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 4.0,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "ciliate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.85,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Cypress knees",
@@ -1304,7 +2080,16 @@
      1.5
     ],
     "density": 0.8,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -1333,7 +2118,28 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "fibrous",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.9,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.5,
+     "val": 0.7,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Duckweed",
@@ -1353,7 +2159,16 @@
      0.01
     ],
     "density": 0.9,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -1382,7 +2197,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "orbicular",
+     "aspect": 1.3,
+     "base": "rounded",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      0.2,
+      0.5
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 1.0,
+     "val": 1.1,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Lizard's tail",
@@ -1402,7 +2249,16 @@
      1
     ],
     "density": 0.6,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -1431,7 +2287,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "cordate",
+     "aspect": 1.6,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Pickerelweed",
@@ -1451,7 +2339,16 @@
      1.2
     ],
     "density": 0.5,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -1480,7 +2377,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "cordate",
+     "aspect": 1.8,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "arcuate",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      25
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Royal fern",
@@ -1500,7 +2429,16 @@
      1.5
     ],
     "density": 0.6,
-    "soil": "peat",
+    "soil": {
+     "classes": [
+      "clay_peat",
+      "alluvium"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "color": "#4E9A3C",
     "accent": "#7A5A38",
     "source": "Osmunda spectabilis (regalis), American royal fern, swamp and bog fern of E North America, 0.6-1.5 m — Wikipedia",
@@ -1522,7 +2460,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "dichotomous",
+     "arrangement": "basal",
+     "size_cm": [
+      60,
+      150
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       60,
+       160
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 3.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.2,
+     "autumn": "#c8a040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Slender pitcher",
@@ -1547,7 +2523,17 @@
      5.0
     ],
     "density": 0.7,
-    "soil": "peat",
+    "soil": {
+     "classes": [
+      "clay_peat",
+      "sand",
+      "sandstone"
+     ],
+     "drainage": "poor",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#6AA050",
     "accent": "#C03040",
@@ -1634,7 +2620,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 6.0,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Taro",
@@ -1659,7 +2677,16 @@
      2.0
     ],
     "density": 0.9,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -1750,7 +2777,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "leaf": {
+     "type": "simple",
+     "outline": "peltate",
+     "aspect": 1.3,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      80
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Water hyacinth",
@@ -1770,7 +2829,16 @@
      0.6
     ],
     "density": 0.4,
-    "soil": "wet",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.25,
+     "salinity": "none"
+    },
     "needs": [
      "standing_water"
     ],
@@ -1799,7 +2867,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "orbicular",
+     "aspect": 1.0,
+     "base": "rounded",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "arcuate",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Zebra alocasia",
@@ -1824,7 +2924,17 @@
      1.5
     ],
     "density": 0.4,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3E9A3E",
     "accent": "#8A6A40",
@@ -1906,7 +3016,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "leaf": {
+     "type": "simple",
+     "outline": "sagittate",
+     "aspect": 1.8,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      80
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ],
   "epiphyte": [
@@ -1928,7 +3070,17 @@
      0.4
     ],
     "density": 0.2,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat",
+      "karst"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "color": "#5AB040",
     "accent": "#B08A40",
     "source": "Encyclia tampensis, Florida butterfly orchid, epiphyte on cypress and pop ash in Florida swamps — Wikipedia",
@@ -1950,7 +3102,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 12.0,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      40
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Ghost orchid",
@@ -1975,7 +3159,17 @@
      0.3
     ],
     "density": 0.1,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat",
+      "karst"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#4A8A4A",
     "accent": "#F8F4F0",
@@ -2059,7 +3253,28 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.7,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.6,
+     "val": 0.9,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Golden pothos",
@@ -2084,7 +3299,17 @@
      20.0
     ],
     "density": 0.6,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "any",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3E8A3E",
     "accent": "#7A6A50",
@@ -2166,7 +3391,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "aspect": 1.4,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      30,
+      90
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "lobes": 7
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Guzmania",
@@ -2191,7 +3449,18 @@
      0.5
     ],
     "density": 0.6,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "granite",
+      "basalt",
+      "sandstone"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#4A8A4A",
     "accent": "#E04060",
@@ -2275,7 +3544,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 9.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      30,
+      45
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Monstera",
@@ -2300,7 +3601,17 @@
      20.0
     ],
     "density": 0.6,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3E8A3E",
     "accent": "#7A6A50",
@@ -2382,7 +3693,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "aspect": 1.2,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      25,
+      90
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "lobes": 11
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Moth orchid",
@@ -2407,7 +3751,18 @@
      0.5
     ],
     "density": 0.4,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "granite",
+      "sandstone",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#4A8A4A",
     "accent": "#F8F4F0",
@@ -2491,7 +3846,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.5,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      15,
+      30
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Philodendron",
@@ -2516,7 +3903,17 @@
      15.0
     ],
     "density": 0.8,
-    "soil": "rich",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.5,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#3E8A3E",
     "accent": "#7A6A50",
@@ -2598,7 +3995,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "aroid"
+    "leaf_type": "aroid",
+    "leaf": {
+     "type": "simple",
+     "outline": "cordate",
+     "aspect": 1.3,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Resurrection fern",
@@ -2618,7 +4047,17 @@
      0.3
     ],
     "density": 0.5,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat",
+      "sand"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "tolerant"
+    },
     "color": "#5AA040",
     "accent": "#7A6A50",
     "source": "Pleopeltis polypodioides, resurrection fern, epiphytic on live oak and cypress limbs SE USA — Wikipedia",
@@ -2640,7 +4079,43 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "dichotomous",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      25
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       12,
+       40
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 3.5,
+      "leaflet_margin": "entire"
+     },
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Spanish moss",
@@ -2660,7 +4135,18 @@
      4
     ],
     "density": 1.0,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "clay_peat",
+      "sand",
+      "karst"
+     ],
+     "drainage": "poor",
+     "ph": "any",
+     "fertility_min": 0.1,
+     "salinity": "tolerant"
+    },
     "color": "#9AB890",
     "accent": "#B0B0A0",
     "source": "Tillandsia usneoides, Spanish moss, grey festoons on cypress and oak in SE US swamps — Wikipedia / USDA",
@@ -2682,7 +4168,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "succulent"
+    "leaf_type": "succulent",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 30.0,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 1.0
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.4,
+     "val": 1.1,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Tank bromeliad",
@@ -2707,7 +4225,18 @@
      0.6
     ],
     "density": 0.6,
-    "soil": "thin",
+    "soil": {
+     "classes": [
+      "alluvium",
+      "granite",
+      "basalt",
+      "sandstone"
+     ],
+     "drainage": "moderate",
+     "ph": "acid",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
     "needs": [],
     "color": "#7A9A8A",
     "accent": "#E04060",
@@ -2791,7 +4320,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 8.0,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      30,
+      60
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.5,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ]
  },
