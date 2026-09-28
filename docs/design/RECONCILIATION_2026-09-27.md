@@ -1101,8 +1101,11 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
 
 ## Z. Sprint slide, and the cloak flurry — 28 Sept 2026
 
-- **Sprint slide.** Crouch (Shift) while sprinting on the ground → the player drops
-  into a **slide**: low, fast, cloak streaming, the Black Ops "dolphin dive" feel without
+- **Sprint slide — on the tech button.** Press **right click** while sprinting on the
+  ground → the player drops into a **slide**. (Not Shift: the designer's rule is that
+  ALL movement lives on the right mouse button so a player never needs both hands for
+  movement — left is the item, right is the body.) Hold it to keep sliding; release to
+  stand. The rest: low, fast, cloak streaming, the Black Ops "dolphin dive" feel without
   the belly-flop. Rules (`movement.json` `slide`):
   - starts only above `min_mps` (a sprint), keeps `carry` of your speed and decays by
     `friction_mps2` (less on wet, sand and snow via `traction`, so a slide down a wet
@@ -1117,9 +1120,13 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
   - a slide into a trunk or wall at speed without a tech is impact damage (§K).
   - Animation: the reused crouch pose leaned back on one hip, cloak fanned out behind;
     first-person camera drops but never tilts.
-- **The ninja roll stands as built** (§J roll block): tap crouch in the window on touchdown
-  from height → no fall damage up to `safe_m`, reduced beyond, and the fall becomes forward
-  speed. (The designer re-stated it; nothing changes.)
+- **The ninja roll moves to the tech button too.** Tap **right click** in the window on
+  touchdown from height → the roll (no fall damage up to `safe_m`, reduced beyond, fall
+  becomes forward speed; §J). Shift-tap stays as an alternate for now. So the tech button
+  on the ground reads: sprinting → slide; landing → roll; standing → nothing.
+- **Right click is therefore the whole movement vocabulary:** wall jump / cling / climb /
+  swing / bounce in the air or on wood, slide and roll on the ground. One button, one
+  hand, timing and context decide.
 - **Cloak flurry.** Every roll — and every slide start, wall-jump kick and swing release —
   plays a **"cloak flurry"** sound: a short whip-and-rustle of heavy cloth, synthesized in
   `sound_synth` like the rest (no samples), pitched by speed (faster = sharper snap), heard
