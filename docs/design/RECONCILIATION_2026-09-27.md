@@ -208,6 +208,13 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     cloaked folk** — keep the behaviour and the lanterns, drop the goblin body and
     the word. Rename in `creatures.json` and `camps.gd` (`"goblin"` folk →
     `"small_folk"` or a proper tribe name).
+  - **Guiding principle — the Falcon/Ganondorf rule.** In Melee, Captain Falcon
+    and Ganondorf share one moveset and skeleton; what differs is scale, weight,
+    speed and colour, and nobody confuses them. Do the same here: **one rig, one
+    animation set** (walk, run, sit, climb, tech, cook, idle) for every cloaked
+    figure. Species = scale + timing + palette. Big folk play the same animations
+    slower and heavier (longer stride, more settle on landing); small folk play
+    them quicker and lighter. **Never build a per-species animation set.**
   - **Scale is the species.** Cloaked figures at roughly: small folk ~1.0 m,
     tribal / marsh / north folk ~1.7 m, and the large ones (`Forest troll` 3.2 m,
     `Mountain yeti` 2.6 m) as **big cloaked figures** with the same rig scaled up
