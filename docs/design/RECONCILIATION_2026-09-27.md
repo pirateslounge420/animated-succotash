@@ -612,8 +612,12 @@ Both **on by default**, each **toggleable in the settings menu**, both small and
   rest of your gear (corpse rule above). The walk back is the penalty; the fire is safe.
   (Designer's call to confirm: if this feels too harsh early, the fallback is that the
   folk who found you leave a spear by the fire — one item, not the kit.)
-- Arrows are consumed and recoverable (an arrow that misses sticks in the ground or a
-  trunk and can be picked up; one that hits a creature has a chance to break).
+- **Arrows stick in whatever they hit** — ground, trunk, ruin, or the **body part of a
+  creature or figure**, riding along with it as it moves (already built: `arrow.gd`
+  parents the arrow to the hit collision shape; take it back with E within `pick_m`).
+  Keep this; it is the visual record of a fight. Arrows are recoverable from anything
+  they stuck in, including a dead creature; an arrow that hits a creature has a small
+  chance to break (`break_chance` in `combat.json`, tune later).
 
 ## N. Hold left click to charge — one rule for all three tools — LOCKED
 
