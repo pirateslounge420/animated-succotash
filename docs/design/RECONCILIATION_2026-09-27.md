@@ -488,6 +488,25 @@ Keep all of it. Changes:
   shifts local solar time — no ecological effect on its own.
 - These feed the tuber-maturity gate (E), the soil layer (Phase 5) and seasons (Phase 4).
 
+## G2. Soil is a first-class spawn check — LOCKED
+
+- Every plant placement checks **temperature × rainfall/moisture × soil type** as three
+  co-equal gates before anything else (then altitude, water proximity, light, photoperiod).
+  Soil is **not** a soft multiplier: a species outside its soil set does not spawn.
+- The terrain build must **mark soil type explicitly** per point, differentiated and
+  readable by plant checks and by the ecology. `geology_pass.gd` already assigns
+  rock/soil (basalt, sand, alluvium, clay/peat, till, karst, sandstone, granite); keep
+  that and add the Phase 5 layer on top: **depth**, **fertility/organic content**,
+  **drainage**, **pH class** (acid / neutral / alkaline — bogs vs karst limestone), and
+  **salinity** (coasts, salt flats). Fertility is fed by `flora.litter`, dead wood decay
+  (dead-wood section above) and animal waste; it is what the Amorphophallus tuber gate reads.
+- Plant data: `soil` stays, but it becomes a **set of allowed soil classes** plus optional
+  preferences (e.g. cypress: clay/peat + alluvium, waterlogged; pine: sand/till, acid,
+  well-drained; Trichocereus: rocky/till, alkaline, sharp drainage). The data-fill agents
+  add `soil` in this form using the same allowed-value rule as the leaf vocabulary.
+- Why: without a real soil gate the same forest appears on every substrate and the
+  food web has nothing to stand on. Ecosystems function because soil differs.
+
 ## H. Housekeeping
 
 - Pronunciations of *hewittii* and *paeoniifolius*: the designer corrected the assistant

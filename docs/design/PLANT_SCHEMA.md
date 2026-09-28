@@ -188,6 +188,19 @@ trunk/structure and `canopy` decides the foliage.
 
 ---
 
+## 4b. `soil` (spawn gate — co-equal with temperature and moisture)
+
+```json
+"soil": { "classes": ["alluvium", "clay_peat"], "drainage": "poor", "ph": "acid",
+          "fertility_min": 0.4, "salinity": "none" }
+```
+- `classes`: allowed substrates from the terrain's soil map — `basalt`, `sand`, `alluvium`,
+  `clay_peat`, `till`, `karst`, `sandstone`, `granite` (extend only when the geology pass
+  does). A species outside its classes **does not spawn**.
+- `drainage`: `poor` (waterlogged ok) · `moderate` · `sharp` (must drain).
+- `ph`: `acid` · `neutral` · `alkaline` · `any`.
+- `fertility_min`: 0–1, minimum organic content; `salinity`: `none` · `tolerant` · `needs`.
+
 ## 5. LOD contract (for the card builder)
 
 | range | what is drawn |
