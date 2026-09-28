@@ -614,3 +614,24 @@ Both **on by default**, each **toggleable in the settings menu**, both small and
   folk who found you leave a spear by the fire — one item, not the kit.)
 - Arrows are consumed and recoverable (an arrow that misses sticks in the ground or a
   trunk and can be picked up; one that hits a creature has a chance to break).
+
+## N. Hold left click to charge — one rule for all three tools — LOCKED
+
+Left click is the **charge** button, the way right click is the **tech** button: hold to
+build power, release to act. Power sets both **strength and trajectory**.
+- **Bow:** already built (`bow.gd`): hold to draw, Minecraft-style power curve over
+  `draw_s`, release to loose; a longer draw is a faster, flatter, harder arrow. Keep.
+- **Spear:** already built (`spear.gd`): tap = thrust, hold = raise; longer raise = faster,
+  flatter, harder throw. Keep. (Momentum from §K stacks on top via `inherit_velocity`.)
+- **Fishing pole — new:** hold to wind up, release to **cast**; charge sets **cast
+  distance** (and arc): a tap drops the line at your feet, a full charge reaches
+  `cast_max_m` (~25–30 m). Aim with the look direction. The line lands on water or not;
+  reel in with the same button held (or a second input, tune by feel). Fishing itself
+  (bites, fish species by water temperature, catch) is Phase 10; the cast is Phase 1 so
+  the pole is usable from the first play.
+- Shared rules: walking slows while charging (bow already does this); a charge is
+  cancelled by any tech input (right click), so movement always wins the conflict; the
+  charge bar, if any, is the same tiny arc for all three so the player learns one gauge.
+- Add to `data/combat.json`: a `fishing` block — `wind_s`, `cast_min_m`, `cast_max_m`,
+  `line_max_m`, `reel_mps`, `inherit_velocity` (so casting mid-bound throws the line
+  further, same as arrows).
