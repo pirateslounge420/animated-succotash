@@ -743,3 +743,31 @@ were out there; every time after, it was because you died.
   enemy camp at a fixed bearing and distance, seeded, so the direction the shinobi flee is
   always true. Enemy camps are rare, terrain-placed (ridges, dead forest, drowned ground),
   and the same one serves several villages.
+
+## R. Airborne: momentum is committed, the body is free — LOCKED
+
+- **No air steering.** Once you leave a surface, your velocity vector is fixed until you
+  touch something. Direction changes **only on contact** — a wall, a branch, the ground,
+  a vine — exactly like a real body. Set `air.air_steer_mps` to 0 (it is 2.5 now) and
+  `air_accel_mps2` to 0; gravity (§J asymmetric) is the only force in flight. A jump is a
+  decision.
+- **The body rotates freely in the air.** Look direction turns the whole figure, so you
+  can **turn 180° mid-jump** and travel backwards — it reads as a **moonwalk** through
+  the air, cloak trailing the wrong way — then turn back for the landing. Facing never
+  alters velocity.
+- **Aim is free in flight too.** Because the body turns and the item hand is independent
+  (§N), you can fly forward, spin, loose an arrow or throw a spear **backwards** at a
+  pursuer, spin back, and land. That is the intended expression of the momentum + charge
+  rules together.
+- **Landing techs read the body, not the velocity.** The roll / bounce / wall jump all
+  still fire on the same tech window regardless of facing, but the **animation follows
+  facing**: facing along your travel → forward roll (the clean, "sexy" landing); facing
+  against it → a back-roll that works but looks rougher; sideways → a shoulder roll.
+  Same momentum result either way — the difference is style, and it is visible to
+  anyone watching, which is the point.
+- **Third person and other figures:** the free rotation is how a spinning shinobi in the
+  canopy reads from outside. First person stays locked to the look direction as before.
+- **Newbies:** none of this needs to be understood on day one. A player who never turns
+  in the air still gets clean jumps; the freedom is there to discover. Most won't chase
+  the shinobi at the opening, and that is fine — the opening only has to *show* the
+  ceiling, not ask for it.
