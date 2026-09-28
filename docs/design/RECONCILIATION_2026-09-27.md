@@ -1047,3 +1047,29 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
 - **Plant names only when close.** The genus/species readout for the plant you're looking
   at appears only within **about 1 m** (`hud.json` `plant_name.reach_m`), not from far
   away; beyond that the reticle shows nothing. Reading a plant means walking up to it.
+
+## X. Carcasses: vultures first, then the decomposers — 28 Sept 2026
+
+- **Every dead creature is a carcass** (the spawner already tracks corpses; the player's
+  own body already draws circling scavenger birds — generalise that to all carcasses).
+- **Vultures come first.** Within a few minutes of a death in open or half-open country,
+  **vultures** (Old World in Africa/Eurasia biomes, New World turkey/black vultures and
+  condors in the Americas, added to the creature data as `role: scavenger`) appear high
+  up and **circle over the carcass** — the same slow spiral that marks your own corpse
+  (§P) — then **make their way down** in stages: a wide circle, a lower circle, a landing
+  a few metres off, a hop in, and they **feed**, heads down, squabbling. They flush and
+  re-circle if the player or a predator comes close, and come back when it's quiet.
+  Forest carcasses draw crows/ravens instead; water carcasses draw gulls or herons.
+- **Then the decomposers finish it.** After the birds, the carcass passes through the
+  same visible decay states as dead wood (fresh → picked → bones → gone), feeding
+  insects (blowflies, beetles) and finally the soil ledger (`flora.litter`-style
+  fertility, Phase 6). Bones may persist a while as landscape (a skull by a waterhole).
+- **It's readable and useful:** circling vultures tell you from far off that something
+  died there — a kill you can steal from, a predator that may still be near (§P risk),
+  or your own body. Flies and smell on the wind (pheromone field, §0) do the same up
+  close. Camp folk will note "vultures over the ridge."
+- **Food web:** this is the scavenger rung of the blueprint's food web made physical
+  (producers → herbivores → carnivores → **scavengers** → decomposers), Phase 7/8. For
+  now: vultures as a creature with a `carcass` behaviour, a decay-state timer per corpse,
+  and the circling reused from the death block (`combat.json death` scavenger fields
+  become the generic carcass values).
