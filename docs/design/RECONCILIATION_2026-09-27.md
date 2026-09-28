@@ -440,6 +440,30 @@ Summary of the decision:
   fixed vocabulary. The card builder and atlas are built against the schema separately.
   Merging is trivial because the field names never vary.
 
+### D2. No more bushes — the canopy IS the leaf cards (locked 28 Sept)
+
+- **Remove the blob.** No tree, shrub or herb draws its foliage as a smooth sphere,
+  ellipsoid or "bush" mesh any more, at any LOD. The placeholder crown in `plant_meshes`
+  is retired, not restyled.
+- **The canopy is built from the species' own leaf card**, generated from its `leaf`
+  block (outline, aspect, margin, venation, arrangement, texture, tint), placed along
+  the tree's limbs by `arrangement` and shaped by `canopy` (form, gap, layering, droop).
+  A bald cypress is feathery flat needle sprays; a live oak is dense small glossy ovals;
+  an acacia is a flat spreading lace of tiny bipinnate leaflets; a bur oak is big lobed
+  leaves in clumps; a palm is a crown of pinnate fronds. **Different species look
+  different because their leaves do**, exactly as in the real forest.
+- **Far LOD is fewer, larger cards with the same ragged outline**, then an impostor baked
+  from those cards — never a solid shape (PLANT_SCHEMA §5).
+- **Build order (PLANT_SCHEMA §0):** structure first, textures layered over it.
+- **Data:** 135 species already carry the blocks (cypress, pine, acacia, trichocereus,
+  rainforest, swamp, tallgrass prairie files); the rest are being filled by parallel
+  agents against the same schema; `tools/plant_schema_check.py --strict` is the gate.
+  Species without a `leaf` block yet fall back to a **generic ragged card cluster**
+  (ovate, entire, gap 0.35) — still never a blob.
+- **This is now unblocked for Claude Code** (the "let the schema sit a day" hold is
+  lifted): build the card generator + atlas + placement against the filled files, using
+  bald cypress, live oak, acacia and a palm as the four proving species.
+
 ## E. Amorphophallus — the petiole is the plant
 
 `data/plants/amorphophallus.json` already holds 246 species with a **genus grammar** for
