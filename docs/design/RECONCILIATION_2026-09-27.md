@@ -636,19 +636,16 @@ build power, release to act. Power sets both **strength and trajectory**.
 - **Charging never slows you down.** Remove the bow's walk-slowdown while drawing
   (`bow.gd`); no tool reduces speed or momentum while charged. A charge is **held
   through techs** — right click does not cancel it.
-- **Charging makes momentum harder to keep — that is where the skill is.** How
-  (designer's principle; the mechanism below is the assistant's proposed reading, tune or
-  replace by feel):
-  - **Hands are busy.** While charging you cannot **cling** or **catch-and-swing** (both
-    need hands). Foot techs — wall jump, branch bounce, landing roll — still work.
-  - **Tighter windows.** Foot techs while charging use a narrower window (~8 frames
-    instead of 14). A held charge is a commitment; a missed tech at speed is the usual
-    lethal impact.
-  - **Aim drifts with motion.** The charged aim wobbles with body lean and landings, so a
-    shot released mid-chain needs the release timed to a calm point in the arc (top of a
-    bound, bottom of a swing).
-  So a skilled player draws while chaining, lands a bounce on 8 frames, and looses at the
-  apex; an unskilled one stops to shoot, or falls.
+- **Charging makes momentum harder to keep — and the difficulty is purely the
+  player's own multitasking. No artificial handicap.** Every tech stays available with
+  its normal window while a charge is held; nothing is disabled, nothing tightens, aim
+  does not drift. The game simply asks for two things at once:
+  - **Left mouse = the item in hand** (hold to charge, release to act).
+  - **Right mouse = movement** (the tech button: wall jump, cling, bounce, swing, roll
+    timing).
+  A player focused on the weapon hand will miss a movement input, and a missed tech at
+  speed is the usual lethal impact. That is the whole skill: keeping both hands honest
+  at 120 km/h. The game never nerfs you for trying.
 - The charge gauge, if any, is the same tiny arc for all three tools so the player
   learns one gauge.
 - Add to `data/combat.json`: a `fishing` block — `wind_s`, `cast_min_m`, `cast_max_m`,
