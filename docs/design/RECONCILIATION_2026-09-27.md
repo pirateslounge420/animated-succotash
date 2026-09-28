@@ -759,12 +759,22 @@ were out there; every time after, it was because you died.
   (§N), you can fly forward, spin, loose an arrow or throw a spear **backwards** at a
   pursuer, spin back, and land. That is the intended expression of the momentum + charge
   rules together.
-- **Landing techs read the body, not the velocity.** The roll / bounce / wall jump all
-  still fire on the same tech window regardless of facing, but the **animation follows
-  facing**: facing along your travel → forward roll (the clean, "sexy" landing); facing
-  against it → a back-roll that works but looks rougher; sideways → a shoulder roll.
-  Same momentum result either way — the difference is style, and it is visible to
-  anyone watching, which is the point.
+- **Every contact re-aims momentum to the cursor.** On each landing, bounce, wall
+  jump, cling release, swing release — any contact with a surface — the momentum vector
+  is **redirected to the look direction** at that instant; the tech decides how much of
+  the magnitude survives (perfect = kept or gained, missed = lost). This is the one
+  moment you steer. So: fly forward, spin 180° (moonwalk), **turn back before
+  touchdown** and you keep going forward — that is the clean landing; land still facing
+  backwards and you go back the way you came, deliberately or not. The wall jump kicks
+  toward the cursor (bounded by the wall's normal, you can't kick into it); the bounce
+  launches toward the cursor; the swing release throws you toward the cursor.
+  Look direction is therefore also the aim of the next hop, which is why the head-look
+  on figures (§B) matters: you can read where a shinobi is about to go.
+- **Same rule for NPC shinobi (§O, §P).** They use this exact code path: their "cursor"
+  is their planner's look target, and their momentum re-aims on contact like ours. No
+  separate steering for AI.
+- The landing animation follows facing as well: forward roll along travel is the clean
+  one; a back-landing is a back-roll; sideways a shoulder roll.
 - **Third person and other figures:** the free rotation is how a spinning shinobi in the
   canopy reads from outside. First person stays locked to the look direction as before.
 - **Newbies:** none of this needs to be understood on day one. A player who never turns
