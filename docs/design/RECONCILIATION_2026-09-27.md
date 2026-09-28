@@ -128,7 +128,15 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     an elder line of chatter. Then control returns. Reuses `encampment` folk.
   - Full health, empty carry, no gear — it's all in the bundle back where you fell.
     The camp folk did not loot you.
-  - The bundle persists until picked up or the world state expires it (Phase 12
+  - **The drop is a corpse, not an icon.** Your body stays where you fell, in the
+    existing death-slump pose with the cloak on it, holding all your gear. Interact
+    to recover it. **No map pin, no compass, no marker** — you find it by retracing
+    your route, the same way you find anything else in this world.
+  - **The corpse is in the world, so the world acts on it.** Scavengers gather
+    near it (circling birds, a fox) — which is a *help*, since they show you where
+    to look — and, once creature memory exists (Phase 7/8), whatever killed you may
+    still be around your gear. Finding your corpse is the risk half of the loop.
+  - The corpse persists until recovered or the world state expires it (Phase 12
     persistence decides how long). No other penalty — the walk back is the penalty,
     and it starts from a fire, which is a safe zone, so it's never hopeless.
   - Later hook (Phase 11 lore/rumours): folk at that camp can remember they found you.
