@@ -633,9 +633,24 @@ build power, release to act. Power sets both **strength and trajectory**.
   reel in with the same button held (or a second input, tune by feel). Fishing itself
   (bites, fish species by water temperature, catch) is Phase 10; the cast is Phase 1 so
   the pole is usable from the first play.
-- Shared rules: walking slows while charging (bow already does this); a charge is
-  cancelled by any tech input (right click), so movement always wins the conflict; the
-  charge bar, if any, is the same tiny arc for all three so the player learns one gauge.
+- **Charging never slows you down.** Remove the bow's walk-slowdown while drawing
+  (`bow.gd`); no tool reduces speed or momentum while charged. A charge is **held
+  through techs** — right click does not cancel it.
+- **Charging makes momentum harder to keep — that is where the skill is.** How
+  (designer's principle; the mechanism below is the assistant's proposed reading, tune or
+  replace by feel):
+  - **Hands are busy.** While charging you cannot **cling** or **catch-and-swing** (both
+    need hands). Foot techs — wall jump, branch bounce, landing roll — still work.
+  - **Tighter windows.** Foot techs while charging use a narrower window (~8 frames
+    instead of 14). A held charge is a commitment; a missed tech at speed is the usual
+    lethal impact.
+  - **Aim drifts with motion.** The charged aim wobbles with body lean and landings, so a
+    shot released mid-chain needs the release timed to a calm point in the arc (top of a
+    bound, bottom of a swing).
+  So a skilled player draws while chaining, lands a bounce on 8 frames, and looses at the
+  apex; an unskilled one stops to shoot, or falls.
+- The charge gauge, if any, is the same tiny arc for all three tools so the player
+  learns one gauge.
 - Add to `data/combat.json`: a `fishing` block — `wind_s`, `cast_min_m`, `cast_max_m`,
   `line_max_m`, `reel_mps`, `inherit_velocity` (so casting mid-bound throws the line
   further, same as arrows).
