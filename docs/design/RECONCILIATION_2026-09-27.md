@@ -110,9 +110,74 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
   - Animation: hands reach and grip (the trailing-arm run pose flips forward on
     catch), body hangs, cloak trails the arc. Reuse gibbon brachiation timing as the
     reference for the hang-and-release rhythm.
+  - **Hanging is unlimited.** No timer, no stamina drain — you can hang from a
+    branch indefinitely (wait out a wolf, take in the view). The limit lives in the
+    **handhold, not the player**: what you're holding decides whether it holds.
+  - **Handholds have material properties**, from the plant species (extend
+    `species_db` / plant JSON, read by `BranchGraph` per handhold):
+    - `break_speed_mps` — catch or swing faster than this and the branch/vine
+      **snaps**; you keep flying with reduced speed (same as a missed tech) and the
+      handhold is gone from the graph. Thinner wood breaks sooner (scale by radius).
+    - `flex` — how far the handhold bends under load (visual sway on catch).
+    - `snapback` — how much of the flex returns as a push on release. High snapback
+      **maintains or adds momentum**: catching a green, whippy stem and releasing
+      on the rebound is a launch. Zero snapback is a plain pendulum.
+    - `hold_load` — static weight it bears; below this hanging is free forever.
+  - **Alive vs dead matters.** Plants get an `alive` state. Dead wood is **brittle**:
+    lower `break_speed_mps`, near-zero `flex` and `snapback`. Green wood is springy.
+    Dead wood is a real ecosystem object, not just a movement flag — see
+    "Dead wood" below.
+  - **Species examples** (starting values, tune by feel):
+    - **Giant bamboo, green:** effectively **unbreakable** (very high
+      `break_speed_mps`), high `flex`, **high `snapback`** — the premier momentum
+      tool; a bamboo grove is a launch corridor. **Dead/dry bamboo:** brittle, low
+      break speed, no snapback; it shatters.
+    - **Vines (rainforest / jungle / swamp):** long swing, medium break speed that
+      drops with age, low snapback (they stretch, they don't spring).
+    - **Live oak / cypress limbs:** high break speed, low flex, low snapback —
+      reliable, boring pendulums.
+    - **Birch / young saplings:** low break speed, high flex, medium snapback —
+      whippy but fragile; snap if you come in hot.
+    - **Pine:** medium all round; dead pine limbs snap easily.
+  - Snapping and snapback are both **readable at a glance**: a green stem bows and
+    springs; a dry one cracks. Sound: `sound_synth` gets a crack (dry) and a whip
+    (green). This is how the player learns which plants launch and which fail.
   - Add to `movement.json`: a `swing` block with `catch_reach_m`, `max_branch_radius_m`
     (above this it's a wall-jump surface), `release_carry`, `gravity_scale`,
-    `max_swing_s` (let go automatically after this long — no hanging forever).
+    `snap_speed_keep` (fraction of speed kept when a handhold breaks under you).
+    Per-species values live in the plant data, not here.
+
+- **Dead wood: snags, logs and dead bamboo — Phases 5–8, seeded now.** The spec
+  already plans `flora.snags` and `flora.logs` as ledgers (tree age seeds them,
+  fungi decay them, Phase 7) and `flora.litter` for soil. **Promote them from
+  numbers to placed objects**, because dead wood does four jobs at once:
+  1. **Movement** — brittle handholds (above). Dry bamboo shatters; a rotten limb
+     drops you.
+  2. **Decomposer food** — the decomposer rung of the food web (blueprint) gets a
+     physical home. Fungi (shelf fungi on snags, mushrooms on logs) and insects
+     (termites, beetle larvae) live on dead wood and **break it down over in-game
+     seasons** into soil fertility (Phase 5 `flora.litter` / soil layer). Decay is a
+     visible state machine: fresh snag → barked → bare → hollow → rotten → gone,
+     each stage changing its material properties and who lives in it.
+  3. **Homes** — hollow snags are **cavity sites** for owls, woodpeckers and other
+     cavity nesters; rotten logs shelter salamanders, snakes, small mammals. Add a
+     `site: "snag_cavity"` / `"log"` type alongside the catalogue's existing
+     `"termite_mound"` so creature JSON can claim dead wood the way snakes claim
+     mounds. Woodpeckers *make* cavities (a snag with a woodpecker becomes a cavity
+     site later); owls take over. A snag with a resident gives an audio cue (drumming
+     by day, hoots by night) — how the player learns a dead tree is "occupied".
+  4. **Landscape reading** — standing snags mark burn scars, beaver-flooded ground,
+     bark-beetle kills, and the wet edges of swamps (cypress knees and dead
+     trunks are a Louisiana signature).
+  - **Placement:** a small fraction of trees per biome are dead at generation, weighted
+    up in badlands, swamp margins, taiga (beetle kill), and old burn scars. Dead bamboo
+    culms stand inside living groves (bamboo dies back after flowering).
+  - **Bamboo shoots** exist too: young culms, short and edible (a forage item for
+    Phase 10), later becoming green culms. So a grove has shoots, green culms and
+    dry culms mixed — three different handhold behaviours in one place.
+  - Do not build the decay simulation before Phase 5 — for now, place dead wood with
+    a fixed decay stage so the movement and creature systems have something real to
+    use, and let the ledgers drive stage changes later.
 
 - **Ninja landing roll — Phase 1.** Landing from height already triggers a squat
   (`landing.squat_s` / `heavy_squat_s`, threshold `heavy_fall_m` 1.7) and fall damage
