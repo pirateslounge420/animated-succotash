@@ -39,6 +39,10 @@ var chunks: ChunkManager
 var site := Vector3.UP
 ## Where the player wakes (surface direction).
 var player_spot := Vector3.UP
+## Dev: which side of the fire the player wakes on (radians; NAN = a
+## random side). tools/dev_view.gd fixes it so the frame is the same
+## every time (the folk stand across the fire from the player).
+static var fixed_side := NAN
 var _fire: Node3D
 var _npcs: Array[Node3D] = []
 var _time := 0.0
@@ -134,6 +138,8 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
 	var side := rng.randf() * TAU
+	if not is_nan(fixed_side):
+		side = fixed_side
 	player_spot = CreatureSpawner._offset(site, side, PLAYER_M)
 	_mat(player_spot)
 	# The elder and the hunter: cloaked figures on the player's own rig

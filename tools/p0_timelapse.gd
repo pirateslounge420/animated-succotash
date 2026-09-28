@@ -24,11 +24,11 @@ extends SceneTree
 ## Exit code 1 if a limit is exceeded.
 
 ## Largest change allowed in one 1/30 s frame. Colors are 0-1 per channel
-## (1/255 = 0.0039); energies are light energies; angles in degrees.
+## (1/255 = 0.0039); energies are shares of full strength; angles in degrees.
 const LIMITS := {
 	"sun_el": 0.05, "moon_el": 0.05,
 	"zenith": 0.004, "horizon": 0.004, "fog": 0.004, "ambient_color": 0.004,
-	"ambient": 0.004, "sun_energy": 0.004, "moon_energy": 0.004,
+	"ambient": 0.004, "sun_energy": 0.0047, "moon_energy": 0.0047, # energies: share of full strength (0.004 of the old 0.85 sun)
 	"stars": 0.01, "sun_disc": 0.01, "glyph": 0.03, "cloud_dir": 0.2,
 	"sky_speed": 0.01,
 }
@@ -95,8 +95,10 @@ func _sample(sky: SkySystem) -> Dictionary:
 		"fog": sky.environment.fog_light_color,
 		"ambient_color": sky.environment.ambient_light_color,
 		"ambient": sky.environment.ambient_light_energy,
-		"sun_energy": sky.sun.light_energy,
-		"moon_energy": sky.moon.light_energy,
+		# As a share of full strength (data/look.json sets full), so the
+		# limits mean the same whatever the lights' strength.
+		"sun_energy": sky.sun.light_energy / maxf(sky.sun_max_energy, 1e-4),
+		"moon_energy": sky.moon.light_energy / maxf(sky.moon_max_energy, 1e-4),
 		"stars": float(m.get_shader_parameter("star_visibility")),
 		"sun_disc": float(m.get_shader_parameter("sun_visible")),
 		"glyph": float(m.get_shader_parameter("glyph_visibility")),

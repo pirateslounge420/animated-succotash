@@ -1,35 +1,40 @@
-// Full-screen grade, the last step of the look: a 2000-2004 console frame
-// (Dreamcast / GameCube; docs/WORLD_SYSTEMS_SPEC.md R1). The 3D renders at
-// 0.8 scale and is upscaled smoothly, for the era's 480p softness.
+// Full-screen grade, the last step of the look (design reconciliation,
+// Session 2 section C: dark and moody at every hour). The 3D renders at
+// 0.8 scale and is upscaled smoothly.
 //
-// Always: slight color bleed (each pixel's color, not its brightness,
-// averaged with its horizontal neighbors, like composite video), a mild
-// ultramarine haze that keeps shadows off pure black (R1a: nothing pure
-// black, blue rather than grey), a vibrance boost for greens and blues, a
-// faint moving film grain, and a light ordered dither (a 4x4 Bayer
-// pattern toward 5 bits per channel, mixed in at a quarter strength;
-// `dither` 0 turns it off). No sharpening, no bloom.
+// Two presets, day and night (data/look.json, set by PostGrade), never one
+// curve through the middle: the frame is graded by each preset in full and
+// the two results crossfade by `night` (0 by day, 1 at night; only dusk and
+// dawn see a mix). A preset: exposure, mids (a power curve that pulls the
+// midtones down and keeps black and white), saturation about the luma,
+// teal (greens toward forest/teal), a blue shadow tint over the darks,
+// contrast, and a vignette. Warm pixels (firelight, lanterns: red well
+// above blue) skip the shadow tint so the warm accent stays orange.
 //
-// Night: `night` cools the shadows toward cobalt without lifting the
-// highlights, and a soft vignette frames the scene; the haze thickens and
-// turns ultramarine, so the darkest corner is deep blue, never black.
-// Warm pixels (firelight, lanterns: red well above blue) skip the cooling,
-// so the one warm accent stays orange against the blue. Inside a magical
-// site (`magic`) contrast climbs a little so the glow reads against the
-// dark.
+// Always, after the grade: slight color bleed before it (each pixel's
+// color, not its brightness, averaged with its horizontal neighbors), a
+// faint moving film grain and a light ordered dither (a 4x4 Bayer pattern
+// toward 5 bits per channel, at `dither` strength). No bloom, no
+// sharpening. Inside a magical site at night (`magic`) contrast climbs a
+// little so the glow reads against the dark.
 shader_type canvas_item;
 
 uniform sampler2D screen_tex : hint_screen_texture, filter_linear_mipmap;
 uniform float night = 0.0;
 uniform float magic = 0.0;
-uniform float vibrance = 0.3;
 uniform float bleed = 0.6; // 0-1: how much color spreads sideways
-uniform float haze = 0.08; // 0-1: the veil lifting the darks by day
-uniform vec3 haze_color = vec3(0.12, 0.18, 0.55); // ultramarine, not grey
-uniform float night_haze = 0.25; // the veil at night (R1a night sky blue)
-uniform vec3 night_haze_color = vec3(0.08, 0.14, 0.75);
 uniform float grain = 0.025; // film grain amplitude
 uniform float dither = 0.25; // 0-1 ordered dither strength; 0 = off
+// The presets: x day, y night.
+uniform vec2 exposure = vec2(1.0, 1.0);
+uniform vec2 mids = vec2(1.3, 1.35);
+uniform vec2 saturation = vec2(1.35, 1.3);
+uniform vec2 teal = vec2(0.6, 0.5);
+uniform vec3 shadow_tint_day = vec3(0.7, 0.85, 1.45);
+uniform vec3 shadow_tint_night = vec3(0.55, 0.7, 1.6);
+uniform vec2 shadow_tint_amount = vec2(0.45, 0.55);
+uniform vec2 contrast = vec2(1.12, 1.1);
+uniform vec2 vignette = vec2(0.12, 0.4);
 
 // 4x4 Bayer thresholds, 0-15.
 const float BAYER[16] = float[16](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0,
@@ -41,6 +46,33 @@ float luma_of(vec3 c) {
 
 float hash(vec2 p) {
 	return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+// One preset's grade of `c` (display space, 0-1).
+vec3 grade(vec3 c, float expo, float m, float sat, float tl, vec3 tint, float tint_amt, float k, float vig, vec2 uv) {
+	float warm = smoothstep(0.06, 0.25, c.r - c.b);
+	c *= expo;
+	// Mids down: a power curve through black and white.
+	c = pow(max(c, vec3(0.0)), vec3(m));
+	// Saturation about the luma.
+	float y = luma_of(c);
+	c = max(mix(vec3(y), c, sat), vec3(0.0));
+	// Greens toward forest/teal: less red, blue drawn up toward the green,
+	// a touch deeper.
+	float g = clamp((c.g - max(c.r, c.b)) * 4.0, 0.0, 1.0);
+	c.r *= 1.0 - 0.35 * tl * g;
+	c.b += (c.g - c.b) * 0.4 * tl * g;
+	c.g *= 1.0 - 0.06 * tl * g;
+	// Blue shadows: the darks tinted, the lights left alone.
+	y = luma_of(c);
+	float dark = 1.0 - smoothstep(0.02, 0.4, y);
+	c = mix(c, c * tint, tint_amt * dark * (1.0 - warm));
+	// Contrast about a low pivot (keeps the mids down).
+	c = (c - 0.4) * k + 0.4;
+	// Vignette.
+	vec2 vc = uv - 0.5;
+	c *= mix(1.0, smoothstep(0.95, 0.3, length(vc * vec2(1.0, 0.8))), vig);
+	return c;
 }
 
 void fragment() {
@@ -55,38 +87,12 @@ void fragment() {
 	float y = luma_of(c);
 	vec3 col = mix(c, wide - vec3(luma_of(wide)) + y, bleed);
 
-	// Vibrance: saturate the less-saturated colors most (keeps already
-	// vivid ones from clipping), with extra push for greens and blues.
+	// The two presets, each in full, crossfaded by night.
+	vec3 day_c = grade(col, exposure.x, mids.x, saturation.x, teal.x, shadow_tint_day, shadow_tint_amount.x, contrast.x, vignette.x, SCREEN_UV);
+	vec3 night_c = grade(col, exposure.y, mids.y, saturation.y, teal.y, shadow_tint_night, shadow_tint_amount.y, contrast.y, vignette.y, SCREEN_UV);
+	col = mix(day_c, night_c, night);
+	col = (col - 0.4) * (1.0 + 0.15 * magic * night) + 0.4;
 	float luma = luma_of(col);
-	float sat = max(col.r, max(col.g, col.b)) - min(col.r, min(col.g, col.b));
-	float gb = smoothstep(0.0, 0.2, max(col.g, col.b) - col.r);
-	col = mix(vec3(luma), col, 1.0 + vibrance * (1.0 - sat) * (0.25 + 0.75 * gb) * (1.0 - night * 0.5));
-
-	// Emerald: yellowish greens shift cooler and deeper (mossy, not lime).
-	float greenness = clamp((col.g - max(col.r, col.b)) * 4.0, 0.0, 1.0);
-	col.r *= 1.0 - 0.2 * greenness;
-	col.b *= 1.0 + 0.08 * greenness;
-
-	// Night: cool the shadows toward cobalt without lifting the highlights.
-	// Firelit pixels (red well above blue) keep their warmth.
-	luma = luma_of(col);
-	float warm = smoothstep(0.06, 0.25, col.r - col.b);
-	vec3 night_tint = mix(vec3(0.2, 0.3, 0.55), vec3(0.8, 0.86, 1.0), smoothstep(0.0, 0.6, luma));
-	col = mix(col, col * night_tint * 1.15, night * 0.5 * (1.0 - warm));
-	float contrast = 1.0 + 0.15 * magic * night;
-	col = (col - 0.5) * contrast + 0.5;
-
-	// Night vignette frames the scene (before the haze, so the corners
-	// are lifted to deep blue too).
-	vec2 vc = SCREEN_UV - 0.5;
-	col *= mix(1.0, smoothstep(0.9, 0.3, length(vc * vec2(1.0, 0.8))), night * 0.4);
-
-	// Mild haze: an ultramarine veil over the darks, thicker at night, so
-	// shadows are deep blue, never pure black or grey.
-	luma = luma_of(col);
-	vec3 veil = mix(haze_color, night_haze_color, night);
-	float dark = 1.0 - smoothstep(0.0, mix(0.5, 0.2, night), luma);
-	col = mix(col, veil, mix(haze, night_haze, night) * dark);
 
 	// Faint film grain, strongest in the midtones, changing every frame.
 	float g = hash(FRAGCOORD.xy + fract(TIME * 7.13) * 91.7) - 0.5;

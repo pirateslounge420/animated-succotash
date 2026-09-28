@@ -2,9 +2,10 @@
 // water, ruins). SkySystem sets these uniforms each frame through Look.
 //
 // Lighting is Godot's own, not here: every lit world shader is plain
-// Lambert with `render_mode vertex_lighting` and no specular, over a strong
-// flat ambient (SkySystem), the vertex-lit look of 2001-2004 consoles. No
-// custom light(), rim, sheen, gloss or colored-shadow fill.
+// Lambert with no specular under one hard-shadowed sun (or moon) over a
+// low, deep-blue ambient (SkySystem, data/look.json: dark and moody,
+// bright only where the light hits). No custom light(), rim, sheen or
+// gloss; the blue of the shadows is the ambient's, and the grade's.
 //
 // Fog is done here rather than by the Environment: smooth distance haze
 // that thins with altitude, and valleys and low ground fill with extra

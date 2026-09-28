@@ -1,0 +1,91 @@
+extends SceneTree
+## The fixed dev viewpoint: the same frame every time, for judging the
+## look between changes. Seed 42 postage stamp (data/dev.json), the first
+## camp (spawn 0), you waking on the fire's north side (the folk across
+## it; Encampment.fixed_side) and the random numbers seeded. The camera
+## stands 9 m south of the fire, 2.4 m up, looking north across it at you
+## (third person, the wanderer visible), tipped 7 degrees down. The
+## weather is held clear and still.
+## Saves one frame per requested local solar hour.
+##
+##   xvfb-run -a -s "-screen 0 1280x720x24" ~/bin/godot --path . \
+##     --rendering-method forward_plus --resolution 1280x720 -s tools/dev_view.gd
+##
+## HOURS: comma-separated local solar hours (default "12,0": noon and
+## midnight). OUT_DIR (default /tmp/shots), TAG: file name prefix
+## (default "devview"): writes <TAG>_<hh>h.png. Prints the sun's
+## elevation, the light's elevation and the mean brightness of each frame.
+
+var out_dir := "/tmp/shots"
+
+
+func _initialize() -> void:
+	if OS.get_environment("OUT_DIR") != "":
+		out_dir = OS.get_environment("OUT_DIR")
+	_run.call_deferred()
+
+
+func _frames(n: int) -> void:
+	for i in n:
+		await process_frame
+
+
+func _run() -> void:
+	DirAccess.make_dir_recursive_absolute(out_dir)
+	var world = get_root().get_node("World")
+	world.spawn_choice = 0
+	seed(42)
+	Encampment.fixed_side = 0.0
+	var main = load("res://scenes/main.tscn").instantiate()
+	get_root().add_child(main)
+	while not main._playing:
+		await process_frame
+	var clear := {"wind": Vector3(1, 0, 0.5), "rain_mm_h": 0.0, "snow": false, "temp_c": 18.0, "storm": 0.0, "clear": 1.0, "cloud": 0.15}
+	main._weather_timer = 1e9
+	main._local_weather = clear
+	main._weather_eased = clear.duplicate()
+	main.hud.visible = false
+	var player: PlanetPlayer = main.player
+	player.set_physics_process(false)
+	player.first_person = false
+	player._apply_view()
+	var pd: Vector3 = main.camp.site
+	var n := CubeSphere.north(pd)
+	var ground: float = main.chunks.ground_height(pd)
+	var target: Vector3 = world.to_scene(pd, PlanetConst.RADIUS_M + ground + 1.0)
+	var eye_d: Vector3 = (pd - n * 9.0 / PlanetConst.RADIUS_M).normalized()
+	var eye: Vector3 = world.to_scene(eye_d, PlanetConst.RADIUS_M + main.chunks.ground_height(eye_d) + 2.4)
+	var cam := Camera3D.new()
+	cam.fov = 60.0
+	cam.near = 0.1
+	cam.far = 30000.0
+	get_root().add_child(cam)
+	var look := (target - eye).normalized()
+	look = (look - pd * look.dot(pd)).normalized()
+	look = (look * cos(deg_to_rad(7.0)) - pd * sin(deg_to_rad(7.0))).normalized()
+	cam.global_transform = Transform3D(Basis.looking_at(look, pd), eye)
+	cam.current = true
+	var hours := (OS.get_environment("HOURS") if OS.get_environment("HOURS") != "" else "12,0").split(",")
+	var tag := OS.get_environment("TAG") if OS.get_environment("TAG") != "" else "devview"
+	var lon := CubeSphere.longitude(pd)
+	var base: float = floor(world.days) + 1.0
+	for h in hours:
+		var hour := float(h)
+		var days := Astro.days_at_solar_hour(base, hour, lon)
+		for k in 20:
+			world.days = days
+			await process_frame
+		var img := get_root().get_texture().get_image()
+		var path := out_dir.path_join("%s_%02dh.png" % [tag, int(hour)])
+		img.save_png(path)
+		var sum := 0.0
+		var cnt := 0
+		for y in range(0, img.get_height(), 8):
+			for x in range(0, img.get_width(), 8):
+				sum += img.get_pixel(x, y).get_luminance()
+				cnt += 1
+		var sky: SkySystem = main.sky
+		var light_el := rad_to_deg(Astro.elevation(sky.sun.global_basis.z, pd))
+		print("[devview] sun shadows %s, bias %.2f, normal bias %.2f, splits %d, max %.0f m" % [sky.sun.shadow_enabled, sky.sun.shadow_bias, sky.sun.shadow_normal_bias, sky.sun.directional_shadow_mode, sky.sun.directional_shadow_max_distance])
+		print("[devview] %05.2f h: sun %.1f deg, sun light %.1f deg, mean brightness %.3f -> %s" % [hour, sky.sun_elevation_deg, light_el, sum / cnt, path])
+	quit()

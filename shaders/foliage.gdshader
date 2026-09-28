@@ -35,7 +35,8 @@
 // them cool toward their night targets after dark.
 //
 // Vertex-lit like the terrain (Lambert, no specular, Look), with Godot's
-// own leaf translucency (BACKLIGHT). Near magical sites, about half the
+// own leaf translucency (BACKLIGHT). Hard sun shadows: in the shadow pass
+// closed shapes cast from their far faces only (no self-shadow acne). Near magical sites, about half the
 // plants glow at their tips at night.
 shader_type spatial;
 render_mode world_vertex_coords, cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
@@ -114,6 +115,14 @@ void vertex() {
 }
 
 void fragment() {
+	// The sun's and moon's shadow maps are drawn with an orthographic
+	// projection (the game camera is perspective). There, closed shapes
+	// (bark, crowns, bamboo culms) cast from their far faces only, so a
+	// lit face never shadows itself (the material is double-sided for the
+	// leaf cards, which still cast from both sides).
+	if (PROJECTION_MATRIX[3][3] == 1.0 && FRONT_FACING && (mat_id < 1.5 || (mat_id > 3.5 && mat_id < 4.5))) {
+		discard;
+	}
 	vec3 an = abs(obj_normal);
 	vec4 tex;
 	if (mat_id > 4.5) {

@@ -7,9 +7,14 @@ extends Node3D
 ## around a sphere, so "up" and therefore sun elevation depend on where
 ## they stand), the world clock in days, and the local weather.
 ##
-## * Sun and moon are real lights. Each one's brightness and color follow
-##   its own elevation above the local horizon: dim and warm when low,
-##   full strength high up, nothing once it's a few degrees below.
+## * Sun and moon are real lights casting hard shadow maps (no blur), and
+##   by day the sun is the only one doing any work: ambient is low and deep
+##   blue, sky light and reflections are off (data/look.json; design
+##   reconciliation Session 2 section C). Each light's brightness and color
+##   follow its own elevation: dim and warm when low, full strength high
+##   up, nothing once it's a few degrees below. Its direction is raked: the
+##   elevation squeezed under look "light" rake_max_deg, so shadows run
+##   long even at noon (the disc in the sky stays true).
 ## * The moon moves like Earth's (Astro.MoonMode.ORBITAL), so sun and moon
 ##   genuinely share the dawn/dusk sky on most days, each lighting the
 ##   world from its own side.
@@ -24,12 +29,11 @@ extends Node3D
 ## * The sky is a painted skybox (SkyPaint bakes its cloud and star
 ##   panoramas once): this feeds it the cloud cover from the (eased)
 ##   weather, the clouds' colors for the hour and their slow drift.
-## * Colors are the R1a palette (docs/WORLD_SYSTEMS_SPEC.md) as they
-##   should read on screen: pure saturated blue by day, bright ultramarine
-##   at night (never black or grey), night fog that dissolves distance to
-##   blue, and a strong ultramarine fill with periwinkle moonlight.
-##   _scene_color() undoes the environment's exposure and adjustment so
-##   the hex values land on screen (before the post grade).
+## * Sky colors are the R1a palette (docs/WORLD_SYSTEMS_SPEC.md): pure
+##   saturated blue by day, ultramarine at night, night fog that dissolves
+##   distance to blue, periwinkle moonlight. _scene_color() undoes the
+##   environment's exposure so the hex values land on screen before the
+##   post grade (PostGrade's day and night presets, data/look.json).
 ## * Nothing snaps: the sky's turning speed eases between phases
 ##   (DayCycle), the weather arriving here is eased (main.gd), the lights
 ##   fade to exactly zero before they're switched off, and the clouds'
@@ -38,8 +42,8 @@ extends Node3D
 const SKY_SHADER := preload("res://shaders/sky.gdshader")
 
 @export var moon_mode: Astro.MoonMode = Astro.MoonMode.ORBITAL
-@export var sun_max_energy := 0.85
-@export var moon_max_energy := 1.25
+@export var sun_max_energy := 1.35
+@export var moon_max_energy := 1.1
 ## Moonlight never drops below this share of full (thin phases, playable nights).
 const MOON_FLOOR := 0.05
 ## 0-1: how deep the viewer is inside a magical site (Landmarks sets it).
@@ -64,9 +68,6 @@ var moonlight := 0.0 # 0-1, includes phase
 var _zenith := Gradient.new()
 var _horizon := Gradient.new()
 ## Cloud tones (lit tops, shaded undersides) for CloudLayers.
-## The grade: saturation and contrast at night (x) and by day (y).
-var grade_saturation := Vector2(1.2, 1.42)
-var grade_contrast := Vector2(1.32, 1.28)
 
 var cloud_light := Color.WHITE
 var cloud_shade := Color(0.7, 0.75, 0.9)
@@ -107,9 +108,13 @@ var _cloud_scroll := 0.0
 ## Night magic: inside a glowing site the moonlight dims and the air goes
 ## near-black so the bioluminescence reads like neon against black.
 const MAGIC_DARKEN := 0.6
-## Flat ambient energy by day and at night (before moonlight lifts it).
-const AMBIENT_DAY := 0.5
-const AMBIENT_NIGHT := 0.42
+## The light and the two grade presets (data/look.json; design
+## reconciliation Session 2 section C: dark and moody, day included). The
+## sun does all the work; ambient is low and deep blue, which is all a
+## shadow gets, so shadows read blue. Shadows are hard-edged shadow maps.
+static var LIGHT := Tuning.section("look", "light")
+static var DAY := Tuning.section("look", "day")
+static var NIGHT := Tuning.section("look", "night")
 ## Night fog density (per meter) added to the day's haze: about 40% at
 ## 200 m, so the middle distance goes blue and the far distance dissolves.
 const FOG_NIGHT := 0.0017
@@ -146,17 +151,20 @@ func _ready() -> void:
 	environment.background_mode = Environment.BG_SKY
 	environment.sky = sky
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.reflected_light_source = Environment.REFLECTION_SOURCE_SKY
+	# The sky lights nothing: no sky ambient, no sky reflections.
+	environment.ambient_light_sky_contribution = 0.0
+	environment.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
 	# Linear: keep colors as saturated as authored (filmic curves wash them
 	# toward realism).
 	environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 	environment.tonemap_exposure = 0.9 # a touch under, so nothing reads washed out
 	environment.fog_enabled = true
 	environment.fog_sky_affect = 0.0 # the sky shader draws its own banded haze
-	environment.adjustment_enabled = true
-	# 2001-2004 console lighting: vertex-lit Lambert over a strong flat
-	# ambient, and nothing screen-space on top: no glow halos, no ambient
-	# occlusion, no screen-space reflections or indirect light.
+	# The grade is PostGrade's two presets, not the environment's.
+	environment.adjustment_enabled = false
+	# Lambert under one hard sun over a low blue ambient, and nothing
+	# screen-space on top: no glow halos, no ambient occlusion, no
+	# screen-space reflections or indirect light.
 	environment.glow_enabled = false
 	environment.ssao_enabled = false
 	environment.ssil_enabled = false
@@ -167,8 +175,11 @@ func _ready() -> void:
 	world_env.environment = environment
 	add_child(world_env)
 
-	# No shadow maps: sun and moon light every surface by its facing alone;
-	# characters get soft blob shadows instead (BlobShadow).
+	# Hard shadow maps from the sun (and the moon at night): no blur, no
+	# soft filtering (project setting soft_shadow_filter_quality 0), a
+	# point light source.
+	sun_max_energy = float(LIGHT.get("sun_energy", sun_max_energy))
+	moon_max_energy = float(LIGHT.get("moon_energy", moon_max_energy))
 	sun = DirectionalLight3D.new()
 	sun.name = "Sun"
 	add_child(sun)
@@ -176,8 +187,14 @@ func _ready() -> void:
 	moon.name = "Moon"
 	add_child(moon)
 	for light in [sun, moon]:
-		light.shadow_enabled = false
+		light.shadow_enabled = bool(LIGHT.get("shadows", true))
+		light.shadow_blur = 0.0
 		light.light_angular_distance = 0.0
+		light.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_4_SPLITS
+		light.directional_shadow_max_distance = float(LIGHT.get("shadow_max_m", 90.0))
+		light.directional_shadow_fade_start = 0.9
+		light.shadow_bias = float(LIGHT.get("shadow_bias", 0.04))
+		light.shadow_normal_bias = float(LIGHT.get("shadow_normal_bias", 1.2))
 
 
 ## up/east/north: the viewer's local frame. weather: WeatherSim.local_weather().
@@ -200,9 +217,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	moonlight = moon_up * maxf(pow(illumination, 3.3), MOON_FLOOR)
 	var dark_magic := magic * (1.0 - daylight)
 
-	# Lights.
-	_aim(sun, sun_dir, up)
-	_aim(moon, moon_dir, up)
+	# Lights: raking, never flat overhead (the disc in the sky stays true).
+	_aim(sun, _rake(sun_dir, up, north), up)
+	_aim(moon, _rake(moon_dir, up, north), up)
 	var sun_col := _sun_color(sun_elevation_deg)
 	sun.light_color = sun_col
 	sun.light_energy = sun_max_energy * sun_up * (1.0 - 0.55 * float(weather.get("cloud", 0.0)))
@@ -216,11 +233,6 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# before the light is switched off, so switching never shows.
 	sun.visible = sun.light_energy > 0.0
 	moon.visible = moon.light_energy > 0.0
-
-	# Grade: a punchy curve day and night, saturated by day. Set first:
-	# _scene_color() reads it.
-	environment.adjustment_saturation = lerpf(grade_saturation.x, grade_saturation.y, daylight)
-	environment.adjustment_contrast = lerpf(grade_contrast.x, grade_contrast.y, daylight)
 
 	# Palette: continuous in sun elevation, lifted a little by moonlight at
 	# night. Worked out as screen colors, then turned into scene colors.
@@ -295,14 +307,15 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	else:
 		cloud_light_dir = _turn(up, sun_dir, (to_sun - split) / maxf(1.0 - split, 1e-4))
 
-	# Ambient: one strong flat fill, the vertex-lit consoles' way of keeping
-	# the side away from the sun clearly readable (Phantasy Star Online's
-	# bright shade), never a black shadow. By day a soft cool white; at
-	# night a strong ultramarine (R1), lifted by the moon.
-	var amb_day := Color(0.86, 0.9, 1.0)
-	var amb_night := FILL_NIGHT.lerp(FILL_MOON, lift)
+	# Ambient: low and deep blue, day and night (data/look.json): it's all
+	# a shadow gets, so shadows are deep and blue, never grey. The moon
+	# lifts the night's a little.
+	var amb_day := Color(str(DAY.get("ambient_color", "#2C4AA8")))
+	var amb_night := Color(str(NIGHT.get("ambient_color", "#1C2A8C"))).lerp(FILL_MOON, lift * 0.3)
+	var e_day := float(DAY.get("ambient_energy", 0.16))
+	var e_night := float(NIGHT.get("ambient_energy", 0.2)) * (1.0 + 0.4 * lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
-	environment.ambient_light_energy = lerpf(AMBIENT_NIGHT + 0.18 * lift, AMBIENT_DAY, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
+	environment.ambient_light_energy = lerpf(e_night, e_day, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
 
 	# Fog and mist (drawn by the world shaders, see Look): a light haze
 	# that gives depth to long daytime views; thicker at night and in cloud
@@ -333,8 +346,8 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 ## about mid-grey, applied to the sRGB image) and its exposure, so the
 ## palette's hex values read true on screen before the post grade.
 func _scene_color(c: Color) -> Color:
-	var s := environment.adjustment_saturation
-	var k := environment.adjustment_contrast
+	var s := environment.adjustment_saturation if environment.adjustment_enabled else 1.0
+	var k := environment.adjustment_contrast if environment.adjustment_enabled else 1.0
 	var m := (c.r + c.g + c.b) / 3.0
 	var v := Vector3(c.r, c.g, c.b)
 	v = Vector3(m, m, m) + (v - Vector3(m, m, m)) / s
@@ -384,6 +397,26 @@ static func _turn(a: Vector3, b: Vector3, t: float) -> Vector3:
 	if axis.length() < 1e-4: # opposite: any perpendicular will do
 		axis = a.cross(Vector3.RIGHT if absf(a.x) < 0.9 else Vector3.FORWARD)
 	return a.rotated(axis.normalized(), angle * clampf(t, 0.0, 1.0))
+
+
+## Where a light shines from: `dir` (toward the body) with its elevation
+## squeezed smoothly under look "light" rake_max_deg, so it rakes across
+## the ground even at noon. Near overhead the body's bearing is lost, so
+## the light leans rake_bias toward the equator side (away from the north
+## pole's direction here), more the higher it stands; at the horizon it is
+## the body's own bearing. Below the horizon: unchanged (the light is off).
+static func _rake(dir: Vector3, up: Vector3, north: Vector3) -> Vector3:
+	var el := asin(clampf(dir.dot(up), -1.0, 1.0))
+	if el <= 0.0:
+		return dir
+	var cap := deg_to_rad(float(LIGHT.get("rake_max_deg", 38.0)))
+	var el2 := cap * tanh(el / cap)
+	var h := dir - up * dir.dot(up)
+	h -= (north - up * north.dot(up)).normalized() * float(LIGHT.get("rake_bias", 0.45)) * smoothstep(0.0, deg_to_rad(40.0), el)
+	if h.length() < 1e-5:
+		return dir
+	h = h.normalized()
+	return (h * cos(el2) + up * sin(el2)).normalized()
 
 
 func _aim(light: DirectionalLight3D, body_dir: Vector3, up: Vector3) -> void:

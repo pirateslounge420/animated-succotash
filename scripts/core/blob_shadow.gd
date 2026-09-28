@@ -1,8 +1,9 @@
 class_name BlobShadow
 ## Soft round blob shadows under the player, creatures and camp folk
-## (shaders/blob_shadow.gdshader): nothing casts a real shadow (no shadow
-## maps), so characters are grounded the way 2001-2004 console games did
-## it, by a dark disc on the ground. One quad mesh and one material serve
+## (shaders/blob_shadow.gdshader), from when nothing cast a real shadow.
+## The sun and moon now cast hard shadow maps (data/look.json), so blobs
+## are off unless look "light" blob_shadows is true: make() still returns
+## the node (callers position and show it), with no mesh. One quad mesh and one material serve
 ## every blob; each is a child of its character's upright (unscaled) node,
 ## so local +Y is the planet's up and y = 0 the ground under its feet.
 
@@ -31,6 +32,8 @@ static func make(parent: Node3D, radius: float, length := 0.0) -> MeshInstance3D
 	mi.visibility_range_end = FAR_M
 	mi.position = Vector3(0.0, LIFT, 0.0)
 	mi.scale = Vector3(radius, 1.0, length if length > 0.0 else radius)
+	if not bool(Tuning.num("look", "light", "blob_shadows")):
+		mi.mesh = null # callers toggle visible every frame; with no mesh nothing draws
 	parent.add_child(mi)
 	return mi
 

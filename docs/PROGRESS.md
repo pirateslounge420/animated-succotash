@@ -4,6 +4,33 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Session 2, Step 1: dark daylight (addendum §C, lighting model and grade only)
+- **Light:**
+  - The sun is the one directional light by day and casts real shadow maps (there were none before): hard-edged, with no blur and soft filtering off; 4 splits over 90 m.
+  - Ambient is cut to a low, deep blue (#2448D0 at 0.42 by day), which is all a shadow gets, so shadows read deep blue: sand in shade is about (19, 19, 100) on screen.
+  - Sky ambient and sky reflections are off.
+  - The light's elevation is squeezed under 38° (`rake_max_deg`), so it rakes even at noon: the dev spot's 58.5° noon sun lights at 34.7°. The sun disc stays true.
+  - The moon lights the night the same way.
+- **Grade:** two presets, day and night, in `data/look.json`.
+  - Each preset: mids down (a power curve), saturation ×1.35 day / ×1.3 night, greens toward teal, blue shadow tint, contrast and vignette.
+  - The frame is graded by each preset in full and crossfaded by daylight, never one curve.
+  - The environment's old saturation/contrast adjustment and the old haze veil are gone.
+  - No SSAO, bloom, SSR or soft shadows.
+- **Fixes along the way:**
+  - Plant shaders are double-sided (for leaf cards), so trunks shadowed themselves in striped acne that no bias could fix. In the shadow pass, closed shapes (bark, crowns, culms) now cast from their far faces only.
+  - Blob shadows are off (`look.light.blob_shadows`); real shadows replace them.
+- **Dev viewpoint:** `tools/dev_view.gd` gives the same frame every time: seed 42 stamp, first camp, you on the fire's north side (`Encampment.fixed_side`), the camera 9 m south of the fire. It saves noon and midnight.
+- **Checks:**
+  - p0_timelapse passes; its light-energy limits are now a share of full strength.
+  - tech_check passes.
+  - play_fixes_check fails only the "wall jump out of a sprint jump" check, which failed before this change too.
+- **Open:**
+  - Striped shadows from leaf cards remain on some bush tops.
+  - The shadow cost is unmeasured on real hardware. `look.light.shadows` false switches shadows off; `shadow_max_m` shortens them.
+- **Reference still has:** ragged leaf-card canopies against the sky; ours are still smooth blobs, which the hard light now shows up.
+
+---
+
 ## 2026-09-28 — Feel pass 2 (the designer's second play)
 - **Jump:** gravity 19.6 → 28 m/s² and take-off 5.2 → 7.6 m/s: a hop is about 1.0–1.1 m high (was 0.7) with the same 0.53 s in the air, so it's higher and less floaty. Fast-fall 26 m/s. Swings keep their old rhythm (swing gravity_scale 0.7).
 - **Wall jump:**
