@@ -184,8 +184,8 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 	var map: PlanetData = world.planet
 	var lon := CubeSphere.longitude(player_dir)
 	# Solar time: the sky's (warped) clock, so noon is when the sun peaks.
-	var days: float = Astro.apparent_days(world.days, lon)
 	var lat := CubeSphere.latitude(player_dir)
+	var days: float = Astro.apparent_days(world.days, lon, lat)
 	var hours := Astro.local_hours(days, lon)
 	var hh := int(hours)
 	var mm := int((hours - hh) * 60.0)
@@ -226,24 +226,32 @@ func update_readout(world: Node, player_dir: Vector3, elevation_m: float, weathe
 ## The debug overlay's text: real and solar clock, the phase and how far
 ## into it (real minutes at the running day length), the sky's turning
 ## speed, sun and moon elevation, the moon's age and phase, the mansion
-## and the eased cloud cover.
+## and the eased cloud cover; then the calendar at this latitude: day of
+## the year, the sun's declination, hours of daylight (the 24-hour clock)
+## and today's minutes of day, dusk, night and dawn here.
 static func debug_text(world: Node, player_dir: Vector3, weather: Dictionary) -> String:
 	var lon := CubeSphere.longitude(player_dir)
+	var lat := CubeSphere.latitude(player_dir)
 	var clock := fposmod(Astro.time_of_day(world.days) + lon / TAU, 1.0)
-	var days: float = Astro.apparent_days(world.days, lon)
+	var days: float = Astro.apparent_days(world.days, lon, lat)
+	var decl := Astro.declination(world.days)
 	var solar_h := Astro.local_hours(days, lon)
 	var day_min: float = world.day_length_s / 60.0
-	var ph := DayCycle.phase_at(clock)
+	var ph := DayCycle.phase_at(clock, lat, decl)
+	var pm := DayCycle.phase_minutes_at(lat, decl)
+	var scale := day_min / DayCycle.day_length_min()
 	var sun_el := rad_to_deg(Astro.elevation(Astro.sun_dir(days), player_dir))
 	var moon_el := rad_to_deg(Astro.elevation(Astro.moon_dir(days), player_dir))
 	var mansion := Astro.mansion_index(days)
-	return "DEBUG (F3)%s\nClock %s · solar %s · %.0f-min day\n%s %.1f / %.1f min · sky speed x%.2f\nSun %+.1f° · Moon %+.1f°\nMoon day %.1f of %.1f · %s · %d%% lit\nMansion %d %s · cloud %.2f" % [
+	return "DEBUG (F3)%s\nClock %s · solar %s · %.0f-min day\n%s %.1f / %.1f min · sky speed x%.2f\nSun %+.1f° · Moon %+.1f°\nMoon day %.1f of %.1f · %s · %d%% lit\nMansion %d %s · cloud %.2f\nLat %.1f° · year day %d of %d · sun decl %+.1f°\nDaylight %.1f h · day %.0f · dusk %.0f · night %.0f · dawn %.0f min" % [
 		" · dev mode" if world.dev_mode else "",
 		_hhmm(clock * 24.0), _hhmm(solar_h), day_min,
-		String(ph.name).capitalize(), float(ph.into) * day_min, float(ph.length) * day_min, DayCycle.turn_rate(clock),
+		String(ph.name).capitalize(), float(ph.into) * day_min, float(ph.length) * day_min, DayCycle.turn_rate(clock, lat, decl),
 		sun_el, moon_el,
 		Astro.moon_age_days(days), DayCycle.moon_cycle_days(), Astro.phase_name(days), int(round(Astro.moon_illumination(days) * 100.0)),
 		mansion + 1, Astro.MANSION_NAMES[mansion], float(weather.get("cloud", 0.0)),
+		rad_to_deg(lat), int(Astro.year_day(world.days)) + 1, int(DayCycle.year_days()), rad_to_deg(decl),
+		DayCycle.daylight_hours(lat, decl), float(pm.day) * scale, float(pm.dusk) * scale, float(pm.night) * scale, float(pm.dawn) * scale,
 	]
 
 

@@ -156,10 +156,11 @@ func _sweep(label: String, lat_deg: float, lon: float, start_days: float, n_days
 			target["storm"] = [0.0, 0.7, 0.0, 0.9, 0.0, 0.2][k % 6]
 			target["wind"] = Vector3(8, 0, -3) if k % 2 == 0 else Vector3(-4, 0, 6)
 		WeatherSim.ease_toward(eased, target, dt, DayCycle.weather_smoothing_s())
-		var sky_days := Astro.apparent_days(days, lon)
+		var lat := deg_to_rad(lat_deg)
+		var sky_days := Astro.apparent_days(days, lon, lat)
 		sky.update_sky(up, east, north, sky_days, eased, 0.2, dt)
 		var s := _sample(sky)
-		s["sky_speed"] = DayCycle.turn_rate(fposmod(Astro.time_of_day(days) + lon / TAU, 1.0))
+		s["sky_speed"] = DayCycle.turn_rate(fposmod(Astro.time_of_day(days) + lon / TAU, 1.0), lat, Astro.declination(days))
 		if sky._shown_mansion != shown:
 			if shown >= 0:
 				swaps += 1
@@ -231,11 +232,12 @@ func _sweep(label: String, lat_deg: float, lon: float, start_days: float, n_days
 ## must land on the asked-for hour: warp(unwarp(h)) == h.
 func _inverse_check() -> void:
 	var worst := 0.0
-	for i in 480:
-		var h := 24.0 * i / 480.0
-		var d := Astro.days_at_solar_hour(13.0, h, 0.9)
-		var back := Astro.local_hours(Astro.apparent_days(d, 0.9), 0.9)
-		worst = maxf(worst, absf(fposmod(back - h + 12.0, 24.0) - 12.0))
+	for lat in [0.0, 0.8]:
+		for i in 480:
+			var h := 24.0 * i / 480.0
+			var d := Astro.days_at_solar_hour(13.0, h, 0.9, lat)
+			var back := Astro.local_hours(Astro.apparent_days(d, 0.9, lat), 0.9)
+			worst = maxf(worst, absf(fposmod(back - h + 12.0, 24.0) - 12.0))
 	print("[p0] start-hour inverse: worst error %.9f hours (17:00 -> %.4f)" % [worst, Astro.local_hours(Astro.apparent_days(Astro.days_at_solar_hour(13.0, 17.0, 0.9), 0.9), 0.9)])
 	if worst > 1e-6:
 		failures.append("days_at_solar_hour is off by %.9f hours" % worst)

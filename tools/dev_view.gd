@@ -44,7 +44,17 @@ func _run() -> void:
 	main._weather_timer = 1e9
 	main._local_weather = clear
 	main._weather_eased = clear.duplicate()
-	main.hud.visible = false
+	# DEBUG=1 shows the F3 overlay (clock, phase, daylight at this
+	# latitude) and nothing else of the HUD.
+	if OS.get_environment("DEBUG") == "1":
+		for c in main.hud.get_children():
+			if c is CanvasItem:
+				c.visible = false
+		main.hud.toggle_debug()
+		main.hud._debug.add_theme_font_size_override("font_size", 20)
+		main.hud._debug.add_theme_constant_override("outline_size", 8)
+	else:
+		main.hud.visible = false
 	var player: PlanetPlayer = main.player
 	player.set_physics_process(false)
 	player.first_person = false
@@ -71,9 +81,10 @@ func _run() -> void:
 	var base: float = floor(world.days) + 1.0
 	for h in hours:
 		var hour := float(h)
-		var days := Astro.days_at_solar_hour(base, hour, lon)
+		var days := Astro.days_at_solar_hour(base, hour, lon, CubeSphere.latitude(pd))
 		for k in 20:
 			world.days = days
+			main.hud._readout_timer = 0.0
 			await process_frame
 		var img := get_root().get_texture().get_image()
 		var path := out_dir.path_join("%s_%02dh.png" % [tag, int(hour)])

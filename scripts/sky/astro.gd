@@ -2,8 +2,12 @@ class_name Astro
 ## Sun and moon positions in the planet-fixed frame (DESIGN.md "Lighting &
 ## Day-Night Cycle"). Time is measured in in-game days as a float: the
 ## integer part counts days, the fraction is time of day (0.5 = noon at
-## longitude 0). The planet spins about +Y with no axial tilt, so there
-## are no seasons. Day and night are not quite equal: see
+## longitude 0). The planet spins about +Y (north) and is tilted
+## DayCycle.axial_tilt() (23.5 degrees) to its orbit: over a year of
+## DayCycle.year_days() the sun's declination swings between the tropics,
+## so day length depends on latitude and the day of the year (DayCycle),
+## with midnight sun and polar night past the polar circles. Day of the
+## year 0 is the northern spring equinox. Sunrise and sunset: see
 ## PlanetConst.SUNRISE_ELEVATION_DEG.
 ##
 ## MoonMode:
@@ -14,7 +18,10 @@ class_name Astro
 ##                     day (a 29.5-day cycle, DayCycle.moon_cycle_days),
 ##                     and its path is tilted ~5 degrees like Earth's
 ##                     moon's, so it rides a little north or south of the
-##                     sun's path.
+##                     ecliptic. It follows the same tilt as the sun: its
+##                     declination is the ecliptic's at its own place,
+##                     so winter full moons ride high and summer ones
+##                     low.
 ##   LOCKED_OPPOSITE - the moon always sits opposite the sun (the original
 ##                     spec wording). Phase is then only a calendar value.
 
@@ -46,16 +53,39 @@ static func time_of_day(days: float) -> float:
 ## uniform clock; DayCycle.warp sets how fast the sky turns through each
 ## phase, easing between speeds so it never jumps). Pass the result to
 ## anything that draws or lights the sky, or tells the time.
-static func apparent_days(days: float, longitude: float) -> float:
+static func apparent_days(days: float, longitude: float, latitude := 0.0) -> float:
 	var clock := fposmod(time_of_day(days) + longitude / TAU, 1.0)
-	return days + DayCycle.warp(clock) - clock
+	return days + DayCycle.warp(clock, latitude, declination(days)) - clock
 
 
-## The (uniform) days value at which `longitude` sees solar time
-## `local_h` (0-24, 12 = sun highest) on the day of `base_days`.
-static func days_at_solar_hour(base_days: float, local_h: float, longitude: float) -> float:
-	var clock := DayCycle.unwarp(local_h / 24.0)
-	return floor(base_days) + fposmod(clock - longitude / TAU, 1.0)
+## The (uniform) days value at which a place (`longitude`, `latitude`)
+## sees solar time `local_h` (0-24, 12 = sun highest) on the day of
+## `base_days`.
+static func days_at_solar_hour(base_days: float, local_h: float, longitude: float, latitude := 0.0) -> float:
+	var out := floorf(base_days) + 0.5
+	# Twice: the declination (and so the warp) is the answer's own.
+	for i in 2:
+		var clock := DayCycle.unwarp(local_h / 24.0, latitude, declination(out))
+		out = floorf(base_days) + fposmod(clock - longitude / TAU, 1.0)
+	return out
+
+
+## Day of the year, 0 to DayCycle.year_days() (0 = the northern spring
+## equinox; about 91 the June solstice, 182 the autumn equinox, 274 the
+## December solstice).
+static func year_day(days: float) -> float:
+	return fposmod(days + DayCycle.year_start_day(), DayCycle.year_days())
+
+
+## The sun's place along the ecliptic (radians, 0 at the spring equinox).
+static func sun_ecliptic_longitude(days: float) -> float:
+	return TAU * year_day(days) / DayCycle.year_days()
+
+
+## The sun's declination (radians): +tilt at the June solstice, -tilt at
+## the December one.
+static func declination(days: float) -> float:
+	return asin(sin(DayCycle.axial_tilt()) * sin(sun_ecliptic_longitude(days)))
 
 
 ## Local clock at a longitude, as hours 0-24 (noon = 12 when the sun is
@@ -71,7 +101,8 @@ static func subsolar_longitude(days: float) -> float:
 
 static func sun_dir(days: float) -> Vector3:
 	var lon := subsolar_longitude(days)
-	return Vector3(sin(lon), 0.0, cos(lon))
+	var d := declination(days)
+	return Vector3(cos(d) * sin(lon), sin(d), cos(d) * cos(lon))
 
 
 ## Moon's angular distance east of the sun: 0 = new, PI = full.
@@ -89,7 +120,9 @@ static func moon_dir(days: float, mode := MoonMode.ORBITAL) -> Vector3:
 		return -sun_dir(days)
 	var e := moon_elongation(days)
 	var lon := subsolar_longitude(days) + e
-	var lat := MOON_INCLINATION * sin(e + 0.7)
+	# On the ecliptic at its own place (the sun's plus its elongation),
+	# tipped a little off it by its orbit's inclination.
+	var lat := asin(sin(DayCycle.axial_tilt()) * sin(sun_ecliptic_longitude(days) + e)) + MOON_INCLINATION * sin(e + 0.7)
 	return Vector3(cos(lat) * sin(lon), sin(lat), cos(lat) * cos(lon))
 
 

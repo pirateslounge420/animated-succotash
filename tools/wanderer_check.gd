@@ -144,7 +144,7 @@ func frames(n: int) -> void:
 
 
 func _hold_noon() -> void:
-	world.days = Astro.days_at_solar_hour(world.days, 11.0, CubeSphere.longitude(player.surface_dir))
+	world.days = Astro.days_at_solar_hour(world.days, 11.0, CubeSphere.longitude(player.surface_dir), CubeSphere.latitude(player.surface_dir))
 
 
 func shot(sname: String, n := 3) -> Image:

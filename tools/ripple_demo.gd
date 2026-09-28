@@ -226,7 +226,7 @@ func _at(d: Vector3, h: float) -> Vector3:
 
 
 func _set_hour(h: float) -> void:
-	world.days = Astro.days_at_solar_hour(world.days, h, CubeSphere.longitude(spot))
+	world.days = Astro.days_at_solar_hour(world.days, h, CubeSphere.longitude(spot), CubeSphere.latitude(spot))
 
 
 func _rain(mm_h: float) -> void:

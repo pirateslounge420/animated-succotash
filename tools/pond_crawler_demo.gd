@@ -99,7 +99,7 @@ func frames(n: int) -> void:
 
 
 func set_time(local_h: float, d: Vector3) -> void:
-	world.days = Astro.days_at_solar_hour(world.days, local_h, CubeSphere.longitude(d))
+	world.days = Astro.days_at_solar_hour(world.days, local_h, CubeSphere.longitude(d), CubeSphere.latitude(d))
 
 
 func goto(d: Vector3) -> void:

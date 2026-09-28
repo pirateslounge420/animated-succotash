@@ -109,7 +109,7 @@ func _setup() -> void:
 	# the cue reads, and the clock is set for its longitude.
 	await _goto(cam_d)
 	main.player.visible = false
-	world.days = Astro.days_at_solar_hour(world.days, 23.0, CubeSphere.longitude(cam_d))
+	world.days = Astro.days_at_solar_hour(world.days, 23.0, CubeSphere.longitude(cam_d), CubeSphere.latitude(cam_d))
 	main._local_weather = {"wind": along * 1.0, "rain_mm_h": 0.0, "snow": false, "temp_c": 2.0, "storm": 0.0, "clear": 1.0, "cloud": 0.15}
 	await frames(40)
 	print("[demo] local %.1f h, daylight %.2f, moon %.2f lit, biome %s" % [Astro.local_hours(world.days, CubeSphere.longitude(cam_d)), main.sky.daylight,

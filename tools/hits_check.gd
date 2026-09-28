@@ -76,7 +76,7 @@ func _run() -> void:
 	# Clear, still weather, midday.
 	main._weather_timer = 1e9
 	main._local_weather = {"wind": Vector3(0.3, 0, 0.2), "rain_mm_h": 0.0, "snow": false, "temp_c": 16.0, "storm": 0.0, "clear": 1.0, "cloud": 0.1}
-	world.days = Astro.days_at_solar_hour(world.days, 12.5, CubeSphere.longitude(player.surface_dir))
+	world.days = Astro.days_at_solar_hour(world.days, 12.5, CubeSphere.longitude(player.surface_dir), CubeSphere.latitude(player.surface_dir))
 	await frames(10)
 	if "--shots" in OS.get_cmdline_user_args():
 		await _shots()

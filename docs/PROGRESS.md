@@ -4,6 +4,43 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-28 — Session 2, Step 2: derived day/night (addendum §F)
+- **Tilt:**
+  - Axial tilt is 23.5° and the year is 365 game days; day of the year 0 is the northern spring equinox. Game day 0 is year day 0 (`year_start_day`); the world clock starts on day 13.6.
+  - The sun's declination swings ±23.5°.
+  - The moon follows the same geometry: its declination is the ecliptic's at its own place (plus its 5° inclination). At 45° N the winter full moon rides 65° high at midnight, the summer one 18°.
+- **The warp is now astronomy:**
+  - The sky turns at one of three speeds (night, twilight within ±10°, day), blended over 4° of sun elevation.
+  - The speeds are calibrated once so the equator on an equinox gives exactly the reference 60/18/48/18.
+  - Anywhere else the same speeds act on that place's sun, and the turn is scaled to still take 144 minutes.
+  - Day, dusk, night and dawn therefore derive from latitude and declination.
+- **Measured** (`tools/daylight_check.gd`; minutes day / dusk / night / dawn):
+
+  | Place | Date | Daylight | Day / dusk / night / dawn (min) |
+  |---|---|---|---|
+  | Equator | Equinox | 14.1 h | 60 / 18 / 48 / 18 |
+  | Equator | Solstice | 14.2 h | 58.5 / 19.3 / 46.8 / 19.3 |
+  | 45° N | Equinox | 14.4 h | 53 / 24 / 43 / 24 |
+  | 45° N | June | 16.7 h | 65 / 27 / 25 / 27 |
+  | 45° N | December | 12.2 h | 32 / 29 / 55 / 29 |
+  | 75° N | June | 24 h (midnight sun) | 107 / 37 / 0 / 0 |
+  | 75° N | December | 0 h (polar night) | 0 / 0 / 102 / 42 |
+
+  Twilight lingers at high latitude (48 min each at 75° on the equinox).
+- **Where it's wired:**
+  - `DayCycle` and `Astro` take a latitude everywhere (main, HUD, tools).
+  - You still wake at the start of dusk: that hour now depends on your latitude and the date.
+  - The weather heats by the tilted sun, so it has seasons on its own.
+- **Dev readout (F3):** latitude, year day, the sun's declination, hours of daylight on the 24-hour clock, and today's minutes of each phase here.
+- **Checks:**
+  - daylight_check passes.
+  - p0_timelapse passes: no jumps, the equator's phases at 59.9 / 18.1 / 47.9 / 18.1, the start-hour inverse exact at two latitudes.
+  - tech_check and play_fixes_check each report 0 fails.
+- **Note for photoperiod:** the reference split puts day plus twilight at 96 of 144 minutes, so the equator gets about 14 h of daylight on the game clock, not 12. Real short-day thresholds (for example cannabis at about 12 h) would never trigger in the tropics unless they are read against that.
+- **Reference still has:** a deep cobalt sky with bold painted clouds by day and indigo with baked stars by night (checklist item 2). Our sky is still the old R1a gradient.
+
+---
+
 ## 2026-09-28 — Session 2, Step 1: dark daylight (addendum §C, lighting model and grade only)
 - **Light:**
   - The sun is the one directional light by day and casts real shadow maps (there were none before): hard-edged, with no blur and soft filtering off; 4 splits over 90 m.

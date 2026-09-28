@@ -50,7 +50,7 @@ func frames(n: int, draw := true) -> void:
 
 
 func _hold_time() -> void:
-	world.days = Astro.days_at_solar_hour(world.days, hour, CubeSphere.longitude(spot))
+	world.days = Astro.days_at_solar_hour(world.days, hour, CubeSphere.longitude(spot), CubeSphere.latitude(spot))
 
 
 func shot(name: String) -> void:

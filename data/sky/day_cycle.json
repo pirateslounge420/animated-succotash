@@ -7,9 +7,15 @@
 		"dawn": 18
 	},
 	"twilight_deg": 10,
-	"rate_blend_min": 12,
+	"rate_blend_deg": 4,
+	"axial_tilt_deg": 23.5,
+	"year_days": 365,
+	"year_start_day": 0,
 	"moon_cycle_days": 29.5,
 	"weather_smoothing_s": 5,
-	"cloud_light_band_deg": [-10, 4],
+	"cloud_light_band_deg": [
+		-10,
+		4
+	],
 	"glyph_fade_s": 2.5
 }

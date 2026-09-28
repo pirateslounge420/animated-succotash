@@ -96,8 +96,10 @@ func _on_planet_ready() -> void:
 	# Start at the very beginning of dusk wherever that is (the designer:
 	# "the spawn in time is right at the beginning of dusk"), so the first
 	# session opens on sunset and then the night.
-	var local_start_h := DayCycle.phase_start_hour("dusk")
-	world.days = Astro.days_at_solar_hour(world.days, local_start_h, CubeSphere.longitude(spawn_dir))
+	# (Dusk's hour depends on the latitude and the day of the year.)
+	var spawn_lat := CubeSphere.latitude(spawn_dir)
+	var local_start_h := DayCycle.phase_start_hour("dusk", spawn_lat, Astro.declination(world.days))
+	world.days = Astro.days_at_solar_hour(world.days, local_start_h, CubeSphere.longitude(spawn_dir), spawn_lat)
 	world.center_on(spawn_dir, PlanetConst.RADIUS_M + world.surface_elevation(spawn_dir))
 
 	chunks = ChunkManager.new()
@@ -233,7 +235,7 @@ func _process(delta: float) -> void:
 	camp.update_camp(delta, player.global_position)
 	var fog: float = world.planet.sample(world.planet.fog, d)
 	Look.apply({"look_planet_center": world.planet_center(), "look_planet_radius": PlanetConst.RADIUS_M})
-	var sky_days := Astro.apparent_days(world.days, CubeSphere.longitude(d))
+	var sky_days := Astro.apparent_days(world.days, CubeSphere.longitude(d), CubeSphere.latitude(d))
 	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), sky_days, weather, fog, delta)
 	var cam := player.camera()
 	var clear := 1.0 - float(weather.get("cloud", 0.0))
