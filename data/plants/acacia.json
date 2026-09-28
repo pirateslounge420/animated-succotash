@@ -108,6 +108,51 @@
       "bird"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "furrowed",
+      "base": "#6a5a4e",
+      "secondary": "#4a3e36",
+      "feature_cm": 2,
+      "roughness": 0.6,
+      "notes": "grey to black-brown, rough and fissured; young twigs reddish; paired thorns: long straight white ones and short hooked ones"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#5e8a48",
+      "underside": "#6e9a58",
+      "gloss": 0.2,
+      "veins": "none",
+      "vein_colour": "#5e8a48",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       3
+      ],
+      "notes": "tiny feathery bipinnate leaves, minute leaflets; foliage fine grey-green haze"
+     },
+     "flower": {
+      "colour": "#f8f4e0",
+      "secondary": "#e8d890",
+      "form": "small creamy-white fluffy balls in clusters",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#c8a868",
+      "form": "pale yellow-brown pods twisted into tight spirals and coils, 8-12 cm; fall for browsers"
+     },
+     "seasonal": "drops leaves in the long dry season; flushes with rains",
+     "silhouette": "the flat-top: a wide, perfectly flat or slightly domed umbrella crown on a short trunk or several leaning stems; the savanna signature",
+     "confidence": "documented",
+     "refs": "Wikipedia Vachellia tortilis; Kew POWO; PlantZAfrica"
     }
    },
    {
@@ -211,6 +256,51 @@
       "bird"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "papery",
+      "base": "#c8d040",
+      "secondary": "#8aa030",
+      "feature_cm": 1,
+      "roughness": 0.2,
+      "notes": "smooth powdery lime-yellow to greenish-yellow bark over the whole trunk and limbs, peeling in thin papery flakes; the powder rubs off yellow"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.35,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#6a9a4e",
+      "underside": "#7aa85e",
+      "gloss": 0.2,
+      "veins": "none",
+      "vein_colour": "#6a9a4e",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       8
+      ],
+      "notes": "fine feathery bipinnate leaves, small leaflets; sparse airy canopy; long straight white paired thorns"
+     },
+     "flower": {
+      "colour": "#f0d040",
+      "secondary": "#e8c020",
+      "form": "bright golden-yellow fluffy pompom balls in clusters",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#b09858",
+      "form": "flat straight pale brown papery pods 5-10 cm, constricted between seeds"
+     },
+     "seasonal": "briefly deciduous in dry season; none strong",
+     "silhouette": "tall slender luminous yellow-green trunk with a sparse, spreading, flat-topped crown; standing in wet pans and river edges",
+     "confidence": "documented",
+     "refs": "Wikipedia Vachellia xanthophloea; PlantZAfrica; Kew POWO"
     }
    },
    {
@@ -314,6 +404,51 @@
       "bird"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "furrowed",
+      "base": "#5a4a40",
+      "secondary": "#3a3028",
+      "feature_cm": 3,
+      "roughness": 0.7,
+      "notes": "grey to blackish-brown, deeply furrowed; young stems shiny red-brown; paired straight whitish spines with swollen bases to 6 cm"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.4,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#4e8a48",
+      "underside": "#5e9a58",
+      "gloss": 0.25,
+      "veins": "none",
+      "vein_colour": "#4e8a48",
+      "margin": "entire",
+      "size_cm": [
+       2,
+       5
+      ],
+      "notes": "bipinnate, 2-5 pairs of pinnae with 8-18 pairs of small leaflets; denser and darker green than tortilis"
+     },
+     "flower": {
+      "colour": "#f0c830",
+      "secondary": "#e8b820",
+      "form": "bright golden-yellow ball flowers, late winter to summer",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#b0a890",
+      "form": "large thick half-moon / kidney pods to 13 x 5 cm covered in velvety grey hairs; do not split"
+     },
+     "seasonal": "semi-deciduous; briefly bare in late dry season",
+     "silhouette": "wide spreading rounded to flat umbrella crown on a stout dark trunk; the lone big tree of the Kalahari dunes",
+     "confidence": "documented",
+     "refs": "PlantZAfrica Vachellia erioloba; Wikipedia; Kew POWO"
     }
    },
    {
@@ -417,6 +552,51 @@
       "bird"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "peeling",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#6a5a4e",
+      "secondary": "#4a3e34",
+      "feature_cm": 2,
+      "roughness": 0.6,
+      "notes": "dark grey, rough, fibrous and fissured, flaking in narrow strips; no thorns (Australian wattle)"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#7a8a68",
+      "underside": "#7a8a68",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#7a8a68",
+      "margin": "entire",
+      "size_cm": [
+       3,
+       10
+      ],
+      "notes": "narrow grey-green to silver-grey phyllodes (flattened leaf stalks), needle-like, held upright; whole bush a dull silvery haze"
+     },
+     "flower": {
+      "colour": "#f0d040",
+      "secondary": "#e8c828",
+      "form": "short bright yellow cylindrical spikes after rain",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#b0a070",
+      "form": "flat papery pale brown pods 2-4 cm, oblong"
+     },
+     "seasonal": "evergreen; none; flowers opportunistically after rain",
+     "silhouette": "a low grey-green upright shrub or small tree with a narrow, upswept, broom-like crown of vertical branches; in endless open stands",
+     "confidence": "documented",
+     "refs": "Wikipedia Acacia aneura; WorldWideWattle; Kew POWO"
     }
    }
   ],
@@ -522,6 +702,51 @@
       "bird"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "furrowed",
+      "base": "#6a5a50",
+      "secondary": "#4a3e36",
+      "feature_cm": 1,
+      "roughness": 0.5,
+      "notes": "grey-brown, rough; branches studded with hollow black-purple swollen thorn galls 2-3 cm across, each with two long straight white spines"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.5,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "bipinnate",
+      "colour": "#5e8a48",
+      "underside": "#6e9a58",
+      "gloss": 0.2,
+      "veins": "none",
+      "vein_colour": "#5e8a48",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       3
+      ],
+      "notes": "small feathery bipinnate leaves; sparse"
+     },
+     "flower": {
+      "colour": "#f8f4e0",
+      "secondary": "#e8d8a0",
+      "form": "small creamy-white fluffy balls",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#a89060",
+      "form": "small flat brown pods 3-6 cm"
+     },
+     "seasonal": "deciduous in the dry season",
+     "silhouette": "a low scraggly thorn shrub 2-6 m, sparse and spiky, dotted with round dark ant galls that whistle in wind; in dense stands on black clay",
+     "confidence": "documented",
+     "refs": "Wikipedia Vachellia drepanolobium; Kew POWO; Mpala Research Centre"
     }
    }
   ],

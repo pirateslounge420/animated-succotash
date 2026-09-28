@@ -1,0 +1,2607 @@
+{
+ "notes": "Fish and sea creatures in the creatures.json schema plus D4 fields; spawn disabled until Phase 7. Each carries `needs.water_kind` (river/lake/sea), `salt`, `depth_m`, and a `habitat` label; species appear only in their water — river fish never in the sea, reef fish never in cold water — so every biome's water has its own fish. `school.size` > 1 means shoals rendered as one instanced body of many fish. `bait` lists what each takes, and the bait table says where each bait comes from: the fishing loop reads both, so worms catch trout and only a flying fish that landed in your boat at night catches a marlin. Sharks, orcas and the wels are apex_water and hunt the schools; `scent_drawn` species come to blood and carcasses in the water; `hazard` species can hurt a wading or swimming player; `landmark` creatures (whales, whale shark, manta, giant squid) are rare boat encounters the lore system may name; whales `migration` pole-to-tropic with the seasons, and the humpback's song is audible through a boat hull at night. Flying fish glide and land in boats. Salmon run upstream in autumn (reads flow_to) and leap the waterfalls.",
+ "bait": {
+  "worm": "dug from soil with hands or shovel; universal freshwater bait",
+  "insect": "caught from foliage or a snag; trout, grayling, tilapia",
+  "fly": "a feather lure tied from a bird feather and cord; trout, salmon, mahseer",
+  "minnow": "a small fish used live; pike, bass, barracuda",
+  "frog": "caught at a pond; bass, pike, snakehead",
+  "fish_scrap": "cut from a caught fish; catfish, cod, sharks",
+  "meat": "a piece of any carcass; catfish, piranha, sharks — and it draws them",
+  "bread": "camp bread; carp, tilapia",
+  "berry": "foraged; carp and mahseer near overhanging bushes",
+  "fruit": "a fallen fig; mahseer",
+  "salmon_egg": "from a spawning salmon; trout",
+  "squid": "caught at night by lantern light from a boat; tuna, swordfish, grouper",
+  "crab": "from rocky shore or mangrove; sea bass, grouper",
+  "feather": "a bare feather lure; mackerel",
+  "flying_fish": "one that landed in the boat at night; marlin, sailfish, mahi-mahi, tuna",
+  "seal": "a seal carcass; great white only"
+ },
+ "creatures": [
+  {
+   "name": "Brown trout",
+   "genus": "Salmo",
+   "species": "trutta",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    2,
+    14
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 60,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     3.0
+    ]
+   },
+   "size_m": 0.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.8,
+   "shy_m": 3.5,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "fly",
+    "worm",
+    "minnow"
+   ],
+   "habitat": "cold clear river",
+   "reproduce_days": 365,
+   "source": "Cold clear rivers and lakes; lies in pools behind rocks; takes flies at dusk."
+  },
+  {
+   "name": "Rainbow trout",
+   "genus": "Oncorhynchus",
+   "species": "mykiss",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    4,
+    16
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 60,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     3.0
+    ]
+   },
+   "size_m": 0.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.8,
+   "shy_m": 3.5,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "fly",
+    "worm",
+    "salmon_egg"
+   ],
+   "habitat": "cold clear river",
+   "reproduce_days": 365,
+   "source": "Fast cold rivers; leaps."
+  },
+  {
+   "name": "Atlantic salmon",
+   "genus": "Salmo",
+   "species": "salar",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    2,
+    12
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 30,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     3.0
+    ]
+   },
+   "size_m": 1.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.5,
+   "shy_m": 4.0,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "fly",
+    "minnow"
+   ],
+   "habitat": "cold clear river",
+   "reproduce_days": 365,
+   "source": "Runs upriver from the sea in autumn to spawn in gravel; leaps falls — reads flow_to upstream; a seasonal migration.",
+   "migration": "upstream_autumn",
+   "anadromous": true
+  },
+  {
+   "name": "Grayling",
+   "genus": "Thymallus",
+   "species": "thymallus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    0,
+    12
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 24,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     3.0
+    ]
+   },
+   "size_m": 0.4,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.6,
+   "shy_m": 3.4,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "fly",
+    "insect"
+   ],
+   "habitat": "cold clear river",
+   "reproduce_days": 365,
+   "source": "Sail-finned; clean northern rivers."
+  },
+  {
+   "name": "Northern pike",
+   "genus": "Esox",
+   "species": "lucius",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    0,
+    16
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 88,
+   "needs": {
+    "open_water": true,
+    "water_kind": "lake",
+    "salt": false,
+    "depth_m": [
+     0.5,
+     20.0
+    ]
+   },
+   "size_m": 1.2,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.8,
+   "shy_m": 4.2,
+   "sound": "none",
+   "trophic": "apex_water",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "minnow",
+    "frog",
+    "fish_scrap"
+   ],
+   "habitat": "cold lake",
+   "reproduce_days": 365,
+   "source": "Weedy lake margins; ambush predator; eats ducklings."
+  },
+  {
+   "name": "European perch",
+   "genus": "Perca",
+   "species": "fluviatilis",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    2,
+    18
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 23,
+   "needs": {
+    "open_water": true,
+    "water_kind": "lake",
+    "salt": false,
+    "depth_m": [
+     0.5,
+     20.0
+    ]
+   },
+   "size_m": 0.35,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.5,
+   "shy_m": 3.35,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "worm",
+    "minnow"
+   ],
+   "habitat": "cold lake",
+   "reproduce_days": 365,
+   "source": "Striped; shoals in weed beds."
+  },
+  {
+   "name": "Common carp",
+   "genus": "Cyprinus",
+   "species": "carpio",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    8,
+    26
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "any",
+   "one_per_radius_m": 28,
+   "needs": {
+    "open_water": true,
+    "water_kind": "lake",
+    "salt": false,
+    "depth_m": [
+     0.5,
+     15.0
+    ]
+   },
+   "size_m": 0.8,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.2,
+   "shy_m": 3.8,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "bread",
+    "worm",
+    "berry"
+   ],
+   "habitat": "warm lake or swamp",
+   "reproduce_days": 365,
+   "source": "Muddy slow water; roots the bottom and clouds it."
+  },
+  {
+   "name": "Largemouth bass",
+   "genus": "Micropterus",
+   "species": "salmoides",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    10,
+    26
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "dusk",
+   "one_per_radius_m": 60,
+   "needs": {
+    "open_water": true,
+    "water_kind": "lake",
+    "salt": false,
+    "depth_m": [
+     0.5,
+     15.0
+    ]
+   },
+   "size_m": 0.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.8,
+   "shy_m": 3.5,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "frog",
+    "minnow",
+    "insect"
+   ],
+   "habitat": "warm lake or swamp",
+   "reproduce_days": 365,
+   "source": "Warm weedy lakes; strikes surface lures at dusk."
+  },
+  {
+   "name": "Channel catfish",
+   "genus": "Ictalurus",
+   "species": "punctatus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    10,
+    28
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "night",
+   "one_per_radius_m": 76,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     6.0
+    ]
+   },
+   "size_m": 0.9,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.4,
+   "shy_m": 3.9,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "fish_scrap",
+    "worm",
+    "meat"
+   ],
+   "habitat": "warm slow river",
+   "reproduce_days": 365,
+   "source": "Muddy rivers; night feeder by smell."
+  },
+  {
+   "name": "Wels catfish",
+   "genus": "Silurus",
+   "species": "glanis",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    8,
+    24
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "night",
+   "one_per_radius_m": 140,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     6.0
+    ]
+   },
+   "size_m": 2.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 4.8,
+   "shy_m": 5.5,
+   "sound": "none",
+   "trophic": "apex_water",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "fish_scrap",
+    "meat"
+   ],
+   "habitat": "warm slow river",
+   "reproduce_days": 365,
+   "source": "Deep slow European rivers; a monster that takes ducks; rare variant reaches 3 m.",
+   "rare_variant": true
+  },
+  {
+   "name": "Nile tilapia",
+   "genus": "Oreochromis",
+   "species": "niloticus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    18,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 24,
+   "needs": {
+    "open_water": true,
+    "water_kind": "lake",
+    "salt": false,
+    "depth_m": [
+     0.5,
+     15.0
+    ]
+   },
+   "size_m": 0.4,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.6,
+   "shy_m": 3.4,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "bread",
+    "insect",
+    "worm"
+   ],
+   "habitat": "warm lake or swamp",
+   "reproduce_days": 365,
+   "source": "African lakes and rivers; mouth-brooding cichlid; camp staple."
+  },
+  {
+   "name": "Peacock bass",
+   "genus": "Cichla",
+   "species": "ocellaris",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    22,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 68,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     6.0
+    ]
+   },
+   "size_m": 0.7,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.0,
+   "shy_m": 3.7,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "minnow",
+    "frog"
+   ],
+   "habitat": "warm slow river",
+   "reproduce_days": 365,
+   "source": "Amazon rivers; the aggressive cichlid."
+  },
+  {
+   "name": "Red-bellied piranha",
+   "genus": "Pygocentrus",
+   "species": "nattereri",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    22,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 23,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     6.0
+    ]
+   },
+   "size_m": 0.3,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.4,
+   "shy_m": 3.3,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "meat",
+    "fish_scrap"
+   ],
+   "habitat": "warm slow river",
+   "reproduce_days": 365,
+   "source": "Amazon; schools; drawn by blood in the water — a carcass in the river summons them.",
+   "scent_drawn": true
+  },
+  {
+   "name": "Arapaima",
+   "genus": "Arapaima",
+   "species": "gigas",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    24,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 160,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     6.0
+    ]
+   },
+   "size_m": 3.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 5.5,
+   "shy_m": 6.0,
+   "sound": "none",
+   "trophic": "apex_water",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "fish_scrap",
+    "meat"
+   ],
+   "habitat": "warm slow river",
+   "reproduce_days": 365,
+   "source": "Amazon floodplain lakes; air-breather that surfaces with a gulp; huge; rare.",
+   "rare_variant": true
+  },
+  {
+   "name": "Electric eel",
+   "genus": "Electrophorus",
+   "species": "electricus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    23,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "night",
+   "one_per_radius_m": 120,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     6.0
+    ]
+   },
+   "size_m": 2.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 4.0,
+   "shy_m": 5.0,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [],
+   "habitat": "warm slow river",
+   "reproduce_days": 365,
+   "source": "Amazon muddy backwaters; shocks anything that touches it, including a wading player.",
+   "hazard": "shock"
+  },
+  {
+   "name": "Mekong giant catfish",
+   "genus": "Pangasianodon",
+   "species": "gigas",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    22,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "any",
+   "one_per_radius_m": 160,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     6.0
+    ]
+   },
+   "size_m": 3.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 5.5,
+   "shy_m": 6.0,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "bread",
+    "fish_scrap"
+   ],
+   "habitat": "warm slow river",
+   "reproduce_days": 365,
+   "source": "Mekong; the largest freshwater fish; mythic-rare.",
+   "rare_variant": true
+  },
+  {
+   "name": "Snakehead",
+   "genus": "Channa",
+   "species": "striata",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    20,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "any",
+   "one_per_radius_m": 72,
+   "needs": {
+    "open_water": true,
+    "water_kind": "lake",
+    "salt": false,
+    "depth_m": [
+     0.5,
+     15.0
+    ]
+   },
+   "size_m": 0.8,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.2,
+   "shy_m": 3.8,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "frog",
+    "minnow",
+    "meat"
+   ],
+   "habitat": "warm lake or swamp",
+   "reproduce_days": 365,
+   "source": "SE Asian swamps; breathes air and crosses land between pools in the wet season.",
+   "walks_on_land": true
+  },
+  {
+   "name": "Alligator gar",
+   "genus": "Atractosteus",
+   "species": "spatula",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    16,
+    28
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "any",
+   "one_per_radius_m": 140,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     6.0
+    ]
+   },
+   "size_m": 2.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 4.8,
+   "shy_m": 5.5,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "fish_scrap",
+    "meat"
+   ],
+   "habitat": "warm slow river",
+   "reproduce_days": 365,
+   "source": "SE US bayous; armoured; surfaces to gulp air.",
+   "rare_variant": true
+  },
+  {
+   "name": "Golden mahseer",
+   "genus": "Tor",
+   "species": "putitora",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    12,
+    24
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 100,
+   "needs": {
+    "open_water": true,
+    "water_kind": "river",
+    "salt": false,
+    "depth_m": [
+     0.0,
+     3.0
+    ]
+   },
+   "size_m": 1.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 3.2,
+   "shy_m": 4.5,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "fly",
+    "fruit",
+    "insect"
+   ],
+   "habitat": "cold clear river",
+   "reproduce_days": 365,
+   "source": "Himalayan foothill rivers; golden scales; takes figs that fall into the water — reads fruit fall."
+  },
+  {
+   "name": "Atlantic herring",
+   "genus": "Clupea",
+   "species": "harengus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    2,
+    14
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 23,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 0.3,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.4,
+   "shy_m": 3.3,
+   "sound": "none",
+   "trophic": "forage",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "fly",
+    "insect"
+   ],
+   "habitat": "cold shelf sea and coast",
+   "reproduce_days": 365,
+   "source": "Vast silver shoals; the base of the northern sea's food web; whales and seabirds follow them."
+  },
+  {
+   "name": "Sardine",
+   "genus": "Sardina",
+   "species": "pilchardus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    12,
+    22
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 22,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 0.2,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.3,
+   "shy_m": 3.2,
+   "sound": "none",
+   "trophic": "forage",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "insect",
+    "bread"
+   ],
+   "habitat": "warm coast",
+   "reproduce_days": 365,
+   "source": "Bait balls off temperate coasts; the sardine run pulls sharks, dolphins and gannets in.",
+   "migration": "coastal_seasonal"
+  },
+  {
+   "name": "Atlantic cod",
+   "genus": "Gadus",
+   "species": "morhua",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    0,
+    12
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 32,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 1.2,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.8,
+   "shy_m": 4.2,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "fish_scrap",
+    "worm",
+    "squid"
+   ],
+   "habitat": "cold shelf sea and coast",
+   "reproduce_days": 365,
+   "source": "Cold shelf seas; the camp's dried-fish staple."
+  },
+  {
+   "name": "Atlantic mackerel",
+   "genus": "Scomber",
+   "species": "scombrus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    8,
+    18
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 24,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 0.4,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.6,
+   "shy_m": 3.4,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "feather",
+    "fish_scrap"
+   ],
+   "habitat": "cold shelf sea and coast",
+   "reproduce_days": 365,
+   "source": "Fast striped shoals near the surface in summer.",
+   "migration": "coastal_seasonal"
+  },
+  {
+   "name": "European sea bass",
+   "genus": "Dicentrarchus",
+   "species": "labrax",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    10,
+    22
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "dusk",
+   "one_per_radius_m": 72,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 0.8,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.2,
+   "shy_m": 3.8,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "minnow",
+    "crab",
+    "squid"
+   ],
+   "habitat": "warm coast",
+   "reproduce_days": 365,
+   "source": "Surf and estuaries; hunts the shallows at dusk."
+  },
+  {
+   "name": "Yellowfin tuna",
+   "genus": "Thunnus",
+   "species": "albacares",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    18,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 40,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     20.0,
+     4000.0
+    ]
+   },
+   "size_m": 2.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 4.0,
+   "shy_m": 5.0,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "squid",
+    "fish_scrap",
+    "flying_fish"
+   ],
+   "habitat": "open ocean",
+   "reproduce_days": 365,
+   "source": "Warm open ocean; fast schools under birds; the big pull.",
+   "migration": "ocean_seasonal"
+  },
+  {
+   "name": "Blue marlin",
+   "genus": "Makaira",
+   "species": "nigricans",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    22,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 200,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     20.0,
+     4000.0
+    ]
+   },
+   "size_m": 4.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 7.0,
+   "shy_m": 7.0,
+   "sound": "none",
+   "trophic": "apex_water",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "flying_fish",
+    "squid",
+    "fish_scrap"
+   ],
+   "habitat": "open ocean",
+   "reproduce_days": 365,
+   "source": "Warm open ocean; the spearfish; leaps when hooked; the fight of a lifetime — only from a boat.",
+   "rare_variant": true
+  },
+  {
+   "name": "Sailfish",
+   "genus": "Istiophorus",
+   "species": "platypterus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    22,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 50,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     20.0,
+     4000.0
+    ]
+   },
+   "size_m": 3.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 5.5,
+   "shy_m": 6.0,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "flying_fish",
+    "squid"
+   ],
+   "habitat": "open ocean",
+   "reproduce_days": 365,
+   "source": "Warm seas; raises its sail to herd sardines; fastest fish."
+  },
+  {
+   "name": "Swordfish",
+   "genus": "Xiphias",
+   "species": "gladius",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    12,
+    26
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "night",
+   "one_per_radius_m": 180,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     20.0,
+     4000.0
+    ]
+   },
+   "size_m": 3.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 6.2,
+   "shy_m": 6.5,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "squid",
+    "fish_scrap"
+   ],
+   "habitat": "open ocean",
+   "reproduce_days": 365,
+   "source": "Deep open ocean; rises at night; the other spearfish.",
+   "rare_variant": true
+  },
+  {
+   "name": "Flying fish",
+   "genus": "Exocoetus",
+   "species": "volitans",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    20,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 23,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     20.0,
+     4000.0
+    ]
+   },
+   "size_m": 0.3,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 1.4,
+   "shy_m": 3.3,
+   "sound": "none",
+   "trophic": "forage",
+   "diet": [
+    "insects",
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "insect"
+   ],
+   "habitat": "open ocean",
+   "reproduce_days": 365,
+   "source": "Warm seas; bursts from the water and glides 50 m on wing-fins, often landing in a boat at night — a real event; chased by tuna and dolphinfish.",
+   "glides": true
+  },
+  {
+   "name": "Mahi-mahi",
+   "genus": "Coryphaena",
+   "species": "hippurus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    20,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 35,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     20.0,
+     4000.0
+    ]
+   },
+   "size_m": 1.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 3.2,
+   "shy_m": 4.5,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "flying_fish",
+    "squid"
+   ],
+   "habitat": "open ocean",
+   "reproduce_days": 365,
+   "source": "Warm seas; blazing green-gold; shadows floating logs and weed."
+  },
+  {
+   "name": "Great barracuda",
+   "genus": "Sphyraena",
+   "species": "barracuda",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    24,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 112,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     40.0
+    ]
+   },
+   "size_m": 1.8,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 3.7,
+   "shy_m": 4.8,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "minnow",
+    "fish_scrap"
+   ],
+   "habitat": "coral or rocky reef",
+   "reproduce_days": 365,
+   "source": "Reef edges; hangs motionless then strikes; drawn to shiny things."
+  },
+  {
+   "name": "Parrotfish",
+   "genus": "Scarus",
+   "species": "coeruleus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    24,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 30,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     40.0
+    ]
+   },
+   "size_m": 1.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.5,
+   "shy_m": 4.0,
+   "sound": "none",
+   "trophic": "grazer",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [],
+   "habitat": "coral or rocky reef",
+   "reproduce_days": 365,
+   "source": "Coral reef; grazes coral and makes the white sand; sleeps in a mucus cocoon."
+  },
+  {
+   "name": "Grouper",
+   "genus": "Epinephelus",
+   "species": "marginatus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    16,
+    28
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 88,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     40.0
+    ]
+   },
+   "size_m": 1.2,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.8,
+   "shy_m": 4.2,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "squid",
+    "crab",
+    "fish_scrap"
+   ],
+   "habitat": "coral or rocky reef",
+   "reproduce_days": 365,
+   "source": "Rocky reefs and wrecks; sits in a hole; sunken temples will have one."
+  },
+  {
+   "name": "Reef shark",
+   "genus": "Carcharhinus",
+   "species": "amblyrhynchos",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    24,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "night",
+   "one_per_radius_m": 112,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     40.0
+    ]
+   },
+   "size_m": 1.8,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 3.7,
+   "shy_m": 4.8,
+   "sound": "none",
+   "trophic": "apex_water",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "fish_scrap",
+    "meat"
+   ],
+   "habitat": "coral or rocky reef",
+   "reproduce_days": 365,
+   "source": "Reef drop-offs; patrols in numbers at dusk; hazard to a wading player.",
+   "hazard": "bite"
+  },
+  {
+   "name": "Tiger shark",
+   "genus": "Galeocerdo",
+   "species": "cuvier",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    20,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "night",
+   "one_per_radius_m": 220,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 4.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 7.8,
+   "shy_m": 7.5,
+   "sound": "none",
+   "trophic": "apex_water",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "meat",
+    "fish_scrap"
+   ],
+   "habitat": "warm coast",
+   "reproduce_days": 365,
+   "source": "Warm coasts, lagoons and river mouths; eats anything; the night hazard of tropical shallows.",
+   "rare_variant": true,
+   "hazard": "bite"
+  },
+  {
+   "name": "Great white shark",
+   "genus": "Carcharodon",
+   "species": "carcharias",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    10,
+    22
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 240,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 5.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 8.5,
+   "shy_m": 8.0,
+   "sound": "none",
+   "trophic": "apex_water",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "meat",
+    "seal"
+   ],
+   "habitat": "cold shelf sea and coast",
+   "reproduce_days": 365,
+   "source": "Cool coasts with seal colonies; breaches; the sea's mythic-tier apex; drawn by blood and carcasses.",
+   "rare_variant": true,
+   "hazard": "bite",
+   "scent_drawn": true
+  },
+  {
+   "name": "Hammerhead",
+   "genus": "Sphyrna",
+   "species": "lewini",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    20,
+    28
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 55,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 3.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 6.2,
+   "shy_m": 6.5,
+   "sound": "none",
+   "trophic": "apex_water",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "fish_scrap"
+   ],
+   "habitat": "warm coast",
+   "reproduce_days": 365,
+   "source": "Warm seamounts; schools by day in hundreds."
+  },
+  {
+   "name": "Whale shark",
+   "genus": "Rhincodon",
+   "species": "typus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    22,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 440,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     20.0,
+     4000.0
+    ]
+   },
+   "size_m": 10.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 16.0,
+   "shy_m": 13.0,
+   "sound": "none",
+   "trophic": "filter",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [],
+   "habitat": "open ocean",
+   "reproduce_days": 365,
+   "source": "Warm open ocean; the largest fish; harmless filter feeder; follows plankton blooms; landmark encounter from a boat.",
+   "landmark": true
+  },
+  {
+   "name": "Manta ray",
+   "genus": "Mobula",
+   "species": "birostris",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    22,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 240,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     40.0
+    ]
+   },
+   "size_m": 5.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 8.5,
+   "shy_m": 8.0,
+   "sound": "none",
+   "trophic": "filter",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [],
+   "habitat": "coral or rocky reef",
+   "reproduce_days": 365,
+   "source": "Reef cleaning stations and open water; somersaults through plankton.",
+   "landmark": true
+  },
+  {
+   "name": "Humpback whale",
+   "genus": "Megaptera",
+   "species": "novaeangliae",
+   "role": "water",
+   "body": "whale",
+   "spawn": "disabled",
+   "temp_c": [
+    2,
+    28
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 160,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     20.0,
+     4000.0
+    ]
+   },
+   "size_m": 14.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 22.0,
+   "shy_m": 17.0,
+   "sound": "song",
+   "trophic": "filter",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [],
+   "habitat": "open ocean",
+   "reproduce_days": 365,
+   "source": "All oceans; feeds on herring and krill in cold seas in summer, breeds in warm lagoons in winter — a planet-scale migration; breaches and sings (audible underwater and through a boat hull); landmark encounter.",
+   "migration": "pole_to_tropic",
+   "landmark": true,
+   "mammal": true
+  },
+  {
+   "name": "Sperm whale",
+   "genus": "Physeter",
+   "species": "macrocephalus",
+   "role": "water",
+   "body": "whale",
+   "spawn": "disabled",
+   "temp_c": [
+    4,
+    28
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "any",
+   "one_per_radius_m": 180,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     20.0,
+     4000.0
+    ]
+   },
+   "size_m": 16.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 25.0,
+   "shy_m": 19.0,
+   "sound": "click",
+   "trophic": "apex_water",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [],
+   "habitat": "open ocean",
+   "reproduce_days": 365,
+   "source": "Deep ocean; dives an hour for squid; clicks; the deep's landmark.",
+   "landmark": true,
+   "mammal": true
+  },
+  {
+   "name": "Orca",
+   "genus": "Orcinus",
+   "species": "orca",
+   "role": "water",
+   "body": "whale",
+   "spawn": "disabled",
+   "temp_c": [
+    0,
+    20
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 100,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 8.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 13.0,
+   "shy_m": 11.0,
+   "sound": "none",
+   "trophic": "apex_water",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "pack",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [],
+   "habitat": "cold shelf sea and coast",
+   "reproduce_days": 365,
+   "source": "Cold coasts; pods hunt seals, salmon and even whales; the sea's pack hunter with the same pack rules as wolves.",
+   "landmark": true,
+   "mammal": true
+  },
+  {
+   "name": "Beluga",
+   "genus": "Delphinapterus",
+   "species": "leucas",
+   "role": "water",
+   "body": "dolphin",
+   "spawn": "disabled",
+   "temp_c": [
+    -2,
+    8
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 65,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 4.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 7.8,
+   "shy_m": 7.5,
+   "sound": "song",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [],
+   "habitat": "cold shelf sea and coast",
+   "reproduce_days": 365,
+   "source": "Arctic estuaries and sea-ice edge; white; sings — the canary of the sea.",
+   "mammal": true
+  },
+  {
+   "name": "Bottlenose dolphin",
+   "genus": "Tursiops",
+   "species": "truncatus",
+   "role": "water",
+   "body": "dolphin",
+   "spawn": "disabled",
+   "temp_c": [
+    10,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 50,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 3.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 5.5,
+   "shy_m": 6.0,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [],
+   "habitat": "warm coast",
+   "reproduce_days": 365,
+   "source": "Coasts everywhere; rides a boat's bow wave; herds sardines with the sailfish.",
+   "friendly": true,
+   "mammal": true
+  },
+  {
+   "name": "Seal",
+   "genus": "Phoca",
+   "species": "vitulina",
+   "role": "water",
+   "body": "seal",
+   "spawn": "disabled",
+   "temp_c": [
+    0,
+    16
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 36,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 1.6,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 3.4,
+   "shy_m": 4.6,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [],
+   "habitat": "cold shelf sea and coast",
+   "reproduce_days": 365,
+   "source": "Cold rocky shores; hauls out on rocks; food for orcas and great whites.",
+   "hauls_out": true,
+   "mammal": true
+  },
+  {
+   "name": "Sea turtle",
+   "genus": "Chelonia",
+   "species": "mydas",
+   "role": "water",
+   "body": "turtle",
+   "spawn": "disabled",
+   "temp_c": [
+    22,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 88,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     40.0
+    ]
+   },
+   "size_m": 1.2,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.8,
+   "shy_m": 4.2,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [],
+   "habitat": "coral or rocky reef",
+   "reproduce_days": 365,
+   "source": "Warm seas; grazes seagrass; comes ashore on beaches at night to lay eggs in sand — nests the birds and crabs raid.",
+   "nest": {
+    "type": "ground",
+    "site": "beach_sand"
+   },
+   "reptile": true
+  },
+  {
+   "name": "Atlantic salmon (sea)",
+   "genus": "Salmo",
+   "species": "salar",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    2,
+    12
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "day",
+   "one_per_radius_m": 30,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     200.0
+    ]
+   },
+   "size_m": 1.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 2.5,
+   "shy_m": 4.0,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     20,
+     500
+    ]
+   },
+   "bait": [
+    "fly",
+    "minnow"
+   ],
+   "habitat": "cold shelf sea and coast",
+   "reproduce_days": 365,
+   "source": "The same fish at sea, growing before its run — one species, two water types.",
+   "anadromous": true
+  },
+  {
+   "name": "Moray eel",
+   "genus": "Gymnothorax",
+   "species": "javanicus",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    24,
+    30
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "night",
+   "one_per_radius_m": 140,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     1.0,
+     40.0
+    ]
+   },
+   "size_m": 2.5,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 4.8,
+   "shy_m": 5.5,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [
+    "fish_scrap"
+   ],
+   "habitat": "coral or rocky reef",
+   "reproduce_days": 365,
+   "source": "Reef holes and sunken ruins; gapes from crevices.",
+   "hazard": "bite"
+  },
+  {
+   "name": "Giant squid",
+   "genus": "Architeuthis",
+   "species": "dux",
+   "role": "water",
+   "body": "fish",
+   "spawn": "disabled",
+   "temp_c": [
+    2,
+    12
+   ],
+   "moisture": [
+    0,
+    1
+   ],
+   "active": "night",
+   "one_per_radius_m": 520,
+   "needs": {
+    "open_water": true,
+    "water_kind": "sea",
+    "salt": true,
+    "depth_m": [
+     20.0,
+     4000.0
+    ]
+   },
+   "size_m": 12.0,
+   "color": "#6A8AA0",
+   "accent": "#D0E0F0",
+   "speed_mps": 19.0,
+   "shy_m": 15.0,
+   "sound": "none",
+   "trophic": "fish",
+   "diet": [
+    "fish"
+   ],
+   "temperament": "skittish",
+   "water_bound": true,
+   "school": {
+    "size": [
+     1,
+     1
+    ]
+   },
+   "bait": [],
+   "habitat": "open ocean",
+   "reproduce_days": 365,
+   "source": "Deep cold ocean; almost never seen; rises at night; the sea's mythic — one per planet.",
+   "rare_variant": true,
+   "landmark": true,
+   "mythic": true
+  }
+ ]
+}

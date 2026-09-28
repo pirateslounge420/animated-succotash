@@ -57,7 +57,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Quiver tree",
@@ -97,7 +99,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Saguaro cactus",
@@ -137,7 +141,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Umbrella thorn",
@@ -178,7 +184,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Velvet mesquite",
@@ -221,7 +229,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Yellow paloverde",
@@ -262,7 +272,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    }
   ],
   "shrub": [
@@ -304,7 +316,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Creosote bush",
@@ -344,7 +358,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Mulga",
@@ -384,7 +400,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "peeling",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Ocotillo",
@@ -424,7 +442,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine"
    },
    {
     "name": "Prickly pear",
@@ -464,7 +484,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Whitethorn acacia",
@@ -504,7 +526,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    }
   ],
   "ground": [
@@ -546,7 +570,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Bursage",
@@ -586,7 +612,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Hard spinifex",
@@ -626,7 +654,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Lechuguilla",
@@ -666,7 +696,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine"
    },
    {
     "name": "Tabush grass",
@@ -706,7 +738,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Welwitschia",
@@ -746,7 +780,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "succulent"
    }
   ],
   "epiphyte": []

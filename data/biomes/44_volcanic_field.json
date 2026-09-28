@@ -57,7 +57,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "birch",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Etna broom tree",
@@ -101,7 +103,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Japanese larch",
@@ -145,7 +149,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "scaly",
+    "leaf_type": "needle"
    },
    {
     "name": "Lodgepole pine",
@@ -189,7 +195,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle"
    },
    {
     "name": "Ohia lehua",
@@ -233,7 +241,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    }
   ],
   "shrub": [
@@ -279,7 +289,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss"
    },
    {
     "name": "Fuji knotweed",
@@ -323,7 +335,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Pumice lupine",
@@ -367,7 +381,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss"
    },
    {
     "name": "Sea buckthorn",
@@ -407,7 +423,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Tea-leaved willow",
@@ -447,7 +465,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Volcanic pioneer shrub",
@@ -491,7 +511,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    }
   ],
   "ground": [
@@ -537,7 +559,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "furry",
+    "leaf_type": "frond"
    },
    {
     "name": "Fireweed",
@@ -577,7 +601,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Lava moss",
@@ -617,7 +643,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss"
    },
    {
     "name": "Lyme grass",
@@ -657,7 +685,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Map lichen",
@@ -697,7 +727,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss"
    },
    {
     "name": "Swordfern",
@@ -737,7 +769,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond"
    }
   ],
   "epiphyte": []

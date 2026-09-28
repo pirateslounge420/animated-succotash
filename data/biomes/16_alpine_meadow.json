@@ -66,7 +66,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "peeling",
+    "leaf_type": "glossy"
    },
    {
     "name": "Dwarf juniper",
@@ -110,7 +112,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle"
    }
   ],
   "ground": [
@@ -156,7 +160,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Alpine wildflowers",
@@ -200,7 +206,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Edelweiss",
@@ -244,7 +252,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss"
    },
    {
     "name": "Gentian",
@@ -288,7 +298,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Mat grass",
@@ -332,7 +344,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Tibetan alpine sedge",
@@ -376,7 +390,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Tufted hairgrass",
@@ -416,7 +432,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    }
   ],
   "epiphyte": []

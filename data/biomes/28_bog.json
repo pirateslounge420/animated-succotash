@@ -57,7 +57,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "scaly",
+    "leaf_type": "needle"
    },
    {
     "name": "Bog pine",
@@ -97,7 +99,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "pine",
+    "leaf_type": "needle"
    },
    {
     "name": "Tamarack",
@@ -137,7 +141,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "scaly",
+    "leaf_type": "needle"
    }
   ],
   "shrub": [
@@ -182,7 +188,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Bog rosemary",
@@ -222,7 +230,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Cranberry",
@@ -262,7 +272,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Heather",
@@ -302,7 +314,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Leatherleaf",
@@ -342,7 +356,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    }
   ],
   "ground": [
@@ -384,7 +400,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Deergrass",
@@ -424,7 +442,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Pitcher plant",
@@ -464,7 +484,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Round-leaved sundew",
@@ -504,7 +526,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Sphagnum moss",
@@ -544,7 +568,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss"
    }
   ],
   "epiphyte": []

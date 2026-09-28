@@ -114,6 +114,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#6a4a3a",
+      "secondary": "#c8b898",
+      "form": "thin fan bracket in overlapping tiers, concentric bands",
+      "size_cm": [
+       2,
+       8
+      ],
+      "texture": "velvety",
+      "gloss": 0.3,
+      "notes": "concentric zones alternating brown, tan, grey-blue, rust, with pale wavy margin"
+     },
+     "underside": {
+      "colour": "#f0ece0",
+      "type": "pores white-cream, tiny"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "tiered brackets on dead hardwood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "shelves of striped fans on a log",
+     "confidence": "documented",
+     "refs": "Wikipedia Trametes versicolor; Phillips"
     }
    },
    {
@@ -224,6 +261,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#8a8a80",
+      "secondary": "#4a3a30",
+      "form": "hoof-shaped hard perennial bracket, grey with concentric ridges",
+      "size_cm": [
+       10,
+       40
+      ],
+      "texture": "hard-crusty",
+      "gloss": 0.3,
+      "notes": "grey to grey-brown hoof with darker brown zoned ridges, pale brown pore edge"
+     },
+     "underside": {
+      "colour": "#c8b898",
+      "type": "pores tan-brown"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "perennial bracket on birch and beech",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "grey hooves stuck to a birch snag",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -334,6 +408,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#d8c8a8",
+      "secondary": "#a8907a",
+      "form": "rounded kidney-shaped bracket, smooth pale brown skin, rolled margin",
+      "size_cm": [
+       10,
+       25
+      ],
+      "texture": "smooth-leathery",
+      "gloss": 0.3,
+      "notes": "pale tan-buff smooth top like a bun, white underside, thick white flesh"
+     },
+     "underside": {
+      "colour": "#f0ece0",
+      "type": "pores white, tiny"
+     },
+     "stipe": {
+      "colour": "#d8c8a8",
+      "height_cm": [
+       0,
+       2
+      ]
+     },
+     "habit": "single annual bracket on dying birch",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "pale buns jutting from a birch trunk",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -444,6 +555,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f89020",
+      "secondary": "#f8d838",
+      "form": "fan-shaped overlapping shelves, wavy, lobed",
+      "size_cm": [
+       10,
+       40
+      ],
+      "texture": "suede-smooth",
+      "gloss": 0.3,
+      "notes": "vivid orange top zones, bright sulphur-yellow margin and underside; fades pale with age"
+     },
+     "underside": {
+      "colour": "#f8e850",
+      "type": "pores bright sulphur yellow"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "massed tiered shelves on oak snags",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "blaze of orange-yellow shelves on an oak",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -554,6 +702,47 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#c8a048",
+      "secondary": "#8a6a3a",
+      "form": "convex to flat cap, honey-brown, darker centre, fine dark scales in the middle",
+      "size_cm": [
+       3,
+       15
+      ],
+      "texture": "slightly sticky",
+      "gloss": 0.3,
+      "notes": "honey-yellow-brown caps with dark scaly centre; stem with a white-yellow ring, tapering; grows in dense clumps"
+     },
+     "underside": {
+      "colour": "#e8dcc0",
+      "type": "gills cream to pinkish-brown"
+     },
+     "stipe": {
+      "colour": "#c8b078",
+      "height_cm": [
+       5,
+       15
+      ]
+     },
+     "habit": "tufted clumps at the base of trees and stumps",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "dense honey-brown clump at a tree base",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com",
+     "glow": {
+      "colour": "#8ac878",
+      "part": "mycelium in wood, faint"
+     }
     }
    },
    {
@@ -664,6 +853,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#8a9aa0",
+      "secondary": "#c8ccc0",
+      "form": "oyster-shell fan cap, smooth, shelving",
+      "size_cm": [
+       5,
+       25
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "grey to grey-brown to blue-grey caps in overlapping shelving clusters, white decurrent gills"
+     },
+     "underside": {
+      "colour": "#f0ece0",
+      "type": "gills white, running down the short stem"
+     },
+     "stipe": {
+      "colour": "#f0ece0",
+      "height_cm": [
+       0,
+       3
+      ]
+     },
+     "habit": "shelving clusters on dead hardwood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "grey shells stacked up a beech log",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -774,6 +1000,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#7a5a3a",
+      "secondary": "#d8c8a8",
+      "form": "convex cap, brown, edges with white cottony flecks and cracking",
+      "size_cm": [
+       5,
+       20
+      ],
+      "texture": "cracked-scaly",
+      "gloss": 0.3,
+      "notes": "umber to tan-brown cap with paler cracks and scattered white flecks; fibrous stem"
+     },
+     "underside": {
+      "colour": "#f0e8d0",
+      "type": "gills white-cream"
+     },
+     "stipe": {
+      "colour": "#c8b898",
+      "height_cm": [
+       3,
+       8
+      ]
+     },
+     "habit": "scattered on fallen hardwood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "brown caps on a fallen oak",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -884,6 +1147,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8d040",
+      "secondary": "#c88a30",
+      "form": "convex to bell cap, sulphur-yellow with tawny-orange centre",
+      "size_cm": [
+       2,
+       7
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "bright sulphur-yellow caps with orange-tan centre; greenish-yellow gills; dense tufts"
+     },
+     "underside": {
+      "colour": "#8aa848",
+      "type": "gills sulphur-yellow turning green-grey then purple-brown"
+     },
+     "stipe": {
+      "colour": "#e8d040",
+      "height_cm": [
+       5,
+       12
+      ]
+     },
+     "habit": "dense tufts on stumps",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "dense bright yellow tuft on a stump",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -994,6 +1294,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e89828",
+      "secondary": "#c86a18",
+      "form": "convex slimy cap, bright orange-tan, darker centre",
+      "size_cm": [
+       2,
+       10
+      ],
+      "texture": "slimy-glossy",
+      "gloss": 0.3,
+      "notes": "glossy orange-yellow caps, stem dark brown velvety below fading tawny above; tufted"
+     },
+     "underside": {
+      "colour": "#f0e0b0",
+      "type": "gills pale cream-yellow"
+     },
+     "stipe": {
+      "colour": "#5a3a20",
+      "height_cm": [
+       3,
+       10
+      ]
+     },
+     "habit": "tufted clusters on elm and willow, winter",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "glossy orange cluster on a frosty snag",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -1104,6 +1441,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#7a6a58",
+      "secondary": "#b8a888",
+      "form": "huge flat semicircular perennial bracket, dull grey-brown, lumpy concentric ridges",
+      "size_cm": [
+       10,
+       60
+      ],
+      "texture": "hard-dull",
+      "gloss": 0.3,
+      "notes": "dull grey-brown lumpy top often dusted rusty-brown with spores; pure white underside"
+     },
+     "underside": {
+      "colour": "#f0ece0",
+      "type": "pores white bruising brown instantly"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "perennial bracket, years of growth",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "huge flat grey shelf on an old snag",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -1214,6 +1588,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#a82818",
+      "secondary": "#e8b838",
+      "form": "kidney-shaped bracket, lacquered red-mahogany with yellow-white growing edge, on a lateral stalk",
+      "size_cm": [
+       5,
+       25
+      ],
+      "texture": "glossy-lacquered",
+      "gloss": 0.3,
+      "notes": "glossy varnished red-brown zones grading to orange-yellow then white at the margin; stalk also lacquered"
+     },
+     "underside": {
+      "colour": "#f0e8d0",
+      "type": "pores cream bruising brown"
+     },
+     "stipe": {
+      "colour": "#8a2818",
+      "height_cm": [
+       3,
+       15
+      ]
+     },
+     "habit": "single stalked bracket at hardwood base",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "shiny red fan on a stalk at a tree base",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -1324,6 +1735,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8c878",
+      "secondary": "#5a3a20",
+      "form": "large flat fan bracket on a short lateral stem, tan with dark brown flattened scales",
+      "size_cm": [
+       10,
+       50
+      ],
+      "texture": "scaly",
+      "gloss": 0.3,
+      "notes": "creamy tan cap patterned with rings of dark brown flat scales like pheasant feathers"
+     },
+     "underside": {
+      "colour": "#f0ece0",
+      "type": "pores white-cream, large angular"
+     },
+     "stipe": {
+      "colour": "#e8c878",
+      "height_cm": [
+       2,
+       6
+      ]
+     },
+     "habit": "shelving brackets in spring",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "big tan feathered fans on an elm",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -1434,6 +1882,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#5a3a30",
+      "secondary": "#c82818",
+      "form": "hoof to shelf bracket, dark grey-brown top, bright red-orange resinous band near the white margin",
+      "size_cm": [
+       5,
+       40
+      ],
+      "texture": "hard-resinous",
+      "gloss": 0.3,
+      "notes": "dark brown to black older zones, glossy red-orange belt, white rim"
+     },
+     "underside": {
+      "colour": "#f0e8d8",
+      "type": "pores cream-white"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "perennial bracket on conifers",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "hard dark hooves with a red band on a spruce snag",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -1544,6 +2029,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#a82828",
+      "secondary": "#d84a48",
+      "form": "tongue-shaped fleshy bracket, blood-red to liver-brown, rough top",
+      "size_cm": [
+       10,
+       25
+      ],
+      "texture": "rough-moist",
+      "gloss": 0.3,
+      "notes": "red-brown liver-like slab, oozes red juice; pale pinkish pore surface"
+     },
+     "underside": {
+      "colour": "#e8c8a0",
+      "type": "pores pale yellow-pink, separate tubes"
+     },
+     "stipe": {
+      "colour": "#a82828",
+      "height_cm": [
+       0,
+       5
+      ]
+     },
+     "habit": "single bracket at oak base in autumn",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "red tongue jutting from an oak base",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -1654,6 +2176,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f8f4ec",
+      "secondary": "#e8d8b8",
+      "form": "rounded mass 10-25 cm of long hanging white spines",
+      "size_cm": [
+       10,
+       25
+      ],
+      "texture": "shaggy",
+      "gloss": 0.3,
+      "notes": "pure white cascading spines like a pom-pom or beard; ages yellow-tan"
+     },
+     "underside": {
+      "colour": "#f8f4ec",
+      "type": "spines white, 1-4 cm long, yellowing with age"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "single cushion on hardwood wounds",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "white shaggy ball on a wounded beech",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -1764,6 +2323,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f8f4ec",
+      "secondary": "#f0e8d8",
+      "form": "openly branched coral-like mass with short spines hanging in rows from the branches",
+      "size_cm": [
+       10,
+       30
+      ],
+      "texture": "branched",
+      "gloss": 0.3,
+      "notes": "white to cream branching coral with rows of tiny hanging teeth; yellows with age"
+     },
+     "underside": {
+      "colour": "#f8f4ec",
+      "type": "spines white, 0.5-1 cm"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "branched mass on fallen hardwood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "white coral bursting from a fallen beech log",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -1874,6 +2470,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#c8c8c0",
+      "secondary": "#8a8a80",
+      "form": "tiny fan or shell cap 1-4 cm, grey-white, hairy, lobed",
+      "size_cm": [
+       1,
+       4
+      ],
+      "texture": "hairy-felted",
+      "gloss": 0.3,
+      "notes": "small greyish-white fuzzy fans, wavy edge, pink-grey split gills underneath"
+     },
+     "underside": {
+      "colour": "#d8a8b0",
+      "type": "gills pinkish-grey, split lengthwise"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "clusters on dead wood worldwide",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "little grey fans scattered on any dead wood",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -1984,6 +2617,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f0a0b0",
+      "secondary": "#f8d0d8",
+      "form": "oyster fan cap, salmon-pink, fading to buff",
+      "size_cm": [
+       3,
+       12
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "bright salmon-pink shelving clusters fading paler with age"
+     },
+     "underside": {
+      "colour": "#f0a0b0",
+      "type": "gills pink, decurrent"
+     },
+     "stipe": {
+      "colour": "#f0c0c8",
+      "height_cm": [
+       0,
+       2
+      ]
+     },
+     "habit": "shelving clusters on tropical dead wood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "pink shells clustered on a fallen tropical log",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -2094,6 +2764,47 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8e0c8",
+      "secondary": "#6a5a48",
+      "form": "funnel-shaped cap, cream to tan with brown, purple or bluish tints",
+      "size_cm": [
+       5,
+       30
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "large creamy fan-funnel caps with dark smudges; whole fruit body glows green at night"
+     },
+     "underside": {
+      "colour": "#e8e0c8",
+      "type": "gills cream, decurrent, glowing"
+     },
+     "stipe": {
+      "colour": "#e8e0c8",
+      "height_cm": [
+       3,
+       8
+      ]
+     },
+     "habit": "clusters at base of eucalypts",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "pale funnels at a eucalypt base, green glow after dark",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com",
+     "glow": {
+      "colour": "#8af0a0",
+      "part": "whole fruit body, strong"
+     }
     }
    },
    {
@@ -2204,6 +2915,47 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f08820",
+      "secondary": "#e86a18",
+      "form": "convex to funnel cap, bright orange, smooth",
+      "size_cm": [
+       5,
+       20
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "vivid orange caps and gills in dense clumps; gills glow faint green at night"
+     },
+     "underside": {
+      "colour": "#f0a030",
+      "type": "gills orange, decurrent, glowing"
+     },
+     "stipe": {
+      "colour": "#e88828",
+      "height_cm": [
+       5,
+       20
+      ]
+     },
+     "habit": "dense clumps at oak base",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "bright orange clump on buried roots",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com",
+     "glow": {
+      "colour": "#8af0a0",
+      "part": "gills, faint"
+     }
     }
    },
    {
@@ -2314,6 +3066,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#c8c8b8",
+      "secondary": "#8a8a78",
+      "form": "thin semicircular bracket, grey-white, hairy, faintly zoned",
+      "size_cm": [
+       3,
+       10
+      ],
+      "texture": "hairy",
+      "gloss": 0.3,
+      "notes": "grey-white hairy zoned top, thin, pale pore surface"
+     },
+     "underside": {
+      "colour": "#f0ece0",
+      "type": "pores white-grey"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "tiered brackets on dead hardwood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "grey hairy fans on a log",
+     "confidence": "documented",
+     "refs": "Wikipedia Trametes hirsuta; Phillips"
     }
    },
    {
@@ -2424,6 +3213,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8c888",
+      "secondary": "#c8a060",
+      "form": "convex to broad umbo cap, buff-tan, hygrophanous paling to cream",
+      "size_cm": [
+       2,
+       6
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "buff tan caps with darker umbo, in arcs and rings in grass; grass ring darker green"
+     },
+     "underside": {
+      "colour": "#f0e8d0",
+      "type": "gills cream, widely spaced"
+     },
+     "stipe": {
+      "colour": "#e8d8b0",
+      "height_cm": [
+       4,
+       8
+      ]
+     },
+     "habit": "rings in grassland",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "arcs of small tan mushrooms in a meadow",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -2534,6 +3360,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f8f4ec",
+      "secondary": "#8a7a68",
+      "form": "tiny white pleated parachute cap 0.5-1.5 cm, sunken centre",
+      "size_cm": [
+       0.5,
+       1.5
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "white pleated caps on black horsehair-thin wiry stems, troops on twigs"
+     },
+     "underside": {
+      "colour": "#f8f4ec",
+      "type": "gills white, attached to a collar"
+     },
+     "stipe": {
+      "colour": "#2a2020",
+      "height_cm": [
+       2,
+       6
+      ]
+     },
+     "habit": "troops on fallen twigs and leaves",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "specks of white parachutes on twigs",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -2644,6 +3507,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f8f4ec",
+      "secondary": "#c8b090",
+      "form": "tall cylindrical cap covered in shaggy white scales tipped tan, opening to a bell, edges dissolving black",
+      "size_cm": [
+       5,
+       15
+      ],
+      "texture": "shaggy",
+      "gloss": 0.3,
+      "notes": "white lawyer's-wig cylinder with tan tip and brown-edged scales; edge liquefies black"
+     },
+     "underside": {
+      "colour": "#f8f4ec",
+      "type": "gills white turning pink then black ink"
+     },
+     "stipe": {
+      "colour": "#f8f4ec",
+      "height_cm": [
+       10,
+       30
+      ]
+     },
+     "habit": "scattered on disturbed ground",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "white shaggy columns on a path edge",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -2754,6 +3654,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#a888b8",
+      "secondary": "#c8a898",
+      "form": "convex to flat cap, lilac-violet fading to tan-brown",
+      "size_cm": [
+       5,
+       15
+      ],
+      "texture": "smooth-moist",
+      "gloss": 0.3,
+      "notes": "lilac-purple cap fading buff from the centre, lilac gills and bulbous stem"
+     },
+     "underside": {
+      "colour": "#a888c8",
+      "type": "gills lilac"
+     },
+     "stipe": {
+      "colour": "#a888c8",
+      "height_cm": [
+       5,
+       10
+      ]
+     },
+     "habit": "scattered in leaf litter, late autumn",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "lilac caps in deep leaf litter",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -2864,6 +3801,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#d8c8a8",
+      "secondary": "#7a5a3a",
+      "form": "egg then flat parasol cap, cream with concentric brown scales and brown umbo",
+      "size_cm": [
+       10,
+       30
+      ],
+      "texture": "scaly",
+      "gloss": 0.3,
+      "notes": "cream parasol with shaggy brown scales, tall stem with brown snakeskin banding and a moveable ring"
+     },
+     "underside": {
+      "colour": "#f0ece0",
+      "type": "gills white, free"
+     },
+     "stipe": {
+      "colour": "#c8b090",
+      "height_cm": [
+       15,
+       40
+      ]
+     },
+     "habit": "scattered in grass and open wood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "tall drumsticks opening to wide parasols in a meadow",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -2974,6 +3948,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f0ece0",
+      "secondary": "#c8b898",
+      "form": "pear-shaped ball 3-6 cm covered in small cone-shaped spines, opening a top pore",
+      "size_cm": [
+       3,
+       6
+      ],
+      "texture": "spiny-warty",
+      "gloss": 0.3,
+      "notes": "white to cream pestle-shaped ball with spiky warts that fall leaving a net pattern; browns with age"
+     },
+     "underside": {
+      "colour": "#f0ece0",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#f0ece0",
+      "height_cm": [
+       2,
+       5
+      ]
+     },
+     "habit": "groups on soil and litter",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "white spiky balls in troops on the forest floor",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -3084,6 +4095,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f8f4ec",
+      "secondary": "#d8c8a0",
+      "form": "huge smooth white ball 20-80 cm, no stem",
+      "size_cm": [
+       20,
+       80
+      ],
+      "texture": "smooth-suede",
+      "gloss": 0.3,
+      "notes": "white leathery sphere like a boulder; yellows then splits brown releasing olive-brown spore dust"
+     },
+     "underside": {
+      "colour": "#f8f4ec",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "single in meadows and edges",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "a white football sitting in a meadow",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -3194,6 +4242,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#a8b868",
+      "secondary": "#e8e8d8",
+      "form": "convex to flat cap, olive-yellow-green with faint radial fibres, satiny",
+      "size_cm": [
+       5,
+       15
+      ],
+      "texture": "satiny-smooth",
+      "gloss": 0.3,
+      "notes": "sickly olive-green to yellow-green cap, white gills, white stem with skirt ring and a sac-like volva at the base"
+     },
+     "underside": {
+      "colour": "#f8f4ec",
+      "type": "gills white, free"
+     },
+     "stipe": {
+      "colour": "#f0ecdc",
+      "height_cm": [
+       8,
+       15
+      ]
+     },
+     "habit": "solitary under oak and beech",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "greenish-capped white mushroom under an oak",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -3304,6 +4389,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e82818",
+      "secondary": "#f8f4ec",
+      "form": "hemispherical to flat cap, scarlet with white warty flecks",
+      "size_cm": [
+       8,
+       20
+      ],
+      "texture": "flecked",
+      "gloss": 0.3,
+      "notes": "brilliant red cap dotted with white pyramidal warts; white stem with skirt and scaly bulbous base; fades orange"
+     },
+     "underside": {
+      "colour": "#f8f4ec",
+      "type": "gills white, free"
+     },
+     "stipe": {
+      "colour": "#f8f4ec",
+      "height_cm": [
+       8,
+       20
+      ]
+     },
+     "habit": "scattered under birch and pine",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "red white-spotted toadstool under birch",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -3414,6 +4536,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#a86a3a",
+      "secondary": "#c8a070",
+      "form": "rounded bun cap, brown like a baked roll, slightly greasy",
+      "size_cm": [
+       8,
+       25
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "chestnut-brown bun cap with pale rim, fat pale club stem with fine white net near the top"
+     },
+     "underside": {
+      "colour": "#e8e8c8",
+      "type": "pores white then yellow-olive"
+     },
+     "stipe": {
+      "colour": "#d8c8a0",
+      "height_cm": [
+       8,
+       20
+      ]
+     },
+     "habit": "scattered under conifers and oak",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "fat brown buns under spruce",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -3524,6 +4683,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#f8c030",
+      "secondary": "#f0b028",
+      "form": "funnel cap with wavy irregular margin, egg-yellow",
+      "size_cm": [
+       3,
+       10
+      ],
+      "texture": "smooth-matte",
+      "gloss": 0.3,
+      "notes": "uniform egg-yolk to apricot yellow funnel with wavy edge and forked ridges"
+     },
+     "underside": {
+      "colour": "#f8c030",
+      "type": "blunt forked ridges, same yellow, running down the stem"
+     },
+     "stipe": {
+      "colour": "#f8c030",
+      "height_cm": [
+       3,
+       8
+      ]
+     },
+     "habit": "scattered in moss under conifers and beech",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "yellow funnels dotting mossy ground",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -3634,6 +4830,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e89040",
+      "secondary": "#7a9a70",
+      "form": "funnel cap, orange with darker concentric zones, greening with bruising",
+      "size_cm": [
+       5,
+       15
+      ],
+      "texture": "smooth-moist",
+      "gloss": 0.3,
+      "notes": "carrot-orange zoned cap with green stains, orange gills and milk, pitted stem"
+     },
+     "underside": {
+      "colour": "#e88838",
+      "type": "gills orange bleeding carrot-orange milk"
+     },
+     "stipe": {
+      "colour": "#e89040",
+      "height_cm": [
+       3,
+       7
+      ]
+     },
+     "habit": "scattered under pine",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "orange funnels with green bruises under pines",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -3744,6 +4977,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#c8a070",
+      "secondary": "#f0e8d8",
+      "form": "convex cap, tan-brown fibrous scales on white ground",
+      "size_cm": [
+       5,
+       20
+      ],
+      "texture": "fibrous-scaly",
+      "gloss": 0.3,
+      "notes": "brown-streaked cream cap, thick white stem with brown cottony ring and scales below; embedded in needles"
+     },
+     "underside": {
+      "colour": "#f8f4ec",
+      "type": "gills white"
+     },
+     "stipe": {
+      "colour": "#f0e8d8",
+      "height_cm": [
+       10,
+       20
+      ]
+     },
+     "habit": "scattered under old pines",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "stout brown-white mushroom half buried under pine",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -3854,6 +5124,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#2a1a18",
+      "secondary": "#4a3a30",
+      "form": "irregular warty black lump 3-10 cm, underground",
+      "size_cm": [
+       3,
+       10
+      ],
+      "texture": "warty-pyramidal",
+      "gloss": 0.3,
+      "notes": "black knobbly lump with pyramidal warts; interior black marbled with white veins"
+     },
+     "underside": {
+      "colour": "#3a2a28",
+      "type": "none; marbled black-white interior"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "underground beneath oak and hazel",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "invisible: bare patch (brule) under an oak",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -3964,6 +5271,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#c8a860",
+      "secondary": "#5a4a38",
+      "form": "conical honeycomb cap of pale tan to grey-brown ridges and dark pits, hollow",
+      "size_cm": [
+       5,
+       12
+      ],
+      "texture": "honeycomb-pitted",
+      "gloss": 0.3,
+      "notes": "sponge-like yellow-tan pitted cone on a white hollow stem"
+     },
+     "underside": {
+      "colour": "#f0e8d8",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#f0e8d8",
+      "height_cm": [
+       3,
+       8
+      ]
+     },
+     "habit": "scattered on burned or disturbed ground in spring",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "tan honeycomb cones in spring leaf litter",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -4074,6 +5418,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#4a3a30",
+      "secondary": "#a88a60",
+      "form": "conical honeycomb cap, dark grey-brown to black ridges, tan pits",
+      "size_cm": [
+       4,
+       10
+      ],
+      "texture": "honeycomb-pitted",
+      "gloss": 0.3,
+      "notes": "dark charcoal-brown pitted cone on a pale stem, in thousands on ash"
+     },
+     "underside": {
+      "colour": "#f0e8d8",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#e8e0d0",
+      "height_cm": [
+       3,
+       8
+      ]
+     },
+     "habit": "mass fruiting on conifer burns",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "black cones dotting a burn scar",
+     "confidence": "partly",
+     "refs": "Wikipedia Morchella exuberans; Phillips"
     }
    },
    {
@@ -4184,6 +5565,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8c860",
+      "secondary": "#d8b850",
+      "form": "hemispherical slimy cap, pale yellow-ochre",
+      "size_cm": [
+       1,
+       4
+      ],
+      "texture": "slimy-glossy",
+      "gloss": 0.3,
+      "notes": "small glossy yellow half-globe on a slender pale stem on dung"
+     },
+     "underside": {
+      "colour": "#4a4a48",
+      "type": "gills grey-black, broad"
+     },
+     "stipe": {
+      "colour": "#e8d890",
+      "height_cm": [
+       4,
+       10
+      ]
+     },
+     "habit": "scattered on herbivore dung",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "little yellow domes on cowpats",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -4294,6 +5712,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#d8c8a0",
+      "secondary": "#e8dcc0",
+      "form": "cup 3-8 cm, inrolled edges, pale tan inside, whitish scurfy outside",
+      "size_cm": [
+       3,
+       8
+      ],
+      "texture": "scurfy",
+      "gloss": 0.3,
+      "notes": "pale buff cups clustered, incurved rims, outside whitish granular"
+     },
+     "underside": {
+      "colour": "#e8dcc0",
+      "type": "none"
+     },
+     "stipe": {
+      "colour": "#000000",
+      "height_cm": [
+       0,
+       0
+      ]
+     },
+     "habit": "clustered on rich ground and dung",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "cluster of pale cups on a midden",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -4404,6 +5859,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#8a7a68",
+      "secondary": "#c8b8a0",
+      "form": "bell-shaped bonnet cap 2-6 cm, grey-brown, radially grooved",
+      "size_cm": [
+       2,
+       6
+      ],
+      "texture": "smooth",
+      "gloss": 0.3,
+      "notes": "grey-brown grooved bells on tough greyish stems in troops"
+     },
+     "underside": {
+      "colour": "#e8dcc8",
+      "type": "gills white-grey turning pinkish"
+     },
+     "stipe": {
+      "colour": "#a89a88",
+      "height_cm": [
+       4,
+       10
+      ]
+     },
+     "habit": "troops on stumps",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "grey bonnets clustered on a stump",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    },
    {
@@ -4514,6 +6006,47 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#e8e8e0",
+      "secondary": "#c8c8b8",
+      "form": "tiny bell cap 0.5-3 cm, pale grey-white, slightly slimy",
+      "size_cm": [
+       0.5,
+       3
+      ],
+      "texture": "slimy",
+      "gloss": 0.3,
+      "notes": "small pale grey-white bonnets on wet wood; glows bright green in the dark"
+     },
+     "underside": {
+      "colour": "#f0f0e8",
+      "type": "gills white, glowing"
+     },
+     "stipe": {
+      "colour": "#e8e8e0",
+      "height_cm": [
+       1,
+       3
+      ]
+     },
+     "habit": "troops on fallen wet wood",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "pale specks on a wet log, green glow at night",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com",
+     "glow": {
+      "colour": "#60f890",
+      "part": "cap and gills, bright"
+     }
     }
    },
    {
@@ -4624,6 +6157,47 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#c8b898",
+      "secondary": "#8a7a68",
+      "form": "tiny bell cap 0.5-2 cm, yellow-brown to grey",
+      "size_cm": [
+       0.5,
+       2
+      ],
+      "texture": "gelatinous",
+      "gloss": 0.3,
+      "notes": "tiny brownish bonnets whose gelatinous stems glow yellow-green continuously"
+     },
+     "underside": {
+      "colour": "#e8e0d0",
+      "type": "gills pale"
+     },
+     "stipe": {
+      "colour": "#d8c8a8",
+      "height_cm": [
+       1,
+       4
+      ]
+     },
+     "habit": "scattered on twigs in deep shade",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "faint green sparks on a twig in deep shade",
+     "confidence": "partly",
+     "refs": "Wikipedia Mycena luxaeterna; Desjardin et al 2010",
+     "glow": {
+      "colour": "#a8f860",
+      "part": "stem, continuous"
+     }
     }
    },
    {
@@ -4734,6 +6308,43 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "cap": {
+      "colour": "#7a5a38",
+      "secondary": "#a88a50",
+      "form": "single stiff wiry stalk 1-3 cm from behind the head of a dead ant, with a swollen red-brown fertile pad",
+      "size_cm": [
+       1,
+       3
+      ],
+      "texture": "wiry",
+      "gloss": 0.3,
+      "notes": "brown thread rising from an ant clamped under a leaf, tipped by a red-brown bulge"
+     },
+     "underside": {
+      "colour": "#a83a28",
+      "type": "none; red-brown fruiting cushion"
+     },
+     "stipe": {
+      "colour": "#7a5a38",
+      "height_cm": [
+       1,
+       3
+      ]
+     },
+     "habit": "on dead ants under leaves",
+     "seasonal": "fruits seasonally then rots or persists (brackets)",
+     "silhouette": "an ant on a leaf underside with a stalk sprouting from its head",
+     "confidence": "documented",
+     "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
     }
    }
   ]

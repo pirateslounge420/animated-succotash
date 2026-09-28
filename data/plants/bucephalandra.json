@@ -112,6 +112,51 @@
       "water"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.0,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#1f4a3a",
+      "underside": "#5a3a5a",
+      "gloss": 0.75,
+      "veins": "pinnate",
+      "vein_colour": "#4a7a5a",
+      "margin": "wavy",
+      "size_cm": [
+       5,
+       20
+      ],
+      "notes": "elliptic-oblong, thick, glossy; blue-green with an iridescent blue sheen and scattered tiny white/yellow dots; purple-tinged undersides and petioles; strongly wavy margin"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#5a3a5a",
+      "markings": "#5a3a5a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "short, purple-flushed"
+     },
+     "flower": {
+      "colour": "#f2f0e8",
+      "secondary": "#e2a3b0",
+      "form": "small white spathe with a pink flush, 2-4 cm, lower part persistent; short white spadix",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#5a8a4a",
+      "form": "small green berries in a squat cluster"
+     },
+     "seasonal": "evergreen; submerged form during floods with more intense colour",
+     "silhouette": "dense low mat of dark glossy leaves creeping over stream rocks",
+     "confidence": "documented",
+     "refs": "Wikipedia Bucephalandra (genus); aquarist descriptions; Kew POWO for name"
     }
    },
    {
@@ -217,6 +262,47 @@
       "water"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.0,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#1f4a5a",
+      "underside": "#4a3a5a",
+      "gloss": 0.85,
+      "veins": "pinnate",
+      "vein_colour": "#4a8a8a",
+      "margin": "wavy",
+      "size_cm": [
+       4,
+       10
+      ],
+      "notes": "oblong-elliptic with strongly undulate margin; dark blue-green with a pronounced metallic blue iridescence and scattered white dots; new leaves reddish"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#4a3a5a",
+      "markings": "#4a3a5a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "short, purple-brown"
+     },
+     "flower": {
+      "colour": "#f8f8f0",
+      "secondary": "#e2a3b0",
+      "form": "small white spathe 2-3 cm, pinkish at base; white spadix",
+      "scent": "none"
+     },
+     "seasonal": "evergreen rheophyte; submerged in spate",
+     "silhouette": "low iridescent blue-green cushion on stream rocks",
+     "confidence": "partly",
+     "refs": "Boyce, Bogner & Mayo 1995 (Aroideana, PDF not fetchable); aquarist trade descriptions; Kew POWO"
     }
    },
    {
@@ -322,6 +408,47 @@
       "water"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.0,
+      "lean": 0.2
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2d6b3c",
+      "underside": "#4a6b4a",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#6a9a6a",
+      "margin": "entire",
+      "size_cm": [
+       18,
+       25
+      ],
+      "notes": "largest of the genus: elliptic blades 18-25 x 6-7 cm, acuminate, punctate beneath, prominent veins; plant 20-40 cm; slightly wavy margin; dark green, faint blue sheen when submerged"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#4a6b3a",
+      "markings": "#4a6b3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "long green petioles from a thick creeping rhizome"
+     },
+     "flower": {
+      "colour": "#f2f0e8",
+      "secondary": "#dfe6c8",
+      "form": "oval white spathe 2.5-3.5 cm, upper part deciduous, lower persistent",
+      "scent": "none"
+     },
+     "seasonal": "evergreen; slow",
+     "silhouette": "a loose clump of upright dark green paddle leaves on a river boulder",
+     "confidence": "documented",
+     "refs": "b-aqua.com species sheet (Bogner protologue measurements); Kew POWO"
     }
    },
    {
@@ -427,6 +554,47 @@
       "water"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.0,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#2d5a3c",
+      "underside": "#4a5a4a",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#5a8a6a",
+      "margin": "wavy",
+      "size_cm": [
+       1,
+       4
+      ],
+      "notes": "tiny narrow-lanceolate blades, dark green, slightly wavy; dense mats in waterfall spray"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#4a5a4a",
+      "markings": "#4a5a4a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "very short"
+     },
+     "flower": {
+      "colour": "#f8f8f0",
+      "secondary": "#f2f0e8",
+      "form": "minute white spathe under 1.5 cm",
+      "scent": "none"
+     },
+     "seasonal": "evergreen; permanently wet spray-zone rheophyte",
+     "silhouette": "a moss-like dark green fuzz on wet rock beside a fall",
+     "confidence": "partly",
+     "refs": "Wong & Boyce protologue (not fetchable); Kew POWO; Gardens' Bulletin Singapore rheophyte review"
     }
    }
   ],

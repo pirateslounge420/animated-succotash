@@ -58,7 +58,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "African baobab",
@@ -161,7 +163,9 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "pink_smooth",
+    "leaf_type": "palmate"
    },
    {
     "name": "Baobab",
@@ -201,7 +205,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "pink_smooth",
+    "leaf_type": "palmate"
    },
    {
     "name": "Boab",
@@ -304,7 +310,9 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "pink_smooth",
+    "leaf_type": "palmate"
    },
    {
     "name": "Cerrado pequi",
@@ -344,7 +352,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Darwin stringybark",
@@ -384,7 +394,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "peeling",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Grandidier's baobab",
@@ -487,7 +499,9 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "pink_smooth",
+    "leaf_type": "palmate"
    },
    {
     "name": "Miombo tree",
@@ -527,7 +541,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Palmyra palm",
@@ -567,7 +583,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "palm",
+    "leaf_type": "frond"
    }
   ],
   "shrub": [
@@ -609,7 +627,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine"
    },
    {
     "name": "Candelabra tree",
@@ -649,7 +669,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine"
    },
    {
     "name": "Savanna bamboo",
@@ -689,7 +711,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "bamboo",
+    "leaf_type": "grass"
    },
    {
     "name": "Sicklebush",
@@ -729,7 +753,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf"
    },
    {
     "name": "Whistling thorn",
@@ -769,7 +795,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf"
    }
   ],
   "ground": [
@@ -814,7 +842,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Fire lily",
@@ -854,7 +884,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "oak",
+    "leaf_type": "palmate"
    },
    {
     "name": "Red grass",
@@ -894,7 +926,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Savanna grass",
@@ -934,7 +968,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "grass"
    },
    {
     "name": "Spear grass",
@@ -974,7 +1010,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "dry_grass"
    },
    {
     "name": "Spinifex",
@@ -1014,7 +1052,9 @@
      "pollinator": "insect",
      "disperser": [],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "moss"
    }
   ],
   "epiphyte": []

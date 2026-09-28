@@ -112,6 +112,51 @@
       "water"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#6a5a48",
+      "secondary": "#8a7a68",
+      "feature_cm": 3,
+      "roughness": 0.7,
+      "notes": "trunk clad in persistent diamond-shaped leaf bases and brown woolly scales; shaggy pineapple-skin look"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.1,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#2e6a34",
+      "underside": "#3e7a44",
+      "gloss": 0.8,
+      "veins": "parallel",
+      "vein_colour": "#2e6a34",
+      "margin": "spiny",
+      "size_cm": [
+       50,
+       150
+      ],
+      "notes": "stiff glossy dark green pinnate fronds in a circular rosette; narrow leaflets with rolled-under margins and sharp tips; new flush pale and woolly"
+     },
+     "flower": {
+      "colour": "#e8b840",
+      "secondary": "#c89830",
+      "form": "male: tall golden cone 30-60 cm; female: round woolly golden-brown dome of leaf-like scales",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#e85a30",
+      "form": "bright orange-red plum-like seeds 3-5 cm among the woolly female cone scales"
+     },
+     "seasonal": "evergreen; none; annual flush of new leaves in one ring",
+     "silhouette": "a stocky shaggy trunk 1-3 m topped with a symmetric dark green stiff feather rosette; branches/clumps with age",
+     "confidence": "documented",
+     "refs": "Wikipedia Cycas revoluta; Kew POWO; Cycad Society"
     }
    },
    {
@@ -218,6 +263,51 @@
       "water"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#5a4e42",
+      "secondary": "#3a3028",
+      "feature_cm": 3,
+      "roughness": 0.7,
+      "notes": "trunk of persistent leaf bases, often charred black by fire, rusty woolly at the crown"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.1,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#4e8a48",
+      "underside": "#5e9a58",
+      "gloss": 0.6,
+      "veins": "parallel",
+      "vein_colour": "#4e8a48",
+      "margin": "entire",
+      "size_cm": [
+       100,
+       200
+      ],
+      "notes": "long pinnate fronds with flat, broader, mid to bright green leaflets; more relaxed and open than revoluta; fresh flush bright lime after fire"
+     },
+     "flower": {
+      "colour": "#d8b040",
+      "secondary": "#b89030",
+      "form": "narrow yellow-brown male cone; female sporophylls in a loose crown",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#e8a030",
+      "form": "large orange-yellow to red seeds 4-5 cm hanging on the female crown"
+     },
+     "seasonal": "evergreen; resprouts bright green from a blackened trunk after fire",
+     "silhouette": "a slender blackened trunk 2-5 m in open savanna with a loose arching crown of pale green fronds; in scattered stands under eucalypts",
+     "confidence": "partly",
+     "refs": "Wikipedia Cycas media; Kew POWO; Flora of Australia"
     }
    },
    {
@@ -324,6 +414,51 @@
       "water"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#6a5a4a",
+      "secondary": "#8a7a68",
+      "feature_cm": 4,
+      "roughness": 0.7,
+      "notes": "thick trunk armoured in persistent grey-brown leaf bases in a spiral, woolly at the top"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.1,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#2e6e3a",
+      "underside": "#3e7e4a",
+      "gloss": 0.8,
+      "veins": "parallel",
+      "vein_colour": "#2e6e3a",
+      "margin": "toothed",
+      "size_cm": [
+       150,
+       250
+      ],
+      "notes": "very long glossy dark green pinnate fronds; broad lance leaflets with a few marginal teeth and conspicuous cross-veins (transvenosus); crown of many fronds"
+     },
+     "flower": {
+      "colour": "#e8a030",
+      "secondary": "#c88020",
+      "form": "large golden-yellow to orange barrel cones, several per crown, 40-60 cm",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#e85a2a",
+      "form": "big orange-red seeds packed in the female cone"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "the tallest cycad: a palm-like column up to 12 m with a big dark glossy crown; whole hillside forests of them",
+     "confidence": "documented",
+     "refs": "Wikipedia Encephalartos transvenosus; PlantZAfrica; Kew POWO"
     }
    },
    {
@@ -430,6 +565,43 @@
       "water"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "frond",
+    "appearance": {
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.2,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#2e6a34",
+      "underside": "#3e7a44",
+      "gloss": 0.7,
+      "veins": "parallel",
+      "vein_colour": "#2e6a34",
+      "margin": "entire",
+      "size_cm": [
+       30,
+       90
+      ],
+      "notes": "stiff glossy dark green pinnate fronds from an underground stem; narrow leathery leaflets; fern-like low clump"
+     },
+     "flower": {
+      "colour": "#a87a48",
+      "secondary": "#8a6a3a",
+      "form": "small rusty-brown cylindrical cones 5-15 cm at ground level",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#e86a30",
+      "form": "bright orange-red seeds exposed as the female cone splits"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "a low stemless clump of dark glossy fern-like fronds 0.5-1 m in open pine flatwoods; reads as a dark fern",
+     "confidence": "documented",
+     "refs": "Wikipedia Zamia integrifolia; Flora of North America; Kew POWO"
     }
    },
    {
@@ -536,6 +708,51 @@
       "water"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "scaly",
+      "base": "#5a4e42",
+      "secondary": "#7a6a5a",
+      "feature_cm": 3,
+      "roughness": 0.6,
+      "notes": "short trunk mostly underground, clad in old leaf bases; fire-blackened"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.2,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "feather-frond",
+      "colour": "#2e6e3c",
+      "underside": "#3e7e4c",
+      "gloss": 0.7,
+      "veins": "parallel",
+      "vein_colour": "#2e6e3c",
+      "margin": "entire",
+      "size_cm": [
+       70,
+       200
+      ],
+      "notes": "long glossy dark green pinnate fronds, arching, with many narrow flat leaflets; leaflets often with a pale/red base; 20-100 fronds"
+     },
+     "flower": {
+      "colour": "#7a9a58",
+      "secondary": "#5a7a48",
+      "form": "green to brown cones: males cylindrical, females barrel-like 30-45 cm, near ground",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#e85a2a",
+      "form": "large orange-red seeds 4-5 cm exposed when the female cone breaks up"
+     },
+     "seasonal": "evergreen; resprouts after fire",
+     "silhouette": "a big dark glossy fountain of arching fronds 1-2 m from the ground, almost trunkless, in colonies under eucalypts",
+     "confidence": "documented",
+     "refs": "Wikipedia Macrozamia communis; PlantNET NSW; Kew POWO"
     }
    }
   ],

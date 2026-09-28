@@ -3,7 +3,7 @@
  "name": "Amorphophallus (aroid family) - genus catalogue",
  "kind": "land",
  "status": "names researched; traits documented for 34 species, estimated for 212",
- "notes": "All 246 species accepted by Kew's Plants of the World Online (fetched 2026-09-26). Every entry carries its own climate band, so this file needs no biome climate block: species_db should load data/plants/*.json exactly like a biome file. 'shape' is 'umbrella' as a placeholder until the 'aroid' shape exists. 'aroid', 'repro' and 'genes' are read by the plant lifecycle/genetics system (spec Phase 6); the current loader ignores them. Colours are in-game R1a-leaning values, not botanical measurements. Each source line says whether traits are documented or estimated.",
+ "notes": "All 246 species accepted by Kew's Plants of the World Online (fetched 2026-09-26). Every entry carries its own climate band, so this file needs no biome climate block: species_db should load data/plants/*.json exactly like a biome file. 'shape' is 'umbrella' as a placeholder until the 'aroid' shape exists. 'aroid', 'repro' and 'genes' are read by the plant lifecycle/genetics system (spec Phase 6); the current loader ignores them. Colours are in-game R1a-leaning values, not botanical measurements. Each source line says whether traits are documented or estimated. 'genus_grammar' gives the shared petiole/leaf/spathe rules and ranges; species without an 'appearance' block are painted by the engine from the grammar, seeded by species name so each is stable.",
  "family_defaults": {
   "shape": "aroid",
   "repro": {
@@ -383,6 +383,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       300,
+       400
+      ],
+      "notes": "petiole 2-3.5 m; lamina 3-4 m wide; narrowly elliptic leaflets with tail-like tips; small tree silhouette"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#7a9a6a",
+      "markings": "#dfe8d0",
+      "marking_size": "bold",
+      "texture": "smooth",
+      "notes": "greyish-green ground; large elongate whitish blotches plus many small scattered dark-brown (#4a2a1a) spots that fuse"
+     },
+     "flower": {
+      "colour": "#6b7a3c",
+      "secondary": "#6a1e4a",
+      "spadix": "#c8a060",
+      "form": "very tall inflorescence (peduncle 2-3 m); olive-green to greyish-purple spathe with pale and dark green spots; inside purple with warty base, pale green mid, purple apex; spadix reddish to pale yellow, 90 cm",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "a lone 4 m green umbrella on a spotted grey pole; in flower a 3 m dark spike",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#e8401f",
+      "form": "cylinder of red berries (typical of genus)"
+     }
     }
    },
    {
@@ -473,6 +519,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       350,
+       450
+      ],
+      "notes": "lamina ~4 m across; lanceolate long-acuminate leaflets 13-25 cm"
+     },
+     "petiole": {
+      "pattern": "spotted",
+      "base": "#2f5a2a",
+      "markings": "#9fd08a",
+      "marking_size": "bold",
+      "texture": "smooth",
+      "notes": "dark green with numerous large and small rounded/elongate-oval pale green spots"
+     },
+     "flower": {
+      "colour": "#3f7a2f",
+      "secondary": "#a9c98a",
+      "spadix": "#4a1f33",
+      "form": "tallest inflorescence in genus, peduncle 3-4 m; spathe dark green grading to pale green, margin dark red-brown (#5a2a1a), base dark olive; inside pale green with reddish-brown spots and red veins; spadix ~150 cm, longer than spathe",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "4 m umbrella on a dark spotted pole; in flower a slim 4 m mast with a green cup",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#e8401f",
+      "form": "red berries (typical of genus)"
+     }
     }
    },
    {
@@ -563,6 +655,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       200,
+       300
+      ],
+      "notes": "large Bornean lowland species; elliptic-lanceolate leaflets 10-22 cm"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#5f7a4a",
+      "markings": "#e9c7cf",
+      "marking_size": "bold",
+      "texture": "smooth",
+      "notes": "base mottled pink, green, blackish-green and dark grey; occasional large pale green/whitish oval spots higher up"
+     },
+     "flower": {
+      "colour": "#6fbf3f",
+      "secondary": "#5a0f2e",
+      "spadix": "#efe8c8",
+      "form": "bright green spathe with occasional white spots and purple-flushed margin; inside purplish at top, creamy-pink (#e2b8b8) middle, dark maroon base; spadix 30-140 cm",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "big glossy green umbrella on a pink-and-grey mottled pole",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#e8401f",
+      "form": "red berries (typical of genus)"
+     }
     }
    },
    {
@@ -653,6 +791,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       400,
+       600
+      ],
+      "notes": "single leaf 2-5 m tall, 6 m across, three main branches; tree-like"
+     },
+     "petiole": {
+      "pattern": "spotted",
+      "base": "#8fbf6a",
+      "markings": "#e8f0d8",
+      "marking_size": "bold",
+      "texture": "smooth",
+      "notes": "light green densely scattered with almost circular whitish spots, like lichen-covered bark; petiole thigh-thick"
+     },
+     "flower": {
+      "colour": "#9fbf7a",
+      "secondary": "#6b0f2a",
+      "spadix": "#d9c57a",
+      "form": "3 m inflorescence; spathe pale green with cream specks outside, ribbed and frilled, deep blackish-purple limb edge; inside dark burgundy-maroon, smooth; spadix appendix dirty yellow below, livid above, 2-3 m",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "a small tree that is one leaf: pale spotted trunk, flat green canopy; in flower a huge maroon funnel with a yellow spire",
+     "confidence": "documented",
+     "refs": "Wikipedia Titan arum; Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#e02a1a",
+      "form": "bright scarlet plum-sized berries in a cylinder like a stack of small tomatoes"
+     }
     }
    }
   ],
@@ -745,7 +929,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus abyssinicus",
@@ -835,6 +1021,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       60,
+       90
+      ],
+      "notes": "lamina ~80 cm; oblanceolate to linear leaflets to 15 cm"
+     },
+     "petiole": {
+      "pattern": "spotted",
+      "base": "#5f7a3c",
+      "markings": "#3e2a4a",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "green, or maroon to brownish-green (#6b3a3a), with darker purplish-green spots"
+     },
+     "flower": {
+      "colour": "#5a6b3c",
+      "secondary": "#5a0f2e",
+      "spadix": "#3b0f2e",
+      "form": "spathe green or greenish-purple with purple lines and spots, or glaucous purple outside; inside deep glossy maroon with a glaucous blue-grey (#8a9aa8) band at the base; spadix shorter than spathe, club-tipped",
+      "scent": "musky"
+     },
+     "seasonal": "strictly dry-season dormant; leaf only in the rains",
+     "silhouette": "knee-high green umbrella in savanna grass; dull purple cup in flower",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#e8401f",
+      "form": "red-orange berries (typical of genus)"
+     }
     }
    },
    {
@@ -925,7 +1157,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus albispathus",
@@ -1015,7 +1249,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus albus",
@@ -1105,6 +1341,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       60,
+       90
+      ],
+      "notes": "lamina ~80 cm, winged rachis; elliptic-lanceolate leaflets 2-12 cm"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#a9c98a",
+      "markings": "#7a9a6a",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "pale green with greyish-green irregular elongate or rounded spots plus whitish (#eef2e0) dots"
+     },
+     "flower": {
+      "colour": "#a9c98a",
+      "secondary": "#f2ecd8",
+      "spadix": "#cfd98a",
+      "form": "pale green spathe spotted dark green with white dots near margin; inside creamy white with faint pale green flush, warty base; spadix bright pale green turning yellowish",
+      "scent": "musky"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "low pale-green umbrella; white-cream cup in flower",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#f06a1f",
+      "form": "orange-red ovoid berries"
+     }
     }
    },
    {
@@ -1195,7 +1477,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus amygdaloides",
@@ -1285,7 +1569,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus andranogidroensis",
@@ -1375,7 +1661,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus angolensis",
@@ -1465,7 +1753,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus angulatus",
@@ -1555,7 +1845,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus angustispathus",
@@ -1645,7 +1937,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus ankarana",
@@ -1735,7 +2029,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus annulifer",
@@ -1825,7 +2121,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus antsingyensis",
@@ -1915,7 +2213,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus aphyllus",
@@ -2005,7 +2305,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus arcuspadix",
@@ -2095,7 +2397,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus ardii",
@@ -2185,7 +2489,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus asper",
@@ -2275,7 +2581,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus asterostigmatus",
@@ -2365,7 +2673,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus atrorubens",
@@ -2455,7 +2765,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus atroviridis",
@@ -2545,6 +2857,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#1f5a3a",
+      "underside": "#8fa89a",
+      "gloss": 0.15,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       30,
+       50
+      ],
+      "notes": "only 5-6 large obovate leaflets; upper side dark emerald green with pinkish-violet margin and bluish sheen; underside greyish-green, hairy"
+     },
+     "petiole": {
+      "pattern": "spotted",
+      "base": "#6a3a2a",
+      "markings": "#e0d8c8",
+      "marking_size": "medium",
+      "texture": "hairy",
+      "notes": "dark reddish-brown, velvety hairy, with rounded dirty-white brown-centred spots and many tiny dirty-white dots"
+     },
+     "flower": {
+      "colour": "#c9b89a",
+      "secondary": "#dfe6c8",
+      "spadix": "#6b4a2a",
+      "form": "spathe dirty white grading to pale brown with small dirty-white spots, pink-violet (#c96b9a) margin; inside pale whitish-green suffused purple near top, pink-violet margin; appendix brown",
+      "scent": "musky"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "low, few-leafleted dark velvety plant on a brown hairy stalk",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -2635,7 +2989,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus bantae",
@@ -2725,7 +3081,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus barbatus",
@@ -2815,7 +3173,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus barthlottii",
@@ -2905,7 +3265,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus baumannii",
@@ -2995,7 +3357,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus beccarii",
@@ -3085,7 +3449,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus bequaertii",
@@ -3175,7 +3541,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus bognerianus",
@@ -3265,7 +3633,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus bolikhamxayensis",
@@ -3355,7 +3725,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus bonaccordensis",
@@ -3445,7 +3817,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus borneensis",
@@ -3535,7 +3909,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus boyceanus",
@@ -3625,7 +4001,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus brachyphyllus",
@@ -3715,7 +4093,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus brevipetiolatus",
@@ -3805,7 +4185,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus brevispathus",
@@ -3895,7 +4277,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus bubenensis",
@@ -3985,7 +4369,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus bufo",
@@ -4075,6 +4461,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       40,
+       50
+      ],
+      "notes": "plant ~1.2 m; lamina ~45 cm; much divided ovate-lanceolate leaflets"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#7a8a6a",
+      "markings": "#4f7a3c",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "mottled grey and green; fairly stout"
+     },
+     "flower": {
+      "colour": "#6b6b3c",
+      "secondary": "#4a1035",
+      "spadix": "#3b0f2e",
+      "form": "toad-like spathe: dirty brownish-green base with blackish-green dots grading to brownish-purple with rounded white spots; inside dark purple base, creamy zone, dark maroon limb with white spots; appendix glossy dark purple, rugulose with shallow pits, ~10 cm",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "grey-green mottled stalk under a mid-size umbrella; warty toad-brown cup in flower",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -4165,6 +4593,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       40,
+       90
+      ],
+      "notes": "umbrella-like compound leaf with obovate-lanceolate lobes 5-12 cm; small round bulbils sit in the forks"
+     },
+     "petiole": {
+      "pattern": "spotted",
+      "base": "#2f5a2a",
+      "markings": "#e9c7cf",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "dark green fleshy petiole mottled with whitish-pink spots"
+     },
+     "flower": {
+      "colour": "#8a9a7a",
+      "secondary": "#d8788f",
+      "spadix": "#e2a3b0",
+      "form": "spathe greyish-green with blackish-green spots outside (often pink-tinged); inside dark pink at base, paler pink toward the top; spadix flesh-pink; bulbils form at the leaf branch points",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "knee-high green umbrella on a pink-flecked stalk; soft pink cup in flower",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#e8401f",
+      "form": "clustered sub-globose berries green ripening to red"
+     }
     }
    },
    {
@@ -4255,7 +4729,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus calcicola",
@@ -4345,7 +4821,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus canaliculatus",
@@ -4435,7 +4913,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus candidissimus",
@@ -4525,7 +5005,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus carneus",
@@ -4615,7 +5097,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus carnosus",
@@ -4705,7 +5189,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus caudatus",
@@ -4795,7 +5281,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus chlorospathus",
@@ -4885,7 +5373,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus cicatricifer",
@@ -4975,7 +5465,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus cidarioides",
@@ -5065,7 +5557,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus cirrifer",
@@ -5155,7 +5649,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus claudelii",
@@ -5245,7 +5741,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus coaetaneus",
@@ -5335,6 +5833,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       80,
+       100
+      ],
+      "notes": "dark green oblanceolate leaflets 15-20 cm; lamina ~1 m"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#2f5a2a",
+      "markings": "#2f5a2a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "uniformly dark green, terete, turgid; 60-120 cm"
+     },
+     "flower": {
+      "colour": "#5f8a3c",
+      "secondary": "#5a6b3c",
+      "spadix": "#cfd98a",
+      "form": "spathe green flushed dirty brownish-purple (#6b4a4a) on the upper half; inside dirty green flushed dark purplish at base and along midrib; spadix pale yellowish-green, narrowly fusiform-conic; flowers WITH the leaf",
+      "scent": "musky"
+     },
+     "seasonal": "leaf and inflorescence present together in summer; dormant tuber in winter",
+     "silhouette": "plain dark-green umbrella with a green-and-brown spike beside it at the same time",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#2f3fa6",
+      "form": "dark blue oval berries ~1 cm"
+     }
     }
    },
    {
@@ -5425,6 +5969,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       60,
+       100
+      ],
+      "notes": "elliptic-oblong leaflets with acuminate tips, decurrent on rachis"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#a9c98a",
+      "markings": "#6b4a2a",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "pale green to pale brownish with numerous elongate to irregular brown to dark-brown spots"
+     },
+     "flower": {
+      "colour": "#7a5a5a",
+      "secondary": "#5a0f2e",
+      "spadix": "#8a6a4a",
+      "form": "frilled pink-purple to brownish-green or pale yellowish-brown spathe (varies by variety); inside verrucose with rounded bumps, purple base; spadix cylindrical, longer than spathe, pale yellowish-brown to dark purplish-brown",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "common ground-tier umbrella; frilled purple-brown cup in monsoon",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#e8401f",
+      "form": "sub-globose red berries 0.8-1.2 cm"
+     }
     }
    },
    {
@@ -5515,7 +6105,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus costatus",
@@ -5605,7 +6197,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus coudercii",
@@ -5695,7 +6289,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus crinitus",
@@ -5785,7 +6381,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus crispifolius",
@@ -5875,7 +6473,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus croatii",
@@ -5965,7 +6565,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus cruddasianus",
@@ -6055,7 +6657,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus curvistylis",
@@ -6145,7 +6749,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus declinatus",
@@ -6235,7 +6841,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus discophorus",
@@ -6325,7 +6933,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus dracontioides",
@@ -6415,7 +7025,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus dumboi",
@@ -6505,7 +7117,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus dunnii",
@@ -6595,6 +7209,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       80,
+       100
+      ],
+      "notes": "lamina ~1 m; lanceolate leaflets dark green above"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#5f8a4a",
+      "markings": "#a9c98a",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "green or greyish-green with numerous elongate confluent pale green or brownish-green spots"
+     },
+     "flower": {
+      "colour": "#9fd08a",
+      "secondary": "#6a1e4a",
+      "spadix": "#efe8c8",
+      "form": "bright pale green spathe with rounded white spots at base grading to whitish-green; inside reddish-purple base, pale green limb; appendix ivory-white; smells of fresh carrots",
+      "scent": "sweet"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "green-and-white speckled cone with a white spadix, later a mid-size umbrella",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts); Plant Delights"
     }
    },
    {
@@ -6685,7 +7341,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus eburneus",
@@ -6775,7 +7433,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus echinatus",
@@ -6865,7 +7525,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus eichleri",
@@ -6955,7 +7617,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus elatus",
@@ -7045,7 +7709,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus elegans",
@@ -7135,7 +7801,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus elliotii",
@@ -7225,7 +7893,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus erythrorrhachis",
@@ -7315,7 +7985,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus excentricus",
@@ -7405,7 +8077,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus fallax",
@@ -7495,7 +8169,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus ferruginosus",
@@ -7585,7 +8261,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus flammeus",
@@ -7675,7 +8353,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus flotoi",
@@ -7765,7 +8445,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus fontarumii",
@@ -7855,7 +8537,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus forbesii",
@@ -7945,7 +8629,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus fornicatus",
@@ -8035,7 +8721,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus fuscus",
@@ -8125,7 +8813,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus galbra",
@@ -8215,6 +8905,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       60,
+       100
+      ],
+      "notes": "lanceolate leaflets 11-20 cm, long-acuminate"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#8fae6a",
+      "markings": "#e8f0d8",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "uniformly pale green, or olive ground with irregular medium-green, white, brown and black spots"
+     },
+     "flower": {
+      "colour": "#cfd98a",
+      "secondary": "#efe8c8",
+      "spadix": "#d9c57a",
+      "form": "pale yellow-green spathe, plain or spotted black/dark green/pale green/white; inside off-white with a yellow (#e8d060) base; fruity scent",
+      "scent": "sweet"
+     },
+     "seasonal": "dry-season dormant (monsoon woodland)",
+     "silhouette": "pale green umbrella in monsoon woodland; small yellow-green cup",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -8305,7 +9037,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus gallowayi",
@@ -8395,7 +9129,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus glaucophyllus",
@@ -8485,7 +9221,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus gliruroides",
@@ -8575,7 +9313,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus glossophyllus",
@@ -8665,7 +9405,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus goetzei",
@@ -8755,7 +9497,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus gomboczianus",
@@ -8845,7 +9589,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus gracilior",
@@ -8935,7 +9681,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus gracilis",
@@ -9025,7 +9773,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus haematospadix",
@@ -9115,7 +9865,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus harmandii",
@@ -9205,7 +9957,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus hayi",
@@ -9295,7 +10049,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus hemicryptus",
@@ -9385,7 +10141,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus henryi",
@@ -9475,6 +10233,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       30,
+       100
+      ],
+      "notes": "leaflet margins start reddish-pink then go green/white; major veins impressed"
+     },
+     "petiole": {
+      "pattern": "spotted",
+      "base": "#3f7a32",
+      "markings": "#e8f0d8",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "mid to dark green with several oval or irregular whitish spots, with or without many small white dots"
+     },
+     "flower": {
+      "colour": "#9fd08a",
+      "secondary": "#5a0f2e",
+      "spadix": "#3b0f2e",
+      "form": "glossy pale green spathe, sometimes purple-flushed, few paler spots; inside dark maroon base grading to dirty whitish/greenish-purple; spadix longer than spathe (20-46 cm), appendix hairy",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "modest green umbrella; glossy green cup with a dark spike",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#2f3fa6",
+      "form": "blue berries"
+     }
     }
    },
    {
@@ -9565,7 +10369,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus hirsutus",
@@ -9655,7 +10461,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus hirtus",
@@ -9745,7 +10553,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus hohenackeri",
@@ -9835,7 +10645,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus hottae",
@@ -9925,7 +10737,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus impressus",
@@ -10015,7 +10829,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus incurvatus",
@@ -10105,7 +10921,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus infundibuliformis",
@@ -10195,7 +11013,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus interruptus",
@@ -10285,7 +11105,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus johnsonii",
@@ -10375,6 +11197,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       80,
+       100
+      ],
+      "notes": "lamina to 1 m; broadly oval leaflets ~12 cm"
+     },
+     "petiole": {
+      "pattern": "spotted",
+      "base": "#4f9a3c",
+      "markings": "#2e4a25",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "bright green with dark green spots; to 100 cm"
+     },
+     "flower": {
+      "colour": "#6b4a3a",
+      "secondary": "#5a2f4f",
+      "spadix": "#4a1f33",
+      "form": "spathe green or reddish-brown, purple toward the margin, to 21 cm; inside purplish, slippery and concave (traps beetles); spadix longer than spathe, ~50 cm; smells of rotting fish and faeces by evening",
+      "scent": "carrion"
+     },
+     "seasonal": "dry-season dormant (W African savanna)",
+     "silhouette": "bright green savanna umbrella; reddish cup with a long dark spike",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#f07a1f",
+      "form": "vivid orange berries ripening from the top down"
+     }
     }
    },
    {
@@ -10465,7 +11333,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus julaihii",
@@ -10555,7 +11425,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus juliae",
@@ -10645,7 +11517,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus kachinensis",
@@ -10735,7 +11609,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus khammouanensis",
@@ -10825,7 +11701,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus kienluongensis",
@@ -10915,7 +11793,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus kiusianus",
@@ -11005,6 +11885,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       60,
+       90
+      ],
+      "notes": "bright green leaflets with a narrow pale violet margin, undulate"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#6b7a55",
+      "markings": "#e8f0d8",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "glossy dirty olive/greyish green with narrowly elongate whitish or very pale green spots and numerous tiny dark green dots"
+     },
+     "flower": {
+      "colour": "#5a2f3f",
+      "secondary": "#e2a3b0",
+      "spadix": "#3b0f2e",
+      "form": "spathe greenish-pink or glossy dark purplish-brown with small whitish spots, margin green with a narrow red-violet line; inside pale pinkish with purple base, or all dark brown, with round whitish spots",
+      "scent": "carrion"
+     },
+     "seasonal": "cold-dormant; leaf in summer only",
+     "silhouette": "olive mottled stalk under a mid-size umbrella; purple-brown speckled cup",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#2f3fa6",
+      "form": "berries turn bright lilac-pink then shiny deep blue"
+     }
     }
    },
    {
@@ -11095,6 +12021,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       130,
+       200
+      ],
+      "notes": "highly dissected; elliptic acuminate leaflets 3-10 cm, dull green"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#e6cfc7",
+      "markings": "#2e4a25",
+      "marking_size": "bold",
+      "texture": "smooth",
+      "notes": "dirty whitish-pink ground almost entirely covered by large elongate dark green confluent spots plus small white dots; scattered warts at base"
+     },
+     "flower": {
+      "colour": "#4a1f33",
+      "secondary": "#3b1130",
+      "spadix": "#3b0f2e",
+      "form": "dark purplish-brown spathe with scattered blackish-green spots; inside blackish-purple and densely warty at base, whitish-purple above; dark purple spadix to 55 cm+ (much longer than spathe); 3-day stench",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "tall umbrella on a pink-grey-and-green mottled pole; dark maroon spike in spring",
+     "confidence": "documented",
+     "refs": "Wikipedia; Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -11185,7 +12153,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus koratensis",
@@ -11275,7 +12245,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus krausei",
@@ -11365,6 +12337,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       100,
+       160
+      ],
+      "notes": "lanceolate leaflets 11-48 cm, green or greyish-green above, paler below"
+     },
+     "petiole": {
+      "pattern": "spotted",
+      "base": "#a9c98a",
+      "markings": "#7a9a6a",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "pale green, base often pale pink or reddish-brown (#c98a8a), with many small and large elliptic spots and white dots"
+     },
+     "flower": {
+      "colour": "#a9c98a",
+      "secondary": "#d9e0a0",
+      "spadix": "#cfd98a",
+      "form": "pale green spathe, slightly darker at base; inside pale yellowish-green, base sometimes maroonish and warty; spadix about as long as spathe; heavy gas-leak stench",
+      "scent": "musky"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "large pale-green umbrella with a pink-footed stalk",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -11455,7 +12469,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus lacourii",
@@ -11545,7 +12561,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus lambii",
@@ -11635,6 +12653,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       150,
+       200
+      ],
+      "notes": "lamina to 2 m; elongate-elliptic leaflets 18-31 cm"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#4f8a3c",
+      "markings": "#eef2e0",
+      "marking_size": "bold",
+      "texture": "rough",
+      "notes": "whitish base with dense marbling of confluent green spots, grading up to continuous green with large whitish/pale green oval spots"
+     },
+     "flower": {
+      "colour": "#7fcf3f",
+      "secondary": "#5a0f2e",
+      "spadix": "#3b0f2e",
+      "form": "bright apple-green glossy spathe with pale ring-like spots, limb green shaded blackish-brown between veins; inside dark maroon with an upper dirty yellowish to pale green zone, warty grooved base; spadix 55-150 cm; urine/gas smell",
+      "scent": "musky"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "big Bornean umbrella on a marbled pole; long dark spike from a green cup",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#f07a1f",
+      "form": "orange berries, eaten fast by birds"
+     }
     }
    },
    {
@@ -11725,7 +12789,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus lanuginosus",
@@ -11798,7 +12864,7 @@
       0.7
      ]
     },
-    "source": "Kew POWO accepted name. Thailand. Woolly (lanuginose) spathe.",
+    "source": "Kew POWO accepted name. Hon Tre Island, Vietnam (type locality; earlier noted as Thailand). Woolly (lanuginose) spathe.",
     "traits": {
      "genus": "Amorphophallus",
      "species": "lanuginosus",
@@ -11815,6 +12881,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       50,
+       80
+      ],
+      "notes": "leaf unknown; genus-typical dissected umbrella assumed"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#6f8a55",
+      "markings": "#dfe8d0",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "leaf undescribed in protologue; painted from genus grammar"
+     },
+     "flower": {
+      "colour": "#8a9a7a",
+      "secondary": "#5a0f2e",
+      "spadix": "#efe8c8",
+      "form": "erect elongate triangular-ovate spathe 13 cm; inside with irregular warts; male zone wrapped in masses of staminodes with long flexuous hairs (the woolly 'lanuginose' look)",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "small umbrella; short woolly-looking spike",
+     "confidence": "typical-of-genus",
+     "refs": "Aroidpedia archive species page (protologue extracts) (type only; leaf unknown)"
     }
    },
    {
@@ -11905,7 +13013,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus leptosoma",
@@ -11995,7 +13105,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus lewallei",
@@ -12085,7 +13197,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus linearis",
@@ -12175,7 +13289,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus linguiformis",
@@ -12265,7 +13381,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus longicomus",
@@ -12355,7 +13473,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus longiconnectivus",
@@ -12445,7 +13565,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus longispathaceus",
@@ -12535,7 +13657,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus longistylus",
@@ -12625,7 +13749,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus longituberosus",
@@ -12715,7 +13841,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus lunatus",
@@ -12805,7 +13933,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus luzoniensis",
@@ -12895,7 +14025,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus lyratus",
@@ -12985,7 +14117,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus macrophyllus",
@@ -13075,7 +14209,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus macrorhizus",
@@ -13165,6 +14301,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#2d6b3c",
+      "underside": "#8fa89a",
+      "gloss": 0.15,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       60,
+       120
+      ],
+      "notes": "elliptic to obovate leaflets 10-36 cm; dark velvety green with narrow reddish margin; underside greyish-green, hairy; creeping rhizome"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#8fae6a",
+      "markings": "#1f2a1a",
+      "marking_size": "bold",
+      "texture": "hairy",
+      "notes": "densely velvety hairy; from pale green with a few elongate whitish spots to reddish-brown (#6a3a2a) with many large confluent blackish-green spots"
+     },
+     "flower": {
+      "colour": "#a9c98a",
+      "secondary": "#9fbf7a",
+      "spadix": "#dfe6c8",
+      "form": "pale green spathe with small darker spots at base, purplish margin, dark green top; inside pale green with purplish margin, base maroon chequered pale green; appendix with a few scattered black hairs",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "dark velvety umbrella on a fuzzy mottled stalk",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -13255,7 +14433,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus mangelsdorffii",
@@ -13345,7 +14525,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus margaritifer",
@@ -13435,7 +14617,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus margretae",
@@ -13525,7 +14709,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus maximus",
@@ -13615,6 +14801,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       100,
+       120
+      ],
+      "notes": "lacy lamina to 1.2 m; lanceolate to obovate leaflets to 19 cm"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#7a9a6a",
+      "markings": "#8a4a6a",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "greyish-green with reddish-purple flushes or mottled; distinct waxy bloom"
+     },
+     "flower": {
+      "colour": "#6b5a6b",
+      "secondary": "#5a1f4a",
+      "spadix": "#3b0f2e",
+      "form": "spathe greyish-purple to greyish-brown base, limb dirty purplish and greyish with strongly sinuous twisted margin; inside purple warty base, glossy purple limb; spadix ~70 cm, weeps droplets on day one; decaying-meat smell",
+      "scent": "carrion"
+     },
+     "seasonal": "dry-season dormant (E Africa)",
+     "silhouette": "largest African species: waxy purple-grey stalk under a lacy umbrella; twisted purple cup",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -13705,7 +14933,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus mayoi",
@@ -13795,7 +15025,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus mekongensis",
@@ -13885,7 +15117,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus merrillii",
@@ -13975,7 +15209,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus mildbraedii",
@@ -14065,7 +15301,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus minimus",
@@ -14155,7 +15393,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus minor",
@@ -14245,7 +15485,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus mirabilis",
@@ -14335,7 +15577,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus mossambicensis",
@@ -14425,7 +15669,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus muelleri",
@@ -14515,6 +15761,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       75,
+       200
+      ],
+      "notes": "highly dissected; up to 40 bulbils (0.5-6 cm) on the leaf branches"
+     },
+     "petiole": {
+      "pattern": "streaked",
+      "base": "#4f6b3c",
+      "markings": "#9fd08a",
+      "marking_size": "bold",
+      "texture": "smooth",
+      "notes": "green, olive, brownish-green or almost black with numerous large elongate-elliptic, diamond or stripe-like pale green spots"
+     },
+     "flower": {
+      "colour": "#a9c98a",
+      "secondary": "#d8788f",
+      "spadix": "#efe8c8",
+      "form": "spathe pale green or pale dirty pink with transversely elongate whitish spots and blackish-green dots, grading to brownish-purple or dark greyish-green above; inside dark pink or pale yellowish-pink grading to purplish-brown with pale spots; spadix 8-30 cm",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "streaked dark stalk under a wide umbrella dotted with bulbils",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#f06a1f",
+      "form": "orange-red berries (spadix persists dry in fruit)"
+     }
     }
    },
    {
@@ -14605,7 +15897,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus myosuroides",
@@ -14695,6 +15989,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       20
+      ],
+      "notes": "small leaf with distinctive pale grey feathering along the midrib"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8fae6a",
+      "markings": "#8fae6a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "slender petiole 18-22 cm x 3-4 mm; colour not in protologue (pale green assumed)"
+     },
+     "flower": {
+      "colour": "#f2f2e8",
+      "secondary": "#f8f8f0",
+      "spadix": "#efe8c8",
+      "form": "tiny white spathe with pale greenish lower half; inside white, shallowly warty base; appendix off-white, thread-like and slightly sinusoid (mouse-tail), ~5 cm",
+      "scent": "none"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "ankle-high; white thumb-sized cup with a wiggly white tail",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#dfe9c8",
+      "form": "berries white at base, pale green above, striate-warty"
+     }
     }
    },
    {
@@ -14785,7 +16125,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus napalensis",
@@ -14875,6 +16217,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       100,
+       150
+      ],
+      "notes": "highly dissected to 1.5 m; elliptic leaflets 8-20 cm with undulate margins"
+     },
+     "petiole": {
+      "pattern": "spotted",
+      "base": "#a9c98a",
+      "markings": "#1f2a1a",
+      "marking_size": "bold",
+      "texture": "smooth",
+      "notes": "pale green with large irregular or elongate-oval dark green or blackish spots"
+     },
+     "flower": {
+      "colour": "#a9c98a",
+      "secondary": "#b8d09a",
+      "spadix": "#cfd98a",
+      "form": "pale green spathe with numerous small conic warts outside; inside pale green, base sometimes pale purplish; appendix covered in small conical warts, pale",
+      "scent": "musky"
+     },
+     "seasonal": "cold and dry dormant (Himalayan foothills); fruits Jul-Sep",
+     "silhouette": "big pale umbrella on a boldly black-spotted stalk; all-green warty cup",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#e8401f",
+      "form": "red berries (typical of genus)"
+     }
     }
    },
    {
@@ -14965,7 +16353,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus natolii",
@@ -15055,7 +16445,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus niahensis",
@@ -15145,6 +16537,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       80,
+       100
+      ],
+      "notes": "moderately dissected, thinly leathery, to 1 m"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#a9c98a",
+      "markings": "#c9dcb5",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "uniform pale green with a few obscure paler spots in some individuals"
+     },
+     "flower": {
+      "colour": "#eef2e0",
+      "secondary": "#f8f8f0",
+      "spadix": "#f2f2e8",
+      "form": "very pale greenish-white to white spathe, lower part sometimes pink-tinged; inside white glossy limb, deep reddish-purple (#6a1e4a) warty lower part; spadix white, spiny; rotten-fish smell",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "pale green umbrella at a limestone cave mouth; white cup with a white spike",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#f07a1f",
+      "form": "deep orange ellipsoid berries, 1-seeded"
+     }
     }
    },
    {
@@ -15235,7 +16673,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus nicolsonianus",
@@ -15325,7 +16765,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus obovoideus",
@@ -15415,7 +16857,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus obscurus",
@@ -15505,7 +16949,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus ochroleucus",
@@ -15595,7 +17041,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus oncophyllus",
@@ -15685,7 +17133,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus ongsakulii",
@@ -15775,6 +17225,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#2d6b3c",
+      "underside": "#7fb070",
+      "gloss": 0.25,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       5,
+       12
+      ],
+      "notes": "fern-like: hundreds of 3-11 mm dark green leaflets with whitish midribs"
+     },
+     "petiole": {
+      "pattern": "striped",
+      "base": "#b8c97a",
+      "markings": "#6b7a4a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "pale yellowish-green to dirty greenish-brown, with or without thin darker stripes"
+     },
+     "flower": {
+      "colour": "#8fa89a",
+      "secondary": "#4a1035",
+      "spadix": "#c9a86a",
+      "form": "tiny spathe greyish-green with parallel dark grey veins outside; inside dark purple strongly warty; appendix pale yellowish-brown, smooth; flowers with the leaf, up to 4 times a season",
+      "scent": "musky"
+     },
+     "seasonal": "leaf and flowers together in the wet season; tuber only 2 cm",
+     "silhouette": "a few-cm fern-like tuft; the smallest of the genus",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#c9dcb5",
+      "form": "tiny bilobed berries pale green with whitish dots"
+     }
     }
    },
    {
@@ -15865,7 +17361,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus operculatus",
@@ -15955,7 +17453,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus opertus",
@@ -16045,7 +17545,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus paeoniifolius",
@@ -16135,6 +17637,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       100,
+       300
+      ],
+      "notes": "plant to 2 m; highly dissected lamina up to 3 m across; 'peony-leaved'"
+     },
+     "petiole": {
+      "pattern": "warty",
+      "base": "#5a3a3a",
+      "markings": "#e9c7cf",
+      "marking_size": "bold",
+      "texture": "warty",
+      "notes": "wild form purplish-brown strongly muricate (rough warty) with light pinkish blotches; cultivated form greenish with white blotches and nearly smooth"
+     },
+     "flower": {
+      "colour": "#7a5a4a",
+      "secondary": "#4a1035",
+      "spadix": "#3b0f2e",
+      "form": "broad frilled campanulate spathe 25x28 cm, brownish-purple with paler blotches and a ruffled purple-brown margin; inside dark purple-maroon, warty base; appendix dark purple-brown, subglobose to conoid, wrinkled brain-like; putrid smell",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "elephant-foot yam: a stout warty dark trunk-like stalk under a wide umbrella; squat purple ruffled bowl in flower",
+     "confidence": "documented",
+     "refs": "Wikipedia; Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#e8401f",
+      "form": "red subglobose/ovoid berries"
+     }
     }
    },
    {
@@ -16225,7 +17773,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus paucisectus",
@@ -16315,7 +17865,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus pendulus",
@@ -16405,7 +17957,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus perakensis",
@@ -16495,7 +18049,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus perrieri",
@@ -16585,7 +18141,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus pilosus",
@@ -16675,7 +18233,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus plicatus",
@@ -16765,7 +18325,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus polyanthus",
@@ -16855,7 +18417,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus prainii",
@@ -16945,6 +18509,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       100,
+       130
+      ],
+      "notes": "lamina ~1.2 m; 4-8 lanceolate caudate-acuminate leaflets per division"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#8fae6a",
+      "markings": "#c9c9c9",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "green mottled with grey, or with white and red (#c96b6b) spots; 1-1.5 m"
+     },
+     "flower": {
+      "colour": "#a9c98a",
+      "secondary": "#d9e0a0",
+      "spadix": "#efe8c8",
+      "form": "pale green spathe spotted white; inside rough purple-brown (#5a2f3f) base, paler above; large smooth cream-coloured appendix 15-20 cm, longer than spathe",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "pale mottled stalk under a mid-size umbrella; cream club rising from a green cup",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -17035,7 +18641,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus prolificus",
@@ -17125,7 +18733,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus pulchellus",
@@ -17215,7 +18825,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus purpurascens",
@@ -17305,7 +18917,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus pusillus",
@@ -17395,7 +19009,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus putii",
@@ -17485,7 +19101,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus pygmaeus",
@@ -17575,6 +19193,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#1f4a2e",
+      "underside": "#7a3a5a",
+      "gloss": 0.1,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       25
+      ],
+      "notes": "moderately dissected; upper surface very dark velvety green, lower flushed purple-red"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8a5a3a",
+      "markings": "#8a5a3a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "uniformly reddish-brown or pale olive-brown (#8a7a4a)"
+     },
+     "flower": {
+      "colour": "#f2ecd8",
+      "secondary": "#e9c7cf",
+      "spadix": "#dfe6c8",
+      "form": "creamy white or pinkish-white spathe 1.5-6 cm; inside dirty brownish-red warty base; appendix elongate-fusiform, smooth, very pale green or creamy white; whole spadix 5-8 cm",
+      "scent": "musky"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "hand-high dark velvety leaf on a brown stalk; tiny cream cup",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -17665,7 +19325,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus ravenii",
@@ -17755,7 +19417,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus rayongii",
@@ -17845,7 +19509,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus reflexus",
@@ -17935,7 +19601,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus rhizomatosus",
@@ -18025,6 +19693,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       40,
+       50
+      ],
+      "notes": "only 5-6 large elliptic leaflets 14-20 cm; mid-green above, pale below; spreads by rhizome into colonies"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#a9c98a",
+      "markings": "#a9c98a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "slender pale green petiole ~1 cm thick, 29-57 cm"
+     },
+     "flower": {
+      "colour": "#c9dcb5",
+      "secondary": "#eef2e0",
+      "spadix": "#efe8c8",
+      "form": "small oval spathe 6-7 cm, pale green base shading to whitish; inside smooth purple (#6a1e4a) base; appendix mouse-tail, smooth, 12-13 cm, much longer than spathe",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "colony of knee-high few-leafleted umbrellas",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -18115,7 +19825,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus rostratus",
@@ -18205,7 +19917,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus rugosus",
@@ -18295,7 +20009,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus sagittarius",
@@ -18385,7 +20101,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus sakonnakhonensis",
@@ -18475,7 +20193,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus salmoneus",
@@ -18565,6 +20285,48 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       80,
+       110
+      ],
+      "notes": "highly dissected to 1.1 m; elliptic-lanceolate leaflets 18-29 cm, impressed veins"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#4f8a3c",
+      "markings": "#e8f0d8",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "entirely green or with a few scattered small white dots; turgid"
+     },
+     "flower": {
+      "colour": "#e2a3b0",
+      "secondary": "#d88a8a",
+      "spadix": "#efe8c8",
+      "form": "spathe pale whitish-green in the middle suffused pale reddish-brown to the margin, or entirely pale magenta/salmon; inside pale reddish-brown or pale magenta; appendix pale yellowish-white, warted, 4-11 cm",
+      "scent": "musky"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "plain green stalk under an umbrella; salmon-pink cup in flower",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)"
     }
    },
    {
@@ -18655,7 +20417,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus saraburensis",
@@ -18745,7 +20509,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus saururus",
@@ -18835,7 +20601,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus scaber",
@@ -18925,7 +20693,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus schmidtiae",
@@ -19015,7 +20785,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus scutatus",
@@ -19105,7 +20877,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus serrulatus",
@@ -19195,7 +20969,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus shyamsalilianus",
@@ -19285,7 +21061,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus sinuatus",
@@ -19375,7 +21153,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus sizemoreae",
@@ -19465,7 +21245,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus smithsonianus",
@@ -19555,7 +21337,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus sparsiflorus",
@@ -19645,7 +21429,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus spectabilis",
@@ -19735,7 +21521,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus staudtii",
@@ -19825,7 +21613,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus stuhlmannii",
@@ -19915,7 +21705,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus subcymbiformis",
@@ -20005,7 +21797,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus sumawongii",
@@ -20095,7 +21889,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus suwidjianus",
@@ -20185,7 +21981,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus sylvaticus",
@@ -20275,7 +22073,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus symonianus",
@@ -20365,7 +22165,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus synandrifer",
@@ -20455,7 +22257,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus taurostigma",
@@ -20545,7 +22349,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus tenuispadix",
@@ -20635,7 +22441,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus tenuistylis",
@@ -20725,7 +22533,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus terrestris",
@@ -20815,7 +22625,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus teuszii",
@@ -20905,7 +22717,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus thaiensis",
@@ -20995,7 +22809,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus tinekeae",
@@ -21085,7 +22901,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus tonkinensis",
@@ -21175,7 +22993,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus tuberculatus",
@@ -21265,7 +23085,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus umbrinus",
@@ -21355,7 +23177,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus urceolatus",
@@ -21445,7 +23269,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus variabilis",
@@ -21535,6 +23361,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       100,
+       125
+      ],
+      "notes": "elliptic to elliptic-lanceolate leaflets 4-34 cm"
+     },
+     "petiole": {
+      "pattern": "mottled",
+      "base": "#6b7a4a",
+      "markings": "#dfe8d0",
+      "marking_size": "bold",
+      "texture": "smooth",
+      "notes": "extremely variable: entirely green, olive, greyish-green to dark brown ground with rounded, oval or elongated blotches (pale on dark or dark on pale)"
+     },
+     "flower": {
+      "colour": "#b8c97a",
+      "secondary": "#c9b89a",
+      "spadix": "#e8d060",
+      "form": "yellowish-green spathe suffused brown at the margin, with whitish and dark brown spots, tiny dark brown dots and reddish-brown lengthwise lines; inside pale yellowish-green to reddish-brown with flat yellow warts at base; male zone pale apricot, appendix pale yellow, twice the flower zones",
+      "scent": "carrion"
+     },
+     "seasonal": "deciduous: one leaf per year, dies back to tuber for the dry/cold season; flowers from the bare tuber before the leaf",
+     "silhouette": "the common Javan umbrella; yellow-green speckled cup with a yellow spike",
+     "confidence": "documented",
+     "refs": "Aroidpedia archive species page (protologue extracts)",
+     "fruit": {
+      "colour": "#f06a1f",
+      "form": "bright orange-red berry, 1-2 seeds"
+     }
     }
    },
    {
@@ -21625,7 +23497,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus verticillatus",
@@ -21715,7 +23589,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus villosus",
@@ -21805,7 +23681,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus vogelianus",
@@ -21895,7 +23773,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus wasa",
@@ -21985,7 +23865,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus xiei",
@@ -22075,7 +23957,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus yaoi",
@@ -22165,7 +24049,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus yuloensis",
@@ -22255,7 +24141,9 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    },
    {
     "name": "Amorphophallus yunnanensis",
@@ -22345,6 +24233,52 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "dissected-umbrella",
+      "colour": "#3f8f3a",
+      "underside": "#7fb070",
+      "gloss": 0.35,
+      "veins": "pinnate",
+      "vein_colour": "#9fd48a",
+      "margin": "entire",
+      "size_cm": [
+       30,
+       60
+      ],
+      "notes": "small hill species; leaf 6-35 cm (Wikipedia)"
+     },
+     "petiole": {
+      "pattern": "spotted",
+      "base": "#8fa89a",
+      "markings": "#e9c7cf",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "greyish-green with pale pinkish spots (Wikipedia); protologue leaf undescribed"
+     },
+     "flower": {
+      "colour": "#a9c98a",
+      "secondary": "#f2ecd8",
+      "spadix": "#efe8c8",
+      "form": "boat-shaped spathe ~18 cm, 'livid purplish' per 1911 protologue; cultivated material shows pale green outside with whitish inside and a pale appendix; appendix short blunt conoid 4 cm",
+      "scent": "musky"
+     },
+     "seasonal": "cold-dormant montane species (2600 m type locality)",
+     "silhouette": "small grey-green umbrella on a pink-spotted stalk",
+     "confidence": "partly",
+     "refs": "Wikipedia; Aroidpedia archive species page (protologue extracts) (protologue incomplete)",
+     "fruit": {
+      "colour": "#2f3fa6",
+      "form": "berries green, then blue, finally violet"
+     }
     }
    },
    {
@@ -22435,8 +24369,189 @@
      "pollinator": "carrion_fly",
      "disperser": "bird",
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    }
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid"
    }
   ]
+ },
+ "genus_grammar": {
+  "what": "Shared rules for painting any Amorphophallus, plus ranges to vary within for undocumented species. Built from the 34 documented entries below.",
+  "plant": {
+   "habit": "single leaf per season on one tall petiole; no stem/trunk; petiole ends in a 3-branched umbrella of dissected leaflets; inflorescence rises separately from the bare tuber (usually before the leaf, rarely with it)",
+   "height_cm": {
+    "dwarf": [
+     5,
+     30
+    ],
+    "typical": [
+     50,
+     150
+    ],
+    "giant": [
+     200,
+     500
+    ]
+   },
+   "leaf_dissection": {
+    "levels": [
+     "moderate (5-6 large obovate leaflets)",
+     "highly dissected (dozens of lanceolate leaflets)",
+     "fern-like (hundreds of mm-scale leaflets)"
+    ],
+    "frequency": [
+     0.2,
+     0.7,
+     0.1
+    ]
+   },
+   "leaflet_colour": {
+    "upper": [
+     "#2f7d32",
+     "#3f8f3a",
+     "#4f9a45",
+     "#2d6b3c"
+    ],
+    "underside": [
+     "#7fb070",
+     "#8fae8a",
+     "#a3b8a0"
+    ],
+    "margin_tint": {
+     "none": 0.6,
+     "reddish-pink": 0.25,
+     "pale-violet": 0.15
+    },
+    "gloss": [
+     0.2,
+     0.6
+    ],
+    "velvety_matte_dark": 0.15
+   }
+  },
+  "petiole": {
+   "patterns": {
+    "mottled": 0.55,
+    "spotted": 0.2,
+    "plain": 0.15,
+    "streaked": 0.05,
+    "warty": 0.05
+   },
+   "base_hues": [
+    "#4f8a3c",
+    "#3d6b30",
+    "#6f8a55",
+    "#7a9a6a",
+    "#5f6b4a",
+    "#7b5a3a",
+    "#6a4a3a",
+    "#e6cfc7"
+   ],
+   "base_note": "greens dominate (pale green to blackish olive); 20% lean brown/reddish-brown; 5% have a whitish-pink ground almost hidden under green blotches (konjac type)",
+   "marking_hues": [
+    "#e8f0d8",
+    "#dfe8d0",
+    "#c9dcb5",
+    "#9fd08a",
+    "#e9c7cf",
+    "#2e4a25",
+    "#4a2a1a",
+    "#1f2a1a"
+   ],
+   "marking_note": "two-layer rule: large elongate/oval blotches (pale on dark ground, or dark on pale ground) plus a fine scatter of tiny dots of the opposite value; blotches often confluent and elongated along the petiole axis",
+   "marking_size": {
+    "fine": 0.2,
+    "medium": 0.5,
+    "bold": 0.3
+   },
+   "texture": {
+    "smooth": 0.8,
+    "warty": 0.1,
+    "hairy": 0.1
+   },
+   "base_zone": "lowest 10-20% of petiole often shifts to pink/reddish/grey or whitish, then grades to the main colour"
+  },
+  "spathe": {
+   "outer_ranges": {
+    "green_family": [
+     "#8fbf6a",
+     "#6fa04f",
+     "#a9c98a",
+     "#7d8f4c"
+    ],
+    "brown_purple_family": [
+     "#5a2f3f",
+     "#4a1f33",
+     "#6b4a3a",
+     "#7a5a5a"
+    ],
+    "pale_family": [
+     "#e8ead8",
+     "#dcd9c4",
+     "#e9c7cf"
+    ]
+   },
+   "outer_frequency": {
+    "green_family": 0.45,
+    "brown_purple_family": 0.35,
+    "pale_family": 0.2
+   },
+   "outer_markings": "whitish or blackish-green spots on the tube base (60%); margin often a contrasting line (purple, red-violet or brown) (50%); frilled/undulate limb margin in 40%",
+   "inner_ranges": {
+    "dark": [
+     "#5a0f2e",
+     "#4a1035",
+     "#6b0f2a",
+     "#3b1130"
+    ],
+    "pale": [
+     "#e9e4c8",
+     "#f2ecd8",
+     "#d9d2a0"
+    ],
+    "pink": [
+     "#d8788f",
+     "#c95d7a",
+     "#e2a3b0"
+    ]
+   },
+   "inner_rule": "base of tube inside is nearly always dark maroon/purple and warty (verrucose); limb inside is either the same dark colour (glossy) or a pale cream/greenish/pink zone; a two-tone dark-base/pale-limb split is the commonest",
+   "shape": "funnel/campanulate tube with a flaring limb; limb 1-3x tube length"
+  },
+  "spadix": {
+   "appendix_colours": {
+    "dark_purple": 0.45,
+    "cream_ivory": 0.25,
+    "pale_yellow_green": 0.2,
+    "brown": 0.1
+   },
+   "hues": {
+    "dark_purple": "#3b0f2e",
+    "cream_ivory": "#efe8c8",
+    "pale_yellow_green": "#cfd98a",
+    "brown": "#6b4a2a"
+   },
+   "form": "appendix longer than spathe in 60% (conical/whip); subglobose brain-like in 10%; mouse-tail thread in 5%; surface smooth 60%, wrinkled/warty 35%, hairy 5%"
+  },
+  "scent": {
+   "carrion": 0.6,
+   "musky(gas/urine/cheese)": 0.25,
+   "sweet(carrot/fruity)": 0.1,
+   "none": 0.05
+  },
+  "fruit": {
+   "colours": {
+    "orange_red": 0.7,
+    "blue_violet": 0.2,
+    "white_green": 0.1
+   },
+   "hues": {
+    "orange_red": "#e8401f",
+    "blue_violet": "#2f3fa6",
+    "white_green": "#dfe9c8"
+   },
+   "form": "cylinder of tightly packed berries on the old spadix, red/orange ones ripening top-down"
+  },
+  "seasonal": "leaf and inflorescence never overlap except in coaetaneus/ongsakulii; plant vanishes entirely into the tuber for the dormant season"
  }
 }

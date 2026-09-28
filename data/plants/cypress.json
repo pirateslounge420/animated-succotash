@@ -103,6 +103,51 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#b06a44",
+      "secondary": "#7a5238",
+      "feature_cm": 3,
+      "roughness": 0.5,
+      "notes": "red-brown to grey-brown, thin, fibrous, peeling in long vertical strips; base flares into buttress folds; root knees around the trunk"
+     },
+     "trunk": {
+      "form": "buttressed",
+      "taper": 0.5,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#7cb44a",
+      "underside": "#8fc060",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#7cb44a",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       2
+      ],
+      "notes": "soft flat feathery needles in two ranks on short deciduous shoots; bright yellow-green in spring, mid green summer"
+     },
+     "flower": {
+      "colour": "#c8a860",
+      "secondary": "#8aa050",
+      "form": "hanging tassels of small tan pollen cones in late winter; tiny green female cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#6a8a4a",
+      "form": "round wrinkled green cones 2-3 cm, turning brown, shatter when ripe"
+     },
+     "seasonal": "deciduous conifer: turns rust-orange to copper-brown in autumn, bare in winter, feathery lime green in spring",
+     "silhouette": "tall flared trunk from standing water with a narrow conical crown when young, flat-topped and irregular when old; knees around the base; Spanish moss drapes it",
+     "confidence": "documented",
+     "refs": "Wikipedia Taxodium distichum; Flora of North America; USFS Silvics"
     }
    },
    {
@@ -201,6 +246,51 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#9a6a48",
+      "secondary": "#6a4a3a",
+      "feature_cm": 3,
+      "roughness": 0.5,
+      "notes": "grey-brown to red-brown fibrous bark shredding in vertical strips; immensely wide fluted base"
+     },
+     "trunk": {
+      "form": "buttressed",
+      "taper": 0.5,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#6fa84a",
+      "underside": "#82b85e",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#6fa84a",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       2
+      ],
+      "notes": "flat soft needles in two ranks on drooping shoots; evergreen to semi-evergreen; finer and more weeping than bald cypress"
+     },
+     "flower": {
+      "colour": "#c8a860",
+      "secondary": "#8aa050",
+      "form": "long drooping tassels of tan pollen cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#6a8a4a",
+      "form": "small round green cones 1.5-2.5 cm turning brown"
+     },
+     "seasonal": "mostly evergreen in the tropics, bronzes and drops briefly in dry cold; none from range",
+     "silhouette": "enormous squat fluted trunk with a broad spreading crown of pendulous feathery branchlets; wider than tall when ancient",
+     "confidence": "documented",
+     "refs": "Wikipedia Taxodium mucronatum; Kew POWO; Gymnosperm Database"
     }
    },
    {
@@ -299,6 +389,51 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#7a6a5a",
+      "secondary": "#5a4a40",
+      "feature_cm": 2,
+      "roughness": 0.4,
+      "notes": "grey-brown, thin, shallowly furrowed in long vertical strips; twisting slightly with age"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.3,
+      "lean": 0.02
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#2f5a34",
+      "underside": "#2f5a34",
+      "gloss": 0.2,
+      "veins": "none",
+      "vein_colour": "#2f5a34",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.2
+      ],
+      "notes": "tiny dark green scales pressed flat on rounded cord-like shoots; foliage very dense and dark"
+     },
+     "flower": {
+      "colour": "#c8b060",
+      "secondary": "#5a7a48",
+      "form": "tiny yellow-tan pollen cones at shoot tips in late winter",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a6a4a",
+      "form": "round woody cones 2-4 cm, green then grey-brown, of 8-14 shield-shaped scales"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "a dark green exclamation mark: a tight narrow column 20-30 m tall and 2-3 m wide, branches held vertical; occasionally a broader spreading horizontal form",
+     "confidence": "documented",
+     "refs": "Wikipedia Cupressus sempervirens; Kew POWO; Gymnosperm Database"
     }
    },
    {
@@ -396,6 +531,51 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "broadleaf",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#8a7a68",
+      "secondary": "#5a4a40",
+      "feature_cm": 3,
+      "roughness": 0.5,
+      "notes": "grey-brown, fibrous, deeply furrowed vertical ridges; often silvered by salt wind"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.4,
+      "lean": 0.4
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#4e8a3e",
+      "underside": "#4e8a3e",
+      "gloss": 0.25,
+      "veins": "none",
+      "vein_colour": "#4e8a3e",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.2
+      ],
+      "notes": "bright deep green blunt scales on rounded cord shoots in dense sprays; lemon scent when crushed"
+     },
+     "flower": {
+      "colour": "#d8c060",
+      "secondary": "#5a7a48",
+      "form": "small yellow pollen cones at shoot tips",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a6a50",
+      "form": "round warty cones 2.5-4 cm, green ripening grey-brown, 8-12 scales"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "wind-sculpted: massive short trunk with heavy contorted limbs and a flat-topped, one-sided layered crown leaning away from the sea; bonsai-like at 30 m",
+     "confidence": "documented",
+     "refs": "Wikipedia Hesperocyparis macrocarpa; Kew POWO; Gymnosperm Database"
     }
    },
    {
@@ -494,6 +674,51 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#8a5a48",
+      "secondary": "#5c3e34",
+      "feature_cm": 3,
+      "roughness": 0.5,
+      "notes": "red-brown to silver-brown, fibrous, in long vertical ridges peeling in strips; thick and spongy on old trees"
+     },
+     "trunk": {
+      "form": "single",
+      "taper": 0.3,
+      "lean": 0.02
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#4a8452",
+      "underside": "#7aa88a",
+      "gloss": 0.3,
+      "veins": "none",
+      "vein_colour": "#4a8452",
+      "margin": "entire",
+      "size_cm": [
+       0.1,
+       0.3
+      ],
+      "notes": "blue-green to bright green scales in flat fern-like sprays; whitish x-shaped stomatal marks underneath; sprays droop at tips"
+     },
+     "flower": {
+      "colour": "#c83a3a",
+      "secondary": "#6a8a5a",
+      "form": "tiny crimson pollen cones at spray tips in spring; small blue-green female cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#6a7a8a",
+      "form": "small round cones 8 mm, glaucous blue-green ripening brown, 8 scales"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "tall narrow spire with a distinctly drooping leader and pendulous flat spray tips; feathery dense column to 60 m",
+     "confidence": "documented",
+     "refs": "Wikipedia Chamaecyparis lawsoniana; Flora of North America; Gymnosperm Database"
     }
    }
   ],

@@ -122,6 +122,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#5f9e5a",
+      "secondary": "#7fb27a",
+      "ribs": [
+       6,
+       8
+      ],
+      "rib_depth": 0.35,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#e0c27a",
+      "spine_cm": [
+       0.3,
+       2
+      ],
+      "spines_per_areole": [
+       1,
+       4
+      ],
+      "height_m": [
+       3,
+       6
+      ],
+      "diameter_cm": [
+       8,
+       15
+      ],
+      "gloss": 0.25,
+      "notes": "San Pedro: rounded ribs with V-notch above each areole; spines tiny or absent; pale waxy bloom on new growth"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "tall smooth blue-green candelabra of near-spineless columns branching from the base",
+     "confidence": "documented",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -240,6 +292,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#5b8fa0",
+      "secondary": "#7aaab8",
+      "ribs": [
+       6,
+       9
+      ],
+      "rib_depth": 0.4,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#b8863b",
+      "spine_cm": [
+       1,
+       4
+      ],
+      "spines_per_areole": [
+       4,
+       8
+      ],
+      "height_m": [
+       2,
+       4
+      ],
+      "diameter_cm": [
+       10,
+       20
+      ],
+      "gloss": 0.25,
+      "notes": "Peruvian torch: glaucous blue epidermis, stout honey-brown spines with dark swollen bases; new growth frosted blue"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.3
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "thick grey-blue columns leaning and sprawling from the base, brown-spined",
+     "confidence": "documented",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -358,6 +462,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#7fae7a",
+      "secondary": "#9bc48f",
+      "ribs": [
+       4,
+       8
+      ],
+      "rib_depth": 0.55,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#c99a4a",
+      "spine_cm": [
+       0.5,
+       7
+      ],
+      "spines_per_areole": [
+       2,
+       6
+      ],
+      "height_m": [
+       2,
+       5
+      ],
+      "diameter_cm": [
+       15,
+       20
+      ],
+      "gloss": 0.25,
+      "notes": "Bolivian torch: pale matte green, ribs few and deep, areoles 2.5-3 cm apart, spines honey to brown"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.15
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "slender pale green columns with few sharp ribs and long honey spines, base-branching",
+     "confidence": "documented",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -476,6 +632,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#3f7d45",
+      "secondary": "#4f9455",
+      "ribs": [
+       4,
+       6
+      ],
+      "rib_depth": 0.3,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#d8c690",
+      "spine_cm": [
+       0.1,
+       0.5
+      ],
+      "spines_per_areole": [
+       0,
+       3
+      ],
+      "height_m": [
+       2,
+       4
+      ],
+      "diameter_cm": [
+       8,
+       12
+      ],
+      "gloss": 0.25,
+      "notes": "dark matte green, ribs broad and shallow, spines minute or absent; areoles small and pale"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white 22 cm nocturnal funnel",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "dark green near-spineless columns, slightly ribbed, tight clump",
+     "confidence": "documented",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -593,6 +801,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#5e8fa4",
+      "secondary": "#7ba8b8",
+      "ribs": [
+       6,
+       9
+      ],
+      "rib_depth": 0.4,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#8a5a2a",
+      "spine_cm": [
+       1,
+       3
+      ],
+      "spines_per_areole": [
+       5,
+       9
+      ],
+      "height_m": [
+       2,
+       4
+      ],
+      "diameter_cm": [
+       7,
+       13
+      ],
+      "gloss": 0.25,
+      "notes": "glaucous blue-grey epidermis, ribs rounded with slight notches, dark brown spines"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "grey-blue columns, brown-spined, branching from base",
+     "confidence": "partly",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001; Wikipedia Echinopsis macrogona"
     }
    },
    {
@@ -710,6 +970,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#6aa07a",
+      "secondary": "#8bbf95",
+      "ribs": [
+       7,
+       8
+      ],
+      "rib_depth": 0.35,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#c9a85a",
+      "spine_cm": [
+       2,
+       10
+      ],
+      "spines_per_areole": [
+       8,
+       15
+      ],
+      "height_m": [
+       3,
+       6
+      ],
+      "diameter_cm": [
+       10,
+       15
+      ],
+      "gloss": 0.25,
+      "notes": "blue-green to green; many long stout spines yellow-brown fading grey-white with age; densely armed"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "tall green candelabra bristling with long yellow-grey spines",
+     "confidence": "documented",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -827,6 +1139,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#6da85f",
+      "secondary": "#8cc07c",
+      "ribs": [
+       8,
+       14
+      ],
+      "rib_depth": 0.3,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#d9b95c",
+      "spine_cm": [
+       3,
+       10
+      ],
+      "spines_per_areole": [
+       8,
+       15
+      ],
+      "height_m": [
+       6,
+       12
+      ],
+      "diameter_cm": [
+       20,
+       45
+      ],
+      "gloss": 0.25,
+      "notes": "Argentine saguaro (cardon grande): light green, blunt ribs, yellow spines; trunk woody grey-brown at base"
+     },
+     "trunk": {
+      "form": "branching-columnar",
+      "taper": 0.2,
+      "lean": 0.05
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm, brown-hairy tube, on upper stems",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "tree-sized saguaro-like cactus with thick trunk and upright arms",
+     "confidence": "documented",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -944,6 +1308,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#3f7b4a",
+      "secondary": "#559362",
+      "ribs": [
+       8,
+       12
+      ],
+      "rib_depth": 0.3,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#c9b7a8",
+      "spine_cm": [
+       2,
+       8
+      ],
+      "spines_per_areole": [
+       8,
+       15
+      ],
+      "height_m": [
+       2,
+       5
+      ],
+      "diameter_cm": [
+       15,
+       25
+      ],
+      "gloss": 0.25,
+      "notes": "dark green, spines grey-white with pinkish-brown tips; flower white to pale pink 23 cm"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fbe9e6",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "dark green columns with pale grey-pink spines, branching from base",
+     "confidence": "partly",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -1061,6 +1477,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#5aa050",
+      "secondary": "#78b96c",
+      "ribs": [
+       8,
+       10
+      ],
+      "rib_depth": 0.3,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#b89a6a",
+      "spine_cm": [
+       1,
+       5
+      ],
+      "spines_per_areole": [
+       6,
+       12
+      ],
+      "height_m": [
+       1,
+       2.5
+      ],
+      "diameter_cm": [
+       10,
+       15
+      ],
+      "gloss": 0.25,
+      "notes": "bright green, about 9 ribs, brownish spines; shrubby, rarely tall"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "short bright green shrubby columns, moderately spined",
+     "confidence": "partly",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -1178,6 +1646,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#5f97a3",
+      "secondary": "#7fb3bd",
+      "ribs": [
+       7,
+       9
+      ],
+      "rib_depth": 0.4,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#c98b4a",
+      "spine_cm": [
+       0.5,
+       5
+      ],
+      "spines_per_areole": [
+       2,
+       4
+      ],
+      "height_m": [
+       3,
+       5
+      ],
+      "diameter_cm": [
+       8,
+       12
+      ],
+      "gloss": 0.25,
+      "notes": "glaucous blue-green, broad ribs with V-notch, sparse spines red-brown or yellow with one 5 cm central; some populations spineless"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "blue-green columns like pachanoi with one long spine per areole",
+     "confidence": "partly",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -1295,6 +1815,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#5f93a0",
+      "secondary": "#7fb0ba",
+      "ribs": [
+       8,
+       10
+      ],
+      "rib_depth": 0.35,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#b5843a",
+      "spine_cm": [
+       3,
+       10
+      ],
+      "spines_per_areole": [
+       6,
+       12
+      ],
+      "height_m": [
+       3,
+       4
+      ],
+      "diameter_cm": [
+       10,
+       15
+      ],
+      "gloss": 0.25,
+      "notes": "blue-green epidermis, honey-brown spines to 10 cm"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "blue-green columns with long honey-brown spines",
+     "confidence": "partly",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -1412,6 +1984,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#5f9e6a",
+      "secondary": "#82b98a",
+      "ribs": [
+       6,
+       8
+      ],
+      "rib_depth": 0.35,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#d4b04e",
+      "spine_cm": [
+       0,
+       3
+      ],
+      "spines_per_areole": [
+       0,
+       3
+      ],
+      "height_m": [
+       2,
+       4
+      ],
+      "diameter_cm": [
+       12,
+       20
+      ],
+      "gloss": 0.25,
+      "notes": "nursery form: very wide ribs, bloated look, spines few and golden with no swollen base"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "fat bloated green columns, very wide ribs, few golden spines",
+     "confidence": "partly",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -1529,6 +2153,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#6aa85a",
+      "secondary": "#8cc47a",
+      "ribs": [
+       5,
+       6
+      ],
+      "rib_depth": 0.45,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#dcc07a",
+      "spine_cm": [
+       0.2,
+       1
+      ],
+      "spines_per_areole": [
+       2,
+       5
+      ],
+      "height_m": [
+       1,
+       3
+      ],
+      "diameter_cm": [
+       6,
+       10
+      ],
+      "gloss": 0.25,
+      "notes": "green, 5-6 ribs, very short honey spines; slender bridgesii relative"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "slender green columns, few ribs, very short honey spines",
+     "confidence": "partly",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -1646,6 +2322,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#3f7a63",
+      "secondary": "#5a9880",
+      "ribs": [
+       10,
+       14
+      ],
+      "rib_depth": 0.3,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#d6c58f",
+      "spine_cm": [
+       3,
+       15
+      ],
+      "spines_per_areole": [
+       8,
+       16
+      ],
+      "height_m": [
+       5,
+       8
+      ],
+      "diameter_cm": [
+       30,
+       65
+      ],
+      "gloss": 0.25,
+      "notes": "dark green to blue-grey, very thick stems, ivory-yellow spines to 15 cm; trunk woody grey at base"
+     },
+     "trunk": {
+      "form": "branching-columnar",
+      "taper": 0.2,
+      "lean": 0.05
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "massive tree cactus with huge trunk and thick arms, pale-spined",
+     "confidence": "partly",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -1763,6 +2491,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#3f8048",
+      "secondary": "#569c5f",
+      "ribs": [
+       8,
+       12
+      ],
+      "rib_depth": 0.3,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#c8a26a",
+      "spine_cm": [
+       3,
+       10
+      ],
+      "spines_per_areole": [
+       8,
+       14
+      ],
+      "height_m": [
+       5,
+       10
+      ],
+      "diameter_cm": [
+       20,
+       40
+      ],
+      "gloss": 0.25,
+      "notes": "green to dark green, spines reddish-yellow fading grey; identity disputed"
+     },
+     "trunk": {
+      "form": "branching-columnar",
+      "taper": 0.2,
+      "lean": 0.05
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "tall dark green tree cactus with grey-yellow spines",
+     "confidence": "partly",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -1880,6 +2660,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#5e97a6",
+      "secondary": "#7fb3c0",
+      "ribs": [
+       6,
+       8
+      ],
+      "rib_depth": 0.35,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#e2d6a8",
+      "spine_cm": [
+       1,
+       4
+      ],
+      "spines_per_areole": [
+       4,
+       8
+      ],
+      "height_m": [
+       2,
+       3
+      ],
+      "diameter_cm": [
+       8,
+       12
+      ],
+      "gloss": 0.25,
+      "notes": "blue-green, yellow-white to grey spines; pachanoi/peruvianus relative"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "blue-green columns with pale yellow-white spines, base-branching",
+     "confidence": "partly",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -1997,6 +2829,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#6a9aa8",
+      "secondary": "#8fb9c4",
+      "ribs": [
+       6,
+       9
+      ],
+      "rib_depth": 0.4,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#a87a3a",
+      "spine_cm": [
+       1,
+       4
+      ],
+      "spines_per_areole": [
+       4,
+       9
+      ],
+      "height_m": [
+       1,
+       3
+      ],
+      "diameter_cm": [
+       6,
+       10
+      ],
+      "gloss": 0.25,
+      "notes": "strongly glaucous frosted blue epidermis, brown spines; often treated as Echinopsis uyupampensis"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.35
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "short glaucous blue-grey columns, sprawling, brown-spined",
+     "confidence": "typical-of-genus",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    },
    {
@@ -2114,6 +2998,58 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "cactus",
+    "leaf_type": "spine",
+    "appearance": {
+     "stem": {
+      "colour": "#5aa842",
+      "secondary": "#7dc45c",
+      "ribs": [
+       7,
+       9
+      ],
+      "rib_depth": 0.5,
+      "areole_colour": "#f4efe0",
+      "spine_colour": "#7a3a22",
+      "spine_cm": [
+       1,
+       7
+      ],
+      "spines_per_areole": [
+       6,
+       14
+      ],
+      "height_m": [
+       3,
+       5
+      ],
+      "diameter_cm": [
+       12,
+       18
+      ],
+      "gloss": 0.25,
+      "notes": "bright green, very strong rib furrows, dark reddish-brown spines; prostrate on slopes near sea level"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.1,
+      "lean": 0.6
+     },
+     "flower": {
+      "colour": "#fff6e8",
+      "secondary": "#e7c28a",
+      "form": "white nocturnal funnel 15-20 cm at stem top; brown-black hairy tube",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#4f8a3a",
+      "form": "green-red hairy egg-shaped berry, splits to white pulp"
+     },
+     "seasonal": "evergreen succulent; no seasonal colour change; flowers after rains",
+     "silhouette": "bright green deeply furrowed columns lying along rocky slopes, dark red-brown spines",
+     "confidence": "documented",
+     "refs": "Wikipedia (Echinopsis/Leucostele pages), trichocereus.net species pages, freakycacti.com overview, Anderson 2001"
     }
    }
   ]

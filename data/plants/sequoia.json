@@ -102,6 +102,51 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#a04a3a",
+      "secondary": "#6a3a2e",
+      "feature_cm": 10,
+      "roughness": 0.7,
+      "notes": "very thick soft fibrous red-brown bark in deep vertical furrows and ridges; spongy; weathers grey on the outer surface; base flares"
+     },
+     "trunk": {
+      "form": "buttressed",
+      "taper": 0.25,
+      "lean": 0.02
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#2e6a3a",
+      "underside": "#5e8a6a",
+      "gloss": 0.35,
+      "veins": "parallel",
+      "vein_colour": "#2e6a3a",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       2.5
+      ],
+      "notes": "flat dark green needles in two ranks on shade shoots; short awl scales on sun shoots at the top; two white bands beneath"
+     },
+     "flower": {
+      "colour": "#c8b070",
+      "secondary": "#6a8a5a",
+      "form": "tiny yellowish pollen cones at shoot tips in winter",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#6a4a3a",
+      "form": "small egg cones 1.5-3 cm, green ripening red-brown, wrinkled scales"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "an immense straight red column vanishing into fog with a narrow conical crown of short horizontal branches high up; often in fairy rings of stump sprouts",
+     "confidence": "documented",
+     "refs": "Wikipedia Sequoia sempervirens; Flora of North America; Gymnosperm Database"
     }
    },
    {
@@ -200,6 +245,51 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#c25a34",
+      "secondary": "#7a3e2a",
+      "feature_cm": 20,
+      "roughness": 0.75,
+      "notes": "very thick, soft, fibrous, bright cinnamon-orange-red bark in huge rounded vertical ridges and deep furrows; fire-scarred black at the base"
+     },
+     "trunk": {
+      "form": "buttressed",
+      "taper": 0.3,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "scale",
+      "colour": "#3e7a42",
+      "underside": "#3e7a42",
+      "gloss": 0.3,
+      "veins": "none",
+      "vein_colour": "#3e7a42",
+      "margin": "entire",
+      "size_cm": [
+       0.3,
+       0.6
+      ],
+      "notes": "awl-shaped blue-green scale leaves spiralling around cord-like shoots; foliage in dense rounded sprays"
+     },
+     "flower": {
+      "colour": "#d0b860",
+      "secondary": "#6a8a5a",
+      "form": "small yellow pollen cones at shoot tips in late winter",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7a5a3a",
+      "form": "egg cones 4-7 cm, green for years then brown, diamond-patterned scales; open with fire heat"
+     },
+     "seasonal": "evergreen; none",
+     "silhouette": "the fattest tree: a vast fluted orange-red column barely tapering, few huge limbs, a rounded, often broken flat-topped crown far above the forest",
+     "confidence": "documented",
+     "refs": "Wikipedia Sequoiadendron giganteum; Flora of North America; NPS Sequoia"
     }
    }
   ],
@@ -300,6 +390,51 @@
       "wind"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "fibrous",
+    "leaf_type": "needle",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#a86a48",
+      "secondary": "#6e4a3a",
+      "feature_cm": 4,
+      "roughness": 0.5,
+      "notes": "orange-brown to red-brown fibrous bark peeling in vertical strips; base strongly fluted and buttressed with deep hollows under the branch bases"
+     },
+     "trunk": {
+      "form": "buttressed",
+      "taper": 0.4,
+      "lean": 0.0
+     },
+     "leaf": {
+      "form": "needle",
+      "colour": "#7ab848",
+      "underside": "#8ac860",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#7ab848",
+      "margin": "entire",
+      "size_cm": [
+       1,
+       3
+      ],
+      "notes": "soft flat bright green needles in opposite pairs on deciduous shoots; fresh lime green in spring"
+     },
+     "flower": {
+      "colour": "#c8a860",
+      "secondary": "#6a8a5a",
+      "form": "hanging tassels of small tan pollen cones",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#6a7a4a",
+      "form": "small round cones 1.5-2.5 cm on long stalks, green then brown"
+     },
+     "seasonal": "deciduous conifer: turns apricot-orange then russet-bronze in autumn, bare in winter, lime green spring flush",
+     "silhouette": "tall symmetrical narrow cone with a deeply fluted buttressed base and upswept branches; feathery, then a bare red-brown skeleton in winter",
+     "confidence": "documented",
+     "refs": "Wikipedia Metasequoia glyptostroboides; Flora of China; Kew POWO"
     }
    }
   ],

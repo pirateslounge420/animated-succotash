@@ -115,6 +115,51 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#8a6a3e",
+      "secondary": "#5a4224",
+      "feature_cm": 4,
+      "roughness": 0.8,
+      "notes": "trunk clothed in dead brown leaves, then rough fibrous grey-brown"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.05,
+      "lean": 0.4
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#4f8a3e",
+      "underside": "#4f8a3e",
+      "gloss": 0.4,
+      "veins": "parallel",
+      "vein_colour": "#4f8a3e",
+      "margin": "toothed",
+      "size_cm": [
+       40,
+       70
+      ],
+      "notes": "stiff dagger, dark green, finely toothed edges, sharp brown-black tip; dense rosette at stem tip"
+     },
+     "flower": {
+      "colour": "#fbf7ec",
+      "secondary": "#c9a0a8",
+      "form": "dense upright panicle 60 cm of waxy cream bells, purple-tinged outside",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#5a2a4a",
+      "form": "fleshy purple-black cylinder 8 cm, hanging"
+     },
+     "seasonal": "evergreen; skirt of dead brown leaves below the live rosette",
+     "silhouette": "leaning spiky-topped poles 2-5 m, dead leaf skirts, cream flower spike in summer",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Yucca aloifolia"
     }
    },
    {
@@ -226,6 +271,51 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "appearance": {
+     "bark": {
+      "pattern": "plated",
+      "base": "#8f6f4a",
+      "secondary": "#5c4630",
+      "feature_cm": 3,
+      "roughness": 0.75,
+      "notes": "grey-brown, checked into small plates on old trunks; upper limbs shaggy with dead leaves"
+     },
+     "trunk": {
+      "form": "branching-columnar",
+      "taper": 0.2,
+      "lean": 0.15
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#5c8a4a",
+      "underside": "#5c8a4a",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#5c8a4a",
+      "margin": "toothed",
+      "size_cm": [
+       15,
+       35
+      ],
+      "notes": "stiff bluish-green daggers in dense terminal tufts, finely toothed, dead leaves persist as brown thatch on branches"
+     },
+     "flower": {
+      "colour": "#efe9c8",
+      "secondary": "#b8c890",
+      "form": "dense 30-50 cm clusters of greenish-cream bells at branch tips, spring",
+      "scent": "musky"
+     },
+     "fruit": {
+      "colour": "#a8b060",
+      "form": "green-tan spongy oval 6-10 cm in clusters"
+     },
+     "seasonal": "evergreen; flowers only after wet winters",
+     "silhouette": "grotesque forked tree 5-12 m, every limb ending in a spiky pompom",
+     "confidence": "documented",
+     "refs": "Flora of North America, NPS Joshua Tree, Wikipedia"
     }
    },
    {
@@ -337,6 +427,51 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "appearance": {
+     "bark": {
+      "pattern": "fibrous",
+      "base": "#8c7050",
+      "secondary": "#5a4a30",
+      "feature_cm": 5,
+      "roughness": 0.75,
+      "notes": "massive trunk shaggy with hanging dead grey-brown leaves, rough fibrous below"
+     },
+     "trunk": {
+      "form": "branching-columnar",
+      "taper": 0.25,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#4a8a48",
+      "underside": "#4a8a48",
+      "gloss": 0.3,
+      "veins": "parallel",
+      "vein_colour": "#4a8a48",
+      "margin": "entire",
+      "size_cm": [
+       30,
+       60
+      ],
+      "notes": "stiff rigid green daggers with white marginal threads, dense round heads"
+     },
+     "flower": {
+      "colour": "#f8f4e6",
+      "secondary": "#d8c8b0",
+      "form": "huge drooping panicle 1-2 m of cream bells hanging below the crown",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#5a4a3a",
+      "form": "fleshy brown cylinders 5-8 cm in hanging clusters"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "stout branched tree 5-10 m, many dense round leaf-heads, pendent cream flower masses",
+     "confidence": "documented",
+     "refs": "Wikipedia Yucca filifera, Kew POWO"
     }
    },
    {
@@ -448,6 +583,43 @@
       "gravity"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "furry",
+    "leaf_type": "spine",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#7a9e78",
+      "underside": "#7a9e78",
+      "gloss": 0.2,
+      "veins": "parallel",
+      "vein_colour": "#7a9e78",
+      "margin": "entire",
+      "size_cm": [
+       30,
+       70
+      ],
+      "notes": "narrow grey-green stiff needles 1 cm wide with white edge and curling white threads; ground rosette 1 m across"
+     },
+     "flower": {
+      "colour": "#f6f2e2",
+      "secondary": "#c8d8a0",
+      "form": "single stalk 1-1.5 m of greenish-white bells, early summer",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#8a7a5a",
+      "form": "dry tan capsules 5-7 cm upright on the old stalk"
+     },
+     "seasonal": "evergreen; old flower stalks persist dry and grey",
+     "silhouette": "grey-green spiky hemisphere on prairie with one pale flower spike",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Yucca glauca"
     }
    }
   ]

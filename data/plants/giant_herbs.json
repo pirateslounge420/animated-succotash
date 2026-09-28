@@ -109,6 +109,59 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#4f8a5a",
+      "secondary": "#bcd6c8",
+      "feature_cm": 30,
+      "roughness": 0.15,
+      "notes": "pseudostem up to 15 m, base 2 m across; dark green under a thick blue-white waxy bloom; old sheaths dry papery brown (#8a6a3a)"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.25,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#3f8f3a",
+      "underside": "#8fb8a0",
+      "gloss": 0.5,
+      "veins": "parallel",
+      "vein_colour": "#9fd08a",
+      "margin": "entire",
+      "size_cm": [
+       300,
+       500
+      ],
+      "notes": "enormous paddle blades 5 m long on 1.5-2 m petioles; splits into strips in wind; glaucous beneath"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#4f8a5a",
+      "markings": "#bcd6c8",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "channelled, waxy; same colour as the sheath"
+     },
+     "flower": {
+      "colour": "#6b2a3a",
+      "secondary": "#e8d060",
+      "form": "huge pendulous bud with maroon bracts, cream-yellow flowers",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#a8c85a",
+      "form": "yellow-green bananas 15 cm in massive hanging bunches, seedy"
+     },
+     "seasonal": "evergreen; each pseudostem dies after fruiting, replaced by suckers",
+     "silhouette": "a banana the size of a tree: a pale waxy green column with a shaggy crown of torn 5 m blades",
+     "confidence": "documented",
+     "refs": "Wikipedia Musa ingens; Kew POWO"
     }
    }
   ],
@@ -217,6 +270,59 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "single",
+      "taper": 0.2,
+      "lean": 0.15
+     },
+     "bark": {
+      "pattern": "ringed",
+      "base": "#6b7a4a",
+      "secondary": "#a89a7a",
+      "feature_cm": 5,
+      "roughness": 0.4,
+      "notes": "thick upright stem to 1-2 m ringed with leaf scars, old dry sheath fibre at the top"
+     },
+     "leaf": {
+      "form": "arrowhead",
+      "colour": "#3f9a3a",
+      "underside": "#7fb870",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#9fd08a",
+      "margin": "wavy",
+      "size_cm": [
+       100,
+       200
+      ],
+      "notes": "huge glossy bright green elephant ears held UPRIGHT (tips point up), sagittate with wavy margin; not peltate; veins raised pale"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#5f9a4a",
+      "markings": "#5f9a4a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "stout plain green petiole to 1.3 m, attached at the notch"
+     },
+     "flower": {
+      "colour": "#c9d98a",
+      "secondary": "#f2ecd8",
+      "form": "yellow-green spathe 20-30 cm hooding a cream spadix, at leaf bases",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#e8401f",
+      "form": "red berries on the spadix"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "2-3 m clump of upright glossy arrowheads on a short trunk",
+     "confidence": "documented",
+     "refs": "Wikipedia Alocasia macrorrhizos; Kew POWO"
     }
    },
    {
@@ -321,6 +427,59 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "single",
+      "taper": 0.2,
+      "lean": 0.15
+     },
+     "bark": {
+      "pattern": "ringed",
+      "base": "#6b7a4a",
+      "secondary": "#a89a7a",
+      "feature_cm": 4,
+      "roughness": 0.35,
+      "notes": "short thick stem to 1 m with leaf-scar rings"
+     },
+     "leaf": {
+      "form": "arrowhead",
+      "colour": "#4f8a5a",
+      "underside": "#8fb8a0",
+      "gloss": 0.25,
+      "veins": "pinnate",
+      "vein_colour": "#a8c8a0",
+      "margin": "wavy",
+      "size_cm": [
+       50,
+       130
+      ],
+      "notes": "matte blue-green glaucous elephant ears, PELTATE (petiole joins inside the blade), held upright, lightly wavy edge"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#6f9a5a",
+      "markings": "#6f9a5a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "long plain grey-green petiole to 1 m"
+     },
+     "flower": {
+      "colour": "#e8e6c8",
+      "secondary": "#f2ecd8",
+      "form": "pale cream-green spathe 15-25 cm, strongly fragrant at night",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#e8401f",
+      "form": "red berries"
+     },
+     "seasonal": "evergreen; dies back in cold winters and resprouts",
+     "silhouette": "1-2 m clump of matte grey-green upright ears",
+     "confidence": "documented",
+     "refs": "Wikipedia Alocasia odora; Kew POWO"
     }
    },
    {
@@ -427,6 +586,59 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#6b9a4a",
+      "secondary": "#3a2a1a",
+      "feature_cm": 30,
+      "roughness": 0.15,
+      "notes": "pseudostem 2-6 m, green with large brown-black blotches and a thin waxy bloom; old sheaths papery brown"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.25,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#4f9a45",
+      "underside": "#8fb890",
+      "gloss": 0.5,
+      "veins": "parallel",
+      "vein_colour": "#9fd08a",
+      "margin": "entire",
+      "size_cm": [
+       150,
+       250
+      ],
+      "notes": "paddle blades 1.5-2.5 m, often with dark blotches when young; wax on underside; tattered by wind"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#6b9a4a",
+      "markings": "#3a2a1a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "channelled, waxy; same colour as the sheath"
+     },
+     "flower": {
+      "colour": "#6b1f4a",
+      "secondary": "#f2d060",
+      "form": "hanging bud with purple-red bracts curling back; yellow tubular flowers; bat-visited at night",
+      "scent": "musky"
+     },
+     "fruit": {
+      "colour": "#e8d060",
+      "form": "small seedy yellow bananas in tiers along a hanging stalk"
+     },
+     "seasonal": "evergreen; each pseudostem dies after fruiting, replaced by suckers",
+     "silhouette": "clumping fountain of torn green blades on brown-blotched stems in a forest gap",
+     "confidence": "documented",
+     "refs": "Wikipedia Musa acuminata; Kew POWO"
     }
    },
    {
@@ -531,6 +743,59 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#8fbf8a",
+      "secondary": "#d8e8d8",
+      "feature_cm": 30,
+      "roughness": 0.15,
+      "notes": "pseudostem 3-7 m, pale green almost blue-white with heavy waxy bloom, no dark blotches; base flared"
+     },
+     "trunk": {
+      "form": "clumping",
+      "taper": 0.25,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#4f9a45",
+      "underside": "#a8c8b0",
+      "gloss": 0.5,
+      "veins": "parallel",
+      "vein_colour": "#9fd08a",
+      "margin": "entire",
+      "size_cm": [
+       150,
+       300
+      ],
+      "notes": "broad waxy blades 1.5-3 m, strongly glaucous underside, stiffer than acuminata"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8fbf8a",
+      "markings": "#d8e8d8",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "channelled, waxy; same colour as the sheath"
+     },
+     "flower": {
+      "colour": "#5a1f3a",
+      "secondary": "#f2d060",
+      "form": "large hanging bud with dark purple-red bracts that fall off; cream-yellow flowers",
+      "scent": "musky"
+     },
+     "fruit": {
+      "colour": "#a8c85a",
+      "form": "stout angular yellow-green bananas full of black seeds"
+     },
+     "seasonal": "evergreen; each pseudostem dies after fruiting, replaced by suckers",
+     "silhouette": "waxy pale-green clump of stiff broad blades on the monsoon forest edge",
+     "confidence": "documented",
+     "refs": "Wikipedia Musa balbisiana; Kew POWO"
     }
    },
    {
@@ -635,6 +900,59 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#6b9a4a",
+      "secondary": "#a83a3a",
+      "feature_cm": 40,
+      "roughness": 0.15,
+      "notes": "swollen barrel base to 1 m thick, 3-6 m tall; green sheaths flushed red-purple, drying to papery brown"
+     },
+     "trunk": {
+      "form": "bottle",
+      "taper": 0.45,
+      "lean": 0.05
+     },
+     "leaf": {
+      "form": "blade",
+      "colour": "#3f8f3a",
+      "underside": "#8fb890",
+      "gloss": 0.45,
+      "veins": "parallel",
+      "vein_colour": "#c83a3a",
+      "margin": "entire",
+      "size_cm": [
+       300,
+       500
+      ],
+      "notes": "massive erect paddle blades 3-5 m with a striking red to maroon midrib; margins red-edged on young leaves"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#8a3a3a",
+      "markings": "#6b9a4a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "short, red-purple channelled petiole"
+     },
+     "flower": {
+      "colour": "#5a1f2a",
+      "secondary": "#f2d060",
+      "form": "single giant pendulous bud with dark red-brown bracts, then the plant dies",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#c8a860",
+      "form": "dry leathery yellow-brown bananas full of black pea-sized seeds; inedible"
+     },
+     "seasonal": "evergreen; monocarpic: flowers once after 5-10 years then dies",
+     "silhouette": "a single fat red-veined banana on a bottle-shaped base, leaves held stiffly upright",
+     "confidence": "documented",
+     "refs": "Wikipedia Ensete ventricosum; Kew POWO"
     }
    }
   ],
@@ -741,6 +1059,47 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "arrowhead",
+      "colour": "#2f7d32",
+      "underside": "#6fa06a",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#4f9a45",
+      "margin": "entire",
+      "size_cm": [
+       30,
+       60
+      ],
+      "notes": "glossy plain dark green sagittate blades; the show is the stem"
+     },
+     "petiole": {
+      "pattern": "striped",
+      "base": "#c9c95a",
+      "markings": "#2a3a1a",
+      "marking_size": "bold",
+      "texture": "smooth",
+      "notes": "yellow-green petiole to 1 m with irregular dark green-black zebra/tiger bands running around it, bands 1-3 cm wide"
+     },
+     "flower": {
+      "colour": "#c9d98a",
+      "secondary": "#e8e6c8",
+      "form": "small greenish spathe, inconspicuous",
+      "scent": "none"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "a bundle of tiger-striped stalks with glossy green arrowheads on top",
+     "confidence": "documented",
+     "refs": "Wikipedia Alocasia zebrina; horticultural descriptions; Kew POWO"
     }
    },
    {
@@ -854,6 +1213,47 @@
       "human"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0.3,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "arrowhead",
+      "colour": "#2d6b3c",
+      "underside": "#7fa878",
+      "gloss": 0.1,
+      "veins": "pinnate",
+      "vein_colour": "#6a9a6a",
+      "margin": "entire",
+      "size_cm": [
+       30,
+       80
+      ],
+      "notes": "velvety matte water-shedding heart-shaped blades, PELTATE, held nodding/downward; often a purple dot where the petiole joins; some forms purple-veined"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#6fa05a",
+      "markings": "#5a3a6a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "long green petiole, often purple-flushed or dark purple in some cultivars"
+     },
+     "flower": {
+      "colour": "#e8d060",
+      "secondary": "#f2ecd8",
+      "form": "yellow spathe 20-40 cm around a cream spadix, rarely seen",
+      "scent": "sweet"
+     },
+     "seasonal": "evergreen in the tropics; dies back with cold",
+     "silhouette": "waist-high clump of nodding matte heart leaves standing in water",
+     "confidence": "documented",
+     "refs": "Wikipedia Colocasia esculenta; Kew POWO"
     }
    }
   ],

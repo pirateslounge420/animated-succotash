@@ -110,6 +110,55 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "single",
+      "taper": 0.1,
+      "lean": 0.4
+     },
+     "bark": {
+      "pattern": "ringed",
+      "base": "#8a8a6a",
+      "secondary": "#5a5a40",
+      "feature_cm": 3,
+      "roughness": 0.5,
+      "notes": "grey-green crawling trunk marked with eye-shaped leaf scars in a ring pattern; thick aerial roots rope down"
+     },
+     "leaf": {
+      "form": "lobed",
+      "colour": "#4a9a3a",
+      "underside": "#5aa848",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#8ac860",
+      "margin": "lobed",
+      "size_cm": [
+       60,
+       120
+      ],
+      "notes": "huge deeply bipinnatifid glossy leaves with wavy-edged lobes on long petioles"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#5aa848",
+      "markings": "#5aa848",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "long round green petiole 1 m"
+     },
+     "flower": {
+      "colour": "#f8f0e0",
+      "secondary": "#6a2a3a",
+      "form": "cream spathe, maroon inside, around a white spadix; hidden in the crown",
+      "scent": "spicy"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "wide 2-3 m mound of huge cut glossy leaves on a leaning scarred trunk",
+     "confidence": "documented",
+     "refs": "Wikipedia Thaumatophyllum bipinnatifidum, IAS, Kew POWO"
     }
    }
   ],
@@ -217,6 +266,47 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3a8a3a",
+      "underside": "#4a9a4a",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#4a9a4a",
+      "margin": "entire",
+      "size_cm": [
+       8,
+       30
+      ],
+      "notes": "heart-shaped glossy leaves, small on juvenile climbers, large on mature stems; new leaves bronze-red"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#4a9a4a",
+      "markings": "#4a9a4a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "slender green petiole, stems clinging with short roots"
+     },
+     "flower": {
+      "colour": "#e8f0d8",
+      "secondary": "#e8f0d8",
+      "form": "small greenish-white spathe, rarely seen",
+      "scent": "none"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "green heart-leaved ribbon running up a trunk, dangling loops",
+     "confidence": "documented",
+     "refs": "Wikipedia Philodendron hederaceum, Kew POWO"
     }
    },
    {
@@ -321,6 +411,51 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "lobed",
+      "colour": "#3a8a3a",
+      "underside": "#4a9a4a",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#5aa848",
+      "margin": "lobed",
+      "size_cm": [
+       40,
+       90
+      ],
+      "notes": "huge glossy leaves deeply split at the edges and pierced with oval holes; juvenile leaves entire and heart-shaped"
+     },
+     "petiole": {
+      "pattern": "plain",
+      "base": "#4a9a4a",
+      "markings": "#4a9a4a",
+      "marking_size": "fine",
+      "texture": "smooth",
+      "notes": "long petiole with sheathing base; thick brown cord-like aerial roots"
+     },
+     "flower": {
+      "colour": "#f8f4e0",
+      "secondary": "#f8f4e0",
+      "form": "cream boat spathe 30 cm around a thick cream spadix",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#8ab848",
+      "form": "green corn-cob 25 cm with hexagonal scales that fall off ripe"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "tree trunk wrapped in giant holey leaves with brown roots trailing",
+     "confidence": "documented",
+     "refs": "Wikipedia Monstera deliciosa, Kew POWO"
     }
    },
    {
@@ -425,6 +560,47 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "aroid",
+    "appearance": {
+     "trunk": {
+      "form": "none",
+      "taper": 0,
+      "lean": 0.3
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#4a9a3a",
+      "underside": "#5aa848",
+      "gloss": 0.6,
+      "veins": "pinnate",
+      "vein_colour": "#5aa848",
+      "margin": "entire",
+      "size_cm": [
+       10,
+       90
+      ],
+      "notes": "heart-shaped leaves marbled with gold-yellow streaks; mature climbing leaves huge and pinnately split"
+     },
+     "petiole": {
+      "pattern": "streaked",
+      "base": "#6aa848",
+      "markings": "#d8c840",
+      "marking_size": "medium",
+      "texture": "smooth",
+      "notes": "grooved petiole streaked yellow like the leaf"
+     },
+     "flower": {
+      "colour": "#e8e0b0",
+      "secondary": "#e8e0b0",
+      "form": "cream spathe, almost never produced",
+      "scent": "none"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "gold-splashed green cladding up trunks and carpeting the floor",
+     "confidence": "documented",
+     "refs": "Wikipedia Epipremnum aureum, Kew POWO"
     }
    },
    {
@@ -529,6 +705,51 @@
       "mammal"
      ],
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "smooth_grey",
+    "leaf_type": "glossy",
+    "appearance": {
+     "bark": {
+      "pattern": "smooth",
+      "base": "#c8c0a8",
+      "secondary": "#a8a090",
+      "feature_cm": 8,
+      "roughness": 0.2,
+      "notes": "pale grey smooth lattice of fused roots wrapping the host; branches with ring leaf scars"
+     },
+     "trunk": {
+      "form": "multi",
+      "taper": 0.1,
+      "lean": 0.1
+     },
+     "leaf": {
+      "form": "simple",
+      "colour": "#3a8a3a",
+      "underside": "#5a9a48",
+      "gloss": 0.7,
+      "veins": "pinnate",
+      "vein_colour": "#d8e8c0",
+      "margin": "entire",
+      "size_cm": [
+       5,
+       12
+      ],
+      "notes": "leathery glossy oval leaves, pale midrib"
+     },
+     "flower": {
+      "colour": "#a8c870",
+      "secondary": "#a8c870",
+      "form": "hidden inside the fig",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#e8b838",
+      "form": "small yellow-orange figs 1 cm in pairs along twigs, red-ripe"
+     },
+     "seasonal": "evergreen",
+     "silhouette": "pale grey root lattice cage around a host trunk, dense dark crown above",
+     "confidence": "documented",
+     "refs": "Flora of North America, Wikipedia Ficus aurea"
     }
    }
   ]
