@@ -9,6 +9,16 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
 
 ---
 
+## Thesis (27 Sept 2026)
+
+**This game is about the fundamentals: a world, and exploring it through movement that
+feels good.** Everything else is in service of that. When a feature request arrives,
+the test is: does it make moving through the world feel better, or make the world
+worth moving through? If neither, it does not go in. That is why there are three tools
+and no crafting (§T), why progression is the player's hands (§S), why the planet is
+big (§I) and the movement is fast (§J), and why the opening shows movement before it
+shows anything else (§P).
+
 ## 0. Locked decisions (new or changed)
 
 - **Day/night cycle: 144 min real time — day 60 / dusk 18 / night 48 / dawn 18 (10h / 3h / 8h / 3h in game time).**
