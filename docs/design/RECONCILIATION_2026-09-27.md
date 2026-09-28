@@ -485,6 +485,37 @@ Keep all of it. Changes:
 - Consequence: because spawn biome is random, a tundra spawn and a rainforest spawn get
   different calendars. That is a feature; "night is 48 minutes" is no longer a promise.
 
+## F2. How the derived cycle keeps the 18-minute twilights (engineering note)
+
+Real geometry alone does **not** give an 18-minute dusk: at the equator the sun crosses
+the 10° twilight band in about 40 game minutes (~4 real minutes), and a geometric equator
+day is 12 h / 12 h, not 10 / 8. The 60/18/48/18 reference is a **stylisation**, and the
+existing `day_cycle.gd` warp (the sky turns slower through dusk and dawn) is exactly the
+right tool — keep it, and drive it from the astronomy instead of fixed phase minutes:
+
+1. **Astronomy decides the facts:** declination from tilt and day-of-year; sunrise and
+   sunset hour angles by latitude (at `SUNRISE_ELEVATION_DEG`, −3.6°); natural twilight as
+   the time the sun spends between that and −13.6° (`twilight_deg` 10); polar night and
+   midnight sun when the equations have no solution.
+2. **The warp reshapes the clock:** each twilight is stretched to **at least 18 real
+   minutes** on any day that has a sunrise and a sunset (never shortened below its
+   natural length — high latitudes get their long glow), and the remaining time is split
+   between day and night **in the geometric ratio, biased** so the equator at the spring
+   equinox lands exactly on 60 / 18 / 48 / 18. Midnight sun: no dusk, no dawn, 144 minutes
+   of day. Deep polar night: 144 minutes of night; a skimming sun gives only its natural
+   twilight.
+3. `day_length_min` stays 144 and `phase_min` stays in `day_cycle.json` as the reference
+   the bias is calibrated against; the warp's per-phase turn rates become outputs of (1)
+   and (2), computed per latitude and day-of-year, not constants.
+
+The reference implementation and the numbers to match are in
+**`tools/reference/daylight_reference.py`** and **`daylight_table.csv`** (11 latitudes ×
+12 days: declination, sunrise/sunset, daylight, natural twilight, the stylised
+day/dusk/night/dawn in real minutes, season and transition flags, and a short-day
+photoperiod example). Year day 0 = northern spring equinox; northern seasons run spring
+[0, 91.25), summer, autumn, winter; the south is shifted by half a year. Transitions are
+the 20-day window straddling each boundary. Tolerance 0.05 game h.
+
 ## G. Photoperiod, latitude and elevation in the ecology
 
 - Add a **`photoperiod`** field per species: `short_day` (flowers when daylight drops
