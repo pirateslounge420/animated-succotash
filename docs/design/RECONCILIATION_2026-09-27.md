@@ -216,11 +216,11 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     slower and heavier (longer stride, more settle on landing); small folk play
     them quicker and lighter. **Never build a per-species animation set.**
   - **Scale is the species.** Cloaked figures at roughly: small folk ~1.0 m,
-    tribal / marsh / north folk ~1.7 m, and the large ones (`Forest troll` 3.2 m,
-    `Mountain yeti` 2.6 m) as **big cloaked figures** with the same rig scaled up
-    and a heavier cloak. The `Marsh witch` (1.7 m, friendly) is already a cloaked
-    figure by nature — same rig.
-  - **Beasts stay beasts.** `Werewolf`, `Desert skinwalker`, `Night rider`,
+    tribal / marsh / north folk ~1.7 m, and the `Forest troll` (3.2 m) as a
+    **big cloaked figure** with the same rig scaled up and a heavier cloak. The
+    `Marsh witch` (1.7 m, friendly) is already a cloaked figure by nature — same rig.
+  - **Beasts stay beasts.** `Mountain yeti` (a mythical beast — **uncloaked**, fur
+    body, stays on the creature side), `Werewolf`, `Desert skinwalker`, `Night rider`,
     `Pond Crawler`, `Unicorn`, `Bog wisp` are not "higher intelligent" in this
     sense and keep their creature bodies. If a creature would ever sit at a fire
     or talk, it's a cloaked figure; if it hunts, haunts or grazes, it's a beast.
