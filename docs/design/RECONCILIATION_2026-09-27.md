@@ -64,9 +64,13 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     it can't run away.
   - Add to `movement.json` `wall_jump`: `cling_hold_s` (how long a cling lasts),
     `cling_jump_scale`, `chain_gain`, `chain_cap`.
-  - Cling pose: body flat to the wall, feet planted, one hand reaching — it should
-    read as a rest, not a hang. Coming out of cling into a jump uses the same kick
-    animation but shorter.
+  - **Animation is one reused crouch pose.** Build a basic crouch/squat (legs bent,
+    torso dropped, cloak pooling) and reuse it for: landing squat, wall-jump kick
+    wind-up, and cling. On a wall the same pose is rotated so the feet plant on the
+    face. The **cloak hides the legs**, so exact limb placement never has to look right —
+    it only has to *feel* right and leave the player guessing at the parkour going on
+    underneath. Don't add separate wall-jump or cling rigs; adjust the cloak sim
+    (bunch at crouch, snap out on the kick) instead of adding bones or poses.
   Keep `window_s`, `angle_deg`, `min_wall_steepness` as they are.
 
 ---
