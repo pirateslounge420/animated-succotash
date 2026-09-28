@@ -31,7 +31,7 @@
 // UV2.y and shows only where the plant's vine amount is above it.
 //
 // Colors follow the R1a palette (palette.gdshaderinc): green leaves are
-// pulled part of the way toward the grass target (species keep their own
+// pulled part of the way toward the canopy target (species keep their own
 // shade; flowers and autumn colors, not being green, are left alone), bark
 // toward the warm dirt/bark brown, moss toward the moss green, and all of
 // them cool toward their night targets after dark.
@@ -173,15 +173,16 @@ void fragment() {
 		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
 		tex = retro_tex(look_tex_bark, uv / look_tile_m2.x);
 	}
-	// R1a palette: leaves toward grass green, bark toward the warm brown.
+	// Palette: leaves toward the canopy green (§AG), bark toward the warm
+	// brown.
 	vec3 base = COLOR.rgb;
 	float gw = pal_greenness(base);
 	float nk = look_night;
 	if (mat_id < 0.5) {
-		base = pal_pull(base, pal_dirt, 0.7 * (1.0 - gw));
+		base = pal_pull(base, pal_bark, 0.7 * (1.0 - gw));
 		base = pal_pull(base, pal_bark_night, 0.6 * nk * (1.0 - gw));
 	}
-	base = pal_pull(base, pal_grass, 0.45 * gw);
+	base = pal_pull(base, pal_canopy, 0.55 * gw);
 	base = pal_pull(base, pal_grass_night, 0.7 * nk * gw);
 	if (dead_v > 0.5) {
 		// Dead wood: grey weathered bark; dry straw-colored bamboo.

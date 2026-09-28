@@ -28,6 +28,8 @@ func _ready() -> void:
 	mat.set_shader_parameter("bleed", float(retro.get("bleed", 0.6)))
 	mat.set_shader_parameter("grain", float(retro.get("grain", 0.025)))
 	mat.set_shader_parameter("levels", pow(2.0, float(retro.get("bits_per_channel", 5))) - 1.0)
+	var fl := Color(str((retro.get("colors", {}) as Dictionary).get("shadow_floor", "#080C4A")))
+	mat.set_shader_parameter("shadow_floor", Vector3(fl.r, fl.g, fl.b))
 	for pair in [["shadow_tint_day", day], ["shadow_tint_night", night]]:
 		var t: Array = pair[1].get("shadow_tint", [1.0, 1.0, 1.0])
 		mat.set_shader_parameter(pair[0], Vector3(float(t[0]), float(t[1]), float(t[2])))

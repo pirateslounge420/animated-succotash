@@ -20,11 +20,17 @@
 // and #3E4C8C instead of pure ultramarine. If the night lighting changes,
 // re-tune the night targets. Change the look here, not in each shader.
 
-// Grass: screen #3FA83A by day (shadow #1F5A22), cooling toward #1E4A6A.
-const vec3 pal_grass = vec3(0.08, 0.27, 0.06);
+// Grass (§AG, data/look.json retro.colors): screen #3F6E2C in the sun,
+// #224A18 base, #10270A deep, cooling toward #1E4A6A at night. Dark, not
+// poison green: it reads bright only against the navy.
+const vec3 pal_grass = vec3(0.07, 0.16, 0.0);
+// Tree crowns: #1A3A14, a shade under the grass.
+const vec3 pal_canopy = vec3(0.05, 0.075, 0.025);
 const vec3 pal_grass_night = vec3(0.03, 0.47, 0.2);
-// Dirt and bark, the one warm ground color: #6B4A2E to #A07A4A.
-const vec3 pal_dirt = vec3(0.72, 0.39, 0.18);
+// Dirt and paths (§AG): olive earth, #4A4626 to #8F803B in the sun.
+const vec3 pal_dirt = vec3(0.85, 0.55, 0.04);
+// Bark, the warm brown: #6B4A2E to #A07A4A.
+const vec3 pal_bark = vec3(0.72, 0.39, 0.18);
 const vec3 pal_bark_night = vec3(0.28, 0.26, 0.36);
 // Stone: #6F7A8A by day, #3E4C8C at night. Moss #3F7A3A.
 const vec3 pal_stone = vec3(0.42, 0.45, 0.5);

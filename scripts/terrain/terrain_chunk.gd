@@ -665,11 +665,10 @@ static var _fall_mat: ShaderMaterial
 static var _mist_mesh: QuadMesh
 static var _salt_mat: ShaderMaterial
 static var _fresh_mat: ShaderMaterial
-## Day water (docs/WORLD_SYSTEMS_SPEC.md R1a): bright saturated blue, lands
-## near #1667FF on screen, between the day sky's zenith and horizon. Sea
-## and fresh water share it: two blues met in a hard 16 m staircase at
-## every river mouth.
-const WATER := Color("#3B78FF")
+## Day water: the reference's deep navy (data/look.json retro.colors.water,
+## design §AG). Sea and fresh water share it: two blues met in a hard 16 m
+## staircase at every river mouth.
+static var WATER := Color(str((Tuning.section("look", "retro").get("colors", {}) as Dictionary).get("water", "#3B78FF")))
 
 
 static func materials() -> void:

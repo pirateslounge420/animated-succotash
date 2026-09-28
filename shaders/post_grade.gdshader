@@ -18,7 +18,10 @@
 // faint moving film grain and a hard ordered dither: each channel floored
 // to `levels` steps (2^bits_per_channel - 1, 31 at 5 bits) through a 4x4
 // Bayer pattern, at `dither` strength (1: every pixel on the 5-bit grid,
-// data/look.json retro). No bloom, no sharpening. Inside a magical site at night (`magic`) contrast climbs a
+// data/look.json retro). Before the grain, a shadow floor (§AG,
+// retro.colors.shadow_floor, #080C4A): the darks are lifted to navy, so
+// the darkest pixels in the open read navy, never black. No bloom, no
+// sharpening. Inside a magical site at night (`magic`) contrast climbs a
 // little so the glow reads against the dark.
 shader_type canvas_item;
 
@@ -29,6 +32,7 @@ uniform float bleed = 0.6; // 0-1: how much color spreads sideways
 uniform float grain = 0.025; // film grain amplitude
 uniform float dither = 0.25; // 0-1 ordered dither strength; 0 = off
 uniform float levels = 31.0; // steps per channel: 2^bits - 1
+uniform vec3 shadow_floor = vec3(0.031, 0.047, 0.29); // display space
 // The presets: x day, y night.
 uniform vec2 exposure = vec2(1.0, 1.0);
 uniform vec2 mids = vec2(1.3, 1.35);
@@ -96,6 +100,10 @@ void fragment() {
 	vec3 night_c = grade(col, exposure.y, mids.y, saturation.y, teal.y, shadow_tint_night, shadow_tint_amount.y, contrast.y, vignette.y, SCREEN_UV);
 	col = mix(day_c, night_c, night);
 	col = (col - 0.4) * (1.0 + 0.15 * magic * night) + 0.4;
+	// Shadow floor: the darks come up to navy (each channel at least the
+	// floor's, easing off above the floor's own brightness).
+	float fl = luma_of(shadow_floor);
+	col = mix(col, max(col, shadow_floor), 1.0 - smoothstep(fl, fl * 4.0, luma_of(col)));
 	float luma = luma_of(col);
 
 	// Faint film grain, strongest in the midtones, changing every frame.

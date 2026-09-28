@@ -25,6 +25,9 @@ extends SceneTree
 ## --resolution 1920x1080 --position 0,0 instead). INTEGER=0: the
 ## fractional upscale for this run. Prints the sun's
 ## elevation, the light's elevation and the mean brightness of each frame.
+## SPAWN=n: the n-th camp instead of the first (other ground to judge).
+## SUNWARD=1 with VISTA=1: face the sun's bearing instead (the sunset sky).
+## CLOUD=x: the held weather's cloud cover (default 0.15).
 
 var out_dir := "/tmp/shots"
 
@@ -46,7 +49,7 @@ func _run() -> void:
 		get_root().mode = Window.MODE_FULLSCREEN
 	var integer_env := OS.get_environment("INTEGER")
 	var world = get_root().get_node("World")
-	world.spawn_choice = 0
+	world.spawn_choice = int(OS.get_environment("SPAWN")) if OS.get_environment("SPAWN") != "" else 0
 	seed(42)
 	Encampment.fixed_side = 0.0
 	var main = load("res://scenes/main.tscn").instantiate()
@@ -56,7 +59,7 @@ func _run() -> void:
 	# INTEGER=0: fractional upscale for this run (the saved setting untouched).
 	if integer_env == "0":
 		get_root().content_scale_stretch = Window.CONTENT_SCALE_STRETCH_FRACTIONAL
-	var clear := {"wind": Vector3(1, 0, 0.5), "rain_mm_h": 0.0, "snow": false, "temp_c": 18.0, "storm": 0.0, "clear": 1.0, "cloud": 0.15}
+	var clear := {"wind": Vector3(1, 0, 0.5), "rain_mm_h": 0.0, "snow": false, "temp_c": 18.0, "storm": 0.0, "clear": 1.0, "cloud": float(OS.get_environment("CLOUD")) if OS.get_environment("CLOUD") != "" else 0.15}
 	main._weather_timer = 1e9
 	main._local_weather = clear
 	main._weather_eased = clear.duplicate()
@@ -144,6 +147,12 @@ func _run() -> void:
 			world.days = days
 			main.hud._readout_timer = 0.0
 			await process_frame
+			# SUNWARD=1 (with VISTA): turn toward the sun's bearing, the view
+			# tipped up 8 degrees: the sunset sky and the sun's disc.
+			if OS.get_environment("SUNWARD") == "1" and OS.get_environment("VISTA") == "1":
+				var sd: Vector3 = main.sky.sun_dir
+				var flat := (sd - pd * sd.dot(pd)).normalized()
+				cam.global_transform = Transform3D(Basis.looking_at(flat.rotated(flat.cross(pd).normalized(), deg_to_rad(8.0)), pd), cam.global_position)
 		var img := get_root().get_texture().get_image()
 		var path := out_dir.path_join("%s_%02dh.png" % [tag, int(hour)])
 		img.save_png(path)

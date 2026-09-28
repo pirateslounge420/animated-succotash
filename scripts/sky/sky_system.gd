@@ -66,6 +66,7 @@ var daylight := 1.0 # 0 at night, 1 in full day
 var moonlight := 0.0 # 0-1, includes phase
 
 var _zenith := Gradient.new()
+var _mid := Gradient.new()
 var _horizon := Gradient.new()
 ## Cloud tones (lit tops, shaded undersides) for CloudLayers.
 
@@ -74,11 +75,18 @@ var cloud_shade := Color(0.7, 0.75, 0.9)
 var _shown_mansion := -1
 var _glyph_fade := 1.0 # 0-1, dips to 0 while the glyph changes mansion
 
-## The R1a palette (docs/WORLD_SYSTEMS_SPEC.md), as it should read on
-## screen: day sky zenith -> horizon, night sky zenith -> horizon, night
-## fog, and the moonlight's color.
-const DAY_ZENITH := Color("#1436FF")
-const DAY_HORIZON := Color("#4C7CFF")
+## The palette as it should read on screen. Day and sunset come from the
+## reference frames (data/look.json retro.colors, design §AG: zenith ->
+## mid -> horizon, no white haze band; sunset in retro.sunset_bands);
+## night is R1a's (docs/WORLD_SYSTEMS_SPEC.md, §C's ultramarine): night
+## sky zenith -> horizon, night fog, and the moonlight's color.
+static var RETRO := Tuning.section("look", "retro")
+static var RC: Dictionary = RETRO.get("colors", {})
+static var DAY_ZENITH := Color(str(RC.get("sky_zenith", "#1436FF")))
+static var DAY_MID := Color(str(RC.get("sky_mid", "#3059FF")))
+static var DAY_HORIZON := Color(str(RC.get("sky_horizon", "#4C7CFF")))
+static var SUNSET_SUN := Color(str(RC.get("sunset_sun", "#FBF486")))
+static var BANDS: Array = (RC.get("sunset_bands", ["#E68534", "#A24C1C", "#523726"]) as Array).map(func(h): return Color(str(h)))
 const NIGHT_ZENITH := Color("#0A14A0")
 const NIGHT_HORIZON := Color("#1B2ED8")
 const NIGHT_FOG := Color("#1E30C0")
@@ -87,19 +95,21 @@ const MOONLIGHT := Color("#8FA8FF")
 const FILL_NIGHT := Color("#3A4CFF")
 const FILL_MOON := Color("#6480FF")
 
-## Elevation (degrees) -> palette keys [elevation, zenith, horizon], as
-## seen on screen. Day is pure saturated blue; at dusk and dawn a warm
-## band (rose, then orange) stays low on the horizon while the sky above
-## goes ultramarine; night is bright ultramarine.
+## Elevation (degrees) -> palette keys [elevation, zenith, mid, horizon],
+## as seen on screen. Day is deep saturated blue; around sunrise and
+## sunset the whole sky takes the sunset bands (orange at the horizon,
+## rust above, brown overhead), an afterglow of them under ultramarine
+## just after; night is bright ultramarine.
 const _ELEV_MIN := -18.0
 const _ELEV_MAX := 40.0
-const _KEYS := [
-	[-18.0, NIGHT_ZENITH, NIGHT_HORIZON],
-	[-8.0, Color("#0E1AB4"), Color("#2C34DC")],
-	[-2.0, Color("#1428C8"), Color("#D84C60")],
-	[3.0, Color("#1432E8"), Color("#FF8C3A")],
-	[12.0, DAY_ZENITH, DAY_HORIZON],
-	[40.0, DAY_ZENITH, DAY_HORIZON],
+static var _KEYS := [
+	[-18.0, NIGHT_ZENITH, NIGHT_ZENITH.lerp(NIGHT_HORIZON, 0.5), NIGHT_HORIZON],
+	[-8.0, Color("#0E1AB4"), Color("#1D27C8"), Color("#2C34DC")],
+	[-3.0, Color("#1428C8"), BANDS[2], BANDS[1]],
+	[2.0, BANDS[2], BANDS[1], BANDS[0]],
+	[6.0, BANDS[2].lerp(DAY_ZENITH, 0.4), BANDS[1].lerp(DAY_MID, 0.5), BANDS[0].lerp(DAY_HORIZON, 0.4)],
+	[12.0, DAY_ZENITH, DAY_MID, DAY_HORIZON],
+	[40.0, DAY_ZENITH, DAY_MID, DAY_HORIZON],
 ]
 ## Turns per second the painted clouds drift round the viewer, at rest
 ## and per m/s of wind.
@@ -125,18 +135,23 @@ static var RETRO_FOG := Tuning.section("look", "retro").get("fog", {}) as Dictio
 func _ready() -> void:
 	var offsets := PackedFloat32Array()
 	var zeniths := PackedColorArray()
+	var mids := PackedColorArray()
 	var horizons := PackedColorArray()
 	for key in _KEYS:
 		offsets.append(inverse_lerp(_ELEV_MIN, _ELEV_MAX, key[0]))
 		zeniths.append(key[1])
-		horizons.append(key[2])
+		mids.append(key[2])
+		horizons.append(key[3])
 	_zenith.offsets = offsets
 	_zenith.colors = zeniths
+	_mid.offsets = offsets
+	_mid.colors = mids
 	_horizon.offsets = offsets
 	_horizon.colors = horizons
 
 	sky_material = ShaderMaterial.new()
 	sky_material.shader = SKY_SHADER
+	sky_material.set_shader_parameter("sun_disc_deg", float(RETRO.get("sun_disc_deg", 1.5)))
 	# The painted clouds and starfield, baked once on the GPU.
 	var paint := SkyPaint.new()
 	paint.name = "SkyPaint"
@@ -241,15 +256,18 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# night. Worked out as screen colors, then turned into scene colors.
 	var t := inverse_lerp(_ELEV_MIN, _ELEV_MAX, clampf(sun_elevation_deg, _ELEV_MIN, _ELEV_MAX))
 	var zenith := _zenith.sample(t)
+	var mid := _mid.sample(t)
 	var horizon := _horizon.sample(t)
 	var night := 1.0 - daylight
 	var lift := moonlight * night
 	zenith += Color(0.01, 0.02, 0.06) * lift
+	mid += Color(0.01, 0.02, 0.055) * lift
 	horizon += Color(0.01, 0.02, 0.05) * lift
 	var storm := float(weather.get("storm", 0.0))
 	var cloud := float(weather.get("cloud", 0.0))
 	# Storms grey the day sky; at night they deepen it, still blue.
 	zenith = zenith.lerp(Color(0.45, 0.48, 0.55).lerp(Color(0.07, 0.1, 0.4), night), storm * 0.7)
+	mid = mid.lerp(Color(0.5, 0.53, 0.6).lerp(Color(0.08, 0.12, 0.45), night), storm * 0.6)
 	# Dusk and dawn: the gradient hugs the horizon, so the warm band stays
 	# low and the sky above goes ultramarine.
 	var warm_band := smoothstep(-12.0, -4.0, sun_elevation_deg) * (1.0 - smoothstep(4.0, 12.0, sun_elevation_deg))
@@ -259,12 +277,16 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	sky_material.set_shader_parameter("east_dir", east)
 	sky_material.set_shader_parameter("north_dir", north)
 	zenith = zenith.lerp(Color(0.0, 0.01, 0.04), dark_magic * 0.6)
+	mid = mid.lerp(Color(0.005, 0.02, 0.07), dark_magic * 0.55)
 	horizon = horizon.lerp(Color(0.01, 0.03, 0.1), dark_magic * 0.5)
 	sky_material.set_shader_parameter("zenith_color", _scene_color(zenith))
+	sky_material.set_shader_parameter("mid_color", _scene_color(mid))
 	sky_material.set_shader_parameter("horizon_color", _scene_color(horizon))
 	sky_material.set_shader_parameter("ground_color", _scene_color(horizon.darkened(0.6)))
 	sky_material.set_shader_parameter("sun_dir", sun_dir)
 	sky_material.set_shader_parameter("sun_color", sun_col)
+	# The disc: the reference's pale yellow sunset sun, whiter up high.
+	sky_material.set_shader_parameter("sun_disc_color", _scene_color(SUNSET_SUN.lerp(Color(1.0, 0.98, 0.9), smoothstep(6.0, 30.0, sun_elevation_deg))))
 	sky_material.set_shader_parameter("sun_visible", smoothstep(-2.0, 1.0, sun_elevation_deg) * (1.0 - cloud * 0.8))
 	sky_material.set_shader_parameter("moon_dir", moon_dir)
 	sky_material.set_shader_parameter("moon_phase", phase)

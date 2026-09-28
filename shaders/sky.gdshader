@@ -5,12 +5,14 @@
 // player's local up, since "up" changes as you walk around the planet.
 //
 // A painted panoramic skybox in the manner of 2001-2004 console games
-// (docs/WORLD_SYSTEMS_SPEC.md R1/R1a): a smooth gradient (pure saturated
-// blue by day, #1436FF overhead to #4C7CFF at the horizon; bright
-// ultramarine at night, #0A14A0 to #1B2ED8; at dusk a warm band held low
-// by horizon_sharpness under an ultramarine sky), soft haze hugging the
-// horizon in the ground fog's color (fog_color) and a warm glow on the
-// sun's side. SkySystem sends these already corrected for the exposure
+// (docs/WORLD_SYSTEMS_SPEC.md R1/R1a, design §AG): a three-stop gradient,
+// zenith -> mid -> horizon (by day the reference's deep blue, #0810B8
+// overhead through #3560D0 to #7A90E0 at the horizon, data/look.json
+// retro.colors; around sunset the sunset bands; bright ultramarine at
+// night, #0A14A0 to #1B2ED8), haze hugging the horizon in the ground fog's
+// color (fog_color, the horizon's own: no white band) and a warm glow on
+// the sun's side. The sun is a big soft disc (sun_disc_deg across, 8 by
+// default) fading out radially, not a point: no bloom does it. SkySystem sends these already corrected for the exposure
 // and adjustment, so they read true on screen.
 // Over it, two panoramas painted once at startup (SkyPaint,
 // sky_paint.gdshader):
@@ -31,6 +33,7 @@ uniform vec3 east_dir = vec3(1.0, 0.0, 0.0);
 uniform vec3 north_dir = vec3(0.0, 0.0, -1.0);
 
 uniform vec3 zenith_color : source_color = vec3(0.2, 0.5, 0.95);
+uniform vec3 mid_color : source_color = vec3(0.4, 0.68, 0.98);
 uniform vec3 horizon_color : source_color = vec3(0.6, 0.85, 1.0);
 uniform vec3 ground_color : source_color = vec3(0.2, 0.22, 0.25);
 uniform float horizon_sharpness = 2.5;
@@ -38,6 +41,8 @@ uniform vec3 fog_color : source_color = vec3(0.6, 0.8, 1.0);
 
 uniform vec3 sun_dir = vec3(0.0, 1.0, 0.0);
 uniform vec3 sun_color : source_color = vec3(1.0, 0.95, 0.85);
+uniform vec3 sun_disc_color : source_color = vec3(1.0, 0.97, 0.6);
+uniform float sun_disc_deg = 8.0; // across
 uniform float sun_visible = 1.0;
 
 uniform vec3 moon_dir = vec3(0.0, -1.0, 0.0);
@@ -135,7 +140,8 @@ void sky() {
 	vec3 col;
 	if (h >= 0.0) {
 		float t = pow(h, 1.0 / horizon_sharpness);
-		col = mix(horizon_color, zenith_color, smoothstep(0.0, 1.0, t));
+		col = t < 0.5 ? mix(horizon_color, mid_color, smoothstep(0.0, 1.0, t * 2.0))
+			: mix(mid_color, zenith_color, smoothstep(0.0, 1.0, t * 2.0 - 1.0));
 		// Soft haze hugging the horizon, the same color as the ground fog.
 		col = mix(col, fog_color, (1.0 - smoothstep(0.0, 0.12, h)) * 0.85);
 		// Warm glow low on the sun's side (strongest near sunrise/sunset).
@@ -148,9 +154,15 @@ void sky() {
 		col = mix(horizon_color, ground_color, clamp(-h * 4.0, 0.0, 1.0));
 	}
 
-	// Sun: disc plus warm glow.
+	// Sun: a big soft disc, bright in the middle and fading out to its
+	// rim, a fainter corona round it, and the wide warm glow.
 	float sd = dot(d, sun_dir);
-	col += sun_color * sun_visible * (smoothstep(0.9994, 0.9997, sd) * 6.0 + pow(max(sd, 0.0), 180.0) * 0.6 + pow(max(sd, 0.0), 12.0) * 0.12);
+	float sr = acos(clamp(sd, -1.0, 1.0)) / radians(sun_disc_deg * 0.5);
+	float disc = 1.0 - smoothstep(0.35, 1.0, sr);
+	float corona = pow(1.0 - clamp(sr / 2.5, 0.0, 1.0), 3.0);
+	col = mix(col, sun_disc_color * 1.15, clamp(disc * 1.2, 0.0, 1.0) * sun_visible);
+	col += sun_disc_color * sun_visible * corona * 0.3;
+	col += sun_color * sun_visible * pow(max(sd, 0.0), 12.0) * 0.12;
 
 	if (!AT_CUBEMAP_PASS) {
 		float night_mask = smoothstep(-0.02, 0.05, h);
