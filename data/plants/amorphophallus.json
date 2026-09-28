@@ -5,7 +5,9 @@
  "status": "names researched; traits documented for 34 species, estimated for 212",
  "notes": "All 246 species accepted by Kew's Plants of the World Online (fetched 2026-09-26). Every entry carries its own climate band, so this file needs no biome climate block: species_db should load data/plants/*.json exactly like a biome file. 'shape' is 'umbrella' as a placeholder until the 'aroid' shape exists. 'aroid', 'repro' and 'genes' are read by the plant lifecycle/genetics system (spec Phase 6); the current loader ignores them. Colours are in-game R1a-leaning values, not botanical measurements. Each source line says whether traits are documented or estimated. 'genus_grammar' gives the shared petiole/leaf/spathe rules and ranges; species without an 'appearance' block are painted by the engine from the grammar, seeded by species name so each is stable.",
  "family_defaults": {
-  "needs": ["forest_floor"],
+  "needs": [
+   "forest_floor"
+  ],
   "shape": "aroid",
   "repro": {
    "mode": "both",
@@ -483,6 +485,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#7FA36E",
+     "color_2": "#D8DFC4",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -673,6 +686,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#7FA36E",
+     "color_2": "#DDE3C8",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -860,6 +884,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#7A9E6A",
+     "color_2": "#D6DCC2",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -1050,6 +1085,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#8FAF7A",
+     "color_2": "#E8EBD8",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    }
   ],
@@ -1200,6 +1246,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -1392,6 +1449,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5C8048",
+     "color_2": "#C6C8A8",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -1540,6 +1608,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -1687,6 +1766,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -1879,6 +1969,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#587F4C",
+     "color_2": "#D4D8C0",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -2026,6 +2127,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -2174,6 +2286,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -2321,6 +2444,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -2468,6 +2602,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -2613,6 +2758,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -2761,6 +2917,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -2908,6 +3075,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -3054,6 +3232,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -3201,6 +3390,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -3348,6 +3548,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -3496,6 +3707,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -3641,6 +3863,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -3786,6 +4019,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -3933,6 +4177,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -4080,6 +4335,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -4268,6 +4534,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 2,
+     "color": "#2E5A2C",
+     "color_2": "#2E5A2C",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: plain (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -4415,6 +4692,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -4563,6 +4851,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -4710,6 +5009,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -4857,6 +5167,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -5004,6 +5325,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -5149,6 +5481,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -5296,6 +5639,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -5444,6 +5798,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -5591,6 +5956,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -5738,6 +6114,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -5883,6 +6270,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -6030,6 +6428,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -6176,6 +6585,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -6324,6 +6744,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -6471,6 +6902,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -6616,6 +7058,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -6804,6 +7257,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#4E7245",
+     "color_2": "#8A9A6A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -6996,6 +7460,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5F8A52",
+     "color_2": "#E7C8CC",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -7143,6 +7618,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -7288,6 +7774,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -7435,6 +7932,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -7583,6 +8091,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -7730,6 +8249,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -7877,6 +8407,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -8024,6 +8565,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -8171,6 +8723,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -8318,6 +8881,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -8463,6 +9037,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -8611,6 +9196,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -8759,6 +9355,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -8951,6 +9558,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#4F7A48",
+     "color_2": "#C9D0B2",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -9142,6 +9760,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A8A4E",
+     "color_2": "#D8D8C0",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -9290,6 +9919,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -9436,6 +10076,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -9583,6 +10234,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -9731,6 +10393,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -9878,6 +10551,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -10026,6 +10710,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -10174,6 +10869,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -10321,6 +11027,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -10469,6 +11186,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -10616,6 +11344,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -10764,6 +11503,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -10911,6 +11661,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -11099,6 +11860,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#4F7A48",
+     "color_2": "#C9D0B2",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -11247,6 +12019,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -11392,6 +12175,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -11540,6 +12334,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -11687,6 +12492,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -11835,6 +12651,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -11982,6 +12809,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -12129,6 +12967,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -12276,6 +13125,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -12423,6 +13283,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -12568,6 +13439,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -12716,6 +13598,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -12864,6 +13757,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -13011,6 +13915,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -13158,6 +14073,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -13304,6 +14230,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -13452,6 +14389,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -13600,6 +14548,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -13787,6 +14746,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5E8A4E",
+     "color_2": "#CCD2B0",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -13935,6 +14905,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -14082,6 +15063,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -14230,6 +15222,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: plain (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -14377,6 +15380,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -14524,6 +15538,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -14671,6 +15696,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -14818,6 +15854,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -14966,6 +16013,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -15112,6 +16170,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -15257,6 +16326,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -15405,6 +16485,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -15552,6 +16643,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -15699,6 +16801,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -15890,6 +17003,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#4E7A48",
+     "color_2": "#C6CEB0",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -16038,6 +17162,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -16186,6 +17321,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -16333,6 +17479,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -16480,6 +17637,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -16625,6 +17793,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -16772,6 +17951,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -16919,6 +18109,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -17065,6 +18266,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -17212,6 +18424,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -17404,6 +18627,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5C8048",
+     "color_2": "#C6C8A8",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -17550,6 +18784,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -17695,6 +18940,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -17841,6 +19097,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -17989,6 +19256,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -18135,6 +19413,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -18280,6 +19569,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -18471,6 +19771,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#4E7A48",
+     "color_2": "#CFD6B8",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -18659,6 +19970,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#4E6E4A",
+     "color_2": "#D9B8C4",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -18806,6 +20128,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -18954,6 +20287,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -19141,6 +20485,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#E0B8C0",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -19289,6 +20644,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -19437,6 +20803,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -19624,6 +21001,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#4E7245",
+     "color_2": "#6A8A5A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -19769,6 +21157,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -19956,6 +21355,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -20103,6 +21513,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -20248,6 +21669,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -20396,6 +21828,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -20543,6 +21986,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -20690,6 +22144,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -20837,6 +22302,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -20984,6 +22460,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -21131,6 +22618,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -21279,6 +22777,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -21426,6 +22935,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -21573,6 +23093,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -21720,6 +23251,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -21866,6 +23408,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -22013,6 +23566,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -22200,6 +23764,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -22345,6 +23920,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -22492,6 +24078,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -22639,6 +24236,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -22786,6 +24394,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -22974,6 +24593,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5C8048",
+     "color_2": "#C6C8A8",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -23122,6 +24752,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -23269,6 +24910,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -23417,6 +25069,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -23565,6 +25228,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -23713,6 +25387,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -23861,6 +25546,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -24009,6 +25705,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -24154,6 +25861,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -24301,6 +26019,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -24493,6 +26222,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A8A4E",
+     "color_2": "#DCD9BE",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -24640,6 +26380,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -24832,6 +26583,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -24980,6 +26742,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -25172,6 +26945,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#4E7A48",
+     "color_2": "#CFD6B8",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -25319,6 +27103,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -25467,6 +27262,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -25655,6 +27461,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -25803,6 +27620,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -25950,6 +27778,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -26098,6 +27937,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -26245,6 +28095,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -26393,6 +28254,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -26541,6 +28413,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -26732,6 +28615,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 2,
+     "color": "#5E8A50",
+     "color_2": "#5E8A50",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: plain (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -26878,6 +28772,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -27025,6 +28930,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -27172,6 +29088,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -27363,6 +29290,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#3E6B3A",
+     "color_2": "#C9CBA8",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -27510,6 +29448,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -27658,6 +29607,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -27803,6 +29763,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -27948,6 +29919,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -28095,6 +30077,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -28243,6 +30236,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -28388,6 +30392,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -28535,6 +30550,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -28721,6 +30747,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#6E9A5C",
+     "color_2": "#3A5A32",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: spotted (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -28869,6 +30906,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -29016,6 +31064,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -29164,6 +31223,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -29312,6 +31382,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -29460,6 +31541,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -29607,6 +31699,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -29794,6 +31897,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5E8A50",
+     "color_2": "#C8D0B0",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -29939,6 +32053,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -30084,6 +32209,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -30231,6 +32367,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -30378,6 +32525,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -30565,6 +32723,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -30713,6 +32882,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -30861,6 +33041,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -31008,6 +33199,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -31155,6 +33357,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -31302,6 +33515,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -31490,6 +33714,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -31638,6 +33873,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -31785,6 +34031,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -31932,6 +34189,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -32079,6 +34347,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -32226,6 +34505,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -32373,6 +34663,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -32520,6 +34821,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -32667,6 +34979,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -32814,6 +35137,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -32962,6 +35296,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -33109,6 +35454,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -33255,6 +35611,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -33400,6 +35767,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -33547,6 +35925,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -33694,6 +36083,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -33841,6 +36241,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -33989,6 +36400,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -34134,6 +36556,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -34282,6 +36715,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -34429,6 +36873,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -34576,6 +37031,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -34723,6 +37189,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -34870,6 +37347,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -35017,6 +37505,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -35164,6 +37663,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -35311,6 +37821,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -35458,6 +37979,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -35603,6 +38135,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -35750,6 +38293,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -35898,6 +38452,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -36045,6 +38610,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -36192,6 +38768,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -36383,6 +38970,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5C8A4C",
+     "color_2": "#E2E4CC",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -36529,6 +39127,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -36677,6 +39286,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -36824,6 +39444,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -36971,6 +39602,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -37118,6 +39760,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -37265,6 +39918,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -37413,6 +40077,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -37560,6 +40235,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -37752,6 +40438,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#4F7A48",
+     "color_2": "#C9D0B2",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    },
    {
@@ -37899,6 +40596,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#5A804C",
+     "color_2": "#CFD2B6",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
     }
    }
   ]

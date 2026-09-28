@@ -207,7 +207,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus peruvianus",
@@ -410,7 +421,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#5A8C6A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus bridgesii",
@@ -613,7 +635,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4A8058",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus scopulicola",
@@ -816,7 +849,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#3E7A4A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus macrogonus",
@@ -1018,7 +1062,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus cuzcoensis",
@@ -1220,7 +1275,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus terscheckii",
@@ -1422,7 +1488,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus tacaquirensis",
@@ -1624,7 +1701,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus taquimbalensis",
@@ -1826,7 +1914,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus santaensis",
@@ -2028,7 +2127,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus puquiensis",
@@ -2230,7 +2340,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus huanucoensis",
@@ -2432,7 +2553,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus riomizquensis",
@@ -2634,7 +2766,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus werdermannianus",
@@ -2836,7 +2979,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus validus",
@@ -3038,7 +3192,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus knuthianus",
@@ -3240,7 +3405,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus glaucus",
@@ -3442,7 +3618,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    },
    {
     "name": "Trichocereus chalaensis",
@@ -3643,7 +3830,18 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "realm": "andes"
+    "realm": "andes",
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4.3,
+     "color": "#4E8A5A",
+     "color_2": "#E8DCAA",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    }
    }
   ]
  },

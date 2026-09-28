@@ -6,7 +6,7 @@ Usage:
     python3 tools/plant_schema_check.py data/plants/pine.json [more files]
     python3 tools/plant_schema_check.py --strict ...   # also require every entry to carry the new blocks
 
-Checks the optional new blocks (`leaf`, `canopy`, `tint`, `photoperiod`, `soil`) on
+Checks the optional new blocks (`leaf`, `bark`, `canopy`, `tint`, `photoperiod`, `soil`) on
 every plant entry: allowed values, types and ranges, exactly as the schema lists them.
 Entries without a block pass unless --strict (the fill is incremental). Exit code 1 on
 any error. Data-fill agents run this before they finish a file.
@@ -40,6 +40,10 @@ PH = {"acid", "neutral", "alkaline", "any"}
 SALINITY = {"none", "tolerant", "needs"}
 CONFIDENCE = {"documented", "estimated"}
 BLADE_TYPES = {"simple", "compound", "strap", "frond"}
+BARK_PATTERN = {"smooth", "fissured", "furrowed", "plated", "scaly", "flaky", "papery", "stringy", "ringed",
+                "spiny", "warty", "green_stem", "none"}
+BARK_ORIENT = {"vertical", "diamond", "horizontal", "none"}
+LENTICELS = {"none", "dots", "horizontal_bands"}
 
 
 class Report:
@@ -47,6 +51,7 @@ class Report:
         self.errors = []
         self.entries = 0
         self.with_leaf = 0
+        self.with_bark = 0
 
     def err(self, where, msg):
         self.errors.append("%s: %s" % (where, msg))
@@ -151,6 +156,33 @@ def check_tint(rep, where, t):
         rep.err(where, "'drop' must be true/false")
 
 
+def _hex(rep, where, d, key, required=True):
+    v = d.get(key)
+    if v is None:
+        if required:
+            rep.err(where, "missing '%s'" % key)
+        return
+    if not (isinstance(v, str) and v.startswith("#") and len(v) == 7):
+        rep.err(where, "'%s' must be a #rrggbb hex" % key)
+
+
+def check_bark(rep, where, b):
+    if not isinstance(b, dict):
+        rep.err(where, "'bark' must be an object"); return
+    _enum(rep, where, b, "pattern", BARK_PATTERN)
+    if b.get("pattern") == "none":
+        return
+    _enum(rep, where, b, "orientation", BARK_ORIENT)
+    if b.get("orientation") != "none" and b.get("pattern") not in ("fissured", "furrowed", "plated", "flaky"):
+        rep.err(where, "'orientation' is only for fissured/furrowed/plated/flaky (use 'none')")
+    _num(rep, where, b, "depth", 0.0, 1.0)
+    _num(rep, where, b, "scale_cm", 0.2, 200)
+    _hex(rep, where, b, "color")
+    _hex(rep, where, b, "color_2")
+    _enum(rep, where, b, "lenticels", LENTICELS)
+    _enum(rep, where, b, "confidence", CONFIDENCE, required=False)
+
+
 def check_photoperiod(rep, where, p):
     if not isinstance(p, dict):
         rep.err(where, "'photoperiod' must be an object"); return
@@ -186,6 +218,11 @@ def check_entry(rep, where, e, strict):
             fn(rep, where + "." + key, e[key])
         elif strict and "leaf" in e:
             rep.err(where, "missing '%s'" % key)
+    if "bark" in e:
+        rep.with_bark += 1
+        check_bark(rep, where + ".bark", e["bark"])
+    elif strict:
+        rep.err(where, "missing 'bark'")
     if "soil" in e:
         check_soil(rep, where + ".soil", e["soil"])
     elif strict:
@@ -227,7 +264,7 @@ def main(argv):
         check_file(f, rep, strict)
     for e in rep.errors:
         print("ERROR", e)
-    print("%d entries checked, %d with a leaf block, %d errors" % (rep.entries, rep.with_leaf, len(rep.errors)))
+    print("%d entries checked, %d with a leaf block, %d with a bark block, %d errors" % (rep.entries, rep.with_leaf, rep.with_bark, len(rep.errors)))
     return 1 if rep.errors else 0
 
 

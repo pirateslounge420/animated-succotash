@@ -147,6 +147,67 @@ Leaflet fields reuse the simple-leaf vocabulary above.
 
 ---
 
+## 1b. `bark` block (trunk and stem surface — drives the per-species bark tile)
+
+```json
+"bark": {
+  "pattern":     "furrowed",
+  "orientation": "vertical",
+  "depth":       0.6,
+  "scale_cm":    4,
+  "color":       "#5A4A3A",
+  "color_2":     "#8A5A3A",
+  "lenticels":   "none",
+  "confidence":  "documented"
+}
+```
+
+### `pattern` (the mature trunk, as a flora describes it)
+| value | look | examples |
+|---|---|---|
+| `smooth` | unbroken, faint mottling | beech, fig, magnolia, young trees, baobab |
+| `fissured` | shallow narrow cracks | ash, elm, young oak, hornbeam |
+| `furrowed` | deep ridges and valleys | mature oak, black locust, cottonwood, chestnut |
+| `plated` | jigsaw / rectangular plates with cracks between | ponderosa pine, alligator juniper (diamond), persimmon (blocky) |
+| `scaly` | small thin flakes, roughly shingled | spruce, fir, old cherry, araucaria |
+| `flaky` | patches peel to a paler or brighter under-colour | plane/sycamore, eucalyptus, arbutus, guava, crape myrtle |
+| `papery` | thin horizontal sheets curl off | birch, river birch, paperbark *Melaleuca* |
+| `stringy` | long shredding fibrous strips | redwood, cypress, juniper, cedar, stringybark eucalypts |
+| `ringed` | leaf-scar rings or nodes around the stem | palms, bamboo culms, tree ferns, banana pseudostem, cycads |
+| `spiny` | spines, thorns or areoles on the stem | cacti, *Ceiba*, honey locust, rose, *Pandanus* prop roots |
+| `warty` | raised corky bumps or big lenticels | hackberry, elder, cork oak (deep corky = `furrowed` depth 1) |
+| `green_stem` | photosynthetic herbaceous stem | herbs, aroid petioles, grasses, cannabis, reeds |
+| `none` | no stem surface to draw | mosses, lichens, fungi, algae, submerged plants |
+
+### `orientation` — for `fissured` / `furrowed` / `plated` / `flaky`; `none` otherwise
+`vertical` (oak, cottonwood) · `diamond` (crossing ridges: ash, alligator juniper, some pines)
+· `horizontal` (cherry, birch lenticel bands; horizontal plates) · `none`
+
+### `depth`
+0–1: relief and contrast of the pattern — the darkness of the fissures / the brightness of
+the peel. Beech 0.1, ash 0.4, oak 0.7, cork oak 1.0.
+
+### `scale_cm`
+Spacing of ridges, plates, rings or flakes on the real trunk, in cm (ponderosa plates
+~10, oak furrows ~3–5, birch bands ~1, palm rings ~10–25, bamboo nodes ~20–40).
+
+### `color`, `color_2`
+Hex. `color` is the outer bark on the mature trunk in flat daylight (grey-brown
+`#6E6458`, red-brown `#7A4A2E`, white `#E6E2D6`, green stem `#5C8A3C`…). `color_2` is
+the secondary colour the pattern reveals: the inner bark in fissures (usually darker or
+redder), the peel underside (often brighter: plane tree cream, eucalyptus orange, arbutus
+red), the lenticel bands, the ring scars. `green_stem` species set `color_2` to the node
+/ mottle colour (aroid petiole blotches).
+
+### `lenticels`
+`none` · `dots` (scattered pale specks: elder, hackberry) · `horizontal_bands` (dark
+dashes in rows: birch, cherry, alder).
+
+The stem tile is generated from this block (`tools/look/make_plant_tiles.py`, design
+§AH); species without one fall back to their `bark_type` class with a per-species roll.
+
+---
+
 ## 2. `canopy` block (whole-plant form; forestry vocabulary)
 
 ```json
@@ -267,7 +328,8 @@ Every species maps to one card + parameters. No hand-drawn leaves.
    `"leaf_confidence": "estimated"`; documented → `"documented"`.
 2. Source is real taxonomy (floras, Kew POWO, regional botanical descriptions). Record the
    source phrase in `source` as the files already do.
-3. Never change `genus`/`species`/climate bands — only add the new blocks.
+3. Never change `genus`/`species`/climate bands — only add the new blocks (`leaf`, `bark`,
+   `canopy`, `tint`, `photoperiod` where a species has one).
 4. Work by file (`data/plants/*.json`) or by biome (`data/biomes/*.json`); one agent per
    file; never two agents on one file.
 5. Keep it archetypal: if a species has variable leaves, describe the **typical adult**
