@@ -90,9 +90,16 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
     (`roll_max_m`) the roll still fires but damage is only reduced, not removed.
   - A successful roll **converts vertical speed into horizontal speed**: on exit the
     player carries `roll_carry` (~0.5–0.7) of the fall speed forward, added to
-    run speed and capped by `roll_max_mps`. Higher fall → longer roll → faster exit.
-    This is what lets the player chain wall-jump → drop → roll → sprint and "sling"
-    through terrain. Roll exit feeds straight into the ninja-run lean.
+    run speed. Higher fall → longer roll → faster exit. This is what lets the player
+    chain wall-jump → drop → roll → sprint and "sling" through terrain. Roll exit
+    feeds straight into the ninja-run lean.
+  - **Momentum is nearly uncapped.** `roll_max_mps` and `chain_cap` are only sanity
+    limits (physics stability), set far above anything a player will reach by skill —
+    not a design ceiling. The balance is **risk, not a cap**: the faster you go, the
+    harder momentum is to control and the more a miss costs. Fall damage and impact
+    damage scale with speed, so a missed roll or wall jump at high speed **can kill
+    outright**. Perfect execution keeps you alive and fast; one mistake ends the run.
+    Speed → risk → the health bar is the governor.
   - A **missed** roll (no input, or outside the window) is the existing squat and
     full fall damage. Mistimed input during the squat does nothing — no punish
     beyond the normal landing.
@@ -101,7 +108,18 @@ put the work in the named phase of `WORLD_SYSTEMS_SPEC.md`; only section 3 is ne
   - **Animation:** reuse the crouch pose → tuck → the cloak does the rest. The roll
     itself is a rotation of the body root with the cloak wrapping; no new rig.
   - Add to `movement.json`: a `roll` block with `window_s`, `safe_m`, `max_m`,
-    `damage_scale`, `carry`, `max_mps`, `len_per_m`, `len_cap_m`.
+    `damage_scale`, `carry`, `max_mps` (sanity only), `len_per_m`, `len_cap_m`.
+  - **Impact damage:** hitting a wall, trunk or the ground at speed without a tech
+    (roll or wall jump) deals damage by impact speed above `impact_safe_mps`
+    (`impact_per_mps`), same shape as fall damage. Make both lethal at the top end.
+
+- **Death and respawn — Phase 1 / Phase 10.** Death already exists (`main.respawn()`,
+  slump-and-lie-still). Lock the consequence: **you respawn, but your gear drops
+  where you died.** Carried inventory (the R4 few-things carry) and equipped items
+  fall as a pickup bundle at the death spot; the player comes back at the last lit
+  campfire (or the opening campfire if none) at full health with an empty carry.
+  The bundle persists until picked up or the world state expires it (Phase 12
+  persistence decides how long). No other penalty — the walk back is the penalty.
 
 ---
 
