@@ -24,6 +24,8 @@ extends Node
 var world: Node
 var chunks: ChunkManager
 var sky: SkySystem
+## The season on the trees: autumn colour, leaf fall, bare winter, spring.
+var leaf_season: LeafSeason
 var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
@@ -118,6 +120,10 @@ func _on_planet_ready() -> void:
 	var shell := FarShell.new()
 	shell.name = "FarShell"
 	root.add_child(shell)
+	leaf_season = LeafSeason.new()
+	leaf_season.name = "LeafSeason"
+	leaf_season.main = self
+	root.add_child(leaf_season)
 	shell.build(world)
 	clouds = CloudLayers.new()
 	clouds.name = "Clouds"
@@ -263,6 +269,7 @@ func _process(delta: float) -> void:
 		Look.apply({"look_ground_m": _ground_mean})
 	var sky_days := Astro.apparent_days(world.days, CubeSphere.longitude(d), CubeSphere.latitude(d))
 	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), sky_days, weather, fog, delta)
+	leaf_season.update_season(delta, d, world.days, WeatherFX.plant_wind)
 	var cam := player.camera()
 	var clear := 1.0 - float(weather.get("cloud", 0.0))
 	sky_events.update_events(delta, d, CubeSphere.north(d), 1.0 - smoothstep(0.0, 0.25, sky.daylight), clear)

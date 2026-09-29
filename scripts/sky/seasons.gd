@@ -53,6 +53,17 @@ static func _position(days: float, lat: float) -> float:
 	return fposmod(yd / year * 4.0, 4.0)
 
 
+## Where in the seasonal year a place is (0-4: spring's middle at 0,
+## summer's at 1, autumn's at 2, winter's at 3), and half a transition in
+## those units: the plants' clock (LeafSeason).
+static func year_position(days: float, lat: float) -> float:
+	return _position(days, lat)
+
+
+static func half_transition() -> float:
+	return _num("calendar", "transition_days", 20.0) * 0.5 / DayCycle.year_days() * 4.0
+
+
 ## The season now and the change under way: {"name", "next", "t" (0 while
 ## settled, 0-1 through the transition into "next"), "settled",
 ## "day_of_season" (days since this season began)}.

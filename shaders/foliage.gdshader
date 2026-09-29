@@ -65,7 +65,8 @@ global uniform float look_leaf_shadow_m;
 // design §W, look.json "ranges", set per node by VegetationPlacer): each
 // plant shrinks away into its root over the last tenth.
 instance uniform float draw_range_m = 0.0;
-// Leaf left on the trees for the season, 0-1 (Phase 5 sets it; 1 = full).
+// Leaf left on the trees for the season, 0-1 (LeafSeason sets it on the
+// deciduous species' materials; 1 = full).
 uniform float leaf_season = 1.0;
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_bark : filter_nearest_mipmap, repeat_enable;
@@ -211,6 +212,16 @@ void fragment() {
 	// leaf cards, which still cast from both sides).
 	if (PROJECTION_MATRIX[3][3] == 1.0 && FRONT_FACING && (mat_id < 1.5 || (mat_id > 3.5 && mat_id < 4.5))) {
 		discard;
+	}
+	// The season (LeafSeason, design §AI): a thinning crown loses its
+	// leaves in leaf-sized cells, a hash picking which go first, until at
+	// leaf_season 0 it is bare. (Branchy trees' clusters thin by their own
+	// keys in vertex().)
+	if (leaf_season < 0.999 && mat_id > 0.5 && mat_id < 2.5) {
+		vec3 cell = floor(obj_pos / max(sp_leaf_m * 2.0, 0.25));
+		if (sp_hash(cell.xy + cell.z * 17.13) >= leaf_season) {
+			discard;
+		}
 	}
 	vec3 an = abs(obj_normal);
 	vec4 tex;

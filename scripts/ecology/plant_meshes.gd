@@ -19,8 +19,9 @@ class_name PlantMeshes
 ## How leafy a crown is: the species' `leaf_density` sets how many clusters
 ## its mesh carries; each tree's leaf amount (leaf_amount(): its growth and
 ## how dry its site is, in the MultiMesh custom data) thins and shrinks
-## them in the foliage shader, and the shader's `leaf_season` will thin
-## them for winter once seasons exist.
+## them in the foliage shader, and the season (LeafSeason: the deciduous
+## species materials' `leaf_season` and `sp_autumn`) turns and thins them
+## through the autumn and brings them back in spring.
 
 const S := PlantSpecies.Shape
 

@@ -14,7 +14,10 @@ extends SceneTree
 ## HOURS (default "14"), YEAR_DAY (day of the year, 0 = the northern spring
 ## equinox; default tomorrow), DAYS (comma-separated days of the year: one
 ## frame each at the first hour, for running the clock through a season),
-## HEIGHT_M (each tree's height, default 13), NO_TILES=1 (the class
+## HEIGHT_M (each tree's height, default 13), FRAMES (frames held before
+## each shot, default 20: more lets falling leaves get down), DIST (the camera's distance
+## from the row, default 22 m), WIND (m/s, default 1.1; above
+## litter.json fall.gust_mps in the fall, a gust strips the crowns), NO_TILES=1 (the class
 ## textures, as before §AH, to compare), OUT_DIR (default /tmp/shots),
 ## TAG (default "species"): writes <TAG>_<hh>h.png or <TAG>_d<day>.png.
 
@@ -37,7 +40,8 @@ func _run() -> void:
 	get_root().add_child(main)
 	while not main._playing:
 		await process_frame
-	var clear := {"wind": Vector3(1, 0, 0.5), "rain_mm_h": 0.0, "snow": false, "temp_c": 18.0, "storm": 0.0, "clear": 1.0, "cloud": 0.15}
+	var wind_mps := float(OS.get_environment("WIND")) if OS.get_environment("WIND") != "" else 1.1
+	var clear := {"wind": Vector3(1, 0, 0.5).normalized() * wind_mps, "rain_mm_h": 0.0, "snow": false, "temp_c": 18.0, "storm": 0.0, "clear": 1.0, "cloud": 0.15}
 	main._weather_timer = 1e9
 	main._local_weather = clear
 	main._weather_eased = clear.duplicate()
@@ -55,10 +59,12 @@ func _run() -> void:
 	# in the order given); the camera 26 m farther south looking back north,
 	# so the midday sun (in the south, here) lights the side it sees.
 	var row_d := (pd - n * 38.0 / PlanetConst.RADIUS_M).normalized()
-	var cam_d := (pd - n * 60.0 / PlanetConst.RADIUS_M).normalized()
+	var dist := float(OS.get_environment("DIST")) if OS.get_environment("DIST") != "" else 22.0
+	var cam_d := (pd - n * (38.0 + dist) / PlanetConst.RADIUS_M).normalized()
 	await _frames(10)
 	if OS.get_environment("KEEP_VEG") != "1":
 		_hide_vegetation(get_root())
+		main.leaf_season.only_extra = true
 	var trees: Array[Node3D] = []
 	for i in names.size():
 		var sp := SpeciesDB.find(names[i].strip_edges())
@@ -85,7 +91,9 @@ func _run() -> void:
 		get_root().add_child(mmi)
 		mmi.global_position = at
 		trees.append(mmi)
+		main.leaf_season.extra.append([at, height, SpeciesDB.index_of(sp)])
 		print("[species] %s: %s, tiles %s" % [sp.name, sp.genus, sp.tiles.keys()])
+	main.leaf_season._scan_t = 0.0 # take the row now
 	var eye: Vector3 = world.to_scene(cam_d, PlanetConst.RADIUS_M + main.chunks.ground_height(cam_d) + 1.7)
 	var mid: Vector3 = world.to_scene(row_d, PlanetConst.RADIUS_M + main.chunks.ground_height(row_d) + height * 0.45)
 	var cam := Camera3D.new()
@@ -112,13 +120,14 @@ func _run() -> void:
 			shots.append([base, float(h), "%s_%02dh.png" % [tag, int(float(h))]])
 	for s in shots:
 		var days := Astro.days_at_solar_hour(s[0], s[1], lon, CubeSphere.latitude(pd))
-		for k in 20:
+		for k in (int(OS.get_environment("FRAMES")) if OS.get_environment("FRAMES") != "" else 20):
 			world.days = days
 			await process_frame
 		var img := get_root().get_texture().get_image()
 		var path := out_dir.path_join(s[2])
 		img.save_png(path)
-		print("[species] day %.1f (year day %.0f, %s) %05.2f h -> %s" % [days, Astro.year_day(days), Seasons.label(days, CubeSphere.latitude(pd)), s[1], path])
+		var ls: LeafSeason = main.leaf_season
+		print("[species] day %.1f (year day %.0f, %s) %05.2f h: autumn %.2f, leaf left %.2f, %d leaves falling (%d trees shedding %.3f/day, wind %.1f m/s) -> %s" % [days, Astro.year_day(days), Seasons.label(days, CubeSphere.latitude(pd)), s[1], ls.autumn, ls.leaf_left, ls.falling_count(), ls._trees.size(), ls.shed_per_day, WeatherFX.plant_wind.length(), path])
 	quit()
 
 
