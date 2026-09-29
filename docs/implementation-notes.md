@@ -2571,3 +2571,4 @@ overriding them.
 - §AF bats: microbat/megabat archetypes, roosts (caves, snags, ruins, tree camps), dusk emergence stream, guano soil object.
 - §AG reference look: nearest tiny tiles (`look.retro.tile_*`), dither 1.0 / bleed 0.2, pushed sky/water/grass colours, fog 0.0035 + valley height fog, shadows off by day + canopy darkening (A/B), FOV 78.
 - §AG head start: `assets/textures/retro/` tiles + `cloud_pano.png` (drop-in for `Look.texture()` / `sky_paint` clouds), `tools/look/measure_look.py` targets, `docs/references/batch3/`.
+- §AH per-species plant tiles (`assets/textures/plants/species/`, `atlas_species.json`): species_db loads the atlas; shaders multiply species tiles by white × genes jitter; canopy cards from the leaf cutout + mass; autumn blend; `bark` block in the catalogue.

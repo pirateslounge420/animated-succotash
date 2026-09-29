@@ -11,4 +11,10 @@
   (mean luma, saturation, navy-not-black shadows, grass share, dominant colours). The
   targets were measured from `docs/references/batch3/`; run it on those to see why.
 
-Design: `docs/design/RECONCILIATION_2026-09-27.md §AG`. Data: `data/look.json retro`.
+- `make_plant_tiles.py` — per-species leaf cutout, autumn variant, foliage mass, bark tile
+  and (Amorphophallus) petiole, rendered from each entry's `leaf` / `bark` / `tint` / `aroid`
+  blocks into `assets/textures/plants/species/` with `atlas_species.json` (design §AH).
+  `--only Quercus` for one genus, `--preview` for the contact sheet, deterministic by name.
+
+Design: `docs/design/RECONCILIATION_2026-09-27.md §AG, §AH`. Data: `data/look.json retro`,
+the plant catalogue.

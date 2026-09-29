@@ -1580,3 +1580,58 @@ blue-purple, and no cast shadow anywhere. Compare side by side with the five fra
 
 **Order:** 2 and 5 (two numbers each, immediate), then 1 (sampler flags + tile scale,
 then the tile art), 3 (colours), 4 (cloud pano), 6 (A/B), 7 (later, Phase 9). Phase 1.5.
+
+## AH. Every species gets its own texture, drawn from its taxonomy — 28 Sept 2026
+
+The reference clips (§AG) get their richness from tiny nearest-filtered tiles. Ours now
+come **from the plants themselves**: every one of the 1,217 catalogue entries carries a
+botanical description in the schema vocabulary — `leaf` (outline, aspect, base, apex,
+margin, venation, arrangement, compound layout, surface), the new **`bark` block**
+(PLANT_SCHEMA §1b: pattern, orientation, depth, scale, two colours, lenticels), `canopy`,
+`tint`, `photoperiod` — filled from floras and Kew POWO by eight parallel agents and
+validated strictly (`tools/plant_schema_check.py --strict`: 1,217 leaf, 1,217 bark, 0
+errors). From those blocks `tools/look/make_plant_tiles.py` renders a tile set into
+`assets/textures/plants/species/` (3,041 files, 3 MB; `atlas_species.json` is the index):
+
+| file | size | what |
+|---|---|---|
+| `<key>_leaf.png` | 48×48 RGBA cutout | one leaf unit with the real outline (an oak's pinnate lobes, a maple's palmate lobes, a ginkgo fan with forking veins, a cannabis hand of serrate leaflets, a pine's needle bundle, a cypress spray, a palm strap), its margin teeth, venation lines, surface (glossy band, glaucous bloom, felted speckle, succulent swell), 1-px dark rim |
+| `<key>_leaf_autumn.png` | 48×48 | the same structure in `tint.autumn` (472 deciduous species) |
+| `<key>_leaves.png` | 32×32 tileable | a scatter of that leaf — the foliage mass for canopy cards and the far LOD; small leaves many, big leaves few; a share flipped to the underside value |
+| `<key>_bark.png` | 64×64 tileable | the trunk from `bark`: furrowed oak, papery birch, plated ponderosa, flaky sycamore, stringy redwood, ringed palm, spiny torch cactus, mottled aroid petiole… a ~40 cm square (`bark_tile_m 0.4`) |
+| `<key>_petiole.png` | 32×128 | Amorphophallus only: the species' petiole grammar (mottled / spotted / streaked / lichen, confluent at the base), the per-species reference for the per-plant generator of SPECIAL_GENERA §1 |
+
+Identical renders share one file (a genus of look-alikes costs one tile); every render is
+seeded by the species name, so re-running changes nothing. Preview of 28 species:
+`docs/references/batch3/species_tiles_preview.png`.
+
+**Rules for the engine:**
+1. **Colour lives in the tile.** Leaf colour = the palette green (`#3E8232` albedo) with the
+   species' `tint` applied, exactly as PLANT_SCHEMA §3 says (entries whose own `color` is
+   not a green — straw grasses, red sphagnum, brown kelp — keep it). Bark colour = `bark.color`
+   / `color_2`. So the foliage/bark shaders **multiply species tiles by white × the genes
+   jitter** (per-individual ±hue/value, PLANT_SCHEMA §4c), never by the species `color`
+   again. The 13-leaf / 16-bark class atlas (`assets/textures/plants/atlas.json`) stays as
+   the fallback for anything without a species tile.
+2. **Structure then texture (PLANT_SCHEMA §0) is honoured:** the card builder uses the leaf
+   cutout as the card (its alpha is the silhouette; no engine outline generation needed at
+   this LOD), the mass tile for the canopy clumps and far cards, the bark tile on the trunk
+   with `tile_m` 0.4 vertical repeat. §AG filtering: nearest, ≤ 2 mips.
+3. **Seasons:** deciduous species blend `leaf` → `leaf_autumn` over the autumn transition
+   (§F), then drop; the mass tile is recoloured by the same ratio (autumn ÷ leaf colour).
+4. **Wind flips** show the underside: the card's colour × (1 + `tint.underside`) on the back
+   face — no second texture.
+5. **Amorphophallus** keeps the per-plant petiole generator (SPECIAL_GENERA §1); the
+   `_petiole.png` is its species reference and the LOD-far fallback.
+6. **Budget:** ~3 MB on disk, and only the region's species are resident (species tables are
+   per region), so the resident set is a few hundred KB of VRAM. The old 256-px painted
+   set (`LookTextures`) is no longer needed for plants.
+
+**Data rule:** a species is drawn *only* from its blocks. To change how a plant looks, fix
+its description (and cite the flora in `source`), never the tile. `make_plant_tiles.py`
+is deterministic; run it after any catalogue edit and commit the result.
+
+**Order:** load `atlas_species.json` in `species_db` (Step 6.5 territory — the same loader
+that reads `data/plants/*.json`) → foliage/bark shaders take the species tile and drop the
+species-colour multiply for tiled species → canopy cards from the leaf cutout + mass →
+autumn blend → underside. Phase 6.
