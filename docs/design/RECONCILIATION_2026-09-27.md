@@ -1709,3 +1709,35 @@ because a hull with a leaf texture painted on it is still a blob. Locked:
    still a blob.
 5. **Wind moves the gaps.** Clusters sway independently (per-card phase), so the holes
    open and close — the flicker that makes a real canopy read alive.
+
+## AK. Trees have a skeleton, not a stick — 28 Sept 2026
+
+The leafless tree must look like *that* tree. `docs/design/TREE_ARCHITECTURE.md`
+(25 sources) gives the engine the real branching programs — the Hallé–Oldeman models
+(Rauh oaks and maples, Massart tiered conifers, Troll's drooping beech and elm, Leeuwenberg's
+forking frangipani, Koriba's sympodial tropical crowns, Corner/Tomlinson palms and tree
+ferns…) with numbers: Leonardo's rule for branch thickness (parent² ≈ Σ children²), branch
+angles by model, 4–9 orders, whorl pitch, trunk taper (d ∝ h^1.5), slenderness, sweep and
+lean, fork height by growing conditions, buttresses, branch collars and stubs, dead limbs,
+root flare, live-crown ratio open vs forest-grown, krummholz. Every woody species in the
+catalogue (524 entries) now carries an **`architecture` block** (PLANT_SCHEMA §8) filled
+from it and validated.
+
+**Rules for the generator (`plant_meshes`, Phase 6):**
+1. Build the wood from the block: trunk with taper, sweep (`sinuosity`, `lean_max_deg`
+   biased by slope and prevailing wind), a fork at `fork_height_frac` when set, order-1
+   branches at `spacing_m` and `branch_angle_deg` following the `model`'s program
+   (tiered whorls for massart/attims, spiral for rauh, sympodial zig-zag for koriba/troll,
+   dichotomous for schoute), then recursive orders with Leonardo thickness and a slight
+   upward curve at the tips, to `orders`. Buttresses and root flare at the base.
+2. **Open vs forest-grown is per tree**, from neighbour density at spawn: a lone oak
+   forks low and spreads (LCR 0.8), the same oak in a stand is a tall clear bole (0.4)
+   with the lower branches self-pruned (`self_prune`) leaving collars and stubs.
+3. **Deadwood is part of the silhouette**: `dead_limbs` of the skeleton is kept bare
+   (§X carcass/snag palette), the rest carries the §AJ canopy clusters. Handholds (§0)
+   come from this skeleton, so climbing is species-true too.
+4. Silhouettes are read at the far LOD as the skeleton's order-1/2 lines, never a
+   cone or lollipop.
+
+**Dev check:** winter at the dev spot with oak, beech, spruce, pine, palm and baobab side
+by side: each recognisable bare.

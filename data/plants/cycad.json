@@ -203,6 +203,29 @@
      "color_2": "#8A7A68",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 0,
+     "branch_angle_deg": [
+      45,
+      80
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.2,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.3,
+      0.3
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    },
    {
@@ -400,6 +423,29 @@
      "color_2": "#7A5A3A",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      45,
+      80
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.2,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.3,
+      0.3
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    },
    {
@@ -597,6 +643,29 @@
      "color_2": "#8A7A68",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 0,
+     "branch_angle_deg": [
+      40,
+      75
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.25,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.3,
+      0.3
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    },
    {
@@ -785,6 +854,29 @@
      "color": "#6A7A4A",
      "color_2": "#8A7A5A",
      "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 0,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.05,
      "confidence": "estimated"
     }
    },
@@ -983,6 +1075,29 @@
      "color_2": "#7A6A5A",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 0,
+     "branch_angle_deg": [
+      40,
+      75
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.2,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.6,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    }
   ],

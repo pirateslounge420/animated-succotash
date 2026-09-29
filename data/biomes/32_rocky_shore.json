@@ -97,6 +97,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "attims",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      30,
+      70
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 40,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.2,
+     "confidence": "documented"
     }
    },
    {
@@ -177,6 +203,29 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      85,
+      115
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.3,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 30,
+     "live_crown_ratio": [
+      0.9,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.35,
+     "confidence": "documented"
     }
    }
   ],
@@ -264,6 +313,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    },
    {
@@ -339,6 +414,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    },
    {
@@ -424,6 +525,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
     }
    },
    {
@@ -510,6 +637,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      45
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
     }
    }
   ],

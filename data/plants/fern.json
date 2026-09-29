@@ -195,6 +195,29 @@
      "color_2": "#8A7A60",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "tree_fern",
+     "orders": 0,
+     "branch_angle_deg": [
+      50,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.2,
+      0.2
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "documented"
     }
    },
    {
@@ -384,6 +407,29 @@
      "color_2": "#C8B088",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "tree_fern",
+     "orders": 0,
+     "branch_angle_deg": [
+      50,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.2,
+      0.2
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "documented"
     }
    },
    {
@@ -572,6 +618,29 @@
      "color": "#6A4A30",
      "color_2": "#3A2A18",
      "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "tree_fern",
+     "orders": 0,
+     "branch_angle_deg": [
+      50,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.15,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.25,
+      0.25
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.5,
+     "root_flare": false,
+     "spacing_m": 0.1,
      "confidence": "documented"
     }
    }

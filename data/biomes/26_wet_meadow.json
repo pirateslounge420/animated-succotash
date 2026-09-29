@@ -108,6 +108,32 @@
      "lenticels": "dots",
      "confidence": "documented",
      "note": "grey, smooth on young stems, shallowly fissured on old multi-stems"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "documented"
     }
    },
    {
@@ -196,6 +222,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "stout stems spotted or streaked purple"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 2,
+     "branch_angle_deg": [
+      10,
+      30
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    },
    {
@@ -288,6 +340,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "erect ridged stems, often reddish"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 2,
+     "branch_angle_deg": [
+      10,
+      30
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    }
   ],

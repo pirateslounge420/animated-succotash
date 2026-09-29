@@ -113,6 +113,32 @@
      "color_2": "#C88A5A",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 2.2,
+     "sinuosity": 0.9,
+     "fork_height_frac": [
+      0.0,
+      0.15
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
     }
    }
   ],
@@ -192,6 +218,32 @@
      "color_2": "#E0C060",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      60
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.05,
+     "confidence": "estimated"
     }
    },
    {
@@ -274,6 +326,32 @@
      "color": "#7A6E60",
      "color_2": "#5A4A40",
      "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      15,
+      40
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
      "confidence": "estimated"
     }
    },

@@ -176,6 +176,29 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      30,
+      90
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.15,
+      0.15
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.0,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    }
   ],
@@ -326,6 +349,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      35,
+      65
+     ],
+     "taper_exponent": 1.9,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.1,
+      0.25
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
     }
    },
    {
@@ -475,6 +524,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      65
+     ],
+     "taper_exponent": 1.7,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 0.8,
+     "confidence": "documented"
     }
    },
    {
@@ -563,6 +638,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.8,
+      0.4
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 1.5,
+     "confidence": "documented"
     }
    },
    {
@@ -651,6 +752,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "umbrella",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.15,
+      0.35
+     ],
+     "buttress": "low",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 1.0,
+     "confidence": "estimated"
     }
    },
    {
@@ -800,6 +927,29 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 0,
+     "branch_angle_deg": [
+      30,
+      80
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.5,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    },
    {
@@ -892,6 +1042,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      45,
+      80
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
     }
    },
    {
@@ -984,6 +1160,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "koriba",
+     "habit": "umbrella",
+     "orders": 4,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.8,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": true,
+     "spacing_m": 1.2,
+     "confidence": "estimated"
     }
    },
    {
@@ -1072,6 +1274,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      75,
+      100
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.15,
+     "fork_height_frac": [
+      0.3,
+      0.5
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.8,
+      0.45
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -1220,6 +1448,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      35,
+      65
+     ],
+     "taper_exponent": 1.9,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.1,
+      0.25
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
     }
    }
   ],
@@ -1310,6 +1564,29 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.7,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    },
    {
@@ -1398,6 +1675,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
     }
    },
    {
@@ -1490,6 +1793,29 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "tree_fern",
+     "orders": 0,
+     "branch_angle_deg": [
+      30,
+      100
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.2,
+      0.2
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "documented"
     }
    },
    {
@@ -1639,6 +1965,29 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "holttum",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      30,
+      80
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.5,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
     }
    },
    {
@@ -1727,6 +2076,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
     }
    },
    {
@@ -1815,6 +2190,29 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.7,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    }
   ],
@@ -2635,6 +3033,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "roux",
+     "habit": "shrub",
+     "orders": 2,
+     "branch_angle_deg": [
+      60,
+      100
+     ],
+     "taper_exponent": 1.1,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 60,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
     }
    },
    {

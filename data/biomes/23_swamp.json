@@ -117,6 +117,29 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "thin red-brown to grey-brown fibrous bark shredding in long vertical strips; fluted buttressed base"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      80,
+      100
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "low",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.7,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.5,
+     "confidence": "documented"
     }
    },
    {
@@ -218,6 +241,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "dark brown to blackish, deeply furrowed into thick flat interlacing ridges, shaggy with age"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "multi_stem",
+     "orders": 6,
+     "branch_angle_deg": [
+      30,
+      50
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.5,
+     "confidence": "documented"
     }
    },
    {
@@ -317,6 +366,29 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "trunk clothed in criss-cross persistent leaf bases (bootjacks) when young, smooth grey and ringed with leaf scars when old"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      0,
+      0
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.15,
+      0.15
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 0.2,
+     "confidence": "documented"
     }
    },
    {
@@ -491,6 +563,29 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "smooth grey columnar trunk ringed with leaf scars"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      0,
+      0
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.15,
+      0.15
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.0,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    },
    {
@@ -591,6 +686,29 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "thicker and more deeply furrowed than bald cypress; grey-brown fibrous ridges"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 4,
+     "branch_angle_deg": [
+      45,
+      75
+     ],
+     "taper_exponent": 1.3,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "low",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.6,
+      0.35
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "documented"
     }
    },
    {
@@ -689,6 +807,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "grey-brown, exfoliating in large thin scales that expose red-brown inner bark"
+    },
+    "architecture": {
+     "model": "troll",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      30,
+      55
+     ],
+     "taper_exponent": 1.7,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.7,
+     "confidence": "estimated"
     }
    },
    {
@@ -794,6 +938,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "dark brown to grey, thin, shallowly furrowed with thin scaly ridges; swollen buttressed base"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      75,
+      95
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.15,
+     "fork_height_frac": [
+      0.4,
+      0.6
+     ],
+     "buttress": "low",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.5,
+      0.35
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": true,
+     "spacing_m": 0.7,
+     "confidence": "estimated"
     }
    }
   ],
@@ -901,6 +1071,32 @@
      "lenticels": "dots",
      "confidence": "documented",
      "note": "grey-brown, smooth with lenticels on young stems, shallowly fissured and scaly on old stems"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
     }
    },
    {
@@ -994,6 +1190,29 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "hollow green to yellow-green culms with a raised ring at each node, internodes 10-30 cm"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 2,
+     "branch_angle_deg": [
+      20,
+      45
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.6,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.25,
+     "confidence": "documented"
     }
    },
    {
@@ -1093,6 +1312,29 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "creeping trunk matted with persistent fibrous leaf bases"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "multi_stem",
+     "orders": 0,
+     "branch_angle_deg": [
+      0,
+      0
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.5,
+      0.5
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "documented"
     }
    },
    {
@@ -1191,6 +1433,32 @@
      "lenticels": "dots",
      "confidence": "documented",
      "note": "slender arching red-brown stems with small lenticels"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
     }
    },
    {
@@ -1286,6 +1554,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "thin smooth grey to grey-brown bark with paler blotches"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
     }
    }
   ],
@@ -1378,6 +1672,29 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "knee bark thinner and smoother than the trunk but still fibrous, red-brown weathering grey"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "columnar",
+     "orders": 0,
+     "branch_angle_deg": [
+      0,
+      0
+     ],
+     "taper_exponent": 3.0,
+     "sinuosity": 0.3,
+     "fork_height_frac": null,
+     "buttress": "low",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.05,
+      0.05
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": true,
+     "spacing_m": 0.2,
+     "confidence": "documented"
     }
    },
    {

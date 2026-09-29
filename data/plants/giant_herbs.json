@@ -204,6 +204,29 @@
      "color_2": "#C8D8C8",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.5,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    }
   ],
@@ -807,6 +830,29 @@
      "color_2": "#3A2A1A",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.5,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    },
    {
@@ -1006,6 +1052,29 @@
      "color_2": "#D8E8D8",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.5,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    },
    {
@@ -1205,6 +1274,29 @@
      "color_2": "#A83A3A",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "tomlinson",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 1.1,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.5,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.0,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    }
   ],

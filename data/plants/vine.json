@@ -392,6 +392,32 @@
      "color_2": "#8A6A4A",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "roux",
+     "habit": "shrub",
+     "orders": 2,
+     "branch_angle_deg": [
+      70,
+      100
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
     }
    },
    {
@@ -584,6 +610,32 @@
      "color_2": "#6A5A4A",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "roux",
+     "habit": "shrub",
+     "orders": 2,
+     "branch_angle_deg": [
+      70,
+      100
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.35,
+     "confidence": "estimated"
     }
    },
    {
@@ -771,6 +823,32 @@
      "color": "#6A9A3A",
      "color_2": "#C8B848",
      "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "roux",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      70,
+      100
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.25,
      "confidence": "estimated"
     }
    },
@@ -962,6 +1040,32 @@
      "color": "#B8B0A0",
      "color_2": "#9A9280",
      "lenticels": "dots",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 6,
+     "branch_angle_deg": [
+      45,
+      80
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "high",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 1.5,
      "confidence": "documented"
     }
    }

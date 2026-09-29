@@ -110,6 +110,32 @@
      "color_2": "#9A7A5A",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 30,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    },
    {
@@ -192,6 +218,32 @@
      "color": "#7A5A48",
      "color_2": "#9A8A78",
      "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "attims",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      70,
+      100
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 40,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.4,
+     "root_flare": false,
+     "spacing_m": 0.1,
      "confidence": "documented"
     }
    }

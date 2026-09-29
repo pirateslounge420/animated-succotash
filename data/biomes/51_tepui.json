@@ -165,6 +165,32 @@
      "color_2": "#8A6650",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      35,
+      65
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.05,
+      0.25
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
     }
    }
   ],
@@ -455,6 +481,32 @@
      "color_2": "#5A5248",
      "lenticels": "dots",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "candelabra",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.05,
+      0.25
+     ],
+     "buttress": "low",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
     }
    },
    {
@@ -597,6 +649,32 @@
      "color": "#7A6E62",
      "color_2": "#5A5048",
      "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": false,
+     "spacing_m": 0.1,
      "confidence": "estimated"
     }
    },
@@ -890,6 +968,29 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "old stipe bases and root mantle; stipes spiny (pungens)"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "tree_fern",
+     "orders": 0,
+     "branch_angle_deg": [
+      0,
+      0
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.2,
+      0.2
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "documented"
     }
    }
   ],

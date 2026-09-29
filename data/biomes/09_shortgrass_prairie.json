@@ -108,6 +108,32 @@
      "color_2": "#524A42",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      30,
+      55
+     ],
+     "taper_exponent": 1.6,
+     "sinuosity": 0.25,
+     "fork_height_frac": [
+      0.2,
+      0.4
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.7,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 1.0,
+     "confidence": "documented"
     }
    }
   ],
@@ -198,6 +224,32 @@
      "color_2": "#C8C4B8",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      70
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    },
    {
@@ -271,6 +323,32 @@
      "color_2": "#E8DCB0",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      20,
+      60
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.8
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.25,
+     "confidence": "estimated"
     }
    },
    {
@@ -357,6 +435,32 @@
      "color_2": "#8A7A68",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      15,
+      40
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
     }
    },
    {

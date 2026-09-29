@@ -110,6 +110,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "attims",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      45,
+      75
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
     }
    },
    {
@@ -198,6 +224,29 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "corner",
+     "habit": "palm",
+     "orders": 0,
+     "branch_angle_deg": [
+      0,
+      0
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.2,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.15,
+      0.15
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.0,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    },
    {
@@ -291,6 +340,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "attims",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.2,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "low",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "documented"
     }
    },
    {
@@ -378,6 +453,32 @@
      "mode": "short_day",
      "threshold_h": 11.0,
      "response": "leaf_drop"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "multi_stem",
+     "orders": 6,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.0,
+      0.15
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
     }
    }
   ],
@@ -468,6 +569,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "multi_stem",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.25,
+     "confidence": "estimated"
     }
    },
    {
@@ -556,6 +683,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      65
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 25,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": true,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
     }
    },
    {
@@ -645,6 +798,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    }
   ],

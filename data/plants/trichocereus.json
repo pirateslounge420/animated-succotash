@@ -218,6 +218,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -432,6 +458,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -646,6 +698,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -860,6 +938,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -1073,6 +1177,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -1286,6 +1416,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -1499,6 +1655,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 2,
+     "branch_angle_deg": [
+      10,
+      30
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.15,
+      0.4
+     ],
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.8,
+     "confidence": "documented"
     }
    },
    {
@@ -1712,6 +1894,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -1925,6 +2133,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -2138,6 +2372,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -2351,6 +2611,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -2564,6 +2850,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -2777,6 +3089,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -2990,6 +3328,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -3203,6 +3567,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -3416,6 +3806,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -3629,6 +4045,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "columnar",
+     "orders": 1,
+     "branch_angle_deg": [
+      5,
+      25
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.0,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated"
     }
    },
    {
@@ -3841,6 +4283,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "ribs 7; spines short on pachanoi, long on peruvianus/bridgesii"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 1,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.0,
+     "sinuosity": 0.2,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.95,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated"
     }
    }
   ]

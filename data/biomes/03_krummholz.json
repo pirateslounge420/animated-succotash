@@ -100,6 +100,29 @@
      "color_2": "#8A4A38",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      80,
+      100
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.7,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 35,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.4,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "estimated"
     }
    },
    {
@@ -246,6 +269,29 @@
      "color_2": "#9A6A48",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      50,
+      75
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.3,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.5,
+      0.3
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.35,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "documented"
     }
    },
    {
@@ -334,6 +380,32 @@
      "color_2": "#4A3A32",
      "lenticels": "horizontal_bands",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      45,
+      65
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.05,
+      0.2
+     ],
+     "buttress": "none",
+     "lean_max_deg": 35,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
     }
    },
    {
@@ -417,6 +489,29 @@
      "color_2": "#8A5A50",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      85,
+      115
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.5,
+     "root_flare": true,
+     "spacing_m": 0.35,
+     "confidence": "estimated"
     }
    }
   ],
@@ -567,6 +662,32 @@
      "color_2": "#9A7A5A",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 30,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    },
    {
@@ -655,6 +776,32 @@
      "color_2": "#8A7A6A",
      "lenticels": "dots",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      70
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 30,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.15,
+     "confidence": "estimated"
     }
    },
    {
@@ -742,6 +889,32 @@
      "color": "#7A6E60",
      "color_2": "#9A8A70",
      "lenticels": "none",
+     "confidence": "estimated"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      40,
+      80
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 40,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.15,
      "confidence": "estimated"
     }
    },
@@ -831,6 +1004,32 @@
      "color_2": "#7A6A48",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 3,
+     "branch_angle_deg": [
+      20,
+      45
+     ],
+     "taper_exponent": 1.8,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    },
    {
@@ -915,6 +1114,32 @@
      "color_2": "#7A6A58",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      50,
+      75
+     ],
+     "taper_exponent": 2.0,
+     "sinuosity": 0.8,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 45,
+     "live_crown_ratio": [
+      0.9,
+      0.8
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.3,
+     "root_flare": true,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
     }
    }
   ],

@@ -194,6 +194,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      65
+     ],
+     "taper_exponent": 1.7,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 0.8,
+     "confidence": "documented"
     }
    },
    {
@@ -385,6 +411,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      65
+     ],
+     "taper_exponent": 1.7,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 0.8,
+     "confidence": "documented"
     }
    },
    {
@@ -576,6 +628,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "decurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      40,
+      65
+     ],
+     "taper_exponent": 1.7,
+     "sinuosity": 0.3,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.8,
+      0.5
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 0.8,
+     "confidence": "documented"
     }
    },
    {
@@ -768,6 +846,32 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "architecture": {
+     "model": "scarrone",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      35,
+      55
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.4,
+      0.6
+     ],
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.6,
+      0.35
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 1.2,
+     "confidence": "documented"
     }
    }
   ],

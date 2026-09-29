@@ -189,6 +189,32 @@
      "color_2": "#B0A090",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 4,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.1,
+     "sinuosity": 0.1,
+     "fork_height_frac": [
+      0.5,
+      0.7
+     ],
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.4,
+      0.3
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 1.5,
+     "confidence": "estimated"
     }
    }
   ],
@@ -376,6 +402,29 @@
      "color_2": "#8A8878",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 3,
+     "branch_angle_deg": [
+      85,
+      105
+     ],
+     "taper_exponent": 1.2,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.8,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 1.5,
+     "confidence": "documented"
     }
    },
    {
@@ -560,6 +609,29 @@
      "color": "#7A5A48",
      "color_2": "#5A4438",
      "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "umbrella",
+     "orders": 3,
+     "branch_angle_deg": [
+      60,
+      90
+     ],
+     "taper_exponent": 1.2,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.4,
+      0.25
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 1.5,
      "confidence": "documented"
     }
    },
@@ -746,6 +818,29 @@
      "color_2": "#7A6A5A",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 3,
+     "branch_angle_deg": [
+      85,
+      105
+     ],
+     "taper_exponent": 1.2,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.8,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 1.5,
+     "confidence": "documented"
     }
    },
    {
@@ -925,6 +1020,29 @@
      "color": "#7A6A5A",
      "color_2": "#5A4A3E",
      "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 3,
+     "branch_angle_deg": [
+      85,
+      105
+     ],
+     "taper_exponent": 1.2,
+     "sinuosity": 0.05,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 5,
+     "live_crown_ratio": [
+      0.8,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.1,
+     "root_flare": true,
+     "spacing_m": 1.5,
      "confidence": "documented"
     }
    }

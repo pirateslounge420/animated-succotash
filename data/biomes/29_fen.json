@@ -110,6 +110,32 @@
      "lenticels": "horizontal_bands",
      "confidence": "documented",
      "note": "smooth light grey bark with horizontal lenticels, staying smooth on old stems"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      50,
+      75
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.2,
+     "fork_height_frac": [
+      0.3,
+      0.5
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.6,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.2,
+     "root_flare": false,
+     "spacing_m": 0.6,
+     "confidence": "estimated"
     }
    },
    {
@@ -191,6 +217,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "thin grey to red-brown fibrous bark shredding in long narrow vertical strips"
+    },
+    "architecture": {
+     "model": "attims",
+     "habit": "columnar",
+     "orders": 6,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.15,
+     "fork_height_frac": [
+      0.05,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 8,
+     "live_crown_ratio": [
+      0.9,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": true,
+     "spacing_m": 0.15,
+     "confidence": "documented"
     }
    },
    {
@@ -277,6 +329,29 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "thin, grey on young trees, red-brown and flaking in small scales on mature trunks"
+    },
+    "architecture": {
+     "model": "massart",
+     "habit": "excurrent",
+     "orders": 5,
+     "branch_angle_deg": [
+      80,
+      100
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.15,
+     "fork_height_frac": null,
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.7,
+      0.4
+     ],
+     "self_prune": true,
+     "dead_limbs": 0.25,
+     "root_flare": true,
+     "spacing_m": 0.4,
+     "confidence": "documented"
     }
    }
   ],
@@ -369,6 +444,32 @@
      "lenticels": "dots",
      "confidence": "documented",
      "note": "dark red-brown smooth shrub stems with pale lenticels, not peeling"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "multi_stem",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.4,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.15,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "estimated"
     }
    },
    {
@@ -459,6 +560,32 @@
      "lenticels": "dots",
      "confidence": "documented",
      "note": "grey, smooth on young stems, shallowly fissured on old multi-stems"
+    },
+    "architecture": {
+     "model": "champagnat",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      20,
+      50
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.6,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 20,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.3,
+     "root_flare": false,
+     "spacing_m": 0.2,
+     "confidence": "documented"
     }
    },
    {
@@ -553,6 +680,32 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "brown bark peeling in long thin papery shreds"
+    },
+    "architecture": {
+     "model": "rauh",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      30,
+      60
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.5,
+     "fork_height_frac": [
+      0.0,
+      0.1
+     ],
+     "buttress": "none",
+     "lean_max_deg": 15,
+     "live_crown_ratio": [
+      0.9,
+      0.7
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.25,
+     "root_flare": false,
+     "spacing_m": 0.1,
+     "confidence": "estimated"
     }
    }
   ],
