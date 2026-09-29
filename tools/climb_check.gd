@@ -209,9 +209,11 @@ func _initialize() -> void:
 		var me_y := alt()
 		var best := -1
 		var best_y := INF
-		# (On your side of the trunk: out along the way you face out.)
+		# (On your side of the trunk: out along the way you face out. From
+		# the trunk where you hold it, not its foot: a leaning trunk isn't
+		# over its foot up here.)
 		var frame := g.frame()
-		var out_l := frame.basis.inverse() * (player.global_position - g.base())
+		var out_l := frame.basis.inverse() * (player.global_position - g.pos(c.hold[c.lead]))
 		out_l.y = 0.0
 		out_l = out_l.normalized()
 		for i in g.size():
@@ -250,6 +252,7 @@ func _initialize() -> void:
 			await release("move_forward")
 			await release("move_back")
 			await frames(10)
+			print("[climb] to the limb's height (%.1f m): at %.1f m, %s" % [best_y, alt(), _describe()])
 			# Look out along the limb (the way it grows).
 			var along := g.frame().basis * g.tangent[best]
 			var flat := (along - player.up * along.dot(player.up)).normalized()

@@ -172,6 +172,7 @@ func _tree(n: String, g: BranchGraph) -> void:
 	var th := Vector3(g.tangent[best].x, 0, g.tangent[best].z).normalized()
 	# Round to its side of the trunk and up to it.
 	c.start(g, g.links[best][0] if g.limb[g.links[best][0]] == 0 else best, g.local[best] - th * 0.1 + Vector3(0, -1.2, 0) + th * (g.radius[best] + 0.5), Vector3.UP)
+	trace = 12 if OS.get_environment("TRACE") == "out" else 0
 	_hold(c, Vector2(0, 1), 8.0, th)
 	var on := g.limb[c.hold[c.lead]] != 0 and not c._cling(c.hold[c.lead])
 	print("    out along limb at %s: now %s, %s" % [c.describe(best), c.describe(c.hold[c.lead]), c.pose])
