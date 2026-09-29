@@ -151,37 +151,52 @@ func _initialize() -> void:
 		await frames(20)
 		await release("move_forward")
 		ok(player.climbing, "the stick takes hold again")
-	# 4. Out along a limb: look at the nearest limb handhold above you and
-	# push toward it.
+	# 4. Out along a limb: the lowest thick limb that leaves the trunk
+	# above you; climb to its foot, look out along it and push W.
 	if player.climbing:
 		var c := player.trees.climb
-		var me := player.global_position
+		var up_l := Vector3.UP
+		var me_y := alt()
 		var best := -1
-		var best_d := INF
+		var best_y := INF
 		for i in g.size():
 			if g.limb[i] == 0 or g.radius[i] < TreeClimb.STRADDLE_R_M:
 				continue
-			var d := g.pos(i).distance_to(me)
-			if d < best_d and d > 0.6:
-				best_d = d
+			# A limb's first handhold: linked to the trunk.
+			var from_trunk := false
+			for j in g.links[i]:
+				if g.limb[j] == 0:
+					from_trunk = true
+			var y: float = g.local[i].y
+			if from_trunk and y > 1.5 and y < best_y:
+				best_y = y
 				best = i
 		if best >= 0:
-			var to := g.pos(best) - me
+			# Down or up the trunk to its height.
+			await press("move_forward" if best_y > me_y else "move_back")
+			for s2 in 60:
+				await frames(10)
+				if absf(alt() + 1.0 - best_y) < 0.6 or not player.climbing:
+					break
+			await release("move_forward")
+			await release("move_back")
+			await frames(10)
+			var to := g.pos(best) - player.global_position
 			var flat := (to - player.up * to.dot(player.up)).normalized()
-			face(flat, clampf(to.normalized().dot(player.up), -0.8, 0.8))
+			face(flat, 0.1)
 			await press("move_forward")
 			var on_limb := false
 			for s in 24:
 				await frames(15)
 				var i: int = c.hold[c.lead] if player.climbing else -1
-				if i >= 0 and g.limb[i] != 0:
+				if i >= 0 and g.limb[i] != 0 and not c._cling(i):
 					on_limb = true
 				if on_limb and s > 8:
 					break
 			await release("move_forward")
 			await frames(15)
-			print("[climb] toward limb hold %s (%.1f m off): %s" % [c.describe(best), best_d, _describe()])
-			ok(on_limb, "pushing toward a thick limb takes you out onto it")
+			print("[climb] out along the limb at %s: %s" % [c.describe(best), _describe()])
+			ok(on_limb, "looking out along a thick limb and pushing W takes you out onto it")
 			if on_limb:
 				await press("crouch")
 				await frames(3)
@@ -193,7 +208,7 @@ func _initialize() -> void:
 				await release("move_forward")
 				await frames(10)
 		else:
-			ok(false, "a limb thick enough to straddle within reach")
+			ok(false, "a limb thick enough to straddle, off the trunk")
 	# 5. Down.
 	if not player.climbing:
 		player.stop_perch(false, true)

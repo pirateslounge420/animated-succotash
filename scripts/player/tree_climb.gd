@@ -251,7 +251,9 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 	var screen := _horizontal(fwd_l * input.y + right_l * input.x)
 	screen = screen.normalized() if screen.length() > 1e-3 else Vector3.ZERO
 	var li := hold[lead]
-	var on_trunk := g.limb[li] == 0 or (pose == "trunk" and g.limb[hold[1 - lead]] == 0)
+	# (Steep wood, a stem out of a fork or an upright limb, climbs like
+	# the trunk: W up it.)
+	var on_trunk := g.limb[li] == 0 or _cling(li) or (pose == "trunk" and g.limb[hold[1 - lead]] == 0)
 	var tup := g.tangent[li] if g.tangent[li].dot(_up_l) >= 0.0 else -g.tangent[li]
 	var dir: Vector3
 	# Looking out from the trunk (not at it), W goes out that way: onto a
@@ -283,6 +285,12 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 	var move := _toward(dir, on_trunk)
 	if move.is_empty() and looking_out and input.y > 0.3:
 		move = _toward(tup, on_trunk)
+	# Up the trunk and nothing that way (the trunk ends at a fork, or thins
+	# out under the crown): carry on up whatever goes on up from here, the
+	# stem or limb that climbs most steeply, whichever side it leaves on
+	# (from play: at a fork W used to stop dead).
+	if move.is_empty() and on_trunk and input.y > 0.3:
+		move = _upward()
 	if not move.is_empty():
 		return move
 	# Round the trunk: the hand on that side goes first, the other follows
@@ -370,6 +378,31 @@ func _toward(dir: Vector3, on_trunk: bool) -> Array:
 			best = [mover, j, a]
 	if best.is_empty() and thin:
 		prompt = "Too thin to hold any further out"
+	return best
+
+
+## The steepest way on up from the holds you have: a handhold within reach,
+## thick enough to grip, that climbs (at least UP_ON of the way up); the
+## rear hand reaches for it. [] if there's none.
+const UP_ON := 0.35
+
+
+func _upward() -> Array:
+	var p: Array[Vector3] = [_hand_point(0), _hand_point(1)]
+	var top := 0 if p[0].dot(_up_l) >= p[1].dot(_up_l) else 1
+	var base := hold[top]
+	var best := []
+	var best_s := UP_ON
+	for j in _reachable(base, true):
+		if j == hold[0] or j == hold[1] or g.radius[j] < GRIP_R_M:
+			continue
+		var d := g.local[j] - g.local[base]
+		if d.length() < 0.05:
+			continue
+		var s := d.normalized().dot(_up_l)
+		if s > best_s:
+			best_s = s
+			best = [1 - top, j, _hold_angle(j, p[top])]
 	return best
 
 
