@@ -735,6 +735,22 @@ func _initialize() -> void:
 		var rng_m := predicted.distance_to(player.global_position)
 		ok(miss < 1.0 + rng_m * 0.015, "the arrow lands where the arc said (%.2f m off at %.0f m)" % [miss, rng_m])
 	player.set_view(0.0, 0.0)
+	# Your own arrow coming back down hurts you (from play): one of yours
+	# falling from 12 m straight onto you.
+	await settle(camp_d)
+	player._invulnerable = 0.0
+	var hp_self := player.hp
+	var own := Arrow.new()
+	own.world = world
+	own.chunks = main.chunks
+	own.camps = main.camps
+	own.shooter = player
+	own.damage = Bow.DAMAGE
+	world.world_root.add_child(own)
+	own.launch(player.global_position + player.up * 12.0, -player.up * 20.0)
+	await frames(60)
+	print("own arrow from above: hp %.0f -> %.0f" % [hp_self, player.hp])
+	ok(player.hp < hp_self, "your own arrow coming back down hurts you")
 
 	# 5. E while climbing takes a stuck spear or arrow.
 	if g != null:

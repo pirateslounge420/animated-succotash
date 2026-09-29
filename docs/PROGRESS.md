@@ -4,6 +4,25 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — Mike's play notes: astride in trees, a still cling, the zenith, your own arrows
+- **Always astride in a tree** (Mike: "always straddle, no hanging"):
+  - The hang pose is gone. On any limb, thick or thin, level or not, you sit astride it; on the trunk and steep wood you hug it as before.
+  - A/D on a limb now leans you round it astride, up to about 57° either side (`TreeClimb.ROUND_MAX` 1 radian), with your hands going round with you. It no longer takes you under it.
+  - **Contradiction flagged:** Mike asked earlier to go "however you want" round a limb. Leaning astride is how I've squared the two.
+  - **S on a limb** always goes back along it toward where it grows from, hand over hand, whichever way you look. By the look it could send you out to a thin tip, where the hands swapped the same two holds for ever.
+  - Any reach that would put the hands back on the grip they had two reaches ago now counts as nothing that way, so the ways on (down whatever goes down, back along the limb) take over.
+  - `climb_lab` 68/0 and `climb_check` 0 fails. The round-limb tests now expect "leans round, always astride".
+- **A still cling** (Mike: "only the cloak in the wind and the head looking round should move"):
+  - A new `cling` body pose: tucked, feet braced on the face, hands up on it.
+  - The torso no longer turns after the look, the feet don't step when you crawl, and the lean with speed and the stride are off. The head turns with the look (up to `head_max_deg`), and the cloak still simulates.
+- **Looking straight up** (Mike: the clouds and sky "come to a convergence"):
+  - The painted cloud panorama is wrapped round the sky by compass bearing and height, so at the zenith all its columns met at one point. Both of its layers now fade out between 50° and 77° up. Overhead belongs to the weather's flat cloud decks (`CloudLayers`), which don't pinch.
+  - It was the cloud wrap, not the field of view.
+  - `dev_view` gained `PITCH=` (first person) to render it.
+- **Your own arrows can hit you** (Mike):
+  - An arrow ignores you only for its first 0.4 s, while it leaves the bow. After that, one coming back down on you hurts like any other hit (by its speed), glances off and drops.
+  - `play_fixes` gained a test: one of yours falling from 12 m onto you.
+
 ## 2026-09-29 — §AJ + §AL canopy on the skeleton; Mike's play notes (jump, text, HUD)
 - **§AJ + §AL canopy** (the tree/plant build, step 3):
   - **No hull at any LOD:** leaves are cluster cards on order-3+ twigs, and each card keeps its mass tile's holes (cut to `canopy.gap`), so sky shows through every card. Near (25 m), cluster cards show the leaf cutout at the leaf's real size. Far: every third cluster at 1.9×, over the order-1/2 lines.

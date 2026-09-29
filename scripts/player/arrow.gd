@@ -14,7 +14,8 @@ extends Node3D
 ##     it bounces back off that part and drops;
 ##   * ground, trees, ruins: buries its head there and stays a while (a
 ##     tree's wood only: its leaves have no collider, design §AM);
-##   * water: splashes (Ripples) and sinks.
+##   * water: splashes (Ripples) and sinks;
+##   * you, if it comes back down on you (shooter): it hurts you.
 ## Leaf clusters on the way (FoliageCover) each take combat.foliage_drag of
 ## its speed and rustle their tree; they hide a creature, not armour it.
 ## Where it lands makes a noise wildlife hears (NoiseEvents, NOISE_M): a
@@ -40,6 +41,11 @@ var camps: Camps
 var velocity := Vector3.ZERO
 var damage := 10.0
 var exclude: Array[RID] = []
+## Who loosed it (PlanetPlayer): passed through while it leaves the bow
+## (SELF_SAFE_S); after that it can come down on them and hurt them (from
+## play: arrows shot up that come back down should be able to).
+var shooter: PlanetPlayer = null
+const SELF_SAFE_S := 0.4
 ## A super shot (design §S, SuperMeter): every hit critical, the fall
 ## eased by gravity_scale, a red streak (combat "overcharge").
 var super_shot := false
@@ -144,6 +150,8 @@ func _physics_process(delta: float) -> void:
 	var b := a + velocity * delta
 	var q := PhysicsRayQueryParameters3D.create(a, b)
 	q.exclude = exclude
+	if shooter != null and is_instance_valid(shooter) and _life < SELF_SAFE_S:
+		q.exclude = exclude + [shooter.get_rid()]
 	# The world, and creatures' and people's parts on their own layer
 	# (Hitboxes; the default mask has every layer, this says so).
 	q.collision_mask |= Hitboxes.LAYER
@@ -158,7 +166,9 @@ func _physics_process(delta: float) -> void:
 		struck = str((ray.collider as Node).name) if ray.collider is Node else "?"
 		# A creature's or a person's part (Hitboxes): who it belongs to.
 		hit_obj = Hitboxes.creature_of(ray.collider)
-		if hit_obj:
+		if shooter != null and ray.collider == shooter:
+			hit_kind = "shooter"
+		elif hit_obj:
 			hit_part = _shape_node(ray.collider, ray.shape)
 			hit_kind = "creature" if hit_obj.has_method("hurt") else "folk"
 	# Leaves (design §AM 3): no collider, but every cluster on the way
@@ -211,6 +221,14 @@ func _physics_process(delta: float) -> void:
 			_sound("arrow_hit")
 			reparent(hit_part, true)
 			_stick()
+		"shooter":
+			# Your own arrow coming back down on you: it hurts like any
+			# other (by its speed), and glances off and drops.
+			shooter.take_hit(damage * clampf(velocity.length() / Bow.MAX_SPEED, 0.4, 1.0), a)
+			_sound("arrow_hit")
+			exclude.append(shooter.get_rid())
+			global_position = hit_pos - velocity.normalized() * 0.03
+			velocity *= -0.15
 		"folk":
 			# They complain (Camps.shot_at()); the hit reads like any other
 			# (Hits), but no one's harmed. Only the first touch counts: a
