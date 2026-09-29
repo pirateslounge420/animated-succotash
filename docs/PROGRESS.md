@@ -81,6 +81,20 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **HUD you choose:** the settings panel (O / F10) now switches every HUD element: speedometer, clock, health bar, weapon, crosshair dot, names, damage numbers, prompts and subtitles. All are on by default.
 - **Orchid names up the trees:** plants other than trees (epiphytes, orchids on limbs) are now named within reach of your body, height included. You read an orchid by climbing up to it, not from the ground under it. Trees keep the along-the-ground reach.
 - `dev_view`: SETTINGS=1 opens the panel; LOOK_NAME="binomial|common name" puts a name under the crosshair.
+- **For the designer (data; Mike's requests from play, not built):**
+  - **Fish and reptiles.** Already in the data: mahi-mahi (dolphinfish, *Coryphaena hippurus*), grouper (*Epinephelus marginatus*), red-bellied piranha (*Pygocentrus nattereri*), electric eel (*Electrophorus electricus*), Nile and saltwater crocodiles (*Crocodylus niloticus*, *C. porosus*). Missing:
+    - redfish (red drum, *Sciaenops ocellatus*);
+    - alewife (*Alosa pseudoharengus*);
+    - a flounder (summer flounder, *Paralichthys dentatus*, or the European *Platichthys flesus*);
+    - golden dorado (*Salminus brasiliensis*), the river "dorado", if Mike meant that one rather than mahi-mahi.
+    - Fish don't spawn in the world until Phase 7, so these are data only for now.
+  - **Sonoran Desert toad** (*Incilius alvarius*; it was *Bufo alvarius*). Mike wants to milk its parotoid glands and smoke the dried secretion, which holds 5-MeO-DMT and bufotenine. That needs a creature entry, an interact action on the toad, an item, and the effect under Phase 10's `player.haze`. Only the entry is data work now.
+  - **Orchids: "every orchid, epiphytic and terrestrial, with its fungus".**
+    - The live list has 5 (2 ground, 3 epiphyte) and the archive has 60. Kew accepts about 28,000 species, so "every orchid" can't be taken literally. I suggest a set per realm and biome, from the archive up.
+    - Each needs a `habit` of epiphytic, lithophytic or terrestrial (the tier already says most of this).
+    - Each needs a fungal partner. Correction for Mike: most orchids aren't bound to one unique fungus. They germinate with broad groups: *Tulasnella*, *Ceratobasidium* and *Serendipita* for most green orchids, and *Russula*, *Thelephora* or *Armillaria* for the leafless mycoheterotrophs. So the field is the partner genus or group, or a species where one is known (for example *Tulasnella calospora*).
+    - Climbing up to an epiphyte already names it on the HUD (common and scientific); a partner line under it is one more field once the data has it.
+  - **PvP ninjas** (Mike): an idea for later, not scheduled.
 
 ## 2026-09-29 — §AK trees grown from their architecture block
 - **Skeleton** (`TreeArch`, new): 149 tree-tier woody species with an `architecture` block now grow their trunk and branches from it. Cacti, bamboo, lianas, mangroves, knee-roots and shrubs keep their own builders.
