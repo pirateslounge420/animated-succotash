@@ -983,7 +983,9 @@ func _update_climb_legs() -> void:
 		return
 	var pb := _body as PlayerBody
 	var pose := ""
-	if climbing:
+	if clinging:
+		pose = "cling"
+	elif climbing:
 		pose = trees.climb.pose if _climb_graph else "trunk"
 	elif perched:
 		pose = "trunk" if _perch_local != Vector3.INF else "straddle"
@@ -991,7 +993,7 @@ func _update_climb_legs() -> void:
 	if pose == "":
 		_climb_last = Vector3.INF
 		return
-	if _climb_last != Vector3.INF and climbing:
+	if _climb_last != Vector3.INF and climbing and not clinging:
 		pb.climb_travel += minf(global_position.distance_to(_climb_last), 0.5)
 	_climb_last = global_position
 
@@ -2068,8 +2070,13 @@ func _update_camera(delta: float) -> void:
 			var want := 1.35 if bow.drawing else lerpf(0.06, back, _arm_trail)
 			if s == 1 and not is_nan(spear_arm):
 				want = spear_arm
+			var spread := lerpf(0.13, spread_rad, _arm_trail) * sx
+			if clinging:
+				# Both hands up on the face, held there.
+				want = 2.55
+				spread = 0.3 * sx
 			arm.rotation.x = lerpf(arm.rotation.x, want, k)
-			arm.rotation.z = lerpf(arm.rotation.z, lerpf(0.13, spread_rad, _arm_trail) * sx, k)
+			arm.rotation.z = lerpf(arm.rotation.z, spread, k)
 	elif _body is PlayerBody:
 		# The hands are on the wood: no trailing bend in the elbows.
 		(_body as PlayerBody).trail_elbow = 0.0

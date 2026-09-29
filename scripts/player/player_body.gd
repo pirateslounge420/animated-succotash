@@ -178,8 +178,10 @@ var _legs: Array[Node3D] = []
 ## Climbing (PlanetPlayer sets it; from play: legs planted on the tree, not
 ## dangling): "" off; "trunk" hugging steep wood, knees up, the feet braced
 ## on the bark and stepping as you go; "straddle" astride a limb (sitting
-## on it too); "hang" under thin wood, knees drawn up. `climb_travel`: how
-## far the body has moved on the wood (m), which steps the feet.
+## on it too); "cling" on a wall, a rock or a trunk (right click held):
+## tucked, feet braced, hands up on the face, still (from play: only the
+## cloak in the wind and the head as you look round move). `climb_travel`:
+## how far the body has moved on the wood (m), which steps the feet.
 var climb_pose := ""
 var climb_travel := 0.0
 var _knees: Array[Node3D] = []
@@ -521,6 +523,20 @@ const CLIMB_STEP_M := 0.35
 
 func _climb_legs(delta: float) -> void:
 	_update_look(delta)
+	if climb_pose == "cling":
+		# Still: the torso doesn't turn after the look, the feet don't step;
+		# only the head turns (as far as head_max_deg).
+		var head_max := deg_to_rad(float(HEAD_LOOK.get("head_max_deg", 45.0)))
+		_hips.position = Vector3(0.0, HIP_Y - 0.3, 0.12)
+		_hips.rotation = Vector3.ZERO
+		_torso.rotation = Vector3(0.2, 0.0, 0.0)
+		head.rotation = Vector3(_head_pitch - 0.1, clampf(_head_yaw, -head_max, head_max), 0.0)
+		for s in 2:
+			var side := -1.0 if s == 0 else 1.0
+			_legs[s].rotation = Vector3(1.0 + 0.25 * s, 0.0, 0.25 * side)
+			_knees[s].rotation = Vector3(-1.6 - 0.2 * s, 0.0, 0.0)
+			_ankles[s].rotation = Vector3(0.6, 0.0, 0.0)
+		return
 	var ph := climb_travel / CLIMB_STEP_M * PI
 	_hips.position = Vector3(0.0, HIP_Y - 0.12, 0.0)
 	_hips.rotation = Vector3.ZERO
