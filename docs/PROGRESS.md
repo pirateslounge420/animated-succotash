@@ -52,6 +52,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
     - Ducked against the trunk: the trunk pose.
     - The cloak still covers most of it.
   - **Diagonals** (Mike): on steep wood, W+D (and the other three pairs) reaches up or down and swings round the wood toward that side in the same move.
+  - **Go round any limb you can climb** (Mike): on a limb, A/D take you round it: astride on top, hugging its side, hanging under it. You keep that side as you shimmy along; W/S still go along it or across to another limb. Shift sits on top or tucks in against the side. Steep wood and the trunk went round already.
   - **Cling, crawl, leap** (Mike: "cling with right click, move with WASD, release right click to jump toward where you're looking, hold again at the right time to cling to the next surface"):
     - Right click on the ground facing a wall, rock or trunk within 0.9 m grabs on.
     - While clinging, WASD crawls over the face at 1.6 m/s (up, down and round a trunk, following its curve).

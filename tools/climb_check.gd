@@ -7,8 +7,8 @@ extends SceneTree
 ##      then W and D together: up and round at once;
 ##   3. Shift on the trunk: duck in against it; hands free (the bow draws);
 ##      the stick takes hold again;
-##   4. look out along the nearest limb above you and push W: out onto it;
-##      Shift there: sit on top of it;
+##   4. look out along a thick limb on your side and push W: out onto it;
+##      A/D round it (on top, its side, under it); Shift: perch on it;
 ##   5. back on, hold S: down again (to near the ground, or you let go).
 ## Prints the climb step by step (height, pose, handhold) so a stall shows.
 ##
@@ -255,11 +255,27 @@ func _initialize() -> void:
 			print("[climb] out along the limb at %s: %s" % [c.describe(best), _describe()])
 			ok(on_limb, "looking out along a thick limb and pushing W takes you out onto it")
 			if on_limb:
+				# Round the limb: D for a while, then A back: the pose goes
+				# from on top to its side to under it and back.
+				var poses := {}
+				await press("move_right")
+				for s5 in 16:
+					await frames(10)
+					poses[c.pose] = true
+				await release("move_right")
+				await press("move_left")
+				for s5 in 16:
+					await frames(10)
+					poses[c.pose] = true
+				await release("move_left")
+				await frames(20)
+				print("[climb] round the limb: poses %s, now %s" % [poses.keys(), _describe()])
+				ok(poses.size() >= 2 and player.climbing, "A/D go round the limb (%s)" % ", ".join(poses.keys()))
 				await press("crouch")
 				await frames(3)
 				await release("crouch")
 				await frames(20)
-				ok(player.perched and player._perch_local == Vector3.INF, "Shift on the limb sits you on top of it")
+				ok(player.perched, "Shift on the limb perches there (%s)" % ("on top" if player._perch_local == Vector3.INF else "tucked in against its side"))
 				await press("move_forward")
 				await frames(20)
 				await release("move_forward")

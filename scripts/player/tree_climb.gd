@@ -22,7 +22,8 @@ extends RefCounted
 ##           onto it.
 ##   limb    push along it (camera-relative) to shimmy out or back in; push
 ##           toward another limb of the tree within REACH_M to reach across
-##           to it. You hang under wood thinner than STRADDLE_R_M and
+##           to it; A/D go round it (over the top, down its side, under
+##           it), and you stay on that side as you shimmy along. You hang under wood thinner than STRADDLE_R_M and
 ##           straddle thicker, flatter wood; you stop where the wood gets
 ##           thinner than a grip.
 ## Holds are kept in the tree's own frame (BranchGraph.local), so neither
@@ -116,6 +117,11 @@ var _along := Vector3.FORWARD
 var _up_l := Vector3.UP
 # The way the body faces (tree frame, horizontal).
 var _face_l := Vector3.FORWARD
+# Round a limb (from play: wood thick enough to climb is thick enough to
+# go round): where you are round it, radians from its top (0 on top, PI
+# underneath); NAN until A/D first takes you round, then kept as you
+# shimmy along; back to NAN on steep wood.
+var _limb_rel := NAN
 # The way the stick is taking the hands (tree frame), and the stick then.
 var _dir := Vector3.ZERO
 var _dir_input := Vector2.ZERO
@@ -135,6 +141,7 @@ func start(graph: BranchGraph, i: int, player_pos: Vector3, up: Vector3) -> void
 	reaches = 0
 	holds_log.clear()
 	lead = 1
+	_limb_rel = NAN
 	if _cling(i):
 		var a := _angle_of(i, p)
 		var d := HANDS_APART_M * 0.5 / maxf(g.radius[i], 0.1)
@@ -213,6 +220,8 @@ func perch_hold() -> int:
 ## Perching at handhold `i` sits on top of it (a limb, flattish wood) rather
 ## than tucking in against it (the trunk, steep wood).
 func perch_on_top(i: int) -> bool:
+	if _round(i):
+		return absf(_limb_rel) < 0.9
 	return not _cling(i) or (g.limb[i] == 0 and _next_along(i, 1.0) < 0)
 
 
@@ -282,6 +291,10 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 			var j := _next_along(hold[low], -1.0)
 			if j < 0 or g.local[j].dot(_up_l) < LOWEST_HOLD_M:
 				return ["drop"]
+	# Round a limb: A/D (more than W/S) takes you round it, over the top,
+	# down its side, underneath.
+	if not on_trunk and absf(input.x) > 0.3 and absf(input.x) >= absf(input.y):
+		return _round_limb(input.x, right_l)
 	var move := _toward(dir, on_trunk)
 	if move.is_empty() and looking_out and input.y > 0.3:
 		move = _toward(tup, on_trunk)
@@ -422,6 +435,34 @@ func _upward(sgn := 1.0) -> Array:
 	return best
 
 
+## One step round the limb held (`x` the stick's right, `right_l` the
+## camera's right): the other hand reaches round to the new angle, the body
+## follows (_pose_of()). [hand, handhold, angle].
+func _round_limb(x: float, right_l: Vector3) -> Array:
+	var li := hold[lead]
+	if is_nan(_limb_rel):
+		_limb_rel = 0.0 if pose == "straddle" else PI
+	var a_now := _top_angle(li) + _limb_rel
+	var rightward := (_around(li, a_now + 0.1) - _around(li, a_now)).dot(right_l)
+	var sgn := signf(x) * (1.0 if rightward >= 0.0 else -1.0)
+	_limb_rel = wrapf(_limb_rel + sgn * AROUND_M * 2.0 / (maxf(g.radius[li], 0.1) + HUG_M), -PI, PI)
+	return [1 - lead, li, _top_angle(li) + _limb_rel]
+
+
+## The angle round limb handhold `i` of its top (straight up from its axis).
+func _top_angle(i: int) -> float:
+	var t := g.tangent[i]
+	var side := _up_l - t * t.dot(_up_l)
+	if side.length_squared() < 1e-6:
+		return 0.0
+	return _angle_of(i, g.local[i] + side.normalized())
+
+
+## Round a limb (_limb_rel set): the hold's angle is where you are round it.
+func _round(i: int) -> bool:
+	return not _cling(i) and not is_nan(_limb_rel)
+
+
 ## The hand on the side of the body that `dir` (tree frame) points to.
 func _side_hand(dir: Vector3) -> int:
 	return 1 if dir.dot(_face_l.cross(_up_l)) >= 0.0 else 0
@@ -483,6 +524,9 @@ func _start_reach(h: int, i: int, a: float) -> void:
 # --- Where things are ---------------------------------------------------------------
 
 func _update_outputs(f: Transform3D, up: Vector3) -> void:
+	# Both hands back on steep wood: no longer round a limb.
+	if reaching < 0 and _cling(hold[0]) and _cling(hold[1]):
+		_limb_rel = NAN
 	var p0 := _current_hand(0)
 	var p1 := _current_hand(1)
 	hands[0] = f * p0
@@ -497,7 +541,7 @@ func _update_outputs(f: Transform3D, up: Vector3) -> void:
 		"trunk":
 			# Hugging the wood, off the bark between the hands (which may be
 			# on two limbs while one reaches across).
-			var ri := wood if _cling(wood) else hold[1 - lead]
+			var ri := wood if (_cling(wood) or _round(wood)) else hold[1 - lead]
 			var out := _around(ri, _body_angle())
 			var c := mid + out * HUG_M
 			# The shoulders under the hands, lower for a hand far above.
@@ -535,6 +579,15 @@ func _update_outputs(f: Transform3D, up: Vector3) -> void:
 func _pose_of(i: int) -> String:
 	if _cling(i):
 		return "trunk"
+	if _round(i):
+		# Round a limb: astride it on top, hanging under it, hugging its
+		# side between.
+		var r := absf(_limb_rel)
+		if r < 0.9:
+			return "straddle"
+		if r > 2.3:
+			return "hang"
+		return "trunk"
 	if g.radius[i] >= STRADDLE_R_M and absf(g.tangent[i].dot(_up_l)) < STRADDLE_SLOPE:
 		return "straddle"
 	return "hang"
@@ -564,7 +617,7 @@ func _hand_point(h: int) -> Vector3:
 ## bark at angle `a`; on a limb on the top of the wood, a little to its
 ## own side.
 func _point(i: int, a: float, h: int) -> Vector3:
-	if _cling(i):
+	if _cling(i) or (_round(i) and pose == "trunk"):
 		return g.local[i] + _around(i, a) * g.radius[i]
 	var t := g.tangent[i]
 	var side := _up_l - t * t.dot(_up_l)
@@ -575,6 +628,8 @@ func _point(i: int, a: float, h: int) -> Vector3:
 
 ## The angle a new hold on `j` takes: facing a hand coming from `from`.
 func _hold_angle(j: int, from: Vector3) -> float:
+	if _round(j):
+		return _top_angle(j) + _limb_rel
 	return _angle_of(j, from) if _cling(j) else 0.0
 
 
@@ -584,7 +639,7 @@ func _body_angle() -> float:
 	var c := 0.0
 	var n := 0
 	for h in 2:
-		if _cling(hold[h]):
+		if _cling(hold[h]) or _round(hold[h]):
 			s += sin(angle[h])
 			c += cos(angle[h])
 			n += 1
