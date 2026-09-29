@@ -16,9 +16,9 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - A new `cling` body pose: tucked, feet braced on the face, hands up on it.
   - The torso no longer turns after the look, the feet don't step when you crawl, and the lean with speed and the stride are off. The head turns with the look (up to `head_max_deg`), and the cloak still simulates.
 - **Looking straight up** (Mike: the clouds and sky "come to a convergence"):
-  - The painted cloud panorama is wrapped round the sky by compass bearing and height, so at the zenith all its columns met at one point. Both of its layers now fade out between 50° and 77° up. Overhead belongs to the weather's flat cloud decks (`CloudLayers`), which don't pinch.
+  - The painted cloud panorama is wrapped round the sky by compass bearing and height, so at the zenith all its columns met at one point. Both of its layers now fade out between 25° and 50° up (from 50–77°, the streaks between still pointed at the zenith). Overhead belongs to the weather's flat cloud decks (`CloudLayers`), which don't pinch.
   - It was the cloud wrap, not the field of view.
-  - `dev_view` gained `PITCH=` (first person) to render it.
+  - `dev_view` gained `PITCH=` (first person, or tipping the vista camera up) to render it. Straight up now shows only the soft weather decks; the painted banks at the horizon are unchanged.
 - **Your own arrows can hit you** (Mike):
   - An arrow ignores you only for its first 0.4 s, while it leaves the bow. After that, one coming back down on you hurts like any other hit (by its speed), glances off and drops.
   - `play_fixes` gained a test: one of yours falling from 12 m onto you.
