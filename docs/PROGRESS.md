@@ -4,6 +4,23 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — Round any trunk, however it leans (Mike: "the way that a tree leans should matter… clinging and shimmying, they should be able to circumnavigate it regardless of how it twists")
+- **Measured:** `climb_lab` now holds D for 15 s on each trunk with the camera still, adding up the turn about the trunk's own axis. Before this change, straight trunks (pine, birch) went round and round, but every leaning trunk stalled at 5–107°. There were three causes:
+  - **A/D reached for whatever lay to your right.** On a leaning trunk, the next hold up or down the trunk lies to the side too, so D climbed the trunk or stepped onto a limb. A/D on a trunk now goes round it, about its own axis.
+  - **A/D's direction followed the camera every reach,** so round the back of the trunk D turned you back again. Which way round is now set when the key goes down and kept while it's held.
+  - **The feet hung straight down from the hands,** so on a leaning trunk the body dangled on its low side wherever the hands went. The feet now hang along the trunk, and the body model tilts to hug it, even from underneath. Only the body tilts, not the camera (`TreeClimb.body_up` / `body_face`; `PlanetPlayer._tilt_to`).
+  - Also fixed: on thin wood, the hands' spread and a diagonal's swing, which are lengths of bark turned into angles, put the hands over half a turn apart. Their average then flipped to the far side and the spiral undid itself. Both are capped in angle (`MAX_HALF_APART`, `MAX_SWING`).
+- **Result:** D goes round all ten sample trunks, leans up to 57° (about a lap per 2.3 s). W+D spirals 270–380° in 3 s. In game, W+D does 316–325° on a tamarisk, Miombo and pequi.
+- **The cling (right click) likewise:**
+  - W goes up the trunk's axis (its branch graph), not the planet's up flattened onto the bark;
+  - A/D keeps its way round while held;
+  - the trunk counts as held from any side but straight below;
+  - the top of a leaning trunk no longer counts as the ground;
+  - the body tilts along the trunk.
+
+  Result: 670° round a tamarisk and 875° round a Miombo in 6 s. **Not solved:** on a pequi the cling snags on low limbs (their colliders stop the body 1.2 m out) and gets 49°. Climbing on the graph (E) isn't affected. Whether limbs should stop a clinging body is Mike's call (asked).
+- `climb_check`: the W+D and cling-round turns are added up as they go (start-to-end read a whole spiral as nothing), and the leap after circling aims out from where you are. The limb step picks the limb on the side you end up on, which on the big tamarisk is one inside its tangle (the sweep still reaches 10 of 11 of the sample tamarisk's limbs).
+
 ## 2026-09-29 — Every branch reachable; hiding at a branch's end (Mike: "any branch that branches off should be accessible (not twigs or overly thin sticks)… crouching at the end of a branch which has leaves hides the player… hide and seek")
 - **Measured first:** `climb_lab BRANCHES=1` takes every branch off the trunk thick enough to hold (grip radius 4.5 cm, a metre or more of it). From the trunk beside its foot, looking out along it (or the way it leaves the trunk), it holds W and checks that you reach an end of it, where the wood gets too thin.
   - Most of the misses the first versions reported were the test's own mistakes (too short a hold; one "tip" for a branch that forks into several), not the game's.
