@@ -566,8 +566,10 @@ func _initialize() -> void:
 			await frames(1)
 			n += 1
 		var was_sprinting := player.sprinting
+		# (A held jump: tapped, it's a knee-high hop now and you're down
+		# again before the bow is up.)
 		await press("jump")
-		await frames(1)
+		await frames(10)
 		await release("jump")
 		n = 0
 		while player._wall_f > 0 and n < 60:
@@ -619,7 +621,9 @@ func _initialize() -> void:
 		# Aim at the body, held over for the drop (as the arc shows).
 		for k in 20:
 			var body_at: Vector3 = deer.global_position + world.dir_of(deer.global_position) * 1.0
-			var t_fly := body_at.distance_to(player.camera().global_position) / Bow.MAX_SPEED
+			# (At the draw you have: the flight is short now, the draw isn't
+			# full, and aimed for a full one the arrow fell short.)
+			var t_fly := body_at.distance_to(player.camera().global_position) / (Bow.MAX_SPEED * maxf(player.bow.power(), 0.2))
 			var aim_at: Vector3 = body_at + world.dir_of(body_at) * 0.5 * Arrow.GRAVITY * t_fly * t_fly
 			var to := (aim_at - player.camera().global_position).normalized()
 			var flat := (to - player.up * to.dot(player.up)).normalized()
