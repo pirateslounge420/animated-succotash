@@ -170,9 +170,14 @@ static var CAMERA_Y := 1.5 * BODY_K
 static var CROUCH_CAMERA_Y := 0.95 * BODY_K
 static var CLIMB_SPEED := Tuning.num("movement", "climb", "simple_mps")
 static var CLIMB_REACH_M := Tuning.num("movement", "climb", "reach_m")
-## First person: eye height standing and crouched.
-static var EYE_Y := 1.45 * BODY_K
-static var CROUCH_EYE_Y := 0.9 * BODY_K
+## First person: eye height standing (data/look.json retro.eye_m, design
+## §AG 7: 1.4 m) and crouched (the same share of it as before).
+static var EYE_Y := float(Tuning.section("look", "retro").get("eye_m", 1.45 * BODY_K))
+static var CROUCH_EYE_Y := EYE_Y * 0.9 / 1.45
+## Field of view (retro.fov_deg, §AG 7: 78); aiming narrows it by the
+## same share as before (70 -> 60).
+static var FOV := float(Tuning.section("look", "retro").get("fov_deg", 70.0))
+static var AIM_FOV := FOV * 60.0 / 70.0
 ## Hit points; a drop of more than FALL_SAFE_M hurts (by the height, so a
 ## fast-fall out of a hop doesn't).
 const MAX_HP := 100.0
@@ -413,7 +418,7 @@ func _ready() -> void:
 	# Far enough for the high cloud layer to reach the horizon (~35 km).
 	_camera.far = 60000.0
 	_camera.near = 0.1
-	_camera.fov = 70.0
+	_camera.fov = FOV
 	_camera.current = true
 	_spring.add_child(_camera)
 	trees = TreeContact.new()
@@ -1775,7 +1780,7 @@ func _update_camera(delta: float) -> void:
 		_spring.spring_length = lerpf(4.5, 2.4, _aim_blend)
 	_camera.h_offset = 0.55 * _aim_blend + randf_range(-1.0, 1.0) * _shake * 0.12
 	_camera.v_offset = randf_range(-1.0, 1.0) * _shake * 0.12
-	_camera.fov = lerpf(70.0, 60.0, aim_power())
+	_camera.fov = lerpf(FOV, AIM_FOV, aim_power())
 	# The elf raises both arms to aim the bow, the right one to hold and
 	# throw the spear (an imported model has its own clips); on a branch
 	# graph they hold the tree (_reach_arms()).

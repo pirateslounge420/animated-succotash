@@ -26,7 +26,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - The greyscale tile is tinted by the sky, taking the sunset bands at sunset. SkyPaint only bakes clouds when the tile is missing.
 - **6 Shadows A/B (not locked):** `SkySystem.day_shadows()`: the "Sun shadows by day" setting, or DAY_SHADOWS=0/1 for tools. It defaults to look "light" shadows (on), so today's look stands until the designer picks.
   - B turns the sun's shadow map off, switches on blob shadows (`BlobShadow.set_enabled`) and darkens ground under canopy by `canopy_dark` 0.45. The top-down canopy mask in ground vertex alpha is now feathered over `canopy_feather_m` 3 m. The terrain grid is ~8 m, so vertex interpolation softens it further.
-  - Dev spot, 14:00, 480 lines (llvmpipe; compare ratios): A FPS_A. B FPS_B.
+  - `perf_bench`, dev frame at 15:00, 480 lines, on llvmpipe (compare ratios): **A 2279 ms a frame** (the shadow pass ≈ 384 ms: 261 draws, 1.07M tris). **B 1833 ms, −20 %**; the shadow pass is gone and the blobs cost nothing measurable. On a GPU that's ~1.24× A's fps.
   - Forest camp mean luma: A 0.13, B 0.28 (reference 0.18–0.32).
 - **7 Camera:** FOV `retro.fov_deg` 78 (aiming zooms to the same share, 67). First-person eye at `retro.eye_m` 1.4 m, crouched eye scaled to match.
 - **Reference still has:** sprawling bright meadows and paths flanked by trees (world-gen, §AG 7, Phase 9); its clouds are whiter and softer-edged than our lavender-tinted posterised tile; our camp clearings are sand, so the frame averages brighter (0.37–0.45 luma at the dev spot vs 0.18–0.32).
