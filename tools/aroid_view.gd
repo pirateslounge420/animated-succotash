@@ -86,8 +86,13 @@ func _run() -> void:
 	var entry := {}
 	var want_sp := OS.get_environment("SPECIES")
 	var tries_n := int(OS.get_environment("TRIES")) if OS.get_environment("TRIES") != "" else 25
+	# AT="x,y,z": straight to that spot (a direction FIND=1 printed).
+	if OS.get_environment("AT") != "":
+		cands = [-1]
+		tries_n = 1
 	for tries in mini(cands.size(), tries_n):
-		await goto(map.dir[cands[tries]])
+		var here: Vector3 = map.dir[cands[tries]] if cands[tries] >= 0 else Vector3(float(OS.get_environment("AT").split(",")[0]), float(OS.get_environment("AT").split(",")[1]), float(OS.get_environment("AT").split(",")[2])).normalized()
+		await goto(here)
 		garden._scan()
 		# The species with the most plants here that bloom (or the one asked).
 		var best_n := 0
@@ -99,7 +104,15 @@ func _run() -> void:
 				best_n = int(e.n)
 				entry = e
 		if not entry.is_empty():
+			# FIND=1 (run headless: seconds a spot, not minutes): print
+			# where, and stop; AT= that, drawn, takes the pictures.
+			if OS.get_environment("FIND") == "1":
+				print("[aroid_view] found %s: %d plants at AT=%.6f,%.6f,%.6f (spot %d)" % [entry.sp.name, int(entry.n), here.x, here.y, here.z, tries])
+				quit()
+				return
 			break
+		elif OS.get_environment("FIND") == "1":
+			print("[aroid_view] spot %d: none" % tries)
 	if entry.is_empty():
 		print("[aroid_view] no aroids found")
 		quit()
