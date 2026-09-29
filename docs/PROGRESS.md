@@ -4,6 +4,48 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — §AH per-species tiles; §AI leaf fall, piles and rot (4 steps)
+- **§AH tiles:**
+  - `SpeciesDB` reads `atlas_species.json`: all 1,031 species get their leaf / leaf_autumn / leaves / litter / bark / petiole files. 121 mosses, air plants and conks have no bark tile and keep the class bark.
+  - `PlantMeshes.material_for(sp)` gives each species its own copy of the foliage material with its tiles. Tiles are read straight from the PNGs, lazily, so only the region's species are resident. The folder is `.gdignore`'d rather than 3,900 imported resources, so an exported build would need it added as raw files.
+  - The shader draws them times white and a per-plant genes jitter (warm/cool ±6 %, value ±10 %). There is no genes code yet, so the jitter comes from the instance hash.
+  - Bark tiles every 0.4 m. Crowns get the foliage mass over their own shade.
+  - Near cards (25 m) show the leaf cutout at the leaf's real size, in leaf cells inside the ragged cluster outline. Clumps and far cards show the mass.
+  - Tile values are read raw like every vertex colour here: decoding sRGB halved them.
+  - Wind is now a global (`plant_wind`).
+- **§AI 1 colour and fall** (`LeafSeason`, at the player's latitude):
+  - Colour blends leaf → autumn over the summer → autumn transition, and the mass is recoloured by the same share.
+  - Shedding starts at `start_at` and takes `per_day_share` per game-day over `deciduous_days`; crowns are bare in winter and leaf out green over the spring transition.
+  - A gust over `gust_mps` drops `gust_share` at once.
+  - Crowns thin in leaf-sized cells.
+  - Falling leaves are the species' leaf card, spinning and flipping, from the trees within 45 m at the rate their crowns lose leaves. They are drawn at twice the leaf's size to read at 480 lines, and unshaded.
+- **§AI 2 piles** (`LitterField`, 4 m cells fixed to the ground):
+  - Mass from the crowns: deciduous 0.4 kg/m² of crown over the fall; evergreens 1.0 kg/m² × 0.3 a year.
+  - It is laid within crown radius × spread, drifted downwind.
+  - Depth → cm → a mound up to 0.25 m. Each cell is drawn with the dominant species' litter tile (a Texture2DArray): ragged edge, scattered when thin.
+  - Rustle above 3 cm; sprinting in kicks 15 % of the top layer up as leaves.
+- **§AI 3–4 rot:**
+  - Stages flow first-order at `days_at_reference` × Q10 (freeze_rate below 0 °C) × moisture curve × leaf multiplier. Dry → wet-dark waits on rain.
+  - The shader does the stage colour transform, the holes mask and the height, like the designer's preview.
+  - Humus goes into `flora_litter_kg` (per cell `humus_at`). Nothing reads it yet (soil fertility is Phase 7).
+  - Litter fungi (`substrate: litter`) fruit on stage 2–3 cells 2–5 days after rain, in season and temperature, for 5 days. They are drawn with their catalogue mesh (a rosette: there is no mushroom shape yet).
+- **Checks:** `tools/litter_check.gd` (new) passes 21/0: the crown timeline, Q10/freeze/moisture, multipliers, first-order stages with mass kept, rain → wet-dark, humus. Durations (leaf shape gone / into soil):
+  - tropical broadleaf 159 / 323 days;
+  - temperate broadleaf 450 / 912 days;
+  - boreal needles 3,590 / 7,287 days.
+  - `tools/species_row.gd` (new) shows oak, maple, Scots pine and coconut palm side by side through the year. Options: RUN, DAYS, TOP, WIND, DIST, FRAMES, NO_TILES.
+- **Dev run** (`species_row RUN=145,330`, a temperate year, rain every 9 days):
+  - green on day 150; turning on 160; 90 % shed by 170; bare by 180;
+  - piles 1.4 cm deep at most (four trees 11 m apart), rotting through dry (stage 1.4 by day 212) to wet-dark (2.2 by day 330);
+  - buds on day 330.
+- **Flags for the designer:**
+  - Tropical broadleaf loses its leaf shape in about 5 months with these `days_at_reference`; §AI 4 says weeks.
+  - Morel is tagged `fruit_season: autumn`, but it fruits in spring.
+  - Litter fungi are drawn with their catalogue shape (rosette).
+- **Reference still has:** real mushroom forms, and litter that hides what's under it (snags, burrows: the kick doesn't expose anything yet).
+
+---
+
 ## 2026-09-29 — §AG: the look tuned to the reference clips (steps 1–7; shadows A/B not locked)
 - **1 Dither and bleed** (`post_grade`): a hard ordered dither at `retro.dither` 1.0 onto a true 5-bit grid per channel (`bits_per_channel`), bleed 0.2, grain 0.025, all at the 480-line internal frame. The header comment is fixed.
 - **2 Fog** (`SkySystem`, `look.gdshaderinc`): day density `retro.fog.day_density` 0.0035, so far hills are ~65 % haze at 300 m and ~75 % at 400 m. The fog colour stays the horizon colour. Valley fog adds `height_density` below the local ground mean: `main` samples the eye and a 250 m ring every 0.5 s and sends `look_ground_m`. dev_view `VISTA=1` gives a far view.

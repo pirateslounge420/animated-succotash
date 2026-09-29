@@ -22,11 +22,27 @@ extends Node3D
 ## its top layer up into the air (LeafSeason.kick) once each time you
 ## enter it.
 ##
+## It rots (§AI 3-4, data/litter.json "stages" and "timing"): each stage
+## passes its litter on to the next at a first-order rate, the stage's
+## days_at_reference at 15 °C and moisture 0.6, faster by Q10 per 10 °C
+## (below 0 °C only freeze_rate as fast), by the moisture_curve (the
+## place's moisture, soaked by recent rain) and by the dominant species'
+## leaf (species_multiplier: needles 0.25x, glossy 0.5x, big leaves
+## slower...). Dry litter turns wet-dark only after rain. What leaves the
+## humus stage goes into the soil: flora_litter_kg (the flora.litter
+## ledger; per cell, humus_at()), which soil fertility will read (Phase 7).
+## Litter fungi (data/plants/fungi.json, fungus.substrate "litter") fruit
+## on cells in the wet-dark and skeleton stages fungus.fruit_after_rain_days
+## after rain, in their season and temperature band, for a few days.
+##
 ## Only the ground near the player gathers litter (the trees LeafSeason
-## watches); a cell keeps its litter when you walk away.
+## watches); a cell keeps its litter, and goes on rotting, when you walk
+## away.
 
 static var PILE: Dictionary = Tuning.section("litter", "pile")
 static var FALL: Dictionary = Tuning.section("litter", "fall")
+static var TIMING: Dictionary = Tuning.section("litter", "timing")
+static var STAGES: Array = Tuning.table("litter").get("stages", [])
 ## Leaves a deciduous crown drops over its fall, kg per m2 of crown
 ## (leaf area index ~5 x ~80 g/m2 dry leaf); evergreen foliage held, kg
 ## per m2 of crown.
@@ -71,6 +87,10 @@ class Cell:
 	## What fell here, by species index (kg/m2 fed), for the dominant one.
 	var fed := {}
 	var dominant := -1
+	## Humus passed into the soil here, kg/m2.
+	var humus := 0.0
+	## Fungi fruiting here: [species index, until (days)], or empty.
+	var fruit: Array = []
 
 	func mass() -> float:
 		return m[0] + m[1] + m[2] + m[3] + m[4]
@@ -225,10 +245,219 @@ func _spread(center: Vector3, radius: float, kg: float, sp_idx: int) -> void:
 			_add_layer(sp_idx)
 
 
-## Litter rots over `dd` game-days (§AI 3-4; LitterField.age is extended
-## by the decomposition step).
-func age(_dd: float, _weather: Dictionary) -> void:
-	pass
+## The humus passed into the soil so far, kg (flora.litter).
+var flora_litter_kg := 0.0
+var _wet := 0.0 # recent rain, 1 just rained, fading over a couple of days
+var _dry_days := 99.0 # game-days since it last rained
+var _fruit_mmis := {} # fungus species index -> MultiMeshInstance3D
+var _days := 0.0
+
+
+## The humus a cell has given the soil, kg/m2.
+func humus_at(d: Vector3) -> float:
+	var c: Cell = cells.get(key_of(d))
+	return c.humus if c else 0.0
+
+
+## How much faster than at the reference a species' litter rots
+## (timing.species_multiplier, by leaf type, else by surface texture;
+## big leaves slower).
+static func rot_multiplier(sp: PlantSpecies) -> float:
+	var t: Dictionary = TIMING.get("species_multiplier", {})
+	var k := 1.0
+	if t.has(sp.leaf_type):
+		k = float(t[sp.leaf_type])
+	elif t.has(sp.leaf_texture):
+		k = float(t[sp.leaf_texture])
+	if sp.leaf_m * 100.0 > float(t.get("large_leaf_over_cm", 40.0)):
+		k *= float(t.get("large_leaf_factor", 0.8))
+	return k
+
+
+## How fast litter rots here and now against the reference (15 °C,
+## moisture 0.6): Q10 per 10 °C, freeze_rate below 0 °C, times the
+## moisture curve.
+static func climate_rate(temp_c: float, moisture: float) -> float:
+	var q10 := float(TIMING.get("q10", 2.0))
+	var t_ref := float(TIMING.get("reference_temp_c", 15.0))
+	var r := pow(q10, (temp_c - t_ref) / 10.0) if temp_c > 0.0 else float(TIMING.get("freeze_rate", 0.02))
+	return r * _curve(TIMING.get("moisture_curve", [[0.0, 0.1], [0.6, 1.0], [1.0, 1.6]]), moisture)
+
+
+static func _curve(pts: Array, x: float) -> float:
+	if pts.is_empty():
+		return 1.0
+	if x <= float(pts[0][0]):
+		return float(pts[0][1])
+	for i in range(1, pts.size()):
+		if x <= float(pts[i][0]):
+			var a: Array = pts[i - 1]
+			var b: Array = pts[i]
+			return lerpf(float(a[1]), float(b[1]), (x - float(a[0])) / maxf(float(b[0]) - float(a[0]), 1e-6))
+	return float(pts[pts.size() - 1][1])
+
+
+## Litter rots over `dd` game-days (§AI 3-4).
+func age(dd: float, weather: Dictionary) -> void:
+	if dd <= 0.0:
+		return
+	_days += dd
+	var rain := float(weather.get("rain_mm_h", 0.0))
+	if rain > 0.1:
+		_wet = 1.0
+		_dry_days = 0.0
+	else:
+		_wet *= exp(-dd / 2.0)
+		_dry_days += dd
+	var moist := 0.6
+	if main and main.world and main.world.planet:
+		moist = main.world.planet.sample(main.world.planet.moisture, main.player.surface_dir)
+	moist = clampf(maxf(moist, _wet), 0.0, 1.0)
+	var rate := climate_rate(float(weather.get("temp_c", 15.0)), moist)
+	var all := SpeciesDB.all()
+	var days_ref := PackedFloat32Array()
+	for i in 5:
+		days_ref.append(float(STAGES[mini(i, STAGES.size() - 1)].get("days_at_reference", 30.0)) if not STAGES.is_empty() else 30.0)
+	var fungi := _litter_fungi() if _dry_days >= 2.0 and _dry_days <= 5.0 else []
+	for k in cells:
+		var c: Cell = cells[k]
+		if c.mass() <= 0.0:
+			continue
+		var r := rate * (rot_multiplier(all[c.dominant]) if c.dominant >= 0 else 1.0)
+		for s in range(4, -1, -1):
+			if c.m[s] <= 0.0:
+				continue
+			var kr := r
+			if s == 1:
+				# Dry leaves turn wet-dark after rain.
+				kr *= 0.3 + 0.7 * _wet
+			var out := c.m[s] * (1.0 - exp(-dd * kr / days_ref[s]))
+			c.m[s] -= out
+			if s < 4:
+				c.m[s + 1] += out
+			else:
+				c.humus += out
+				flora_litter_kg += out * _cell_m * _cell_m
+		_fruit(c, k, fungi)
+	_draw_fruit()
+
+
+## Litter fungi fruit on wet-dark and skeleton litter a few days after
+## rain, in their season and temperature band, then go.
+func _fruit(c: Cell, k: Vector3i, fungi: Array) -> void:
+	if not c.fruit.is_empty():
+		if _days > float(c.fruit[1]):
+			c.fruit = []
+		return
+	if c.m[2] + c.m[3] < 0.03 or fungi.is_empty():
+		return
+	# One try per cell per rain: a third of the cells fruit.
+	var h := absi(hash([k, int(_days - _dry_days)]))
+	if h % 3 != 0:
+		return
+	var sp_idx: int = fungi[h % fungi.size()]
+	var sp: PlantSpecies = SpeciesDB.all()[sp_idx]
+	var f: Dictionary = _fungus_block(sp)
+	var window: Array = f.get("fruit_after_rain_days", [2, 5])
+	if _dry_days < float(window[0]) or _dry_days > float(window[1]):
+		return
+	c.fruit = [sp_idx, _days + 5.0]
+
+
+## The litter fungi that can fruit now (their season, their temperature;
+## by default the season and temperature where the player is).
+func _litter_fungi(season := "", temp := INF) -> Array:
+	var out := []
+	if main and season == "":
+		var d: Vector3 = main.player.surface_dir
+		season = str(Seasons.at(main.world.days, CubeSphere.latitude(d)).name)
+	if main and temp == INF:
+		temp = float(main._weather_eased.get("temp_c", 15.0))
+	season = "any" if season == "" else season
+	temp = 15.0 if temp == INF else temp
+	for i in _litter_species():
+		var sp: PlantSpecies = SpeciesDB.all()[i]
+		var fs := str(_fungus_block(sp).get("fruit_season", "any"))
+		if (fs == "any" or fs == season) and temp >= sp.temp_c.x - 3.0 and temp <= sp.temp_c.y + 3.0:
+			out.append(i)
+	return out
+
+
+static var _litter_sp: Array = []
+static var _fungus := {}
+
+
+## The catalogue's fungi with fungus.substrate "litter".
+static func _litter_species() -> Array:
+	if not _litter_sp.is_empty():
+		return _litter_sp
+	var doc = JSON.parse_string(FileAccess.get_file_as_string("res://data/plants/fungi.json"))
+	if doc is Dictionary:
+		for tier in doc.get("plants", {}):
+			for e in doc.plants[tier]:
+				if e is Dictionary and (e.get("fungus", {}) as Dictionary).get("substrate", "") == "litter":
+					var sp := SpeciesDB.find(str(e.name))
+					if sp:
+						_fungus[SpeciesDB.index_of(sp)] = e.fungus
+						_litter_sp.append(SpeciesDB.index_of(sp))
+	return _litter_sp
+
+
+static func _fungus_block(sp: PlantSpecies) -> Dictionary:
+	return _fungus.get(SpeciesDB.index_of(sp), {})
+
+
+## The fruiting bodies: a few of the species' mesh on each fruiting cell.
+func _draw_fruit() -> void:
+	if main == null:
+		return
+	var per := {}
+	for k in cells:
+		var c: Cell = cells[k]
+		if not c.fruit.is_empty():
+			if not per.has(c.fruit[0]):
+				per[c.fruit[0]] = []
+			per[c.fruit[0]].append(k)
+	for idx in _fruit_mmis:
+		if not per.has(idx):
+			(_fruit_mmis[idx] as MultiMeshInstance3D).multimesh.visible_instance_count = 0
+	for idx in per:
+		var sp: PlantSpecies = SpeciesDB.all()[idx]
+		if not _fruit_mmis.has(idx):
+			var mm := MultiMesh.new()
+			mm.transform_format = MultiMesh.TRANSFORM_3D
+			mm.use_custom_data = true
+			mm.use_colors = true
+			mm.mesh = PlantMeshes.mesh_for(sp, PlantMeshes.LOD_NEAR)
+			mm.instance_count = 400
+			var mi := MultiMeshInstance3D.new()
+			mi.name = "Fruiting_" + sp.name
+			mi.multimesh = mm
+			mi.material_override = PlantMeshes.material_for(sp)
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			mi.custom_aabb = AABB(Vector3.ONE * -DRAW_M * 3.0, Vector3.ONE * DRAW_M * 6.0)
+			add_child(mi)
+			_fruit_mmis[idx] = mi
+		var mmi: MultiMeshInstance3D = _fruit_mmis[idx]
+		var n := 0
+		var rng := RandomNumberGenerator.new()
+		for k in per[idx]:
+			var c: Cell = cells[k]
+			rng.seed = hash(k)
+			for j in 4:
+				if n >= 400:
+					break
+				var e := CubeSphere.east(c.dir)
+				var nn := CubeSphere.north(c.dir)
+				var d := (c.dir + (e * rng.randf_range(-1.6, 1.6) + nn * rng.randf_range(-1.6, 1.6)) / PlanetConst.RADIUS_M).normalized()
+				var at: Vector3 = main.world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d))
+				var hgt := rng.randf_range(sp.height_m.x, sp.height_m.y)
+				var b := Basis(e, d, e.cross(d)).orthonormalized().rotated(d, rng.randf() * TAU).scaled(Vector3.ONE * hgt)
+				mmi.multimesh.set_instance_transform(n, Transform3D(b, to_local(at)))
+				mmi.multimesh.set_instance_color(n, Color.WHITE)
+				mmi.multimesh.set_instance_custom_data(n, Color(0, 0, 0, 0))
+				n += 1
+		mmi.multimesh.visible_instance_count = n
 
 
 func _add_layer(sp_idx: int) -> void:

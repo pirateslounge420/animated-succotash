@@ -21,7 +21,7 @@ extends SceneTree
 ## textures, as before §AH, to compare), OUT_DIR (default /tmp/shots),
 ## TAG (default "species"): writes <TAG>_<hh>h.png or <TAG>_d<day>.png.
 ## RUN="from,to,step": run the clock through the year instead (see
-## _run_clock); LOOK_H: where on the trees the camera aims (share of
+## _run_clock: a temperate year's temperature, rain every 9 days); LOOK_H: where on the trees the camera aims (share of
 ## their height, default 0.45; 0 looks at their feet); TOP=1 looks down
 ## on the row from 30 m up.
 
@@ -117,7 +117,7 @@ func _run() -> void:
 	cam.global_transform = Transform3D(Basis.looking_at((mid - eye).normalized(), cam_d), eye)
 	# TOP=1: from 30 m above the row, looking down on it (the piles).
 	if OS.get_environment("TOP") == "1":
-		var above: Vector3 = world.to_scene((row_d - n * 6.0 / PlanetConst.RADIUS_M).normalized(), PlanetConst.RADIUS_M + main.chunks.ground_height(row_d) + 30.0)
+		var above: Vector3 = world.to_scene((row_d - n * (6.0 if OS.get_environment("TOP_M") == "" else 3.0) / PlanetConst.RADIUS_M + e * (0.0 if OS.get_environment("TOP_M") == "" else -11.0) / PlanetConst.RADIUS_M).normalized(), PlanetConst.RADIUS_M + main.chunks.ground_height(row_d) + (float(OS.get_environment("TOP_M")) if OS.get_environment("TOP_M") != "" else 30.0))
 		var ground_mid: Vector3 = world.to_scene(row_d, PlanetConst.RADIUS_M + main.chunks.ground_height(row_d))
 		cam.global_transform = Transform3D(Basis.looking_at((ground_mid - above).normalized(), n), above)
 	cam.current = true
@@ -171,6 +171,16 @@ func _run_clock(main: Node, world: Node, pd: Vector3, lon: float, base: float, h
 	while yd <= to + 1e-4:
 		var days := Astro.days_at_solar_hour(day0 + (yd - from), hour, lon, CubeSphere.latitude(pd))
 		world.days = days
+		# A temperate year: 12 °C plus the season's swing here, and a day
+		# of rain every 9 days (never the day of a shot), so the litter
+		# has weather to rot in.
+		var wet := int(yd) % 9 == 0
+		for w in want:
+			if absf(yd - w) < 1.5:
+				wet = false
+		for wd in [main._local_weather, main._weather_eased]:
+			wd["temp_c"] = 12.0 + Seasons.temp_offset_c(days, CubeSphere.latitude(pd))
+			wd["rain_mm_h"] = 2.0 if wet else 0.0
 		await process_frame
 		for w in want.duplicate():
 			if yd + 1e-4 >= w:
