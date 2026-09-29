@@ -35,6 +35,14 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
     - Order-3 twigs of 4 cm and up get their own capsules, only within 30 m (dropped past 35 m). An 18 m oak has none that thick; a 40 m one has 61.
     - Palm fronds get none (`tree_check` 16/0).
   - Reference still has: the in-game dev check (c) with a fox and a thrown spear.
+- **§AI.1 revised: each tree turns on its own clock** (step 5 of the tree build):
+  - The foliage shader now runs the `autumn_colour` clock per tree and per cluster. LeafSeason publishes where the year is (days since the spring and autumn transitions) and the stage table as globals.
+  - Each deciduous tree is offset by its own seeded day (± `jitter_days`, seeded by its turn and lean, which the floating origin never changes). Its top and outer clusters run up to `cluster_lead_days` ahead, so a tree turns from the outside in.
+  - Colour: green → yellow-green (hue drifting toward the autumn colour by `hue_toward_autumn`) → peak → dull (`sat` 0.6, `val` 0.8). Each cluster drops from the dull stage on (24 days at 6 %).
+  - Spring: buds (darker and greyer, clusters small) → young pale leaves (brighter, hue shifted toward yellow) → full, over `spring_days`.
+  - Gusts still strip on top (the material's `leaf_season`).
+  - `litter_check` 23/0: a hillside of 30 trees turns over 4.5 weeks, each tree on its own day, spread over 13 days.
+  - Reference still has: the rendered run of days 130–200 (queued) and dev check (d) through one autumn. Falling leaves and litter still follow the mean clock, not each tree's.
 - **Jump and gravity (Mike, from play: "jumps way too high and floaty; gravity more consistent and snappier; can't jump as high"):**
   - Rising gravity went from 1.9 to 26 m/s² (falling stays 28), and take-off from 7.6 to 9.7 m/s.
   - A held jump now peaks about 1.8 m up with 0.73 s in the air (it was about 15 m); a sprint jump about 2.3 m; a tap about 0.3 m.

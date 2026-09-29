@@ -188,6 +188,13 @@ func update_season(delta: float, d: Vector3, days: float, wind: Vector3) -> void
 	autumn = c.autumn
 	leaf_left = c.leaf * _gust_mult
 	leaf_now = leaf_left
+	# Each tree runs the staged clock itself (the foliage shader, §AI.1
+	# revised): where the year is, in days since the spring and the autumn
+	# transitions began.
+	var quarter := DayCycle.year_days() / 4.0
+	var q := fposmod(p - (3.5 - Seasons.half_transition()), 4.0)
+	RenderingServer.global_shader_parameter_set("leaf_clock", Vector2(q * quarter, (q - 2.0) * quarter))
+	_set_stage_globals()
 	shed_per_day = c.rate * _gust_mult
 	_apply_t -= delta
 	if _apply_t <= 0.0 or gust_drop > 0.0:
@@ -211,10 +218,55 @@ func _apply() -> void:
 		if not sp.deciduous:
 			continue
 		var m: ShaderMaterial = mats[idx]
-		m.set_shader_parameter("sp_autumn", autumn)
-		m.set_shader_parameter("leaf_season", leaf_left)
+		m.set_shader_parameter("sp_deciduous", true)
+		# (The shader runs the clock; what gusts have stripped on top of it
+		# is this.)
+		m.set_shader_parameter("leaf_season", _gust_mult)
 	for idx in _falling:
 		(_falling[idx] as _Fall).mmi.material_override.set_shader_parameter("sp_autumn", autumn if all[idx].deciduous else 0.0)
+
+
+## The staged clock's table (data/seasons.json autumn_colour) as the
+## foliage shader's globals, once.
+static var _stages_set := false
+
+
+static func _set_stage_globals() -> void:
+	if _stages_set:
+		return
+	_stages_set = true
+	var d: Dictionary = Seasons.data().get("autumn_colour", {})
+	var ac := _autumn_colour()
+	var st: Array = ac.stages
+	var stages: Array = d.get("stages", [])
+	var start := [0.0, 0.0, 0.0, 0.0]
+	var blend := [0.0, 0.0, 0.0, 0.0]
+	var hue := [0.0, 0.0, 0.0, 0.0]
+	var sat := [1.0, 1.0, 1.0, 1.0]
+	var val := [1.0, 1.0, 1.0, 1.0]
+	for i in 4:
+		var k := mini(i, st.size() - 2) if st.size() > 1 else 0
+		start[i] = float(st[k][0]) if i < st.size() - 1 else float(st[-1][0]) + i
+		blend[i] = float(st[k][1])
+		if i < stages.size():
+			hue[i] = float(stages[i].get("hue_toward_autumn", 0.0))
+			sat[i] = float(stages[i].get("sat", 1.0))
+			val[i] = float(stages[i].get("val", 1.0))
+	var rs := RenderingServer
+	rs.global_shader_parameter_set("ac_start", Vector4(start[0], start[1], start[2], start[3]))
+	rs.global_shader_parameter_set("ac_blend", Vector4(blend[0], blend[1], blend[2], blend[3]))
+	rs.global_shader_parameter_set("ac_hue", Vector4(hue[0], hue[1], hue[2], hue[3]))
+	rs.global_shader_parameter_set("ac_sat", Vector4(sat[0], sat[1], sat[2], sat[3]))
+	rs.global_shader_parameter_set("ac_val", Vector4(val[0], val[1], val[2], val[3]))
+	rs.global_shader_parameter_set("ac_fall", Vector4(float(ac.fall_day), float(FALL.get("per_day_share", 0.06)), float(FALL.get("deciduous_days", 24.0)), float(st[-1][0])))
+	rs.global_shader_parameter_set("ac_tree", Vector4(float(d.get("jitter_days", 7.0)), float(d.get("cluster_lead_days", 8.0)), float(d.get("spring_days", 24.0)), 0.0))
+	var sp: Array = d.get("spring_stages", [])
+	var bud_end := float(sp[0].get("share", 0.3)) if sp.size() > 0 else 0.3
+	var young_end := bud_end + (float(sp[1].get("share", 0.4)) if sp.size() > 1 else 0.4)
+	var bud: Dictionary = sp[0] if sp.size() > 0 else {}
+	var young: Dictionary = sp[1] if sp.size() > 1 else {}
+	rs.global_shader_parameter_set("spring_a", Vector4(bud_end, young_end, float(bud.get("sat", 0.7)), float(bud.get("val", 0.6))))
+	rs.global_shader_parameter_set("spring_b", Vector4(float(young.get("val", 1.1)), float(young.get("hue_shift", 8.0)), 0.0, 0.0))
 
 
 ## The trees near the player that can shed (their species has a leaf tile).

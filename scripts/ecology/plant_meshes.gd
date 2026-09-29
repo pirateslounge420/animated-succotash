@@ -69,6 +69,8 @@ static func material_for(sp: PlantSpecies) -> ShaderMaterial:
 	m.set_shader_parameter("sp_has_bark", sp.tiles.has("bark"))
 	m.set_shader_parameter("sp_leaf_color", sp.leaf_color)
 	m.set_shader_parameter("sp_autumn_color", sp.autumn_color)
+	# A deciduous species runs the staged season clock (LeafSeason).
+	m.set_shader_parameter("sp_deciduous", sp.deciduous)
 	m.set_shader_parameter("sp_bark_tile_m", sp.bark_tile_m)
 	# A leaf cell on the near cards: the leaf's own length, but never so
 	# small that it's below a few pixels a few meters off.

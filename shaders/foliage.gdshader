@@ -90,11 +90,43 @@ uniform vec3 sp_leaf_color = vec3(0.24, 0.51, 0.2);
 uniform vec3 sp_autumn_color = vec3(0.69, 0.54, 0.23);
 uniform float sp_bark_tile_m = 0.4; // the bark tile's square, m
 uniform float sp_leaf_m = 0.12; // one leaf cell on the near cards, m
-// How far into its autumn colour the species is, 0-1 (the season; §AI).
+// How far into its autumn colour the species is, 0-1 (the season; §AI);
+// a deciduous species (sp_deciduous) runs the clock below instead.
 uniform float sp_autumn = 0.0;
+// The staged autumn and spring (design §AI.1 revised; data/seasons.json
+// autumn_colour; LeafSeason sets the globals): each deciduous tree runs
+// the clock itself, offset by its own seeded day (± jitter_days), and its
+// top and outer clusters by cluster_lead_days more, so a hillside turns
+// over weeks and a tree from the outside in. leaf_clock.x: days since the
+// winter -> spring transition began; .y: days since the summer -> autumn
+// transition began. ac_start: the four stages' start days (from the
+// latter); ac_blend / ac_hue / ac_sat / ac_val: each stage's colour blend,
+// hue drift toward the autumn colour, saturation and value, eased from one
+// stage start to the next; ac_fall: (fall day, share lost a day, fall
+// days, end of the last stage); ac_tree: (jitter days, cluster lead days,
+// spring days, 0); spring_a: (bud end, young end as shares of spring
+// days, bud saturation, bud value); spring_b: (young value, young hue
+// shift toward yellow in degrees, 0, 0).
+uniform bool sp_deciduous = false;
+global uniform vec2 leaf_clock;
+global uniform vec4 ac_start;
+global uniform vec4 ac_blend;
+global uniform vec4 ac_hue;
+global uniform vec4 ac_sat;
+global uniform vec4 ac_val;
+global uniform vec4 ac_fall;
+global uniform vec4 ac_tree;
+global uniform vec4 spring_a;
+global uniform vec4 spring_b;
 // Cards nearer than this show the leaf cutout, farther the foliage mass.
 const float SP_NEAR_M = 25.0;
 
+// The season on this tree / cluster: (autumn blend, hue drift toward the
+// autumn colour, saturation, value), the hue shift toward yellow (spring,
+// 0-1 of a turn) and the leaf left.
+varying vec4 v_season;
+varying float v_hshift;
+varying float v_leaf;
 varying float sway_w;
 varying float glow_pick;
 varying vec3 world_pos;
@@ -108,6 +140,29 @@ varying float wood_dead; // a dead limb of a living tree (TreeArch: UV2.y 1 on b
 varying vec3 genes; // this plant's jitter: a warm/cool and value roll
 varying float inst;
 
+// A value eased through the stages: `v` at each stage's start day `st`,
+// held after the last.
+float stage_ease(float t, vec4 st, vec4 v) {
+	if (t <= st.x) return v.x;
+	if (t < st.y) return mix(v.x, v.y, (t - st.x) / max(st.y - st.x, 1e-3));
+	if (t < st.z) return mix(v.y, v.z, (t - st.y) / max(st.z - st.y, 1e-3));
+	if (t < st.w) return mix(v.z, v.w, (t - st.z) / max(st.w - st.z, 1e-3));
+	return v.w;
+}
+
+vec3 rgb_to_hsv(vec3 c) {
+	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+	vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+	vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+	float d = q.x - min(q.w, q.y);
+	return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + 1e-10)), d / (q.x + 1e-10), q.x);
+}
+
+vec3 hsv_to_rgb(vec3 c) {
+	vec3 p = abs(fract(c.xxx + vec3(1.0, 2.0 / 3.0, 1.0 / 3.0)) * 6.0 - 3.0);
+	return c.z * mix(vec3(1.0), clamp(p - 1.0, 0.0, 1.0), c.y);
+}
+
 void vertex() {
 	// Texture space: the plant's own frame (so textures ride with it),
 	// scaled to meters by the instance's height.
@@ -120,6 +175,42 @@ void vertex() {
 	moss = INSTANCE_CUSTOM.r;
 	cluster_key = CUSTOM0.w;
 	float leaf = (1.0 - INSTANCE_CUSTOM.a) * leaf_season;
+	v_season = vec4(sp_autumn, 0.0, 1.0, 1.0);
+	v_hshift = 0.0;
+	if (sp_deciduous) {
+		// This tree's own day (± jitter_days), its top and outer clusters
+		// ahead by up to cluster_lead_days.
+		// (Seeded by the tree's own turn and lean, which the floating
+		// origin never changes; instance ids repeat from chunk to chunk.)
+		vec3 bx = normalize(MODEL_MATRIX[0].xyz);
+		float h1 = fract(sin(dot(bx, vec3(127.1, 311.7, 74.7))) * 43758.5453) * 2.0 - 1.0;
+		float h2 = fract(sin(dot(bx, vec3(269.5, 183.3, 246.1))) * 24634.6345) * 2.0 - 1.0;
+		float lead = 0.0;
+		if (mat_id > 4.5) {
+			vec3 cc = CUSTOM0.xyz;
+			lead = ac_tree.y * clamp(0.5 * smoothstep(0.35, 0.95, cc.y) + 0.5 * smoothstep(0.05, 0.3, length(cc.xz)), 0.0, 1.0);
+		}
+		float t = leaf_clock.y + h1 * ac_tree.x + lead;
+		float sd = max(leaf_clock.x + h2 * ac_tree.x * 0.5 + lead * 0.25, 0.0);
+		// Autumn: colour by stage; the leaves fall from the dull stage.
+		float fall = t - ac_fall.x;
+		float leaf_a = fall <= 0.0 ? 1.0 : pow(1.0 - ac_fall.y, fall) * (1.0 - smoothstep(0.75 * ac_fall.z, ac_fall.z, fall));
+		// Spring: buds, young pale leaves, full; the clusters grow in
+		// through the bud and young stages.
+		float sp_days = max(ac_tree.z, 1.0);
+		float u = sd / sp_days;
+		float leaf_s = smoothstep(0.0, spring_a.y, u);
+		float bud = 1.0 - smoothstep(spring_a.x * 0.6, spring_a.x, u);
+		float young = smoothstep(spring_a.x * 0.6, spring_a.x, u) * (1.0 - smoothstep(spring_a.y, 1.0, u));
+		float in_spring = step(u, 1.0) * step(t, ac_start.x);
+		v_season = vec4(stage_ease(t, ac_start, ac_blend), stage_ease(t, ac_start, ac_hue),
+			stage_ease(t, ac_start, ac_sat), stage_ease(t, ac_start, ac_val));
+		v_season.z *= mix(1.0, mix(1.0, spring_a.z, bud), in_spring);
+		v_season.w *= mix(1.0, mix(1.0, spring_a.w, bud) * mix(1.0, spring_b.x, young), in_spring);
+		v_hshift = spring_b.y / 360.0 * young * in_spring;
+		leaf *= min(leaf_a, leaf_s);
+	}
+	v_leaf = leaf;
 	if (mat_id > 4.5) {
 		// A leaf cluster, smaller on a sparse tree.
 		vec3 c = (MODEL_MATRIX * vec4(CUSTOM0.xyz, 1.0)).xyz;
@@ -215,7 +306,7 @@ vec4 sp_leaf_cell(vec2 g, float seed) {
 	float lod = clamp(log2(max(max(dg.x, dg.y) * 48.0, 1e-4)), 0.0, look_max_mips);
 	vec4 c = textureLod(sp_leaf, f, lod);
 	vec4 a = textureLod(sp_leaf_autumn, f, lod);
-	return vec4(mix(c.rgb, a.rgb, sp_autumn), c.a);
+	return vec4(mix(c.rgb, a.rgb, v_season.x), c.a);
 }
 
 void fragment() {
@@ -231,9 +322,9 @@ void fragment() {
 	// leaves in leaf-sized cells, a hash picking which go first, until at
 	// leaf_season 0 it is bare. (Branchy trees' clusters thin by their own
 	// keys in vertex().)
-	if (leaf_season < 0.999 && mat_id > 0.5 && mat_id < 2.5) {
+	if (v_leaf < 0.999 && mat_id > 0.5 && mat_id < 2.5) {
 		vec3 cell = floor(obj_pos / max(sp_leaf_m * 2.0, 0.25));
-		if (sp_hash(cell.xy + cell.z * 17.13) >= leaf_season) {
+		if (sp_hash(cell.xy + cell.z * 17.13) >= v_leaf) {
 			discard;
 		}
 	}
@@ -284,7 +375,7 @@ void fragment() {
 		// The species' own tiles (§AH), times white and the genes jitter.
 		// The foliage mass takes the autumn colour by the same share as the
 		// leaf cutout (autumn / leaf colour).
-		vec3 autumn_tint = mix(vec3(1.0), clamp(sp_autumn_color / max(sp_leaf_color, vec3(0.01)), 0.0, 4.0), sp_autumn);
+		vec3 autumn_tint = mix(vec3(1.0), clamp(sp_autumn_color / max(sp_leaf_color, vec3(0.01)), 0.0, 4.0), v_season.x);
 		// The mass tile holds a few leaves across.
 		float mass_m = clamp(sp_leaf_m * 2.5, 0.3, 3.0);
 		vec4 t;
@@ -321,6 +412,18 @@ void fragment() {
 			}
 		}
 		vec3 c = t.rgb * genes;
+		if (sp_deciduous && mat_id > 0.5) {
+			// The season's hue drift toward the autumn colour (yellow-green),
+			// the dull stage's saturation and value, spring's buds and
+			// young pale leaves.
+			vec3 hsv = rgb_to_hsv(c);
+			float ha = rgb_to_hsv(sp_autumn_color).x;
+			float dh = fract(ha - hsv.x + 0.5) - 0.5;
+			hsv.x = fract(hsv.x + dh * v_season.y - v_hshift);
+			hsv.y = clamp(hsv.y * v_season.z, 0.0, 1.0);
+			hsv.z = clamp(hsv.z * v_season.w, 0.0, 1.0);
+			c = hsv_to_rgb(hsv);
+		}
 		float cg = pal_greenness(c);
 		c = pal_pull(c, mat_id < 0.5 ? pal_bark_night : pal_grass_night, (mat_id < 0.5 ? 0.6 : 0.7 * cg) * nk);
 		if (dead_v > 0.5 || wood_dead > 0.5) {

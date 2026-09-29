@@ -56,6 +56,36 @@ func _run() -> void:
 	var spring := LeafSeason.crown_at(0.2, h)
 	ok(spring.leaf == 1.0 and spring.autumn == 0.0, "spring: full and green again")
 
+	# --- The staged clock per tree (§AI.1 revised; the foliage shader) --------
+	# Thirty trees on a hillside, each its own day (± jitter_days) and its
+	# outer clusters ahead by cluster_lead_days: the day each starts to turn
+	# (its outer clusters leave green) and the day it's all at peak (its
+	# inner clusters reach the peak stage).
+	var acd: Dictionary = Seasons.data().get("autumn_colour", {})
+	var jit := float(acd.get("jitter_days", 7.0))
+	var cl_lead := float(acd.get("cluster_lead_days", 8.0))
+	var st: Array = ac.stages
+	var green_end := float(st[1][0])
+	var peak_start := float(st[2][0])
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 3
+	var starts: Array[float] = []
+	var peaks: Array[float] = []
+	for k in 30:
+		var off := rng.randf_range(-1.0, 1.0) * jit
+		starts.append(green_end - off - cl_lead)
+		peaks.append(peak_start - off)
+	starts.sort()
+	peaks.sort()
+	var span := peaks[-1] - starts[0]
+	var same := 0
+	for k in range(1, 30):
+		if absf(starts[k] - starts[k - 1]) < 1e-6:
+			same += 1
+	print("[litter] a hillside of 30 trees: the first starts turning on day %.0f, the last is at peak on day %.0f (of the transition): %.1f weeks" % [starts[0], peaks[-1], span / 7.0])
+	ok(span > 25.0 and span < 50.0, "the hillside turns over about five weeks (%.1f)" % (span / 7.0))
+	ok(same == 0 and starts[-1] - starts[0] > jit, "no two trees turn in step: each its own day, spread over %.0f days" % (starts[-1] - starts[0]))
+
 	# --- Rate ----------------------------------------------------------------
 	var r15 := LitterField.climate_rate(15.0, 0.6)
 	var r25 := LitterField.climate_rate(25.0, 0.6)

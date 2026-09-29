@@ -49,6 +49,46 @@ lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 
 [shader_globals]
 
+leaf_clock={
+"type": "vec2",
+"value": Vector2(0, -60)
+}
+ac_start={
+"type": "vec4",
+"value": Vector4(-12, -5.7, 4.8, 19.5)
+}
+ac_blend={
+"type": "vec4",
+"value": Vector4(0, 0.35, 1, 1)
+}
+ac_hue={
+"type": "vec4",
+"value": Vector4(0, 0.4, 0, 0)
+}
+ac_sat={
+"type": "vec4",
+"value": Vector4(1, 1, 1, 0.6)
+}
+ac_val={
+"type": "vec4",
+"value": Vector4(1, 1, 1, 0.8)
+}
+ac_fall={
+"type": "vec4",
+"value": Vector4(19.5, 0.06, 24, 30)
+}
+ac_tree={
+"type": "vec4",
+"value": Vector4(7, 8, 24, 0)
+}
+spring_a={
+"type": "vec4",
+"value": Vector4(0.3, 0.7, 0.7, 0.6)
+}
+spring_b={
+"type": "vec4",
+"value": Vector4(1.1, 8, 0, 0)
+}
 plant_wind={
 "type": "vec3",
 "value": Vector3(0, 0, 0)
