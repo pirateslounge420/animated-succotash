@@ -1014,8 +1014,11 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
   watch (the "pausing on a distant branch to look back" of §Q is a perch).
   **Locked 28 Sept 2026 (late):** perching is not only at the crown — you can perch on
   **top of any limb thick enough to straddle** as well as at the top of the tree, and
-  from a perch **the bow and the spear both work** (draw and shoot, raise and throw); you
-  turn with the look while perched. Implemented: `TreeClimb.perch_hold()` (straddle pose,
+  from a perch **all three tools work** — the bow (draw and shoot), the spear (raise and
+  throw) and the fishing pole (cast and reel down into the water below: a perch over a
+  river or a pool is the best fishing spot in the game); you turn with the look while
+  perched. The pole's cast (§N) is not built yet; when it is, it gates on
+  `not climbing and not swimming` like the bow and spear, so a perch already allows it. Implemented: `TreeClimb.perch_hold()` (straddle pose,
   or the highest trunk handhold), `PlanetPlayer.start_perch / _perch_step / stop_perch`
   — crouch to sit, stick to take hold again, Space to bound off, E to drop.
 - **Climbing is on the tech button, not E.** To climb: **hold right click against the

@@ -333,8 +333,10 @@ var sprinting := false
 var crouching := false
 var climbing := false
 ## Perched (design §V): sitting on top of a limb or on the crown of a
-## tree, hands free: look, aim and shoot the bow or throw the spear from
-## there, drop back to climbing with the stick, or jump off into a bound.
+## tree, hands free: look, shoot the bow, throw the spear or cast the
+## fishing pole from there (each tool gates on `not climbing`, which a
+## perch is not), drop back to climbing with the stick, or jump off into
+## a bound.
 ## Entered with crouch while climbing where TreeClimb.perch_hold() allows.
 var perched := false
 var _perch_key := 0
@@ -1197,7 +1199,7 @@ func _update_prompt(delta: float, forward: Vector3) -> void:
 		return
 	_prompt_timer = 0.2
 	if perched:
-		prompt = "Perched · left click: shoot or throw · move: back onto the wood · Space: jump off"
+		prompt = "Perched · left click: shoot, throw or cast · Q swap tool · move: back onto the wood · Space: jump off"
 	elif climbing and _climb_graph:
 		prompt = trees.climb.prompt
 	elif climbing:
