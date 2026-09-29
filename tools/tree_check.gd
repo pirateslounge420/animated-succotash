@@ -126,6 +126,16 @@ func _run() -> void:
 		if best_kind == TreeLayouts.Kind.TWIG:
 			twig_holds += 1
 	ok(twig_holds == 0, "no handhold on a twig (%d)" % twig_holds)
+	# Colliders (design §AM 1): limbs and branches; twigs of 4 cm and up
+	# only on their own (the 30 m ring); nothing on fronds.
+	var limbs_n := TreeLayouts.collider_segments(sk, 18.0, false, true).size()
+	var twigs_n := TreeLayouts.collider_segments(sk, 18.0, false, true, true).size()
+	var twigs_big := TreeLayouts.collider_segments(sk, 40.0, false, true, true).size()
+	print("[trees] an 18 m oak: %d limb and branch capsules, %d twig capsules (4 cm and up, within 30 m); at 40 m, %d twig capsules" % [limbs_n, twigs_n, twigs_big])
+	ok(limbs_n > 60, "orders 1-2 get capsules (%d)" % limbs_n)
+	ok(twigs_big > twigs_n, "only a big tree's twigs are thick enough to stand on (%d at 40 m, %d at 18 m)" % [twigs_big, twigs_n])
+	var palm_twigs := TreeLayouts.collider_segments(psk, 20.0, false, true, true).size()
+	ok(palm_twigs == 0, "no capsules on a palm's fronds (%d)" % palm_twigs)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 

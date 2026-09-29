@@ -107,6 +107,7 @@ var _tree_body: StaticBody3D
 var _tree_next := 0
 var _owner_tree := {} # shape owner id -> index in trees
 var _limb_owners := {} # tree index -> PackedInt32Array of shape owner ids
+var _twig_owners := {} # the same for its order-3 twigs (within ChunkManager.TWIG_M)
 ## Shared collider shapes: Vector3i(radius cm, length dm, capsule) -> Shape3D.
 static var _shapes := {}
 
@@ -822,6 +823,7 @@ func set_fine(fine: bool, hero := false) -> void:
 			_tree_next = 0
 			_owner_tree.clear()
 			_limb_owners.clear()
+			_twig_owners.clear()
 	var lod := PlantMeshes.LOD_FAR
 	if fine:
 		lod = PlantMeshes.LOD_HERO if hero else PlantMeshes.LOD_NEAR
@@ -1081,6 +1083,9 @@ func is_limb_shape(body: Object, shape_idx: int) -> bool:
 	for i in _limb_owners:
 		if owner in (_limb_owners[i] as PackedInt32Array):
 			return true
+	for i in _twig_owners:
+		if owner in (_twig_owners[i] as PackedInt32Array):
+			return true
 	return false
 
 
@@ -1100,6 +1105,35 @@ func remove_graph(i: int) -> void:
 				_tree_body.remove_shape_owner(owner)
 				_owner_tree.erase(owner)
 		_limb_owners.erase(i)
+	remove_twigs(i)
+
+
+## Capsules on tree `i`'s order-3 twigs thick enough to stand on (design
+## §AM 1, TreeLayouts.TWIG_COLLIDER_R_M), near the player only.
+func add_twigs(i: int) -> void:
+	var t: Array = trees[i]
+	var pick: int = t[4]
+	if pick < 0 or _twig_owners.has(i) or _tree_body == null:
+		return
+	var frame := tree_frame(i)
+	var owners := PackedInt32Array()
+	for seg in TreeLayouts.collider_segments(TreeLayouts.skeleton(t[2], TreeLayouts.layout_of(pick)), t[1], TreeLayouts.is_mirrored(pick), true, true):
+		owners.append(_add_wood_shape(frame, seg, i))
+	_twig_owners[i] = owners
+
+
+func has_twigs(i: int) -> bool:
+	return _twig_owners.has(i)
+
+
+func remove_twigs(i: int) -> void:
+	if not _twig_owners.has(i):
+		return
+	if _tree_body != null:
+		for owner in (_twig_owners[i] as PackedInt32Array):
+			_tree_body.remove_shape_owner(owner)
+			_owner_tree.erase(owner)
+	_twig_owners.erase(i)
 
 
 ## Drop every branch graph (and limb collider) of this chunk's trees.

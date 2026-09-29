@@ -39,12 +39,14 @@ const KNEE_M := 0.5
 ## through and rustles (TreeContact).
 const BUSH_STEM_R_M := 0.07
 const BUSH_SHAPES := [S.SHRUB, S.CUSHION, S.FERN, S.TUSSOCK, S.GRASS, S.REED, S.EPIPHYTE_CLUMP, S.KNEES]
-## Limbs and branches at least this thick (radius, m) get a collider near
-## the player, so arrows stick in them.
-const LIMB_COLLIDER_R_M := 0.05
-## Twigs (order 3+) this thick (radius, m) get a collider too (design §AM:
-## order-3 wood "where thick enough to stand on", >= 4 cm).
-const TWIG_COLLIDER_R_M := 0.04
+## Limbs and branches (orders 1-2, design §AM 1: "always") at least this
+## thick (radius, m: 3 cm across, anything an arrow sticks in) get a
+## collider near the player.
+const LIMB_COLLIDER_R_M := 0.015
+## Twigs (order 3+) this thick (radius, m: 4 cm across) get a collider too
+## (design §AM: order-3 wood "where thick enough to stand on", >= 4 cm),
+## within ChunkManager.TWIG_M only.
+const TWIG_COLLIDER_R_M := 0.02
 ## Colliders sit just inside the drawn wood (its polygon's inner radius).
 const COLLIDER_FIT := 0.92
 
@@ -547,9 +549,11 @@ static func _solid(pts: Array, r: float) -> Piece:
 ## Collider shapes for a tree `h` meters tall, in its frame (meters):
 ## [a, b, radius, capsule] per shape, a cylinder or capsule from a to b.
 ## `near`: the limbs and thick branches (while the tree is in branch-graph
-## range) instead of the trunk, roots and solid shapes. None at all for
+## range) instead of the trunk, roots and solid shapes; with `twigs`, the
+## order-3 twigs thick enough to stand on instead (within ChunkManager.
+## TWIG_M). None at all for
 ## plants whose wood stays below knee height.
-static func collider_segments(sk: Skeleton, h: float, mirrored: bool, near: bool) -> Array:
+static func collider_segments(sk: Skeleton, h: float, mirrored: bool, near: bool, twigs := false) -> Array:
 	var out: Array = []
 	var top := 0.0
 	for pc in sk.pieces:
@@ -561,6 +565,9 @@ static func collider_segments(sk: Skeleton, h: float, mirrored: bool, near: bool
 	for pc in sk.pieces:
 		var is_near := pc.kind == Kind.LIMB or pc.kind == Kind.BRANCH or pc.kind == Kind.TWIG
 		if is_near != near:
+			continue
+		# Twigs come on their own (`twigs`: only they), nearer the player.
+		if near and (pc.kind == Kind.TWIG) != twigs:
 			continue
 		if pc.frond:
 			continue # a palm's fronds are leaves (design §AM)

@@ -30,7 +30,11 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
     - a still player on an oak limb inside the crown is seen from the side 13 % of the time and from right below 30 %;
     - an Arctic fox notices a still player at 1.4 m hidden, against 7.5 m in the open;
     - three clusters take 14 % of an arrow's speed.
-  - Reference still has: order-3 twig capsules only within 30 m (twigs are still in the 60 m limb ring, at 8 cm thick instead of 4 cm); the in-game dev check (c) with a fox and a thrown spear.
+  - **Wood colliders (§AM 1, 5):**
+    - Orders 1–2 get capsules down to 3 cm thick (before, only limbs of 10 cm and up, so an oak had 8; now 116, within the 60 m graph ring).
+    - Order-3 twigs of 4 cm and up get their own capsules, only within 30 m (dropped past 35 m). An 18 m oak has none that thick; a 40 m one has 61.
+    - Palm fronds get none (`tree_check` 16/0).
+  - Reference still has: the in-game dev check (c) with a fox and a thrown spear.
 - **Jump and gravity (Mike, from play: "jumps way too high and floaty; gravity more consistent and snappier; can't jump as high"):**
   - Rising gravity went from 1.9 to 26 m/s² (falling stays 28), and take-off from 7.6 to 9.7 m/s.
   - A held jump now peaks about 1.8 m up with 0.73 s in the air (it was about 15 m); a sprint jump about 2.3 m; a tap about 0.3 m.

@@ -35,6 +35,10 @@ const HERO_M := 120.0
 ## show their full limbs.
 const GRAPH_M := 60.0
 const GRAPH_OUT_M := 70.0
+## Order-3 twigs thick enough to stand on get their capsules only this
+## near (design §AM 5: the physics budget), dropped again past TWIG_OUT_M.
+const TWIG_M := 30.0
+const TWIG_OUT_M := 35.0
 ## Time per frame (ms) for building branch graphs and limb colliders,
 ## nearest trees first; at least one tree a frame (a 70 m emergent's graph
 ## takes ~0.6 ms, most trees' far less).
@@ -234,7 +238,14 @@ func _update_graphs(player_dir: Vector3, budget_ms: float) -> void:
 	while not _graph_todo.is_empty() and (built == 0 or Time.get_ticks_usec() < until):
 		var item: Array = _graph_todo.pop_back()
 		var c: TerrainChunk = item[0]
-		if is_instance_valid(c) and c.has_tree_colliders() and not c.graphs.has(item[1]):
+		if not is_instance_valid(c) or not c.has_tree_colliders():
+			continue
+		if item.size() > 3:
+			# A tree already holding its graph, come within TWIG_M.
+			if c.graphs.has(item[1]):
+				c.add_twigs(item[1])
+				built += 1
+		elif not c.graphs.has(item[1]):
 			c.add_graph(item[1])
 			built += 1
 
@@ -257,6 +268,10 @@ func _scan_graphs(p: Vector3) -> void:
 			if c.graphs.has(i):
 				if d2 > out2:
 					c.remove_graph(i)
+				elif d2 < TWIG_M * TWIG_M and not c.has_twigs(i):
+					_graph_todo.append([c, i, d2, true])
+				elif d2 > TWIG_OUT_M * TWIG_OUT_M and c.has_twigs(i):
+					c.remove_twigs(i)
 			elif d2 < in2:
 				_graph_todo.append([c, i, d2])
 	_graph_todo.sort_custom(func(a: Array, b: Array) -> bool: return a[2] > b[2])
