@@ -219,7 +219,8 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 				if DeadWood.is_dead(ctx.map, site.dir, sp):
 					leaf = 0.0
 					vines *= 0.3
-			_emit(out, sp_idx, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, height, 0.09, moss, vines, 1.0 - leaf)
+			var lean := _lean(ctx, sp, site.dir) if TreeArch.grows(sp) else Vector2.INF
+			_emit(out, sp_idx, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, height, 0.09, moss, vines, 1.0 - leaf, lean)
 			if tier == T.EMERGENT or tier == T.CANOPY:
 				hosts.append([site.dir, PlanetConst.RADIUS_M + site.h, height, sp_idx, site.depth, leaf])
 				if tier == T.EMERGENT:
@@ -227,13 +228,56 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 
 
 static func _emit(out: Dictionary, sp_idx: int, d: Vector3, radius: float, rng: RandomNumberGenerator, height: float,
-		lean_max := 0.09, moss := 0.0, vines := 0.0, bare := 0.0) -> void:
+		lean_max := 0.09, moss := 0.0, vines := 0.0, bare := 0.0, lean := Vector2.INF) -> void:
 	if not out.has(sp_idx):
 		out[sp_idx] = PackedFloat32Array()
 	var arr: PackedFloat32Array = out[sp_idx]
-	arr.append_array([d.x, d.y, d.z, radius, rng.randf() * TAU,
-		rng.randf_range(-lean_max, lean_max), rng.randf_range(-lean_max, lean_max), height, moss, vines, bare])
+	var yaw := rng.randf() * TAU
+	if lean == Vector2.INF:
+		lean = Vector2(rng.randf_range(-lean_max, lean_max), rng.randf_range(-lean_max, lean_max))
+	arr.append_array([d.x, d.y, d.z, radius, yaw, lean.x, lean.y, height, moss, vines, bare])
 	out[sp_idx] = arr
+
+
+## A tree's lean (design §AK 1): up to its architecture's lean_max_deg,
+## toward downhill (the ground's fall over ~60 m) and downwind (the
+## place's prevailing wind), with a random share: the (fwd x up, fwd)
+## tangent components prepare() tilts by.
+static func _lean(ctx: _Context, sp: PlantSpecies, d: Vector3) -> Vector2:
+	var fwd := d.cross(Vector3.RIGHT if absf(d.x) < 0.9 else Vector3.FORWARD).normalized()
+	var side := fwd.cross(d)
+	var e := CubeSphere.east(d)
+	var n := CubeSphere.north(d)
+	var step := 60.0 / PlanetConst.RADIUS_M
+	var h0 := ctx.map.sample(ctx.map.elevation, d)
+	var he := ctx.map.sample(ctx.map.elevation, (d + e * step).normalized()) - h0
+	var hn := ctx.map.sample(ctx.map.elevation, (d + n * step).normalized()) - h0
+	var down := -(e * he + n * hn) / 60.0
+	var wind: Vector3 = ctx.map.wind_avg[ctx.map.cell_at(d)] if ctx.map.wind_avg.size() > 0 else Vector3.ZERO
+	var toward := down.normalized() * clampf(down.length() * 4.0, 0.0, 1.0) \
+		+ wind.normalized() * clampf(wind.length() / 8.0, 0.0, 1.0) \
+		+ (side * ctx.rng.randf_range(-1.0, 1.0) + fwd * ctx.rng.randf_range(-1.0, 1.0)) * 0.6
+	toward -= d * toward.dot(d)
+	if toward.length() < 1e-4:
+		return Vector2.ZERO
+	var amount := deg_to_rad(float(sp.arch.get("lean_max_deg", 8.0))) * ctx.rng.randf_range(0.15, 1.0)
+	toward = toward.normalized() * amount
+	return Vector2(toward.dot(side), toward.dot(fwd))
+
+
+## In a stand: at least two other trees within 9 m (design §AK 2: forest-
+## grown), else a lone, open-grown tree.
+static func _crowded(d: Vector3, hosts: Array) -> bool:
+	var near := 0
+	var lim := 9.0 / PlanetConst.RADIUS_M
+	for h in hosts:
+		var hd: Vector3 = h[0]
+		var dd := (hd - d).length()
+		if dd > 1e-7 and dd < lim:
+			near += 1
+			if near >= 2:
+				return true
+	return false
 
 
 ## Epiphytes hang from or cling to hosts already placed.
@@ -329,12 +373,17 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts 
 			var fwd := up.cross(Vector3.RIGHT if absf(up.x) < 0.9 else Vector3.FORWARD).normalized()
 			var basis := Basis(fwd.cross(up), up, fwd).orthonormalized()
 			basis = basis.rotated(up, arr[o + 4])
-			basis = basis.rotated(basis.x, arr[o + 5]).rotated(basis.z, arr[o + 6])
+			# The lean: a tilt (radians) toward the tangent vector
+			# (lean_x along fwd x up, lean_z along fwd), so it can point
+			# downhill or downwind (_lean()).
+			var lean := fwd.cross(up) * arr[o + 5] + fwd * arr[o + 6]
+			if lean.length() > 1e-5:
+				basis = Basis(up.cross(lean).normalized(), lean.length()) * basis
 			var rot := basis
 			basis = basis.scaled(Vector3.ONE * arr[o + 7])
 			_put(buf, i * MM_STRIDE, basis, pos, arr[o + 8], arr[o + 9], arr[o + 10])
 			if tall:
-				var pick := TreeLayouts.pick(world_seed, key, d) if branchy else -1
+				var pick := TreeLayouts.pick(world_seed, key, d, _crowded(d, hosts), TreeArch.grows(sp)) if branchy else -1
 				trees.append([pos, arr[o + 7], i, pick, -1, rot, ords[i] if i < ords.size() else -1])
 		var layouts := {}
 		if branchy:

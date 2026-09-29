@@ -26,9 +26,11 @@ const S := PlantSpecies.Shape
 const COUNT := 6
 
 ## What a piece of wood is. TRUNK, ROOT and SOLID always have colliders;
-## LIMB and BRANCH get them only while the tree is in branch-graph range.
-## Everything but SOLID carries handholds.
-enum Kind { TRUNK, ROOT, LIMB, BRANCH, SOLID }
+## LIMB and BRANCH get them only while the tree is in branch-graph range,
+## TWIG (order 3 and finer, TreeArch; a palm's frond rachis) only where it
+## is thick enough to stand on (TWIG_COLLIDER_R_M), in that range too.
+## Everything but SOLID and TWIG carries handholds.
+enum Kind { TRUNK, ROOT, LIMB, BRANCH, SOLID, TWIG }
 
 ## Knee height (m): plants whose wood stays below it get no collider.
 const KNEE_M := 0.5
@@ -40,6 +42,9 @@ const BUSH_SHAPES := [S.SHRUB, S.CUSHION, S.FERN, S.TUSSOCK, S.GRASS, S.REED, S.
 ## Limbs and branches at least this thick (radius, m) get a collider near
 ## the player, so arrows stick in them.
 const LIMB_COLLIDER_R_M := 0.05
+## Twigs (order 3+) this thick (radius, m) get a collider too (design §AM:
+## order-3 wood "where thick enough to stand on", >= 4 cm).
+const TWIG_COLLIDER_R_M := 0.04
 ## Colliders sit just inside the drawn wood (its polygon's inner radius).
 const COLLIDER_FIT := 0.92
 
@@ -58,6 +63,11 @@ class Piece:
 	var kind := 0
 	var limb := 0
 	var parent := -1
+	## Branch order (0 the trunk and codominant stems, 1 limbs, 2
+	## branches, 3+ twigs), deadwood (drawn grey, bare), a palm's frond.
+	var order := 0
+	var dead := false
+	var frond := false
 	## Where it meets its parent (its first point; a root's last).
 	var join := Vector3.ZERO
 	## Arc length (unit) from the first point to each point.
@@ -108,6 +118,17 @@ class Skeleton:
 	var buttress := Vector2.ZERO
 	## A bush: its solid piece is only its woody stem (BUSH_STEM_R_M).
 	var bush := false
+	## Grown from the species' architecture block (TreeArch, design §AK):
+	## the leaves hang only on its twigs (anchors), no clumps.
+	var arch := false
+	## Leaf-cluster anchors, each on a drawn twig (design §AL):
+	## [position, the twig's direction there, the side the cluster hangs
+	## to, piece index, 0-1 how far out in the crown, cluster radius].
+	var anchors: Array = []
+	## Buttress fins at the foot: [horizontal direction, height, reach].
+	var fins: Array = []
+	## Open-grown (a lone tree) or forest-grown (in a stand).
+	var open := true
 
 	func add(p: Piece) -> int:
 		p.finish()
@@ -131,14 +152,22 @@ static func use_seed(world_seed: int) -> bool:
 ## Does this species grow layouts (limbs, branches and leaf clumps)?
 static func branchy(sp: PlantSpecies) -> bool:
 	return (sp.tier == PlantSpecies.Tier.EMERGENT or sp.tier == PlantSpecies.Tier.CANOPY) \
-		and sp.shape in [S.BROADLEAF, S.GNARLED, S.EMERGENT, S.UMBRELLA, S.CYPRESS]
+		and (sp.shape in [S.BROADLEAF, S.GNARLED, S.EMERGENT, S.UMBRELLA, S.CYPRESS] or TreeArch.grows(sp))
 
 
 ## The layout a tree grows, from the world seed, its chunk and its surface
 ## direction: 0 .. 2 * COUNT - 1, the layout being pick % COUNT, mirrored
 ## (x -> -x in the unit frame) when pick >= COUNT.
-static func pick(world_seed: int, chunk_key: Vector3i, dir: Vector3) -> int:
-	return hash([world_seed, chunk_key, dir]) % (COUNT * 2)
+## A tree grown from its architecture (TreeArch) takes an open-grown
+## layout (0 .. COUNT/2 - 1) when it stands alone and a forest-grown one
+## (the rest) when `crowded` (design §AK 2: neighbour density at spawn).
+static func pick(world_seed: int, chunk_key: Vector3i, dir: Vector3, crowded := false, arch := false) -> int:
+	var h := hash([world_seed, chunk_key, dir])
+	if not arch:
+		return h % (COUNT * 2)
+	var half := COUNT / 2
+	var layout := (h % half) + (half if crowded else 0)
+	return layout + (COUNT if (h / half) % 2 == 1 else 0)
 
 
 ## The layout a pick grows (-1: a tree without layouts, pick -1).
@@ -163,7 +192,9 @@ static func skeleton(sp_idx: int, layout: int) -> Skeleton:
 		return cached
 	var sp: PlantSpecies = SpeciesDB.all()[sp_idx]
 	var sk: Skeleton
-	if layout >= 0 and branchy(sp):
+	if layout >= 0 and TreeArch.grows(sp):
+		sk = TreeArch.grow(sp, sp_idx, layout, seed_now, layout >= COUNT / 2)
+	elif layout >= 0 and branchy(sp):
 		sk = _grow(sp, sp_idx, layout, seed_now)
 	else:
 		sk = _fixed(sp)
@@ -528,9 +559,11 @@ static func collider_segments(sk: Skeleton, h: float, mirrored: bool, near: bool
 		return out
 	var mx := Vector3(-1, 1, 1) if mirrored else Vector3.ONE
 	for pc in sk.pieces:
-		var is_near := pc.kind == Kind.LIMB or pc.kind == Kind.BRANCH
+		var is_near := pc.kind == Kind.LIMB or pc.kind == Kind.BRANCH or pc.kind == Kind.TWIG
 		if is_near != near:
 			continue
+		if pc.frond:
+			continue # a palm's fronds are leaves (design §AM)
 		var n := pc.pts.size()
 		if is_near:
 			# Capsules (round ends where limbs meet): limbs in two (they
@@ -539,7 +572,7 @@ static func collider_segments(sk: Skeleton, h: float, mirrored: bool, near: bool
 			for r in pc.rad:
 				mean_r += r
 			mean_r /= n
-			if mean_r * h < LIMB_COLLIDER_R_M:
+			if mean_r * h < (TWIG_COLLIDER_R_M if pc.kind == Kind.TWIG else LIMB_COLLIDER_R_M):
 				continue
 			var cuts := [0, n / 2, n - 1] if pc.kind == Kind.LIMB and n >= 5 else [0, n - 1]
 			for k in cuts.size() - 1:
@@ -616,7 +649,7 @@ static func _lay_handholds(sk: Skeleton, hb: float) -> Array:
 		var pc: Piece = sk.pieces[pi]
 		first.append(-1)
 		last.append(-1)
-		if pc.kind == Kind.SOLID:
+		if pc.kind == Kind.SOLID or pc.kind == Kind.TWIG:
 			continue
 		var s := 0.0
 		match pc.kind:

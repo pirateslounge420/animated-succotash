@@ -104,6 +104,7 @@ varying float mat_id;
 varying float moss;
 varying float cluster_key;
 varying float dead_v;
+varying float wood_dead; // a dead limb of a living tree (TreeArch: UV2.y 1 on bark)
 varying vec3 genes; // this plant's jitter: a warm/cool and value roll
 varying float inst;
 
@@ -115,6 +116,7 @@ void vertex() {
 	obj_pos = (inv * vec4(VERTEX, 1.0)).xyz * scale;
 	obj_normal = normalize((inv * vec4(NORMAL, 0.0)).xyz);
 	mat_id = UV2.x;
+	wood_dead = (UV2.x < 0.5 && UV2.y > 0.5) ? 1.0 : 0.0;
 	moss = INSTANCE_CUSTOM.r;
 	cluster_key = CUSTOM0.w;
 	float leaf = (1.0 - INSTANCE_CUSTOM.a) * leaf_season;
@@ -261,7 +263,7 @@ void fragment() {
 	}
 	base = pal_pull(base, pal_canopy, 0.55 * gw);
 	base = pal_pull(base, pal_grass_night, 0.7 * nk * gw);
-	if (dead_v > 0.5) {
+	if (dead_v > 0.5 || wood_dead > 0.5) {
 		// Dead wood: grey weathered bark; dry straw-colored bamboo.
 		base = mat_id > 3.5 && mat_id < 4.5 ? mix(base, vec3(0.72, 0.62, 0.40), 0.85) : mix(base, vec3(0.46, 0.44, 0.41), 0.75);
 	}
@@ -306,7 +308,7 @@ void fragment() {
 		vec3 c = t.rgb * genes;
 		float cg = pal_greenness(c);
 		c = pal_pull(c, mat_id < 0.5 ? pal_bark_night : pal_grass_night, (mat_id < 0.5 ? 0.6 : 0.7 * cg) * nk);
-		if (dead_v > 0.5) {
+		if (dead_v > 0.5 || wood_dead > 0.5) {
 			c = mix(c, vec3(0.46, 0.44, 0.41), 0.75);
 		}
 		ALBEDO = c;

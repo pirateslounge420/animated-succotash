@@ -368,6 +368,13 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 	b.far = lod == LOD_FAR
 	b.hero = lod == LOD_HERO
 	b.freq = CROWN_FREQ[lod]
+	if TreeArch.grows(sp):
+		# A tree grown from its architecture: far off, its first layout's
+		# order 1-2 wood and fewer, bigger cards (never a cone or a ball).
+		b.wood = sp.accent
+		b.rng.seed = hash([idx, 0, 7919])
+		b.arch_tree(TreeLayouts.skeleton(idx, 0), sp.color)
+		return b.commit_arrays()
 	var far := b.far
 	var leaf := sp.color
 	var wood := sp.accent
@@ -707,6 +714,10 @@ class _Builder:
 	## Near the player every ring of the skeleton is drawn; farther, every
 	## other one, so the main limbs keep their silhouette.
 	func skeleton(sk: TreeLayouts.Skeleton, col: Color, vine_col: Color, density: float) -> void:
+		if sk.arch:
+			arch_tree(sk, col)
+			vines(sk.vines, vine_col)
+			return
 		if sk.buttress != Vector2.ZERO:
 			cone(Vector3.ZERO, sk.buttress.x, sk.buttress.y, 8, wood, 0.0, 0.0)
 		for pc in sk.pieces:
@@ -728,6 +739,130 @@ class _Builder:
 			wood_tube(pts, rad, ring, pc.kind != TreeLayouts.Kind.BRANCH)
 		leaf_clusters(sk, col, density)
 		vines(sk.vines, vine_col)
+
+	## A tree grown from its architecture (TreeArch, design §AK/§AJ/§AL):
+	## its wood order by order, every piece a bark tube (the trunk and
+	## stems round, the limbs a little less, branches coarse, twigs a thin
+	## three-sided prism never thinner than TWIG_MIN_R so they read as dark
+	## 1-2 px lines through the gaps), dead wood marked for the shader's
+	## grey (UV2.y 1), buttress fins at the foot; and its leaf clusters, a
+	## few crossed cutout cards each, hung only at its anchors (every one on
+	## a drawn twig), never a hull. Far off (`far`): the order 1-2 lines and
+	## fewer, bigger cards (every third anchor, 1.9x) with the same holes.
+	## The trunk, limbs and branches hold still (handholds); a twig sways
+	## from nothing at its foot to TWIG_SWAY at its tip and its clusters
+	## sway with it, so the leaves stay on the wood in the wind. A palm's
+	## leaflets lie flat along its fronds.
+	const TWIG_MIN_R := 0.0018
+	const TWIG_SWAY := 0.45
+
+	func arch_tree(sk: TreeLayouts.Skeleton, col: Color) -> void:
+		for f in sk.fins:
+			fin(f[0], f[1], f[2])
+		for pc in sk.pieces:
+			var order := pc.order
+			if far and order >= 3 and not pc.frond:
+				continue
+			var n := pc.pts.size()
+			var pts := PackedVector3Array()
+			var rad := PackedFloat32Array()
+			var sw := PackedFloat32Array()
+			for i in n:
+				if hero or i % 2 == 0 or i == n - 1:
+					if far and order >= 1 and i != 0 and i != n - 1 and i != n / 2:
+						continue
+					pts.append(pc.pts[i])
+					var r := pc.rad[i]
+					if order >= 2 or pc.frond:
+						r = maxf(r, TWIG_MIN_R * (1.4 if far else 1.0))
+					rad.append(r)
+					var t := float(i) / maxf(n - 1, 1)
+					sw.append(t * TWIG_SWAY if (order >= 3 or pc.frond) else 0.0)
+			var ring := 3
+			match order:
+				0:
+					ring = 12 if hero else (8 if not far else 6)
+				1:
+					ring = 8 if hero else (6 if not far else 4)
+				2:
+					ring = 5 if hero else (4 if not far else 3)
+			if pc.frond:
+				ring = 3
+			strand_key = 1.0 if pc.dead else 0.0
+			wood_tube(pts, rad, ring, order > 0, sw)
+			strand_key = 0.0
+		# The leaf clusters at the anchors.
+		var list: Array = sk.anchors
+		if far:
+			list = []
+			for i in range(0, sk.anchors.size(), 3):
+				var a2: Array = (sk.anchors[i] as Array).duplicate()
+				a2[5] = float(a2[5]) * 1.9
+				list.append(a2)
+		var order_keys: Array[int] = []
+		for i in list.size():
+			order_keys.append(i)
+		for i in range(order_keys.size() - 1, 0, -1):
+			var jj := rng.randi_range(0, i)
+			var t := order_keys[i]
+			order_keys[i] = order_keys[jj]
+			order_keys[jj] = t
+		for rank in order_keys.size():
+			var an: Array = list[order_keys[rank]]
+			var key := (rank + 0.5) / list.size()
+			var p: Vector3 = an[0]
+			var tan: Vector3 = an[1]
+			var hang: Vector3 = an[2]
+			var r: float = an[5]
+			var pc: TreeLayouts.Piece = sk.pieces[an[3]]
+			var tone := col
+			match rank % 3:
+				1:
+					tone = col.lightened(0.08)
+				2:
+					tone = col.darkened(0.08)
+			if pc.frond:
+				frond_card(p + hang * r * 0.55, tan, hang, r, tone, TWIG_SWAY, key)
+			else:
+				# The card's middle a little out from the twig, so the twig
+				# runs into it: its anchor on the wood.
+				cluster(p + hang * r * 0.45, r, 0.8, tone, TWIG_SWAY, key)
+			hang_from.append([p, Vector3(r, r, r)])
+
+	## A buttress fin: a flat plank of bark from the trunk out along `dir`,
+	## `height` up the trunk, `reach` out at the ground.
+	func fin(dir: Vector3, height: float, reach: float) -> void:
+		mat = 0.0
+		part += 1
+		var side := dir.cross(Vector3.UP).normalized() * reach * 0.08
+		var a := Vector3(0, height, 0)
+		var b := dir * reach
+		var o := Vector3.ZERO
+		for sgn in [1.0, -1.0]:
+			var off: Vector3 = side * sgn
+			tri(o + off, a + off, b + off, wood, 0.0, 0.0, 0.0)
+		tri(b + side, a + side, a - side, wood, 0.0, 0.0, 0.0)
+		tri(b + side, a - side, b - side, wood, 0.0, 0.0, 0.0)
+		mat = 1.0
+
+	## A palm's leaflet card: flat along the frond, hanging to one side.
+	func frond_card(center: Vector3, along: Vector3, side: Vector3, r: float, col: Color, sway: float, key: float) -> void:
+		var a1 := along.normalized() * r
+		var a2 := side.normalized() * r * 0.7
+		var nrm := a1.cross(a2).normalized()
+		if nrm.y < 0.0:
+			nrm = -nrm
+		var p := [center - a1 - a2, center + a1 - a2, center + a1 + a2, center - a1 + a2]
+		var q := [Vector2(0, 1), Vector2(0, 0), Vector2(1, 0), Vector2(1, 1)]
+		for idx in [[0, 1, 2], [0, 2, 3]]:
+			for jj in idx:
+				v.append(p[jj])
+				n.append(nrm)
+				c.append(Color(col, sway))
+				uv.append(q[jj])
+				uv2.append(Vector2(5.0, 0.0))
+				parts.append(-1)
+				cu.append_array([center.x, center.y, center.z, key])
 
 	## Leaf clusters on the outer third of every limb and branch: each a few
 	## crossed alpha-cutout cards (the leaf-card texture's ragged cluster of
@@ -864,7 +999,7 @@ class _Builder:
 	## `ring` sides, no sway. Each ring's orientation is carried along from
 	## the one before (no twist where the wood curves); `cap` closes the far
 	## end with a low rounded cone.
-	func wood_tube(pts: PackedVector3Array, rad: PackedFloat32Array, ring: int, cap: bool) -> void:
+	func wood_tube(pts: PackedVector3Array, rad: PackedFloat32Array, ring: int, cap: bool, sw := PackedFloat32Array()) -> void:
 		mat = 0.0
 		part += 1
 		var n := pts.size()
@@ -883,16 +1018,20 @@ class _Builder:
 				var a := TAU * k / ring
 				r.append(pts[i] + (side * cos(a) + side2 * sin(a)) * rad[i])
 			rings.append(r)
+		var swv := func(i: int) -> float: return sw[i] if i < sw.size() else 0.0
 		for i in n - 1:
+			var s0: float = swv.call(i)
+			var s1: float = swv.call(i + 1)
 			for k in ring:
 				var k1 := (k + 1) % ring
-				tri(rings[i][k], rings[i + 1][k1], rings[i][k1], wood, 0.0, 0.0, 0.0)
-				tri(rings[i][k], rings[i + 1][k], rings[i + 1][k1], wood, 0.0, 0.0, 0.0)
+				tri(rings[i][k], rings[i + 1][k1], rings[i][k1], wood, s0, s1, s0)
+				tri(rings[i][k], rings[i + 1][k], rings[i + 1][k1], wood, s0, s1, s1)
 		if cap:
 			var tip := pts[n - 1] + axis * rad[n - 1] * 0.6
+			var st: float = swv.call(n - 1)
 			for k in ring:
 				var k1 := (k + 1) % ring
-				tri(rings[n - 1][k], tip, rings[n - 1][k1], wood, 0.0, 0.0, 0.0)
+				tri(rings[n - 1][k], tip, rings[n - 1][k1], wood, st, st, st)
 		mat = 1.0
 
 	## A crown of `lobes` overlapping, noise-displaced icospheres: one big

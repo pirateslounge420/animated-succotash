@@ -14,7 +14,10 @@ extends SceneTree
 ## HOURS (default "14"), YEAR_DAY (day of the year, 0 = the northern spring
 ## equinox; default tomorrow), DAYS (comma-separated days of the year: one
 ## frame each at the first hour, for running the clock through a season),
-## HEIGHT_M (each tree's height, default 13), FRAMES (frames held before
+## HEIGHT_M (each tree's height, default 13; "auto": 0.6 of its species'
+## typical height), SPACING (m between trees, default 11), LAYOUT (its
+## layout: 0-2 open-grown, 3-5 forest-grown; default its far/first),
+## BARE=1 (no leaves: the skeleton alone), FRAMES (frames held before
 ## each shot, default 20: more lets falling leaves get down), DIST (the camera's distance
 ## from the row, default 22 m), WIND (m/s, default 1.1; above
 ## litter.json fall.gust_mps in the fall, a gust strips the crowns), NO_TILES=1 (the class
@@ -55,7 +58,10 @@ func _run() -> void:
 	player.visible = false
 
 	var names := (OS.get_environment("SPECIES") if OS.get_environment("SPECIES") != "" else "Oak,Maple,Scots pine,Coconut palm").split(",")
-	var height := float(OS.get_environment("HEIGHT_M")) if OS.get_environment("HEIGHT_M") != "" else 13.0
+	var height_env := OS.get_environment("HEIGHT_M")
+	var height := float(height_env) if height_env != "" and height_env != "auto" else 13.0
+	var spacing := float(OS.get_environment("SPACING")) if OS.get_environment("SPACING") != "" else 11.0
+	var layout := int(OS.get_environment("LAYOUT")) if OS.get_environment("LAYOUT") != "" else -1
 	var pd: Vector3 = main.camp.site
 	var n := CubeSphere.north(pd)
 	# The row and the camera on dry land: the first of 16 headings from
@@ -83,16 +89,19 @@ func _run() -> void:
 		if sp == null:
 			print("[species] no species named '%s'" % names[i])
 			continue
-		var off := (float(i) - (names.size() - 1) * 0.5) * 11.0
+		var off := (float(i) - (names.size() - 1) * 0.5) * spacing
+		var h := height
+		if height_env == "auto":
+			h = clampf((sp.height_m.x + sp.height_m.y) * 0.5 * 0.6, 8.0, 22.0)
 		var d := (row_d + e * off / PlanetConst.RADIUS_M).normalized()
 		var at: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) - 0.1)
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
 		mm.use_custom_data = true
 		mm.use_colors = true
-		mm.mesh = PlantMeshes.mesh_for(sp, PlantMeshes.LOD_HERO)
+		mm.mesh = PlantMeshes.mesh_for(sp, PlantMeshes.LOD_HERO, layout)
 		mm.instance_count = 1
-		var b := Basis(e, d, e.cross(d)).orthonormalized().scaled(Vector3.ONE * height)
+		var b := Basis(e, d, e.cross(d)).orthonormalized().scaled(Vector3.ONE * h)
 		mm.set_instance_transform(0, Transform3D(b, Vector3.ZERO))
 		mm.set_instance_color(0, Color.WHITE)
 		mm.set_instance_custom_data(0, Color(0, 0, 0, 0))
@@ -103,7 +112,11 @@ func _run() -> void:
 		get_root().add_child(mmi)
 		mmi.global_position = at
 		trees.append(mmi)
-		main.leaf_season.extra.append([at, height, SpeciesDB.index_of(sp)])
+		main.leaf_season.extra.append([at, h, SpeciesDB.index_of(sp)])
+		if OS.get_environment("BARE") == "1":
+			var bare_m := (mmi.material_override as ShaderMaterial).duplicate() as ShaderMaterial
+			bare_m.set_shader_parameter("leaf_season", 0.0)
+			mmi.material_override = bare_m
 		print("[species] %s: %s, tiles %s" % [sp.name, sp.genus, sp.tiles.keys()])
 	main.leaf_season._scan_t = 0.0 # take the row now
 	var eye: Vector3 = world.to_scene(cam_d, PlanetConst.RADIUS_M + main.chunks.ground_height(cam_d) + 1.7)

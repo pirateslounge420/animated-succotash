@@ -4,6 +4,31 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — §AK trees grown from their architecture block
+- **Skeleton** (`TreeArch`, new): 149 tree-tier woody species with an `architecture` block now grow their trunk and branches from it. Cacti, bamboo, lianas, mangroves, knee-roots and shrubs keep their own builders.
+  - Model programs:
+    - whorls for massart / attims (a spruce has 16);
+    - a golden-angle spiral for rauh;
+    - sympodial zig-zag with droop for koriba / troll;
+    - forks for leeuwenberg / schoute (a baobab is a candelabra of 4–6 stems);
+    - a single column with fronds for corner / tomlinson / holttum palms and tree ferns.
+  - Leonardo thickness: each fork splits the parent's cross-section (r_parent² = Σ r_child²). Taper follows `taper_exponent`, the foot flares, and `sinuosity` bends the wood.
+  - Also from the block: `fork_height_frac`, `branch_angle_deg`, `spacing_m`, `orders` and buttress fins.
+  - Dead limbs are grey, bare, and lowest on the tree. Self-pruning species leave stubs below the crown.
+- **Open- vs forest-grown:** each species has 6 layouts, 3 open-grown and 3 forest-grown. The placer picks forest-grown when 2 or more hosts stand within 9 m.
+  - Forest-grown trees are narrower, taller, crowned higher (`live_crown_ratio`), and carry leaves only on their top and outer face.
+  - An open-grown oak's crown starts at 0.26 of its height; in a stand it starts at 0.64.
+- **Lean:** downhill (the slope over 60 m) plus the prevailing wind plus a little random, up to `lean_max_deg`.
+- **Leaves on twigs:** every cluster anchor lies on an order-3+ twig or a palm frond, on the outer 60 % of it; the inside of the crown is bare branchwork. Clusters are sized so the crown seen from outside is about 1 − `canopy.gap` covered.
+- **LOD:**
+  - Twigs are 1–2 px dark lines.
+  - The far mesh keeps the order-1/2 lines under fewer, bigger clusters, never a cone.
+- **Handholds** come from the skeleton (an 18 m oak has 376) and never lie on twigs. Colliders follow the wood.
+- **Check:** `tools/tree_check.gd` (new) passes 13/0: anchors on wood (60,061 checked), only on twigs, Leonardo, bare dead limbs, open crown lower than forest crown, pine stubs, spruce whorls, palm fronds, handholds.
+- **Dev check (a):** winter, bare, side by side: oak, beech, spruce, Scots pine, coconut palm, baobab (`species_row BARE=1`). Each is recognisable. The bare palm is a column, because its fronds are its leaves.
+- The global shader-parameter buffer was raised to 262,144 (per-instance lean and season data ran out).
+- Reference still has: canopy cards that are not yet cut out to the gap share per card; ground shade that is still a disc; leaf collision and cover (§AM); the full §AI.1 staged gradient.
+
 ## 2026-09-29 — §AH per-species tiles; §AI leaf fall, piles and rot (4 steps)
 - **§AH tiles:**
   - `SpeciesDB` reads `atlas_species.json`: all 1,031 species get their leaf / leaf_autumn / leaves / litter / bark / petiole files. 121 mosses, air plants and conks have no bark tile and keep the class bark.

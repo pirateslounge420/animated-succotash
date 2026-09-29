@@ -83,6 +83,15 @@ var bark_tile_m := 0.4
 var leaf_m := 0.1
 var leaf_type := ""
 var leaf_texture := ""
+## Its wood's program (the entry's `architecture` block, PLANT_SCHEMA §8,
+## TREE_ARCHITECTURE.md §5: model, habit, orders, branch angles, taper,
+## sinuosity, fork, buttress, lean, live crown ratio, self-pruning, dead
+## limbs, root flare, spacing) and how its crown is dressed (`canopy`:
+## form, gap, layering, droop); empty when it has none. The leaf block's
+## arrangement (alternate, opposite, whorled, spiral, distichous...).
+var arch := {}
+var canopy := {}
+var leaf_arrangement := ""
 ## Deciduous (tint.drop): turns tint.autumn and drops its leaves in
 ## autumn (design §AI).
 var deciduous := false

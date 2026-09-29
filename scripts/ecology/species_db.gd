@@ -360,6 +360,13 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 			sp.leaf_m = (float(size[0]) + float(size[1])) * 0.005
 		sp.leaf_type = str(lf.get("type", ""))
 		sp.leaf_texture = str(lf.get("texture", ""))
+		sp.leaf_arrangement = str(lf.get("arrangement", ""))
+	var ar = e.get("architecture", {})
+	if ar is Dictionary:
+		sp.arch = ar
+	var cn = e.get("canopy", {})
+	if cn is Dictionary:
+		sp.canopy = cn
 	var tint = e.get("tint", {})
 	if tint is Dictionary:
 		sp.deciduous = bool(tint.get("drop", false))
