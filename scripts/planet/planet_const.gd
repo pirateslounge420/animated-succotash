@@ -8,24 +8,28 @@ class_name PlanetConst
 const FULL_CIRCUMFERENCE_M := 4000000.0
 
 ## Geography (continents, mountain belts, volcanoes, rock regions, the
-## weather grid, the blueprint's distances and slopes) is always laid out
-## on a planet of this size. The full planet is that size; the dev
-## postage stamp (data/dev.json, World) is a scale model of it: the same
-## geography shrunk sideways by GEO_SCALE, heights unchanged, with
-## everything at walking scale (ground detail, plants, creatures, the
-## player, ruins) at its real size. Geographic code measures with
-## GEO_RADIUS_M (CubeSphere.geo_distance_m); scene and walking code with
-## RADIUS_M. On the full planet the two are equal.
-const GEO_CIRCUMFERENCE_M := FULL_CIRCUMFERENCE_M
-const GEO_RADIUS_M := GEO_CIRCUMFERENCE_M / TAU # ~636,620 m
+## weather grid, the blueprint's distances and slopes) is laid out on a
+## planet of this size, the one its noise scales, climate and passes were
+## tuned on. The planet actually built is a scale model of it sideways
+## (GEO_SCALE, heights unchanged): 10x on the full 4,000 km planet, so its
+## continents and biome regions are ten times wider; 0.1x on the dev
+## postage stamp (data/dev.json, World). Everything at walking scale
+## (ground detail, plants, creatures, the player, ruins) is at its real
+## size either way. Geographic code measures with GEO_RADIUS_M
+## (CubeSphere.geo_distance_m); scene and walking code with RADIUS_M.
+## (With the layout at the full 4,000 km, the same noise drew ten times as
+## many continents a tenth the size: an archipelago of coast, desert and
+## mountain, with no forest band on seed 42.)
+const GEO_CIRCUMFERENCE_M := 400000.0
+const GEO_RADIUS_M := GEO_CIRCUMFERENCE_M / TAU # ~63,662 m
 
 ## The planet actually built: FULL_CIRCUMFERENCE_M unless the dev postage
 ## stamp is on (set_circumference, before generation). These are static
 ## vars, not consts, for that reason; nothing else may write them.
 static var CIRCUMFERENCE_M := FULL_CIRCUMFERENCE_M
 static var RADIUS_M := CIRCUMFERENCE_M / TAU
-## Real meters per geographic meter (1 on the full planet).
-static var GEO_SCALE := 1.0
+## Real meters per geographic meter (10 on the full planet).
+static var GEO_SCALE := CIRCUMFERENCE_M / GEO_CIRCUMFERENCE_M
 
 
 ## Size the planet (meters around). Call before generating; everything
