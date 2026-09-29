@@ -81,6 +81,14 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - **Tests:**
     - `climb_check` passes 0 fails in the world. Its look-up helper set the yaw instead of the pitch, so the "leap toward the look" test leapt sideways.
     - `play_fixes`: the trunk wall-jump test starts 2.2 m up (with the snappier fall it reached the trunk at the ground), and the fast-fall test holds jump (a tap is only a 0.3 m hop).
+    - `play_fixes` is at 1 fail, the air shot at the deer, which is on its known-intermittent list. Now the shot is taken on the ground at full draw, with the crosshair 0.3 m from the deer, and it still missed on the last run. Not chased further.
+    - `tech_check` 0 fails, `tree_check` 0 fails. tech_check crashed once on an engine thread error after the wake test; it didn't repeat.
+  - **Renders (dev checks):**
+    - (a) The winter row with anchor dots shows every anchor on a twig.
+    - (b) Birch look-up and side views; a raccoon perches 9.2 m up.
+    - (d) Autumn, days 150 / 158 / 166 / 175: the row goes red and orange, dulls, and by 175 has 58 % of its leaves, each tree on its own day. A paper birch alone on day 175 is yellow and nearly bare.
+    - The species row re-rendered: the coconut palm has its arching frond crown back, and the oak and beech stand on big main limbs.
+    - The HUD shot: the opening controls hint no longer covers the Elder's first line or the bow line.
   - **Waking after a death:** the ruin whose fire you wake at, and its camp, are built before you wake. They came in a ruin a frame, and you could wake with no fire yet (tech_check found it 7.5 km from where you fell).
 - **§AI.1 revised: each tree turns on its own clock** (step 5 of the tree build):
   - The foliage shader now runs the `autumn_colour` clock per tree and per cluster. LeafSeason publishes where the year is (days since the spring and autumn transitions) and the stage table as globals.

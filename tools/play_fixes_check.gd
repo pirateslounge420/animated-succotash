@@ -599,6 +599,12 @@ func _initialize() -> void:
 				landed_drawing = true
 			if not player.is_on_floor() and player.bow.drawing:
 				drew_air = true
+		# A full draw before the shot (the flight is short now; landed, you
+		# hold it until it's full, and aim for a full-power arrow).
+		for k in 300:
+			if player.bow.power() >= 0.999:
+				break
+			await frames(1)
 		# The deer stands 12 m off where the line of sight from your eyes is
 		# clear (as you'd pick a shot): moved there now.
 		var eye := player.camera().global_position
@@ -621,9 +627,7 @@ func _initialize() -> void:
 		# Aim at the body, held over for the drop (as the arc shows).
 		for k in 20:
 			var body_at: Vector3 = deer.global_position + world.dir_of(deer.global_position) * 1.0
-			# (At the draw you have: the flight is short now, the draw isn't
-			# full, and aimed for a full one the arrow fell short.)
-			var t_fly := body_at.distance_to(player.camera().global_position) / (Bow.MAX_SPEED * maxf(player.bow.power(), 0.2))
+			var t_fly := body_at.distance_to(player.camera().global_position) / Bow.MAX_SPEED
 			var aim_at: Vector3 = body_at + world.dir_of(body_at) * 0.5 * Arrow.GRAVITY * t_fly * t_fly
 			var to := (aim_at - player.camera().global_position).normalized()
 			var flat := (to - player.up * to.dot(player.up)).normalized()
