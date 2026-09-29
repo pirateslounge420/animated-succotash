@@ -291,6 +291,10 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 	# (from play: at a fork W used to stop dead).
 	if move.is_empty() and on_trunk and input.y > 0.3:
 		move = _upward()
+	# Down the same way: from a limb's foot back onto the trunk, or down
+	# whatever goes on down from here.
+	if move.is_empty() and on_trunk and input.y < -0.3:
+		move = _upward(-1.0)
 	# Diagonal on steep wood (W and D together, and the other three): the
 	# reach up or down also swings round the wood toward that side, so you
 	# spiral up and round in one move (from play).
@@ -373,7 +377,7 @@ func _toward(dir: Vector3, on_trunk: bool) -> Array:
 			if on_trunk and g.limb[j] == 0 and dir.dot(_up_l) > -0.3:
 				continue
 			# Onto a limb from a trunk: one on your side, the way it leads.
-			if out != Vector3.ZERO:
+			if out != Vector3.ZERO and g.limb[j] != 0:
 				var way := _horizontal(g.local[j] - g.local[base]) + (_horizontal(g.tangent[j]) if is_link else Vector3.ZERO)
 				if way.length() > 0.02 and way.normalized().dot(out) < -0.1:
 					continue
@@ -393,15 +397,15 @@ func _toward(dir: Vector3, on_trunk: bool) -> Array:
 	return best
 
 
-## The steepest way on up from the holds you have: a handhold within reach,
-## thick enough to grip, that climbs (at least UP_ON of the way up); the
-## rear hand reaches for it. [] if there's none.
+## The steepest way on up (`sgn` 1) or down (-1) from the holds you have:
+## a handhold within reach, thick enough to grip, at least UP_ON of the way
+## up (down); the other hand reaches for it. [] if there's none.
 const UP_ON := 0.35
 
 
-func _upward() -> Array:
+func _upward(sgn := 1.0) -> Array:
 	var p: Array[Vector3] = [_hand_point(0), _hand_point(1)]
-	var top := 0 if p[0].dot(_up_l) >= p[1].dot(_up_l) else 1
+	var top := 0 if p[0].dot(_up_l) * sgn >= p[1].dot(_up_l) * sgn else 1
 	var base := hold[top]
 	var best := []
 	var best_s := UP_ON
@@ -411,7 +415,7 @@ func _upward() -> Array:
 		var d := g.local[j] - g.local[base]
 		if d.length() < 0.05:
 			continue
-		var s := d.normalized().dot(_up_l)
+		var s := d.normalized().dot(_up_l) * sgn
 		if s > best_s:
 			best_s = s
 			best = [1 - top, j, _hold_angle(j, p[top])]
