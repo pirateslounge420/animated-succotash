@@ -1,7 +1,7 @@
 extends SceneTree
 ## Species side by side (design §AH/§AI dev check): an oak, a maple, a
 ## Scots pine and a coconut palm (SPECIES: comma-separated names to use
-## others) stood in a row south of the first camp (seed 42, dev mode), the
+## others) stood in a row on dry land 38 m from the first camp (seed 42, dev mode), the
 ## camera 1.7 m up south of them looking north, the weather held clear. The rest of
 ## the vegetation is hidden so only these stand there (KEEP_VEG=1 keeps
 ## it). Each tree is drawn exactly as in play: its hero mesh in a
@@ -20,6 +20,10 @@ extends SceneTree
 ## litter.json fall.gust_mps in the fall, a gust strips the crowns), NO_TILES=1 (the class
 ## textures, as before §AH, to compare), OUT_DIR (default /tmp/shots),
 ## TAG (default "species"): writes <TAG>_<hh>h.png or <TAG>_d<day>.png.
+## RUN="from,to,step": run the clock through the year instead (see
+## _run_clock); LOOK_H: where on the trees the camera aims (share of
+## their height, default 0.45; 0 looks at their feet); TOP=1 looks down
+## on the row from 30 m up.
 
 var out_dir := "/tmp/shots"
 
@@ -54,13 +58,21 @@ func _run() -> void:
 	var height := float(OS.get_environment("HEIGHT_M")) if OS.get_environment("HEIGHT_M") != "" else 13.0
 	var pd: Vector3 = main.camp.site
 	var n := CubeSphere.north(pd)
+	# The row and the camera on dry land: the first of 16 headings from
+	# the camp where every tree, the ground round them and the camera
+	# stand above water.
+	var dist0 := float(OS.get_environment("DIST")) if OS.get_environment("DIST") != "" else 22.0
+	for k in 16:
+		var hn := n.rotated(pd, TAU * k / 16.0)
+		if _dry(main, pd, hn, names.size(), dist0):
+			n = hn
+			break
 	var e := n.cross(pd).normalized()
 	# The row 38 m south of the camp, 11 m apart across it (west to east
 	# in the order given); the camera 26 m farther south looking back north,
 	# so the midday sun (in the south, here) lights the side it sees.
 	var row_d := (pd - n * 38.0 / PlanetConst.RADIUS_M).normalized()
-	var dist := float(OS.get_environment("DIST")) if OS.get_environment("DIST") != "" else 22.0
-	var cam_d := (pd - n * (38.0 + dist) / PlanetConst.RADIUS_M).normalized()
+	var cam_d := (pd - n * (38.0 + dist0) / PlanetConst.RADIUS_M).normalized()
 	await _frames(10)
 	if OS.get_environment("KEEP_VEG") != "1":
 		_hide_vegetation(get_root())
@@ -95,13 +107,19 @@ func _run() -> void:
 		print("[species] %s: %s, tiles %s" % [sp.name, sp.genus, sp.tiles.keys()])
 	main.leaf_season._scan_t = 0.0 # take the row now
 	var eye: Vector3 = world.to_scene(cam_d, PlanetConst.RADIUS_M + main.chunks.ground_height(cam_d) + 1.7)
-	var mid: Vector3 = world.to_scene(row_d, PlanetConst.RADIUS_M + main.chunks.ground_height(row_d) + height * 0.45)
+	var look_h := float(OS.get_environment("LOOK_H")) if OS.get_environment("LOOK_H") != "" else 0.45
+	var mid: Vector3 = world.to_scene(row_d, PlanetConst.RADIUS_M + main.chunks.ground_height(row_d) + height * look_h)
 	var cam := Camera3D.new()
 	cam.fov = 70.0
 	cam.near = 0.1
 	cam.far = 30000.0
 	get_root().add_child(cam)
 	cam.global_transform = Transform3D(Basis.looking_at((mid - eye).normalized(), cam_d), eye)
+	# TOP=1: from 30 m above the row, looking down on it (the piles).
+	if OS.get_environment("TOP") == "1":
+		var above: Vector3 = world.to_scene((row_d - n * 6.0 / PlanetConst.RADIUS_M).normalized(), PlanetConst.RADIUS_M + main.chunks.ground_height(row_d) + 30.0)
+		var ground_mid: Vector3 = world.to_scene(row_d, PlanetConst.RADIUS_M + main.chunks.ground_height(row_d))
+		cam.global_transform = Transform3D(Basis.looking_at((ground_mid - above).normalized(), n), above)
 	cam.current = true
 
 	var tag := OS.get_environment("TAG") if OS.get_environment("TAG") != "" else "species"
@@ -111,6 +129,10 @@ func _run() -> void:
 	if OS.get_environment("YEAR_DAY") != "":
 		base += fposmod(float(OS.get_environment("YEAR_DAY")) - Astro.year_day(base), DayCycle.year_days())
 	var shots: Array = []
+	if OS.get_environment("RUN") != "":
+		await _run_clock(main, world, pd, lon, base, float(hours[0]), tag)
+		quit()
+		return
 	if OS.get_environment("DAYS") != "":
 		for dd in OS.get_environment("DAYS").split(","):
 			var day0: float = base + fposmod(float(dd) - Astro.year_day(base), DayCycle.year_days())
@@ -131,9 +153,66 @@ func _run() -> void:
 	quit()
 
 
+## RUN="from,to,step": the clock runs from one day of the year to another
+## `step` days a frame at the first hour (so the season, the fall, the
+## piles and their rotting all run through), saving a frame on each day
+## in DAYS it passes.
+func _run_clock(main: Node, world: Node, pd: Vector3, lon: float, base: float, hour: float, tag: String) -> void:
+	var r := OS.get_environment("RUN").split(",")
+	var from := float(r[0])
+	var to := float(r[1])
+	var step := float(r[2]) if r.size() > 2 else 0.25
+	var want: Array = []
+	for dd in OS.get_environment("DAYS").split(","):
+		if dd != "":
+			want.append(float(dd))
+	var day0: float = base + fposmod(from - Astro.year_day(base), DayCycle.year_days())
+	var yd := from
+	while yd <= to + 1e-4:
+		var days := Astro.days_at_solar_hour(day0 + (yd - from), hour, lon, CubeSphere.latitude(pd))
+		world.days = days
+		await process_frame
+		for w in want.duplicate():
+			if yd + 1e-4 >= w:
+				want.erase(w)
+				for k in 12:
+					world.days = days
+					await process_frame
+				var path := out_dir.path_join("%s_d%03d.png" % [tag, int(w)])
+				get_root().get_texture().get_image().save_png(path)
+				var ls: LeafSeason = main.leaf_season
+				var lf: LitterField = main.litter
+				var deepest := 0.0
+				var stage := 0.0
+				for k2 in lf.cells:
+					var c: LitterField.Cell = lf.cells[k2]
+					if c.mass() > deepest:
+						deepest = c.mass()
+						stage = lf.stage_of(c)
+				print("[species] year day %.0f (%s): autumn %.2f, leaf left %.2f, %d falling; litter %d cells, deepest %.1f cm at stage %.2f -> %s" % [w, Seasons.label(days, CubeSphere.latitude(pd)), ls.autumn, ls.leaf_left, ls.falling_count(), lf.cells.size(), deepest * float(LitterField.PILE.get("cm_per_kg_m2", 6.0)), stage, path])
+		yd += step
+
+
 func _frames(k: int) -> void:
 	for i in k:
 		await process_frame
+
+
+## Is the ground dry for a row of `count` trees 38 m out along -`n` (11 m
+## apart, 8 m round each) and the camera `dist` m beyond it?
+func _dry(main: Node, pd: Vector3, n: Vector3, count: int, dist: float) -> bool:
+	var e := n.cross(pd).normalized()
+	var pts: Array[Vector3] = []
+	for i in count:
+		var off := (float(i) - (count - 1) * 0.5) * 11.0
+		for dx in [-8.0, 0.0, 8.0]:
+			for dz in [-8.0, 0.0, 8.0]:
+				pts.append((pd - n * (38.0 + dz) / PlanetConst.RADIUS_M + e * (off + dx) / PlanetConst.RADIUS_M).normalized())
+	pts.append((pd - n * (38.0 + dist) / PlanetConst.RADIUS_M).normalized())
+	for q in pts:
+		if main.chunks.water_level_at(q) > main.chunks.ground_height(q) - 0.2:
+			return false
+	return true
 
 
 ## Hides every placed plant (VegetationPlacer's nodes carry "species").

@@ -26,6 +26,8 @@ var chunks: ChunkManager
 var sky: SkySystem
 ## The season on the trees: autumn colour, leaf fall, bare winter, spring.
 var leaf_season: LeafSeason
+## Fallen leaves on the ground: piles, rustle, rot.
+var litter: LitterField
 var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
@@ -124,6 +126,11 @@ func _on_planet_ready() -> void:
 	leaf_season.name = "LeafSeason"
 	leaf_season.main = self
 	root.add_child(leaf_season)
+	litter = LitterField.new()
+	litter.name = "LitterField"
+	litter.main = self
+	litter.leaf_season = leaf_season
+	root.add_child(litter)
 	shell.build(world)
 	clouds = CloudLayers.new()
 	clouds.name = "Clouds"
@@ -270,6 +277,7 @@ func _process(delta: float) -> void:
 	var sky_days := Astro.apparent_days(world.days, CubeSphere.longitude(d), CubeSphere.latitude(d))
 	sky.update_sky(d, CubeSphere.east(d), CubeSphere.north(d), sky_days, weather, fog, delta)
 	leaf_season.update_season(delta, d, world.days, WeatherFX.plant_wind)
+	litter.update_litter(delta, d, world.days, weather)
 	var cam := player.camera()
 	var clear := 1.0 - float(weather.get("cloud", 0.0))
 	sky_events.update_events(delta, d, CubeSphere.north(d), 1.0 - smoothstep(0.0, 0.25, sky.daylight), clear)

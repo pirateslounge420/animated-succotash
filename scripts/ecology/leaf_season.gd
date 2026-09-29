@@ -55,6 +55,7 @@ var extra: Array = []
 var only_extra := false
 
 var _gust_mult := 1.0
+var _gust_total := 0.0 # gust drops not yet laid on the ground (LitterField)
 var _gusting := false
 var _scan_t := 0.0
 var _apply_t := 0.0
@@ -124,6 +125,7 @@ func update_season(delta: float, d: Vector3, days: float, wind: Vector3) -> void
 		if c.leaf * _gust_mult > 0.01:
 			var share := float(FALL.get("gust_share", 0.25))
 			gust_drop = c.leaf * _gust_mult * share
+			_gust_total += gust_drop
 			_gust_mult *= 1.0 - share
 	elif speed < gust_mps * 0.8:
 		_gusting = false
@@ -296,6 +298,50 @@ func _fly(delta: float) -> void:
 			mm.set_instance_transform(k, Transform3D(Basis().scaled(Vector3.ONE * f.size), p))
 			mm.set_instance_custom_data(k, Color(f.phase[k], 0.0, 0.0, 0.0))
 		mm.visible_instance_count = n
+
+
+## What gusts have left of the deciduous crowns (a share, 0-1).
+func gust_mult() -> float:
+	return _gust_mult
+
+
+## The gust drops since the last call (a share of a full crown), taken by
+## LitterField to lay on the ground.
+func take_gust() -> float:
+	var g := _gust_total
+	_gust_total = 0.0
+	return g
+
+
+## The trees watched now: [local root, ground direction, height, species
+## index].
+func tree_list() -> Array:
+	return _trees
+
+
+## Running through a pile (LitterField): `n` of species `sp_idx`'s leaves
+## flung up around `at` (scene position) and fluttering down again.
+func kick(at: Vector3, up: Vector3, sp_idx: int, n: int) -> void:
+	var sp: PlantSpecies = SpeciesDB.all()[sp_idx]
+	if not sp.tiles.has("leaf"):
+		return
+	var f := _fall_of(sp_idx, sp)
+	var base := to_local(at)
+	var e := up.cross(Vector3.RIGHT if absf(up.x) < 0.9 else Vector3.FORWARD).normalized()
+	var nn := up.cross(e)
+	for i in n:
+		if f.start.size() >= POOL:
+			return
+		var a := _rng.randf() * TAU
+		var side := e * cos(a) + nn * sin(a)
+		var from := base + up * _rng.randf_range(0.4, 1.2) + side * _rng.randf_range(0.1, 0.6)
+		var to := base + side * _rng.randf_range(0.8, 2.2) + up * 0.03
+		f.start.append(from)
+		f.land.append(to)
+		f.side.append(side.cross(up))
+		f.age.append(0.0)
+		f.dur.append(maxf((from - to).dot(up), 0.3) / float(FALL.get("leaf_fall_speed_mps", 0.6)))
+		f.phase.append(_rng.randf() * TAU)
 
 
 ## How many leaves are in the air (tools).
