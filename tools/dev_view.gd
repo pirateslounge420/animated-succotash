@@ -28,6 +28,8 @@ extends SceneTree
 ## fractional upscale for this run. Prints the sun's
 ## elevation, the light's elevation and the mean brightness of each frame.
 ## SPAWN=n: the n-th camp instead of the first (other ground to judge).
+## VISTA_M=m with VISTA=1: that far up instead of 40 m (over the canopy,
+## to see the far trees; PITCH=-0.2 tips it down).
 ## SUNWARD=1 with VISTA=1: face the sun's bearing instead (the sunset sky).
 ## CLOUD=x: the held weather's cloud cover (default 0.15).
 
@@ -123,7 +125,8 @@ func _run() -> void:
 	# VISTA=1: from 40 m above the same spot, level, toward the lowest
 	# horizon of 12 headings (the longest view): for the distance haze.
 	if OS.get_environment("VISTA") == "1":
-		var hi: Vector3 = world.to_scene(pd, PlanetConst.RADIUS_M + ground + 40.0)
+		var up_m := float(OS.get_environment("VISTA_M")) if OS.get_environment("VISTA_M") != "" else 40.0
+		var hi: Vector3 = world.to_scene(pd, PlanetConst.RADIUS_M + ground + up_m)
 		var best_h := n
 		var best_e := INF
 		for k in 12:

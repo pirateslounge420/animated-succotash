@@ -860,6 +860,7 @@ func _swap_plants(parent: Node) -> void:
 			continue
 		var mmi := ch as MultiMeshInstance3D
 		var sp: PlantSpecies = all[ch.get_meta("species")]
+		plant_shadow(mmi, sp, lod)
 		if ch.has_meta("layout"):
 			mmi.visible = lod != PlantMeshes.LOD_FAR
 			if mmi.visible:
@@ -868,6 +869,17 @@ func _swap_plants(parent: Node) -> void:
 			mmi.visible = lod == PlantMeshes.LOD_FAR
 		else:
 			mmi.multimesh.mesh = PlantMeshes.mesh_for(sp, lod)
+
+
+## Only plants in the hero chunks (ChunkManager.HERO_M, 120 m) cast
+## shadows: the shadow map reaches look "light" shadow_max_m (50 m), so a
+## tree farther out never lands a shadow in it, but it still costs the
+## shadow pass its triangles (most of that pass's 17M on the full planet).
+## Ground cover and epiphytes never cast (VegetationPlacer).
+static func plant_shadow(mmi: MultiMeshInstance3D, sp: PlantSpecies, lod: int) -> void:
+	if sp.tier == PlantSpecies.Tier.GROUND or sp.tier == PlantSpecies.Tier.EPIPHYTE:
+		return
+	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if lod == PlantMeshes.LOD_HERO else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
 func _exit_tree() -> void:

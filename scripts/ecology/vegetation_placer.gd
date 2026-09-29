@@ -485,6 +485,7 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 		# A branchy species' own MultiMesh only ever shows the far crown.
 		var mm := _multimesh(PlantMeshes.mesh_for(sp, PlantMeshes.LOD_FAR if far_only else lod), entry[0], entry[1])
 		var mmi := _instance(parent, sp_idx, sp, mm, sp.name.replace(" ", "_"))
+		TerrainChunk.plant_shadow(mmi, sp, lod)
 		if far_only:
 			mmi.set_meta("far_only", true)
 			mmi.visible = lod == PlantMeshes.LOD_FAR
@@ -495,6 +496,7 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 			var lmm := _multimesh(lmesh, layouts[l][0], layouts[l][1])
 			var lmi := _instance(parent, sp_idx, sp, lmm, "%s_%d" % [sp.name.replace(" ", "_"), l])
 			lmi.set_meta("layout", l)
+			TerrainChunk.plant_shadow(lmi, sp, lod)
 			lmi.visible = near
 			if own:
 				chunk.layout_mm[Vector2i(sp_idx, l)] = lmm
