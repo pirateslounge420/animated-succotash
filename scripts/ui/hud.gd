@@ -42,12 +42,12 @@ func _ready() -> void:
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 47)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_prompt.add_theme_font_size_override("font_size", 15)
+	_prompt.add_theme_font_size_override("font_size", HudText.px(15))
 	_subtitle = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_subtitle.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 80)
 	_subtitle.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_subtitle.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_subtitle.add_theme_font_size_override("font_size", 15)
+	_subtitle.add_theme_font_size_override("font_size", HudText.px(15))
 	_debug = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	_debug.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT, Control.PRESET_MODE_MINSIZE, 9)
 	_debug.grow_vertical = Control.GROW_DIRECTION_BOTH
@@ -68,7 +68,7 @@ func _ready() -> void:
 func _label(align: HorizontalAlignment) -> Label:
 	var l := Label.new()
 	l.horizontal_alignment = align
-	l.add_theme_font_size_override("font_size", int(Tuning.num("hud", "text", "base_px")) + 1)
+	l.add_theme_font_size_override("font_size", HudText.px(Tuning.num("hud", "text", "base_px")))
 	l.add_theme_color_override("font_color", Color(0.95, 0.97, 1.0))
 	l.add_theme_color_override("font_outline_color", Color(0.05, 0.07, 0.15))
 	l.add_theme_constant_override("outline_size", 3)
@@ -89,7 +89,7 @@ func _build_loading() -> void:
 	var title := Label.new()
 	title.text = "Generating planet"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 17)
+	title.add_theme_font_size_override("font_size", HudText.px(17))
 	box.add_child(title)
 	_loading_label = Label.new()
 	_loading_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -122,7 +122,7 @@ func _process(delta: float) -> void:
 	for l in _lines:
 		if _clock >= l[0] and _clock < l[0] + l[3]:
 			shown = "%s: %s" % [l[1], l[2]]
-	_subtitle.text = shown
+	_subtitle.text = shown if Settings.get_bool("hud.subtitles") else ""
 	_lines = _lines.filter(func(l): return _clock < l[0] + l[3])
 
 
@@ -170,7 +170,7 @@ func _dim_readouts(dim: bool) -> void:
 
 
 func set_prompt(text: String) -> void:
-	_prompt.text = text
+	_prompt.text = text if Settings.get_bool("hud.prompts") else ""
 
 
 func toggle_debug() -> void:

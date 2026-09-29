@@ -62,7 +62,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_death_label = Label.new()
 	_death_label.text = "You died"
-	_death_label.add_theme_font_size_override("font_size", 31)
+	_death_label.add_theme_font_size_override("font_size", HudText.px(40))
 	_death_label.add_theme_color_override("font_color", Color(0.95, 0.4, 0.35))
 	_death_label.add_theme_color_override("font_outline_color", Color(0.1, 0.02, 0.02))
 	_death_label.add_theme_constant_override("outline_size", 5)
@@ -154,14 +154,15 @@ func _draw() -> void:
 		draw_rect(Rect2(Vector2.ZERO, size), Color(0.08, 0.0, 0.0, _death))
 	var fb := Hits.feedback()
 	var ink := Color.from_string(str(fb.colors.outline), Color(0.04, 0.07, 0.31))
-	_draw_meter(size, fb.meter, ink)
+	if Settings.get_bool("hud.health"):
+		_draw_meter(size, fb.meter, ink)
 	# The weapon in hand, above the meter.
-	if weapon != "" and not _dead:
+	if weapon != "" and not _dead and Settings.get_bool("hud.weapon"):
 		var font := get_theme_default_font()
 		var at := Vector2(10, size.y - 76)
-		draw_string_outline(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 9, 3, Color(0.05, 0.07, 0.15))
-		draw_string(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.95, 0.97, 1.0))
-	if not _dead:
+		draw_string_outline(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, HudText.px(9), 3, Color(0.05, 0.07, 0.15))
+		draw_string(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, HudText.px(9), Color(0.95, 0.97, 1.0))
+	if not _dead and Settings.get_bool("hud.damage"):
 		_draw_numbers(fb, ink)
 	# The small dot in the middle of the view (or the X), and the name of
 	# what it rests on.
@@ -170,14 +171,14 @@ func _draw() -> void:
 		var dot_ink := Color(0.05, 0.07, 0.15, 0.7)
 		if x_left > 0.0:
 			_draw_x(c, fb.crit_x, ink)
-		elif not show_crosshair:
+		elif not show_crosshair and Settings.get_bool("hud.reticle"):
 			if look_name != "":
 				draw_arc(c, 3.0, 0.0, TAU, 16, dot_ink, 2.0)
 				draw_arc(c, 3.0, 0.0, TAU, 16, Color(1, 1, 1, 0.9), 1.0)
 			else:
 				draw_circle(c, 1.8, dot_ink)
 				draw_circle(c, 1.1, Color(1, 1, 1, 0.8))
-		if look_name != "":
+		if look_name != "" and Settings.get_bool("hud.names"):
 			if _italic == null:
 				_italic = FontVariation.new()
 				_italic.base_font = get_theme_default_font()
@@ -185,8 +186,8 @@ func _draw() -> void:
 			# Two lines: the binomial, then "common name · origin" a size
 			# smaller (hud.json plant_name.name_px / origin_px).
 			var lines := look_name.split("\n")
-			var name_px := int(PLANT_NAME.get("name_px", 13))
-			var origin_px := int(PLANT_NAME.get("origin_px", 11))
+			var name_px := HudText.px(float(PLANT_NAME.get("name_px", 13)))
+			var origin_px := HudText.px(float(PLANT_NAME.get("origin_px", 11)))
 			var at := Vector2(c.x - 170.0, c.y + (24.0 if show_crosshair else 19.0))
 			draw_string_outline(_italic, at, lines[0], HORIZONTAL_ALIGNMENT_CENTER, 340.0, name_px, 3, Color(0.05, 0.07, 0.15))
 			draw_string(_italic, at, lines[0], HORIZONTAL_ALIGNMENT_CENTER, 340.0, name_px, Color(0.95, 0.97, 1.0, 0.95))
@@ -240,7 +241,7 @@ func _draw_meter(size: Vector2, m: Dictionary, ink: Color) -> void:
 		draw_rect(Rect2(at, Vector2(w * share, h)), fill)
 		draw_rect(Rect2(at, Vector2(w * share, 1.0)), edge)
 	var font := get_theme_default_font()
-	var px := int(m.numeral_px)
+	var px := HudText.px(float(m.numeral_px))
 	var text := str(ceili(hp)) if hp > 0.0 else "0"
 	var tp := Vector2(at.x + w + 5.0, at.y + h * 0.5 + px * 0.36)
 	draw_string_outline(font, tp, text, HORIZONTAL_ALIGNMENT_LEFT, -1, px, 3, ink)
@@ -268,7 +269,7 @@ func _draw_numbers(fb: Dictionary, ink: Color) -> void:
 		if cam.is_position_behind(world):
 			continue
 		var d := maxf(cam.global_position.distance_to(world), 0.5)
-		var px := int(round(clampf(float(num.size_px) * pow(float(num.ref_distance_m) / d, float(num.distance_power)), float(num.min_px), float(num.max_px))))
+		var px := HudText.px(clampf(float(num.size_px) * pow(float(num.ref_distance_m) / d, float(num.distance_power)), float(num.min_px), float(num.max_px)))
 		var alpha := clampf((life - n.t) / maxf(float(num.fade_s), 0.01), 0.0, 1.0)
 		var text := str(maxi(roundi(float(e.amount)), 1))
 		var p := cam.unproject_position(world)

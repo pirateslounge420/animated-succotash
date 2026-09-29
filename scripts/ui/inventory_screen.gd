@@ -18,7 +18,7 @@ const EDGE := Color("#C8D8F0")
 const TEXT := Color(0.93, 0.95, 1.0)
 const DIM := Color(0.62, 0.68, 0.82)
 const PICK := Color(0.16, 0.26, 0.62, 0.9)
-const ROW_H := 22.0
+const ROW_H := 24.0
 const W := 580.0
 const PAD := 16.0
 ## The layout above is at the old 720-line reference; it's drawn scaled
@@ -123,11 +123,11 @@ func _draw() -> void:
 	if it != null:
 		ItemIcon.draw_icon(self, foot.position + Vector2(36, 40), 34.0, it)
 		var tx := foot.position + Vector2(84, 30)
-		_text(font, tx, Inventory.title(it), 17, TEXT)
+		_text(font, tx, Inventory.title(it), HudText.px(17), TEXT)
 		var bin := str(it.get("binomial", ""))
 		if bin != "":
-			draw_string_outline(_italic, tx + Vector2(0, 24), bin, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, 4, INK)
-			draw_string(_italic, tx + Vector2(0, 24), bin, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, TEXT)
+			draw_string_outline(_italic, tx + Vector2(0, 22), bin, HORIZONTAL_ALIGNMENT_LEFT, -1, HudText.px(15), 4, INK)
+			draw_string(_italic, tx + Vector2(0, 22), bin, HORIZONTAL_ALIGNMENT_LEFT, -1, HudText.px(15), TEXT)
 		var hint := ""
 		if chosen[0] == "carried":
 			hint = "G: set it down"
@@ -141,24 +141,24 @@ func _row(font: Font, row: Rect2, key: Array, label: String, it, spare: bool) ->
 	_rows.append([row, key])
 	if key == chosen:
 		draw_rect(row, PICK)
-	var size_px := 12 if spare else 14
+	var size_px := HudText.px(12 if spare else 14)
 	var x := row.position.x + 6.0
 	if label != "":
-		_text(font, Vector2(x, row.position.y + 15.0), label, 12, DIM)
+		_text(font, Vector2(x, row.position.y + 17.0), label, HudText.px(12), DIM)
 		x += 64.0
 	if it == null:
-		_text(font, Vector2(x, row.position.y + 15.0), "—", size_px, Color(DIM, 0.45))
+		_text(font, Vector2(x, row.position.y + 17.0), "—", size_px, Color(DIM, 0.45))
 		return
 	ItemIcon.draw_icon(self, Vector2(x + 7.0, row.position.y + row.size.y * 0.5), 8.0, it)
 	var title := Inventory.title(it)
-	_text(font, Vector2(x + 20.0, row.position.y + 15.0), title, size_px, DIM if spare else TEXT)
+	_text(font, Vector2(x + 20.0, row.position.y + 17.0), title, size_px, DIM if spare else TEXT)
 	# A sample's species beside it, small, so two cuttings tell apart.
 	var bin := str(it.get("binomial", ""))
 	if bin != "":
 		var bx := x + 28.0 + font.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, size_px).x
 		var room := row.end.x - bx - 4.0
 		if room > 30.0:
-			draw_string(_italic, Vector2(bx, row.position.y + 15.0), bin, HORIZONTAL_ALIGNMENT_LEFT, room, 12, DIM)
+			draw_string(_italic, Vector2(bx, row.position.y + 17.0), bin, HORIZONTAL_ALIGNMENT_LEFT, room, HudText.px(12), DIM)
 
 
 func _text(font: Font, at: Vector2, s: String, px: int, col: Color) -> void:

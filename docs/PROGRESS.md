@@ -36,6 +36,14 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - A held jump now peaks about 1.8 m up with 0.73 s in the air (it was about 15 m); a sprint jump about 2.3 m; a tap about 0.3 m.
   - `play_fixes_check` now expects a tap hop under 0.6 m and a sprint bound about 7 m out, under 3 m up.
   - **Flag for the designer:** this replaces §J's "long lazy rise, shark-fin arc" (the asymmetry is now slight). §J and the `air` `_help` need the new numbers; I updated `_help`.
+- **Legible text (Mike: "make sure the text is actually legible"):**
+  - The HUD font is now VT323, a DEC terminal face under the SIL OFL (`assets/fonts/vt323.ttf`, with its license), drawn with no antialiasing or hinting.
+  - Every size snaps to its pixel grid (`HudText.px()`: 20 px body, 40 headings; `hud.json text.crisp_px`), so no glyph falls between pixels at 480 lines.
+  - The typewriter face at 9–11 px, antialiased and then upscaled, was mush.
+  - Inventory rows went from 22 to 24 px, and the settings panel was rebuilt at the new size.
+- **HUD you choose:** the settings panel (O / F10) now switches every HUD element: speedometer, clock, health bar, weapon, crosshair dot, names, damage numbers, prompts and subtitles. All are on by default.
+- **Orchid names up the trees:** plants other than trees (epiphytes, orchids on limbs) are now named within reach of your body, height included. You read an orchid by climbing up to it, not from the ground under it. Trees keep the along-the-ground reach.
+- `dev_view`: SETTINGS=1 opens the panel; LOOK_NAME="binomial|common name" puts a name under the crosshair.
 
 ## 2026-09-29 — §AK trees grown from their architecture block
 - **Skeleton** (`TreeArch`, new): 149 tree-tier woody species with an `architecture` block now grow their trunk and branches from it. Cacti, bamboo, lianas, mangroves, knee-roots and shrubs keep their own builders.

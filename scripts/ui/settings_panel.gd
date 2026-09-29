@@ -1,18 +1,28 @@
 class_name SettingsPanel
 extends Control
 ## The settings panel (O or F10): a small plain box in the R1a palette.
-## The HUD switches (design §L: the speedometer and the clock, both on by
-## default) and the display (design §Y, Display: internal lines 480 or 720,
-## 16:9 or 4:3 letterboxed, integer scaling) and the sun's shadows by day
-## (design §AG 6 A/B, SkySystem.day_shadows()). Click a line to switch it;
-## O, F10 or Esc closes. The world doesn't pause. Sizes at the 480-line
-## reference, like all the HUD.
+## The HUD: every element can be switched on or off, so you choose what's
+## on your screen (2026-09-29, from play; design §L's speedometer and
+## clock among them, all on by default). The display (design §Y, Display:
+## internal lines 480 or 720, 16:9 or 4:3 letterboxed, integer scaling) and
+## the sun's shadows by day (design §AG 6 A/B, SkySystem.day_shadows()).
+## Click a line to switch it; O, F10 or Esc closes. The world doesn't
+## pause. Sizes at the 480-line reference, like all the HUD (HudText.px()).
 
 ## [key, label, kind]: "bool" switches; "lines" and "aspect" step through
-## Display's choices.
+## Display's choices; "head" is a section title.
 const ITEMS := [
+	["", "HUD", "head"],
 	["hud.speedometer", "Speedometer", "bool"],
 	["hud.clock", "Clock (watch face)", "bool"],
+	["hud.health", "Health bar", "bool"],
+	["hud.weapon", "Weapon in hand", "bool"],
+	["hud.reticle", "Crosshair dot", "bool"],
+	["hud.names", "Names (plants, animals)", "bool"],
+	["hud.damage", "Damage numbers", "bool"],
+	["hud.prompts", "Prompts (E: ...)", "bool"],
+	["hud.subtitles", "Subtitles", "bool"],
+	["", "Display", "head"],
 	["display.lines", "Internal lines", "lines"],
 	["display.aspect", "Aspect", "aspect"],
 	["display.integer", "Integer scaling", "bool"],
@@ -22,8 +32,8 @@ const PANEL := Color(0.035, 0.055, 0.19, 0.88)
 const EDGE := Color("#C8D8F0")
 const TEXT := Color(0.93, 0.95, 1.0)
 const DIM := Color(0.62, 0.68, 0.82)
-const W := 200.0
-const ROW := 16.0
+const W := 300.0
+const ROW := 20.0
 
 var _rows: Array = [] # [Rect2, item]
 
@@ -88,15 +98,20 @@ func _shown(item: Array) -> String:
 func _draw() -> void:
 	_rows.clear()
 	var font := ThemeDB.fallback_font
-	var h := 28.0 + ROW * ITEMS.size() + 16.0
+	var px := HudText.px(20)
+	var h := 30.0 + ROW * ITEMS.size() + 26.0
 	var r := Rect2(Vector2(size.x * 0.5 - W * 0.5, size.y * 0.5 - h * 0.5), Vector2(W, h))
 	draw_rect(r, PANEL)
 	draw_rect(r, Color(EDGE, 0.55), false, 1.0)
-	draw_string(font, r.position + Vector2(10, 17), "Settings", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, TEXT)
+	draw_string(font, r.position + Vector2(10, 22), "Settings", HORIZONTAL_ALIGNMENT_LEFT, -1, px, TEXT)
 	for i in ITEMS.size():
 		var item: Array = ITEMS[i]
-		var row := Rect2(r.position + Vector2(8, 26 + ROW * i), Vector2(W - 16, ROW - 2))
+		var row := Rect2(r.position + Vector2(8, 30 + ROW * i), Vector2(W - 16, ROW - 2))
+		if item[2] == "head":
+			draw_string(font, row.position + Vector2(2, 15), str(item[1]), HORIZONTAL_ALIGNMENT_LEFT, -1, px, EDGE)
+			draw_line(row.position + Vector2(60, 10), Vector2(row.end.x, row.position.y + 10), Color(EDGE, 0.3), 1.0)
+			continue
 		_rows.append([row, item])
 		var lit: bool = item[2] != "bool" or _on(item)
-		draw_string(font, row.position + Vector2(2, 10), _shown(item), HORIZONTAL_ALIGNMENT_LEFT, -1, 9, TEXT if lit else DIM)
-	draw_string(font, Vector2(r.position.x + 10, r.end.y - 6), "click to switch · O or Esc closes", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, DIM)
+		draw_string(font, row.position + Vector2(14, 15), _shown(item), HORIZONTAL_ALIGNMENT_LEFT, -1, px, TEXT if lit else DIM)
+	draw_string(font, Vector2(r.position.x + 10, r.end.y - 8), "click to switch - O or Esc closes", HORIZONTAL_ALIGNMENT_LEFT, -1, px, DIM)

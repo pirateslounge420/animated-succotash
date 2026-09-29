@@ -14,7 +14,9 @@ extends SceneTree
 ## HOURS: comma-separated local solar hours (default "12,0": noon and
 ## midnight). YEAR_DAY: the day of the year (0 = northern spring
 ## equinox; default tomorrow). DEBUG=1: the F3 overlay on the frame.
-## HUD=1: the whole HUD; SPEED (m/s) and METER (0-1) feed its readouts. OUT_DIR (default /tmp/shots), TAG: file name prefix
+## HUD=1: the whole HUD; SPEED (m/s) and METER (0-1) feed its readouts;
+## SETTINGS=1 opens the settings panel; LOOK_NAME="binomial|common name"
+## puts a name under the crosshair. OUT_DIR (default /tmp/shots), TAG: file name prefix
 ## (default "devview"): writes <TAG>_<hh>h.png, the internal frame
 ## (design §Y: 854x480 by default). SCREEN=1 also writes
 ## <TAG>_<hh>h_window.png, the window as it shows on the screen (the
@@ -82,6 +84,13 @@ func _run() -> void:
 		player.velocity = -player.global_basis.z * float(OS.get_environment("SPEED"))
 	if OS.get_environment("METER") != "":
 		player.meter.value = float(OS.get_environment("METER"))
+	# SETTINGS=1 (with HUD=1): the settings panel open over the frame.
+	# LOOK_NAME: a name under the crosshair ("binomial|common name").
+	if OS.get_environment("SETTINGS") == "1":
+		main.settings_panel.open()
+	if OS.get_environment("LOOK_NAME") != "":
+		player.look.set_process(false)
+		player.look.text = OS.get_environment("LOOK_NAME").replace("|", "\n")
 	# HEADLOOK: the wanderer's look, "yaw,pitch" in degrees from where it
 	# faces (+ left, + up), to show the hood-first head-look.
 	if OS.get_environment("HEADLOOK") != "":

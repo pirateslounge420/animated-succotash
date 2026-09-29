@@ -84,7 +84,7 @@ func _draw() -> void:
 func _draw_speed() -> void:
 	var s := _sec("speedometer")
 	var font := ThemeDB.fallback_font
-	var px := int(s.get("size_px", 13))
+	var px := HudText.px(float(s.get("size_px", 13)))
 	var v := _shown
 	var mph := v * 2.23694
 	var kmh := v * 3.6

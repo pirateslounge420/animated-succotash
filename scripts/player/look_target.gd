@@ -20,8 +20,10 @@ extends Node
 ## species index and the point looked at (`species_index`, `point`: E takes
 ## a sample, Inventory), nothing else.
 ##
-## Animals are named out to ANIMAL_M from you; trees and other plants only
-## within NAME_M of you, measured along the ground (design §W; hud.json
+## Animals are named out to ANIMAL_M from you; trees only within NAME_M
+## of you, measured along the ground, and other plants within NAME_M of
+## your body, height and all (so an epiphyte up a tree is read by
+## climbing to it) (design §W; hud.json
 ## plant_name.reach_m, about a metre: reading a plant means walking up to
 ## it, and so does taking a sample). Plants are searched for out to
 ## PLANT_M. The name lingers LINGER_S after the crosshair leaves, so it
@@ -124,7 +126,7 @@ func _look() -> Array:
 	var plant := _plant_on_ray(from, dir, block_t + 0.3, me)
 	if not plant.is_empty() and (best.is_empty() or float(plant[2]) < block_t):
 		var p_at := from + dir * float(plant[2])
-		return [plant[0], plant[1], plant[3], p_at] if _near(p_at, me) else []
+		return [plant[0], plant[1], plant[3], p_at] if _near_body(p_at, me) else []
 	return best
 
 
@@ -133,6 +135,15 @@ func _look() -> Array:
 func _near(p: Vector3, me: Vector3) -> bool:
 	var off := p - me
 	return (off - player.up * off.dot(player.up)).length() <= NAME_M
+
+
+## Within NAME_M of the player's body (feet `me` to head), height and
+## all: a plant up in a tree (an epiphytic orchid on a limb) is named only
+## once you've climbed up beside it, not from the ground under it.
+func _near_body(p: Vector3, me: Vector3) -> bool:
+	var off := p - me
+	var h := clampf(off.dot(player.up), 0.0, 1.7)
+	return (off - player.up * h).length() <= NAME_M
 
 
 ## The nearest indexed plant (not a tree) the ray passes through within
