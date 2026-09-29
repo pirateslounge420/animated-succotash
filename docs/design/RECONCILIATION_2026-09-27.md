@@ -1813,3 +1813,16 @@ outside in. Leaves fall only from the dull stage (litter `fall` now keys off it,
 24 days at 6 %/day). Spring mirrors it: bud → young pale-yellow leaf → full green over
 24 days. The season transition (20 days) is the *temperature* ramp; foliage follows
 its own, longer clock.
+
+## AL. Old growth — 28 Sept 2026 (late)
+
+- **Locked:** the planet is at the tribal stage, so nothing has ever been logged, cleared
+  or farmed: **every stand is old growth.** Emergent and canopy trees are placed near the
+  top of their species' `height_m` band (most of them; `data/stand.json` old_share /
+  old_min / old_pow), about one emergent in four is a giant beyond its band, a thin young
+  cohort (~18%) fills the gaps, no tree is placed with a sapling's thin crown
+  (growth_floor), shrubs and ground plants favour the big end of their bands, and the
+  default share of standing snags doubles (data/dead_wood.json). `mode: "even"` in
+  stand.json restores the old uniform roll for comparison. Fallen logs and the age
+  ledger stay with Phase 6/7.
+

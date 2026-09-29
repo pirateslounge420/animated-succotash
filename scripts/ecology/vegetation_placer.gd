@@ -62,6 +62,10 @@ const T := PlantSpecies.Tier
 const SIZE_SCALE := {0: 1.45, 1: 1.3, 2: 1.2, 3: 1.2, 4: 1.2}
 const GIANT_CHANCE := 0.15
 const GIANT_SCALE := 1.25
+## The stand's age (data/stand.json): the tribal planet is old growth, so
+## trees roll near the top of their species' band, with giants and a thin
+## young cohort in the gaps (_roll_height()).
+static var STAND := Tuning.table("stand")
 const SPACING_M := {0: 34.0, 1: 8.2, 2: 4.9, 3: 3.8}
 const FILL := {0: 0.55, 1: 0.9, 2: 0.65, 3: 0.95}
 ## Moist forest packs tighter (layered, view-framing woods like the
@@ -197,9 +201,7 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 					chosen = k
 					break
 			var sp: PlantSpecies = candidates[chosen]
-			var height := lerpf(sp.height_m.x, sp.height_m.y, pow(ctx.rng.randf(), 0.8)) * float(SIZE_SCALE[tier])
-			if tier == T.EMERGENT and ctx.rng.randf() < GIANT_CHANCE:
-				height *= GIANT_SCALE
+			var height := _roll_height(ctx.rng, sp, tier) * float(SIZE_SCALE[tier])
 			var sp_idx := SpeciesDB.index_of(sp)
 			# Wet sites mossy, wet and warm ones hung with vines (0-1 each,
 			# per plant; the foliage shader shows them).
@@ -225,6 +227,32 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 				hosts.append([site.dir, PlanetConst.RADIUS_M + site.h, height, sp_idx, site.depth, leaf])
 				if tier == T.EMERGENT:
 					ctx.add_emergent(site.dir)
+
+
+## A tree's height (m, before the tier's size scale) from its species'
+## band, by the stand's age (data/stand.json). Old growth: most trees in
+## the top of the band, a scatter of giants among the emergents, a thin
+## young cohort in the gaps; "even": the old roll, slightly favouring
+## the small end. Shrubs and ground cover take shrub_pow instead.
+static func _roll_height(rng: RandomNumberGenerator, sp: PlantSpecies, tier: int) -> float:
+	var t: float
+	var giant_chance := GIANT_CHANCE
+	var giant_scale := GIANT_SCALE
+	if str(STAND.get("mode", "old_growth")) == "old_growth" and (tier == T.EMERGENT or tier == T.CANOPY):
+		if rng.randf() < float(STAND.get("old_share", 0.82)):
+			t = lerpf(float(STAND.get("old_min", 0.7)), 1.0, 1.0 - pow(rng.randf(), 1.0 / maxf(float(STAND.get("old_pow", 0.55)), 0.05)))
+		else:
+			t = rng.randf_range(float(STAND.get("young_min", 0.2)), float(STAND.get("young_max", 0.55)))
+		giant_chance = float(STAND.get("giant_chance", giant_chance))
+		giant_scale = float(STAND.get("giant_scale", giant_scale))
+	elif tier == T.EMERGENT or tier == T.CANOPY:
+		t = pow(rng.randf(), 0.8)
+	else:
+		t = pow(rng.randf(), float(STAND.get("shrub_pow", 1.0)))
+	var height := lerpf(sp.height_m.x, sp.height_m.y, t)
+	if tier == T.EMERGENT and rng.randf() < giant_chance:
+		height *= giant_scale
+	return height
 
 
 static func _emit(out: Dictionary, sp_idx: int, d: Vector3, radius: float, rng: RandomNumberGenerator, height: float,
@@ -296,7 +324,7 @@ static func _place_epiphytes(ctx: _Context, out: Dictionary, hosts: Array) -> vo
 				var angle := ctx.rng.randf() * TAU
 				var off := (CubeSphere.east(d) * cos(angle) + CubeSphere.north(d) * sin(angle)) * host_h * 0.22
 				var attach := host_h * ctx.rng.randf_range(0.55, 0.85)
-				var size := lerpf(sp.height_m.x, sp.height_m.y, ctx.rng.randf()) * float(SIZE_SCALE[4])
+				var size := lerpf(sp.height_m.x, sp.height_m.y, pow(ctx.rng.randf(), float(STAND.get("shrub_pow", 1.0)))) * float(SIZE_SCALE[4])
 				if sp.shape == PlantSpecies.Shape.LIANA:
 					attach = host_h * 0.8
 					size = minf(size, attach * 0.9)

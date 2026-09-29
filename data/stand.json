@@ -1,0 +1,22 @@
+{
+ "_help": {
+  "about": "How old the world's plants are when you find them (design: the planet is at the tribal stage, so nothing has ever been logged, cleared or farmed — every forest is OLD GROWTH: a stand dominated by big old trees at the top of their species' size, with a scatter of giants, a thin cohort of young trees in the gaps, and standing snags). Read by VegetationPlacer when a chunk grows its trees. Restart after editing.",
+  "mode": "old_growth (the tribal planet) or even (the older uniform roll, for comparison).",
+  "old_share": "The share of emergent and canopy trees that are old: their height rolls in the top part of the species' height_m band (old_min .. 1 of the band, biased to the top by old_pow: lower = more of them at the very top).",
+  "young_share": "The rest: the regeneration cohort in gaps and under the crowns, rolled between young_min and young_max of the band. old_share + young_share should be 1.",
+  "giant_chance": "Chance an emergent tree is a giant, taller than its band (x giant_scale). Old growth: about one in four emergents.",
+  "growth_floor": "Trees are placed at least this far through their life (0-1, PlantMeshes.stand_in_growth): full crowns everywhere, thinning a little on the oldest.",
+  "shrub_pow": "Shrubs and ground plants: exponent on the roll across their band (1 = even; below 1 favours big)."
+ },
+ "mode": "old_growth",
+ "old_share": 0.82,
+ "old_min": 0.7,
+ "old_pow": 0.55,
+ "young_share": 0.18,
+ "young_min": 0.2,
+ "young_max": 0.55,
+ "giant_chance": 0.25,
+ "giant_scale": 1.3,
+ "growth_floor": 0.75,
+ "shrub_pow": 0.7
+}

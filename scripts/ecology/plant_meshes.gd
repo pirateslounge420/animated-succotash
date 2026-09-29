@@ -334,7 +334,10 @@ static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> Array
 ## the tallest.
 static func stand_in_growth(sp: PlantSpecies, height_m: float) -> float:
 	var t := inverse_lerp(sp.height_m.x, sp.height_m.y, height_m)
-	return lerpf(0.55, 1.0, clampf(t, 0.0, 1.0))
+	# Old growth (data/stand.json growth_floor): no tree is placed young
+	# enough for a thin crown; the young cohort is at least this grown.
+	var floor_g := float(Tuning.table("stand").get("growth_floor", 0.55))
+	return lerpf(floor_g, 1.0, clampf(t, 0.0, 1.0))
 
 
 ## How much of its leaf clusters a tree shows, 0-1 (the foliage shader
