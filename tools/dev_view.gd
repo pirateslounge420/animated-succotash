@@ -14,7 +14,8 @@ extends SceneTree
 ## HOURS: comma-separated local solar hours (default "12,0": noon and
 ## midnight). YEAR_DAY: the day of the year (0 = northern spring
 ## equinox; default tomorrow). DEBUG=1: the F3 overlay on the frame.
-## HUD=1: the whole HUD; SPEED (m/s) and METER (0-1) feed its readouts;
+## HUD=1: the whole HUD (H's full HUD: every readout, pinned or not);
+## SPEED (m/s) and METER (0-1) feed its readouts;
 ## SETTINGS=1 opens the settings panel; LOOK_NAME="binomial|common name"
 ## puts a name under the crosshair. OUT_DIR (default /tmp/shots), TAG: file name prefix
 ## (default "devview"): writes <TAG>_<hh>h.png, the internal frame
@@ -78,6 +79,9 @@ func _run() -> void:
 		main.hud._debug.add_theme_constant_override("outline_size", 5)
 	elif OS.get_environment("HUD") != "1":
 		main.hud.visible = false
+	else:
+		# The whole HUD: H's full HUD, every readout pinned or not.
+		main.hud.toggle()
 	var player: PlanetPlayer = main.player
 	player.set_physics_process(false)
 	# HUD=1 keeps the HUD (speedometer, clock); SPEED (m/s) and METER (0-1)

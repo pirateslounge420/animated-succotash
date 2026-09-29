@@ -27,6 +27,23 @@ static func set_value(key: String, v: Variant) -> void:
 	_cfg.save(PATH)
 
 
+## Whether a setting has been saved (else it reads as its default).
+static func has(key: String) -> bool:
+	_load()
+	var p := key.split(".", true, 1)
+	return _cfg.has_section_key(p[0], p[1] if p.size() > 1 else "value")
+
+
+## Forget a setting (saved at once): it reads as its default again.
+static func erase(key: String) -> void:
+	_load()
+	var p := key.split(".", true, 1)
+	var k: String = p[1] if p.size() > 1 else "value"
+	if _cfg.has_section_key(p[0], k):
+		_cfg.erase_section_key(p[0], k)
+		_cfg.save(PATH)
+
+
 static func get_bool(key: String, default := true) -> bool:
 	return bool(get_value(key, default))
 

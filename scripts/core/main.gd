@@ -61,6 +61,12 @@ var _playing := false
 var _local_weather := {}
 var _weather_eased := {}
 var _weather_timer := 0.0
+## The mouse freed with Esc (PlanetPlayer) and not taken back since: with
+## no screen open that wants it, the HUD's readouts can be pinned
+## (Hud.set_pinning()). Not the mouse mode alone: the game also starts with
+## the mouse free (until the first click), and a headless run's mouse is
+## always free.
+var _mouse_freed := false
 
 
 ## Quitting frees everything at once; detach the meshes first (see
@@ -319,6 +325,9 @@ func _process(delta: float) -> void:
 	hud.set_prompt(prompt)
 	hud.update_readout(world, d, elevation, weather, player.swimming, delta)
 	hud.update_status(player)
+	# Pinning the readouts: while the mouse is free after Esc and no screen
+	# that wants it is open (the inventory, the settings panel, the map).
+	hud.set_pinning(_mouse_freed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED and not player.ui_open and not map_overlay.visible)
 	# The speedometer and the watch face (design §L): speed, meter, the
 	# local clock and today's dawn/dusk here.
 	var lat := CubeSphere.latitude(d)
@@ -386,6 +395,11 @@ func _on_player_died() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not _playing:
 		return
+	# A click that gets here takes the mouse back (PlanetPlayer), so
+	# pinning ends. A click on a readout while pinning never gets here: the
+	# HUD stops it as GUI input (Hud.PinCatcher).
+	if event is InputEventMouseButton and event.pressed and not player.ui_open:
+		_mouse_freed = false
 	if event.is_action_pressed("toggle_map"):
 		map_overlay.toggle(player.surface_dir)
 	elif event.is_action_pressed("toggle_hud"):
@@ -409,6 +423,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_toggle_inventory(not inventory_screen.visible)
 	elif event.is_action_pressed("release_mouse") and inventory_screen.visible:
 		_toggle_inventory(false)
+	elif event.is_action_pressed("release_mouse"):
+		# Esc freed the mouse (PlanetPlayer): the readouts can be pinned.
+		_mouse_freed = true
 	elif event.is_action_pressed("inventory_drop") and inventory_screen.visible:
 		_drop_chosen()
 	elif inventory_screen.visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -500,6 +517,7 @@ func _toggle_settings(on: bool) -> void:
 		player.ui_open = inventory_screen.visible
 		if not inventory_screen.visible:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			_mouse_freed = false
 			player.bow.block_until_release()
 
 
@@ -514,6 +532,7 @@ func _toggle_inventory(on: bool) -> void:
 		inventory_screen.close()
 		player.ui_open = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		_mouse_freed = false
 		player.bow.block_until_release()
 
 

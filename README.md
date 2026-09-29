@@ -34,7 +34,7 @@ temperate or tropical coast (a different one each game).
 | W twice and hold, left stick click | Sprint, while forward stays held (loud: wildlife notices you sooner) |
 | Shift, B | Crouch (hold): slow and nearly silent |
 | Space, A | Jump (hold to keep jumping); hold to swim up |
-| Mouse, right stick | Look (click the window to capture the mouse, Esc frees it) |
+| Mouse, right stick | Look (click the window to capture the mouse, Esc frees it; while it's free, click a readout to pin it to the screen, anywhere else to carry on) |
 | Left mouse (hold, release), right trigger | Draw the bow and loose an arrow: the longer you hold (up to a second), the farther and harder it flies |
 | V or F5, right stick click | First / third person |
 | E, X | Interact: turn over a fallen log, take a sample, pick things up; today it also starts a climb (changing to hold-right-click cling + move, design §V) |
@@ -42,7 +42,7 @@ temperate or tropical coast (a different one each game).
 | Tab (or I) | Inventory |
 | Q | Cycle bow / spear / fishing pole |
 | M, Back | Planet map (keys 1-5 switch biome / elevation / °C / rainfall / live weather; drag to turn, wheel to zoom) |
-| H | Hide the HUD |
+| H | The full HUD (every readout); H again: just the pinned ones (at first the speedometer and the clock) |
 | F3 | Debug overlay: clock, day phase (dawn / day / dusk / night and how far into it), sky speed, sun and moon elevation, moon age and phase, mansion |
 
 One in-game day is **144 real minutes** — exactly one tenth of a real day, so the

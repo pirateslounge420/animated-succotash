@@ -49,9 +49,9 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | Mouse wheel | Fishing pole in hand: scroll down to reel the line in, scroll up to let it out (bound; the pole itself is not built yet) |
 | V or F5 | Switch between first and third person |
 | M | Map. While it's open, 1 = biomes, 2 = height, 3 = temperature, 4 = rainfall, 5 = live weather |
-| H | Hide or show the on-screen text |
-| O or F10 | Settings (click a line; O, F10 or Esc closes): the speedometer and the clock on or off; the picture's internal lines (480, or 720 at most), its shape (16:9, or 4:3 with black bars), integer scaling on or off; and sun shadows by day on or off (off: no cast shadows, dark ground under trees and soft blobs under characters, the reference look being tried out) |
-| Esc | Free the mouse pointer (click in the window to take it back) |
+| H | The full HUD: every readout (the time, the moon, its mansion, the season, the biome and soil, the temperature, the weather, the wind, your elevation and position, the speedometer and the clock). H again: just the ones you've pinned |
+| O or F10 | Settings (click a line; O, F10 or Esc closes): the speedometer and the clock on or off (the same as pinning them); the picture's internal lines (480, or 720 at most), its shape (16:9, or 4:3 with black bars), integer scaling on or off; and sun shadows by day on or off (off: no cast shadows, dark ground under trees and soft blobs under characters, the reference look being tried out) |
+| Esc | Free the mouse pointer. While it's free (and no inventory, settings or map is open) every readout shows and a line at the top says what to do: click a readout to pin it to the screen (pinned ones are bright with a small gold • before them, the rest dimmed), click it again to unpin it; it's saved at once. Click anywhere else to take the mouse back and carry on |
 | F3 | Debug overlay: clock, day phase, sun and moon |
 | F2 (dev) | Frame-time readout at the top: frame ms and fps, the renderer's cpu and gpu ms, and what the shadow pass costs (sampled every few seconds by switching shadows off for a few frames, so they blink briefly while it's on) |
 | F4 (dev) | Show collision shapes |
@@ -68,7 +68,7 @@ Gamepad:
 - Clicking the right stick switches first and third person.
 - Start opens the inventory, Back the map.
 
-Readouts: your speed at the bottom right (mph and km/h; faint when you're slow, brighter toward 120 km/h, its glow warming as the super meter fills), and a small watch face at the top right: one hand for the hour on a 12-hour dial, with the 24-hour numbers on the outer ring, and two gold marks where today's dawn and dusk fall here (they move with the season and as you travel). All the on-screen text grows with the window.
+Readouts: your speed at the bottom right (mph and km/h; faint when you're slow, brighter toward 120 km/h, its glow warming as the super meter fills), and a small watch face at the top right: one hand for the hour on a 12-hour dial, with the 24-hour numbers on the outer ring, and two gold marks where today's dawn and dusk fall here (they move with the season and as you travel). These two are the only readouts pinned in a new game; the others (the time, the moon, its mansion, the season, the biome and soil, the temperature, the weather, the wind, your elevation and position) show with H, or all the time once you pin them (Esc, then click them). "Swimming" and "Above the clouds" show whenever they apply. All the on-screen text grows with the window.
 
 The picture: the game draws at a fixed 480 lines (854×480) and blows that up to your window with square, unsmoothed pixels, text and all, so a bigger window only means bigger pixels. With integer scaling on (the default) it uses a whole multiple when the window holds at least two (a 1080p screen shows it at exactly 2×, with thin black bars round it); turn it off in settings to fill the screen at 2.25×. 720 lines is the most the settings allow.
 
