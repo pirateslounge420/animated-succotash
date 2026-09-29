@@ -75,6 +75,12 @@ const MIN_GAIN_M := 0.1
 const LOWEST_HOLD_M := 1.3
 ## How far round a limb you can lean astride it (radians from its top).
 const ROUND_MAX := 1.0
+## Round thin wood, angles from lengths of bark grow large: the hands
+## HANDS_APART_M apart and a diagonal's swing put them over half a turn
+## apart on a 9 cm trunk, where the body's angle between them flips to the
+## far side and the spiral undid itself. Each is capped (radians).
+const MAX_HALF_APART := 0.5
+const MAX_SWING := 1.2
 
 var key := 0
 var g: BranchGraph
@@ -106,6 +112,12 @@ var feet := Vector3.ZERO
 var facing := Vector3.FORWARD
 var hands: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO]
 var push_dir := Vector3.FORWARD
+## The body's own up and front (scene): hugging a trunk, up along the wood
+## and facing into it, however it leans, even from under it (from play:
+## round any trunk, however it leans or twists); else the planet's up and
+## `facing`. The player tilts the body (not the camera) to them.
+var body_up := Vector3.UP
+var body_face := Vector3.FORWARD
 
 # The reach under way: where the hand set off from (tree frame), its new
 # hold, how far along (0..1) and over how long (s); the beat after it.
@@ -134,6 +146,12 @@ var _dir_input := Vector2.ZERO
 # the hands going back and forth.
 var _grips: Array[Vector2i] = []
 var _grips_input := Vector2.ZERO
+# Which way round the wood A/D takes you (+1/-1 of its angle; 0: not
+# going round): set from the camera when the key goes down, then kept while
+# it's held, so you circle on round the back of a trunk with the camera
+# still (from play: round any trunk, however it leans or twists).
+var _round_sgn := 0.0
+var _round_key := 0.0
 
 
 ## Take hold of handhold `i` of `graph` (E at a trunk), from where the
@@ -153,7 +171,7 @@ func start(graph: BranchGraph, i: int, player_pos: Vector3, up: Vector3) -> void
 	_limb_rel = NAN
 	if _cling(i):
 		var a := _angle_of(i, p)
-		var d := HANDS_APART_M * 0.5 / maxf(g.radius[i], 0.1)
+		var d := _half_apart(i)
 		var below := _next_along(i, -1.0)
 		hold = PackedInt32Array([below if below >= 0 and g.local[below].dot(_up_l) > LOWEST_HOLD_M else i, i])
 		angle = PackedFloat32Array([a - d, a + d])
@@ -285,6 +303,12 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 	# (Nor a diagonal: W and D spiral round the wood; they wandered out
 	# onto whatever limb came round to the look.)
 	var diagonal := absf(input.x) > 0.3 and absf(input.y) > 0.3
+	if absf(input.x) <= 0.3 or signf(input.x) != _round_key:
+		_round_sgn = 0.0
+	# A/D on the trunk: round it, about its own axis (not toward whatever
+	# lies to your right: on a leaning trunk the next hold up or down it
+	# lies to the side too, and D climbed it, or stepped onto a limb).
+	var sideways := on_trunk and _cling(li) and absf(input.x) > 0.3 and absf(input.x) >= absf(input.y) and not diagonal
 	var looking_out := on_trunk and input.y > -0.3 and not diagonal and out_l.length() > 1e-3 and screen.dot(out_l.normalized()) > 0.3
 	if looking_out:
 		dir = screen + tup * 0.25 * input.y
@@ -333,7 +357,7 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 	if _grips_input.dot(input.normalized()) < 0.9:
 		_grips_input = input.normalized()
 		_grips.clear()
-	var move := _toward(dir, on_trunk)
+	var move := [] if sideways else _toward(dir, on_trunk)
 	# Back to the grip of two reaches ago: the hands trading the same two
 	# holds (at a limb's thin end they swapped for ever). Nothing that way,
 	# so the ways on below (down whatever goes down, back along the limb).
@@ -372,11 +396,11 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 		if _cling(j):
 			var ba := _body_angle()
 			var rightward := (_around(li, ba + 0.1) - _around(li, ba)).dot(right_l)
-			var sgn := signf(input.x) * (1.0 if rightward >= 0.0 else -1.0)
+			var sgn := _round_way(input.x, rightward)
 			# (The body goes round half the hand's swing a reach, about
 			# 0.3 m to its 0.5 m up; bigger swings overshot the side you
 			# steer to and swung back.)
-			move[2] = float(move[2]) + sgn * AROUND_M * 1.3 / (maxf(g.radius[j], 0.1) + HUG_M)
+			move[2] = float(move[2]) + sgn * minf(AROUND_M * 1.3 / (maxf(g.radius[j], 0.1) + HUG_M), MAX_SWING)
 	if not move.is_empty():
 		return move
 	# Round the trunk: the hand on that side goes first, the other follows
@@ -387,20 +411,30 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 		# angle runs. The hand furthest that way leads.
 		var ba := _body_angle()
 		var rightward := (_around(li, ba + 0.1) - _around(li, ba)).dot(right_l)
-		var sgn := signf(input.x) * (1.0 if rightward >= 0.0 else -1.0)
+		var sgn := _round_way(input.x, rightward)
 		var lead_h := 1 if wrapf(angle[1] - angle[0], -PI, PI) * sgn >= 0.0 else 0
 		var i := hold[lead_h]
 		if not _cling(i):
 			return []
 		var r := maxf(g.radius[i], 0.1)
 		var apart := angle[lead_h] - angle[1 - lead_h]
-		var close := HANDS_APART_M / r
+		var close := _half_apart(i) * 2.0
 		if apart * sgn > close * 1.2 or hold[1 - lead_h] != i:
 			return [1 - lead_h, i, angle[lead_h] - sgn * close]
-		return [lead_h, i, angle[lead_h] + sgn * AROUND_M * 2.0 / (r + HUG_M)]
+		return [lead_h, i, angle[lead_h] + sgn * minf(AROUND_M * 2.0 / (r + HUG_M), MAX_SWING)]
 	if prompt == "" and on_trunk and input.y > 0.3:
 		prompt = "The trunk is too thin to climb any higher: push toward a limb"
 	return []
+
+
+## Which way round the wood (+1/-1 of its angle) for the stick's `x`:
+## toward the camera's side (`rightward`: how the angle runs to the
+## camera's right) when the key goes down, the same way while it's held.
+func _round_way(x: float, rightward: float) -> float:
+	if _round_sgn == 0.0:
+		_round_sgn = signf(x) * (1.0 if rightward >= 0.0 else -1.0)
+		_round_key = signf(x)
+	return _round_sgn
 
 
 ## The best reach the way `dir` goes (tree frame, unit): on steep wood the
@@ -435,7 +469,7 @@ func _toward(dir: Vector3, on_trunk: bool) -> Array:
 		var a := _hold_angle(j, p[front])
 		if same and _cling(j) and _cling(hold[mover]):
 			# Up or down steep wood: to the mover's own side.
-			var d := HANDS_APART_M * 0.5 / maxf(g.radius[j], 0.1)
+			var d := _half_apart(j)
 			a = _body_angle() + (d if mover == 1 else -d)
 		var q := _point(j, a, mover)
 		# Up steep wood (W, or W and A/D) never takes a hand down it, nor S
@@ -643,6 +677,8 @@ func _update_outputs(f: Transform3D, up: Vector3) -> void:
 	var feet_l: Vector3
 	var face_l: Vector3
 	var push_l: Vector3
+	var body_up_l := _up_l
+	var body_face_l := Vector3.ZERO
 	match pose:
 		"trunk":
 			# Hugging the wood, off the bark between the hands (which may be
@@ -650,11 +686,17 @@ func _update_outputs(f: Transform3D, up: Vector3) -> void:
 			var ri := wood if (_cling(wood) or _round(wood)) else hold[1 - lead]
 			var out := _around(ri, _body_angle())
 			var c := mid + out * HUG_M
+			# Along the wood, not straight down: round a leaning trunk the
+			# feet hung below it wherever the hands went, and the body never
+			# came round underneath.
+			var tup := g.tangent[ri] if g.tangent[ri].dot(_up_l) >= 0.0 else -g.tangent[ri]
 			# The shoulders under the hands, lower for a hand far above.
-			var above := clampf(0.55 - absf((p1 - p0).dot(_up_l)) * 0.5, -0.2, TRUNK_REACH_Y)
-			feet_l = c - _up_l * (SHOULDER_Y + above)
+			var above := clampf(0.55 - absf((p1 - p0).dot(tup)) * 0.5, -0.2, TRUNK_REACH_Y)
+			feet_l = c - tup * (SHOULDER_Y + above)
 			face_l = -_horizontal(out)
 			push_l = _horizontal(out)
+			body_up_l = tup
+			body_face_l = -out
 		_:
 			var hips := mid - _along * STRADDLE_AHEAD_M
 			feet_l = hips - _up_l * HIP_Y
@@ -668,6 +710,10 @@ func _update_outputs(f: Transform3D, up: Vector3) -> void:
 		push_dir = (f.basis * push_l).normalized()
 	facing -= up * facing.dot(up)
 	push_dir -= up * push_dir.dot(up)
+	body_up = (f.basis * body_up_l).normalized()
+	body_face = (f.basis * body_face_l).normalized() if body_face_l.length() > 1e-3 else facing
+	body_face = (body_face - body_up * body_face.dot(body_up))
+	body_face = body_face.normalized() if body_face.length() > 1e-3 else facing
 
 
 func _pose_of(i: int) -> String:
@@ -718,6 +764,11 @@ func _hold_angle(j: int, from: Vector3) -> float:
 	if _round(j):
 		return _top_angle(j) + _limb_rel
 	return _angle_of(j, from) if _cling(j) else 0.0
+
+
+## Half the hands' spread round steep wood at `i` (radians).
+func _half_apart(i: int) -> float:
+	return minf(HANDS_APART_M * 0.5 / maxf(g.radius[i], 0.1), MAX_HALF_APART)
 
 
 ## The body's angle round the trunk: between the hands on steep wood.

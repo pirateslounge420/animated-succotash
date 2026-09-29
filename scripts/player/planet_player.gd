@@ -374,6 +374,22 @@ var _camera: Camera3D
 ## The body: an imported model (ModelLibrary "player") if there is one,
 ## else the wanderer (PlayerBody).
 var _body: Node3D
+## The body's tilt along a leaning trunk while climbing or clinging to it
+## (local to the upright player; identity otherwise), eased; whether a step
+## asked for it since the body was last posed.
+var _climb_tilt := Basis.IDENTITY
+var _tilt_held := false
+
+
+## Tilt the body (not the camera) to face `face` with its up along `body_up`
+## (scene): hugging a leaning trunk.
+func _tilt_to(face: Vector3, body_up: Vector3, delta: float) -> void:
+	var f := face - body_up * face.dot(body_up)
+	if f.length() < 1e-3:
+		return
+	var want := (global_basis.orthonormalized().inverse() * Basis.looking_at(f.normalized(), body_up)).orthonormalized()
+	_climb_tilt = _climb_tilt.slerp(want, clampf(delta * 8.0, 0.0, 1.0))
+	_tilt_held = true
 var _animator: ModelAnimator
 ## Soft shadow on the ground under the player (BlobShadow).
 var _blob: MeshInstance3D
@@ -1025,6 +1041,9 @@ func _graph_climb_step(delta: float) -> void:
 		_face(c.facing.normalized(), delta * 0.6)
 	_climb_out = c.push_dir
 	_orient()
+	# The body (not the camera, which hangs off the upright player) along
+	# the wood, however the trunk leans: up the trunk, facing into it.
+	_tilt_to(c.body_face, c.body_up, delta)
 	var hands := c.hands.duplicate()
 	if _grab_t > 0.0:
 		_grab_t -= delta
@@ -1672,6 +1691,24 @@ func _catchable(g: BranchGraph, i: int) -> bool:
 ## Frames a cling rides out without touching its face, and the count.
 const CLING_MISS_F := 8
 var _cling_miss_f := 0
+## Which way round a trunk A/D is taking you (+1/-1 of its right, as it
+## set off; 0: not going round) and the key's side then.
+var _cling_side := 0.0
+var _cling_side_key := 0.0
+
+
+## The trunk's own up where you cling (its branch graph's wood nearest
+## your chest, pointing up), or the planet's up if there's no graph there.
+func _cling_axis() -> Vector3:
+	var near := BranchGraphs.nearest(global_position + up * 1.0, 2.0, TreeClimb.GRIP_R_M)
+	if near.is_empty():
+		return up
+	var g: BranchGraph = near[0]
+	var d := g.dir(int(near[1]))
+	# (Only steep wood: a limb you clung to from below isn't "up".)
+	if absf(d.dot(up)) < 0.3:
+		return up
+	return d if d.dot(up) >= 0.0 else -d
 
 
 ## Approach speed at the face (a wall jump keeps it if it's more).
@@ -1721,11 +1758,28 @@ func _cling_step(delta: float) -> void:
 	# (from play); left alone you hold still.
 	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
 	var n := _wall_n
-	var wall_up := up - n * up.dot(n)
+	# On a trunk, "up" is up the trunk (its branch graph's axis where you
+	# are), not the planet's: up a leaning trunk, not round to its top.
+	var axis := _cling_axis() if _wall_tree else up
+	var wall_up := axis - n * axis.dot(n)
 	wall_up = wall_up.normalized() if wall_up.length() > 0.1 else up
 	var cam_r := _camera_forward().cross(up)
 	var wall_r := cam_r - n * cam_r.dot(n)
 	wall_r = wall_r.normalized() if wall_r.length() > 0.1 else wall_up.cross(n)
+	if _wall_tree:
+		# Round a trunk A/D keeps going the way it set off (toward the
+		# camera's side when the key went down) while it's held: round the
+		# back, where the camera's right turns the other way, you circle on
+		# (from play: round any trunk, however it leans or twists).
+		if absf(input.x) <= 0.2 or signf(input.x) != _cling_side_key:
+			_cling_side = 0.0
+		var round_r := wall_up.cross(n).normalized()
+		if absf(input.x) > 0.2:
+			if _cling_side == 0.0:
+				_cling_side = signf((wall_r * input.x).dot(round_r)) if absf(wall_r.dot(round_r)) > 0.05 else signf(input.x)
+				_cling_side_key = signf(input.x)
+			wall_r = round_r * _cling_side * signf(input.x)
+		_tilt_to(-n, wall_up, delta)
 	var crawl := (wall_up * input.y + wall_r * input.x) * CLING_CRAWL
 	if input.length() < 0.2 and CLING_SLIDE <= 0.0:
 		# Left alone it holds still (from play: no slip-down). Pressing
@@ -1737,12 +1791,20 @@ func _cling_step(delta: float) -> void:
 	velocity = -n * 1.5 + crawl - (up * CLING_SLIDE if input.length() < 0.2 and CLING_SLIDE > 0.0 else Vector3.ZERO)
 	move_and_slide()
 	var touching := false
+	var ground := false
 	for k in get_slide_collision_count():
-		var cn := get_slide_collision(k).get_normal()
-		if absf(cn.dot(up)) < WJ_STEEP:
+		var col := get_slide_collision(k)
+		var cn := col.get_normal()
+		var cb := col.get_collider()
+		var tree := cb is CollisionObject3D and ((cb as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER) != 0
+		# A trunk from any side but straight below (under a leaning trunk
+		# its face looks down); anything else only while steep.
+		if absf(cn.dot(up)) < WJ_STEEP or (_wall_tree and tree and cn.dot(up) > -0.95):
 			touching = true
 			# Round a trunk or a boulder: the face turns under you.
 			_wall_n = _wall_n.lerp(cn, 0.5).normalized()
+		elif not tree and cn.dot(up) > 0.7:
+			ground = true
 	if input.length() > 0.2:
 		_face((-_wall_n - up * _wall_n.dot(up)).normalized(), delta * 3.0)
 	# Down onto the ground ends it (not crawling up off it: just off the
@@ -1751,7 +1813,8 @@ func _cling_step(delta: float) -> void:
 	# collider gives way to the next one's narrower one, a hand's breadth
 	# in, and the cling let go there).
 	_cling_miss_f = 0 if touching else _cling_miss_f + 1
-	if (is_on_floor() and input.y <= 0.2) or _cling_miss_f > CLING_MISS_F:
+	# (The ground, not the top of a leaning trunk you're crawling round.)
+	if ((ground if _wall_tree else is_on_floor()) and input.y <= 0.2) or _cling_miss_f > CLING_MISS_F:
 		clinging = false
 		velocity = Vector3.ZERO
 	_kick_t = 2.0 / 60.0
@@ -2003,6 +2066,11 @@ func _update_squat(delta: float) -> void:
 		else:
 			_body.position = Vector3(0, -_squat_dip, 0)
 			_body.rotation = Vector3(kick + lean, 0.0, 0.0)
+			if not _tilt_held:
+				_climb_tilt = _climb_tilt.slerp(Basis.IDENTITY, clampf(delta * 8.0, 0.0, 1.0))
+			_tilt_held = false
+			if not _climb_tilt.is_equal_approx(Basis.IDENTITY):
+				_body.basis = _climb_tilt * _body.basis
 
 
 ## Dead: you slump to the ground and lie still (main respawns you).

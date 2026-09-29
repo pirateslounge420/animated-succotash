@@ -90,9 +90,9 @@ func _hold(c: TreeClimb, input: Vector2, s: float, look := Vector3.ZERO) -> Vect
 	if look == Vector3.ZERO and c.pose != "trunk":
 		look = c.facing
 	elif look == Vector3.ZERO:
-		var to: Vector3 = c.g.local[c.hold[c.lead]] - c.feet
-		to.y = 0.0
-		look = to.normalized() if to.length() > 0.05 else -c.facing
+		# At the wood, the way the body faces it (from the feet it swung
+		# aside once the feet hung down along a leaning trunk).
+		look = c.facing if c.facing.length() > 0.1 else Vector3.FORWARD
 	for f in int(s / DT):
 		var fwd := look
 		var right := fwd.cross(Vector3.UP).normalized()
@@ -150,8 +150,6 @@ func _tree(n: String, g: BranchGraph) -> void:
 	c = TreeClimb.new()
 	c.start(g, mid, g.local[mid] + Vector3(0, -1.0, g.radius[mid] + 0.45), Vector3.UP)
 	_hold(c, Vector2(0, 1), 1.0)
-	var p0: Vector3 = c.feet - g.local[c.hold[c.lead]]
-	p0.y = 0.0
 	var a0 := c.feet.y
 	var w0: int = c.hold[c.lead]
 	trace = 8 if OS.get_environment("TRACE") == "diag" else 0
@@ -159,12 +157,21 @@ func _tree(n: String, g: BranchGraph) -> void:
 	# you start.)
 	var look0: Vector3 = g.local[w0] - c.feet
 	look0.y = 0.0
-	_hold(c, Vector2(0.7071, 0.7071), 3.0, look0.normalized())
-	var p1: Vector3 = c.feet - g.local[c.hold[c.lead]]
-	p1.y = 0.0
-	var turned := rad_to_deg(p0.angle_to(p1))
+	# (Added up step by step round the wood's own axis: once past half a
+	# turn, start to end alone reads short.)
+	var turned := rad_to_deg(absf(_round_during(c, Vector2(0.7071, 0.7071), 3.0, look0.normalized())))
 	print("    W+D from %.1f m (%s): %.1f m higher, %.0f deg round, now %s" % [a0, c.describe(w0), c.feet.y - a0, turned, c.describe(c.hold[c.lead])])
 	ok(c.feet.y - a0 > 0.3 and turned > 15.0, "%s: W+D climbs up and round" % n)
+	# Round the trunk with D alone, from halfway up: all the way round, and
+	# on, whichever way the trunk leans or twists (from play). Measured
+	# round the wood's own axis at the hold, step by step.
+	c = TreeClimb.new()
+	c.start(g, mid, g.local[mid] + Vector3(0, -1.0, g.radius[mid] + 0.45), Vector3.UP)
+	# (The camera held still: round the back of the trunk D must carry on
+	# the same way round.)
+	var total := _round_during(c, Vector2(1, 0), 15.0, c.facing)
+	print("    D round the trunk for 15 s from %.1f m: %.0f deg round, at %s (lean %.0f deg)" % [g.local[mid].y, rad_to_deg(absf(total)), c.describe(c.hold[c.lead]), rad_to_deg(g.tangent[mid].angle_to(Vector3.UP))])
+	ok(absf(total) > TAU, "%s: D goes all the way round the trunk (%.0f deg)" % [n, rad_to_deg(absf(total))])
 	# Out along the lowest thick level limb on the trunk, and round it.
 	var best := -1
 	for i in g.size():
@@ -351,3 +358,25 @@ func _branch_try(g: BranchGraph, t: int, r0: int, tip: int, reach: float, look: 
 	if on and (at_end or best < maxf(0.6, reach * 0.2)):
 		return ""
 	return "%s; now %s" % [("stopped %.1f m out, %d holds short of an end" % [(g.local[fin] - g.local[r0]).length(), _to_end(g, fin, depth)]) if on and depth.has(fin) else ("on it, then off it" if on else "never on it"), c.describe(fin)]
+
+
+## The feet's offset from the wood held (tree frame).
+func _round_off(c: TreeClimb) -> Vector3:
+	return c.feet - c.g.local[c.hold[c.lead]]
+
+
+## Hold `input` for `s` seconds, the camera still, looking `look`; how far
+## round the wood (radians, signed) the feet went, added up every quarter
+## second about the wood's own axis at the hold.
+func _round_during(c: TreeClimb, input: Vector2, s: float, look: Vector3) -> float:
+	var total := 0.0
+	var prev := _round_off(c)
+	for k in int(s / 0.25):
+		_hold(c, input, 0.25, look)
+		var now := _round_off(c)
+		var tt: Vector3 = c.g.tangent[c.hold[c.lead]]
+		var a := prev - tt * prev.dot(tt)
+		var b := now - tt * now.dot(tt)
+		total += a.signed_angle_to(b, tt)
+		prev = now
+	return total

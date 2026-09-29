@@ -59,6 +59,22 @@ func face(h: Vector3, pitch := 0.0) -> void:
 	player.set_view(pitch, 0.0)
 
 
+## Your chest's offset from the nearest trunk handhold of `g` (scene), and
+## the trunk's way there: [offset, axis].
+func _trunk_offset(g: BranchGraph) -> Array:
+	var chest: Vector3 = player.global_position + player.up * 1.0
+	var best := -1
+	var best_d := INF
+	for i in g.size():
+		if g.limb[i] != 0:
+			continue
+		var d := g.pos(i).distance_to(chest)
+		if d < best_d:
+			best_d = d
+			best = i
+	return [chest - g.pos(best), g.dir(best)]
+
+
 ## Your offset from the wood you lead with (tree frame), and the wood's way
 ## there: [offset, tangent].
 func _round_offset(cc: TreeClimb) -> Array:
@@ -419,6 +435,25 @@ func _initialize() -> void:
 		var a2 := alt()
 		print("[climb] crawling up the trunk for 1 s: %.1f -> %.1f m" % [a1, a2])
 		ok(a2 - a1 > 0.8, "W crawls up the face while clinging (%.1f m)" % (a2 - a1))
+		# D alone, the camera still: round the trunk and on round it, however
+		# it leans (from play), added up round the trunk's own axis.
+		var round_total := 0.0
+		var prev_off := _trunk_offset(g)
+		await press("move_right")
+		for k in 36:
+			await frames(10)
+			if not player.clinging:
+				break
+			var now_off := _trunk_offset(g)
+			var ax: Vector3 = now_off[1]
+			var pa: Vector3 = prev_off[0] - ax * (prev_off[0] as Vector3).dot(ax)
+			var pb: Vector3 = now_off[0] - ax * (now_off[0] as Vector3).dot(ax)
+			round_total += pa.signed_angle_to(pb, ax)
+			prev_off = now_off
+		await release("move_right")
+		await frames(10)
+		print("[climb] D clinging for 6 s: %.0f deg round the trunk, clinging %s, %.1f m up" % [rad_to_deg(absf(round_total)), player.clinging, alt()])
+		ok(player.clinging and absf(round_total) > TAU, "D clinging goes all the way round the trunk (%.0f deg)" % rad_to_deg(absf(round_total)))
 		face(out, 0.6)
 		# (A moment to look up: the look is read with the camera.)
 		await frames(3)
