@@ -42,6 +42,11 @@ var hp := 0.0
 ## Damage a bite or blow does to the player, 0 = never attacks. Pack
 ## hunters and hostile mythicals default to one by size ("bite").
 var bite := 0.0
+## Unprovoked: it comes for you within this many metres (0 = only when
+## hurt or, for packs and mythicals, by their own rules). Crocodiles,
+## hippos and buffalo: the territorial charge (D4 "aggression range").
+## Scaled by how loud you are (a still, crouched player gets closer).
+var charge_m := 0.0
 
 # Spec D4 fields (docs/WORLD_SYSTEMS_SPEC.md D4; data/creatures/README.md).
 # Read by the systems that need them; nothing else changes behavior yet.
@@ -146,6 +151,7 @@ static func _from(e: Dictionary) -> CreatureSpecies:
 	sp.hp = float(e.get("hp", 0.0))
 	var hunter := sp.role == "pack" or sp.temperament in ["hostile", "aggressive"]
 	sp.bite = float(e.get("bite", (6.0 + 5.0 * sp.size_m) if hunter else 0.0))
+	sp.charge_m = float(e.get("charge_m", 0.0))
 	# Spec D4 fields.
 	sp.data = e
 	sp.trophic = str(e.get("trophic", ""))

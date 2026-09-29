@@ -303,6 +303,19 @@ func tick(delta: float, ctx: Dictionary) -> void:
 	var shy := _shy_m(ctx)
 	_calm(delta, ctx, to_player, shy)
 	_hear()
+	# The territorial charge (species.charge_m): a crocodile, a hippo, a
+	# buffalo comes for you unprovoked once you're this near, nearer if
+	# you're quiet and still, further if you're loud.
+	if species.charge_m > 0.0 and species.bite > 0.0 and not leaving:
+		var noise: float = ctx.get("player_noise", 0.5)
+		var still: float = ctx.get("player_still", 0.0)
+		var reach := species.charge_m * (0.55 + 0.9 * noise) * (0.7 if still > 2.0 else 1.0)
+		if to_player < reach * sight_toward(ctx.player_dir):
+			angry = 25.0
+			say()
+			_attack(delta, ctx, to_player)
+			_place(delta)
+			return
 	match species.role:
 		"ground":
 			_ground(delta, player_dir, to_player, shy)
