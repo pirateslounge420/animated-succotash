@@ -4,6 +4,35 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — §AG: the look tuned to the reference clips (steps 1–7; shadows A/B not locked)
+- **1 Dither and bleed** (`post_grade`): a hard ordered dither at `retro.dither` 1.0 onto a true 5-bit grid per channel (`bits_per_channel`), bleed 0.2, grain 0.025, all at the 480-line internal frame. The header comment is fixed.
+- **2 Fog** (`SkySystem`, `look.gdshaderinc`): day density `retro.fog.day_density` 0.0035, so far hills are ~65 % haze at 300 m and ~75 % at 400 m. The fog colour stays the horizon colour. Valley fog adds `height_density` below the local ground mean: `main` samples the eye and a 250 m ring every 0.5 s and sends `look_ground_m`. dev_view `VISTA=1` gives a far view.
+- **3 Tiles:**
+  - `Look.texture()` hands out the `assets/textures/retro` tiles (64 px, stone 128, leaves and leaf card 32). Weave and fur are still painted.
+  - Terrain, foliage, ruin and model samplers are `filter_nearest_mipmap` with no anisotropy, read through `retro_tex()`, which caps the mip at `retro.max_mips` (2).
+  - Repeats come from `retro.tile_m` (the `look_tile_m`/`look_tile_m2` globals).
+  - The terrain's rotated second copy is gone and its far fade dropped from 0.55 to 0.2. The ground now sparkles with texels.
+  - Leaf-cluster cards use the 32 px noisy cutout, mirrored and turned per cluster.
+- **4 Colours:**
+  - The sky is a three-stop gradient from `retro.colors` (#0810B8 / #3560D0 / #7A90E0, no white band).
+  - Around sunset the whole sky takes `sunset_bands`. Night keeps §C's ultramarine.
+  - The sun is an 8° soft disc (`sun_disc_deg`) with a radial falloff, #FBF486 low down. There's no bloom.
+  - Water is #04087A.
+  - Palette: grass darker (lit grass measures #3A6832 against the #3F6E2C target), a canopy target for crowns, olive path dirt; bark keeps the old brown.
+  - The grade gets a shadow floor at `shadow_floor` #080C4A.
+  - dev_view gains `SPAWN`, `SUNWARD` and `CLOUD`.
+- **5 Clouds:**
+  - `cloud_pano` 512×128 is drawn nearest, in two layers: far 2.2× smaller, low and hazier, 1 turn / 40 min; near 1 turn / 12 min.
+  - The greyscale tile is tinted by the sky, taking the sunset bands at sunset. SkyPaint only bakes clouds when the tile is missing.
+- **6 Shadows A/B (not locked):** `SkySystem.day_shadows()`: the "Sun shadows by day" setting, or DAY_SHADOWS=0/1 for tools. It defaults to look "light" shadows (on), so today's look stands until the designer picks.
+  - B turns the sun's shadow map off, switches on blob shadows (`BlobShadow.set_enabled`) and darkens ground under canopy by `canopy_dark` 0.45. The top-down canopy mask in ground vertex alpha is now feathered over `canopy_feather_m` 3 m. The terrain grid is ~8 m, so vertex interpolation softens it further.
+  - Dev spot, 14:00, 480 lines (llvmpipe; compare ratios): A FPS_A. B FPS_B.
+  - Forest camp mean luma: A 0.13, B 0.28 (reference 0.18–0.32).
+- **7 Camera:** FOV `retro.fov_deg` 78 (aiming zooms to the same share, 67). First-person eye at `retro.eye_m` 1.4 m, crouched eye scaled to match.
+- **Reference still has:** sprawling bright meadows and paths flanked by trees (world-gen, §AG 7, Phase 9); its clouds are whiter and softer-edged than our lavender-tinted posterised tile; our camp clearings are sand, so the frame averages brighter (0.37–0.45 luma at the dev spot vs 0.18–0.32).
+
+---
+
 ## 2026-09-28 — Step 6.5: realm gate and direct catalogue loading (design §AA)
 - **Direct loading:** `SpeciesDB` reads `data/plants/*.json` after the biome files.
   - 427 catalogue species are new, giving 1031 in all.

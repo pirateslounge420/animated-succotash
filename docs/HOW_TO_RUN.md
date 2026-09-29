@@ -50,7 +50,7 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | V or F5 | Switch between first and third person |
 | M | Map. While it's open, 1 = biomes, 2 = height, 3 = temperature, 4 = rainfall, 5 = live weather |
 | H | Hide or show the on-screen text |
-| O or F10 | Settings (click a line; O, F10 or Esc closes): the speedometer and the clock on or off; the picture's internal lines (480, or 720 at most), its shape (16:9, or 4:3 with black bars) and integer scaling on or off |
+| O or F10 | Settings (click a line; O, F10 or Esc closes): the speedometer and the clock on or off; the picture's internal lines (480, or 720 at most), its shape (16:9, or 4:3 with black bars), integer scaling on or off; and sun shadows by day on or off (off: no cast shadows, dark ground under trees and soft blobs under characters, the reference look being tried out) |
 | Esc | Free the mouse pointer (click in the window to take it back) |
 | F3 | Debug overlay: clock, day phase, sun and moon |
 | F2 (dev) | Frame-time readout at the top: frame ms and fps, the renderer's cpu and gpu ms, and what the shadow pass costs (sampled every few seconds by switching shadows off for a few frames, so they blink briefly while it's on) |
