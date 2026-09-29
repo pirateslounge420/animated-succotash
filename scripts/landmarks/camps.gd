@@ -279,6 +279,13 @@ func update_camps(delta: float) -> void:
 		_animate(_camps[key], delta, pp)
 
 
+## Build the camps in reach now, not at the next half-second refresh
+## (after waking by a fire).
+func refresh_now() -> void:
+	_timer = 0.5
+	_refresh()
+
+
 func _refresh() -> void:
 	var pp := player.global_position
 	var pd: Vector3 = world.dir_of(pp)

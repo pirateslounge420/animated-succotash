@@ -369,7 +369,11 @@ func _on_player_died() -> void:
 	world.rebase(offset)
 	player.global_position -= offset
 	chunks.load_blocking(d)
+	# The ruin whose fire it is, and its camp, are there when you wake
+	# (they'd otherwise come in over the next seconds, a ruin a frame).
+	landmarks.build_ruin_at(fire)
 	player.spawn_at(d, fire)
+	camps.refresh_now()
 	player.set_view(-0.3, 0.0)
 	player.revive()
 	player.wake(float(dt.get("wake_s", 2.5)))

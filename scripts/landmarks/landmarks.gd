@@ -136,14 +136,47 @@ func _attach_ruins() -> void:
 	if item == null:
 		return
 	var c: Vector3i = item[0]
-	WorkerThreadPool.wait_for_task_completion(_pending[c])
-	_pending.erase(c)
+	if _pending.has(c):
+		WorkerThreadPool.wait_for_task_completion(_pending[c])
+		_pending.erase(c)
 	if _ruins.has(c):
 		return
 	var node := RuinBuilder.make_node(item[1], world)
 	_root.add_child(node)
 	node.global_transform = RuinBuilder.placement(item[1], world)
 	_ruins[c] = node
+
+
+## Build the ruin around surface direction `d` now, if there is one and
+## it isn't built yet (not on a worker, one a frame): you wake by its fire
+## after a death (Camps.wake_fire), so it has to be there when you do.
+func build_ruin_at(d: Vector3) -> void:
+	for c in CreatureSpawner._cells_around(d, Ruins.CELL_M, Ruins.CELL_M):
+		if not _ruin_cells.has(c):
+			_ruin_cells[c] = Ruins.find(map, c)
+		var site: Dictionary = _ruin_cells[c]
+		if site.is_empty() or _ruins.has(c):
+			continue
+		if CubeSphere.surface_distance_m(site.dir, d) > float(site.footprint_m) + 60.0:
+			continue
+		var data = null
+		if _pending.has(c):
+			# Already on a worker: wait for it and take its result.
+			WorkerThreadPool.wait_for_task_completion(_pending[c])
+			_pending.erase(c)
+			_mutex.lock()
+			for k in _done.size():
+				if _done[k][0] == c:
+					data = _done[k][1]
+					_done.remove_at(k)
+					break
+			_mutex.unlock()
+		if data == null:
+			data = RuinBuilder.compute(map, site)
+		var node := RuinBuilder.make_node(data, world)
+		_root.add_child(node)
+		node.global_transform = RuinBuilder.placement(data, world)
+		_ruins[c] = node
 
 
 ## Collision for ruins the player is near (COLLIDE_M), a piece a frame
