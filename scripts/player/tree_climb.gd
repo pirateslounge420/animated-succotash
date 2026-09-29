@@ -30,8 +30,10 @@ extends RefCounted
 ## the floating origin nor the chunk disturbs them; `key` finds the tree's
 ## graph again if it is rebuilt (the same tree, the same handholds).
 
-## Wood the player can hold (radius, m): BranchGraphView's green.
-const GRIP_R_M := 0.06
+## Wood the player can hold (radius, m): BranchGraphView's green. A 9 cm
+## pole (it was 12 cm: forest-grown stems and the top of most trunks were
+## out of bounds, and climbs stopped a few metres up).
+const GRIP_R_M := 0.045
 ## Reaching across to another limb: handholds this near the hand (m).
 const REACH_M := 1.2
 ## The body's speed while a reach is under way (m/s) and the beat after
@@ -268,13 +270,23 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 	# Looking out from the trunk (not at it), W goes out that way: onto a
 	# limb there; else up.
 	var out_l := _horizontal(_around(li, _body_angle())) if _cling(li) else Vector3.ZERO
-	var looking_out := on_trunk and out_l.length() > 1e-3 and screen.dot(out_l.normalized()) > 0.3
+	# (Not S: backing off the trunk points "out" too, and S sent the hands
+	# out and round instead of down.)
+	# (Nor a diagonal: W and D spiral round the wood; they wandered out
+	# onto whatever limb came round to the look.)
+	var diagonal := absf(input.x) > 0.3 and absf(input.y) > 0.3
+	var looking_out := on_trunk and input.y > -0.3 and not diagonal and out_l.length() > 1e-3 and screen.dot(out_l.normalized()) > 0.3
 	if looking_out:
 		dir = screen + tup * 0.25 * input.y
 	elif on_trunk and absf(input.x) > 0.3 and absf(input.y) > 0.3:
 		# A diagonal: the reach is up (or down) the wood, and the swing
 		# round it comes below; aimed sideways, it stepped off onto a limb.
 		dir = tup * signf(input.y) + screen * 0.3
+	elif on_trunk and input.y < 0.0:
+		# S is down: the camera's back (away from the wood) blended in as
+		# much as W's forward sent a hand round a thin trunk and back, up
+		# and down for ever.
+		dir = tup * input.y + screen * 0.3
 	elif on_trunk:
 		dir = tup * input.y + screen * 1.2
 	else:
@@ -301,18 +313,35 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 	if not on_trunk and absf(input.x) > 0.3 and absf(input.x) > absf(input.y) + 0.2:
 		return _round_limb(input.x, right_l)
 	var move := _toward(dir, on_trunk)
-	if move.is_empty() and looking_out and input.y > 0.3:
-		move = _toward(tup, on_trunk)
+	# Looking out finds a limb that way; with none, you climb the trunk as
+	# if facing it (round a thin trunk the way out swings past the look,
+	# and the hands went to any trunk hold that way, lower ones too).
+	if looking_out and not move.is_empty() and move.size() == 3 and g.limb[move[1]] == 0 and g.limb[li] == 0:
+		move = []
+	if move.is_empty() and looking_out and absf(input.y) > 0.3:
+		move = _toward((tup * signf(input.y) + screen * 0.3).normalized(), on_trunk)
 	# Up the trunk and nothing that way (the trunk ends at a fork, or thins
 	# out under the crown): carry on up whatever goes on up from here, the
 	# stem or limb that climbs most steeply, whichever side it leaves on
 	# (from play: at a fork W used to stop dead).
-	if move.is_empty() and on_trunk and input.y > 0.3:
-		move = _upward()
+	if move.is_empty() and input.y > 0.3 and (on_trunk or (absf(input.x) < 0.3 and absf(g.tangent[li].dot(_up_l)) > 0.4)):
+		# (On a rising limb too: hanging on a stem above a fork, W goes on
+		# up; out along a level limb, W stops at its end. From a limb, not
+		# back onto the trunk: that undid "out along the limb".)
+		move = _upward(1.0, not on_trunk)
 	# Down the same way: from a limb's foot back onto the trunk, or down
 	# whatever goes on down from here.
 	if move.is_empty() and on_trunk and input.y < -0.3:
 		move = _upward(-1.0)
+	# S on a limb, nothing that way (looking across it): down whatever goes
+	# down, else back along it toward where it grows from, and so down the
+	# tree (from play: climbing down didn't always work).
+	if move.is_empty() and not on_trunk and input.y < -0.3 and absf(input.x) < 0.3:
+		move = _upward(-1.0)
+		if move.is_empty():
+			var jb := _next_along(li, -1.0)
+			if jb >= 0:
+				move = [1 - lead, jb, _hold_angle(jb, _hand_point(lead))]
 	# Diagonal on steep wood (W and D together, and the other three): the
 	# reach up or down also swings round the wood toward that side, so you
 	# spiral up and round in one move (from play).
@@ -322,7 +351,10 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 			var ba := _body_angle()
 			var rightward := (_around(li, ba + 0.1) - _around(li, ba)).dot(right_l)
 			var sgn := signf(input.x) * (1.0 if rightward >= 0.0 else -1.0)
-			move[2] = float(move[2]) + sgn * AROUND_M * 3.0 / (maxf(g.radius[j], 0.1) + HUG_M)
+			# (The body goes round half the hand's swing a reach, about
+			# 0.3 m to its 0.5 m up; bigger swings overshot the side you
+			# steer to and swung back.)
+			move[2] = float(move[2]) + sgn * AROUND_M * 1.3 / (maxf(g.radius[j], 0.1) + HUG_M)
 	if not move.is_empty():
 		return move
 	# Round the trunk: the hand on that side goes first, the other follows
@@ -384,6 +416,12 @@ func _toward(dir: Vector3, on_trunk: bool) -> Array:
 			var d := HANDS_APART_M * 0.5 / maxf(g.radius[j], 0.1)
 			a = _body_angle() + (d if mover == 1 else -d)
 		var q := _point(j, a, mover)
+		# Up steep wood (W, or W and A/D) never takes a hand down it, nor S
+		# up it: round a thin trunk the sideways part made up the gain, and
+		# the hands went up and down on the spot.
+		var vert := dir.dot(_up_l)
+		if on_trunk and same and absf(vert) > 0.5 and (q - p[mover]).dot(_up_l) * signf(vert) < 0.0:
+			continue
 		if (q - p[mover]).dot(dir) < MIN_GAIN_M:
 			continue
 		var s := (g.local[j] - g.local[base]).normalized().dot(dir)
@@ -393,6 +431,10 @@ func _toward(dir: Vector3, on_trunk: bool) -> Array:
 			# (Not back onto the trunk sideways or up; down a steep limb
 			# to its foot, yes: onto the trunk it grows from.)
 			if on_trunk and g.limb[j] == 0 and dir.dot(_up_l) > -0.3:
+				continue
+			# Out on a limb, the trunk only if you head right at it (at a
+			# limb's end, W used to take you back up the trunk above).
+			if not on_trunk and g.limb[j] == 0 and s < 0.8:
 				continue
 			# Onto a limb from a trunk: one on your side, the way it leads.
 			if out != Vector3.ZERO and g.limb[j] != 0:
@@ -421,22 +463,28 @@ func _toward(dir: Vector3, on_trunk: bool) -> Array:
 const UP_ON := 0.35
 
 
-func _upward(sgn := 1.0) -> Array:
+func _upward(sgn := 1.0, no_trunk := false) -> Array:
 	var p: Array[Vector3] = [_hand_point(0), _hand_point(1)]
-	var top := 0 if p[0].dot(_up_l) * sgn >= p[1].dot(_up_l) * sgn else 1
-	var base := hold[top]
 	var best := []
 	var best_s := UP_ON
-	for j in _reachable(base, true):
-		if j == hold[0] or j == hold[1] or g.radius[j] < GRIP_R_M:
-			continue
-		var d := g.local[j] - g.local[base]
-		if d.length() < 0.05:
-			continue
-		var s := d.normalized().dot(_up_l) * sgn
-		if s > best_s:
-			best_s = s
-			best = [1 - top, j, _hold_angle(j, p[top])]
+	# From either hand's hold, the other hand reaching (at a fork the hand
+	# that looks higher can be on the trunk below it, where the stem above
+	# isn't linked, and the climb stopped).
+	for top in 2:
+		var base := hold[top]
+		for j in _reachable(base, true):
+			if j == hold[0] or j == hold[1] or g.radius[j] < GRIP_R_M or (no_trunk and g.limb[j] == 0):
+				continue
+			var d := g.local[j] - g.local[base]
+			if d.length() < 0.05:
+				continue
+			# (Past the other hand, not back below it.)
+			if (g.local[j] - g.local[hold[1 - top]]).dot(_up_l) * sgn < 0.05:
+				continue
+			var s := d.normalized().dot(_up_l) * sgn
+			if s > best_s:
+				best_s = s
+				best = [1 - top, j, _hold_angle(j, p[top])]
 	return best
 
 

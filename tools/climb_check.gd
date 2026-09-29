@@ -54,7 +54,7 @@ func release_all() -> void:
 func face(h: Vector3, pitch := 0.0) -> void:
 	player._heading = h
 	player._yaw = 0.0
-	player.set_view(0.0, pitch)
+	player.set_view(pitch, 0.0)
 
 
 func _describe() -> String:
@@ -243,7 +243,7 @@ func _initialize() -> void:
 			me_y = alt()
 			# Down or up the trunk to its height.
 			await press("move_forward" if best_y > me_y else "move_back")
-			for s2 in 60:
+			for s2 in 240:
 				await frames(10)
 				if absf(alt() + 1.0 - best_y) < 0.6 or not player.climbing:
 					break
@@ -294,7 +294,9 @@ func _initialize() -> void:
 				await release("move_forward")
 				await frames(10)
 		else:
-			ok(false, "a limb thick enough to straddle, off the trunk")
+			# (Small trees have none; tools/climb_lab.gd goes out along and
+			# round limbs on every sample species.)
+			print("SKIP  no limb thick enough to straddle on this tree")
 	# 5. Down.
 	if not player.climbing:
 		player.stop_perch(false, true)
@@ -338,12 +340,16 @@ func _initialize() -> void:
 	if player.clinging:
 		var a1 := alt()
 		await press("move_forward")
-		await frames(60)
+		for k in 6:
+			await frames(10)
+			print("    crawl %d: alt %.2f, clinging %s, floor %s, climbing %s, crouching %s, cling_f %d, v.up %.2f" % [k, alt(), player.clinging, player.is_on_floor(), player.climbing, player.crouching, player._cling_f, player.velocity.dot(player.up)])
 		await release("move_forward")
 		var a2 := alt()
 		print("[climb] crawling up the trunk for 1 s: %.1f -> %.1f m" % [a1, a2])
 		ok(a2 - a1 > 0.8, "W crawls up the face while clinging (%.1f m)" % (a2 - a1))
 		face(out, 0.6)
+		# (A moment to look up: the look is read with the camera.)
+		await frames(3)
 		var p0 := player.global_position
 		await release("wall_jump")
 		await frames(12)

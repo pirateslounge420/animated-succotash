@@ -343,10 +343,17 @@ static func _laterals_on_stem(g: _G, st: int, excurrent: bool) -> Array[int]:
 	return out
 
 
+## Stubs' limb numbers start here (past any real limb's).
+const STUB_LIMB := 100000
+
+
 ## A self-pruned stub: a short dead piece with its collar.
 static func out_stub(g: _G, parent: int, p: Vector3, d: Vector3, r_here: float) -> void:
 	var r := r_here * 0.3
-	g.piece(p, d, g.rng.randf_range(0.012, 0.03), r * 1.3, r, 0.0, K.BRANCH, 1, parent, 0, true)
+	var i := g.piece(p, d, g.rng.randf_range(0.012, 0.03), r * 1.3, r, 0.0, K.BRANCH, 1, parent, 0, true)
+	# Its own limb (not 0, the trunk's): a climber took a stub for the
+	# trunk and stopped on it.
+	g.sk.pieces[i].limb = STUB_LIMB + i
 
 
 ## Sympodial / dichotomous crowns: `order` pieces forking from a tip.

@@ -8,7 +8,7 @@ extends MeshInstance3D
 ## the leaves, and redrawn a few times a second. When off it doesn't exist.
 
 ## Wood the player can hold (radius, m); thinner is monkey-only.
-const PLAYER_RADIUS_M := 0.06
+const PLAYER_RADIUS_M := TreeClimb.GRIP_R_M
 ## Graphs with a handhold within this of the player are drawn.
 const VIEW_M := 30.0
 const REDRAW_S := 0.25
