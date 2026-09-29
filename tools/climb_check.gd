@@ -4,6 +4,7 @@ extends SceneTree
 ## always work"; "Shift should perch or duck in trees"):
 ##   1. walk up to the nearest branchy tree to the camp, take hold (E);
 ##   2. hold W: up the trunk, into the crown (how high, where it stalls);
+##      then W and D together: up and round at once;
 ##   3. Shift on the trunk: duck in against it; hands free (the bow draws);
 ##      the stick takes hold again;
 ##   4. look out along the nearest limb above you and push W: out onto it;
@@ -113,6 +114,17 @@ func _initialize() -> void:
 	face(-out)
 	player.try_climb()
 	await frames(10)
+	if not player.climbing:
+		# Why not: what the reach ray meets, how far the trunk is.
+		var from := player.global_position + player.up * 1.1
+		var fwd := player._camera_forward()
+		var q := PhysicsRayQueryParameters3D.create(from, from + fwd * PlanetPlayer.CLIMB_REACH_M * 3.0)
+		q.exclude = [player.get_rid()]
+		var hit := player.get_world_3d().direct_space_state.intersect_ray(q)
+		var rel := base - player.global_position
+		print("[climb] no hold: reach %.2f m; the foot %.2f m off (%.2f m along the look); the ray meets %s at %.2f m; ground here %.2f, alt %.2f" % [
+			PlanetPlayer.CLIMB_REACH_M, (rel - player.up * rel.dot(player.up)).length(), rel.dot(fwd), (hit.collider as Node).name if not hit.is_empty() else "nothing",
+			from.distance_to(hit.position) if not hit.is_empty() else -1.0, main.chunks.ground_height(player.surface_dir), alt()])
 	ok(player.climbing, "takes hold of the trunk (%s)" % _describe())
 	# 2. Up.
 	await press("move_forward")
@@ -133,6 +145,26 @@ func _initialize() -> void:
 	await frames(10)
 	print("[climb] up the trunk: %.1f m (of %.1f), stopped: %s" % [top, g.height_m, _describe()])
 	ok(top > g.height_m * 0.35, "climbs up into the crown (%.1f m of %.1f)" % [top, g.height_m])
+	# 2b. Diagonal: W and D together from partway up: higher and round.
+	if player.climbing:
+		await press("move_back")
+		await frames(90)
+		await release("move_back")
+		await frames(10)
+		var rel0 := player.global_position - g.base()
+		rel0 -= player.up * rel0.dot(player.up)
+		var a0 := alt()
+		await press("move_forward")
+		await press("move_right")
+		await frames(180)
+		await release("move_forward")
+		await release("move_right")
+		await frames(10)
+		var rel1 := player.global_position - g.base()
+		rel1 -= player.up * rel1.dot(player.up)
+		var turned := rel0.angle_to(rel1)
+		print("[climb] W+D for 3 s: %.1f m higher, %.0f deg round the trunk, %s" % [alt() - a0, rad_to_deg(turned), _describe()])
+		ok(alt() - a0 > 0.3 and turned > deg_to_rad(15.0), "W and D together climb up and round at once")
 	# 3. Shift: duck in against the trunk; the bow draws; the stick resumes.
 	await press("crouch")
 	await frames(3)

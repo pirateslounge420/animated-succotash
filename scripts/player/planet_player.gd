@@ -565,6 +565,7 @@ func _physics_process(delta: float) -> void:
 	spear.update_spear(delta)
 	aim_arc.update_arc()
 	_update_camera(delta)
+	_update_climb_legs()
 	if dead:
 		_dead_step(delta)
 		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
@@ -939,6 +940,30 @@ func _climb_step(delta: float) -> void:
 	_facing = -_climb_out
 	if Input.is_action_just_pressed("jump"):
 		stop_climb(true)
+
+
+## The body's legs on the tree (PlayerBody.climb_pose): hugging the trunk
+## or steep wood, astride a limb, or knees up under thin wood; ducked in
+## against the trunk like hugging it, perched on top astride.
+var _climb_last := Vector3.INF
+
+
+func _update_climb_legs() -> void:
+	if not _body is PlayerBody:
+		return
+	var pb := _body as PlayerBody
+	var pose := ""
+	if climbing:
+		pose = trees.climb.pose if _climb_graph else "trunk"
+	elif perched:
+		pose = "trunk" if _perch_local != Vector3.INF else "straddle"
+	pb.climb_pose = pose
+	if pose == "":
+		_climb_last = Vector3.INF
+		return
+	if _climb_last != Vector3.INF and climbing:
+		pb.climb_travel += minf(global_position.distance_to(_climb_last), 0.5)
+	_climb_last = global_position
 
 
 ## On a branch graph: TreeClimb moves the hands; the body goes where it

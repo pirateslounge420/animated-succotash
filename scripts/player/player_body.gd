@@ -175,6 +175,13 @@ var _cloth_mat: ShaderMaterial
 var _hips: Node3D
 var _torso: Node3D
 var _legs: Array[Node3D] = []
+## Climbing (PlanetPlayer sets it; from play: legs planted on the tree, not
+## dangling): "" off; "trunk" hugging steep wood, knees up, the feet braced
+## on the bark and stepping as you go; "straddle" astride a limb (sitting
+## on it too); "hang" under thin wood, knees drawn up. `climb_travel`: how
+## far the body has moved on the wood (m), which steps the feet.
+var climb_pose := ""
+var climb_travel := 0.0
 var _knees: Array[Node3D] = []
 var _ankles: Array[Node3D] = []
 var _elbows: Array[Node3D] = []
@@ -488,6 +495,9 @@ func _pose(delta: float) -> void:
 			_ankles[s].rotation = Vector3(0.0, 0.0, 0.0)
 		_pose_arms_rest(0.0)
 		return
+	if climb_pose != "":
+		_climb_legs(delta)
+		return
 	_update_look(delta)
 	_torso.rotation = Vector3(-0.5 * c - _lean, _torso_yaw, 0.0)
 	# The hood stays level: it turns back by the torso's lean; it turns by
@@ -501,6 +511,45 @@ func _pose(delta: float) -> void:
 		_knees[s].rotation = Vector3(-2.05 * c - lift - 0.05, 0.0, 0.0)
 		_ankles[s].rotation = Vector3(0.75 * c + 0.5 * lift - 0.3 * swing, 0.0, 0.0)
 	_pose_arms_rest(a)
+
+
+## The legs on the tree (climb_pose): a foot steps up every STEP_M of
+## travel, the other braced; the hips close in to the wood, the body leant
+## into it. (The arms are the climb's: PlanetPlayer reaches them.)
+const CLIMB_STEP_M := 0.35
+
+
+func _climb_legs(delta: float) -> void:
+	_update_look(delta)
+	var ph := climb_travel / CLIMB_STEP_M * PI
+	_hips.position = Vector3(0.0, HIP_Y - 0.12, 0.0)
+	_hips.rotation = Vector3.ZERO
+	match climb_pose:
+		"trunk":
+			_torso.rotation = Vector3(0.12, _torso_yaw * 0.5, 0.0)
+		"straddle":
+			_hips.position = Vector3(0.0, HIP_Y - 0.3, 0.05)
+			_torso.rotation = Vector3(-0.1, _torso_yaw, 0.0)
+		_:
+			_torso.rotation = Vector3(0.05, _torso_yaw * 0.5, 0.0)
+	head.rotation = Vector3(_head_pitch, _head_yaw - _torso_yaw * 0.5, 0.0)
+	for s in 2:
+		var side := -1.0 if s == 0 else 1.0
+		# 0 .. 1: this foot high (just stepped up) .. low (pushing).
+		var k := 0.5 + 0.5 * sin(ph + PI * s)
+		match climb_pose:
+			"trunk":
+				_legs[s].rotation = Vector3(0.75 + 0.55 * k, 0.0, 0.2 * side)
+				_knees[s].rotation = Vector3(-1.45 - 0.5 * k, 0.0, 0.0)
+				_ankles[s].rotation = Vector3(0.55 + 0.2 * k, 0.0, 0.0)
+			"straddle":
+				_legs[s].rotation = Vector3(1.25, 0.0, 0.6 * side)
+				_knees[s].rotation = Vector3(-1.35, 0.0, 0.0)
+				_ankles[s].rotation = Vector3(0.35, 0.0, 0.0)
+			_:
+				_legs[s].rotation = Vector3(1.05 + 0.2 * k, 0.0, 0.12 * side)
+				_knees[s].rotation = Vector3(-1.9, 0.0, 0.0)
+				_ankles[s].rotation = Vector3(0.5, 0.0, 0.0)
 
 
 ## Where the legs are in their stride, 0 .. TAU (the left leg forward at
