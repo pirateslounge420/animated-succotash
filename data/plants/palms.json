@@ -156,6 +156,48 @@
      "silhouette": "an impossibly tall thin white pole 40-60 m rising above the cloud forest with a small dark feather-duster crown",
      "confidence": "documented",
      "refs": "Wikipedia Ceroxylon quindiuense; Kew POWO; Palmpedia"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 22,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      60,
+      100
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.6,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.6
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 8,
+     "color": "#E8E8E0",
+     "color_2": "#6A6A60",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -314,6 +356,48 @@
      "silhouette": "a leaning slender grey trunk with a loose spherical crown of 25-30 arching feather fronds; nuts clustered under it",
      "confidence": "documented",
      "refs": "Wikipedia Cocos nucifera; Kew POWO; Palmpedia"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 18,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      60,
+      90
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.6,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 6,
+     "color": "#9A8A78",
+     "color_2": "#6A5A4A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -466,6 +550,48 @@
      "silhouette": "a stout rough-scaled column with a full spherical crown of stiff grey-green fronds and hanging orange fruit bunches; suckers at the base; oasis groves",
      "confidence": "documented",
      "refs": "Wikipedia Phoenix dactylifera; Kew POWO; Palmpedia"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      20,
+      40
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "plated",
+     "orientation": "diamond",
+     "depth": 0.7,
+     "scale_cm": 15,
+     "color": "#8A7A60",
+     "color_2": "#5E5040",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -618,6 +744,49 @@
      "silhouette": "the only branching palm: a trunk that forks in Ys two or three times, each fork tipped with a round tuft of fan leaves; candelabra of tufts",
      "confidence": "documented",
      "refs": "Wikipedia Hyphaene thebaica; Kew POWO; Palmpedia"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "palmate_lobed",
+     "aspect": 1.0,
+     "lobes": 15,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "spiral",
+     "size_cm": [
+      100,
+      150
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.55,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 8,
+     "color": "#8A7A68",
+     "color_2": "#5E5248",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -778,6 +947,49 @@
      "silhouette": "tall straight grey column 20-35 m with a big spherical crown of huge fan leaves; stands in flooded swamps in vast groves",
      "confidence": "documented",
      "refs": "Wikipedia Mauritia flexuosa; Kew POWO; Palmpedia"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "palmate_lobed",
+     "aspect": 1.0,
+     "lobes": 15,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "spiral",
+     "size_cm": [
+      200,
+      300
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 5,
+     "color": "#7A7060",
+     "color_2": "#5A5248",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],

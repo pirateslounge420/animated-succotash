@@ -68,7 +68,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 2.5,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.3,
+      0.8
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 0.5,
+     "color": "#5E4A3A",
+     "color_2": "#7A6450",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Net-leaved willow",
@@ -114,7 +156,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "orbicular",
+     "aspect": 1.3,
+     "base": "rounded",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1.5,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -3,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.5,
+     "autumn": "#d4b03a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.5,
+     "color": "#6E5A48",
+     "color_2": "#8A7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Snow willow",
@@ -160,7 +248,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "orbicular",
+     "aspect": 1.1,
+     "base": "rounded",
+     "apex": "rounded",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.5,
+      2
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#d8b040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.5,
+     "color": "#7A6048",
+     "color_2": "#9A8A6A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "ground": [
@@ -208,7 +342,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.85,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#c8a850"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8AA048",
+     "color_2": "#A08A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Curved sedge",
@@ -254,7 +431,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 12,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#c8a040"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#9AA848",
+     "color_2": "#A08A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Map lichen",
@@ -300,7 +520,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.2,
+     "val": 1.15,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#B8C830",
+     "color_2": "#2A2A2A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Moss campion",
@@ -346,7 +597,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "ciliate",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.4,
+      1.2
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5A9A48",
+     "color_2": "#8A7A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Mountain avens",
@@ -392,7 +685,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 2.2,
+     "base": "truncate",
+     "apex": "obtuse",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.8,
+      2.5
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.65
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#5A4636",
+     "color_2": "#8A7458",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Purple saxifrage",
@@ -438,7 +773,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 1.5,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "ciliate",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.2,
+      0.6
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.8,
+     "val": 0.8,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5A7A48",
+     "color_2": "#7A5A48",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    }
   ],
   "epiphyte": []

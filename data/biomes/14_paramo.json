@@ -68,7 +68,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      20,
+      45
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.45,
+     "val": 1.15,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#7A6A50",
+     "color_2": "#A09070",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Paramo dwarf bamboo",
@@ -114,7 +156,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "bamboo",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "ovate",
+     "aspect": 5,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      2,
+      5
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 8,
+     "color": "#8AA060",
+     "color_2": "#B0A060",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Paramo dwarf shrub",
@@ -160,7 +244,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.4,
+      1.4
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.75,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#8A5A48",
+     "color_2": "#B08A6A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Paramo puya",
@@ -206,7 +332,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "spine"
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 20,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      40,
+      80
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#7A6A58",
+     "color_2": "#A09080",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Tall frailejon",
@@ -252,7 +420,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 8,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      25,
+      50
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.45,
+     "val": 1.15,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#6E6050",
+     "color_2": "#9A8A6A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "ground": [
@@ -296,7 +506,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "rounded",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 30,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#B04A40",
+     "color_2": "#8A6030",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Cushion plant",
@@ -342,7 +594,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.5,
+      1.5
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.08,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5A9A48",
+     "color_2": "#8A8A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Paramo club moss",
@@ -384,7 +678,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 6,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.3,
+      0.6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#6A9A48",
+     "color_2": "#8A8A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Paramo lupine",
@@ -430,7 +766,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      10
+     ],
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       7,
+       11
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 5,
+      "leaflet_margin": "entire"
+     },
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.45,
+     "val": 1.15,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#8A9A80",
+     "color_2": "#B0B0A0",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Tussock grass",
@@ -476,7 +858,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      20,
+      50
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": 12,
+     "sat": 0.85,
+     "val": 1.05,
+     "underside": 0.05,
+     "autumn": "#c8b060"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#9AA850",
+     "color_2": "#B09858",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "epiphyte": []

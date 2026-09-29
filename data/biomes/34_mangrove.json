@@ -67,7 +67,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "mangrove",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.8,
+     "base": "cuneate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      10,
+      18
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "horizontal",
+     "depth": 0.35,
+     "scale_cm": 3,
+     "color": "#5A5048",
+     "color_2": "#8A4A38",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "dark grey to blackish, cracked in a horizontal-reticulate pattern; inner bark red"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Black mangrove",
@@ -112,7 +155,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "mangrove",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.8,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 2,
+     "color": "#4A4844",
+     "color_2": "#B87A3A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "dark grey to black, fissured into small scaly plates; inner bark orange"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Coconut palm",
@@ -226,7 +312,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 18,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      60,
+      90
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 6,
+     "color": "#9A8A78",
+     "color_2": "#6A5A4A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "grey-brown trunk ringed with leaf scars"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.6,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Grey mangrove",
@@ -271,7 +400,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "mangrove",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.5,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      5,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#A8A89A",
+     "color_2": "#8A9A80",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "smooth pale grey to whitish, flaking in thin patches to greenish under-bark"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.65,
+     "val": 0.95,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Mangrove apple",
@@ -321,7 +493,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "mangrove",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 1.6,
+     "base": "cuneate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 2.5,
+     "color": "#7A7468",
+     "color_2": "#5A5048",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "grey-brown, rough, fissured and flaking in small patches"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -5,
+     "sat": 0.7,
+     "val": 0.95,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Red mangrove",
@@ -371,7 +586,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "mangrove",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.0,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      6,
+      13
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.25,
+     "scale_cm": 2,
+     "color": "#7A7268",
+     "color_2": "#8A4A38",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "grey to grey-brown, smooth to shallowly fissured; inner bark red"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "White mangrove",
@@ -416,7 +674,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "mangrove",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      4,
+      9
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 2.5,
+     "color": "#8A7A6A",
+     "color_2": "#6A4A3A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "grey-brown to reddish, rough, fissured into flat ridges"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.8,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ],
   "shrub": [
@@ -463,7 +764,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.0,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#6A5E54",
+     "color_2": "#4A4038",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "dark grey-brown, deeply and roughly furrowed on old trunks"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Holly mangrove",
@@ -508,7 +852,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.0,
+     "base": "cuneate",
+     "apex": "mucronate",
+     "margin": "spinose",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      6,
+      18
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 6,
+     "color": "#6A9A50",
+     "color_2": "#8A8A70",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "soft green to grey-brown stems with paired spines at the nodes"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 3,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Mangrove fern",
@@ -553,7 +940,54 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      100,
+      300
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       20,
+       60
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 5,
+      "leaflet_margin": "entire"
+     },
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 5,
+     "color": "#7A8A50",
+     "color_2": "#5A4A38",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stout erect rhizome; thick stipes dark brown at the base"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Nipa palm",
@@ -599,7 +1033,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 15,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      60,
+      130
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 20,
+     "color": "#6A8A48",
+     "color_2": "#8A7A50",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "trunkless: prostrate rhizome with massive green petiole bases"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Orange mangrove",
@@ -644,7 +1121,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "mangrove",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.3,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      8,
+      20
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 3,
+     "color": "#6A5E54",
+     "color_2": "#9A5A38",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "grey to dark brown, rough, fissured, with large corky lenticels on the buttresses"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ],
   "ground": [
@@ -696,7 +1216,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "mangrove",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.0,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      5,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1,
+     "color": "#7A8A60",
+     "color_2": "#6A5A48",
+     "lenticels": "dots",
+     "confidence": "estimated",
+     "note": "seedling stem: smooth, green-grey with small lenticels (entry is the propagule stage)"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Saltwort",
@@ -741,7 +1304,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 2,
+     "color": "#8AB060",
+     "color_2": "#A0A080",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "sprawling yellow-green succulent stems, woody at the base"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.9,
+     "val": 1.05,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Sea purslane",
@@ -786,7 +1392,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 4.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      1.5,
+      6
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 3,
+     "color": "#8A6A5A",
+     "color_2": "#C86A78",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "succulent prostrate stems, green flushed pink-red, rooting at the nodes"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Smooth cordgrass",
@@ -836,7 +1485,52 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 35,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      60
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 10,
+     "color": "#6AA048",
+     "color_2": "#B0B078",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "smooth hollow green culms with pale nodes; the whole shoot turns straw and dies in autumn"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 3,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#C8A858",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Turtle grass",
@@ -886,7 +1580,44 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 30,
+     "base": "truncate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      15,
+      50
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "submerged; short vertical shoots from a buried rhizome"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.85,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ],
   "epiphyte": [
@@ -930,7 +1661,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.5,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 1,
+     "color": "#8A7A66",
+     "color_2": "#5A4A3A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "swollen grey-brown tuber studded with spines"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Mangrove bromeliad",
@@ -972,7 +1746,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "succulent"
+    "leaf_type": "succulent",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 10,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      30,
+      100
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 5,
+     "color": "#9AA880",
+     "color_2": "#B8785A",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "stemless tank rosette; tall red-tinged flower spike"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.55,
+     "val": 1.05,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Mangrove orchid",
@@ -1014,7 +1831,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 2.8,
+     "base": "truncate",
+     "apex": "emarginate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      4,
+      10
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 3,
+     "color": "#8AA858",
+     "color_2": "#C8B888",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "swollen yellow-green pseudobulb canes with papery sheaths at the nodes"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Strangler fig",
@@ -1121,7 +1981,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.0,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 2,
+     "color": "#9A9488",
+     "color_2": "#7A7468",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "smooth pale grey, with a lattice of aerial roots"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ]
  },

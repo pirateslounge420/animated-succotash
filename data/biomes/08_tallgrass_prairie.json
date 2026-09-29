@@ -106,6 +106,16 @@
      "mode": "short_day",
      "threshold_h": 11.0,
      "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.7,
+     "scale_cm": 4,
+     "color": "#7A7268",
+     "color_2": "#463C34",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -195,6 +205,16 @@
      "mode": "short_day",
      "threshold_h": 11.0,
      "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 2,
+     "color": "#8A7A66",
+     "color_2": "#6A5A48",
+     "lenticels": "dots",
+     "confidence": "documented"
     }
    },
    {
@@ -287,6 +307,16 @@
      "mode": "long_day",
      "threshold_h": 14.5,
      "response": "flower"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1,
+     "color": "#9A9486",
+     "color_2": "#6E5E4C",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -375,6 +405,16 @@
      "mode": "short_day",
      "threshold_h": 13.0,
      "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 30,
+     "color": "#9AAA70",
+     "color_2": "#D8CCA0",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -467,6 +507,16 @@
      "mode": "long_day",
      "threshold_h": 14.5,
      "response": "flower"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 0.5,
+     "color": "#7A5A48",
+     "color_2": "#D8C8A8",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -556,6 +606,16 @@
      "mode": "short_day",
      "threshold_h": 13.5,
      "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 20,
+     "color": "#7A9A6A",
+     "color_2": "#7A5A7A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -644,6 +704,16 @@
      "mode": "long_day",
      "threshold_h": 14.5,
      "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 10,
+     "color": "#6A8A48",
+     "color_2": "#9A8A60",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -731,6 +801,16 @@
      "mode": "short_day",
      "threshold_h": 13.5,
      "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 20,
+     "color": "#7A9A5A",
+     "color_2": "#B0A878",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -820,6 +900,16 @@
      "mode": "short_day",
      "threshold_h": 13.5,
      "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 8,
+     "color": "#7A9A88",
+     "color_2": "#A05A50",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -907,6 +997,16 @@
      "mode": "long_day",
      "threshold_h": 14.0,
      "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 10,
+     "color": "#5A8A48",
+     "color_2": "#7A5A6A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -995,6 +1095,16 @@
      "mode": "short_day",
      "threshold_h": 13.5,
      "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 20,
+     "color": "#6A9A58",
+     "color_2": "#A87A60",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],

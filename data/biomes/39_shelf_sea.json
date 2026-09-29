@@ -69,7 +69,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      100
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "brown alga: flat dichotomous fronds with a midrib and paired air bladders, drawn as straps"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "estimated",
+     "note": "holdfast and short stipe; no stem surface"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 18,
+     "sat": 0.6,
+     "val": 0.55,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Eelgrass",
@@ -119,7 +157,44 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      30,
+      120
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "submerged; leaves sheathed on a creeping rhizome"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Sea lettuce",
@@ -169,7 +244,34 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "green alga: thin translucent bright green sheets"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "alga; no stem"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.1,
+     "val": 1.1,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Sea rocket",
@@ -214,7 +316,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "aspect": 2.5,
+     "lobes": 5,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      8
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 3,
+     "color": "#6A9A50",
+     "color_2": "#8A6A70",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "fleshy sprawling green stems, often purple-tinged"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 3,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#B8A868",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Smooth cordgrass",
@@ -264,7 +412,52 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 35,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      60
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 10,
+     "color": "#6AA048",
+     "color_2": "#B0B078",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "smooth hollow green culms with pale nodes; the whole shoot turns straw and dies in autumn"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 3,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#C8A858",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Sugar kelp",
@@ -314,7 +507,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "undulate",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      100,
+      400
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "brown alga: single undivided blade with ruffled margins on a short stipe"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "estimated",
+     "note": "holdfast and short stipe; no stem surface"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.7
+    },
+    "tint": {
+     "hue_shift": 18,
+     "sat": 0.55,
+     "val": 0.55,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ],
   "epiphyte": []

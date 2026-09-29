@@ -67,7 +67,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 25,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      150,
+      400
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "kelp: 30-60 smooth strap blades to 4 m trailing from the float, drawn as straps"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.55,
+     "layering": "clumped",
+     "droop": 0.85
+    },
+    "tint": {
+     "hue_shift": 20,
+     "sat": 0.65,
+     "val": 0.65,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#7A7A30",
+     "color_2": "#5A4A20",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "alga; smooth rope-like stipe, no bark"
+    }
    },
    {
     "name": "Giant kelp",
@@ -117,7 +161,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "strap",
+     "outline": "ovate",
+     "aspect": 9,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      30,
+      90
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "kelp: corrugated toothed blades 30-90 cm alternate along the stipe, each on a gas bladder"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 18,
+     "sat": 0.65,
+     "val": 0.6,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#6A7A28",
+     "color_2": "#4A4A20",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "alga; no bark"
+    }
    },
    {
     "name": "Oarweed",
@@ -167,7 +255,52 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "strap",
+     "outline": "palmate_lobed",
+     "lobes": 8,
+     "aspect": 1.2,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      100,
+      200
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "kelp: broad blade split into 5-12 finger-like straps on a flexible stipe"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 18,
+     "sat": 0.6,
+     "val": 0.55,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#5A5A28",
+     "color_2": "#3A3A18",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "alga; no bark"
+    }
    },
    {
     "name": "Southern bull kelp",
@@ -217,7 +350,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 15,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      300,
+      1000
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "thick leathery honeycombed fronds splitting into long straps"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.9
+    },
+    "tint": {
+     "hue_shift": 20,
+     "sat": 0.65,
+     "val": 0.6,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#6A5A28",
+     "color_2": "#4A3A18",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "alga; massive holdfast, no bark"
+    }
    }
   ],
   "shrub": [
@@ -261,7 +438,44 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.2,
+      0.35
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.75,
+     "val": 0.8,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#5A4A40",
+     "color_2": "#7A6050",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Coyote brush",
@@ -303,7 +517,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 1.8,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "dentate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#7A7266",
+     "color_2": "#5A524A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Salal",
@@ -345,7 +601,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.15,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8A6A58",
+     "color_2": "#6A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Sea blite bush",
@@ -390,7 +688,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.5,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#8A8070",
+     "color_2": "#6A6050",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    }
   ],
   "ground": [
@@ -442,7 +782,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "jointed calcified red alga: pink articulated turf"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.5,
+     "val": 1.05,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#D890A8",
+     "color_2": "#E8C0D0",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Rockweed",
@@ -492,7 +864,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      40
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "brown alga: flat dichotomous fronds with a midrib, drawn as straps"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 18,
+     "sat": 0.6,
+     "val": 0.55,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#6A6A28",
+     "color_2": "#3A3A18",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "holdfast and short stipe; no stem surface"
+    }
    },
    {
     "name": "Sea palm",
@@ -542,7 +958,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "palm",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      10,
+      25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "kelp: stout stipe topped by up to 100 grooved strap blades"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 18,
+     "sat": 0.65,
+     "val": 0.7,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#6A7A28",
+     "color_2": "#4A4A20",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "alga; hollow rubbery stipe, no bark"
+    }
    },
    {
     "name": "Surfgrass",
@@ -592,7 +1052,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      30,
+      100
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#3E9A3A",
+     "color_2": "#6A5A3A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "submerged seagrass; rhizome and sheaths only"
+    }
    },
    {
     "name": "Thrift",
@@ -637,7 +1140,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      2,
+      10
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 2,
+     "color": "#5A8A48",
+     "color_2": "#8A7A60",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "epiphyte": []

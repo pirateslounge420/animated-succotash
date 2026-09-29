@@ -153,6 +153,48 @@
      "silhouette": "a gnarled small tree 10-20 m with a rounded dense dark crown; in flower a dome of red; forest-forming on Himalayan ridges",
      "confidence": "documented",
      "refs": "Wikipedia Rhododendron arboreum; Flora of China; Trees and Shrubs Online"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 3.5,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "whorled",
+     "size_cm": [
+      8,
+      20
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#A86A50",
+     "color_2": "#C89A78",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "tiered",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -301,6 +343,48 @@
      "silhouette": "a coarse open small tree 6-12 m whose giant glossy leaves in whorls read like a rubber plant in the cloud forest",
      "confidence": "documented",
      "refs": "Wikipedia Rhododendron sinogrande; Flora of China; Trees and Shrubs Online"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 2.5,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "whorled",
+     "size_cm": [
+      40,
+      100
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 3,
+     "color": "#8A6A58",
+     "color_2": "#A88A78",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "tiered",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.6
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    }
   ],
@@ -451,6 +535,48 @@
      "silhouette": "impenetrable thickets ('hells') of sprawling crooked stems 3-6 m under hemlock; a dark glossy tangle along streams",
      "confidence": "documented",
      "refs": "Wikipedia Rhododendron maximum; Flora of North America; USFS"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.5,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "whorled",
+     "size_cm": [
+      10,
+      25
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 1,
+     "color": "#8A6A58",
+     "color_2": "#6A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.15,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -599,6 +725,48 @@
      "silhouette": "a knee-high (0.5-1 m) dense evergreen heath mat above the treeline, dotted pink in bloom",
      "confidence": "documented",
      "refs": "Wikipedia Rhododendron ferrugineum; Flora Europaea; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#6A5A4E",
+     "color_2": "#4A3E34",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.2,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.4
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    }
   ],
@@ -750,6 +918,48 @@
      "silhouette": "a loose shrub 1-5 m perched on mossy branches or on the ground in montane forest; glowing orange trumpets against dark leaves",
      "confidence": "documented",
      "refs": "Wikipedia Rhododendron javanicum; Trees and Shrubs Online; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.8,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "whorled",
+     "size_cm": [
+      6,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#7A6A5A",
+     "color_2": "#5A4A3E",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    }
   ]

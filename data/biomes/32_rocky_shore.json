@@ -59,7 +59,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "fibrous",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.4
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#8A7A68",
+     "color_2": "#5A4A40",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thick grey-brown fibrous bark in vertical strips"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.3,
+     "layering": "tiered",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Sitka spruce",
@@ -101,7 +139,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "scaly",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      1.5,
+      2.5
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 3,
+     "color": "#6E6058",
+     "color_2": "#8A5A50",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thin grey-brown to purplish bark breaking into small scaly plates"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ],
   "shrub": [
@@ -145,7 +221,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 5.0,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "whorled",
+     "size_cm": [
+      1,
+      2.5
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.2,
+     "scale_cm": 0.8,
+     "color": "#8A8478",
+     "color_2": "#6A6458",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "grey-brown finely fissured woody stems"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.55,
+     "val": 1.05,
+     "underside": 0.4
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Gorse",
@@ -187,7 +306,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "adult leaves reduced to rigid green spines; effectively leafless"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 1.5,
+     "color": "#4A7A38",
+     "color_2": "#6A5A40",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "green spiny shoots; old stems brown and shredding"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Salal",
@@ -229,7 +381,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.2,
+     "scale_cm": 0.8,
+     "color": "#7A5A4A",
+     "color_2": "#9A7A60",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "slender twisted red-brown stems, shreddy on old wood"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.2,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Tree mallow",
@@ -271,7 +466,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 1.0,
+     "lobes": 7,
+     "base": "cordate",
+     "apex": "obtuse",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      6,
+      18
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#8A8070",
+     "color_2": "#6E6458",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "stout soft-wooded grey stem with leaf scars"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ],
   "ground": [
@@ -323,7 +562,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      100
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "brown alga: flat dichotomous fronds with a midrib and paired air bladders, drawn as straps"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "estimated",
+     "note": "holdfast and short stipe; no stem surface"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 18,
+     "sat": 0.6,
+     "val": 0.55,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Feather boa kelp",
@@ -373,7 +650,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "ciliate",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      200,
+      800
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "brown alga: long flattened rachis fringed with small blades and floats"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "estimated",
+     "note": "holdfast and short stipe; no stem surface"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.8
+    },
+    "tint": {
+     "hue_shift": 18,
+     "sat": 0.6,
+     "val": 0.5,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Rock samphire",
@@ -418,7 +733,56 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       9,
+       30
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 8,
+      "leaflet_margin": "entire"
+     },
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 3,
+     "color": "#7AA070",
+     "color_2": "#9AB090",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "fleshy glaucous striate stems, woody at the base"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.6,
+     "val": 1.05,
+     "underside": 0.05,
+     "autumn": "#B8A870",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Sea campion",
@@ -460,7 +824,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.0,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 2,
+     "color": "#8AA890",
+     "color_2": "#A8B8A0",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "prostrate glaucous stems, woody at the base"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.55,
+     "val": 1.05,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Sea fig",
@@ -505,7 +912,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      4,
+      7
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented",
+     "note": "leaves three-angled in section"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 5,
+     "color": "#6A9A50",
+     "color_2": "#9A6A5A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "trailing succulent stems, green becoming reddish and woody"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Sea ivory lichen",
@@ -547,7 +998,34 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "fruticose lichen: tufted grey-green strap-like branches"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "lichen thallus"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.35,
+     "val": 1.2,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Sea lettuce",
@@ -597,7 +1075,34 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "green alga: thin translucent bright green sheets"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "alga; no stem"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.1,
+     "val": 1.1,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Sea spleenwort",
@@ -642,7 +1147,54 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       16,
+       40
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 2.2,
+      "leaflet_margin": "crenate"
+     },
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1,
+     "color": "#5A3A2E",
+     "color_2": "#7A5A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "short rhizome; glossy purple-brown stipes"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    },
    {
     "name": "Thrift",
@@ -687,7 +1239,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      2,
+      10
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 2,
+     "color": "#5A8A48",
+     "color_2": "#8A7A60",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "woody rootstock under a dense cushion; leafless green flower stalks"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    }
    }
   ],
   "epiphyte": []

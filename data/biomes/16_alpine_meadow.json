@@ -68,7 +68,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "peeling",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.0,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2.5,
+      5
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 0.75,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#7A6A5A",
+     "color_2": "#9A7A5A",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Dwarf juniper",
@@ -114,7 +156,44 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "fibrous",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "whorled",
+     "size_cm": [
+      0.4,
+      1.0
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.4
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 1,
+     "color": "#7A5A48",
+     "color_2": "#9A8A78",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "ground": [
@@ -162,7 +241,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 3.5,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "arcuate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#a06a3a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A9A48",
+     "color_2": "#8A5A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Alpine wildflowers",
@@ -208,7 +331,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "palmate",
+     "arrangement": "basal",
+     "size_cm": [
+      2,
+      5
+     ],
+     "compound": {
+      "form": "dissected",
+      "leaflets": [
+       6,
+       20
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 8,
+      "leaflet_margin": "entire"
+     },
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#a08a48",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#6A9A48",
+     "color_2": "#8A8A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Edelweiss",
@@ -254,7 +425,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      1.5,
+      4
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.4,
+     "val": 1.2,
+     "underside": 0.1,
+     "autumn": "#9a9270",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8A9A80",
+     "color_2": "#B8B8A8",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Gentian",
@@ -300,7 +515,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.5,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "arcuate",
+     "arrangement": "basal",
+     "size_cm": [
+      2.5,
+      6
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.95,
+     "val": 0.85,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5A8A48",
+     "color_2": "#7A6A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Mat grass",
@@ -346,7 +603,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      5,
+      25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#d0c8a0"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8AA050",
+     "color_2": "#C0B888",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Tibetan alpine sedge",
@@ -392,7 +692,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.85,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#b89a50"
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8AA848",
+     "color_2": "#A08A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Tufted hairgrass",
@@ -434,7 +777,52 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.1,
+     "autumn": "#c8b060"
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.5,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A9A50",
+     "color_2": "#A09060",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "epiphyte": []

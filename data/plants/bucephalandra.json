@@ -157,6 +157,48 @@
      "silhouette": "dense low mat of dark glossy leaves creeping over stream rocks",
      "confidence": "documented",
      "refs": "Wikipedia Bucephalandra (genus); aquarist descriptions; Kew POWO for name"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.8,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.9,
+     "val": 0.7,
+     "underside": 0.35
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#3A5A3A",
+     "color_2": "#5A3A5A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -303,6 +345,48 @@
      "silhouette": "low iridescent blue-green cushion on stream rocks",
      "confidence": "partly",
      "refs": "Boyce, Bogner & Mayo 1995 (Aroideana, PDF not fetchable); aquarist trade descriptions; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 3.2,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      4,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.15,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -14,
+     "sat": 0.9,
+     "val": 0.65,
+     "underside": 0.35
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#2A4A4A",
+     "color_2": "#4A3A5A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -449,6 +533,48 @@
      "silhouette": "a loose clump of upright dark green paddle leaves on a river boulder",
      "confidence": "documented",
      "refs": "b-aqua.com species sheet (Bogner protologue measurements); Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 3.4,
+     "base": "cuneate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      18,
+      25
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.75,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#3A6A3A",
+     "color_2": "#6A5A4A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -595,6 +721,48 @@
      "silhouette": "a moss-like dark green fuzz on wet rock beside a fall",
      "confidence": "partly",
      "refs": "Wong & Boyce protologue (not fetchable); Kew POWO; Gardens' Bulletin Singapore rheophyte review"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 4.5,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 0.7,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#2A4A2A",
+     "color_2": "#4A4A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ],

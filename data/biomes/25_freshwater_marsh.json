@@ -67,7 +67,54 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.2,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      7,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#b8a848",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 1.5,
+     "color": "#6A5E52",
+     "color_2": "#4A3E34",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "grey-brown, smooth with lenticels on young stems, shallowly fissured and scaly on old stems"
+    }
    },
    {
     "name": "Grey willow",
@@ -116,7 +163,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.8,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      9
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented",
+     "note": "obovate to oblanceolate, dull green above, grey-tomentose beneath, margin entire to sinuate"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.5,
+     "autumn": "#c0b048",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 2,
+     "color": "#7A7670",
+     "color_2": "#5A544E",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "grey, smooth on young stems, shallowly fissured on old multi-stems"
+    }
    },
    {
     "name": "Sweet gale",
@@ -158,7 +253,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "oblanceolate, toothed only toward the apex, dotted with yellow resin glands, grey-green"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.25,
+     "autumn": "#c0a840",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A4A3A",
+     "color_2": "#A08A70",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "dark red-brown smooth stems with pale lenticels and resin glands"
+    }
    }
   ],
   "ground": [
@@ -209,7 +352,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60.0,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      100,
+      250
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented",
+     "note": "flat spongy grey-green blades 1-2.5 cm wide, 1-3 m long, two-ranked from the base (true aspect ~100)"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.75,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#c8a860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 30,
+     "color": "#7AA860",
+     "color_2": "#A8A878",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "round green flower culm inside the leaf fans"
+    }
    },
    {
     "name": "Common reed",
@@ -258,7 +447,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 15.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      20,
+      50
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented",
+     "note": "grey-green flat blades 1-4 cm wide along tall culms"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#c8b078",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 20,
+     "color": "#8AA858",
+     "color_2": "#B8B080",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "hollow jointed culms turning straw-coloured in winter; internodes ~20 cm"
+    }
    },
    {
     "name": "Reed sweet-grass",
@@ -307,7 +542,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 30.0,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      30,
+      60
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "bright green glossy keeled blades 0.7-2 cm wide with rough margins"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 1.0,
+     "val": 1.05,
+     "underside": 0.1,
+     "autumn": "#c8b860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 15,
+     "color": "#7AB050",
+     "color_2": "#A8B070",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stout hollow culms"
+    }
    },
    {
     "name": "Soft-stem bulrush",
@@ -356,7 +639,42 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "leaves reduced to basal sheaths; the round spongy grey-green culms are the photosynthetic surface (drawn by the reed shape + green_stem bark)"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.0,
+     "autumn": "#c0a870",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 40,
+     "color": "#7AA070",
+     "color_2": "#B8B090",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "terete soft grey-green culms 1-3 m, papery straw sheaths at the base"
+    }
    },
    {
     "name": "Tussock sedge",
@@ -405,7 +723,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 60.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      90
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "arching M-shaped blades 3-6 mm wide (true aspect > 100) building dense tussocks of old leaf bases"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.1,
+     "autumn": "#c0a860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 10,
+     "color": "#6A9A48",
+     "color_2": "#9A8A60",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "tussock pedestal of brown persistent leaf bases"
+    }
    },
    {
     "name": "Yellow flag iris",
@@ -454,7 +818,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "spine"
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 35.0,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      50,
+      100
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "grey-green sword leaves 1-3 cm wide with a raised midrib, in flat basal fans"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.8,
+     "val": 0.95,
+     "underside": 0.05,
+     "autumn": "#b8a860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#6A9A58",
+     "color_2": "#9A6A60",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stout flower stems; leaf bases flushed pink-brown"
+    }
    }
   ],
   "epiphyte": []

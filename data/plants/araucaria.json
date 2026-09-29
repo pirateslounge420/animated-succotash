@@ -147,6 +147,48 @@
      "silhouette": "a colossal grey untapered column bare for 20 m, then a massive rounded broad crown of thick radiating limbs; a forest cathedral pillar",
      "confidence": "documented",
      "refs": "Wikipedia Agathis australis; NZ Plant Conservation Network; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 3.0,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      4
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.85,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 8,
+     "color": "#8A8A80",
+     "color_2": "#B0A090",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -292,6 +334,48 @@
      "silhouette": "straight trunk with whorls of rope-like, upcurved snakey branches; young trees a full pyramid, old trees a bare pole with a flat-topped umbrella of tufts",
      "confidence": "documented",
      "refs": "Wikipedia Araucaria araucana; Kew POWO; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "deltoid",
+     "aspect": 1.5,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      2.5,
+      4
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "tiered",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 6,
+     "color": "#6A6A60",
+     "color_2": "#8A8878",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -435,6 +519,48 @@
      "silhouette": "the candelabra: tall bare trunk topped by a flat, wide umbrella of long upturned branches ending in tufts; unmistakable in the southern Brazilian highlands",
      "confidence": "documented",
      "refs": "Wikipedia Araucaria angustifolia; Kew POWO; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 5,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      3,
+      6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.45,
+     "layering": "tiered",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 5,
+     "color": "#7A5A48",
+     "color_2": "#5A4438",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -578,6 +704,48 @@
      "silhouette": "tall straight trunk with a dome or egg-shaped crown of layered horizontal tufted branches; from afar a dark symmetrical dome with a lumpy outline",
      "confidence": "documented",
      "refs": "Wikipedia Araucaria bidwillii; Kew POWO; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 4.5,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      2.5,
+      5
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "tiered",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.45,
+     "scale_cm": 4,
+     "color": "#5A4A3E",
+     "color_2": "#7A6A5A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -721,6 +889,43 @@
      "silhouette": "perfectly symmetrical tiered spire: whorls of horizontal branches in evenly spaced storeys, each a flat fern-like plane; a giant Christmas tree 50 m tall",
      "confidence": "documented",
      "refs": "Wikipedia Araucaria heterophylla; Kew POWO; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.4,
+      0.8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.5,
+     "layering": "tiered",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 3,
+     "color": "#7A6A5A",
+     "color_2": "#5A4A3E",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],

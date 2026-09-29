@@ -59,7 +59,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "scaly",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.6,
+      1.5
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented",
+     "note": "short stiff 4-angled blunt blue-green needles"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -14,
+     "sat": 0.7,
+     "val": 0.8,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 1.5,
+     "color": "#6A6058",
+     "color_2": "#5A6A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thin grey-brown bark in small flaky scales over olive-green inner bark"
+    }
    },
    {
     "name": "Bog pine",
@@ -101,7 +140,47 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "pine",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 2,
+     "size_cm": [
+      3,
+      6
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented",
+     "note": "paired twisted blue-green needles, short on the stunted bog form"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "plated",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 5,
+     "color": "#8A6A58",
+     "color_2": "#C87A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "lower trunk grey-brown and fissured into plates; upper trunk and branches flaking orange-red"
+    }
    },
    {
     "name": "Tamarack",
@@ -143,7 +222,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "scaly",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 8,
+     "size_cm": [
+      1.5,
+      2.5
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "soft light blue-green needles in spur tufts of 15-30 (schema caps fascicle at 8), single on long shoots; deciduous, gold in autumn"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 1.05,
+     "underside": 0.05,
+     "autumn": "#d8a020",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#7A6058",
+     "color_2": "#9A5A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thin, grey on young trees, red-brown and flaking in small scales on mature trunks"
+    }
    }
   ],
   "shrub": [
@@ -190,7 +313,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "oblanceolate, toothed only toward the apex, dotted with yellow resin glands, grey-green"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.25,
+     "autumn": "#c0a840",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A4A3A",
+     "color_2": "#A08A70",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "dark red-brown smooth stems with pale lenticels and resin glands"
+    }
    },
    {
     "name": "Bog rosemary",
@@ -232,7 +403,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 6.0,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1.5,
+      4
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented",
+     "note": "narrow leathery evergreen leaves with strongly revolute margins, blue-green above, white beneath"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.6
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.5,
+     "color": "#7A4A3A",
+     "color_2": "#9A6A50",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "slender red-brown creeping stems"
+    }
    },
    {
     "name": "Cranberry",
@@ -274,7 +489,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.5,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.3,
+      1.0
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "tiny evergreen leaves with revolute margins, dark glossy green above, whitish beneath, on wiry trailing stems"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.5,
+     "color": "#5A3A30",
+     "color_2": "#7A5A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thread-like dark red-brown creeping stems"
+    }
    },
    {
     "name": "Heather",
@@ -316,7 +575,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.2,
+      0.35
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "tiny scale leaves in four ranks, closely pressed to the twig"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.75,
+     "val": 0.8,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#5A4A40",
+     "color_2": "#7A6050",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "old woody stems dark grey-brown, rough, bark shredding in thin strips"
+    }
    },
    {
     "name": "Leatherleaf",
@@ -358,7 +656,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.6,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      5
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "leathery evergreen elliptic-oblong leaves, dull green with rusty scurfy scales, bronzing in winter"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.7,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#6A5A4A",
+     "color_2": "#8A7060",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "grey-brown stems shredding in thin strips; twigs scurfy"
+    }
    }
   ],
   "ground": [
@@ -402,7 +744,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      40
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "filiform channelled blades about 1 mm wide (true aspect > 200) in dense tussocks, russet in autumn"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.05,
+     "autumn": "#c08040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 5,
+     "color": "#7AA050",
+     "color_2": "#9A7050",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "culms with inflated bladeless sheaths; tussock of brown persistent sheaths"
+    }
    },
    {
     "name": "Deergrass",
@@ -444,7 +832,42 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "leaves reduced to basal sheaths with a 1-3 mm blade; the wiry terete culms are the plant (drawn by the tussock shape + green_stem bark), turning orange in autumn"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.0,
+     "autumn": "#c88040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 10,
+     "color": "#7AA858",
+     "color_2": "#9A7A50",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "wiry terete culms 10-40 cm, brown basal sheaths"
+    }
    },
    {
     "name": "Pitcher plant",
@@ -486,7 +909,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.0,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      8,
+      25
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "leaves are inflated decumbent pitchers with a broad erect wavy hood, green netted with purple-red veins; obovate is the nearest flat card"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "stemless rosette on a rhizome"
+    }
    },
    {
     "name": "Round-leaved sundew",
@@ -528,7 +989,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "orbicular",
+     "aspect": 0.8,
+     "base": "truncate",
+     "apex": "rounded",
+     "margin": "ciliate",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      0.4,
+      1.0
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "estimated",
+     "note": "blade wider than long on a long petiole, covered in red glandular tentacles (ciliate = the marginal tentacles); forms a winter hibernaculum"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.6,
+     "val": 0.95,
+     "underside": 0.0,
+     "autumn": "#b04030",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "dormancy"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "stemless rosette"
+    }
    },
    {
     "name": "Sphagnum moss",
@@ -570,7 +1073,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "hooded (cucullate) ovate branch leaves 1.5-2.5 mm; wine-red hummock moss"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 12,
+     "sat": 0.6,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "moss, no stem surface"
+    }
    }
   ],
   "epiphyte": []

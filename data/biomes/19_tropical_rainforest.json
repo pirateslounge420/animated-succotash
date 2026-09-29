@@ -102,6 +102,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 3,
+     "color": "#6E665C",
+     "color_2": "#4A423A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -193,6 +203,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 8,
+     "color": "#9A9C8E",
+     "color_2": "#7A806E",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -281,6 +301,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 10,
+     "color": "#B8B4A8",
+     "color_2": "#8E8A7E",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -365,6 +395,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 4,
+     "color": "#7A6E5E",
+     "color_2": "#A8904E",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ],
@@ -454,6 +494,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 10,
+     "color": "#8A8A80",
+     "color_2": "#66665C",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -540,6 +590,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 3,
+     "color": "#8A8478",
+     "color_2": "#B8A060",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -703,6 +763,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 15,
+     "color": "#8A8578",
+     "color_2": "#66625A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -791,6 +861,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 2,
+     "color": "#8A9A50",
+     "color_2": "#4A3A28",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -875,6 +955,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#6E6458",
+     "color_2": "#8A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -961,6 +1051,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#6A6058",
+     "color_2": "#463C34",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1046,6 +1146,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 5,
+     "color": "#A09C90",
+     "color_2": "#84806F",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -1132,6 +1242,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#6A9A48",
+     "color_2": "#8A6A50",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1216,6 +1336,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 35,
+     "color": "#7A9A60",
+     "color_2": "#C8C8A8",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1367,6 +1497,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#5C8A3C",
+     "color_2": "#8AAA6A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1451,6 +1591,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#5E8E3E",
+     "color_2": "#8A7A50",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1535,6 +1685,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#8A8072",
+     "color_2": "#6A6052",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1624,6 +1784,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 8,
+     "color": "#5A4A38",
+     "color_2": "#8A7A60",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1775,6 +1945,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 5,
+     "color": "#6A9A50",
+     "color_2": "#4A3A30",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1925,6 +2105,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#7AA060",
+     "color_2": "#B8C8A0",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -2013,6 +2203,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1,
+     "color": "#5A9A40",
+     "color_2": "#7AAA60",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2166,6 +2366,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#6A9A48",
+     "color_2": "#8A5A48",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2255,6 +2465,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#4A3830",
+     "color_2": "#6A5A48",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2338,6 +2558,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 2,
+     "color": "#5E9A44",
+     "color_2": "#8AAA70",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2423,6 +2653,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#6E7A5A",
+     "color_2": "#6E7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2577,6 +2817,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#6A9A48",
+     "color_2": "#8A5A48",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2734,6 +2984,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#5E9A44",
+     "color_2": "#7A5A7A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2883,6 +3143,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.6,
+     "scale_cm": 1.5,
+     "color": "#8AA060",
+     "color_2": "#4A3A2A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -2970,6 +3240,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#6E7A5A",
+     "color_2": "#6E7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3055,6 +3335,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#6E7A5A",
+     "color_2": "#6E7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3205,6 +3495,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 3,
+     "color": "#6A9A48",
+     "color_2": "#B8B858",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3290,6 +3590,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 4,
+     "color": "#7A6E5E",
+     "color_2": "#5A4E44",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -3375,6 +3685,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 5,
+     "color": "#5C8A3C",
+     "color_2": "#8A7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3527,6 +3847,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#6E7A5A",
+     "color_2": "#6E7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3612,6 +3942,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#6A9A50",
+     "color_2": "#B0A080",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3761,6 +4101,16 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#5E8E3E",
+     "color_2": "#8A6A50",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ]

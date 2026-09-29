@@ -149,6 +149,50 @@
      "silhouette": "low red-green rosette of fat tubes on sphagnum, one dark flower on a stick",
      "confidence": "documented",
      "refs": "Flora of North America, Wikipedia Sarracenia purpurea"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3,
+     "base": "attenuate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11,
+     "response": "dormancy"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#7A9A3A",
+     "color_2": "#8A3A4A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -291,6 +335,52 @@
      "silhouette": "cluster of yellow-green trumpets 1 m tall in wet pine savanna",
      "confidence": "documented",
      "refs": "Flora of North America, Wikipedia Sarracenia flava"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 8,
+     "base": "attenuate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      50,
+      90
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 14,
+     "sat": 1.0,
+     "val": 1.05,
+     "underside": 0.05,
+     "autumn": "#A8783A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11,
+     "response": "dormancy"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#A8B840",
+     "color_2": "#A83A2A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -433,6 +523,52 @@
      "silhouette": "cluster of white-topped trumpets, red-netted, in Gulf bog",
      "confidence": "documented",
      "refs": "Flora of North America, Wikipedia Sarracenia leucophylla"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 10,
+     "base": "attenuate",
+     "apex": "rounded",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      40,
+      90
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.8,
+     "val": 1.1,
+     "underside": 0.05,
+     "autumn": "#A8804A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11,
+     "response": "dormancy"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#6AA040",
+     "color_2": "#C83A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -575,6 +711,50 @@
      "silhouette": "flat star of red-green beaked tubes on wet ground",
      "confidence": "documented",
      "refs": "Flora of North America, Wikipedia Sarracenia psittacina"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      8,
+      20
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11,
+     "response": "dormancy"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#7AA83A",
+     "color_2": "#B03A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -729,6 +909,48 @@
      "silhouette": "sprawling green rosette-climber with huge dark red urns sitting on mossy ground",
      "confidence": "documented",
      "refs": "Wikipedia Nepenthes rajah, Clarke Nepenthes of Borneo"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 3,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      25,
+      50
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 3,
+     "color": "#6A8A4A",
+     "color_2": "#7A3A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -879,6 +1101,48 @@
      "silhouette": "thin scrambling green tangle over heath with dangling little green-red flasks",
      "confidence": "documented",
      "refs": "Wikipedia Nepenthes gracilis, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 6,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      6,
+      14
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 5,
+     "color": "#6A9A48",
+     "color_2": "#8A5A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1029,6 +1293,48 @@
      "silhouette": "pale green scrambler in wet grass with hanging green-pink pitchers",
      "confidence": "documented",
      "refs": "Wikipedia Nepenthes mirabilis, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      12,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 5,
+     "color": "#6AA050",
+     "color_2": "#A8604A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1179,6 +1485,52 @@
      "silhouette": "tiny red-sparkling rosette 5 cm across on sphagnum",
      "confidence": "documented",
      "refs": "Flora of North America, Wikipedia Drosera rotundifolia"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "orbicular",
+     "aspect": 0.8,
+     "base": "truncate",
+     "apex": "rounded",
+     "margin": "ciliate",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      0.4,
+      1.0
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.1,
+     "autumn": "#B03A2A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12,
+     "response": "dormancy"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8AB04A",
+     "color_2": "#C83A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1329,6 +1681,48 @@
      "silhouette": "loose 15 cm mop of red-fringed straps with pink flower stalk",
      "confidence": "documented",
      "refs": "Wikipedia Drosera capensis, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 8,
+     "base": "attenuate",
+     "apex": "rounded",
+     "margin": "ciliate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      7
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7AA848",
+     "color_2": "#6A4A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1479,6 +1873,51 @@
      "silhouette": "erect forked red-green antlers 30 cm above swamp",
      "confidence": "documented",
      "refs": "Wikipedia Drosera binata, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 3,
+     "lobes": 2,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.1,
+     "autumn": "#9A5A3A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7AA848",
+     "color_2": "#A83A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1629,6 +2068,50 @@
      "silhouette": "red sparkle dots on bare sand, barely visible",
      "confidence": "documented",
      "refs": "Wikipedia Drosera pygmaea, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "orbicular",
+     "aspect": 1.0,
+     "base": "truncate",
+     "apex": "rounded",
+     "margin": "ciliate",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      0.1,
+      0.3
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 10.5,
+     "response": "bud_set"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.3,
+     "color": "#7AA848",
+     "color_2": "#C83A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1779,6 +2262,50 @@
      "silhouette": "small green-red rosette of open jaws 10-15 cm across on wet sand",
      "confidence": "documented",
      "refs": "Flora of North America, Wikipedia Dionaea muscipula"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.5,
+     "base": "attenuate",
+     "apex": "rounded",
+     "margin": "spinose",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11,
+     "response": "dormancy"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7AB848",
+     "color_2": "#C83A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ],
@@ -1931,6 +2458,48 @@
      "silhouette": "climbing green stem in mossy trees with odd waisted olive-brown goblets",
      "confidence": "documented",
      "refs": "Wikipedia Nepenthes lowii, Clarke Nepenthes of Borneo"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 3,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      15,
+      30
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#7A6A50",
+     "color_2": "#5A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ]

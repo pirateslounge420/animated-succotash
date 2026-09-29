@@ -149,6 +149,52 @@
      "silhouette": "slender 10 m trunk with an umbrella of fronds silver on the underside",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       50,
+       90
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      200,
+      400
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.95,
+     "val": 0.8,
+     "underside": 0.8
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 6,
+     "color": "#4A3A30",
+     "color_2": "#8A7A60",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -292,6 +338,52 @@
      "silhouette": "tall slender trunk with a wide bright green lacy crown",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       50,
+       90
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      200,
+      400
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 8,
+     "color": "#6A5A48",
+     "color_2": "#C8B088",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -435,6 +527,52 @@
      "silhouette": "short massive furry brown trunk with a broad dark green crown",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       50,
+       90
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 5,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      200,
+      400
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.95,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.8,
+     "scale_cm": 2,
+     "color": "#6A4A30",
+     "color_2": "#3A2A18",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -573,6 +711,54 @@
      "silhouette": "knee-high to head-high green (autumn orange-brown) mass covering whole hillsides",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "tripinnate",
+      "leaflets": [
+       12,
+       24
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3,
+      "leaflet_margin": "entire"
+     },
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      50,
+      200
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "tiered",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#B8702A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#6A8A3A",
+     "color_2": "#3A2A1A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -708,6 +894,52 @@
      "silhouette": "dark green shuttlecocks 1 m tall carpeting conifer floor",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       60,
+       120
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      50,
+      150
+     ],
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 1.0,
+     "val": 0.75,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#6A6A3A",
+     "color_2": "#7A5A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -843,6 +1075,54 @@
      "silhouette": "soft light green lacy tufts by streams",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       40,
+       80
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 4,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      100
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.15,
+     "autumn": "#C8A83A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7AA848",
+     "color_2": "#7A4A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -980,6 +1260,54 @@
      "silhouette": "tight tall green vases 1.5 m in floodplain woods",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       60,
+       120
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 6,
+      "leaflet_margin": "crenate"
+     },
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      100,
+      170
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#B89A3A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A9A40",
+     "color_2": "#4A3A2A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1121,6 +1449,54 @@
      "silhouette": "big rounded 1.5 m clump with brown flower-like tassels",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       10,
+       18
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 3.5,
+      "leaflet_margin": "entire"
+     },
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      100,
+      200
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#C8A040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#7AA858",
+     "color_2": "#8A5A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1258,6 +1634,52 @@
      "silhouette": "airy green mist of tiny fans on black threads over wet rock",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       30,
+       80
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.0,
+      "leaflet_margin": "crenate"
+     },
+     "venation": "dichotomous",
+     "arrangement": "basal",
+     "size_cm": [
+      15,
+      40
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#3A2A2A",
+     "color_2": "#1A1414",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1393,6 +1815,52 @@
      "silhouette": "flat dark green rosette 40 cm with upright brown quills",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       60,
+       120
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 5,
+      "leaflet_margin": "entire"
+     },
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      20,
+      50
+     ],
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 1.0,
+     "val": 0.75,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#4A6A3A",
+     "color_2": "#4A3A2A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1526,6 +1994,43 @@
      "silhouette": "pond surface carpeted red-green like paint",
      "confidence": "documented",
      "refs": "Wikipedia Azolla filiculoides, Kew POWO"
+    },
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.1,
+      0.2
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 0.3,
+     "color": "#7AA848",
+     "color_2": "#B84A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ],
@@ -1663,6 +2168,48 @@
      "silhouette": "big bright green funnel on a trunk or fork",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 7,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      60,
+      150
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#5A8A48",
+     "color_2": "#2A2020",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1798,6 +2345,49 @@
      "silhouette": "grey-green antlers hanging from a brown shield on a trunk",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 2.5,
+     "lobes": 4,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "lobed",
+     "venation": "dichotomous",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      90
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.8
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 3,
+     "color": "#7A8A60",
+     "color_2": "#6A5A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1933,6 +2523,52 @@
      "silhouette": "green fur along oak limbs, brown when dry",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       10,
+       30
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 4,
+      "leaflet_margin": "entire"
+     },
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      20
+     ],
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.4
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#5A8A48",
+     "color_2": "#8A7A60",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -2069,6 +2705,54 @@
      "silhouette": "green lace draped over shrubs and fences",
      "confidence": "documented",
      "refs": "Wikipedia, Kew POWO, Flora of North America"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       20,
+       80
+      ],
+      "leaflet_outline": "deltoid",
+      "leaflet_aspect": 1.3,
+      "leaflet_margin": "serrate"
+     },
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      200,
+      600
+     ],
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#A8803A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#6A9A48",
+     "color_2": "#5A4A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -2196,6 +2880,37 @@
      "silhouette": "a green tuft of forking twigs, like a small green whisk broom",
      "confidence": "documented",
      "refs": "Wikipedia Psilotum nudum, Kew POWO"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6AA048",
+     "color_2": "#C8B040",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ]

@@ -69,7 +69,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 5,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "brown alga: serrate leaf-like blades with round bladders, drawn as small leaves"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 20,
+     "sat": 0.7,
+     "val": 0.7,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#8A7A28",
+     "color_2": "#5A4A18",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "floating alga; no stem surface"
+    }
    },
    {
     "name": "Pelagic sargassum",
@@ -119,7 +163,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 10,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      5
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "brown alga: narrow toothed blades, bladders spine-tipped; drawn as small leaves"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 20,
+     "sat": 0.75,
+     "val": 0.75,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#9A8A30",
+     "color_2": "#6A5A20",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "floating alga; no stem surface"
+    }
    }
   ],
   "epiphyte": []

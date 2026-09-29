@@ -60,7 +60,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.9,
+     "val": 1.05,
+     "underside": 0.05,
+     "autumn": "#C8B050",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 3,
+     "color": "#B8B4A8",
+     "color_2": "#7A6A58",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Iodine bush",
@@ -102,7 +146,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.1,
+      0.2
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented",
+     "note": "leaves reduced to minute fleshy scales on succulent jointed branchlets"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.75,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.5,
+     "color": "#7A9A70",
+     "color_2": "#8A7060",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Nitre bush",
@@ -144,7 +226,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.5,
+     "base": "attenuate",
+     "apex": "emarginate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#B8B4A8",
+     "color_2": "#7A7264",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Saltcedar",
@@ -186,7 +310,46 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.15,
+      0.35
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.45,
+     "layering": "sparse",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#d8a040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 1.5,
+     "color": "#5A4A44",
+     "color_2": "#8A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Shrubby seablite",
@@ -228,7 +391,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.5,
+      1.8
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.6,
+     "val": 0.9,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.25,
+     "scale_cm": 0.8,
+     "color": "#7A7066",
+     "color_2": "#5A5048",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "ground": [
@@ -272,7 +477,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "oblong",
+     "aspect": 3,
+     "base": "attenuate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.3,
+      1
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "margins rolled under, often salt-crusted"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.55,
+     "val": 0.95,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 0.5,
+     "color": "#8A7E70",
+     "color_2": "#6A6058",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Glasswort",
@@ -317,7 +565,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.4
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented",
+     "note": "leaves reduced to opposite fleshy scales fused around the jointed stem"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 1.05,
+     "underside": 0.0,
+     "autumn": "#C84A3A",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#6AB848",
+     "color_2": "#9AD070",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Halocnemum",
@@ -359,7 +649,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented",
+     "note": "knobby cone-like succulent joints"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.6,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 0.4,
+     "color": "#8AA080",
+     "color_2": "#6E6A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Pickleweed",
@@ -404,7 +732,47 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.4
+     ],
+     "compound": null,
+     "texture": "succulent",
+     "confidence": "documented",
+     "note": "leaves reduced to opposite fleshy scales fused around the jointed stem"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#7AA850",
+     "color_2": "#8A7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Saltgrass",
@@ -446,7 +814,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 20,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      2,
+      10
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.65,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#C8B878",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 2,
+     "color": "#8A9A68",
+     "color_2": "#B0A878",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "epiphyte": []

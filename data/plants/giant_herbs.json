@@ -162,6 +162,48 @@
      "silhouette": "a banana the size of a tree: a pale waxy green column with a shaggy crown of torn 5 m blades",
      "confidence": "documented",
      "refs": "Wikipedia Musa ingens; Kew POWO"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "oblong",
+     "aspect": 4.5,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      300,
+      500
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 30,
+     "color": "#7A9A7A",
+     "color_2": "#C8D8C8",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ],
@@ -323,6 +365,48 @@
      "silhouette": "2-3 m clump of upright glossy arrowheads on a short trunk",
      "confidence": "documented",
      "refs": "Wikipedia Alocasia macrorrhizos; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "sagittate",
+     "aspect": 1.5,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      100,
+      200
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.35,
+     "layering": "tiered",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 5,
+     "color": "#6B7A4A",
+     "color_2": "#A89A7A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -480,6 +564,48 @@
      "silhouette": "1-2 m clump of matte grey-green upright ears",
      "confidence": "documented",
      "refs": "Wikipedia Alocasia odora; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "peltate",
+     "aspect": 1.3,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      50,
+      130
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.35,
+     "layering": "tiered",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.8,
+     "val": 0.95,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.35,
+     "scale_cm": 4,
+     "color": "#6B7A4A",
+     "color_2": "#A89A7A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -639,6 +765,48 @@
      "silhouette": "clumping fountain of torn green blades on brown-blotched stems in a forest gap",
      "confidence": "documented",
      "refs": "Wikipedia Musa acuminata; Kew POWO"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "oblong",
+     "aspect": 4,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      150,
+      250
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 1.0,
+     "val": 0.95,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 30,
+     "color": "#6B9A4A",
+     "color_2": "#3A2A1A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -796,6 +964,48 @@
      "silhouette": "waxy pale-green clump of stiff broad blades on the monsoon forest edge",
      "confidence": "documented",
      "refs": "Wikipedia Musa balbisiana; Kew POWO"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "oblong",
+     "aspect": 4,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      150,
+      300
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 1.0,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 30,
+     "color": "#8FBF8A",
+     "color_2": "#D8E8D8",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -953,6 +1163,48 @@
      "silhouette": "a single fat red-veined banana on a bottle-shaped base, leaves held stiffly upright",
      "confidence": "documented",
      "refs": "Wikipedia Ensete ventricosum; Kew POWO"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "oblong",
+     "aspect": 4,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      300,
+      500
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 40,
+     "color": "#6B9A4A",
+     "color_2": "#A83A3A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ],
@@ -1100,6 +1352,48 @@
      "silhouette": "a bundle of tiger-striped stalks with glossy green arrowheads on top",
      "confidence": "documented",
      "refs": "Wikipedia Alocasia zebrina; horticultural descriptions; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "sagittate",
+     "aspect": 1.6,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      60
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "tiered",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 1.0,
+     "val": 0.75,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 2,
+     "color": "#B8A868",
+     "color_2": "#2A2A20",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1254,6 +1548,48 @@
      "silhouette": "waist-high clump of nodding matte heart leaves standing in water",
      "confidence": "documented",
      "refs": "Wikipedia Colocasia esculenta; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "peltate",
+     "aspect": 1.4,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      80
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.35,
+     "layering": "tiered",
+     "droop": 0.5
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.95,
+     "val": 0.8,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 3,
+     "color": "#6A8A4A",
+     "color_2": "#6A3A6A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ],

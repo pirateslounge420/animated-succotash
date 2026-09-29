@@ -106,6 +106,17 @@
      "mode": "short_day",
      "threshold_h": 11.0,
      "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#8A6A50",
+     "color_2": "#6A4A38",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thin red-brown to grey-brown fibrous bark shredding in long vertical strips; fluted buttressed base"
     }
    },
    {
@@ -196,6 +207,17 @@
      "mode": "short_day",
      "threshold_h": 11.0,
      "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.7,
+     "scale_cm": 4,
+     "color": "#4A3A2E",
+     "color_2": "#6A5040",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "dark brown to blackish, deeply furrowed into thick flat interlacing ridges, shaggy with age"
     }
    },
    {
@@ -284,6 +306,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 15,
+     "color": "#8A7A68",
+     "color_2": "#6A5A48",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "trunk clothed in criss-cross persistent leaf bases (bootjacks) when young, smooth grey and ringed with leaf scars when old"
     }
    },
    {
@@ -447,6 +480,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 20,
+     "color": "#8A8478",
+     "color_2": "#6A6458",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "smooth grey columnar trunk ringed with leaf scars"
     }
    },
    {
@@ -536,6 +580,17 @@
      "mode": "short_day",
      "threshold_h": 11.0,
      "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#7A6A5A",
+     "color_2": "#5A4A3E",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thicker and more deeply furrowed than bald cypress; grey-brown fibrous ridges"
     }
    },
    {
@@ -623,6 +678,17 @@
      "mode": "short_day",
      "threshold_h": 11.0,
      "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 4,
+     "color": "#7A6A5A",
+     "color_2": "#9A5A3A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "grey-brown, exfoliating in large thin scales that expose red-brown inner bark"
     }
    },
    {
@@ -717,6 +783,17 @@
      "mode": "short_day",
      "threshold_h": 11.0,
      "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#6A6058",
+     "color_2": "#4A4038",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "dark brown to grey, thin, shallowly furrowed with thin scaly ridges; swollen buttressed base"
     }
    }
   ],
@@ -813,6 +890,17 @@
      "mode": "short_day",
      "threshold_h": 11.0,
      "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 1.5,
+     "color": "#6A5E52",
+     "color_2": "#4A3E34",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "grey-brown, smooth with lenticels on young stems, shallowly fissured and scaly on old stems"
     }
    },
    {
@@ -895,6 +983,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 20,
+     "color": "#8AA850",
+     "color_2": "#B0A060",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "hollow green to yellow-green culms with a raised ring at each node, internodes 10-30 cm"
     }
    },
    {
@@ -983,6 +1082,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 8,
+     "color": "#7A6A58",
+     "color_2": "#5A4A3A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "creeping trunk matted with persistent fibrous leaf bases"
     }
    },
    {
@@ -1070,6 +1180,17 @@
      "mode": "short_day",
      "threshold_h": 11.0,
      "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#6A5040",
+     "color_2": "#8A6A50",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "slender arching red-brown stems with small lenticels"
     }
    },
    {
@@ -1154,6 +1275,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 2,
+     "color": "#8A8478",
+     "color_2": "#A8A498",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thin smooth grey to grey-brown bark with paler blotches"
     }
    }
   ],
@@ -1235,6 +1367,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#8A6A50",
+     "color_2": "#6A4A38",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "knee bark thinner and smoother than the trunk but still fibrous, red-brown weathering grey"
     }
    },
    {
@@ -1325,6 +1468,11 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "floating thalli, no stem"
     }
    },
    {
@@ -1415,6 +1563,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#5C8A3C",
+     "color_2": "#7A9A50",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "jointed green stems, swollen at the nodes"
     }
    },
    {
@@ -1505,6 +1664,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 4,
+     "color": "#5A9A48",
+     "color_2": "#7AB060",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "smooth green petioles and flower scapes"
     }
    },
    {
@@ -1594,6 +1764,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#6A9A48",
+     "color_2": "#9A7A5A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stipes pinkish-tan and woolly at the base, green above; short erect rhizome"
     }
    },
    {
@@ -1751,6 +1932,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 3,
+     "color": "#5A9A48",
+     "color_2": "#8A5A6A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stout green petioles, often flushed purple toward the base"
     }
    },
    {
@@ -1841,6 +2033,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#6AB050",
+     "color_2": "#9AC870",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "inflated spongy petioles, pale green"
     }
    }
   ],
@@ -1927,6 +2130,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#7A9A50",
+     "color_2": "#B0A070",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "clustered olive-green pseudobulbs with papery tan sheaths"
     }
    },
    {
@@ -2067,6 +2281,11 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "leafless; a fan of flat grey-green photosynthetic roots pressed to the host bark, no stem"
     }
    },
    {
@@ -2155,6 +2374,17 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A8A48",
+     "color_2": "#8A7A58",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "creeping rhizome clothed in brown scales; short green stipes"
     }
    },
    {
@@ -2240,6 +2470,11 @@
     },
     "photoperiod": {
      "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "thread-like grey scurfy stems, no bark; the strand is drawn by the leaf tint"
     }
    }
   ]

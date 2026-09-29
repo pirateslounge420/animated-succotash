@@ -122,7 +122,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.2,
+     "base": "cuneate",
+     "apex": "rounded",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "coriaceous obovate leaves crowded at twig tips; genus has crenulate margins"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.8,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 1.5,
+     "color": "#6E5244",
+     "color_2": "#8A6650",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    }
   ],
   "shrub": [
@@ -225,7 +268,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "spine"
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      100,
+      200
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 5,
+     "color": "#7A6A5A",
+     "color_2": "#5A4A3A",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "tree-like stem clothed in old leaf bases"
+    }
    },
    {
     "name": "Tepui clusia",
@@ -326,7 +412,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 1.8,
+     "base": "cuneate",
+     "apex": "rounded",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      4,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "thick leathery leaves with many close parallel side veins"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.75,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7A7268",
+     "color_2": "#5A5248",
+     "lenticels": "dots",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Tepui myrtle",
@@ -427,7 +556,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.0,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      8
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.85,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7A6E62",
+     "color_2": "#5A5048",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Tepui stegolepis",
@@ -528,7 +699,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "spine"
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 15,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      50,
+      150
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "stiff sword-shaped equitant leaves in a fan (Rapateaceae)"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 0.9,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#6A8A5A",
+     "color_2": "#6A5A48",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Tepui tree fern",
@@ -629,7 +843,54 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      200,
+      300
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       40,
+       70
+      ],
+      "leaflet_outline": "pinnate_lobed",
+      "leaflet_aspect": 5.0,
+      "leaflet_margin": "lobed"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 5,
+     "color": "#4A3A2E",
+     "color_2": "#8A6A4A",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "old stipe bases and root mantle; stipes spiny (pungens)"
+    }
    }
   ],
   "ground": [
@@ -740,7 +1001,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "spine"
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 8,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      20,
+      50
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented",
+     "note": "erect overlapping leaves form a waxy yellow-green tank"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 14,
+     "sat": 0.9,
+     "val": 1.1,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#A0B860",
+     "color_2": "#7A6A50",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Giant sun pitcher",
@@ -846,7 +1150,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "obovate",
+     "aspect": 4,
+     "base": "attenuate",
+     "apex": "truncate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      20,
+      50
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "each leaf is a funnel-shaped pitcher with a nectar spoon, drawn as a flared strap"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 2,
+     "color": "#7A9A58",
+     "color_2": "#8A5A48",
+     "lenticels": "none",
+     "confidence": "estimated",
+     "note": "erect stems clothed in old pitcher bases"
+    }
    },
    {
     "name": "Rock lichen",
@@ -947,7 +1295,39 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "shrubby reindeer lichen"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.35,
+     "val": 1.1,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#B0C0A0",
+     "color_2": "#B0C0A0",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Roraima sundew",
@@ -1053,7 +1433,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 4,
+     "base": "attenuate",
+     "apex": "rounded",
+     "margin": "ciliate",
+     "venation": "none",
+     "arrangement": "basal",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented",
+     "note": "red glandular tentacles fringe the narrow blade"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 30,
+     "sat": 1.0,
+     "val": 0.85,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#8A3A3A",
+     "color_2": "#5A4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Summit moss",
@@ -1154,7 +1577,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.5,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.1,
+      0.25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "hooded ovate branch leaves; wine-red hummock moss"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 30,
+     "sat": 0.7,
+     "val": 0.85,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#B04A40",
+     "color_2": "#8A6030",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Sun pitcher",
@@ -1260,7 +1726,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "obovate",
+     "aspect": 3,
+     "base": "attenuate",
+     "apex": "truncate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "funnel pitcher constricted mid-way, red nectar spoon; drawn as a flared strap"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7A9A58",
+     "color_2": "#8A5A48",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Tepui bromeliad",
@@ -1361,7 +1870,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "spine"
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.55,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7A9A7A",
+     "color_2": "#6A5A48",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Tepui cushion",
@@ -1462,7 +2013,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "moss"
+    "leaf_type": "moss",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7AA070",
+     "color_2": "#8A7A60",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Tepui orectanthe",
@@ -1563,7 +2156,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "furry",
-    "leaf_type": "spine"
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 25,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      30,
+      80
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "estimated",
+     "note": "stiff sword leaves in an equitant fan; sceptre-headed scape"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.8,
+     "val": 0.95,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#6A9A5A",
+     "color_2": "#8A7A58",
+     "lenticels": "none",
+     "confidence": "estimated"
+    }
    }
   ],
   "epiphyte": [
@@ -1672,7 +2308,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.6,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "basal",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "estimated",
+     "note": "long-stalked emergent leaves from stolons in a bromeliad tank"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#5A8A5A",
+     "color_2": "#8060C0",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "submerged stolons in a tank; no stem surface"
+    }
    }
   ]
  },

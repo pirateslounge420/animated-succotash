@@ -152,6 +152,48 @@
      "silhouette": "broad dense dark pyramid to rounded dome, foliage to the ground, glossy highlights; huge white flowers dotted on the canopy in early summer",
      "confidence": "documented",
      "refs": "Wikipedia Magnolia grandiflora; Flora of North America; Missouri Botanical Garden"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.0,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      12,
+      25
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 2,
+     "color": "#8A8278",
+     "color_2": "#6A6258",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "pyramidal",
+     "gap": 0.2,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.85,
+     "val": 0.7,
+     "underside": 0.35
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -299,6 +341,50 @@
      "silhouette": "small to medium rounded tree, often multi-stemmed, a cloud of white cups on bare grey branches in early spring, then a leafy dome",
      "confidence": "documented",
      "refs": "Wikipedia Magnolia denudata; Flora of China; Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 1.7,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      10,
+      18
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 2,
+     "color": "#8A8A82",
+     "color_2": "#6E6E66",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.25,
+     "autumn": "#c8a848",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -446,6 +532,50 @@
      "silhouette": "tall broad-crowned forest tree 20-30 m; in flower a leafless canopy stippled entirely pink against the cloud forest",
      "confidence": "documented",
      "refs": "Wikipedia Magnolia campbellii; Flora of China; Trees and Shrubs Online"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.0,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      15,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#7A7A72",
+     "color_2": "#5E5E56",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.25,
+     "autumn": "#c0a040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    },
    {
@@ -593,6 +723,51 @@
      "silhouette": "the tallest eastern hardwood: a huge straight columnar trunk clear of branches for 25 m, narrow oblong crown; a bare mast in winter with upright cone clusters",
      "confidence": "documented",
      "refs": "Wikipedia Liriodendron tulipifera; Flora of North America; USFS Silvics"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 1.0,
+     "base": "truncate",
+     "apex": "emarginate",
+     "margin": "lobed",
+     "lobes": 4,
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      8,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "diamond",
+     "depth": 0.55,
+     "scale_cm": 4,
+     "color": "#8A8078",
+     "color_2": "#5A5048",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 1.0,
+     "val": 1.0,
+     "underside": 0.25,
+     "autumn": "#e8c830",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
     }
    }
   ],

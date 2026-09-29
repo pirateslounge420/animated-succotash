@@ -62,7 +62,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "deltoid",
+     "aspect": 0.9,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      8
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 0.95,
+     "val": 1.05,
+     "underside": 0.15,
+     "autumn": "#e8c830",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "bud_set"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.65,
+     "scale_cm": 4,
+     "color": "#A09888",
+     "color_2": "#5A5048",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Gambel oak",
@@ -108,7 +154,52 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "lobes": 7,
+     "aspect": 1.7,
+     "base": "cuneate",
+     "apex": "rounded",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      6,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.3,
+     "autumn": "#c8702a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#7A7468",
+     "color_2": "#4E4840",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Netleaf hackberry",
@@ -150,7 +241,52 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.8,
+     "base": "oblique",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "thick rough leaves, prominently net-veined beneath"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.2,
+     "autumn": "#d0b848",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "warty",
+     "orientation": "none",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#8A847A",
+     "color_2": "#5A5448",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Two-needle pinyon",
@@ -196,7 +332,45 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "pine",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "fascicled",
+     "fascicle": 2,
+     "size_cm": [
+      2,
+      4.5
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.75,
+     "val": 0.8,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#7A6A5C",
+     "color_2": "#9A5A40",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Utah juniper",
@@ -242,7 +416,44 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "fibrous",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.1,
+      0.3
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 1.5,
+     "color": "#9A9080",
+     "color_2": "#6E5A48",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "shrub": [
@@ -286,7 +497,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.5,
+     "base": "attenuate",
+     "apex": "truncate",
+     "margin": "dentate",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      1,
+      4
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented",
+     "note": "wedge-shaped leaves 3-toothed at the tip, silver-felted"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.45,
+     "val": 1.05,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.6,
+     "scale_cm": 1,
+     "color": "#8A8070",
+     "color_2": "#5A4A3C",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Blackbrush",
@@ -328,7 +582,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3.5,
+     "base": "attenuate",
+     "apex": "mucronate",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      0.4,
+      1.5
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.5,
+     "val": 0.9,
+     "underside": 0.1,
+     "autumn": "#9A9070",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 2,
+     "color": "#6E6A66",
+     "color_2": "#3A3A38",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Cliffrose",
@@ -370,7 +668,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "lobes": 5,
+     "aspect": 1.5,
+     "base": "cuneate",
+     "apex": "obtuse",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      0.5,
+      2
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "tiny wedge leaves 3-7-lobed, resinous above, white-felted beneath"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.5
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 1,
+     "color": "#8A7A6A",
+     "color_2": "#9A5A40",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Coyote willow",
@@ -415,7 +757,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      4,
+      12
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "fastigiate",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.6,
+     "val": 1.05,
+     "underside": 0.3,
+     "autumn": "#d0b848",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 13.0,
+     "response": "bud_set"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#8A7E70",
+     "color_2": "#6A5A48",
+     "lenticels": "dots",
+     "confidence": "estimated"
+    }
    },
    {
     "name": "Green Mormon tea",
@@ -457,7 +845,40 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented",
+     "note": "leaves reduced to 2-4 mm scales; green jointed stems photosynthesise"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.25,
+     "scale_cm": 3,
+     "color": "#5A9A48",
+     "color_2": "#8A8060",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "jointed bright-green stems, internodes 2-5 cm with brown scale-leaf nodes"
+    }
    },
    {
     "name": "Prickly pear",
@@ -499,7 +920,38 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "cactus",
-    "leaf_type": "spine"
+    "leaf_type": "spine",
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.95,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "spiny",
+     "orientation": "none",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#6A9A5A",
+     "color_2": "#E8E0C8",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "ground": [
@@ -543,7 +995,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "lobes": 3,
+     "aspect": 1.1,
+     "base": "truncate",
+     "apex": "obtuse",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      1.5,
+      5
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.5,
+     "val": 1.05,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#8A9A80",
+     "color_2": "#A08A70",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Galleta grass",
@@ -585,7 +1080,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 30,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      3,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.65,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#C4B48C",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#8A9A78",
+     "color_2": "#B8A890",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Indian ricegrass",
@@ -627,7 +1166,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 60,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.6,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.7,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#D4C48A",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 8,
+     "color": "#8A9A70",
+     "color_2": "#C8B888",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Maidenhair fern",
@@ -672,7 +1257,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "dichotomous",
+     "arrangement": "basal",
+     "size_cm": [
+      15,
+      40
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       20,
+       60
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 1.0,
+      "leaflet_margin": "crenate"
+     },
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "fan-shaped pinnules on black wiry stipes"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.55,
+     "layering": "sparse",
+     "droop": 0.6
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 0.5,
+     "color": "#3A2A2A",
+     "color_2": "#1A1414",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "stipes black and wiry"
+    }
    },
    {
     "name": "Sand dropseed",
@@ -714,7 +1347,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      8,
+      25
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.8,
+     "val": 1.0,
+     "underside": 0.05,
+     "autumn": "#C8B878",
+     "drop": false
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 5,
+     "color": "#8AA070",
+     "color_2": "#C0B080",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    },
    {
     "name": "Scarlet monkeyflower",
@@ -759,7 +1436,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "palmate",
+     "arrangement": "opposite",
+     "size_cm": [
+      2,
+      8
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.95,
+     "val": 1.05,
+     "underside": 0.15,
+     "autumn": "#b8a860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#7AA050",
+     "color_2": "#8A6A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    }
    }
   ],
   "epiphyte": []

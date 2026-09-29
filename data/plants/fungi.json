@@ -151,6 +151,37 @@
      "silhouette": "shelves of striped fans on a log",
      "confidence": "documented",
      "refs": "Wikipedia Trametes versicolor; Phillips"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.15,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.59,
+     "val": 0.89,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -298,6 +329,37 @@
      "silhouette": "grey hooves stuck to a birch snag",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.32,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -445,6 +507,37 @@
      "silhouette": "pale buns jutting from a birch trunk",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.32,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -592,6 +685,37 @@
      "silhouette": "blaze of orange-yellow shelves on an oak",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.15,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.49,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -743,6 +867,37 @@
       "colour": "#8ac878",
       "part": "mycelium in wood, faint"
      }
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.03,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -890,6 +1045,37 @@
      "silhouette": "grey shells stacked up a beech log",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.2,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1037,6 +1223,37 @@
      "silhouette": "brown caps on a fallen oak",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.12,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1184,6 +1401,37 @@
      "silhouette": "dense bright yellow tuft on a stump",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.21,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1331,6 +1579,37 @@
      "silhouette": "glossy orange cluster on a frosty snag",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.31,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1478,6 +1757,37 @@
      "silhouette": "huge flat grey shelf on an old snag",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.52,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1625,6 +1935,37 @@
      "silhouette": "shiny red fan on a stalk at a tree base",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.15,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.42,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1772,6 +2113,37 @@
      "silhouette": "big tan feathered fans on an elm",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.15,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.62,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -1919,6 +2291,37 @@
      "silhouette": "hard dark hooves with a red band on a spruce snag",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.22,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2066,6 +2469,37 @@
      "silhouette": "red tongue jutting from an oak base",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.38,
+     "val": 1.16,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2213,6 +2647,37 @@
      "silhouette": "white shaggy ball on a wounded beech",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2360,6 +2825,37 @@
      "silhouette": "white coral bursting from a fallen beech log",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2507,6 +3003,37 @@
      "silhouette": "little grey fans scattered on any dead wood",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2654,6 +3181,37 @@
      "silhouette": "pink shells clustered on a fallen tropical log",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.2,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.4,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2805,6 +3363,37 @@
       "colour": "#8af0a0",
       "part": "whole fruit body, strong"
      }
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -2956,6 +3545,37 @@
       "colour": "#8af0a0",
       "part": "gills, faint"
      }
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.49,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3103,6 +3723,37 @@
      "silhouette": "grey hairy fans on a log",
      "confidence": "documented",
      "refs": "Wikipedia Trametes hirsuta; Phillips"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "layered",
+     "gap": 0.15,
+     "layering": "tiered",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3250,6 +3901,37 @@
      "silhouette": "arcs of small tan mushrooms in a meadow",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.7,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3397,6 +4079,37 @@
      "silhouette": "specks of white parachutes on twigs",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3544,6 +4257,37 @@
      "silhouette": "white shaggy columns on a path edge",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3691,6 +4435,37 @@
      "silhouette": "lilac caps in deep leaf litter",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.63,
+     "val": 1.28,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3838,6 +4613,37 @@
      "silhouette": "tall drumsticks opening to wide parasols in a meadow",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.48,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -3985,6 +4791,37 @@
      "silhouette": "white spiky balls in troops on the forest floor",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -4132,6 +4969,37 @@
      "silhouette": "a white football sitting in a meadow",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -4279,6 +5147,37 @@
      "silhouette": "greenish-capped white mushroom under an oak",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.57,
+     "val": 1.22,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -4426,6 +5325,37 @@
      "silhouette": "red white-spotted toadstool under birch",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.46,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -4573,6 +5503,37 @@
      "silhouette": "fat brown buns under spruce",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.35,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.12,
+     "val": 1.0,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -4720,6 +5681,37 @@
      "silhouette": "yellow funnels dotting mossy ground",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.49,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -4867,6 +5859,37 @@
      "silhouette": "orange funnels with green bruises under pines",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.23,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -5014,6 +6037,37 @@
      "silhouette": "stout brown-white mushroom half buried under pine",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.62,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -5161,6 +6215,37 @@
      "silhouette": "invisible: bare patch (brule) under an oak",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.1,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.41,
+     "val": 0.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -5308,6 +6393,37 @@
      "silhouette": "tan honeycomb cones in spring leaf litter",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.2,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.76,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -5455,6 +6571,37 @@
      "silhouette": "black cones dotting a burn scar",
      "confidence": "partly",
      "refs": "Wikipedia Morchella exuberans; Phillips"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.2,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.8,
+     "val": 0.65,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -5602,6 +6749,37 @@
      "silhouette": "little yellow domes on cowpats",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.96,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -5749,6 +6927,37 @@
      "silhouette": "cluster of pale cups on a midden",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.48,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -5896,6 +7105,37 @@
      "silhouette": "grey bonnets clustered on a stump",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.28,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -6047,6 +7287,37 @@
       "colour": "#60f890",
       "part": "cap and gills, bright"
      }
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -6198,6 +7469,37 @@
       "colour": "#a8f860",
       "part": "stem, continuous"
      }
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.3,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -6345,6 +7647,37 @@
      "silhouette": "an ant on a leaf underside with a stalk sprouting from its head",
      "confidence": "documented",
      "refs": "Wikipedia; Phillips Mushrooms; MushroomExpert.com"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.0
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 1.4,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#000000",
+     "color_2": "#000000",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ]

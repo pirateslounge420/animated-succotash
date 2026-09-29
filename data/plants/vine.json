@@ -159,6 +159,49 @@
      "silhouette": "wide 2-3 m mound of huge cut glossy leaves on a leaning scarred trunk",
      "confidence": "documented",
      "refs": "Wikipedia Thaumatophyllum bipinnatifidum, IAS, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "aspect": 1.4,
+     "lobes": 13,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      60,
+      120
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 1.0,
+     "val": 0.85,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#8A8A6A",
+     "color_2": "#5A5A40",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -307,6 +350,48 @@
      "silhouette": "green heart-leaved ribbon running up a trunk, dangling loops",
      "confidence": "documented",
      "refs": "Wikipedia Philodendron hederaceum, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "cordate",
+     "aspect": 1.2,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      8,
+      30
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 1.0,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 3,
+     "color": "#4A7A3A",
+     "color_2": "#8A6A4A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -456,6 +541,49 @@
      "silhouette": "tree trunk wrapped in giant holey leaves with brown roots trailing",
      "confidence": "documented",
      "refs": "Wikipedia Monstera deliciosa, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "aspect": 1.2,
+     "lobes": 10,
+     "base": "cordate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      40,
+      90
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 1.0,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 5,
+     "color": "#5A8A48",
+     "color_2": "#6A5A4A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -601,6 +729,49 @@
      "silhouette": "gold-splashed green cladding up trunks and carpeting the floor",
      "confidence": "documented",
      "refs": "Wikipedia Epipremnum aureum, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "pinnate_lobed",
+     "aspect": 1.3,
+     "lobes": 8,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "lobed",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      30,
+      90
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 1.0,
+     "val": 0.95,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 4,
+     "color": "#6A9A3A",
+     "color_2": "#C8B848",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -750,6 +921,48 @@
      "silhouette": "pale grey root lattice cage around a host trunk, dense dark crown above",
      "confidence": "documented",
      "refs": "Flora of North America, Wikipedia Ficus aurea"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 1.8,
+     "base": "rounded",
+     "apex": "obtuse",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.25,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 1.0,
+     "val": 0.8,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 8,
+     "color": "#B8B0A0",
+     "color_2": "#9A9280",
+     "lenticels": "dots",
+     "confidence": "documented"
     }
    }
   ]

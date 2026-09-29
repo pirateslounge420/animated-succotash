@@ -157,6 +157,52 @@
      "silhouette": "a stocky shaggy trunk 1-3 m topped with a symmetric dark green stiff feather rosette; branches/clumps with age",
      "confidence": "documented",
      "refs": "Wikipedia Cycas revoluta; Kew POWO; Cycad Society"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       100,
+       240
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 25,
+      "leaflet_margin": "entire"
+     },
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      50,
+      150
+     ],
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.45,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 1.0,
+     "val": 0.75,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#6A5A48",
+     "color_2": "#8A7A68",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -308,6 +354,52 @@
      "silhouette": "a slender blackened trunk 2-5 m in open savanna with a loose arching crown of pale green fronds; in scattered stands under eucalypts",
      "confidence": "partly",
      "refs": "Wikipedia Cycas media; Kew POWO; Flora of Australia"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       120,
+       260
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 22,
+      "leaflet_margin": "entire"
+     },
+     "venation": "pinnate",
+     "arrangement": "spiral",
+     "size_cm": [
+      100,
+      200
+     ],
+     "texture": "matte",
+     "confidence": "estimated"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.5,
+     "layering": "even",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#4A4038",
+     "color_2": "#7A5A3A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -459,6 +551,52 @@
      "silhouette": "the tallest cycad: a palm-like column up to 12 m with a big dark glossy crown; whole hillside forests of them",
      "confidence": "documented",
      "refs": "Wikipedia Encephalartos transvenosus; PlantZAfrica; Kew POWO"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       60,
+       140
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 7,
+      "leaflet_margin": "spinose"
+     },
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      150,
+      250
+     ],
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "palmate_crown",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 1.0,
+     "val": 0.75,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 4,
+     "color": "#6A5A4A",
+     "color_2": "#8A7A68",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -602,6 +740,52 @@
      "silhouette": "a low stemless clump of dark glossy fern-like fronds 0.5-1 m in open pine flatwoods; reads as a dark fern",
      "confidence": "documented",
      "refs": "Wikipedia Zamia integrifolia; Flora of North America; Kew POWO"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       20,
+       50
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 15,
+      "leaflet_margin": "entire"
+     },
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      90
+     ],
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 1.0,
+     "val": 0.75,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#6A7A4A",
+     "color_2": "#8A7A5A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -753,6 +937,52 @@
      "silhouette": "a big dark glossy fountain of arching fronds 1-2 m from the ground, almost trunkless, in colonies under eucalypts",
      "confidence": "documented",
      "refs": "Wikipedia Macrozamia communis; PlantNET NSW; Kew POWO"
+    },
+    "leaf": {
+     "type": "frond",
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       70,
+       120
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 25,
+      "leaflet_margin": "entire"
+     },
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      70,
+      200
+     ],
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 1.0,
+     "val": 0.75,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#4A4038",
+     "color_2": "#7A6A5A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],

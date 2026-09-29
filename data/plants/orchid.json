@@ -146,6 +146,50 @@
      "silhouette": "two ribbed leaves and one pink balloon in pine needles",
      "confidence": "documented",
      "refs": "Flora of North America, Wikipedia Cypripedium acaule"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.2,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      10,
+      25
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.15,
+     "autumn": "#B8A040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 2,
+     "color": "#6A9A48",
+     "color_2": "#8A7A5A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -285,6 +329,48 @@
      "silhouette": "thin pink-and-brown stem in short grass",
      "confidence": "documented",
      "refs": "Wikipedia Ophrys apifera, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 3,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      4,
+      10
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.4,
+     "layering": "sparse",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.75,
+     "val": 0.95,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#7AA860",
+     "color_2": "#6A5A4A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ],
@@ -426,6 +512,48 @@
      "silhouette": "white moths hovering on a wire out of a dark green tuft on a trunk",
      "confidence": "documented",
      "refs": "Wikipedia Phalaenopsis amabilis, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 3,
+     "base": "truncate",
+     "apex": "emarginate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      15,
+      40
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 1.0,
+     "val": 0.7,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#5A7A50",
+     "color_2": "#A0A890",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -565,6 +693,37 @@
      "silhouette": "a tangle of grey roots on a trunk, one white ghost in summer",
      "confidence": "documented",
      "refs": "Wikipedia Dendrophylax lindenii, Flora of North America"
+    },
+    "leaf": {
+     "type": "none",
+     "venation": "none",
+     "compound": null,
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.6,
+     "val": 0.9,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 1,
+     "color": "#7A9A70",
+     "color_2": "#E8ECE0",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -704,6 +863,48 @@
      "silhouette": "big spiky green clump in a fork of a savanna tree with yellow-spotted sprays",
      "confidence": "documented",
      "refs": "Wikipedia Ansellia africana, Kew POWO"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      15,
+      50
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.4,
+     "scale_cm": 3,
+     "color": "#A8A850",
+     "color_2": "#6A6A3A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ]

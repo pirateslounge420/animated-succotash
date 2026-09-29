@@ -118,7 +118,49 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "fibrous",
-    "leaf_type": "needle"
+    "leaf_type": "needle",
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "distichous",
+     "size_cm": [
+      1.0,
+      1.8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.45,
+     "layering": "tiered",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.15,
+     "autumn": "#b5572a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#8A6A50",
+     "color_2": "#6A4A38",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "thin red-brown to grey-brown fibrous bark shredding in long vertical strips; fluted buttressed base"
+    }
    },
    {
     "name": "Black poplar",
@@ -163,7 +205,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "deltoid",
+     "aspect": 1.1,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      8
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "rhombic-ovate to deltoid, crenate-serrate, glossy, on flattened petioles"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.95,
+     "val": 0.95,
+     "underside": 0.25,
+     "autumn": "#d8b830",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.75,
+     "scale_cm": 4,
+     "color": "#5A5048",
+     "color_2": "#3A3028",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "dark grey-brown, deeply furrowed, trunk studded with large burrs"
+    }
    },
    {
     "name": "Cottonwood",
@@ -208,7 +298,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "deltoid",
+     "aspect": 1.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      7,
+      13
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "triangular, coarsely crenate-serrate, glossy, fluttering on flattened petioles"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.25,
+     "autumn": "#e0c030",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.8,
+     "scale_cm": 5,
+     "color": "#8A8478",
+     "color_2": "#4A4038",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "ash-grey, thick, deeply furrowed into flat-topped ridges on mature trunks"
+    }
    },
    {
     "name": "Pecan",
@@ -250,7 +388,59 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      30,
+      50
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       9,
+       17
+      ],
+      "leaflet_outline": "ovate",
+      "leaflet_aspect": 3.5,
+      "leaflet_margin": "serrate"
+     },
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "leaflets falcate-lanceolate 5-12 cm, serrate"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.2,
+     "autumn": "#c8a030",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#7A6E60",
+     "color_2": "#5A4A3E",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "light grey-brown, irregularly and shallowly furrowed into narrow flat scaly ridges"
+    }
    },
    {
     "name": "Silver maple",
@@ -292,7 +482,56 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "beech",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 1.0,
+     "lobes": 5,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "opposite",
+     "size_cm": [
+      8,
+      16
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "deeply cut 5-lobed with narrow sinuses, coarsely toothed lobes, silvery-white beneath"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.55,
+     "autumn": "#d8c040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "vertical",
+     "depth": 0.5,
+     "scale_cm": 5,
+     "color": "#7A7268",
+     "color_2": "#8A6A50",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "smooth grey when young; mature trunk breaks into long thin scaly plates loose at the ends, shaggy"
+    }
    },
    {
     "name": "Southern magnolia",
@@ -397,7 +636,51 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "smooth_grey",
-    "leaf_type": "glossy"
+    "leaf_type": "glossy",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.2,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      12,
+      20
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "thick leathery evergreen, glossy dark green above, rusty-tomentose beneath"
+    },
+    "canopy": {
+     "form": "pyramidal",
+     "gap": 0.2,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.7,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 3,
+     "color": "#8A8680",
+     "color_2": "#6E6A64",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "smooth grey, becoming finely scaly-plated on very old trunks"
+    }
    },
    {
     "name": "Sycamore",
@@ -442,7 +725,56 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "peeling",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 0.9,
+     "lobes": 5,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      10,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "broad, shallowly 3-5-lobed, coarsely toothed, wider than long"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.3,
+     "autumn": "#b08040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "flaky",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 8,
+     "color": "#A89A88",
+     "color_2": "#E8E4D8",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "brown outer bark flakes off in jigsaw patches to expose mottled white, cream and pale green inner bark"
+    }
    },
    {
     "name": "White willow",
@@ -487,7 +819,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 6.5,
+     "base": "cuneate",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      10
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented",
+     "note": "lanceolate, finely serrate, silky white-hairy both sides"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.6,
+     "val": 1.1,
+     "underside": 0.6,
+     "autumn": "#c8b840",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#6E6458",
+     "color_2": "#4A4036",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "grey-brown, deeply fissured with intersecting ridges on old trunks"
+    }
    }
   ],
   "shrub": [
@@ -531,7 +911,59 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      15,
+      30
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "elliptic",
+      "leaflet_aspect": 2.2,
+      "leaflet_margin": "serrate"
+     },
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "5-7 ovate-elliptic serrate leaflets 5-12 cm, unpleasant-smelling"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.85,
+     "underside": 0.25,
+     "autumn": "#a8a048",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "warty",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 1.5,
+     "color": "#8A8070",
+     "color_2": "#B0A890",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "light grey-brown, corky and deeply furrowed on old stems, studded with raised lenticels"
+    }
    },
    {
     "name": "Giant river cane",
@@ -573,7 +1005,50 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "bamboo",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 9.0,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 8,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 20,
+     "color": "#8AA850",
+     "color_2": "#B0A060",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "hollow green to yellow-green culms with a raised ring at each node, internodes 10-30 cm"
+    }
    },
    {
     "name": "Grey willow",
@@ -615,7 +1090,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 2.8,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      9
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented",
+     "note": "obovate to oblanceolate, dull green above, grey-tomentose beneath, margin entire to sinuate"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.5,
+     "autumn": "#c0b048",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.35,
+     "scale_cm": 2,
+     "color": "#7A7670",
+     "color_2": "#5A544E",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "grey, smooth on young stems, shallowly fissured on old multi-stems"
+    }
    },
    {
     "name": "Red-osier dogwood",
@@ -660,7 +1183,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "broadleaf"
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 2.0,
+     "base": "rounded",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "arcuate",
+     "arrangement": "opposite",
+     "size_cm": [
+      5,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "ovate to elliptic-lanceolate with 5-7 arcuate vein pairs, pale glaucous beneath"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.35,
+     "autumn": "#a83028",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 12.0,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 1,
+     "color": "#9A3A30",
+     "color_2": "#C8B8A0",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "stems bright red (deepest in winter), smooth with pale lenticels; old stems grey-brown"
+    }
    }
   ],
   "ground": [
@@ -704,7 +1275,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.8,
+     "base": "cuneate",
+     "apex": "acute",
+     "margin": "crenate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      3,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "thin ovate-elliptic blades with rounded teeth, water-repellent bluish beneath"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.85,
+     "val": 0.95,
+     "underside": 0.3,
+     "autumn": "#b8b050",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 6,
+     "color": "#7AB060",
+     "color_2": "#8A6A70",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "translucent succulent stems swollen and reddish at the nodes"
+    }
    },
    {
     "name": "Ostrich fern",
@@ -746,7 +1363,57 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "frond"
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "dichotomous",
+     "arrangement": "basal",
+     "size_cm": [
+      100,
+      170
+     ],
+     "compound": {
+      "form": "bipinnate",
+      "leaflets": [
+       60,
+       120
+      ],
+      "leaflet_outline": "pinnate_lobed",
+      "leaflet_aspect": 8.0,
+      "leaflet_margin": "lobed"
+     },
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "sterile fronds oblanceolate, pinnate-pinnatifid, 30-60 pinnae per side, tapering strongly to the base"
+    },
+    "canopy": {
+     "form": "vase",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.15,
+     "autumn": "#b89040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#6A9A48",
+     "color_2": "#3A2A20",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "short erect crown of dark scaly stipe bases; stipes green with dark brown bases"
+    }
    },
    {
     "name": "Reed canary grass",
@@ -791,7 +1458,55 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 15.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      10,
+      30
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "flat rough blades 0.6-1.8 cm wide"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#c8b070",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "long_day",
+     "threshold_h": 14.0,
+     "response": "flower"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 12,
+     "color": "#7AA850",
+     "color_2": "#A8A870",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "hollow jointed culms, straw-coloured when dead"
+    }
    },
    {
     "name": "Sedge",
@@ -833,7 +1548,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 40.0,
+     "base": "truncate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      60
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "Carex grayi: flat blades 6-11 mm wide, dark green, in a loose tussock"
+    },
+    "canopy": {
+     "form": "tussock",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 4,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.1,
+     "autumn": "#b8a860",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 10,
+     "color": "#6A9A48",
+     "color_2": "#8A8A58",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "triangular culms"
+    }
    },
    {
     "name": "Stinging nettle",
@@ -875,7 +1636,53 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "grass"
+    "leaf_type": "grass",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.9,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "serrate",
+     "venation": "pinnate",
+     "arrangement": "opposite",
+     "size_cm": [
+      4,
+      12
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "ovate-cordate, coarsely serrate, with stinging hairs"
+    },
+    "canopy": {
+     "form": "columnar",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.15,
+     "autumn": "#b8a850",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 6,
+     "color": "#5E8A3E",
+     "color_2": "#8A6A60",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "square ridged stems, often purplish at the nodes"
+    }
    }
   ],
   "epiphyte": [
@@ -919,7 +1726,56 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "simple",
+     "outline": "palmate_lobed",
+     "aspect": 1.0,
+     "lobes": 3,
+     "base": "cordate",
+     "apex": "acuminate",
+     "margin": "lobed",
+     "venation": "palmate",
+     "arrangement": "alternate",
+     "size_cm": [
+      7,
+      15
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented",
+     "note": "broadly ovate-cordate, shallowly 3-lobed, coarsely serrate with acuminate teeth, glossy above"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.95,
+     "val": 1.0,
+     "underside": 0.2,
+     "autumn": "#d0b040",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 3,
+     "color": "#6A5A48",
+     "color_2": "#8A6A50",
+     "lenticels": "none",
+     "confidence": "documented",
+     "note": "grey-brown bark shredding in long loose strips on old stems"
+    }
    },
    {
     "name": "Spanish moss",
@@ -1028,7 +1884,44 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "green_stem",
-    "leaf_type": "succulent"
+    "leaf_type": "succulent",
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 30.0,
+     "base": "attenuate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "none",
+     "arrangement": "alternate",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.6,
+     "layering": "sparse",
+     "droop": 1.0
+    },
+    "tint": {
+     "hue_shift": -10,
+     "sat": 0.4,
+     "val": 1.1,
+     "underside": 0.0
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "confidence": "documented",
+     "note": "thread-like grey scurfy stems, no bark; the strand is drawn by the leaf tint"
+    }
    },
    {
     "name": "Virginia creeper",
@@ -1070,7 +1963,59 @@
      "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
     },
     "bark_type": "oak",
-    "leaf_type": "palmate"
+    "leaf_type": "palmate",
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      8,
+      20
+     ],
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       5
+      ],
+      "leaflet_outline": "obovate",
+      "leaflet_aspect": 2.3,
+      "leaflet_margin": "serrate"
+     },
+     "texture": "matte",
+     "confidence": "documented",
+     "note": "5 elliptic-obovate leaflets 5-15 cm, coarsely serrate above the middle"
+    },
+    "canopy": {
+     "form": "climbing",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.85,
+     "underside": 0.3,
+     "autumn": "#b02020",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 1,
+     "color": "#6E6258",
+     "color_2": "#4E4238",
+     "lenticels": "dots",
+     "confidence": "documented",
+     "note": "older stems grey-brown with shallow ridges and lenticels; young stems with disc-tipped tendrils"
+    }
    }
   ]
  },

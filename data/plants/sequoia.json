@@ -147,6 +147,43 @@
      "silhouette": "an immense straight red column vanishing into fog with a narrow conical crown of short horizontal branches high up; often in fairy rings of stump sprouts",
      "confidence": "documented",
      "refs": "Wikipedia Sequoia sempervirens; Flora of North America; Gymnosperm Database"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "distichous",
+     "size_cm": [
+      1,
+      2.5
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.35,
+     "layering": "tiered",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.9,
+     "val": 0.8,
+     "underside": 0.45
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.7,
+     "scale_cm": 10,
+     "color": "#7E5646",
+     "color_2": "#A85A3E",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -290,6 +327,43 @@
      "silhouette": "the fattest tree: a vast fluted orange-red column barely tapering, few huge limbs, a rounded, often broken flat-topped crown far above the forest",
      "confidence": "documented",
      "refs": "Wikipedia Sequoiadendron giganteum; Flora of North America; NPS Sequoia"
+    },
+    "leaf": {
+     "type": "scale",
+     "venation": "none",
+     "arrangement": "spiral",
+     "size_cm": [
+      0.3,
+      0.8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.3,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.8,
+     "scale_cm": 20,
+     "color": "#B85C36",
+     "color_2": "#6A3A2A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -435,6 +509,47 @@
      "silhouette": "tall symmetrical narrow cone with a deeply fluted buttressed base and upswept branches; feathery, then a bare red-brown skeleton in winter",
      "confidence": "documented",
      "refs": "Wikipedia Metasequoia glyptostroboides; Flora of China; Kew POWO"
+    },
+    "leaf": {
+     "type": "needle",
+     "venation": "none",
+     "arrangement": "opposite",
+     "size_cm": [
+      1,
+      3
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "conical",
+     "gap": 0.4,
+     "layering": "even",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": 10,
+     "sat": 1.0,
+     "val": 1.05,
+     "underside": 0.15,
+     "autumn": "#c8783a",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "short_day",
+     "threshold_h": 11.5,
+     "response": "leaf_drop"
+    },
+    "bark": {
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.5,
+     "scale_cm": 4,
+     "color": "#9A6A4A",
+     "color_2": "#6E4A3A",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],

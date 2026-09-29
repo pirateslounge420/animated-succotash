@@ -157,6 +157,48 @@
      "silhouette": "grey-green sphere on a short trunk topped by a towering pale spike like a candle in the puna",
      "confidence": "documented",
      "refs": "Wikipedia Puya raimondii, Kew POWO"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 18,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      100,
+      150
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.15,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.6,
+     "val": 0.95,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "ringed",
+     "orientation": "none",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#8A7A5A",
+     "color_2": "#5A4A30",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
@@ -302,6 +344,48 @@
      "silhouette": "impenetrable thicket of arching spiny green straps 1.5 m tall, red hearts in bloom",
      "confidence": "documented",
      "refs": "Wikipedia Bromelia pinguin, Kew POWO"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 35,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      100,
+      200
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.4
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 1.0,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#5A8A4A",
+     "color_2": "#7A6A4A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ],
@@ -443,6 +527,48 @@
      "silhouette": "long pale grey curtains 1-3 m hanging from every branch",
      "confidence": "documented",
      "refs": "Flora of North America, Wikipedia Tillandsia usneoides"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 40,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      2,
+      6
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "weeping",
+     "gap": 0.5,
+     "layering": "sparse",
+     "droop": 1.0
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.4,
+     "val": 1.1,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#A0AA98",
+     "color_2": "#7A8A70",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -582,6 +708,48 @@
      "silhouette": "grey pompoms clustered along bare branches and wires",
      "confidence": "documented",
      "refs": "Flora of North America, Wikipedia Tillandsia recurvata"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "linear",
+     "aspect": 30,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "distichous",
+     "size_cm": [
+      3,
+      10
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.3,
+     "layering": "even",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.45,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#9AA898",
+     "color_2": "#7A8A70",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -721,6 +889,48 @@
      "silhouette": "small silvery tuft on bark, red-topped in bloom",
      "confidence": "documented",
      "refs": "Wikipedia Tillandsia ionantha, Kew POWO"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 10,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      3,
+      6
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.1
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#8FA890",
+     "color_2": "#6A8A6A",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -860,6 +1070,48 @@
      "silhouette": "white fuzzy balls on bare rock, greyer when wet",
      "confidence": "documented",
      "refs": "Wikipedia Tillandsia tectorum, Kew POWO"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "linear",
+     "aspect": 20,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "spiral",
+     "size_cm": [
+      8,
+      18
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.3,
+     "val": 1.3,
+     "underside": 0.05
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 1,
+     "color": "#C8CCC0",
+     "color_2": "#A0A898",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -999,6 +1251,48 @@
      "silhouette": "silver-banded green urn with a pink star on top",
      "confidence": "documented",
      "refs": "Wikipedia Aechmea fasciata, Kew POWO"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "oblong",
+     "aspect": 7,
+     "base": "truncate",
+     "apex": "mucronate",
+     "margin": "spinose",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      60
+     ],
+     "compound": null,
+     "texture": "waxy_glaucous",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.2,
+     "layering": "even",
+     "droop": 0.3
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#6A8A5A",
+     "color_2": "#C8CCC0",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    },
    {
@@ -1138,6 +1432,48 @@
      "silhouette": "glossy green rosette with a scarlet star on a tree limb",
      "confidence": "documented",
      "refs": "Wikipedia Guzmania lingulata, Kew POWO"
+    },
+    "leaf": {
+     "type": "strap",
+     "outline": "oblong",
+     "aspect": 12,
+     "base": "truncate",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "parallel",
+     "arrangement": "basal",
+     "size_cm": [
+      30,
+      45
+     ],
+     "compound": null,
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rosette",
+     "gap": 0.25,
+     "layering": "even",
+     "droop": 0.35
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 1.05,
+     "val": 0.9,
+     "underside": 0.15
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.3,
+     "scale_cm": 2,
+     "color": "#5A9A48",
+     "color_2": "#8AB878",
+     "lenticels": "none",
+     "confidence": "estimated"
     }
    }
   ]

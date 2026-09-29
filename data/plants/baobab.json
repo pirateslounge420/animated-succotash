@@ -152,6 +152,54 @@
      "silhouette": "the upside-down tree: a vast grey bottle trunk with a spreading tangle of thick, stubby, root-like branches; leafless most of the year",
      "confidence": "documented",
      "refs": "Wikipedia Adansonia digitata; Kew POWO; PlantZAfrica"
+    },
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      10,
+      20
+     ],
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       7
+      ],
+      "leaflet_outline": "elliptic",
+      "leaflet_aspect": 2.5,
+      "leaflet_margin": "entire"
+     },
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "spreading",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2,
+     "autumn": "#c8b048",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 30,
+     "color": "#9A8A78",
+     "color_2": "#C0A890",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -299,6 +347,54 @@
      "silhouette": "a smooth untapering grey cylinder 25-30 m tall crowned by a small flat table of horizontal branches at the very top; the Avenue of the Baobabs",
      "confidence": "documented",
      "refs": "Wikipedia Adansonia grandidieri; Kew POWO; Baum 1995 Ann Missouri Bot Gard"
+    },
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      8,
+      15
+     ],
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       9,
+       11
+      ],
+      "leaflet_outline": "elliptic",
+      "leaflet_aspect": 4.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "umbrella",
+     "gap": 0.6,
+     "layering": "tiered",
+     "droop": 0.05
+    },
+    "tint": {
+     "hue_shift": -8,
+     "sat": 0.7,
+     "val": 0.9,
+     "underside": 0.25,
+     "autumn": "#c8a850",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
+     "scale_cm": 40,
+     "color": "#A89A88",
+     "color_2": "#C8B0A0",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -446,6 +542,54 @@
      "silhouette": "a fat squat grey bottle, often wider than tall, pinched to a neck then a bushy tangle of short branches; grotesque and cheerful",
      "confidence": "documented",
      "refs": "Wikipedia Adansonia gregorii; Kew POWO; Australian Plant Society"
+    },
+    "leaf": {
+     "type": "compound",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      8,
+      15
+     ],
+     "compound": {
+      "form": "palmate",
+      "leaflets": [
+       5,
+       9
+      ],
+      "leaflet_outline": "elliptic",
+      "leaflet_aspect": 2.5,
+      "leaflet_margin": "entire"
+     },
+     "texture": "glossy",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.5,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.95,
+     "underside": 0.2,
+     "autumn": "#c8b048",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.2,
+     "scale_cm": 30,
+     "color": "#8A8070",
+     "color_2": "#B0A490",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    },
    {
@@ -594,6 +738,50 @@
      "silhouette": "tall, gaunt, irregular; open pyramidal crown of a few big upswept limbs when young, broader and craggy with age; a column of gold in autumn",
      "confidence": "documented",
      "refs": "Wikipedia Ginkgo biloba; Flora of China; Missouri Botanical Garden"
+    },
+    "leaf": {
+     "type": "simple",
+     "outline": "obovate",
+     "aspect": 0.8,
+     "base": "cuneate",
+     "apex": "emarginate",
+     "margin": "undulate",
+     "venation": "dichotomous",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      8
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "irregular",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.2
+    },
+    "tint": {
+     "hue_shift": 6,
+     "sat": 0.9,
+     "val": 1.0,
+     "underside": 0.1,
+     "autumn": "#e8c020",
+     "drop": true
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "furrowed",
+     "orientation": "vertical",
+     "depth": 0.6,
+     "scale_cm": 3,
+     "color": "#8A8278",
+     "color_2": "#5E5850",
+     "lenticels": "none",
+     "confidence": "documented"
     }
    }
   ],
