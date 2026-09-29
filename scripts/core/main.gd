@@ -83,6 +83,8 @@ func _ready() -> void:
 	Controls.ensure()
 	Display.install(get_window())
 	HudText.install()
+	# The volume sliders' saved levels (settings panel, Audio).
+	AudioMix.apply()
 	# The world's textures paint on a worker while the planet generates,
 	# and the camp folk's sculpted bodies build.
 	Look.prepare()
@@ -425,6 +427,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_toggle_settings(not settings_panel.visible)
 	elif settings_panel.visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		settings_panel.click(event.position)
+	elif settings_panel.visible and event is InputEventMouseMotion:
+		# Dragging a volume slider.
+		settings_panel.drag(event.position)
 	elif event.is_action_pressed("inventory"):
 		_toggle_inventory(not inventory_screen.visible)
 	elif event.is_action_pressed("release_mouse") and inventory_screen.visible:

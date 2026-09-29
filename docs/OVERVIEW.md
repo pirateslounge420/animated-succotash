@@ -135,8 +135,8 @@ hands.
 ## Interface
 
 - Almost none. A small **speedometer** (mph and km/h) that brightens as you go faster; a
-  **classic 12-hour clock face** (hour and minute hands, 12/3/6/9 on the dial); a slim
-  health bar; the super meter as a ring on the charge
+  **railway pocket watch** (steel case and crown, white dial, black 1-12 and red
+  13-24, a red seconds hand); a slim health bar; the super meter as a ring on the charge
   gauge. Typewriter-style font. Map on M (biome, height, temperature, rainfall,
   weather layers) — it never marks your corpse or the enemy.
 

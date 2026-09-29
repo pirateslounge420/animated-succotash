@@ -4,6 +4,10 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — The clock is a railway pocket watch; footsteps and climbing quieter, with sliders (Mike, from chat)
+- **Pocket watch** (design §AQ, from a photo of Mike's own watch): steel case with its knurled crown at 12, white dial, minute track, bold black 1-12 (a 5 x 7 pixel face with two-cell strokes), red 13-24 inside (3 x 5), black skeleton hands, a red seconds hand on a red cap; no brand, no dawn/dusk marks. 80 px across (+ the crown). Every figure drawn cell by cell on the 480-line grid. `data/hud.json` clock: case, numerals, hours_24, minute_track, seconds_hand, colours. Rendered at eight times of day to check (the OpenGL renderer draws the HUD here).
+- **Audio sliders** (settings panel, new Audio section): Volume, Footsteps, Climbing, 0-100 %, clicked or dragged (`AudioMix`: Footsteps and Climbing buses sending to Master; settings `audio.master` / `audio.footsteps` / `audio.climbing`). Footsteps and climbing start at 50 % (-6 dB), from play. Branch cracks and whips moved to their own player on the master bus so the footsteps slider doesn't hide them. `tools/audio_mix_check.gd` 0 fails; `tools/hud_pin_check.gd` 0 fails.
+
 ## 2026-09-29 — Round any trunk, however it leans (Mike: "the way that a tree leans should matter… clinging and shimmying, they should be able to circumnavigate it regardless of how it twists")
 - **Measured:** `climb_lab` now holds D for 15 s on each trunk with the camera still, adding up the turn about the trunk's own axis. Before this change, straight trunks (pine, birch) went round and round, but every leaning trunk stalled at 5–107°. There were three causes:
   - **A/D reached for whatever lay to your right.** On a leaning trunk, the next hold up or down the trunk lies to the side too, so D climbed the trunk or stepped onto a limb. A/D on a trunk now goes round it, about its own axis.

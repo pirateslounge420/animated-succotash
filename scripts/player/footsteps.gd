@@ -22,10 +22,13 @@ var _dist := 0.0
 var _count := 0
 var _air_s := 0.0
 var _scuff_player: AudioStreamPlayer3D
+var _effect_player: AudioStreamPlayer3D
 
 
 func _init() -> void:
 	Audio3D.apply(self, "footstep")
+	# The Footsteps slider (settings panel, Audio: AudioMix).
+	bus = AudioMix.bus("footsteps")
 
 
 ## Per physics frame. `moved` is the distance walked this frame.
@@ -69,6 +72,7 @@ func scuff(player: PlanetPlayer) -> void:
 	if _scuff_player == null:
 		_scuff_player = AudioStreamPlayer3D.new()
 		Audio3D.apply(_scuff_player, "footstep")
+		_scuff_player.bus = AudioMix.bus("footsteps")
 		add_child(_scuff_player)
 	_count += 1
 	_scuff_player.stream = SoundSynth.stream("scuff", _count)
@@ -77,13 +81,19 @@ func scuff(player: PlanetPlayer) -> void:
 	_scuff_player.play()
 
 
-## A one-off sound at the player on the scuff's player: "crack" (a
-## handhold snapping), "whip" (a green stem springing back).
+## A one-off sound at the player: "crack" (a handhold snapping), "whip"
+## (a green stem springing back). On a player of its own, on the master
+## bus: a warning, not a footstep, so the Footsteps slider leaves it alone.
 func effect(player: PlanetPlayer, kind: String) -> void:
 	scuff(player)
-	_scuff_player.stream = SoundSynth.stream(kind, _count)
-	_scuff_player.volume_db = VOLUME_DB["sprint"] + 2.0
-	_scuff_player.play()
+	if _effect_player == null:
+		_effect_player = AudioStreamPlayer3D.new()
+		Audio3D.apply(_effect_player, "footstep")
+		add_child(_effect_player)
+	_effect_player.stream = SoundSynth.stream(kind, _count)
+	_effect_player.volume_db = VOLUME_DB["sprint"] + 2.0
+	_effect_player.pitch_scale = randf_range(0.9, 1.1)
+	_effect_player.play()
 
 
 ## What the player is standing on.

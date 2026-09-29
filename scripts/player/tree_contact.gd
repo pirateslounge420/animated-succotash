@@ -60,12 +60,16 @@ func _ready() -> void:
 		v.top_level = true
 		add_child(v)
 		_voices.append(v)
+	# The climbing sounds play on the Climbing slider's bus (settings
+	# panel, Audio: AudioMix).
 	for i in 2:
 		var h := Audio3D.make("climb_hand", self, "HandL" if i == 0 else "HandR")
 		h.volume_db = -6.0
+		h.bus = AudioMix.bus("climbing")
 		_hand_voices.append(h)
 	_breath = Audio3D.make("climb_breath", self, "Breath")
 	_breath.volume_db = -9.0
+	_breath.bus = AudioMix.bus("climbing")
 
 
 # --- Branch graphs (climbing) ------------------------------------------------------

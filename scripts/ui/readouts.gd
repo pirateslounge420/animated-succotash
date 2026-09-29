@@ -14,13 +14,16 @@ extends Control
 ## ceiling, 120 km/h), so it only asserts itself when you're fast. Its
 ## glow warms from glow_cold to glow_warm as the super meter fills.
 ##
-## Clock: a classic 12-hour clock face (design §AQ, from play: "more like a
-## classic 12-hour clock"; it was a pilot's watch with a 24-hour ring and
-## dawn and dusk marks). A round face with a rim, twelve hour marks (the
-## quarters bolder), pixel numerals at 12, 3, 6 and 9 drawn on the frame's
-## own pixel grid (the HUD font can't go that small and stay crisp), a
-## short broad hour hand that goes round twice a day, a long thin minute
-## hand once a game hour (6 real minutes), and a cap on the pin.
+## Clock: an old railway pocket watch (design §AQ, from play: "more like an
+## OG pocket watch face", after the designer's own watch): a polished steel
+## case with its crown at 12, a white enamel dial, a minute track round the
+## edge (a tick a minute, a square every five), bold black numerals 1-12,
+## the 24-hour numerals 13-24 small and red inside them, black skeleton
+## hands (the hour hand twice round a day, the minute hand once a game
+## hour: 6 real minutes) and a thin red seconds hand (once a game minute:
+## 6 real seconds) on a red cap. No dawn or dusk marks. Every figure is
+## drawn cell by cell on the 480-line frame's own pixel grid (the HUD font
+## can't go that small and stay crisp). hud.json clock switches the parts.
 
 static var HUD := {}
 
@@ -128,10 +131,18 @@ func _speed_box() -> Rect2:
 	return Rect2(_corner("speedometer", box), box)
 
 
-## The clock face's box in its corner (local px).
+## The clock's box in its corner (local px): the watch case, and its
+## crown above it.
 func _clock_box() -> Rect2:
-	var d := float(_sec("clock").get("size_px", 44))
-	return Rect2(_corner("clock", Vector2(d, d)), Vector2(d, d))
+	var c := _sec("clock")
+	var d := float(c.get("size_px", 80))
+	var h := d + (_crown_h(d) if bool(c.get("case", true)) else 0.0)
+	return Rect2(_corner("clock", Vector2(d, h)), Vector2(d, h))
+
+
+## How far the crown and its pendant stand above the case (px).
+static func _crown_h(d: float) -> float:
+	return maxf(5.0, roundf(d * 0.09))
 
 
 ## A dial's box with, while pinning, the pin mark's cell before it.
@@ -191,14 +202,31 @@ func _draw_speed(k: float, mk: float) -> void:
 	_draw_mark(first_x, box.position.y + line_h * 0.5, mk)
 
 
-## Pixel numerals for the clock face, 3 x 5 cells ("#" lit): the frame is
-## 480 lines, and at a 44 px face the HUD font's smallest crisp size (20 px)
-## wouldn't fit, so the four quarter numerals are drawn cell by cell.
-const DIGITS := {
-	"1": [".#.", "##.", ".#.", ".#.", "###"],
+## Pixel figures for the dial, "#" lit, the 1s narrower as a watch dial
+## sets them: DIGITS_BOLD (5 x 7, two-cell strokes: the black railway
+## numerals) and DIGITS_SMALL (3 x 5: the red 24-hour ones).
+const DIGITS_BOLD := {
+	"0": [".###.", "##.##", "##.##", "##.##", "##.##", "##.##", ".###."],
+	"1": [".##", "###", ".##", ".##", ".##", ".##", ".##"],
+	"2": [".###.", "##.##", "...##", "..##.", ".##..", "##...", "#####"],
+	"3": ["####.", "...##", "...##", ".###.", "...##", "...##", "####."],
+	"4": ["...##", "..###", ".#.##", "##.##", "#####", "...##", "...##"],
+	"5": ["#####", "##...", "####.", "...##", "...##", "##.##", ".###."],
+	"6": [".###.", "##...", "##...", "####.", "##.##", "##.##", ".###."],
+	"7": ["#####", "...##", "..##.", "..##.", ".##..", ".##..", ".##.."],
+	"8": [".###.", "##.##", "##.##", ".###.", "##.##", "##.##", ".###."],
+	"9": [".###.", "##.##", "##.##", ".####", "...##", "...##", ".###."],
+}
+const DIGITS_SMALL := {
+	"0": ["###", "#.#", "#.#", "#.#", "###"],
+	"1": [".#", "##", ".#", ".#", ".#"],
 	"2": ["###", "..#", "###", "#..", "###"],
 	"3": ["###", "..#", ".##", "..#", "###"],
+	"4": ["#.#", "#.#", "###", "..#", "..#"],
+	"5": ["###", "#..", "###", "..#", "###"],
 	"6": ["###", "#..", "###", "#.#", "###"],
+	"7": ["###", "..#", ".#.", ".#.", ".#."],
+	"8": ["###", "#.#", "###", "#.#", "###"],
 	"9": ["###", "#.#", "###", "..#", "###"],
 }
 
@@ -207,73 +235,134 @@ const DIGITS := {
 func _draw_clock(k: float, mk: float) -> void:
 	var c := _sec("clock")
 	var box := _clock_box()
-	var d := box.size.x
-	var a0 := float(c.get("alpha", 0.6))
-	var a := a0 * k
-	# On the pixel grid, so the rim and the numerals stay crisp.
-	var mid := (box.position + box.size * 0.5).round()
-	var r := floorf(d * 0.5)
-	var ring := Color(Color(str(c.get("ring_color", "#4C7CFF"))), minf(a0 + 0.15, 1.0) * k)
-	var hand := Color(Color(str(c.get("hand_color", "#7FB0FF"))), minf(a0 + 0.35, 1.0) * k)
-	var numeral := Color(Color(str(c.get("numeral_color", c.get("hand_color", "#7FB0FF")))), minf(a0 + 0.3, 1.0) * k)
+	var d := float(c.get("size_px", 80))
+	var a := float(c.get("alpha", 0.95)) * k
+	var with_case := bool(c.get("case", true))
+	var top := _crown_h(d) if with_case else 0.0
+	# On the pixel grid, so the case and the figures stay crisp.
+	var mid := (box.position + Vector2(d * 0.5, top + d * 0.5)).round()
+	var r_case := floorf(d * 0.5)
+	var rim := maxf(2.0, roundf(d / 26.0)) if with_case else 0.0
+	var rd := r_case - rim
+	var tone := func(key: String, fallback: String, alpha := 1.0) -> Color:
+		return Color(Color(str(c.get(key, fallback))), a * alpha)
+	var ink: Color = tone.call("numeral_color", "#141414")
+	var red: Color = tone.call("accent_color", "#C8281E")
+	var dial: Color = tone.call("dial_color", "#E9E6DE")
 	_draw_mark(box.position.x, mid.y, mk)
-	# The face and its rim.
-	draw_circle(mid, r, Color(Color(str(c.get("face_color", "#0A1250"))), a * 0.85))
-	draw_arc(mid, r - 0.5, 0.0, TAU, 64, ring, maxf(1.5, d / 24.0))
-	# The hour marks: a tick at each hour; at 12, 3, 6 and 9 a numeral
-	# (or, with numerals off, a longer, bolder tick).
-	var numerals := str(c.get("numerals", "quarters")) == "quarters"
-	var cell := maxf(1.0, floorf(d / 40.0))
+	if with_case:
+		_draw_case(mid, r_case, rim, top, tone)
+	draw_circle(mid, rd, dial)
+	# The minute track round the edge: a tick a minute, a square every five.
+	if bool(c.get("minute_track", true)):
+		var track: Color = tone.call("track_color", "#2A2A2A", 0.85)
+		for m in 60:
+			var ma := TAU * m / 60.0
+			var dir := Vector2(sin(ma), -cos(ma))
+			if m % 5 == 0:
+				draw_rect(Rect2((mid + dir * (rd - 2.5) - Vector2.ONE).round(), Vector2(2, 2)), ink)
+			else:
+				draw_rect(Rect2((mid + dir * (rd - 1.8)).floor(), Vector2.ONE), track)
+	# The hours: bold black 1-12 (all, the quarters, or none), and inside
+	# them the 24-hour numerals in red.
+	var which := str(c.get("numerals", "all"))
 	for h in 12:
 		var ang := _angle12(float(h))
 		var dir := Vector2(sin(ang), -cos(ang))
-		if h % 3 == 0:
-			if numerals:
-				_draw_numeral("12" if h == 0 else str(h), mid + dir * r * 0.66, cell, numeral)
-			else:
-				draw_line(mid + dir * r * 0.68, mid + dir * r * 0.9, ring, maxf(2.0, d / 18.0))
-		else:
-			draw_line(mid + dir * r * 0.78, mid + dir * r * 0.9, ring, 1.0)
-	if bool(c.get("minute_marks", false)):
-		for m in 60:
-			if m % 5 != 0:
-				var ma := TAU * m / 60.0
-				draw_rect(Rect2((mid + Vector2(sin(ma), -cos(ma)) * r * 0.86).floor(), Vector2.ONE), Color(ring, ring.a * 0.6))
-	# The hands: a short broad hour hand (twice round a day) and a long thin
-	# minute hand (once a game hour), each with a little tail past the pin.
-	# (Never thinner than a pixel at the tip: unsmoothed, a tapered sliver
-	# would drop out and the hand read short.)
-	var ha := _angle12(clock_h)
-	_draw_hand(mid, ha, r * 0.55, r * 0.14, maxf(3.0, d / 13.0), maxf(1.6, d / 26.0), hand)
-	var ma := TAU * fposmod(clock_h, 1.0)
-	var mdir := Vector2(sin(ma), -cos(ma))
-	var mw := 1.0 if d < 60.0 else 2.0
-	draw_line(mid - mdir * r * 0.18, mid + mdir * r * 0.84, hand, mw)
-	draw_circle(mid, maxf(1.5, d / 22.0), hand)
+		var hour := 12 if h == 0 else h
+		if which == "all" or (which == "quarters" and h % 3 == 0):
+			_draw_figures(str(hour), mid + dir * rd * 0.7, DIGITS_BOLD, ink)
+		elif which == "none" or which == "quarters":
+			draw_line(mid + dir * rd * 0.7, mid + dir * rd * 0.84, ink, 2.0 if h % 3 == 0 else 1.0)
+		if bool(c.get("hours_24", true)):
+			_draw_figures(str(hour + 12), mid + dir * rd * 0.44, DIGITS_SMALL, red)
+	# The hands: black skeleton hands (a pale line down the middle of each),
+	# the hour hand short and broad, the minute hand long; a thin red seconds
+	# hand with its counterweight; a black hub under a red cap.
+	var hand: Color = tone.call("hand_color", "#141414")
+	_draw_hand(mid, _angle12(clock_h), rd * 0.52, rd * 0.12, maxf(3.0, roundf(d / 20.0)), 2.0, hand, dial)
+	_draw_hand(mid, TAU * fposmod(clock_h, 1.0), rd * 0.8, rd * 0.12, 3.0, 1.6, hand, dial)
+	draw_circle(mid, maxf(2.0, d / 28.0), hand)
+	if bool(c.get("seconds_hand", true)):
+		var sa := TAU * fposmod(clock_h * 60.0, 1.0)
+		var sdir := Vector2(sin(sa), -cos(sa))
+		draw_line(mid - sdir * rd * 0.24, mid + sdir * rd * 0.88, red, 1.0)
+		draw_circle(mid - sdir * rd * 0.2, 1.2, red)
+	draw_circle(mid, maxf(1.2, d / 40.0), red)
 
 
-## One hand: a tapered bar from `tail` behind the pin (`w_base` wide) to
-## `length` out (`w_tip` wide).
-func _draw_hand(mid: Vector2, ang: float, length: float, tail: float, w_base: float, w_tip: float, col: Color) -> void:
+## The case: a polished steel ring (dark edge, bright body, a highlight up
+## on the left and shade down on the right, the way the light sits on a
+## domed case) and the pendant and knurled crown at 12.
+func _draw_case(mid: Vector2, r: float, rim: float, top: float, tone: Callable) -> void:
+	var steel: Color = tone.call("case_color", "#C5CAD0")
+	var dark: Color = tone.call("case_dark", "#5B6068")
+	var light: Color = tone.call("case_light", "#F4F6F8")
+	# The pendant (a short neck) and the crown on it, above the case.
+	var neck_w := maxf(3.0, roundf(r * 0.14))
+	var neck_h := maxf(2.0, roundf(top * 0.4))
+	var crown_w := maxf(6.0, roundf(r * 0.28))
+	var crown_h := top - neck_h
+	var neck := Rect2(Vector2(mid.x - floorf(neck_w * 0.5), mid.y - r - neck_h + 1.0), Vector2(neck_w, neck_h))
+	draw_rect(neck.grow(1.0), dark)
+	draw_rect(neck, steel)
+	var crown := Rect2(Vector2(mid.x - floorf(crown_w * 0.5), neck.position.y - crown_h), Vector2(crown_w, crown_h))
+	draw_rect(crown.grow(1.0), dark)
+	draw_rect(crown, steel)
+	# Knurling: the crown's ridges.
+	var x := crown.position.x + 1.0
+	while x < crown.end.x - 0.5:
+		draw_rect(Rect2(Vector2(x, crown.position.y), Vector2(1, crown_h)), Color(dark, dark.a * 0.8))
+		x += 2.0
+	draw_rect(Rect2(crown.position, Vector2(crown_w, 1)), light)
+	# The ring.
+	draw_circle(mid, r, dark)
+	draw_circle(mid, r - 1.0, steel)
+	var band := maxf(rim - 1.5, 1.0)
+	draw_arc(mid, r - 1.0 - band * 0.5, deg_to_rad(195.0), deg_to_rad(285.0), 16, light, 1.0)
+	draw_arc(mid, r - 1.0 - band * 0.5, deg_to_rad(15.0), deg_to_rad(105.0), 16, Color(dark, dark.a * 0.7), 1.0)
+	# The bezel's inner edge, where the crystal meets the dial.
+	draw_circle(mid, r - rim + 0.5, Color(dark, dark.a * 0.9))
+
+
+## One skeleton hand: a black tapered bar from `tail` behind the pin
+## (`w_base` wide) to `length` out (`w_tip` wide; never under a pixel, or
+## the unsmoothed tip drops out and the hand reads short), with a line of
+## `inner` down its middle when it's broad enough to show one.
+func _draw_hand(mid: Vector2, ang: float, length: float, tail: float, w_base: float, w_tip: float, col: Color, inner: Color) -> void:
 	var dir := Vector2(sin(ang), -cos(ang))
 	var side := Vector2(-dir.y, dir.x)
 	var back := mid - dir * tail
 	var tip := mid + dir * length
 	draw_colored_polygon(PackedVector2Array([back + side * w_base * 0.5, tip + side * w_tip * 0.5,
 		tip - side * w_tip * 0.5, back - side * w_base * 0.5]), col)
+	if w_base >= 3.0:
+		draw_line(mid + dir * length * 0.3, mid + dir * length * 0.82, inner, 1.0)
 
 
-## A numeral (DIGITS) centred at `at`, each lit cell `cell` px square.
-func _draw_numeral(text: String, at: Vector2, cell: float, col: Color) -> void:
-	var w := (text.length() * 4 - 1) * cell
-	var origin := (at - Vector2(w, 5.0 * cell) * 0.5).round()
-	for i in text.length():
-		var rows: Array = DIGITS.get(text[i], [])
+## Figures (`font`: DIGITS_BOLD or DIGITS_SMALL) centred at `at`, one px a
+## cell, a px between figures.
+func _draw_figures(text: String, at: Vector2, font: Dictionary, col: Color) -> void:
+	var w := -1.0
+	var h := 0.0
+	for ch in text:
+		var rows: Array = font.get(ch, [])
+		if rows.is_empty():
+			continue
+		w += float((rows[0] as String).length()) + 1.0
+		h = maxf(h, float(rows.size()))
+	var origin := (at - Vector2(w, h) * 0.5).round()
+	var x0 := 0.0
+	for ch in text:
+		var rows: Array = font.get(ch, [])
+		if rows.is_empty():
+			continue
 		for y in rows.size():
 			var row: String = rows[y]
 			for x in row.length():
 				if row[x] == "#":
-					draw_rect(Rect2(origin + Vector2((i * 4 + x) * cell, y * cell), Vector2(cell, cell)), col)
+					draw_rect(Rect2(origin + Vector2(x0 + x, y), Vector2.ONE), col)
+		x0 += float((rows[0] as String).length()) + 1.0
 
 
 ## The angle (radians, clockwise from 12 o'clock) of hour `h` on a

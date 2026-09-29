@@ -1876,13 +1876,22 @@ a unique and rare genetic abnormality." Built, with the full design in
   crested, cutleaf...) are recorded for the mesh builders. The HUD names a sport after
   the common name ("variegated sport") and an aroid's stage ("in bloom, receptive").
 
-## AQ. A classic 12-hour clock — 29 Sept 2026
+## AQ. The HUD clock is an old railway pocket watch; volume sliders — 29 Sept 2026
 
-- **Locked (Mike):** "make the clock face more like a classic 12-hour clock and remove the
-  zones which show dawn and dusk." Supersedes §L's clock bullet: the HUD clock is a
-  plain round clock face — a rim, twelve hour ticks, the numerals 12, 3, 6 and 9 (drawn
-  as pixel numerals on the 480-line frame's own grid; the HUD font can't go that small
-  and stay crisp), a short broad hour hand that goes round twice a day and a long thin
-  minute hand once a game hour (6 real minutes). No 24-hour ring, no dawn/dusk marks, no
-  PM dot. 44 px across (was 30). `data/hud.json` clock (numerals quarters | none,
-  minute_marks, colours).
+- **Locked (Mike):** first "make the clock face more like a classic 12-hour clock and
+  remove the zones which show dawn and dusk", then "make the clock look more like an OG
+  pocket watch face" with a photo of his own railway pocket watch. Supersedes §L's clock
+  bullet: the HUD clock is a pocket watch — a polished steel case with its crown at 12, a
+  white enamel dial, a minute track (a tick a minute, a square every five), bold black
+  numerals 1-12 with the 24-hour numerals 13-24 small and red inside them, black
+  skeleton hands (hour, and minute: once a game hour, 6 real minutes) and a thin red
+  seconds hand (once a game minute, 6 real seconds) on a red cap. No dawn/dusk marks,
+  no brand. Every figure is drawn cell by cell on the 480-line frame's pixel grid.
+  80 px across. `data/hud.json` clock switches the case, numerals (all | quarters |
+  none), the 24-hour ring, the minute track and the seconds hand, and holds the colours.
+- **Locked (Mike):** "the climbing and running/walking sounds a bit more diminished, with a
+  slider in audio options." The settings panel gets an Audio section: Volume (master),
+  Footsteps (walking, running, landings, skids, wall-jump kicks) and Climbing (hands on
+  the bark, the breaths), 0-100 %, each its own bus (`AudioMix`); footsteps and climbing
+  start at half (-6 dB). A snapping handhold and a springing stem stay on the master bus
+  (a warning, not a footstep).
