@@ -1,7 +1,7 @@
 extends SceneTree
 ## How big the biomes are (from play, 2026-09-29: "the biomes change too
 ## fast"; "every playthrough needs at least one continent of each biome").
-## For each seed, generates the planet (the full 400 km one; STAMP=1 the
+## For each seed, generates the planet (the full 4,000 km one; STAMP=1 the
 ## dev postage stamp instead) and prints, per major biome band (data/dev.json
 ## "stamp"."bands", land bands only):
 ##   - its share of the land and its area (km2);

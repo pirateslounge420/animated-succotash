@@ -2,8 +2,10 @@ class_name PlanetConst
 ## Planet-wide constants from DESIGN.md "Overview" and "Biome Sizing".
 ## Distances are meters, temperatures °C, time in real seconds.
 
-## The full planet: 1/100th of Earth's circumference.
-const FULL_CIRCUMFERENCE_M := 400000.0
+## The full planet: 1/10 of Earth's circumference (design §I, LOCKED
+## 2026-09-29: landmass, height (HEIGHT_SCALE 0.1) and time (the 144-min
+## day) all share the one 1/10 ratio; 400 km / 1/100 before).
+const FULL_CIRCUMFERENCE_M := 4000000.0
 
 ## Geography (continents, mountain belts, volcanoes, rock regions, the
 ## weather grid, the blueprint's distances and slopes) is always laid out
@@ -15,7 +17,7 @@ const FULL_CIRCUMFERENCE_M := 400000.0
 ## GEO_RADIUS_M (CubeSphere.geo_distance_m); scene and walking code with
 ## RADIUS_M. On the full planet the two are equal.
 const GEO_CIRCUMFERENCE_M := FULL_CIRCUMFERENCE_M
-const GEO_RADIUS_M := GEO_CIRCUMFERENCE_M / TAU # ~63,662 m
+const GEO_RADIUS_M := GEO_CIRCUMFERENCE_M / TAU # ~636,620 m
 
 ## The planet actually built: FULL_CIRCUMFERENCE_M unless the dev postage
 ## stamp is on (set_circumference, before generation). These are static

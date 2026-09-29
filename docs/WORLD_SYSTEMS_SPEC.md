@@ -62,7 +62,7 @@ The build is far past "prototype." Most layers of the stack already exist. The j
 
 | Stack layer | Exists in repo | Aligned to spec? | Gap / risk |
 |---|---|---|---|
-| Geology / terrain | `planet/passes/terrain, geology`; cube-sphere 400 km; continents, mountains, ravines, cliffs, cave mouths | Mostly | No **tectonic skeleton** — mountains not placed by plate boundaries. No caves: the only "cave mouths" are wolf-den props (Phase 3 replaces them) |
+| Geology / terrain | `planet/passes/terrain, geology`; cube-sphere 4,000 km; continents, mountains, ravines, cliffs, cave mouths | Mostly | No **tectonic skeleton** — mountains not placed by plate boundaries. No caves: the only "cave mouths" are wolf-den props (Phase 3 replaces them) |
 | Water | `passes/hydrology`; `river_network` (widths, rapids, waterfalls); rivers swell in storms | Yes | Verify rivers carry a **current direction** swimmers and waders can feel |
 | Energy (clock/sky) | `sky_system` 2-hour day, moon phases, real sun+moon lights; `astro`; `lunar_mansions`; `cloud_layers` | Mostly | Day split must be **45/20/35/20**; verify smooth lerps; lunar cycle ~29.5 days |
 | Climate | `passes/climate`; `weather_sim` grid with wind | Partly | Verify wind is **pressure-gradient** driven; verify **ridge-blocked moisture** (windward wet / leeward dry) |
@@ -107,7 +107,7 @@ Target: **late-90s/early-2000s console 3D, saturated dark-fantasy**. Low-poly bu
 # PART D — Architecture
 
 ### D1. World scale (locked)
-Spherical wraparound cube-sphere, **4,000 km** circumference (1/10 Earth, design §I; the code's 400 km is the pre-change value), relief ≈ 1/10 Earth, floating origin around the player. Already built — keep it.
+Spherical wraparound cube-sphere, **4,000 km** circumference (1/10 Earth, design §I; the code matches since 2026-09-29), relief ≈ 1/10 Earth, floating origin around the player. Already built — keep it.
 
 The planet is **4,000 km (1/10 Earth) with biomes at 1/10 Earth scale too** (design §I): movement is the reason the scale works, not boats. Therefore: everything global lives in PlanetData at coarse resolution with **fixed cell counts** (coarser per km, never denser with area); everything the player touches is generated locally on demand from those coarse fields plus noise; nothing is stored per metre.
 

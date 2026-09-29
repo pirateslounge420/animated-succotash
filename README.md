@@ -4,7 +4,7 @@
 
 An ambient open-world exploration game in a smooth-shaded GameCube style,
 set on a walkable, procedurally generated cube-sphere planet — 4,000 km around, one tenth of Earth (design §I; the code
-still says 400 km until that change lands) — at a tribal, pre-firearm tech level.
+4,000 km around) — at a tribal, pre-firearm tech level.
 No quests and no crafting: three tools for the whole game (spear, bow, fishing
 pole), momentum-based movement that is the point of the game, and you
 wander, watch the weather roll in, and find what lives where.

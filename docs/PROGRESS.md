@@ -4,6 +4,11 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — Planet size locked at 1/10 Earth in the code (Mike, from chat)
+- `PlanetConst.FULL_CIRCUMFERENCE_M` 400 km → **4,000 km**, so landmass, height (`HEIGHT_SCALE` 0.1, unchanged) and time (the 144-min day, unchanged) share the one 1/10 ratio design §I locked on the 27th. The dev postage stamp (`data/dev.json`, 40 km) is untouched and still on; turn it off to play the full planet.
+- What changes on the full planet: the 96-cell blueprint's cells are now ~7 km (were ~1 km), so rivers, lake edges and biome borders are decided at 7 km steps and detailed by noise in the chunk; small features (oases, hot springs, lagoons) are sparser per km. Generation cost is the same (fixed cell count); streaming cost is unchanged (view distance, not planet size).
+- Follow-ups: the smallest-band grow pass (every seed gets a continent of every biome); check `tools/biome_scale.gd` numbers at the new size; sparse ledger storage for the 100× area (spec D3). Docs updated: DESIGN.md overview, README, WORLD_SYSTEMS_SPEC.
+
 ## 2026-09-29 — Mike's play notes: astride in trees, a still cling, the zenith, your own arrows
 - **Always astride in a tree** (Mike: "always straddle, no hanging"):
   - The hang pose is gone. On any limb, thick or thin, level or not, you sit astride it; on the trunk and steep wood you hug it as before.

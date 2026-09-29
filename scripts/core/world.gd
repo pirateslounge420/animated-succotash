@@ -12,7 +12,7 @@ extends Node
 ##   the same first camp) replace the game's, so before/after views match.
 ##   A missing file, or dev_mode false, means the game's own settings.
 ## * Dev postage stamp (spec A4): in dev mode, "postage_stamp": true builds
-##   a small scale model of the planet instead of the full 400 km one:
+##   a small scale model of the planet instead of the full 4,000 km one:
 ##   the same seed and passes, with the geography shrunk to
 ##   "stamp"."circumference_km" around on a coarser "grid_res" blueprint,
 ##   so every climate band is a short walk apart and it generates in a

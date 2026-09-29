@@ -12,7 +12,7 @@ extends SceneTree
 ##   3. with a display, starts the game on the stamp and saves a ground
 ##      screenshot at the first camp, then the planet map (spec A4
 ##      overlay: biome, temperature, rainfall, elevation) from four sides.
-## With --full it also times the full 400 km planet for comparison.
+## With --full it also times the full 4,000 km planet for comparison.
 ##
 ## Run from the project folder:
 ##   numbers only (no window):
