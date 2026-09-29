@@ -36,6 +36,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - temperate broadleaf 450 / 912 days;
   - boreal needles 3,590 / 7,287 days.
   - `tools/species_row.gd` (new) shows oak, maple, Scots pine and coconut palm side by side through the year. Options: RUN, DAYS, TOP, WIND, DIST, FRAMES, NO_TILES.
+- **Play checks after these steps:** strike passes. tech_check crashed once with engine-internal `rb_set` errors right after its respawn teleport. It then passed 23/0 on this code, and 23/0 on the commit before §AH, so it's intermittent. It's not reproduced, so a race in the new per-species materials during a burst of new chunks isn't ruled out; watch for it.
 - **Dev run** (`species_row RUN=145,330`, a temperate year, rain every 9 days):
   - green on day 150; turning on 160; 90 % shed by 170; bare by 180;
   - piles 1.4 cm deep at most (four trees 11 m apart), rotting through dry (stage 1.4 by day 212) to wet-dark (2.2 by day 330);
