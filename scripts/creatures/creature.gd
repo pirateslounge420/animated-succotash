@@ -268,7 +268,8 @@ func tick(delta: float, ctx: Dictionary) -> void:
 		return
 	_timer -= delta
 	var player_dir: Vector3 = ctx.player_dir
-	var to_player := distance_to(player_dir)
+	# Up a tree, you're that much farther off (ctx "player_above_m").
+	var to_player := Vector2(distance_to(player_dir), float(ctx.get("player_above_m", 0.0))).length()
 	_rig_near = to_player < RIG_M
 	_hitboxes_near = to_player < Hitboxes.ACTIVE_M or Arrow.near(global_position, Hitboxes.ARROW_WAKE_M)
 
@@ -300,7 +301,7 @@ func tick(delta: float, ctx: Dictionary) -> void:
 		_place(delta)
 		return
 
-	var shy := _shy_m(ctx)
+	var shy := _shy_m(ctx, to_player)
 	_calm(delta, ctx, to_player, shy)
 	_hear()
 	# The territorial charge (species.charge_m): a crocodile, a hippo, a
@@ -471,11 +472,20 @@ func _call_interval() -> float:
 # --- Roles ---------------------------------------------------------------------
 
 ## Flight distance now: shy_m scaled by the player's noise, widened by
-## suspicion, and narrowed where it's blind (sight_toward()).
-func _shy_m(ctx: Dictionary) -> float:
+## suspicion, and narrowed where it's blind (sight_toward()). The seeing
+## part (the 0.35 a silent player still gets) is cut by the leaves between
+## its eyes and you (design §AM 2, FoliageCover: ctx "cover", the clusters
+## round you when you're in or under a crown): a still player in a crown
+## is only heard, not seen.
+func _shy_m(ctx: Dictionary, to_player := INF) -> float:
 	var noise: float = ctx.get("player_noise", 0.4)
 	var sight := sight_toward(ctx.player_dir) if ctx.has("player_dir") else 1.0
-	return species.shy_m * (0.35 + 1.25 * noise) * (1.0 + suspicion) * sight
+	var seen := 1.0
+	var cover: Array = ctx.get("cover", [])
+	if not cover.is_empty() and to_player < species.shy_m * 4.0 * (1.0 + suspicion):
+		var eye := global_position + global_basis.y * maxf(species.size_m * 0.6, 0.2)
+		seen = FoliageCover.see_through(eye, ctx.player_eye, cover)
+	return species.shy_m * (0.35 * seen + 1.25 * noise) * (1.0 + suspicion) * sight
 
 
 ## Noises out in the world (NoiseEvents: an arrow or the spear landing):

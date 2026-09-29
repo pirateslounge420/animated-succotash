@@ -21,6 +21,16 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
     - `species_row`: UP=1 (under the first tree, looking up), PERCH=<creature> (sits it on a limb in the crown), SIDE_M=x (looks at the perch level), ANCHORS=1 (the §AL debug view: a dot at every anchor).
     - `measure_look.py` prints the sky share.
   - Reference still has: shrubs are still hull lumps (not skeleton plants); no baked far impostor (the far mesh is fewer, bigger cards with holes); the rendered dev checks (a) winter row with anchors and (b) birch look-up and perch are rendering now and get their own entry.
+- **§AM leaves are cover, not walls** (step 4):
+  - **Colliders:** trees already collided only on their wood; there was no crown collider left to remove.
+  - **Arrows and the spear** (`FoliageCover.clusters_on`): each leaf cluster on the way takes `combat.foliage_drag` (5 %) of the speed and rustles its tree; wood stops them as before.
+  - **Creature sight:** when you're in or under a crown, the clusters round you are looked up (four times a second). Each animal's line of sight to you loses `gap` per cluster it crosses, and that cuts the seeing part of its flight distance; noise still carries.
+  - **Height counts:** creatures now add your height above the ground to how far off you are (before, a fox under your tree counted you as 0 m away).
+  - **`tools/cover_check.gd` (new) passes 7/0:**
+    - a still player on an oak limb inside the crown is seen from the side 13 % of the time and from right below 30 %;
+    - an Arctic fox notices a still player at 1.4 m hidden, against 7.5 m in the open;
+    - three clusters take 14 % of an arrow's speed.
+  - Reference still has: order-3 twig capsules only within 30 m (twigs are still in the 60 m limb ring, at 8 cm thick instead of 4 cm); the in-game dev check (c) with a fox and a thrown spear.
 
 ## 2026-09-29 — §AK trees grown from their architecture block
 - **Skeleton** (`TreeArch`, new): 149 tree-tier woody species with an `architecture` block now grow their trunk and branches from it. Cacti, bamboo, lianas, mangroves, knee-roots and shrubs keep their own builders.

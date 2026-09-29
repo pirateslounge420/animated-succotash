@@ -10,8 +10,11 @@ extends Node3D
 ##     spear drops to the ground there;
 ##   * a camp person's part: a glancing blow they complain about
 ##     (Camps.shot_at()), and it bounces off and falls;
-##   * ground, trees, ruins: buries its point there;
+##   * ground, trees, ruins: buries its point there (a tree's wood only:
+##     its leaves have no collider, design §AM);
 ##   * water: splashes (Ripples) and floats on the surface.
+## Leaf clusters on the way (FoliageCover) each take combat.foliage_drag of
+## its speed and rustle their tree.
 ## Wherever it lands makes a noise wildlife hears (NoiseEvents, NOISE_M).
 ## It stays until the player takes it back (Spear.pick_up()): there is
 ## only one. Lives under World.world_root (or the part it's stuck in), so
@@ -72,6 +75,26 @@ func launch(from: Vector3, vel: Vector3) -> void:
 	_orient()
 
 
+## Leaf clusters passed through (so each slows it once) and trees
+## rustled (FoliageCover).
+var _leaves := {}
+
+
+func _through_leaves(a: Vector3, b: Vector3) -> void:
+	for h in FoliageCover.clusters_on(get_world_3d().direct_space_state, a, b):
+		var chunk: TerrainChunk = h[0]
+		var key := Vector3i(chunk.get_instance_id(), int(h[1]), int(h[4]))
+		if _leaves.has(key):
+			continue
+		_leaves[key] = true
+		velocity *= 1.0 - FoliageCover.DRAG
+		var tree_key := Vector3i(chunk.get_instance_id(), int(h[1]), -1)
+		if not _leaves.has(tree_key):
+			_leaves[tree_key] = true
+			if TreeContact.instance != null:
+				TreeContact.instance.rustle(chunk, int(h[1]), 0.7)
+
+
 func _physics_process(delta: float) -> void:
 	# A brief faint trail behind it in flight (AimArc.Trail).
 	if _trail != null:
@@ -91,6 +114,9 @@ func _physics_process(delta: float) -> void:
 	q.exclude = exclude
 	q.collision_mask |= Hitboxes.LAYER
 	var ray := get_world_3d().direct_space_state.intersect_ray(q)
+	# Leaves (design §AM 3): no collider, but every cluster on the way
+	# takes combat.foliage_drag of the speed and rustles its tree.
+	_through_leaves(a, b if ray.is_empty() else ray.position)
 	if ray.is_empty():
 		# Water: it meets the surface and floats.
 		var d: Vector3 = world.dir_of(b)

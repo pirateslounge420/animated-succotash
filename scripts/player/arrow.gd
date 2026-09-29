@@ -12,8 +12,11 @@ extends Node3D
 ##   * a camp person's part (Hitboxes.creature_of() names a holder with no
 ##     hurt()): a glancing shot they complain about (Camps.shot_at()), and
 ##     it bounces back off that part and drops;
-##   * ground, trees, ruins: buries its head there and stays a while;
+##   * ground, trees, ruins: buries its head there and stays a while (a
+##     tree's wood only: its leaves have no collider, design §AM);
 ##   * water: splashes (Ripples) and sinks.
+## Leaf clusters on the way (FoliageCover) each take combat.foliage_drag of
+## its speed and rustle their tree; they hide a creature, not armour it.
 ## Where it lands makes a noise wildlife hears (NoiseEvents, NOISE_M): a
 ## miss can spook the animal it lands by.
 ## Lives under World.world_root, so it moves with the floating origin.
@@ -68,6 +71,26 @@ func launch(from: Vector3, vel: Vector3) -> void:
 	add_child(_trail)
 	_orient()
 	flying.append(self)
+
+
+## Leaf clusters passed through (so each slows it once) and trees
+## rustled (FoliageCover).
+var _leaves := {}
+
+
+func _through_leaves(a: Vector3, b: Vector3) -> void:
+	for h in FoliageCover.clusters_on(get_world_3d().direct_space_state, a, b):
+		var chunk: TerrainChunk = h[0]
+		var key := Vector3i(chunk.get_instance_id(), int(h[1]), int(h[4]))
+		if _leaves.has(key):
+			continue
+		_leaves[key] = true
+		velocity *= 1.0 - FoliageCover.DRAG
+		var tree_key := Vector3i(chunk.get_instance_id(), int(h[1]), -1)
+		if not _leaves.has(tree_key):
+			_leaves[tree_key] = true
+			if TreeContact.instance != null:
+				TreeContact.instance.rustle(chunk, int(h[1]), 0.5)
 
 
 func _exit_tree() -> void:
@@ -138,6 +161,9 @@ func _physics_process(delta: float) -> void:
 		if hit_obj:
 			hit_part = _shape_node(ray.collider, ray.shape)
 			hit_kind = "creature" if hit_obj.has_method("hurt") else "folk"
+	# Leaves (design §AM 3): no collider, but every cluster on the way
+	# takes combat.foliage_drag of the speed and rustles its tree.
+	_through_leaves(a, hit_pos)
 	if hit_kind == "":
 		# Water: sinks where it meets the surface.
 		var d: Vector3 = world.dir_of(b)

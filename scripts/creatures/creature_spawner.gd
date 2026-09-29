@@ -127,6 +127,10 @@ func _exit_tree() -> void:
 	SculptedBodies.finish()
 
 
+var _cover: Array = []
+var _cover_t := 0.0
+
+
 func update_creatures(delta: float, daylight: float) -> void:
 	if player == null:
 		return
@@ -140,6 +144,22 @@ func update_creatures(delta: float, daylight: float) -> void:
 	var ctx := {"player_dir": pd, "looking_at": _looked_at(),
 		"player_noise": player.noise_level, "player_still": player.still_time,
 		"player_swimming": player.swimming}
+	# How high you are off the ground (up a tree, a cliff): part of how far
+	# off you are.
+	ctx["player_above_m"] = maxf(world.radius_of(player.global_position) - PlanetConst.RADIUS_M - chunks.ground_height(pd), 0.0)
+	# Leaves hide you (design §AM 2): in or under a crown, the clusters
+	# round you, for each animal's line of sight (Creature._shy_m()).
+	# (Looked up four times a second.)
+	_cover_t -= delta
+	if player.trees != null and player.trees.under_canopy:
+		var eye := player.global_position + player.up * 1.4
+		if _cover_t <= 0.0:
+			_cover_t = 0.25
+			_cover = FoliageCover.clusters_round(player.get_world_3d().direct_space_state, eye)
+		ctx["player_eye"] = eye
+		ctx["cover"] = _cover
+	else:
+		_cover = []
 
 	# One ambient species per frame (round robin), dens and territories a
 	# few times a second.

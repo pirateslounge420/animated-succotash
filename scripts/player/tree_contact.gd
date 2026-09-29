@@ -42,7 +42,13 @@ var _breath: AudioStreamPlayer3D
 var _sound_n := 0
 
 
+## The player's (arrows and the spear rustle the crowns they pass through:
+## FoliageCover).
+static var instance: TreeContact
+
+
 func _ready() -> void:
+	instance = self
 	var sphere := SphereShape3D.new()
 	sphere.radius = QUERY_RADIUS_M
 	_query.shape = sphere

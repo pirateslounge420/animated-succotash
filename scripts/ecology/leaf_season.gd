@@ -47,6 +47,8 @@ var main: Node
 ## how much leaf is left (0-1).
 var autumn := 0.0
 var leaf_left := 1.0
+## The same leaf left, for code without the node (FoliageCover).
+static var leaf_now := 1.0
 ## The share of a full deciduous crown falling per game-day now (0 outside
 ## the fall), and the extra share a gust dropped this frame.
 var shed_per_day := 0.0
@@ -185,6 +187,7 @@ func update_season(delta: float, d: Vector3, days: float, wind: Vector3) -> void
 		_gusting = false
 	autumn = c.autumn
 	leaf_left = c.leaf * _gust_mult
+	leaf_now = leaf_left
 	shed_per_day = c.rate * _gust_mult
 	_apply_t -= delta
 	if _apply_t <= 0.0 or gust_drop > 0.0:
