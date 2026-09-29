@@ -1582,6 +1582,7 @@ func _tech(cam_forward: Vector3) -> bool:
 		clinging = true
 		clings += 1
 		_cling_f = 0
+		_cling_miss_f = 0
 		_cling_left = CLING_S
 		_wall_speed = maxf(_wall_in.length(), (velocity - up * velocity.dot(up)).length())
 		_move = Vector3.ZERO
@@ -1630,6 +1631,9 @@ func _ground_cling(cam_forward: Vector3) -> bool:
 	var wchunk := (wb as Node).get_parent() as TerrainChunk if wb is Node else null
 	_wall_limb = wchunk != null and wchunk.is_limb_shape(wb, int(hit.shape))
 	global_position += up * 0.3
+	# Up against it: the ray met it up to CLING_REACH_M off, and a cling
+	# a hand's breadth away loses the face on its first move.
+	move_and_collide(-n * CLING_REACH_M)
 	if not _tech(cam_forward) or not clinging:
 		return false
 	# Past the planting frames at once: a grab, not a kick.
@@ -1648,6 +1652,11 @@ func _catchable(g: BranchGraph, i: int) -> bool:
 	if sp != null and sp.shape == PlantSpecies.Shape.BAMBOO:
 		return true
 	return g.limb[i] > 0 and g.radius[i] <= SWING_MAX_R
+
+
+## Frames a cling rides out without touching its face, and the count.
+const CLING_MISS_F := 8
+var _cling_miss_f := 0
 
 
 ## Approach speed at the face (a wall jump keeps it if it's more).
@@ -1722,8 +1731,12 @@ func _cling_step(delta: float) -> void:
 	if input.length() > 0.2:
 		_face((-_wall_n - up * _wall_n.dot(up)).normalized(), delta * 3.0)
 	# Down onto the ground ends it (not crawling up off it: just off the
-	# ground the feet still read as on it); so does losing the face.
-	if (is_on_floor() and input.y <= 0.2) or not touching:
+	# ground the feet still read as on it); so does losing the face for
+	# more than a few frames (crawling up a trunk, the flared foot's
+	# collider gives way to the next one's narrower one, a hand's breadth
+	# in, and the cling let go there).
+	_cling_miss_f = 0 if touching else _cling_miss_f + 1
+	if (is_on_floor() and input.y <= 0.2) or _cling_miss_f > CLING_MISS_F:
 		clinging = false
 		velocity = Vector3.ZERO
 	_kick_t = 2.0 / 60.0
