@@ -271,6 +271,18 @@ trunk/structure and `canopy` decides the foliage.
 
 ---
 
+## 4a. `origin` (HUD)
+
+```json
+"origin": "Eastern North America"
+```
+Where the species comes from on Earth, 2-6 plain words, under ~40 characters: the
+country or region a field guide would give ("Louisiana and the Gulf coast", "Andes of
+Peru and Bolivia", "Worldwide (cosmopolitan)"). The HUD prints it under the binomial with
+the common name when you're within reach of the plant (data/hud.json plant_name). Filled
+28 Sept 2026 for every entry; a missing `origin` falls back to the first clause of the
+research note (PlantSpecies.origin_from_source), which reads worse — fill it.
+
 ## 4b. `soil` (spawn gate — co-equal with temperature and moisture)
 
 ```json

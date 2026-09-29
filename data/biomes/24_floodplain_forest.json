@@ -23,6 +23,7 @@
     "name": "Bald cypress",
     "genus": "Taxodium",
     "species": "distichum",
+    "origin": "Southeastern USA",
     "family": "Cupressaceae",
     "shape": "cypress",
     "temp_c": [
@@ -189,6 +190,7 @@
     "name": "Black poplar",
     "genus": "Populus",
     "species": "nigra",
+    "origin": "Europe to Central Asia",
     "shape": "broadleaf",
     "temp_c": [
      6,
@@ -308,6 +310,7 @@
     "name": "Cottonwood",
     "genus": "Populus",
     "species": "deltoides",
+    "origin": "Eastern North America",
     "shape": "broadleaf",
     "temp_c": [
      5,
@@ -427,6 +430,7 @@
     "name": "Pecan",
     "genus": "Carya",
     "species": "illinoinensis",
+    "origin": "Mississippi Valley and Mexico",
     "shape": "broadleaf",
     "temp_c": [
      12,
@@ -547,6 +551,7 @@
     "name": "Silver maple",
     "genus": "Acer",
     "species": "saccharinum",
+    "origin": "Eastern North America",
     "shape": "broadleaf",
     "temp_c": [
      4,
@@ -664,6 +669,7 @@
     "name": "Southern magnolia",
     "genus": "Magnolia",
     "species": "grandiflora",
+    "origin": "Southeastern USA",
     "family": "Magnoliaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -839,6 +845,7 @@
     "name": "Sycamore",
     "genus": "Platanus",
     "species": "occidentalis",
+    "origin": "Eastern North America",
     "shape": "broadleaf",
     "temp_c": [
      7,
@@ -959,6 +966,7 @@
     "name": "White willow",
     "genus": "Salix",
     "species": "alba",
+    "origin": "Europe to Central Asia",
     "shape": "broadleaf",
     "temp_c": [
      6,
@@ -1080,6 +1088,7 @@
     "name": "Elderberry",
     "genus": "Sambucus",
     "species": "nigra",
+    "origin": "Europe and Western Asia",
     "shape": "shrub",
     "temp_c": [
      7,
@@ -1200,6 +1209,7 @@
     "name": "Giant river cane",
     "genus": "Arundinaria",
     "species": "gigantea",
+    "origin": "Southeastern USA",
     "shape": "bamboo",
     "temp_c": [
      10,
@@ -1308,6 +1318,7 @@
     "name": "Grey willow",
     "genus": "Salix",
     "species": "cinerea",
+    "origin": "Europe and Western Asia",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -1424,6 +1435,7 @@
     "name": "Red-osier dogwood",
     "genus": "Cornus",
     "species": "sericea",
+    "origin": "Northern North America",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -1545,6 +1557,7 @@
     "name": "Jewelweed",
     "genus": "Impatiens",
     "species": "capensis",
+    "origin": "Eastern North America",
     "shape": "grass",
     "temp_c": [
      5,
@@ -1633,6 +1646,7 @@
     "name": "Ostrich fern",
     "genus": "Matteuccia",
     "species": "struthiopteris",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "fern",
     "temp_c": [
      2,
@@ -1725,6 +1739,7 @@
     "name": "Reed canary grass",
     "genus": "Phalaris",
     "species": "arundinacea",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "grass",
     "temp_c": [
      3,
@@ -1818,6 +1833,7 @@
     "name": "Sedge",
     "genus": "Carex",
     "species": "grayi",
+    "origin": "Eastern North America",
     "shape": "tussock",
     "temp_c": [
      6,
@@ -1906,6 +1922,7 @@
     "name": "Stinging nettle",
     "genus": "Urtica",
     "species": "dioica",
+    "origin": "Eurasia and North America",
     "shape": "grass",
     "temp_c": [
      4,
@@ -1996,6 +2013,7 @@
     "name": "Riverbank grape",
     "genus": "Vitis",
     "species": "riparia",
+    "origin": "Eastern North America",
     "shape": "liana",
     "temp_c": [
      4,
@@ -2113,6 +2131,7 @@
     "name": "Spanish moss",
     "genus": "Tillandsia",
     "species": "usneoides",
+    "origin": "SE USA to Argentina",
     "family": "Bromeliaceae",
     "shape": "hanging_moss",
     "temp_c": [
@@ -2259,6 +2278,7 @@
     "name": "Virginia creeper",
     "genus": "Parthenocissus",
     "species": "quinquefolia",
+    "origin": "Eastern North America to Mexico",
     "shape": "liana",
     "temp_c": [
      5,

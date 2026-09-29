@@ -23,6 +23,7 @@
     "name": "Downy birch",
     "genus": "Betula",
     "species": "pubescens",
+    "origin": "Northern Europe, Iceland and Siberia",
     "shape": "broadleaf",
     "temp_c": [
      -2,
@@ -137,6 +138,7 @@
     "name": "Lodgepole pine",
     "genus": "Pinus",
     "species": "contorta",
+    "origin": "Western North America",
     "shape": "conifer",
     "temp_c": [
      -2,
@@ -240,6 +242,7 @@
     "name": "Manuka",
     "genus": "Leptospermum",
     "species": "scoparium",
+    "origin": "New Zealand and SE Australia",
     "shape": "gnarled",
     "temp_c": [
      8,
@@ -355,6 +358,7 @@
     "name": "Geothermal willow",
     "genus": "Salix",
     "species": "lanata",
+    "origin": "Iceland, Scandinavia and Arctic Russia",
     "shape": "shrub",
     "temp_c": [
      -4,
@@ -469,6 +473,7 @@
     "name": "Prostrate kanuka",
     "genus": "Kunzea",
     "species": "ericoides",
+    "origin": "New Zealand",
     "shape": "shrub",
     "temp_c": [
      8,
@@ -582,6 +587,7 @@
     "name": "Shrubby cinquefoil",
     "genus": "Dasiphora",
     "species": "fruticosa",
+    "origin": "Circumboreal (Holarctic)",
     "shape": "shrub",
     "temp_c": [
      -3,
@@ -700,6 +706,7 @@
     "name": "Umbrella fern",
     "genus": "Dicranopteris",
     "species": "linearis",
+    "origin": "Old World tropics and Pacific",
     "shape": "fern",
     "temp_c": [
      10,
@@ -795,6 +802,7 @@
     "name": "Broad-leaved cattail",
     "genus": "Typha",
     "species": "latifolia",
+    "origin": "Northern Hemisphere (Holarctic)",
     "shape": "reed",
     "temp_c": [
      0,
@@ -888,6 +896,7 @@
     "name": "Geothermal kanuka moss",
     "genus": "Campylopus",
     "species": "introflexus",
+    "origin": "Southern Hemisphere (S America, NZ)",
     "shape": "moss",
     "temp_c": [
      5,
@@ -976,6 +985,7 @@
     "name": "Green cyanobacteria mat",
     "genus": "Synechococcus",
     "species": "lividus",
+    "origin": "Yellowstone hot springs, USA",
     "shape": "thermophile_mat",
     "temp_c": [
      -10,
@@ -1058,6 +1068,7 @@
     "name": "Hot-spring moss",
     "genus": "Bryum",
     "species": "argenteum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      -8,
@@ -1146,6 +1157,7 @@
     "name": "Ross' bentgrass",
     "genus": "Agrostis",
     "species": "rossiae",
+    "origin": "Yellowstone, Wyoming (endemic)",
     "shape": "grass",
     "temp_c": [
      -2,
@@ -1235,6 +1247,7 @@
     "name": "Thermophile mat",
     "genus": "Thermus",
     "species": "aquaticus",
+    "origin": "Yellowstone hot springs, USA",
     "shape": "thermophile_mat",
     "temp_c": [
      -10,
@@ -1317,6 +1330,7 @@
     "name": "Tufted hairgrass",
     "genus": "Deschampsia",
     "species": "cespitosa",
+    "origin": "Circumboreal (Holarctic)",
     "shape": "tussock",
     "temp_c": [
      -5,

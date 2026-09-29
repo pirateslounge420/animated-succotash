@@ -11,6 +11,7 @@
     "name": "Giant highland banana",
     "genus": "Musa",
     "species": "ingens",
+    "origin": "New Guinea highlands",
     "family": "Musaceae",
     "shape": "palm",
     "temp_c": [
@@ -235,6 +236,7 @@
     "name": "Giant taro",
     "genus": "Alocasia",
     "species": "macrorrhizos",
+    "origin": "Borneo and the Philippines",
     "family": "Araceae",
     "shape": "umbrella",
     "temp_c": [
@@ -436,6 +438,7 @@
     "name": "Alocasia (Himalayan)",
     "genus": "Alocasia",
     "species": "odora",
+    "origin": "Southern China and Indochina",
     "family": "Araceae",
     "shape": "umbrella",
     "temp_c": [
@@ -635,6 +638,7 @@
     "name": "Wild banana",
     "genus": "Musa",
     "species": "acuminata",
+    "origin": "Southeast Asia (Malesia)",
     "family": "Musaceae",
     "shape": "palm",
     "temp_c": [
@@ -859,6 +863,7 @@
     "name": "Wild banana (Indian)",
     "genus": "Musa",
     "species": "balbisiana",
+    "origin": "India to Indochina and S China",
     "family": "Musaceae",
     "shape": "palm",
     "temp_c": [
@@ -1081,6 +1086,7 @@
     "name": "Enset",
     "genus": "Ensete",
     "species": "ventricosum",
+    "origin": "Ethiopian highlands and East Africa",
     "family": "Musaceae",
     "shape": "palm",
     "temp_c": [
@@ -1305,6 +1311,7 @@
     "name": "Zebra alocasia",
     "genus": "Alocasia",
     "species": "zebrina",
+    "origin": "Philippines",
     "family": "Araceae",
     "shape": "umbrella",
     "temp_c": [
@@ -1492,6 +1499,7 @@
     "name": "Taro",
     "genus": "Colocasia",
     "species": "esculenta",
+    "origin": "India and Southeast Asia",
     "family": "Araceae",
     "shape": "umbrella",
     "temp_c": [

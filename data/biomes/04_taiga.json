@@ -23,6 +23,7 @@
     "name": "Black spruce",
     "genus": "Picea",
     "species": "mariana",
+    "origin": "Boreal Canada and Alaska",
     "shape": "conifer",
     "temp_c": [
      -5,
@@ -125,6 +126,7 @@
     "name": "Fir",
     "genus": "Abies",
     "species": "balsamea",
+    "origin": "Eastern Canada and NE United States",
     "shape": "conifer",
     "temp_c": [
      -2,
@@ -227,6 +229,7 @@
     "name": "Larch",
     "genus": "Larix",
     "species": "sibirica",
+    "origin": "Western Siberia and the Urals",
     "shape": "conifer",
     "temp_c": [
      -6,
@@ -333,6 +336,7 @@
     "name": "Lodgepole pine",
     "genus": "Pinus",
     "species": "contorta",
+    "origin": "Western North America",
     "family": "Pinaceae",
     "shape": "conifer",
     "temp_c": [
@@ -502,6 +506,7 @@
     "name": "Paper birch",
     "genus": "Betula",
     "species": "papyrifera",
+    "origin": "Boreal North America",
     "shape": "broadleaf",
     "temp_c": [
      -4,
@@ -616,6 +621,7 @@
     "name": "Scots pine",
     "genus": "Pinus",
     "species": "sylvestris",
+    "origin": "Scotland to Siberia",
     "shape": "conifer",
     "temp_c": [
      -2,
@@ -719,6 +725,7 @@
     "name": "Spruce",
     "genus": "Picea",
     "species": "abies",
+    "origin": "Scandinavia and central Europe",
     "shape": "conifer",
     "temp_c": [
      -2,
@@ -823,6 +830,7 @@
     "name": "Bilberry",
     "genus": "Vaccinium",
     "species": "myrtillus",
+    "origin": "Northern and mountain Eurasia",
     "shape": "shrub",
     "temp_c": [
      -4,
@@ -937,6 +945,7 @@
     "name": "Dwarf birch",
     "genus": "Betula",
     "species": "nana",
+    "origin": "Circumpolar Arctic and subarctic",
     "shape": "shrub",
     "temp_c": [
      -6,
@@ -1051,6 +1060,7 @@
     "name": "Juniper",
     "genus": "Juniperus",
     "species": "communis",
+    "origin": "Circumboreal (northern hemisphere)",
     "shape": "conifer",
     "temp_c": [
      -6,
@@ -1156,6 +1166,7 @@
     "name": "Labrador tea",
     "genus": "Rhododendron",
     "species": "groenlandicum",
+    "origin": "Boreal North America and Greenland",
     "shape": "shrub",
     "temp_c": [
      -6,
@@ -1266,6 +1277,7 @@
     "name": "Taiga willow",
     "genus": "Salix",
     "species": "bebbiana",
+    "origin": "Boreal North America",
     "shape": "shrub",
     "temp_c": [
      -6,
@@ -1382,6 +1394,7 @@
     "name": "Feather moss",
     "genus": "Pleurozium",
     "species": "schreberi",
+    "origin": "Circumboreal (northern hemisphere)",
     "shape": "moss",
     "temp_c": [
      -6,
@@ -1466,6 +1479,7 @@
     "name": "Fireweed",
     "genus": "Chamaenerion",
     "species": "angustifolium",
+    "origin": "Circumboreal (northern hemisphere)",
     "shape": "grass",
     "temp_c": [
      -4,
@@ -1554,6 +1568,7 @@
     "name": "Lingonberry",
     "genus": "Vaccinium",
     "species": "vitis-idaea",
+    "origin": "Circumboreal (northern hemisphere)",
     "shape": "shrub",
     "temp_c": [
      -6,
@@ -1664,6 +1679,7 @@
     "name": "Reindeer lichen",
     "genus": "Cladonia",
     "species": "rangiferina",
+    "origin": "Circumboreal and Arctic",
     "shape": "moss",
     "temp_c": [
      -8,
@@ -1737,6 +1753,7 @@
     "name": "Rusty bog-moss",
     "genus": "Sphagnum",
     "species": "fuscum",
+    "origin": "Circumpolar boreal and Arctic",
     "shape": "moss",
     "temp_c": [
      -8,

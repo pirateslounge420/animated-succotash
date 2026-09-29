@@ -23,6 +23,7 @@
     "name": "Acacia",
     "genus": "Vachellia",
     "species": "tortilis",
+    "origin": "Africa and Arabia",
     "shape": "umbrella",
     "leaf_density": 0.5,
     "temp_c": [
@@ -140,6 +141,7 @@
     "name": "African baobab",
     "genus": "Adansonia",
     "species": "digitata",
+    "origin": "Sub-Saharan Africa",
     "family": "Malvaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -319,6 +321,7 @@
     "name": "Baobab",
     "genus": "Adansonia",
     "species": "digitata",
+    "origin": "Sub-Saharan Africa",
     "shape": "gnarled",
     "temp_c": [
      20,
@@ -435,6 +438,7 @@
     "name": "Boab",
     "genus": "Adansonia",
     "species": "gregorii",
+    "origin": "Kimberley, Northwest Australia",
     "family": "Malvaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -614,6 +618,7 @@
     "name": "Cerrado pequi",
     "genus": "Caryocar",
     "species": "brasiliense",
+    "origin": "Brazilian Cerrado",
     "shape": "gnarled",
     "temp_c": [
      20,
@@ -730,6 +735,7 @@
     "name": "Darwin stringybark",
     "genus": "Eucalyptus",
     "species": "tetrodonta",
+    "origin": "Northern Australia",
     "shape": "broadleaf",
     "temp_c": [
      24,
@@ -840,6 +846,7 @@
     "name": "Miombo tree",
     "genus": "Brachystegia",
     "species": "spiciformis",
+    "origin": "Southern and Eastern Africa",
     "shape": "broadleaf",
     "temp_c": [
      19,
@@ -956,6 +963,7 @@
     "name": "Palmyra palm",
     "genus": "Borassus",
     "species": "flabellifer",
+    "origin": "India and Southeast Asia",
     "shape": "palm",
     "temp_c": [
      22,
@@ -1069,6 +1077,7 @@
     "name": "Australian screw pine",
     "genus": "Pandanus",
     "species": "spiralis",
+    "origin": "Northern Australia",
     "shape": "spike_rosette",
     "temp_c": [
      24,
@@ -1153,6 +1162,7 @@
     "name": "Candelabra tree",
     "genus": "Euphorbia",
     "species": "candelabrum",
+    "origin": "Eastern Africa",
     "shape": "cactus",
     "temp_c": [
      18,
@@ -1251,6 +1261,7 @@
     "name": "Savanna bamboo",
     "genus": "Oxytenanthera",
     "species": "abyssinica",
+    "origin": "Tropical Africa",
     "shape": "bamboo",
     "temp_c": [
      20,
@@ -1358,6 +1369,7 @@
     "name": "Sicklebush",
     "genus": "Dichrostachys",
     "species": "cinerea",
+    "origin": "Africa and India",
     "shape": "shrub",
     "temp_c": [
      18,
@@ -1474,6 +1486,7 @@
     "name": "Whistling thorn",
     "genus": "Vachellia",
     "species": "drepanolobium",
+    "origin": "East Africa",
     "shape": "shrub",
     "temp_c": [
      16,
@@ -1592,6 +1605,7 @@
     "name": "Elephant grass",
     "genus": "Cenchrus",
     "species": "purpureus",
+    "origin": "Tropical Africa",
     "shape": "tussock",
     "temp_c": [
      20,
@@ -1683,6 +1697,7 @@
     "name": "Fire lily",
     "genus": "Gloriosa",
     "species": "superba",
+    "origin": "Africa and Tropical Asia",
     "shape": "liana",
     "temp_c": [
      20,
@@ -1769,6 +1784,7 @@
     "name": "Red grass",
     "genus": "Hyparrhenia",
     "species": "rufa",
+    "origin": "Tropical Africa",
     "shape": "grass",
     "temp_c": [
      20,
@@ -1857,6 +1873,7 @@
     "name": "Savanna grass",
     "genus": "Themeda",
     "species": "triandra",
+    "origin": "Africa, Asia and Australia",
     "shape": "tussock",
     "temp_c": [
      16,
@@ -1945,6 +1962,7 @@
     "name": "Spear grass",
     "genus": "Heteropogon",
     "species": "contortus",
+    "origin": "Pantropical",
     "shape": "grass",
     "temp_c": [
      20,
@@ -2033,6 +2051,7 @@
     "name": "Spinifex",
     "genus": "Triodia",
     "species": "pungens",
+    "origin": "Northern Australia",
     "shape": "cushion",
     "temp_c": [
      22,

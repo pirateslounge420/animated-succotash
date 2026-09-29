@@ -25,6 +25,7 @@
     "name": "Bladder wrack",
     "genus": "Fucus",
     "species": "vesiculosus",
+    "origin": "North Atlantic and Baltic coasts",
     "shape": "epiphyte_clump",
     "temp_c": [
      0,
@@ -113,6 +114,7 @@
     "name": "Eelgrass",
     "genus": "Zostera",
     "species": "marina",
+    "origin": "North Atlantic and North Pacific coasts",
     "shape": "grass",
     "temp_c": [
      0,
@@ -200,6 +202,7 @@
     "name": "Sea lettuce",
     "genus": "Ulva",
     "species": "lactuca",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      0,
@@ -277,6 +280,7 @@
     "name": "Sea rocket",
     "genus": "Cakile",
     "species": "maritima",
+    "origin": "Europe, North Africa and Western Asia",
     "shape": "grass",
     "temp_c": [
      5,
@@ -368,6 +372,7 @@
     "name": "Smooth cordgrass",
     "genus": "Sporobolus",
     "species": "alterniflorus",
+    "origin": "Atlantic coast of the Americas",
     "shape": "reed",
     "temp_c": [
      5,
@@ -463,6 +468,7 @@
     "name": "Sugar kelp",
     "genus": "Saccharina",
     "species": "latissima",
+    "origin": "North Atlantic and North Pacific coasts",
     "shape": "liana",
     "temp_c": [
      0,

@@ -23,6 +23,7 @@
     "name": "Ash",
     "genus": "Fraxinus",
     "species": "excelsior",
+    "origin": "Europe and the Caucasus",
     "shape": "broadleaf",
     "temp_c": [
      6,
@@ -139,6 +140,7 @@
     "name": "Beech",
     "genus": "Fagus",
     "species": "sylvatica",
+    "origin": "Western and central Europe",
     "shape": "broadleaf",
     "temp_c": [
      6,
@@ -251,6 +253,7 @@
     "name": "Dawn redwood",
     "genus": "Metasequoia",
     "species": "glyptostroboides",
+    "origin": "Hubei, central China",
     "family": "Cupressaceae",
     "shape": "conifer",
     "temp_c": [
@@ -414,6 +417,7 @@
     "name": "Elm",
     "genus": "Ulmus",
     "species": "americana",
+    "origin": "Eastern North America",
     "shape": "broadleaf",
     "temp_c": [
      5,
@@ -526,6 +530,7 @@
     "name": "Ginkgo",
     "genus": "Ginkgo",
     "species": "biloba",
+    "origin": "Eastern China",
     "family": "Ginkgoaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -702,6 +707,7 @@
     "name": "Maple",
     "genus": "Acer",
     "species": "saccharum",
+    "origin": "Northeastern North America",
     "shape": "broadleaf",
     "temp_c": [
      4,
@@ -815,6 +821,7 @@
     "name": "Oak",
     "genus": "Quercus",
     "species": "robur",
+    "origin": "Europe to the Caucasus",
     "shape": "broadleaf",
     "temp_c": [
      6,
@@ -928,6 +935,7 @@
     "name": "Red oak",
     "genus": "Quercus",
     "species": "rubra",
+    "origin": "Eastern North America",
     "shape": "broadleaf",
     "temp_c": [
      6,
@@ -1041,6 +1049,7 @@
     "name": "Tulip tree",
     "genus": "Liriodendron",
     "species": "tulipifera",
+    "origin": "Eastern North America",
     "family": "Magnoliaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -1217,6 +1226,7 @@
     "name": "Yulan magnolia",
     "genus": "Magnolia",
     "species": "denudata",
+    "origin": "Central and eastern China",
     "family": "Magnoliaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -1394,6 +1404,7 @@
     "name": "Elderberry",
     "genus": "Sambucus",
     "species": "nigra",
+    "origin": "Europe and western Asia",
     "shape": "shrub",
     "temp_c": [
      7,
@@ -1510,6 +1521,7 @@
     "name": "Great rhododendron",
     "genus": "Rhododendron",
     "species": "maximum",
+    "origin": "Appalachian Mountains, eastern USA",
     "family": "Ericaceae",
     "shape": "shrub",
     "temp_c": [
@@ -1684,6 +1696,7 @@
     "name": "Hawthorn",
     "genus": "Crataegus",
     "species": "monogyna",
+    "origin": "Europe, NW Africa and W Asia",
     "shape": "gnarled",
     "temp_c": [
      6,
@@ -1797,6 +1810,7 @@
     "name": "Hazel",
     "genus": "Corylus",
     "species": "avellana",
+    "origin": "Europe and western Asia",
     "shape": "shrub",
     "temp_c": [
      6,
@@ -1909,6 +1923,7 @@
     "name": "Ichang papeda",
     "genus": "Citrus",
     "species": "cavaleriei",
+    "origin": "Central and SW China",
     "family": "Rutaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -2085,6 +2100,7 @@
     "name": "Moso bamboo",
     "genus": "Phyllostachys",
     "species": "edulis",
+    "origin": "Southern China and Taiwan",
     "shape": "bamboo",
     "temp_c": [
      13,
@@ -2192,6 +2208,7 @@
     "name": "Spicebush",
     "genus": "Lindera",
     "species": "benzoin",
+    "origin": "Eastern North America",
     "shape": "shrub",
     "temp_c": [
      8,
@@ -2306,6 +2323,7 @@
     "name": "Bluebell",
     "genus": "Hyacinthoides",
     "species": "non-scripta",
+    "origin": "Atlantic western Europe",
     "shape": "grass",
     "temp_c": [
      8,
@@ -2392,6 +2410,7 @@
     "name": "Kuma bamboo grass",
     "genus": "Sasa",
     "species": "veitchii",
+    "origin": "Japan",
     "shape": "bamboo",
     "temp_c": [
      8,
@@ -2499,6 +2518,7 @@
     "name": "Lady fern",
     "genus": "Athyrium",
     "species": "filix-femina",
+    "origin": "Circumboreal temperate forests",
     "shape": "fern",
     "temp_c": [
      4,
@@ -2589,6 +2609,7 @@
     "name": "Mayapple",
     "genus": "Podophyllum",
     "species": "peltatum",
+    "origin": "Eastern North America",
     "shape": "rosette",
     "temp_c": [
      8,
@@ -2675,6 +2696,7 @@
     "name": "Spring herbs",
     "genus": "Anemone",
     "species": "nemorosa",
+    "origin": "Europe",
     "shape": "grass",
     "temp_c": [
      6,
@@ -2765,6 +2787,7 @@
     "name": "Wood sorrel",
     "genus": "Oxalis",
     "species": "acetosella",
+    "origin": "Europe and northern Asia",
     "shape": "cushion",
     "temp_c": [
      4,
@@ -2855,6 +2878,7 @@
     "name": "Ivy",
     "genus": "Hedera",
     "species": "helix",
+    "origin": "Europe and western Asia",
     "shape": "liana",
     "temp_c": [
      7,

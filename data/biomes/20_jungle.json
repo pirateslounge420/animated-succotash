@@ -23,6 +23,7 @@
     "name": "Fishtail palm",
     "genus": "Caryota",
     "species": "urens",
+    "origin": "India and Sri Lanka",
     "shape": "palm",
     "temp_c": [
      21,
@@ -134,6 +135,7 @@
     "name": "Sal",
     "genus": "Shorea",
     "species": "robusta",
+    "origin": "India and Nepal",
     "shape": "broadleaf",
     "temp_c": [
      20,
@@ -246,6 +248,7 @@
     "name": "Teak",
     "genus": "Tectona",
     "species": "grandis",
+    "origin": "India to Indochina",
     "shape": "broadleaf",
     "temp_c": [
      21,
@@ -358,6 +361,7 @@
     "name": "Trumpet tree",
     "genus": "Cecropia",
     "species": "obtusifolia",
+    "origin": "Mexico to Colombia",
     "shape": "umbrella",
     "temp_c": [
      21,
@@ -469,6 +473,7 @@
     "name": "Umbrella tree",
     "genus": "Musanga",
     "species": "cecropioides",
+    "origin": "West and Central Africa",
     "shape": "umbrella",
     "temp_c": [
      23,
@@ -585,6 +590,7 @@
     "name": "Bamboo thicket",
     "genus": "Bambusa",
     "species": "bambos",
+    "origin": "India and Southeast Asia",
     "shape": "bamboo",
     "temp_c": [
      22,
@@ -692,6 +698,7 @@
     "name": "Elephant ear",
     "genus": "Alocasia",
     "species": "macrorrhizos",
+    "origin": "Southeast Asia and Pacific",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -776,6 +783,7 @@
     "name": "Giant bamboo",
     "genus": "Dendrocalamus",
     "species": "giganteus",
+    "origin": "Myanmar and Thailand",
     "shape": "bamboo",
     "temp_c": [
      22,
@@ -883,6 +891,7 @@
     "name": "Guadua bamboo",
     "genus": "Guadua",
     "species": "angustifolia",
+    "origin": "Colombia, Venezuela and Ecuador",
     "shape": "bamboo",
     "temp_c": [
      20,
@@ -990,6 +999,7 @@
     "name": "Hanging lobster-claw",
     "genus": "Heliconia",
     "species": "rostrata",
+    "origin": "Peru, Bolivia and Ecuador",
     "shape": "shrub",
     "temp_c": [
      21,
@@ -1074,6 +1084,7 @@
     "name": "Wild banana",
     "genus": "Musa",
     "species": "acuminata",
+    "origin": "Southeast Asia",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -1183,6 +1194,7 @@
     "name": "Bracken",
     "genus": "Pteridium",
     "species": "aquilinum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "fern",
     "temp_c": [
      8,
@@ -1273,6 +1285,7 @@
     "name": "Cogon grass",
     "genus": "Imperata",
     "species": "cylindrica",
+    "origin": "Old World tropics",
     "shape": "grass",
     "temp_c": [
      18,
@@ -1359,6 +1372,7 @@
     "name": "Lantana",
     "genus": "Lantana",
     "species": "camara",
+    "origin": "Tropical Americas",
     "shape": "shrub",
     "temp_c": [
      18,
@@ -1469,6 +1483,7 @@
     "name": "Spiral ginger",
     "genus": "Costus",
     "species": "spicatus",
+    "origin": "Caribbean",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -1553,6 +1568,7 @@
     "name": "Torch ginger",
     "genus": "Etlingera",
     "species": "elatior",
+    "origin": "Malay Peninsula and Indonesia",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -1639,6 +1655,7 @@
     "name": "Passion vine",
     "genus": "Passiflora",
     "species": "edulis",
+    "origin": "Brazil, Paraguay and Argentina",
     "shape": "liana",
     "temp_c": [
      20,
@@ -1724,6 +1741,7 @@
     "name": "Rattan vine",
     "genus": "Calamus",
     "species": "rotang",
+    "origin": "India and Sri Lanka",
     "shape": "liana",
     "temp_c": [
      22,
@@ -1835,6 +1853,7 @@
     "name": "Staghorn fern",
     "genus": "Platycerium",
     "species": "bifurcatum",
+    "origin": "Eastern Australia and New Guinea",
     "shape": "epiphyte_clump",
     "temp_c": [
      18,

@@ -13,6 +13,7 @@
     "name": "Pink lady's slipper",
     "genus": "Cypripedium",
     "species": "acaule",
+    "origin": "Northeastern North America",
     "family": "Orchidaceae",
     "shape": "rosette",
     "temp_c": [
@@ -196,6 +197,7 @@
     "name": "Bee orchid",
     "genus": "Ophrys",
     "species": "apifera",
+    "origin": "Europe and the Mediterranean",
     "family": "Orchidaceae",
     "shape": "rosette",
     "temp_c": [
@@ -379,6 +381,7 @@
     "name": "Moth orchid",
     "genus": "Phalaenopsis",
     "species": "amabilis",
+    "origin": "Malesia to New Guinea and Australia",
     "family": "Orchidaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -560,6 +563,7 @@
     "name": "Ghost orchid",
     "genus": "Dendrophylax",
     "species": "lindenii",
+    "origin": "Southern Florida and Cuba",
     "family": "Orchidaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -730,6 +734,7 @@
     "name": "Leopard orchid",
     "genus": "Ansellia",
     "species": "africana",
+    "origin": "Tropical and southern Africa",
     "family": "Orchidaceae",
     "shape": "epiphyte_clump",
     "temp_c": [

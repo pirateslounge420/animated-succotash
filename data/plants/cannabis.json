@@ -229,7 +229,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Hindu Kush range, Afghanistan and Pakistan"
    },
    {
     "name": "Cannabis - Afghani",
@@ -447,7 +448,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Kandahar and Helmand, Afghanistan"
    },
    {
     "name": "Cannabis - Mazar-i-Sharif",
@@ -665,7 +667,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Balkh, northern Afghanistan"
    },
    {
     "name": "Cannabis - Lashkar Gah",
@@ -883,7 +886,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Helmand, Afghanistan"
    },
    {
     "name": "Cannabis - Chitral",
@@ -1101,7 +1105,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Chitral, northern Pakistan"
    },
    {
     "name": "Cannabis - Swat Valley",
@@ -1319,7 +1324,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Swat, northern Pakistan"
    },
    {
     "name": "Cannabis - Tirah Valley",
@@ -1537,7 +1543,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Khyber, Pakistan"
    },
    {
     "name": "Cannabis - Kashmir",
@@ -1755,7 +1762,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Kashmir valley"
    },
    {
     "name": "Cannabis - Uzbek",
@@ -1973,7 +1981,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Uzbekistan"
    },
    {
     "name": "Cannabis - Pamir",
@@ -2191,7 +2200,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Tajikistan / Pamirs"
    },
    {
     "name": "Cannabis - Manali",
@@ -2409,7 +2419,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Kullu valley, Himachal Pradesh"
    },
    {
     "name": "Cannabis - Parvati (Malana)",
@@ -2627,7 +2638,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Parvati valley, Himachal Pradesh"
    },
    {
     "name": "Cannabis - Nepalese",
@@ -2845,7 +2857,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Nepal middle hills"
    },
    {
     "name": "Cannabis - Kerala",
@@ -3063,7 +3076,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Western Ghats, Kerala, India"
    },
    {
     "name": "Cannabis - Mysore",
@@ -3281,7 +3295,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Karnataka, India"
    },
    {
     "name": "Cannabis - Manipur",
@@ -3499,7 +3514,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Manipur, NE India"
    },
    {
     "name": "Cannabis - Ceylon",
@@ -3717,7 +3733,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Sri Lanka"
    },
    {
     "name": "Cannabis - Thai (Isan)",
@@ -3935,7 +3952,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Northeast Thailand"
    },
    {
     "name": "Cannabis - Meao Thai",
@@ -4153,7 +4171,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Hmong hill villages, northern Thailand"
    },
    {
     "name": "Cannabis - Luang Prabang",
@@ -4371,7 +4390,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "northern Laos"
    },
    {
     "name": "Cannabis - Cambodian",
@@ -4589,7 +4609,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Cambodia"
    },
    {
     "name": "Cannabis - Vietnamese (Vietnam Black)",
@@ -4807,7 +4828,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Vietnam"
    },
    {
     "name": "Cannabis - Burmese",
@@ -5025,7 +5047,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Myanmar"
    },
    {
     "name": "Cannabis - Aceh",
@@ -5243,7 +5266,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Aceh, northern Sumatra"
    },
    {
     "name": "Cannabis - Yunnan",
@@ -5461,7 +5485,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Yunnan, China"
    },
    {
     "name": "Cannabis - Papua New Guinea",
@@ -5679,7 +5704,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "PNG highlands"
    },
    {
     "name": "Cannabis - Durban",
@@ -5897,7 +5923,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "KwaZulu-Natal, South Africa"
    },
    {
     "name": "Cannabis - Transkei (Rooibaard)",
@@ -6115,7 +6142,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Eastern Cape, South Africa"
    },
    {
     "name": "Cannabis - Swazi",
@@ -6333,7 +6361,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Eswatini highlands"
    },
    {
     "name": "Cannabis - Malawi",
@@ -6551,7 +6580,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Nkhotakota and the lake shore, Malawi"
    },
    {
     "name": "Cannabis - Kilimanjaro",
@@ -6769,7 +6799,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Kilimanjaro foothills, Tanzania"
    },
    {
     "name": "Cannabis - Kisumu",
@@ -6987,7 +7018,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Lake Victoria shore, Kenya"
    },
    {
     "name": "Cannabis - Ethiopian",
@@ -7205,7 +7237,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Ethiopian highlands"
    },
    {
     "name": "Cannabis - Congolese",
@@ -7423,7 +7456,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Congo basin"
    },
    {
     "name": "Cannabis - Angolan",
@@ -7641,7 +7675,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Angola"
    },
    {
     "name": "Cannabis - Nigerian",
@@ -7859,7 +7894,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Nigeria"
    },
    {
     "name": "Cannabis - Ghanaian",
@@ -8077,7 +8113,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Ghana"
    },
    {
     "name": "Cannabis - Zamal",
@@ -8295,7 +8332,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Réunion"
    },
    {
     "name": "Cannabis - Rif (Ketama)",
@@ -8513,7 +8551,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Rif mountains, Morocco"
    },
    {
     "name": "Cannabis - Lebanese (Bekaa)",
@@ -8731,7 +8770,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Bekaa valley, Lebanon"
    },
    {
     "name": "Cannabis - Turkish",
@@ -8949,7 +8989,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Anatolia, Turkey"
    },
    {
     "name": "Cannabis - Iranian (Mashhad)",
@@ -9167,7 +9208,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Khorasan, Iran"
    },
    {
     "name": "Cannabis - Acapulco Gold",
@@ -9385,7 +9427,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Guerrero, Mexico"
    },
    {
     "name": "Cannabis - Oaxacan",
@@ -9603,7 +9646,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Oaxaca, Mexico"
    },
    {
     "name": "Cannabis - Michoacán",
@@ -9821,7 +9865,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Michoacán, Mexico"
    },
    {
     "name": "Cannabis - Sinaloan",
@@ -10039,7 +10084,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Sinaloa, Mexico"
    },
    {
     "name": "Cannabis - Santa Marta Gold",
@@ -10257,7 +10303,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Sierra Nevada de Santa Marta, Colombia"
    },
    {
     "name": "Cannabis - Punto Rojo",
@@ -10475,7 +10522,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Colombia"
    },
    {
     "name": "Cannabis - Limón Verde",
@@ -10693,7 +10741,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Colombia"
    },
    {
     "name": "Cannabis - Panama Red",
@@ -10911,7 +10960,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Panama"
    },
    {
     "name": "Cannabis - Lamb's Bread",
@@ -11129,7 +11179,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Jamaica"
    },
    {
     "name": "Cannabis - Manga Rosa",
@@ -11347,7 +11398,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "northeast Brazil"
    },
    {
     "name": "Cannabis - Hawaiian (Kona / Puna)",
@@ -11565,7 +11617,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Hawai'i"
    },
    {
     "name": "Cannabis - Russian ruderalis",
@@ -11783,7 +11836,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Volga and southern Siberia"
    },
    {
     "name": "Cannabis - Altai",
@@ -12001,7 +12055,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Altai mountains"
    },
    {
     "name": "Cannabis - Chuy Valley",
@@ -12219,7 +12274,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Chuy valley, Kazakhstan / Kyrgyzstan"
    },
    {
     "name": "Cannabis - Mongolian",
@@ -12437,7 +12493,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Mongolian steppe"
    },
    {
     "name": "Cannabis - Northern Chinese hemp",
@@ -12655,7 +12712,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Shandong / Hebei, China"
    },
    {
     "name": "Cannabis - Japanese hemp (asa)",
@@ -12873,7 +12931,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Tochigi and Nagano, Japan"
    },
    {
     "name": "Cannabis - Korean hemp (Andong)",
@@ -13091,7 +13150,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Andong, Korea"
    },
    {
     "name": "Cannabis - Central Russian hemp",
@@ -13309,7 +13369,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "central Russia / Ukraine"
    },
    {
     "name": "Cannabis - Carmagnola",
@@ -13527,7 +13588,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Piedmont, Italy"
    },
    {
     "name": "Cannabis - Anatolian hemp (Kastamonu)",
@@ -13745,7 +13807,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "northern Turkey"
    },
    {
     "name": "Cannabis - Kentucky feral hemp",
@@ -13963,7 +14026,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "origin": "Ohio valley, USA"
    }
   ]
  },

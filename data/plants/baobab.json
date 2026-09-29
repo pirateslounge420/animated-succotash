@@ -11,6 +11,7 @@
     "name": "African baobab",
     "genus": "Adansonia",
     "species": "digitata",
+    "origin": "Sub-Saharan Africa",
     "family": "Malvaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -232,6 +233,7 @@
     "name": "Grandidier's baobab",
     "genus": "Adansonia",
     "species": "grandidieri",
+    "origin": "Southwestern Madagascar",
     "family": "Malvaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -453,6 +455,7 @@
     "name": "Boab",
     "genus": "Adansonia",
     "species": "gregorii",
+    "origin": "Kimberley, northwestern Australia",
     "family": "Malvaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -674,6 +677,7 @@
     "name": "Ginkgo",
     "genus": "Ginkgo",
     "species": "biloba",
+    "origin": "Eastern China (Zhejiang, Guizhou)",
     "family": "Ginkgoaceae",
     "shape": "broadleaf",
     "temp_c": [

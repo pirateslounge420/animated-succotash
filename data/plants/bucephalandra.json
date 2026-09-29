@@ -13,6 +13,7 @@
     "name": "Bucephalandra motleyana",
     "genus": "Bucephalandra",
     "species": "motleyana",
+    "origin": "Borneo",
     "family": "Araceae",
     "shape": "rosette",
     "temp_c": [
@@ -205,6 +206,7 @@
     "name": "Bucephalandra catherineae",
     "genus": "Bucephalandra",
     "species": "catherineae",
+    "origin": "Borneo (Sarawak)",
     "family": "Araceae",
     "shape": "rosette",
     "temp_c": [
@@ -393,6 +395,7 @@
     "name": "Bucephalandra gigantea",
     "genus": "Bucephalandra",
     "species": "gigantea",
+    "origin": "Borneo (Central Kalimantan)",
     "family": "Araceae",
     "shape": "rosette",
     "temp_c": [
@@ -581,6 +584,7 @@
     "name": "Bucephalandra bogneri",
     "genus": "Bucephalandra",
     "species": "bogneri",
+    "origin": "Borneo (Sarawak)",
     "family": "Araceae",
     "shape": "rosette",
     "temp_c": [

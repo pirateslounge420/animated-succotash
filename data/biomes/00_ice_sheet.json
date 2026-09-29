@@ -25,6 +25,7 @@
     "name": "Antarctic moss",
     "genus": "Bryum",
     "species": "pseudotriquetrum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      -30,
@@ -109,6 +110,7 @@
     "name": "Map lichen",
     "genus": "Rhizocarpon",
     "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      -40,

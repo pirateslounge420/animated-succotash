@@ -24,6 +24,7 @@
     "name": "Greasewood",
     "genus": "Sarcobatus",
     "species": "vermiculatus",
+    "origin": "Western North America",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -136,6 +137,7 @@
     "name": "Iodine bush",
     "genus": "Allenrolfea",
     "species": "occidentalis",
+    "origin": "Great Basin and Mojave Desert",
     "shape": "shrub",
     "temp_c": [
      8,
@@ -242,6 +244,7 @@
     "name": "Nitre bush",
     "genus": "Nitraria",
     "species": "retusa",
+    "origin": "Sahara and Arabian Peninsula",
     "shape": "shrub",
     "temp_c": [
      16,
@@ -352,6 +355,7 @@
     "name": "Saltcedar",
     "genus": "Tamarix",
     "species": "ramosissima",
+    "origin": "Central Asia to the Caspian",
     "shape": "shrub",
     "temp_c": [
      8,
@@ -478,6 +482,7 @@
     "name": "Shrubby seablite",
     "genus": "Suaeda",
     "species": "vera",
+    "origin": "Mediterranean and North Africa",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -590,6 +595,7 @@
     "name": "Alkali heath",
     "genus": "Frankenia",
     "species": "salina",
+    "origin": "California and Baja California",
     "shape": "cushion",
     "temp_c": [
      12,
@@ -675,6 +681,7 @@
     "name": "Glasswort",
     "genus": "Salicornia",
     "species": "europaea",
+    "origin": "Europe, Asia and North America",
     "shape": "cushion",
     "temp_c": [
      5,
@@ -762,6 +769,7 @@
     "name": "Halocnemum",
     "genus": "Halocnemum",
     "species": "strobilaceum",
+    "origin": "North Africa to Central Asia",
     "shape": "cushion",
     "temp_c": [
      8,
@@ -842,6 +850,7 @@
     "name": "Pickleweed",
     "genus": "Sarcocornia",
     "species": "fruticosa",
+    "origin": "Mediterranean and North Africa",
     "shape": "cushion",
     "temp_c": [
      12,
@@ -927,6 +936,7 @@
     "name": "Saltgrass",
     "genus": "Distichlis",
     "species": "spicata",
+    "origin": "The Americas (coasts and playas)",
     "shape": "grass",
     "temp_c": [
      5,

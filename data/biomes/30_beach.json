@@ -23,6 +23,7 @@
     "name": "Beach she-oak",
     "genus": "Casuarina",
     "species": "equisetifolia",
+    "origin": "Southeast Asia, Australia and Pacific",
     "shape": "conifer",
     "temp_c": [
      20,
@@ -130,6 +131,7 @@
     "name": "Coconut palm",
     "genus": "Cocos",
     "species": "nucifera",
+    "origin": "Indo-Pacific tropical coasts",
     "shape": "palm",
     "temp_c": [
      21,
@@ -241,6 +243,7 @@
     "name": "Maritime pine",
     "genus": "Pinus",
     "species": "pinaster",
+    "origin": "Western Mediterranean and Atlantic coast",
     "shape": "conifer",
     "temp_c": [
      10,
@@ -345,6 +348,7 @@
     "name": "Screw pine",
     "genus": "Pandanus",
     "species": "tectorius",
+    "origin": "Indo-Pacific coasts, Hawaii to Australia",
     "shape": "umbrella",
     "temp_c": [
      21,
@@ -459,6 +463,7 @@
     "name": "Sea grape",
     "genus": "Coccoloba",
     "species": "uvifera",
+    "origin": "Caribbean and Florida",
     "shape": "gnarled",
     "temp_c": [
      21,
@@ -572,6 +577,7 @@
     "name": "Beach heliotrope",
     "genus": "Heliotropium",
     "species": "arboreum",
+    "origin": "Indo-Pacific tropical coasts",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -686,6 +692,7 @@
     "name": "Beach naupaka",
     "genus": "Scaevola",
     "species": "taccada",
+    "origin": "Indo-Pacific tropical coasts",
     "shape": "shrub",
     "temp_c": [
      21,
@@ -800,6 +807,7 @@
     "name": "Sea buckthorn",
     "genus": "Hippophae",
     "species": "rhamnoides",
+    "origin": "Europe and Central Asia",
     "shape": "shrub",
     "temp_c": [
      3,
@@ -915,6 +923,7 @@
     "name": "Wax myrtle",
     "genus": "Morella",
     "species": "cerifera",
+    "origin": "Southeastern US and Caribbean",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -1028,6 +1037,7 @@
     "name": "Beach morning glory",
     "genus": "Ipomoea",
     "species": "pes-caprae",
+    "origin": "Pantropical beaches worldwide",
     "shape": "grass",
     "temp_c": [
      20,
@@ -1116,6 +1126,7 @@
     "name": "Beach spinifex",
     "genus": "Spinifex",
     "species": "sericeus",
+    "origin": "Australia and New Zealand",
     "shape": "tussock",
     "temp_c": [
      15,
@@ -1201,6 +1212,7 @@
     "name": "Bitter panicgrass",
     "genus": "Panicum",
     "species": "amarum",
+    "origin": "US Atlantic and Gulf coasts",
     "shape": "grass",
     "temp_c": [
      12,
@@ -1288,6 +1300,7 @@
     "name": "Sea holly",
     "genus": "Eryngium",
     "species": "maritimum",
+    "origin": "Europe and Mediterranean coasts",
     "shape": "rosette",
     "temp_c": [
      7,
@@ -1376,6 +1389,7 @@
     "name": "Sea purslane",
     "genus": "Sesuvium",
     "species": "portulacastrum",
+    "origin": "Pantropical coasts worldwide",
     "shape": "cushion",
     "temp_c": [
      20,
@@ -1464,6 +1478,7 @@
     "name": "Sea rocket",
     "genus": "Cakile",
     "species": "maritima",
+    "origin": "Europe, North Africa and Western Asia",
     "shape": "grass",
     "temp_c": [
      5,

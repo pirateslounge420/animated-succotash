@@ -3,7 +3,9 @@ extends Node
 ## What the crosshair rests on, named (the HUD shows it under the
 ## crosshair): the binomial of the animal, tree or plant you're looking at
 ## as you come near it ("Quercus robur", from the species tables' `genus`
-## and `species`, spec D4).
+## and `species`, spec D4), with the common name and where on Earth it
+## comes from on a second line (PlantSpecies.hud_name(): `origin`, or the
+## first clause of the research note).
 ##
 ## What it reads: the crosshair ray (PlanetPlayer.crosshair_point()'s
 ## start and direction); one physics ray for creatures' and people's
@@ -108,7 +110,7 @@ func _look() -> Array:
 			if sp == null and obj.get_parent() != null:
 				sp = obj.get_parent().get("species")
 			if sp is CreatureSpecies and at.distance_to(me) <= ANIMAL_M and (sp as CreatureSpecies).binomial() != "":
-				best = [(sp as CreatureSpecies).binomial(), "animal"]
+				best = [(sp as CreatureSpecies).hud_name(), "animal"]
 		else:
 			var chunk := (hit.collider as Node).get_parent() as TerrainChunk if hit.collider is Node else null
 			if chunk != null and _near(at, me):
@@ -116,7 +118,7 @@ func _look() -> Array:
 				if i >= 0:
 					var tsp: PlantSpecies = SpeciesDB.all()[int(chunk.trees[i][2])]
 					if tsp.binomial() != "":
-						best = [tsp.binomial(), "tree"]
+						best = [tsp.hud_name(), "tree"]
 	# Plants without colliders, in front of whatever the ray hit: the
 	# nearer of the two is what you're looking at.
 	var plant := _plant_on_ray(from, dir, block_t + 0.3, me)
@@ -178,7 +180,7 @@ func _plant_on_ray(from: Vector3, dir: Vector3, length: float, me: Vector3) -> A
 	if best_sp < 0:
 		return []
 	var sp: PlantSpecies = SpeciesDB.all()[best_sp]
-	return [] if sp.binomial() == "" else [sp.binomial(), "plant", best_t, best_sp]
+	return [] if sp.binomial() == "" else [sp.hud_name(), "plant", best_t, best_sp]
 
 
 ## Where along the ray (o + d t, t in [t0, t1], d unit) it passes within

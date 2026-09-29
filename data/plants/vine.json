@@ -12,6 +12,7 @@
     "name": "Tree philodendron",
     "genus": "Philodendron",
     "species": "bipinnatifidum",
+    "origin": "Southern Brazil and Paraguay",
     "family": "",
     "shape": "rosette",
     "temp_c": [
@@ -211,6 +212,7 @@
     "name": "Philodendron",
     "genus": "Philodendron",
     "species": "hederaceum",
+    "origin": "Mexico to Brazil and the Caribbean",
     "family": "",
     "shape": "liana",
     "temp_c": [
@@ -424,6 +426,7 @@
     "name": "Monstera",
     "genus": "Monstera",
     "species": "deliciosa",
+    "origin": "Southern Mexico to Panama",
     "family": "",
     "shape": "liana",
     "temp_c": [
@@ -642,6 +645,7 @@
     "name": "Golden pothos",
     "genus": "Epipremnum",
     "species": "aureum",
+    "origin": "Society Islands, French Polynesia",
     "family": "",
     "shape": "liana",
     "temp_c": [
@@ -856,6 +860,7 @@
     "name": "Strangler fig",
     "genus": "Ficus",
     "species": "aurea",
+    "origin": "Florida and the Caribbean",
     "family": "",
     "shape": "liana",
     "temp_c": [

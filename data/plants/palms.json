@@ -10,6 +10,7 @@
     "name": "Andean wax palm",
     "genus": "Ceroxylon",
     "species": "quindiuense",
+    "origin": "Andes of Colombia and Peru",
     "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
@@ -229,6 +230,7 @@
     "name": "Coconut palm",
     "genus": "Cocos",
     "species": "nucifera",
+    "origin": "Indo-Pacific tropical coasts",
     "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
@@ -450,6 +452,7 @@
     "name": "Date palm",
     "genus": "Phoenix",
     "species": "dactylifera",
+    "origin": "North Africa and the Middle East",
     "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
@@ -667,6 +670,7 @@
     "name": "Doum palm",
     "genus": "Hyphaene",
     "species": "thebaica",
+    "origin": "Sahel and the Nile valley",
     "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
@@ -888,6 +892,7 @@
     "name": "Moriche palm",
     "genus": "Mauritia",
     "species": "flexuosa",
+    "origin": "Amazon and Orinoco basins",
     "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [

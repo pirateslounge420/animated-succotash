@@ -22,6 +22,7 @@
     "name": "Brazil nut tree",
     "genus": "Bertholletia",
     "species": "excelsa",
+    "origin": "Amazon Basin",
     "shape": "emergent",
     "temp_c": [
      24,
@@ -144,6 +145,7 @@
     "name": "Kapok",
     "genus": "Ceiba",
     "species": "pentandra",
+    "origin": "Tropical Americas and West Africa",
     "shape": "emergent",
     "temp_c": [
      22,
@@ -271,6 +273,7 @@
     "name": "Tualang",
     "genus": "Koompassia",
     "species": "excelsa",
+    "origin": "Malay Peninsula, Sumatra and Borneo",
     "shape": "emergent",
     "temp_c": [
      24,
@@ -395,6 +398,7 @@
     "name": "Yellow meranti",
     "genus": "Shorea",
     "species": "faguetiana",
+    "origin": "Borneo and Malay Peninsula",
     "shape": "emergent",
     "temp_c": [
      24,
@@ -517,6 +521,7 @@
     "name": "Assai palm",
     "genus": "Euterpe",
     "species": "precatoria",
+    "origin": "Amazon Basin and Central America",
     "shape": "palm",
     "temp_c": [
      24,
@@ -637,6 +642,7 @@
     "name": "Limba",
     "genus": "Terminalia",
     "species": "superba",
+    "origin": "West and Central Africa",
     "shape": "umbrella",
     "temp_c": [
      23,
@@ -756,6 +762,7 @@
     "name": "Moriche palm",
     "genus": "Mauritia",
     "species": "flexuosa",
+    "origin": "Amazon and Orinoco basins",
     "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
@@ -952,6 +959,7 @@
     "name": "Rattan palm",
     "genus": "Calamus",
     "species": "manan",
+    "origin": "Malay Peninsula and Sumatra",
     "shape": "liana",
     "temp_c": [
      24,
@@ -1073,6 +1081,7 @@
     "name": "Red meranti",
     "genus": "Shorea",
     "species": "leprosula",
+    "origin": "Malay Peninsula, Sumatra and Borneo",
     "shape": "broadleaf",
     "temp_c": [
      24,
@@ -1193,6 +1202,7 @@
     "name": "Sapucaia",
     "genus": "Lecythis",
     "species": "pisonis",
+    "origin": "Brazil",
     "shape": "broadleaf",
     "temp_c": [
      22,
@@ -1315,6 +1325,7 @@
     "name": "Strangler fig",
     "genus": "Ficus",
     "species": "aurea",
+    "origin": "Florida and the Caribbean",
     "shape": "gnarled",
     "temp_c": [
      21,
@@ -1438,6 +1449,7 @@
     "name": "Aframomum ginger",
     "genus": "Aframomum",
     "species": "melegueta",
+    "origin": "West Africa",
     "shape": "shrub",
     "temp_c": [
      23,
@@ -1532,6 +1544,7 @@
     "name": "Giant bamboo",
     "genus": "Dendrocalamus",
     "species": "giganteus",
+    "origin": "Myanmar and Thailand",
     "shape": "bamboo",
     "temp_c": [
      22,
@@ -1649,6 +1662,7 @@
     "name": "Giant taro",
     "genus": "Alocasia",
     "species": "macrorrhizos",
+    "origin": "Southeast Asia and Pacific",
     "family": "Araceae",
     "shape": "umbrella",
     "temp_c": [
@@ -1810,6 +1824,7 @@
     "name": "Heliconia",
     "genus": "Heliconia",
     "species": "bihai",
+    "origin": "Caribbean and Northern South America",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -1904,6 +1919,7 @@
     "name": "Silver miconia",
     "genus": "Miconia",
     "species": "argentea",
+    "origin": "Mexico to Colombia",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -2024,6 +2040,7 @@
     "name": "Tree fern",
     "genus": "Cyathea",
     "species": "arborea",
+    "origin": "Caribbean",
     "shape": "tree_fern",
     "temp_c": [
      20,
@@ -2146,6 +2163,7 @@
     "name": "Wild banana",
     "genus": "Musa",
     "species": "acuminata",
+    "origin": "Southeast Asia",
     "family": "Musaceae",
     "shape": "palm",
     "temp_c": [
@@ -2330,6 +2348,7 @@
     "name": "Wild banana (Indian)",
     "genus": "Musa",
     "species": "balbisiana",
+    "origin": "India to Indochina",
     "family": "Musaceae",
     "shape": "palm",
     "temp_c": [
@@ -2515,6 +2534,7 @@
     "name": "Amazon sword",
     "genus": "Echinodorus",
     "species": "grandiflorus",
+    "origin": "Brazil and Northern Argentina",
     "shape": "reed",
     "temp_c": [
      22,
@@ -2611,6 +2631,7 @@
     "name": "Common swamp pitcher",
     "genus": "Nepenthes",
     "species": "mirabilis",
+    "origin": "Indochina to Northern Australia",
     "family": "Nepenthaceae",
     "shape": "reed",
     "temp_c": [
@@ -2774,6 +2795,7 @@
     "name": "Forest-floor fern",
     "genus": "Adiantum",
     "species": "latifolium",
+    "origin": "Tropical Americas",
     "shape": "fern",
     "temp_c": [
      22,
@@ -2873,6 +2895,7 @@
     "name": "Marantaceae herb",
     "genus": "Calathea",
     "species": "lutea",
+    "origin": "Mexico to Brazil",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -2966,6 +2989,7 @@
     "name": "Selaginella",
     "genus": "Selaginella",
     "species": "willdenowii",
+    "origin": "Southeast Asia",
     "shape": "moss",
     "temp_c": [
      22,
@@ -3061,6 +3085,7 @@
     "name": "Slender pitcher",
     "genus": "Nepenthes",
     "species": "gracilis",
+    "origin": "Sumatra, Borneo and Malaya",
     "family": "Nepenthaceae",
     "shape": "reed",
     "temp_c": [
@@ -3225,6 +3250,7 @@
     "name": "Taro",
     "genus": "Colocasia",
     "species": "esculenta",
+    "origin": "Southeast Asia and India",
     "family": "Araceae",
     "shape": "umbrella",
     "temp_c": [
@@ -3392,6 +3418,7 @@
     "name": "Zebra alocasia",
     "genus": "Alocasia",
     "species": "zebrina",
+    "origin": "Philippines",
     "family": "Araceae",
     "shape": "umbrella",
     "temp_c": [
@@ -3553,6 +3580,7 @@
     "name": "Bird's nest fern",
     "genus": "Asplenium",
     "species": "nidus",
+    "origin": "Tropical Asia to Australia",
     "shape": "epiphyte_clump",
     "temp_c": [
      22,
@@ -3648,6 +3676,7 @@
     "name": "Bromeliad",
     "genus": "Guzmania",
     "species": "lingulata",
+    "origin": "Central America to Brazil",
     "shape": "epiphyte_clump",
     "temp_c": [
      21,
@@ -3743,6 +3772,7 @@
     "name": "Golden pothos",
     "genus": "Epipremnum",
     "species": "aureum",
+    "origin": "Society Islands, French Polynesia",
     "family": "",
     "shape": "liana",
     "temp_c": [
@@ -3903,6 +3933,7 @@
     "name": "Liana",
     "genus": "Bauhinia",
     "species": "guianensis",
+    "origin": "Amazon Basin",
     "shape": "liana",
     "temp_c": [
      22,
@@ -4021,6 +4052,7 @@
     "name": "Monstera",
     "genus": "Monstera",
     "species": "deliciosa",
+    "origin": "Southern Mexico to Panama",
     "shape": "liana",
     "temp_c": [
      21,
@@ -4116,6 +4148,7 @@
     "name": "Moth orchid",
     "genus": "Phalaenopsis",
     "species": "amabilis",
+    "origin": "Indonesia, Philippines and New Guinea",
     "family": "Orchidaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -4278,6 +4311,7 @@
     "name": "Orchid",
     "genus": "Cattleya",
     "species": "labiata",
+    "origin": "Northeastern Brazil",
     "shape": "epiphyte_clump",
     "temp_c": [
      22,
@@ -4373,6 +4407,7 @@
     "name": "Philodendron",
     "genus": "Philodendron",
     "species": "hederaceum",
+    "origin": "Mexico to Brazil",
     "family": "",
     "shape": "liana",
     "temp_c": [

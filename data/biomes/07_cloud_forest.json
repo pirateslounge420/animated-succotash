@@ -26,6 +26,7 @@
     "name": "Andean wax palm",
     "genus": "Ceroxylon",
     "species": "quindiuense",
+    "origin": "Andes of Colombia and Peru",
     "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
@@ -207,6 +208,7 @@
     "name": "Big-leaf rhododendron",
     "genus": "Rhododendron",
     "species": "sinogrande",
+    "origin": "Yunnan, Tibet and northern Myanmar",
     "family": "Ericaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -381,6 +383,7 @@
     "name": "Campbell's magnolia",
     "genus": "Magnolia",
     "species": "campbellii",
+    "origin": "Eastern Himalaya",
     "family": "Magnoliaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -556,6 +559,7 @@
     "name": "Cloud-forest oak",
     "genus": "Quercus",
     "species": "costaricensis",
+    "origin": "Costa Rica and western Panama",
     "shape": "broadleaf",
     "temp_c": [
      8,
@@ -670,6 +674,7 @@
     "name": "Clusia",
     "genus": "Clusia",
     "species": "multiflora",
+    "origin": "Northern Andes and Central America",
     "shape": "umbrella",
     "temp_c": [
      10,
@@ -784,6 +789,7 @@
     "name": "Giant highland banana",
     "genus": "Musa",
     "species": "ingens",
+    "origin": "New Guinea highlands",
     "family": "Musaceae",
     "shape": "palm",
     "temp_c": [
@@ -956,6 +962,7 @@
     "name": "Gnarled cloud-forest tree",
     "genus": "Weinmannia",
     "species": "tomentosa",
+    "origin": "Andes of Colombia and Venezuela",
     "shape": "gnarled",
     "temp_c": [
      8,
@@ -1074,6 +1081,7 @@
     "name": "Hagenia",
     "genus": "Hagenia",
     "species": "abyssinica",
+    "origin": "East African mountains",
     "shape": "umbrella",
     "temp_c": [
      8,
@@ -1192,6 +1200,7 @@
     "name": "Podocarp",
     "genus": "Podocarpus",
     "species": "oleifolius",
+    "origin": "Mexico to Bolivia",
     "shape": "conifer",
     "temp_c": [
      9,
@@ -1306,6 +1315,7 @@
     "name": "Tree rhododendron",
     "genus": "Rhododendron",
     "species": "arboreum",
+    "origin": "Himalaya and southern India",
     "family": "Ericaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -1482,6 +1492,7 @@
     "name": "Andean chusquea",
     "genus": "Chusquea",
     "species": "scandens",
+    "origin": "Northern Andes",
     "shape": "bamboo",
     "temp_c": [
      8,
@@ -1593,6 +1604,7 @@
     "name": "Andean miconia",
     "genus": "Miconia",
     "species": "theizans",
+    "origin": "Mexico to Bolivia",
     "shape": "shrub",
     "temp_c": [
      9,
@@ -1707,6 +1719,7 @@
     "name": "Andean tree fern",
     "genus": "Cyathea",
     "species": "caracasana",
+    "origin": "Central America to Bolivia",
     "shape": "tree_fern",
     "temp_c": [
      10,
@@ -1822,6 +1835,7 @@
     "name": "Enset",
     "genus": "Ensete",
     "species": "ventricosum",
+    "origin": "Ethiopia and East African highlands",
     "family": "Musaceae",
     "shape": "palm",
     "temp_c": [
@@ -1994,6 +2008,7 @@
     "name": "Fuchsia",
     "genus": "Fuchsia",
     "species": "boliviana",
+    "origin": "Andes of Peru, Bolivia and Argentina",
     "shape": "shrub",
     "temp_c": [
      10,
@@ -2108,6 +2123,7 @@
     "name": "Mountain bamboo",
     "genus": "Yushania",
     "species": "alpina",
+    "origin": "East African mountains",
     "shape": "bamboo",
     "temp_c": [
      8,
@@ -2221,6 +2237,7 @@
     "name": "Begonia",
     "genus": "Begonia",
     "species": "foliosa",
+    "origin": "Andes of Colombia and Venezuela",
     "shape": "cushion",
     "temp_c": [
      10,
@@ -2309,6 +2326,7 @@
     "name": "Filmy fern",
     "genus": "Hymenophyllum",
     "species": "polyanthos",
+    "origin": "Pantropical",
     "shape": "fern",
     "temp_c": [
      8,
@@ -2397,6 +2415,7 @@
     "name": "Hard fern",
     "genus": "Blechnum",
     "species": "occidentale",
+    "origin": "Neotropics, Mexico to Argentina",
     "shape": "fern",
     "temp_c": [
      10,
@@ -2485,6 +2504,7 @@
     "name": "Moss carpet",
     "genus": "Thuidium",
     "species": "delicatulum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      6,
@@ -2563,6 +2583,7 @@
     "name": "Peperomia",
     "genus": "Peperomia",
     "species": "galioides",
+    "origin": "Mexico to Bolivia",
     "shape": "cushion",
     "temp_c": [
      8,
@@ -2653,6 +2674,7 @@
     "name": "Beard lichen",
     "genus": "Usnea",
     "species": "barbata",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "hanging_moss",
     "temp_c": [
      6,
@@ -2719,6 +2741,7 @@
     "name": "Epidendrum orchid",
     "genus": "Epidendrum",
     "species": "secundum",
+    "origin": "Andes and Central America",
     "shape": "epiphyte_clump",
     "temp_c": [
      8,
@@ -2807,6 +2830,7 @@
     "name": "Epiphytic moss and liverworts",
     "genus": "Plagiochila",
     "species": "bifaria",
+    "origin": "Pantropical and oceanic islands",
     "shape": "hanging_moss",
     "temp_c": [
      6,
@@ -2885,6 +2909,7 @@
     "name": "Lowe's pitcher",
     "genus": "Nepenthes",
     "species": "lowii",
+    "origin": "Borneo",
     "family": "Nepenthaceae",
     "shape": "liana",
     "temp_c": [
@@ -3065,6 +3090,7 @@
     "name": "Tank bromeliad",
     "genus": "Guzmania",
     "species": "monostachia",
+    "origin": "Florida, Caribbean and Andes",
     "shape": "epiphyte_clump",
     "temp_c": [
      10,
@@ -3143,6 +3169,7 @@
     "name": "Vireya rhododendron",
     "genus": "Rhododendron",
     "species": "javanicum",
+    "origin": "Java, Sumatra and Malesia",
     "family": "Ericaceae",
     "shape": "epiphyte_clump",
     "temp_c": [

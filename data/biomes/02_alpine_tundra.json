@@ -28,6 +28,7 @@
     "name": "Alpine azalea",
     "genus": "Kalmia",
     "species": "procumbens",
+    "origin": "Circumpolar Arctic-alpine",
     "shape": "shrub",
     "temp_c": [
      -10,
@@ -142,6 +143,7 @@
     "name": "Net-leaved willow",
     "genus": "Salix",
     "species": "reticulata",
+    "origin": "Circumpolar Arctic-alpine",
     "shape": "shrub",
     "temp_c": [
      -10,
@@ -260,6 +262,7 @@
     "name": "Snow willow",
     "genus": "Salix",
     "species": "herbacea",
+    "origin": "Arctic-alpine Europe and NE N America",
     "shape": "shrub",
     "temp_c": [
      -10,
@@ -380,6 +383,7 @@
     "name": "Alpine sedge",
     "genus": "Kobresia",
     "species": "myosuroides",
+    "origin": "Circumpolar Arctic-alpine",
     "shape": "tussock",
     "temp_c": [
      -10,
@@ -469,6 +473,7 @@
     "name": "Curved sedge",
     "genus": "Carex",
     "species": "curvula",
+    "origin": "Alps, Pyrenees and Carpathians",
     "shape": "grass",
     "temp_c": [
      -8,
@@ -558,6 +563,7 @@
     "name": "Map lichen",
     "genus": "Rhizocarpon",
     "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      -15,
@@ -635,6 +641,7 @@
     "name": "Moss campion",
     "genus": "Silene",
     "species": "acaulis",
+    "origin": "Circumpolar Arctic-alpine",
     "shape": "cushion",
     "temp_c": [
      -10,
@@ -723,6 +730,7 @@
     "name": "Mountain avens",
     "genus": "Dryas",
     "species": "octopetala",
+    "origin": "Arctic-alpine Eurasia and N America",
     "shape": "cushion",
     "temp_c": [
      -10,
@@ -811,6 +819,7 @@
     "name": "Purple saxifrage",
     "genus": "Saxifraga",
     "species": "oppositifolia",
+    "origin": "Circumpolar Arctic-alpine",
     "shape": "cushion",
     "temp_c": [
      -12,

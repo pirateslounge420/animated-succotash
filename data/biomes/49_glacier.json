@@ -25,6 +25,7 @@
     "name": "Glacier buttercup",
     "genus": "Ranunculus",
     "species": "glacialis",
+    "origin": "Alps, Pyrenees and the Arctic",
     "shape": "cushion",
     "temp_c": [
      -12,
@@ -116,6 +117,7 @@
     "name": "Map lichen",
     "genus": "Rhizocarpon",
     "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      -30,
@@ -189,6 +191,7 @@
     "name": "Snow algae",
     "genus": "Chlamydomonas",
     "species": "nivalis",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "thermophile_mat",
     "temp_c": [
      -30,

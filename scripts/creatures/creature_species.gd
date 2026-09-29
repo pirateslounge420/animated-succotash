@@ -11,6 +11,9 @@ extends RefCounted
 const DATA_PATH := "res://data/creatures/creatures.json"
 
 var name := ""
+## Where it lives on Earth, short, for the HUD: `origin`, else the first
+## clause of `source`.
+var origin := ""
 var role := "ground"
 var body := "quadruped"
 var spawn := "ambient"
@@ -115,6 +118,9 @@ static func _load() -> void:
 static func _from(e: Dictionary) -> CreatureSpecies:
 	var sp := CreatureSpecies.new()
 	sp.name = e.name
+	sp.origin = str(e.get("origin", ""))
+	if sp.origin == "":
+		sp.origin = PlantSpecies.origin_from_source(str(e.get("source", "")), str(e.get("genus", "")), str(e.get("species", "")))
 	sp.role = e.get("role", sp.role)
 	sp.body = e.get("body", sp.body)
 	sp.spawn = e.get("spawn", sp.spawn)
@@ -228,5 +234,18 @@ func active_now(daylight: float) -> bool:
 
 
 ## "Genus species" from the table (spec D4), or "".
+## The HUD line under the crosshair: binomial, then common name and origin.
+func hud_name() -> String:
+	var b := binomial()
+	if b == "":
+		return ""
+	var second := PackedStringArray()
+	if name != "" and name.to_lower() != b.to_lower():
+		second.append(name)
+	if origin != "":
+		second.append(origin)
+	return b if second.is_empty() else "%s\n%s" % [b, " · ".join(second)]
+
+
 func binomial() -> String:
 	return ("%s %s" % [str(data.get("genus", "")), str(data.get("species", ""))]).strip_edges()

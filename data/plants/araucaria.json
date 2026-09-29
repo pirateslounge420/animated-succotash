@@ -10,6 +10,7 @@
     "name": "Kauri",
     "genus": "Agathis",
     "species": "australis",
+    "origin": "Northland, New Zealand",
     "family": "Araucariaceae",
     "shape": "emergent",
     "temp_c": [
@@ -223,6 +224,7 @@
     "name": "Monkey puzzle",
     "genus": "Araucaria",
     "species": "araucana",
+    "origin": "Andes of Chile and Argentina",
     "family": "Araucariaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -431,6 +433,7 @@
     "name": "Paraná pine",
     "genus": "Araucaria",
     "species": "angustifolia",
+    "origin": "Southern Brazil and NE Argentina",
     "family": "Araucariaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -639,6 +642,7 @@
     "name": "Bunya pine",
     "genus": "Araucaria",
     "species": "bidwillii",
+    "origin": "Queensland, Australia",
     "family": "Araucariaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -847,6 +851,7 @@
     "name": "Norfolk Island pine",
     "genus": "Araucaria",
     "species": "heterophylla",
+    "origin": "Norfolk Island, South Pacific",
     "family": "Araucariaceae",
     "shape": "conifer",
     "temp_c": [

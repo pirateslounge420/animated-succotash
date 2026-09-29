@@ -25,6 +25,7 @@
     "name": "Drift sargassum",
     "genus": "Sargassum",
     "species": "fluitans",
+    "origin": "Sargasso Sea and tropical Atlantic",
     "shape": "epiphyte_clump",
     "temp_c": [
      18,
@@ -119,6 +120,7 @@
     "name": "Pelagic sargassum",
     "genus": "Sargassum",
     "species": "natans",
+    "origin": "Sargasso Sea and tropical Atlantic",
     "shape": "epiphyte_clump",
     "temp_c": [
      18,

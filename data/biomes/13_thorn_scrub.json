@@ -23,6 +23,7 @@
     "name": "Baobab",
     "genus": "Adansonia",
     "species": "digitata",
+    "origin": "Sub-Saharan Africa",
     "shape": "gnarled",
     "temp_c": [
      20,
@@ -139,6 +140,7 @@
     "name": "Caatinga catingueira",
     "genus": "Cenostigma",
     "species": "pyramidale",
+    "origin": "Caatinga of NE Brazil",
     "shape": "broadleaf",
     "temp_c": [
      22,
@@ -255,6 +257,7 @@
     "name": "Honey mesquite",
     "genus": "Prosopis",
     "species": "glandulosa",
+    "origin": "SW United States and northern Mexico",
     "shape": "gnarled",
     "temp_c": [
      16,
@@ -371,6 +374,7 @@
     "name": "Red quebracho",
     "genus": "Schinopsis",
     "species": "balansae",
+    "origin": "Gran Chaco, Argentina and Paraguay",
     "shape": "broadleaf",
     "temp_c": [
      19,
@@ -481,6 +485,7 @@
     "name": "Umbrella thorn",
     "genus": "Vachellia",
     "species": "tortilis",
+    "origin": "Africa and Arabia",
     "shape": "umbrella",
     "leaf_density": 0.5,
     "temp_c": [
@@ -600,6 +605,7 @@
     "name": "Blackbrush acacia",
     "genus": "Vachellia",
     "species": "rigidula",
+    "origin": "South Texas and NE Mexico",
     "shape": "shrub",
     "temp_c": [
      17,
@@ -714,6 +720,7 @@
     "name": "Facheiro cactus",
     "genus": "Pilosocereus",
     "species": "pachycladus",
+    "origin": "Caatinga of NE Brazil",
     "shape": "cactus",
     "temp_c": [
      22,
@@ -813,6 +820,7 @@
     "name": "Madagascar ocotillo",
     "genus": "Alluaudia",
     "species": "procera",
+    "origin": "Southern Madagascar",
     "shape": "spike_rosette",
     "temp_c": [
      22,
@@ -899,6 +907,7 @@
     "name": "Mandacaru",
     "genus": "Cereus",
     "species": "jamacaru",
+    "origin": "Caatinga of NE Brazil",
     "shape": "cactus",
     "temp_c": [
      22,
@@ -998,6 +1007,7 @@
     "name": "Myrrh bush",
     "genus": "Commiphora",
     "species": "africana",
+    "origin": "Sub-Saharan Africa",
     "shape": "shrub",
     "temp_c": [
      20,
@@ -1114,6 +1124,7 @@
     "name": "Texas ebony",
     "genus": "Ebenopsis",
     "species": "ebano",
+    "origin": "South Texas and NE Mexico",
     "shape": "shrub",
     "temp_c": [
      20,
@@ -1230,6 +1241,7 @@
     "name": "Buffelgrass",
     "genus": "Cenchrus",
     "species": "ciliaris",
+    "origin": "Africa, Arabia and India",
     "shape": "grass",
     "temp_c": [
      18,
@@ -1316,6 +1328,7 @@
     "name": "Elephant's foot",
     "genus": "Euphorbia",
     "species": "tirucalli",
+    "origin": "Eastern and southern Africa",
     "shape": "shrub",
     "temp_c": [
      20,
@@ -1415,6 +1428,7 @@
     "name": "Kinglet agave",
     "genus": "Agave",
     "species": "lechuguilla",
+    "origin": "Chihuahuan Desert, Mexico and Texas",
     "shape": "spike_rosette",
     "temp_c": [
      15,
@@ -1499,6 +1513,7 @@
     "name": "Prickly pear",
     "genus": "Opuntia",
     "species": "engelmannii",
+    "origin": "SW United States and northern Mexico",
     "shape": "cactus",
     "temp_c": [
      14,
@@ -1598,6 +1613,7 @@
     "name": "Threeawn grass",
     "genus": "Aristida",
     "species": "purpurea",
+    "origin": "SW United States and northern Mexico",
     "shape": "tussock",
     "temp_c": [
      10,
@@ -1686,6 +1702,7 @@
     "name": "Ball moss",
     "genus": "Tillandsia",
     "species": "recurvata",
+    "origin": "Southern USA to Argentina",
     "shape": "epiphyte_clump",
     "temp_c": [
      15,

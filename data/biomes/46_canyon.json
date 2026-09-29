@@ -23,6 +23,7 @@
     "name": "Fremont cottonwood",
     "genus": "Populus",
     "species": "fremontii",
+    "origin": "Southwestern USA and northern Mexico",
     "shape": "broadleaf",
     "temp_c": [
      10,
@@ -140,6 +141,7 @@
     "name": "Gambel oak",
     "genus": "Quercus",
     "species": "gambelii",
+    "origin": "Southwestern USA (Colorado Plateau)",
     "shape": "broadleaf",
     "temp_c": [
      6,
@@ -257,6 +259,7 @@
     "name": "Netleaf hackberry",
     "genus": "Celtis",
     "species": "reticulata",
+    "origin": "Southwestern USA and northern Mexico",
     "shape": "gnarled",
     "temp_c": [
      10,
@@ -370,6 +373,7 @@
     "name": "Two-needle pinyon",
     "genus": "Pinus",
     "species": "edulis",
+    "origin": "Colorado Plateau, southwestern USA",
     "shape": "conifer",
     "temp_c": [
      6,
@@ -480,6 +484,7 @@
     "name": "Utah juniper",
     "genus": "Juniperus",
     "species": "osteosperma",
+    "origin": "Great Basin and Colorado Plateau",
     "shape": "conifer",
     "temp_c": [
      6,
@@ -591,6 +596,7 @@
     "name": "Big sagebrush",
     "genus": "Artemisia",
     "species": "tridentata",
+    "origin": "Western North America",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -702,6 +708,7 @@
     "name": "Blackbrush",
     "genus": "Coleogyne",
     "species": "ramosissima",
+    "origin": "Mojave Desert and Colorado Plateau",
     "shape": "shrub",
     "temp_c": [
      8,
@@ -814,6 +821,7 @@
     "name": "Cliffrose",
     "genus": "Purshia",
     "species": "stansburiana",
+    "origin": "Southwestern USA and northern Mexico",
     "shape": "gnarled",
     "temp_c": [
      8,
@@ -926,6 +934,7 @@
     "name": "Coyote willow",
     "genus": "Salix",
     "species": "exigua",
+    "origin": "Western North America",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -1043,6 +1052,7 @@
     "name": "Green Mormon tea",
     "genus": "Ephedra",
     "species": "viridis",
+    "origin": "Southwestern USA",
     "shape": "shrub",
     "temp_c": [
      6,
@@ -1144,6 +1154,7 @@
     "name": "Prickly pear",
     "genus": "Opuntia",
     "species": "engelmannii",
+    "origin": "Southwestern USA and Mexico",
     "shape": "cactus",
     "temp_c": [
      10,
@@ -1245,6 +1256,7 @@
     "name": "Desert globemallow",
     "genus": "Sphaeralcea",
     "species": "ambigua",
+    "origin": "Mojave and Sonoran Deserts",
     "shape": "grass",
     "temp_c": [
      10,
@@ -1330,6 +1342,7 @@
     "name": "Galleta grass",
     "genus": "Pleuraphis",
     "species": "jamesii",
+    "origin": "Colorado Plateau and Great Basin",
     "shape": "grass",
     "temp_c": [
      6,
@@ -1416,6 +1429,7 @@
     "name": "Indian ricegrass",
     "genus": "Achnatherum",
     "species": "hymenoides",
+    "origin": "Western North America",
     "shape": "tussock",
     "temp_c": [
      2,
@@ -1504,6 +1518,7 @@
     "name": "Maidenhair fern",
     "genus": "Adiantum",
     "species": "capillus-veneris",
+    "origin": "Worldwide (warm temperate)",
     "shape": "fern",
     "temp_c": [
      8,
@@ -1597,6 +1612,7 @@
     "name": "Sand dropseed",
     "genus": "Sporobolus",
     "species": "cryptandrus",
+    "origin": "North America, Canada to Mexico",
     "shape": "tussock",
     "temp_c": [
      4,
@@ -1683,6 +1699,7 @@
     "name": "Scarlet monkeyflower",
     "genus": "Erythranthe",
     "species": "cardinalis",
+    "origin": "Southwestern USA and Baja California",
     "shape": "grass",
     "temp_c": [
      8,

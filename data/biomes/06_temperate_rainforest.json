@@ -23,6 +23,7 @@
     "name": "Coast redwood",
     "genus": "Sequoia",
     "species": "sempervirens",
+    "origin": "Coastal California and Oregon",
     "shape": "conifer",
     "temp_c": [
      10,
@@ -125,6 +126,7 @@
     "name": "Coihue",
     "genus": "Nothofagus",
     "species": "dombeyi",
+    "origin": "Southern Chile and Argentina",
     "shape": "broadleaf",
     "temp_c": [
      6,
@@ -235,6 +237,7 @@
     "name": "Douglas fir",
     "genus": "Pseudotsuga",
     "species": "menziesii",
+    "origin": "Western North America",
     "shape": "conifer",
     "temp_c": [
      5,
@@ -337,6 +340,7 @@
     "name": "Hemlock",
     "genus": "Tsuga",
     "species": "heterophylla",
+    "origin": "Pacific NW, Alaska to California",
     "shape": "conifer",
     "temp_c": [
      4,
@@ -439,6 +443,7 @@
     "name": "Rimu",
     "genus": "Dacrydium",
     "species": "cupressinum",
+    "origin": "New Zealand",
     "shape": "conifer",
     "temp_c": [
      8,
@@ -541,6 +546,7 @@
     "name": "Sitka spruce",
     "genus": "Picea",
     "species": "sitchensis",
+    "origin": "Pacific coast, Alaska to California",
     "shape": "conifer",
     "temp_c": [
      5,
@@ -647,6 +653,7 @@
     "name": "Colihue",
     "genus": "Chusquea",
     "species": "culeou",
+    "origin": "Southern Chile and Argentina",
     "shape": "bamboo",
     "temp_c": [
      6,
@@ -754,6 +761,7 @@
     "name": "Devil's club",
     "genus": "Oplopanax",
     "species": "horridus",
+    "origin": "Pacific NW, Alaska to Oregon",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -867,6 +875,7 @@
     "name": "Kuril bamboo",
     "genus": "Sasa",
     "species": "kurilensis",
+    "origin": "Northern Japan, Kurils and Sakhalin",
     "shape": "bamboo",
     "temp_c": [
      2,
@@ -974,6 +983,7 @@
     "name": "Salal",
     "genus": "Gaultheria",
     "species": "shallon",
+    "origin": "Pacific Northwest coast",
     "shape": "shrub",
     "temp_c": [
      6,
@@ -1084,6 +1094,7 @@
     "name": "Silver tree fern",
     "genus": "Cyathea",
     "species": "dealbata",
+    "origin": "New Zealand",
     "shape": "tree_fern",
     "temp_c": [
      9,
@@ -1195,6 +1206,7 @@
     "name": "Vine maple",
     "genus": "Acer",
     "species": "circinatum",
+    "origin": "Pacific Northwest",
     "shape": "gnarled",
     "temp_c": [
      6,
@@ -1310,6 +1322,7 @@
     "name": "Deer fern",
     "genus": "Blechnum",
     "species": "spicant",
+    "origin": "Pacific NW and Atlantic Europe",
     "shape": "fern",
     "temp_c": [
      4,
@@ -1398,6 +1411,7 @@
     "name": "Oregon oxalis",
     "genus": "Oxalis",
     "species": "oregana",
+    "origin": "Coastal Oregon and California",
     "shape": "cushion",
     "temp_c": [
      8,
@@ -1486,6 +1500,7 @@
     "name": "Skunk cabbage",
     "genus": "Lysichiton",
     "species": "americanus",
+    "origin": "Pacific Northwest",
     "shape": "rosette",
     "temp_c": [
      4,
@@ -1579,6 +1594,7 @@
     "name": "Stair-step moss",
     "genus": "Hylocomium",
     "species": "splendens",
+    "origin": "Circumboreal (northern hemisphere)",
     "shape": "moss",
     "temp_c": [
      2,
@@ -1657,6 +1673,7 @@
     "name": "Sword fern",
     "genus": "Polystichum",
     "species": "munitum",
+    "origin": "Pacific Northwest",
     "shape": "fern",
     "temp_c": [
      6,
@@ -1747,6 +1764,7 @@
     "name": "Cat-tail moss",
     "genus": "Isothecium",
     "species": "stoloniferum",
+    "origin": "Pacific Northwest coast",
     "shape": "hanging_moss",
     "temp_c": [
      6,
@@ -1825,6 +1843,7 @@
     "name": "Licorice fern",
     "genus": "Polypodium",
     "species": "glycyrrhiza",
+    "origin": "Pacific Northwest",
     "shape": "epiphyte_clump",
     "temp_c": [
      7,
@@ -1913,6 +1932,7 @@
     "name": "Old man's beard",
     "genus": "Usnea",
     "species": "longissima",
+    "origin": "Circumboreal old-growth forests",
     "shape": "hanging_moss",
     "temp_c": [
      2,

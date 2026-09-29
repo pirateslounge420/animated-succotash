@@ -12,6 +12,7 @@
     "name": "Sago cycad",
     "genus": "Cycas",
     "species": "revoluta",
+    "origin": "Ryukyu Islands, southern Japan",
     "family": "Cycadaceae/Zamiaceae",
     "shape": "palm",
     "temp_c": [
@@ -232,6 +233,7 @@
     "name": "Australian cycad",
     "genus": "Cycas",
     "species": "media",
+    "origin": "Northern Australia (Queensland)",
     "family": "Cycadaceae/Zamiaceae",
     "shape": "palm",
     "temp_c": [
@@ -452,6 +454,7 @@
     "name": "Modjadji cycad",
     "genus": "Encephalartos",
     "species": "transvenosus",
+    "origin": "Limpopo, South Africa",
     "family": "Cycadaceae/Zamiaceae",
     "shape": "palm",
     "temp_c": [
@@ -672,6 +675,7 @@
     "name": "Coontie",
     "genus": "Zamia",
     "species": "integrifolia",
+    "origin": "Florida, Georgia and Caribbean",
     "family": "Cycadaceae/Zamiaceae",
     "shape": "palm",
     "temp_c": [
@@ -884,6 +888,7 @@
     "name": "Burrawang",
     "genus": "Macrozamia",
     "species": "communis",
+    "origin": "New South Wales, Australia",
     "family": "Cycadaceae/Zamiaceae",
     "shape": "palm",
     "temp_c": [

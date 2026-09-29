@@ -23,6 +23,7 @@
     "name": "Crack willow",
     "genus": "Salix",
     "species": "fragilis",
+    "origin": "Europe and Western Asia",
     "shape": "broadleaf",
     "temp_c": [
      4,
@@ -141,6 +142,7 @@
     "name": "Grey mangrove",
     "genus": "Avicennia",
     "species": "marina",
+    "origin": "Indo-West Pacific and East Africa",
     "shape": "mangrove",
     "temp_c": [
      15,
@@ -260,6 +262,7 @@
     "name": "Nipa palm",
     "genus": "Nypa",
     "species": "fruticans",
+    "origin": "Indo-West Pacific, India to Australia",
     "shape": "palm",
     "temp_c": [
      22,
@@ -376,6 +379,7 @@
     "name": "Swamp she-oak",
     "genus": "Casuarina",
     "species": "glauca",
+    "origin": "Eastern Australia",
     "shape": "conifer",
     "temp_c": [
      14,
@@ -488,6 +492,7 @@
     "name": "Groundsel bush",
     "genus": "Baccharis",
     "species": "halimifolia",
+    "origin": "Southeastern US and Gulf coast",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -603,6 +608,7 @@
     "name": "Marsh elder",
     "genus": "Iva",
     "species": "frutescens",
+    "origin": "US Atlantic and Gulf coasts",
     "shape": "shrub",
     "temp_c": [
      10,
@@ -721,6 +727,7 @@
     "name": "Sea purslane shrub",
     "genus": "Halimione",
     "species": "portulacoides",
+    "origin": "Europe and Mediterranean coasts",
     "shape": "shrub",
     "temp_c": [
      7,
@@ -837,6 +844,7 @@
     "name": "Common cordgrass",
     "genus": "Sporobolus",
     "species": "anglicus",
+    "origin": "Southern England (hybrid origin)",
     "shape": "reed",
     "temp_c": [
      7,
@@ -932,6 +940,7 @@
     "name": "Common reed",
     "genus": "Phragmites",
     "species": "australis",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "reed",
     "temp_c": [
      0,
@@ -1026,6 +1035,7 @@
     "name": "Eelgrass",
     "genus": "Zostera",
     "species": "marina",
+    "origin": "North Atlantic and North Pacific coasts",
     "shape": "grass",
     "temp_c": [
      0,
@@ -1113,6 +1123,7 @@
     "name": "Glasswort",
     "genus": "Salicornia",
     "species": "europaea",
+    "origin": "Europe and Northern Hemisphere coasts",
     "shape": "cushion",
     "temp_c": [
      3,
@@ -1206,6 +1217,7 @@
     "name": "Saltmarsh bulrush",
     "genus": "Bolboschoenus",
     "species": "maritimus",
+    "origin": "Near-cosmopolitan worldwide",
     "shape": "reed",
     "temp_c": [
      3,
@@ -1300,6 +1312,7 @@
     "name": "Sea aster",
     "genus": "Tripolium",
     "species": "pannonicum",
+    "origin": "Europe and Western Asia",
     "shape": "rosette",
     "temp_c": [
      5,
@@ -1390,6 +1403,7 @@
     "name": "Smooth cordgrass",
     "genus": "Sporobolus",
     "species": "alterniflorus",
+    "origin": "Atlantic coast of the Americas",
     "shape": "reed",
     "temp_c": [
      5,
@@ -1485,6 +1499,7 @@
     "name": "Widgeongrass",
     "genus": "Ruppia",
     "species": "maritima",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "grass",
     "temp_c": [
      3,

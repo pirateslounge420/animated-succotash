@@ -28,6 +28,7 @@
     "name": "Alpenrose",
     "genus": "Rhododendron",
     "species": "ferrugineum",
+    "origin": "Alps and Pyrenees",
     "shape": "shrub",
     "temp_c": [
      -2,
@@ -142,6 +143,7 @@
     "name": "Dwarf juniper",
     "genus": "Juniperus",
     "species": "communis",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "conifer",
     "temp_c": [
      -2,
@@ -253,6 +255,7 @@
     "name": "Alpine paintbrush",
     "genus": "Castilleja",
     "species": "rhexiifolia",
+    "origin": "Rocky Mountains",
     "shape": "grass",
     "temp_c": [
      -2,
@@ -343,6 +346,7 @@
     "name": "Alpine wildflowers",
     "genus": "Ranunculus",
     "species": "adoneus",
+    "origin": "Rocky Mountains",
     "shape": "rosette",
     "temp_c": [
      -2,
@@ -437,6 +441,7 @@
     "name": "Edelweiss",
     "genus": "Leontopodium",
     "species": "nivale",
+    "origin": "Mountains of Europe",
     "shape": "cushion",
     "temp_c": [
      -2,
@@ -527,6 +532,7 @@
     "name": "Gentian",
     "genus": "Gentiana",
     "species": "acaulis",
+    "origin": "Mountains of Europe",
     "shape": "rosette",
     "temp_c": [
      -2,
@@ -615,6 +621,7 @@
     "name": "Mat grass",
     "genus": "Nardus",
     "species": "stricta",
+    "origin": "Europe and Western Asia",
     "shape": "tussock",
     "temp_c": [
      -2,
@@ -704,6 +711,7 @@
     "name": "Tibetan alpine sedge",
     "genus": "Kobresia",
     "species": "pygmaea",
+    "origin": "Tibetan Plateau and Himalaya",
     "shape": "grass",
     "temp_c": [
      -4,
@@ -793,6 +801,7 @@
     "name": "Tufted hairgrass",
     "genus": "Deschampsia",
     "species": "cespitosa",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "tussock",
     "temp_c": [
      -2,

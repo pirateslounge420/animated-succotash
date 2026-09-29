@@ -11,6 +11,7 @@
     "name": "Pomelo",
     "genus": "Citrus",
     "species": "maxima",
+    "origin": "Southeast Asia (Malay Peninsula)",
     "family": "Rutaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -231,6 +232,7 @@
     "name": "Citron",
     "genus": "Citrus",
     "species": "medica",
+    "origin": "Northeast India and Himalayan foothills",
     "family": "Rutaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -449,6 +451,7 @@
     "name": "Mandarin",
     "genus": "Citrus",
     "species": "reticulata",
+    "origin": "Southern China and northern Vietnam",
     "family": "Rutaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -667,6 +670,7 @@
     "name": "Ichang papeda",
     "genus": "Citrus",
     "species": "cavaleriei",
+    "origin": "Central and southwestern China",
     "family": "Rutaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -885,6 +889,7 @@
     "name": "Australian finger lime",
     "genus": "Citrus",
     "species": "australasica",
+    "origin": "Queensland and NSW, Australia",
     "family": "Rutaceae",
     "shape": "broadleaf",
     "temp_c": [

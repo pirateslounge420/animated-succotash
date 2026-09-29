@@ -12,6 +12,7 @@
     "name": "Silver tree fern",
     "genus": "Cyathea",
     "species": "dealbata",
+    "origin": "New Zealand",
     "family": "Cyatheaceae",
     "shape": "tree_fern",
     "temp_c": [
@@ -224,6 +225,7 @@
     "name": "Australian tree fern",
     "genus": "Cyathea",
     "species": "cooperi",
+    "origin": "Eastern Australia",
     "family": "Cyatheaceae",
     "shape": "tree_fern",
     "temp_c": [
@@ -436,6 +438,7 @@
     "name": "Soft tree fern",
     "genus": "Dicksonia",
     "species": "antarctica",
+    "origin": "Southeastern Australia and Tasmania",
     "family": "Dicksoniaceae",
     "shape": "tree_fern",
     "temp_c": [
@@ -650,6 +653,7 @@
     "name": "Bracken",
     "genus": "Pteridium",
     "species": "aquilinum",
+    "origin": "Worldwide (cosmopolitan)",
     "family": "Dennstaedtiaceae",
     "shape": "fern",
     "temp_c": [
@@ -834,6 +838,7 @@
     "name": "Sword fern",
     "genus": "Polystichum",
     "species": "munitum",
+    "origin": "Pacific Northwest, North America",
     "family": "Dryopteridaceae",
     "shape": "fern",
     "temp_c": [
@@ -1015,6 +1020,7 @@
     "name": "Lady fern",
     "genus": "Athyrium",
     "species": "filix-femina",
+    "origin": "Circumboreal (northern hemisphere)",
     "family": "Athyriaceae",
     "shape": "fern",
     "temp_c": [
@@ -1198,6 +1204,7 @@
     "name": "Ostrich fern",
     "genus": "Matteuccia",
     "species": "struthiopteris",
+    "origin": "Circumboreal (northern hemisphere)",
     "family": "Onocleaceae",
     "shape": "fern",
     "temp_c": [
@@ -1383,6 +1390,7 @@
     "name": "Royal fern",
     "genus": "Osmunda",
     "species": "regalis",
+    "origin": "Europe, Africa and the Americas",
     "family": "Osmundaceae",
     "shape": "fern",
     "temp_c": [
@@ -1572,6 +1580,7 @@
     "name": "Maidenhair fern",
     "genus": "Adiantum",
     "species": "capillus-veneris",
+    "origin": "Worldwide (cosmopolitan)",
     "family": "Pteridaceae",
     "shape": "fern",
     "temp_c": [
@@ -1755,6 +1764,7 @@
     "name": "Hard fern",
     "genus": "Blechnum",
     "species": "spicant",
+    "origin": "Europe and western North America",
     "family": "Blechnaceae",
     "shape": "fern",
     "temp_c": [
@@ -1936,6 +1946,7 @@
     "name": "Mosquito fern",
     "genus": "Azolla",
     "species": "filiculoides",
+    "origin": "The Americas",
     "family": "Salviniaceae",
     "shape": "moss",
     "temp_c": [
@@ -2108,6 +2119,7 @@
     "name": "Bird's nest fern",
     "genus": "Asplenium",
     "species": "nidus",
+    "origin": "Tropical Asia, Australia and Pacific",
     "family": "Aspleniaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -2285,6 +2297,7 @@
     "name": "Staghorn fern",
     "genus": "Platycerium",
     "species": "bifurcatum",
+    "origin": "Eastern Australia and New Guinea",
     "family": "Polypodiaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -2463,6 +2476,7 @@
     "name": "Resurrection fern",
     "genus": "Pleopeltis",
     "species": "polypodioides",
+    "origin": "Southeastern US and tropical America",
     "family": "Polypodiaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -2644,6 +2658,7 @@
     "name": "Climbing fern",
     "genus": "Lygodium",
     "species": "japonicum",
+    "origin": "East Asia",
     "family": "Lygodiaceae",
     "shape": "liana",
     "temp_c": [
@@ -2828,6 +2843,7 @@
     "name": "Whisk fern",
     "genus": "Psilotum",
     "species": "nudum",
+    "origin": "Tropics and subtropics worldwide",
     "family": "Psilotaceae",
     "shape": "moss",
     "temp_c": [

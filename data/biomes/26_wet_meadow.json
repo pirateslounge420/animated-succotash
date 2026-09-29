@@ -24,6 +24,7 @@
     "name": "Grey willow",
     "genus": "Salix",
     "species": "cinerea",
+    "origin": "Europe and Western Asia",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -140,6 +141,7 @@
     "name": "Joe-pye weed",
     "genus": "Eutrochium",
     "species": "maculatum",
+    "origin": "Northern North America",
     "shape": "shrub",
     "temp_c": [
      3,
@@ -254,6 +256,7 @@
     "name": "Meadowsweet",
     "genus": "Filipendula",
     "species": "ulmaria",
+    "origin": "Europe and Western Asia",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -374,6 +377,7 @@
     "name": "Bluejoint reed grass",
     "genus": "Calamagrostis",
     "species": "canadensis",
+    "origin": "Northern North America",
     "shape": "grass",
     "temp_c": [
      0,
@@ -464,6 +468,7 @@
     "name": "Common sedge",
     "genus": "Carex",
     "species": "nigra",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "grass",
     "temp_c": [
      2,
@@ -552,6 +557,7 @@
     "name": "Marsh marigold",
     "genus": "Caltha",
     "species": "palustris",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "cushion",
     "temp_c": [
      2,
@@ -639,6 +645,7 @@
     "name": "Purple moor-grass",
     "genus": "Molinia",
     "species": "caerulea",
+    "origin": "Europe and Western Asia",
     "shape": "tussock",
     "temp_c": [
      4,
@@ -729,6 +736,7 @@
     "name": "Ragged robin",
     "genus": "Silene",
     "species": "flos-cuculi",
+    "origin": "Europe and Western Asia",
     "shape": "grass",
     "temp_c": [
      5,
@@ -817,6 +825,7 @@
     "name": "Soft rush",
     "genus": "Juncus",
     "species": "effusus",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "reed",
     "temp_c": [
      3,
@@ -892,6 +901,7 @@
     "name": "Tufted hair-grass",
     "genus": "Deschampsia",
     "species": "cespitosa",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "tussock",
     "temp_c": [
      2,

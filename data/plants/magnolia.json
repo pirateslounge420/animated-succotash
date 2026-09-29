@@ -11,6 +11,7 @@
     "name": "Southern magnolia",
     "genus": "Magnolia",
     "species": "grandiflora",
+    "origin": "Southeastern United States",
     "family": "Magnoliaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -226,6 +227,7 @@
     "name": "Yulan magnolia",
     "genus": "Magnolia",
     "species": "denudata",
+    "origin": "Central and eastern China",
     "family": "Magnoliaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -443,6 +445,7 @@
     "name": "Campbell's magnolia",
     "genus": "Magnolia",
     "species": "campbellii",
+    "origin": "Eastern Himalaya and Yunnan",
     "family": "Magnoliaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -660,6 +663,7 @@
     "name": "Tulip tree",
     "genus": "Liriodendron",
     "species": "tulipifera",
+    "origin": "Eastern North America",
     "family": "Magnoliaceae",
     "shape": "broadleaf",
     "temp_c": [

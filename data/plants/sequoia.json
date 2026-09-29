@@ -10,6 +10,7 @@
     "name": "Coast redwood",
     "genus": "Sequoia",
     "species": "sempervirens",
+    "origin": "Coastal California and Oregon",
     "family": "Cupressaceae",
     "shape": "conifer",
     "temp_c": [
@@ -213,6 +214,7 @@
     "name": "Giant sequoia",
     "genus": "Sequoiadendron",
     "species": "giganteum",
+    "origin": "Sierra Nevada, California",
     "family": "Cupressaceae",
     "shape": "conifer",
     "temp_c": [
@@ -418,6 +420,7 @@
     "name": "Dawn redwood",
     "genus": "Metasequoia",
     "species": "glyptostroboides",
+    "origin": "Hubei and Hunan, China",
     "family": "Cupressaceae",
     "shape": "conifer",
     "temp_c": [

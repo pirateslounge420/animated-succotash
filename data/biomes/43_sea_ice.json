@@ -25,6 +25,7 @@
     "name": "Antarctic moss",
     "genus": "Bryum",
     "species": "pseudotriquetrum",
+    "origin": "Bipolar and worldwide",
     "shape": "moss",
     "temp_c": [
      -20,
@@ -109,6 +110,7 @@
     "name": "Ice algae",
     "genus": "Nitzschia",
     "species": "frigida",
+    "origin": "Arctic Ocean sea ice",
     "shape": "moss",
     "temp_c": [
      -30,
@@ -190,6 +192,7 @@
     "name": "Map lichen",
     "genus": "Rhizocarpon",
     "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      -30,

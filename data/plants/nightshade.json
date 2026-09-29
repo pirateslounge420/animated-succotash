@@ -12,6 +12,7 @@
     "display": "Jimsonweed / thornapple",
     "genus": "Datura",
     "species": "stramonium",
+    "origin": "Mexico and Central America",
     "family": "Solanaceae",
     "shape": "shrub",
     "temp_c": [
@@ -233,6 +234,7 @@
     "display": "Sacred datura",
     "genus": "Datura",
     "species": "wrightii",
+    "origin": "Southwestern US and northern Mexico",
     "family": "Solanaceae",
     "shape": "shrub",
     "temp_c": [
@@ -456,6 +458,7 @@
     "display": "Devil's trumpet",
     "genus": "Datura",
     "species": "metel",
+    "origin": "South and Southeast Asia",
     "family": "Solanaceae",
     "shape": "shrub",
     "temp_c": [
@@ -679,6 +682,7 @@
     "display": "Angel's trumpet",
     "genus": "Brugmansia",
     "species": "suaveolens",
+    "origin": "Southeastern Brazil",
     "family": "Solanaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -900,6 +904,7 @@
     "display": "Red angel's trumpet",
     "genus": "Brugmansia",
     "species": "sanguinea",
+    "origin": "Andes, Colombia to northern Chile",
     "family": "Solanaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -1122,6 +1127,7 @@
     "display": "Tree datura",
     "genus": "Brugmansia",
     "species": "arborea",
+    "origin": "Andes of Ecuador to northern Chile",
     "family": "Solanaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -1342,6 +1348,7 @@
     "display": "Peach angel's trumpet",
     "genus": "Brugmansia",
     "species": "versicolor",
+    "origin": "Lowland Ecuador (Guayas basin)",
     "family": "Solanaceae",
     "shape": "broadleaf",
     "temp_c": [

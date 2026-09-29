@@ -24,6 +24,7 @@
     "name": "Blackbrush",
     "genus": "Coleogyne",
     "species": "ramosissima",
+    "origin": "Mojave and Great Basin, USA",
     "shape": "shrub",
     "temp_c": [
      8,
@@ -136,6 +137,7 @@
     "name": "Mormon tea",
     "genus": "Ephedra",
     "species": "nevadensis",
+    "origin": "Southwestern USA",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -235,6 +237,7 @@
     "name": "Reaumuria",
     "genus": "Reaumuria",
     "species": "soongarica",
+    "origin": "Gobi and Central Asia",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -347,6 +350,7 @@
     "name": "Saltbush",
     "genus": "Atriplex",
     "species": "canescens",
+    "origin": "Western North America",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -457,6 +461,7 @@
     "name": "Saxaul",
     "genus": "Haloxylon",
     "species": "ammodendron",
+    "origin": "Central Asia and Gobi",
     "shape": "gnarled",
     "temp_c": [
      2,
@@ -564,6 +569,7 @@
     "name": "Winterfat",
     "genus": "Krascheninnikovia",
     "species": "ceratoides",
+    "origin": "Central Asia and W North America",
     "shape": "shrub",
     "temp_c": [
      -2,
@@ -676,6 +682,7 @@
     "name": "Desert halogeton",
     "genus": "Anabasis",
     "species": "brevifolia",
+    "origin": "Central Asia and Mongolia",
     "shape": "cushion",
     "temp_c": [
      0,
@@ -762,6 +769,7 @@
     "name": "Galleta grass",
     "genus": "Pleuraphis",
     "species": "jamesii",
+    "origin": "Southwestern USA",
     "shape": "grass",
     "temp_c": [
      6,
@@ -848,6 +856,7 @@
     "name": "Gobi needlegrass",
     "genus": "Stipa",
     "species": "glareosa",
+    "origin": "Mongolia and Central Asia",
     "shape": "tussock",
     "temp_c": [
      -2,
@@ -936,6 +945,7 @@
     "name": "Indian ricegrass",
     "genus": "Achnatherum",
     "species": "hymenoides",
+    "origin": "Western North America",
     "shape": "tussock",
     "temp_c": [
      2,

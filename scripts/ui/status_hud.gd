@@ -37,6 +37,7 @@ static var METER_HUD := Tuning.section("hud", "super_meter")
 ## The crosshair (hud.json reticle, 480-line px, design §W): four arms,
 ## each size_px / 2 long, starting gap_px out from the middle.
 static var RETICLE := Tuning.section("hud", "reticle")
+static var PLANT_NAME := Tuning.section("hud", "plant_name")
 ## The weapon in hand ("Bow", "Spear", "Spear (thrown)").
 var weapon := ""
 ## The binomial under the crosshair (LookTarget), or "".
@@ -181,9 +182,19 @@ func _draw() -> void:
 				_italic = FontVariation.new()
 				_italic.base_font = get_theme_default_font()
 				_italic.variation_transform = Transform2D(Vector2(1, 0), Vector2(0.22, 1), Vector2.ZERO)
-			var at := Vector2(c.x - 135.0, c.y + (20.0 if show_crosshair else 15.0))
-			draw_string_outline(_italic, at, look_name, HORIZONTAL_ALIGNMENT_CENTER, 270.0, 9, 3, Color(0.05, 0.07, 0.15))
-			draw_string(_italic, at, look_name, HORIZONTAL_ALIGNMENT_CENTER, 270.0, 9, Color(0.95, 0.97, 1.0, 0.95))
+			# Two lines: the binomial, then "common name · origin" a size
+			# smaller (hud.json plant_name.name_px / origin_px).
+			var lines := look_name.split("\n")
+			var name_px := int(PLANT_NAME.get("name_px", 13))
+			var origin_px := int(PLANT_NAME.get("origin_px", 11))
+			var at := Vector2(c.x - 170.0, c.y + (24.0 if show_crosshair else 19.0))
+			draw_string_outline(_italic, at, lines[0], HORIZONTAL_ALIGNMENT_CENTER, 340.0, name_px, 3, Color(0.05, 0.07, 0.15))
+			draw_string(_italic, at, lines[0], HORIZONTAL_ALIGNMENT_CENTER, 340.0, name_px, Color(0.95, 0.97, 1.0, 0.95))
+			if lines.size() > 1:
+				var at2 := at + Vector2(0.0, origin_px + 3.0)
+				var f := get_theme_default_font()
+				draw_string_outline(f, at2, lines[1], HORIZONTAL_ALIGNMENT_CENTER, 340.0, origin_px, 3, Color(0.05, 0.07, 0.15))
+				draw_string(f, at2, lines[1], HORIZONTAL_ALIGNMENT_CENTER, 340.0, origin_px, Color(0.9, 0.93, 0.85, 0.95))
 	# Crosshair and draw.
 	if show_crosshair and not _dead:
 		var c := size * 0.5

@@ -12,6 +12,7 @@
     "name": "Queen of the Andes",
     "genus": "Puya",
     "species": "raimondii",
+    "origin": "Andes of Peru and Bolivia",
     "family": "Bromeliaceae",
     "shape": "spike_rosette",
     "temp_c": [
@@ -207,6 +208,7 @@
     "name": "Bromelia",
     "genus": "Bromelia",
     "species": "pinguin",
+    "origin": "Mexico, Central America and Caribbean",
     "family": "Bromeliaceae",
     "shape": "spike_rosette",
     "temp_c": [
@@ -394,6 +396,7 @@
     "name": "Spanish moss",
     "genus": "Tillandsia",
     "species": "usneoides",
+    "origin": "SE USA to Argentina",
     "family": "Bromeliaceae",
     "shape": "hanging_moss",
     "temp_c": [
@@ -575,6 +578,7 @@
     "name": "Ball moss",
     "genus": "Tillandsia",
     "species": "recurvata",
+    "origin": "Southern USA to Argentina",
     "family": "Bromeliaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -756,6 +760,7 @@
     "name": "Air plant",
     "genus": "Tillandsia",
     "species": "ionantha",
+    "origin": "Mexico and Central America",
     "family": "Bromeliaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -937,6 +942,7 @@
     "name": "Rock tillandsia",
     "genus": "Tillandsia",
     "species": "tectorum",
+    "origin": "Andes of Peru and Ecuador",
     "family": "Bromeliaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -1118,6 +1124,7 @@
     "name": "Tank bromeliad",
     "genus": "Aechmea",
     "species": "fasciata",
+    "origin": "Atlantic forest of Brazil",
     "family": "Bromeliaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -1299,6 +1306,7 @@
     "name": "Guzmania",
     "genus": "Guzmania",
     "species": "lingulata",
+    "origin": "Central America and northern S America",
     "family": "Bromeliaceae",
     "shape": "epiphyte_clump",
     "temp_c": [

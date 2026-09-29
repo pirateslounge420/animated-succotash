@@ -11,6 +11,7 @@
     "name": "Scots pine",
     "genus": "Pinus",
     "species": "sylvestris",
+    "origin": "Northern Europe and Siberia",
     "family": "Pinaceae",
     "shape": "conifer",
     "temp_c": [
@@ -233,6 +234,7 @@
     "name": "Stone pine",
     "genus": "Pinus",
     "species": "pinea",
+    "origin": "Mediterranean basin",
     "family": "Pinaceae",
     "shape": "conifer",
     "temp_c": [
@@ -457,6 +459,7 @@
     "name": "Ponderosa pine",
     "genus": "Pinus",
     "species": "ponderosa",
+    "origin": "Western North America",
     "family": "Pinaceae",
     "shape": "conifer",
     "temp_c": [
@@ -679,6 +682,7 @@
     "name": "Lodgepole pine",
     "genus": "Pinus",
     "species": "contorta",
+    "origin": "Western North America",
     "family": "Pinaceae",
     "shape": "conifer",
     "temp_c": [
@@ -902,6 +906,7 @@
     "name": "Bristlecone pine",
     "genus": "Pinus",
     "species": "longaeva",
+    "origin": "Great Basin, western United States",
     "family": "Pinaceae",
     "shape": "conifer",
     "temp_c": [

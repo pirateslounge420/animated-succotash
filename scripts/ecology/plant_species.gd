@@ -50,6 +50,10 @@ var accent := Color(0.35, 0.25, 0.15) # trunk/stem/flower
 ## Water depth range (m) this species can root in, if STANDING_WATER.
 var water_depth_m := Vector2(0.05, 1.5)
 var source := "" # research note / citation from DESIGN.md
+## Where it comes from on Earth, short, for the HUD ("Central Asia and the
+## Middle East"): the entry's `origin`, else the first clause of its
+## `source` / `traits.native_range` (origin_from_source()).
+var origin := ""
 ## How leafy its crown is, 0-1 (`leaf_density` in the table; -1: the
 ## shape's default, leaf_density_of()): how many leaf clusters a branchy
 ## tree carries along its limbs (PlantMeshes).
@@ -157,3 +161,49 @@ func leaf_density_of() -> float:
 ## or "" if the table gives none.
 func binomial() -> String:
 	return ("%s %s" % [genus, species]).strip_edges()
+
+
+## What the HUD prints under the crosshair: the binomial, then the common
+## name (when the table's `name` isn't just the binomial) and the origin.
+func hud_name() -> String:
+	var b := binomial()
+	if b == "":
+		return ""
+	var second := PackedStringArray()
+	if name != "" and name.to_lower() != b.to_lower() and not name.begins_with(genus + " "):
+		second.append(name)
+	if origin != "":
+		second.append(origin)
+	return b if second.is_empty() else "%s\n%s" % [b, " · ".join(second)]
+
+
+## A short origin from a research note: strips the leading binomial and
+## takes the first clause ("Tamarix ramosissima, Central Asian and Middle
+## Eastern oasis margins, feathery shrub — Flora of China" -> "Central
+## Asian and Middle Eastern oasis margins"). Data may give `origin`
+## outright instead.
+static func origin_from_source(src: String, gen: String, spec: String) -> String:
+	var t := src.strip_edges()
+	if t == "":
+		return ""
+	var b := ("%s %s" % [gen, spec]).strip_edges()
+	if b != "" and t.to_lower().begins_with(b.to_lower()):
+		t = t.substr(b.length())
+	t = t.strip_edges()
+	while t.length() > 0 and (t.begins_with("—") or t.begins_with("-") or t.begins_with(",") or t.begins_with(";") or t.begins_with(":")):
+		t = t.substr(1).strip_edges()
+	var cut := t.length()
+	for sep in [" — ", ";", " (", ". "]:
+		var i := t.find(sep)
+		if i > 0 and i < cut:
+			cut = i
+	t = t.substr(0, cut).strip_edges()
+	# Two comma clauses at most, and never a wall of text.
+	var parts := t.split(",", false)
+	if parts.size() > 2:
+		t = ("%s,%s" % [parts[0], parts[1]]).strip_edges()
+	if t.length() > 60:
+		t = t.substr(0, 57).strip_edges() + "…"
+	if t.length() > 0:
+		t = t[0].to_upper() + t.substr(1)
+	return t

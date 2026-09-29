@@ -23,6 +23,7 @@
     "name": "Dry-season deciduous tree",
     "genus": "Bursera",
     "species": "simaruba",
+    "origin": "Florida, Mexico and Caribbean",
     "shape": "broadleaf",
     "temp_c": [
      22,
@@ -139,6 +140,7 @@
     "name": "Flame of the forest",
     "genus": "Butea",
     "species": "monosperma",
+    "origin": "Indian subcontinent",
     "shape": "gnarled",
     "temp_c": [
      22,
@@ -255,6 +257,7 @@
     "name": "Grandidier's baobab",
     "genus": "Adansonia",
     "species": "grandidieri",
+    "origin": "Western Madagascar",
     "shape": "gnarled",
     "temp_c": [
      23,
@@ -371,6 +374,7 @@
     "name": "Guanacaste",
     "genus": "Enterolobium",
     "species": "cyclocarpum",
+    "origin": "Mexico to Northern South America",
     "shape": "umbrella",
     "temp_c": [
      22,
@@ -487,6 +491,7 @@
     "name": "Indian rosewood",
     "genus": "Dalbergia",
     "species": "latifolia",
+    "origin": "Peninsular India",
     "shape": "broadleaf",
     "temp_c": [
      22,
@@ -603,6 +608,7 @@
     "name": "Silk floss tree",
     "genus": "Ceiba",
     "species": "speciosa",
+    "origin": "Brazil, Bolivia and Argentina",
     "shape": "broadleaf",
     "temp_c": [
      20,
@@ -721,6 +727,7 @@
     "name": "Common bamboo",
     "genus": "Bambusa",
     "species": "vulgaris",
+    "origin": "Southern China and Indochina",
     "shape": "bamboo",
     "temp_c": [
      20,
@@ -828,6 +835,7 @@
     "name": "Coral bean",
     "genus": "Erythrina",
     "species": "berteroana",
+    "origin": "Mexico to Colombia",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -944,6 +952,7 @@
     "name": "Dwarf date palm",
     "genus": "Phoenix",
     "species": "sylvestris",
+    "origin": "Indian subcontinent",
     "shape": "palm",
     "temp_c": [
      22,
@@ -1055,6 +1064,7 @@
     "name": "Frangipani",
     "genus": "Plumeria",
     "species": "rubra",
+    "origin": "Mexico and Central America",
     "shape": "gnarled",
     "temp_c": [
      22,
@@ -1167,6 +1177,7 @@
     "name": "Jatropha",
     "genus": "Jatropha",
     "species": "curcas",
+    "origin": "Mexico and Central America",
     "shape": "shrub",
     "temp_c": [
      20,
@@ -1280,6 +1291,7 @@
     "name": "Kalanchoe",
     "genus": "Kalanchoe",
     "species": "beharensis",
+    "origin": "Southern Madagascar",
     "shape": "rosette",
     "temp_c": [
      22,
@@ -1366,6 +1378,7 @@
     "name": "Bamboo grass",
     "genus": "Heteropogon",
     "species": "contortus",
+    "origin": "Pantropical",
     "shape": "grass",
     "temp_c": [
      20,
@@ -1454,6 +1467,7 @@
     "name": "Beach morning glory",
     "genus": "Ipomoea",
     "species": "pes-caprae",
+    "origin": "Pantropical coasts",
     "shape": "liana",
     "temp_c": [
      22,
@@ -1538,6 +1552,7 @@
     "name": "Bluestem",
     "genus": "Andropogon",
     "species": "gayanus",
+    "origin": "Tropical Africa",
     "shape": "tussock",
     "temp_c": [
      20,
@@ -1626,6 +1641,7 @@
     "name": "Bromelia",
     "genus": "Bromelia",
     "species": "pinguin",
+    "origin": "Mexico, Central America and Caribbean",
     "family": "Bromeliaceae",
     "shape": "spike_rosette",
     "temp_c": [
@@ -1777,6 +1793,7 @@
     "name": "Resurrection fern",
     "genus": "Pleopeltis",
     "species": "polypodioides",
+    "origin": "SE USA to South America",
     "shape": "fern",
     "temp_c": [
      16,
@@ -1865,6 +1882,7 @@
     "name": "Wild pineapple",
     "genus": "Bromelia",
     "species": "pinguin",
+    "origin": "Mexico, Central America and Caribbean",
     "shape": "spike_rosette",
     "temp_c": [
      22,
@@ -1951,6 +1969,7 @@
     "name": "Air plant",
     "genus": "Tillandsia",
     "species": "fasciculata",
+    "origin": "Florida to Northern South America",
     "shape": "epiphyte_clump",
     "temp_c": [
      20,
@@ -2035,6 +2054,7 @@
     "name": "Dry-forest orchid",
     "genus": "Encyclia",
     "species": "cordigera",
+    "origin": "Mexico to Venezuela",
     "shape": "epiphyte_clump",
     "temp_c": [
      22,
@@ -2119,6 +2139,7 @@
     "name": "Spanish moss",
     "genus": "Tillandsia",
     "species": "usneoides",
+    "origin": "SE USA to Argentina",
     "shape": "hanging_moss",
     "temp_c": [
      16,

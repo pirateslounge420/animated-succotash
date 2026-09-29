@@ -496,7 +496,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "W Java / Sumatra"
    },
    {
     "name": "Amorphophallus gigas",
@@ -697,7 +698,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra"
    },
    {
     "name": "Amorphophallus hewittii",
@@ -895,7 +897,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Borneo lowland"
    },
    {
     "name": "Amorphophallus titanum",
@@ -1096,7 +1099,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Titan arum, W Sumatra"
    }
   ],
   "ground": [
@@ -1257,7 +1261,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus abyssinicus",
@@ -1460,7 +1465,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "W and E African savanna"
    },
    {
     "name": "Amorphophallus adamsensis",
@@ -1619,7 +1625,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippine"
    },
    {
     "name": "Amorphophallus albispathus",
@@ -1777,7 +1784,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus albus",
@@ -1980,7 +1988,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sichuan / Yunnan river valleys"
    },
    {
     "name": "Amorphophallus allenii",
@@ -2138,7 +2147,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus amygdaloides",
@@ -2297,7 +2307,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus andranogidroensis",
@@ -2455,7 +2466,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Madagascar"
    },
    {
     "name": "Amorphophallus angolensis",
@@ -2613,7 +2625,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus angulatus",
@@ -2769,7 +2782,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus angustispathus",
@@ -2928,7 +2942,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus ankarana",
@@ -3086,7 +3101,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Madagascar tsingy karst"
    },
    {
     "name": "Amorphophallus annulifer",
@@ -3243,7 +3259,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus antsingyensis",
@@ -3401,7 +3418,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Madagascar tsingy karst"
    },
    {
     "name": "Amorphophallus aphyllus",
@@ -3559,7 +3577,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus arcuspadix",
@@ -3718,7 +3737,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus ardii",
@@ -3874,7 +3894,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus asper",
@@ -4030,7 +4051,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus asterostigmatus",
@@ -4188,7 +4210,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus atrorubens",
@@ -4346,7 +4369,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus atroviridis",
@@ -4545,7 +4569,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: plain (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Thailand"
    },
    {
     "name": "Amorphophallus bangkokensis",
@@ -4703,7 +4728,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus bantae",
@@ -4862,7 +4888,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus barbatus",
@@ -5020,7 +5047,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus barthlottii",
@@ -5178,7 +5206,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Gulf of Guinea / Congo"
    },
    {
     "name": "Amorphophallus baumannii",
@@ -5336,7 +5365,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus beccarii",
@@ -5492,7 +5522,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus bequaertii",
@@ -5650,7 +5681,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Gulf of Guinea / Congo"
    },
    {
     "name": "Amorphophallus bognerianus",
@@ -5809,7 +5841,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Western Ghats and Sri Lanka"
    },
    {
     "name": "Amorphophallus bolikhamxayensis",
@@ -5967,7 +6000,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus bonaccordensis",
@@ -6125,7 +6159,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Western Ghats and Sri Lanka"
    },
    {
     "name": "Amorphophallus borneensis",
@@ -6281,7 +6316,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus boyceanus",
@@ -6439,7 +6475,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus brachyphyllus",
@@ -6596,7 +6633,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus brevipetiolatus",
@@ -6755,7 +6793,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus brevispathus",
@@ -6913,7 +6952,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus bubenensis",
@@ -7069,7 +7109,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus bufo",
@@ -7268,7 +7309,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Thailand"
    },
    {
     "name": "Amorphophallus bulbifer",
@@ -7471,7 +7513,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus calabaricus",
@@ -7629,7 +7672,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Gulf of Guinea / Congo"
    },
    {
     "name": "Amorphophallus calcicola",
@@ -7785,7 +7829,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "limestone karst, SE Asia"
    },
    {
     "name": "Amorphophallus canaliculatus",
@@ -7943,7 +7988,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus candidissimus",
@@ -8102,7 +8148,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus carneus",
@@ -8260,7 +8307,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus carnosus",
@@ -8418,7 +8466,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus caudatus",
@@ -8576,7 +8625,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus chlorospathus",
@@ -8734,7 +8784,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus cicatricifer",
@@ -8892,7 +8943,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus cidarioides",
@@ -9048,7 +9100,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus cirrifer",
@@ -9207,7 +9260,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus claudelii",
@@ -9366,7 +9420,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus coaetaneus",
@@ -9569,7 +9624,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Yunnan / Laos / Vietnam"
    },
    {
     "name": "Amorphophallus commutatus",
@@ -9771,7 +9827,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "W India (Konkan/Ghats)"
    },
    {
     "name": "Amorphophallus consimilis",
@@ -9930,7 +9987,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus costatus",
@@ -10087,7 +10145,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus coudercii",
@@ -10245,7 +10304,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus crinitus",
@@ -10404,7 +10464,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus crispifolius",
@@ -10562,7 +10623,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus croatii",
@@ -10721,7 +10783,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus cruddasianus",
@@ -10880,7 +10943,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus curvistylis",
@@ -11038,7 +11102,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus declinatus",
@@ -11197,7 +11262,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippine"
    },
    {
     "name": "Amorphophallus discophorus",
@@ -11355,7 +11421,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Java / Lesser Sundas seasonal forest"
    },
    {
     "name": "Amorphophallus dracontioides",
@@ -11514,7 +11581,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus dumboi",
@@ -11672,7 +11740,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus dunnii",
@@ -11871,7 +11940,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Guangxi / Guangdong / Taiwan"
    },
    {
     "name": "Amorphophallus dzui",
@@ -12030,7 +12100,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus eburneus",
@@ -12186,7 +12257,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus echinatus",
@@ -12345,7 +12417,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus eichleri",
@@ -12503,7 +12576,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus elatus",
@@ -12662,7 +12736,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus elegans",
@@ -12820,7 +12895,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus elliotii",
@@ -12978,7 +13054,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus erythrorrhachis",
@@ -13136,7 +13213,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus excentricus",
@@ -13294,7 +13372,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus fallax",
@@ -13450,7 +13529,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus ferruginosus",
@@ -13609,7 +13689,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus flammeus",
@@ -13768,7 +13849,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus flotoi",
@@ -13926,7 +14008,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus fontarumii",
@@ -14084,7 +14167,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus forbesii",
@@ -14241,7 +14325,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus fornicatus",
@@ -14400,7 +14485,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus fuscus",
@@ -14559,7 +14645,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus galbra",
@@ -14757,7 +14844,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "N Australia and New Guinea monsoon woodland"
    },
    {
     "name": "Amorphophallus gallaensis",
@@ -14916,7 +15004,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus gallowayi",
@@ -15074,7 +15163,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus glaucophyllus",
@@ -15233,7 +15323,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: plain (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus gliruroides",
@@ -15391,7 +15482,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus glossophyllus",
@@ -15549,7 +15641,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus goetzei",
@@ -15707,7 +15800,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus gomboczianus",
@@ -15865,7 +15959,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus gracilior",
@@ -16024,7 +16119,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus gracilis",
@@ -16181,7 +16277,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus haematospadix",
@@ -16337,7 +16434,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus harmandii",
@@ -16496,7 +16594,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus hayi",
@@ -16654,7 +16753,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus hemicryptus",
@@ -16812,7 +16912,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus henryi",
@@ -17014,7 +17115,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Taiwan"
    },
    {
     "name": "Amorphophallus hildebrandtii",
@@ -17173,7 +17275,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Madagascar"
    },
    {
     "name": "Amorphophallus hirsutus",
@@ -17332,7 +17435,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus hirtus",
@@ -17490,7 +17594,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "subtropical China / Taiwan / Japan"
    },
    {
     "name": "Amorphophallus hohenackeri",
@@ -17648,7 +17753,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus hottae",
@@ -17804,7 +17910,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus impressus",
@@ -17962,7 +18069,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus incurvatus",
@@ -18120,7 +18228,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus infundibuliformis",
@@ -18277,7 +18386,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus interruptus",
@@ -18435,7 +18545,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus johnsonii",
@@ -18638,7 +18749,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "W African savanna"
    },
    {
     "name": "Amorphophallus josefbogneri",
@@ -18795,7 +18907,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus julaihii",
@@ -18951,7 +19064,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus juliae",
@@ -19108,7 +19222,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus kachinensis",
@@ -19267,7 +19382,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus khammouanensis",
@@ -19424,7 +19540,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "limestone karst, SE Asia"
    },
    {
     "name": "Amorphophallus kienluongensis",
@@ -19580,7 +19697,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "limestone karst, SE Asia"
    },
    {
     "name": "Amorphophallus kiusianus",
@@ -19782,7 +19900,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Kyushu, Ryukyus, E China"
    },
    {
     "name": "Amorphophallus konjac",
@@ -19981,7 +20100,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "subtropical China / Taiwan / Japan"
    },
    {
     "name": "Amorphophallus konkanensis",
@@ -20139,7 +20259,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus koratensis",
@@ -20298,7 +20419,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus krausei",
@@ -20496,7 +20618,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Yunnan, N Thailand, Myanmar hills"
    },
    {
     "name": "Amorphophallus kuznetsovii",
@@ -20655,7 +20778,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus lacourii",
@@ -20814,7 +20938,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus lambii",
@@ -21012,7 +21137,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sabah, Borneo"
    },
    {
     "name": "Amorphophallus lanceolatus",
@@ -21168,7 +21294,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus lanuginosus",
@@ -21366,7 +21493,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus laoticus",
@@ -21524,7 +21652,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus leptosoma",
@@ -21680,7 +21809,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus lewallei",
@@ -21839,7 +21969,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus linearis",
@@ -21997,7 +22128,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus linguiformis",
@@ -22155,7 +22287,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus longicomus",
@@ -22313,7 +22446,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus longiconnectivus",
@@ -22471,7 +22605,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus longispathaceus",
@@ -22629,7 +22764,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippine"
    },
    {
     "name": "Amorphophallus longistylus",
@@ -22788,7 +22924,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus longituberosus",
@@ -22946,7 +23083,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus lunatus",
@@ -23104,7 +23242,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus luzoniensis",
@@ -23262,7 +23401,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippine"
    },
    {
     "name": "Amorphophallus lyratus",
@@ -23419,7 +23559,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus macrophyllus",
@@ -23577,7 +23718,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus macrorhizus",
@@ -23775,7 +23917,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Thailand"
    },
    {
     "name": "Amorphophallus malkmus-husseinii",
@@ -23931,7 +24074,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus mangelsdorffii",
@@ -24089,7 +24233,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Madagascar"
    },
    {
     "name": "Amorphophallus margaritifer",
@@ -24247,7 +24392,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus margretae",
@@ -24405,7 +24551,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus maximus",
@@ -24604,7 +24751,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "E Africa"
    },
    {
     "name": "Amorphophallus maxwellii",
@@ -24763,7 +24911,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus mayoi",
@@ -24921,7 +25070,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus mekongensis",
@@ -25080,7 +25230,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "subtropical China / Taiwan / Japan"
    },
    {
     "name": "Amorphophallus merrillii",
@@ -25239,7 +25390,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippine"
    },
    {
     "name": "Amorphophallus mildbraedii",
@@ -25398,7 +25550,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus minimus",
@@ -25557,7 +25710,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus minor",
@@ -25716,7 +25870,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus mirabilis",
@@ -25872,7 +26027,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus mossambicensis",
@@ -26030,7 +26186,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus muelleri",
@@ -26233,7 +26390,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Thailand to Java"
    },
    {
     "name": "Amorphophallus mullendersii",
@@ -26391,7 +26549,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Gulf of Guinea / Congo"
    },
    {
     "name": "Amorphophallus myosuroides",
@@ -26594,7 +26753,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Laos"
    },
    {
     "name": "Amorphophallus mysorensis",
@@ -26753,7 +26913,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus napalensis",
@@ -26956,7 +27117,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Nepal, NE India foothills"
    },
    {
     "name": "Amorphophallus napiger",
@@ -27114,7 +27276,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus natolii",
@@ -27273,7 +27436,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippine"
    },
    {
     "name": "Amorphophallus niahensis",
@@ -27472,7 +27636,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Niah, Sarawak: limestone cave-mouth"
    },
    {
     "name": "Amorphophallus nicolaii",
@@ -27631,7 +27796,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus nicolsonianus",
@@ -27789,7 +27955,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus obovoideus",
@@ -27948,7 +28115,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippine"
    },
    {
     "name": "Amorphophallus obscurus",
@@ -28106,7 +28274,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus ochroleucus",
@@ -28265,7 +28434,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus oncophyllus",
@@ -28424,7 +28594,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus ongsakulii",
@@ -28626,7 +28797,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: plain (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Laos"
    },
    {
     "name": "Amorphophallus opalinus",
@@ -28783,7 +28955,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus operculatus",
@@ -28941,7 +29114,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus opertus",
@@ -29099,7 +29273,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus paeoniifolius",
@@ -29301,7 +29476,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Elephant-foot yam"
    },
    {
     "name": "Amorphophallus palawanensis",
@@ -29459,7 +29635,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippine"
    },
    {
     "name": "Amorphophallus paucisectus",
@@ -29618,7 +29795,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus pendulus",
@@ -29774,7 +29952,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus perakensis",
@@ -29930,7 +30109,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus perrieri",
@@ -30088,7 +30268,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Madagascar"
    },
    {
     "name": "Amorphophallus pilosus",
@@ -30247,7 +30428,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus plicatus",
@@ -30403,7 +30585,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus polyanthus",
@@ -30561,7 +30744,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus prainii",
@@ -30758,7 +30942,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: spotted (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Peninsular Malaysia and S Thailand"
    },
    {
     "name": "Amorphophallus preussii",
@@ -30917,7 +31102,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Gulf of Guinea / Congo"
    },
    {
     "name": "Amorphophallus prolificus",
@@ -31075,7 +31261,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus pulchellus",
@@ -31234,7 +31421,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus purpurascens",
@@ -31393,7 +31581,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus pusillus",
@@ -31552,7 +31741,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus putii",
@@ -31710,7 +31900,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus pygmaeus",
@@ -31908,7 +32099,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Thailand"
    },
    {
     "name": "Amorphophallus ranchanensis",
@@ -32064,7 +32256,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus ravenii",
@@ -32220,7 +32413,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus rayongii",
@@ -32378,7 +32572,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus reflexus",
@@ -32536,7 +32731,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus rhizomatosus",
@@ -32734,7 +32930,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Thailand"
    },
    {
     "name": "Amorphophallus richardsiae",
@@ -32893,7 +33090,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus rostratus",
@@ -33052,7 +33250,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippine"
    },
    {
     "name": "Amorphophallus rugosus",
@@ -33210,7 +33409,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus sagittarius",
@@ -33368,7 +33568,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus sakonnakhonensis",
@@ -33526,7 +33727,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus salmoneus",
@@ -33725,7 +33927,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippines"
    },
    {
     "name": "Amorphophallus samarensis",
@@ -33884,7 +34087,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Philippine"
    },
    {
     "name": "Amorphophallus saraburensis",
@@ -34042,7 +34246,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus saururus",
@@ -34200,7 +34405,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus scaber",
@@ -34358,7 +34564,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus schmidtiae",
@@ -34516,7 +34723,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus scutatus",
@@ -34674,7 +34882,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus serrulatus",
@@ -34832,7 +35041,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus shyamsalilianus",
@@ -34990,7 +35200,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Western Ghats and Sri Lanka"
    },
    {
     "name": "Amorphophallus sinuatus",
@@ -35148,7 +35359,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus sizemoreae",
@@ -35307,7 +35519,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus smithsonianus",
@@ -35465,7 +35678,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "peninsular India"
    },
    {
     "name": "Amorphophallus sparsiflorus",
@@ -35622,7 +35836,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus spectabilis",
@@ -35778,7 +35993,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus staudtii",
@@ -35936,7 +36152,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Gulf of Guinea / Congo"
    },
    {
     "name": "Amorphophallus stuhlmannii",
@@ -36094,7 +36311,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus subcymbiformis",
@@ -36252,7 +36470,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus sumawongii",
@@ -36411,7 +36630,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus suwidjianus",
@@ -36567,7 +36787,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus sylvaticus",
@@ -36726,7 +36947,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Western Ghats and Sri Lanka"
    },
    {
     "name": "Amorphophallus symonianus",
@@ -36884,7 +37106,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus synandrifer",
@@ -37042,7 +37265,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus taurostigma",
@@ -37200,7 +37424,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Madagascar"
    },
    {
     "name": "Amorphophallus tenuispadix",
@@ -37358,7 +37583,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus tenuistylis",
@@ -37516,7 +37742,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus terrestris",
@@ -37674,7 +37901,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus teuszii",
@@ -37832,7 +38060,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "African savanna / dry woodland"
    },
    {
     "name": "Amorphophallus thaiensis",
@@ -37990,7 +38219,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus tinekeae",
@@ -38146,7 +38376,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus tonkinensis",
@@ -38304,7 +38535,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "subtropical China / Taiwan / Japan"
    },
    {
     "name": "Amorphophallus tuberculatus",
@@ -38463,7 +38695,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: warty (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus umbrinus",
@@ -38621,7 +38854,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus urceolatus",
@@ -38779,7 +39013,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus variabilis",
@@ -38981,7 +39216,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Java, lowland edges"
    },
    {
     "name": "Amorphophallus venustus",
@@ -39138,7 +39374,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Sumatra, Borneo and Malaya"
    },
    {
     "name": "Amorphophallus verticillatus",
@@ -39297,7 +39534,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "subtropical China / Taiwan / Japan"
    },
    {
     "name": "Amorphophallus villosus",
@@ -39455,7 +39693,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: hairy (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus vogelianus",
@@ -39613,7 +39852,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus wasa",
@@ -39771,7 +40011,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Indochina (Thailand to Vietnam)"
    },
    {
     "name": "Amorphophallus xiei",
@@ -39929,7 +40170,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "subtropical China / Taiwan / Japan"
    },
    {
     "name": "Amorphophallus yaoi",
@@ -40088,7 +40330,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "subtropical China / Taiwan / Japan"
    },
    {
     "name": "Amorphophallus yuloensis",
@@ -40246,7 +40489,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "subtropical China / Taiwan / Japan"
    },
    {
     "name": "Amorphophallus yunnanensis",
@@ -40449,7 +40693,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Yunnan, S China hills"
    },
    {
     "name": "Amorphophallus zenkeri",
@@ -40607,7 +40852,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "petiole: mottled (per-plant texture generator, SPECIAL_GENERA §1)"
-    }
+    },
+    "origin": "Gulf of Guinea / Congo"
    }
   ]
  },

@@ -23,6 +23,7 @@
     "name": "Grey alder",
     "genus": "Alnus",
     "species": "incana",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "broadleaf",
     "temp_c": [
      -5,
@@ -142,6 +143,7 @@
     "name": "Northern white cedar",
     "genus": "Thuja",
     "species": "occidentalis",
+    "origin": "Northeastern North America",
     "shape": "conifer",
     "temp_c": [
      -5,
@@ -249,6 +251,7 @@
     "name": "Tamarack",
     "genus": "Larix",
     "species": "laricina",
+    "origin": "Canada and Northeastern USA",
     "shape": "conifer",
     "temp_c": [
      -7,
@@ -360,6 +363,7 @@
     "name": "Bog birch",
     "genus": "Betula",
     "species": "pumila",
+    "origin": "Canada and Northern USA",
     "shape": "shrub",
     "temp_c": [
      -7,
@@ -476,6 +480,7 @@
     "name": "Fen willow",
     "genus": "Salix",
     "species": "cinerea",
+    "origin": "Europe and Western Asia",
     "shape": "shrub",
     "temp_c": [
      -4,
@@ -592,6 +597,7 @@
     "name": "Shrubby cinquefoil",
     "genus": "Dasiphora",
     "species": "fruticosa",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "shrub",
     "temp_c": [
      -7,
@@ -714,6 +720,7 @@
     "name": "Black bog-rush",
     "genus": "Schoenus",
     "species": "nigricans",
+    "origin": "Europe, N Africa and W Asia",
     "shape": "tussock",
     "temp_c": [
      -2,
@@ -800,6 +807,7 @@
     "name": "Bottle sedge",
     "genus": "Carex",
     "species": "rostrata",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "grass",
     "temp_c": [
      -7,
@@ -891,6 +899,7 @@
     "name": "Brown moss",
     "genus": "Scorpidium",
     "species": "scorpioides",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "moss",
     "temp_c": [
      -7,
@@ -971,6 +980,7 @@
     "name": "Grass of Parnassus",
     "genus": "Parnassia",
     "species": "palustris",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "rosette",
     "temp_c": [
      -7,
@@ -1059,6 +1069,7 @@
     "name": "Marsh marigold",
     "genus": "Caltha",
     "species": "palustris",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "rosette",
     "temp_c": [
      -7,
@@ -1146,6 +1157,7 @@
     "name": "Saw sedge",
     "genus": "Cladium",
     "species": "mariscus",
+    "origin": "Europe, W Asia and N Africa",
     "shape": "reed",
     "temp_c": [
      -2,

@@ -24,6 +24,7 @@
     "name": "Groundsel bush",
     "genus": "Baccharis",
     "species": "halimifolia",
+    "origin": "US Atlantic and Gulf coasts",
     "shape": "shrub",
     "temp_c": [
      10,
@@ -142,6 +143,7 @@
     "name": "Marsh elder",
     "genus": "Iva",
     "species": "frutescens",
+    "origin": "US Atlantic and Gulf coasts",
     "shape": "shrub",
     "temp_c": [
      8,
@@ -260,6 +262,7 @@
     "name": "Sea purslane shrub (halimione)",
     "genus": "Atriplex",
     "species": "portulacoides",
+    "origin": "Coasts of Europe and W Asia",
     "shape": "shrub",
     "temp_c": [
      6,
@@ -376,6 +379,7 @@
     "name": "Black needlerush",
     "genus": "Juncus",
     "species": "roemerianus",
+    "origin": "US Gulf and Atlantic coasts",
     "shape": "reed",
     "temp_c": [
      12,
@@ -464,6 +468,7 @@
     "name": "Common cordgrass",
     "genus": "Sporobolus",
     "species": "anglicus",
+    "origin": "Southern England (hybrid origin)",
     "shape": "grass",
     "temp_c": [
      7,
@@ -559,6 +564,7 @@
     "name": "Cordgrass",
     "genus": "Spartina",
     "species": "alterniflora",
+    "origin": "US Atlantic and Gulf coasts",
     "shape": "grass",
     "temp_c": [
      8,
@@ -654,6 +660,7 @@
     "name": "Glasswort",
     "genus": "Salicornia",
     "species": "europaea",
+    "origin": "Coasts of Europe and N Africa",
     "shape": "cushion",
     "temp_c": [
      3,
@@ -747,6 +754,7 @@
     "name": "Salt hay",
     "genus": "Spartina",
     "species": "patens",
+    "origin": "US Atlantic and Gulf coasts",
     "shape": "grass",
     "temp_c": [
      6,
@@ -837,6 +845,7 @@
     "name": "Sea lavender",
     "genus": "Limonium",
     "species": "vulgare",
+    "origin": "Atlantic coasts of Europe",
     "shape": "rosette",
     "temp_c": [
      6,

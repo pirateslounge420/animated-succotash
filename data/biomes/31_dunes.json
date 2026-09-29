@@ -23,6 +23,7 @@
     "name": "Dune pine",
     "genus": "Pinus",
     "species": "contorta",
+    "origin": "Western North America",
     "shape": "conifer",
     "temp_c": [
      3,
@@ -127,6 +128,7 @@
     "name": "Scots pine",
     "genus": "Pinus",
     "species": "sylvestris",
+    "origin": "Europe and Siberia",
     "shape": "conifer",
     "temp_c": [
      -2,
@@ -233,6 +235,7 @@
     "name": "Bayberry",
     "genus": "Morella",
     "species": "pensylvanica",
+    "origin": "Northeastern North America",
     "shape": "shrub",
     "temp_c": [
      5,
@@ -348,6 +351,7 @@
     "name": "Coastal juniper",
     "genus": "Juniperus",
     "species": "communis",
+    "origin": "Circumboreal Northern Hemisphere",
     "shape": "shrub",
     "temp_c": [
      -2,
@@ -454,6 +458,7 @@
     "name": "Coastal wattle",
     "genus": "Acacia",
     "species": "longifolia",
+    "origin": "Southeastern Australia",
     "shape": "shrub",
     "temp_c": [
      13,
@@ -566,6 +571,7 @@
     "name": "Creeping willow",
     "genus": "Salix",
     "species": "repens",
+    "origin": "Europe and Western Siberia",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -683,6 +689,7 @@
     "name": "American beachgrass",
     "genus": "Ammophila",
     "species": "breviligulata",
+    "origin": "Northeastern North America",
     "shape": "tussock",
     "temp_c": [
      2,
@@ -770,6 +777,7 @@
     "name": "Dune evening primrose",
     "genus": "Oenothera",
     "species": "drummondii",
+    "origin": "Gulf of Mexico coast",
     "shape": "rosette",
     "temp_c": [
      15,
@@ -855,6 +863,7 @@
     "name": "Lyme grass",
     "genus": "Leymus",
     "species": "arenarius",
+    "origin": "Northern Europe and Iceland",
     "shape": "tussock",
     "temp_c": [
      0,
@@ -942,6 +951,7 @@
     "name": "Marram grass",
     "genus": "Ammophila",
     "species": "arenaria",
+    "origin": "Europe and North Africa coasts",
     "shape": "tussock",
     "temp_c": [
      4,
@@ -1027,6 +1037,7 @@
     "name": "Sand sedge",
     "genus": "Carex",
     "species": "arenaria",
+    "origin": "Europe and North Africa coasts",
     "shape": "grass",
     "temp_c": [
      3,
@@ -1112,6 +1123,7 @@
     "name": "Sea oats",
     "genus": "Uniola",
     "species": "paniculata",
+    "origin": "Southeastern US and Caribbean",
     "shape": "tussock",
     "temp_c": [
      16,

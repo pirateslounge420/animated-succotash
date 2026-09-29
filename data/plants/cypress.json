@@ -11,6 +11,7 @@
     "name": "Bald cypress",
     "genus": "Taxodium",
     "species": "distichum",
+    "origin": "Southeastern United States",
     "family": "Cupressaceae",
     "shape": "cypress",
     "temp_c": [
@@ -225,6 +226,7 @@
     "name": "Montezuma cypress",
     "genus": "Taxodium",
     "species": "mucronatum",
+    "origin": "Mexico and Guatemala",
     "family": "Cupressaceae",
     "shape": "cypress",
     "temp_c": [
@@ -440,6 +442,7 @@
     "name": "Mediterranean cypress",
     "genus": "Cupressus",
     "species": "sempervirens",
+    "origin": "Eastern Mediterranean",
     "family": "Cupressaceae",
     "shape": "conifer",
     "temp_c": [
@@ -657,6 +660,7 @@
     "name": "Monterey cypress",
     "genus": "Hesperocyparis",
     "species": "macrocarpa",
+    "origin": "Monterey coast, California",
     "family": "Cupressaceae",
     "shape": "gnarled",
     "temp_c": [
@@ -872,6 +876,7 @@
     "name": "Lawson cypress",
     "genus": "Chamaecyparis",
     "species": "lawsoniana",
+    "origin": "Oregon and California coast",
     "family": "Cupressaceae",
     "shape": "conifer",
     "temp_c": [

@@ -23,6 +23,7 @@
     "name": "Aleppo pine",
     "genus": "Pinus",
     "species": "halepensis",
+    "origin": "Mediterranean Basin",
     "shape": "conifer",
     "temp_c": [
      12,
@@ -129,6 +130,7 @@
     "name": "Plains cottonwood",
     "genus": "Populus",
     "species": "deltoides",
+    "origin": "Eastern and central North America",
     "shape": "broadleaf",
     "temp_c": [
      4,
@@ -246,6 +248,7 @@
     "name": "Rocky Mountain juniper",
     "genus": "Juniperus",
     "species": "scopulorum",
+    "origin": "Western North America",
     "shape": "conifer",
     "temp_c": [
      2,
@@ -353,6 +356,7 @@
     "name": "Greasewood",
     "genus": "Sarcobatus",
     "species": "vermiculatus",
+    "origin": "Western North America",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -465,6 +469,7 @@
     "name": "Plains prickly pear",
     "genus": "Opuntia",
     "species": "polyacantha",
+    "origin": "Great Plains and western North America",
     "shape": "cactus",
     "temp_c": [
      2,
@@ -564,6 +569,7 @@
     "name": "Rubber rabbitbrush",
     "genus": "Ericameria",
     "species": "nauseosa",
+    "origin": "Western North America",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -676,6 +682,7 @@
     "name": "Silver sagebrush",
     "genus": "Artemisia",
     "species": "cana",
+    "origin": "Northern Great Plains and Rockies",
     "shape": "shrub",
     "temp_c": [
      0,
@@ -786,6 +793,7 @@
     "name": "Skunkbush sumac",
     "genus": "Rhus",
     "species": "trilobata",
+    "origin": "Western North America",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -902,6 +910,7 @@
     "name": "Soapweed yucca",
     "genus": "Yucca",
     "species": "glauca",
+    "origin": "Great Plains of North America",
     "shape": "spike_rosette",
     "temp_c": [
      3,
@@ -988,6 +997,7 @@
     "name": "Blue grama",
     "genus": "Bouteloua",
     "species": "gracilis",
+    "origin": "Great Plains, Canada to Mexico",
     "shape": "grass",
     "temp_c": [
      2,
@@ -1074,6 +1084,7 @@
     "name": "Esparto grass",
     "genus": "Macrochloa",
     "species": "tenacissima",
+    "origin": "Spain and North Africa",
     "shape": "tussock",
     "temp_c": [
      14,
@@ -1162,6 +1173,7 @@
     "name": "Gumbo evening primrose",
     "genus": "Oenothera",
     "species": "caespitosa",
+    "origin": "Western North America",
     "shape": "rosette",
     "temp_c": [
      2,
@@ -1248,6 +1260,7 @@
     "name": "Little bluestem",
     "genus": "Schizachyrium",
     "species": "scoparium",
+    "origin": "North American prairies",
     "shape": "tussock",
     "temp_c": [
      3,
@@ -1336,6 +1349,7 @@
     "name": "Western wheatgrass",
     "genus": "Pascopyrum",
     "species": "smithii",
+    "origin": "Great Plains of North America",
     "shape": "grass",
     "temp_c": [
      2,

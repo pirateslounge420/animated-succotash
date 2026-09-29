@@ -23,6 +23,7 @@
     "name": "Downy birch",
     "genus": "Betula",
     "species": "pubescens",
+    "origin": "Northern Europe and Siberia",
     "shape": "broadleaf",
     "temp_c": [
      -2,
@@ -137,6 +138,7 @@
     "name": "Etna broom tree",
     "genus": "Genista",
     "species": "aetnensis",
+    "origin": "Mount Etna, Sicily and Sardinia",
     "shape": "gnarled",
     "temp_c": [
      10,
@@ -241,6 +243,7 @@
     "name": "Japanese larch",
     "genus": "Larix",
     "species": "kaempferi",
+    "origin": "Central Honshu, Japan",
     "shape": "conifer",
     "temp_c": [
      2,
@@ -352,6 +355,7 @@
     "name": "Lodgepole pine",
     "genus": "Pinus",
     "species": "contorta",
+    "origin": "Western North America",
     "shape": "conifer",
     "temp_c": [
      0,
@@ -459,6 +463,7 @@
     "name": "Ohia lehua",
     "genus": "Metrosideros",
     "species": "polymorpha",
+    "origin": "Hawaiian Islands",
     "shape": "gnarled",
     "temp_c": [
      10,
@@ -576,6 +581,7 @@
     "name": "Etna soapwort",
     "genus": "Astragalus",
     "species": "siculus",
+    "origin": "Mount Etna, Sicily (endemic)",
     "shape": "cushion",
     "temp_c": [
      4,
@@ -669,6 +675,7 @@
     "name": "Fuji knotweed",
     "genus": "Reynoutria",
     "species": "japonica",
+    "origin": "Japan, China and Korea",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -786,6 +793,7 @@
     "name": "Pumice lupine",
     "genus": "Lupinus",
     "species": "lepidus",
+    "origin": "Western North America",
     "shape": "cushion",
     "temp_c": [
      0,
@@ -880,6 +888,7 @@
     "name": "Sea buckthorn",
     "genus": "Hippophae",
     "species": "rhamnoides",
+    "origin": "Europe and Central Asia",
     "shape": "shrub",
     "temp_c": [
      0,
@@ -994,6 +1003,7 @@
     "name": "Tea-leaved willow",
     "genus": "Salix",
     "species": "phylicifolia",
+    "origin": "Northern Europe and Iceland",
     "shape": "shrub",
     "temp_c": [
      -3,
@@ -1108,6 +1118,7 @@
     "name": "Volcanic pioneer shrub",
     "genus": "Vaccinium",
     "species": "reticulatum",
+    "origin": "Hawaiian Islands",
     "shape": "shrub",
     "temp_c": [
      8,
@@ -1224,6 +1235,7 @@
     "name": "Amaumau fern",
     "genus": "Sadleria",
     "species": "cyatheoides",
+    "origin": "Hawaiian Islands",
     "shape": "tree_fern",
     "temp_c": [
      12,
@@ -1340,6 +1352,7 @@
     "name": "Fireweed",
     "genus": "Chamaenerion",
     "species": "angustifolium",
+    "origin": "Circumboreal Northern Hemisphere",
     "shape": "grass",
     "temp_c": [
      -4,
@@ -1428,6 +1441,7 @@
     "name": "Lava moss",
     "genus": "Racomitrium",
     "species": "lanuginosum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      -5,
@@ -1513,6 +1527,7 @@
     "name": "Lyme grass",
     "genus": "Leymus",
     "species": "arenarius",
+    "origin": "Northern Europe and Iceland",
     "shape": "tussock",
     "temp_c": [
      -3,
@@ -1599,6 +1614,7 @@
     "name": "Map lichen",
     "genus": "Rhizocarpon",
     "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      -8,
@@ -1672,6 +1688,7 @@
     "name": "Swordfern",
     "genus": "Nephrolepis",
     "species": "exaltata",
+    "origin": "Tropical Americas and Pacific",
     "shape": "fern",
     "temp_c": [
      15,

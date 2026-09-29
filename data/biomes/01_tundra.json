@@ -24,6 +24,7 @@
     "name": "Arctic willow",
     "genus": "Salix",
     "species": "arctica",
+    "origin": "Circumpolar high Arctic",
     "shape": "shrub",
     "temp_c": [
      -15,
@@ -138,6 +139,7 @@
     "name": "Bog bilberry",
     "genus": "Vaccinium",
     "species": "uliginosum",
+    "origin": "Circumpolar Arctic and boreal",
     "shape": "shrub",
     "temp_c": [
      -12,
@@ -252,6 +254,7 @@
     "name": "Crowberry",
     "genus": "Empetrum",
     "species": "nigrum",
+    "origin": "Circumboreal (northern hemisphere)",
     "shape": "shrub",
     "temp_c": [
      -12,
@@ -357,6 +360,7 @@
     "name": "Dwarf birch",
     "genus": "Betula",
     "species": "nana",
+    "origin": "Circumpolar Arctic and subarctic",
     "shape": "shrub",
     "temp_c": [
      -12,
@@ -473,6 +477,7 @@
     "name": "Arctic annuals",
     "genus": "Papaver",
     "species": "radicatum",
+    "origin": "Circumpolar high Arctic",
     "shape": "cushion",
     "temp_c": [
      -15,
@@ -560,6 +565,7 @@
     "name": "Arctic cottongrass",
     "genus": "Eriophorum",
     "species": "scheuchzeri",
+    "origin": "Circumpolar Arctic",
     "shape": "tussock",
     "temp_c": [
      -15,
@@ -645,6 +651,7 @@
     "name": "Entire-leaf mountain avens",
     "genus": "Dryas",
     "species": "integrifolia",
+    "origin": "Arctic North America and Greenland",
     "shape": "cushion",
     "temp_c": [
      -15,
@@ -729,6 +736,7 @@
     "name": "Reindeer lichen",
     "genus": "Cladonia",
     "species": "rangiferina",
+    "origin": "Circumboreal and Arctic",
     "shape": "moss",
     "temp_c": [
      -15,
@@ -802,6 +810,7 @@
     "name": "Rusty bog-moss",
     "genus": "Sphagnum",
     "species": "fuscum",
+    "origin": "Circumpolar boreal and Arctic",
     "shape": "moss",
     "temp_c": [
      -15,
@@ -886,6 +895,7 @@
     "name": "Tundra sedge",
     "genus": "Carex",
     "species": "aquatilis",
+    "origin": "Circumpolar Arctic and boreal",
     "shape": "grass",
     "temp_c": [
      -15,

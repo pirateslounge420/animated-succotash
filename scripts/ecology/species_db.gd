@@ -347,6 +347,11 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	sp.source = e.get("source", "")
 	sp.genus = str(e.get("genus", ""))
 	sp.species = str(e.get("species", ""))
+	sp.origin = str(e.get("origin", ""))
+	if sp.origin == "":
+		var tr = e.get("traits", {})
+		var nr := str(tr.get("native_range", "")) if tr is Dictionary else ""
+		sp.origin = PlantSpecies.origin_from_source(nr if nr != "" else str(sp.source), sp.genus, sp.species)
 	sp.leaf_density = clampf(float(e.get("leaf_density", -1.0)), -1.0, 1.0)
 	var lf = e.get("leaf", {})
 	if lf is Dictionary:

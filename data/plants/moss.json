@@ -13,6 +13,7 @@
     "name": "Sphagnum moss",
     "genus": "Sphagnum",
     "species": "magellanicum",
+    "origin": "Southern South America",
     "family": "Sphagnaceae",
     "shape": "moss",
     "temp_c": [
@@ -194,6 +195,7 @@
     "name": "Feather moss",
     "genus": "Pleurozium",
     "species": "schreberi",
+    "origin": "Circumboreal (northern hemisphere)",
     "family": "Hylocomiaceae",
     "shape": "moss",
     "temp_c": [
@@ -378,6 +380,7 @@
     "name": "Stair-step moss",
     "genus": "Hylocomium",
     "species": "splendens",
+    "origin": "Circumboreal (northern hemisphere)",
     "family": "Hylocomiaceae",
     "shape": "moss",
     "temp_c": [
@@ -562,6 +565,7 @@
     "name": "Cushion moss",
     "genus": "Leucobryum",
     "species": "glaucum",
+    "origin": "Europe and eastern North America",
     "family": "Leucobryaceae",
     "shape": "cushion",
     "temp_c": [
@@ -738,6 +742,7 @@
     "name": "Wall moss",
     "genus": "Tortula",
     "species": "muralis",
+    "origin": "Worldwide (cosmopolitan)",
     "family": "Pottiaceae",
     "shape": "moss",
     "temp_c": [
@@ -918,6 +923,7 @@
     "name": "Haircap moss",
     "genus": "Polytrichum",
     "species": "commune",
+    "origin": "Worldwide (cosmopolitan)",
     "family": "Polytrichaceae",
     "shape": "moss",
     "temp_c": [
@@ -1098,6 +1104,7 @@
     "name": "Lava moss",
     "genus": "Racomitrium",
     "species": "lanuginosum",
+    "origin": "Worldwide, cold and montane regions",
     "family": "Grimmiaceae",
     "shape": "moss",
     "temp_c": [
@@ -1274,6 +1281,7 @@
     "name": "Liverwort",
     "genus": "Marchantia",
     "species": "polymorpha",
+    "origin": "Worldwide (cosmopolitan)",
     "family": "Marchantiaceae",
     "shape": "moss",
     "temp_c": [
@@ -1458,6 +1466,7 @@
     "name": "Reindeer lichen",
     "genus": "Cladonia",
     "species": "rangiferina",
+    "origin": "Circumboreal and Arctic",
     "family": "Cladoniaceae",
     "shape": "cushion",
     "temp_c": [
@@ -1624,6 +1633,7 @@
     "name": "Map lichen",
     "genus": "Rhizocarpon",
     "species": "geographicum",
+    "origin": "Worldwide (cosmopolitan)",
     "family": "Rhizocarpaceae",
     "shape": "moss",
     "temp_c": [
@@ -1789,6 +1799,7 @@
     "name": "Rock tripe",
     "genus": "Umbilicaria",
     "species": "esculenta",
+    "origin": "East Asia (Japan, Korea, China)",
     "family": "Umbilicariaceae",
     "shape": "moss",
     "temp_c": [
@@ -1956,6 +1967,7 @@
     "name": "Hanging moss",
     "genus": "Papillaria",
     "species": "crocea",
+    "origin": "Eastern Australia and New Zealand",
     "family": "Meteoriaceae",
     "shape": "hanging_moss",
     "temp_c": [
@@ -2132,6 +2144,7 @@
     "name": "Tree moss",
     "genus": "Dendroalsia",
     "species": "abietina",
+    "origin": "Pacific coast of North America",
     "family": "Cryphaeaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -2308,6 +2321,7 @@
     "name": "Old man's beard",
     "genus": "Usnea",
     "species": "longissima",
+    "origin": "Circumboreal (northern hemisphere)",
     "family": "Parmeliaceae",
     "shape": "hanging_moss",
     "temp_c": [

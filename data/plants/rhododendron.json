@@ -11,6 +11,7 @@
     "name": "Tree rhododendron",
     "genus": "Rhododendron",
     "species": "arboreum",
+    "origin": "Himalaya and southern India",
     "family": "Ericaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -227,6 +228,7 @@
     "name": "Big-leaf rhododendron",
     "genus": "Rhododendron",
     "species": "sinogrande",
+    "origin": "Yunnan, China and northern Burma",
     "family": "Ericaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -445,6 +447,7 @@
     "name": "Great rhododendron",
     "genus": "Rhododendron",
     "species": "maximum",
+    "origin": "Appalachians, eastern North America",
     "family": "Ericaceae",
     "shape": "shrub",
     "temp_c": [
@@ -661,6 +664,7 @@
     "name": "Alpenrose",
     "genus": "Rhododendron",
     "species": "ferrugineum",
+    "origin": "Alps and Pyrenees",
     "family": "Ericaceae",
     "shape": "shrub",
     "temp_c": [
@@ -880,6 +884,7 @@
     "name": "Vireya rhododendron",
     "genus": "Rhododendron",
     "species": "javanicum",
+    "origin": "Java and western Malesia",
     "family": "Ericaceae",
     "shape": "epiphyte_clump",
     "temp_c": [

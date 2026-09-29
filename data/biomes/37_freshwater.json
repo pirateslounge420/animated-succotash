@@ -23,6 +23,7 @@
     "name": "Black alder",
     "genus": "Alnus",
     "species": "glutinosa",
+    "origin": "Europe and Western Asia",
     "shape": "broadleaf",
     "temp_c": [
      2,
@@ -142,6 +143,7 @@
     "name": "Black willow",
     "genus": "Salix",
     "species": "nigra",
+    "origin": "Eastern North America",
     "shape": "broadleaf",
     "temp_c": [
      6,
@@ -260,6 +262,7 @@
     "name": "River red gum",
     "genus": "Eucalyptus",
     "species": "camaldulensis",
+    "origin": "Mainland Australia",
     "shape": "broadleaf",
     "temp_c": [
      14,
@@ -375,6 +378,7 @@
     "name": "Weeping willow",
     "genus": "Salix",
     "species": "babylonica",
+    "origin": "Northern China",
     "shape": "broadleaf",
     "temp_c": [
      8,
@@ -494,6 +498,7 @@
     "name": "White willow",
     "genus": "Salix",
     "species": "alba",
+    "origin": "Europe, North Africa and Western Asia",
     "shape": "broadleaf",
     "temp_c": [
      4,
@@ -615,6 +620,7 @@
     "name": "Buttonbush",
     "genus": "Cephalanthus",
     "species": "occidentalis",
+    "origin": "Eastern North America",
     "shape": "shrub",
     "temp_c": [
      6,
@@ -737,6 +743,7 @@
     "name": "Grey willow",
     "genus": "Salix",
     "species": "cinerea",
+    "origin": "Europe and Western Asia",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -856,6 +863,7 @@
     "name": "Papyrus",
     "genus": "Cyperus",
     "species": "papyrus",
+    "origin": "Africa and the Nile valley",
     "shape": "reed",
     "temp_c": [
      18,
@@ -951,6 +959,7 @@
     "name": "Bulrush",
     "genus": "Schoenoplectus",
     "species": "lacustris",
+    "origin": "Europe and Western Asia",
     "shape": "reed",
     "temp_c": [
      2,
@@ -1035,6 +1044,7 @@
     "name": "Canadian waterweed",
     "genus": "Elodea",
     "species": "canadensis",
+    "origin": "North America",
     "shape": "grass",
     "temp_c": [
      3,
@@ -1122,6 +1132,7 @@
     "name": "Cattail",
     "genus": "Typha",
     "species": "latifolia",
+    "origin": "Northern Hemisphere (circumboreal)",
     "shape": "reed",
     "temp_c": [
      2,
@@ -1217,6 +1228,7 @@
     "name": "Common reed",
     "genus": "Phragmites",
     "species": "australis",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "reed",
     "temp_c": [
      0,
@@ -1312,6 +1324,7 @@
     "name": "Curled pondweed",
     "genus": "Potamogeton",
     "species": "crispus",
+    "origin": "Europe, Asia and North Africa",
     "shape": "grass",
     "temp_c": [
      4,
@@ -1399,6 +1412,7 @@
     "name": "Eurasian water milfoil",
     "genus": "Myriophyllum",
     "species": "spicatum",
+    "origin": "Europe, Asia and North Africa",
     "shape": "fern",
     "temp_c": [
      3,
@@ -1490,6 +1504,7 @@
     "name": "Giant water lily",
     "genus": "Victoria",
     "species": "amazonica",
+    "origin": "Amazon basin, South America",
     "shape": "rosette",
     "temp_c": [
      24,
@@ -1577,6 +1592,7 @@
     "name": "Sacred lotus",
     "genus": "Nelumbo",
     "species": "nucifera",
+    "origin": "South and East Asia to Australia",
     "shape": "rosette",
     "temp_c": [
      14,
@@ -1672,6 +1688,7 @@
     "name": "Water hyacinth",
     "genus": "Pontederia",
     "species": "crassipes",
+    "origin": "Amazon basin, South America",
     "shape": "rosette",
     "temp_c": [
      16,
@@ -1764,6 +1781,7 @@
     "name": "White water lily",
     "genus": "Nymphaea",
     "species": "alba",
+    "origin": "Europe, North Africa and Western Asia",
     "shape": "rosette",
     "temp_c": [
      4,
@@ -1853,6 +1871,7 @@
     "name": "Yellow flag iris",
     "genus": "Iris",
     "species": "pseudacorus",
+    "origin": "Europe, North Africa and Western Asia",
     "shape": "grass",
     "temp_c": [
      4,

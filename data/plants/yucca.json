@@ -10,6 +10,7 @@
     "name": "Spanish bayonet",
     "genus": "Yucca",
     "species": "aloifolia",
+    "origin": "Southeastern US coast and Mexico",
     "family": "Asparagaceae",
     "shape": "spike_rosette",
     "temp_c": [
@@ -234,6 +235,7 @@
     "name": "Joshua tree",
     "genus": "Yucca",
     "species": "brevifolia",
+    "origin": "Mojave Desert, southwestern US",
     "family": "Asparagaceae",
     "shape": "gnarled",
     "temp_c": [
@@ -458,6 +460,7 @@
     "name": "Izote",
     "genus": "Yucca",
     "species": "filifera",
+    "origin": "Central Mexican plateau",
     "family": "Asparagaceae",
     "shape": "gnarled",
     "temp_c": [
@@ -682,6 +685,7 @@
     "name": "Soapweed yucca",
     "genus": "Yucca",
     "species": "glauca",
+    "origin": "Great Plains of North America",
     "family": "Asparagaceae",
     "shape": "spike_rosette",
     "temp_c": [

@@ -23,6 +23,7 @@
     "name": "Bald cypress",
     "genus": "Taxodium",
     "species": "distichum",
+    "origin": "Southeastern USA",
     "shape": "cypress",
     "temp_c": [
      12,
@@ -146,6 +147,7 @@
     "name": "Black willow",
     "genus": "Salix",
     "species": "nigra",
+    "origin": "Eastern North America",
     "shape": "broadleaf",
     "temp_c": [
      8,
@@ -273,6 +275,7 @@
     "name": "Cabbage palm",
     "genus": "Sabal",
     "species": "palmetto",
+    "origin": "SE USA, Cuba and Bahamas",
     "shape": "palm",
     "temp_c": [
      18,
@@ -395,6 +398,7 @@
     "name": "Moriche palm",
     "genus": "Mauritia",
     "species": "flexuosa",
+    "origin": "Amazon and Orinoco basins",
     "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
@@ -592,6 +596,7 @@
     "name": "Pond cypress",
     "genus": "Taxodium",
     "species": "ascendens",
+    "origin": "Southeastern USA",
     "shape": "cypress",
     "temp_c": [
      16,
@@ -715,6 +720,7 @@
     "name": "Water elm",
     "genus": "Planera",
     "species": "aquatica",
+    "origin": "Southeastern USA",
     "shape": "broadleaf",
     "temp_c": [
      16,
@@ -839,6 +845,7 @@
     "name": "Water tupelo",
     "genus": "Nyssa",
     "species": "aquatica",
+    "origin": "Southeastern USA",
     "shape": "broadleaf",
     "temp_c": [
      13,
@@ -972,6 +979,7 @@
     "name": "Buttonbush",
     "genus": "Cephalanthus",
     "species": "occidentalis",
+    "origin": "Eastern North America",
     "shape": "shrub",
     "temp_c": [
      8,
@@ -1103,6 +1111,7 @@
     "name": "Giant cane",
     "genus": "Arundinaria",
     "species": "gigantea",
+    "origin": "Southeastern USA",
     "shape": "bamboo",
     "temp_c": [
      10,
@@ -1219,6 +1228,7 @@
     "name": "Saw palmetto",
     "genus": "Serenoa",
     "species": "repens",
+    "origin": "Southeastern USA",
     "shape": "palm",
     "temp_c": [
      17,
@@ -1341,6 +1351,7 @@
     "name": "Virginia willow",
     "genus": "Itea",
     "species": "virginica",
+    "origin": "Southeastern USA",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -1465,6 +1476,7 @@
     "name": "Wax myrtle",
     "genus": "Morella",
     "species": "cerifera",
+    "origin": "SE USA, Mexico and Caribbean",
     "shape": "shrub",
     "temp_c": [
      14,
@@ -1588,6 +1600,7 @@
     "name": "Cypress knees",
     "genus": "Taxodium",
     "species": "distichum",
+    "origin": "Southeastern USA",
     "shape": "knees",
     "temp_c": [
      12,
@@ -1701,6 +1714,7 @@
     "name": "Duckweed",
     "genus": "Lemna",
     "species": "minor",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      5,
@@ -1796,6 +1810,7 @@
     "name": "Lizard's tail",
     "genus": "Saururus",
     "species": "cernuus",
+    "origin": "Eastern North America",
     "shape": "reed",
     "temp_c": [
      8,
@@ -1897,6 +1912,7 @@
     "name": "Pickerelweed",
     "genus": "Pontederia",
     "species": "cordata",
+    "origin": "Eastern Americas",
     "shape": "reed",
     "temp_c": [
      6,
@@ -1998,6 +2014,7 @@
     "name": "Royal fern",
     "genus": "Osmunda",
     "species": "spectabilis",
+    "origin": "Eastern Americas",
     "shape": "fern",
     "temp_c": [
      5,
@@ -2098,6 +2115,7 @@
     "name": "Taro",
     "genus": "Colocasia",
     "species": "esculenta",
+    "origin": "Southeast Asia and India",
     "family": "Araceae",
     "shape": "umbrella",
     "temp_c": [
@@ -2266,6 +2284,7 @@
     "name": "Water hyacinth",
     "genus": "Pontederia",
     "species": "crassipes",
+    "origin": "Amazon Basin",
     "shape": "rosette",
     "temp_c": [
      16,
@@ -2369,6 +2388,7 @@
     "name": "Butterfly orchid",
     "genus": "Encyclia",
     "species": "tampensis",
+    "origin": "Florida and Bahamas",
     "shape": "epiphyte_clump",
     "temp_c": [
      18,
@@ -2464,6 +2484,7 @@
     "name": "Ghost orchid",
     "genus": "Dendrophylax",
     "species": "lindenii",
+    "origin": "Florida and Cuba",
     "family": "Orchidaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
@@ -2609,6 +2630,7 @@
     "name": "Resurrection fern",
     "genus": "Pleopeltis",
     "species": "polypodioides",
+    "origin": "SE USA to South America",
     "shape": "fern",
     "temp_c": [
      14,
@@ -2708,6 +2730,7 @@
     "name": "Spanish moss",
     "genus": "Tillandsia",
     "species": "usneoides",
+    "origin": "SE USA to Argentina",
     "shape": "hanging_moss",
     "temp_c": [
      14,

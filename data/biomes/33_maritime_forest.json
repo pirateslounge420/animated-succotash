@@ -23,6 +23,7 @@
     "name": "Bald cypress",
     "genus": "Taxodium",
     "species": "distichum",
+    "origin": "Southeastern United States",
     "family": "Cupressaceae",
     "shape": "cypress",
     "temp_c": [
@@ -186,6 +187,7 @@
     "name": "Cabbage palmetto",
     "genus": "Sabal",
     "species": "palmetto",
+    "origin": "Southeastern US, Cuba and Bahamas",
     "shape": "palm",
     "temp_c": [
      16,
@@ -297,6 +299,7 @@
     "name": "Japanese black pine",
     "genus": "Pinus",
     "species": "thunbergii",
+    "origin": "Coastal Japan and Korea",
     "shape": "conifer",
     "temp_c": [
      8,
@@ -400,6 +403,7 @@
     "name": "Loblolly pine",
     "genus": "Pinus",
     "species": "taeda",
+    "origin": "Southeastern United States",
     "shape": "conifer",
     "temp_c": [
      13,
@@ -503,6 +507,7 @@
     "name": "Monterey cypress",
     "genus": "Cupressus",
     "species": "macrocarpa",
+    "origin": "Monterey Peninsula, California",
     "shape": "cypress",
     "temp_c": [
      11,
@@ -608,6 +613,7 @@
     "name": "Sitka spruce",
     "genus": "Picea",
     "species": "sitchensis",
+    "origin": "Pacific Northwest, Alaska to California",
     "shape": "conifer",
     "temp_c": [
      4,
@@ -712,6 +718,7 @@
     "name": "Wind-shaped live oak",
     "genus": "Quercus",
     "species": "virginiana",
+    "origin": "Southeastern United States",
     "shape": "gnarled",
     "temp_c": [
      14,
@@ -824,6 +831,7 @@
     "name": "Coyote brush",
     "genus": "Baccharis",
     "species": "pilularis",
+    "origin": "California and Oregon coast",
     "shape": "shrub",
     "temp_c": [
      10,
@@ -934,6 +942,7 @@
     "name": "Kuril bamboo",
     "genus": "Sasa",
     "species": "kurilensis",
+    "origin": "Hokkaido, Kurils and Sakhalin",
     "shape": "bamboo",
     "temp_c": [
      4,
@@ -1041,6 +1050,7 @@
     "name": "Saw palmetto",
     "genus": "Serenoa",
     "species": "repens",
+    "origin": "Southeastern United States",
     "shape": "palm",
     "temp_c": [
      16,
@@ -1152,6 +1162,7 @@
     "name": "Wax myrtle",
     "genus": "Morella",
     "species": "cerifera",
+    "origin": "Southeastern US and Caribbean",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -1262,6 +1273,7 @@
     "name": "Yaupon holly",
     "genus": "Ilex",
     "species": "vomitoria",
+    "origin": "Southeastern United States",
     "shape": "shrub",
     "temp_c": [
      14,
@@ -1374,6 +1386,7 @@
     "name": "Bracken",
     "genus": "Pteridium",
     "species": "aquilinum",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "fern",
     "temp_c": [
      4,
@@ -1464,6 +1477,7 @@
     "name": "Partridgeberry",
     "genus": "Mitchella",
     "species": "repens",
+    "origin": "Eastern North America",
     "shape": "cushion",
     "temp_c": [
      8,
@@ -1548,6 +1562,7 @@
     "name": "Pink muhly grass",
     "genus": "Muhlenbergia",
     "species": "capillaris",
+    "origin": "Eastern United States",
     "shape": "tussock",
     "temp_c": [
      14,
@@ -1635,6 +1650,7 @@
     "name": "Salal",
     "genus": "Gaultheria",
     "species": "shallon",
+    "origin": "Pacific Northwest of North America",
     "shape": "shrub",
     "temp_c": [
      6,
@@ -1745,6 +1761,7 @@
     "name": "Seaside goldenrod",
     "genus": "Solidago",
     "species": "sempervirens",
+    "origin": "Atlantic and Gulf coasts of N America",
     "shape": "grass",
     "temp_c": [
      6,
@@ -1835,6 +1852,7 @@
     "name": "Muscadine grape",
     "genus": "Vitis",
     "species": "rotundifolia",
+    "origin": "Southeastern United States",
     "shape": "liana",
     "temp_c": [
      14,
@@ -1947,6 +1965,7 @@
     "name": "Resurrection fern",
     "genus": "Pleopeltis",
     "species": "polypodioides",
+    "origin": "Southeastern US and Neotropics",
     "shape": "epiphyte_clump",
     "temp_c": [
      14,
@@ -2035,6 +2054,7 @@
     "name": "Spanish moss",
     "genus": "Tillandsia",
     "species": "usneoides",
+    "origin": "Southeastern US to South America",
     "shape": "hanging_moss",
     "temp_c": [
      15,

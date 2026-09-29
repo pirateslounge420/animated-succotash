@@ -23,6 +23,7 @@
     "name": "Bull kelp",
     "genus": "Nereocystis",
     "species": "luetkeana",
+    "origin": "Pacific coast, Alaska to California",
     "shape": "liana",
     "temp_c": [
      6,
@@ -117,6 +118,7 @@
     "name": "Giant kelp",
     "genus": "Macrocystis",
     "species": "pyrifera",
+    "origin": "Temperate Pacific and Southern Ocean",
     "shape": "liana",
     "temp_c": [
      6,
@@ -211,6 +213,7 @@
     "name": "Oarweed",
     "genus": "Laminaria",
     "species": "digitata",
+    "origin": "North Atlantic coasts",
     "shape": "liana",
     "temp_c": [
      4,
@@ -306,6 +309,7 @@
     "name": "Southern bull kelp",
     "genus": "Durvillaea",
     "species": "antarctica",
+    "origin": "Chile, New Zealand and subantarctic",
     "shape": "liana",
     "temp_c": [
      6,
@@ -402,6 +406,7 @@
     "name": "Coastal heather",
     "genus": "Calluna",
     "species": "vulgaris",
+    "origin": "Europe and Northwest Africa",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -507,6 +512,7 @@
     "name": "Coyote brush",
     "genus": "Baccharis",
     "species": "pilularis",
+    "origin": "California and Oregon coast",
     "shape": "shrub",
     "temp_c": [
      11,
@@ -617,6 +623,7 @@
     "name": "Salal",
     "genus": "Gaultheria",
     "species": "shallon",
+    "origin": "Pacific Northwest of North America",
     "shape": "shrub",
     "temp_c": [
      5,
@@ -727,6 +734,7 @@
     "name": "Sea blite bush",
     "genus": "Suaeda",
     "species": "taxifolia",
+    "origin": "Southern California and Baja",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -842,6 +850,7 @@
     "name": "Coralline alga",
     "genus": "Corallina",
     "species": "officinalis",
+    "origin": "North Atlantic coasts",
     "shape": "moss",
     "temp_c": [
      4,
@@ -924,6 +933,7 @@
     "name": "Rockweed",
     "genus": "Fucus",
     "species": "distichus",
+    "origin": "North Pacific and North Atlantic coasts",
     "shape": "epiphyte_clump",
     "temp_c": [
      0,
@@ -1018,6 +1028,7 @@
     "name": "Sea palm",
     "genus": "Postelsia",
     "species": "palmaeformis",
+    "origin": "Pacific coast, BC to California",
     "shape": "palm",
     "temp_c": [
      8,
@@ -1112,6 +1123,7 @@
     "name": "Surfgrass",
     "genus": "Phyllospadix",
     "species": "scouleri",
+    "origin": "Pacific coast, Alaska to Baja",
     "shape": "grass",
     "temp_c": [
      6,
@@ -1205,6 +1217,7 @@
     "name": "Thrift",
     "genus": "Armeria",
     "species": "maritima",
+    "origin": "Northern Hemisphere coasts",
     "shape": "cushion",
     "temp_c": [
      -2,

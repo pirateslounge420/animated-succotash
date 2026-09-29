@@ -23,6 +23,7 @@
     "name": "Coastal cypress",
     "genus": "Hesperocyparis",
     "species": "macrocarpa",
+    "origin": "Monterey Peninsula, California",
     "shape": "cypress",
     "temp_c": [
      11,
@@ -129,6 +130,7 @@
     "name": "Sitka spruce",
     "genus": "Picea",
     "species": "sitchensis",
+    "origin": "Pacific Northwest, Alaska to California",
     "shape": "conifer",
     "temp_c": [
      4,
@@ -234,6 +236,7 @@
     "name": "Coastal rosemary",
     "genus": "Westringia",
     "species": "fruticosa",
+    "origin": "New South Wales, Australia",
     "shape": "shrub",
     "temp_c": [
      14,
@@ -345,6 +348,7 @@
     "name": "Gorse",
     "genus": "Ulex",
     "species": "europaeus",
+    "origin": "Western Europe",
     "shape": "shrub",
     "temp_c": [
      7,
@@ -446,6 +450,7 @@
     "name": "Salal",
     "genus": "Gaultheria",
     "species": "shallon",
+    "origin": "Pacific Northwest of North America",
     "shape": "shrub",
     "temp_c": [
      5,
@@ -557,6 +562,7 @@
     "name": "Tree mallow",
     "genus": "Malva",
     "species": "arborea",
+    "origin": "Western Europe and Mediterranean",
     "shape": "shrub",
     "temp_c": [
      10,
@@ -671,6 +677,7 @@
     "name": "Bladder wrack",
     "genus": "Fucus",
     "species": "vesiculosus",
+    "origin": "North Atlantic and Baltic coasts",
     "shape": "epiphyte_clump",
     "temp_c": [
      0,
@@ -759,6 +766,7 @@
     "name": "Feather boa kelp",
     "genus": "Egregia",
     "species": "menziesii",
+    "origin": "Pacific coast, Alaska to Baja",
     "shape": "liana",
     "temp_c": [
      8,
@@ -847,6 +855,7 @@
     "name": "Rock samphire",
     "genus": "Crithmum",
     "species": "maritimum",
+    "origin": "Atlantic Europe and Mediterranean",
     "shape": "cushion",
     "temp_c": [
      9,
@@ -941,6 +950,7 @@
     "name": "Sea campion",
     "genus": "Silene",
     "species": "uniflora",
+    "origin": "Northwestern Europe",
     "shape": "cushion",
     "temp_c": [
      2,
@@ -1026,6 +1036,7 @@
     "name": "Sea fig",
     "genus": "Carpobrotus",
     "species": "chilensis",
+    "origin": "Chile and California coasts",
     "shape": "cushion",
     "temp_c": [
      12,
@@ -1115,6 +1126,7 @@
     "name": "Sea ivory lichen",
     "genus": "Ramalina",
     "species": "siliquosa",
+    "origin": "North Atlantic coasts of Europe",
     "shape": "moss",
     "temp_c": [
      -5,
@@ -1184,6 +1196,7 @@
     "name": "Sea lettuce",
     "genus": "Ulva",
     "species": "lactuca",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "moss",
     "temp_c": [
      0,
@@ -1261,6 +1274,7 @@
     "name": "Sea spleenwort",
     "genus": "Asplenium",
     "species": "marinum",
+    "origin": "Atlantic Europe and Mediterranean",
     "shape": "fern",
     "temp_c": [
      7,
@@ -1353,6 +1367,7 @@
     "name": "Thrift",
     "genus": "Armeria",
     "species": "maritima",
+    "origin": "Northern Hemisphere coasts",
     "shape": "cushion",
     "temp_c": [
      -2,

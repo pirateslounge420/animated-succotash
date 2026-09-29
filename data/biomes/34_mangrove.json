@@ -23,6 +23,7 @@
     "name": "Asian stilt mangrove",
     "genus": "Rhizophora",
     "species": "mucronata",
+    "origin": "Indo-West Pacific and East Africa",
     "shape": "mangrove",
     "temp_c": [
      22,
@@ -142,6 +143,7 @@
     "name": "Black mangrove",
     "genus": "Avicennia",
     "species": "germinans",
+    "origin": "Tropical Americas and West Africa",
     "shape": "mangrove",
     "temp_c": [
      18,
@@ -256,6 +258,7 @@
     "name": "Coconut palm",
     "genus": "Cocos",
     "species": "nucifera",
+    "origin": "Indo-Pacific tropical coasts",
     "family": "Arecaceae",
     "shape": "palm",
     "temp_c": [
@@ -436,6 +439,7 @@
     "name": "Grey mangrove",
     "genus": "Avicennia",
     "species": "marina",
+    "origin": "Indo-West Pacific and East Africa",
     "shape": "mangrove",
     "temp_c": [
      16,
@@ -550,6 +554,7 @@
     "name": "Mangrove apple",
     "genus": "Sonneratia",
     "species": "alba",
+    "origin": "Indo-West Pacific and East Africa",
     "shape": "mangrove",
     "temp_c": [
      23,
@@ -669,6 +674,7 @@
     "name": "Red mangrove",
     "genus": "Rhizophora",
     "species": "mangle",
+    "origin": "Tropical Americas and West Africa",
     "shape": "mangrove",
     "temp_c": [
      20,
@@ -788,6 +794,7 @@
     "name": "White mangrove",
     "genus": "Laguncularia",
     "species": "racemosa",
+    "origin": "Tropical Americas and West Africa",
     "shape": "broadleaf",
     "temp_c": [
      20,
@@ -904,6 +911,7 @@
     "name": "Buttonwood",
     "genus": "Conocarpus",
     "species": "erectus",
+    "origin": "Tropical Americas and West Africa",
     "shape": "shrub",
     "temp_c": [
      20,
@@ -1018,6 +1026,7 @@
     "name": "Holly mangrove",
     "genus": "Acanthus",
     "species": "ilicifolius",
+    "origin": "Indo-West Pacific",
     "shape": "shrub",
     "temp_c": [
      22,
@@ -1132,6 +1141,7 @@
     "name": "Mangrove fern",
     "genus": "Acrostichum",
     "species": "aureum",
+    "origin": "Pantropical coasts worldwide",
     "shape": "fern",
     "temp_c": [
      21,
@@ -1224,6 +1234,7 @@
     "name": "Nipa palm",
     "genus": "Nypa",
     "species": "fruticans",
+    "origin": "Indo-West Pacific, India to Australia",
     "shape": "palm",
     "temp_c": [
      23,
@@ -1336,6 +1347,7 @@
     "name": "Orange mangrove",
     "genus": "Bruguiera",
     "species": "gymnorhiza",
+    "origin": "Indo-West Pacific and East Africa",
     "shape": "mangrove",
     "temp_c": [
      22,
@@ -1452,6 +1464,7 @@
     "name": "Mangrove seedling",
     "genus": "Rhizophora",
     "species": "mangle",
+    "origin": "Tropical Americas and West Africa",
     "shape": "mangrove",
     "temp_c": [
      20,
@@ -1568,6 +1581,7 @@
     "name": "Saltwort",
     "genus": "Batis",
     "species": "maritima",
+    "origin": "Tropical Americas and Hawaii",
     "shape": "cushion",
     "temp_c": [
      20,
@@ -1656,6 +1670,7 @@
     "name": "Sea purslane",
     "genus": "Sesuvium",
     "species": "portulacastrum",
+    "origin": "Pantropical coasts worldwide",
     "shape": "cushion",
     "temp_c": [
      20,
@@ -1744,6 +1759,7 @@
     "name": "Smooth cordgrass",
     "genus": "Sporobolus",
     "species": "alterniflorus",
+    "origin": "Atlantic coast of the Americas",
     "shape": "reed",
     "temp_c": [
      10,
@@ -1839,6 +1855,7 @@
     "name": "Turtle grass",
     "genus": "Thalassia",
     "species": "testudinum",
+    "origin": "Caribbean and Gulf of Mexico",
     "shape": "reed",
     "temp_c": [
      22,
@@ -1928,6 +1945,7 @@
     "name": "Ant plant",
     "genus": "Myrmecodia",
     "species": "beccarii",
+    "origin": "Queensland, Australia",
     "shape": "epiphyte_clump",
     "temp_c": [
      23,
@@ -2013,6 +2031,7 @@
     "name": "Mangrove bromeliad",
     "genus": "Tillandsia",
     "species": "utriculata",
+    "origin": "Florida, Caribbean and Central America",
     "shape": "epiphyte_clump",
     "temp_c": [
      20,
@@ -2098,6 +2117,7 @@
     "name": "Mangrove orchid",
     "genus": "Dendrobium",
     "species": "crumenatum",
+    "origin": "Southeast Asia and Malesia",
     "shape": "epiphyte_clump",
     "temp_c": [
      23,
@@ -2183,6 +2203,7 @@
     "name": "Strangler fig",
     "genus": "Ficus",
     "species": "aurea",
+    "origin": "Florida and the Caribbean",
     "family": "",
     "shape": "liana",
     "temp_c": [

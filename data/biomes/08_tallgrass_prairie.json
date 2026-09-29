@@ -23,6 +23,7 @@
     "name": "Bur oak",
     "genus": "Quercus",
     "species": "macrocarpa",
+    "origin": "Central and eastern North America",
     "shape": "broadleaf",
     "temp_c": [
      4,
@@ -150,6 +151,7 @@
     "name": "American hazel",
     "genus": "Corylus",
     "species": "americana",
+    "origin": "Eastern and central North America",
     "shape": "shrub",
     "temp_c": [
      5,
@@ -273,6 +275,7 @@
     "name": "Leadplant",
     "genus": "Amorpha",
     "species": "canescens",
+    "origin": "Great Plains of North America",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -401,6 +404,7 @@
     "name": "Pampas grass",
     "genus": "Cortaderia",
     "species": "selloana",
+    "origin": "Pampas of Argentina and Brazil",
     "shape": "tussock",
     "temp_c": [
      12,
@@ -499,6 +503,7 @@
     "name": "Prairie rose",
     "genus": "Rosa",
     "species": "arkansana",
+    "origin": "Central North America",
     "shape": "shrub",
     "temp_c": [
      3,
@@ -629,6 +634,7 @@
     "name": "Big bluestem",
     "genus": "Andropogon",
     "species": "gerardii",
+    "origin": "Central and eastern North America",
     "shape": "grass",
     "temp_c": [
      4,
@@ -726,6 +732,7 @@
     "name": "Compass plant",
     "genus": "Silphium",
     "species": "laciniatum",
+    "origin": "Central North America",
     "shape": "grass",
     "temp_c": [
      5,
@@ -824,6 +831,7 @@
     "name": "Indiangrass",
     "genus": "Sorghastrum",
     "species": "nutans",
+    "origin": "Eastern and central North America",
     "shape": "grass",
     "temp_c": [
      5,
@@ -921,6 +929,7 @@
     "name": "Little bluestem",
     "genus": "Schizachyrium",
     "species": "scoparium",
+    "origin": "North America",
     "shape": "tussock",
     "temp_c": [
      3,
@@ -1020,6 +1029,7 @@
     "name": "Purple coneflower",
     "genus": "Echinacea",
     "species": "purpurea",
+    "origin": "Central and eastern United States",
     "shape": "grass",
     "temp_c": [
      6,
@@ -1117,6 +1127,7 @@
     "name": "Switchgrass",
     "genus": "Panicum",
     "species": "virgatum",
+    "origin": "North America",
     "shape": "grass",
     "temp_c": [
      5,

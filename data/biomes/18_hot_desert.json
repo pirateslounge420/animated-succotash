@@ -23,6 +23,7 @@
     "name": "Cardon",
     "genus": "Pachycereus",
     "species": "pringlei",
+    "origin": "Baja California and Sonora",
     "shape": "cactus",
     "temp_c": [
      19,
@@ -122,6 +123,7 @@
     "name": "Quiver tree",
     "genus": "Aloidendron",
     "species": "dichotomum",
+    "origin": "Namibia and South Africa",
     "shape": "rosette",
     "temp_c": [
      18,
@@ -206,6 +208,7 @@
     "name": "Saguaro cactus",
     "genus": "Carnegiea",
     "species": "gigantea",
+    "origin": "Sonoran Desert",
     "shape": "cactus",
     "temp_c": [
      18,
@@ -305,6 +308,7 @@
     "name": "Umbrella thorn",
     "genus": "Vachellia",
     "species": "tortilis",
+    "origin": "Africa and Arabia",
     "shape": "umbrella",
     "leaf_density": 0.5,
     "temp_c": [
@@ -422,6 +426,7 @@
     "name": "Velvet mesquite",
     "genus": "Prosopis",
     "species": "velutina",
+    "origin": "Sonoran Desert",
     "shape": "umbrella",
     "temp_c": [
      18,
@@ -541,6 +546,7 @@
     "name": "Yellow paloverde",
     "genus": "Parkinsonia",
     "species": "microphylla",
+    "origin": "Sonoran Desert",
     "shape": "broadleaf",
     "leaf_density": 0.3,
     "temp_c": [
@@ -660,6 +666,7 @@
     "name": "Barrel cactus",
     "genus": "Ferocactus",
     "species": "wislizeni",
+    "origin": "SW USA and Northern Mexico",
     "shape": "cactus",
     "temp_c": [
      18,
@@ -756,6 +763,7 @@
     "name": "Creosote bush",
     "genus": "Larrea",
     "species": "tridentata",
+    "origin": "SW USA and Northern Mexico",
     "shape": "shrub",
     "temp_c": [
      16,
@@ -870,6 +878,7 @@
     "name": "Mulga",
     "genus": "Acacia",
     "species": "aneura",
+    "origin": "Arid Australia",
     "shape": "shrub",
     "temp_c": [
      18,
@@ -980,6 +989,7 @@
     "name": "Ocotillo",
     "genus": "Fouquieria",
     "species": "splendens",
+    "origin": "SW USA and Northern Mexico",
     "shape": "spike_rosette",
     "temp_c": [
      18,
@@ -1067,6 +1077,7 @@
     "name": "Prickly pear",
     "genus": "Opuntia",
     "species": "engelmannii",
+    "origin": "SW USA and Northern Mexico",
     "shape": "cactus",
     "temp_c": [
      16,
@@ -1166,6 +1177,7 @@
     "name": "Whitethorn acacia",
     "genus": "Vachellia",
     "species": "constricta",
+    "origin": "SW USA and Northern Mexico",
     "shape": "shrub",
     "temp_c": [
      17,
@@ -1284,6 +1296,7 @@
     "name": "Brittlebush",
     "genus": "Encelia",
     "species": "farinosa",
+    "origin": "SW USA and Northern Mexico",
     "shape": "shrub",
     "temp_c": [
      18,
@@ -1396,6 +1409,7 @@
     "name": "Bursage",
     "genus": "Ambrosia",
     "species": "dumosa",
+    "origin": "SW USA and Northern Mexico",
     "shape": "shrub",
     "temp_c": [
      17,
@@ -1509,6 +1523,7 @@
     "name": "Hard spinifex",
     "genus": "Triodia",
     "species": "basedowii",
+    "origin": "Central Australia",
     "shape": "tussock",
     "temp_c": [
      20,
@@ -1595,6 +1610,7 @@
     "name": "Lechuguilla",
     "genus": "Agave",
     "species": "lechuguilla",
+    "origin": "Chihuahuan Desert",
     "shape": "spike_rosette",
     "temp_c": [
      17,
@@ -1679,6 +1695,7 @@
     "name": "Tabush grass",
     "genus": "Panicum",
     "species": "turgidum",
+    "origin": "Sahara and Arabia",
     "shape": "tussock",
     "temp_c": [
      20,
@@ -1765,6 +1782,7 @@
     "name": "Welwitschia",
     "genus": "Welwitschia",
     "species": "mirabilis",
+    "origin": "Namib Desert",
     "shape": "rosette",
     "temp_c": [
      17,

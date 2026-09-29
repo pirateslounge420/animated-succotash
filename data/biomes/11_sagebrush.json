@@ -23,6 +23,7 @@
     "name": "Singleleaf pinyon",
     "genus": "Pinus",
     "species": "monophylla",
+    "origin": "Great Basin, western USA",
     "shape": "conifer",
     "temp_c": [
      4,
@@ -133,6 +134,7 @@
     "name": "Utah juniper",
     "genus": "Juniperus",
     "species": "osteosperma",
+    "origin": "Great Basin and Colorado Plateau",
     "shape": "conifer",
     "temp_c": [
      4,
@@ -244,6 +246,7 @@
     "name": "Antelope bitterbrush",
     "genus": "Purshia",
     "species": "tridentata",
+    "origin": "Intermountain western USA",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -356,6 +359,7 @@
     "name": "Big sagebrush",
     "genus": "Artemisia",
     "species": "tridentata",
+    "origin": "Great Basin, western North America",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -466,6 +470,7 @@
     "name": "Greasewood",
     "genus": "Sarcobatus",
     "species": "vermiculatus",
+    "origin": "Western North America",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -578,6 +583,7 @@
     "name": "Rubber rabbitbrush",
     "genus": "Ericameria",
     "species": "nauseosa",
+    "origin": "Western North America",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -690,6 +696,7 @@
     "name": "Shadscale",
     "genus": "Atriplex",
     "species": "confertifolia",
+    "origin": "Great Basin, western USA",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -802,6 +809,7 @@
     "name": "Arrowleaf balsamroot",
     "genus": "Balsamorhiza",
     "species": "sagittata",
+    "origin": "Intermountain western USA",
     "shape": "grass",
     "temp_c": [
      2,
@@ -888,6 +896,7 @@
     "name": "Bluebunch wheatgrass",
     "genus": "Pseudoroegneria",
     "species": "spicata",
+    "origin": "Intermountain western N America",
     "shape": "tussock",
     "temp_c": [
      2,
@@ -976,6 +985,7 @@
     "name": "Idaho fescue",
     "genus": "Festuca",
     "species": "idahoensis",
+    "origin": "Intermountain western N America",
     "shape": "tussock",
     "temp_c": [
      1,
@@ -1064,6 +1074,7 @@
     "name": "Indian ricegrass",
     "genus": "Achnatherum",
     "species": "hymenoides",
+    "origin": "Western North America",
     "shape": "tussock",
     "temp_c": [
      2,
@@ -1152,6 +1163,7 @@
     "name": "Sandberg bluegrass",
     "genus": "Poa",
     "species": "secunda",
+    "origin": "Western North America",
     "shape": "grass",
     "temp_c": [
      1,

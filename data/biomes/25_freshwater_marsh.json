@@ -24,6 +24,7 @@
     "name": "Buttonbush",
     "genus": "Cephalanthus",
     "species": "occidentalis",
+    "origin": "Eastern North America",
     "shape": "shrub",
     "temp_c": [
      8,
@@ -146,6 +147,7 @@
     "name": "Grey willow",
     "genus": "Salix",
     "species": "cinerea",
+    "origin": "Europe and Western Asia",
     "shape": "shrub",
     "temp_c": [
      4,
@@ -269,6 +271,7 @@
     "name": "Sweet gale",
     "genus": "Myrica",
     "species": "gale",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "shrub",
     "temp_c": [
      3,
@@ -387,6 +390,7 @@
     "name": "Cattail",
     "genus": "Typha",
     "species": "latifolia",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "reed",
     "temp_c": [
      3,
@@ -482,6 +486,7 @@
     "name": "Common reed",
     "genus": "Phragmites",
     "species": "australis",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "reed",
     "temp_c": [
      3,
@@ -577,6 +582,7 @@
     "name": "Reed sweet-grass",
     "genus": "Glyceria",
     "species": "maxima",
+    "origin": "Europe and Western Asia",
     "shape": "grass",
     "temp_c": [
      5,
@@ -674,6 +680,7 @@
     "name": "Soft-stem bulrush",
     "genus": "Schoenoplectus",
     "species": "tabernaemontani",
+    "origin": "Worldwide (cosmopolitan)",
     "shape": "reed",
     "temp_c": [
      3,
@@ -758,6 +765,7 @@
     "name": "Tussock sedge",
     "genus": "Carex",
     "species": "stricta",
+    "origin": "Eastern North America",
     "shape": "tussock",
     "temp_c": [
      3,
@@ -853,6 +861,7 @@
     "name": "Yellow flag iris",
     "genus": "Iris",
     "species": "pseudacorus",
+    "origin": "Europe, W Asia and N Africa",
     "shape": "spike_rosette",
     "temp_c": [
      5,

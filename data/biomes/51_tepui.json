@@ -27,6 +27,7 @@
     "name": "Bonnetia",
     "genus": "Bonnetia",
     "species": "roraimae",
+    "origin": "Guiana Highlands (Venezuela, Guyana)",
     "family": "Bonnetiaceae",
     "shape": "gnarled",
     "temp_c": [
@@ -199,6 +200,7 @@
     "name": "Giant brocchinia",
     "genus": "Brocchinia",
     "species": "micrantha",
+    "origin": "Guiana Highlands, Venezuela",
     "family": "Bromeliaceae",
     "shape": "spike_rosette",
     "temp_c": [
@@ -343,6 +345,7 @@
     "name": "Tepui clusia",
     "genus": "Clusia",
     "species": "tepuiensis",
+    "origin": "Tepuis of Venezuela",
     "family": "Clusiaceae",
     "shape": "gnarled",
     "temp_c": [
@@ -513,6 +516,7 @@
     "name": "Tepui myrtle",
     "genus": "Tepuianthus",
     "species": "auyantepuiensis",
+    "origin": "Auyán-tepui, Venezuela",
     "family": "Thymelaeaceae",
     "shape": "shrub",
     "temp_c": [
@@ -682,6 +686,7 @@
     "name": "Tepui stegolepis",
     "genus": "Stegolepis",
     "species": "guianensis",
+    "origin": "Guiana Highlands (Venezuela, Guyana)",
     "family": "Rapateaceae",
     "shape": "spike_rosette",
     "temp_c": [
@@ -826,6 +831,7 @@
     "name": "Tepui tree fern",
     "genus": "Cyathea",
     "species": "pungens",
+    "origin": "Guiana Highlands and Andes",
     "family": "Cyatheaceae",
     "shape": "tree_fern",
     "temp_c": [
@@ -999,6 +1005,7 @@
     "name": "Brocchinia",
     "genus": "Brocchinia",
     "species": "reducta",
+    "origin": "Guiana Highlands (Venezuela, Guyana)",
     "family": "Bromeliaceae",
     "shape": "spike_rosette",
     "temp_c": [
@@ -1151,6 +1158,7 @@
     "name": "Giant sun pitcher",
     "genus": "Heliamphora",
     "species": "tatei",
+    "origin": "Cerro Duida, Amazonas, Venezuela",
     "family": "Sarraceniaceae",
     "shape": "reed",
     "temp_c": [
@@ -1301,6 +1309,7 @@
     "name": "Rock lichen",
     "genus": "Cladonia",
     "species": "confusa",
+    "origin": "Tropical and southern highlands",
     "family": "Cladoniaceae",
     "shape": "moss",
     "temp_c": [
@@ -1434,6 +1443,7 @@
     "name": "Roraima sundew",
     "genus": "Drosera",
     "species": "roraimae",
+    "origin": "Guiana Highlands (Venezuela, Brazil)",
     "family": "Droseraceae",
     "shape": "rosette",
     "temp_c": [
@@ -1583,6 +1593,7 @@
     "name": "Summit moss",
     "genus": "Sphagnum",
     "species": "magellanicum",
+    "origin": "Americas, Patagonia to Canada",
     "family": "Sphagnaceae",
     "shape": "moss",
     "temp_c": [
@@ -1727,6 +1738,7 @@
     "name": "Sun pitcher",
     "genus": "Heliamphora",
     "species": "nutans",
+    "origin": "Mount Roraima, Venezuela/Guyana",
     "family": "Sarraceniaceae",
     "shape": "reed",
     "temp_c": [
@@ -1876,6 +1888,7 @@
     "name": "Tepui bromeliad",
     "genus": "Navia",
     "species": "glauca",
+    "origin": "Guiana Highlands, Venezuela",
     "family": "Bromeliaceae",
     "shape": "spike_rosette",
     "temp_c": [
@@ -2019,6 +2032,7 @@
     "name": "Tepui cushion",
     "genus": "Connellia",
     "species": "augustae",
+    "origin": "Mount Roraima, Guiana Highlands",
     "family": "Bromeliaceae",
     "shape": "cushion",
     "temp_c": [
@@ -2162,6 +2176,7 @@
     "name": "Tepui orectanthe",
     "genus": "Orectanthe",
     "species": "sceptrum",
+    "origin": "Guiana Highlands, Venezuela",
     "family": "Xyridaceae",
     "shape": "spike_rosette",
     "temp_c": [
@@ -2308,6 +2323,7 @@
     "name": "Humboldt's bladderwort",
     "genus": "Utricularia",
     "species": "humboldtii",
+    "origin": "Guiana Highlands (Venezuela, Guyana)",
     "family": "Lentibulariaceae",
     "shape": "rosette",
     "temp_c": [

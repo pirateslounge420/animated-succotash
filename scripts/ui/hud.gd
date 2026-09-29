@@ -42,12 +42,12 @@ func _ready() -> void:
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 47)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_prompt.add_theme_font_size_override("font_size", 12)
+	_prompt.add_theme_font_size_override("font_size", 15)
 	_subtitle = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_subtitle.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 80)
 	_subtitle.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_subtitle.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_subtitle.add_theme_font_size_override("font_size", 13)
+	_subtitle.add_theme_font_size_override("font_size", 15)
 	_debug = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	_debug.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT, Control.PRESET_MODE_MINSIZE, 9)
 	_debug.grow_vertical = Control.GROW_DIRECTION_BOTH

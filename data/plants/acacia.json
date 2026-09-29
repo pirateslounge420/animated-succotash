@@ -11,6 +11,7 @@
     "name": "Umbrella thorn",
     "genus": "Vachellia",
     "species": "tortilis",
+    "origin": "Africa (Sahel to South Africa) and Arabia",
     "family": "Fabaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -244,6 +245,7 @@
     "name": "Fever tree",
     "genus": "Vachellia",
     "species": "xanthophloea",
+    "origin": "Eastern and southern Africa",
     "family": "Fabaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -475,6 +477,7 @@
     "name": "Camel thorn",
     "genus": "Vachellia",
     "species": "erioloba",
+    "origin": "Kalahari, southern Africa",
     "family": "Fabaceae",
     "shape": "umbrella",
     "temp_c": [
@@ -706,6 +709,7 @@
     "name": "Mulga",
     "genus": "Acacia",
     "species": "aneura",
+    "origin": "Arid interior of Australia",
     "family": "Fabaceae",
     "shape": "broadleaf",
     "temp_c": [
@@ -934,6 +938,7 @@
     "name": "Whistling thorn",
     "genus": "Vachellia",
     "species": "drepanolobium",
+    "origin": "East Africa (Kenya, Tanzania)",
     "family": "Fabaceae",
     "shape": "umbrella",
     "temp_c": [

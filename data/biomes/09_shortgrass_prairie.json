@@ -23,6 +23,7 @@
     "name": "Plains cottonwood",
     "genus": "Populus",
     "species": "deltoides",
+    "origin": "Central and eastern North America",
     "shape": "broadleaf",
     "temp_c": [
      4,
@@ -142,6 +143,7 @@
     "name": "Fringed sage",
     "genus": "Artemisia",
     "species": "frigida",
+    "origin": "N American plains and Eurasian steppe",
     "shape": "shrub",
     "temp_c": [
      -2,
@@ -256,6 +258,7 @@
     "name": "Plains prickly pear",
     "genus": "Opuntia",
     "species": "polyacantha",
+    "origin": "Western North America",
     "shape": "cactus",
     "temp_c": [
      2,
@@ -355,6 +358,7 @@
     "name": "Rubber rabbitbrush",
     "genus": "Ericameria",
     "species": "nauseosa",
+    "origin": "Western North America",
     "shape": "shrub",
     "temp_c": [
      2,
@@ -467,6 +471,7 @@
     "name": "Soapweed yucca",
     "genus": "Yucca",
     "species": "glauca",
+    "origin": "Great Plains, Alberta to Texas",
     "shape": "spike_rosette",
     "temp_c": [
      3,
@@ -553,6 +558,7 @@
     "name": "Blue grama",
     "genus": "Bouteloua",
     "species": "gracilis",
+    "origin": "Great Plains of North America",
     "shape": "grass",
     "temp_c": [
      2,
@@ -639,6 +645,7 @@
     "name": "Buffalograss",
     "genus": "Bouteloua",
     "species": "dactyloides",
+    "origin": "Great Plains of North America",
     "shape": "grass",
     "temp_c": [
      4,
@@ -725,6 +732,7 @@
     "name": "Needle-and-thread",
     "genus": "Hesperostipa",
     "species": "comata",
+    "origin": "Western North America",
     "shape": "tussock",
     "temp_c": [
      1,
@@ -813,6 +821,7 @@
     "name": "Scarlet globemallow",
     "genus": "Sphaeralcea",
     "species": "coccinea",
+    "origin": "Western North American plains",
     "shape": "grass",
     "temp_c": [
      2,
@@ -900,6 +909,7 @@
     "name": "Western wheatgrass",
     "genus": "Pascopyrum",
     "species": "smithii",
+    "origin": "Northern Great Plains",
     "shape": "grass",
     "temp_c": [
      2,

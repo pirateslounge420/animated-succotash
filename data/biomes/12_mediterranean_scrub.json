@@ -23,6 +23,7 @@
     "name": "Aleppo pine",
     "genus": "Pinus",
     "species": "halepensis",
+    "origin": "Mediterranean basin",
     "shape": "conifer",
     "temp_c": [
      12,
@@ -129,6 +130,7 @@
     "name": "Coast live oak",
     "genus": "Quercus",
     "species": "agrifolia",
+    "origin": "Coastal California and Baja California",
     "shape": "broadleaf",
     "temp_c": [
      12,
@@ -239,6 +241,7 @@
     "name": "Cork oak",
     "genus": "Quercus",
     "species": "suber",
+    "origin": "Western Mediterranean",
     "shape": "gnarled",
     "temp_c": [
      13,
@@ -349,6 +352,7 @@
     "name": "Holm oak",
     "genus": "Quercus",
     "species": "ilex",
+    "origin": "Mediterranean basin",
     "shape": "broadleaf",
     "leaf_density": 0.85,
     "temp_c": [
@@ -460,6 +464,7 @@
     "name": "Mediterranean cypress",
     "genus": "Cupressus",
     "species": "sempervirens",
+    "origin": "Eastern Mediterranean",
     "family": "Cupressaceae",
     "shape": "conifer",
     "temp_c": [
@@ -624,6 +629,7 @@
     "name": "Stone pine",
     "genus": "Pinus",
     "species": "pinea",
+    "origin": "Mediterranean coasts",
     "shape": "umbrella",
     "temp_c": [
      13,
@@ -730,6 +736,7 @@
     "name": "Wild olive",
     "genus": "Olea",
     "species": "europaea",
+    "origin": "Mediterranean basin",
     "shape": "gnarled",
     "temp_c": [
      13,
@@ -842,6 +849,7 @@
     "name": "Bigberry manzanita",
     "genus": "Arctostaphylos",
     "species": "glauca",
+    "origin": "S California and Baja California",
     "shape": "gnarled",
     "temp_c": [
      13,
@@ -952,6 +960,7 @@
     "name": "Chamise",
     "genus": "Adenostoma",
     "species": "fasciculatum",
+    "origin": "California and Baja California",
     "shape": "shrub",
     "temp_c": [
      13,
@@ -1058,6 +1067,7 @@
     "name": "Gum rockrose",
     "genus": "Cistus",
     "species": "ladanifer",
+    "origin": "Western Mediterranean",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -1168,6 +1178,7 @@
     "name": "Kermes oak",
     "genus": "Quercus",
     "species": "coccifera",
+    "origin": "Mediterranean basin",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -1278,6 +1289,7 @@
     "name": "Mastic",
     "genus": "Pistacia",
     "species": "lentiscus",
+    "origin": "Mediterranean basin",
     "shape": "shrub",
     "temp_c": [
      13,
@@ -1392,6 +1404,7 @@
     "name": "Strawberry tree",
     "genus": "Arbutus",
     "species": "unedo",
+    "origin": "Western Mediterranean and Ireland",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -1504,6 +1517,7 @@
     "name": "Asphodel",
     "genus": "Asphodelus",
     "species": "ramosus",
+    "origin": "Mediterranean basin",
     "shape": "grass",
     "temp_c": [
      13,
@@ -1590,6 +1604,7 @@
     "name": "Common thyme",
     "genus": "Thymus",
     "species": "vulgaris",
+    "origin": "Western Mediterranean",
     "shape": "cushion",
     "temp_c": [
      12,
@@ -1674,6 +1689,7 @@
     "name": "Esparto grass",
     "genus": "Macrochloa",
     "species": "tenacissima",
+    "origin": "SE Spain and North Africa",
     "shape": "tussock",
     "temp_c": [
      14,
@@ -1762,6 +1778,7 @@
     "name": "French lavender",
     "genus": "Lavandula",
     "species": "stoechas",
+    "origin": "Mediterranean basin",
     "shape": "shrub",
     "temp_c": [
      12,
@@ -1872,6 +1889,7 @@
     "name": "Ramose false brome",
     "genus": "Brachypodium",
     "species": "retusum",
+    "origin": "Mediterranean basin",
     "shape": "grass",
     "temp_c": [
      12,
@@ -1960,6 +1978,7 @@
     "name": "Sugarbush protea",
     "genus": "Protea",
     "species": "repens",
+    "origin": "Cape region of South Africa",
     "shape": "shrub",
     "temp_c": [
      14,

@@ -23,6 +23,7 @@
     "name": "Dahurian larch",
     "genus": "Larix",
     "species": "gmelinii",
+    "origin": "Eastern Siberia and Mongolia",
     "shape": "conifer",
     "temp_c": [
      -6,
@@ -129,6 +130,7 @@
     "name": "Lodgepole pine",
     "genus": "Pinus",
     "species": "contorta",
+    "origin": "Western North America",
     "family": "Pinaceae",
     "shape": "conifer",
     "temp_c": [
@@ -298,6 +300,7 @@
     "name": "Mountain birch",
     "genus": "Betula",
     "species": "pubescens",
+    "origin": "Northern Europe and Siberia",
     "shape": "broadleaf",
     "temp_c": [
      -4,
@@ -412,6 +415,7 @@
     "name": "Wind-stunted conifer",
     "genus": "Picea",
     "species": "engelmannii",
+    "origin": "Rocky Mountains of North America",
     "shape": "conifer",
     "temp_c": [
      -4,
@@ -520,6 +524,7 @@
     "name": "Alpenrose",
     "genus": "Rhododendron",
     "species": "ferrugineum",
+    "origin": "Alps and Pyrenees",
     "family": "Ericaceae",
     "shape": "shrub",
     "temp_c": [
@@ -694,6 +699,7 @@
     "name": "Dwarf birch",
     "genus": "Betula",
     "species": "nana",
+    "origin": "Circumpolar Arctic and subarctic",
     "shape": "shrub",
     "temp_c": [
      -8,
@@ -808,6 +814,7 @@
     "name": "Dwarf willow",
     "genus": "Salix",
     "species": "glauca",
+    "origin": "Circumboreal (northern hemisphere)",
     "shape": "shrub",
     "temp_c": [
      -6,
@@ -922,6 +929,7 @@
     "name": "Heath",
     "genus": "Vaccinium",
     "species": "myrtillus",
+    "origin": "Northern and mountain Eurasia",
     "shape": "shrub",
     "temp_c": [
      -4,
@@ -1036,6 +1044,7 @@
     "name": "Mountain pine",
     "genus": "Pinus",
     "species": "mugo",
+    "origin": "Alps, Carpathians and Balkans",
     "shape": "conifer",
     "temp_c": [
      -2,
@@ -1148,6 +1157,7 @@
     "name": "Mountain avens",
     "genus": "Dryas",
     "species": "octopetala",
+    "origin": "Arctic-alpine Eurasia and N America",
     "shape": "cushion",
     "temp_c": [
      -6,
@@ -1232,6 +1242,7 @@
     "name": "Sheep fescue",
     "genus": "Festuca",
     "species": "ovina",
+    "origin": "Europe and northern Asia",
     "shape": "tussock",
     "temp_c": [
      -6,
@@ -1319,6 +1330,7 @@
     "name": "Star reindeer lichen",
     "genus": "Cladonia",
     "species": "stellaris",
+    "origin": "Circumboreal (northern hemisphere)",
     "shape": "moss",
     "temp_c": [
      -8,

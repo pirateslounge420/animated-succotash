@@ -23,6 +23,7 @@
     "name": "Black spruce",
     "genus": "Picea",
     "species": "mariana",
+    "origin": "Canada and Northern USA",
     "shape": "conifer",
     "temp_c": [
      -7,
@@ -127,6 +128,7 @@
     "name": "Bog pine",
     "genus": "Pinus",
     "species": "sylvestris",
+    "origin": "Northern Europe and Siberia",
     "shape": "conifer",
     "temp_c": [
      -4,
@@ -232,6 +234,7 @@
     "name": "Tamarack",
     "genus": "Larix",
     "species": "laricina",
+    "origin": "Canada and Northeastern USA",
     "shape": "conifer",
     "temp_c": [
      -7,
@@ -343,6 +346,7 @@
     "name": "Bog myrtle",
     "genus": "Myrica",
     "species": "gale",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "shrub",
     "temp_c": [
      -4,
@@ -462,6 +466,7 @@
     "name": "Bog rosemary",
     "genus": "Andromeda",
     "species": "polifolia",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "shrub",
     "temp_c": [
      -7,
@@ -574,6 +579,7 @@
     "name": "Cranberry",
     "genus": "Vaccinium",
     "species": "oxycoccos",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "shrub",
     "temp_c": [
      -7,
@@ -686,6 +692,7 @@
     "name": "Heather",
     "genus": "Calluna",
     "species": "vulgaris",
+    "origin": "Europe and Western Asia",
     "shape": "shrub",
     "temp_c": [
      -4,
@@ -793,6 +800,7 @@
     "name": "Leatherleaf",
     "genus": "Chamaedaphne",
     "species": "calyculata",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "shrub",
     "temp_c": [
      -7,
@@ -907,6 +915,7 @@
     "name": "Cottongrass",
     "genus": "Eriophorum",
     "species": "vaginatum",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "tussock",
     "temp_c": [
      -7,
@@ -995,6 +1004,7 @@
     "name": "Deergrass",
     "genus": "Trichophorum",
     "species": "cespitosum",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "tussock",
     "temp_c": [
      -4,
@@ -1072,6 +1082,7 @@
     "name": "Pitcher plant",
     "genus": "Sarracenia",
     "species": "purpurea",
+    "origin": "Eastern North America",
     "shape": "rosette",
     "temp_c": [
      -7,
@@ -1152,6 +1163,7 @@
     "name": "Round-leaved sundew",
     "genus": "Drosera",
     "species": "rotundifolia",
+    "origin": "Circumboreal (N Hemisphere)",
     "shape": "rosette",
     "temp_c": [
      -7,
@@ -1236,6 +1248,7 @@
     "name": "Sphagnum moss",
     "genus": "Sphagnum",
     "species": "magellanicum",
+    "origin": "Southern South America",
     "shape": "moss",
     "temp_c": [
      -7,

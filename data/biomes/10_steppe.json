@@ -23,6 +23,7 @@
     "name": "Siberian elm",
     "genus": "Ulmus",
     "species": "pumila",
+    "origin": "Central Asia, Mongolia and N China",
     "shape": "broadleaf",
     "temp_c": [
      -2,
@@ -137,6 +138,7 @@
     "name": "Neneo",
     "genus": "Mulinum",
     "species": "spinosum",
+    "origin": "Patagonia, Argentina and Chile",
     "shape": "cushion",
     "temp_c": [
      2,
@@ -229,6 +231,7 @@
     "name": "Siberian pea shrub",
     "genus": "Caragana",
     "species": "arborescens",
+    "origin": "Siberia and Mongolia",
     "shape": "shrub",
     "temp_c": [
      -4,
@@ -345,6 +348,7 @@
     "name": "Steppe spiraea",
     "genus": "Spiraea",
     "species": "hypericifolia",
+    "origin": "SE Europe to Central Asia",
     "shape": "shrub",
     "temp_c": [
      -2,
@@ -457,6 +461,7 @@
     "name": "Steppe wormwood",
     "genus": "Artemisia",
     "species": "austriaca",
+    "origin": "Eastern Europe to Kazakhstan",
     "shape": "shrub",
     "temp_c": [
      0,
@@ -573,6 +578,7 @@
     "name": "Coiron",
     "genus": "Pappostipa",
     "species": "speciosa",
+    "origin": "Patagonian steppe",
     "shape": "tussock",
     "temp_c": [
      2,
@@ -661,6 +667,7 @@
     "name": "Crested wheatgrass",
     "genus": "Agropyron",
     "species": "cristatum",
+    "origin": "Central Asia and Siberia",
     "shape": "grass",
     "temp_c": [
      -2,
@@ -749,6 +756,7 @@
     "name": "Feather grass",
     "genus": "Stipa",
     "species": "pennata",
+    "origin": "Eurasian steppe",
     "shape": "tussock",
     "temp_c": [
      0,
@@ -837,6 +845,7 @@
     "name": "Krylov needlegrass",
     "genus": "Stipa",
     "species": "krylovii",
+    "origin": "Mongolia and Central Asia",
     "shape": "tussock",
     "temp_c": [
      -4,
@@ -925,6 +934,7 @@
     "name": "Steppe tulip",
     "genus": "Tulipa",
     "species": "suaveolens",
+    "origin": "Pontic-Caspian steppe",
     "shape": "grass",
     "temp_c": [
      2,
@@ -1011,6 +1021,7 @@
     "name": "Valais fescue",
     "genus": "Festuca",
     "species": "valesiaca",
+    "origin": "Eurasian steppe",
     "shape": "tussock",
     "temp_c": [
      -2,

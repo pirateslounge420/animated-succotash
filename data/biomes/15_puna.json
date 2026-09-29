@@ -27,6 +27,7 @@
     "name": "Queñua",
     "genus": "Polylepis",
     "species": "tarapacana",
+    "origin": "Central Andes (Peru to Argentina)",
     "shape": "gnarled",
     "temp_c": [
      -3,
@@ -147,6 +148,7 @@
     "name": "Puna cactus",
     "genus": "Cumulopuntia",
     "species": "boliviana",
+    "origin": "Andean altiplano",
     "shape": "cactus",
     "temp_c": [
      -3,
@@ -250,6 +252,7 @@
     "name": "Puna daisy shrub",
     "genus": "Parastrephia",
     "species": "lepidophylla",
+    "origin": "Andean altiplano",
     "shape": "shrub",
     "temp_c": [
      -3,
@@ -359,6 +362,7 @@
     "name": "Queen of the Andes",
     "genus": "Puya",
     "species": "raimondii",
+    "origin": "Andes of Peru and Bolivia",
     "shape": "spike_rosette",
     "temp_c": [
      -3,
@@ -447,6 +451,7 @@
     "name": "Yareta",
     "genus": "Azorella",
     "species": "compacta",
+    "origin": "Central Andes",
     "shape": "cushion",
     "temp_c": [
      -3,
@@ -537,6 +542,7 @@
     "name": "Bofedal cushion",
     "genus": "Distichia",
     "species": "muscoides",
+    "origin": "High Andes",
     "shape": "cushion",
     "temp_c": [
      -3,
@@ -628,6 +634,7 @@
     "name": "Bunch grass",
     "genus": "Festuca",
     "species": "orthophylla",
+    "origin": "Central Andean altiplano",
     "shape": "tussock",
     "temp_c": [
      -3,
@@ -717,6 +724,7 @@
     "name": "Ground rosette",
     "genus": "Werneria",
     "species": "nubigena",
+    "origin": "Andes of Peru and Bolivia",
     "shape": "rosette",
     "temp_c": [
      -3,
@@ -805,6 +813,7 @@
     "name": "Ichu grass",
     "genus": "Jarava",
     "species": "ichu",
+    "origin": "Andes, Mexico to Argentina",
     "shape": "tussock",
     "temp_c": [
      -3,
@@ -894,6 +903,7 @@
     "name": "Puna gentian",
     "genus": "Gentianella",
     "species": "primuloides",
+    "origin": "Andes of Peru and Bolivia",
     "shape": "cushion",
     "temp_c": [
      -3,

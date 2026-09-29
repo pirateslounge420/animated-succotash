@@ -23,6 +23,7 @@
     "name": "Coconut palm",
     "genus": "Cocos",
     "species": "nucifera",
+    "origin": "Indo-Pacific tropical coasts",
     "shape": "palm",
     "temp_c": [
      23,
@@ -134,6 +135,7 @@
     "name": "Pisonia",
     "genus": "Pisonia",
     "species": "grandis",
+    "origin": "Indo-Pacific coral cays",
     "shape": "umbrella",
     "temp_c": [
      23,
@@ -247,6 +249,7 @@
     "name": "Beach naupaka",
     "genus": "Scaevola",
     "species": "taccada",
+    "origin": "Indo-Pacific tropical coasts",
     "shape": "shrub",
     "temp_c": [
      23,
@@ -360,6 +363,7 @@
     "name": "Octopus bush",
     "genus": "Heliotropium",
     "species": "foertherianum",
+    "origin": "Indo-Pacific tropical coasts",
     "shape": "shrub",
     "temp_c": [
      23,
@@ -476,6 +480,7 @@
     "name": "Beach morning glory",
     "genus": "Ipomoea",
     "species": "pes-caprae",
+    "origin": "Pantropical beaches worldwide",
     "shape": "grass",
     "temp_c": [
      23,
@@ -564,6 +569,7 @@
     "name": "Crustose coralline alga",
     "genus": "Porolithon",
     "species": "onkodes",
+    "origin": "Indo-Pacific reefs",
     "shape": "moss",
     "temp_c": [
      23,
@@ -646,6 +652,7 @@
     "name": "Halimeda",
     "genus": "Halimeda",
     "species": "opuntia",
+    "origin": "Pantropical reefs worldwide",
     "shape": "cushion",
     "temp_c": [
      23,
@@ -728,6 +735,7 @@
     "name": "Sea grapes alga",
     "genus": "Caulerpa",
     "species": "racemosa",
+    "origin": "Pantropical reefs worldwide",
     "shape": "moss",
     "temp_c": [
      23,
@@ -810,6 +818,7 @@
     "name": "Turbinaria alga",
     "genus": "Turbinaria",
     "species": "ornata",
+    "origin": "Indo-Pacific reefs",
     "shape": "shrub",
     "temp_c": [
      23,
@@ -904,6 +913,7 @@
     "name": "Turtle grass",
     "genus": "Thalassia",
     "species": "testudinum",
+    "origin": "Caribbean and Gulf of Mexico",
     "shape": "grass",
     "temp_c": [
      23,

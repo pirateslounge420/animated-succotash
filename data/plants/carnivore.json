@@ -13,6 +13,7 @@
     "name": "Purple pitcher plant",
     "genus": "Sarracenia",
     "species": "purpurea",
+    "origin": "Eastern North America",
     "family": "Sarraceniaceae",
     "shape": "reed",
     "temp_c": [
@@ -199,6 +200,7 @@
     "name": "Yellow pitcher plant",
     "genus": "Sarracenia",
     "species": "flava",
+    "origin": "Southeastern USA coastal plain",
     "family": "Sarraceniaceae",
     "shape": "reed",
     "temp_c": [
@@ -387,6 +389,7 @@
     "name": "White pitcher plant",
     "genus": "Sarracenia",
     "species": "leucophylla",
+    "origin": "Gulf coast of the USA",
     "family": "Sarraceniaceae",
     "shape": "reed",
     "temp_c": [
@@ -575,6 +578,7 @@
     "name": "Parrot pitcher plant",
     "genus": "Sarracenia",
     "species": "psittacina",
+    "origin": "Gulf coast of the USA",
     "family": "Sarraceniaceae",
     "shape": "rosette",
     "temp_c": [
@@ -761,6 +765,7 @@
     "name": "Giant montane pitcher",
     "genus": "Nepenthes",
     "species": "rajah",
+    "origin": "Mount Kinabalu, Borneo (Sabah)",
     "family": "Nepenthaceae",
     "shape": "reed",
     "temp_c": [
@@ -957,6 +962,7 @@
     "name": "Slender pitcher",
     "genus": "Nepenthes",
     "species": "gracilis",
+    "origin": "Malay Peninsula, Sumatra and Borneo",
     "family": "Nepenthaceae",
     "shape": "reed",
     "temp_c": [
@@ -1149,6 +1155,7 @@
     "name": "Common swamp pitcher",
     "genus": "Nepenthes",
     "species": "mirabilis",
+    "origin": "Indochina to northern Australia",
     "family": "Nepenthaceae",
     "shape": "reed",
     "temp_c": [
@@ -1341,6 +1348,7 @@
     "name": "Round-leaved sundew",
     "genus": "Drosera",
     "species": "rotundifolia",
+    "origin": "Circumboreal (Holarctic)",
     "family": "Droseraceae",
     "shape": "rosette",
     "temp_c": [
@@ -1537,6 +1545,7 @@
     "name": "Cape sundew",
     "genus": "Drosera",
     "species": "capensis",
+    "origin": "Western Cape, South Africa",
     "family": "Droseraceae",
     "shape": "rosette",
     "temp_c": [
@@ -1729,6 +1738,7 @@
     "name": "Forked sundew",
     "genus": "Drosera",
     "species": "binata",
+    "origin": "Eastern Australia and New Zealand",
     "family": "Droseraceae",
     "shape": "rosette",
     "temp_c": [
@@ -1924,6 +1934,7 @@
     "name": "Pygmy sundew",
     "genus": "Drosera",
     "species": "pygmaea",
+    "origin": "Southern Australia and New Zealand",
     "family": "Droseraceae",
     "shape": "rosette",
     "temp_c": [
@@ -2118,6 +2129,7 @@
     "name": "Venus flytrap",
     "genus": "Dionaea",
     "species": "muscipula",
+    "origin": "Carolinas, southeastern USA",
     "family": "Droseraceae",
     "shape": "rosette",
     "temp_c": [
@@ -2314,6 +2326,7 @@
     "name": "Lowe's pitcher",
     "genus": "Nepenthes",
     "species": "lowii",
+    "origin": "Borneo (Sabah and Sarawak)",
     "family": "Nepenthaceae",
     "shape": "liana",
     "temp_c": [
