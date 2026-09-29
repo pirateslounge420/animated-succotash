@@ -306,7 +306,7 @@ func tick(delta: float, ctx: Dictionary) -> void:
 	# The territorial charge (species.charge_m): a crocodile, a hippo, a
 	# buffalo comes for you unprovoked once you're this near, nearer if
 	# you're quiet and still, further if you're loud.
-	if species.charge_m > 0.0 and species.bite > 0.0 and not leaving:
+	if species.charge_m > 0.0 and species.bite > 0.0 and not leaving and (not afloat or bool(ctx.get("player_swimming", false))):
 		var noise: float = ctx.get("player_noise", 0.5)
 		var still: float = ctx.get("player_still", 0.0)
 		var reach := species.charge_m * (0.55 + 0.9 * noise) * (0.7 if still > 2.0 else 1.0)
@@ -428,6 +428,25 @@ func _attack(delta: float, ctx: Dictionary, to_player: float) -> void:
 	# By a lit fire you're safe: it gives up and goes.
 	if Campfire.lit_near(get_tree(), world.to_scene(pd, PlanetConst.RADIUS_M + _ground_at(pd)), Tuning.num("combat", "death", "fire_safe_m")):
 		angry = 0.0
+		return
+	# A creature that lives in the water (afloat: sharks, crocodiles out
+	# in the open) hunts only while you're in it too, and never beaches
+	# itself: it circles at the shallows if you get out.
+	if afloat:
+		if not bool(ctx.get("player_swimming", false)):
+			angry = minf(angry, 4.0)
+			mode = "idle"
+			_speed_now = 0.0
+			return
+		if to_player > reach:
+			mode = "go"
+			_walk(pd, species.speed_mps * 1.15, delta, true)
+		else:
+			_speed_now = 0.0
+			heading = _tangent_to(pd)
+			if _bite_cd <= 0.0:
+				_bite_cd = 1.3
+				spawner.player_hit(species.bite, global_position)
 		return
 	if to_player > reach:
 		mode = "go"

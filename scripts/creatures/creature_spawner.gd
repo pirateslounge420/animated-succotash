@@ -138,7 +138,8 @@ func update_creatures(delta: float, daylight: float) -> void:
 	# The player's noise and stillness (PlanetPlayer) set how close
 	# wildlife lets you come and how fast a startled animal calms down.
 	var ctx := {"player_dir": pd, "looking_at": _looked_at(),
-		"player_noise": player.noise_level, "player_still": player.still_time}
+		"player_noise": player.noise_level, "player_still": player.still_time,
+		"player_swimming": player.swimming}
 
 	# One ambient species per frame (round robin), dens and territories a
 	# few times a second.

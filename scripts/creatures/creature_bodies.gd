@@ -61,6 +61,8 @@ static func build(sp: CreatureSpecies) -> Dictionary:
 			_bird(b, sp, 0.0, 0.08)
 		"frog":
 			_frog(b, sp)
+		"shark":
+			_shark(b, sp)
 		"beetle":
 			_beetle(b, sp)
 		"swarm":
@@ -402,6 +404,41 @@ static func _bird(b: Dictionary, sp: CreatureSpecies, leg: float, neck: float) -
 		var leg_color := sp.accent if sp.body == "wader" else Color(0.35, 0.3, 0.25)
 		for x in [-0.04, 0.04]:
 			limb(b, r, Vector3(x, leg + 0.02, 0.02), leg + 0.02, 0.022, leg_color)
+
+
+## A shark, afloat: the body hangs under the waterline (the root sits on
+## the water), the dorsal fin and the top of the tail cut the surface —
+## the fin is what you see coming. `size_m` is its length. The tail pivot
+## sweeps side to side as it swims (Creature swings `tail`).
+static func _shark(b: Dictionary, sp: CreatureSpecies) -> void:
+	var r: Node3D = b.root
+	var c := sp.color
+	var belly := sp.accent
+	# Body: a long spindle, its back a hand under the surface.
+	ball(r, Vector3(0.13, 0.15, 0.62), Vector3(0, -0.13, 0.05), c)
+	ball(r, Vector3(0.11, 0.11, 0.5), Vector3(0, -0.17, 0.08), belly)
+	# Snout.
+	var snout := cone(r, 0.1, 0.03, 0.26, Vector3(0, -0.13, -0.42), c)
+	snout.rotation.x = -PI * 0.5
+	eyes(r, Vector3(0, -0.11, -0.3), 0.16, 0.014)
+	# Dorsal fin: a swept triangle standing out of the water.
+	var fin := cone(r, 0.12, 0.005, 0.24, Vector3(0, 0.02, 0.0), c.darkened(0.15), 0.0, 3)
+	fin.scale = Vector3(0.28, 1.0, 1.0)
+	fin.rotation.x = 0.35
+	# Pectoral fins, swept back, under the surface.
+	for sgn in [-1.0, 1.0]:
+		var pf := box(r, Vector3(0.24, 0.015, 0.1), Vector3(0.2 * sgn, -0.19, -0.08), c.darkened(0.1))
+		pf.rotation.y = -0.5 * sgn
+		pf.rotation.z = 0.25 * sgn
+	# Tail: pivot at the peduncle; upper lobe tall enough to break the surface.
+	var tail := Node3D.new()
+	tail.position = Vector3(0, -0.13, 0.62)
+	r.add_child(tail)
+	var upper := box(tail, Vector3(0.02, 0.26, 0.14), Vector3(0, 0.12, 0.07), c.darkened(0.15))
+	upper.rotation.x = -0.4
+	var lower := box(tail, Vector3(0.02, 0.14, 0.1), Vector3(0, -0.07, 0.05), c.darkened(0.15))
+	lower.rotation.x = 0.4
+	b.tail = tail
 
 
 static func _frog(b: Dictionary, sp: CreatureSpecies) -> void:
