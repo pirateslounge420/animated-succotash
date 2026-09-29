@@ -2576,3 +2576,4 @@ overriding them.
 - §AJ dappled canopies: cards on the branch skeleton with real holes (open share = canopy.gap), no hull at any LOD, dappled ground shade from card alpha, see-through dev test.
 - §AK tree skeletons from the `architecture` block (TREE_ARCHITECTURE.md): H-O model branching, Leonardo taper, fork/lean/buttress, open vs forest-grown per tree, dead limbs, handholds from the skeleton.
 - §AL clusters anchored on drawn twigs (no floating foliage), hollow inner crown, fronds as branches.
+- §AM hitboxes on wood only (branch capsules), foliage = cover (LOS blocked by leaf cards), projectiles pass leaves with `combat.foliage_drag`.

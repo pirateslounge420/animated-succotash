@@ -1,59 +1,213 @@
 {
-	"_help": {
-		"about": "The player's combat table (Bow, Spear, Arrow, ThrownSpear, AimArc read it at start; restart the game after editing). Speeds in m/s, times in seconds, distances in metres, angles in degrees. Damage is in health points (the player has 100).",
-		"bow": "draw_s: seconds to a full draw. max_speed_mps: the arrow's speed at full draw. min_power: a draw weaker than this (0-1) looses nothing. damage: a full draw's damage before the hit-part multiplier. crit_extra: a full draw sometimes hits up to this much harder (0.5 = up to +50%). max_arrows: arrows left lying about before the oldest vanish. inherit_velocity: how much of your own motion the arrow takes with it (design §K: 1 = honest physics, the arrow inherits all of it).",
-		"spear": "tap_s: a press shorter than this thrusts; longer raises to throw. raise_s: seconds to a full raise. min_power: a weaker raise throws nothing. min_speed_mps / max_speed_mps: the throw's speed from a light to a full raise. throw_damage, thrust_damage: before the hit-part multiplier. reach_m: how far a thrust reaches. thrust_s: how long a thrust takes. pick_m: how near you must be to take a thrown spear back. noise: how loud a throw is (0-1). thrust_noise_m: how far creatures hear a thrust. inherit_velocity: as for the bow.",
-		"fishing": "[NOT WIRED YET — design §N, §U.] The fishing pole: hold left click to wind up over wind_s, release to cast toward where you look; the charge sets the distance from cast_min_m to cast_max_m (and the arc). The line is at most line_max_m; reel in at reel_mps with the MOUSE WHEEL (scroll down reels in, scroll up lets out; controls.gd reel_in / reel_out). inherit_velocity: how much of your own motion the cast takes (a cast mid-bound goes further). The spear also fishes: a thrust at a visible fish within spear.reach_m (spear.fish_thrust). Bites, fish species by water temperature and the catch are Phase 10; the cast is Phase 1.",
-		"overcharge": "[fishing: NOT WIRED YET — design §N; bow and spear wired.] The super meter's spend (design §S): the SUPER SHOT. With any meter, keep holding past a tool's normal full charge for extra_s more and the tool is overcharged; release and the meter empties (one spend empties it). Release before extra_s and it's a normal full action, meter kept. Every overcharged shot is a CRITICAL HIT (it uses the critical feedback: yellow number, the X) at damage_scale (3 = triple), flies faster (speed_scale) and farther (range_scale on gravity: the projectile falls away less), and trails a RED tracer (tracer_color, tracer_s long) instead of the usual streak, so everyone can see it was a super shot. bow: pierce lets the arrow pass through the first body. spear: pin sticks the target where it stands; impact_kill applies the strike curve at full force. fishing: cast_scale multiplies the cast, hook_creatures lets the line hook and reel a creature or figure, grapple lets it hook a distant branch and reel YOU to it (designer to confirm: a free redirect). read_cue names the in-world tell while charged.",
-		"strike": "Momentum in melee (design §K): a spear thrust or a running strike deals extra damage by CLOSING speed, the same curve as movement.impact: nothing under safe_mps, per_mps health per m/s over, and at kill_mps or more it's a kill on anything not a mythic. It cuts both ways: a thrust that meets a trunk or wall at speed is movement.impact on you.",
-		"quiver": "Arrows carried (design §M, §T): start is what a new game gives, cap the most you can hold. Arrows stick in what they hit and come back with E; break_chance_on_flesh is the chance an arrow that hit a creature is broken when you pull it. There is no arrow crafting: beyond recovery, arrows come from camp folk (Phase 10).",
-		"arrow": "fletching_from_cloak: the feathers take the shooter's cloak colour (the player's indigo, a folk's own dye), so you can tell whose arrow is stuck in the deer. gravity_mps2: how fast an arrow falls away (Earth's pull). stuck_s: how long a stuck arrow stays before it vanishes. max_flight_s: an arrow that has hit nothing by then is gone. noise_m: how far creatures hear it strike. pick_m: how near you must be (E) to take a stuck arrow back.",
-		"thrown_spear": "gravity_mps2, max_flight_s, noise_m: as for the arrow. splash_m: how far creatures hear it hit water. bury_m: how deep the head sinks when it sticks.",
-		"aim": "How far your aim wanders, in degrees: the aim arc shows it, and the shot follows the arc. still_deg: standing still on the ground. moving_deg: on the ground at a sprint (in between when walking). apex_deg: at the top of a jump, where it's steadiest. per_vertical_mps_deg: added per m/s you're rising or falling. max_deg: the most it ever wanders. rate: how quickly it wanders.",
-		"arc": "show_aim_arc: draw the dotted aim arc while you draw or raise (false: no arc; players learn the drop by eye; it is still worked out for the tests). max_s: how many seconds of flight it follows. step_s: its resolution. dot_every: a dot every so many steps. skip: steps skipped near the eye. After release, a flying arrow or spear leaves a streak: trail_s how long it is, in seconds of flight, but never shorter than trail_min_m metres (bug 2026-09-28: at the top of a high arc the arrow slows almost to a stop, so a time-based trail collapsed to nothing and the arrow vanished from sight coming down; the trail must persist for the WHOLE flight); trail_width_m how wide at the head (it narrows toward the tail), and never less than trail_min_width_per_m per metre from you, so a far shot still reads as a line; trail_alpha how solid at the head (0 to 1).",
-		"hits": "Where a hit lands and what that means, for every creature, camp person and mythic alike. How much each part multiplies the damage and what it does to the animal is in data/creatures/creatures.json (hit_parts); this block holds the rules that are the same for everyone.",
-		"hits.critical_parts": "The parts whose hits are critical: they show a yellow number and flash the crosshair into an X.",
-		"hits.eye_radius_scale": "Each eye is a small hit sphere this many times the drawn eye's radius, so an eye can be aimed at without being a pixel hunt.",
-		"hits.eye_min_radius_m": "No eye's hit sphere is smaller than this (meters).",
-		"hits.eyes_from_size_m": "Only creatures at least this big (size_m) get eye spheres; on a beetle or a songbird the head is the smallest target.",
-		"hits.blind_notice": "A creature blinded on one side notices you there only this close, as a share of its usual flight distance (1: not blinded at all; 0.3: you can walk up within a third of the distance on the blind side).",
-		"hits.limp_roll_deg": "How far a lamed animal's body rolls toward its bad leg on each stride as it limps (degrees, at full lameness).",
-		"feedback": "[px sizes here are now at the 480-line internal reference, design §Y.] What the player sees and hears when a hit lands: the rising number, the crosshair's X, the X's sound, and the health meter.",
-		"feedback.number": "The damage number that rises from the impact point. rise_m: how far it rises (m) over life_s seconds; fade_s: the last seconds of its life it fades out; size_px: its size (pixels) at ref_distance_m meters away; distance_power: how strongly size follows distance (0: never changes, 1: shrinks in proportion); min_px / max_px: never smaller or larger than this; max_on_screen: at most this many at once (the oldest goes first); combine_s: hits on one target closer together than this (seconds; 0.017 is one frame) add up to one number.",
-		"feedback.colors": "normal: an ordinary hit's number; critical: a critical hit's number (the one warm accent); outline: the dark edge round every number and the X (R1a night blue, never black).",
-		"feedback.crit_x": "The crosshair's X on a critical hit or a kill. hold_s: how long a critical's X shows; kill_hold_s: how long a kill's does (a beat longer); size_px: each stroke's reach from the middle; gap_px: the empty middle; width_px: stroke thickness; color / kill_color: the X for a critical, and for a kill.",
-		"feedback.sound": "The X's short sharp hit sound (a UI sound, not placed in the world). volume_db: its loudness; pitch: its pitch; kill_pitch: a kill's (lower is heavier).",
-		"feedback.meter": "The player's health meter at the bottom left: a slim bar and a small numeral. width_px / height_px: the bar; fill / track / edge: its colors (R1a blues); low_share: below this share of full health the bar pulses; numeral_px: the numeral's size.",
-		"healing": "How the player gets health back. There is no healing on its own.",
-		"healing.rest_radius_m": "Resting at a fire: standing, crouching or sitting still within this many meters of a lit campfire.",
-		"healing.rest_still_s": "After this many seconds still there, health starts to come back.",
-		"healing.rest_hp_per_s": "How fast resting at a fire heals (health a second).",
-		"healing.sources": "Health each kind of healing gives at once, for the things that will call it: cooked food and camp medicine (Phase 10, inventory).",
-		"death": "When you die your body stays where it fell with all your gear; you wake at the nearest camp fire within wake_search_m of where you died (or wanderers make a fire wake_place_m off if none), lying there for wake_s before you get up, with full health and nothing on you. After scavenger_delay_s, scavenger_count birds circle circle_radius_m wide, circle_height_m over the body. corpse_pick_m: how near you must be (E) to take your things back. fire_safe_m: within this of a lit fire, nothing hostile hurts you and angry animals give up."
-	},
-	"bow": {"draw_s": 1.0, "max_speed_mps": 55.0, "min_power": 0.1, "damage": 30.0, "crit_extra": 0.5, "max_arrows": 40, "inherit_velocity": 1.0},
-	"spear": {"tap_s": 0.22, "raise_s": 0.8, "min_power": 0.15, "min_speed_mps": 9.0, "max_speed_mps": 24.0, "throw_damage": 45.0, "reach_m": 2.0, "thrust_s": 0.4, "thrust_damage": 25.0, "pick_m": 2.0, "noise": 0.6, "thrust_noise_m": 5.0, "inherit_velocity": 1.0, "fish_thrust": true},
-	"fishing": {"wind_s": 1.0, "cast_min_m": 1.0, "cast_max_m": 28.0, "line_max_m": 40.0, "reel_mps": 3.0, "inherit_velocity": 1.0},
-	"overcharge": {
-		"critical": true, "damage_scale": 3.0, "speed_scale": 1.3, "range_scale": 1.5, "tracer_color": "#FF2A2A", "tracer_s": 0.9,
-		"bow": {"extra_s": 1.2, "pierce": true, "read_cue": "bow creaks, arrow tip glints red"},
-		"spear": {"extra_s": 1.0, "pin": true, "impact_kill": true, "read_cue": "cloak lifts, shaft glows red"},
-		"fishing": {"extra_s": 1.0, "cast_scale": 2.0, "hook_creatures": true, "grapple": true, "read_cue": "line whistles, red thread"}
-	},
-	"strike": {"safe_mps": 6.0, "per_mps": 8.0, "kill_mps": 25.0},
-	"quiver": {"start": 20, "cap": 20, "break_chance_on_flesh": 0.15},
-	"arrow": {"fletching_from_cloak": true, "gravity_mps2": 9.8, "stuck_s": 60.0, "max_flight_s": 12.0, "noise_m": 8.0, "pick_m": 2.0},
-	"thrown_spear": {"gravity_mps2": 9.8, "max_flight_s": 10.0, "noise_m": 12.0, "splash_m": 9.0, "bury_m": 0.22},
-	"aim": {"still_deg": 0.3, "moving_deg": 1.2, "apex_deg": 0.0, "per_vertical_mps_deg": 0.45, "max_deg": 4.0, "rate": 1.3},
-	"arc": {"show_aim_arc": false, "max_s": 3.0, "step_s": 0.0333, "dot_every": 2, "skip": 2, "trail_s": 0.45, "trail_min_m": 2.5, "trail_width_m": 0.045, "trail_min_width_per_m": 0.0025, "trail_alpha": 0.9},
-	"hits": {"critical_parts": ["head", "eye"], "eye_radius_scale": 2.5, "eye_min_radius_m": 0.02, "eyes_from_size_m": 0.3, "blind_notice": 0.3, "limp_roll_deg": 7.0},
-	"feedback": {
-		"number": {"rise_m": 0.7, "life_s": 1.0, "fade_s": 0.35, "size_px": 10, "ref_distance_m": 8.0, "distance_power": 0.5, "min_px": 7, "max_px": 13, "max_on_screen": 4, "combine_s": 0.017},
-		"colors": {"normal": "#FFFFFF", "critical": "#FFD23A", "outline": "#0A1250"},
-		"crit_x": {"hold_s": 0.12, "kill_hold_s": 0.4, "size_px": 7, "gap_px": 2, "width_px": 1.0, "color": "#FFFFFF", "kill_color": "#FFD23A"},
-		"sound": {"volume_db": -8.0, "pitch": 1.0, "kill_pitch": 0.78},
-		"meter": {"width_px": 100, "height_px": 3, "fill": "#4C7CFF", "track": "#0A14A0", "edge": "#7FB0FF", "low_share": 0.25, "numeral_px": 9}
-	},
-	"healing": {"rest_radius_m": 4.0, "rest_still_s": 2.0, "rest_hp_per_s": 1.5, "sources": {"cooked_food": 20, "camp_medicine": 45}},
-	"death": {"wake_search_m": 4000.0, "wake_place_m": 150.0, "wake_s": 2.5, "scavenger_delay_s": 45.0, "scavenger_count": 3, "circle_radius_m": 8.0, "circle_height_m": 18.0, "corpse_pick_m": 2.2, "fire_safe_m": 8.0}
+ "_help": {
+  "about": "The player's combat table (Bow, Spear, Arrow, ThrownSpear, AimArc read it at start; restart the game after editing). Speeds in m/s, times in seconds, distances in metres, angles in degrees. Damage is in health points (the player has 100).",
+  "bow": "draw_s: seconds to a full draw. max_speed_mps: the arrow's speed at full draw. min_power: a draw weaker than this (0-1) looses nothing. damage: a full draw's damage before the hit-part multiplier. crit_extra: a full draw sometimes hits up to this much harder (0.5 = up to +50%). max_arrows: arrows left lying about before the oldest vanish. inherit_velocity: how much of your own motion the arrow takes with it (design \u00a7K: 1 = honest physics, the arrow inherits all of it).",
+  "spear": "tap_s: a press shorter than this thrusts; longer raises to throw. raise_s: seconds to a full raise. min_power: a weaker raise throws nothing. min_speed_mps / max_speed_mps: the throw's speed from a light to a full raise. throw_damage, thrust_damage: before the hit-part multiplier. reach_m: how far a thrust reaches. thrust_s: how long a thrust takes. pick_m: how near you must be to take a thrown spear back. noise: how loud a throw is (0-1). thrust_noise_m: how far creatures hear a thrust. inherit_velocity: as for the bow.",
+  "fishing": "[NOT WIRED YET \u2014 design \u00a7N, \u00a7U.] The fishing pole: hold left click to wind up over wind_s, release to cast toward where you look; the charge sets the distance from cast_min_m to cast_max_m (and the arc). The line is at most line_max_m; reel in at reel_mps with the MOUSE WHEEL (scroll down reels in, scroll up lets out; controls.gd reel_in / reel_out). inherit_velocity: how much of your own motion the cast takes (a cast mid-bound goes further). The spear also fishes: a thrust at a visible fish within spear.reach_m (spear.fish_thrust). Bites, fish species by water temperature and the catch are Phase 10; the cast is Phase 1.",
+  "overcharge": "[fishing: NOT WIRED YET \u2014 design \u00a7N; bow and spear wired.] The super meter's spend (design \u00a7S): the SUPER SHOT. With any meter, keep holding past a tool's normal full charge for extra_s more and the tool is overcharged; release and the meter empties (one spend empties it). Release before extra_s and it's a normal full action, meter kept. Every overcharged shot is a CRITICAL HIT (it uses the critical feedback: yellow number, the X) at damage_scale (3 = triple), flies faster (speed_scale) and farther (range_scale on gravity: the projectile falls away less), and trails a RED tracer (tracer_color, tracer_s long) instead of the usual streak, so everyone can see it was a super shot. bow: pierce lets the arrow pass through the first body. spear: pin sticks the target where it stands; impact_kill applies the strike curve at full force. fishing: cast_scale multiplies the cast, hook_creatures lets the line hook and reel a creature or figure, grapple lets it hook a distant branch and reel YOU to it (designer to confirm: a free redirect). read_cue names the in-world tell while charged.",
+  "strike": "Momentum in melee (design \u00a7K): a spear thrust or a running strike deals extra damage by CLOSING speed, the same curve as movement.impact: nothing under safe_mps, per_mps health per m/s over, and at kill_mps or more it's a kill on anything not a mythic. It cuts both ways: a thrust that meets a trunk or wall at speed is movement.impact on you.",
+  "quiver": "Arrows carried (design \u00a7M, \u00a7T): start is what a new game gives, cap the most you can hold. Arrows stick in what they hit and come back with E; break_chance_on_flesh is the chance an arrow that hit a creature is broken when you pull it. There is no arrow crafting: beyond recovery, arrows come from camp folk (Phase 10).",
+  "arrow": "fletching_from_cloak: the feathers take the shooter's cloak colour (the player's indigo, a folk's own dye), so you can tell whose arrow is stuck in the deer. gravity_mps2: how fast an arrow falls away (Earth's pull). stuck_s: how long a stuck arrow stays before it vanishes. max_flight_s: an arrow that has hit nothing by then is gone. noise_m: how far creatures hear it strike. pick_m: how near you must be (E) to take a stuck arrow back.",
+  "thrown_spear": "gravity_mps2, max_flight_s, noise_m: as for the arrow. splash_m: how far creatures hear it hit water. bury_m: how deep the head sinks when it sticks.",
+  "aim": "How far your aim wanders, in degrees: the aim arc shows it, and the shot follows the arc. still_deg: standing still on the ground. moving_deg: on the ground at a sprint (in between when walking). apex_deg: at the top of a jump, where it's steadiest. per_vertical_mps_deg: added per m/s you're rising or falling. max_deg: the most it ever wanders. rate: how quickly it wanders.",
+  "arc": "show_aim_arc: draw the dotted aim arc while you draw or raise (false: no arc; players learn the drop by eye; it is still worked out for the tests). max_s: how many seconds of flight it follows. step_s: its resolution. dot_every: a dot every so many steps. skip: steps skipped near the eye. After release, a flying arrow or spear leaves a streak: trail_s how long it is, in seconds of flight, but never shorter than trail_min_m metres (bug 2026-09-28: at the top of a high arc the arrow slows almost to a stop, so a time-based trail collapsed to nothing and the arrow vanished from sight coming down; the trail must persist for the WHOLE flight); trail_width_m how wide at the head (it narrows toward the tail), and never less than trail_min_width_per_m per metre from you, so a far shot still reads as a line; trail_alpha how solid at the head (0 to 1).",
+  "hits": "Where a hit lands and what that means, for every creature, camp person and mythic alike. How much each part multiplies the damage and what it does to the animal is in data/creatures/creatures.json (hit_parts); this block holds the rules that are the same for everyone.",
+  "hits.critical_parts": "The parts whose hits are critical: they show a yellow number and flash the crosshair into an X.",
+  "hits.eye_radius_scale": "Each eye is a small hit sphere this many times the drawn eye's radius, so an eye can be aimed at without being a pixel hunt.",
+  "hits.eye_min_radius_m": "No eye's hit sphere is smaller than this (meters).",
+  "hits.eyes_from_size_m": "Only creatures at least this big (size_m) get eye spheres; on a beetle or a songbird the head is the smallest target.",
+  "hits.blind_notice": "A creature blinded on one side notices you there only this close, as a share of its usual flight distance (1: not blinded at all; 0.3: you can walk up within a third of the distance on the blind side).",
+  "hits.limp_roll_deg": "How far a lamed animal's body rolls toward its bad leg on each stride as it limps (degrees, at full lameness).",
+  "feedback": "[px sizes here are now at the 480-line internal reference, design \u00a7Y.] What the player sees and hears when a hit lands: the rising number, the crosshair's X, the X's sound, and the health meter.",
+  "feedback.number": "The damage number that rises from the impact point. rise_m: how far it rises (m) over life_s seconds; fade_s: the last seconds of its life it fades out; size_px: its size (pixels) at ref_distance_m meters away; distance_power: how strongly size follows distance (0: never changes, 1: shrinks in proportion); min_px / max_px: never smaller or larger than this; max_on_screen: at most this many at once (the oldest goes first); combine_s: hits on one target closer together than this (seconds; 0.017 is one frame) add up to one number.",
+  "feedback.colors": "normal: an ordinary hit's number; critical: a critical hit's number (the one warm accent); outline: the dark edge round every number and the X (R1a night blue, never black).",
+  "feedback.crit_x": "The crosshair's X on a critical hit or a kill. hold_s: how long a critical's X shows; kill_hold_s: how long a kill's does (a beat longer); size_px: each stroke's reach from the middle; gap_px: the empty middle; width_px: stroke thickness; color / kill_color: the X for a critical, and for a kill.",
+  "feedback.sound": "The X's short sharp hit sound (a UI sound, not placed in the world). volume_db: its loudness; pitch: its pitch; kill_pitch: a kill's (lower is heavier).",
+  "feedback.meter": "The player's health meter at the bottom left: a slim bar and a small numeral. width_px / height_px: the bar; fill / track / edge: its colors (R1a blues); low_share: below this share of full health the bar pulses; numeral_px: the numeral's size.",
+  "healing": "How the player gets health back. There is no healing on its own.",
+  "healing.rest_radius_m": "Resting at a fire: standing, crouching or sitting still within this many meters of a lit campfire.",
+  "healing.rest_still_s": "After this many seconds still there, health starts to come back.",
+  "healing.rest_hp_per_s": "How fast resting at a fire heals (health a second).",
+  "healing.sources": "Health each kind of healing gives at once, for the things that will call it: cooked food and camp medicine (Phase 10, inventory).",
+  "death": "When you die your body stays where it fell with all your gear; you wake at the nearest camp fire within wake_search_m of where you died (or wanderers make a fire wake_place_m off if none), lying there for wake_s before you get up, with full health and nothing on you. After scavenger_delay_s, scavenger_count birds circle circle_radius_m wide, circle_height_m over the body. corpse_pick_m: how near you must be (E) to take your things back. fire_safe_m: within this of a lit fire, nothing hostile hurts you and angry animals give up.",
+  "foliage_drag": "[NOT WIRED YET \u2014 design \u00a7AM] Leaves have no hitbox; projectiles pass through leaf clusters losing this share of speed per cluster, with a rustle. Wood (trunk, branches) keeps full collision."
+ },
+ "bow": {
+  "draw_s": 1.0,
+  "max_speed_mps": 55.0,
+  "min_power": 0.1,
+  "damage": 30.0,
+  "crit_extra": 0.5,
+  "max_arrows": 40,
+  "inherit_velocity": 1.0
+ },
+ "spear": {
+  "tap_s": 0.22,
+  "raise_s": 0.8,
+  "min_power": 0.15,
+  "min_speed_mps": 9.0,
+  "max_speed_mps": 24.0,
+  "throw_damage": 45.0,
+  "reach_m": 2.0,
+  "thrust_s": 0.4,
+  "thrust_damage": 25.0,
+  "pick_m": 2.0,
+  "noise": 0.6,
+  "thrust_noise_m": 5.0,
+  "inherit_velocity": 1.0,
+  "fish_thrust": true
+ },
+ "fishing": {
+  "wind_s": 1.0,
+  "cast_min_m": 1.0,
+  "cast_max_m": 28.0,
+  "line_max_m": 40.0,
+  "reel_mps": 3.0,
+  "inherit_velocity": 1.0
+ },
+ "overcharge": {
+  "critical": true,
+  "damage_scale": 3.0,
+  "speed_scale": 1.3,
+  "range_scale": 1.5,
+  "tracer_color": "#FF2A2A",
+  "tracer_s": 0.9,
+  "bow": {
+   "extra_s": 1.2,
+   "pierce": true,
+   "read_cue": "bow creaks, arrow tip glints red"
+  },
+  "spear": {
+   "extra_s": 1.0,
+   "pin": true,
+   "impact_kill": true,
+   "read_cue": "cloak lifts, shaft glows red"
+  },
+  "fishing": {
+   "extra_s": 1.0,
+   "cast_scale": 2.0,
+   "hook_creatures": true,
+   "grapple": true,
+   "read_cue": "line whistles, red thread"
+  }
+ },
+ "strike": {
+  "safe_mps": 6.0,
+  "per_mps": 8.0,
+  "kill_mps": 25.0
+ },
+ "quiver": {
+  "start": 20,
+  "cap": 20,
+  "break_chance_on_flesh": 0.15
+ },
+ "arrow": {
+  "fletching_from_cloak": true,
+  "gravity_mps2": 9.8,
+  "stuck_s": 60.0,
+  "max_flight_s": 12.0,
+  "noise_m": 8.0,
+  "pick_m": 2.0
+ },
+ "thrown_spear": {
+  "gravity_mps2": 9.8,
+  "max_flight_s": 10.0,
+  "noise_m": 12.0,
+  "splash_m": 9.0,
+  "bury_m": 0.22
+ },
+ "aim": {
+  "still_deg": 0.3,
+  "moving_deg": 1.2,
+  "apex_deg": 0.0,
+  "per_vertical_mps_deg": 0.45,
+  "max_deg": 4.0,
+  "rate": 1.3
+ },
+ "arc": {
+  "show_aim_arc": false,
+  "max_s": 3.0,
+  "step_s": 0.0333,
+  "dot_every": 2,
+  "skip": 2,
+  "trail_s": 0.45,
+  "trail_min_m": 2.5,
+  "trail_width_m": 0.045,
+  "trail_min_width_per_m": 0.0025,
+  "trail_alpha": 0.9
+ },
+ "hits": {
+  "critical_parts": [
+   "head",
+   "eye"
+  ],
+  "eye_radius_scale": 2.5,
+  "eye_min_radius_m": 0.02,
+  "eyes_from_size_m": 0.3,
+  "blind_notice": 0.3,
+  "limp_roll_deg": 7.0
+ },
+ "feedback": {
+  "number": {
+   "rise_m": 0.7,
+   "life_s": 1.0,
+   "fade_s": 0.35,
+   "size_px": 10,
+   "ref_distance_m": 8.0,
+   "distance_power": 0.5,
+   "min_px": 7,
+   "max_px": 13,
+   "max_on_screen": 4,
+   "combine_s": 0.017
+  },
+  "colors": {
+   "normal": "#FFFFFF",
+   "critical": "#FFD23A",
+   "outline": "#0A1250"
+  },
+  "crit_x": {
+   "hold_s": 0.12,
+   "kill_hold_s": 0.4,
+   "size_px": 7,
+   "gap_px": 2,
+   "width_px": 1.0,
+   "color": "#FFFFFF",
+   "kill_color": "#FFD23A"
+  },
+  "sound": {
+   "volume_db": -8.0,
+   "pitch": 1.0,
+   "kill_pitch": 0.78
+  },
+  "meter": {
+   "width_px": 100,
+   "height_px": 3,
+   "fill": "#4C7CFF",
+   "track": "#0A14A0",
+   "edge": "#7FB0FF",
+   "low_share": 0.25,
+   "numeral_px": 9
+  }
+ },
+ "healing": {
+  "rest_radius_m": 4.0,
+  "rest_still_s": 2.0,
+  "rest_hp_per_s": 1.5,
+  "sources": {
+   "cooked_food": 20,
+   "camp_medicine": 45
+  }
+ },
+ "death": {
+  "wake_search_m": 4000.0,
+  "wake_place_m": 150.0,
+  "wake_s": 2.5,
+  "scavenger_delay_s": 45.0,
+  "scavenger_count": 3,
+  "circle_radius_m": 8.0,
+  "circle_height_m": 18.0,
+  "corpse_pick_m": 2.2,
+  "fire_safe_m": 8.0
+ },
+ "foliage_drag": 0.05
 }

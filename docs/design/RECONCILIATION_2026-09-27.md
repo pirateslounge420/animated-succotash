@@ -1769,3 +1769,29 @@ skeleton, by `arrangement` (alternate / opposite / whorled / spiral / distichous
 
 **Dev check (with §AJ's):** wireframe/debug view shows every card's anchor lying on a
 twig; look up into an oak from the trunk and see branchwork, then leaves at the rim.
+
+## AM. Only the wood collides: leaves are cover, not walls — 28 Sept 2026
+
+1. **Hitboxes on trunk and branches only** (orders 1–2 always; order 3 twigs where thick
+   enough to stand on, ≥ 4 cm), as capsules along the §AK skeleton. **Leaf cards and
+   clusters have no collision at all** — the player, creatures, arrows and the spear pass
+   through foliage. This replaces the crown collider (the "leaf shadow" / canopy hull
+   colliders in `terrain_chunk` and `plant_meshes`), and the D5 hitbox audit reads:
+   *every branch, no leaf*.
+2. **Foliage is cover.** Being inside a cluster hides you: line-of-sight for creatures and
+   enemy shinobi is blocked by leaf cards (a cheap raycast against the card alpha or the
+   cluster's bounding sphere with `canopy.gap` as the see-through chance), so a player who
+   climbs into a crown and stays still is invisible from outside — and a cat, an owl or a
+   tree snake inside the canopy is invisible to the player until it moves or the wind
+   opens a gap (§AJ). Sound still carries (rustle on entry, §Z cloak flurry).
+3. **Arrows and the spear** hit wood (stick in it, §U) and pass leaves with a rustle and a
+   small speed loss (`combat.foliage_drag`, 5 % per cluster); a creature hiding in a crown
+   can be shot through the leaves — the leaves hide it, they don't armour it.
+4. **Handholds (§0) are the branches**, so climbing into cover is the same move as
+   climbing: cling, perch (§V), cloak flurry, then stillness.
+5. **Physics budget** (§W): capsules per branch are cheaper than a crown mesh collider;
+   keep order-3 capsules only within 30 m of the player.
+
+**Dev check:** stand in a big oak's crown, still: a fox below walks past without alarm; a
+thrown spear from outside sticks in a branch or passes the leaves; an arrow fired from
+inside leaves cleanly.
