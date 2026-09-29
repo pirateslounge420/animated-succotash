@@ -1612,19 +1612,26 @@ const CLING_REACH_M := 0.9
 func _ground_cling(cam_forward: Vector3) -> bool:
 	var fwd := (cam_forward - up * cam_forward.dot(up)).normalized()
 	# A fan of rays (knee to head, a little either side): a leaning trunk
-	# or a fork isn't where one ray at the chest would look.
+	# or a fork isn't where one ray at the chest would look. Of the faces
+	# they meet, the one met most squarely: a side ray grazing the edge of
+	# a thin trunk met it with a face pointing across you, and the crawl
+	# pressed along that, past the trunk (from play: a cling on a thin
+	# trunk that crawled nowhere).
 	var hit := {}
+	var best_face := 0.3
 	for y in [1.0, 0.6, 1.4]:
 		for turn in [0.0, 0.35, -0.35]:
 			var from: Vector3 = global_position + up * y
-			var q := PhysicsRayQueryParameters3D.create(from, from + fwd.rotated(up, turn) * CLING_REACH_M)
+			var ray_dir := fwd.rotated(up, turn)
+			var q := PhysicsRayQueryParameters3D.create(from, from + ray_dir * CLING_REACH_M)
 			q.exclude = [get_rid()]
 			var h := get_world_3d().direct_space_state.intersect_ray(q)
-			if not h.is_empty() and absf((h.normal as Vector3).dot(up)) < WJ_STEEP:
+			if h.is_empty() or absf((h.normal as Vector3).dot(up)) >= WJ_STEEP:
+				continue
+			var facing := -(h.normal as Vector3).dot(ray_dir)
+			if facing > best_face + 0.05:
+				best_face = facing
 				hit = h
-				break
-		if not hit.is_empty():
-			break
 	if hit.is_empty():
 		return false
 	var n: Vector3 = hit.normal
