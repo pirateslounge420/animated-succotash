@@ -141,10 +141,9 @@ func _run() -> void:
 		player.first_person = true
 		player._apply_view()
 		player.camera().current = true
-		# PITCH=x (radians, first person): look up or down (1.5: nearly
-		# straight up, the zenith).
-		if OS.get_environment("PITCH") != "":
-			player.set_view(float(OS.get_environment("PITCH")), 0.0)
+	# PITCH=x without FP: the view camera tipped up by x (radians).
+	if OS.get_environment("PITCH") != "" and OS.get_environment("FP") != "1":
+		cam.rotate_object_local(Vector3.RIGHT, float(OS.get_environment("PITCH")))
 	var hours := (OS.get_environment("HOURS") if OS.get_environment("HOURS") != "" else "12,0").split(",")
 	var tag := OS.get_environment("TAG") if OS.get_environment("TAG") != "" else "devview"
 	var lon := CubeSphere.longitude(pd)
@@ -159,6 +158,10 @@ func _run() -> void:
 		for k in 20:
 			world.days = days
 			main.hud._readout_timer = 0.0
+			# PITCH=x (radians, with FP=1): look up or down (1.5: nearly
+			# straight up, the zenith); held every frame over the opening's.
+			if OS.get_environment("PITCH") != "" and OS.get_environment("FP") == "1":
+				player.set_view(float(OS.get_environment("PITCH")), 0.0)
 			await process_frame
 			# SUNWARD=1 (with VISTA): turn toward the sun's bearing, the view
 			# tipped up 8 degrees: the sunset sky and the sun's disc.
