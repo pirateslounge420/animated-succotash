@@ -534,6 +534,22 @@ def render_mass(e, card, rng, size=MASS_PX):
     count = max(3, int(round(count * (1.0 - gap) / 0.55)))
     card4 = card.resize((px, px), Image.NEAREST)
     under = float((e.get("tint") or {}).get("underside", 0.15))
+    target = 1.0 - gap
+    for attempt in range(5):
+        base = Image.new("RGBA", (n4, n4), (0, 0, 0, 0))
+        r2 = np.random.default_rng(int(rng.integers(0, 2**31)))
+        _scatter(base, card4, count, t, under, r2, n4)
+        cov = (np.asarray(base.resize((size, size), Image.BOX))[..., 3] > 110).mean()
+        if cov <= target + 0.06 or count <= 2:
+            break
+        count = max(2, int(count * max(0.5, target / max(cov, 1e-3))))
+    a = np.asarray(base.resize((size, size), Image.BOX)).astype(float)
+    mask = a[..., 3] > 110
+    rgb = posterise(a[..., :3] / 255.0)
+    return Image.fromarray(np.dstack([(rgb * 255).astype(np.uint8), (mask * 255).astype(np.uint8)]), "RGBA")
+
+
+def _scatter(base, card4, count, t, under, rng, n4):
     for i in range(count):
         ang = rng.uniform(0, 360) if t not in ("strap",) else rng.uniform(-35, 35)
         rot = card4.rotate(ang, expand=True, resample=Image.NEAREST)
@@ -545,10 +561,6 @@ def render_mass(e, card, rng, size=MASS_PX):
         for dx in (-n4, 0, n4):
             for dy in (-n4, 0, n4):
                 base.paste(rot, (x + dx - rot.width // 2, y + dy - rot.height // 2), rot)
-    a = np.asarray(base.resize((size, size), Image.BOX)).astype(float)
-    mask = a[..., 3] > 110
-    rgb = posterise(a[..., :3] / 255.0)
-    return Image.fromarray(np.dstack([(rgb * 255).astype(np.uint8), (mask * 255).astype(np.uint8)]), "RGBA")
 
 
 # ---------------------------------------------------------------- litter tile (design §AI)
