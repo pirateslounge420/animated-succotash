@@ -128,8 +128,8 @@ func find_open(d: Vector3) -> Vector3:
 	return best
 
 
-## A heading for a held sprint bound from here (design §J: about 19 m up,
-## 50 m out): the predicted arc meets nothing on the way and comes down on
+## A heading for a held sprint bound from here (design §J: about 2.3 m up,
+## 7 m out): the predicted arc meets nothing on the way and comes down on
 ## dry ground. The flattest-landing clear one of 36; else open_heading().
 const RUN_UP_F := 70
 
@@ -281,16 +281,16 @@ func _initialize() -> void:
 		air += 1.0 / 60.0
 		peak = maxf(peak, alt())
 	print("standing hop: %.2f s in the air, %.2f m high (Earth-gravity hop of the same height: %.2f s)" % [air, peak, 2.0 * sqrt(2.0 * peak / 9.8)])
-	# Design §J: a tap cuts the rise (jump_release_cut); the light
-	# up-gravity carries it about 1.9 m, then the heavy down-gravity drops
-	# you fast (a shark fin, no float).
+	# Design §J (retuned 2026-09-29): a tap cuts the rise
+	# (jump_release_cut) to a small hop, and gravity pulls nearly as hard
+	# rising as falling, so it's down fast (snappy, no float).
 	var fall_s := sqrt(2.0 * peak / PlanetPlayer.GRAVITY_DOWN)
-	ok(peak > 1.4 and peak < 2.5 and fall_s < 0.45, "a tapped hop: about 1.9 m (%.2f), down fast (%.2f s)" % [peak, fall_s])
+	ok(peak > 0.1 and peak < 0.6 and fall_s < 0.25, "a tapped hop: about 0.3 m (%.2f), down fast (%.2f s)" % [peak, fall_s])
 	# Landing squat: a couple of frames.
 	ok(player._squat_len > 0.0 and player._squat_len <= 0.07, "a light landing squats %.0f ms" % (player._squat_len * 1000.0))
 	await frames(20)
-	# A held sprint bound (design §J): a long lazy rise on the light
-	# up-gravity, a fast drop; lands about 50 m out. Then the branch
+	# A held sprint bound (design §J, retuned): about 2.3 m up, 0.8 s in
+	# the air; lands about 7 m out. Then the branch
 	# bounce: right click just before the touchdown turns the fall into
 	# forward speed, and the feet alternate.
 	var open_d := find_open(camp_d)
@@ -333,7 +333,7 @@ func _initialize() -> void:
 			var bound_d := CubeSphere.surface_distance_m(world.dir_of(p_take), player.surface_dir)
 			await frames(2)
 			print("sprint bound: %.1f m out, %.1f m up, %.2f s in the air; bounce at %.1f m/s down: %.1f -> %.1f m/s forward, foot %d -> %d, hp %.0f -> %.0f" % [bound_d, bound_peak, bound_air / 60.0, fell_v, h_in, player._move.length(), foot0, player._foot, hp_take, player.hp])
-			ok(bound_d > 42.0 and bound_d < 58.0, "a held sprint bound lands about 50 m out (%.1f m)" % bound_d)
+			ok(bound_d > 5.0 and bound_d < 10.0 and bound_peak < 3.0, "a held sprint bound: about 7 m out (%.1f m), under 3 m up (%.1f m)" % [bound_d, bound_peak])
 			ok(player.bounces == b0 + 1 and player._move.length() > h_in + 5.0, "right click at the touchdown bounces: the fall turned forward")
 			ok(player._foot != foot0, "the bounce plants the other foot")
 			ok(player.hp >= hp_take - 0.01, "your own rise doesn't count as a fall: no damage")

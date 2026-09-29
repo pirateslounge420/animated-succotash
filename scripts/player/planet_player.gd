@@ -67,9 +67,9 @@ extends CharacterBody3D
 ## than a body length); a sprint carries into a longer slide and a longer
 ## jump. See the table's "_help" for each number.
 static var GRAVITY := Tuning.num("movement", "air", "gravity_mps2")
-## Asymmetric gravity (design §J): a light pull while rising (a long lazy
-## rise, an Earth-strength body on a 1/10 planet), full weight falling (a
-## sharp drop, no float): the shark-fin arc.
+## Gravity rising and falling (design §J, retuned from play 2026-09-29):
+## nearly the same pull both ways, a little heavier falling, so a jump is
+## short and snappy and nothing floats.
 static var GRAVITY_UP := Tuning.num("movement", "air", "gravity_up_mps2")
 static var GRAVITY_DOWN := Tuning.num("movement", "air", "gravity_down_mps2")
 ## Letting go of jump while still rising cuts the rise to this share (a
@@ -736,8 +736,8 @@ func _physics_process(delta: float) -> void:
 	elif not swimming and not on_floor:
 		if _was_on_floor and not _jumped:
 			_takeoff_r = radius # ran off an edge
-		# Asymmetric gravity (design §J): let go of jump while rising and
-		# the rise is cut (a tap is a hop); a light pull up, full weight down.
+		# Let go of jump while rising and the rise is cut (a tap is a hop);
+		# gravity_up rising, gravity_down falling (design §J).
 		if _rising_jump and vy > 0.0 and not Input.is_action_pressed("jump"):
 			vy *= JUMP_CUT
 			_rising_jump = false
