@@ -2575,3 +2575,4 @@ overriding them.
 - §AI leaf fall, litter piles and decomposition (`data/litter.json`, `<key>_litter.png`, `litter_holes.png`): autumn blend, falling leaf billboards, depth patches, climate-timed stages, rustle/kick, fertility + litter fungi.
 - §AJ dappled canopies: cards on the branch skeleton with real holes (open share = canopy.gap), no hull at any LOD, dappled ground shade from card alpha, see-through dev test.
 - §AK tree skeletons from the `architecture` block (TREE_ARCHITECTURE.md): H-O model branching, Leonardo taper, fork/lean/buttress, open vs forest-grown per tree, dead limbs, handholds from the skeleton.
+- §AL clusters anchored on drawn twigs (no floating foliage), hollow inner crown, fronds as branches.

@@ -1741,3 +1741,31 @@ from it and validated.
 
 **Dev check:** winter at the dev spot with oak, beech, spruce, pine, palm and baobab side
 by side: each recognisable bare.
+
+## AL. Leaves grow from branches: clusters are anchored, never floating — 28 Sept 2026
+
+Tightening §AJ and §AK together. **Every leaf cluster hangs on a twig that hangs on a
+branch that reaches the trunk** — the skeleton is built to the last order (`orders`)
+and the clusters are placed *only at the ends and along the outer orders* of that
+skeleton, by `arrangement` (alternate / opposite / whorled / spiral / distichous) and
+`spacing_m`. Nothing floats:
+1. **No cluster without a twig.** The card cluster's anchor is a node on an order ≥ 3
+   twig; a cluster with no twig under it is a bug. Where a species wants foliage the
+   skeleton doesn't reach, the skeleton grows a twig there (Leonardo thickness), not the
+   other way round.
+2. **Twigs are drawn, not implied.** Orders 3+ are thin dark lines (1–2 px at 480p) that
+   stay visible through the §AJ gaps — that dark lattice inside a canopy is most of why a
+   real tree reads as a tree and not a cloud. At mid LOD the twigs collapse to the order-2
+   branch tips but the branches still reach every cluster; at far LOD the order-1/2 lines
+   remain under the big cards.
+3. **Inner crown is hollow.** Leaves grow where light is: on the outer 30–40 % of each
+   branch (open-grown) or the top and outer face (forest-grown, LCR from §AK). The inside
+   of the crown is bare branchwork the player looks up into from below — and where
+   creatures perch (§V).
+4. **Palms, tree ferns, cycads**: fronds are the branches; they radiate from the crown
+   point (`palmate_crown`), each frond a card with its own rachis line.
+5. **Wind:** a cluster sways with the twig that carries it (the twig's phase), so the
+   holes open and close as one structure.
+
+**Dev check (with §AJ's):** wireframe/debug view shows every card's anchor lying on a
+twig; look up into an oak from the trunk and see branchwork, then leaves at the rim.
