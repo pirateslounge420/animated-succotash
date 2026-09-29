@@ -154,7 +154,9 @@ func _initialize() -> void:
 				break
 		await release("move_back")
 		await frames(10)
-		var rel0 := player.global_position - g.base()
+		# (Round the wood you hold, not the tree's foot: a leaning trunk.)
+		var cc := player.trees.climb
+		var rel0 := player.global_position - g.pos(cc.hold[cc.lead])
 		rel0 -= player.up * rel0.dot(player.up)
 		var a0 := alt()
 		await press("move_forward")
@@ -163,7 +165,7 @@ func _initialize() -> void:
 		await release("move_forward")
 		await release("move_right")
 		await frames(10)
-		var rel1 := player.global_position - g.base()
+		var rel1 := player.global_position - g.pos(cc.hold[cc.lead])
 		rel1 -= player.up * rel1.dot(player.up)
 		var turned := rel0.angle_to(rel1)
 		print("[climb] W+D for 3 s: %.1f m higher, %.0f deg round the trunk, %s" % [alt() - a0, rad_to_deg(turned), _describe()])

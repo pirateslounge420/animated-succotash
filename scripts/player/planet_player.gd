@@ -351,6 +351,7 @@ var _perch_hold := -1
 ## Tucked in against the trunk (not on top of the wood): where, in the
 ## tree's frame; INF when sitting on top.
 var _perch_local := Vector3.INF
+var _perch_wait_f := 0
 ## 0 (silent) .. 1 (sprinting): how far off wildlife notices you.
 var noise_level := 0.1
 ## Seconds since the player last moved.
@@ -1028,9 +1029,16 @@ func _graph_climb_step(delta: float) -> void:
 		hands[1] = h0
 	_reach_arms(hands)
 	trees.climb_sounds(global_position + up * EYE_Y)
-	if Input.is_action_just_pressed("crouch") and c.perch_hold() >= 0:
-		start_perch(c.perch_hold())
-		return
+	# Shift perches (or ducks) as soon as the hands have landed: pressed
+	# mid-reach, it waits for it (up to half a second).
+	if Input.is_action_just_pressed("crouch"):
+		_perch_wait_f = 30
+	if _perch_wait_f > 0:
+		_perch_wait_f -= 1
+		if c.perch_hold() >= 0:
+			_perch_wait_f = 0
+			start_perch(c.perch_hold())
+			return
 	if Input.is_action_just_pressed("jump"):
 		stop_climb(true)
 
@@ -1594,10 +1602,20 @@ const CLING_REACH_M := 0.9
 
 func _ground_cling(cam_forward: Vector3) -> bool:
 	var fwd := (cam_forward - up * cam_forward.dot(up)).normalized()
-	var from := global_position + up * 1.0
-	var q := PhysicsRayQueryParameters3D.create(from, from + fwd * CLING_REACH_M)
-	q.exclude = [get_rid()]
-	var hit := get_world_3d().direct_space_state.intersect_ray(q)
+	# A fan of rays (knee to head, a little either side): a leaning trunk
+	# or a fork isn't where one ray at the chest would look.
+	var hit := {}
+	for y in [1.0, 0.6, 1.4]:
+		for turn in [0.0, 0.35, -0.35]:
+			var from: Vector3 = global_position + up * y
+			var q := PhysicsRayQueryParameters3D.create(from, from + fwd.rotated(up, turn) * CLING_REACH_M)
+			q.exclude = [get_rid()]
+			var h := get_world_3d().direct_space_state.intersect_ray(q)
+			if not h.is_empty() and absf((h.normal as Vector3).dot(up)) < WJ_STEEP:
+				hit = h
+				break
+		if not hit.is_empty():
+			break
 	if hit.is_empty():
 		return false
 	var n: Vector3 = hit.normal
