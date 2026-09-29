@@ -3,7 +3,8 @@ extends Node
 ## The painted sky (shaders/sky_paint.gdshader), baked once at startup
 ## on the GPU into two panoramas the sky shader samples every frame:
 ##
-## * clouds: 2048 x 512 over the viewer's sky (azimuth x elevation):
+## * clouds (only if there is no §AG painted tile, see bake()): 2048 x
+##   512 over the viewer's sky (azimuth x elevation):
 ##   brushy cloud banks piled over the horizon and long wispy streaks
 ##   higher up, stored as densities and shading so the sky shader colors
 ##   them for the hour and thresholds them by the weather's cover;
@@ -22,8 +23,11 @@ var clouds: Texture2D
 var stars: Texture2D
 
 
-func bake() -> void:
-	clouds = _bake(0, CLOUD_SIZE)
+## `cloud_tile`: the §AG hand-painted cloud pano (data/look.json retro;
+## 512 x 128, same channels) if there is one; the clouds are baked only
+## without it.
+func bake(cloud_tile: Texture2D = null) -> void:
+	clouds = cloud_tile if cloud_tile else _bake(0, CLOUD_SIZE)
 	stars = _bake(1, STAR_SIZE)
 
 

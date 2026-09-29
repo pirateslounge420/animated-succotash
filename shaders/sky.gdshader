@@ -14,14 +14,17 @@
 // the sun's side. The sun is a big soft disc (sun_disc_deg across, 8 by
 // default) fading out radially, not a point: no bloom does it. SkySystem sends these already corrected for the exposure
 // and adjustment, so they read true on screen.
-// Over it, two panoramas painted once at startup (SkyPaint,
-// sky_paint.gdshader):
-//   * clouds, in the viewer's sky: brushy banks piled over the horizon
-//     and long white streaks higher up (none near the zenith, where the
-//     panorama pinches), turning slowly round the viewer (cloud_scroll),
-//     thresholded by the weather's cover and colored for the hour (lit
-//     tops, blue bellies, warm near the sun). They sit in front of the
-//     sun, moon and stars and go into the radiance cubemap too;
+// Over it, two panoramas:
+//   * clouds, in the viewer's sky: the §AG hand-painted cloud tile
+//     (512 x 128, nearest-filtered so it bands with the dither; SkyPaint
+//     bakes one only without it): banks piled over the horizon and
+//     streaks higher up, greyscale, thresholded by the weather's cover
+//     and tinted by the sky for the hour (lit tops, sky-blue bellies, the
+//     sunset bands at sunset, warm near the sun). Two layers of it: a far
+//     one, far_scale times smaller, squeezed toward the horizon and
+//     turning slowly (cloud_scroll_far), hazier; and the near one over it
+//     (cloud_scroll). They sit in front of the sun, moon and stars and go
+//     into the radiance cubemap too;
 //   * a fixed starfield with a milky band, turned with the sun, plus a
 //     dense speckle of faint stars drawn per pixel (denser in the band).
 // The moon is a big disc (~11 degrees) with phases, the night's centerpiece.
@@ -67,9 +70,11 @@ uniform float star_rotation = 0.0; // subsolar longitude; stars turn with the su
 // The painted panoramas (SkyPaint). Clouds: R bank density, G bank
 // shading, B streak density; u azimuth from east, v elevation. Stars:
 // R brightness, G warmth, B milky band; equirectangular, celestial frame.
-uniform sampler2D cloud_pano : filter_linear, repeat_enable;
+uniform sampler2D cloud_pano : filter_nearest, repeat_enable;
 uniform sampler2D star_pano : filter_linear, repeat_enable;
-uniform float cloud_scroll = 0.0; // turns; the painted clouds drift round
+uniform float cloud_scroll = 0.0; // turns; the near clouds drift round
+uniform float cloud_scroll_far = 0.0; // turns; the far layer
+uniform float far_scale = 2.2; // the far layer's features, this many times smaller
 uniform float bank_cover = 0.4; // 0-1, from the weather
 uniform float streak_cover = 0.4; // 0-1
 uniform vec3 cloud_lit : source_color = vec3(1.0);
@@ -130,6 +135,33 @@ float seg_dist(vec2 p, vec2 a, vec2 b) {
 	vec2 ba = b - a;
 	float h = clamp(dot(pa, ba) / max(dot(ba, ba), 1e-6), 0.0, 1.0);
 	return length(pa - ba * h);
+}
+
+// One layer of the painted clouds: `cp` the tile's channels (r bank
+// density, g lit/shaded, b streak density) seen in direction `d` at
+// height `h` over the horizon; `haze` extra horizon haze (the far layer).
+// Returns the color and how much it covers.
+vec4 cloud_layer(vec3 cp, vec3 d, float h, float haze_extra) {
+	float be = mix(0.8, 0.22, bank_cover);
+	float bank_a = smoothstep(be - 0.06, be + 0.08, cp.r);
+	float se = mix(0.86, 0.3, streak_cover);
+	float streak_a = smoothstep(se - 0.08, se + 0.22, cp.b) * 0.65;
+	float thick = smoothstep(be, be + 0.3, cp.r);
+	// Near the sun (or the moon, at night) they glow, the thin parts
+	// most.
+	float sdc = max(dot(d, sun_dir), 0.0);
+	float mdc = max(dot(d, moon_dir), 0.0);
+	vec3 glow = sun_color * sun_visible * (pow(sdc, 8.0) * 0.45 + pow(sdc, 64.0) * 0.9)
+		+ moon_tint * moon_brightness * (1.0 - day_amount) * pow(mdc, 24.0) * 0.5 * (1.0 - cos(moon_phase));
+	vec3 bank_col = mix(cloud_shade, cloud_lit, cp.g) + glow * (1.1 - thick);
+	vec3 streak_col = mix(cloud_shade, cloud_lit, 0.85) + glow;
+	// Low, far clouds sink into the horizon haze.
+	float haze = clamp((1.0 - smoothstep(0.0, 0.1, h)) * 0.55 + haze_extra, 0.0, 1.0);
+	bank_col = mix(bank_col, fog_color, haze);
+	streak_col = mix(streak_col, fog_color, haze);
+	float a = max(bank_a, streak_a);
+	vec3 c = mix(streak_col, bank_col, bank_a / max(a, 1e-4));
+	return vec4(c, a);
 }
 
 void sky() {
@@ -286,33 +318,22 @@ void sky() {
 		}
 	}
 
-	// The painted clouds, over everything above the horizon.
+	// The painted clouds, over everything above the horizon: the far
+	// layer, then the near one over it.
 	if (h > -0.01) {
-		float el = asin(clamp(h, 0.0, 1.0));
-		float az = atan(dot(d, north_dir), dot(d, east_dir));
-		// (v stops half a texel short of the top row: it would otherwise
-		// wrap and blend the zenith with the horizon.)
-		vec3 cp = textureLod(cloud_pano, vec2(az / TAU + cloud_scroll, min(el / (0.5 * PI), 1.0 - 1.0 / 1024.0)), 0.0).rgb;
-		float be = mix(0.8, 0.22, bank_cover);
-		float bank_a = smoothstep(be - 0.06, be + 0.08, cp.r);
-		float se = mix(0.86, 0.3, streak_cover);
-		float streak_a = smoothstep(se - 0.08, se + 0.22, cp.b) * 0.65;
-		float thick = smoothstep(be, be + 0.3, cp.r);
-		// Near the sun (or the moon, at night) they glow, the thin parts
-		// most.
-		float sdc = max(dot(d, sun_dir), 0.0);
-		float mdc = max(dot(d, moon_dir), 0.0);
-		vec3 glow = sun_color * sun_visible * (pow(sdc, 8.0) * 0.45 + pow(sdc, 64.0) * 0.9)
-			+ moon_tint * moon_brightness * (1.0 - day_amount) * pow(mdc, 24.0) * 0.5 * (1.0 - cos(moon_phase));
-		vec3 bank_col = mix(cloud_shade, cloud_lit, cp.g) + glow * (1.1 - thick);
-		vec3 streak_col = mix(cloud_shade, cloud_lit, 0.85) + glow;
-		// Low, far clouds sink into the horizon haze.
-		float haze = (1.0 - smoothstep(0.0, 0.1, h)) * 0.55;
-		bank_col = mix(bank_col, fog_color, haze);
-		streak_col = mix(streak_col, fog_color, haze);
+		float el = asin(clamp(h, 0.0, 1.0)) / (0.5 * PI);
+		float az = atan(dot(d, north_dir), dot(d, east_dir)) / TAU;
 		float fade = smoothstep(-0.01, 0.015, h);
-		col = mix(col, streak_col, streak_a * fade);
-		col = mix(col, bank_col, bank_a * fade);
+		// (v stops half a texel short of the top row: it would otherwise
+		// wrap and blend the zenith with the horizon.) The far layer
+		// repeats a whole number of times round the sky, so no seam.
+		float top = 1.0 - 0.5 / 128.0;
+		float far_rep = max(1.0, round(far_scale));
+		vec4 far_c = cloud_layer(textureLod(cloud_pano, vec2(az * far_rep + cloud_scroll_far, min(el * far_scale, top)), 0.0).rgb, d, h, 0.35);
+		far_c.a *= 1.0 - smoothstep(0.75, 1.0, el * far_scale);
+		col = mix(col, far_c.rgb, far_c.a * fade * 0.85);
+		vec4 near_c = cloud_layer(textureLod(cloud_pano, vec2(az + cloud_scroll, min(el, top)), 0.0).rgb, d, h, 0.0);
+		col = mix(col, near_c.rgb, near_c.a * fade);
 	}
 
 	// Lightning lights the whole sky for an instant.

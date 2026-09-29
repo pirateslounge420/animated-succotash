@@ -111,10 +111,15 @@ static var _KEYS := [
 	[12.0, DAY_ZENITH, DAY_MID, DAY_HORIZON],
 	[40.0, DAY_ZENITH, DAY_MID, DAY_HORIZON],
 ]
-## Turns per second the painted clouds drift round the viewer, at rest
-## and per m/s of wind.
-const CLOUD_TURN := Vector2(0.0002, 0.00006)
+## The painted clouds (design §AG, data/look.json retro.clouds): two
+## layers of the same tile, near (1 turn round the viewer in
+## near.turn_min real minutes) and far (smaller, slower: far.scale times
+## as many repeats, 1 turn in far.turn_min). Wind hurries both a little
+## (CLOUD_WIND turns per second per m/s).
+static var CLOUDS: Dictionary = Tuning.section("look", "retro").get("clouds", {})
+const CLOUD_WIND := 0.00006
 var _cloud_scroll := 0.0
+var _cloud_scroll_far := 0.0
 ## Night magic: inside a glowing site the moonlight dims and the air goes
 ## near-black so the bioluminescence reads like neon against black.
 const MAGIC_DARKEN := 0.6
@@ -156,8 +161,10 @@ func _ready() -> void:
 	var paint := SkyPaint.new()
 	paint.name = "SkyPaint"
 	add_child(paint)
-	paint.bake()
+	var tile_path := "res://%s/cloud_pano.png" % str(RETRO.get("tiles_dir", ""))
+	paint.bake(load(tile_path) as Texture2D if RETRO.has("tiles_dir") and ResourceLoader.exists(tile_path) else null)
 	sky_material.set_shader_parameter("cloud_pano", paint.clouds)
+	sky_material.set_shader_parameter("far_scale", float(CLOUDS.get("far", {}).get("scale", 2.2)))
 	sky_material.set_shader_parameter("star_pano", paint.stars)
 	var sky := Sky.new()
 	sky.sky_material = sky_material
@@ -308,17 +315,25 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# cloud and storm grow them to an overcast. By night their bellies
 	# sink toward the sky's ultramarine.
 	var wind: Vector3 = weather.get("wind", Vector3.ZERO)
-	_cloud_scroll = fposmod(_cloud_scroll + delta * (CLOUD_TURN.x + CLOUD_TURN.y * wind.length()), 1.0)
+	var near_turn := 1.0 / (60.0 * float(CLOUDS.get("near", {}).get("turn_min", 12.0)))
+	var far_turn := 1.0 / (60.0 * float(CLOUDS.get("far", {}).get("turn_min", 40.0)))
+	_cloud_scroll = fposmod(_cloud_scroll + delta * (near_turn + CLOUD_WIND * wind.length()), 1.0)
+	_cloud_scroll_far = fposmod(_cloud_scroll_far + delta * (far_turn + CLOUD_WIND * 0.3 * wind.length()), 1.0)
 	sky_material.set_shader_parameter("cloud_scroll", _cloud_scroll)
+	sky_material.set_shader_parameter("cloud_scroll_far", _cloud_scroll_far)
 	sky_material.set_shader_parameter("bank_cover", clampf(0.25 + 0.6 * cloud + 0.25 * storm, 0.0, 1.0))
 	sky_material.set_shader_parameter("streak_cover", clampf(0.3 + 0.35 * cloud, 0.0, 1.0))
-	# In twilight the sun still paints them rose after it's down; storms
-	# grey them.
-	var twilight := smoothstep(-12.0, -3.0, sun_elevation_deg) * (1.0 - smoothstep(-1.0, 6.0, sun_elevation_deg))
-	var painted_lit := cloud_light.lerp(Color(1.0, 0.5, 0.55), twilight * 0.8)
+	# The tile is greyscale, tinted by the sky: around sunset its lit
+	# tops take the sunset bands' orange and its bellies their rust and
+	# brown (§AG, like the sky behind them), fading into the twilight;
+	# storms grey them.
+	var sunset := smoothstep(-8.0, -1.0, sun_elevation_deg) * (1.0 - smoothstep(5.0, 12.0, sun_elevation_deg))
+	var painted_lit := cloud_light.lerp(_scene_color(BANDS[0]), sunset * 0.9)
 	painted_lit = painted_lit.lerp(Color(0.62, 0.65, 0.72) * (0.3 + 0.7 * daylight), storm * 0.7)
+	var painted_shade := cloud_shade.lerp(_scene_color(zenith) * 1.3, night * 0.9)
+	painted_shade = painted_shade.lerp(_scene_color(BANDS[1].lerp(BANDS[2], 0.5)), sunset * 0.85)
 	sky_material.set_shader_parameter("cloud_lit", painted_lit)
-	sky_material.set_shader_parameter("cloud_shade", cloud_shade.lerp(_scene_color(zenith) * 1.3, night * 0.9))
+	sky_material.set_shader_parameter("cloud_shade", painted_shade)
 	# Their light's direction turns from the moon to the sun across the
 	# band, at an even pace. The two can point nearly opposite (a full
 	# moon), so it swings over through the local up: moon -> up -> sun.
