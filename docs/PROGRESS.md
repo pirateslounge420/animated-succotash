@@ -35,6 +35,15 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
     - Order-3 twigs of 4 cm and up get their own capsules, only within 30 m (dropped past 35 m). An 18 m oak has none that thick; a 40 m one has 61.
     - Palm fronds get none (`tree_check` 16/0).
   - Reference still has: the in-game dev check (c) with a fox and a thrown spear.
+- **Big main branches, perch and duck anywhere, shorter people** (Mike, from play):
+  - **Scaffold limbs:** broad crowns (not a single leader, not whorls; oak, beech, maple and the like) now stand on 5–8 big main limbs per stem. They leave the stem at 62–78 % of its thickness, taper to 45 % and are 10 % longer; twigs and leaves fill out from them.
+    - Broadleaf trunks are stouter (height over foot diameter 22, was 28).
+    - An open oak now has 11 main limbs (was 28), and 45 of its limb handholds are thick and flat enough to straddle (was 0).
+    - Palms keep full-size leaflets (the gap fitting shrank them).
+  - **Straddling** starts at 8 cm radius (was 15).
+  - **Shift in a tree** perches or ducks at any hold: on a limb or branch you sit on top of it; on the trunk or steep wood you tuck in against it, pinned where you are. Your hands are free (bow, spear, pole), the stick takes hold again and Space jumps off. The prompt says "Shift perch" or "Shift duck".
+  - **Heights:** the player is 1.35 m (`player_scale` 0.86, was 0.92), and every cloaked figure (the elder, the hunter, camp folk, wanderers, small folk) is 6 % shorter (`body.folk_scale` 0.94). The first-person eye is capped at 0.93 of the body's height (1.26 m). **Flag for the designer:** §AG 7's 1.4 m eye no longer fits the body.
+  - `tools/climb_check.gd` (new): up a branchy tree from the foot, duck on the trunk and draw the bow, out onto a limb and perch on top, back down.
 - **§AI.1 revised: each tree turns on its own clock** (step 5 of the tree build):
   - The foliage shader now runs the `autumn_colour` clock per tree and per cluster. LeafSeason publishes where the year is (days since the spring and autumn transitions) and the stage table as globals.
   - Each deciduous tree is offset by its own seeded day (± `jitter_days`, seeded by its turn and lean, which the floating origin never changes). Its top and outer clusters run up to `cluster_lead_days` ahead, so a tree turns from the outside in.

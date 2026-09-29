@@ -112,6 +112,19 @@ func _run() -> void:
 	# Handholds from the skeleton.
 	var g := TreeLayouts.graph(oi, 0, 18.0)
 	ok(g != null and g.local.size() > 20, "an 18 m oak's branch graph comes from its skeleton (%d handholds)" % (g.local.size() if g else 0))
+	# Big main limbs to climb out along and sit on (from play): limb
+	# handholds thick enough to straddle (TreeClimb.STRADDLE_R_M) and not
+	# steep.
+	var sit := 0
+	var limb_holds := 0
+	for k in g.local.size():
+		if g.limb[k] == 0:
+			continue
+		limb_holds += 1
+		if g.radius[k] >= TreeClimb.STRADDLE_R_M and absf(g.tangent[k].y) < TreeClimb.STRADDLE_SLOPE:
+			sit += 1
+	print("[trees] 18 m oak: %d limb handholds, %d thick and flat enough to straddle and perch on" % [limb_holds, sit])
+	ok(sit >= 15, "an oak's main limbs can be straddled out along (%d holds)" % sit)
 	var holds := TreeLayouts.unit_handholds(oi, 0, 18.0)
 	var twig_holds := 0
 	var sk := TreeLayouts.skeleton(oi, 0)

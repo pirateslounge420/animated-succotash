@@ -172,7 +172,9 @@ static var CLIMB_SPEED := Tuning.num("movement", "climb", "simple_mps")
 static var CLIMB_REACH_M := Tuning.num("movement", "climb", "reach_m")
 ## First person: eye height standing (data/look.json retro.eye_m, design
 ## §AG 7: 1.4 m) and crouched (the same share of it as before).
-static var EYE_Y := float(Tuning.section("look", "retro").get("eye_m", 1.45 * BODY_K))
+## (Never above the eyes of the body you are: a person's eyes are about
+## 0.93 of their height, the hood top 1.57 m x player_scale.)
+static var EYE_Y := minf(float(Tuning.section("look", "retro").get("eye_m", 1.45 * BODY_K)), 1.57 * BODY_K * 0.93)
 static var CROUCH_EYE_Y := EYE_Y * 0.9 / 1.45
 ## Field of view (retro.fov_deg, §AG 7: 78); aiming narrows it by the
 ## same share as before (70 -> 60).
@@ -341,6 +343,9 @@ var climbing := false
 var perched := false
 var _perch_key := 0
 var _perch_hold := -1
+## Tucked in against the trunk (not on top of the wood): where, in the
+## tree's frame; INF when sitting on top.
+var _perch_local := Vector3.INF
 ## 0 (silent) .. 1 (sprinting): how far off wildlife notices you.
 var noise_level := 0.1
 ## Seconds since the player last moved.
@@ -976,15 +981,18 @@ func _graph_climb_step(delta: float) -> void:
 		stop_climb(true)
 
 
-## Sit on top of handhold `i` of the tree you're climbing: climbing ends,
-## the hands are free (the bow and the spear work), the body is pinned to
-## the wood (in the tree's frame, so the floating origin can't move it).
+## Sit on top of handhold `i` of the tree you're climbing, or duck in
+## against the trunk where you are (TreeClimb.perch_on_top()): climbing
+## ends, the hands are free (the bow, the spear and the pole work),
+## crouched, the body pinned to the wood (in the tree's frame, so the
+## floating origin can't move it).
 func start_perch(i: int) -> void:
 	var c := trees.climb
 	if c.g == null or not c.g.valid():
 		return
 	_perch_key = c.key
 	_perch_hold = i
+	_perch_local = Vector3.INF if c.perch_on_top(i) else c.g.frame().affine_inverse() * global_position
 	climbing = false
 	_climb_graph = false
 	perched = true
@@ -1035,7 +1043,10 @@ func _perch_step(delta: float, cam_forward: Vector3) -> void:
 		return
 	_fall_speed = 0.0
 	_fall_top = -INF
-	global_position = g.pos(_perch_hold) + up * (g.radius[_perch_hold] + 0.02)
+	if _perch_local != Vector3.INF:
+		global_position = g.frame() * _perch_local
+	else:
+		global_position = g.pos(_perch_hold) + up * (g.radius[_perch_hold] + 0.02)
 	velocity = Vector3.ZERO
 	_move = Vector3.ZERO
 	# You turn with the look, so aiming turns you on the spot.

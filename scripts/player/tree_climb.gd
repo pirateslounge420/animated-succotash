@@ -59,7 +59,7 @@ const TRUNK_REACH_Y := 0.3
 const HANG_REACH_Y := 0.5
 ## Straddling: wood at least this thick and no steeper than STRADDLE_SLOPE;
 ## the hips over the feet and the hands ahead of the hips (m).
-const STRADDLE_R_M := 0.15
+const STRADDLE_R_M := 0.08
 const STRADDLE_SLOPE := 0.55
 const HIP_Y := 0.85
 const STRADDLE_AHEAD_M := 0.2
@@ -189,7 +189,8 @@ func step(dt: float, input: Vector2, fwd: Vector3, right: Vector3, up: Vector3) 
 			_start_reach(move[0], move[1], move[2])
 	_update_outputs(f, up)
 	if prompt == "":
-		var perch := " · Shift perch" if perch_hold() >= 0 else ""
+		var ph := perch_hold()
+		var perch := (" · Shift perch" if perch_on_top(ph) else " · Shift duck") if ph >= 0 else ""
 		if pose == "trunk":
 			prompt = "W/S climb · A/D round · push toward a limb to take it%s · E let go · Space push off" % perch
 		else:
@@ -197,20 +198,22 @@ func step(dt: float, input: Vector2, fwd: Vector3, right: Vector3, up: Vector3) 
 	return ""
 
 
-## The wood you could perch on from where you are (design §V: crouch at
-## the top): on top of a thick, flattish limb (the straddle pose), or at
-## the crown, the highest handhold of the trunk. The handhold, or -1.
+## The wood you could perch on from where you are (design §V; from play:
+## Shift perches or ducks anywhere in a tree): whatever you hold, once a
+## reach has landed. On a limb or branch you sit on top of it; on the
+## trunk or steep wood you tuck in against it (perch_on_top()). The
+## handhold, or -1.
 func perch_hold() -> int:
 	if reaching >= 0 or g == null:
 		return -1
 	var i := hold[lead]
-	if i < 0:
-		return -1
-	if pose == "straddle":
-		return i
-	if g.limb[i] == 0 and _next_along(i, 1.0) < 0:
-		return i
-	return -1
+	return i if i >= 0 else -1
+
+
+## Perching at handhold `i` sits on top of it (a limb, flattish wood) rather
+## than tucking in against it (the trunk, steep wood).
+func perch_on_top(i: int) -> bool:
+	return not _cling(i) or (g.limb[i] == 0 and _next_along(i, 1.0) < 0)
 
 
 ## A handhold in words, for the log: its number, trunk or limb, how thick

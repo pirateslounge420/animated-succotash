@@ -95,11 +95,17 @@ static func _near(a: Color, b: Color, within := 0.12) -> bool:
 ## dictionary creatures and camps use ({root, legs, wings, tail, light,
 ## cloaked}); `seated` sits it down. Its legs stride by its own velocity
 ## (PlayerBody.set_velocity()), so `legs` is empty; `wings` are its arms.
+## Every cloaked figure's height against the one it's built with
+## (data/movement.json body.folk_scale: from play, a step shorter, like
+## the player).
+static var FOLK_K := float(Tuning.section("movement", "body").get("folk_scale", 1.0))
+
+
 static func build(height_m: float, main: Color, trim: Color, seated := false) -> Dictionary:
 	var body := PlayerBody.new()
 	body.is_player = false
 	body.seated = seated
-	var k := height_m / PLAYER_H
+	var k := height_m * FOLK_K / PLAYER_H
 	body.scale = Vector3.ONE * k
 	body.stride_scale = k
 	body.set_palette(main, trim)

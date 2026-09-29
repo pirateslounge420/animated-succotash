@@ -199,9 +199,9 @@ static func grow(sp: PlantSpecies, idx: int, layout: int, world_seed: int, fores
 		rc = minf(rc, 0.14)
 	g.crown_r = g.j(rc) * (0.72 if forest else 1.1)
 	# Slenderness (height over foot diameter) by habit; forest-grown slimmer.
-	# (Height over the foot's diameter: an open-grown oak ~28, a spruce
+	# (Height over the foot's diameter: an open-grown oak ~22, a spruce
 	# ~45, a baobab ~4.)
-	var slender := 28.0
+	var slender := 22.0
 	match g.habit:
 		"excurrent", "columnar":
 			slender = 45.0
@@ -293,6 +293,15 @@ static func _laterals_on_stem(g: _G, st: int, excurrent: bool) -> Array[int]:
 	var cap := MAX_L1_WHORL if whorl else MAX_L1
 	if count_est > cap:
 		step *= count_est / cap
+	# A broad crown (not a single leader, not whorls) stands on a few big
+	# scaffold limbs, thick where they leave the stem and slow to taper,
+	# that carry the rest (from play: the trees that look best are the
+	# ones with big main branches, and they're the ones you can climb and
+	# perch on): 5-8 of them over the crown's length on each stem.
+	var scaffold := not excurrent and not whorl
+	if scaffold:
+		var crown_len := maxf(total * (1.0 - clampf((g.crown_base - pc.pts[0].y) / maxf(y_top - pc.pts[0].y, 1e-3), 0.0, 0.9)), 0.05)
+		step = maxf(step, crown_len / g.rng.randi_range(5, 8))
 	while s < total * 0.97:
 		var q := pc.at(s)
 		var p: Vector3 = q[0]
@@ -323,7 +332,12 @@ static func _laterals_on_stem(g: _G, st: int, excurrent: bool) -> Array[int]:
 			if g.model == "troll" or g.habit == "weeping":
 				lift = -0.25 - g.droop * 0.5
 			var r_c := r_here * g.rng.randf_range(0.45, 0.6)
-			out.append(g.piece(p, d, length, r_c, r_c * 0.35, lift, K.LIMB, 1, st, 0))
+			var r_tip := r_c * 0.35
+			if scaffold:
+				r_c = r_here * g.rng.randf_range(0.62, 0.78)
+				r_tip = r_c * 0.45
+				length *= 1.1
+			out.append(g.piece(p, d, length, r_c, r_tip, lift, K.LIMB, 1, st, 0))
 		az += 2.39996 if not whorl else g.rng.randf_range(0.4, 1.0)
 		s += step * g.rng.randf_range(0.8, 1.2)
 	return out
@@ -448,7 +462,7 @@ static func _anchors(g: _G) -> void:
 ## covered (§AJ 2): the crown's silhouette area (a dome of crown_r, a bit
 ## more for its depth) shared among the anchors; never smaller than the
 ## leaf-based size, at most an eighth of the tree.
-static func _size_clusters(g: _G, crown_r: float) -> void:
+static func _size_clusters(g: _G, crown_r: float, fit := true) -> void:
 	var n := g.sk.anchors.size()
 	if n == 0:
 		return
@@ -456,7 +470,10 @@ static func _size_clusters(g: _G, crown_r: float) -> void:
 	var r := clampf(sqrt(target / (n * PI * 0.8)), g.cluster_r, 0.125)
 	for an in g.sk.anchors:
 		an[5] = r * g.rng.randf_range(0.85, 1.15)
-	_fit_gap(g)
+	# (A palm's crown is its fronds: their leaflets stay full, the gaps are
+	# between the fronds.)
+	if fit:
+		_fit_gap(g)
 
 
 ## Then all scaled together until, looking straight up from under the
@@ -652,4 +669,4 @@ static func _palm(g: _G, a: Dictionary) -> void:
 				var fd := Vector3(cos(az) * 0.35, -1.0, sin(az) * 0.35).normalized()
 				g.piece(top - Vector3(0, 0.02, 0), fd, frond_l * 0.7, r0 * 0.25, r0 * 0.1, 0.0, K.TWIG, 1, st, 0, true)
 	g.sk.vines = 0
-	_size_clusters(g, (0.26 if not fern else 0.36))
+	_size_clusters(g, (0.26 if not fern else 0.36), false)
