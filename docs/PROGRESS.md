@@ -12,6 +12,11 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - **Flag for the designer:** above 3 chunks this thins §AG's retro haze ("far hills flat blue-purple by ~300–400 m") on purpose. If the look must hold, the far settings can keep the tuned haze and only help from hilltops.
 - **Only the render distance is drawn:** chunks kept one ring past it (so stepping back and forth doesn't reload them) are now hidden, not drawn. That saves draws at every setting.
 - **Cost:** each chunk's trees take about 1.5 s of worker time to place, so a bigger ring fills in over time as you arrive (5 chunks: 123 chunks, about 50 s to fill here on 4 slow cores). Walking, only the new edge loads.
+- **Fix after the 4,000 km planet (for the designer):**
+  - `TerrainChunk.CHUNK_M` was derived from `FULL_CIRCUMFERENCE_M`, so the 1/10-Earth lock made every chunk 2.6 km across instead of 260 m. That meant 81 m ground quads, a render ring 9 km out, and a tree placement grid ten times coarser. On the stamp it meant 4 chunks per face edge.
+  - It is now the fixed 260.4 m walking scale; the chunk count follows the planet (3,840 per face edge on the full planet).
+  - Streaming cost is unchanged from before the lock, as the note there says: the render check on the full planet draws 49 / 123 / 13 chunks at 3 / 5 / 1.
+  - Still following the planet size: `FarShell`'s 96 quads per face edge are now ~10 km each (were ~1 km), so distant mountains are much coarser. Raising it is a cost trade for later.
 - `tools/render_distance_check.gd` (new): switches the setting live (3 → 5 → 1 → 3) from the camp. Drawn chunks go 51 / 123 / 9, and the haze follows. 2/0.
 ## 2026-09-29 — Archetype pass over every plant (Mike: "make each plant more archetypal to what it really looks like")
 - Six parallel botanist passes re-checked all 1,224 entries' `leaf`, `canopy`, `bark`, `architecture` and `tint` against the real species (Kew POWO / floras / the genus table in TREE_ARCHITECTURE.md §5), within the locked vocabulary; `plant_schema_check` 0 errors. Every entry now carries a `silhouette` line (PLANT_SCHEMA §4a2): what it looks like from 60 m, the 64 px target.

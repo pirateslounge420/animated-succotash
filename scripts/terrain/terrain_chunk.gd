@@ -28,11 +28,15 @@ extends Node3D
 ## colors, plus local sand at the shore, bare rock on steep faces, and snow
 ## wherever it's below freezing at that exact height.
 
-## Chunks are about CHUNK_M across whatever the planet's size: 384 per
-## face edge on the full planet, fewer on the dev postage stamp
-## (fit_to_planet, called by PlanetConst.set_circumference).
-const CHUNK_M := PlanetConst.FULL_CIRCUMFERENCE_M / 4.0 / 384.0
-static var CHUNKS_PER_FACE := 384
+## Chunks are about CHUNK_M across whatever the planet's size: a walking
+## scale (8 m ground quads, a tree layout's placement grid, the render
+## distance's step), so a fixed length, not a share of the planet; 3,840
+## per face edge on the 4,000 km planet, fewer on the dev postage stamp
+## (fit_to_planet, called by PlanetConst.set_circumference). (It was
+## derived from the full circumference, and grew tenfold, to 2.6 km, when
+## the planet did.)
+const CHUNK_M := 400000.0 / 4.0 / 384.0
+static var CHUNKS_PER_FACE := roundi(PlanetConst.FULL_CIRCUMFERENCE_M / 4.0 / CHUNK_M)
 
 
 static func fit_to_planet() -> void:
