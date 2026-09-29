@@ -332,6 +332,13 @@ var swimming := false
 var sprinting := false
 var crouching := false
 var climbing := false
+## Perched (design §V): sitting on top of a limb or on the crown of a
+## tree, hands free: look, aim and shoot the bow or throw the spear from
+## there, drop back to climbing with the stick, or jump off into a bound.
+## Entered with crouch while climbing where TreeClimb.perch_hold() allows.
+var perched := false
+var _perch_key := 0
+var _perch_hold := -1
 ## 0 (silent) .. 1 (sprinting): how far off wildlife notices you.
 var noise_level := 0.1
 ## Seconds since the player last moved.
@@ -572,6 +579,12 @@ func _physics_process(delta: float) -> void:
 		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
 		_update_noise(delta, 0.0)
 		trees.update_contact(delta, global_position, get_world_3d().direct_space_state)
+		return
+	if perched:
+		_perch_step(delta, cam_forward)
+		_update_blob(chunks.ground_height(surface_dir))
+		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
+		_update_noise(delta, 0.0)
 		return
 
 	var radius: float = world.radius_of(global_position)
@@ -845,7 +858,7 @@ func tree_ahead(forward: Vector3) -> Array:
 ## branch graph from the nearest handhold you can hold, or (no graph) the
 ## old way up its trunk.
 func try_climb() -> bool:
-	if climbing or swimming:
+	if climbing or perched or swimming:
 		return false
 	var t := tree_ahead(_camera_forward())
 	if t.is_empty():
@@ -954,8 +967,84 @@ func _graph_climb_step(delta: float) -> void:
 		hands[1] = h0
 	_reach_arms(hands)
 	trees.climb_sounds(global_position + up * EYE_Y)
+	if Input.is_action_just_pressed("crouch") and c.perch_hold() >= 0:
+		start_perch(c.perch_hold())
+		return
 	if Input.is_action_just_pressed("jump"):
 		stop_climb(true)
+
+
+## Sit on top of handhold `i` of the tree you're climbing: climbing ends,
+## the hands are free (the bow and the spear work), the body is pinned to
+## the wood (in the tree's frame, so the floating origin can't move it).
+func start_perch(i: int) -> void:
+	var c := trees.climb
+	if c.g == null or not c.g.valid():
+		return
+	_perch_key = c.key
+	_perch_hold = i
+	climbing = false
+	_climb_graph = false
+	perched = true
+	_rest_arms()
+	_set_crouch(true)
+	velocity = Vector3.ZERO
+	_move = Vector3.ZERO
+	_facing = c.facing.normalized() if c.facing.length() > 0.1 else _facing
+	trees.rustle(_climb_chunk, _climb_tree, 0.3)
+
+
+## Off the perch: back onto the wood (`climb`: take hold again where you
+## sat), a jump off into a bound (`jump`), or just a drop.
+func stop_perch(jump := false, climb := false) -> void:
+	if not perched:
+		return
+	perched = false
+	_set_crouch(false)
+	var g := BranchGraphs.find(_perch_key)
+	if climb and g != null and g.valid() and _perch_hold >= 0 and _perch_hold < g.size():
+		trees.climb.start(g, _perch_hold, global_position, up)
+		_climb_from = global_position
+		_climb_ease = 0.0
+		_climb_graph = true
+		climbing = true
+		velocity = Vector3.ZERO
+		_move = Vector3.ZERO
+		return
+	var fwd := (_facing - up * _facing.dot(up)).normalized()
+	if jump:
+		velocity = fwd * 3.0 + up * JUMP_SPEED
+		_move = fwd * 3.0
+		_jumped = true
+		_rising_jump = true
+		_takeoff = _move
+		_takeoff_r = world.radius_of(global_position)
+	else:
+		velocity = Vector3.ZERO
+		_move = Vector3.ZERO
+	_climb_chunk = null
+	_climb_tree = -1
+
+
+func _perch_step(delta: float, cam_forward: Vector3) -> void:
+	var g := BranchGraphs.find(_perch_key)
+	if g == null or not g.valid() or _perch_hold < 0 or _perch_hold >= g.size():
+		stop_perch()
+		return
+	_fall_speed = 0.0
+	_fall_top = -INF
+	global_position = g.pos(_perch_hold) + up * (g.radius[_perch_hold] + 0.02)
+	velocity = Vector3.ZERO
+	_move = Vector3.ZERO
+	# You turn with the look, so aiming turns you on the spot.
+	_face(cam_forward, delta * 0.8)
+	_orient()
+	if Input.is_action_just_pressed("jump"):
+		stop_perch(true)
+		return
+	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
+	if input.length() > 0.5 and not aiming():
+		stop_perch(false, true)
 
 
 ## The elf's arms reach for `hands` (scene; left, right): each arm points
@@ -1107,7 +1196,9 @@ func _update_prompt(delta: float, forward: Vector3) -> void:
 	if _prompt_timer > 0.0:
 		return
 	_prompt_timer = 0.2
-	if climbing and _climb_graph:
+	if perched:
+		prompt = "Perched · left click: shoot or throw · move: back onto the wood · Space: jump off"
+	elif climbing and _climb_graph:
 		prompt = trees.climb.prompt
 	elif climbing:
 		prompt = "W/S climb · A/D around the trunk · E or Space let go"
@@ -1191,6 +1282,7 @@ func _damage(amount: float) -> void:
 		bow.drawing = false
 		spear.cancel()
 		stop_climb()
+		stop_perch()
 		died.emit()
 
 
@@ -1230,7 +1322,7 @@ func _update_health(delta: float) -> void:
 	if _fire_check_t <= 0.0:
 		_fire_check_t = 0.25
 		near_fire = Campfire.lit_near(get_tree(), global_position, float(rules.rest_radius_m))
-	resting = near_fire and not dead and not climbing and not swimming and not aiming() \
+	resting = near_fire and not dead and not climbing and not perched and not swimming and not aiming() \
 		and is_on_floor() and still_time >= float(rules.rest_still_s)
 	if resting and hp < MAX_HP:
 		heal(float(rules.rest_hp_per_s) * delta, "rest")

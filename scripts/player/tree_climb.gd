@@ -187,13 +187,30 @@ func step(dt: float, input: Vector2, fwd: Vector3, right: Vector3, up: Vector3) 
 			return move[0]
 		if move.size() == 3:
 			_start_reach(move[0], move[1], move[2])
-	if prompt == "":
-		if pose == "trunk":
-			prompt = "W/S climb · A/D round · push toward a limb to take it · E let go · Space push off"
-		else:
-			prompt = "Push along the limb to shimmy, toward another to reach across · E let go · Space push off"
 	_update_outputs(f, up)
+	if prompt == "":
+		var perch := " · Shift perch" if perch_hold() >= 0 else ""
+		if pose == "trunk":
+			prompt = "W/S climb · A/D round · push toward a limb to take it%s · E let go · Space push off" % perch
+		else:
+			prompt = "Push along the limb to shimmy, toward another to reach across%s · E let go · Space push off" % perch
 	return ""
+
+
+## The wood you could perch on from where you are (design §V: crouch at
+## the top): on top of a thick, flattish limb (the straddle pose), or at
+## the crown, the highest handhold of the trunk. The handhold, or -1.
+func perch_hold() -> int:
+	if reaching >= 0 or g == null:
+		return -1
+	var i := hold[lead]
+	if i < 0:
+		return -1
+	if pose == "straddle":
+		return i
+	if g.limb[i] == 0 and _next_along(i, 1.0) < 0:
+		return i
+	return -1
 
 
 ## A handhold in words, for the log: its number, trunk or limb, how thick

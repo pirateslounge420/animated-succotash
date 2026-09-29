@@ -1012,6 +1012,12 @@ screen on respawn if the wake-up scene (§P) needs a moment to place folk.
   as you like, look around (head-look §B reads from outside), aim and shoot from it,
   jump off into a bound. Same rig pose for folk and master shinobi, who use perches to
   watch (the "pausing on a distant branch to look back" of §Q is a perch).
+  **Locked 28 Sept 2026 (late):** perching is not only at the crown — you can perch on
+  **top of any limb thick enough to straddle** as well as at the top of the tree, and
+  from a perch **the bow and the spear both work** (draw and shoot, raise and throw); you
+  turn with the look while perched. Implemented: `TreeClimb.perch_hold()` (straddle pose,
+  or the highest trunk handhold), `PlanetPlayer.start_perch / _perch_step / stop_perch`
+  — crouch to sit, stick to take hold again, Space to bound off, E to drop.
 - **Climbing is on the tech button, not E.** To climb: **hold right click against the
   trunk (a cling) and move** — the movement keys walk you up, down and around the trunk
   and out along limbs while the cling is held; let go to drop or kick off. E is no longer

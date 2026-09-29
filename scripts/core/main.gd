@@ -454,6 +454,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				_say_note("Your hands are full.")
 		elif player.climbing:
 			player.stop_climb()
+		elif player.perched:
+			player.stop_perch()
 		elif creatures.log_in_reach(player.global_position):
 			creatures.interact(player.global_position)
 		else:
