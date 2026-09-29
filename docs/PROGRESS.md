@@ -4,6 +4,24 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — Far trees as 2D pictures; shadows only near (Mike: "distant things as 2D… should help performance")
+- **Far trees are pictures now (impostors).** Past the detail ring, every tree is one camera-facing quad (2 triangles) instead of the ~1.5k-triangle far model. The quad is baked from the real far model: its height, where the crown starts, the mean leaf colour, a 4-band crown outline and the trunk's width (`PlantMeshes._build_impostor`). The foliage shader (material id 6) draws the ragged crown, the trunk under it, the season's colour (autumn turn, bare winter twigs, dead trees just a trunk), the palette pulls and the same fog as the real leaves. The pictures stand upright on each tree's own up, so they don't tip over on the curved planet. `IMPOSTORS=0` in the environment brings the 3D far crowns back for comparison.
+  - First pass: facing the camera, the pictures were lit from behind when you looked away from the sun, a dark band against the haze. Now they're lit like a crown's top.
+- **Only the nearest ring's plants cast shadows** (`TerrainChunk.plant_shadow`): the hero chunks within 120 m. Shadows reach only 50 m (look `shadow_max_m`), so farther trees never drew one; they just cost the shadow pass.
+- **Measured** (full planet, the camp, `perf_bench` on this machine's software GPU, so compare as ratios):
+  - Frame 19.4 s → 17.4 s (−10 %).
+  - Visible triangles 13.56M → 12.97M.
+  - Shadow pass 17.6M → 16.0M triangles, 440 → 404 draws.
+  - The rest of both is the detail ring's 3D trees (10–16k triangles each), which have to stay 3D (climbing, collisions, the look up close).
+- **Next for frame time** (not done): pictures for the outer part of the detail ring too (it's chunk-sized today, so the split point is ~260 m), or fewer leaf cards on NEAR trees. On a real GPU the big cost is triangle count, which the pictures cut most at render distance 5–8.
+- **climb_check** now picks a different tree near the camp from run to run: whichever tree's skeleton a worker finishes first. That surfaced three climbing weak spots that were already in the last commit, not caused by this change:
+  - a leaning Athel tamarisk (W looking out along a thin 0.08–0.14 m limb climbs the trunk instead, or hops to a steep neighbouring limb);
+  - a Miombo (W+D went only 13° round the trunk; the test wants 15°);
+  - a Cerrado pequi (clinging to its thin trunk didn't crawl up).
+
+  The check's "your side of the trunk" is now measured where you hold it, not at a leaning trunk's foot. Queued as the next climbing fix. `climb_lab` has `TRACE=out`.
+- `dev_view`: `VISTA_M=` sets the vista camera's height (150 m to look over the canopy).
+
 ## 2026-09-29 — The 4,000 km planet had no forests: geography laid out at 400 km again, built 10x
 - **Found while testing the render distance:** after the 1/10-Earth lock, seed 42's full planet had no rainforest, deciduous, taiga, grassland or scrub. It was all desert (25 %), tundra, alpine and coast (53 % of land), and the camp spawned in hot desert with no trees (`tech_check` and `climb_check`: "no tree near the camp"). The stamp had lost every forest band too.
 - **Cause:** the geography (continent, belt and ridge noise; hotspots; the weather grid; the passes' distances and slopes) is sampled in geographic metres with fixed wavelengths tuned on the 400 km planet. With `GEO_CIRCUMFERENCE_M` at 4,000 km, the same noise drew ten times as many continents a tenth the size: an archipelago with no interiors, so no moisture gradients and no forest.
