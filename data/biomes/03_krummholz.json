@@ -74,9 +74,9 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "conical",
+     "form": "irregular",
      "gap": 0.5,
-     "layering": "tiered",
+     "layering": "sparse",
      "droop": 0.3
     },
     "tint": {
@@ -93,10 +93,10 @@
      "response": "leaf_drop"
     },
     "bark": {
-     "pattern": "plated",
-     "orientation": "vertical",
-     "depth": 0.6,
-     "scale_cm": 5,
+     "pattern": "scaly",
+     "orientation": "none",
+     "depth": 0.45,
+     "scale_cm": 3,
      "color": "#6A5A4E",
      "color_2": "#8A4A38",
      "lenticels": "none",
@@ -124,7 +124,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "stunted ragged larch, sparse tiered branches"
    },
    {
     "name": "Lodgepole pine",
@@ -146,8 +147,8 @@
      3500
     ],
     "height_m": [
-     20.0,
-     35.0
+     2,
+     10
     ],
     "density": 0.9,
     "soil": "thin",
@@ -248,9 +249,9 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "conical",
+     "form": "irregular",
      "gap": 0.4,
-     "layering": "sparse",
+     "layering": "clumped",
      "droop": 0.05
     },
     "tint": {
@@ -274,27 +275,31 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "excurrent",
-     "orders": 5,
+     "habit": "multi_stem",
+     "orders": 4,
      "branch_angle_deg": [
       50,
       75
      ],
      "taper_exponent": 1.4,
-     "sinuosity": 0.3,
-     "fork_height_frac": null,
+     "sinuosity": 0.7,
+     "fork_height_frac": [
+      0.0,
+      0.15
+     ],
      "buttress": "none",
-     "lean_max_deg": 15,
+     "lean_max_deg": 35,
      "live_crown_ratio": [
-      0.5,
-      0.3
+      0.9,
+      0.7
      ],
      "self_prune": true,
-     "dead_limbs": 0.35,
+     "dead_limbs": 0.45,
      "root_flare": true,
-     "spacing_m": 0.6,
-     "confidence": "documented"
-    }
+     "spacing_m": 0.4,
+     "confidence": "estimated"
+    },
+    "silhouette": "wind-flagged dwarf pine, branches downwind only"
    },
    {
     "name": "Mountain birch",
@@ -377,10 +382,10 @@
     "bark": {
      "pattern": "smooth",
      "orientation": "none",
-     "depth": 0.25,
+     "depth": 0.3,
      "scale_cm": 1,
-     "color": "#B8B0A0",
-     "color_2": "#4A3A32",
+     "color": "#C8C0B0",
+     "color_2": "#3A2E28",
      "lenticels": "horizontal_bands",
      "confidence": "documented"
     },
@@ -409,7 +414,8 @@
      "root_flare": false,
      "spacing_m": 0.6,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "crooked multi-stemmed birch, pale trunks"
    },
    {
     "name": "Wind-stunted conifer",
@@ -472,7 +478,7 @@
     "canopy": {
      "form": "irregular",
      "gap": 0.35,
-     "layering": "clumped",
+     "layering": "sparse",
      "droop": 0.15
     },
     "tint": {
@@ -516,7 +522,8 @@
      "root_flare": true,
      "spacing_m": 0.35,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "matted spruce skirt with a few flagged spires"
    }
   ],
   "shrub": [
@@ -693,7 +700,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense dark-green mound, glossy leaves"
    },
    {
     "name": "Dwarf birch",
@@ -808,7 +816,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low tangled shrub of tiny round leaves"
    },
    {
     "name": "Dwarf willow",
@@ -923,7 +932,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "grey-green leafy willow mound"
    },
    {
     "name": "Heath",
@@ -1038,7 +1048,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low green twiggy carpet"
    },
    {
     "name": "Mountain pine",
@@ -1149,7 +1160,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dark sprawling pine mound, knee to head high"
    }
   ],
   "ground": [
@@ -1236,7 +1248,8 @@
      "color_2": "#8A7458",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat evergreen mat with white eight-petal flowers"
    },
    {
     "name": "Sheep fescue",
@@ -1324,7 +1337,8 @@
      "color_2": "#A09060",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small fine blue-green grass tuft"
    },
    {
     "name": "Star reindeer lichen",
@@ -1398,7 +1412,8 @@
      "color_2": "#B8C0A8",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "pale cauliflower-like lichen cushion"
    }
   ],
   "epiphyte": []

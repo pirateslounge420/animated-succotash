@@ -366,8 +366,8 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "conical",
-     "gap": 0.3,
+     "form": "irregular",
+     "gap": 0.35,
      "layering": "clumped",
      "droop": 0.2
     },

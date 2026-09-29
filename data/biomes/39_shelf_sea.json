@@ -108,7 +108,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "olive-brown forked straps draped over rock at low tide"
    },
    {
     "name": "Eelgrass",
@@ -196,7 +197,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "submerged meadow of long green ribbons streaming with tide"
    },
    {
     "name": "Sea lettuce",
@@ -274,7 +276,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "bright green translucent sheets on rock and mud"
    },
    {
     "name": "Sea rocket",
@@ -366,7 +369,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "sprawling fleshy mound of lobed leaves, lilac flowers"
    },
    {
     "name": "Smooth cordgrass",
@@ -462,7 +466,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "tall smooth cordgrass belt fringing the channel edge"
    },
    {
     "name": "Sugar kelp",
@@ -551,7 +556,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "single long ruffled brown blade swaying from a stipe"
    }
   ],
   "epiphyte": []

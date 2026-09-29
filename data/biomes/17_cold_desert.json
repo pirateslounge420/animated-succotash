@@ -131,7 +131,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low blackish spiny rounded shrub"
    },
    {
     "name": "Mormon tea",
@@ -231,7 +232,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "broom of upright grey-green jointed stems"
    },
    {
     "name": "Reaumuria",
@@ -344,7 +346,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "tiny grey succulent-leaved dwarf shrub"
    },
    {
     "name": "Saltbush",
@@ -455,7 +458,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "silvery grey rounded shrub"
    },
    {
     "name": "Saxaul",
@@ -563,7 +567,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "gnarled grey tree with weeping leafless twigs"
    },
    {
     "name": "Winterfat",
@@ -674,7 +679,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low white-woolly upright shrub"
    }
   ],
   "ground": [
@@ -763,7 +769,8 @@
      "color_2": "#A08A70",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small grey succulent cushion"
    },
    {
     "name": "Galleta grass",
@@ -850,7 +857,8 @@
      "color_2": "#B8A890",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "short grey-green sod grass"
    },
    {
     "name": "Gobi needlegrass",
@@ -939,7 +947,8 @@
      "color_2": "#C8B888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small fine tussock"
    },
    {
     "name": "Indian ricegrass",
@@ -1028,7 +1037,8 @@
      "color_2": "#C8B888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "airy tussock with open panicle"
    }
   ],
   "epiphyte": []

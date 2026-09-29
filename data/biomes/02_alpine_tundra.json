@@ -137,7 +137,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "flat glossy heath mat, pink-dotted"
    },
    {
     "name": "Net-leaved willow",
@@ -256,7 +257,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "ground-hugging mat of round net-veined leaves"
    },
    {
     "name": "Snow willow",
@@ -375,7 +377,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "tiny willow mat lost in the turf"
    }
   ],
   "ground": [
@@ -467,7 +470,8 @@
      "color_2": "#A08A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tight fine-leaved yellow-green turf tuft"
    },
    {
     "name": "Curved sedge",
@@ -557,7 +561,8 @@
      "color_2": "#A08A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "curly yellowish sedge turf, wind-combed"
    },
    {
     "name": "Map lichen",
@@ -635,7 +640,8 @@
      "color_2": "#2A2A2A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "yellow-green crust map painted on bare rock"
    },
    {
     "name": "Moss campion",
@@ -724,7 +730,8 @@
      "color_2": "#8A7A58",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tight green cushion studded pink"
    },
    {
     "name": "Mountain avens",
@@ -813,7 +820,8 @@
      "color_2": "#8A7458",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat evergreen mat with white eight-petal flowers"
    },
    {
     "name": "Purple saxifrage",
@@ -902,7 +910,8 @@
      "color_2": "#7A5A48",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense purple-flowered cushion on rock"
    }
   ],
   "epiphyte": []

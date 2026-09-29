@@ -137,7 +137,8 @@
      "root_flare": false,
      "spacing_m": 0.6,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "narrow dark pyramid, straight trunk, twiggy cone-hung crown"
    },
    {
     "name": "Black willow",
@@ -256,7 +257,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "leaning many-trunked willow with a ragged narrow crown"
    },
    {
     "name": "River red gum",
@@ -372,7 +374,8 @@
      "root_flare": true,
      "spacing_m": 2.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "massive white trunk, sparse drooping grey-green crown"
    },
    {
     "name": "Weeping willow",
@@ -492,7 +495,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "green curtain dome, whip branches to the water"
    },
    {
     "name": "White willow",
@@ -612,7 +616,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "broad silver-flashing rounded crown on a stout trunk"
    }
   ],
   "shrub": [
@@ -737,7 +742,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "loose rounded bush at the water line, button flowers"
    },
    {
     "name": "Grey willow",
@@ -857,7 +863,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey-green multi-stem willow bush, rounded and dense"
    },
    {
     "name": "Papyrus",
@@ -951,7 +958,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "smooth dark green triangular culms 2-5 m with brown basal sheaths"
-    }
+    },
+    "silhouette": "tall bare stems each topped by a green mop-head"
    }
   ],
   "ground": [
@@ -1038,7 +1046,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "terete smooth dark green culms 1-3 m, straw sheaths at the base"
-    }
+    },
+    "silhouette": "clump of tall round leafless green stems in water"
    },
    {
     "name": "Canadian waterweed",
@@ -1126,7 +1135,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "submerged trailing stems, no bark"
-    }
+    },
+    "silhouette": "submerged dark-green leafy strands rising toward light"
    },
    {
     "name": "Cattail",
@@ -1222,7 +1232,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "round green flower culm inside the leaf fans"
-    }
+    },
+    "silhouette": "flat sword-leaf fans with brown sausage heads"
    },
    {
     "name": "Common reed",
@@ -1318,7 +1329,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "hollow jointed culms turning straw-coloured in winter; internodes ~20 cm"
-    }
+    },
+    "silhouette": "tall even reed wall with feathery plumed tops"
    },
    {
     "name": "Curled pondweed",
@@ -1406,7 +1418,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "submerged stems, no bark"
-    }
+    },
+    "silhouette": "submerged crinkled-leaf stems, olive-brown"
    },
    {
     "name": "Eurasian water milfoil",
@@ -1498,7 +1511,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "submerged reddish stems, no bark"
-    }
+    },
+    "silhouette": "submerged feathery red-stemmed plumes"
    },
    {
     "name": "Giant water lily",
@@ -1586,7 +1600,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "petioles submerged and prickly; no stem above water"
-    }
+    },
+    "silhouette": "giant rimmed green trays floating in a ring"
    },
    {
     "name": "Sacred lotus",
@@ -1682,7 +1697,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "tall green petioles and scapes with small scattered prickles"
-    }
+    },
+    "silhouette": "blue-green parasol leaves held high above water"
    },
    {
     "name": "Water hyacinth",
@@ -1775,7 +1791,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "inflated spongy petioles, pale green"
-    }
+    },
+    "silhouette": "floating raft of glossy round leaves on balloon stalks"
    },
    {
     "name": "White water lily",
@@ -1865,7 +1882,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "stemless; flexible petioles submerged"
-    }
+    },
+    "silhouette": "flat notched pads floating with white cups"
    },
    {
     "name": "Yellow flag iris",
@@ -1961,7 +1979,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "stout flower stems; leaf bases flushed pink-brown"
-    }
+    },
+    "silhouette": "upright grey-green sword fans with yellow flags"
    }
   ],
   "epiphyte": []

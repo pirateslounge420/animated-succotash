@@ -80,7 +80,7 @@
     },
     "canopy": {
      "form": "rounded",
-     "gap": 0.4,
+     "gap": 0.45,
      "layering": "clumped",
      "droop": 0.2
     },
@@ -114,7 +114,7 @@
       40
      ],
      "taper_exponent": 1.7,
-     "sinuosity": 0.4,
+     "sinuosity": 0.35,
      "fork_height_frac": [
       0.15,
       0.3
@@ -126,11 +126,12 @@
       0.4
      ],
      "self_prune": false,
-     "dead_limbs": 0.3,
+     "dead_limbs": 0.4,
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "open rounded crown of small leaves, brittle limbs"
    }
   ],
   "shrub": [
@@ -225,7 +226,8 @@
      "color_2": "#5A4E40",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "tight spiny green cushion, yellow-flowered"
    },
    {
     "name": "Siberian pea shrub",
@@ -342,7 +344,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "upright twiggy shrub, yellow pea flowers"
    },
    {
     "name": "Steppe spiraea",
@@ -455,7 +458,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "arching wands of small leaves, white-flowered"
    },
    {
     "name": "Steppe wormwood",
@@ -570,7 +574,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "silvery-white feathery low shrub"
    }
   ],
   "ground": [
@@ -661,7 +666,8 @@
      "color_2": "#C8B890",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "stiff grey-green needle-grass tuft"
    },
    {
     "name": "Crested wheatgrass",
@@ -750,7 +756,8 @@
      "color_2": "#B8A888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "green grass clump with flat comb spikes"
    },
    {
     "name": "Feather grass",
@@ -839,7 +846,8 @@
      "color_2": "#C8C0A0",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tuft trailing long feathery silver awns"
    },
    {
     "name": "Krylov needlegrass",
@@ -928,7 +936,8 @@
      "color_2": "#C8B888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small stiff grey-green bunchgrass"
    },
    {
     "name": "Steppe tulip",
@@ -1015,7 +1024,8 @@
      "color_2": "#9A8A8A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low glaucous leaves with a red cup"
    },
    {
     "name": "Valais fescue",
@@ -1104,7 +1114,8 @@
      "color_2": "#C0B898",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tight blue-grey fine-leaved tuft"
    }
   ],
   "epiphyte": []

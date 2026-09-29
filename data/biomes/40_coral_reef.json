@@ -129,7 +129,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "leaning ringed pole with a tousled feather crown"
    },
    {
     "name": "Pisonia",
@@ -241,7 +242,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "broad spreading pale-leaved tree with soft thick trunk"
    }
   ],
   "shrub": [
@@ -357,7 +359,8 @@
      "root_flare": false,
      "spacing_m": 0.25,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense bright-green mound of spoon leaves on beach edge"
    },
    {
     "name": "Octopus bush",
@@ -423,7 +426,7 @@
      "note": "silky silver-hairy spatulate leaves crowded at branch tips"
     },
     "canopy": {
-     "form": "spreading",
+     "form": "umbrella",
      "gap": 0.4,
      "layering": "clumped",
      "droop": 0.1
@@ -448,8 +451,8 @@
      "confidence": "estimated"
     },
     "architecture": {
-     "model": "rauh",
-     "habit": "multi_stem",
+     "model": "leeuwenberg",
+     "habit": "candelabra",
      "orders": 4,
      "branch_angle_deg": [
       40,
@@ -472,7 +475,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "flat-topped candelabra of thick limbs, silver leaf rosettes"
    }
   ],
   "ground": [
@@ -563,7 +567,8 @@
      "color_2": "#7A4A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "trailing vine mat of notched round leaves, pink trumpets"
    },
    {
     "name": "Crustose coralline alga",
@@ -646,7 +651,8 @@
      "color_2": "#E8B0C0",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "pink calcified crust on reef rock"
    },
    {
     "name": "Halimeda",
@@ -729,7 +735,8 @@
      "color_2": "#D8D8C0",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "clump of chained green calcified discs"
    },
    {
     "name": "Sea grapes alga",
@@ -812,7 +819,8 @@
      "color_2": "#3E9A3A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "green runner mat studded with grape-like beads"
    },
    {
     "name": "Turbinaria alga",
@@ -907,7 +915,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "alga; short stipe, no stem surface"
-    }
+    },
+    "silhouette": "stiff brown bushlet of toothed top-shaped blades"
    },
    {
     "name": "Turtle grass",
@@ -1001,7 +1010,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "submerged seagrass; rhizome and sheaths only"
-    }
+    },
+    "silhouette": "short broad-ribbon seagrass lawn"
    }
   ],
   "epiphyte": []

@@ -137,7 +137,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dark rounded mangrove dome above spiky pneumatophores"
    },
    {
     "name": "Coconut palm",
@@ -249,7 +250,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "leaning ringed pole with a tousled feather crown"
    },
    {
     "name": "Red mangrove",
@@ -369,7 +371,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "glossy dome propped on arching stilt-root cage"
    },
    {
     "name": "Tamarisk",
@@ -483,7 +486,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "wispy feathery small tree, pink haze in summer"
    }
   ],
   "shrub": [
@@ -600,7 +604,8 @@
      "root_flare": false,
      "spacing_m": 0.25,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense bright-green mound of spoon leaves on beach edge"
    },
    {
     "name": "Buttonwood",
@@ -715,7 +720,8 @@
      "root_flare": true,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "irregular dark shrub-tree, sprawling low branches"
    },
    {
     "name": "Shrubby seablite",
@@ -831,7 +837,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "compact grey-green succulent bush"
    }
   ],
   "ground": [
@@ -928,7 +935,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "tall even reed wall with feathery plumed tops"
    },
    {
     "name": "Dwarf eelgrass",
@@ -1016,7 +1024,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "short fine-leaved seagrass lawn on tidal mud"
    },
    {
     "name": "Neptune grass",
@@ -1104,7 +1113,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "dense dark ribbon meadow on the seabed"
    },
    {
     "name": "Perennial glasswort",
@@ -1196,7 +1206,8 @@
      "mode": "short_day",
      "threshold_h": 13.0,
      "response": "flower"
-    }
+    },
+    "silhouette": "woody-based glasswort mound of jointed green fingers"
    },
    {
     "name": "Saltmarsh rush",
@@ -1290,7 +1301,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "stiff dark-green rush tussock of vertical needles"
    },
    {
     "name": "Sea purslane",
@@ -1384,7 +1396,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "flat pink-stemmed succulent mat on sand"
    },
    {
     "name": "Tape seagrass",
@@ -1472,7 +1485,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "very long tape leaves swaying from a fibrous rhizome"
    },
    {
     "name": "Turtle grass",
@@ -1560,7 +1574,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "short broad-ribbon seagrass lawn"
    }
   ],
   "epiphyte": []

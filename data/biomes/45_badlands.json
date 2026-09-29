@@ -124,7 +124,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "leaning twisted trunk, open irregular pale-green crown"
    },
    {
     "name": "Plains cottonwood",
@@ -242,7 +243,8 @@
      "root_flare": false,
      "spacing_m": 0.8,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge broad open crown on a massive furrowed trunk"
    },
    {
     "name": "Rocky Mountain juniper",
@@ -348,7 +350,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "narrow blue-green conical juniper, shredding trunk"
    }
   ],
   "shrub": [
@@ -463,7 +466,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spiny grey-white shrub with bright green thread leaves"
    },
    {
     "name": "Plains prickly pear",
@@ -563,7 +567,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low clump of spiny flat pads"
    },
    {
     "name": "Rubber rabbitbrush",
@@ -676,7 +681,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "pale rounded broom-like bush, yellow-topped in autumn"
    },
    {
     "name": "Silver sagebrush",
@@ -787,7 +793,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low silver-grey sage mound"
    },
    {
     "name": "Skunkbush sumac",
@@ -904,7 +911,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense rounded thicket of small three-part leaves"
    },
    {
     "name": "Soapweed yucca",
@@ -989,7 +997,8 @@
      "color_2": "#C8B890",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "stemless spiky blue-grey rosette with tall flower stalk"
    }
   ],
   "ground": [
@@ -1078,7 +1087,8 @@
      "color_2": "#B0A070",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "short fine tussock with eyelash seed heads"
    },
    {
     "name": "Esparto grass",
@@ -1167,7 +1177,8 @@
      "color_2": "#C8BC98",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "big wiry grey-green tussock of thread leaves"
    },
    {
     "name": "Gumbo evening primrose",
@@ -1254,7 +1265,8 @@
      "color_2": "#9A8A70",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "flat grey rosette with big white evening flowers"
    },
    {
     "name": "Little bluestem",
@@ -1343,7 +1355,8 @@
      "color_2": "#A05A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "upright blue-green tussock turning russet"
    },
    {
     "name": "Western wheatgrass",
@@ -1432,7 +1445,8 @@
      "color_2": "#B8A888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "blue-green rhizomatous grass sward"
    }
   ],
   "epiphyte": []

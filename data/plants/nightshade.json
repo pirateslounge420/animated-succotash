@@ -416,13 +416,13 @@
      "silhouette": "a low grey mound in the desert wash, covered at dusk in enormous white trumpets glowing in the dark"
     },
     "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.3,
-     "scale_cm": 2.0,
-     "color": "#8A7A66",
-     "color_2": "#6A5A4A",
-     "lenticels": "dots",
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1.0,
+     "color": "#7A8A6A",
+     "color_2": "#5A6A50",
+     "lenticels": "none",
      "confidence": "documented"
     },
     "architecture": {
@@ -862,9 +862,9 @@
      "silhouette": "a small dome-crowned tree by the water hung with long white trumpets, glowing at dusk; scent carries far"
     },
     "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.3,
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
      "scale_cm": 2.0,
      "color": "#8A7A66",
      "color_2": "#6A5A4A",
@@ -1085,9 +1085,9 @@
      "silhouette": "a small felted tree on the cold wet slope, red-and-yellow trumpets hanging in the mist"
     },
     "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.3,
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
      "scale_cm": 2.0,
      "color": "#8A7A66",
      "color_2": "#6A5A4A",
@@ -1306,9 +1306,9 @@
      "silhouette": "a small grey-green tree with short white bells, in the dry high valley"
     },
     "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.3,
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
      "scale_cm": 2.0,
      "color": "#8A7A66",
      "color_2": "#6A5A4A",
@@ -1527,9 +1527,9 @@
      "silhouette": "a riverside dome tree trailing half-metre trumpets that shade from white to peach"
     },
     "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.3,
+     "pattern": "smooth",
+     "orientation": "none",
+     "depth": 0.15,
      "scale_cm": 2.0,
      "color": "#8A7A66",
      "color_2": "#6A5A4A",

@@ -111,7 +111,8 @@
      "color_2": "#8A5A58",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tiny fleshy rosette with white-pink flowers"
    },
    {
     "name": "Map lichen",
@@ -185,7 +186,8 @@
      "color_2": "#2A2A2A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "yellow-green crust map with black borders on rock"
    },
    {
     "name": "Snow algae",
@@ -259,7 +261,8 @@
      "color_2": "#B03050",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "pink-red stain across old snow"
    }
   ],
   "epiphyte": []

@@ -134,7 +134,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "open rounded crown on a straight grey trunk"
    },
    {
     "name": "Beech",
@@ -247,7 +248,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense broad dome, smooth grey elephant trunk"
    },
    {
     "name": "Dawn redwood",
@@ -411,7 +413,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall feathery cone with a fluted base"
    },
    {
     "name": "Elm",
@@ -524,7 +527,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "vase of arching limbs, fountain crown"
    },
    {
     "name": "Ginkgo",
@@ -670,7 +674,7 @@
      "sat": 0.95,
      "val": 1.0,
      "underside": 0.1,
-     "autumn": "#f0c020",
+     "autumn": "#F2D21E",
      "drop": true
     },
     "photoperiod": {
@@ -701,7 +705,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "gaunt upright tree, fan leaves, gold in autumn"
    },
    {
     "name": "Maple",
@@ -815,7 +820,8 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense oval crown, blazing orange in autumn"
    },
    {
     "name": "Oak",
@@ -929,7 +935,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "broad spreading dome on a short massive trunk"
    },
    {
     "name": "Red oak",
@@ -1043,7 +1050,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall rounded crown, straight trunk, red autumn"
    },
    {
     "name": "Tulip tree",
@@ -1220,7 +1228,8 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall straight column with a narrow high crown"
    },
    {
     "name": "Yulan magnolia",
@@ -1396,7 +1405,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small rounded tree, white goblets before leaves"
    }
   ],
   "shrub": [
@@ -1515,7 +1525,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "arching leafy shrub with flat cream flower plates"
    },
    {
     "name": "Great rhododendron",
@@ -1690,7 +1701,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dark leathery thicket, sprawling stems"
    },
    {
     "name": "Hawthorn",
@@ -1763,8 +1775,8 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "irregular",
-     "gap": 0.3,
+     "form": "rounded",
+     "gap": 0.25,
      "layering": "clumped",
      "droop": 0.15
     },
@@ -1804,7 +1816,8 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "gnarled thorny small tree, dense crown"
    },
    {
     "name": "Hazel",
@@ -1851,7 +1864,7 @@
     "leaf": {
      "type": "simple",
      "outline": "ovate",
-     "aspect": 1.2,
+     "aspect": 1.1,
      "base": "cordate",
      "apex": "acuminate",
      "margin": "serrate",
@@ -1862,7 +1875,7 @@
       12
      ],
      "compound": null,
-     "texture": "velvety",
+     "texture": "hairy_tomentose",
      "confidence": "documented"
     },
     "bark": {
@@ -1917,7 +1930,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "multi-stemmed vase of straight poles"
    },
    {
     "name": "Ichang papeda",
@@ -2094,7 +2108,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "small dense glossy round-topped tree"
    },
    {
     "name": "Moso bamboo",
@@ -2202,7 +2217,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall grey-green culms with arching plume tops"
    },
    {
     "name": "Spicebush",
@@ -2315,7 +2331,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "loose rounded shrub, yellow in autumn"
    }
   ],
   "ground": [
@@ -2404,7 +2421,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "blue nodding bells over strap leaves"
    },
    {
     "name": "Kuma bamboo grass",
@@ -2512,7 +2530,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "knee-high broad-leaved bamboo thicket"
    },
    {
     "name": "Lady fern",
@@ -2603,7 +2622,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "lacy pale-green vase of fronds"
    },
    {
     "name": "Mayapple",
@@ -2690,7 +2710,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "colony of green umbrellas at knee height"
    },
    {
     "name": "Spring herbs",
@@ -2781,7 +2802,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "white star carpet over divided leaves"
    },
    {
     "name": "Wood sorrel",
@@ -2870,7 +2892,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "low clover-leaf carpet on the forest floor"
    }
   ],
   "epiphyte": [
@@ -2984,7 +3007,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dark glossy sheet climbing trunks"
    }
   ]
  },

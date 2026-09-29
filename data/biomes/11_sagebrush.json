@@ -128,7 +128,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "short bushy round-crowned pinyon"
    },
    {
     "name": "Utah juniper",
@@ -238,7 +239,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "squat rounded juniper, shreddy grey trunk"
    }
   ],
   "shrub": [
@@ -319,14 +321,14 @@
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.3,
+     "pattern": "stringy",
+     "orientation": "none",
+     "depth": 0.35,
      "scale_cm": 1,
      "color": "#7A6E60",
      "color_2": "#5A4A3A",
      "lenticels": "none",
-     "confidence": "documented"
+     "confidence": "estimated"
     },
     "architecture": {
      "model": "rauh",
@@ -353,7 +355,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "grey-green spreading shrub, wedge leaves"
    },
    {
     "name": "Big sagebrush",
@@ -464,7 +467,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "silvery-grey rounded shrub, shreddy trunk"
    },
    {
     "name": "Greasewood",
@@ -577,7 +581,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "bright green spiny shrub with white stems"
    },
    {
     "name": "Rubber rabbitbrush",
@@ -690,7 +695,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "grey-green rounded shrub, gold flower top"
    },
    {
     "name": "Shadscale",
@@ -801,7 +807,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low grey spiny mound"
    }
   ],
   "ground": [
@@ -890,7 +897,8 @@
      "color_2": "#A8A088",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "silvery arrow leaves under big yellow daisies"
    },
    {
     "name": "Bluebunch wheatgrass",
@@ -979,7 +987,8 @@
      "color_2": "#B8A888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "green bunchgrass with loose spikes"
    },
    {
     "name": "Idaho fescue",
@@ -1068,7 +1077,8 @@
      "color_2": "#C0B898",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "fine blue-grey bunchgrass tuft"
    },
    {
     "name": "Indian ricegrass",
@@ -1157,7 +1167,8 @@
      "color_2": "#C8B888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "airy bunchgrass with open lacy seed heads"
    },
    {
     "name": "Sandberg bluegrass",
@@ -1246,7 +1257,8 @@
      "color_2": "#B8A888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small early-green bunchgrass tuft"
    }
   ],
   "epiphyte": []

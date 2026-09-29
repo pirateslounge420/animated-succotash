@@ -137,7 +137,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "rounded grey-green bush, white-fluffed in autumn"
    },
    {
     "name": "Marsh elder",
@@ -256,7 +257,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "rounded leafy shrub above the marsh grass"
    },
    {
     "name": "Sea purslane shrub (halimione)",
@@ -371,7 +373,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low silvery-grey sprawling mat"
    }
   ],
   "ground": [
@@ -462,7 +465,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "dense dark grey-green needle stand"
    },
    {
     "name": "Common cordgrass",
@@ -554,11 +558,12 @@
      "val": 1.0,
      "underside": 0.1,
      "autumn": "#C8B060",
-     "drop": false
+     "drop": true
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "stiff upright grass sward"
    },
    {
     "name": "Cordgrass",
@@ -650,11 +655,12 @@
      "val": 1.0,
      "underside": 0.1,
      "autumn": "#C8A858",
-     "drop": false
+     "drop": true
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "tall smooth bright green grass stand"
    },
    {
     "name": "Glasswort",
@@ -748,7 +754,8 @@
      "mode": "short_day",
      "threshold_h": 13.0,
      "response": "flower"
-    }
+    },
+    "silhouette": "low jointed succulent stubble"
    },
    {
     "name": "Salt hay",
@@ -835,11 +842,12 @@
      "val": 1.0,
      "underside": 0.1,
      "autumn": "#C8B060",
-     "drop": false
+     "drop": true
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "fine cowlicked lodged grass mat"
    },
    {
     "name": "Sea lavender",
@@ -930,7 +938,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "flat leaf rosette with a lilac spray"
    }
   ],
   "epiphyte": []

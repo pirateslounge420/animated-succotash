@@ -200,7 +200,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "impossibly tall white pole with a small frond crown"
    }
   ],
   "canopy": [
@@ -377,7 +378,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "tiered whorls of huge leathery leaves"
    },
    {
     "name": "Campbell's magnolia",
@@ -553,7 +555,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "spreading bare crown of pink goblets"
    },
    {
     "name": "Cloud-forest oak",
@@ -668,7 +671,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "massive spreading oak dripping with epiphytes"
    },
    {
     "name": "Clusia",
@@ -783,7 +787,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "flat-topped dense dark crown, thick leaves"
    },
    {
     "name": "Giant highland banana",
@@ -956,7 +961,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "giant banana, huge tattered paddle leaves"
    },
    {
     "name": "Gnarled cloud-forest tree",
@@ -1075,7 +1081,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "gnarled grey tree with a fine-textured crown"
    },
    {
     "name": "Hagenia",
@@ -1194,7 +1201,8 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "wide flat umbrella crown, drooping red plumes"
    },
    {
     "name": "Podocarp",
@@ -1309,7 +1317,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "rounded dark crown of narrow leaves"
    },
    {
     "name": "Tree rhododendron",
@@ -1484,7 +1493,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "crooked red-barked tree, scarlet flower domes"
    }
   ],
   "shrub": [
@@ -1598,7 +1608,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "scrambling bamboo draped over the canopy"
    },
    {
     "name": "Andean miconia",
@@ -1713,7 +1724,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "bushy shrub of paired three-veined leaves"
    },
    {
     "name": "Andean tree fern",
@@ -1829,7 +1841,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "wide frond crown on a fibrous trunk"
    },
    {
     "name": "Enset",
@@ -2002,7 +2015,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "swollen-based banana with upright red-ribbed leaves"
    },
    {
     "name": "Fuchsia",
@@ -2117,7 +2131,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "arching shrub hung with red tubular flowers"
    },
    {
     "name": "Mountain bamboo",
@@ -2229,7 +2244,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall dense bamboo stand, arching tops"
    }
   ],
   "ground": [
@@ -2320,7 +2336,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "trailing sprays of tiny glossy leaves"
    },
    {
     "name": "Filmy fern",
@@ -2409,7 +2426,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "translucent filmy fern film on mossy trunks"
    },
    {
     "name": "Hard fern",
@@ -2498,7 +2516,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "small rosette of ladder fronds"
    },
    {
     "name": "Moss carpet",
@@ -2577,7 +2596,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "fern-like lacy moss carpet"
    },
    {
     "name": "Peperomia",
@@ -2666,7 +2686,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "succulent-leaved little mound"
    }
   ],
   "epiphyte": [
@@ -2735,7 +2756,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "short pale lichen beards on twigs"
    },
    {
     "name": "Epidendrum orchid",
@@ -2824,7 +2846,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "leafy canes with an orange flower ball"
    },
    {
     "name": "Epiphytic moss and liverworts",
@@ -2903,7 +2926,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "flat leafy liverwort hanging in mats"
    },
    {
     "name": "Lowe's pitcher",
@@ -3084,7 +3108,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "scrambling vine hung with flared pitchers"
    },
    {
     "name": "Tank bromeliad",
@@ -3163,7 +3188,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "tank rosette of strap leaves with a red spike"
    },
    {
     "name": "Vireya rhododendron",
@@ -3312,7 +3338,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "epiphytic shrub with orange flower clusters"
    }
   ]
  },

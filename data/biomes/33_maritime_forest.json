@@ -143,9 +143,9 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "conical",
-     "gap": 0.4,
-     "layering": "even",
+     "form": "spreading",
+     "gap": 0.45,
+     "layering": "tiered",
      "droop": 0.3
     },
     "tint": {
@@ -181,7 +181,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat-topped feathery spire on a fluted flared trunk"
    },
    {
     "name": "Cabbage palmetto",
@@ -293,7 +294,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "round fan-leaf ball on a straight grey pole"
    },
    {
     "name": "Japanese black pine",
@@ -397,7 +399,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "irregular tiered dark crown on a black trunk"
    },
    {
     "name": "Loblolly pine",
@@ -501,7 +504,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "rounded crown high on a long straight trunk"
    },
    {
     "name": "Monterey cypress",
@@ -607,7 +611,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "wind-flattened dark crown on a thick trunk"
    },
    {
     "name": "Sitka spruce",
@@ -674,9 +679,9 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "irregular",
+     "form": "conical",
      "gap": 0.4,
-     "layering": "clumped",
+     "layering": "even",
      "droop": 0.3
     },
     "tint": {
@@ -712,7 +717,8 @@
      "root_flare": true,
      "spacing_m": 0.35,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall dark spire with drooping sprays"
    },
    {
     "name": "Wind-shaped live oak",
@@ -823,7 +829,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "sloping wind-sheared dome of dark leaves"
    }
   ],
   "shrub": [
@@ -936,7 +943,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense compact green mound"
    },
    {
     "name": "Kuril bamboo",
@@ -1044,7 +1052,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense low leafy bamboo thicket"
    },
    {
     "name": "Saw palmetto",
@@ -1156,7 +1165,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low sprawling clump of stiff fan leaves"
    },
    {
     "name": "Wax myrtle",
@@ -1267,7 +1277,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense rounded olive-green multi-stem bush"
    },
    {
     "name": "Yaupon holly",
@@ -1378,7 +1389,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "upright vase-shaped glossy shrub"
    }
   ],
   "ground": [
@@ -1471,7 +1483,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "waist-high layered triangular fronds"
    },
    {
     "name": "Partridgeberry",
@@ -1556,7 +1569,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "flat tiny-leaved mat"
    },
    {
     "name": "Pink muhly grass",
@@ -1644,7 +1658,8 @@
      "mode": "short_day",
      "threshold_h": 13,
      "response": "flower"
-    }
+    },
+    "silhouette": "fine tussock under a pink haze"
    },
    {
     "name": "Salal",
@@ -1755,7 +1770,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense glossy leafy thicket"
    },
    {
     "name": "Seaside goldenrod",
@@ -1844,7 +1860,8 @@
      "mode": "short_day",
      "threshold_h": 13.5,
      "response": "flower"
-    }
+    },
+    "silhouette": "stiff upright stems with golden plumes"
    }
   ],
   "epiphyte": [
@@ -1959,7 +1976,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "leafy tangle high in host trees"
    },
    {
     "name": "Resurrection fern",
@@ -2048,7 +2066,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "furry green mat along horizontal limbs"
    },
    {
     "name": "Spanish moss",
@@ -2127,7 +2146,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "long grey curtains hanging from branches"
    }
   ]
  },

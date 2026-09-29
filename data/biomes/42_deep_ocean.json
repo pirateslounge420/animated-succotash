@@ -114,7 +114,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "floating alga; no stem surface"
-    }
+    },
+    "silhouette": "floating golden-brown tangle with berry floats"
    },
    {
     "name": "Pelagic sargassum",
@@ -209,7 +210,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "floating alga; no stem surface"
-    }
+    },
+    "silhouette": "floating golden-brown tangle with berry floats"
    }
   ],
   "epiphyte": []

@@ -120,7 +120,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "immense red column, narrow crown far above"
    },
    {
     "name": "Coihue",
@@ -231,7 +232,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "huge layered dark crown of tiny leaves"
    },
    {
     "name": "Douglas fir",
@@ -334,7 +336,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall dark spire, deeply furrowed trunk"
    },
    {
     "name": "Hemlock",
@@ -395,8 +398,8 @@
      "orientation": "vertical",
      "depth": 0.5,
      "scale_cm": 3,
-     "color": "#6E5A4E",
-     "color_2": "#5A3234",
+     "color": "#6A4A3E",
+     "color_2": "#8A3A34",
      "lenticels": "none",
      "confidence": "documented"
     },
@@ -437,7 +440,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "feathery dark cone with a drooping tip"
    },
    {
     "name": "Rimu",
@@ -495,9 +499,9 @@
     },
     "bark": {
      "pattern": "flaky",
-     "orientation": "vertical",
+     "orientation": "none",
      "depth": 0.45,
-     "scale_cm": 6,
+     "scale_cm": 8,
      "color": "#6A5A4C",
      "color_2": "#9A5A3A",
      "lenticels": "none",
@@ -540,7 +544,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "weeping dark-green curtains on a tall trunk"
    },
    {
     "name": "Sitka spruce",
@@ -613,7 +618,7 @@
      "droop": 0.4
     },
     "tint": {
-     "hue_shift": -12,
+     "hue_shift": -9,
      "sat": 0.75,
      "val": 0.85,
      "underside": 0.3
@@ -634,7 +639,7 @@
      "taper_exponent": 1.3,
      "sinuosity": 0.05,
      "fork_height_frac": null,
-     "buttress": "none",
+     "buttress": "low",
      "lean_max_deg": 5,
      "live_crown_ratio": [
       0.9,
@@ -645,7 +650,8 @@
      "root_flare": true,
      "spacing_m": 0.35,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge blue-green spire, buttressed base"
    }
   ],
   "shrub": [
@@ -755,7 +761,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "fountain of arching solid canes"
    },
    {
     "name": "Devil's club",
@@ -869,7 +876,8 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spiny club stems under huge maple-like leaves"
    },
    {
     "name": "Kuril bamboo",
@@ -977,7 +985,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense waist-high bamboo thicket"
    },
    {
     "name": "Salal",
@@ -1088,7 +1097,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense glossy evergreen thicket"
    },
    {
     "name": "Silver tree fern",
@@ -1200,7 +1210,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "silver-backed frond crown on a slender trunk"
    },
    {
     "name": "Vine maple",
@@ -1247,11 +1258,11 @@
     "leaf": {
      "type": "simple",
      "outline": "palmate_lobed",
-     "aspect": 1.0,
+     "aspect": 0.95,
      "base": "cordate",
      "apex": "acute",
      "margin": "lobed",
-     "lobes": 9,
+     "lobes": 7,
      "venation": "palmate",
      "arrangement": "opposite",
      "size_cm": [
@@ -1314,7 +1325,8 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "sprawling multi-stemmed maple, round leaves"
    }
   ],
   "ground": [
@@ -1405,7 +1417,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "flat rosette of glossy ladder fronds"
    },
    {
     "name": "Oregon oxalis",
@@ -1494,7 +1507,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "dense clover-leaf carpet of the redwood floor"
    },
    {
     "name": "Skunk cabbage",
@@ -1588,7 +1602,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "huge upright glossy paddle leaves"
    },
    {
     "name": "Stair-step moss",
@@ -1667,7 +1682,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "stepped feathery moss carpet"
    },
    {
     "name": "Sword fern",
@@ -1726,7 +1742,7 @@
        160
       ],
       "leaflet_outline": "ovate",
-      "leaflet_aspect": 5,
+      "leaflet_aspect": 6.5,
       "leaflet_margin": "serrate"
      },
      "texture": "glossy",
@@ -1756,7 +1772,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "big dark-green shuttlecock of stiff fronds"
    }
   ],
   "epiphyte": [
@@ -1837,7 +1854,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "shaggy moss drapes hanging from limbs"
    },
    {
     "name": "Licorice fern",
@@ -1926,7 +1944,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "small fern clumps on mossy trunks"
    },
    {
     "name": "Old man's beard",
@@ -1993,7 +2012,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "long pale lichen beards streaming from branches"
    }
   ]
  },

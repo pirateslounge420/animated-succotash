@@ -137,7 +137,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense round crown over arching stilt roots"
    },
    {
     "name": "Black mangrove",
@@ -252,7 +253,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "grey-green rounded crown over a pencil-root field"
    },
    {
     "name": "Coconut palm",
@@ -369,21 +371,26 @@
     "bark_type": "palm",
     "leaf_type": "frond",
     "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 18,
-     "base": "truncate",
-     "apex": "acute",
-     "margin": "entire",
+     "type": "frond",
      "venation": "parallel",
-     "arrangement": "distichous",
+     "arrangement": "spiral",
      "size_cm": [
-      60,
-      90
+      400,
+      600
      ],
-     "compound": null,
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       180,
+       250
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 25.0,
+      "leaflet_margin": "entire"
+     },
      "texture": "glossy",
-     "confidence": "documented"
+     "confidence": "documented",
+     "note": "pinnate fronds 4-6 m with 200+ linear leaflets 60-90 cm, arching from a leaning ringed trunk"
     },
     "bark": {
      "pattern": "ringed",
@@ -433,7 +440,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "leaning ringed pole with arching feather fronds"
    },
    {
     "name": "Grey mangrove",
@@ -548,7 +556,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "pale grey-green crown on a pale trunk"
    },
    {
     "name": "Mangrove apple",
@@ -668,7 +677,8 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spreading drooping crown over cone roots"
    },
    {
     "name": "Red mangrove",
@@ -788,7 +798,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense dark crown on arching prop roots"
    },
    {
     "name": "White mangrove",
@@ -903,7 +914,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "small rounded yellow-green crown"
    }
   ],
   "shrub": [
@@ -1020,7 +1032,8 @@
      "root_flare": true,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "gnarled leaning multi-stem tree"
    },
    {
     "name": "Holly mangrove",
@@ -1135,7 +1148,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low spiny-leaved thicket"
    },
    {
     "name": "Mangrove fern",
@@ -1228,7 +1242,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "tall coarse fronds in clumps"
    },
    {
     "name": "Nipa palm",
@@ -1277,21 +1292,26 @@
     "bark_type": "palm",
     "leaf_type": "frond",
     "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 15,
-     "base": "truncate",
-     "apex": "acuminate",
-     "margin": "entire",
+     "type": "frond",
      "venation": "parallel",
-     "arrangement": "distichous",
+     "arrangement": "spiral",
      "size_cm": [
-      60,
-      130
+      400,
+      900
      ],
-     "compound": null,
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       100,
+       200
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 20.0,
+      "leaflet_margin": "entire"
+     },
      "texture": "glossy",
-     "confidence": "documented"
+     "confidence": "documented",
+     "note": "erect pinnate fronds 4-9 m with many linear leaflets, rising from a prostrate trunkless rhizome"
     },
     "bark": {
      "pattern": "green_stem",
@@ -1341,7 +1361,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "trunkless clump of huge feather fronds"
    },
    {
     "name": "Orange mangrove",
@@ -1456,7 +1477,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "tall conical crown over knee roots"
    }
   ],
   "ground": [
@@ -1575,7 +1597,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "single thin stem with a few leaves"
    },
    {
     "name": "Saltwort",
@@ -1664,7 +1687,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "low yellow-green succulent mat"
    },
    {
     "name": "Sea purslane",
@@ -1753,7 +1777,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "flat succulent mat with pink stems"
    },
    {
     "name": "Smooth cordgrass",
@@ -1845,11 +1870,12 @@
      "val": 1.0,
      "underside": 0.1,
      "autumn": "#C8A858",
-     "drop": false
+     "drop": true
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "tall smooth bright green grass stand"
    },
    {
     "name": "Turtle grass",
@@ -1937,7 +1963,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "submerged ribbon meadow"
    }
   ],
   "epiphyte": [
@@ -2025,7 +2052,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "spiny tuber with a few leaves"
    },
    {
     "name": "Mangrove bromeliad",
@@ -2111,7 +2139,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "grey-green tank rosette on a branch"
    },
    {
     "name": "Mangrove orchid",
@@ -2197,7 +2226,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "clump of drooping leafy canes"
    },
    {
     "name": "Strangler fig",
@@ -2374,7 +2404,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "spreading crown on a lattice of roots"
    }
   ]
  },

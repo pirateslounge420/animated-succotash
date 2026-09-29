@@ -133,7 +133,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "prostrate woody mat hugging the ground, catkins upright"
    },
    {
     "name": "Bog bilberry",
@@ -248,7 +249,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low blue-green twiggy mound, knee-high at most"
    },
    {
     "name": "Crowberry",
@@ -354,7 +356,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dark heath mat of needle-fine twigs"
    },
    {
     "name": "Dwarf birch",
@@ -469,7 +472,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low tangled shrub of tiny round leaves"
    }
   ],
   "ground": [
@@ -559,7 +563,8 @@
      "color_2": "#8A7A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "hairy leaf tuft with nodding yellow cups"
    },
    {
     "name": "Arctic cottongrass",
@@ -645,7 +650,8 @@
      "color_2": "#A08A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grassy tuft topped with white cotton puffs"
    },
    {
     "name": "Entire-leaf mountain avens",
@@ -730,7 +736,8 @@
      "color_2": "#8A7458",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat evergreen mat spangled with white flowers"
    },
    {
     "name": "Reindeer lichen",
@@ -804,7 +811,8 @@
      "color_2": "#A8B8A0",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "pale grey-white spongy lichen carpet"
    },
    {
     "name": "Rusty bog-moss",
@@ -889,7 +897,8 @@
      "color_2": "#A05A30",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "brown-green moss hummock, soft and rounded"
    },
    {
     "name": "Tundra sedge",
@@ -975,7 +984,8 @@
      "color_2": "#8A5A40",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "blue-green sedge sward in wet ground"
    }
   ],
   "epiphyte": []

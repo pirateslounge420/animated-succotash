@@ -131,7 +131,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spiny grey-white shrub with bright green thread leaves"
    },
    {
     "name": "Iodine bush",
@@ -238,7 +239,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "grey-green succulent jointed bush"
    },
    {
     "name": "Nitre bush",
@@ -349,7 +351,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spiny grey-green succulent-leaved mound"
    },
    {
     "name": "Saltcedar",
@@ -476,7 +479,8 @@
      "secondary": "#F4D0DC",
      "form": "dense pink plumes 2-5 cm on the twig tips",
      "season": "summer"
-    }
+    },
+    "silhouette": "feathery see-through plume bush with weeping whip twigs"
    },
    {
     "name": "Shrubby seablite",
@@ -587,7 +591,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "compact grey-green succulent bush"
    }
   ],
   "ground": [
@@ -675,7 +680,8 @@
      "color_2": "#6A6058",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "flat grey-green salt-crusted mat, pink flowers"
    },
    {
     "name": "Glasswort",
@@ -763,7 +769,8 @@
      "color_2": "#9AD070",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "carpet of stubby jointed green candles, red by autumn"
    },
    {
     "name": "Halocnemum",
@@ -844,7 +851,8 @@
      "color_2": "#6E6A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "knobby grey-green succulent hummock"
    },
    {
     "name": "Pickleweed",
@@ -930,7 +938,8 @@
      "color_2": "#8A7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "woody-based glasswort mound of jointed green fingers"
    },
    {
     "name": "Saltgrass",
@@ -1017,7 +1026,8 @@
      "color_2": "#B0A878",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "short stiff two-ranked saltgrass turf"
    }
   ],
   "epiphyte": []

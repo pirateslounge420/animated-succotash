@@ -184,7 +184,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat-topped feathery spire on a fluted flared trunk"
    },
    {
     "name": "Black poplar",
@@ -304,7 +305,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "broad heavy dome on a burred leaning trunk"
    },
    {
     "name": "Cottonwood",
@@ -424,7 +426,8 @@
      "root_flare": false,
      "spacing_m": 0.8,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall open vase crown on a straight thick trunk"
    },
    {
     "name": "Pecan",
@@ -545,7 +548,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall broad oval crown on a long clear trunk"
    },
    {
     "name": "Silver maple",
@@ -663,7 +667,8 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "wide vase crown of long arching limbs"
    },
    {
     "name": "Southern magnolia",
@@ -839,7 +844,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense dark pyramid to the ground"
    },
    {
     "name": "Sycamore",
@@ -927,7 +933,7 @@
     "bark": {
      "pattern": "flaky",
      "orientation": "none",
-     "depth": 0.7,
+     "depth": 0.3,
      "scale_cm": 8,
      "color": "#A89A88",
      "color_2": "#E8E4D8",
@@ -960,7 +966,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "massive spreading crown on mottled white limbs"
    },
    {
     "name": "White willow",
@@ -1080,7 +1087,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "silvery rounded dome of drooping twigs"
    }
   ],
   "shrub": [
@@ -1203,7 +1211,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "loose arching multi-stem bush"
    },
    {
     "name": "Giant river cane",
@@ -1312,7 +1321,8 @@
      "root_flare": false,
      "spacing_m": 0.25,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense stand of slim green poles with leafy tops"
    },
    {
     "name": "Grey willow",
@@ -1429,7 +1439,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey-green rounded bush of many stems"
    },
    {
     "name": "Red-osier dogwood",
@@ -1549,7 +1560,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "thicket of straight red stems"
    }
   ],
   "ground": [
@@ -1640,7 +1652,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "translucent succulent stems swollen and reddish at the nodes"
-    }
+    },
+    "silhouette": "knee-high bushy green mound"
    },
    {
     "name": "Ostrich fern",
@@ -1733,7 +1746,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "short erect crown of dark scaly stipe bases; stipes green with dark brown bases"
-    }
+    },
+    "silhouette": "tall shuttlecock vase of feathery fronds"
    },
    {
     "name": "Reed canary grass",
@@ -1827,7 +1841,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "hollow jointed culms, straw-coloured when dead"
-    }
+    },
+    "silhouette": "waist-high dense grass sward"
    },
    {
     "name": "Sedge",
@@ -1916,7 +1931,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "triangular culms"
-    }
+    },
+    "silhouette": "loose arching tussock"
    },
    {
     "name": "Stinging nettle",
@@ -2005,7 +2021,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "square ridged stems, often purplish at the nodes"
-    }
+    },
+    "silhouette": "erect leafy stems in a dense patch"
    }
   ],
   "epiphyte": [
@@ -2125,7 +2142,8 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "leafy tangle draped over host trees"
    },
    {
     "name": "Spanish moss",
@@ -2272,7 +2290,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "thread-like grey scurfy stems, no bark; the strand is drawn by the leaf tint"
-    }
+    },
+    "silhouette": "long grey curtains hanging from branches"
    },
    {
     "name": "Virginia creeper",
@@ -2393,7 +2412,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "flat leafy sheet climbing a trunk"
    }
   ]
  },

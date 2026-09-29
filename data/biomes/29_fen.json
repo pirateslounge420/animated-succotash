@@ -83,9 +83,9 @@
      "note": "ovate-elliptic, doubly serrate, acute (not notched), dull above and grey-hairy beneath"
     },
     "canopy": {
-     "form": "rounded",
+     "form": "conical",
      "gap": 0.4,
-     "layering": "clumped",
+     "layering": "even",
      "droop": 0.15
     },
     "tint": {
@@ -137,7 +137,8 @@
      "root_flare": false,
      "spacing_m": 0.6,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "narrow conical crown on a smooth grey trunk"
    },
    {
     "name": "Northern white cedar",
@@ -245,7 +246,8 @@
      "root_flare": true,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense narrow green column"
    },
    {
     "name": "Tamarack",
@@ -355,7 +357,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "thin open spire, gold in autumn"
    }
   ],
   "shrub": [
@@ -474,7 +477,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low rounded twiggy bush"
    },
    {
     "name": "Fen willow",
@@ -591,7 +595,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey-green rounded bush of many stems"
    },
    {
     "name": "Shrubby cinquefoil",
@@ -712,7 +717,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low dense yellow-flowered mound"
    }
   ],
   "ground": [
@@ -801,7 +807,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "wiry culms rising from glossy black-brown basal sheaths"
-    }
+    },
+    "silhouette": "wiry dark tussock with black bases"
    },
    {
     "name": "Bottle sedge",
@@ -893,7 +900,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "bluntly triangular culms with brown basal sheaths"
-    }
+    },
+    "silhouette": "upright glaucous sedge lawn"
    },
    {
     "name": "Brown moss",
@@ -974,7 +982,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "moss, no stem surface"
-    }
+    },
+    "silhouette": "glossy red-brown carpet"
    },
    {
     "name": "Grass of Parnassus",
@@ -1063,7 +1072,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "single slender flower stem"
-    }
+    },
+    "silhouette": "small heart-leaf rosette with one white flower"
    },
    {
     "name": "Marsh marigold",
@@ -1151,7 +1161,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "hollow succulent stems, brownish at the base"
-    }
+    },
+    "silhouette": "low mound of glossy round leaves"
    },
    {
     "name": "Saw sedge",
@@ -1241,7 +1252,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "stout hollow culms with straw-coloured sheaths"
-    }
+    },
+    "silhouette": "tall dense grey-green blade stand"
    }
   ],
   "epiphyte": []

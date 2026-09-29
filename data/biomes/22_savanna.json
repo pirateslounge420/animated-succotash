@@ -135,7 +135,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat-topped disc on bare thorny limbs"
    },
    {
     "name": "African baobab",
@@ -315,7 +316,8 @@
      "root_flare": true,
      "spacing_m": 3.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge grey bottle trunk, sparse root-like crown"
    },
    {
     "name": "Baobab",
@@ -432,7 +434,8 @@
      "root_flare": true,
      "spacing_m": 3.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge grey bottle trunk, sparse root-like crown"
    },
    {
     "name": "Boab",
@@ -612,7 +615,8 @@
      "root_flare": true,
      "spacing_m": 2.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "swollen grey bottle trunk, small crown"
    },
    {
     "name": "Cerrado pequi",
@@ -729,7 +733,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low twisted tree, thick dark corky bark"
    },
    {
     "name": "Darwin stringybark",
@@ -840,7 +845,8 @@
      "root_flare": true,
      "spacing_m": 2.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall straight stringy trunk, thin open crown"
    },
    {
     "name": "Miombo tree",
@@ -957,7 +963,8 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "flat spreading crown, short crooked trunk"
    },
    {
     "name": "Palmyra palm",
@@ -1069,7 +1076,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall dark straight trunk with round fan crown"
    }
   ],
   "shrub": [
@@ -1156,7 +1164,8 @@
      "color_2": "#6A6458",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "spiral tufts of long leaves on stilt-rooted stems"
    },
    {
     "name": "Candelabra tree",
@@ -1255,7 +1264,8 @@
      "root_flare": false,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense green candelabra of upright succulent arms"
    },
    {
     "name": "Savanna bamboo",
@@ -1363,7 +1373,8 @@
      "root_flare": false,
      "spacing_m": 0.25,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "open clump of thin arching culms"
    },
    {
     "name": "Sicklebush",
@@ -1480,7 +1491,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "thorny tangled shrub with pink-yellow lantern flowers"
    },
    {
     "name": "Whistling thorn",
@@ -1597,7 +1609,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "open thorny shrub with black ant galls"
    }
   ],
   "ground": [
@@ -1691,7 +1704,8 @@
      "color_2": "#B8B080",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall dense cane-like grass clump"
    },
    {
     "name": "Fire lily",
@@ -1778,7 +1792,8 @@
      "color_2": "#8A8A60",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tendril climber with red-yellow flame flowers"
    },
    {
     "name": "Red grass",
@@ -1867,7 +1882,8 @@
      "color_2": "#B08A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall reddish-tan grass stand"
    },
    {
     "name": "Savanna grass",
@@ -1956,7 +1972,8 @@
      "color_2": "#A87850",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "red-brown tussock with nodding heads"
    },
    {
     "name": "Spear grass",
@@ -2045,7 +2062,8 @@
      "color_2": "#A08A60",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tussock with tangled twisted black awns"
    },
    {
     "name": "Spinifex",
@@ -2125,7 +2143,8 @@
      "color_2": "#B8B080",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "spiny green hummock"
    }
   ],
   "epiphyte": []

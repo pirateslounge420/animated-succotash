@@ -124,7 +124,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "ragged open pine, leaning trunk, tufted crown"
    },
    {
     "name": "Coast live oak",
@@ -235,7 +236,8 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "broad dark dome on short forked trunk"
    },
    {
     "name": "Cork oak",
@@ -297,7 +299,7 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "spreading",
+     "form": "rounded",
      "gap": 0.35,
      "layering": "clumped",
      "droop": 0.1
@@ -346,7 +348,8 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "wide rounded crown over thick corky trunk"
    },
    {
     "name": "Holm oak",
@@ -458,7 +461,8 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense dark rounded dome, low crown"
    },
    {
     "name": "Mediterranean cypress",
@@ -623,7 +627,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "narrow dark green pencil spire"
    },
    {
     "name": "Stone pine",
@@ -730,7 +735,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat umbrella disc on bare pink trunk"
    },
    {
     "name": "Wild olive",
@@ -841,7 +847,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey-green rounded crown on gnarled twisted trunk"
    }
   ],
   "shrub": [
@@ -954,7 +961,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "open grey-green shrub on red twisting stems"
    },
    {
     "name": "Chamise",
@@ -1061,7 +1069,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense dark wiry shrub, many upright stems"
    },
    {
     "name": "Gum rockrose",
@@ -1172,7 +1181,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "upright sticky dark shrub, big white flowers"
    },
    {
     "name": "Kermes oak",
@@ -1283,7 +1293,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low dense prickly evergreen mound"
    },
    {
     "name": "Mastic",
@@ -1398,7 +1409,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense dark green rounded mound"
    },
    {
     "name": "Strawberry tree",
@@ -1509,7 +1521,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "rounded evergreen head on red peeling stems"
    }
   ],
   "ground": [
@@ -1598,7 +1611,8 @@
      "color_2": "#A0A080",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey strap rosette with tall branched flower spike"
    },
    {
     "name": "Common thyme",
@@ -1683,7 +1697,8 @@
      "color_2": "#B0A898",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low grey-green woody cushion"
    },
    {
     "name": "Esparto grass",
@@ -1772,7 +1787,8 @@
      "color_2": "#C8BC98",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall wiry grey-green tussock"
    },
    {
     "name": "French lavender",
@@ -1883,7 +1899,8 @@
      "root_flare": false,
      "spacing_m": 0.05,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "grey mound topped with purple tufts"
    },
    {
     "name": "Ramose false brome",
@@ -1972,7 +1989,8 @@
      "color_2": "#B8A888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "short creeping grass mat"
    },
    {
     "name": "Sugarbush protea",
@@ -2083,7 +2101,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "upright shrub with big cone-shaped flowerheads"
    }
   ],
   "epiphyte": []

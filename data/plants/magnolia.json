@@ -811,7 +811,7 @@
      "outline": "palmate_lobed",
      "aspect": 1.0,
      "base": "truncate",
-     "apex": "emarginate",
+     "apex": "truncate",
      "margin": "lobed",
      "lobes": 4,
      "venation": "palmate",

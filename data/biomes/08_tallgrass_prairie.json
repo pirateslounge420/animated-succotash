@@ -143,7 +143,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge broad crown on a stout furrowed trunk"
    }
   ],
   "shrub": [
@@ -269,7 +270,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense rounded multi-stem thicket"
    },
    {
     "name": "Leadplant",
@@ -398,7 +400,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low grey-leaved shrub with purple spikes"
    },
    {
     "name": "Pampas grass",
@@ -497,7 +500,8 @@
      "color_2": "#D8CCA0",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge grass fountain with white plumes"
    },
    {
     "name": "Prairie rose",
@@ -626,7 +630,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low prickly rose patch"
    }
   ],
   "ground": [
@@ -726,7 +731,8 @@
      "color_2": "#7A5A7A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall blue-green grass, turkey-foot seed heads"
    },
    {
     "name": "Compass plant",
@@ -825,7 +831,8 @@
      "color_2": "#9A8A60",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall stalk with yellow daisies over cut leaves"
    },
    {
     "name": "Indiangrass",
@@ -923,7 +930,8 @@
      "color_2": "#B0A878",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall grass with golden-bronze plumes"
    },
    {
     "name": "Little bluestem",
@@ -1023,7 +1031,8 @@
      "color_2": "#A05A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "knee-high blue-green tufts, orange in autumn"
    },
    {
     "name": "Purple coneflower",
@@ -1121,7 +1130,8 @@
      "color_2": "#7A5A6A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "purple daisies with orange cones on stiff stems"
    },
    {
     "name": "Switchgrass",
@@ -1220,7 +1230,8 @@
      "color_2": "#A87A60",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall upright grass clump, airy seed cloud"
    }
   ],
   "epiphyte": []

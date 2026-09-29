@@ -192,7 +192,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "gnarled crooked tree, leaf tufts at twig tips"
    }
   ],
   "shrub": [
@@ -339,7 +340,8 @@
      "lenticels": "none",
      "confidence": "estimated",
      "note": "tree-like stem clothed in old leaf bases"
-    }
+    },
+    "silhouette": "giant bromeliad rosette atop a stout leaf-clad stem"
    },
    {
     "name": "Tepui clusia",
@@ -510,7 +512,8 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "candelabra of thick branches with leathery leaf pairs"
    },
    {
     "name": "Tepui myrtle",
@@ -680,7 +683,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "compact glossy-leaved shrub mound"
    },
    {
     "name": "Tepui stegolepis",
@@ -825,7 +829,8 @@
      "color_2": "#6A5A48",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "stiff sword-leaf fan, tall flower scapes"
    },
    {
     "name": "Tepui tree fern",
@@ -997,7 +1002,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "slender fibrous trunk with arching bipinnate frond umbrella"
    }
   ],
   "ground": [
@@ -1152,7 +1158,8 @@
      "color_2": "#7A6A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "erect yellow-green tank of overlapping leaves"
    },
    {
     "name": "Giant sun pitcher",
@@ -1303,7 +1310,8 @@
      "lenticels": "none",
      "confidence": "estimated",
      "note": "erect stems clothed in old pitcher bases"
-    }
+    },
+    "silhouette": "clustered tall green funnel pitchers on stems"
    },
    {
     "name": "Rock lichen",
@@ -1437,7 +1445,8 @@
      "color_2": "#B0C0A0",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "pale grey-green shrubby lichen mound"
    },
    {
     "name": "Roraima sundew",
@@ -1587,7 +1596,8 @@
      "color_2": "#5A4A3A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tiny red sticky rosette"
    },
    {
     "name": "Summit moss",
@@ -1732,7 +1742,8 @@
      "color_2": "#8A6030",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "wine-red moss hummock"
    },
    {
     "name": "Sun pitcher",
@@ -1882,7 +1893,8 @@
      "color_2": "#8A5A48",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low cluster of green funnel pitchers, red spoons"
    },
    {
     "name": "Tepui bromeliad",
@@ -2026,7 +2038,8 @@
      "color_2": "#6A5A48",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spiny blue-grey bromeliad rosette on bare rock"
    },
    {
     "name": "Tepui cushion",
@@ -2170,7 +2183,8 @@
      "color_2": "#8A7A60",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spiny-leaved bromeliad cushion"
    },
    {
     "name": "Tepui orectanthe",
@@ -2315,7 +2329,8 @@
      "color_2": "#8A7A58",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "stiff sword-leaf fan with sceptre flower head"
    }
   ],
   "epiphyte": [
@@ -2469,7 +2484,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "submerged stolons in a tank; no stem surface"
-    }
+    },
+    "silhouette": "few long-stalked leaves rising from a bromeliad tank, violet flowers"
    }
   ]
  },

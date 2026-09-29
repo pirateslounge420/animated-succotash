@@ -135,7 +135,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey-green rounded bush of many stems"
    },
    {
     "name": "Joe-pye weed",
@@ -250,7 +251,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "tall straight stems with flat purple tops"
    },
    {
     "name": "Meadowsweet",
@@ -369,7 +371,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "erect leafy clump with creamy plumes"
    }
   ],
   "ground": [
@@ -462,7 +465,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "slender culms, bluish at the nodes"
-    }
+    },
+    "silhouette": "lax blue-green grass stand"
    },
    {
     "name": "Common sedge",
@@ -551,7 +555,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "slender triangular culms with blackish-brown basal sheaths"
-    }
+    },
+    "silhouette": "low fine glaucous sward"
    },
    {
     "name": "Marsh marigold",
@@ -639,7 +644,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "hollow succulent stems, brownish at the base"
-    }
+    },
+    "silhouette": "low mound of glossy round leaves"
    },
    {
     "name": "Purple moor-grass",
@@ -730,7 +736,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "culms with a single swollen basal internode"
-    }
+    },
+    "silhouette": "tight tussock of fine arching blades"
    },
    {
     "name": "Ragged robin",
@@ -819,7 +826,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "slender stems sticky below the nodes, reddish"
-    }
+    },
+    "silhouette": "thin stems with pink ragged flowers"
    },
    {
     "name": "Soft rush",
@@ -895,7 +903,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "terete smooth glossy green culms in dense tufts, red-brown sheaths at the base"
-    }
+    },
+    "silhouette": "dense tuft of glossy green needles"
    },
    {
     "name": "Tufted hair-grass",
@@ -984,7 +993,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "dense tussock of old leaf bases"
-    }
+    },
+    "silhouette": "dense dark tussock under an airy seed haze"
    }
   ],
   "epiphyte": []

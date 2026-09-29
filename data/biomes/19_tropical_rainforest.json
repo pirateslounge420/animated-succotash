@@ -139,7 +139,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall straight bole with small round crown above canopy"
    },
    {
     "name": "Kapok",
@@ -267,7 +268,8 @@
      "root_flare": true,
      "spacing_m": 2.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "giant buttressed trunk, flat tiered crown above canopy"
    },
    {
     "name": "Tualang",
@@ -392,7 +394,8 @@
      "root_flare": true,
      "spacing_m": 2.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "pale smooth giant with wide spreading top"
    },
    {
     "name": "Yellow meranti",
@@ -513,7 +516,8 @@
      "root_flare": true,
      "spacing_m": 2.0,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "towering straight bole, rounded emergent crown"
    }
   ],
   "canopy": [
@@ -615,7 +619,7 @@
      "confidence": "documented"
     },
     "architecture": {
-     "model": "tomlinson",
+     "model": "corner",
      "habit": "palm",
      "orders": 0,
      "branch_angle_deg": [
@@ -636,7 +640,8 @@
      "root_flare": false,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "slender grey pole with drooping feather fronds"
    },
    {
     "name": "Limba",
@@ -756,7 +761,8 @@
      "root_flare": true,
      "spacing_m": 2.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "straight trunk with pagoda tiers of branches"
    },
    {
     "name": "Moriche palm",
@@ -953,7 +959,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall straight palm with big fan fronds"
    },
    {
     "name": "Rattan palm",
@@ -1075,7 +1082,8 @@
      "root_flare": false,
      "spacing_m": 2.0,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spiny climbing cane trailing through canopy"
    },
    {
     "name": "Red meranti",
@@ -1196,7 +1204,8 @@
      "root_flare": true,
      "spacing_m": 1.8,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "tall rounded crown on straight fissured bole"
    },
    {
     "name": "Sapucaia",
@@ -1319,7 +1328,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "broad rounded crown, pink new flush"
    },
    {
     "name": "Strangler fig",
@@ -1441,7 +1451,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "wide dome on latticework of aerial roots"
    }
   ],
   "shrub": [
@@ -1538,7 +1549,8 @@
      "color_2": "#8A6A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "clump of arching leafy cane stems"
    },
    {
     "name": "Giant bamboo",
@@ -1656,7 +1668,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge clump of thick arching culms"
    },
    {
     "name": "Giant taro",
@@ -1818,7 +1831,8 @@
      "color_2": "#8AAA6A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "giant arrow-shaped leaves held up on stalks"
    },
    {
     "name": "Heliconia",
@@ -1913,7 +1927,8 @@
      "color_2": "#8A7A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "fan of paddle leaves with red bracts"
    },
    {
     "name": "Silver miconia",
@@ -2034,7 +2049,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "rounded shrub with silver leaf undersides"
    },
    {
     "name": "Tree fern",
@@ -2157,7 +2173,8 @@
      "root_flare": false,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "slim fibrous trunk with crown of lacy fronds"
    },
    {
     "name": "Wild banana",
@@ -2342,7 +2359,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "clump of arching torn banana leaves"
    },
    {
     "name": "Wild banana (Indian)",
@@ -2526,7 +2544,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "clump of glaucous arching banana leaves"
    }
   ],
   "ground": [
@@ -2625,7 +2644,8 @@
      "color_2": "#7AAA60",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "rosette of broad heart leaves in water"
    },
    {
     "name": "Common swamp pitcher",
@@ -2789,7 +2809,8 @@
      "color_2": "#8A5A48",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "scrambling vine hung with pitchers"
    },
    {
     "name": "Forest-floor fern",
@@ -2889,7 +2910,8 @@
      "color_2": "#6A5A48",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low spray of delicate fronds on black stems"
    },
    {
     "name": "Marantaceae herb",
@@ -2983,7 +3005,8 @@
      "color_2": "#8AAA70",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall stand of huge paddle leaves, white beneath"
    },
    {
     "name": "Selaginella",
@@ -3079,7 +3102,8 @@
      "color_2": "#6E7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "blue iridescent lacy ground mat"
    },
    {
     "name": "Slender pitcher",
@@ -3244,7 +3268,8 @@
      "color_2": "#8A5A48",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "slender vine with small pitchers"
    },
    {
     "name": "Taro",
@@ -3412,7 +3437,8 @@
      "color_2": "#7A5A7A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "clump of nodding heart-shaped leaves"
    },
    {
     "name": "Zebra alocasia",
@@ -3572,7 +3598,8 @@
      "color_2": "#4A3A2A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "upright arrow leaves on striped stalks"
    }
   ],
   "epiphyte": [
@@ -3670,7 +3697,8 @@
      "color_2": "#6E7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "bright green funnel of strap fronds"
    },
    {
     "name": "Bromeliad",
@@ -3766,7 +3794,8 @@
      "color_2": "#6E7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small glossy rosette with red flower spike"
    },
    {
     "name": "Golden pothos",
@@ -3927,7 +3956,8 @@
      "color_2": "#B8B858",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "climbing vine of big gold-splashed leaves"
    },
    {
     "name": "Liana",
@@ -4046,7 +4076,8 @@
      "root_flare": false,
      "spacing_m": 1.5,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "flat wavy ribbon stem ladder up trunk"
    },
    {
     "name": "Monstera",
@@ -4142,7 +4173,8 @@
      "color_2": "#8A7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "climber with huge split perforated leaves"
    },
    {
     "name": "Moth orchid",
@@ -4305,7 +4337,8 @@
      "color_2": "#6E7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "few flat leaves with arching white flower spray"
    },
    {
     "name": "Orchid",
@@ -4401,7 +4434,8 @@
      "color_2": "#B0A080",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "clump of stiff leaves with big pink flower"
    },
    {
     "name": "Philodendron",
@@ -4561,7 +4595,8 @@
      "color_2": "#8A6A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "trailing vine of small heart leaves"
    }
   ]
  },

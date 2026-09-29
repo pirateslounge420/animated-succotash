@@ -112,30 +112,31 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "decurrent",
+     "habit": "excurrent",
      "orders": 5,
      "branch_angle_deg": [
       30,
-      55
+      50
      ],
-     "taper_exponent": 1.6,
-     "sinuosity": 0.25,
+     "taper_exponent": 1.4,
+     "sinuosity": 0.15,
      "fork_height_frac": [
-      0.2,
-      0.4
+      0.4,
+      0.6
      ],
      "buttress": "none",
      "lean_max_deg": 10,
      "live_crown_ratio": [
-      0.7,
-      0.4
+      0.6,
+      0.35
      ],
      "self_prune": true,
-     "dead_limbs": 0.3,
-     "root_flare": true,
-     "spacing_m": 1.0,
+     "dead_limbs": 0.25,
+     "root_flare": false,
+     "spacing_m": 0.8,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "massive trunk forking high into a broad crown"
    }
   ],
   "shrub": [
@@ -252,7 +253,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "silver-grey feathery low mat"
    },
    {
     "name": "Plains prickly pear",
@@ -352,7 +354,8 @@
      "root_flare": false,
      "spacing_m": 0.25,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low clump of spiny flat pads"
    },
    {
     "name": "Rubber rabbitbrush",
@@ -465,7 +468,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "grey-green rounded shrub, gold flower top"
    },
    {
     "name": "Soapweed yucca",
@@ -550,7 +554,8 @@
      "color_2": "#C8B890",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "stiff blue-green spike rosette with a flower stalk"
    }
   ],
   "ground": [
@@ -639,7 +644,8 @@
      "color_2": "#B0A070",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "short grass tuft with eyelash seed heads"
    },
    {
     "name": "Buffalograss",
@@ -726,7 +732,8 @@
      "color_2": "#B8A888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "short grey-green sod, ankle-high"
    },
    {
     "name": "Needle-and-thread",
@@ -815,7 +822,8 @@
      "color_2": "#C8B888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tuft with long silky needle awns"
    },
    {
     "name": "Scarlet globemallow",
@@ -903,7 +911,8 @@
      "color_2": "#A88A70",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low grey mound with orange cups"
    },
    {
     "name": "Western wheatgrass",
@@ -992,7 +1001,8 @@
      "color_2": "#B8A888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "blue-green wheatgrass sward"
    }
   ],
   "epiphyte": []

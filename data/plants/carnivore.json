@@ -964,7 +964,7 @@
     "species": "gracilis",
     "origin": "Malay Peninsula, Sumatra and Borneo",
     "family": "Nepenthaceae",
-    "shape": "reed",
+    "shape": "liana",
     "temp_c": [
      23,
      28
@@ -1157,7 +1157,7 @@
     "species": "mirabilis",
     "origin": "Indochina to northern Australia",
     "family": "Nepenthaceae",
-    "shape": "reed",
+    "shape": "liana",
     "temp_c": [
      22,
      29

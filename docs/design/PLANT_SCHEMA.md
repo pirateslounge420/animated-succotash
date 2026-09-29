@@ -283,6 +283,16 @@ the common name when you're within reach of the plant (data/hud.json plant_name)
 28 Sept 2026 for every entry; a missing `origin` falls back to the first clause of the
 research note (PlantSpecies.origin_from_source), which reads worse — fill it.
 
+## 4a2. `silhouette` (the modeller's target)
+
+```json
+"silhouette": "flat-topped disc on bare limbs"
+```
+What the plant looks like from ~60 m, in ten words or fewer — the one thing the model
+must hit at 64 px. Every entry has one (top level, or `appearance.silhouette` in the
+older catalogues) since the archetype pass of 29 Sept 2026, when every entry's leaf,
+canopy, bark, architecture and tint were re-checked against the real species.
+
 ## 4b. `soil` (spawn gate — co-equal with temperature and moisture)
 
 ```json

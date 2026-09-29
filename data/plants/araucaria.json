@@ -157,7 +157,7 @@
      "apex": "obtuse",
      "margin": "entire",
      "venation": "parallel",
-     "arrangement": "alternate",
+     "arrangement": "opposite",
      "size_cm": [
       2,
       4
@@ -193,7 +193,7 @@
     },
     "architecture": {
      "model": "massart",
-     "habit": "excurrent",
+     "habit": "decurrent",
      "orders": 4,
      "branch_angle_deg": [
       40,

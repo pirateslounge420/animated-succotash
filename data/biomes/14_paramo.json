@@ -111,7 +111,8 @@
      "color_2": "#A09070",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "woolly rosette atop skirt of dead leaves"
    },
    {
     "name": "Paramo dwarf bamboo",
@@ -223,7 +224,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense low arching bamboo thicket"
    },
    {
     "name": "Paramo dwarf shrub",
@@ -338,7 +340,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "compact needle-leaved shrub, yellow flowers"
    },
    {
     "name": "Paramo puya",
@@ -427,7 +430,8 @@
      "color_2": "#A09080",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spiky grey rosette with club flower spike"
    },
    {
     "name": "Tall frailejon",
@@ -516,7 +520,8 @@
      "color_2": "#9A8A6A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall column of dead leaves, woolly rosette on top"
    }
   ],
   "ground": [
@@ -603,7 +608,8 @@
      "color_2": "#8A6030",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "reddish spongy moss hummock"
    },
    {
     "name": "Cushion plant",
@@ -692,7 +698,8 @@
      "color_2": "#8A8A58",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "hard bright green cushion"
    },
    {
     "name": "Paramo club moss",
@@ -777,7 +784,8 @@
      "color_2": "#8A8A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "creeping scaly green cords"
    },
    {
     "name": "Paramo lupine",
@@ -870,7 +878,8 @@
      "color_2": "#B0B0A0",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "woolly silver rosette with blue spike"
    },
    {
     "name": "Tussock grass",
@@ -960,7 +969,8 @@
      "color_2": "#B09858",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "yellow-green arching tussock"
    }
   ],
   "epiphyte": []

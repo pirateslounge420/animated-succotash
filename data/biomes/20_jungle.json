@@ -108,7 +108,7 @@
      "confidence": "documented"
     },
     "architecture": {
-     "model": "tomlinson",
+     "model": "corner",
      "habit": "palm",
      "orders": 0,
      "branch_angle_deg": [
@@ -129,7 +129,8 @@
      "root_flare": false,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "single trunk with huge ragged fishtail fronds"
    },
    {
     "name": "Sal",
@@ -242,7 +243,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall straight dark bole, dense rounded crown"
    },
    {
     "name": "Teak",
@@ -355,7 +357,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "straight bole, open crown of huge leaves"
    },
    {
     "name": "Trumpet tree",
@@ -467,7 +470,8 @@
      "root_flare": false,
      "spacing_m": 1.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "candelabra of pale stems, umbrella leaf tufts"
    },
    {
     "name": "Umbrella tree",
@@ -582,7 +586,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "stilt-rooted pale trunk, tiered umbrella crown"
    }
   ],
   "shrub": [
@@ -692,7 +697,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense thorny clump of arching culms"
    },
    {
     "name": "Elephant ear",
@@ -777,7 +783,8 @@
      "color_2": "#8AAA6A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "giant arrow-shaped leaves held up on stalks"
    },
    {
     "name": "Giant bamboo",
@@ -885,7 +892,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge clump of thick arching culms"
    },
    {
     "name": "Guadua bamboo",
@@ -993,7 +1001,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall clump of straight banded culms"
    },
    {
     "name": "Hanging lobster-claw",
@@ -1078,7 +1087,8 @@
      "color_2": "#8A7A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "fan of paddle leaves, hanging red-yellow bracts"
    },
    {
     "name": "Wild banana",
@@ -1186,7 +1196,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "clump of arching torn banana leaves"
    }
   ],
   "ground": [
@@ -1279,7 +1290,8 @@
      "color_2": "#5A4A34",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "waist-high tiers of triangular fronds"
    },
    {
     "name": "Cogon grass",
@@ -1366,7 +1378,8 @@
      "color_2": "#B8A870",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense upright grass with white fluffy plumes"
    },
    {
     "name": "Lantana",
@@ -1477,7 +1490,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "sprawling scrubby mound with multicolour flower heads"
    },
    {
     "name": "Spiral ginger",
@@ -1562,7 +1576,8 @@
      "color_2": "#8A5A48",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "spiralled leafy canes with red cone"
    },
    {
     "name": "Torch ginger",
@@ -1647,7 +1662,8 @@
      "color_2": "#7A5A48",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall leafy canes, red torch flowers on separate stalks"
    }
   ],
   "epiphyte": [
@@ -1735,7 +1751,8 @@
      "color_2": "#8A7A58",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tendril vine with three-lobed leaves"
    },
    {
     "name": "Rattan vine",
@@ -1847,7 +1864,8 @@
      "root_flare": false,
      "spacing_m": 2.0,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "thin spiny cane snaking through canopy"
    },
    {
     "name": "Staghorn fern",
@@ -1932,7 +1950,8 @@
      "color_2": "#6E7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "antler fronds hanging from shield on trunk"
    }
   ]
  },

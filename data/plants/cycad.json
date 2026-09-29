@@ -648,8 +648,8 @@
      "confidence": "documented"
     },
     "architecture": {
-     "model": "tomlinson",
-     "habit": "multi_stem",
+     "model": "corner",
+     "habit": "palm",
      "orders": 0,
      "branch_angle_deg": [
       40,

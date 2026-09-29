@@ -125,7 +125,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "wispy grey-green drooping conifer-like tree"
    },
    {
     "name": "Coconut palm",
@@ -173,21 +174,26 @@
     "bark_type": "palm",
     "leaf_type": "frond",
     "leaf": {
-     "type": "strap",
-     "outline": "linear",
-     "aspect": 18,
-     "base": "truncate",
-     "apex": "acute",
-     "margin": "entire",
+     "type": "frond",
      "venation": "parallel",
-     "arrangement": "distichous",
+     "arrangement": "spiral",
      "size_cm": [
-      60,
-      90
+      400,
+      600
      ],
-     "compound": null,
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       180,
+       250
+      ],
+      "leaflet_outline": "linear",
+      "leaflet_aspect": 25.0,
+      "leaflet_margin": "entire"
+     },
      "texture": "glossy",
-     "confidence": "documented"
+     "confidence": "documented",
+     "note": "pinnate fronds 4-6 m with 200+ linear leaflets 60-90 cm, arching from a leaning ringed trunk"
     },
     "bark": {
      "pattern": "ringed",
@@ -237,7 +243,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "leaning ringed pole with arching feather fronds"
    },
    {
     "name": "Maritime pine",
@@ -306,9 +313,9 @@
      "note": "thick, deeply fissured into red-brown to purple-brown plates; fissures orange-red"
     },
     "canopy": {
-     "form": "irregular",
+     "form": "umbrella",
      "gap": 0.4,
-     "layering": "clumped",
+     "layering": "sparse",
      "droop": 0.2
     },
     "tint": {
@@ -342,7 +349,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat-topped umbrella on a leaning red-plated trunk"
    },
    {
     "name": "Screw pine",
@@ -457,7 +465,8 @@
      "root_flare": false,
      "spacing_m": 1.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "candelabra of leaf tufts on stilt roots"
    },
    {
     "name": "Sea grape",
@@ -569,7 +578,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low gnarled dome of big round leaves"
    }
   ],
   "shrub": [
@@ -647,7 +657,7 @@
      "note": "short thick trunk, pale grey, lightly fissured"
     },
     "canopy": {
-     "form": "rounded",
+     "form": "spreading",
      "gap": 0.3,
      "layering": "clumped",
      "droop": 0.1
@@ -686,7 +696,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "silvery spreading crown on a short trunk"
    },
    {
     "name": "Beach naupaka",
@@ -801,7 +812,8 @@
      "root_flare": false,
      "spacing_m": 0.25,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense bright green succulent mound"
    },
    {
     "name": "Sea buckthorn",
@@ -917,7 +929,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "thorny silvery-grey thicket with orange berries"
    },
    {
     "name": "Wax myrtle",
@@ -1029,7 +1042,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense rounded olive-green multi-stem bush"
    }
   ],
   "ground": [
@@ -1120,7 +1134,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "sprawling runners with round leaves"
    },
    {
     "name": "Beach spinifex",
@@ -1206,7 +1221,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "silvery hairy grass tufts with runners"
    },
    {
     "name": "Bitter panicgrass",
@@ -1290,11 +1306,12 @@
      "val": 1.0,
      "underside": 0.05,
      "autumn": "#C8B070",
-     "drop": false
+     "drop": true
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "stout blue-green grass clumps"
    },
    {
     "name": "Sea holly",
@@ -1383,7 +1400,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "spiny blue-grey rosette"
    },
    {
     "name": "Sea purslane",
@@ -1472,7 +1490,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "flat succulent mat with pink stems"
    },
    {
     "name": "Sea rocket",
@@ -1564,7 +1583,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "low fleshy sprawling clump"
    }
   ],
   "epiphyte": []

@@ -104,7 +104,8 @@
      "color_2": "#4A8A3A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low bright-green cushion on wet gravel"
    },
    {
     "name": "Map lichen",
@@ -178,7 +179,8 @@
      "color_2": "#2A2A2A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "yellow-green crust map painted on bare rock"
    }
   ],
   "epiphyte": []

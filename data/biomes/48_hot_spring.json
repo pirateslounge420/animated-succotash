@@ -79,10 +79,10 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "irregular",
+     "form": "rounded",
      "gap": 0.45,
      "layering": "clumped",
-     "droop": 0.3
+     "droop": 0.2
     },
     "tint": {
      "hue_shift": 4,
@@ -132,7 +132,8 @@
      "root_flare": false,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "slender pale trunk, rounded crown of ascending branches"
    },
    {
     "name": "Lodgepole pine",
@@ -236,7 +237,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "narrow dark conical pine, straight trunk, dead lower whorls"
    },
    {
     "name": "Manuka",
@@ -350,7 +352,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "twiggy gnarled dark shrub-tree, white starry flowers"
    }
   ],
   "shrub": [
@@ -467,7 +470,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low woolly silver-leaved willow mound"
    },
    {
     "name": "Prostrate kanuka",
@@ -581,7 +585,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "sprawling prostrate twiggy mound, tiny leaves"
    },
    {
     "name": "Shrubby cinquefoil",
@@ -700,7 +705,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low dense twiggy mound, yellow flowers"
    },
    {
     "name": "Umbrella fern",
@@ -794,7 +800,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "wiry straw-brown stipes"
-    }
+    },
+    "silhouette": "forking tiers of stiff fronds forming a tangled thicket"
    }
   ],
   "ground": [
@@ -890,7 +897,8 @@
      "color_2": "#A8A878",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat sword-leaf fans with brown sausage heads"
    },
    {
     "name": "Geothermal kanuka moss",
@@ -979,7 +987,8 @@
      "color_2": "#8A9A70",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "yellow-green moss cushion, silver hair tips"
    },
    {
     "name": "Green cyanobacteria mat",
@@ -1062,7 +1071,8 @@
      "color_2": "#3F8A38",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "green slimy film in hot runoff"
    },
    {
     "name": "Hot-spring moss",
@@ -1151,7 +1161,8 @@
      "color_2": "#B0C0A0",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "silvery-green moss cushion"
    },
    {
     "name": "Ross' bentgrass",
@@ -1241,7 +1252,8 @@
      "color_2": "#B0A870",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "tiny bright-green bentgrass tuft on warm ground"
    },
    {
     "name": "Thermophile mat",
@@ -1324,7 +1336,8 @@
      "color_2": "#D04020",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "orange-yellow microbial mat in hot channel"
    },
    {
     "name": "Tufted hairgrass",
@@ -1413,7 +1426,8 @@
      "color_2": "#A09060",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense green tussock with airy seed haze"
    }
   ],
   "epiphyte": []

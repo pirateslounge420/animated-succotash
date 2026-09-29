@@ -76,8 +76,8 @@
     },
     "canopy": {
      "form": "conical",
-     "gap": 0.35,
-     "layering": "even",
+     "gap": 0.5,
+     "layering": "sparse",
      "droop": 0.2
     },
     "tint": {
@@ -122,7 +122,8 @@
      "root_flare": true,
      "spacing_m": 0.25,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "narrow dark spire with a clubbed top"
    },
    {
     "name": "Bog pine",
@@ -228,7 +229,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "stunted twisted pine with an orange upper trunk"
    },
    {
     "name": "Tamarack",
@@ -338,7 +340,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "thin open spire, gold in autumn"
    }
   ],
   "shrub": [
@@ -460,7 +463,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low grey-green twiggy bush"
    },
    {
     "name": "Bog rosemary",
@@ -573,7 +577,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "sparse low blue-green twigs"
    },
    {
     "name": "Cranberry",
@@ -686,7 +691,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "thread-like mat with tiny leaves"
    },
    {
     "name": "Heather",
@@ -794,7 +800,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense low purple-grey mound"
    },
    {
     "name": "Leatherleaf",
@@ -907,7 +914,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low dull bronze-green mound"
    }
   ],
   "ground": [
@@ -998,7 +1006,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "culms with inflated bladeless sheaths; tussock of brown persistent sheaths"
-    }
+    },
+    "silhouette": "dense tussock with white cotton heads"
    },
    {
     "name": "Deergrass",
@@ -1076,7 +1085,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "wiry terete culms 10-40 cm, brown basal sheaths"
-    }
+    },
+    "silhouette": "small wiry orange-green tussock"
    },
    {
     "name": "Pitcher plant",
@@ -1157,7 +1167,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "stemless rosette on a rhizome"
-    }
+    },
+    "silhouette": "rosette of squat purple-veined pitchers"
    },
    {
     "name": "Round-leaved sundew",
@@ -1242,7 +1253,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "stemless rosette"
-    }
+    },
+    "silhouette": "tiny red-dotted rosette"
    },
    {
     "name": "Sphagnum moss",
@@ -1323,7 +1335,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "moss, no stem surface"
-    }
+    },
+    "silhouette": "soft wine-red hummock"
    }
   ],
   "epiphyte": []

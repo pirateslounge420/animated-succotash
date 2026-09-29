@@ -93,7 +93,7 @@
      "note": "grey-brown, thick, deeply fissured into a criss-cross network of ridges"
     },
     "canopy": {
-     "form": "spreading",
+     "form": "rounded",
      "gap": 0.35,
      "layering": "clumped",
      "droop": 0.3
@@ -136,7 +136,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "broad ragged dome on short forked trunk, brittle limbs"
    },
    {
     "name": "Grey mangrove",
@@ -256,7 +257,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low grey-green dome over a field of pencil roots"
    },
    {
     "name": "Nipa palm",
@@ -373,7 +375,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "trunkless fountain of erect feather fronds from mud"
    },
    {
     "name": "Swamp she-oak",
@@ -445,7 +448,7 @@
      "note": "hard grey-brown bark, scaly and longitudinally fissured"
     },
     "canopy": {
-     "form": "columnar",
+     "form": "conical",
      "gap": 0.4,
      "layering": "sparse",
      "droop": 0.6
@@ -484,7 +487,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "narrow dark spire of drooping grey-green threads"
    }
   ],
   "shrub": [
@@ -602,7 +606,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "loose rounded bush, white fluff crown in autumn"
    },
    {
     "name": "Marsh elder",
@@ -721,7 +726,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "upright leafy bush of many straight stems"
    },
    {
     "name": "Sea purslane shrub",
@@ -836,7 +842,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low silver-grey sprawling mound"
    }
   ],
   "ground": [
@@ -934,7 +941,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "stiff yellow-green cordgrass sward, culms all one height"
    },
    {
     "name": "Common reed",
@@ -1029,7 +1037,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "tall even reed wall with feathery plumed tops"
    },
    {
     "name": "Eelgrass",
@@ -1117,7 +1126,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "submerged meadow of long green ribbons streaming with tide"
    },
    {
     "name": "Glasswort",
@@ -1211,7 +1221,8 @@
      "mode": "short_day",
      "threshold_h": 13.0,
      "response": "flower"
-    }
+    },
+    "silhouette": "carpet of stubby jointed green candles, red by autumn"
    },
    {
     "name": "Saltmarsh bulrush",
@@ -1306,7 +1317,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "sedge stand of triangular stems, leafy and arching"
    },
    {
     "name": "Sea aster",
@@ -1397,7 +1409,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "fleshy leafy clump topped with lilac daisies"
    },
    {
     "name": "Smooth cordgrass",
@@ -1493,7 +1506,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "tall smooth cordgrass belt fringing the channel edge"
    },
    {
     "name": "Widgeongrass",
@@ -1581,7 +1595,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "hazy tangle of thread stems just below the surface"
    }
   ],
   "epiphyte": []

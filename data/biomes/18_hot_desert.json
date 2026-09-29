@@ -117,7 +117,8 @@
      "root_flare": false,
      "spacing_m": 1.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "massive grey-green column with several arms"
    },
    {
     "name": "Quiver tree",
@@ -202,7 +203,8 @@
      "color_2": "#8A6A48",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "forked golden trunk, rounded crown of rosettes"
    },
    {
     "name": "Saguaro cactus",
@@ -288,8 +290,8 @@
      "taper_exponent": 1.0,
      "sinuosity": 0.1,
      "fork_height_frac": [
-      0.4,
-      0.7
+      0.3,
+      0.5
      ],
      "buttress": "none",
      "lean_max_deg": 5,
@@ -302,7 +304,8 @@
      "root_flare": false,
      "spacing_m": 1.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall ribbed green column with upturned arms"
    },
    {
     "name": "Umbrella thorn",
@@ -420,7 +423,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat-topped disc on bare thorny limbs"
    },
    {
     "name": "Velvet mesquite",
@@ -540,7 +544,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "wide drooping feathery crown on dark trunk"
    },
    {
     "name": "Yellow paloverde",
@@ -596,8 +601,8 @@
      "compound": {
       "form": "bipinnate",
       "leaflets": [
-       16,
-       32
+       8,
+       16
       ],
       "leaflet_outline": "elliptic",
       "leaflet_aspect": 1.5,
@@ -624,7 +629,7 @@
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "smooth",
+     "pattern": "green_stem",
      "orientation": "none",
      "depth": 0.1,
      "scale_cm": 5,
@@ -658,7 +663,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "wispy yellow-green twiggy dome, green trunk"
    }
   ],
   "shrub": [
@@ -757,7 +763,8 @@
      "root_flare": false,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "squat red-spined green barrel"
    },
    {
     "name": "Creosote bush",
@@ -872,7 +879,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "open dark green vase of thin stems"
    },
    {
     "name": "Mulga",
@@ -983,7 +991,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "grey-green upright broom-shaped tree"
    },
    {
     "name": "Ocotillo",
@@ -1071,7 +1080,8 @@
      "color_2": "#6A5A48",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "bundle of tall spiny whip canes"
    },
    {
     "name": "Prickly pear",
@@ -1171,7 +1181,8 @@
      "root_flare": false,
      "spacing_m": 0.25,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "sprawling mound of flat green pads"
    },
    {
     "name": "Whitethorn acacia",
@@ -1288,7 +1299,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "open thorny white-spined shrub"
    }
   ],
   "ground": [
@@ -1403,7 +1415,8 @@
      "root_flare": false,
      "spacing_m": 0.05,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "silver-leaved mound with yellow daisies"
    },
    {
     "name": "Bursage",
@@ -1517,7 +1530,8 @@
      "root_flare": false,
      "spacing_m": 0.05,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low grey-white rounded bush"
    },
    {
     "name": "Hard spinifex",
@@ -1604,7 +1618,8 @@
      "color_2": "#C8B888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "spiny ring-shaped hummock"
    },
    {
     "name": "Lechuguilla",
@@ -1689,7 +1704,8 @@
      "color_2": "#C8B890",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small stiff spiny rosette"
    },
    {
     "name": "Tabush grass",
@@ -1776,7 +1792,8 @@
      "color_2": "#C8B888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey-green wiry tussock"
    },
    {
     "name": "Welwitschia",
@@ -1861,7 +1878,8 @@
      "color_2": "#5A4A3A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "two long shredded straps on a stump"
    }
   ],
   "epiphyte": []

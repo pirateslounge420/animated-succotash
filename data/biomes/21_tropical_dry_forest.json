@@ -134,7 +134,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spreading crown on shiny red peeling trunk"
    },
    {
     "name": "Flame of the forest",
@@ -251,7 +252,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "crooked bare tree ablaze with orange flowers"
    },
    {
     "name": "Grandidier's baobab",
@@ -368,7 +370,8 @@
      "root_flare": true,
      "spacing_m": 3.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "massive smooth column with flat crown on top"
    },
    {
     "name": "Guanacaste",
@@ -485,7 +488,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "enormous low hemispherical dome, wider than tall"
    },
    {
     "name": "Indian rosewood",
@@ -602,7 +606,8 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "tall rounded crown on straight grey bole"
    },
    {
     "name": "Silk floss tree",
@@ -719,7 +724,8 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "spiny green bottle trunk, spreading tiered crown"
    }
   ],
   "shrub": [
@@ -829,7 +835,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "yellow-stemmed arching bamboo clump"
    },
    {
     "name": "Coral bean",
@@ -946,7 +953,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "small thorny tree with red flower spikes"
    },
    {
     "name": "Dwarf date palm",
@@ -1037,7 +1045,7 @@
      "confidence": "documented"
     },
     "architecture": {
-     "model": "tomlinson",
+     "model": "corner",
      "habit": "palm",
      "orders": 0,
      "branch_angle_deg": [
@@ -1058,7 +1066,8 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "stout diamond-patterned trunk, grey-green crown"
    },
    {
     "name": "Frangipani",
@@ -1171,7 +1180,8 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "thick blunt sausage branches, leaf tufts at tips"
    },
    {
     "name": "Jatropha",
@@ -1285,7 +1295,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "soft-stemmed shrub with lobed leaves"
    },
    {
     "name": "Kalanchoe",
@@ -1370,7 +1381,8 @@
      "color_2": "#6A6254",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "felted grey leaves on a short thick stem"
    }
   ],
   "ground": [
@@ -1461,7 +1473,8 @@
      "color_2": "#A08A60",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tussock with tangled twisted black awns"
    },
    {
     "name": "Beach morning glory",
@@ -1546,7 +1559,8 @@
      "color_2": "#7A4A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "creeping sand runner with round leaves"
    },
    {
     "name": "Bluestem",
@@ -1635,7 +1649,8 @@
      "color_2": "#A89060",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall dense blue-green tussock"
    },
    {
     "name": "Bromelia",
@@ -1787,7 +1802,8 @@
      "color_2": "#6E7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "big spiny ground rosette, red centre"
    },
    {
     "name": "Resurrection fern",
@@ -1876,7 +1892,8 @@
      "color_2": "#6E7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small curled fronds hugging bark"
    },
    {
     "name": "Wild pineapple",
@@ -1961,7 +1978,8 @@
      "color_2": "#6E7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "big spiny ground rosette, red centre"
    }
   ],
   "epiphyte": [
@@ -2048,7 +2066,8 @@
      "color_2": "#6E7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey spiky rosette with red spike"
    },
    {
     "name": "Dry-forest orchid",
@@ -2133,7 +2152,8 @@
      "color_2": "#B0A080",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "clump of pseudobulbs and strap leaves"
    },
    {
     "name": "Spanish moss",
@@ -2218,7 +2238,8 @@
      "color_2": "#6E7A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey curtains hanging from branches"
    }
   ]
  },

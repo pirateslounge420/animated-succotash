@@ -222,7 +222,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -232,7 +232,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -463,20 +463,20 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
       25
      ],
      "taper_exponent": 1.0,
-     "sinuosity": 0.1,
+     "sinuosity": 0.2,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
-     "lean_max_deg": 8,
+     "lean_max_deg": 25,
      "live_crown_ratio": [
       0.9,
       0.9
@@ -704,7 +704,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -714,7 +714,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -945,7 +945,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -955,7 +955,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -1185,20 +1185,20 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
       25
      ],
      "taper_exponent": 1.0,
-     "sinuosity": 0.1,
+     "sinuosity": 0.2,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
-     "lean_max_deg": 8,
+     "lean_max_deg": 25,
      "live_crown_ratio": [
       0.9,
       0.9
@@ -1425,7 +1425,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -1435,7 +1435,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -1665,7 +1665,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "candelabra",
      "orders": 2,
      "branch_angle_deg": [
       10,
@@ -1905,7 +1905,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -1915,7 +1915,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -2145,7 +2145,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -2155,7 +2155,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -2385,7 +2385,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -2395,7 +2395,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -2625,7 +2625,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -2635,7 +2635,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -2865,7 +2865,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -2875,7 +2875,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -3105,7 +3105,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -3115,7 +3115,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -3345,20 +3345,20 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
-     "orders": 1,
+     "habit": "candelabra",
+     "orders": 2,
      "branch_angle_deg": [
-      5,
-      25
+      10,
+      30
      ],
      "taper_exponent": 1.0,
      "sinuosity": 0.1,
      "fork_height_frac": [
-      0.0,
-      0.3
+      0.15,
+      0.4
      ],
      "buttress": "none",
-     "lean_max_deg": 8,
+     "lean_max_deg": 5,
      "live_crown_ratio": [
       0.9,
       0.9
@@ -3366,7 +3366,7 @@
      "self_prune": false,
      "dead_limbs": 0.05,
      "root_flare": false,
-     "spacing_m": 0.5,
+     "spacing_m": 0.8,
      "confidence": "estimated"
     }
    },
@@ -3585,20 +3585,20 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
-     "orders": 1,
+     "habit": "candelabra",
+     "orders": 2,
      "branch_angle_deg": [
-      5,
-      25
+      10,
+      30
      ],
      "taper_exponent": 1.0,
      "sinuosity": 0.1,
      "fork_height_frac": [
-      0.0,
-      0.3
+      0.15,
+      0.4
      ],
      "buttress": "none",
-     "lean_max_deg": 8,
+     "lean_max_deg": 5,
      "live_crown_ratio": [
       0.9,
       0.9
@@ -3606,7 +3606,7 @@
      "self_prune": false,
      "dead_limbs": 0.05,
      "root_flare": false,
-     "spacing_m": 0.5,
+     "spacing_m": 0.8,
      "confidence": "estimated"
     }
    },
@@ -3825,7 +3825,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
@@ -3835,7 +3835,7 @@
      "sinuosity": 0.1,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
      "lean_max_deg": 8,
@@ -4065,20 +4065,20 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 1,
      "branch_angle_deg": [
       5,
       25
      ],
      "taper_exponent": 1.0,
-     "sinuosity": 0.1,
+     "sinuosity": 0.2,
      "fork_height_frac": [
       0.0,
-      0.3
+      0.1
      ],
      "buttress": "none",
-     "lean_max_deg": 8,
+     "lean_max_deg": 25,
      "live_crown_ratio": [
       0.9,
       0.9

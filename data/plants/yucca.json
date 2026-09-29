@@ -206,7 +206,7 @@
     },
     "architecture": {
      "model": "tomlinson",
-     "habit": "columnar",
+     "habit": "multi_stem",
      "orders": 2,
      "branch_angle_deg": [
       20,
@@ -215,8 +215,8 @@
      "taper_exponent": 1.0,
      "sinuosity": 0.3,
      "fork_height_frac": [
-      0.2,
-      0.5
+      0.0,
+      0.3
      ],
      "buttress": "none",
      "lean_max_deg": 25,

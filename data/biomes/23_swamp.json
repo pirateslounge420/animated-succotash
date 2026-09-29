@@ -141,7 +141,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat-topped feathery spire on a fluted flared trunk"
    },
    {
     "name": "Black willow",
@@ -269,7 +270,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "leaning multi-trunked mass of narrow drooping foliage"
    },
    {
     "name": "Cabbage palm",
@@ -392,7 +394,8 @@
      "root_flare": true,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "round fan-leaf ball on a straight grey pole"
    },
    {
     "name": "Moriche palm",
@@ -590,7 +593,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge fan-leaf crown atop a tall smooth column"
    },
    {
     "name": "Pond cypress",
@@ -714,7 +718,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "narrow feathery column of ascending branches"
    },
    {
     "name": "Water elm",
@@ -839,7 +844,8 @@
      "root_flare": true,
      "spacing_m": 0.7,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "small low spreading dome over a swollen butt"
    },
    {
     "name": "Water tupelo",
@@ -918,7 +924,7 @@
     },
     "canopy": {
      "form": "irregular",
-     "gap": 0.45,
+     "gap": 0.5,
      "layering": "clumped",
      "droop": 0.2
     },
@@ -971,7 +977,8 @@
      "root_flare": true,
      "spacing_m": 0.7,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "narrow open crown on a long bottle-based trunk"
    }
   ],
   "shrub": [
@@ -1105,7 +1112,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "loose rounded thicket of arching stems"
    },
    {
     "name": "Giant cane",
@@ -1222,7 +1230,8 @@
      "root_flare": false,
      "spacing_m": 0.25,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "dense stand of slim green poles with leafy tops"
    },
    {
     "name": "Saw palmetto",
@@ -1345,7 +1354,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low sprawling clump of stiff fan leaves"
    },
    {
     "name": "Virginia willow",
@@ -1470,7 +1480,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low thicket of slender arching stems"
    },
    {
     "name": "Wax myrtle",
@@ -1592,7 +1603,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense rounded olive-green multi-stem bush"
    }
   ],
   "ground": [
@@ -1708,7 +1720,8 @@
      "root_flare": true,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "cluster of blunt woody cones rising from water"
    },
    {
     "name": "Duckweed",
@@ -1804,7 +1817,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "floating thalli, no stem"
-    }
+    },
+    "silhouette": "flat bright green skin over still water"
    },
    {
     "name": "Lizard's tail",
@@ -1906,7 +1920,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "jointed green stems, swollen at the nodes"
-    }
+    },
+    "silhouette": "waist-high colony of heart-shaped leaves"
    },
    {
     "name": "Pickerelweed",
@@ -2008,7 +2023,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "smooth green petioles and flower scapes"
-    }
+    },
+    "silhouette": "stand of glossy heart-shaped leaves on stalks"
    },
    {
     "name": "Royal fern",
@@ -2109,7 +2125,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "stipes pinkish-tan and woolly at the base, green above; short erect rhizome"
-    }
+    },
+    "silhouette": "vase of tall bipinnate fronds"
    },
    {
     "name": "Taro",
@@ -2278,7 +2295,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "stout green petioles, often flushed purple toward the base"
-    }
+    },
+    "silhouette": "clump of huge drooping heart-shaped leaves on stalks"
    },
    {
     "name": "Water hyacinth",
@@ -2380,7 +2398,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "inflated spongy petioles, pale green"
-    }
+    },
+    "silhouette": "floating raft of glossy rosettes"
    }
   ],
   "epiphyte": [
@@ -2478,7 +2497,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "clustered olive-green pseudobulbs with papery tan sheaths"
-    }
+    },
+    "silhouette": "small tufted clump on a limb"
    },
    {
     "name": "Ghost orchid",
@@ -2624,7 +2644,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "leafless; a fan of flat grey-green photosynthetic roots pressed to the host bark, no stem"
-    }
+    },
+    "silhouette": "flat fan of grey roots on bark"
    },
    {
     "name": "Resurrection fern",
@@ -2724,7 +2745,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "creeping rhizome clothed in brown scales; short green stipes"
-    }
+    },
+    "silhouette": "furry green mat along horizontal limbs"
    },
    {
     "name": "Spanish moss",
@@ -2815,7 +2837,8 @@
      "pattern": "none",
      "confidence": "documented",
      "note": "thread-like grey scurfy stems, no bark; the strand is drawn by the leaf tint"
-    }
+    },
+    "silhouette": "long grey curtains hanging from branches"
    }
   ]
  },

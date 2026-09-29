@@ -83,7 +83,7 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "irregular",
+     "form": "spreading",
      "gap": 0.5,
      "layering": "sparse",
      "droop": 0.1
@@ -134,7 +134,8 @@
      "root_flare": true,
      "spacing_m": 3.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge grey bottle trunk, sparse root-like crown"
    },
    {
     "name": "Caatinga catingueira",
@@ -217,14 +218,14 @@
      "mode": "neutral"
     },
     "bark": {
-     "pattern": "smooth",
+     "pattern": "flaky",
      "orientation": "none",
      "depth": 0.2,
      "scale_cm": 3,
      "color": "#A8A49A",
      "color_2": "#C8B898",
      "lenticels": "dots",
-     "confidence": "documented"
+     "confidence": "estimated"
     },
     "architecture": {
      "model": "rauh",
@@ -251,7 +252,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "small open feathery tree, mottled pale trunk"
    },
    {
     "name": "Honey mesquite",
@@ -368,7 +370,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low wide feathery crown on crooked trunk"
    },
    {
     "name": "Red quebracho",
@@ -479,7 +482,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "rounded open crown on straight dark trunk"
    },
    {
     "name": "Umbrella thorn",
@@ -597,7 +601,8 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat-topped disc on bare thorny limbs"
    }
   ],
   "shrub": [
@@ -714,7 +719,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense thorny grey-white mound"
    },
    {
     "name": "Facheiro cactus",
@@ -814,7 +820,8 @@
      "root_flare": false,
      "spacing_m": 0.6,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "blue columnar cactus, few upright arms"
    },
    {
     "name": "Madagascar ocotillo",
@@ -901,7 +908,8 @@
      "color_2": "#B8A888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall spiny grey poles, leaves in rows"
    },
    {
     "name": "Mandacaru",
@@ -1001,7 +1009,8 @@
      "root_flare": false,
      "spacing_m": 0.7,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "green ribbed candelabra cactus"
    },
    {
     "name": "Myrrh bush",
@@ -1118,7 +1127,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "sparse twiggy shrub with peeling papery bark"
    },
    {
     "name": "Texas ebony",
@@ -1233,7 +1243,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense dark rounded small tree"
    }
   ],
   "ground": [
@@ -1322,7 +1333,8 @@
      "color_2": "#B8A890",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "loose grass tussock with bottlebrush heads"
    },
    {
     "name": "Elephant's foot",
@@ -1422,7 +1434,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "leafless green pencil-stick shrub"
    },
    {
     "name": "Kinglet agave",
@@ -1507,7 +1520,8 @@
      "color_2": "#C8B890",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small stiff spiny rosette"
    },
    {
     "name": "Prickly pear",
@@ -1607,7 +1621,8 @@
      "root_flare": false,
      "spacing_m": 0.25,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "sprawling mound of flat green pads"
    },
    {
     "name": "Threeawn grass",
@@ -1694,7 +1709,8 @@
      "color_2": "#A88A78",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "wispy fine tussock with purplish awns"
    }
   ],
   "epiphyte": [
@@ -1781,7 +1797,8 @@
      "color_2": "#9A9A8A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small grey ball tufts on branches"
    }
   ]
  },

@@ -75,9 +75,9 @@
     },
     "canopy": {
      "form": "columnar",
-     "gap": 0.4,
-     "layering": "clumped",
-     "droop": 0.3
+     "gap": 0.45,
+     "layering": "sparse",
+     "droop": 0.35
     },
     "tint": {
      "hue_shift": -10,
@@ -113,14 +113,15 @@
      "lean_max_deg": 10,
      "live_crown_ratio": [
       0.9,
-      0.5
+      0.6
      ],
      "self_prune": true,
-     "dead_limbs": 0.3,
+     "dead_limbs": 0.35,
      "root_flare": true,
      "spacing_m": 0.35,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "narrow dark spire with a clubbed top"
    },
    {
     "name": "Fir",
@@ -167,7 +168,7 @@
     "leaf": {
      "type": "needle",
      "venation": "none",
-     "arrangement": "spiral",
+     "arrangement": "distichous",
      "size_cm": [
       1.5,
       3
@@ -223,7 +224,8 @@
      "root_flare": true,
      "spacing_m": 0.35,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "neat narrow dark cone, smooth grey trunk"
    },
    {
     "name": "Larch",
@@ -330,7 +332,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "open conical larch, gold in autumn"
    },
    {
     "name": "Lodgepole pine",
@@ -500,7 +503,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "narrow straight pine, thin crown, sparse limbs"
    },
    {
     "name": "Paper birch",
@@ -562,7 +566,7 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "rounded",
+     "form": "irregular",
      "gap": 0.45,
      "layering": "clumped",
      "droop": 0.35
@@ -615,7 +619,8 @@
      "root_flare": false,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "white trunks under a loose light-green crown"
    },
    {
     "name": "Scots pine",
@@ -673,7 +678,7 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "rounded",
+     "form": "irregular",
      "gap": 0.4,
      "layering": "clumped",
      "droop": 0.1
@@ -699,7 +704,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "excurrent",
+     "habit": "umbrella",
      "orders": 5,
      "branch_angle_deg": [
       50,
@@ -712,14 +717,15 @@
      "lean_max_deg": 15,
      "live_crown_ratio": [
       0.5,
-      0.3
+      0.25
      ],
      "self_prune": true,
      "dead_limbs": 0.35,
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat-topped crown on a tall orange trunk"
    },
    {
     "name": "Spruce",
@@ -822,7 +828,8 @@
      "root_flare": true,
      "spacing_m": 0.35,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall dark cone with drooping branchlets"
    }
   ],
   "shrub": [
@@ -939,7 +946,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low green twiggy carpet"
    },
    {
     "name": "Dwarf birch",
@@ -1054,7 +1062,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low tangled shrub of tiny round leaves"
    },
    {
     "name": "Juniper",
@@ -1160,7 +1169,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "prickly grey-green mound or spire"
    },
    {
     "name": "Labrador tea",
@@ -1271,7 +1281,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low mound of rusty-backed leathery leaves"
    },
    {
     "name": "Taiga willow",
@@ -1321,7 +1332,7 @@
      "aspect": 2.5,
      "base": "cuneate",
      "apex": "acute",
-     "margin": "crenate",
+     "margin": "entire",
      "venation": "pinnate",
      "arrangement": "alternate",
      "size_cm": [
@@ -1353,9 +1364,9 @@
     },
     "bark": {
      "pattern": "fissured",
-     "orientation": "vertical",
-     "depth": 0.4,
-     "scale_cm": 2,
+     "orientation": "diamond",
+     "depth": 0.45,
+     "scale_cm": 3,
      "color": "#7A7268",
      "color_2": "#8A5A48",
      "lenticels": "none",
@@ -1386,7 +1397,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "bushy small tree with diamond-patterned trunks"
    }
   ],
   "ground": [
@@ -1473,7 +1485,8 @@
      "color_2": "#5A9A35",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "red-stemmed feather moss carpet"
    },
    {
     "name": "Fireweed",
@@ -1562,7 +1575,8 @@
      "color_2": "#A04A48",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "upright leafy spires topped magenta"
    },
    {
     "name": "Lingonberry",
@@ -1673,7 +1687,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low glossy evergreen carpet, red berries"
    },
    {
     "name": "Reindeer lichen",
@@ -1747,7 +1762,8 @@
      "color_2": "#A8B8A0",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "pale grey-white spongy lichen carpet"
    },
    {
     "name": "Rusty bog-moss",
@@ -1832,7 +1848,8 @@
      "color_2": "#A05A30",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "brown-green moss hummock, soft and rounded"
    }
   ],
   "epiphyte": []

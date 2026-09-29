@@ -74,7 +74,7 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "irregular",
+     "form": "spreading",
      "gap": 0.45,
      "layering": "clumped",
      "droop": 0.5
@@ -100,7 +100,7 @@
     },
     "architecture": {
      "model": "champagnat",
-     "habit": "multi_stem",
+     "habit": "decurrent",
      "orders": 6,
      "branch_angle_deg": [
       30,
@@ -123,7 +123,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "grey-green weeping-twigged tree with a spreading crown"
    },
    {
     "name": "Date palm",
@@ -234,7 +235,8 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall rough pole, stiff grey-green feather crown, date clusters"
    },
    {
     "name": "Doum palm",
@@ -345,7 +347,8 @@
      "root_flare": true,
      "spacing_m": 3.0,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "forking trunk, each arm topped by a fan-leaf tuft"
    },
    {
     "name": "Euphrates poplar",
@@ -463,7 +466,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "open spreading poplar, small grey-green leaves shimmering"
    }
   ],
   "shrub": [
@@ -578,7 +582,8 @@
      "root_flare": false,
      "spacing_m": 0.05,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low spiny green tangle, leafless-looking"
    },
    {
     "name": "Fig",
@@ -669,7 +674,7 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "decurrent",
+     "habit": "multi_stem",
      "orders": 6,
      "branch_angle_deg": [
       45,
@@ -692,7 +697,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low wide spreading crown of big hand leaves, pale trunk"
    },
    {
     "name": "Oleander",
@@ -806,7 +812,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "vase of upright stems, dark narrow leaves, pink flowers"
    },
    {
     "name": "Saltcedar",
@@ -933,7 +940,8 @@
      "secondary": "#F4D0DC",
      "form": "dense pink plumes 2-5 cm on the twig tips",
      "season": "summer"
-    }
+    },
+    "silhouette": "feathery see-through plume bush with weeping whip twigs"
    }
   ],
   "ground": [
@@ -1007,7 +1015,8 @@
      "sat": 0.85,
      "val": 1.0,
      "underside": 0.1,
-     "autumn": "#c0b070"
+     "autumn": "#c0b070",
+     "drop": false
     },
     "photoperiod": {
      "mode": "neutral"
@@ -1021,7 +1030,8 @@
      "color_2": "#A09060",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "close-cropped creeping turf"
    },
    {
     "name": "Common reed",
@@ -1115,7 +1125,8 @@
      "color_2": "#B8A868",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall even reed wall with feathery plumed tops"
    },
    {
     "name": "Desert rush",
@@ -1203,7 +1214,8 @@
      "color_2": "#8A7A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "stiff dark-green rush tussock of vertical needles"
    },
    {
     "name": "Halfa grass",
@@ -1275,7 +1287,8 @@
      "sat": 0.8,
      "val": 1.0,
      "underside": 0.1,
-     "autumn": "#c8b060"
+     "autumn": "#c8b060",
+     "drop": false
     },
     "photoperiod": {
      "mode": "neutral"
@@ -1289,7 +1302,8 @@
      "color_2": "#B0A060",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "coarse pale-green tussock grass with stiff spikes"
    },
    {
     "name": "Smooth flatsedge",
@@ -1368,7 +1382,8 @@
      "sat": 0.95,
      "val": 1.0,
      "underside": 0.05,
-     "autumn": "#b8a060"
+     "autumn": "#b8a060",
+     "drop": false
     },
     "photoperiod": {
      "mode": "neutral"
@@ -1382,7 +1397,8 @@
      "color_2": "#A08050",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "small glossy flatsedge clump on wet sand"
    }
   ],
   "epiphyte": []

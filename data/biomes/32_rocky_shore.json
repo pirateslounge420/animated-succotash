@@ -124,7 +124,8 @@
      "root_flare": true,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "wind-flattened dark crown leaning inland"
    },
    {
     "name": "Sitka spruce",
@@ -228,7 +229,8 @@
      "root_flare": true,
      "spacing_m": 0.35,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall dark spire with drooping sprays"
    }
   ],
   "shrub": [
@@ -342,7 +344,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "compact grey-green rounded bush"
    },
    {
     "name": "Gorse",
@@ -444,7 +447,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense spiny mound, yellow in flower"
    },
    {
     "name": "Salal",
@@ -556,7 +560,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense glossy leafy thicket"
    },
    {
     "name": "Tree mallow",
@@ -669,7 +674,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "stout stem topped by big soft leaves"
    }
   ],
   "ground": [
@@ -760,7 +766,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "olive-brown drooping frond clump"
    },
    {
     "name": "Feather boa kelp",
@@ -849,7 +856,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "long brown fringed straps"
    },
    {
     "name": "Rock samphire",
@@ -944,7 +952,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "fleshy glaucous cushion in crevices"
    },
    {
     "name": "Sea campion",
@@ -1030,7 +1039,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "grey-green cushion with white flowers"
    },
    {
     "name": "Sea fig",
@@ -1120,7 +1130,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "trailing succulent mat"
    },
    {
     "name": "Sea ivory lichen",
@@ -1190,7 +1201,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "grey-green tufts on rock"
    },
    {
     "name": "Sea lettuce",
@@ -1268,7 +1280,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "bright green sheets on rock"
    },
    {
     "name": "Sea spleenwort",
@@ -1361,7 +1374,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "glossy fronds tucked in cliff cracks"
    },
    {
     "name": "Thrift",
@@ -1450,7 +1464,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "tight green cushion with pink heads"
    }
   ],
   "epiphyte": []

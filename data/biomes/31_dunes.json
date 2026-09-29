@@ -122,7 +122,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "short twisted dark pine leaning downwind"
    },
    {
     "name": "Scots pine",
@@ -191,7 +192,7 @@
      "note": "orange-red flaking upper trunk over grey-brown plated lower bark"
     },
     "canopy": {
-     "form": "rounded",
+     "form": "umbrella",
      "gap": 0.4,
      "layering": "clumped",
      "droop": 0.1
@@ -207,14 +208,14 @@
     },
     "architecture": {
      "model": "rauh",
-     "habit": "excurrent",
+     "habit": "umbrella",
      "orders": 5,
      "branch_angle_deg": [
       50,
       75
      ],
      "taper_exponent": 1.4,
-     "sinuosity": 0.3,
+     "sinuosity": 0.4,
      "fork_height_frac": null,
      "buttress": "none",
      "lean_max_deg": 15,
@@ -227,7 +228,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat-topped umbrella on an orange-barked trunk"
    }
   ],
   "shrub": [
@@ -345,7 +347,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense rounded glossy bush"
    },
    {
     "name": "Coastal juniper",
@@ -452,7 +455,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low prickly blue-green mound"
    },
    {
     "name": "Coastal wattle",
@@ -565,7 +569,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spreading multi-stem shrub with yellow spikes"
    },
    {
     "name": "Creeping willow",
@@ -681,7 +686,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "low grey-green creeping mound"
    }
   ],
   "ground": [
@@ -771,7 +777,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "upright grass tufts in lines"
    },
    {
     "name": "Dune evening primrose",
@@ -857,7 +864,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "grey-hairy sprawling mound"
    },
    {
     "name": "Lyme grass",
@@ -945,7 +953,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "stout blue-grey grass tufts"
    },
    {
     "name": "Marram grass",
@@ -1031,7 +1040,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "dense grey-green upright tufts"
    },
    {
     "name": "Sand sedge",
@@ -1117,7 +1127,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "small tufts in straight lines"
    },
    {
     "name": "Sea oats",
@@ -1205,7 +1216,8 @@
     },
     "photoperiod": {
      "mode": "neutral"
-    }
+    },
+    "silhouette": "tall tufts with nodding golden heads"
    }
   ],
   "epiphyte": []

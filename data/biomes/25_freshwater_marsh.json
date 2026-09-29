@@ -141,7 +141,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "loose rounded thicket of arching stems"
    },
    {
     "name": "Grey willow",
@@ -265,7 +266,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey-green rounded bush of many stems"
    },
    {
     "name": "Sweet gale",
@@ -382,7 +384,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low grey-green twiggy bush"
    }
   ],
   "ground": [
@@ -480,7 +483,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "round green flower culm inside the leaf fans"
-    }
+    },
+    "silhouette": "tall upright fans of grey-green blades with brown spikes"
    },
    {
     "name": "Common reed",
@@ -576,7 +580,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "hollow jointed culms turning straw-coloured in winter; internodes ~20 cm"
-    }
+    },
+    "silhouette": "tall dense stand of plume-topped canes"
    },
    {
     "name": "Reed sweet-grass",
@@ -674,7 +679,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "stout hollow culms"
-    }
+    },
+    "silhouette": "tall bright green leafy stand"
    },
    {
     "name": "Soft-stem bulrush",
@@ -759,7 +765,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "terete soft grey-green culms 1-3 m, papery straw sheaths at the base"
-    }
+    },
+    "silhouette": "sparse tall grey-green leafless stems"
    },
    {
     "name": "Tussock sedge",
@@ -855,7 +862,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "tussock pedestal of brown persistent leaf bases"
-    }
+    },
+    "silhouette": "dome of arching blades on a pedestal"
    },
    {
     "name": "Yellow flag iris",
@@ -951,7 +959,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "stout flower stems; leaf bases flushed pink-brown"
-    }
+    },
+    "silhouette": "upright fans of sword-shaped leaves"
    }
   ],
   "epiphyte": []

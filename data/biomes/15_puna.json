@@ -78,7 +78,7 @@
       3
      ],
      "compound": {
-      "form": "trifoliate",
+      "form": "pinnate",
       "leaflets": [
        3,
        5
@@ -140,7 +140,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "stunted crooked tree with shaggy red bark"
    }
   ],
   "shrub": [
@@ -246,7 +247,8 @@
      "root_flare": false,
      "spacing_m": 0.05,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "low mound of spiny green segments"
    },
    {
     "name": "Puna daisy shrub",
@@ -356,7 +358,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense resinous rounded shrub"
    },
    {
     "name": "Queen of the Andes",
@@ -445,7 +448,8 @@
      "color_2": "#A09080",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "huge spiny rosette with giant flower column"
    },
    {
     "name": "Yareta",
@@ -534,7 +538,8 @@
      "color_2": "#C0B050",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "hard bright green boulder-like cushion"
    }
   ],
   "ground": [
@@ -628,7 +633,8 @@
      "color_2": "#8A8A50",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat dense green bog cushion"
    },
    {
     "name": "Bunch grass",
@@ -718,7 +724,8 @@
      "color_2": "#A08A40",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "stiff yellow spiky tussock"
    },
    {
     "name": "Ground rosette",
@@ -807,7 +814,8 @@
      "color_2": "#8A7A58",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "flat ground rosette with white daisy"
    },
    {
     "name": "Ichu grass",
@@ -897,7 +905,8 @@
      "color_2": "#A09040",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall wispy straw-yellow tussock"
    },
    {
     "name": "Puna gentian",
@@ -986,7 +995,8 @@
      "color_2": "#7A6A58",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "tiny cushion with blue flowers"
    }
   ],
   "epiphyte": []

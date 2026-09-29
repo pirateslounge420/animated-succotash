@@ -79,10 +79,10 @@
      "confidence": "documented"
     },
     "canopy": {
-     "form": "irregular",
+     "form": "rounded",
      "gap": 0.45,
      "layering": "clumped",
-     "droop": 0.3
+     "droop": 0.2
     },
     "tint": {
      "hue_shift": 4,
@@ -132,7 +132,8 @@
      "root_flare": false,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "slender pale trunk, rounded crown of ascending branches"
    },
    {
     "name": "Etna broom tree",
@@ -237,7 +238,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "leafless green weeping broom, gold in bloom"
    },
    {
     "name": "Japanese larch",
@@ -349,7 +351,8 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "open conical larch with tiered horizontal branches, gold autumn"
    },
    {
     "name": "Lodgepole pine",
@@ -457,7 +460,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "narrow dark conical pine, straight trunk, dead lower whorls"
    },
    {
     "name": "Ohia lehua",
@@ -573,7 +577,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "gnarled grey-green crown, crimson bottlebrush blooms"
    }
   ],
   "shrub": [
@@ -669,7 +674,8 @@
      "color_2": "#5A5248",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "spiny grey hedgehog cushion"
    },
    {
     "name": "Fuji knotweed",
@@ -787,7 +793,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dense thicket of bamboo-like canes with big leaves"
    },
    {
     "name": "Pumice lupine",
@@ -882,7 +889,8 @@
      "color_2": "#8A7A6A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "silver-grey rosette mat with purple spikes"
    },
    {
     "name": "Sea buckthorn",
@@ -997,7 +1005,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "thorny silver-grey thicket, orange berries on stems"
    },
    {
     "name": "Tea-leaved willow",
@@ -1112,7 +1121,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "glossy-leaved willow bush, rounded and multi-stemmed"
    },
    {
     "name": "Volcanic pioneer shrub",
@@ -1227,7 +1237,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "small red-tinged shrub on bare lava"
    }
   ],
   "ground": [
@@ -1346,7 +1357,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "short fibrous trunk topped by stiff bipinnate frond crown"
    },
    {
     "name": "Fireweed",
@@ -1435,7 +1447,8 @@
      "color_2": "#A04A48",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "tall leafy wands topped with magenta spires"
    },
    {
     "name": "Lava moss",
@@ -1521,7 +1534,8 @@
      "color_2": "#D0D8C0",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "grey-white woolly moss carpet over lava"
    },
    {
     "name": "Lyme grass",
@@ -1608,7 +1622,8 @@
      "color_2": "#B0B8A8",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "blue-grey arching dune grass tussock"
    },
    {
     "name": "Map lichen",
@@ -1682,7 +1697,8 @@
      "color_2": "#2A2A2A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "yellow-green crust map with black borders on rock"
    },
    {
     "name": "Swordfern",
@@ -1771,7 +1787,8 @@
      "color_2": "#6A5A3A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "arching vase of long narrow sword fronds"
    }
   ],
   "epiphyte": []

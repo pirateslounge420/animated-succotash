@@ -135,7 +135,8 @@
      "root_flare": false,
      "spacing_m": 0.8,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "broad open crown on massive pale trunk, yellow autumn"
    },
    {
     "name": "Gambel oak",
@@ -253,7 +254,8 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "multi-stem clonal oak thicket, rounded crowns"
    },
    {
     "name": "Netleaf hackberry",
@@ -367,7 +369,8 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "gnarled small tree, warty grey bark, irregular crown"
    },
    {
     "name": "Two-needle pinyon",
@@ -478,7 +481,8 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "short bushy round-crowned pine, dense dark needles"
    },
    {
     "name": "Utah juniper",
@@ -588,7 +592,8 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "squat multi-trunk juniper, half dead limbs, rounded crown"
    }
   ],
   "shrub": [
@@ -702,7 +707,8 @@
      "root_flare": true,
      "spacing_m": 0.15,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "silver-grey rounded sage bush, shreddy trunk"
    },
    {
     "name": "Blackbrush",
@@ -815,7 +821,8 @@
      "root_flare": false,
      "spacing_m": 0.05,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "dark spiny low mound, nearly black at distance"
    },
    {
     "name": "Cliffrose",
@@ -928,7 +935,8 @@
      "root_flare": true,
      "spacing_m": 0.15,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "gnarled open shrub, shreddy bark, cream flowers"
    },
    {
     "name": "Coyote willow",
@@ -1046,7 +1054,8 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "thicket of slender upright grey-green stems"
    },
    {
     "name": "Green Mormon tea",
@@ -1148,7 +1157,8 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
-    }
+    },
+    "silhouette": "broom of bright green jointed stems"
    },
    {
     "name": "Prickly pear",
@@ -1248,7 +1258,8 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
-    }
+    },
+    "silhouette": "big mound of upright spiny flat pads"
    }
   ],
   "ground": [
@@ -1336,7 +1347,8 @@
      "color_2": "#A08A70",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "many upright grey stems topped with orange cups"
    },
    {
     "name": "Galleta grass",
@@ -1423,7 +1435,8 @@
      "color_2": "#B8A890",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "wiry grey-green bunch grass with short spikes"
    },
    {
     "name": "Indian ricegrass",
@@ -1512,7 +1525,8 @@
      "color_2": "#C8B888",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "airy tussock with open sprays of seed heads"
    },
    {
     "name": "Maidenhair fern",
@@ -1606,7 +1620,8 @@
      "lenticels": "none",
      "confidence": "documented",
      "note": "stipes black and wiry"
-    }
+    },
+    "silhouette": "delicate drooping fan-leaflet fronds on black wire stems"
    },
    {
     "name": "Sand dropseed",
@@ -1693,7 +1708,8 @@
      "color_2": "#C0B080",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "open tussock with fine loose seed heads"
    },
    {
     "name": "Scarlet monkeyflower",
@@ -1783,7 +1799,8 @@
      "color_2": "#8A6A5A",
      "lenticels": "none",
      "confidence": "documented"
-    }
+    },
+    "silhouette": "leafy clump with scarlet tubular flowers"
    }
   ],
   "epiphyte": []
