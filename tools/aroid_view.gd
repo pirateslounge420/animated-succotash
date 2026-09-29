@@ -66,6 +66,23 @@ func _run() -> void:
 			cands.append(c)
 	seed(7)
 	cands.shuffle()
+	# A species asked for: only spots in a province whose realms it's
+	# native to (RealmMap: one world in nine for most), rainforest or not.
+	var want_name := OS.get_environment("SPECIES")
+	if want_name != "":
+		var wsp := SpeciesDB.find(want_name)
+		if wsp != null and not wsp.realms.is_empty():
+			const WORLD_OF := {"andes": 0, "neotropic": 0, "nearctic": 0, "madagascar": 1, "afrotropic": 1,
+				"mediterranean": 1, "palearctic": 1, "west_asia": 1, "himalaya": 2, "indomalaya": 2,
+				"sino_subtropical": 2, "central_asia": 2, "east_asia_temperate": 2, "malesia": 3,
+				"australasia": 3, "oceania": 4}
+			var worlds := {}
+			for r in wsp.realms:
+				if WORLD_OF.has(r):
+					worlds[WORLD_OF[r]] = true
+			RealmMap.warm(world.world_seed)
+			cands = cands.filter(func(c): return worlds.has(RealmMap.world_at(map.dir[c])))
+			print("[aroid_view] %s: realms %s, %d spots in its provinces" % [want_name, wsp.realms, cands.size()])
 	var entry := {}
 	var want_sp := OS.get_environment("SPECIES")
 	var tries_n := int(OS.get_environment("TRIES")) if OS.get_environment("TRIES") != "" else 25
