@@ -1795,3 +1795,15 @@ twig; look up into an oak from the trunk and see branchwork, then leaves at the 
 **Dev check:** stand in a big oak's crown, still: a fox below walks past without alarm; a
 thrown spear from outside sticks in a branch or passes the leaves; an arrow fired from
 inside leaves cleanly.
+
+**§AI.1 revised — the turn is a six-week gradient, not a switch (28 Sept, from play):**
+green on day 150 and red on day 160 is wrong. Real autumn colour runs ~6 weeks:
+`data/seasons.json autumn_colour` — starts `lead_days` (12) before the autumn transition
+as nights cool, then over `days_total` (42 game-days) goes green → yellow-green
+(hue drifting toward the autumn colour) → peak → dull/browner → drop, each stage its
+`share`; every tree has a seeded ±7-day offset and its top/outer clusters lead the
+inner ones by 8 days, so a hillside turns over weeks and one tree turns from the
+outside in. Leaves fall only from the dull stage (litter `fall` now keys off it,
+24 days at 6 %/day). Spring mirrors it: bud → young pale-yellow leaf → full green over
+24 days. The season transition (20 days) is the *temperature* ramp; foliage follows
+its own, longer clock.

@@ -1,16 +1,16 @@
 {
  "_help": {
   "about": "[NOT WIRED YET \u2014 design \u00a7AI] Leaf fall, litter piles and decomposition. Deciduous species (tint.drop) shed in the autumn transition; evergreens shed a small share all year. Fallen leaves are drawn from the species' own litter tile (assets/textures/plants/species/<key>_litter.png, a flat scatter of its leaves in its autumn colour) and move through the decomposition stages below by ageing; the stage colour transform is shared by every species because real litter converges on the same browns, blacks and greys. Litter mass feeds flora.litter (soil fertility, Phase 7) and is the substrate of litter fungi.",
-  "fall": "deciduous: leaves fall across fall.deciduous_days starting when the autumn transition passes fall.start_at (0-1 through the transition); a fraction falls per game-day with a gust burst (wind above fall.gust_mps drops fall.gust_share of the remaining leaves at once). Evergreen: fall.evergreen_share_per_year of the crown falls spread over the year (needle duff). Where leaves land: within the crown radius \u00d7 fall.spread, drifted downwind by wind_mps \u00d7 fall.drift_s.",
+  "fall": "deciduous: leaves fall across fall.deciduous_days starting when the tree reaches the `dull` colour stage (data/seasons.json autumn_colour), never before peak colour; a fraction falls per game-day with a gust burst (wind above fall.gust_mps drops fall.gust_share of the remaining leaves at once). Evergreen: fall.evergreen_share_per_year of the crown falls spread over the year (needle duff). Where leaves land: within the crown radius \u00d7 fall.spread, drifted downwind by wind_mps \u00d7 fall.drift_s.",
   "pile": "A pile is a ground decal/patch per tree (or merged per cell) with depth_cm from accumulated leaf mass (pile.cm_per_kg_m2); it is drawn with the species' litter tile at the stage's colour; deeper piles read as a raised mound (vertex offset pile.max_raise_m). The player wades through it: pile.rustle sound above depth_cm rustle_cm; running through scatters the top layer (pile.kick_share) \u2014 free fun, and it exposes what is under it.",
   "stages": "Real litter succession: 0 fresh (the species' autumn colour, flat and bright) \u2192 1 dry (curled, fades to tan/brown, lighter) \u2192 2 wet-dark (after rain: dark brown to near-black, matted) \u2192 3 bleached/skeletonised (pale grey-tan, veins and holes, thin) \u2192 4 humus (dark crumbly near-black, no leaf shape). Each stage's `color_lerp` pulls the tile's colour toward `to` by `amount`, `sat` and `val` multiply, `holes` is the share of the skeleton mask applied (a shared mask), `height` scales pile depth (litter shrinks as it rots).",
   "timing": "days_at_reference is the stage's duration at 15 \u00b0C and moisture 0.6. Real rate scales by temperature (Q10 = 2: doubles every 10 \u00b0C, ~0 below 0 \u00b0C) and moisture (dry litter barely rots; wet rots fast), so tropical litter is gone in weeks, boreal needles take years. species multiplier by leaf type/texture: needles and leathery/glossy leaves rot slowly, thin matte leaves fast (litter k-values: maple/ash ~1/yr, oak/beech ~0.3-0.5/yr, pine needles ~0.2/yr, tropical broadleaf ~3-6/yr).",
   "fungi": "litter fungi (data/plants/fungi.json substrate: litter) fruit on piles in stage 2-3 after rain."
  },
  "fall": {
-  "start_at": 0.35,
-  "deciduous_days": 18,
-  "per_day_share": 0.08,
+  "start_at": "after autumn_colour.peak \u2014 see data/seasons.json autumn_colour; leaves fall from the dull stage on",
+  "deciduous_days": 24,
+  "per_day_share": 0.06,
   "gust_mps": 6.0,
   "gust_share": 0.25,
   "evergreen_share_per_year": 0.3,
