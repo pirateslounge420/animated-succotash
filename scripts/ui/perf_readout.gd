@@ -106,6 +106,6 @@ func _sample(delta: float, gpu: float) -> void:
 
 func _restore() -> void:
 	if _off_f >= 0 and sun != null and is_instance_valid(sun):
-		sun.shadow_enabled = bool(Tuning.num("look", "light", "shadows"))
+		sun.shadow_enabled = SkySystem.day_shadows() and bool(Tuning.num("look", "light", "shadows"))
 	_off_f = -1
 	_sample_t = SAMPLE_S

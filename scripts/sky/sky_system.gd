@@ -133,6 +133,21 @@ static var NIGHT := Tuning.section("look", "night")
 ## Night fog density (per meter) added to the day's haze: about 40% at
 ## 200 m, so the middle distance goes blue and the far distance dissolves.
 const FOG_NIGHT := 0.0017
+## Sun shadows by day, A/B (design §AG 6, not locked yet): on, the sun
+## casts hard shadow maps (look "light"); off, it casts none and the
+## ground darkens under trees instead (retro.canopy_dark, feathered
+## retro.canopy_feather_m by TerrainChunk.bake_canopy_shade) with blob
+## shadows under characters (BlobShadow). The switch is the setting
+## "display.day_shadows" (the settings panel), default look "light"
+## shadows; DAY_SHADOWS=0/1 in the environment overrides it (tools).
+static func day_shadows() -> bool:
+	var env := OS.get_environment("DAY_SHADOWS")
+	if env != "":
+		return env == "1"
+	return Settings.get_bool("display.day_shadows", bool(LIGHT.get("shadows", true)))
+
+
+var _day_shadows_set := -1
 ## The day haze and valley fog (data/look.json retro.fog, design §AG).
 static var RETRO_FOG := Tuning.section("look", "retro").get("fog", {}) as Dictionary
 
@@ -241,6 +256,15 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	# a tenth of full moonlight; a floor keeps thin phases faintly lit.
 	moonlight = moon_up * maxf(pow(illumination, 3.3), MOON_FLOOR)
 	var dark_magic := magic * (1.0 - daylight)
+
+	# The day-shadow A/B: applied when it changes, so tools that switch the
+	# sun's shadow for a moment (PerfReadout, perf_bench) aren't fought.
+	var ds := int(day_shadows())
+	if ds != _day_shadows_set:
+		_day_shadows_set = ds
+		sun.shadow_enabled = ds == 1 and bool(LIGHT.get("shadows", true))
+		BlobShadow.set_enabled(ds == 0)
+		Look.apply({"look_canopy_dark": 0.0 if ds == 1 else float(RETRO.get("canopy_dark", 0.45))})
 
 	# Lights: raking, never flat overhead (the disc in the sky stays true).
 	_aim(sun, _rake(sun_dir, up, north), up)

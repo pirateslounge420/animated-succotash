@@ -15,9 +15,12 @@
 // night targets as night falls.
 //
 // Under trees (vertex alpha: 1 - how much canopy is overhead, baked by
-// TerrainChunk.bake_canopy_shade) the ground is in dappled shade: patches
-// of shadow with sun flecks between them, the light coming through the
-// gaps between the leaf clusters, a meter or two across; faint by night.
+// TerrainChunk.bake_canopy_shade, feathered at the crown's edge) the
+// ground is in dappled shade: patches of shadow with sun flecks between
+// them, the light coming through the gaps between the leaf clusters, a
+// meter or two across; faint by night. When the sun casts no shadow map
+// by day (§AG 6, look_canopy_dark > 0) it is instead simply darker, by
+// look_canopy_dark, the way the reference darkens ground under trees.
 //
 // Near magical sites, patches of moss glow at night.
 shader_type spatial;
@@ -87,7 +90,9 @@ void fragment() {
 	ALBEDO = c * t * 2.0 * (1.0 + dapple * 0.35);
 	// Dappled canopy shade: shadow, broken by sun flecks.
 	float canopy = 1.0 - COLOR.a;
-	if (canopy > 0.002) {
+	if (look_canopy_dark > 0.0) {
+		ALBEDO *= 1.0 - look_canopy_dark * canopy * (1.0 - 0.6 * look_night);
+	} else if (canopy > 0.002) {
 		float fn = texture(look_grain_soft, UV * 0.37 + vec2(0.13, 0.71)).r * 0.65
 			+ texture(look_grain_soft, UV * 0.9 + vec2(0.52, 0.27)).r * 0.35;
 		float fleck = smoothstep(0.54, 0.6, fn);

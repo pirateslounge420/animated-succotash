@@ -47,6 +47,10 @@ lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 
 [shader_globals]
 
+look_canopy_dark={
+"type": "float",
+"value": 0.0
+}
 look_eye={
 "type": "vec3",
 "value": Vector3(0, 0, 0)

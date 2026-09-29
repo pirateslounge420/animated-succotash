@@ -3,7 +3,8 @@ extends Control
 ## The settings panel (O or F10): a small plain box in the R1a palette.
 ## The HUD switches (design §L: the speedometer and the clock, both on by
 ## default) and the display (design §Y, Display: internal lines 480 or 720,
-## 16:9 or 4:3 letterboxed, integer scaling). Click a line to switch it;
+## 16:9 or 4:3 letterboxed, integer scaling) and the sun's shadows by day
+## (design §AG 6 A/B, SkySystem.day_shadows()). Click a line to switch it;
 ## O, F10 or Esc closes. The world doesn't pause. Sizes at the 480-line
 ## reference, like all the HUD.
 
@@ -15,6 +16,7 @@ const ITEMS := [
 	["display.lines", "Internal lines", "lines"],
 	["display.aspect", "Aspect", "aspect"],
 	["display.integer", "Integer scaling", "bool"],
+	["display.day_shadows", "Sun shadows by day", "bool"],
 ]
 const PANEL := Color(0.035, 0.055, 0.19, 0.88)
 const EDGE := Color("#C8D8F0")
@@ -69,6 +71,8 @@ func _switch(item: Array) -> void:
 func _on(item: Array) -> bool:
 	if item[0] == "display.integer":
 		return Display.integer()
+	if item[0] == "display.day_shadows":
+		return SkySystem.day_shadows()
 	return Settings.get_bool(item[0])
 
 

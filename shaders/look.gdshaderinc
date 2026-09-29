@@ -44,6 +44,9 @@ global uniform float look_height_m;
 global uniform vec4 look_tile_m;
 global uniform vec2 look_tile_m2;
 global uniform float look_max_mips;
+// Ground darkening under canopy when the sun casts no shadow map by day
+// (§AG 6, retro.canopy_dark; 0 while it does: SkySystem.day_shadows()).
+global uniform float look_canopy_dark;
 global uniform float look_night;
 // Teal and cobalt (sRGB (0.05, 1.0, 0.85) and (0.15, 0.35, 1.0)), linear.
 const vec3 look_glow_color = vec3(0.00394, 1.0, 0.69207);

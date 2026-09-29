@@ -431,6 +431,10 @@ static func _bake_hollow_ao(h: PackedFloat32Array, cols: PackedColorArray) -> vo
 			cols[i] = Color(c.r * k, c.g * k, c.b * k, c.a)
 
 
+## How wide the canopy shade's edge fades (data/look.json retro.canopy_feather_m).
+static var CANOPY_FEATHER_M := float(Tuning.section("look", "retro").get("canopy_feather_m", 3.0))
+
+
 ## Baked canopy shade: ground under tree crowns is darkened a little, and
 ## how much canopy is overhead (0-1, weighted by how leafy each tree is,
 ## hosts' leaf amount) goes in the vertex color's alpha as 1 - canopy: the
@@ -450,11 +454,15 @@ static func bake_canopy_shade(data: Dictionary, hosts: Array) -> void:
 		var gy := (uv.y + 1.0) * 0.5 * CHUNKS_PER_FACE * QUADS - key.z * QUADS
 		var r: float = maxf(float(host[2]) * 0.3, 2.0) / quad_m # crown radius in quads
 		var leaf: float = float(host[5]) if host.size() > 5 else 1.0
-		for y in range(maxi(0, int(gy - r)), mini(n, int(gy + r) + 2)):
-			for x in range(maxi(0, int(gx - r)), mini(n, int(gx + r) + 2)):
-				var d := Vector2(x - gx, y - gy).length() / r
-				if d < 1.0:
-					shade[y * n + x] = maxf(shade[y * n + x], (1.0 - d * d) * leaf)
+		# Full shade inside the crown, fading out across CANOPY_FEATHER_M
+		# centred on its edge (design §AG 6).
+		var f := CANOPY_FEATHER_M / quad_m * 0.5
+		var reach := r + f
+		for y in range(maxi(0, int(gy - reach)), mini(n, int(gy + reach) + 2)):
+			for x in range(maxi(0, int(gx - reach)), mini(n, int(gx + reach) + 2)):
+				var d := Vector2(x - gx, y - gy).length()
+				if d < reach:
+					shade[y * n + x] = maxf(shade[y * n + x], (1.0 - smoothstep(maxf(r - f, 0.0), reach, d)) * leaf)
 	for i in n * n:
 		if shade[i] > 0.0:
 			var k := 1.0 - 0.12 * shade[i]
