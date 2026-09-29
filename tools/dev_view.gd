@@ -141,6 +141,10 @@ func _run() -> void:
 		player.first_person = true
 		player._apply_view()
 		player.camera().current = true
+		# PITCH=x (radians, first person): look up or down (1.5: nearly
+		# straight up, the zenith).
+		if OS.get_environment("PITCH") != "":
+			player.set_view(float(OS.get_environment("PITCH")), 0.0)
 	var hours := (OS.get_environment("HOURS") if OS.get_environment("HOURS") != "" else "12,0").split(",")
 	var tag := OS.get_environment("TAG") if OS.get_environment("TAG") != "" else "devview"
 	var lon := CubeSphere.longitude(pd)

@@ -330,9 +330,14 @@ void sky() {
 		float top = 1.0 - 0.5 / 128.0;
 		float far_rep = max(1.0, round(far_scale));
 		vec4 far_c = cloud_layer(textureLod(cloud_pano, vec2(az * far_rep + cloud_scroll_far, min(el * far_scale, top)), 0.0).rgb, d, h, 0.35);
-		far_c.a *= 1.0 - smoothstep(0.75, 1.0, el * far_scale);
+		far_c.a *= (1.0 - smoothstep(0.75, 1.0, el * far_scale)) * (1.0 - smoothstep(0.55, 0.85, el));
 		col = mix(col, far_c.rgb, far_c.a * fade * 0.85);
 		vec4 near_c = cloud_layer(textureLod(cloud_pano, vec2(az + cloud_scroll, min(el, top)), 0.0).rgb, d, h, 0.0);
+		// Toward the zenith the panorama's columns all meet at a point (from
+		// play: looking straight up, the clouds converged): it fades out
+		// there, and overhead is the weather's flat cloud decks'
+		// (CloudLayers).
+		near_c.a *= 1.0 - smoothstep(0.55, 0.85, el);
 		col = mix(col, near_c.rgb, near_c.a * fade);
 	}
 
