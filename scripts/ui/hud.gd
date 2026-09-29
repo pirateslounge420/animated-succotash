@@ -35,7 +35,11 @@ func _ready() -> void:
 	_right.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 9)
 	_right.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
+	# (Up above the subtitle, the prompt and the weapon line: at the start
+	# it sat on the Elder's first words and the bow.)
 	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 9)
+	_hint.offset_bottom -= 104
+	_hint.offset_top -= 104
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_hint.text = "WASD move · W W sprint · Shift crouch (air: drop) · Space jump (tap hop, hold bound)\nright click at a wall: wall jump (hold: cling) · as you land: bounce\nleft click: draw / release · Q bow, spear · E interact · V view · Tab pack\nM map · H hide HUD · O settings · F3 debug · Esc frees mouse"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
