@@ -463,7 +463,9 @@ func _toward(dir: Vector3, on_trunk: bool) -> Array:
 				var way := _horizontal(g.local[j] - g.local[base]) + (_horizontal(g.tangent[j]) if is_link else Vector3.ZERO)
 				if way.length() > 0.02 and way.normalized().dot(out) < -0.1:
 					continue
-				if is_link and way.length() > 0.3:
+				# (Even a stem rising almost straight from a fork leans its own
+				# way: a baobab's crown of them, each reached by looking its way.)
+				if is_link and way.length() > 0.05:
 					s = maxf(s, way.normalized().dot(dir))
 			s -= 0.05 if is_link else 0.15
 		if s < (0.3 if is_link else 0.5):

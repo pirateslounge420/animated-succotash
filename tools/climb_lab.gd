@@ -10,9 +10,16 @@ extends SceneTree
 ##
 ##   ~/bin/godot --headless --path . --script tools/climb_lab.gd
 ## SPECIES="Acacia,Oak" to pick; LAYOUTS=2 for more layouts per species.
+## BRANCHES=1: instead, every branch off the trunk thick enough to hold
+## (from play: "any branch that branches off should be accessible"): from
+## the trunk beside its foot, looking out along it, W; does it take you out
+## along it to where it gets too thin? Prints each miss and a score per
+## tree; fails below BRANCH_PASS of them reached.
 
 const SPECIES := ["Acacia", "Beach she-oak", "Miombo tree", "Oak", "Beech", "Baobab", "Paper birch", "Scots pine"]
 const DT := 1.0 / 60.0
+## Share of a tree's holdable branches W must take you out along.
+const BRANCH_PASS := 0.9
 
 var fails := 0
 var holder: Node3D
@@ -51,7 +58,10 @@ func _run() -> void:
 			g.xform = Transform3D.IDENTITY
 			g.key = hash([n, lay])
 			BranchGraphs.add(g)
-			_tree(n, g)
+			if OS.get_environment("BRANCHES") == "1":
+				_branches(n, g)
+			else:
+				_tree(n, g)
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
 
@@ -187,3 +197,157 @@ func _tree(n: String, g: BranchGraph) -> void:
 				lean = maxf(lean, absf(c._limb_rel))
 		print("    D round it: poses %s, leaning %.0f deg" % [poses.keys(), rad_to_deg(lean)])
 		ok(lean > 0.3 and poses.keys() == ["straddle"], "%s: D leans you round the limb, still astride" % n)
+
+
+## Each limb's parent limb (the one its first handhold forks from; -1 for
+## the trunk) and its handholds, outward in order.
+func _limbs(g: BranchGraph) -> Array:
+	var parent := {}
+	var holds := {}
+	for i in g.size():
+		var l := g.limb[i]
+		if not holds.has(l):
+			holds[l] = []
+			parent[l] = -1
+			for j in g.links[i]:
+				if g.limb[j] != l and j < i:
+					parent[l] = g.limb[j]
+		holds[l].append(i)
+	return [parent, holds]
+
+
+## Is limb `l` limb `top` or grown from it?
+func _within(l: int, top: int, parent: Dictionary) -> bool:
+	var k := 0
+	while l >= 0 and k < 64:
+		if l == top:
+			return true
+		l = parent.get(l, -1)
+		k += 1
+	return false
+
+
+func _branches(n: String, g: BranchGraph) -> void:
+	var lp := _limbs(g)
+	var parent: Dictionary = lp[0]
+	var holds: Dictionary = lp[1]
+	var tried := 0
+	var reached := 0
+	for l in holds:
+		if l == 0 or parent[l] != 0 or l >= BranchGraph.VINE_LIMB:
+			continue
+		var hs: Array = holds[l]
+		var r0: int = hs[0]
+		if g.radius[r0] < TreeClimb.GRIP_R_M:
+			continue
+		if OS.get_environment("LIMB") != "" and l != int(OS.get_environment("LIMB")):
+			continue
+		var t := -1
+		for j in g.links[r0]:
+			if g.limb[j] == 0:
+				t = j
+		if t < 0 or g.local[t].y < TreeClimb.LOWEST_HOLD_M + 0.3:
+			continue
+		# Its tip: the last handhold out along it still thick enough.
+		var tip := r0
+		for i in hs:
+			if g.radius[i] >= TreeClimb.GRIP_R_M:
+				tip = i
+			else:
+				break
+		var reach: float = (g.local[tip] - g.local[r0]).length()
+		# (A stub: less than a metre to hold, nothing to go out along.)
+		if reach < 1.0:
+			continue
+		tried += 1
+		# Two natural looks: toward its tip, and the way it leaves the
+		# trunk (they differ on a stem bending up out of a crown's fork).
+		var looks: Array[Vector3] = []
+		for way: Vector3 in [g.local[tip] - g.local[t], g.local[r0] - g.local[t] + g.tangent[r0]]:
+			var lk := Vector3(way.x, 0, way.z)
+			if lk.length() > 1e-3:
+				looks.append(lk.normalized())
+		var depth := _depth_from(g, r0, l, parent)
+		var got := "no way to look along it"
+		for look in looks:
+			var res := _branch_try(g, t, r0, tip, reach, look, depth)
+			if res == "":
+				got = ""
+				break
+			got = res
+		if got == "":
+			reached += 1
+		else:
+			print("    miss: limb %d (r %.2f m, %.1f m up, %.1f m long to r %.2f, rising %.2f): %s" % [l, g.radius[r0], g.local[r0].y, reach, g.radius[tip], g.tangent[r0].y, got])
+	var share := float(reached) / maxf(tried, 1.0)
+	print("[lab] %s: %d of %d branches off the trunk reached along (%.0f %%)" % [n, reached, tried, share * 100.0])
+	ok(tried == 0 or share >= BRANCH_PASS, "%s: W takes you out along the branches off the trunk (%d/%d)" % [n, reached, tried])
+
+
+## Handholds of limb `l` and what grows from it, by links out from `r0`.
+func _depth_from(g: BranchGraph, r0: int, l: int, parent: Dictionary) -> Dictionary:
+	var depth := {r0: 0}
+	var q := [r0]
+	while not q.is_empty():
+		var i: int = q.pop_front()
+		for j in g.links[i]:
+			if not depth.has(j) and _within(g.limb[j], l, parent):
+				depth[j] = depth[i] + 1
+				q.append(j)
+	return depth
+
+
+## How many holds on from `i`, outward, to the nearest end (thick enough).
+func _to_end(g: BranchGraph, i: int, depth: Dictionary) -> int:
+	var n := 0
+	while n < 200:
+		var nxt := -1
+		for j in g.links[i]:
+			if depth.has(j) and depth[j] > depth[i] and g.radius[j] >= TreeClimb.GRIP_R_M:
+				nxt = j
+		if nxt < 0:
+			return n
+		i = nxt
+		n += 1
+	return n
+
+
+## From the trunk beside a branch's foot, looking `look`, W: "" if it takes
+## you out along the branch to an end, else what happened.
+func _branch_try(g: BranchGraph, t: int, r0: int, tip: int, reach: float, look: Vector3, depth: Dictionary) -> String:
+	var c := TreeClimb.new()
+	c.start(g, t, g.local[t] + Vector3(0, -1.0, 0) + look * (g.radius[t] + 0.45), Vector3.UP)
+	trace = 10 if OS.get_environment("TRACE") == "out" else 0
+	if trace > 0:
+		print("      from %s, the branch's foot %s; look %s" % [c.describe(t), c.describe(r0), look.snapped(Vector3.ONE * 0.01)])
+	# W until it stops getting you anywhere (4 s without a hold further
+	# out along it, by links), or 3 minutes.
+	var on := false
+	var at_end := false
+	var best := INF
+	var far := -1
+	var still := 0.0
+	for k in 360:
+		_hold(c, Vector2(0, 1), 0.5, look)
+		var i: int = c.hold[c.lead]
+		still += 0.5
+		if depth.has(i):
+			on = true
+			best = minf(best, g.local[i].distance_to(g.local[tip]))
+			# Out at an end of it: a hold with nothing thick enough further
+			# out (a limb forks, so it has several ends; W takes the one
+			# looked at). Held on, W may then reach across to wood nearby
+			# (TreeClimb: the air between limbs), so ever, not last.
+			if _to_end(g, i, depth) == 0:
+				at_end = true
+			if depth[i] > far:
+				far = depth[i]
+				still = 0.0
+		if c.has_meta("ended") or still > 4.0:
+			break
+	var fin: int = c.hold[c.lead]
+	if OS.get_environment("LIMB") != "":
+		print("      last: %s" % [c.holds_log.slice(-6)])
+	if on and (at_end or best < maxf(0.6, reach * 0.2)):
+		return ""
+	return "%s; now %s" % [("stopped %.1f m out, %d holds short of an end" % [(g.local[fin] - g.local[r0]).length(), _to_end(g, fin, depth)]) if on and depth.has(fin) else ("on it, then off it" if on else "never on it"), c.describe(fin)]
