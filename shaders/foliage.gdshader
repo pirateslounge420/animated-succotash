@@ -270,7 +270,9 @@ void vertex() {
 	glow_pick = step(0.5, fract(sin(float(INSTANCE_ID) * 12.9898) * 43758.5453));
 	if (mat_id > 5.5) {
 		// A far tree's picture: upright on the tree's own up, turned round
-		// it to face the camera, lit as if its face leant a little up.
+		// it to face the camera, lit as a crown's top is (its face leant
+		// mostly up: facing the camera, a picture looked at away from the
+		// sun was lit from behind, a dark band against the haze).
 		vec3 root = MODEL_MATRIX[3].xyz;
 		vec3 upv = MODEL_MATRIX[1].xyz;
 		vec3 upn = normalize(upv);
@@ -280,7 +282,7 @@ void vertex() {
 		vec3 side = normalize(cross(upn, fwd));
 		vec3 lp = (inv * vec4(VERTEX, 1.0)).xyz;
 		VERTEX = root + upv * lp.y + side * lp.x * length(MODEL_MATRIX[0].xyz);
-		NORMAL = normalize(fwd + upn * 0.6);
+		NORMAL = normalize(upn + fwd * 0.35);
 		v_imp = CUSTOM0;
 		v_imp2 = vec2(mod(UV2.y, 10.0), floor(UV2.y / 10.0) / 100.0);
 		// Never in the shadow pass.
