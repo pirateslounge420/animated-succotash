@@ -236,8 +236,77 @@ def check_soil(rep, where, s):
     _enum(rep, where, s, "salinity", SALINITY)
 
 
+# The life-cycle block (docs/design/AROID_LIFE.md; the Amorphophallus'
+# `cycle`), read by AroidLife / AroidGarden.
+CY_DORMANCY = {"dry", "cold", "cycle", "evergreen"}
+CY_SHOOT = {"narrow_spike", "stout_spike", "blunt_spike"}
+CY_BUD = {"rounded", "ovoid", "conical", "narrow_spike"}
+CY_PATTERN = {"plain", "mottled", "spotted", "streaked", "lichen", "warty"}
+CY_WHEN = {"before_leaf", "with_leaf", "after_leaf", "instead_of_leaf"}
+CY_THEN = {"leaf", "rest"}
+CY_OPENS = {"evening", "night", "morning", "afternoon"}
+CY_SCENT = {"carrion", "dung", "gas", "cheese", "fish", "sweet", "fruity", "spicy", "musky", "none"}
+CY_POLL = {"carrion_beetle", "dung_beetle", "rove_beetle", "hister_beetle", "sap_beetle", "other_beetle", "blowfly",
+           "flesh_fly", "drosophilid", "other_fly", "sweat_bee", "stingless_bee", "bee", "thrips", "unknown"}
+CY_TUBER = {"tuber", "elongate_tuber", "rhizome", "stoloniferous"}
+CY_BULBILS = {"none", "leaf", "petiole"}
+CY_SPORT = {"polyploid", "variegated", "aurea", "anthocyanin_free", "melanic", "glaucous", "dwarf", "laciniate",
+            "fused_leaflets", "twin_inflorescence", "colour_morph_flower", "prolific_offsets"}
+
+
+def _cy_range(rep, where, d, key):
+    v = d.get(key)
+    if not (isinstance(v, list) and len(v) == 2 and all(isinstance(x, (int, float)) and not isinstance(x, bool) for x in v) and v[0] <= v[1]):
+        rep.err(where, "'%s' = %r is not a [min, max] range" % (key, v))
+
+
+def check_cycle(rep, where, c):
+    if not isinstance(c, dict):
+        rep.err(where, "not an object")
+        return
+    for k in ("life", "shoot", "bud", "bloom", "fruit", "tuber", "ploidy", "hybrids", "sports"):
+        if k not in c:
+            rep.err(where, "missing '%s'" % k)
+    life = c.get("life", {})
+    _enum(rep, where + ".life", life, "dormancy", CY_DORMANCY)
+    for k in ("leaf_days", "rest_days"):
+        _cy_range(rep, where + ".life", life, k)
+    for part, forms in (("shoot", CY_SHOOT), ("bud", CY_BUD)):
+        b = c.get(part, {})
+        _enum(rep, where + "." + part, b, "form", forms)
+        cat = b.get("cataphylls", {})
+        _hex(rep, where + "." + part + ".cataphylls", cat, "colour")
+        _enum(rep, where + "." + part + ".cataphylls", cat, "pattern", CY_PATTERN)
+    for k in ("rise_days", "unfurl_days"):
+        _cy_range(rep, where + ".shoot", c.get("shoot", {}), k)
+    for k in ("bud_days", "peduncle_cm"):
+        _cy_range(rep, where + ".bud", c.get("bud", {}), k)
+    bl = c.get("bloom", {})
+    for k, allowed in (("when", CY_WHEN), ("then", CY_THEN), ("opens", CY_OPENS), ("scent", CY_SCENT)):
+        _enum(rep, where + ".bloom", bl, k, allowed)
+    for k in ("female_hours", "male_after_hours", "open_days"):
+        _cy_range(rep, where + ".bloom", bl, k)
+    pol = bl.get("pollinators")
+    if not isinstance(pol, list) or not pol or any(x not in CY_POLL for x in pol):
+        rep.err(where + ".bloom", "pollinators %r not all in %s" % (pol, sorted(CY_POLL)))
+    fr = c.get("fruit", {})
+    _hex(rep, where + ".fruit", fr, "unripe")
+    _hex(rep, where + ".fruit", fr, "ripe")
+    _cy_range(rep, where + ".fruit", fr, "ripen_days")
+    tu = c.get("tuber", {})
+    _enum(rep, where + ".tuber", tu, "kind", CY_TUBER)
+    _enum(rep, where + ".tuber", tu, "bulbils", CY_BULBILS)
+    for k in ("first_bloom_years", "bloom_every_years"):
+        _cy_range(rep, where + ".tuber", tu, k)
+    for s in c.get("sports", []) or []:
+        if s.get("kind") not in CY_SPORT:
+            rep.err(where + ".sports", "kind %r not in %s" % (s.get("kind"), sorted(CY_SPORT)))
+
+
 def check_entry(rep, where, e, strict):
     rep.entries += 1
+    if "cycle" in e:
+        check_cycle(rep, where + ".cycle", e["cycle"])
     if "leaf" in e:
         rep.with_leaf += 1
         check_leaf(rep, where + ".leaf", e["leaf"])

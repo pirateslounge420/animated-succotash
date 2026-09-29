@@ -1,0 +1,3426 @@
+{
+ "_help": {
+  "about": "Sports: rare genetic abnormalities any plant can carry (design 29 Sept 2026, Mike: 'each plant should also have rare sport forms which are like a unique and rare genetic abnormality'). PlantGenetics rolls each plant once, from its position (the same plant is the same sport on every visit), at its shape's rate; which kind it is is weighted toward what's documented in its genus (by_genus, researched: named cultivars that arose as sports, wild abnormal forms) and, for the Amorphophallus, in its species (the catalogue's cycle.sports). Clonal plants (tuber offsets, stolons, bulbils: the aroids that make them) roll per clump, so a sport shows as a whole clump, as it does in nature. Restart after editing.",
+  "kinds": "Every kind: code (the engine's number, packed into the plant's instance data with its moss: moss + 2 x code), label (what the HUD calls it after the name), size (height multiplier), look (what it looks like), inherit (how it passes to offspring in a cross: seed = seed_share of the seedlings; recessive = seed_share, all of them if both parents carry it; clonal = only offsets and cuttings, seed_share of seedlings; ploidy = the ploidy rules below), fertility (seed set when it's a parent), shows (what the engine draws today; form sports are recorded for the mesh builders).",
+  "by_shape": "The chance a plant is a sport (rate: one in 1/rate) and the kinds its shape class can show, weight 1 each. Grasses, tussocks, mosses, cushions, mats and knees don't sport (nothing to see). 'aroid' is every species with a cycle block (the Amorphophallus).",
+  "weights": "Kind weights: shape default, genus documented, species documented; a kind documented in the genus or species is allowed even if the shape list lacks it.",
+  "ploidy": "Crosses: 2x x 2x gives 2x, with an unreduced gamete now and then (unreduced: that share of seedlings are 3x, a quarter as many 4x — the rare spontaneous polyploid); 4x x 4x gives 4x; 2x x 4x gives 3x (triploid: seed set x triploid_fertility); an apomictic mother's seed is her clone.",
+  "by_genus": "Researched per genus (agent pass, 29 Sept 2026; 217 of 469 genera have a documented sport): kind and a documented example."
+ },
+ "kinds": {
+  "polyploid": {
+   "code": 1,
+   "label": "tetraploid",
+   "size": 1.3,
+   "look": "deeper green, thicker leaves, bigger flowers",
+   "inherit": "ploidy",
+   "fertility": 0.5,
+   "shows": "size and colour"
+  },
+  "variegated": {
+   "code": 2,
+   "label": "variegated",
+   "size": 0.85,
+   "look": "cream-white sectors and margins on the leaves",
+   "inherit": "clonal",
+   "seed_share": 0.05,
+   "fertility": 1.0,
+   "shows": "colour"
+  },
+  "aurea": {
+   "code": 3,
+   "label": "golden",
+   "size": 0.9,
+   "look": "golden-yellow foliage",
+   "inherit": "seed",
+   "seed_share": 0.5,
+   "fertility": 1.0,
+   "shows": "colour"
+  },
+  "anthocyanin_free": {
+   "code": 4,
+   "label": "green form",
+   "size": 1.0,
+   "look": "no dark pigment: plain green stems and petioles, pale spathe",
+   "inherit": "recessive",
+   "seed_share": 0.25,
+   "fertility": 1.0,
+   "shows": "colour"
+  },
+  "melanic": {
+   "code": 5,
+   "label": "dark form",
+   "size": 1.0,
+   "look": "purple-black / copper foliage and stems",
+   "inherit": "seed",
+   "seed_share": 0.5,
+   "fertility": 1.0,
+   "shows": "colour"
+  },
+  "glaucous": {
+   "code": 6,
+   "label": "blue form",
+   "size": 1.0,
+   "look": "blue-grey waxy bloom",
+   "inherit": "seed",
+   "seed_share": 0.5,
+   "fertility": 1.0,
+   "shows": "colour"
+  },
+  "dwarf": {
+   "code": 7,
+   "label": "dwarf",
+   "size": 0.4,
+   "look": "compact dwarf, a witch's broom on trees",
+   "inherit": "seed",
+   "seed_share": 0.25,
+   "fertility": 0.8,
+   "shows": "size"
+  },
+  "cristate": {
+   "code": 8,
+   "label": "crested",
+   "size": 0.8,
+   "look": "fasciated crest (a fan or brain-like ridge)",
+   "inherit": "clonal",
+   "seed_share": 0.02,
+   "fertility": 0.3,
+   "shows": "size; the crest shape is for the mesh builders"
+  },
+  "monstrose": {
+   "code": 9,
+   "label": "monstrose",
+   "size": 0.75,
+   "look": "irregular proliferating growth",
+   "inherit": "clonal",
+   "seed_share": 0.02,
+   "fertility": 0.2,
+   "shows": "size; the shape is for the mesh builders"
+  },
+  "weeping": {
+   "code": 10,
+   "label": "weeping",
+   "size": 0.9,
+   "look": "pendulous branches",
+   "inherit": "seed",
+   "seed_share": 0.25,
+   "fertility": 1.0,
+   "shows": "size; the droop is for the tree builder"
+  },
+  "fastigiate": {
+   "code": 11,
+   "label": "columnar",
+   "size": 1.05,
+   "look": "narrow upright crown",
+   "inherit": "seed",
+   "seed_share": 0.25,
+   "fertility": 1.0,
+   "shows": "size; the form is for the tree builder"
+  },
+  "contorted": {
+   "code": 12,
+   "label": "contorted",
+   "size": 0.8,
+   "look": "corkscrew stems",
+   "inherit": "seed",
+   "seed_share": 0.25,
+   "fertility": 1.0,
+   "shows": "size; the twist is for the tree builder"
+  },
+  "laciniate": {
+   "code": 13,
+   "label": "cutleaf",
+   "size": 1.0,
+   "look": "deeply cut, finely dissected leaves",
+   "inherit": "seed",
+   "seed_share": 0.5,
+   "fertility": 1.0,
+   "shows": "the leaf cutout is for the card builder"
+  },
+  "fused_leaflets": {
+   "code": 14,
+   "label": "fused-leaf",
+   "size": 1.0,
+   "look": "leaflets fused or webbed",
+   "inherit": "seed",
+   "seed_share": 0.5,
+   "fertility": 1.0,
+   "shows": "the leaf cutout is for the card builder"
+  },
+  "twin_inflorescence": {
+   "code": 15,
+   "label": "twin-flowered",
+   "size": 1.0,
+   "look": "doubled flower heads / twin spathes",
+   "inherit": "seed",
+   "seed_share": 0.1,
+   "fertility": 1.0,
+   "shows": "aroids: two inflorescences (AroidGarden)"
+  },
+  "colour_morph_flower": {
+   "code": 16,
+   "label": "colour morph",
+   "size": 1.0,
+   "look": "flowers of an unusual colour",
+   "inherit": "seed",
+   "seed_share": 0.5,
+   "fertility": 1.0,
+   "shows": "aroids: spathe colour shifted (AroidGarden)"
+  },
+  "prolific_offsets": {
+   "code": 17,
+   "label": "prolific",
+   "size": 0.8,
+   "look": "abnormally many offsets, pups or bulbils",
+   "inherit": "seed",
+   "seed_share": 0.5,
+   "fertility": 1.0,
+   "shows": "size"
+  }
+ },
+ "by_shape": {
+  "broadleaf": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "melanic",
+    "dwarf",
+    "weeping",
+    "fastigiate",
+    "contorted",
+    "laciniate",
+    "polyploid"
+   ]
+  },
+  "gnarled": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "melanic",
+    "dwarf",
+    "weeping",
+    "fastigiate",
+    "contorted",
+    "laciniate",
+    "polyploid"
+   ]
+  },
+  "emergent": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "melanic",
+    "dwarf",
+    "weeping",
+    "fastigiate",
+    "contorted",
+    "laciniate",
+    "polyploid"
+   ]
+  },
+  "umbrella": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "melanic",
+    "dwarf",
+    "weeping",
+    "fastigiate",
+    "contorted",
+    "laciniate",
+    "polyploid"
+   ]
+  },
+  "mangrove": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "dwarf",
+    "polyploid"
+   ]
+  },
+  "conifer": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "aurea",
+    "glaucous",
+    "dwarf",
+    "weeping",
+    "fastigiate",
+    "variegated",
+    "cristate"
+   ]
+  },
+  "cypress": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "aurea",
+    "glaucous",
+    "dwarf",
+    "weeping",
+    "fastigiate",
+    "variegated"
+   ]
+  },
+  "palm": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "fused_leaflets",
+    "dwarf",
+    "polyploid"
+   ]
+  },
+  "tree_fern": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "cristate",
+    "variegated",
+    "dwarf"
+   ]
+  },
+  "bamboo": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "dwarf",
+    "melanic"
+   ]
+  },
+  "shrub": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "melanic",
+    "dwarf",
+    "weeping",
+    "contorted",
+    "laciniate",
+    "colour_morph_flower",
+    "polyploid"
+   ]
+  },
+  "rosette": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "cristate",
+    "glaucous",
+    "dwarf",
+    "prolific_offsets",
+    "polyploid"
+   ]
+  },
+  "spike_rosette": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "cristate",
+    "glaucous",
+    "dwarf",
+    "prolific_offsets"
+   ]
+  },
+  "cactus": {
+   "rate": 0.0005,
+   "kinds": [
+    "cristate",
+    "monstrose",
+    "variegated",
+    "aurea",
+    "prolific_offsets",
+    "polyploid"
+   ]
+  },
+  "fern": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "cristate",
+    "laciniate",
+    "variegated",
+    "dwarf"
+   ]
+  },
+  "liana": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "melanic"
+   ]
+  },
+  "epiphyte_clump": {
+   "rate": 0.0003333333333333333,
+   "kinds": [
+    "variegated",
+    "aurea",
+    "melanic",
+    "dwarf"
+   ]
+  },
+  "reed": {
+   "rate": 0.00025,
+   "kinds": [
+    "variegated",
+    "aurea"
+   ]
+  },
+  "aroid": {
+   "rate": 0.0006666666666666666,
+   "kinds": [
+    "polyploid",
+    "variegated",
+    "aurea",
+    "anthocyanin_free",
+    "melanic",
+    "glaucous",
+    "dwarf",
+    "laciniate",
+    "fused_leaflets",
+    "twin_inflorescence",
+    "colour_morph_flower",
+    "prolific_offsets"
+   ]
+  }
+ },
+ "weights": {
+  "shape": 1.0,
+  "genus": 6.0,
+  "species": 12.0
+ },
+ "ploidy": {
+  "unreduced": 0.005,
+  "triploid_fertility": 0.05,
+  "tetraploid_fertility": 0.5
+ },
+ "by_genus": {
+  "Abies": [
+   {
+    "kind": "dwarf",
+    "example": "A. balsamea 'Nana' and 'Hudsonia' (dwarf balsam firs); many witch's-broom dwarfs, e.g. A. koreana 'Kohout's Icebreaker'"
+   },
+   {
+    "kind": "aurea",
+    "example": "A. nordmanniana 'Golden Spreader'; A. concolor 'Wintergold'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "A. concolor 'Candicans'; A. procera 'Glauca'"
+   },
+   {
+    "kind": "weeping",
+    "example": "A. alba 'Pendula'; A. nordmanniana 'Pendula'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "A. alba 'Pyramidalis'"
+   }
+  ],
+  "Acacia": [
+   {
+    "kind": "melanic",
+    "example": "A. baileyana 'Purpurea' (purple new foliage)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "A. cognata 'Cousin Itt' (dwarf mop-headed form)"
+   }
+  ],
+  "Acanthus": [
+   {
+    "kind": "variegated",
+    "example": "A. mollis 'Tasmanian Angel' (cream-margined sport found in Tasmania)"
+   },
+   {
+    "kind": "aurea",
+    "example": "A. mollis 'Hollard's Gold'"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "A. mollis 'Rue Ledan' (white-flowered form)"
+   }
+  ],
+  "Acer": [
+   {
+    "kind": "laciniate",
+    "example": "A. saccharinum 'Laciniatum Wieri' (cutleaf silver maple found 1873 by D.B. Wier, Illinois); A. circinatum 'Monroe' (dissected vine maple found wild 1960 on the McKenzie River, Oregon); A. palmatum Dissectum Group"
+   },
+   {
+    "kind": "melanic",
+    "example": "A. palmatum 'Atropurpureum'; A. platanoides 'Crimson King'"
+   },
+   {
+    "kind": "aurea",
+    "example": "A. palmatum 'Katsura'; A. negundo 'Kelly's Gold'"
+   },
+   {
+    "kind": "variegated",
+    "example": "A. platanoides 'Drummondii'; A. negundo 'Flamingo'; A. palmatum 'Butterfly'"
+   },
+   {
+    "kind": "weeping",
+    "example": "A. saccharinum 'Laciniatum Wieri' (pendulous branches); mounding A. palmatum 'Dissectum'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "A. saccharum 'Newton Sentry' and 'Temple's Upright'; A. platanoides 'Columnare'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "A. circinatum 'Little Gem' (witch's-broom dwarf); A. palmatum 'Shishigashira'"
+   }
+  ],
+  "Achnatherum": [],
+  "Acrostichum": [],
+  "Adansonia": [],
+  "Adenostoma": [],
+  "Adiantum": [
+   {
+    "kind": "cristate",
+    "example": "A. raddianum 'Grandiceps' (tasselled crested fronds)"
+   },
+   {
+    "kind": "laciniate",
+    "example": "A. raddianum 'Gracillimum' (extremely finely divided)"
+   },
+   {
+    "kind": "variegated",
+    "example": "A. raddianum 'Variegatum'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "A. aleuticum 'Subpumilum' (wild dwarf maidenhair from the Pacific NW coast); A. capillus-veneris 'Imbricatum'"
+   }
+  ],
+  "Aechmea": [
+   {
+    "kind": "variegated",
+    "example": "A. fasciata 'Albomarginata' and 'Variegata'"
+   },
+   {
+    "kind": "melanic",
+    "example": "A. fasciata var. purpurea (maroon-purple leaves)"
+   }
+  ],
+  "Aframomum": [],
+  "Agathis": [],
+  "Agave": [
+   {
+    "kind": "variegated",
+    "example": "A. americana 'Marginata' and 'Mediopicta' (white/yellow-striped chimeras); variegated A. victoriae-reginae"
+   },
+   {
+    "kind": "dwarf",
+    "example": "A. potatorum 'Kichiokan' (compact form)"
+   }
+  ],
+  "Agropyron": [
+   {
+    "kind": "polyploid",
+    "example": "induced tetraploid A. cristatum (USDA) used to breed the crested wheatgrass 'Hycrest'; wild 2x/4x/6x cytotypes"
+   }
+  ],
+  "Agrostis": [
+   {
+    "kind": "variegated",
+    "example": "A. capillaris 'Silver Needles' (white-variegated bent)"
+   }
+  ],
+  "Alhagi": [],
+  "Allenrolfea": [],
+  "Alluaudia": [
+   {
+    "kind": "cristate",
+    "example": "A. procera f. cristata (crested Madagascar ocotillo) in cultivation"
+   }
+  ],
+  "Alnus": [
+   {
+    "kind": "laciniate",
+    "example": "A. glutinosa 'Imperialis' and 'Laciniata'; A. incana 'Laciniata'"
+   },
+   {
+    "kind": "aurea",
+    "example": "A. incana 'Aurea'; A. glutinosa 'Aurea'"
+   },
+   {
+    "kind": "weeping",
+    "example": "A. incana 'Pendula'"
+   }
+  ],
+  "Alocasia": [
+   {
+    "kind": "variegated",
+    "example": "A. macrorrhizos 'Variegata' (white/green chimera); A. odora 'Okinawa Silver'"
+   },
+   {
+    "kind": "aurea",
+    "example": "A. macrorrhizos 'Lutea' (yellow petioles and midribs)"
+   },
+   {
+    "kind": "monstrose",
+    "example": "A. macrorrhizos 'Stingray' (mutant blade curled with a whip-like tail)"
+   }
+  ],
+  "Aloidendron": [],
+  "Amanita": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "fungal analogue: A. muscaria var. alba (white fly agaric) and A. phalloides var. alba, pigment-free white forms"
+   }
+  ],
+  "Ambrosia": [],
+  "Ammophila": [],
+  "Amorpha": [],
+  "Anabasis": [],
+  "Andromeda": [
+   {
+    "kind": "glaucous",
+    "example": "A. polifolia 'Blue Ice'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "A. polifolia 'Nana' and 'Compacta'"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "A. polifolia 'Alba' (white-flowered)"
+   }
+  ],
+  "Andropogon": [
+   {
+    "kind": "polyploid",
+    "example": "A. gerardii hexaploid and enneaploid (9x) cytotypes in wild prairies; the 9x plants are taller and more robust"
+   },
+   {
+    "kind": "melanic",
+    "example": "A. gerardii 'Blackhawks' and 'Red October' (dark purple foliage)"
+   }
+  ],
+  "Anemone": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "A. nemorosa 'Robinsoniana' (lavender-blue, noticed by William Robinson) and 'Allenii'; pink 'Rosea'"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "A. nemorosa 'Vestal' and 'Bracteata Pleniflora' (doubled flowers)"
+   },
+   {
+    "kind": "monstrose",
+    "example": "A. nemorosa 'Virescens' (flowers replaced by green leafy proliferation)"
+   }
+  ],
+  "Ansellia": [],
+  "Araucaria": [],
+  "Arbutus": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "A. unedo f. rubra (pink-flowered strawberry tree, recorded wild in Ireland)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "A. unedo 'Compacta' and 'Elfin King'"
+   }
+  ],
+  "Arctostaphylos": [],
+  "Aristida": [],
+  "Armeria": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "A. maritima 'Alba' (white thrift)"
+   },
+   {
+    "kind": "melanic",
+    "example": "A. maritima 'Rubrifolia' (purple-red foliage)"
+   },
+   {
+    "kind": "variegated",
+    "example": "A. maritima 'Nifty Thrifty'"
+   }
+  ],
+  "Armillaria": [],
+  "Artemisia": [
+   {
+    "kind": "variegated",
+    "example": "A. vulgaris 'Oriental Limelight' (gold-variegated mugwort)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "A. schmidtiana 'Nana'"
+   }
+  ],
+  "Arundinaria": [],
+  "Asphodelus": [],
+  "Asplenium": [
+   {
+    "kind": "cristate",
+    "example": "A. scolopendrium 'Cristatum' and the Victorian Crispum/Ramo-cristatum hart's-tongue crests; A. trichomanes 'Cristatum'"
+   },
+   {
+    "kind": "laciniate",
+    "example": "A. scolopendrium 'Laceratum Kaye'; A. trichomanes 'Incisum'"
+   }
+  ],
+  "Astragalus": [],
+  "Athyrium": [
+   {
+    "kind": "cristate",
+    "example": "A. filix-femina 'Victoriae' (cruciate-crested lady fern found wild in Scotland, 1861); 'Cristatum'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "A. filix-femina 'Minutissimum'; 'Frizelliae' (tatting fern with bead-like pinnae, found wild in Ireland, 1857)"
+   },
+   {
+    "kind": "laciniate",
+    "example": "A. filix-femina 'Plumosum Axminster' (finely divided plumose form)"
+   },
+   {
+    "kind": "melanic",
+    "example": "A. filix-femina 'Lady in Red' (red stipes)"
+   }
+  ],
+  "Atriplex": [],
+  "Avicennia": [],
+  "Azolla": [],
+  "Azorella": [],
+  "Baccharis": [],
+  "Balsamorhiza": [],
+  "Bambusa": [
+   {
+    "kind": "aurea",
+    "example": "B. vulgaris 'Vittata' (golden culms striped green)"
+   },
+   {
+    "kind": "monstrose",
+    "example": "B. vulgaris 'Wamin' (Buddha's-belly mutant with swollen, compressed internodes)"
+   },
+   {
+    "kind": "variegated",
+    "example": "B. multiplex 'Variegata' ('Silverstripe'); 'Alphonse Karr' (striped culms)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "B. multiplex 'Tiny Fern'"
+   }
+  ],
+  "Batis": [],
+  "Bauhinia": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "B. variegata var. candida (white-flowered orchid tree)"
+   }
+  ],
+  "Begonia": [
+   {
+    "kind": "variegated",
+    "example": "'Calla Lily' semperflorens begonias (white chimeral shoot tips)"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "double-flowered tuberous begonias (B. x tuberhybrida)"
+   },
+   {
+    "kind": "polyploid",
+    "example": "tetraploid semperflorens and tuberous strains (larger, thicker leaves and flowers)"
+   }
+  ],
+  "Bertholletia": [],
+  "Betula": [
+   {
+    "kind": "laciniate",
+    "example": "B. pendula 'Dalecarlica' (Swedish birch, found wild 1767 at Lilla Ornas, Dalarna)"
+   },
+   {
+    "kind": "weeping",
+    "example": "B. pendula 'Youngii' and 'Tristis'"
+   },
+   {
+    "kind": "melanic",
+    "example": "B. pendula 'Purpurea'"
+   },
+   {
+    "kind": "aurea",
+    "example": "B. pendula 'Golden Cloud'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "B. pendula 'Fastigiata'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "B. pendula 'Trost's Dwarf' (dwarf cutleaf)"
+   },
+   {
+    "kind": "contorted",
+    "example": "B. pendula 'Spider Alley' (twisted branches)"
+   },
+   {
+    "kind": "variegated",
+    "example": "B. nana 'Golden Treasure' (gold-margined dwarf birch)"
+   }
+  ],
+  "Blechnum": [
+   {
+    "kind": "cristate",
+    "example": "B. spicant 'Cristatum' (Victorian crested hard fern)"
+   }
+  ],
+  "Bolboschoenus": [],
+  "Boletus": [],
+  "Bonnetia": [],
+  "Borassus": [],
+  "Bouteloua": [],
+  "Brachypodium": [],
+  "Brachystegia": [],
+  "Brocchinia": [],
+  "Bromelia": [
+   {
+    "kind": "variegated",
+    "example": "B. serra var. variegata"
+   }
+  ],
+  "Brugmansia": [
+   {
+    "kind": "laciniate",
+    "example": "B. x candida 'Culebra' (Colombian somatic mutant with shredded strap leaves, once described as the genus Methysticodendron)"
+   },
+   {
+    "kind": "variegated",
+    "example": "B. x candida 'Variegata'; B. 'Snowbank'"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "B. x candida 'Double White' (hose-in-hose doubled flowers)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "B. sanguinea var. flava (yellow form of the normally red species)"
+   }
+  ],
+  "Bruguiera": [],
+  "Bryum": [],
+  "Bucephalandra": [],
+  "Bursera": [],
+  "Butea": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "B. monosperma var. lutea (rare yellow-flowered flame of the forest); white-flowered trees also recorded"
+   }
+  ],
+  "Cakile": [],
+  "Calamagrostis": [
+   {
+    "kind": "variegated",
+    "example": "C. x acutiflora 'Overdam' and 'Avalanche' (white-striped sport of 'Karl Foerster')"
+   }
+  ],
+  "Calamus": [],
+  "Calathea": [
+   {
+    "kind": "variegated",
+    "example": "C. (Goeppertia) lietzei 'White Fusion' (white-marbled sport)"
+   }
+  ],
+  "Calluna": [
+   {
+    "kind": "aurea",
+    "example": "C. vulgaris 'Gold Haze' and 'Robert Chapman'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "C. vulgaris 'Silver Knight' and 'Silver Queen' (silver-grey foliage)"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "C. vulgaris 'H.E. Beale' (double pink, found wild in the New Forest, 1925) and 'Kinlochruel' (double white sport of 'County Wicklow')"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "C. vulgaris f. alba ('lucky' white heather, occurs wild)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "C. vulgaris 'Foxii Nana'"
+   }
+  ],
+  "Caltha": [
+   {
+    "kind": "twin_inflorescence",
+    "example": "C. palustris 'Flore Pleno' (double marsh marigold)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "C. palustris var. alba (white-flowered)"
+   }
+  ],
+  "Calvatia": [],
+  "Campylopus": [],
+  "Cannabis": [
+   {
+    "kind": "fused_leaflets",
+    "example": "'Ducksfoot' webbed-leaflet mutant (e.g. 'Frisian Duck'); single-leaflet 'monophylla' mutants"
+   },
+   {
+    "kind": "polyploid",
+    "example": "colchicine-induced tetraploid and triploid lines (larger, thicker, darker leaves; lower fertility)"
+   },
+   {
+    "kind": "variegated",
+    "example": "chimeral white-sectored mutants reported by breeders"
+   },
+   {
+    "kind": "melanic",
+    "example": "anthocyanin-rich purple forms (dark purple leaves and bracts)"
+   },
+   {
+    "kind": "cristate",
+    "example": "fasciated (flattened, crested) main stems recorded in hemp and drug-type plants"
+   }
+  ],
+  "Cantharellus": [],
+  "Caragana": [
+   {
+    "kind": "weeping",
+    "example": "C. arborescens 'Pendula'"
+   },
+   {
+    "kind": "laciniate",
+    "example": "C. arborescens 'Lorbergii' and 'Walker' (fine thread-like leaflets; 'Walker' also weeping)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "C. arborescens 'Nana'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "C. arborescens 'Sutherland' (columnar)"
+   }
+  ],
+  "Carex": [
+   {
+    "kind": "aurea",
+    "example": "C. elata 'Aurea' (Bowles' golden sedge, found by E.A. Bowles on the Norfolk Broads)"
+   },
+   {
+    "kind": "variegated",
+    "example": "C. nigra 'Variegata'; C. morrowii 'Variegata'; C. oshimensis 'Evergold'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "C. flacca 'Blue Zinger'"
+   }
+  ],
+  "Carnegiea": [
+   {
+    "kind": "cristate",
+    "example": "crested saguaros (C. gigantea f. cristata), catalogued in the wild across the Sonoran Desert"
+   }
+  ],
+  "Carpobrotus": [],
+  "Carya": [],
+  "Caryocar": [],
+  "Caryota": [],
+  "Castilleja": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "sporadic yellow-bracted plants of the normally scarlet C. coccinea and other paintbrushes"
+   }
+  ],
+  "Casuarina": [
+   {
+    "kind": "dwarf",
+    "example": "C. glauca 'Cousin It' (prostrate dwarf groundcover form)"
+   }
+  ],
+  "Cattleya": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "C. labiata var. alba, var. semialba and var. coerulea (white and bluish-lilac forms)"
+   },
+   {
+    "kind": "polyploid",
+    "example": "tetraploid clones selected for heavier, larger flowers (used throughout Cattleya breeding)"
+   }
+  ],
+  "Caulerpa": [],
+  "Cecropia": [],
+  "Ceiba": [],
+  "Celtis": [
+   {
+    "kind": "weeping",
+    "example": "C. sinensis 'Green Cascade' (weeping hackberry)"
+   }
+  ],
+  "Cenchrus": [
+   {
+    "kind": "melanic",
+    "example": "C. setaceus 'Rubrum' (purple fountain grass); C. purpureus 'Prince' (purple napier grass)"
+   },
+   {
+    "kind": "variegated",
+    "example": "C. setaceus 'Fireworks' and 'Sky Rocket' (variegated sports of 'Rubrum')"
+   },
+   {
+    "kind": "dwarf",
+    "example": "C. purpureus 'Mott' (dwarf elephant grass, Tifton, Georgia); C. alopecuroides 'Little Bunny'"
+   }
+  ],
+  "Cenostigma": [],
+  "Cephalanthus": [
+   {
+    "kind": "dwarf",
+    "example": "C. occidentalis 'Sugar Shack' (compact form)"
+   }
+  ],
+  "Cereus": [
+   {
+    "kind": "monstrose",
+    "example": "C. hildmannianus (peruvianus) 'Monstrosus' (monstrose apple cactus)"
+   },
+   {
+    "kind": "cristate",
+    "example": "C. jamacaru f. cristata and other crested Cereus"
+   },
+   {
+    "kind": "contorted",
+    "example": "C. forbesii 'Spiralis' (spirally twisted ribs)"
+   }
+  ],
+  "Cerioporus": [],
+  "Ceroxylon": [],
+  "Chamaecyparis": [
+   {
+    "kind": "dwarf",
+    "example": "C. lawsoniana 'Minima Aurea' and 'Gnome'; C. obtusa 'Nana Gracilis'"
+   },
+   {
+    "kind": "aurea",
+    "example": "C. lawsoniana 'Stewartii' and 'Lanei Aurea'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "C. lawsoniana 'Pembury Blue'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "C. lawsoniana 'Erecta Viridis' and 'Columnaris'"
+   },
+   {
+    "kind": "weeping",
+    "example": "C. lawsoniana 'Pendula' and 'Intertexta'"
+   },
+   {
+    "kind": "variegated",
+    "example": "C. lawsoniana 'White Spot' and 'Albospica'"
+   },
+   {
+    "kind": "contorted",
+    "example": "C. obtusa 'Coralliformis' (twisted, cord-like branchlets)"
+   },
+   {
+    "kind": "cristate",
+    "example": "C. obtusa 'Lycopodioides' (cord-like shoots, occasionally fasciated)"
+   }
+  ],
+  "Chamaedaphne": [
+   {
+    "kind": "dwarf",
+    "example": "C. calyculata 'Nana'"
+   }
+  ],
+  "Chamaenerion": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "C. angustifolium 'Album' (white fireweed, also occurs wild); pale pink 'Stahl Rose'"
+   }
+  ],
+  "Chlamydomonas": [],
+  "Chusquea": [],
+  "Cistus": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "unblotched C. ladanifer lacking the maroon basal petal spots (spotted/unspotted polymorphism in wild Iberian populations)"
+   }
+  ],
+  "Citrus": [
+   {
+    "kind": "variegated",
+    "example": "pink-fleshed variegated Eureka lemon (bud sport found in Burbank, California, 1930s); variegated calamondin"
+   },
+   {
+    "kind": "contorted",
+    "example": "C. trifoliata (Poncirus) 'Flying Dragon' (contorted, dwarf trifoliate orange)"
+   },
+   {
+    "kind": "polyploid",
+    "example": "spontaneous tetraploid nucellar seedlings; triploid seedless 'Oroblanco'"
+   },
+   {
+    "kind": "monstrose",
+    "example": "C. medica var. sarcodactylis (Buddha's hand: fruit split into finger-like segments)"
+   }
+  ],
+  "Cladium": [],
+  "Cladonia": [],
+  "Clusia": [
+   {
+    "kind": "variegated",
+    "example": "C. rosea 'Variegata' (variegated autograph tree)"
+   }
+  ],
+  "Coccoloba": [
+   {
+    "kind": "variegated",
+    "example": "C. uvifera 'Variegata' ('Albo-variegata', variegated sea grape)"
+   }
+  ],
+  "Cocos": [
+   {
+    "kind": "dwarf",
+    "example": "dwarf coconut varieties ('Malayan Dwarf', 'Chowghat Dwarf'): short, early-bearing"
+   }
+  ],
+  "Coleogyne": [],
+  "Colocasia": [
+   {
+    "kind": "melanic",
+    "example": "C. esculenta 'Black Magic' and 'Fontanesii'"
+   },
+   {
+    "kind": "aurea",
+    "example": "C. esculenta 'Maui Gold' and 'Lime Zinger'"
+   },
+   {
+    "kind": "variegated",
+    "example": "C. esculenta 'Nancy's Revenge' and 'Mojito' (speckled)"
+   }
+  ],
+  "Commiphora": [],
+  "Connellia": [],
+  "Conocarpus": [
+   {
+    "kind": "glaucous",
+    "example": "C. erectus var. sericeus (silver buttonwood, silky silver-grey leaves)"
+   }
+  ],
+  "Coprinus": [],
+  "Corallina": [],
+  "Cornus": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "C. sericea 'Flaviramea' (yellow-twig form of the red-stemmed dogwood)"
+   },
+   {
+    "kind": "variegated",
+    "example": "C. sericea 'Silver and Gold' (variegated sport of 'Flaviramea', Mt. Cuba, Delaware); C. alba 'Elegantissima'"
+   },
+   {
+    "kind": "aurea",
+    "example": "C. alba 'Aurea'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "C. sericea 'Kelseyi'"
+   },
+   {
+    "kind": "weeping",
+    "example": "C. florida 'Pendula'; C. kousa 'Lustgarten Weeping'"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "C. florida f. rubra (pink-bracted dogwood, found wild in Virginia)"
+   }
+  ],
+  "Cortaderia": [
+   {
+    "kind": "dwarf",
+    "example": "C. selloana 'Pumila'"
+   },
+   {
+    "kind": "variegated",
+    "example": "C. selloana 'Albolineata' ('Silver Stripe') and 'Aureolineata' ('Gold Band')"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "C. selloana 'Rosea' (pink plumes)"
+   }
+  ],
+  "Corylus": [
+   {
+    "kind": "contorted",
+    "example": "C. avellana 'Contorta' (Harry Lauder's walking stick, found 1863 in a Gloucestershire hedgerow)"
+   },
+   {
+    "kind": "melanic",
+    "example": "C. maxima 'Purpurea' (purple filbert); C. avellana 'Red Majestic'"
+   },
+   {
+    "kind": "aurea",
+    "example": "C. avellana 'Aurea'"
+   },
+   {
+    "kind": "weeping",
+    "example": "C. avellana 'Pendula'"
+   },
+   {
+    "kind": "laciniate",
+    "example": "C. avellana 'Heterophylla' (cut-leaved hazel)"
+   }
+  ],
+  "Costus": [
+   {
+    "kind": "variegated",
+    "example": "C. arabicus 'Variegatus' (variegated spiral ginger)"
+   }
+  ],
+  "Crataegus": [
+   {
+    "kind": "fastigiate",
+    "example": "C. monogyna 'Stricta'"
+   },
+   {
+    "kind": "weeping",
+    "example": "C. monogyna 'Pendula'"
+   },
+   {
+    "kind": "contorted",
+    "example": "C. monogyna 'Flexuosa' (corkscrew branches)"
+   },
+   {
+    "kind": "variegated",
+    "example": "C. monogyna 'Variegata'"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "C. laevigata 'Plena' (double white hawthorn)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "C. laevigata 'Paul's Scarlet' (scarlet double sport of 'Rosea Flore Pleno', Hertfordshire, 1858)"
+   }
+  ],
+  "Crithmum": [],
+  "Cumulopuntia": [],
+  "Cupressus": [
+   {
+    "kind": "fastigiate",
+    "example": "C. sempervirens Stricta Group (the columnar Italian cypress, selected from the spreading wild form)"
+   },
+   {
+    "kind": "aurea",
+    "example": "C. sempervirens 'Swane's Golden'; C. macrocarpa 'Goldcrest'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "C. macrocarpa 'Wilma' (dwarf sport of 'Goldcrest')"
+   },
+   {
+    "kind": "glaucous",
+    "example": "C. arizonica 'Blue Ice' (now often Hesperocyparis)"
+   }
+  ],
+  "Cyathea": [],
+  "Cycas": [
+   {
+    "kind": "variegated",
+    "example": "variegated C. revoluta (Japanese 'fu-iri' sotetsu)"
+   },
+   {
+    "kind": "cristate",
+    "example": "crested, fasciated C. revoluta (multi-headed crest forms)"
+   }
+  ],
+  "Cynodon": [
+   {
+    "kind": "dwarf",
+    "example": "'Tifdwarf' (spontaneous dwarf mutant found in 'Tifgreen' putting greens)"
+   },
+   {
+    "kind": "polyploid",
+    "example": "triploid Tifton hybrids ('Tifway', 'Tifgreen'; C. dactylon x C. transvaalensis)"
+   }
+  ],
+  "Cyperus": [
+   {
+    "kind": "variegated",
+    "example": "C. involucratus 'Variegatus'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "C. involucratus 'Gracilis' / 'Nanus'"
+   }
+  ],
+  "Cypripedium": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "C. acaule f. albiflorum (white-flowered pink lady's slipper, wild)"
+   }
+  ],
+  "Dacrydium": [],
+  "Dalbergia": [],
+  "Dasiphora": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "D. fruticosa 'Abbotswood' (white), 'Red Ace' (red), 'Pink Beauty' (the wild plant is yellow)"
+   },
+   {
+    "kind": "glaucous",
+    "example": "D. fruticosa 'Beesii' (silvery-leaved, wild-collected in China)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "D. fruticosa 'Beesii' and 'Manchu'"
+   }
+  ],
+  "Datura": [
+   {
+    "kind": "polyploid",
+    "example": "D. stramonium haploid, triploid and tetraploid lines (Blakeslee; colchicine doubling first demonstrated in Datura, 1937)"
+   },
+   {
+    "kind": "melanic",
+    "example": "D. stramonium var. tatula (purple stems and flowers); D. metel 'Fastuosa' (purple-black)"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "D. metel 'Fastuosa' / 'Double Purple' (hose-in-hose doubled flowers)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "D. metel 'Golden Queen' (double yellow)"
+   }
+  ],
+  "Dendroalsia": [],
+  "Dendrobium": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "D. nobile var. virginale (pure white form)"
+   },
+   {
+    "kind": "polyploid",
+    "example": "tetraploid clones used in breeding (larger, heavier flowers)"
+   }
+  ],
+  "Dendrocalamus": [
+   {
+    "kind": "variegated",
+    "example": "D. latiflorus 'Mei-nung' (lime/yellow-striped culms)"
+   }
+  ],
+  "Dendrophylax": [],
+  "Deschampsia": [
+   {
+    "kind": "prolific_offsets",
+    "example": "D. cespitosa var. vivipara ('Fairy's Joke': plantlets in place of flowers)"
+   },
+   {
+    "kind": "variegated",
+    "example": "D. cespitosa 'Northern Lights'"
+   }
+  ],
+  "Desmostachya": [],
+  "Dichrostachys": [],
+  "Dicksonia": [],
+  "Dicranopteris": [],
+  "Dionaea": [
+   {
+    "kind": "melanic",
+    "example": "D. muscipula 'Akai Ryu' ('Red Dragon', maroon throughout)"
+   },
+   {
+    "kind": "anthocyanin_free",
+    "example": "D. muscipula 'Justina Davis' (all green, no red in the traps)"
+   },
+   {
+    "kind": "monstrose",
+    "example": "D. muscipula 'Wacky Traps' and 'Cupped Trap' (deformed traps)"
+   },
+   {
+    "kind": "fused_leaflets",
+    "example": "D. muscipula 'Fused Tooth' (marginal teeth webbed together)"
+   }
+  ],
+  "Distichia": [],
+  "Distichlis": [],
+  "Drosera": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "D. capensis 'Alba' (green tentacles, white flowers)"
+   },
+   {
+    "kind": "melanic",
+    "example": "D. capensis 'Red' (red throughout)"
+   }
+  ],
+  "Dryas": [
+   {
+    "kind": "dwarf",
+    "example": "D. octopetala 'Minor'"
+   }
+  ],
+  "Durvillaea": [],
+  "Ebenopsis": [],
+  "Echinacea": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "E. purpurea 'White Swan' / 'Alba' (white rays)"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "E. purpurea 'Doppelganger' ('Doubledecker': a second tier of rays grows from the cone)"
+   }
+  ],
+  "Echinodorus": [
+   {
+    "kind": "variegated",
+    "example": "E. cordifolius 'Marble Queen' (white-marbled mutant)"
+   }
+  ],
+  "Egregia": [],
+  "Elodea": [],
+  "Empetrum": [
+   {
+    "kind": "aurea",
+    "example": "E. nigrum 'Bernstein' (amber-yellow foliage)"
+   }
+  ],
+  "Encelia": [],
+  "Encephalartos": [],
+  "Encyclia": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "E. tampensis var. albolabia (white-lipped Florida butterfly orchid); E. cordigera var. rosea (pink lip)"
+   }
+  ],
+  "Enhalus": [],
+  "Ensete": [
+   {
+    "kind": "melanic",
+    "example": "E. ventricosum 'Maurelii' (red-bronze Abyssinian banana)"
+   }
+  ],
+  "Enterolobium": [],
+  "Ephedra": [],
+  "Epidendrum": [],
+  "Epipremnum": [
+   {
+    "kind": "variegated",
+    "example": "E. aureum 'Marble Queen', then its sports 'N'Joy', 'Pearls and Jade' and 'Manjula'"
+   },
+   {
+    "kind": "aurea",
+    "example": "E. aureum 'Neon' (chartreuse)"
+   },
+   {
+    "kind": "glaucous",
+    "example": "E. pinnatum 'Cebu Blue' (blue-silver juvenile foliage)"
+   }
+  ],
+  "Ericameria": [],
+  "Eriophorum": [],
+  "Eryngium": [
+   {
+    "kind": "variegated",
+    "example": "E. planum 'Jade Frost'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "E. planum 'Blue Hobbit'"
+   }
+  ],
+  "Erythranthe": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "rare white-flowered morphs of the pink E. lewisii in wild populations (genetic basis published in PLoS ONE, 2013)"
+   }
+  ],
+  "Erythrina": [
+   {
+    "kind": "variegated",
+    "example": "E. variegata 'Parcellii' (yellow-veined)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "E. variegata 'Alba' (white-flowered coral tree)"
+   }
+  ],
+  "Espeletia": [],
+  "Etlingera": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "E. elatior var. alba (white torch ginger); pink 'Pink Torch'"
+   }
+  ],
+  "Eucalyptus": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "E. leucoxylon 'Rosea' and E. sideroxylon 'Rosea' (pink/red-flowered forms)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "E. globulus 'Compacta'"
+   }
+  ],
+  "Euphorbia": [
+   {
+    "kind": "cristate",
+    "example": "E. lactea 'Cristata' (coral cactus); E. flanaganii f. cristata"
+   },
+   {
+    "kind": "variegated",
+    "example": "E. lactea 'White Ghost'; E. characias 'Tasmanian Tiger' (variegated sport)"
+   },
+   {
+    "kind": "melanic",
+    "example": "E. trigona 'Rubra' (red African milk tree); E. amygdaloides 'Purpurea'"
+   },
+   {
+    "kind": "aurea",
+    "example": "E. tirucalli 'Sticks on Fire' (golden-orange stems)"
+   }
+  ],
+  "Euterpe": [],
+  "Eutrochium": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "E. maculatum 'Album' (white Joe-Pye weed)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "E. dubium 'Little Joe'; E. maculatum 'Phantom'"
+   },
+   {
+    "kind": "melanic",
+    "example": "E. maculatum Atropurpureum Group (wine-purple stems)"
+   }
+  ],
+  "Fagus": [
+   {
+    "kind": "melanic",
+    "example": "F. sylvatica f. purpurea (copper beech; wild sports recorded in Germany and Switzerland); 'Riversii'"
+   },
+   {
+    "kind": "weeping",
+    "example": "F. sylvatica 'Pendula' and 'Purpurea Pendula'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "F. sylvatica 'Dawyck' (found c. 1860 at Dawyck, Scotland)"
+   },
+   {
+    "kind": "laciniate",
+    "example": "F. sylvatica var. heterophylla 'Aspleniifolia' (fern-leaved beech, a periclinal chimera)"
+   },
+   {
+    "kind": "aurea",
+    "example": "F. sylvatica 'Zlatia' (golden beech from Serbia)"
+   },
+   {
+    "kind": "variegated",
+    "example": "F. sylvatica 'Roseomarginata' ('Purpurea Tricolor') and 'Albovariegata'"
+   },
+   {
+    "kind": "contorted",
+    "example": "F. sylvatica var. tortuosa (Faux de Verzy near Reims: wild twisted, umbrella-shaped beeches)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "F. sylvatica 'Mercedes' (dwarf with fine cut leaves)"
+   },
+   {
+    "kind": "cristate",
+    "example": "F. sylvatica 'Cristata' (cockscomb beech: leaves clustered and crested at the shoot tips)"
+   }
+  ],
+  "Ferocactus": [
+   {
+    "kind": "cristate",
+    "example": "crested barrel cacti (e.g. F. wislizeni f. cristata) found in the wild"
+   }
+  ],
+  "Festuca": [
+   {
+    "kind": "glaucous",
+    "example": "F. valesiaca 'Glaucantha'; F. glauca 'Elijah Blue'"
+   },
+   {
+    "kind": "aurea",
+    "example": "F. glauca 'Golden Toupee'"
+   },
+   {
+    "kind": "prolific_offsets",
+    "example": "viviparous sheep's fescue (F. ovina var. vivipara / F. vivipara): plantlets in place of florets"
+   }
+  ],
+  "Ficus": [
+   {
+    "kind": "variegated",
+    "example": "F. elastica 'Tineke'; F. benjamina 'Starlight'; F. carica 'Panachee' (striped fruit)"
+   },
+   {
+    "kind": "laciniate",
+    "example": "F. carica 'Ice Crystal' (deeply dissected fig leaves)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "F. carica 'Little Miss Figgy'; F. benjamina 'Too Little'"
+   },
+   {
+    "kind": "melanic",
+    "example": "F. elastica 'Burgundy' / 'Abidjan' (black-purple leaves)"
+   },
+   {
+    "kind": "contorted",
+    "example": "F. benjamina 'Wiandi' (zigzag, contorted stems)"
+   }
+  ],
+  "Filipendula": [
+   {
+    "kind": "aurea",
+    "example": "F. ulmaria 'Aurea'"
+   },
+   {
+    "kind": "variegated",
+    "example": "F. ulmaria 'Variegata'"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "F. ulmaria 'Flore Pleno' (double meadowsweet)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "F. ulmaria 'Rosea' (pink meadowsweet)"
+   }
+  ],
+  "Fistulina": [],
+  "Flammulina": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "fungal analogue: pigmentless white enokitake strains (recessive white mutation, the cultivated form)"
+   }
+  ],
+  "Fomes": [],
+  "Fomitopsis": [],
+  "Fouquieria": [],
+  "Frankenia": [],
+  "Fraxinus": [
+   {
+    "kind": "fused_leaflets",
+    "example": "F. excelsior f. diversifolia ('Monophylla', one-leaved ash: simple or 1-3-leaflet leaves)"
+   },
+   {
+    "kind": "weeping",
+    "example": "F. excelsior 'Pendula' (weeping ash, found c. 1750 at Gamlingay, Cambridgeshire)"
+   },
+   {
+    "kind": "aurea",
+    "example": "F. excelsior 'Jaspidea' (golden ash)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "F. excelsior 'Nana'"
+   }
+  ],
+  "Fuchsia": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "F. boliviana var. alba (white-tubed form of the scarlet species)"
+   },
+   {
+    "kind": "aurea",
+    "example": "F. magellanica 'Aurea'; F. 'Genii'"
+   },
+   {
+    "kind": "variegated",
+    "example": "F. magellanica 'Versicolor' and var. gracilis 'Variegata'"
+   }
+  ],
+  "Fucus": [],
+  "Ganoderma": [],
+  "Gaultheria": [],
+  "Genista": [
+   {
+    "kind": "twin_inflorescence",
+    "example": "G. tinctoria 'Flore Pleno' (double dyer's greenweed)"
+   }
+  ],
+  "Gentiana": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "G. acaulis 'Alba' (white trumpet gentian)"
+   }
+  ],
+  "Gentianella": [],
+  "Ginkgo": [
+   {
+    "kind": "weeping",
+    "example": "G. biloba 'Pendula'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "G. biloba 'Fastigiata' and 'Princeton Sentry'"
+   },
+   {
+    "kind": "variegated",
+    "example": "G. biloba 'Variegata'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "G. biloba 'Mariken' and 'Spring Grove' (witch's-broom dwarfs)"
+   },
+   {
+    "kind": "laciniate",
+    "example": "G. biloba 'Laciniata' (deeply cut leaves)"
+   }
+  ],
+  "Gloriosa": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "G. superba 'Lutea' (all-yellow flame lily)"
+   }
+  ],
+  "Glyceria": [
+   {
+    "kind": "variegated",
+    "example": "G. maxima var. variegata"
+   }
+  ],
+  "Guadua": [
+   {
+    "kind": "aurea",
+    "example": "G. angustifolia var. bicolor (striped guadua: yellow culms with green stripes)"
+   }
+  ],
+  "Guzmania": [
+   {
+    "kind": "variegated",
+    "example": "G. monostachia var. variegata (wild striped-leaf form, Fakahatchee Strand, Florida); G. lingulata 'Variegata'"
+   }
+  ],
+  "Hagenia": [],
+  "Halimeda": [],
+  "Halimione": [],
+  "Halocnemum": [],
+  "Haloxylon": [],
+  "Hedera": [
+   {
+    "kind": "variegated",
+    "example": "H. helix 'Goldheart' and 'Glacier'"
+   },
+   {
+    "kind": "aurea",
+    "example": "H. helix 'Buttercup'"
+   },
+   {
+    "kind": "melanic",
+    "example": "H. helix 'Atropurpurea' (purple-black winter foliage)"
+   },
+   {
+    "kind": "cristate",
+    "example": "H. helix 'Parsley Crested' ('Cristata')"
+   },
+   {
+    "kind": "laciniate",
+    "example": "H. helix 'Pedata' (bird's-foot ivy) and 'Needlepoint'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "H. helix 'Conglomerata' (congested dwarf)"
+   }
+  ],
+  "Heliamphora": [],
+  "Heliconia": [
+   {
+    "kind": "variegated",
+    "example": "H. indica 'Striata' and 'Spectabilis' (yellow- or white-veined leaves)"
+   }
+  ],
+  "Heliotropium": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "H. arborescens 'Alba' (white heliotrope)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "H. arborescens 'Dwarf Marine'"
+   }
+  ],
+  "Hericium": [],
+  "Hesperocyparis": [
+   {
+    "kind": "aurea",
+    "example": "H. macrocarpa 'Goldcrest' and 'Donard Gold'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "H. macrocarpa 'Wilma' (dwarf sport of 'Goldcrest') and 'Pygmaea'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "H. macrocarpa 'Greenstead Magnificent'; H. arizonica 'Blue Ice'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "H. macrocarpa 'Fastigiata'"
+   }
+  ],
+  "Hesperostipa": [],
+  "Heteropogon": [],
+  "Hippophae": [
+   {
+    "kind": "dwarf",
+    "example": "H. rhamnoides 'Sprite' (compact form)"
+   }
+  ],
+  "Hyacinthoides": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "H. non-scripta 'Alba' (white bluebell) and pink f. rosea, both occurring wild"
+   }
+  ],
+  "Hylocomium": [],
+  "Hymenophyllum": [],
+  "Hyparrhenia": [],
+  "Hypericum": [
+   {
+    "kind": "variegated",
+    "example": "H. x moserianum 'Tricolor'"
+   },
+   {
+    "kind": "melanic",
+    "example": "H. androsaemum 'Albury Purple'"
+   },
+   {
+    "kind": "aurea",
+    "example": "H. calycinum 'Brigadoon'"
+   }
+  ],
+  "Hyphaene": [],
+  "Hypholoma": [],
+  "Ilex": [
+   {
+    "kind": "weeping",
+    "example": "I. vomitoria 'Pendula' (weeping yaupon)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "I. vomitoria 'Nana' and 'Schillings' ('Stokes Dwarf')"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "I. vomitoria 'Will Fleming'; I. crenata 'Sky Pencil'"
+   },
+   {
+    "kind": "variegated",
+    "example": "I. aquifolium 'Argentea Marginata' and 'Golden King'"
+   },
+   {
+    "kind": "aurea",
+    "example": "I. crenata 'Golden Gem'"
+   }
+  ],
+  "Impatiens": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "I. capensis f. immaculata (jewelweed without the red spots)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "I. capensis f. citrina (lemon-yellow) and f. albiflora (white)"
+   }
+  ],
+  "Imperata": [
+   {
+    "kind": "melanic",
+    "example": "I. cylindrica 'Rubra' ('Red Baron', Japanese blood grass)"
+   }
+  ],
+  "Ipomoea": [
+   {
+    "kind": "melanic",
+    "example": "I. batatas 'Blackie' and 'Ace of Spades'"
+   },
+   {
+    "kind": "aurea",
+    "example": "I. batatas 'Margarita'"
+   },
+   {
+    "kind": "variegated",
+    "example": "I. batatas 'Tricolor'"
+   },
+   {
+    "kind": "laciniate",
+    "example": "I. batatas 'Blackie' (deeply lobed); Japanese henka-asagao (Edo-period I. nil mutants with cut leaves and petals)"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "double-flowered (botan-zaki) I. nil henka-asagao mutants"
+   },
+   {
+    "kind": "dwarf",
+    "example": "non-climbing dwarf I. nil mutants (henka-asagao)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "white-flowered forms of normally blue/purple species (I. purpurea, I. nil)"
+   }
+  ],
+  "Iris": [
+   {
+    "kind": "variegated",
+    "example": "I. pseudacorus 'Variegata'"
+   },
+   {
+    "kind": "anthocyanin_free",
+    "example": "I. pseudacorus var. bastardii (pale flowers without the brown veining)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "I. pseudacorus 'Alba' (cream-white)"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "I. pseudacorus 'Flore Pleno' (double yellow flag)"
+   }
+  ],
+  "Isothecium": [],
+  "Itea": [
+   {
+    "kind": "dwarf",
+    "example": "I. virginica 'Little Henry' ('Sprich')"
+   }
+  ],
+  "Iva": [],
+  "Jarava": [],
+  "Jatropha": [
+   {
+    "kind": "dwarf",
+    "example": "J. integerrima 'Compacta'"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "J. integerrima 'Rosea' (pink-flowered peregrina)"
+   }
+  ],
+  "Juncus": [
+   {
+    "kind": "contorted",
+    "example": "J. effusus f. spiralis (corkscrew rush, found wild); J. effusus 'Unicorn'"
+   },
+   {
+    "kind": "variegated",
+    "example": "J. effusus 'Gold Strike' (gold-striped)"
+   }
+  ],
+  "Juniperus": [
+   {
+    "kind": "dwarf",
+    "example": "J. squamata 'Blue Star' (sport of 'Meyeri'); J. communis 'Compressa'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "J. communis 'Hibernica' (Irish juniper); J. scopulorum 'Skyrocket'"
+   },
+   {
+    "kind": "aurea",
+    "example": "J. communis 'Gold Cone' and 'Depressa Aurea'; J. horizontalis 'Mother Lode'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "J. scopulorum 'Blue Arrow' and 'Wichita Blue'"
+   },
+   {
+    "kind": "weeping",
+    "example": "J. scopulorum 'Tolleson's Weeping'"
+   },
+   {
+    "kind": "contorted",
+    "example": "J. chinensis 'Kaizuka' ('Torulosa', twisted branches)"
+   },
+   {
+    "kind": "variegated",
+    "example": "J. chinensis 'Variegata'"
+   }
+  ],
+  "Kalanchoe": [
+   {
+    "kind": "laciniate",
+    "example": "K. beharensis 'Oak Leaf' (deeply lobed leaves)"
+   },
+   {
+    "kind": "monstrose",
+    "example": "K. beharensis 'Fang' (tentacle-like outgrowths on the leaf backs)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "K. beharensis 'Nana'"
+   },
+   {
+    "kind": "variegated",
+    "example": "K. fedtschenkoi 'Variegata'"
+   }
+  ],
+  "Kalmia": [
+   {
+    "kind": "dwarf",
+    "example": "K. latifolia f. myrtifolia (miniature mountain laurel, e.g. 'Elf', 'Minuet')"
+   },
+   {
+    "kind": "laciniate",
+    "example": "K. latifolia f. polypetala (corolla split into separate strap-like petals)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "K. latifolia 'Ostbo Red' (deep red buds)"
+   }
+  ],
+  "Kobresia": [],
+  "Koompassia": [],
+  "Krascheninnikovia": [],
+  "Kunzea": [],
+  "Lactarius": [],
+  "Laetiporus": [],
+  "Laguncularia": [],
+  "Laminaria": [],
+  "Lantana": [
+   {
+    "kind": "variegated",
+    "example": "L. camara 'Samantha' ('Lemon Swirl') and 'Variegata'"
+   },
+   {
+    "kind": "polyploid",
+    "example": "near-sterile triploid cultivars bred at the University of Florida (the 'Bloomify' series); wild cytotypes range from 2x to 6x"
+   }
+  ],
+  "Larix": [
+   {
+    "kind": "contorted",
+    "example": "L. kaempferi 'Diana' (corkscrew branches)"
+   },
+   {
+    "kind": "weeping",
+    "example": "L. kaempferi 'Pendula'; L. decidua 'Pendula'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "L. decidua 'Corley'; L. laricina 'Newport Beauty' (witch's-broom dwarfs)"
+   },
+   {
+    "kind": "glaucous",
+    "example": "L. kaempferi 'Blue Dwarf' and 'Blue Rabbit'"
+   }
+  ],
+  "Larrea": [],
+  "Lavandula": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "L. stoechas f. leucantha (white); L. angustifolia 'Rosea' (pink)"
+   },
+   {
+    "kind": "variegated",
+    "example": "L. angustifolia 'Platinum Blonde'; L. x intermedia 'Walberton's Silver Edge'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "L. angustifolia 'Nana Alba'"
+   }
+  ],
+  "Lecythis": [],
+  "Lemna": [],
+  "Lentinula": [],
+  "Leontopodium": [
+   {
+    "kind": "dwarf",
+    "example": "L. alpinum 'Mignon'"
+   }
+  ],
+  "Lepista": [],
+  "Leptospermum": [
+   {
+    "kind": "melanic",
+    "example": "L. scoparium var. nichollsii (bronze-purple leaves and crimson flowers, found wild in Canterbury, NZ)"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "L. scoparium 'Red Damask' (double red)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "L. scoparium 'Nanum' ('Kiwi', 'Nanum Tui')"
+   },
+   {
+    "kind": "weeping",
+    "example": "L. scoparium 'Pink Cascade'"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "L. scoparium 'Keatleyi' (large pink flowers, wild-found)"
+   }
+  ],
+  "Leucobryum": [],
+  "Leymus": [],
+  "Limonium": [],
+  "Lindera": [],
+  "Liriodendron": [
+   {
+    "kind": "fastigiate",
+    "example": "L. tulipifera 'Fastigiatum' ('Arnold')"
+   },
+   {
+    "kind": "variegated",
+    "example": "L. tulipifera 'Aureomarginatum' ('Majestic Beauty') and 'Medio-pictum'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "L. tulipifera 'Ardis' and 'Little Volunteer'"
+   }
+  ],
+  "Lupinus": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "white-flowered forms of blue lupins (e.g. L. perennis); L. arboreus 'Snow Queen'"
+   }
+  ],
+  "Lycoperdon": [],
+  "Lycopodium": [],
+  "Lygodium": [],
+  "Lysichiton": [],
+  "Macrochloa": [],
+  "Macrocystis": [],
+  "Macrolepiota": [],
+  "Macrozamia": [],
+  "Magnolia": [
+   {
+    "kind": "dwarf",
+    "example": "M. grandiflora 'Little Gem'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "M. grandiflora 'Hasse'"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "M. denudata 'Fei Huang' ('Yellow River', yellow-flowered mutant from China); M. campbellii f. alba (white, wild)"
+   }
+  ],
+  "Malva": [
+   {
+    "kind": "variegated",
+    "example": "M. (Lavatera) arborea 'Variegata'"
+   }
+  ],
+  "Marasmius": [],
+  "Marchantia": [],
+  "Matteuccia": [],
+  "Mauritia": [],
+  "Metasequoia": [
+   {
+    "kind": "aurea",
+    "example": "M. glyptostroboides 'Gold Rush' ('Ogon')"
+   },
+   {
+    "kind": "variegated",
+    "example": "M. glyptostroboides 'White Spot' and 'Snow Flurry'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "M. glyptostroboides 'Hamlet's Broom' and 'Matthaei Broom'"
+   },
+   {
+    "kind": "weeping",
+    "example": "M. glyptostroboides 'Miss Grace'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "M. glyptostroboides 'National'"
+   }
+  ],
+  "Metrosideros": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "yellow (lehua mamo), orange and white lehua forms of the normally red M. polymorpha; M. excelsa 'Aurea' (yellow-flowered)"
+   },
+   {
+    "kind": "variegated",
+    "example": "M. excelsa 'Variegata'; M. kermadecensis 'Variegata'"
+   }
+  ],
+  "Miconia": [],
+  "Mitchella": [],
+  "Molinia": [
+   {
+    "kind": "variegated",
+    "example": "M. caerulea 'Variegata'"
+   }
+  ],
+  "Monstera": [
+   {
+    "kind": "variegated",
+    "example": "M. deliciosa 'Albo Variegata' (white chimera) and 'Thai Constellation' (stable cream-speckled mutant)"
+   },
+   {
+    "kind": "aurea",
+    "example": "M. deliciosa 'Aurea' (yellow-variegated)"
+   }
+  ],
+  "Morchella": [],
+  "Morella": [
+   {
+    "kind": "dwarf",
+    "example": "M. cerifera var. pumila (dwarf wax myrtle); 'Don's Dwarf'"
+   }
+  ],
+  "Muhlenbergia": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "M. capillaris 'White Cloud' (white-plumed form of pink muhly)"
+   }
+  ],
+  "Mulinum": [],
+  "Musa": [
+   {
+    "kind": "polyploid",
+    "example": "triploid (AAA) dessert bananas such as Cavendish: seedless, larger fruit"
+   },
+   {
+    "kind": "dwarf",
+    "example": "'Dwarf Cavendish' and 'Super Dwarf Cavendish' (dwarf mutants)"
+   },
+   {
+    "kind": "variegated",
+    "example": "Musa 'Ae Ae' (Hawaiian banana with white-striped leaves and fruit)"
+   },
+   {
+    "kind": "melanic",
+    "example": "M. acuminata 'Siam Ruby' (red-maroon leaves); M. balbisiana 'Black Thai' (black stems)"
+   }
+  ],
+  "Musanga": [],
+  "Mycena": [],
+  "Myrica": [],
+  "Myriophyllum": [],
+  "Myrmecodia": [],
+  "Nardus": [],
+  "Navia": [],
+  "Nelumbo": [
+   {
+    "kind": "twin_inflorescence",
+    "example": "twin-flowered lotus (Chinese bingdi lian: two flowers on one stalk) and 'Thousand-petal' lotus (qianban lian)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "bowl lotus (wanlian), e.g. 'Chawan Basu'"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "N. nucifera 'Alba Grandiflora' (white)"
+   }
+  ],
+  "Nepenthes": [
+   {
+    "kind": "melanic",
+    "example": "N. gracilis 'Black' / dark form (near-black pitchers)"
+   }
+  ],
+  "Nephrolepis": [
+   {
+    "kind": "laciniate",
+    "example": "Boston fern sport series: 'Bostoniensis' (itself a sport, 1894), then the finely divided 'Whitmanii' and 'Fluffy Ruffles'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "N. exaltata 'Mini Ruffle' and 'Scottii'"
+   },
+   {
+    "kind": "variegated",
+    "example": "N. exaltata 'Tiger' (gold-streaked)"
+   },
+   {
+    "kind": "aurea",
+    "example": "N. exaltata 'Rita's Gold'"
+   }
+  ],
+  "Nereocystis": [],
+  "Nerium": [
+   {
+    "kind": "variegated",
+    "example": "N. oleander 'Variegatum'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "N. oleander 'Petite Pink' and 'Petite Salmon'"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "N. oleander 'Mrs. Roeding' (double salmon) and 'Luteum Plenum' (double yellow)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "N. oleander 'Sister Agnes' (white)"
+   }
+  ],
+  "Nitraria": [],
+  "Nitzschia": [],
+  "Nothofagus": [],
+  "Nymphaea": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "N. alba f. rosea (red water lily of Lake Fagertarn, Sweden, discovered mid-19th c.; parent of Latour-Marliac's red hybrids)"
+   },
+   {
+    "kind": "variegated",
+    "example": "N. 'Arc-en-Ciel' (variegated-leaved hardy lily, Latour-Marliac)"
+   }
+  ],
+  "Nypa": [],
+  "Nyssa": [
+   {
+    "kind": "contorted",
+    "example": "N. sylvatica 'Zydeco Twist'"
+   },
+   {
+    "kind": "weeping",
+    "example": "N. sylvatica 'Autumn Cascades'"
+   },
+   {
+    "kind": "variegated",
+    "example": "N. sylvatica 'Sheri's Cloud'"
+   }
+  ],
+  "Oenothera": [
+   {
+    "kind": "polyploid",
+    "example": "O. lamarckiana 'Gigas' (tetraploid giant mutant found by Hugo de Vries, c. 1895)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "O. lamarckiana 'Nanella' (de Vries's dwarf mutant)"
+   }
+  ],
+  "Olea": [
+   {
+    "kind": "dwarf",
+    "example": "O. europaea 'Little Ollie' ('Montra')"
+   }
+  ],
+  "Omphalotus": [],
+  "Ophiocordyceps": [],
+  "Ophrys": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "O. apifera var. chlorantha (no pink/brown pigment: whitish sepals, yellow-green lip)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "O. apifera var. flavescens and var. bicolor; var. trollii (wasp orchid, elongated lip)"
+   }
+  ],
+  "Oplopanax": [],
+  "Opuntia": [
+   {
+    "kind": "variegated",
+    "example": "O. monacantha 'Variegata' (Joseph's coat)"
+   },
+   {
+    "kind": "monstrose",
+    "example": "O. monacantha 'Monstrosa'"
+   },
+   {
+    "kind": "cristate",
+    "example": "crested pads (f. cristata) recorded in wild prickly pears"
+   }
+  ],
+  "Orectanthe": [],
+  "Osmunda": [
+   {
+    "kind": "cristate",
+    "example": "O. regalis 'Cristata' and 'Grandiceps'"
+   },
+   {
+    "kind": "melanic",
+    "example": "O. regalis 'Purpurascens' (purple-red stems and new fronds)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "O. regalis 'Gracilis'"
+   }
+  ],
+  "Oxalis": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "O. acetosella f. rosea / var. purpurascens (pink-flowered wood sorrel)"
+   },
+   {
+    "kind": "melanic",
+    "example": "O. triangularis 'Atropurpurea' (purple shamrock)"
+   }
+  ],
+  "Oxytenanthera": [],
+  "Pachycereus": [
+   {
+    "kind": "monstrose",
+    "example": "P. schottii f. monstrosus (totem pole cactus: spineless and lumpy, found wild in Baja California)"
+   },
+   {
+    "kind": "cristate",
+    "example": "crested cardon (P. pringlei f. cristata) in Baja California"
+   }
+  ],
+  "Pandanus": [
+   {
+    "kind": "variegated",
+    "example": "P. tectorius 'Veitchii' and 'Sanderi' (white- or gold-striped)"
+   }
+  ],
+  "Panicum": [
+   {
+    "kind": "glaucous",
+    "example": "P. virgatum 'Heavy Metal' and 'Dallas Blues'"
+   },
+   {
+    "kind": "melanic",
+    "example": "P. virgatum 'Shenandoah' and 'Cheyenne Sky' (red-purple foliage)"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "P. virgatum 'Northwind' (stiffly columnar)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "P. amarum 'Cape Breeze'"
+   },
+   {
+    "kind": "polyploid",
+    "example": "P. virgatum octoploid upland vs tetraploid lowland cytotypes"
+   }
+  ],
+  "Papaver": [
+   {
+    "kind": "twin_inflorescence",
+    "example": "P. somniferum Paeoniflorum Group (fully double)"
+   },
+   {
+    "kind": "laciniate",
+    "example": "P. somniferum Laciniatum Group (deeply fringed petals)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "Shirley poppies (P. rhoeas), bred from a wild white-edged mutant found in 1880 by Rev. W. Wilks at Shirley, Surrey"
+   },
+   {
+    "kind": "monstrose",
+    "example": "P. somniferum 'Hens and Chickens' (a ring of secondary capsules around the main one)"
+   }
+  ],
+  "Papillaria": [],
+  "Pappostipa": [],
+  "Parastrephia": [],
+  "Parkinsonia": [],
+  "Parnassia": [],
+  "Parthenocissus": [
+   {
+    "kind": "variegated",
+    "example": "P. quinquefolia 'Star Showers' ('Monham')"
+   },
+   {
+    "kind": "aurea",
+    "example": "P. tricuspidata 'Fenway Park' (golden sport found on Fenway Park, Boston)"
+   },
+   {
+    "kind": "laciniate",
+    "example": "P. tricuspidata 'Lowii' (small, deeply cut leaves)"
+   }
+  ],
+  "Pascopyrum": [],
+  "Passiflora": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "P. caerulea 'Constance Elliott' (white-flowered)"
+   }
+  ],
+  "Peperomia": [
+   {
+    "kind": "variegated",
+    "example": "P. obtusifolia 'Variegata'"
+   },
+   {
+    "kind": "melanic",
+    "example": "P. caperata 'Luna Red' and 'Burgundy'"
+   }
+  ],
+  "Peziza": [],
+  "Phalaenopsis": [
+   {
+    "kind": "polyploid",
+    "example": "tetraploid white Phalaenopsis lines from P. amabilis / P. aphrodite (e.g. the Phal. Doris lineage)"
+   },
+   {
+    "kind": "variegated",
+    "example": "variegated-leaf clones (e.g. Phal. Sogo Vivien 'Variegata')"
+   }
+  ],
+  "Phalaris": [
+   {
+    "kind": "variegated",
+    "example": "P. arundinacea var. picta (gardener's garters) and 'Feesey'"
+   },
+   {
+    "kind": "aurea",
+    "example": "P. arundinacea 'Luteopicta' (yellow-striped)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "P. arundinacea 'Dwarf Garters'"
+   }
+  ],
+  "Philodendron": [
+   {
+    "kind": "dwarf",
+    "example": "P. bipinnatifidum 'Xanadu' ('Winterbourn', compact form)"
+   },
+   {
+    "kind": "variegated",
+    "example": "P. hederaceum 'Brasil'; variegated P. bipinnatifidum"
+   },
+   {
+    "kind": "aurea",
+    "example": "P. hederaceum 'Lemon Lime'"
+   },
+   {
+    "kind": "melanic",
+    "example": "P. erubescens 'Burgundy'"
+   }
+  ],
+  "Phoenix": [],
+  "Phragmites": [
+   {
+    "kind": "variegated",
+    "example": "P. australis 'Variegatus' and 'Candy Stripe'"
+   }
+  ],
+  "Phyllospadix": [],
+  "Phyllostachys": [
+   {
+    "kind": "monstrose",
+    "example": "P. edulis 'Heterocycla' (kikko-chiku, tortoise-shell bamboo: swollen, oblique alternating internodes)"
+   },
+   {
+    "kind": "aurea",
+    "example": "P. bambusoides 'Castillonis' and P. vivax 'Aureocaulis' (golden culms)"
+   }
+  ],
+  "Picea": [
+   {
+    "kind": "dwarf",
+    "example": "P. glauca 'Conica' (dwarf Alberta spruce, found 1904 at Lake Laggan, Alberta); P. abies 'Nidiformis' and 'Little Gem'"
+   },
+   {
+    "kind": "weeping",
+    "example": "P. abies 'Inversa'; P. omorika 'Pendula'; P. glauca 'Pendula'"
+   },
+   {
+    "kind": "aurea",
+    "example": "P. orientalis 'Skylands'; P. abies 'Aurea'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "P. pungens Glauca Group ('Hoopsii', 'Fat Albert')"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "P. abies 'Cupressina'"
+   },
+   {
+    "kind": "variegated",
+    "example": "P. glauca 'J.W. Daisy's White' (white new growth, sport of 'Conica') and 'Rainbow's End'"
+   }
+  ],
+  "Pilosocereus": [
+   {
+    "kind": "cristate",
+    "example": "crested (f. cristata) plants in cultivation"
+   }
+  ],
+  "Pinus": [
+   {
+    "kind": "aurea",
+    "example": "P. contorta 'Chief Joseph' (golden lodgepole found wild in the Wallowa Mountains, Oregon); P. mugo 'Ophir' and 'Winter Gold'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "P. mugo 'Mops'; P. strobus 'Nana'; many witch's-broom dwarfs, e.g. P. contorta 'Spaan's Dwarf'"
+   },
+   {
+    "kind": "weeping",
+    "example": "P. strobus 'Pendula'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "P. strobus 'Fastigiata'; P. sylvestris 'Fastigiata'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "P. strobus 'Blue Shag'; P. sylvestris 'Watereri'"
+   },
+   {
+    "kind": "contorted",
+    "example": "P. strobus 'Contorta' and 'Torulosa' (twisted needles and branches)"
+   },
+   {
+    "kind": "variegated",
+    "example": "P. thunbergii / P. densiflora 'Oculus Draconis' (dragon's-eye pine, yellow-banded needles)"
+   }
+  ],
+  "Pisonia": [
+   {
+    "kind": "aurea",
+    "example": "P. grandis 'Alba' (lettuce tree, pale yellow-green leaves)"
+   },
+   {
+    "kind": "variegated",
+    "example": "P. umbellifera 'Variegata'"
+   }
+  ],
+  "Pistacia": [],
+  "Plagiochila": [],
+  "Planera": [],
+  "Plantago": [
+   {
+    "kind": "monstrose",
+    "example": "P. major 'Rosularis' (rose plantain: flower spike replaced by a leafy rosette, known since the 16th c.)"
+   },
+   {
+    "kind": "melanic",
+    "example": "P. major 'Rubrifolia' ('Atropurpurea')"
+   },
+   {
+    "kind": "variegated",
+    "example": "P. lanceolata 'Streaker'; P. major 'Variegata'"
+   }
+  ],
+  "Platanus": [
+   {
+    "kind": "variegated",
+    "example": "P. x hispanica 'Suttneri'"
+   },
+   {
+    "kind": "laciniate",
+    "example": "P. orientalis f. digitata (deeply cut leaves)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "P. x hispanica 'Mirkovec'"
+   }
+  ],
+  "Platycerium": [],
+  "Pleopeltis": [],
+  "Pleuraphis": [],
+  "Pleurotus": [],
+  "Pleurozium": [],
+  "Plumeria": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "P. rubra f. acutifolia (white with yellow eye) and f. lutea (yellow), alongside the red f. rubra"
+   }
+  ],
+  "Poa": [
+   {
+    "kind": "prolific_offsets",
+    "example": "P. alpina var. vivipara and P. bulbosa var. vivipara (plantlets in place of florets)"
+   }
+  ],
+  "Podocarpus": [
+   {
+    "kind": "aurea",
+    "example": "P. totara 'Aurea'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "P. elongatus 'Icee Blue' ('Monmal')"
+   },
+   {
+    "kind": "dwarf",
+    "example": "P. macrophyllus 'Pringles Dwarf'"
+   }
+  ],
+  "Podophyllum": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "P. peltatum f. deamii (pink-flowered, red-fruited mayapple); 'Missouri May'"
+   }
+  ],
+  "Polylepis": [],
+  "Polypodium": [
+   {
+    "kind": "cristate",
+    "example": "P. glycyrrhiza 'Grandiceps'; P. vulgare 'Bifidocristatum'"
+   },
+   {
+    "kind": "laciniate",
+    "example": "P. cambricum 'Cambricum' (sterile, finely cut Welsh polypody, recorded in Wales in the 1660s); P. glycyrrhiza 'Malahatense' (found near Malahat, Vancouver Island)"
+   }
+  ],
+  "Polystichum": [
+   {
+    "kind": "cristate",
+    "example": "P. setiferum 'Cristatum' and Cristato-pinnulum Group"
+   },
+   {
+    "kind": "laciniate",
+    "example": "P. setiferum 'Plumosum Densum' and Divisilobum Group"
+   },
+   {
+    "kind": "prolific_offsets",
+    "example": "P. setiferum Proliferum Group (abundant bulbils along the rachis)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "P. setiferum 'Congestum'"
+   }
+  ],
+  "Polytrichum": [],
+  "Pontederia": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "P. cordata f. albiflora (white pickerelweed); 'Pink Pons'"
+   }
+  ],
+  "Populus": [
+   {
+    "kind": "fastigiate",
+    "example": "P. nigra 'Italica' (Lombardy poplar, a male fastigiate mutant from 18th-c. Lombardy); P. tremula 'Erecta' (found wild in Sweden)"
+   },
+   {
+    "kind": "aurea",
+    "example": "P. x canadensis 'Serotina Aurea' (golden poplar, sport raised 1871 in Ghent)"
+   },
+   {
+    "kind": "variegated",
+    "example": "P. x jackii 'Aurora'"
+   },
+   {
+    "kind": "weeping",
+    "example": "P. tremula 'Pendula'"
+   },
+   {
+    "kind": "polyploid",
+    "example": "triploid giant aspen P. tremula 'Gigas' (found in Sweden, 1935); many triploid P. tremuloides clones"
+   },
+   {
+    "kind": "melanic",
+    "example": "P. deltoides 'Purple Tower'"
+   }
+  ],
+  "Porolithon": [],
+  "Posidonia": [],
+  "Postelsia": [],
+  "Potamogeton": [],
+  "Prosopis": [],
+  "Protea": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "white forms of the normally pink/red P. repens"
+   }
+  ],
+  "Protostropharia": [],
+  "Pseudoroegneria": [],
+  "Pseudotsuga": [
+   {
+    "kind": "dwarf",
+    "example": "P. menziesii 'Fletcheri'; 'Loon Lake' (witch's broom)"
+   },
+   {
+    "kind": "weeping",
+    "example": "P. menziesii 'Pendula' and 'Graceful Grace'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "P. menziesii 'Fastigiata'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "P. menziesii var. glauca selections, e.g. 'Glauca Pendula'"
+   },
+   {
+    "kind": "aurea",
+    "example": "P. menziesii 'Aurea'"
+   }
+  ],
+  "Psilotum": [
+   {
+    "kind": "variegated",
+    "example": "P. nudum matsubaran cultivars with nishiki variegation (e.g. 'Kin Gyoku'), collected in Japan since the Edo period"
+   },
+   {
+    "kind": "contorted",
+    "example": "twisted-stem matsubaran cultivars (e.g. 'Shinno Ohineri')"
+   }
+  ],
+  "Pteridium": [
+   {
+    "kind": "cristate",
+    "example": "P. aquilinum 'Cristatum' and 'Grandiceps' (Victorian crested brackens)"
+   }
+  ],
+  "Purshia": [],
+  "Puya": [],
+  "Quercus": [
+   {
+    "kind": "fastigiate",
+    "example": "Q. robur f. fastigiata (cypress oak; the wild mother tree at Harreshausen, Hesse); 'Koster'"
+   },
+   {
+    "kind": "aurea",
+    "example": "Q. robur 'Concordia' (golden oak, raised 1843 in Ghent)"
+   },
+   {
+    "kind": "weeping",
+    "example": "Q. robur 'Pendula'"
+   },
+   {
+    "kind": "melanic",
+    "example": "Q. robur 'Atropurpurea'; Q. petraea 'Purpurea'"
+   },
+   {
+    "kind": "laciniate",
+    "example": "Q. robur 'Filicifolia' and 'Pectinata' (cut-leaf)"
+   },
+   {
+    "kind": "variegated",
+    "example": "Q. robur 'Argenteomarginata'; Q. cerris 'Argenteovariegata'"
+   },
+   {
+    "kind": "contorted",
+    "example": "Q. robur 'Tortuosa' (twisted branches)"
+   }
+  ],
+  "Racomitrium": [],
+  "Ramalina": [],
+  "Ranunculus": [
+   {
+    "kind": "twin_inflorescence",
+    "example": "R. acris 'Flore Pleno'; R. repens 'Pleniflorus'"
+   },
+   {
+    "kind": "melanic",
+    "example": "R. ficaria 'Brazen Hussy' (bronze-black leaves, found by Christopher Lloyd in the woods at Great Dixter)"
+   },
+   {
+    "kind": "variegated",
+    "example": "R. repens 'Buttered Popcorn' (yellow-marbled leaves)"
+   }
+  ],
+  "Reaumuria": [],
+  "Reynoutria": [
+   {
+    "kind": "variegated",
+    "example": "R. japonica 'Variegata' ('Milk Boy')"
+   },
+   {
+    "kind": "dwarf",
+    "example": "R. japonica var. compacta (dwarf montane form)"
+   },
+   {
+    "kind": "polyploid",
+    "example": "the introduced European plant is a single octoploid (8x) female clone"
+   }
+  ],
+  "Rhizocarpon": [],
+  "Rhizophora": [],
+  "Rhododendron": [
+   {
+    "kind": "variegated",
+    "example": "R. ponticum 'Variegatum'; R. 'President Roosevelt'; R. 'Goldflimmer'"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "white forms of R. arboreum (subsp. cinnamomeum var. album) and R. ferrugineum f. album"
+   },
+   {
+    "kind": "dwarf",
+    "example": "R. groenlandicum 'Compactum'; dwarf witch's-broom rhododendrons"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "R. 'Fastuosum Flore Pleno' (double); hose-in-hose azaleas"
+   },
+   {
+    "kind": "melanic",
+    "example": "R. 'Elizabeth Red Foliage' (red-leaved sport)"
+   }
+  ],
+  "Rhus": [
+   {
+    "kind": "laciniate",
+    "example": "R. typhina 'Dissecta' and R. glabra 'Laciniata' (cutleaf sumacs)"
+   },
+   {
+    "kind": "aurea",
+    "example": "R. typhina 'Tiger Eyes' (golden sport of 'Laciniata')"
+   },
+   {
+    "kind": "dwarf",
+    "example": "R. aromatica 'Gro-Low'"
+   }
+  ],
+  "Rosa": [
+   {
+    "kind": "cristate",
+    "example": "R. x centifolia 'Cristata' ('Chapeau de Napoleon', crested moss rose found c. 1820 on an old wall at Fribourg, Switzerland)"
+   },
+   {
+    "kind": "monstrose",
+    "example": "R. chinensis 'Viridiflora' (green rose: petals replaced by leafy sepals)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "R. chinensis 'Minima' ('Rouletii', found in Switzerland 1917; ancestor of the miniature roses)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "R. gallica 'Versicolor' ('Rosa Mundi', a striped sport of the Apothecary's rose)"
+   },
+   {
+    "kind": "variegated",
+    "example": "R. 'Curiosity' (hybrid tea sport with cream-splashed leaves)"
+   }
+  ],
+  "Ruppia": [],
+  "Sabal": [
+   {
+    "kind": "fused_leaflets",
+    "example": "S. palmetto 'Lisa' (mutant with fused leaf segments: stiff, unsplit fronds)"
+   }
+  ],
+  "Saccharina": [],
+  "Sadleria": [],
+  "Salicornia": [],
+  "Salix": [
+   {
+    "kind": "contorted",
+    "example": "S. babylonica var. pekinensis 'Tortuosa' (corkscrew or dragon's-claw willow)"
+   },
+   {
+    "kind": "weeping",
+    "example": "S. caprea 'Kilmarnock' (found by Thomas Lang at Kilmarnock, 19th c.); weeping S. babylonica"
+   },
+   {
+    "kind": "cristate",
+    "example": "S. udensis 'Sekka' (Japanese fantail willow, fasciated stems)"
+   },
+   {
+    "kind": "variegated",
+    "example": "S. integra 'Hakuro Nishiki'; S. cinerea 'Variegata'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "S. purpurea 'Nana'; S. x boydii (wild-found dwarf, Scotland)"
+   },
+   {
+    "kind": "glaucous",
+    "example": "S. alba var. sericea (silver willow)"
+   }
+  ],
+  "Sambucus": [
+   {
+    "kind": "melanic",
+    "example": "S. nigra f. porphyrophylla ('Guincho Purple', 'Black Beauty')"
+   },
+   {
+    "kind": "laciniate",
+    "example": "S. nigra f. laciniata (parsley-leaved elder, grown since the 17th c.); 'Black Lace'"
+   },
+   {
+    "kind": "aurea",
+    "example": "S. nigra 'Aurea'"
+   },
+   {
+    "kind": "variegated",
+    "example": "S. nigra 'Marginata' and 'Pulverulenta'"
+   },
+   {
+    "kind": "anthocyanin_free",
+    "example": "S. nigra f. viridis (green-berried elder with no anthocyanin in the fruit)"
+   },
+   {
+    "kind": "weeping",
+    "example": "S. nigra 'Pendula'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "S. nigra 'Pyramidalis'"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "S. nigra 'Plena' (double-flowered)"
+   }
+  ],
+  "Sarcobatus": [],
+  "Sarcocornia": [],
+  "Sargassum": [],
+  "Sarracenia": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "S. purpurea f. heterophylla (anthocyanin-free green pitchers and yellow flowers, found wild); S. flava var. maxima; S. leucophylla f. viridescens"
+   },
+   {
+    "kind": "melanic",
+    "example": "S. flava var. atropurpurea (entirely red pitchers)"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "S. leucophylla 'Tarnok' (double-flowered; described in Carnivorous Plant Newsletter vol. 22)"
+   }
+  ],
+  "Sasa": [
+   {
+    "kind": "variegated",
+    "example": "S. kurilensis 'Shimofuri' (white-striped)"
+   }
+  ],
+  "Saururus": [],
+  "Saxifraga": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "S. oppositifolia f. albiflora ('Alba', white purple saxifrage)"
+   }
+  ],
+  "Scaevola": [],
+  "Schinopsis": [],
+  "Schizachyrium": [
+   {
+    "kind": "glaucous",
+    "example": "S. scoparium 'The Blues' and 'Blue Heaven'"
+   }
+  ],
+  "Schizophyllum": [],
+  "Schoenoplectus": [
+   {
+    "kind": "variegated",
+    "example": "S. tabernaemontani 'Zebrinus' (zebra rush, cross-banded) and 'Albescens'"
+   }
+  ],
+  "Schoenus": [],
+  "Scorpidium": [],
+  "Selaginella": [
+   {
+    "kind": "aurea",
+    "example": "S. kraussiana 'Aurea'"
+   },
+   {
+    "kind": "variegated",
+    "example": "S. martensii 'Watsoniana' (silver-white tips); S. kraussiana 'Variegata'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "S. kraussiana 'Brownii' (cushion-forming dwarf)"
+   }
+  ],
+  "Sequoia": [
+   {
+    "kind": "variegated",
+    "example": "albino and chimeric (white-green sectored) coast redwoods: several hundred albinos known in California, a few of them stable chimeras"
+   },
+   {
+    "kind": "dwarf",
+    "example": "S. sempervirens 'Prostrata' and 'Adpressa'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "S. sempervirens 'Aptos Blue' and 'Filoli'"
+   },
+   {
+    "kind": "weeping",
+    "example": "S. sempervirens 'Pendula'"
+   }
+  ],
+  "Sequoiadendron": [
+   {
+    "kind": "weeping",
+    "example": "S. giganteum 'Pendulum'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "S. giganteum 'Glaucum'"
+   },
+   {
+    "kind": "aurea",
+    "example": "S. giganteum 'Aureum'"
+   },
+   {
+    "kind": "variegated",
+    "example": "S. giganteum 'Variegatum'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "S. giganteum 'Pygmaeum'"
+   }
+  ],
+  "Serenoa": [
+   {
+    "kind": "glaucous",
+    "example": "silver saw palmetto (glaucous Atlantic-coast form, 'Cinerea')"
+   }
+  ],
+  "Sesuvium": [],
+  "Shorea": [],
+  "Silene": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "S. acaulis 'Alba'; S. flos-cuculi 'Alba' (white ragged robin)"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "S. flos-cuculi 'Jenny' (double ragged robin); S. uniflora 'Robin Whitebreast' ('Flore Pleno')"
+   },
+   {
+    "kind": "variegated",
+    "example": "S. uniflora 'Druett's Variegated'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "S. flos-cuculi 'Nana'"
+   }
+  ],
+  "Silphium": [],
+  "Solidago": [
+   {
+    "kind": "variegated",
+    "example": "S. flexicaulis 'Variegata'"
+   }
+  ],
+  "Sonneratia": [],
+  "Sorghastrum": [
+   {
+    "kind": "glaucous",
+    "example": "S. nutans 'Sioux Blue' and 'Indian Steel'"
+   }
+  ],
+  "Spartina": [
+   {
+    "kind": "variegated",
+    "example": "S. pectinata 'Aureomarginata' (gold-edged prairie cordgrass)"
+   }
+  ],
+  "Sphaeralcea": [
+   {
+    "kind": "colour_morph_flower",
+    "example": "pink, lavender, white and red forms of the normally apricot S. ambigua"
+   }
+  ],
+  "Sphagnum": [],
+  "Spinifex": [],
+  "Spiraea": [
+   {
+    "kind": "aurea",
+    "example": "S. japonica 'Goldflame'; S. thunbergii 'Ogon'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "S. japonica 'Little Princess'"
+   },
+   {
+    "kind": "variegated",
+    "example": "S. x vanhouttei 'Pink Ice'"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "S. prunifolia 'Plena' (double bridal wreath)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "S. japonica 'Shirobana' (pink and white flowers on one plant)"
+   }
+  ],
+  "Sporobolus": [
+   {
+    "kind": "polyploid",
+    "example": "S. anglicus (= Spartina anglica), a fertile allopolyploid that arose c. 1890 in Southampton Water by chromosome doubling of the sterile hybrid S. x townsendii"
+   }
+  ],
+  "Stegolepis": [],
+  "Stipa": [],
+  "Suaeda": [],
+  "Synechococcus": [],
+  "Tamarix": [],
+  "Taxodium": [
+   {
+    "kind": "weeping",
+    "example": "T. distichum 'Cascade Falls' and 'Pendens'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "T. distichum 'Peve Minaret' and 'Secrest'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "T. distichum 'Mickelson' ('Shawnee Brave'); T. distichum var. imbricarium 'Nutans'"
+   },
+   {
+    "kind": "contorted",
+    "example": "T. distichum 'Little Twister'"
+   }
+  ],
+  "Tectona": [],
+  "Tepuianthus": [],
+  "Terminalia": [
+   {
+    "kind": "variegated",
+    "example": "T. mantaly 'Tricolor' (variegated Madagascar almond)"
+   }
+  ],
+  "Thalassia": [],
+  "Themeda": [],
+  "Thermus": [],
+  "Thuidium": [],
+  "Thuja": [
+   {
+    "kind": "aurea",
+    "example": "T. occidentalis 'Rheingold'; 'Golden Globe' (sport of 'Woodwardii')"
+   },
+   {
+    "kind": "dwarf",
+    "example": "T. occidentalis 'Danica' and 'Hetz Midget'"
+   },
+   {
+    "kind": "contorted",
+    "example": "T. occidentalis 'Spiralis' (spirally twisted branchlets)"
+   },
+   {
+    "kind": "weeping",
+    "example": "T. occidentalis 'Pendula'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "T. occidentalis 'Smaragd' and 'Fastigiata'"
+   },
+   {
+    "kind": "variegated",
+    "example": "T. occidentalis 'Sherwood Frost'; T. plicata 'Zebrina'"
+   },
+   {
+    "kind": "cristate",
+    "example": "T. occidentalis 'Cristata' (crested arborvitae)"
+   }
+  ],
+  "Thymus": [
+   {
+    "kind": "variegated",
+    "example": "T. vulgaris 'Silver Posie'"
+   },
+   {
+    "kind": "aurea",
+    "example": "T. vulgaris 'Aureus'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "T. vulgaris 'Compactus'"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "T. vulgaris 'Albus' (white-flowered)"
+   }
+  ],
+  "Tillandsia": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "T. ionantha 'Druid' (no red blush: leaves turn yellow at flowering, white flowers)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "T. tectorum 'Enano' (dwarf form)"
+   }
+  ],
+  "Tortula": [],
+  "Trametes": [],
+  "Trichocereus": [
+   {
+    "kind": "monstrose",
+    "example": "T. bridgesii f. monstrosa ('Clone A' and 'Clone B')"
+   },
+   {
+    "kind": "cristate",
+    "example": "T. pachanoi f. cristata; crested T. bridgesii"
+   },
+   {
+    "kind": "variegated",
+    "example": "variegated T. pachanoi and T. bridgesii clones"
+   }
+  ],
+  "Tricholoma": [],
+  "Trichophorum": [],
+  "Triodia": [],
+  "Tripolium": [],
+  "Tsuga": [
+   {
+    "kind": "weeping",
+    "example": "T. canadensis 'Pendula' (Sargent's weeping hemlock, found c. 1870 near Fishkill, New York); T. heterophylla 'Thorsen's Weeping'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "T. canadensis 'Jeddeloh' and 'Cole's Prostrate'; T. heterophylla 'Iron Springs'"
+   },
+   {
+    "kind": "variegated",
+    "example": "T. canadensis 'Gentsch White' (white-tipped)"
+   },
+   {
+    "kind": "aurea",
+    "example": "T. canadensis 'Golden Splendor'"
+   },
+   {
+    "kind": "glaucous",
+    "example": "T. mertensiana 'Glauca'"
+   }
+  ],
+  "Tuber": [],
+  "Tulipa": [
+   {
+    "kind": "laciniate",
+    "example": "parrot tulips (fringed, cut petals) arising as sports, e.g. 'Black Parrot' from 'Philippe de Comines' (1937)"
+   },
+   {
+    "kind": "twin_inflorescence",
+    "example": "double-flowered tulip sports (the 'Murillo' family of double earlies)"
+   },
+   {
+    "kind": "colour_morph_flower",
+    "example": "colour sports, e.g. 'Golden Apeldoorn' from 'Apeldoorn'"
+   },
+   {
+    "kind": "variegated",
+    "example": "T. praestans 'Unicum' (white-margined leaves)"
+   }
+  ],
+  "Turbinaria": [],
+  "Typha": [
+   {
+    "kind": "variegated",
+    "example": "T. latifolia 'Variegata'"
+   }
+  ],
+  "Ulex": [
+   {
+    "kind": "twin_inflorescence",
+    "example": "U. europaeus 'Flore Pleno' (double gorse)"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "U. europaeus 'Strictus' (Irish gorse: upright and nearly spineless, found in Northern Ireland)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "U. gallii 'Mizen Head' (prostrate dwarf, found at Mizen Head, Ireland)"
+   }
+  ],
+  "Ulmus": [
+   {
+    "kind": "weeping",
+    "example": "U. glabra 'Camperdownii' (Camperdown elm, found c. 1835-40 at Camperdown House, Dundee)"
+   },
+   {
+    "kind": "aurea",
+    "example": "U. glabra 'Lutescens'; U. x hollandica 'Wredei'"
+   },
+   {
+    "kind": "fastigiate",
+    "example": "U. glabra 'Exoniensis' (Exeter elm)"
+   },
+   {
+    "kind": "variegated",
+    "example": "U. minor 'Variegata'"
+   },
+   {
+    "kind": "laciniate",
+    "example": "U. glabra 'Crispa' (fern-leaved elm)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "U. parvifolia 'Seiju'; U. x hollandica 'Jacqueline Hillier'"
+   },
+   {
+    "kind": "melanic",
+    "example": "U. glabra 'Atropurpurea'"
+   }
+  ],
+  "Ulva": [],
+  "Umbilicaria": [],
+  "Uniola": [],
+  "Urtica": [
+   {
+    "kind": "aurea",
+    "example": "U. dioica 'Chedglow' (golden nettle, found at Chedglow, Wiltshire)"
+   }
+  ],
+  "Usnea": [],
+  "Utricularia": [],
+  "Vaccinium": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "V. myrtillus var. leucocarpum (white-berried bilberry, wild)"
+   },
+   {
+    "kind": "dwarf",
+    "example": "V. vitis-idaea var. minus (mountain cranberry); V. corymbosum 'Top Hat'"
+   }
+  ],
+  "Vachellia": [],
+  "Victoria": [],
+  "Vitis": [
+   {
+    "kind": "anthocyanin_free",
+    "example": "white-berried bud sports without anthocyanin, e.g. 'Pinot Blanc' from 'Pinot Noir' (loss of VvMybA function; white wine grapes derive from such mutations)"
+   },
+   {
+    "kind": "melanic",
+    "example": "V. vinifera 'Purpurea' (claret vine)"
+   },
+   {
+    "kind": "laciniate",
+    "example": "V. vinifera 'Ciotat' ('Apiifolia', parsley vine)"
+   },
+   {
+    "kind": "polyploid",
+    "example": "tetraploid large-berried grapes derived from tetraploid bud sports (e.g. 'Kyoho')"
+   }
+  ],
+  "Weinmannia": [],
+  "Welwitschia": [],
+  "Werneria": [],
+  "Westringia": [
+   {
+    "kind": "variegated",
+    "example": "W. fruticosa 'Morning Light' and 'Smokie'"
+   },
+   {
+    "kind": "dwarf",
+    "example": "W. fruticosa 'Mundi' and 'Grey Box'"
+   }
+  ],
+  "Yucca": [
+   {
+    "kind": "variegated",
+    "example": "Y. aloifolia 'Marginata' ('Variegata'); Y. filamentosa 'Color Guard' and 'Bright Edge'"
+   },
+   {
+    "kind": "melanic",
+    "example": "Y. aloifolia 'Purpurea' (purple-leaved Spanish bayonet)"
+   }
+  ],
+  "Yushania": [],
+  "Zamia": [],
+  "Zostera": []
+ }
+}

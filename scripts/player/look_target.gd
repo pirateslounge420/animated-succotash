@@ -120,7 +120,8 @@ func _look() -> Array:
 				if i >= 0:
 					var tsp: PlantSpecies = SpeciesDB.all()[int(chunk.trees[i][2])]
 					if tsp.binomial() != "":
-						best = [tsp.hud_name(), "tree"]
+						var tr: Array = chunk.trees[i]
+						best = [decorate(tsp.hud_name(), int(tr[9]) if tr.size() > 9 else 0, ""), "tree"]
 	# Plants without colliders, in front of whatever the ray hit: the
 	# nearer of the two is what you're looking at.
 	var plant := _plant_on_ray(from, dir, block_t + 0.3, me)
@@ -152,6 +153,9 @@ func _near_body(p: Vector3, me: Vector3) -> bool:
 func _plant_on_ray(from: Vector3, dir: Vector3, length: float, me: Vector3) -> Array:
 	var best_t := INF
 	var best_sp := -1
+	var best_id := 0
+	var best_k := -1
+	var best_buf := PackedFloat32Array()
 	for id in _index:
 		var e: Dictionary = _index[id]
 		var mmi: MultiMeshInstance3D = e.mmi
@@ -179,6 +183,10 @@ func _plant_on_ray(from: Vector3, dir: Vector3, length: float, me: Vector3) -> A
 					if list == null:
 						continue
 					for k in (list as PackedInt32Array):
+						# An aroid resting underground (AroidGarden): nothing
+						# there to name.
+						if AroidGarden.hides(id, k):
+							continue
 						var j := k * 20
 						var base := Vector3(buf[j + 3], buf[j + 7], buf[j + 11])
 						var up := Vector3(buf[j + 1], buf[j + 5], buf[j + 9]) # the scaled y column: height
@@ -188,10 +196,31 @@ func _plant_on_ray(from: Vector3, dir: Vector3, length: float, me: Vector3) -> A
 						if st >= 0.0 and st < best_t and (o + d * st).distance_to(me_l) <= PLANT_M:
 							best_t = st
 							best_sp = e.sp
+							best_id = id
+							best_k = k
+							best_buf = buf
 	if best_sp < 0:
 		return []
 	var sp: PlantSpecies = SpeciesDB.all()[best_sp]
-	return [] if sp.binomial() == "" else [sp.hud_name(), "plant", best_t, best_sp]
+	if sp.binomial() == "":
+		return []
+	# Its sport (packed with its moss: PlantGenetics) and, for an aroid,
+	# where it is in its life (AroidGarden).
+	var sport := PlantGenetics.decode_sport(best_buf[best_k * 20 + 16]) if best_k >= 0 else 0
+	return [decorate(sp.hud_name(), sport, AroidGarden.describe(best_id, best_k)), "plant", best_t, best_sp]
+
+
+## The name with a sport ("variegated sport") and a stage ("in bloom")
+## after the common name.
+static func decorate(text: String, sport: int, stage: String) -> String:
+	var more := PackedStringArray()
+	if sport > 0:
+		more.append("%s sport" % PlantGenetics.label(sport))
+	if stage != "":
+		more.append(stage)
+	if more.is_empty():
+		return text
+	return text + ("\n" if not text.contains("\n") else " · ") + " · ".join(more)
 
 
 ## Where along the ray (o + d t, t in [t0, t1], d unit) it passes within

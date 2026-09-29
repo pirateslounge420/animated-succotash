@@ -1817,7 +1817,7 @@ outside in. Leaves fall only from the dull stage (litter `fall` now keys off it,
 24 days. The season transition (20 days) is the *temperature* ramp; foliage follows
 its own, longer clock.
 
-## AL. Old growth — 28 Sept 2026 (late)
+## AN. Old growth — 28 Sept 2026 (late)
 
 - **Locked:** the planet is at the tribal stage, so nothing has ever been logged, cleared
   or farmed: **every stand is old growth.** Emergent and canopy trees are placed near the
@@ -1829,7 +1829,7 @@ its own, longer clock.
   stand.json restores the old uniform roll for comparison. Fallen logs and the age
   ledger stay with Phase 6/7.
 
-## AM. Camps only at ruins; the random wake — 29 Sept 2026
+## AO. Camps only at ruins; the random wake — 29 Sept 2026
 
 - **Locked:** camp fires — the safe zones, and the places you wake after dying — exist
   **only in the rare ruins** (the inhabited ones, about half) and at the opening
@@ -1840,4 +1840,39 @@ its own, longer clock.
   `data/camps.json` (only_at_ruins, wake_random, wake_radius_m).
 - Spotted hyena added: a night pack of 4-12 on the savanna, denning in burrows on the
   flat (a new `burrow` den kind beside the wolves' `cave_mouth`).
+
+## AP. The aroids live their real lives; genes, crosses and sports for every plant — 29 Sept 2026
+
+Locked (Mike): "some Amorphophallus species go dormant for lack of rain part of the year
+while others like titanum are tropical with little or no dormancy; the shoots that emerge
+should be proper to the species — it comes up like a spike, then the leaves unfurl; they
+can cross-pollinate and take traits from each other with genetic variation, with the
+chance of a rare tetraploid or similar sport; each plant should also have rare sport forms,
+a unique and rare genetic abnormality." Built, with the full design in
+`docs/design/AROID_LIFE.md`:
+
+- **Every Amorphophallus has its researched life** (`cycle` in
+  `data/plants/amorphophallus.json`, all 246, from the protologues, Hetterscheid &
+  Ittenbach 1996, Kite & Hetterscheid's odour data, Claudel 2021's pollinator review,
+  Barthlott et al. 2009, Punekar & Kumaran 2010, CCDB and growers' records): dormancy
+  (196 dry-season, 6 cold, 43 everwet "cycle" like titanum, 1 evergreen), the shoot spike
+  and the flower bud (cataphyll colours and pattern, how long each takes), the bloom
+  (before, with, after or instead of the leaf; opening hour; protogyny; heat; scent;
+  pollinator guilds), fruit, tuber (offsets, stolons, bulbils; first bloom; interval),
+  ploidy, documented hybrids and sports. About 60 wrong regions/origins were fixed
+  from the protologues at the same time.
+- **AroidLife** reads a plant's life off the world clock (nothing stored); **AroidGarden**
+  draws it for the plants round the player: the leaf hidden while the tuber rests, the
+  cataphyll spike, the leaf unfurling, the bud, the spathe opening at its hour, pollen in
+  the male phase, wilting, berries ripening; the smell on the wind; the pollinators
+  (14 insect species, `spawn: "bloom"`); real crosses between plants in bloom; berries
+  as samples carrying the cross.
+- **Sports for every plant** (`data/sports.json`, PlantGenetics): about one plant in
+  3,000 (one in 1,500 for the aroids, one in 2,000 for cacti; none for grasses and
+  mosses), its kind weighted to what's documented in its genus (217 of 469 genera
+  researched) and species; clumps of clonal plants sport together. Colour sports
+  (tetraploid, variegated, golden, green form, dark form, blue) are drawn by the foliage
+  shader; size sports scale the plant; form sports (weeping, columnar, contorted,
+  crested, cutleaf...) are recorded for the mesh builders. The HUD names a sport after
+  the common name ("variegated sport") and an aroid's stage ("in bloom, receptive").
 

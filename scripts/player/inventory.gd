@@ -70,7 +70,10 @@ static func make(kind: String, extra := {}) -> Dictionary:
 ## A sample of plant species `sp_idx` (SpeciesDB): a cutting, a seed head,
 ## a leaf or a cut column, by the plant's shape (items.json sample_part);
 ## a bundle of herbs for the herb genera.
-static func plant_sample(sp_idx: int) -> Dictionary:
+## `extra`: what AroidGarden knows of this very plant (its sport, its
+## ploidy; berries from a fruiting one carry the cross and the seedling's
+## genome: PlantGenetics), merged in.
+static func plant_sample(sp_idx: int, extra := {}) -> Dictionary:
 	var sp: PlantSpecies = SpeciesDB.all()[sp_idx]
 	var shape_name: String = PlantSpecies.Shape.keys()[sp.shape]
 	var part: String = data().get("sample_part", {}).get(shape_name, "cutting")
@@ -80,7 +83,7 @@ static func plant_sample(sp_idx: int) -> Dictionary:
 	elif sp.genus in data().get("bundle_genera", []):
 		kind = "herb_bundle"
 		part = "bundle"
-	return make(kind, {
+	var fields := {
 		"species": sp_idx,
 		"binomial": sp.binomial(),
 		"part": part,
@@ -88,7 +91,9 @@ static func plant_sample(sp_idx: int) -> Dictionary:
 		"color": sp.color.to_html(false),
 		"accent": sp.accent.to_html(false),
 		"height_m": snappedf((sp.height_m.x + sp.height_m.y) * 0.5, 0.1),
-	})
+	}
+	fields.merge(extra, true)
+	return make(kind, fields)
 
 
 ## The item's name on the screen ("Cutting", "Seed head", "Bow", ...).
@@ -100,6 +105,8 @@ static func title(it: Dictionary) -> String:
 			return "Seed head"
 		"leaf":
 			return "Leaf"
+		"berries":
+			return "Berries"
 	return str(kind_info(it.kind).get("name", it.kind))
 
 

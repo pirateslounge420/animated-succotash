@@ -408,11 +408,16 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts 
 			if lean.length() > 1e-5:
 				basis = Basis(up.cross(lean).normalized(), lean.length()) * basis
 			var rot := basis
-			basis = basis.scaled(Vector3.ONE * arr[o + 7])
-			_put(buf, i * MM_STRIDE, basis, pos, arr[o + 8], arr[o + 9], arr[o + 10])
+			# A rare sport (PlantGenetics, data/sports.json): its size now,
+			# its kind packed in with the moss for the shader and the HUD.
+			var sport := PlantGenetics.sport_at(sp, d)
+			var h: float = arr[o + 7] * PlantGenetics.size_of(sport)
+			var moss_s := PlantGenetics.encode_moss(arr[o + 8], sport)
+			basis = basis.scaled(Vector3.ONE * h)
+			_put(buf, i * MM_STRIDE, basis, pos, moss_s, arr[o + 9], arr[o + 10])
 			if tall:
 				var pick := TreeLayouts.pick(world_seed, key, d, _crowded(d, hosts), TreeArch.grows(sp)) if branchy else -1
-				trees.append([pos, arr[o + 7], i, pick, -1, rot, ords[i] if i < ords.size() else -1])
+				trees.append([pos, h, i, pick, -1, rot, ords[i] if i < ords.size() else -1, moss_s])
 		var layouts := {}
 		if branchy:
 			var counts := PackedInt32Array()
@@ -433,7 +438,7 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts 
 					var mirror := -h if TreeLayouts.is_mirrored(t[3]) else h
 					var o: int = int(t[2]) * STRIDE
 					_put(lbuf, int(t[4]) * MM_STRIDE, (t[5] as Basis) * Basis.from_scale(Vector3(mirror, h, h)), t[0],
-						arr[o + 8], arr[o + 9], arr[o + 10])
+						float(t[7]), arr[o + 9], arr[o + 10])
 				layouts[l] = [lbuf, counts[l]]
 		out[sp_idx] = [buf, count, trees, layouts]
 	return out
@@ -510,7 +515,8 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 			var j: int = int(t[2]) * 20
 			var vines := tbuf[j + 17] if j + 19 < tbuf.size() else 0.0
 			var bare := tbuf[j + 19] if j + 19 < tbuf.size() else 0.0
-			placed.append([t[0], t[1], sp_idx, t[2], t[3], t[4], t[5], t[6], vines, bare])
+			var sport := PlantGenetics.decode_sport(float(t[7])) if t.size() > 7 else 0
+			placed.append([t[0], t[1], sp_idx, t[2], t[3], t[4], t[5], t[6], vines, bare, sport])
 	# In placement order when every tree knows its place (compute_base's
 	# trees always do), else in the order they came.
 	var n := placed.size()
@@ -523,7 +529,9 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 			break
 		sorted[at] = t
 	for t in (sorted if not sorted.is_empty() else placed):
-		var extra := [t[8], t[9]]
+		# Vines, bareness and the tree's sport (PlantGenetics; LookTarget
+		# names it) after the seven fields.
+		var extra := [t[8], t[9], t[10]]
 		t.resize(7)
 		t.append_array(extra)
 		chunk.trees.append(t)

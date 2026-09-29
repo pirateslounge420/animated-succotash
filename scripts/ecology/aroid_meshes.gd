@@ -1,0 +1,119 @@
+class_name AroidMeshes
+## The unit meshes of an Amorphophallus' passing parts (AroidGarden): each 1
+## tall along +Y from its base, 1 in radius (the instance scales them), low
+## poly with smooth normals (the GameCube look), UV.x 1 on a spathe's inner
+## surface (shaders/aroid_part.gdshader). Built once, shared.
+
+const SIDES := 10
+static var _cache := {}
+
+
+static func get_mesh(kind: String) -> Mesh:
+	if not _cache.has(kind):
+		match kind:
+			"spike":
+				_cache[kind] = _lathe([[0.0, 1.0], [0.25, 0.9], [0.6, 0.6], [0.85, 0.3], [1.0, 0.0]], false)
+			"bud":
+				_cache[kind] = _lathe([[0.0, 0.35], [0.12, 0.8], [0.35, 1.0], [0.62, 0.95], [0.85, 0.65], [1.0, 0.0]], false)
+			"peduncle":
+				_cache[kind] = _lathe([[0.0, 1.0], [1.0, 0.9]], true)
+			"spathe":
+				_cache[kind] = _spathe()
+			"appendix":
+				_cache[kind] = _lathe([[0.0, 1.0], [0.3, 0.95], [0.7, 0.75], [0.92, 0.45], [1.0, 0.0]], false)
+			"pollen":
+				_cache[kind] = _lathe([[0.0, 1.0], [1.0, 1.0]], true)
+			"berries":
+				_cache[kind] = _berries()
+			_:
+				_cache[kind] = _lathe([[0.0, 1.0], [1.0, 0.0]], false)
+	return _cache[kind]
+
+
+## A surface of revolution: `profile` [[y, radius]...] bottom to top.
+## `open`: no caps.
+static func _lathe(profile: Array, open: bool, inner := 0.0) -> ArrayMesh:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	_add_lathe(st, profile, inner, false)
+	if not open and float(profile[0][1]) > 0.0:
+		# A cap at the bottom.
+		var y0 := float(profile[0][0])
+		var r0 := float(profile[0][1])
+		for s in SIDES:
+			var a0 := TAU * s / SIDES
+			var a1 := TAU * (s + 1) / SIDES
+			st.set_normal(Vector3.DOWN)
+			st.set_uv(Vector2(inner, 0))
+			st.add_vertex(Vector3(0, y0, 0))
+			st.add_vertex(Vector3(cos(a1) * r0, y0, sin(a1) * r0))
+			st.add_vertex(Vector3(cos(a0) * r0, y0, sin(a0) * r0))
+	return st.commit()
+
+
+static func _add_lathe(st: SurfaceTool, profile: Array, uvx: float, inward: bool) -> void:
+	for i in profile.size() - 1:
+		var y0 := float(profile[i][0])
+		var r0 := float(profile[i][1])
+		var y1 := float(profile[i + 1][0])
+		var r1 := float(profile[i + 1][1])
+		var slope := Vector2(r0 - r1, y1 - y0).normalized()
+		for s in SIDES:
+			var a0 := TAU * s / SIDES
+			var a1 := TAU * (s + 1) / SIDES
+			var d0 := Vector3(cos(a0), 0, sin(a0))
+			var d1 := Vector3(cos(a1), 0, sin(a1))
+			var n0 := (d0 * slope.y + Vector3.UP * slope.x).normalized()
+			var n1 := (d1 * slope.y + Vector3.UP * slope.x).normalized()
+			if inward:
+				n0 = -n0
+				n1 = -n1
+			var p00 := d0 * r0 + Vector3.UP * y0
+			var p01 := d1 * r0 + Vector3.UP * y0
+			var p10 := d0 * r1 + Vector3.UP * y1
+			var p11 := d1 * r1 + Vector3.UP * y1
+			var tri := [[p00, n0], [p10, n0], [p11, n1], [p00, n0], [p11, n1], [p01, n1]]
+			if inward:
+				tri = [[p00, n0], [p11, n1], [p10, n0], [p00, n0], [p01, n1], [p11, n1]]
+			for v in tri:
+				st.set_normal(v[1])
+				st.set_uv(Vector2(uvx, (v[0] as Vector3).y))
+				st.add_vertex(v[0])
+
+
+## The spathe: a funnel flaring to its limb, open on one side at the top
+## (a gentle slant), with an inner surface a little inside (UV.x 1: the
+## inside colour).
+static func _spathe() -> ArrayMesh:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var outer := [[0.0, 0.3], [0.2, 0.55], [0.5, 0.82], [0.8, 1.0], [1.0, 1.12]]
+	var inner := [[0.02, 0.26], [0.2, 0.5], [0.5, 0.76], [0.8, 0.93], [1.0, 1.05]]
+	_add_lathe(st, outer, 0.0, false)
+	_add_lathe(st, inner, 1.0, true)
+	var mesh := st.commit()
+	return mesh
+
+
+## An infructescence: rows of berries round a column (octahedra, each
+## shaded round in the shader).
+static func _berries() -> ArrayMesh:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var rows := 7
+	var per := 7
+	var r := 0.3
+	for row in rows:
+		var y := (float(row) + 0.5) / rows
+		for k in per:
+			var a := TAU * (float(k) + (0.5 if row % 2 == 1 else 0.0)) / per
+			var c := Vector3(cos(a) * 0.75, y, sin(a) * 0.75)
+			var dirs := [Vector3.RIGHT, Vector3.LEFT, Vector3.UP, Vector3.DOWN, Vector3.FORWARD, Vector3.BACK]
+			var faces := [[0, 2, 4], [0, 5, 2], [0, 4, 3], [0, 3, 5], [1, 4, 2], [1, 2, 5], [1, 3, 4], [1, 5, 3]]
+			for f in faces:
+				for idx in f:
+					var dv: Vector3 = dirs[idx]
+					st.set_normal(dv)
+					st.set_uv(Vector2(0, y))
+					st.add_vertex(c + Vector3(dv.x * r, dv.y * r / rows * 2.2, dv.z * r))
+	return st.commit()

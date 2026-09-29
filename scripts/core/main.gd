@@ -31,6 +31,8 @@ var litter: LitterField
 var fx: WeatherFX
 var player: PlanetPlayer
 var creatures: CreatureSpawner
+## The Amorphophallus living their cycles round the player (AroidGarden).
+var aroid_garden: AroidGarden
 var mythics: Mythics
 ## Dev mode only (data/dev.json): the F7 rig spawner.
 var dev_spawn: DevSpawn
@@ -180,6 +182,13 @@ func _on_planet_ready() -> void:
 	creatures.name = "Creatures"
 	add_child(creatures)
 	creatures.setup(world, chunks, player)
+	# The aroids' lives: shoots, blooms, scent, pollinators, fruit
+	# (docs/design/AROID_LIFE.md).
+	aroid_garden = AroidGarden.new()
+	aroid_garden.name = "AroidGarden"
+	add_child(aroid_garden)
+	aroid_garden.setup(world, chunks, player, creatures)
+	aroid_garden.say = _say_note
 	# Mythic creatures before they spawn: biome cues.
 	mythics = Mythics.new()
 	mythics.name = "Mythics"
@@ -316,7 +325,8 @@ func _process(delta: float) -> void:
 	elif WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M) != null:
 		prompt = "E: take the %s back" % Inventory.title(WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M).item).to_lower()
 	elif _sample_in_reach() >= 0:
-		prompt = "E: take %s" % _sample_words(Inventory.plant_sample(_sample_in_reach()))
+		var sp_in_reach := _sample_in_reach()
+		prompt = "E: take %s" % _sample_words(Inventory.plant_sample(sp_in_reach, aroid_garden.sample_extra(sp_in_reach, player.look.point) if aroid_garden else {}))
 	if _note_t > 0.0:
 		_note_t -= delta
 		prompt = _note
@@ -468,7 +478,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			# A cutting, a seed head, a leaf, a cut column or a bundle: it
 			# carries the species (Inventory.plant_sample).
 			player.grab_toward(player.look.point)
-			var it := Inventory.plant_sample(plant)
+			var it := Inventory.plant_sample(plant, aroid_garden.sample_extra(plant, player.look.point) if aroid_garden else {})
 			if player.inventory.add(it):
 				_say_note("You take %s." % _sample_words(it))
 			else:
@@ -496,7 +506,11 @@ func _sample_in_reach() -> int:
 
 ## "a cutting of Quercus robur", "a bundle of Cannabis sativa", ...
 func _sample_words(it: Dictionary) -> String:
-	var what: String = {"cutting": "a cutting", "seed": "a seed head", "leaf": "a leaf", "column": "a cut column", "bundle": "a bundle"}.get(str(it.get("part", "")), "a sample")
+	var what: String = {"cutting": "a cutting", "seed": "a seed head", "leaf": "a leaf", "column": "a cut column", "bundle": "a bundle", "berries": "berries"}.get(str(it.get("part", "")), "a sample")
+	if it.has("sport") and str(it.sport) != "":
+		what += " (%s sport)" % str(it.sport)
+	if it.has("seed"):
+		return "%s of %s: %s seed" % [what, it.get("binomial", "it"), str(it.seed)]
 	return "%s of %s" % [what, it.get("binomial", "it")]
 
 

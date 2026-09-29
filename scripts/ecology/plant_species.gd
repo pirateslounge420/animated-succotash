@@ -96,6 +96,28 @@ var leaf_arrangement := ""
 ## autumn (design §AI).
 var deciduous := false
 var autumn_color := Color(0.69, 0.54, 0.23)
+## Its researched life cycle (the Amorphophallus: the catalogue's `cycle`
+## block — dormancy, shoot and bud, bloom, fruit, tuber, ploidy, hybrids,
+## sports; AroidLife reads it); empty for everything else. A plant with a
+## cycle lives it plant by plant (AroidGarden) instead of taking the
+## autumn clock (deciduous is off for them).
+var cycle := {}
+## Its `aroid` block (petiole pattern and colours, spathe colours) and the
+## `appearance.flower` block (spadix colour...), for the bloom's parts.
+var aroid := {}
+var flower := {}
+## Its species gene ranges (the catalogue's `genes`: size, pattern,
+## scent, allocation...), 0-1 each, for PlantGenetics' genomes.
+var gene_ranges := {}
+## Spreads by offsets, stolons, bulbils or suckers (repro.clonal): its
+## sports and genomes are rolled per clump (PlantGenetics), not per plant.
+var clonal := false
+## Sports (PlantGenetics.setup(), data/sports.json): the chance one of
+## these plants is a sport, the sport codes it can show and their
+## cumulative weights.
+var sport_rate := 0.0
+var sport_codes := PackedInt32Array()
+var sport_cum := PackedFloat32Array()
 
 
 ## Smooth band membership: 1 in the middle, easing to 0 at the edges.

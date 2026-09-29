@@ -293,6 +293,15 @@ must hit at 64 px. Every entry has one (top level, or `appearance.silhouette` in
 older catalogues) since the archetype pass of 29 Sept 2026, when every entry's leaf,
 canopy, bark, architecture and tint were re-checked against the real species.
 
+## 4a3. `cycle` (a researched life cycle) and sports
+
+The Amorphophallus carry a `cycle` block — dormancy, shoot and bud, bloom, fruit, tuber,
+ploidy, hybrids, sports — read by AroidLife / AroidGarden; its vocabulary is in
+`docs/design/AROID_LIFE.md` §1 and checked here (`check_cycle`). Every plant can be a
+rare sport (`data/sports.json`, PlantGenetics): the rates by shape, the kinds and what's
+documented per genus live there, not in the plant entries (a species' own documented
+sports go in `cycle.sports` when it has a cycle).
+
 ## 4b. `soil` (spawn gate — co-equal with temperature and moisture)
 
 ```json

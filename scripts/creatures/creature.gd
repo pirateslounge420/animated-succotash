@@ -63,6 +63,9 @@ var heading := Vector3.FORWARD # tangent direction it faces
 var lift := 0.0 # meters above the ground (or the water, when afloat)
 var afloat := false
 var home := Vector3.UP # tether point
+## How far a drifting swarm wanders from home (m): fireflies over a
+## meadow; pollinators close round the bloom that drew them (AroidGarden).
+var drift_m := 6.0
 var home_radius := 20.0
 var host := {} # canopy: {"dir", "base", "height"}
 var mode := "idle"
@@ -698,7 +701,7 @@ func _water_edge(delta: float, player_dir: Vector3, to_player: float, shy: float
 
 func _drift(delta: float) -> void:
 	if _timer <= 0.0:
-		goal = _random_near(home, 6.0)
+		goal = _random_near(home, drift_m)
 		_timer = _rng.randf_range(4.0, 10.0)
 	_walk(goal, species.speed_mps, delta, false, false)
 	lift = 0.0

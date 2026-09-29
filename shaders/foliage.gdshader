@@ -142,6 +142,10 @@ varying vec3 obj_pos; // meters, in the plant's own frame
 varying vec3 obj_normal;
 varying float mat_id;
 varying float moss;
+// A rare sport (PlantGenetics, data/sports.json): its code, packed into the
+// custom data's red with the moss (moss 0-1 + 2 x code). Colour sports are
+// drawn here (sport_tint()); size ones are in the transform already.
+varying flat float v_sport;
 varying float cluster_key;
 varying float dead_v;
 varying float wood_dead; // a dead limb of a living tree (TreeArch: UV2.y 1 on bark)
@@ -182,7 +186,8 @@ void vertex() {
 	obj_normal = normalize((inv * vec4(NORMAL, 0.0)).xyz);
 	mat_id = UV2.x;
 	wood_dead = (UV2.x < 0.5 && UV2.y > 0.5) ? 1.0 : 0.0;
-	moss = INSTANCE_CUSTOM.r;
+	v_sport = floor(INSTANCE_CUSTOM.r * 0.5 + 1e-4);
+	moss = INSTANCE_CUSTOM.r - 2.0 * v_sport;
 	cluster_key = CUSTOM0.w;
 	float leaf = (1.0 - INSTANCE_CUSTOM.a) * leaf_season;
 	v_season = vec4(sp_autumn, 0.0, 1.0, 1.0);
@@ -353,6 +358,39 @@ float imp_profile(float t, vec4 p) {
 	return mix(p.w, 0.0, smoothstep(0.0, 1.0, x - 3.0));
 }
 
+// A colour sport on a surface of colour `c` (leafy: leaves, cards, crown;
+// else bark, stems, petioles): 1 tetraploid (deeper, darker green), 2
+// variegated (cream sectors and margins, from the plant's own frame so
+// they stay put), 3 golden, 4 green form (no dark pigment: stems and
+// petioles plain green), 5 dark form (purple-black / copper), 6 blue form
+// (glaucous). The rest are form sports, drawn by the mesh builders.
+vec3 sport_tint(vec3 c, bool leafy) {
+	if (v_sport < 0.5) {
+		return c;
+	}
+	float lum = dot(c, vec3(0.3, 0.55, 0.15));
+	if (v_sport < 1.5) {
+		return leafy ? c * vec3(0.82, 0.92, 0.8) : c;
+	} else if (v_sport < 2.5) {
+		if (!leafy) {
+			return c;
+		}
+		float n = retro_tex(look_tex_leaves, obj_pos.xz * 1.7 + obj_pos.y * 0.6).g;
+		float edge = retro_tex(look_tex_leaves, obj_pos.zy * 3.1).r;
+		float white = smoothstep(0.52, 0.6, n * 0.8 + edge * 0.35);
+		return mix(c, vec3(0.93, 0.9, 0.74) * (0.55 + lum * 1.2), white);
+	} else if (v_sport < 3.5) {
+		return leafy ? mix(c, vec3(1.25, 1.05, 0.35) * (0.35 + lum * 1.3), 0.7) : c;
+	} else if (v_sport < 4.5) {
+		return leafy ? c : mix(c, vec3(0.42, 0.6, 0.3) * (0.4 + lum * 1.3), 0.8);
+	} else if (v_sport < 5.5) {
+		return mix(c, vec3(0.42, 0.16, 0.3) * (0.25 + lum * 0.9), leafy ? 0.75 : 0.5);
+	} else if (v_sport < 6.5) {
+		return leafy ? mix(c, vec3(0.62, 0.78, 0.86) * (0.35 + lum * 1.2), 0.6) : c;
+	}
+	return c;
+}
+
 void fragment() {
 	// The sun's and moon's shadow maps are drawn with an orthographic
 	// projection (the game camera is perspective). There, closed shapes
@@ -401,6 +439,7 @@ void fragment() {
 			float g = pal_greenness(c);
 			c = pal_pull(c, pal_canopy, 0.55 * g);
 			c = pal_pull(c, pal_grass_night, 0.7 * nk_i * g);
+			c = sport_tint(c, true);
 		} else {
 			c = pal_bark * 0.5 * (0.75 + 0.3 * n) * (twigs ? 1.15 : 1.0);
 			c = pal_pull(c, pal_bark_night, 0.6 * nk_i);
@@ -527,6 +566,7 @@ void fragment() {
 		ALBEDO = c;
 		tex.a = t.a;
 	}
+	ALBEDO = sport_tint(ALBEDO, (mat_id > 0.5 && mat_id < 3.5) || mat_id > 4.5);
 	if (mat_id < 0.5 && moss > 0.01) {
 		// Moss on the bark: patchy, low down, on faces turned up and to one
 		// side (the damp side).

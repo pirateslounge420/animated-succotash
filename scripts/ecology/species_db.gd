@@ -140,6 +140,8 @@ static func _load() -> void:
 			if f.ends_with(".json"):
 				_load_catalogue(CATALOGUE_DIR + "/" + f, by_name)
 	_load_atlas(by_name)
+	# Sport chances and kinds per species (data/sports.json).
+	PlantGenetics.setup(_all)
 	for i in _all.size():
 		_index[_all[i]] = i
 		var t := _all[i].tier
@@ -373,6 +375,23 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 		sp.autumn_color = Color.from_string(str(tint.get("autumn", "")), sp.autumn_color)
 	var hh = e.get("handhold", {})
 	sp.handhold = hh if hh is Dictionary else {}
+	# Life cycle, genes and clonal spread (AroidLife, PlantGenetics).
+	var cyc = e.get("cycle", {})
+	if cyc is Dictionary and not cyc.is_empty():
+		sp.cycle = cyc
+		# The whole plant dies back and comes up again on its own clock
+		# (AroidGarden), not the autumn colour clock.
+		sp.deciduous = false
+	var aro = e.get("aroid", {})
+	sp.aroid = aro if aro is Dictionary else {}
+	var app = e.get("appearance", {})
+	var fl = app.get("flower", {}) if app is Dictionary else {}
+	sp.flower = fl if fl is Dictionary else {}
+	var gn = e.get("genes", {})
+	sp.gene_ranges = gn if gn is Dictionary else {}
+	var rp = e.get("repro", {})
+	if rp is Dictionary:
+		sp.clonal = str(rp.get("clonal", "none")) in ["tuber_offset", "stolon", "bulbil", "sucker", "rhizome"]
 	by_name[p_name] = sp
 	_all.append(sp)
 

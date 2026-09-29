@@ -67,6 +67,8 @@ static func build(sp: CreatureSpecies) -> Dictionary:
 			_beetle(b, sp)
 		"swarm":
 			_swarm(b, sp)
+		"insects":
+			_insects(b, sp)
 		"stalker":
 			_stalker(b, sp)
 		"wisp":
@@ -89,7 +91,7 @@ static func build(sp: CreatureSpecies) -> Dictionary:
 			_robed(b, sp)
 		_:
 			_quadruped(b, sp, 0.3, 0.5)
-	if kind != "swarm":
+	if kind != "swarm" and kind != "insects":
 		(b.root as Node3D).scale = Vector3.ONE * sp.size_m
 	return b
 
@@ -494,6 +496,38 @@ static func _swarm(b: Dictionary, sp: CreatureSpecies) -> void:
 	p.color_ramp = ramp
 	p.position = Vector3(0, 1.0, 0)
 	b.root.add_child(p)
+
+
+## A cloud of small dark insects (pollinators at a bloom: AroidGarden):
+## like the fireflies' specks but unlit and steady, smaller, busier, in the
+## species' colour with its accent on some. `size_m` is the cloud's
+## width; AroidGarden raises it to the bloom's height.
+static func _insects(b: Dictionary, sp: CreatureSpecies) -> void:
+	for layer in 2:
+		var p := CPUParticles3D.new()
+		p.amount = 14 if layer == 0 else 6
+		p.lifetime = 1.6
+		p.preprocess = 2.0
+		p.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
+		p.emission_sphere_radius = sp.size_m * 0.5
+		p.direction = Vector3.UP
+		p.spread = 180.0
+		p.gravity = Vector3.ZERO
+		p.initial_velocity_min = 0.25
+		p.initial_velocity_max = 0.9
+		p.angular_velocity_min = -90.0
+		p.angular_velocity_max = 90.0
+		p.local_coords = true
+		var q := QuadMesh.new()
+		q.size = Vector2(0.035, 0.035) if layer == 0 else Vector2(0.045, 0.03)
+		var m := StandardMaterial3D.new()
+		m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+		m.albedo_color = sp.color if layer == 0 else sp.accent
+		q.material = m
+		p.mesh = q
+		p.position = Vector3(0, 1.0, 0)
+		b.root.add_child(p)
 
 
 # --- Mythical figures (size_m = height) ---------------------------------------
