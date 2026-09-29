@@ -44,6 +44,11 @@ BARK_PATTERN = {"smooth", "fissured", "furrowed", "plated", "scaly", "flaky", "p
                 "spiny", "warty", "green_stem", "none"}
 BARK_ORIENT = {"vertical", "diamond", "horizontal", "none"}
 LENTICELS = {"none", "dots", "horizontal_bands"}
+ARCH_MODEL = {"rauh", "massart", "attims", "roux", "aubreville", "scarrone", "leeuwenberg", "koriba", "troll",
+              "champagnat", "mangenot", "corner", "holttum", "schoute", "tomlinson"}
+ARCH_HABIT = {"excurrent", "decurrent", "multi_stem", "columnar", "palm", "tree_fern", "weeping", "umbrella",
+              "candelabra", "shrub"}
+BUTTRESS = {"none", "low", "high"}
 
 
 class Report:
@@ -183,6 +188,31 @@ def check_bark(rep, where, b):
     _enum(rep, where, b, "confidence", CONFIDENCE, required=False)
 
 
+def check_architecture(rep, where, b):
+    """docs/design/TREE_ARCHITECTURE.md §5 (woody species only; optional)."""
+    if not isinstance(b, dict):
+        rep.err(where, "'architecture' must be an object"); return
+    _enum(rep, where, b, "model", ARCH_MODEL)
+    _enum(rep, where, b, "habit", ARCH_HABIT)
+    _num(rep, where, b, "orders", 0, 9)
+    _range(rep, where, b, "branch_angle_deg", 0, 120)
+    _num(rep, where, b, "taper_exponent", 0.8, 3.0)
+    _num(rep, where, b, "sinuosity", 0.0, 1.0)
+    if b.get("fork_height_frac") is not None:
+        _range(rep, where, b, "fork_height_frac", 0.0, 1.0)
+    _enum(rep, where, b, "buttress", BUTTRESS)
+    _num(rep, where, b, "lean_max_deg", 0, 60)
+    v = b.get("live_crown_ratio")
+    if not (isinstance(v, list) and len(v) == 2 and all(isinstance(x, (int, float)) and 0.05 <= x <= 1.0 for x in v)):
+        rep.err(where, "'live_crown_ratio' must be [open_grown, forest_grown] in 0.05-1")
+    for k in ("self_prune", "root_flare"):
+        if k in b and not isinstance(b[k], bool):
+            rep.err(where, "'%s' must be true/false" % k)
+    _num(rep, where, b, "dead_limbs", 0.0, 1.0)
+    _num(rep, where, b, "spacing_m", 0.02, 6.0)
+    _enum(rep, where, b, "confidence", CONFIDENCE, required=False)
+
+
 def check_photoperiod(rep, where, p):
     if not isinstance(p, dict):
         rep.err(where, "'photoperiod' must be an object"); return
@@ -218,6 +248,8 @@ def check_entry(rep, where, e, strict):
             fn(rep, where + "." + key, e[key])
         elif strict and "leaf" in e:
             rep.err(where, "missing '%s'" % key)
+    if "architecture" in e:
+        check_architecture(rep, where + ".architecture", e["architecture"])
     if "bark" in e:
         rep.with_bark += 1
         check_bark(rep, where + ".bark", e["bark"])

@@ -334,3 +334,12 @@ Every species maps to one card + parameters. No hand-drawn leaves.
    file; never two agents on one file.
 5. Keep it archetypal: if a species has variable leaves, describe the **typical adult**
    leaf.
+
+## 8. `architecture` block (woody species — the leafless skeleton)
+
+Trees and shrubs carry an `architecture` block so the trunk and branches are built from
+the species' real branching program, not a smooth stick: the Hallé–Oldeman model,
+habit, branch orders and angles, taper, sinuosity, fork height, buttresses, lean, live
+crown ratio, self-pruning, dead limbs, root flare, branch spacing. Vocabulary, numbers
+and a 40-genus table: `docs/design/TREE_ARCHITECTURE.md` §5. Herbs, grasses, mosses,
+aroids, epiphytes, fungi and algae carry none. Validated by `tools/plant_schema_check.py`.
