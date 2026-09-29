@@ -10,6 +10,10 @@ extends SceneTree
 ##
 ## OUT_DIR (default /tmp/shots). Writes aroid_<what>.png (the internal
 ## frame) and prints what each shows.
+## SPECIES="Amorphophallus titanum": that species instead of the commonest
+## (TRIES spots looked at, default 25); its bloom also gets a wide shot
+## from standing height (aroid_wild.png) and a close one of the
+## inflorescence (aroid_inflorescence.png).
 
 var out_dir := "/tmp/shots"
 var main
@@ -63,13 +67,17 @@ func _run() -> void:
 	seed(7)
 	cands.shuffle()
 	var entry := {}
-	for tries in mini(cands.size(), 25):
+	var want_sp := OS.get_environment("SPECIES")
+	var tries_n := int(OS.get_environment("TRIES")) if OS.get_environment("TRIES") != "" else 25
+	for tries in mini(cands.size(), tries_n):
 		await goto(map.dir[cands[tries]])
 		garden._scan()
-		# The species with the most plants here that bloom.
+		# The species with the most plants here that bloom (or the one asked).
 		var best_n := 0
 		for id in garden._entries:
 			var e: Dictionary = garden._entries[id]
+			if want_sp != "" and e.sp.name != want_sp:
+				continue
 			if int(e.n) > best_n and e.sp.height_m.y >= 0.6:
 				best_n = int(e.n)
 				entry = e
@@ -150,6 +158,22 @@ func _run() -> void:
 		var path := "%s/aroid_%s.png" % [out_dir, what]
 		get_root().get_texture().get_image().save_png(path)
 		print("[aroid_view] %s: leaf %s, flower %s (%s) -> %s" % [what, st.leaf, st.flower, AroidGarden.describe(entry.mmi.get_instance_id(), pi), path])
+		if what == "bloom" and want_sp != "":
+			# In the wild: from standing height, well back, the forest round it.
+			var bh := clampf(h * 0.5, 1.0, 3.0)
+			var wild := p + up * 1.6 + side.rotated(up, 1.2) * clampf(h * 3.5, 6.0, 16.0)
+			cam.fov = 70.0
+			cam.global_transform = Transform3D(Basis.looking_at((p + up * bh - wild).normalized(), up), wild)
+			await _frames(12)
+			get_root().get_texture().get_image().save_png("%s/aroid_wild.png" % out_dir)
+			# The inflorescence itself, close: spathe and appendix.
+			var near := p + up * (bh * 1.1) + side.rotated(up, 0.3) * clampf(h * 0.8, 1.2, 3.5)
+			cam.fov = 50.0
+			cam.global_transform = Transform3D(Basis.looking_at((p + up * bh * 0.8 - near).normalized(), up), near)
+			await _frames(12)
+			get_root().get_texture().get_image().save_png("%s/aroid_inflorescence.png" % out_dir)
+			cam.fov = 55.0
+			print("[aroid_view] wild and inflorescence shots -> %s/aroid_wild.png, aroid_inflorescence.png" % out_dir)
 	# The sports, as a demonstration: three plants in leaf given colour
 	# sports (variegated, golden, dark) in their instance data.
 	world.days = shots.get("leaf", start)
