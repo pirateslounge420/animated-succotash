@@ -60,6 +60,28 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
     - Letting go leaps toward the look, as steep as you look (12–80° above level).
     - Pressing right click up to 14 frames before meeting the next face, and holding it, clings there on arrival.
     - The tap wall jump is unchanged.
+- **Climbing that works on every tree (Mike: "doesn't always work")**:
+  - `tools/climb_lab.gd` (new) drives the climber on the branch graphs of 8 species × 2 layouts (open and forest-grown), offline, in seconds, the camera held still while the stick is, as in play:
+    - W from the foot into the crown;
+    - S all the way down;
+    - W+D from halfway up the trunk;
+    - out along a thick limb and round it.
+  - It found, and these are fixed (68/0 now):
+    - **S stuck on every tree** (from a few metres up to the top): backing off the trunk points "out", so S reached out and round instead of down, or swung a hand round a thin trunk and back for ever. S is now down the wood; "looking out along a limb" needs W or A/D.
+    - **W stopped at forks** when the hand that looked higher was on the trunk below the fork (the stem above isn't linked to it). The way on up is now searched from both hands.
+    - **Self-pruned stubs were labelled trunk** (a forest Scots pine stopped 1.3 m up, holding a stub). Stubs now get their own limb number.
+    - **Grip:** wood you can hold is now 4.5 cm radius, a 9 cm pole (was 6 cm). Forest-grown birch stems and the top few metres of most trunks were out of bounds, and climbs stopped 2–3 m up. Every tree now climbs to within about 3 m of its top.
+    - **W+D:** each reach swings about 0.3 m round for its 0.5 m up. Bigger swings overshot the side you steer to and swung back. Round a thin trunk, the sideways part let a hand step down, so W and W+D never step down steep wood (nor S up). Diagonals spiral and don't wander off onto limbs.
+    - **S on a limb** with nothing that way (looking across it) goes down whatever goes down, else back along the limb toward where it grows from.
+    - **Out at a limb's end,** W no longer takes you back up the trunk above.
+  - **Right click at a trunk from the ground** now works:
+    - the hop onto the face puts you against it (the ray met it up to 0.9 m off, and the cling lost the face on its first move);
+    - crawling up from just off the ground no longer counts as landing, and a cling rides out 8 frames without touching the face (going up a trunk, the flared foot's collider gives way to the narrower one above, and the cling let go 0.3 m up);
+    - left alone the cling holds dead still (it slid 0.2 m a second round a trunk).
+  - **Tests:**
+    - `climb_check` passes 0 fails in the world. Its look-up helper set the yaw instead of the pitch, so the "leap toward the look" test leapt sideways.
+    - `play_fixes`: the trunk wall-jump test starts 2.2 m up (with the snappier fall it reached the trunk at the ground), and the fast-fall test holds jump (a tap is only a 0.3 m hop).
+  - **Waking after a death:** the ruin whose fire you wake at, and its camp, are built before you wake. They came in a ruin a frame, and you could wake with no fire yet (tech_check found it 7.5 km from where you fell).
 - **§AI.1 revised: each tree turns on its own clock** (step 5 of the tree build):
   - The foliage shader now runs the `autumn_colour` clock per tree and per cluster. LeafSeason publishes where the year is (days since the spring and autumn transitions) and the stage table as globals.
   - Each deciduous tree is offset by its own seeded day (± `jitter_days`, seeded by its turn and lean, which the floating origin never changes). Its top and outer clusters run up to `cluster_lead_days` ahead, so a tree turns from the outside in.
@@ -81,6 +103,19 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **HUD you choose:** the settings panel (O / F10) now switches every HUD element: speedometer, clock, health bar, weapon, crosshair dot, names, damage numbers, prompts and subtitles. All are on by default.
 - **Orchid names up the trees:** plants other than trees (epiphytes, orchids on limbs) are now named within reach of your body, height included. You read an orchid by climbing up to it, not from the ground under it. Trees keep the along-the-ground reach.
 - `dev_view`: SETTINGS=1 opens the panel; LOOK_NAME="binomial|common name" puts a name under the crosshair.
+- **Biomes change too fast (Mike): measured, proposal, not changed yet.** `tools/biome_scale.gd` (new) walks straight lines over the land of seeds 42, 7 and 1234.
+  - **The dev postage stamp is the cause.** `data/dev.json` generates a 40 km planet (`postage_stamp`, every band squeezed in with `min_cells_per_band` 3), and the game opens in it.
+    - There a straight walk leaves a biome after 0.2–0.5 km (2–5 minutes' walk).
+    - The largest region of any band is 1–13 km², and no band has a 25 km² region on any seed.
+  - **On the full 400 km planet**, a straight walk stays 1–6 km in a biome.
+    - The largest regions are 16–40 km across (desert 30–41 km, rainforest 19–28 km, deciduous 17–32 km).
+    - Every band has a region of 25 km² or more on seed 1234. On seeds 42 and 7, woodland/shrubland (Mediterranean scrub, sagebrush) is the one exception (largest 21 and 16 km²).
+    - Temperate grassland is small everywhere (largest 85–164 km²).
+  - The full planet generates in 8 s against the stamp's 4 s.
+  - **Proposal (for Mike and the designer):**
+    1. Play the full planet: `postage_stamp` false for play, the stamp kept for tests.
+    2. For "a continent of every biome on every seed": a check after generation that grows the smallest bands (woodland/shrubland, grassland) toward a region of at least N km², by nudging the climate where the band already is.
+  - Not done without a yes: the stamp is the designer's dev setting.
 - **For the designer (data; Mike's requests from play, not built):**
   - **Fish and reptiles.** Already in the data: mahi-mahi (dolphinfish, *Coryphaena hippurus*), grouper (*Epinephelus marginatus*), red-bellied piranha (*Pygocentrus nattereri*), electric eel (*Electrophorus electricus*), Nile and saltwater crocodiles (*Crocodylus niloticus*, *C. porosus*). Missing:
     - redfish (red drum, *Sciaenops ocellatus*);

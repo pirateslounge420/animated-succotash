@@ -448,8 +448,9 @@ func _initialize() -> void:
 	await frames(20)
 	# Fast-fall: crouch after the apex.
 	await settle(camp_d)
+	# (A held jump: a tap is only a 0.3 m hop now, down again at once.)
 	await press("jump")
-	await frames(1)
+	await frames(12)
 	await release("jump")
 	while vspeed() > 0.0:
 		await frames(1)
@@ -484,7 +485,9 @@ func _initialize() -> void:
 			# In the air beside the trunk, moving into it.
 			var pd: Vector3 = world.dir_of(base + out * (r0 + 1.0))
 			if chain == 0:
-				player.global_position = world.to_scene(pd, PlanetConst.RADIUS_M + main.chunks.ground_height(pd) + 1.2)
+				# (2.2 m up: with the snappier fall, from 1.2 m it reached the
+				# trunk at the ground.)
+				player.global_position = world.to_scene(pd, PlanetConst.RADIUS_M + main.chunks.ground_height(pd) + 2.2)
 				player._wj_chain = 0
 			face(-out)
 			player._move = -out * 5.0
