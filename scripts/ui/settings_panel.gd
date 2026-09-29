@@ -10,7 +10,9 @@ extends Control
 ## pause. Sizes at the 480-line reference, like all the HUD (HudText.px()).
 
 ## [key, label, kind]: "bool" switches; "lines" and "aspect" step through
-## Display's choices; "head" is a section title.
+## Display's choices; "chunks" is the render distance (ChunkManager; click
+## the left half for fewer, the right half for more); "head" is a section
+## title.
 const ITEMS := [
 	["", "HUD", "head"],
 	["hud.speedometer", "Speedometer", "bool"],
@@ -23,6 +25,7 @@ const ITEMS := [
 	["hud.prompts", "Prompts (E: ...)", "bool"],
 	["hud.subtitles", "Subtitles", "bool"],
 	["", "Display", "head"],
+	["display.render_chunks", "Render distance", "chunks"],
 	["display.lines", "Internal lines", "lines"],
 	["display.aspect", "Aspect", "aspect"],
 	["display.integer", "Integer scaling", "bool"],
@@ -57,15 +60,19 @@ func close() -> void:
 func click(at: Vector2) -> bool:
 	for r in _rows:
 		if (r[0] as Rect2).has_point(at):
-			_switch(r[1])
+			_switch(r[1], at.x < (r[0] as Rect2).get_center().x)
 			queue_redraw()
 			return true
 	return false
 
 
-func _switch(item: Array) -> void:
+func _switch(item: Array, left := false) -> void:
 	var key: String = item[0]
 	match str(item[2]):
+		"chunks":
+			var n := ChunkManager.render_chunks() + (-1 if left else 1)
+			Settings.set_value(key, clampi(n, ChunkManager.RENDER_MIN, ChunkManager.RENDER_MAX))
+			return
 		"lines":
 			var i := Display.LINE_CHOICES.find(Display.lines())
 			Settings.set_value(key, Display.LINE_CHOICES[(i + 1) % Display.LINE_CHOICES.size()])
@@ -92,6 +99,9 @@ func _shown(item: Array) -> String:
 			return "%s: %d" % [item[1], Display.lines()]
 		"aspect":
 			return "%s: %s" % [item[1], Display.aspect()]
+		"chunks":
+			var n := ChunkManager.render_chunks()
+			return "< %s: %d (%d m) >" % [item[1], n, roundi(ChunkManager.render_reach_m(n) / 10.0) * 10]
 	return ("[x] " if _on(item) else "[ ] ") + str(item[1])
 
 

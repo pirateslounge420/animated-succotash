@@ -4,6 +4,15 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — Render distance setting (Mike: "view distance similar to Minecraft")
+- **Settings panel (O / F10) → Display → Render distance, 1–8 chunks** (260 m each; `display.render_chunks`, default 3, the distance the look was tuned at):
+  - Click the left half of the row for fewer chunks, the right half for more. The row shows the reach in metres (1: ~400 m, 3: ~920 m, 5: ~1.45 km, 8: ~2.2 km).
+  - It changes live: the chunk manager picks it up on its next update (`ChunkManager.render_chunks()`; `RENDER_CHUNKS=` overrides it for tools).
+- **The day haze follows it** (`ChunkManager.fog_scale()`), so the ring's edge always fades out: the tuned density at 3 chunks, thinner farther (×0.64 at 5, ×0.54 at 6: you see farther, like Minecraft), thicker nearer (×2.33 at 1). Night, storm and cloud-forest fog add on as before.
+  - **Flag for the designer:** above 3 chunks this thins §AG's retro haze ("far hills flat blue-purple by ~300–400 m") on purpose. If the look must hold, the far settings can keep the tuned haze and only help from hilltops.
+- **Only the render distance is drawn:** chunks kept one ring past it (so stepping back and forth doesn't reload them) are now hidden, not drawn. That saves draws at every setting.
+- **Cost:** each chunk's trees take about 1.5 s of worker time to place, so a bigger ring fills in over time as you arrive (5 chunks: 123 chunks, about 50 s to fill here on 4 slow cores). Walking, only the new edge loads.
+- `tools/render_distance_check.gd` (new): switches the setting live (3 → 5 → 1 → 3) from the camp. Drawn chunks go 51 / 123 / 9, and the haze follows. 2/0.
 ## 2026-09-29 — Archetype pass over every plant (Mike: "make each plant more archetypal to what it really looks like")
 - Six parallel botanist passes re-checked all 1,224 entries' `leaf`, `canopy`, `bark`, `architecture` and `tint` against the real species (Kew POWO / floras / the genus table in TREE_ARCHITECTURE.md §5), within the locked vocabulary; `plant_schema_check` 0 errors. Every entry now carries a `silhouette` line (PLANT_SCHEMA §4a2): what it looks like from 60 m, the 64 px target.
 - Biggest corrections: coconut and nipa palms had grass-blade `strap` leaves → pinnate fronds 4–9 m; all 64 cannabis landraces were on the forking (leeuwenberg) model → monopodial (attims), with distinct broad-leaf (dense conical), narrow-leaf, hemp (unbranched poles) and ruderal forms; 14 Trichocereus were single columns → clumps from the base, two → candelabra trees; Scots pine (taiga, dunes, pine) → flat-topped umbrella crown on a bare orange trunk; cottonwood → excurrent with a high fork; treeline lodgepole → a 2–10 m wind-flagged multi-stem; kauri → opposite leaves, decurrent crown of huge limbs; yellow paloverde bark → green_stem; solitary palms (assai, fishtail, wild date) → corner model; octopus bush → candelabra umbrella; Brugmansia/Datura stems → smooth / green; balsam fir needles → distichous; diamond willow bark → diamond; Sitka spruce → low buttress; black spruce → sparse clubbed spire; cordgrasses → winter die-back.

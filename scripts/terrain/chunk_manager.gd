@@ -8,8 +8,10 @@ extends Node
 ##                                      cover and epiphytes
 ##
 ## A standing player's horizon on this planet is only ~465 m away, so a view
-## radius of 3 chunks (~800 m) covers everything visible on flat ground;
-## FarShell draws distant mountains. Undergrowth only exists close by and is
+## radius of 3 chunks (~900 m) covers everything visible on flat ground;
+## FarShell draws distant mountains. The view radius is the player's render
+## distance setting (render_chunks(), 1-8 chunks), with the day haze scaled
+## to match (fog_scale()). Undergrowth only exists close by and is
 ## dropped again as you walk away.
 ##
 ## All geometry and plant placement is computed on worker threads
@@ -22,6 +24,14 @@ signal chunk_unloaded(chunk: TerrainChunk)
 
 @export var view_radius_chunks := 3
 @export var detail_radius_chunks := 1
+## The render distance setting (settings panel, "display.render_chunks";
+## from play, like Minecraft's): how many chunks out the view ring goes,
+## RENDER_MIN .. RENDER_MAX, DEFAULT_RENDER the one the look was tuned at.
+## Changed live: the next update rebuilds the rings. SkySystem thins or
+## thickens the day haze with it (fog_scale()).
+const RENDER_MIN := 1
+const RENDER_MAX := 8
+const DEFAULT_RENDER := 3
 @export var max_attach_per_frame := 2
 ## Tree trunk colliders added per frame (detail ring only).
 @export var tree_colliders_per_frame := 60
@@ -108,6 +118,27 @@ func _exit_tree() -> void:
 	_pending_detail.clear()
 
 
+## The render distance in chunks: the setting (or RENDER_CHUNKS in the
+## environment, for tools), clamped.
+static func render_chunks() -> int:
+	var env := OS.get_environment("RENDER_CHUNKS")
+	var n := int(env) if env != "" else int(Settings.get_value("display.render_chunks", DEFAULT_RENDER))
+	return clampi(n, RENDER_MIN, RENDER_MAX)
+
+
+## How far the view ring reaches (m) at `n` chunks: its edge, from the
+## player's chunk center.
+static func render_reach_m(n: int) -> float:
+	return (n + 0.5) * chunk_size_m()
+
+
+## The day haze's density against the one the look was tuned at, so the
+## ring's edge always fades out: thinner at a longer render distance (you
+## see farther, like Minecraft), thicker at a shorter one.
+static func fog_scale() -> float:
+	return render_reach_m(DEFAULT_RENDER) / render_reach_m(render_chunks())
+
+
 static func chunk_size_m() -> float:
 	return PlanetConst.CIRCUMFERENCE_M / 4.0 / TerrainChunk.CHUNKS_PER_FACE
 
@@ -147,11 +178,15 @@ static func _hero_keys(d: Vector3) -> Dictionary:
 
 
 func update_around(player_dir: Vector3) -> void:
-	# The rings only change when the player crosses into another chunk;
-	# they're measured from that chunk's center, so they're recomputed only
-	# then.
+	# The rings only change when the player crosses into another chunk
+	# (they're measured from that chunk's center, so they're recomputed only
+	# then) or the render distance setting changes.
+	var want_view := render_chunks()
+	var rings_stale := want_view != view_radius_chunks
+	view_radius_chunks = want_view
+	detail_radius_chunks = mini(detail_radius_chunks, view_radius_chunks)
 	var here := TerrainChunk.key_at(player_dir)
-	if here != _rings_key:
+	if here != _rings_key or rings_stale:
 		_rings_key = here
 		var c := TerrainChunk.center_of(here)
 		_ring_view = keys_around(c, view_radius_chunks)
@@ -182,6 +217,9 @@ func update_around(player_dir: Vector3) -> void:
 			_pending_detail[key] = WorkerThreadPool.add_task(_compute_detail.bind(key, c.data, c.hosts))
 		if chunks.has(key):
 			c.set_fine(_wanted_detail.has(key), _hero.has(key))
+			# Kept past the view ring (so stepping back and forth doesn't
+			# reload them) but not drawn: the render distance is what's drawn.
+			c.visible = _wanted.has(key)
 
 	_attach_base(max_attach_per_frame)
 	_attach_detail(max_attach_per_frame)
@@ -377,6 +415,8 @@ func _attach_detail(limit: int) -> void:
 ## undergrowth) are loaded, for the loading screen before spawning. The
 ## rest of the view ring then streams in over the next frames.
 func load_blocking(d: Vector3) -> void:
+	view_radius_chunks = render_chunks()
+	detail_radius_chunks = mini(detail_radius_chunks, view_radius_chunks)
 	var inner := keys_around(d, detail_radius_chunks)
 	_wanted = keys_around(d, view_radius_chunks)
 	_wanted_detail = inner

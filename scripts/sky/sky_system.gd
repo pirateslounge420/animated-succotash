@@ -392,7 +392,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	fog_color = _scene_color(fog_color).lerp(Color(0.015, 0.03, 0.12), dark_magic * 0.6)
 	# By day the reference's close sky-coloured haze (§AG, retro.fog:
 	# far hills flat blue-purple by ~300-400 m); by night §C's.
-	var density := lerpf(float(RETRO_FOG.get("day_density", 0.0008)), 0.0008, night) + fog_amount * 0.003 + storm * 0.002 + night * FOG_NIGHT
+	# (The day haze follows the render distance, ChunkManager.fog_scale():
+	# the tuned density at the default, so the ring's edge fades out.)
+	var density := lerpf(float(RETRO_FOG.get("day_density", 0.0008)) * ChunkManager.fog_scale(), 0.0008, night) + fog_amount * 0.003 + storm * 0.002 + night * FOG_NIGHT
 	var mist := clampf(0.5 * night + fog_amount * 0.6 + storm * 0.3, 0.0, 1.0)
 	environment.fog_light_color = fog_color
 	environment.fog_density = density
