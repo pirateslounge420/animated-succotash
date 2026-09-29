@@ -368,7 +368,9 @@ func _toward(dir: Vector3, on_trunk: bool) -> Array:
 		if same:
 			s += 0.1
 		else:
-			if on_trunk and g.limb[j] == 0:
+			# (Not back onto the trunk sideways or up; down a steep limb
+			# to its foot, yes: onto the trunk it grows from.)
+			if on_trunk and g.limb[j] == 0 and dir.dot(_up_l) > -0.3:
 				continue
 			# Onto a limb from a trunk: one on your side, the way it leads.
 			if out != Vector3.ZERO:

@@ -204,6 +204,16 @@ func _initialize() -> void:
 				best_y = y
 				best = i
 		if best >= 0:
+			# Back onto the trunk first (the diagonal may have left you on a
+			# limb): down until a hand is on the trunk.
+			for s3 in 40:
+				var hi: int = c.hold[c.lead] if player.climbing else -1
+				if hi < 0 or g.limb[hi] == 0:
+					break
+				await press("move_back")
+				await frames(15)
+			await release("move_back")
+			me_y = alt()
 			# Down or up the trunk to its height.
 			await press("move_forward" if best_y > me_y else "move_back")
 			for s2 in 60:
