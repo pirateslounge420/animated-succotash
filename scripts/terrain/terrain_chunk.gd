@@ -459,8 +459,10 @@ static func bake_canopy_shade(data: Dictionary, hosts: Array) -> void:
 	var all := SpeciesDB.all()
 	for host in hosts:
 		# Trees grown from their architecture shade the ground through
-		# their clusters instead (CanopyDapple, §AJ 3).
-		if TreeArch.grows(all[int(host[3])]):
+		# their clusters instead (CanopyDapple, §AJ 3) — unless the shade
+		# map is off (look.json dapple.mode "disc"): then they cast the
+		# disc too.
+		if CanopyDapple.stamped() and TreeArch.grows(all[int(host[3])]):
 			continue
 		var uv := CubeSphere.face_uv(key.x, host[0])
 		var gx := (uv.x + 1.0) * 0.5 * CHUNKS_PER_FACE * QUADS - key.y * QUADS

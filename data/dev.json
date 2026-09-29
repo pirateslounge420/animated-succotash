@@ -1,28 +1,76 @@
 {
-	"dev_mode": true,
-	"day_length_min": 144,
-	"seed": 42,
-	"spawn_choice": 0,
-	"postage_stamp": true,
-	"stamp": {
-		"circumference_km": 40,
-		"grid_res": 48,
-		"min_cells_per_band": 3,
-		"bands": {
-			"Tropical rainforest": ["TROPICAL_RAINFOREST", "JUNGLE"],
-			"Tropical seasonal / savanna": ["SAVANNA", "TROPICAL_DRY_FOREST", "THORN_SCRUB"],
-			"Subtropical desert": ["HOT_DESERT"],
-			"Temperate rainforest": ["TEMPERATE_RAINFOREST"],
-			"Temperate deciduous": ["TEMPERATE_DECIDUOUS"],
-			"Temperate grassland": ["TALLGRASS_PRAIRIE", "SHORTGRASS_PRAIRIE", "STEPPE"],
-			"Woodland / shrubland": ["MEDITERRANEAN_SCRUB", "SAGEBRUSH"],
-			"Boreal / taiga": ["TAIGA"],
-			"Tundra": ["TUNDRA"],
-			"Alpine": ["ALPINE_TUNDRA", "ALPINE_MEADOW", "PARAMO", "PUNA"],
-			"Ocean": ["DEEP_OCEAN", "SHELF_SEA", "CORAL_REEF", "KELP_FOREST", "SEA_ICE"],
-			"Coast": ["BEACH", "DUNES", "ROCKY_SHORE", "MANGROVE", "SALT_MARSH", "ESTUARY", "LAGOON", "MARITIME_FOREST"],
-			"Rivers": ["water:RIVER"],
-			"Lakes": ["water:LAKE"]
-		}
-	}
+ "dev_mode": true,
+ "day_length_min": 144,
+ "seed": 42,
+ "spawn_choice": 0,
+ "postage_stamp": false,
+ "stamp": {
+  "circumference_km": 40,
+  "grid_res": 48,
+  "min_cells_per_band": 3,
+  "bands": {
+   "Tropical rainforest": [
+    "TROPICAL_RAINFOREST",
+    "JUNGLE"
+   ],
+   "Tropical seasonal / savanna": [
+    "SAVANNA",
+    "TROPICAL_DRY_FOREST",
+    "THORN_SCRUB"
+   ],
+   "Subtropical desert": [
+    "HOT_DESERT"
+   ],
+   "Temperate rainforest": [
+    "TEMPERATE_RAINFOREST"
+   ],
+   "Temperate deciduous": [
+    "TEMPERATE_DECIDUOUS"
+   ],
+   "Temperate grassland": [
+    "TALLGRASS_PRAIRIE",
+    "SHORTGRASS_PRAIRIE",
+    "STEPPE"
+   ],
+   "Woodland / shrubland": [
+    "MEDITERRANEAN_SCRUB",
+    "SAGEBRUSH"
+   ],
+   "Boreal / taiga": [
+    "TAIGA"
+   ],
+   "Tundra": [
+    "TUNDRA"
+   ],
+   "Alpine": [
+    "ALPINE_TUNDRA",
+    "ALPINE_MEADOW",
+    "PARAMO",
+    "PUNA"
+   ],
+   "Ocean": [
+    "DEEP_OCEAN",
+    "SHELF_SEA",
+    "CORAL_REEF",
+    "KELP_FOREST",
+    "SEA_ICE"
+   ],
+   "Coast": [
+    "BEACH",
+    "DUNES",
+    "ROCKY_SHORE",
+    "MANGROVE",
+    "SALT_MARSH",
+    "ESTUARY",
+    "LAGOON",
+    "MARITIME_FOREST"
+   ],
+   "Rivers": [
+    "water:RIVER"
+   ],
+   "Lakes": [
+    "water:LAKE"
+   ]
+  }
+ }
 }

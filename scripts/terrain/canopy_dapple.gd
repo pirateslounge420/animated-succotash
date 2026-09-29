@@ -17,6 +17,12 @@ class_name CanopyDapple
 ## Built on the chunk worker after the trees are placed.
 
 const DAPPLE_PX := 512
+## data/look.json dapple.mode: "stamped" (this map) or "disc" (no map;
+## every tree casts the baked crown disc with the shader's sun flecks —
+## cheaper, and the shade needn't match the crown exactly).
+static func stamped() -> bool:
+	return str(Tuning.section("look", "dapple").get("mode", "stamped")) == "stamped"
+
 const STAMP_PX := 32
 ## Shade under one cluster (its cards leave a little light through).
 const CLUSTER_SHADE := 0.8
@@ -34,6 +40,8 @@ static func span_m() -> float:
 ## The shade map for a chunk's placed trees (VegetationPlacer.prepare()'s
 ## output), or null when none of them grows from its architecture.
 static func bake(center: Vector3, plants: Dictionary) -> Image:
+	if not stamped():
+		return null
 	var all := SpeciesDB.all()
 	var east := CubeSphere.east(center)
 	var north := CubeSphere.north(center)

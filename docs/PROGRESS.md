@@ -4,6 +4,10 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — Real planet on; dapple mode switch (Mike, from chat)
+- `data/dev.json` `postage_stamp` is now **false**: play is on the full 4,000 km planet. The stamp settings stay for the dev checks (`postage_stamp: true` brings it back).
+- `data/look.json` `dapple.mode`: `stamped` (the §AJ 3 cluster shade map, default) or `disc` (no map: every tree casts the baked feathered crown disc with the shader's sun flecks). Mike: the shade doesn't need to be mapped to exactly where the light comes through the canopy — "the shade goes here with some dappling in it" is enough — so if the stamped map ever costs frame time, flip to `disc` rather than optimising it. Today it's ~52 ms per chunk on the worker, so it's left on.
+
 ## 2026-09-29 — Planet size locked at 1/10 Earth in the code (Mike, from chat)
 - `PlanetConst.FULL_CIRCUMFERENCE_M` 400 km → **4,000 km**, so landmass, height (`HEIGHT_SCALE` 0.1, unchanged) and time (the 144-min day, unchanged) share the one 1/10 ratio design §I locked on the 27th. The dev postage stamp (`data/dev.json`, 40 km) is untouched and still on; turn it off to play the full planet.
 - What changes on the full planet: the 96-cell blueprint's cells are now ~7 km (were ~1 km), so rivers, lake edges and biome borders are decided at 7 km steps and detailed by noise in the chunk; small features (oases, hot springs, lagoons) are sparser per km. Generation cost is the same (fixed cell count); streaming cost is unchanged (view distance, not planet size).
