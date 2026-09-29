@@ -548,6 +548,64 @@ def render_mass(e, card, rng, size=MASS_PX):
     return Image.fromarray(np.dstack([(rgb * 255).astype(np.uint8), (mask * 255).astype(np.uint8)]), "RGBA")
 
 
+# ---------------------------------------------------------------- litter tile (design §AI)
+
+def render_litter(e, cv, mask, shade, rng, size=MASS_PX):
+    """Tileable flat scatter of the species' fallen leaves in the autumn (or dried) colour:
+    stage 0 of data/litter.json; later stages are the shared colour transform in the shader."""
+    tint = e.get("tint") or {}
+    col = hex_rgb(tint["autumn"]) if tint.get("autumn") else tuple(0.55 * c + 0.45 * b for c, b in zip(leaf_colour(e), (0.55, 0.42, 0.22)))
+    card = Image.fromarray(np.dstack([(posterise(np.array(col)[None, None, :] * shade[..., None]) * 255).astype(np.uint8),
+                                      (mask * 255).astype(np.uint8)]), "RGBA")
+    n4 = size * SS
+    base = Image.new("RGBA", (n4, n4), (0, 0, 0, 0))
+    leaf = e.get("leaf") or {}
+    t = leaf.get("type", "simple")
+    px = int(n4 * (0.5 if t in ("needle", "scale") else 0.42))
+    c4 = card.resize((px, px), Image.NEAREST)
+    for i in range(22):
+        rot = c4.rotate(rng.uniform(0, 360), expand=True, resample=Image.NEAREST)
+        arr = np.asarray(rot).astype(float)
+        arr[..., :3] = np.clip(arr[..., :3] * (1 + rng.uniform(-0.22, 0.12)), 0, 255)     # some already browning
+        if rng.random() < 0.3:
+            arr[..., :3] = arr[..., :3] * 0.8 + np.array([90, 60, 30]) * 0.2
+        rot = Image.fromarray(arr.astype(np.uint8), "RGBA")
+        x, y = int(rng.integers(0, n4)), int(rng.integers(0, n4))
+        for dx in (-n4, 0, n4):
+            for dy in (-n4, 0, n4):
+                base.paste(rot, (x + dx - rot.width // 2, y + dy - rot.height // 2), rot)
+    a = np.asarray(base.resize((size, size), Image.BOX)).astype(float)
+    rgb = posterise(a[..., :3] / 255.0)
+    alpha = a[..., 3] > 90
+    # ground shows through the gaps as dark soil
+    soil = np.array([0.16, 0.12, 0.08])
+    rgb = np.where(alpha[..., None], rgb, soil[None, None, :])
+    return Image.fromarray((rgb * 255).astype(np.uint8), "RGB")
+
+
+def skeleton_mask(rng, size=MASS_PX):
+    """Shared holes mask for the skeleton stage: 1 = hole."""
+    f = fbm(size, size, 6, 6, rng, 2)
+    return (f > 0.28).astype(np.uint8) * 255
+
+
+def litter_stage(img, stage, holes_mask):
+    """Preview of data/litter.json stage transform (what the shader does)."""
+    a = np.asarray(img).astype(float) / 255.0
+    to = np.array(hex_rgb(stage["color_lerp"]["to"]))
+    a = a * (1 - stage["color_lerp"]["amount"]) + to[None, None, :] * stage["color_lerp"]["amount"]
+    h, w, _ = a.shape
+    out = np.zeros_like(a)
+    for y in range(h):
+        for x in range(w):
+            hh, ss, vv = colorsys.rgb_to_hsv(*a[y, x])
+            out[y, x] = colorsys.hsv_to_rgb(hh, min(1, ss * stage["sat"]), min(1, vv * stage["val"]))
+    hole = (np.asarray(holes_mask) > 0) & (np.random.default_rng(1).random((h, w)) < stage["holes"] * 2)
+    soil = np.array([0.16, 0.12, 0.08])
+    out = np.where(hole[..., None], soil[None, None, :], out)
+    return Image.fromarray((posterise(out) * 255).astype(np.uint8), "RGB")
+
+
 # ---------------------------------------------------------------- bark tile
 
 def stamp_disc(v, cx, cy, r, lit, shade):
@@ -760,7 +818,8 @@ def main():
     atlas = {"_help": {"about": "Per-species tiles rendered from the taxonomic data (tools/look/make_plant_tiles.py, design §AH). "
                                 "Files are shared where two species render identically. Tiles carry the species colour: the shader "
                                 "multiplies by white x genes jitter, not by the species colour again.",
-                       "sizes": {"leaf": LEAF_PX, "leaves": MASS_PX, "bark": BARK_PX, "petiole": [PET_W, PET_H]},
+                       "sizes": {"leaf": LEAF_PX, "leaves": MASS_PX, "litter": MASS_PX, "bark": BARK_PX, "petiole": [PET_W, PET_H]},
+                       "litter": "<key>_litter.png is the fallen-leaf scatter at stage 0 of data/litter.json; later stages apply that file's colour transform + litter_holes.png",
                        "bark_tile_m": BARK_TILE_M, "filter": "nearest, no mipmaps beyond 2"},
              "species": {}}
     hashes = {}
@@ -803,6 +862,7 @@ def main():
                 rec["leaf_autumn"] = save(aut, key, "leaf_autumn")
             mass = render_mass(e, card, rng_for(name + "/mass", a.seed))
             rec["leaves"] = save(mass, key, "leaves")
+            rec["litter"] = save(render_litter(e, cv, mask, s, rng_for(name + "/litter", a.seed)), key, "litter")
         bark = e.get("bark") or {}
         bimg = render_bark(bark, rng_for(name + "/bark", a.seed))
         rec["bark"] = save(bimg, key, "bark")
@@ -813,7 +873,28 @@ def main():
         atlas["species"][name] = rec
         if a.preview:
             previews.append((name, rec))
+    holes = Image.fromarray(skeleton_mask(rng_for("holes", a.seed)), "L")
+    holes.save(os.path.join(OUT, "litter_holes.png"))
     json.dump(atlas, open(os.path.join(OUT, "atlas_species.json"), "w"), indent=1)
+    if a.preview:
+        stages = json.load(open(os.path.join(ROOT, "data", "litter.json")))["stages"]
+        rows = [n for n in ("Bur oak", "Maple", "Bog birch", "Ginkgo", "Black spruce", "African baobab") if n in atlas["species"] and atlas["species"][n].get("litter")]
+        S = 96
+        sheet = Image.new("RGB", (230 + (S + 4) * len(stages), 20 + (S + 6) * len(rows)), (16, 16, 24))
+        d = ImageDraw.Draw(sheet)
+        for j, st in enumerate(stages):
+            d.text((200 + j * (S + 4), 4), "%d %s (%dd@15C)" % (j, st["name"], st["days_at_reference"]), fill=(220, 220, 220))
+        for i, n in enumerate(rows):
+            y = 20 + i * (S + 6); d.text((4, y + 40), n, fill=(230, 230, 230))
+            im = Image.open(os.path.join(OUT, atlas["species"][n]["litter"])).convert("RGB")
+            for j, st in enumerate(stages):
+                st_img = litter_stage(im, st, holes)
+                t2 = Image.new("RGB", (im.width * 2, im.height * 2))
+                for ty in range(2):
+                    for tx in range(2):
+                        t2.paste(st_img, (tx * im.width, ty * im.height))
+                sheet.paste(t2.resize((S, S), Image.NEAREST), (200 + j * (S + 4), y))
+        sheet.save(os.path.join(ROOT, "docs", "references", "batch3", "litter_stages_preview.png"))
     print("%d species -> %d unique tiles in %s" % (len(atlas["species"]), made, os.path.relpath(OUT, ROOT)))
 
     if a.preview:

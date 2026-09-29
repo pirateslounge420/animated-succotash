@@ -1635,3 +1635,51 @@ is deterministic; run it after any catalogue edit and commit the result.
 that reads `data/plants/*.json`) → foliage/bark shaders take the species tile and drop the
 species-colour multiply for tiled species → canopy cards from the leaf cutout + mass →
 autumn blend → underside. Phase 6.
+
+## AI. Leaves fall, pile up and rot — 28 Sept 2026
+
+**Honest status:** today, leaf drop is *data only*. `tint.drop` / `tint.autumn` are in the
+catalogue and the foliage shader has a `leaf_season` stub meant to thin crowns in winter,
+but the season system is not wired to the plants: nothing turns colour, nothing falls,
+and there is no litter on the ground. The spec's `flora.litter` ledger (Phase 7) is a
+number, not a thing you can see. This section makes it a thing you can see, walk through
+and watch rot. Data: `data/litter.json` (`[NOT WIRED YET — §AI]`).
+
+1. **Colour turns, then leaves fall (deciduous).** Over the autumn transition (§F) a
+   deciduous crown blends `leaf` → `leaf_autumn` (§AH); from `fall.start_at` of the
+   transition it sheds `per_day_share` of its remaining leaves per game-day over
+   `deciduous_days`, and a **gust** above `gust_mps` drops `gust_share` at once — the
+   whole tree lets go in a wind, the way it really does. Falling leaves are the species'
+   own leaf card as a fluttering billboard (`leaf_fall_speed_mps`, `leaf_flutter`),
+   drifting downwind. Evergreens shed `evergreen_share_per_year` spread over the year
+   (needle duff under every pine). In winter the crown is bare; buds in spring.
+2. **Piles.** Where leaves land (crown radius × `spread`, drifted by the wind), a ground
+   patch accumulates **mass** (kg/m²) → **depth** (`cm_per_kg_m2`). The patch is drawn
+   with the species' **litter tile** (`assets/textures/plants/species/<key>_litter.png`,
+   a flat scatter of that species' fallen leaves — an oak's lobed leaves, a ginkgo's yellow
+   fans, a spruce's needles), raised as a low mound past a few cm (`max_raise_m`). Patches
+   merge per 4 m cell, so mixed woods make mixed litter. The player **wades and rustles**
+   above `rustle_cm`; running through kicks the top layer (`kick_share`) — and can expose a
+   snag, a burrow or a mushroom under it.
+3. **Decomposition, in real stages and real colours** (`stages`): **fresh** (the autumn
+   colour, flat, bright) → **dry** (curled, tan/brown, lighter) → **wet-dark** (after rain:
+   dark brown, matted) → **skeleton** (bleached grey-tan, veins and holes) → **humus** (dark
+   crumbly brown, no leaf shape left). Each stage is a shared colour transform on the
+   species' litter tile (`color_lerp`, `sat`, `val`) plus a shared holes mask
+   (`litter_holes.png`) and a `height` that shrinks the pile — so 932 species need one
+   litter tile each, not five. Preview: `docs/references/batch3/litter_stages_preview.png`.
+4. **Timing is climate-driven** (`timing`): stage durations are set at 15 °C / moisture
+   0.6 and scale by **Q10 = 2** (twice as fast per +10 °C, ~frozen below 0 °C) and by
+   moisture (dry litter barely rots; wet rots fast). So tropical litter is gone in weeks,
+   temperate broadleaf in about a year, boreal needles take years — the real litter
+   k-values. Species multipliers by leaf type/texture: needles 0.25×, leathery/glossy 0.5×,
+   thin matte 1×, succulent 1.5×.
+5. **It feeds the world.** Humus mass goes to `flora.litter` → soil fertility (Phase 7;
+   §G2's soil gate then rewards old forests); litter fungi (`substrate: litter`) fruit on
+   stage 2–3 piles after rain; a pile is where the pond crawler and small mammals rummage
+   (§AC); dead wood already has its own decay (`data/dead_wood.json`) and the two share
+   the timing rule.
+
+**Order:** autumn blend + bare winter crown (shader, from the season clock) → falling leaf
+billboards → litter patches with the species tile and depth → stage transform by climate
+→ rustle/kick → fertility and fungi hook. Phase 6 for 1–2, Phase 7 for 3–5.
