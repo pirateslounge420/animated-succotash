@@ -217,22 +217,24 @@ func _initialize() -> void:
 		var cc := player.trees.climb
 		var a0 := alt()
 		var ang0 := cc._body_angle()
+		# (Added up as it goes, round the trunk's own axis: a whole spiral
+		# read as nothing, start to end.)
+		var turned := 0.0
 		var o0 := _round_offset(cc)
 		await press("move_forward")
 		await press("move_right")
-		await frames(180)
+		for k6 in 18:
+			await frames(10)
+			var o1 := _round_offset(cc)
+			var tt: Vector3 = (o0[1] + o1[1]).normalized()
+			var p0: Vector3 = o0[0] - tt * (o0[0] as Vector3).dot(tt)
+			var p1: Vector3 = o1[0] - tt * (o1[0] as Vector3).dot(tt)
+			turned += p0.signed_angle_to(p1, tt)
+			o0 = o1
+		turned = absf(turned)
 		await release("move_forward")
 		await release("move_right")
 		await frames(10)
-		# (How far round the wood itself: your offset from its axis, square
-		# to it. Flattened onto the ground, round a leaning trunk read wrong;
-		# the climb's own angle is measured from a reference that twists as
-		# the trunk bends.)
-		var o1 := _round_offset(cc)
-		var tt: Vector3 = (o0[1] + o1[1]).normalized()
-		var p0: Vector3 = o0[0] - tt * (o0[0] as Vector3).dot(tt)
-		var p1: Vector3 = o1[0] - tt * (o1[0] as Vector3).dot(tt)
-		var turned := p0.angle_to(p1)
 		print("[climb] W+D for 3 s: %.1f m higher, %.0f deg round the trunk, %s" % [alt() - a0, rad_to_deg(turned), _describe()])
 		if not (alt() - a0 > 0.3 and turned > deg_to_rad(15.0)):
 			print("    reaches: %s; body angle round the wood %.2f -> %.2f rad; camera %s" % [cc.holds_log.slice(-10), ang0, cc._body_angle(), player._camera_forward().snapped(Vector3.ONE * 0.01)])
@@ -450,10 +452,18 @@ func _initialize() -> void:
 			var pb: Vector3 = now_off[0] - ax * (now_off[0] as Vector3).dot(ax)
 			round_total += pa.signed_angle_to(pb, ax)
 			prev_off = now_off
+			if OS.get_environment("CLINGDBG") == "1":
+				print("      round %d: total %.0f deg, v %s, wall_n %s, side %.0f, off %s" % [k, rad_to_deg(round_total), player.velocity.snapped(Vector3.ONE * 0.01), player._wall_n.snapped(Vector3.ONE * 0.01), player._cling_side, pb.snapped(Vector3.ONE * 0.01)])
 		await release("move_right")
 		await frames(10)
 		print("[climb] D clinging for 6 s: %.0f deg round the trunk, clinging %s, %.1f m up" % [rad_to_deg(absf(round_total)), player.clinging, alt()])
 		ok(player.clinging and absf(round_total) > TAU, "D clinging goes all the way round the trunk (%.0f deg)" % rad_to_deg(absf(round_total)))
+		# Out from the trunk where you are now (round the other side, the
+		# first "out" looked into the trunk).
+		var now_out: Vector3 = _trunk_offset(g)[0]
+		now_out -= player.up * now_out.dot(player.up)
+		if now_out.length() > 0.05:
+			out = now_out.normalized()
 		face(out, 0.6)
 		# (A moment to look up: the look is read with the camera.)
 		await frames(3)
