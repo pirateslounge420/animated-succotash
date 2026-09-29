@@ -116,6 +116,12 @@ static func tile(path: String) -> ImageTexture:
 const LOD_HERO := 0
 const LOD_NEAR := 1
 const LOD_FAR := 2
+## Far trees as 2D (from play: "the distant things as 2D", for speed):
+## each species' far level is one quad, turned to face the camera round
+## the tree's own up in the foliage shader (UV2.x 6), its outline the far
+## model's (_build_impostor()): 2 triangles for the ~1,500 of the far model.
+## IMPOSTORS=0 in the environment keeps the far models (renders, A/B).
+static var IMPOSTORS := OS.get_environment("IMPOSTORS") != "0"
 ## Crown lobe detail at each level (geosphere() frequency).
 const CROWN_FREQ := [3, 2, 2]
 
@@ -320,7 +326,13 @@ static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> Array
 	_mutex.unlock()
 	if cached != null:
 		return cached
-	var built := _build_layout(sp, idx, lod, layout) if layout >= 0 else _build(sp, idx, lod)
+	var built: Array
+	if layout >= 0:
+		built = _build_layout(sp, idx, lod, layout)
+	elif lod == LOD_FAR and IMPOSTORS:
+		built = _build_impostor(sp, idx)
+	else:
+		built = _build(sp, idx, lod)
 	_mutex.lock()
 	if not _arrays.has(key):
 		_arrays[key] = built
@@ -366,6 +378,79 @@ static func _build_layout(sp: PlantSpecies, idx: int, lod: int, layout: int) -> 
 	var vine_col := Color(0.5, 0.55, 0.42) if sp.shape == S.CYPRESS else sp.color.darkened(0.3)
 	b.skeleton(TreeLayouts.skeleton(idx, layout), sp.color, vine_col, sp.leaf_density_of())
 	return b.commit_arrays()
+
+
+## A species' far level as a picture (IMPOSTORS): one quad as wide as the
+## far model's crown and as tall as the tree, carrying its outline for the
+## foliage shader to cut: CUSTOM0 the crown's half-width at four heights up
+## the crown (shares of the widest), UV2 (6, crown base + 10 x the trunk's
+## half-width in hundredths of the crown's), COLOR its mean leaf colour
+## (sway 0: the far trees stand still). Unit frame like every plant mesh.
+static func _build_impostor(sp: PlantSpecies, idx: int) -> Array:
+	var model := _build(sp, idx, LOD_FAR)
+	var v: PackedVector3Array = model[Mesh.ARRAY_VERTEX]
+	var c: PackedColorArray = model[Mesh.ARRAY_COLOR]
+	var m: PackedVector2Array = model[Mesh.ARRAY_TEX_UV2]
+	var top := 0.05
+	var base := 1.0
+	var leaves := 0
+	var leaf_col := Color(0, 0, 0)
+	for i in v.size():
+		top = maxf(top, v[i].y)
+		if m[i].x > 0.5 and v[i].y > 0.02:
+			base = minf(base, v[i].y)
+			leaves += 1
+			leaf_col += c[i]
+	if leaves < 12:
+		# Leafless (a cactus, a snag): the whole plant is the "crown", in
+		# its own colour.
+		base = 0.0
+		leaves = 0
+		leaf_col = Color(0, 0, 0)
+		for i in v.size():
+			leaf_col += c[i]
+			leaves += 1
+	leaf_col /= float(maxi(leaves, 1))
+	base = clampf(base, 0.0, top * 0.9)
+	var bins := [0.0, 0.0, 0.0, 0.0]
+	var trunk := 0.0
+	for i in v.size():
+		var r := Vector2(v[i].x, v[i].z).length()
+		var crown := m[i].x > 0.5 or base == 0.0
+		if crown:
+			var t := clampf((v[i].y - base) / maxf(top - base, 1e-3), 0.0, 0.999)
+			var b := int(t * 4.0)
+			bins[b] = maxf(bins[b], r)
+		elif v[i].y < base and v[i].y > 0.05:
+			trunk = maxf(trunk, r)
+	var half := maxf(maxf(bins[0], bins[1]), maxf(bins[2], bins[3]))
+	half = maxf(half, 0.02)
+	var tw := clampf(trunk / half, 0.0, 0.99)
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	var qv := PackedVector3Array()
+	var qn := PackedVector3Array()
+	var qc := PackedColorArray()
+	var quv := PackedVector2Array()
+	var quv2 := PackedVector2Array()
+	var qcu := PackedFloat32Array()
+	var corners := [Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 0), Vector2(1, 1), Vector2(0, 1)]
+	for k in corners:
+		var q: Vector2 = k
+		qv.append(Vector3((q.x - 0.5) * 2.0 * half * 1.08, q.y * top, 0.0))
+		qn.append(Vector3(0, 0, 1))
+		qc.append(Color(leaf_col.r, leaf_col.g, leaf_col.b, 0.0))
+		quv.append(q)
+		quv2.append(Vector2(6.0, base / top + 10.0 * roundf(tw * 100.0)))
+		for b in 4:
+			qcu.append(bins[b] / half)
+	arrays[Mesh.ARRAY_VERTEX] = qv
+	arrays[Mesh.ARRAY_NORMAL] = qn
+	arrays[Mesh.ARRAY_COLOR] = qc
+	arrays[Mesh.ARRAY_TEX_UV] = quv
+	arrays[Mesh.ARRAY_TEX_UV2] = quv2
+	arrays[Mesh.ARRAY_CUSTOM0] = qcu
+	return arrays
 
 
 static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
@@ -513,7 +598,7 @@ class _Builder:
 	var n := PackedVector3Array()
 	var c := PackedColorArray()
 	var uv := PackedVector2Array() # card texture coordinates
-	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 3 vine, 4 culm, 5 cluster card)
+	var uv2 := PackedVector2Array() # x: material (0 bark, 1 leaves, 2 card, 3 vine, 4 culm, 5 cluster card; 6 far picture, _build_impostor)
 	## CUSTOM0, 4 floats a vertex: a cluster card's cluster center and key.
 	var cu := PackedFloat32Array()
 	var wood := Color.BLACK # this species' wood color: cylinders/cones in it are bark

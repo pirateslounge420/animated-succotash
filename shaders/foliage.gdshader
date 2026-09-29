@@ -20,7 +20,15 @@
 // far cards, inside the ragged cluster outline. sp_autumn blends the leaf
 // toward its autumn leaf and the mass by the same share (§AI). The material
 // comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine, 4 bamboo culm,
-// 5 a branchy tree's leaf-cluster card); card UVs are in UV.
+// 5 a branchy tree's leaf-cluster card, 6 a far tree's picture); card UVs
+// are in UV.
+//
+// Far trees as 2D (from play; PlantMeshes._build_impostor, UV2.x 6): one
+// quad per tree, turned to face the camera round the tree's own up; the
+// fragment cuts the far model's outline from it (CUSTOM0: the crown's
+// half-width at four heights; UV2.y: crown base + 10 x trunk half-width in
+// hundredths) and paints it the leaf colour with the season, the palette
+// and the fog of every other plant. They never cast shadows.
 //
 // Branchy trees' leaf clusters (PlantMeshes.leaf_clusters) thin and shrink
 // per tree: the MultiMesh custom data's alpha is how bare the tree is (0
@@ -139,6 +147,8 @@ varying float dead_v;
 varying float wood_dead; // a dead limb of a living tree (TreeArch: UV2.y 1 on bark)
 varying vec3 genes; // this plant's jitter: a warm/cool and value roll
 varying float inst;
+varying vec4 v_imp; // a far picture's crown profile (CUSTOM0)
+varying vec2 v_imp2; // and its crown base, trunk half-width (shares)
 
 // A value eased through the stages: `v` at each stage's start day `st`,
 // held after the last.
@@ -186,7 +196,7 @@ void vertex() {
 		float h1 = fract(sin(dot(bx, vec3(127.1, 311.7, 74.7))) * 43758.5453) * 2.0 - 1.0;
 		float h2 = fract(sin(dot(bx, vec3(269.5, 183.3, 246.1))) * 24634.6345) * 2.0 - 1.0;
 		float lead = 0.0;
-		if (mat_id > 4.5) {
+		if (mat_id > 4.5 && mat_id < 5.5) {
 			vec3 cc = CUSTOM0.xyz;
 			lead = ac_tree.y * clamp(0.5 * smoothstep(0.35, 0.95, cc.y) + 0.5 * smoothstep(0.05, 0.3, length(cc.xz)), 0.0, 1.0);
 		}
@@ -211,7 +221,7 @@ void vertex() {
 		leaf *= min(leaf_a, leaf_s);
 	}
 	v_leaf = leaf;
-	if (mat_id > 4.5) {
+	if (mat_id > 4.5 && mat_id < 5.5) {
 		// A leaf cluster, smaller on a sparse tree.
 		vec3 c = (MODEL_MATRIX * vec4(CUSTOM0.xyz, 1.0)).xyz;
 		VERTEX = c + (VERTEX - c) * mix(0.6, 1.0, smoothstep(0.1, 0.8, leaf));
@@ -233,7 +243,7 @@ void vertex() {
 	// clusters they carry with them, so the gaps in the crown open and
 	// close (§AJ 5): the phase in CUSTOM0.w on the twig's wood, in UV2.y on
 	// its clusters.
-	float tw = mat_id > 4.5 ? UV2.y : (mat_id < 0.5 ? CUSTOM0.w : -1.0);
+	float tw = mat_id > 5.5 ? -1.0 : (mat_id > 4.5 ? UV2.y : (mat_id < 0.5 ? CUSTOM0.w : -1.0));
 	if (tw >= 0.0 && sway > 0.0) {
 		float size_k = clamp(length(MODEL_MATRIX[1].xyz) / 15.0, 0.5, 1.5);
 		float amp = (0.06 + 0.12 * clamp(speed * 0.1, 0.0, 1.0)) * size_k * sway / 0.45;
@@ -258,24 +268,44 @@ void vertex() {
 	genes = vec3(1.0 + 0.12 * (g2 - 0.5), 1.0, 1.0 - 0.12 * (g2 - 0.5)) * (0.9 + 0.2 * g1);
 	inst = float(INSTANCE_ID);
 	glow_pick = step(0.5, fract(sin(float(INSTANCE_ID) * 12.9898) * 43758.5453));
+	if (mat_id > 5.5) {
+		// A far tree's picture: upright on the tree's own up, turned round
+		// it to face the camera, lit as if its face leant a little up.
+		vec3 root = MODEL_MATRIX[3].xyz;
+		vec3 upv = MODEL_MATRIX[1].xyz;
+		vec3 upn = normalize(upv);
+		vec3 to_cam = CAMERA_POSITION_WORLD - root;
+		vec3 flat_c = to_cam - upn * dot(to_cam, upn);
+		vec3 fwd = length(flat_c) > 1e-3 ? normalize(flat_c) : normalize(MODEL_MATRIX[2].xyz);
+		vec3 side = normalize(cross(upn, fwd));
+		vec3 lp = (inv * vec4(VERTEX, 1.0)).xyz;
+		VERTEX = root + upv * lp.y + side * lp.x * length(MODEL_MATRIX[0].xyz);
+		NORMAL = normalize(fwd + upn * 0.6);
+		v_imp = CUSTOM0;
+		v_imp2 = vec2(mod(UV2.y, 10.0), floor(UV2.y / 10.0) / 100.0);
+		// Never in the shadow pass.
+		if (PROJECTION_MATRIX[3][3] == 1.0) {
+			VERTEX = root;
+		}
+	}
 	world_pos = VERTEX;
 	// Vine strands above this plant's vine amount collapse to a point.
 	if (mat_id > 2.5 && mat_id < 3.5 && UV2.y >= INSTANCE_CUSTOM.g) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
 	// So do the leaf clusters this tree has shed.
-	if (mat_id > 4.5 && CUSTOM0.w >= leaf) {
+	if (mat_id > 4.5 && mat_id < 5.5 && CUSTOM0.w >= leaf) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
 	// A dead tree (bare 1: DeadWood): no leaves at all, a snag; dead
 	// bamboo keeps only its dry culms.
 	dead_v = step(0.975, INSTANCE_CUSTOM.a);
-	if (dead_v > 0.5 && ((mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)) {
+	if (dead_v > 0.5 && ((mat_id > 0.5 && mat_id < 2.5) || (mat_id > 4.5 && mat_id < 5.5))) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
 	// The shadow pass (a directional light's is orthographic): leaves
 	// cast only near the eye.
-	if (PROJECTION_MATRIX[3][3] == 1.0 && ((mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)
+	if (PROJECTION_MATRIX[3][3] == 1.0 && ((mat_id > 0.5 && mat_id < 2.5) || (mat_id > 4.5 && mat_id < 5.5))
 			&& distance(world_pos, look_eye) > look_leaf_shadow_m) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
@@ -309,6 +339,18 @@ vec4 sp_leaf_cell(vec2 g, float seed) {
 	return vec4(mix(c.rgb, a.rgb, v_season.x), c.a);
 }
 
+// A far picture's crown half-width (share of its widest) at `t` up the
+// crown (0 its base, 1 its top): the four samples, eased between, closing
+// to a point at the top and a little in at the base.
+float imp_profile(float t, vec4 p) {
+	float x = t * 4.0 - 0.5;
+	if (x < 0.0) return mix(p.x * 0.7, p.x, x + 1.0);
+	if (x < 1.0) return mix(p.x, p.y, smoothstep(0.0, 1.0, x));
+	if (x < 2.0) return mix(p.y, p.z, smoothstep(0.0, 1.0, x - 1.0));
+	if (x < 3.0) return mix(p.z, p.w, smoothstep(0.0, 1.0, x - 2.0));
+	return mix(p.w, 0.0, smoothstep(0.0, 1.0, x - 3.0));
+}
+
 void fragment() {
 	// The sun's and moon's shadow maps are drawn with an orthographic
 	// projection (the game camera is perspective). There, closed shapes
@@ -318,6 +360,57 @@ void fragment() {
 	if (PROJECTION_MATRIX[3][3] == 1.0 && FRONT_FACING && (mat_id < 1.5 || (mat_id > 3.5 && mat_id < 4.5))) {
 		discard;
 	}
+	if (mat_id > 5.5) {
+		// A far tree's picture: the crown's outline, ragged by the leafy
+		// speckle; the trunk under it; the season's leaf left in coarse
+		// cells (a bare winter crown shows a grey haze of twigs); a dead
+		// tree only its trunk.
+		float x = abs(UV.x - 0.5) * 2.0 * 1.08;
+		float cb = v_imp2.x;
+		float t = (UV.y - cb) / max(1.0 - cb, 1e-3);
+		float n = retro_tex(look_tex_leaves, UV * vec2(3.0, 5.0)).g;
+		float r = imp_profile(clamp(t, 0.0, 1.0), v_imp);
+		bool crown = t > 0.0 && x < r * (0.78 + 0.44 * n);
+		bool trunk = UV.y < cb + 0.08 && x < max(v_imp2.y, 0.04);
+		bool twigs = false;
+		if (crown && (v_leaf < 0.999 || dead_v > 0.5)) {
+			if (sp_hash(floor(UV * vec2(14.0, 20.0)) + inst) >= v_leaf * (1.0 - dead_v)) {
+				crown = false;
+				twigs = dead_v < 0.5 && n > 0.55 && t < 0.85;
+			}
+		}
+		if (!crown && !trunk && !twigs) {
+			discard;
+		}
+		float nk_i = look_night;
+		vec3 c;
+		if (crown) {
+			c = sp_tiled ? mix(sp_leaf_color, sp_autumn_color, v_season.x) : COLOR.rgb;
+			c *= genes * (0.7 + 0.45 * n) * mix(0.72, 1.08, clamp(t, 0.0, 1.0));
+			if (sp_deciduous) {
+				vec3 hsv = rgb_to_hsv(c);
+				float ha = rgb_to_hsv(sp_autumn_color).x;
+				float dh = fract(ha - hsv.x + 0.5) - 0.5;
+				hsv.x = fract(hsv.x + dh * v_season.y - v_hshift);
+				hsv.y = clamp(hsv.y * v_season.z, 0.0, 1.0);
+				hsv.z = clamp(hsv.z * v_season.w, 0.0, 1.0);
+				c = hsv_to_rgb(hsv);
+			}
+			float g = pal_greenness(c);
+			c = pal_pull(c, pal_canopy, 0.55 * g);
+			c = pal_pull(c, pal_grass_night, 0.7 * nk_i * g);
+		} else {
+			c = pal_bark * 0.5 * (0.75 + 0.3 * n) * (twigs ? 1.15 : 1.0);
+			c = pal_pull(c, pal_bark_night, 0.6 * nk_i);
+		}
+		ALBEDO = c;
+		ALPHA = 1.0;
+		ALPHA_SCISSOR_THRESHOLD = 0.5;
+		BACKLIGHT = c * (crown ? 0.6 : 0.0);
+		ROUGHNESS = 1.0;
+		SPECULAR = 0.0;
+		FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+	} else {
 	// The season (LeafSeason, design §AI): a thinning crown loses its
 	// leaves in leaf-sized cells, a hash picking which go first, until at
 	// leaf_season 0 it is bare. (Branchy trees' clusters thin by their own
@@ -452,4 +545,5 @@ void fragment() {
 	float glow = look_site_glow(world_pos, 0.25) * glow_pick * smoothstep(0.3, 0.9, sway_w);
 	EMISSION = look_glow_emission(world_pos, glow * 1.0);
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
+	}
 }
