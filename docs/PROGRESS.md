@@ -52,6 +52,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
     - Ducked against the trunk: the trunk pose.
     - The cloak still covers most of it.
   - **Diagonals** (Mike): on steep wood, W+D (and the other three pairs) reaches up or down and swings round the wood toward that side in the same move.
+  - **Cling, crawl, leap** (Mike: "cling with right click, move with WASD, release right click to jump toward where you're looking, hold again at the right time to cling to the next surface"):
+    - Right click on the ground facing a wall, rock or trunk within 0.9 m grabs on.
+    - While clinging, WASD crawls over the face at 1.6 m/s (up, down and round a trunk, following its curve). The hold lasts 5 s (was 2.5).
+    - Letting go leaps toward the look, as steep as you look (12–80° above level).
+    - Pressing right click up to 14 frames before meeting the next face, and holding it, clings there on arrival.
+    - The tap wall jump is unchanged.
 - **§AI.1 revised: each tree turns on its own clock** (step 5 of the tree build):
   - The foliage shader now runs the `autumn_colour` clock per tree and per cluster. LeafSeason publishes where the year is (days since the spring and autumn transitions) and the stage table as globals.
   - Each deciduous tree is offset by its own seeded day (± `jitter_days`, seeded by its turn and lean, which the floating origin never changes). Its top and outer clusters run up to `cluster_lead_days` ahead, so a tree turns from the outside in.

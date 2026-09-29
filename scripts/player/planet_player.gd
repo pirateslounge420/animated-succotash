@@ -121,6 +121,11 @@ static var WJ_NOISE_M := Tuning.num("movement", "wall_jump", "noise_m")
 static var CLING_S := Tuning.num("movement", "wall_jump", "cling_hold_s")
 static var CLING_JUMP := Tuning.num("movement", "wall_jump", "cling_jump_scale")
 static var CLING_SLIDE := Tuning.num("movement", "wall_jump", "cling_slide_mps")
+## Crawling over the face you cling to (WASD), and the leap off it: up as
+## steep as you look, between these (radians).
+static var CLING_CRAWL := float(Tuning.section("movement", "wall_jump").get("cling_crawl_mps", 1.6))
+static var CLING_AIM_MIN := deg_to_rad(float(Tuning.section("movement", "wall_jump").get("cling_aim_min_deg", 12.0)))
+static var CLING_AIM_MAX := deg_to_rad(float(Tuning.section("movement", "wall_jump").get("cling_aim_max_deg", 80.0)))
 ## Landing roll (crouch at touchdown after a big fall; _start_roll()).
 static var ROLL_WINDOW_F := int(Tuning.num("movement", "roll", "window_frames"))
 static var ROLL_SAFE_M := Tuning.num("movement", "roll", "safe_m")
@@ -760,6 +765,11 @@ func _physics_process(delta: float) -> void:
 		_fall_speed = 0.0
 	if swimming or on_floor:
 		_fall_top = radius
+	# Right click on the ground facing a wall, a rock or a trunk within
+	# reach: onto it, clinging (from play).
+	if Input.is_action_just_pressed("wall_jump") and on_floor and not swimming and _bounce_wait_f <= 0 and _ground_cling(cam_forward):
+		_was_on_floor = false
+		return
 	# Right click in the air: the tech (wall jump / cling / catch).
 	if Input.is_action_just_pressed("wall_jump") and not on_floor and not swimming:
 		_tech_press_f = Engine.get_physics_frames()
@@ -817,6 +827,15 @@ func _physics_process(delta: float) -> void:
 		var body := col.get_collider()
 		if body is CollisionObject3D and (body as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER:
 			trees.bumped(body, col.get_collider_shape_index(), horizontal.length())
+	# Right click pressed a moment before the face came, and still held:
+	# the cling takes as you meet it (from play: let go to leap, hold again
+	# at the right time to catch the next surface).
+	if _wall_f == 0 and not clinging and not is_on_floor() and not swimming and Input.is_action_pressed("wall_jump") \
+			and Engine.get_physics_frames() - _tech_press_f <= WJ_WINDOW_F:
+		if _tech(cam_forward):
+			_tech_press_f = -9999
+			_update_squat(delta)
+			return
 	_update_squat(delta)
 	trees.update_contact(delta, global_position, get_world_3d().direct_space_state)
 	var moved := get_real_velocity() - up * get_real_velocity().dot(up)
@@ -1567,6 +1586,39 @@ func _tech(cam_forward: Vector3) -> bool:
 	return _try_catch(cam_forward)
 
 
+## Right click on the ground: a steep face (a wall, a rock, a trunk)
+## within CLING_REACH_M ahead at chest height, then a hop onto it and a
+## cling. True if it took.
+const CLING_REACH_M := 0.9
+
+
+func _ground_cling(cam_forward: Vector3) -> bool:
+	var fwd := (cam_forward - up * cam_forward.dot(up)).normalized()
+	var from := global_position + up * 1.0
+	var q := PhysicsRayQueryParameters3D.create(from, from + fwd * CLING_REACH_M)
+	q.exclude = [get_rid()]
+	var hit := get_world_3d().direct_space_state.intersect_ray(q)
+	if hit.is_empty():
+		return false
+	var n: Vector3 = hit.normal
+	if absf(n.dot(up)) >= WJ_STEEP:
+		return false
+	_wall_n = n
+	_wall_p = hit.position
+	_wall_in = -n
+	_wall_f = 0
+	var wb: Object = hit.collider
+	_wall_tree = wb is CollisionObject3D and ((wb as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER) != 0
+	var wchunk := (wb as Node).get_parent() as TerrainChunk if wb is Node else null
+	_wall_limb = wchunk != null and wchunk.is_limb_shape(wb, int(hit.shape))
+	global_position += up * 0.3
+	if not _tech(cam_forward) or not clinging:
+		return false
+	# Past the planting frames at once: a grab, not a kick.
+	_cling_f = WJ_TAP_F + 1
+	return true
+
+
 ## A handhold you catch and swing on rather than kick off: a vine, a
 ## bamboo culm, or a limb (not the trunk) thinner than SWING_MAX_R.
 func _catchable(g: BranchGraph, i: int) -> bool:
@@ -1586,8 +1638,9 @@ var _wall_speed := 0.0
 
 ## Holding a face (right click held): a tap (let go within WJ_TAP_F
 ## frames) kicks off it, a full wall jump that chains; held longer it's a
-## cling: it slips slowly and lets go after CLING_S. Letting go of right
-## click (or jump) springs you off it all the same, at CLING_JUMP of a
+## cling: WASD crawls over the face (CLING_CRAWL), idle it slips slowly,
+## and it lets go after CLING_S. Letting go of right click (or jump) leaps
+## off toward where you look, as steep as you look, at CLING_JUMP of a
 ## kick, starting the chain over; crouch drops you off it instead.
 func _cling_step(delta: float) -> void:
 	_cling_f += 1
@@ -1603,8 +1656,9 @@ func _cling_step(delta: float) -> void:
 			velocity = _wall_jump(1.0, true)
 			meter.perfect("wall_jump")
 		else:
-			# Out of a cling: it springs you off, but it wasn't the tap.
-			velocity = _wall_jump(CLING_JUMP, false)
+			# Out of a cling: it springs you off toward where you look,
+			# up or level as you look (from play), but it wasn't the tap.
+			velocity = _wall_jump(CLING_JUMP, false, true)
 			meter.broke()
 		_fall_top = world.radius_of(global_position)
 		return
@@ -1620,13 +1674,27 @@ func _cling_step(delta: float) -> void:
 		velocity = Vector3.ZERO
 		_kick_t = 2.0 / 60.0
 		return
-	# Held to the face, slipping slowly.
-	velocity = -_wall_n * 1.5 - up * CLING_SLIDE
+	# Held to the face: WASD crawls over it, up and down and round a trunk
+	# (from play); left alone you slip slowly.
+	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
+	var n := _wall_n
+	var wall_up := up - n * up.dot(n)
+	wall_up = wall_up.normalized() if wall_up.length() > 0.1 else up
+	var cam_r := _camera_forward().cross(up)
+	var wall_r := cam_r - n * cam_r.dot(n)
+	wall_r = wall_r.normalized() if wall_r.length() > 0.1 else wall_up.cross(n)
+	var crawl := (wall_up * input.y + wall_r * input.x) * CLING_CRAWL
+	velocity = -n * 1.5 + crawl - (up * CLING_SLIDE if input.length() < 0.2 else Vector3.ZERO)
 	move_and_slide()
 	var touching := false
 	for k in get_slide_collision_count():
-		if absf(get_slide_collision(k).get_normal().dot(up)) < WJ_STEEP:
+		var cn := get_slide_collision(k).get_normal()
+		if absf(cn.dot(up)) < WJ_STEEP:
 			touching = true
+			# Round a trunk or a boulder: the face turns under you.
+			_wall_n = _wall_n.lerp(cn, 0.5).normalized()
+	if input.length() > 0.2:
+		_face((-_wall_n - up * _wall_n.dot(up)).normalized(), delta * 3.0)
 	if is_on_floor() or not touching:
 		clinging = false
 		velocity = Vector3.ZERO
@@ -1783,7 +1851,7 @@ func _snap(g: BranchGraph, i: int) -> void:
 ## up to WJ_CAP of them (WJ_MAX only a sanity limit); unchained (out of a
 ## cling) starts the chain over. A kick of the body and a scuff creatures
 ## hear. Returns the kick's velocity.
-func _wall_jump(scale := 1.0, chained := true) -> Vector3:
+func _wall_jump(scale := 1.0, chained := true, aimed := false) -> Vector3:
 	var n_h := _wall_n - up * _wall_n.dot(up)
 	n_h = n_h.normalized() if n_h.length() > 0.1 else -_camera_forward()
 	# The kick goes where you look (design §R), bounded by the wall: look
@@ -1805,8 +1873,13 @@ func _wall_jump(scale := 1.0, chained := true) -> Vector3:
 	# between) build on it, up to WJ_CAP of them.
 	var gain := pow(WJ_GAIN, mini(_wj_chain, WJ_CAP)) if chained else 1.0
 	var spd := minf(maxf(WJ_SPEED, kept) * gain * scale, minf(WJ_MAX, SANITY_MPS))
-	var h := away * spd * cos(WJ_ANGLE)
-	var v := spd * sin(WJ_ANGLE)
+	# `aimed` (letting go of a cling): up or level as you look, between
+	# CLING_AIM_MIN and CLING_AIM_MAX above level.
+	var ang := WJ_ANGLE
+	if aimed:
+		ang = clampf(asin(clampf(_look.normalized().dot(up), -1.0, 1.0)), CLING_AIM_MIN, CLING_AIM_MAX)
+	var h := away * spd * cos(ang)
+	var v := spd * sin(ang)
 	_move = h
 	_takeoff = h
 	_jumped = true

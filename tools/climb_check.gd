@@ -148,7 +148,10 @@ func _initialize() -> void:
 	# 2b. Diagonal: W and D together from partway up: higher and round.
 	if player.climbing:
 		await press("move_back")
-		await frames(90)
+		for s4 in 40:
+			await frames(15)
+			if alt() < top * 0.5:
+				break
 		await release("move_back")
 		await frames(10)
 		var rel0 := player.global_position - g.base()
@@ -276,5 +279,34 @@ func _initialize() -> void:
 	await frames(30)
 	print("[climb] down: lowest %.1f m, %s" % [low, _describe()])
 	ok(low < 2.0 or not player.climbing, "climbs back down (lowest %.1f m)" % low)
+	# 6. Cling (right click): from the ground at the trunk, crawl up with
+	# W, look up and let go: a leap up and off, toward the look.
+	await release_all()
+	if player.climbing:
+		player.stop_climb()
+	await frames(60)
+	var cd: Vector3 = world.dir_of(base + out * (r0 + 0.6))
+	player.global_position = world.to_scene(cd, PlanetConst.RADIUS_M + main.chunks.ground_height(cd) + 0.05)
+	player.velocity = Vector3.ZERO
+	await frames(30)
+	face(-out)
+	await press("wall_jump")
+	await frames(4)
+	ok(player.clinging, "right click at a trunk clings to it")
+	if player.clinging:
+		var a1 := alt()
+		await press("move_forward")
+		await frames(60)
+		await release("move_forward")
+		var a2 := alt()
+		print("[climb] crawling up the trunk for 1 s: %.1f -> %.1f m" % [a1, a2])
+		ok(a2 - a1 > 0.8, "W crawls up the face while clinging (%.1f m)" % (a2 - a1))
+		face(out, 0.6)
+		var p0 := player.global_position
+		await release("wall_jump")
+		await frames(12)
+		var dv := player.global_position - p0
+		print("[climb] let go looking up and out: %.2f m up, %.2f m out in 0.2 s" % [dv.dot(player.up), dv.dot(out)])
+		ok(dv.dot(player.up) > 0.2 and dv.dot(out) > 0.2, "letting go leaps up and out, toward the look")
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)
