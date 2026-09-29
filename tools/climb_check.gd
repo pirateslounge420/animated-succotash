@@ -310,6 +310,17 @@ func _initialize() -> void:
 	face(-out)
 	await press("wall_jump")
 	await frames(4)
+	if not player.clinging:
+		# Why not: on the floor? what each ray of the fan meets.
+		var fwd := player._camera_forward()
+		fwd = (fwd - player.up * fwd.dot(player.up)).normalized()
+		print("[climb] no cling: on floor %s, bounce wait %d, climbing %s, trunk %.2f m off" % [player.is_on_floor(), player._bounce_wait_f, player.climbing, (player.global_position - base).length()])
+		for y in [1.0, 0.6, 1.4]:
+			var from: Vector3 = player.global_position + player.up * y
+			var q := PhysicsRayQueryParameters3D.create(from, from + fwd * 0.9)
+			q.exclude = [player.get_rid()]
+			var h := player.get_world_3d().direct_space_state.intersect_ray(q)
+			print("    ray at %.1f m: %s" % [y, "nothing" if h.is_empty() else "%s at %.2f m, normal.up %.2f" % [h.collider, (h.position - from).length(), (h.normal as Vector3).dot(player.up)]])
 	ok(player.clinging, "right click at a trunk clings to it")
 	if player.clinging:
 		var a1 := alt()
