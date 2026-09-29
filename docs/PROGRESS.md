@@ -29,6 +29,10 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - `perf_bench`, dev frame at 15:00, 480 lines, on llvmpipe (compare ratios): **A 2279 ms a frame** (the shadow pass ≈ 384 ms: 261 draws, 1.07M tris). **B 1833 ms, −20 %**; the shadow pass is gone and the blobs cost nothing measurable. On a GPU that's ~1.24× A's fps.
   - Forest camp mean luma: A 0.13, B 0.28 (reference 0.18–0.32).
 - **7 Camera:** FOV `retro.fov_deg` 78 (aiming zooms to the same share, 67). First-person eye at `retro.eye_m` 1.4 m, crouched eye scaled to match.
+- **Checks:**
+  - `biome_species_check.py` HARD 0 (SOFT 131); `plant_schema_check.py` 0 errors.
+  - daylight, soil, strike, super, inventory and tech pass; hits keeps its known failure.
+  - play_fixes varied 10 → 3 fails across two runs on this code, and 0 with the step-7 player file reverted. That spread is its known intermittency: the eye and FOV only move the camera, and the 3-fail run hit only its usual slides and bound.
 - **Reference still has:** sprawling bright meadows and paths flanked by trees (world-gen, §AG 7, Phase 9); its clouds are whiter and softer-edged than our lavender-tinted posterised tile; our camp clearings are sand, so the frame averages brighter (0.37–0.45 luma at the dev spot vs 0.18–0.32).
 
 ---
