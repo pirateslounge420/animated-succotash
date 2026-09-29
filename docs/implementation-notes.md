@@ -2573,3 +2573,4 @@ overriding them.
 - §AG head start: `assets/textures/retro/` tiles + `cloud_pano.png` (drop-in for `Look.texture()` / `sky_paint` clouds), `tools/look/measure_look.py` targets, `docs/references/batch3/`.
 - §AH per-species plant tiles (`assets/textures/plants/species/`, `atlas_species.json`): species_db loads the atlas; shaders multiply species tiles by white × genes jitter; canopy cards from the leaf cutout + mass; autumn blend; `bark` block in the catalogue.
 - §AI leaf fall, litter piles and decomposition (`data/litter.json`, `<key>_litter.png`, `litter_holes.png`): autumn blend, falling leaf billboards, depth patches, climate-timed stages, rustle/kick, fertility + litter fungi.
+- §AJ dappled canopies: cards on the branch skeleton with real holes (open share = canopy.gap), no hull at any LOD, dappled ground shade from card alpha, see-through dev test.

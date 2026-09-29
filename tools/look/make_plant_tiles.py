@@ -529,6 +529,9 @@ def render_mass(e, card, rng, size=MASS_PX):
     else:
         px = int(np.clip(n4 * (0.28 + 0.22 * math.log10(max(mean_cm, 0.5) + 1)), n4 * 0.28, n4 * 0.62))
         count = int(np.clip(26 - px / n4 * 26, 8, 18))
+    # §AJ: the mass is a CUTOUT whose open share follows canopy.gap (sky shows through)
+    gap = float((e.get("canopy") or {}).get("gap", 0.35))
+    count = max(3, int(round(count * (1.0 - gap) / 0.55)))
     card4 = card.resize((px, px), Image.NEAREST)
     under = float((e.get("tint") or {}).get("underside", 0.15))
     for i in range(count):

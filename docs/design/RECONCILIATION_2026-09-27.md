@@ -1683,3 +1683,29 @@ and watch rot. Data: `data/litter.json` (`[NOT WIRED YET — §AI]`).
 **Order:** autumn blend + bare winter crown (shader, from the season clock) → falling leaf
 billboards → litter patches with the species tile and depth → stage transform by climate
 → rustle/kick → fertility and fungi hook. Phase 6 for 1–2, Phase 7 for 3–5.
+
+## AJ. Dappled canopies — the see-through test — 28 Sept 2026
+
+§D2 already bans the bush mesh; this says what "not a blob" must look like in the frame,
+because a hull with a leaf texture painted on it is still a blob. Locked:
+
+1. **No hull, ever.** A canopy is a set of **leaf-cluster cards hung on the branch
+   skeleton**, and the space between clusters is empty — sky, the far hills, the next
+   tree, a bird, a hiding cat. There is no surface behind the cards. This holds at every
+   LOD: far cards are fewer and bigger but keep their holes; the impostor is baked from
+   cards *with* alpha, never a filled silhouette.
+2. **The open share is the species' `canopy.gap`** (PLANT_SCHEMA §2: dense broadleaf 0.2,
+   birch 0.4, acacia 0.5, palm 0.6). The mass tiles (`<key>_leaves.png`) are now cut out
+   to that share, so even a single card lets light through; `layering` puts the clusters
+   in clumps / tiers / even, `droop` hangs them. A few real canopies are near-solid (a
+   dense fig, a yew, a live oak in summer: gap ≤ 0.2) and are allowed to be.
+3. **Dappled light is the same holes.** The ground darkening under trees (§AG 6,
+   `canopy_dark`) is a top-down render of the card alpha, not a disc — so the shade under
+   an oak is a moving patchwork of sun and shadow, and under a palm it is stripes.
+4. **The see-through test (dev check):** stand under a birch at 14:00, look straight up:
+   sky pixels ≈ `canopy.gap` ± 0.1 of the frame (`tools/look/measure_look.py` prints
+   the sky share). Then place a perched creature in the crown and confirm it is visible
+   through the gaps from below and hidden from the side. Fail either and the canopy is
+   still a blob.
+5. **Wind moves the gaps.** Clusters sway independently (per-card phase), so the holes
+   open and close — the flicker that makes a real canopy read alive.
