@@ -178,8 +178,11 @@ func _tree(n: String, g: BranchGraph) -> void:
 	ok(on, "%s: W looking out along a thick limb takes you out onto it" % n)
 	if on:
 		var poses := {}
+		var lean := 0.0
 		for k in 16:
 			_hold(c, Vector2(1, 0), 10 * DT, th)
 			poses[c.pose] = true
-		print("    D round it: %s" % [poses.keys()])
-		ok(poses.size() >= 2, "%s: D goes round the limb" % n)
+			if not is_nan(c._limb_rel):
+				lean = maxf(lean, absf(c._limb_rel))
+		print("    D round it: poses %s, leaning %.0f deg" % [poses.keys(), rad_to_deg(lean)])
+		ok(lean > 0.3 and poses.keys() == ["straddle"], "%s: D leans you round the limb, still astride" % n)

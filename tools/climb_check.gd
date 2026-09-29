@@ -268,8 +268,8 @@ func _initialize() -> void:
 			print("[climb] out along the limb at %s: %s" % [c.describe(best), _describe()])
 			ok(on_limb, "looking out along a thick limb and pushing W takes you out onto it")
 			if on_limb:
-				# Round the limb: D for a while, then A back: the pose goes
-				# from on top to its side to under it and back.
+				# Round the limb: D for a while, then A back: leaning round it,
+				# always astride (from play: no hanging).
 				var poses := {}
 				await press("move_right")
 				for s5 in 16:
@@ -283,7 +283,7 @@ func _initialize() -> void:
 				await release("move_left")
 				await frames(20)
 				print("[climb] round the limb: poses %s, now %s" % [poses.keys(), _describe()])
-				ok(poses.size() >= 2 and player.climbing, "A/D go round the limb (%s)" % ", ".join(poses.keys()))
+				ok(poses.keys() == ["straddle"] and player.climbing, "A/D lean you round the limb, always astride (%s)" % ", ".join(poses.keys()))
 				await press("crouch")
 				await frames(3)
 				await release("crouch")
