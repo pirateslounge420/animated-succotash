@@ -1638,8 +1638,8 @@ var _wall_speed := 0.0
 
 ## Holding a face (right click held): a tap (let go within WJ_TAP_F
 ## frames) kicks off it, a full wall jump that chains; held longer it's a
-## cling: WASD crawls over the face (CLING_CRAWL), idle it slips slowly,
-## and it lets go after CLING_S. Letting go of right click (or jump) leaps
+## cling: WASD crawls over the face (CLING_CRAWL); it holds still when you
+## don't (CLING_SLIDE 0) and for as long as you like (CLING_S 0). Letting go of right click (or jump) leaps
 ## off toward where you look, as steep as you look, at CLING_JUMP of a
 ## kick, starting the chain over; crouch drops you off it instead.
 func _cling_step(delta: float) -> void:
@@ -1662,8 +1662,9 @@ func _cling_step(delta: float) -> void:
 			meter.broke()
 		_fall_top = world.radius_of(global_position)
 		return
+	# (CLING_S 0: no limit; from play, no slipping off.)
 	_cling_left -= delta
-	if _cling_left <= 0.0:
+	if CLING_S > 0.0 and _cling_left <= 0.0:
 		# Worn out: slide off the face.
 		clinging = false
 		velocity = _wall_n * 0.8 - up * 1.0
@@ -1684,7 +1685,7 @@ func _cling_step(delta: float) -> void:
 	var wall_r := cam_r - n * cam_r.dot(n)
 	wall_r = wall_r.normalized() if wall_r.length() > 0.1 else wall_up.cross(n)
 	var crawl := (wall_up * input.y + wall_r * input.x) * CLING_CRAWL
-	velocity = -n * 1.5 + crawl - (up * CLING_SLIDE if input.length() < 0.2 else Vector3.ZERO)
+	velocity = -n * 1.5 + crawl - (up * CLING_SLIDE if input.length() < 0.2 and CLING_SLIDE > 0.0 else Vector3.ZERO)
 	move_and_slide()
 	var touching := false
 	for k in get_slide_collision_count():

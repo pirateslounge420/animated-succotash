@@ -226,7 +226,7 @@ func _initialize() -> void:
 	var held_m := player.global_position.distance_to(p0)
 	var clung := player.clinging
 	print("cling: held 1 s, moved %.2f m" % held_m)
-	ok(clung and held_m < 0.8, "holding right click on the trunk clings")
+	ok(clung and held_m < (0.8 if PlanetPlayer.CLING_SLIDE > 0.0 else 0.2), "holding right click on the trunk clings (and doesn't slip: %.2f m in 1 s)" % held_m)
 	await release("wall_jump")
 	await frames(2)
 	var vj := player.velocity.length()
@@ -243,8 +243,12 @@ func _initialize() -> void:
 		await frames(1)
 		t_cling += 1
 	await release("wall_jump")
-	print("cling lasted %.2f s before sliding off (cling_hold_s %.1f)" % [t_cling / 60.0, PlanetPlayer.CLING_S])
-	ok(absf(t_cling / 60.0 - PlanetPlayer.CLING_S) < 0.3 or t_cling < 400, "the cling wears out and you slide off")
+	# (From play: no slip-down; cling_hold_s 0 is no limit.)
+	print("cling lasted %.2f s (cling_hold_s %.1f: 0 is no limit)" % [t_cling / 60.0, PlanetPlayer.CLING_S])
+	if PlanetPlayer.CLING_S > 0.0:
+		ok(absf(t_cling / 60.0 - PlanetPlayer.CLING_S) < 0.3 or t_cling < 400, "the cling wears out and you slide off")
+	else:
+		ok(t_cling >= 400, "the cling holds as long as right click does (%.1f s and still on)" % (t_cling / 60.0))
 	await settle(camp_d)
 
 	# --- Landing roll ------------------------------------------------------

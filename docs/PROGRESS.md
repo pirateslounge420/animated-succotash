@@ -54,7 +54,8 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
   - **Diagonals** (Mike): on steep wood, W+D (and the other three pairs) reaches up or down and swings round the wood toward that side in the same move.
   - **Cling, crawl, leap** (Mike: "cling with right click, move with WASD, release right click to jump toward where you're looking, hold again at the right time to cling to the next surface"):
     - Right click on the ground facing a wall, rock or trunk within 0.9 m grabs on.
-    - While clinging, WASD crawls over the face at 1.6 m/s (up, down and round a trunk, following its curve). The hold lasts 5 s (was 2.5).
+    - While clinging, WASD crawls over the face at 1.6 m/s (up, down and round a trunk, following its curve).
+    - No slip-down (Mike): a cling holds still when you don't move and lasts as long as you hold right click (`cling_slide_mps` 0; `cling_hold_s` 0 means no limit).
     - Letting go leaps toward the look, as steep as you look (12–80° above level).
     - Pressing right click up to 14 frames before meeting the next face, and holding it, clings there on arrival.
     - The tap wall jump is unchanged.
