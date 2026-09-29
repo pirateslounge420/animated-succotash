@@ -32,6 +32,13 @@ extends Node
 ## "murmur") on a 3D player among them (Audio3D "camp_chatter", heard to
 ## ~25 m), while the subtitle shows.
 
+## data/camps.json: camps only at ruins, and the random wake (design 29
+## Sept 2026: the fires are in the rare ruins, a different one each time
+## you wake).
+static var RULES := Tuning.table("camps")
+## Deaths so far: with the world's seed, it picks a different ruin each
+## time you wake.
+var deaths := 0
 const BUILD_M := 220.0
 const DROP_M := 280.0
 const WILD_CELL_M := 1800.0
@@ -134,6 +141,9 @@ static func wild_site(map: PlanetData, c: Vector3i) -> Dictionary:
 ## planet direction. None in range: a small wandering group's fire is put
 ## down on dry, level ground `place_m` off, and that's it.
 func wake_fire(d: Vector3, search_m: float, place_m: float, opening: Vector3) -> Vector3:
+	deaths += 1
+	if bool(RULES.get("only_at_ruins", true)):
+		return _ruin_wake_fire(d, opening)
 	var best := Vector3.ZERO
 	var best_d := search_m
 	if opening != Vector3.ZERO and CubeSphere.surface_distance_m(opening, d) < best_d:
@@ -177,6 +187,48 @@ func wake_fire(d: Vector3, search_m: float, place_m: float, opening: Vector3) ->
 	var folk := "north" if land == "snow" else ("marsh" if land == "marsh" else "tribal")
 	_wanderers["wander:%d" % _wanderers.size()] = {"dir": spot, "folk": folk, "seed": hash([spot, "wanderers"])}
 	return spot
+
+
+## The fire you wake at when camps are only at ruins (data/camps.json): a
+## random inhabited ruin within wake_radius_m of where you died (the
+## nearest, if wake_random is off), the search widening if there's none;
+## the opening camp as the last resort.
+func _ruin_wake_fire(d: Vector3, opening: Vector3) -> Vector3:
+	var radius := float(RULES.get("wake_radius_m", 12000.0))
+	var sites: Array = []
+	for step in int(RULES.get("widen_steps", 3)) + 1:
+		sites.clear()
+		for r in Ruins.near(map, d, radius):
+			if Ruins.inhabited(r):
+				sites.append(r)
+		if not sites.is_empty():
+			break
+		radius *= 2.0
+	if sites.is_empty():
+		return opening if opening != Vector3.ZERO else d
+	var site: Dictionary
+	if bool(RULES.get("wake_random", true)):
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash([map.terrain.world_seed if map.terrain else 0, deaths, Time.get_ticks_msec()])
+		site = sites[rng.randi_range(0, sites.size() - 1)]
+	else:
+		site = sites[0]
+		for r in sites:
+			if CubeSphere.surface_distance_m(r.dir, d) < CubeSphere.surface_distance_m(site.dir, d):
+				site = r
+	return ruin_fire_dir(map, site)
+
+
+## Where an inhabited ruin's fire is, as a surface direction: the camp
+## spot its builder leaves (RuinBuilder.compute: local x/z in the ruin's
+## frame), run once here without building the meshes into the scene.
+static func ruin_fire_dir(p_map: PlanetData, site: Dictionary) -> Vector3:
+	var data := RuinBuilder.compute(p_map, site)
+	var cs: Vector3 = data.get("camp_spot", Vector3.ZERO)
+	var a: float = site.heading + PI * 0.5
+	var ex := CubeSphere.north(site.dir) * cos(a) + CubeSphere.east(site.dir) * sin(a)
+	var ez := ex.cross(site.dir).normalized()
+	return (site.dir + (ex * cs.x + ez * cs.z) / PlanetConst.RADIUS_M).normalized()
 
 
 ## A rock-shelter camp in grid cell `c`, or {}: {"dir" (the fire),
@@ -241,8 +293,9 @@ func _refresh() -> void:
 		var spot: Vector3 = node.global_transform * (node.get_meta("camp_spot") as Vector3)
 		if spot.distance_to(pp) < BUILD_M:
 			want["ruin:%s" % str(c)] = [spot, Ruins.camp_folk(site), site.seed]
+	var only_ruins := bool(RULES.get("only_at_ruins", true))
 	# Wild camps near water.
-	for c in CreatureSpawner._cells_around(pd, BUILD_M, WILD_CELL_M):
+	for c in CreatureSpawner._cells_around(pd, BUILD_M, WILD_CELL_M) if not only_ruins else []:
 		if not _wild.has(c):
 			_wild[c] = wild_site(map, c)
 		var ws: Dictionary = _wild[c]
@@ -252,7 +305,7 @@ func _refresh() -> void:
 		if spot.distance_to(pp) < BUILD_M:
 			want["wild:%s" % str(c)] = [spot, ws.folk, ws.seed]
 	# Rock shelters under cliffs.
-	for c in CreatureSpawner._cells_around(pd, BUILD_M, CLIFF_CELL_M):
+	for c in CreatureSpawner._cells_around(pd, BUILD_M, CLIFF_CELL_M) if not only_ruins else []:
 		if not _cliff.has(c):
 			_cliff[c] = cliff_site(map, c)
 		var cs: Dictionary = _cliff[c]

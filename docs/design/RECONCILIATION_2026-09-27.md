@@ -1829,3 +1829,15 @@ its own, longer clock.
   stand.json restores the old uniform roll for comparison. Fallen logs and the age
   ledger stay with Phase 6/7.
 
+## AM. Camps only at ruins; the random wake — 29 Sept 2026
+
+- **Locked:** camp fires — the safe zones, and the places you wake after dying — exist
+  **only in the rare ruins** (the inhabited ones, about half) and at the opening
+  encampment. The wild riverside camps and the cliff rock shelters are gone, and
+  wanderers no longer make a fire for you. After a death you wake at a **random**
+  inhabited ruin's fire within 12 km of where you fell — a different one every time —
+  the search widening if none is that near, the opening camp as the last resort.
+  `data/camps.json` (only_at_ruins, wake_random, wake_radius_m).
+- Spotted hyena added: a night pack of 4-12 on the savanna, denning in burrows on the
+  flat (a new `burrow` den kind beside the wolves' `cave_mouth`).
+

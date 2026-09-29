@@ -1,0 +1,12 @@
+{
+ "_help": {
+  "about": "Where camp fires \u2014 the safe zones you can wake at after dying \u2014 are found (design 29 Sept 2026: only in the rare ruins). Restart after editing.",
+  "only_at_ruins": "true: camps exist only at inhabited ruins (about half of them) and at the opening encampment; the wild riverside camps and the cliff rock shelters are not placed, and wanderers never make a fire for you. false: the older rule (nearest camp of any kind).",
+  "wake_random": "true: after a death you wake at a RANDOM inhabited ruin's fire within wake_radius_m of where you died, a different one each time; false: the nearest.",
+  "wake_radius_m": "How far from where you died the fire can be. If no inhabited ruin lies within it the search widens (x2, up to widen_steps times); failing that you wake at the opening camp."
+ },
+ "only_at_ruins": true,
+ "wake_random": true,
+ "wake_radius_m": 12000.0,
+ "widen_steps": 3
+}

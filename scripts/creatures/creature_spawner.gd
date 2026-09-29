@@ -444,6 +444,11 @@ func _find_den(sp: CreatureSpecies, center: Vector3, key: Vector4i) -> Dictionar
 	rng.seed = hash(key)
 	var best := {}
 	var best_slope := 0.45 # about 24 degrees
+	# A burrow den (hyenas): dug in flat open ground, the flatter the
+	# better, instead of a cave mouth on a steep cold slope.
+	var burrow := str(sp.pack.get("den", "cave_mouth")) == "burrow"
+	if burrow:
+		best_slope = 0.35
 	for i in 24:
 		var p := _offset(center, rng.randf() * TAU, sqrt(rng.randf()) * 200.0)
 		var e := map.terrain.elevation(p, true)
@@ -457,10 +462,11 @@ func _find_den(sp: CreatureSpecies, center: Vector3, key: Vector4i) -> Dictionar
 		var gx := (map.terrain.elevation(_offset(p, PI * 0.5, 10.0), true) - map.terrain.elevation(_offset(p, -PI * 0.5, 10.0), true)) / 20.0
 		var gy := (map.terrain.elevation(_offset(p, 0.0, 10.0), true) - map.terrain.elevation(_offset(p, PI, 10.0), true)) / 20.0
 		var slope := Vector2(gx, gy).length()
-		if slope > best_slope:
+		if (slope < best_slope) if burrow else (slope > best_slope):
 			best_slope = slope
 			var downhill := -(ea * gx + no * gy)
-			best = {"species": sp, "dir": p, "facing": downhill.normalized(), "seed": hash(key)}
+			var facing := downhill.normalized() if downhill.length() > 1e-4 else ea
+			best = {"species": sp, "dir": p, "facing": facing, "seed": hash(key)}
 	return best
 
 
