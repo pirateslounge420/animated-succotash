@@ -64,6 +64,25 @@ var handhold := {}
 var realms := PackedStringArray()
 ## Loaded from a catalogue (data/plants/), not a biome file.
 var from_catalogue := false
+## Its own tiles (design §AH, assets/textures/plants/species/
+## atlas_species.json, loaded by SpeciesDB): res:// paths by kind, "leaf"
+## (48 px cutout), "leaf_autumn" (deciduous), "leaves" (32 px mass),
+## "litter", "bark" (64 px, bark_tile_m square), "petiole"
+## (Amorphophallus). Empty: no tiles, the class textures (Look) instead.
+var tiles := {}
+## The leaf colour the tiles carry, and the bark tile's size (m).
+var leaf_color := Color(0.24, 0.51, 0.2)
+var bark_tile_m := 0.4
+## Its leaf (the entry's `leaf` block): mean length in meters (size_cm),
+## type (simple, compound, needle, strap...) and surface texture (matte,
+## glossy...).
+var leaf_m := 0.1
+var leaf_type := ""
+var leaf_texture := ""
+## Deciduous (tint.drop): turns tint.autumn and drops its leaves in
+## autumn (design §AI).
+var deciduous := false
+var autumn_color := Color(0.69, 0.54, 0.23)
 
 
 ## Smooth band membership: 1 in the middle, easing to 0 at the edges.

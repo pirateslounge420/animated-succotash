@@ -2021,8 +2021,7 @@ func _update_noise(delta: float, move_speed: float) -> void:
 	if _body is PlayerBody:
 		(_body as PlayerBody).set_motion(move_speed / SPRINT_SPEED, delta)
 		(_body as PlayerBody).set_velocity(velocity)
-		var wind: Variant = PlantMeshes.material().get_shader_parameter("wind_vector")
-		(_body as PlayerBody).set_wind(wind if wind is Vector3 else Vector3.ZERO)
+		(_body as PlayerBody).set_wind(WeatherFX.plant_wind)
 	elif _animator:
 		var rate := 1.0
 		if anim_state == "walk" or anim_state == "sprint" or anim_state == "crouch_walk":

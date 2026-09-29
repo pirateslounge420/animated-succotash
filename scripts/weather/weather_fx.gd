@@ -6,7 +6,7 @@ extends Node3D
 ##     precipitation, rain above freezing and snow below;
 ##   * the local wind tilts the falling particles, so storm rain blows
 ##     sideways instead of falling straight down;
-##   * the same wind drives foliage sway (PlantMeshes' shared material);
+##   * the same wind drives foliage sway (the global plant_wind);
 ##   * the sound of the rain, muffled (and the rain around you thinned)
 ##     when you're sheltered: under a tree's crown or in a camp shelter.
 ##     Four 3D players (Audio3D "rain") a few meters out on four sides of
@@ -18,6 +18,10 @@ extends Node3D
 ##
 ## Keep this node at the scene origin (not under World.world_root); it
 ## moves its emitters to the camera each frame.
+
+## The wind the plants sway in (scene space, m/s; the foliage shader's
+## global plant_wind), for whoever else reads it (the player's cloak).
+static var plant_wind := Vector3.ZERO
 
 const RAIN_MAX := 3000
 const SNOW_MAX := 1500
@@ -153,7 +157,8 @@ func update_fx(camera_pos: Vector3, up: Vector3, weather: Dictionary, sheltered 
 	m.initial_velocity_max = velocity.length() * 1.1
 	m.gravity = -up * (2.0 if not cold else 0.2) + drift * 0.1
 
-	PlantMeshes.material().set_shader_parameter("wind_vector", wind)
+	plant_wind = wind
+	RenderingServer.global_shader_parameter_set("plant_wind", wind)
 
 
 static func _tangent(up: Vector3) -> Vector3:

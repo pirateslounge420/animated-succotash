@@ -467,7 +467,7 @@ static func _instance(parent: Node3D, sp_idx: int, sp: PlantSpecies, mm: MultiMe
 	var mmi := MultiMeshInstance3D.new()
 	mmi.name = node_name
 	mmi.multimesh = mm
-	mmi.material_override = PlantMeshes.material()
+	mmi.material_override = PlantMeshes.material_for(sp)
 	mmi.set_meta("species", sp_idx)
 	# Detail only near the eye (design §W; data/look.json "ranges"):
 	# grasses to grass_m, the rest of the ground cover and epiphytes to

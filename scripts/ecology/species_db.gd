@@ -22,6 +22,8 @@ class_name SpeciesDB
 
 const DATA_DIR := "res://data/biomes"
 const CATALOGUE_DIR := "res://data/plants"
+## The per-species tiles' index (design §AH).
+const ATLAS_PATH := "res://assets/textures/plants/species/atlas_species.json"
 ## The realm of a catalogue entry that has none yet: no place has it.
 const UNASSIGNED := "unassigned"
 
@@ -137,6 +139,7 @@ static func _load() -> void:
 		for f in cfiles:
 			if f.ends_with(".json"):
 				_load_catalogue(CATALOGUE_DIR + "/" + f, by_name)
+	_load_atlas(by_name)
 	for i in _all.size():
 		_index[_all[i]] = i
 		var t := _all[i].tier
@@ -222,6 +225,31 @@ static func _load_catalogue(path: String, by_name: Dictionary) -> void:
 					sp.needs.append(NEEDS[need])
 				elif not NEEDS.has(need):
 					push_warning("SpeciesDB: %s: unknown need '%s'" % [path, need])
+
+
+## The per-species tiles (design §AH): each species named in the atlas
+## records its files; the rest keep the class textures.
+static func _load_atlas(by_name: Dictionary) -> void:
+	if not FileAccess.file_exists(ATLAS_PATH):
+		return
+	var doc = JSON.parse_string(FileAccess.get_file_as_string(ATLAS_PATH))
+	if typeof(doc) != TYPE_DICTIONARY:
+		push_warning("SpeciesDB: %s is not valid JSON, skipped" % ATLAS_PATH)
+		return
+	var dir := ATLAS_PATH.get_base_dir()
+	var species: Dictionary = doc.get("species", {})
+	for p_name in species:
+		var sp: PlantSpecies = by_name.get(p_name)
+		var e = species[p_name]
+		if sp == null or not e is Dictionary:
+			continue
+		for kind in ["leaf", "leaf_autumn", "leaves", "litter", "bark", "petiole"]:
+			if e.get(kind) is String:
+				sp.tiles[kind] = dir + "/" + str(e[kind])
+		sp.leaf_color = Color.from_string(str(e.get("leaf_color", "")), sp.leaf_color)
+		sp.bark_tile_m = float(e.get("bark_tile_m", 0.4))
+		if sp.leaf_type == "":
+			sp.leaf_type = str(e.get("leaf_type", ""))
 
 
 ## "x", ["x", "y"] or nothing -> the realm names.
@@ -320,6 +348,17 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	sp.genus = str(e.get("genus", ""))
 	sp.species = str(e.get("species", ""))
 	sp.leaf_density = clampf(float(e.get("leaf_density", -1.0)), -1.0, 1.0)
+	var lf = e.get("leaf", {})
+	if lf is Dictionary:
+		var size = lf.get("size_cm", [])
+		if size is Array and size.size() == 2:
+			sp.leaf_m = (float(size[0]) + float(size[1])) * 0.005
+		sp.leaf_type = str(lf.get("type", ""))
+		sp.leaf_texture = str(lf.get("texture", ""))
+	var tint = e.get("tint", {})
+	if tint is Dictionary:
+		sp.deciduous = bool(tint.get("drop", false))
+		sp.autumn_color = Color.from_string(str(tint.get("autumn", "")), sp.autumn_color)
 	var hh = e.get("handhold", {})
 	sp.handhold = hh if hh is Dictionary else {}
 	by_name[p_name] = sp

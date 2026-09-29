@@ -2,15 +2,23 @@
 // expression": local wind drives foliage animation). Meshes carry their
 // color in vertex RGB and how much each vertex may sway in vertex alpha
 // (0 at the roots, 1 at the crown), so trunks stay put and crowns move.
-// Wind comes from the live weather: `wind_vector` is set each frame on the
-// one material every plant shares (PlantMeshes.material()); its direction
+// Wind comes from the live weather: the global `plant_wind`, set each frame
+// by WeatherFX (every plant material reads it); its direction
 // sets which way crowns lean and its strength how far and how fast.
 //
 // Textured with Look's tiny detail tiles (§AG), nearest-filtered with at
 // most two mip levels (retro_tex): bark every look_tile_m2.x metres on
 // trunks, a leafy speckle every look_tile_m2.y on crowns, and noisy 32 px
 // alpha-cutout leaf-cluster cards around the crowns so silhouettes are
-// ragged and dappled instead of round. The material
+// ragged and dappled instead of round.
+//
+// A species with its own tiles (design §AH, PlantMeshes.material_for)
+// draws those instead, times white and the plant's genes jitter (not
+// times its colour: the tiles carry it): its bark every sp_bark_tile_m
+// (0.4 m), its foliage mass on the crowns, and on the cards its leaf
+// cutout at the leaf's own size near (SP_NEAR_M), the mass for clumps and
+// far cards, inside the ragged cluster outline. sp_autumn blends the leaf
+// toward its autumn leaf and the mass by the same share (§AI). The material
 // comes from UV2.x (0 bark, 1 leaves, 2 card, 3 vine, 4 bamboo culm,
 // 5 a branchy tree's leaf-cluster card); card UVs are in UV.
 //
@@ -46,7 +54,7 @@ render_mode world_vertex_coords, cull_disabled, vertex_lighting, diffuse_lambert
 #include "res://shaders/look.gdshaderinc"
 #include "res://shaders/palette.gdshaderinc"
 
-uniform vec3 wind_vector = vec3(0.0);
+global uniform vec3 plant_wind;
 // The eye (the active camera, scene space) and how far from it leaves
 // still cast shadows (design §W, look.json light.leaf_shadow_m): beyond
 // that, in the shadow pass, leaves and leaf cards collapse to nothing
@@ -63,6 +71,28 @@ uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_tex_bark : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D look_tex_leaves : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D look_tex_leaf_card : filter_nearest_mipmap, repeat_enable;
+// A species with its own tiles (design §AH; PlantMeshes.material_for):
+// its leaf cutout (and autumn leaf), foliage mass and bark, which carry
+// its colour, so they are drawn times white and the plant's genes jitter,
+// never times the species colour. Species without tiles keep the class
+// textures above and the palette pulls.
+// Their values are taken as they are, like the vertex colours every other
+// plant and surface is drawn with (no sRGB decode), so a tile's green
+// lands where a species' own colour green would.
+uniform bool sp_tiled = false;
+uniform bool sp_has_bark = true; // (mosses, air plants, conks: no bark tile)
+uniform sampler2D sp_leaf : filter_nearest_mipmap, repeat_disable;
+uniform sampler2D sp_leaf_autumn : filter_nearest_mipmap, repeat_disable;
+uniform sampler2D sp_leaves : filter_nearest_mipmap, repeat_enable;
+uniform sampler2D sp_bark : filter_nearest_mipmap, repeat_enable;
+uniform vec3 sp_leaf_color = vec3(0.24, 0.51, 0.2);
+uniform vec3 sp_autumn_color = vec3(0.69, 0.54, 0.23);
+uniform float sp_bark_tile_m = 0.4; // the bark tile's square, m
+uniform float sp_leaf_m = 0.12; // one leaf cell on the near cards, m
+// How far into its autumn colour the species is, 0-1 (the season; §AI).
+uniform float sp_autumn = 0.0;
+// Cards nearer than this show the leaf cutout, farther the foliage mass.
+const float SP_NEAR_M = 25.0;
 
 varying float sway_w;
 varying float glow_pick;
@@ -73,6 +103,8 @@ varying float mat_id;
 varying float moss;
 varying float cluster_key;
 varying float dead_v;
+varying vec3 genes; // this plant's jitter: a warm/cool and value roll
+varying float inst;
 
 void vertex() {
 	// Texture space: the plant's own frame (so textures ride with it),
@@ -96,8 +128,8 @@ void vertex() {
 		VERTEX = root + (VERTEX - root) * fade;
 	}
 	float sway = COLOR.a;
-	float speed = length(wind_vector);
-	vec3 dir = speed > 0.01 ? wind_vector / speed : vec3(0.0);
+	float speed = length(plant_wind);
+	vec3 dir = speed > 0.01 ? plant_wind / speed : vec3(0.0);
 	float phase = float(INSTANCE_ID) * 1.37;
 	float gust = 0.65 + 0.35 * sin(TIME * (1.1 + speed * 0.06) + phase);
 	float lean = clamp(speed * 0.04, 0.0, 0.8) * gust;
@@ -113,6 +145,12 @@ void vertex() {
 		VERTEX += (sx * sin(TIME * 23.0 + phase) + sz * cos(TIME * 19.0 + phase * 1.3)) * amp;
 	}
 	sway_w = sway;
+	// Genes (PLANT_SCHEMA §4c: kin, not twins): each plant a little warmer
+	// or cooler and lighter or darker than its species, by its instance.
+	float g1 = fract(sin(float(INSTANCE_ID) * 78.233 + 1.7) * 43758.5453);
+	float g2 = fract(sin(float(INSTANCE_ID) * 39.425 + 5.1) * 24634.6345);
+	genes = vec3(1.0 + 0.12 * (g2 - 0.5), 1.0, 1.0 - 0.12 * (g2 - 0.5)) * (0.9 + 0.2 * g1);
+	inst = float(INSTANCE_ID);
 	glow_pick = step(0.5, fract(sin(float(INSTANCE_ID) * 12.9898) * 43758.5453));
 	world_pos = VERTEX;
 	// Vine strands above this plant's vine amount collapse to a point.
@@ -135,6 +173,34 @@ void vertex() {
 			&& distance(world_pos, look_eye) > look_leaf_shadow_m) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
+}
+
+float sp_hash(vec2 p) {
+	return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+// One cell of leaves on a near card (§AH: the leaf cutout is the card at
+// this range): `g` card coordinates in leaf lengths; each cell holds one
+// leaf, flipped or turned at random, some left empty. The mip comes from
+// the continuous coordinates, so the cell seams don't pick a blurry one.
+vec4 sp_leaf_cell(vec2 g, float seed) {
+	vec2 cell = floor(g);
+	vec2 f = fract(g);
+	float h = sp_hash(cell + seed);
+	if (h < 0.22) {
+		return vec4(0.0);
+	}
+	if (fract(h * 7.31) > 0.5) {
+		f.x = 1.0 - f.x;
+	}
+	if (fract(h * 13.7) > 0.5) {
+		f = f.yx;
+	}
+	vec2 dg = max(abs(dFdx(g)), abs(dFdy(g)));
+	float lod = clamp(log2(max(max(dg.x, dg.y) * 48.0, 1e-4)), 0.0, look_max_mips);
+	vec4 c = textureLod(sp_leaf, f, lod);
+	vec4 a = textureLod(sp_leaf_autumn, f, lod);
+	return vec4(mix(c.rgb, a.rgb, sp_autumn), c.a);
 }
 
 void fragment() {
@@ -189,6 +255,52 @@ void fragment() {
 		base = mat_id > 3.5 && mat_id < 4.5 ? mix(base, vec3(0.72, 0.62, 0.40), 0.85) : mix(base, vec3(0.46, 0.44, 0.41), 0.75);
 	}
 	ALBEDO = base * tex.rgb * 2.0;
+	if (sp_tiled && ((mat_id < 0.5 && sp_has_bark) || (mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)) {
+		// The species' own tiles (§AH), times white and the genes jitter.
+		// The foliage mass takes the autumn colour by the same share as the
+		// leaf cutout (autumn / leaf colour).
+		vec3 autumn_tint = mix(vec3(1.0), clamp(sp_autumn_color / max(sp_leaf_color, vec3(0.01)), 0.0, 4.0), sp_autumn);
+		// The mass tile holds a few leaves across.
+		float mass_m = clamp(sp_leaf_m * 2.5, 0.3, 3.0);
+		vec4 t;
+		if (mat_id < 0.5) {
+			// Bark, tiled every sp_bark_tile_m.
+			vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
+			t = retro_tex(sp_bark, uv / sp_bark_tile_m);
+		} else if (mat_id < 1.5) {
+			// A crown's surface: the foliage mass over its own shade.
+			vec2 uv = an.y > 0.55 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
+			vec4 m = retro_tex(sp_leaves, uv / mass_m);
+			t = vec4(mix(sp_leaf_color * 0.45, m.rgb, m.a) * autumn_tint, 1.0);
+		} else {
+			// Cards: the ragged cluster outline; inside it, near, the leaf
+			// cutout at the leaf's own size; for clumps and far cards, the
+			// foliage mass over its own shade.
+			vec2 cuv = UV;
+			if (mat_id > 4.5) {
+				cuv = fract(cluster_key * 5.3) > 0.5 ? vec2(1.0 - UV.x, UV.y) : UV;
+				cuv = fract(cluster_key * 9.7) > 0.5 ? cuv.yx : cuv;
+			}
+			float edge = retro_tex(look_tex_leaf_card, cuv).a;
+			float card_m = (length(dFdx(world_pos)) + length(dFdy(world_pos))) / max(length(dFdx(UV)) + length(dFdy(UV)), 1e-6);
+			card_m = floor(card_m * 10.0 + 0.5) / 10.0;
+			if (mat_id < 2.5 && distance(world_pos, CAMERA_POSITION_WORLD) < SP_NEAR_M) {
+				vec4 l = sp_leaf_cell(cuv * card_m / sp_leaf_m, inst * 3.1 + cluster_key * 17.0);
+				t = vec4(l.rgb, l.a * edge);
+			} else {
+				vec4 m = retro_tex(sp_leaves, cuv * card_m / mass_m);
+				t = vec4(mix(sp_leaf_color * 0.45, m.rgb, m.a) * autumn_tint, edge);
+			}
+		}
+		vec3 c = t.rgb * genes;
+		float cg = pal_greenness(c);
+		c = pal_pull(c, mat_id < 0.5 ? pal_bark_night : pal_grass_night, (mat_id < 0.5 ? 0.6 : 0.7 * cg) * nk);
+		if (dead_v > 0.5) {
+			c = mix(c, vec3(0.46, 0.44, 0.41), 0.75);
+		}
+		ALBEDO = c;
+		tex.a = t.a;
+	}
 	if (mat_id < 0.5 && moss > 0.01) {
 		// Moss on the bark: patchy, low down, on faces turned up and to one
 		// side (the damp side).

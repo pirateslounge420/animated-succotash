@@ -41,6 +41,68 @@ static func material() -> ShaderMaterial:
 	return _material
 
 
+## Species with their own tiles (design §AH) get their own material: the
+## shared one plus the species' leaf cutout, autumn leaf, foliage mass and
+## bark tiles (sp_tiled on, so the shader draws the tiles times white and
+## the plant's genes jitter, not times the species colour). Others share
+## material(). Main thread; one per species, made on first use, so only
+## the region's species are resident.
+static var _materials := {} # species index -> ShaderMaterial
+static var _tiles := {} # res:// path -> ImageTexture
+
+
+static func material_for(sp: PlantSpecies) -> ShaderMaterial:
+	if sp == null or sp.tiles.is_empty():
+		return material()
+	var idx := SpeciesDB.index_of(sp)
+	if _materials.has(idx):
+		return _materials[idx]
+	var m := material().duplicate() as ShaderMaterial
+	Look.register(m)
+	m.set_shader_parameter("sp_tiled", true)
+	var leaf := tile(sp.tiles.get("leaf", ""))
+	m.set_shader_parameter("sp_leaf", leaf)
+	m.set_shader_parameter("sp_leaf_autumn", tile(sp.tiles.get("leaf_autumn", "")) if sp.tiles.has("leaf_autumn") else leaf)
+	m.set_shader_parameter("sp_leaves", tile(sp.tiles.get("leaves", "")))
+	m.set_shader_parameter("sp_bark", tile(sp.tiles.get("bark", "")))
+	m.set_shader_parameter("sp_has_bark", sp.tiles.has("bark"))
+	m.set_shader_parameter("sp_leaf_color", sp.leaf_color)
+	m.set_shader_parameter("sp_autumn_color", sp.autumn_color)
+	m.set_shader_parameter("sp_bark_tile_m", sp.bark_tile_m)
+	# A leaf cell on the near cards: the leaf's own length, but never so
+	# small that it's below a few pixels a few meters off.
+	m.set_shader_parameter("sp_leaf_m", maxf(sp.leaf_m * 1.3, 0.12))
+	_materials[idx] = m
+	return m
+
+
+## Every species material made so far, by species index (the season
+## updates them).
+static func species_materials() -> Dictionary:
+	return _materials
+
+
+## A species tile (design §AH), read straight from its PNG (the folder is
+## .gdignore'd: 3,000 generated tiles, not imported resources), with
+## mipmaps for the shaders' two-level cap (§AG). Null if missing.
+static func tile(path: String) -> ImageTexture:
+	if path == "":
+		return null
+	if _tiles.has(path):
+		return _tiles[path]
+	var tex: ImageTexture = null
+	var bytes := FileAccess.get_file_as_bytes(path)
+	var img := Image.new()
+	if not bytes.is_empty() and img.load_png_from_buffer(bytes) == OK:
+		img.convert(Image.FORMAT_RGBA8)
+		img.generate_mipmaps()
+		tex = ImageTexture.create_from_image(img)
+	else:
+		push_warning("PlantMeshes: species tile %s is missing" % path)
+	_tiles[path] = tex
+	return tex
+
+
 ## Detail levels. HERO, for the chunks right around the player: crown
 ## lobes are geodesic spheres of 180 triangles (not 80), round parts
 ## (trunks, branches, stems, cones) have half as many sides again, so
