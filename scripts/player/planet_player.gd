@@ -870,6 +870,16 @@ func try_climb() -> bool:
 		return false
 	var t := tree_ahead(_camera_forward())
 	if t.is_empty():
+		# The reach ray missed (a leaning trunk, a fork of stems at chest
+		# height): the nearest tree whose wood is within reach anyway
+		# (from play: taking hold didn't always work).
+		var ng := trees.nearest_graph(global_position + up * 1.1, CLIMB_REACH_M)
+		if ng != null and ng.valid() and ng.chunk is TerrainChunk:
+			var i := ng.key & 0xFFFFF
+			var ch := ng.chunk as TerrainChunk
+			if i < ch.trees.size() and ch.trees[i][1] >= 3.0 and PlantMeshes.climbable(ch.tree_species(i).shape):
+				t = [ch, i]
+	if t.is_empty():
 		return false
 	_climb_chunk = t[0]
 	_climb_tree = t[1]
