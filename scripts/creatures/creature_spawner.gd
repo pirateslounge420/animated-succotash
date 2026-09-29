@@ -152,7 +152,7 @@ func update_creatures(delta: float, daylight: float) -> void:
 	# (Looked up four times a second.)
 	_cover_t -= delta
 	if player.trees != null and player.trees.under_canopy:
-		var eye := player.global_position + player.up * 1.4
+		var eye: Vector3 = player.eye_position()
 		if _cover_t <= 0.0:
 			_cover_t = 0.25
 			_cover = FoliageCover.clusters_round(player.get_world_3d().direct_space_state, eye)

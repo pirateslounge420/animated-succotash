@@ -57,6 +57,25 @@ func face(h: Vector3, pitch := 0.0) -> void:
 	player.set_view(pitch, 0.0)
 
 
+## How much of you an animal's eye sees through the leaves (0-1, as
+## Creature._shy_m() has it: FoliageCover, only in or under a crown), on
+## average over 16 points on the ground 15 m round you, 0.8 m up.
+func _seen_from_ground() -> float:
+	if not player.trees.under_canopy:
+		return 1.0
+	var eye: Vector3 = player.eye_position()
+	var space := player.get_world_3d().direct_space_state
+	var cover := FoliageCover.clusters_round(space, eye)
+	var n: Vector3 = CubeSphere.north(player.up)
+	var sum := 0.0
+	for k in 16:
+		var h: Vector3 = n.rotated(player.up, TAU * k / 16.0)
+		var d: Vector3 = world.dir_of(player.global_position + h * 15.0)
+		var from: Vector3 = world.to_scene(d, PlanetConst.RADIUS_M + main.chunks.ground_height(d) + 0.8)
+		sum += FoliageCover.see_through(from, eye, cover)
+	return sum / 16.0
+
+
 func _describe() -> String:
 	var c := player.trees.climb
 	if not player.climbing or c.g == null:
@@ -292,6 +311,35 @@ func _initialize() -> void:
 				await release("crouch")
 				await frames(20)
 				ok(player.perched, "Shift on the limb perches there (%s)" % ("on top" if player._perch_local == Vector3.INF else "tucked in against its side"))
+				await press("move_forward")
+				await frames(20)
+				await release("move_forward")
+				await frames(10)
+				# Out to its end, crouched there in the leaves (from play: a
+				# hiding place, "for a hide and seek situation"): how much of
+				# you do animals on the ground round the tree see?
+				var hid0 := _seen_from_ground()
+				await press("move_forward")
+				var last_hold := -1
+				var stalled := 0
+				for s6 in 160:
+					await frames(15)
+					var hh: int = c.hold[c.lead] if player.climbing else -1
+					stalled = stalled + 1 if hh == last_hold else 0
+					last_hold = hh
+					if stalled >= 12 or not player.climbing:
+						break
+				await release("move_forward")
+				await frames(15)
+				var out_m: float = (g.local[c.hold[c.lead]] - g.local[best]).length() if player.climbing else 0.0
+				await press("crouch")
+				await frames(3)
+				await release("crouch")
+				await frames(30)
+				var hid := _seen_from_ground()
+				print("[climb] out to the end: %.1f m out along it, %s, perched %s, under the crown %s; seen from the ground round the tree: %.0f %% (%.0f %% where you perched nearer the trunk)" % [
+					out_m, _describe(), player.perched, player.trees.under_canopy, hid * 100.0, hid0 * 100.0])
+				ok(player.perched and hid < 0.5, "out at the end of the limb, perched in its leaves, you're mostly hidden (%.0f %% seen)" % (hid * 100.0))
 				await press("move_forward")
 				await frames(20)
 				await release("move_forward")

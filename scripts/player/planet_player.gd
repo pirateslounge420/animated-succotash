@@ -476,6 +476,12 @@ func camera() -> Camera3D:
 	return _camera
 
 
+## Where your eyes are (scene): lower crouched or perched, tucked in (what
+## animals look for through the leaves, CreatureSpawner).
+func eye_position() -> Vector3:
+	return global_position + up * (CROUCH_EYE_Y if crouching or perched else EYE_Y)
+
+
 ## Where the crosshair is, for the bow and the spear alike: the first
 ## thing a ray along the view meets (the world, trees, creatures' and
 ## people's parts, Hitboxes), else 400 m along it. The ray starts where the
