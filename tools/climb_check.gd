@@ -144,6 +144,18 @@ func _initialize() -> void:
 	await release("move_forward")
 	await frames(10)
 	print("[climb] up the trunk: %.1f m (of %.1f), stopped: %s" % [top, g.height_m, _describe()])
+	if player.climbing and top < g.height_m * 0.7:
+		# Why it stopped: the wood in reach of the higher hand, how steeply
+		# each goes up from it and how thick it is.
+		var c0 := player.trees.climb
+		var hi: int = c0.hold[0] if g.local[c0.hold[0]].y >= g.local[c0.hold[1]].y else c0.hold[1]
+		var seen := 0
+		for j in c0._reachable(hi, true):
+			var dd: Vector3 = g.local[j] - g.local[hi]
+			if dd.length() < 0.05 or seen >= 12:
+				continue
+			seen += 1
+			print("    in reach: %d (limb %d, r %.2f m, %.1f m up), %.2f m away, %.2f of the way up%s" % [j, g.limb[j], g.radius[j], g.local[j].y, dd.length(), dd.normalized().y, "" if g.radius[j] >= TreeClimb.GRIP_R_M else " (too thin)"])
 	ok(top > g.height_m * 0.35, "climbs up into the crown (%.1f m of %.1f)" % [top, g.height_m])
 	# 2b. Diagonal: W and D together from partway up: higher and round.
 	if player.climbing:
@@ -154,6 +166,7 @@ func _initialize() -> void:
 				break
 		await release("move_back")
 		await frames(10)
+		print("[climb] down to %.1f m for the diagonal: %s" % [alt(), _describe()])
 		# (Round the wood you hold, not the tree's foot: a leaning trunk.)
 		var cc := player.trees.climb
 		var rel0 := player.global_position - g.pos(cc.hold[cc.lead])

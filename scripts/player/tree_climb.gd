@@ -271,6 +271,10 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 	var looking_out := on_trunk and out_l.length() > 1e-3 and screen.dot(out_l.normalized()) > 0.3
 	if looking_out:
 		dir = screen + tup * 0.25 * input.y
+	elif on_trunk and absf(input.x) > 0.3 and absf(input.y) > 0.3:
+		# A diagonal: the reach is up (or down) the wood, and the swing
+		# round it comes below; aimed sideways, it stepped off onto a limb.
+		dir = tup * signf(input.y) + screen * 0.3
 	elif on_trunk:
 		dir = tup * input.y + screen * 1.2
 	else:
@@ -293,7 +297,8 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 				return ["drop"]
 	# Round a limb: A/D (more than W/S) takes you round it, over the top,
 	# down its side, underneath.
-	if not on_trunk and absf(input.x) > 0.3 and absf(input.x) >= absf(input.y):
+	# (A diagonal, W and D alike, goes along the limb.)
+	if not on_trunk and absf(input.x) > 0.3 and absf(input.x) > absf(input.y) + 0.2:
 		return _round_limb(input.x, right_l)
 	var move := _toward(dir, on_trunk)
 	if move.is_empty() and looking_out and input.y > 0.3:

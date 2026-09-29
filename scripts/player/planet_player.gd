@@ -1694,7 +1694,7 @@ func _cling_step(delta: float) -> void:
 		_kick_t = 2.0 / 60.0
 		return
 	# Held to the face: WASD crawls over it, up and down and round a trunk
-	# (from play); left alone you slip slowly.
+	# (from play); left alone you hold still.
 	var input := Input.get_vector("move_left", "move_right", "move_back", "move_forward")
 	var n := _wall_n
 	var wall_up := up - n * up.dot(n)
@@ -1703,6 +1703,13 @@ func _cling_step(delta: float) -> void:
 	var wall_r := cam_r - n * cam_r.dot(n)
 	wall_r = wall_r.normalized() if wall_r.length() > 0.1 else wall_up.cross(n)
 	var crawl := (wall_up * input.y + wall_r * input.x) * CLING_CRAWL
+	if input.length() < 0.2 and CLING_SLIDE <= 0.0:
+		# Left alone it holds still (from play: no slip-down). Pressing
+		# into a round trunk would slide you round and down it.
+		velocity = Vector3.ZERO
+		_kick_t = 2.0 / 60.0
+		_fall_top = world.radius_of(global_position)
+		return
 	velocity = -n * 1.5 + crawl - (up * CLING_SLIDE if input.length() < 0.2 and CLING_SLIDE > 0.0 else Vector3.ZERO)
 	move_and_slide()
 	var touching := false
@@ -1714,7 +1721,9 @@ func _cling_step(delta: float) -> void:
 			_wall_n = _wall_n.lerp(cn, 0.5).normalized()
 	if input.length() > 0.2:
 		_face((-_wall_n - up * _wall_n.dot(up)).normalized(), delta * 3.0)
-	if is_on_floor() or not touching:
+	# Down onto the ground ends it (not crawling up off it: just off the
+	# ground the feet still read as on it); so does losing the face.
+	if (is_on_floor() and input.y <= 0.2) or not touching:
 		clinging = false
 		velocity = Vector3.ZERO
 	_kick_t = 2.0 / 60.0
