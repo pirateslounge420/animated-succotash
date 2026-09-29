@@ -4,6 +4,24 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — §AJ + §AL canopy on the skeleton; Mike's play notes (jump, text, HUD)
+- **§AJ + §AL canopy** (the tree/plant build, step 3):
+  - **No hull at any LOD:** leaves are cluster cards on order-3+ twigs, and each card keeps its mass tile's holes (cut to `canopy.gap`), so sky shows through every card. Near (25 m), cluster cards show the leaf cutout at the leaf's real size. Far: every third cluster at 1.9×, over the order-1/2 lines.
+  - **Clusters sized to the see-through test:** the anchors are placed first, then all clusters are scaled together until the share of sky seen looking straight up from under the crown equals the species' `canopy.gap` (a 24×24 raster from below; each cluster passes `gap` of the light and overlaps multiply). By the cluster spheres, a paper birch reads 0.36 against its 0.45 gap (`tools/cover_check.gd`).
+  - **Real-tree fixes from the renders** (Mike: "just make it look like the trees do in real life but stylistically"):
+    - the twig and anchor budgets were spent from the bottom up and left a spruce's top half bare, so both are now shuffled over the crown, and top whorls always exist, making a spire to the leader;
+    - palm fronds arch, older ones more, with leaflets hanging in a V under the rachis.
+  - **Wind (§AJ 5, §AL 5):** each twig has its own sway phase, carried on its wood (CUSTOM0.w) and on its clusters (UV2.y), so the gaps open and close with the twig.
+  - **Dappled ground shade (§AJ 3):** `CanopyDapple` is new.
+    - Each branchy tree's clusters are seen from above and stamped (a 32 px stamp per layout, turned in quarter turns to the tree's yaw, scaled and moved by the lean) into a 512² shade map per chunk (about 0.5 m texels), which the terrain shader samples by UV. The map wobbles a little in the wind.
+    - Branchy trees are left out of the old disc bake; other trees keep the disc.
+    - Cost: 52 ms per chunk on the worker, against 1,564 ms of plant placement (`tools/chunk_time.gd` now times prepare and shade); 28 of 36 camp chunks have a map.
+    - With the shadow map on, the near clusters cast real shadows and the map fills in beyond `leaf_shadow_m`.
+  - **Tools:**
+    - `species_row`: UP=1 (under the first tree, looking up), PERCH=<creature> (sits it on a limb in the crown), SIDE_M=x (looks at the perch level), ANCHORS=1 (the §AL debug view: a dot at every anchor).
+    - `measure_look.py` prints the sky share.
+  - Reference still has: shrubs are still hull lumps (not skeleton plants); no baked far impostor (the far mesh is fewer, bigger cards with holes); the rendered dev checks (a) winter row with anchors and (b) birch look-up and perch are rendering now and get their own entry.
+
 ## 2026-09-29 — §AK trees grown from their architecture block
 - **Skeleton** (`TreeArch`, new): 149 tree-tier woody species with an `architecture` block now grow their trunk and branches from it. Cacti, bamboo, lianas, mangroves, knee-roots and shrubs keep their own builders.
   - Model programs:

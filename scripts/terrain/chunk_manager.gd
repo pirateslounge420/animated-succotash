@@ -275,9 +275,11 @@ func _compute_base(key: Vector3i) -> void:
 		return
 	var data := TerrainChunk.compute(key, map, rivers)
 	var trees := VegetationPlacer.compute_base(key, map, data)
-	TerrainChunk.bake_canopy_shade(data, trees.hosts)
-	TerrainChunk.prepare_meshes(data)
+	TerrainChunk.set_anchor(data)
 	data["plants"] = VegetationPlacer.prepare(trees.plants, data.center, data.anchor_r, trees.hosts, key, map.terrain.world_seed)
+	TerrainChunk.bake_canopy_shade(data, trees.hosts)
+	data["dapple"] = CanopyDapple.bake(data.center, data.plants)
+	TerrainChunk.prepare_meshes(data)
 	data["hosts"] = trees.hosts
 	# The trees' meshes, if this is the first time a species shows up.
 	PlantMeshes.warm(data.plants.keys())

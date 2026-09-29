@@ -309,9 +309,7 @@ static func mesh_arrays(data: Dictionary, fine: bool, anchor_r: float) -> Array:
 ## Both meshes' arrays and the (fine) collision faces, computed on the
 ## worker after the canopy shade is baked into the colors.
 static func prepare_meshes(data: Dictionary) -> void:
-	var mid := (QUADS / 2) * (QUADS + 1) + QUADS / 2
-	var anchor_r := PlanetConst.RADIUS_M + (data.heights as PackedFloat32Array)[mid]
-	data["anchor_r"] = anchor_r
+	var anchor_r := set_anchor(data)
 	data["mesh_coarse"] = mesh_arrays(data, false, anchor_r)
 	var fine := mesh_arrays(data, true, anchor_r)
 	data["mesh_fine"] = fine
@@ -322,6 +320,15 @@ static func prepare_meshes(data: Dictionary) -> void:
 	for k in indices.size():
 		faces[k] = local[indices[k]]
 	data["faces"] = faces
+
+
+## The chunk's anchor radius (its middle's ground), into data.anchor_r;
+## the trees are placed relative to it before the meshes are made.
+static func set_anchor(data: Dictionary) -> float:
+	var mid := (QUADS / 2) * (QUADS + 1) + QUADS / 2
+	var anchor_r := PlanetConst.RADIUS_M + (data.heights as PackedFloat32Array)[mid]
+	data["anchor_r"] = anchor_r
+	return anchor_r
 
 
 ## Vertex normals from central differences on the padded grid (`pd`, `ph`
@@ -448,7 +455,12 @@ static func bake_canopy_shade(data: Dictionary, hosts: Array) -> void:
 	var quad_m := PlanetConst.CIRCUMFERENCE_M / 4.0 / CHUNKS_PER_FACE / QUADS
 	var shade := PackedFloat32Array()
 	shade.resize(n * n)
+	var all := SpeciesDB.all()
 	for host in hosts:
+		# Trees grown from their architecture shade the ground through
+		# their clusters instead (CanopyDapple, §AJ 3).
+		if TreeArch.grows(all[int(host[3])]):
+			continue
 		var uv := CubeSphere.face_uv(key.x, host[0])
 		var gx := (uv.x + 1.0) * 0.5 * CHUNKS_PER_FACE * QUADS - key.y * QUADS
 		var gy := (uv.y + 1.0) * 0.5 * CHUNKS_PER_FACE * QUADS - key.z * QUADS
@@ -727,8 +739,17 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 	var anchor: Vector3 = world.to_scene(center_dir, anchor_radius)
 	position = anchor
 
-	_coarse_mesh = _ground_mesh(data.mesh_coarse, "Ground")
-	_fine_mesh = _ground_mesh(data.mesh_fine, "GroundFine")
+	var dapple: Image = data.get("dapple")
+	var ground_mat := _terrain_mat
+	if dapple != null:
+		# This chunk's own copy of the ground material, with its dappled
+		# canopy shade (CanopyDapple).
+		ground_mat = _terrain_mat.duplicate()
+		ground_mat.set_shader_parameter("dapple_tex", ImageTexture.create_from_image(dapple))
+		ground_mat.set_shader_parameter("dapple_span", CanopyDapple.span_m())
+		ground_mat.set_shader_parameter("dapple_on", true)
+	_coarse_mesh = _ground_mesh(data.mesh_coarse, "Ground", ground_mat)
+	_fine_mesh = _ground_mesh(data.mesh_fine, "GroundFine", ground_mat)
 	_fine_mesh.visible = false
 
 	# Ground collision comes later, a strip at a time and only near the
@@ -775,13 +796,13 @@ func build_collision_part() -> void:
 		_col_faces = PackedVector3Array()
 
 
-func _ground_mesh(arrays: Array, node_name: String) -> MeshInstance3D:
+func _ground_mesh(arrays: Array, node_name: String, mat: ShaderMaterial) -> MeshInstance3D:
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	var mi := MeshInstance3D.new()
 	mi.name = node_name
 	mi.mesh = mesh
-	mi.material_override = _terrain_mat
+	mi.material_override = mat
 	add_child(mi)
 	return mi
 

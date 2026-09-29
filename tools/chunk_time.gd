@@ -36,6 +36,9 @@ func _run() -> void:
 	var cj := int((uv.y + 1.0) * 0.5 * TerrainChunk.CHUNKS_PER_FACE)
 	var t_terrain := 0
 	var t_plants := 0
+	var t_prepare := 0
+	var t_dapple := 0
+	var dappled := 0
 	var n := 0
 	for dj in range(-3, 3):
 		for di in range(-3, 3):
@@ -45,8 +48,16 @@ func _run() -> void:
 			var t1 := Time.get_ticks_usec()
 			var base := VegetationPlacer.compute_base(key, map, data)
 			VegetationPlacer.compute_detail(key, map, data, base.hosts)
+			var t2 := Time.get_ticks_usec()
+			TerrainChunk.set_anchor(data)
+			var placed := VegetationPlacer.prepare(base.plants, data.center, data.anchor_r, base.hosts, key, map.terrain.world_seed)
+			var t3 := Time.get_ticks_usec()
+			if CanopyDapple.bake(data.center, placed) != null:
+				dappled += 1
+			t_dapple += Time.get_ticks_usec() - t3
 			t_terrain += t1 - t0
-			t_plants += Time.get_ticks_usec() - t1
+			t_plants += t2 - t1
+			t_prepare += t3 - t2
 			n += 1
-	print("[chunks] %d species; %d chunks round the camp: terrain %.0f ms, plants %.0f ms each" % [SpeciesDB.all().size(), n, t_terrain / 1000.0 / n, t_plants / 1000.0 / n])
+	print("[chunks] %d species; %d chunks round the camp: terrain %.0f ms, plants %.0f ms, prepare %.0f ms, dappled shade %.0f ms each (%d with a shade map)" % [SpeciesDB.all().size(), n, t_terrain / 1000.0 / n, t_plants / 1000.0 / n, t_prepare / 1000.0 / n, t_dapple / 1000.0 / n, dappled])
 	quit()

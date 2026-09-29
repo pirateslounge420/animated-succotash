@@ -316,8 +316,9 @@ static func _laterals_on_stem(g: _G, st: int, excurrent: bool) -> Array[int]:
 			var ang := g.rng.randf_range(g.angle.x, g.angle.y)
 			var d := Vector3(cos(a) * sin(ang), cos(ang), sin(a) * sin(ang)).normalized()
 			var length := g.crown_r * prof / maxf(sin(ang), 0.35) * g.rng.randf_range(0.8, 1.15)
-			if length < 0.02:
-				continue
+			# (The top whorls stay short, but they're there: a spire of
+			# shoots to the leader's tip, not a bare pole.)
+			length = maxf(length, 0.025)
 			var lift := 0.18 - g.droop * 0.4
 			if g.model == "troll" or g.habit == "weeping":
 				lift = -0.25 - g.droop * 0.5
@@ -367,9 +368,18 @@ static func _order(g: _G, parents: Array[int], order: int, budget: int) -> Array
 		if pc.dead and order > 2:
 			continue
 		total += pc.length() * (1.0 - start_f)
-	var step := maxf(g.spacing * pow(0.45, order - 1), total / maxf(float(budget), 1.0))
+	var pairs_n := 2.0 if g.arrangement in ["opposite", "decussate"] else 1.0
+	var step := maxf(g.spacing * pow(0.45, order - 1), total * pairs_n * 1.1 / maxf(float(budget), 1.0))
 	var kind := K.BRANCH if order == 2 else K.TWIG
-	for pi in parents:
+	# In a shuffled order, so that if the budget runs out it runs out
+	# evenly over the crown, not all at the top.
+	var queue: Array[int] = parents.duplicate()
+	for i in range(queue.size() - 1, 0, -1):
+		var jj := g.rng.randi_range(0, i)
+		var t := queue[i]
+		queue[i] = queue[jj]
+		queue[jj] = t
+	for pi in queue:
 		var pc: TreeLayouts.Piece = g.sk.pieces[pi]
 		if pc.dead and order > 2:
 			continue
@@ -446,6 +456,70 @@ static func _size_clusters(g: _G, crown_r: float) -> void:
 	var r := clampf(sqrt(target / (n * PI * 0.8)), g.cluster_r, 0.125)
 	for an in g.sk.anchors:
 		an[5] = r * g.rng.randf_range(0.85, 1.15)
+	_fit_gap(g)
+
+
+## Then all scaled together until, looking straight up from under the
+## crown, the share of sky that gets through is the species' canopy.gap
+## (§AJ 4, the see-through test): the clusters seen from below rastered on
+## a small grid, each passing `gap` of the light (its cards are cut out to
+## it), overlaps multiplying; the mean over the middle of the crown's
+## footprint (where you'd stand and look up), by bisection on the scale.
+static func _fit_gap(g: _G) -> void:
+	var an: Array = g.sk.anchors
+	var reach := 0.0
+	for a in an:
+		var p: Vector3 = a[0]
+		reach = maxf(reach, Vector2(p.x, p.z).length())
+	if reach < 1e-3:
+		return
+	var lo := 0.4
+	var hi := 3.0
+	for it in 9:
+		var mid := (lo + hi) * 0.5
+		if _sky_share(an, reach, mid, g.gap) > g.gap:
+			lo = mid
+		else:
+			hi = mid
+	var k := (lo + hi) * 0.5
+	for a in an:
+		a[5] = minf(float(a[5]) * k, 0.2)
+
+
+const FIT_N := 24
+
+
+## The share of sky seen from below through the middle of the footprint
+## (radius `reach` * 0.75) with every cluster's radius times `k`.
+static func _sky_share(an: Array, reach: float, k: float, gap: float) -> float:
+	var n := FIT_N
+	var cell := reach * 2.0 / n
+	var trans := PackedFloat32Array()
+	trans.resize(n * n)
+	trans.fill(1.0)
+	for a in an:
+		var p: Vector3 = (a[0] as Vector3) + (a[2] as Vector3) * float(a[5]) * 0.45
+		var rr: float = float(a[5]) * 0.9 * k
+		var cx := (p.x + reach) / cell
+		var cz := (p.z + reach) / cell
+		var rp := rr / cell
+		for z in range(maxi(0, int(cz - rp)), mini(n, int(cz + rp) + 1)):
+			for x in range(maxi(0, int(cx - rp)), mini(n, int(cx + rp) + 1)):
+				var dx := x + 0.5 - cx
+				var dz := z + 0.5 - cz
+				if dx * dx + dz * dz <= rp * rp:
+					trans[z * n + x] *= gap
+	var sum := 0.0
+	var cnt := 0
+	var r2 := (n * 0.5 * 0.75) * (n * 0.5 * 0.75)
+	for z in n:
+		for x in n:
+			var dx := x + 0.5 - n * 0.5
+			var dz := z + 0.5 - n * 0.5
+			if dx * dx + dz * dz <= r2:
+				sum += trans[z * n + x]
+				cnt += 1
+	return sum / maxf(cnt, 1)
 
 
 static func _place_anchors(g: _G) -> void:
@@ -459,10 +533,20 @@ static func _place_anchors(g: _G) -> void:
 			total += pc.length() * 0.6
 	var step := maxf(g.cluster_r * 1.5, total / MAX_ANCHORS)
 	var keep := clampf(1.0 - g.gap * 0.45, 0.3, 1.0)
+	# Twigs in a shuffled order: if the anchors run out, they run out
+	# evenly over the crown.
+	var twigs: Array[int] = []
 	for pi in g.sk.pieces.size():
 		var pc: TreeLayouts.Piece = g.sk.pieces[pi]
-		if pc.order != finest or pc.dead:
-			continue
+		if pc.order == finest and not pc.dead:
+			twigs.append(pi)
+	for i in range(twigs.size() - 1, 0, -1):
+		var jj := g.rng.randi_range(0, i)
+		var t := twigs[i]
+		twigs[i] = twigs[jj]
+		twigs[jj] = t
+	for pi in twigs:
+		var pc: TreeLayouts.Piece = g.sk.pieces[pi]
 		var length := pc.length()
 		var s := length
 		var flip := 1.0
@@ -542,7 +626,9 @@ static func _palm(g: _G, a: Dictionary) -> void:
 			# Young fronds stand up in the middle, old ones splay and hang.
 			var el := lerpf(deg_to_rad(70.0), deg_to_rad(-5.0), float(k) / n)
 			var fd := Vector3(cos(az) * cos(el), sin(el), sin(az) * cos(el)).normalized()
-			var f := g.piece(top, fd, frond_l * g.rng.randf_range(0.85, 1.1), r0 * 0.35, r0 * 0.08, -droop * 0.9, K.TWIG, 1, st, k + 1)
+			# (Arching: the older, lower fronds bow more toward their tips.)
+			var arch_k := -(droop * 0.9 + 0.35 * float(k) / n)
+			var f := g.piece(top, fd, frond_l * g.rng.randf_range(0.85, 1.1), r0 * 0.35, r0 * 0.08, arch_k, K.TWIG, 1, st, k + 1)
 			var fp: TreeLayouts.Piece = g.sk.pieces[f]
 			fp.frond = true
 			var length := fp.length()
@@ -554,8 +640,10 @@ static func _palm(g: _G, a: Dictionary) -> void:
 				var tan: Vector3 = q[1]
 				var side := tan.cross(Vector3.UP)
 				side = side.normalized() if side.length() > 1e-3 else Vector3.RIGHT
+				# Leaflets both sides, hanging in a V below the rachis.
 				for sd in [1.0, -1.0]:
-					g.sk.anchors.append([p, tan, side * sd, f, 1.0, g.cluster_r * g.rng.randf_range(0.9, 1.1)])
+					var hang: Vector3 = (side * sd + Vector3.DOWN * 0.45).normalized()
+					g.sk.anchors.append([p, tan, hang, f, 1.0, g.cluster_r * g.rng.randf_range(0.9, 1.1)])
 				s += step
 		# A tree fern's skirt: dead fronds hanging against the trunk.
 		if fern and g.dead_share > 0.0:

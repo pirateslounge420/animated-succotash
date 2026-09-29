@@ -138,6 +138,18 @@ void vertex() {
 	float lean = clamp(speed * 0.04, 0.0, 0.8) * gust;
 	float flutter = sin(TIME * 3.3 + phase * 2.1) * 0.05 * clamp(speed * 0.12, 0.0, 1.0);
 	VERTEX += dir * (lean + flutter) * sway;
+	// A branchy tree's twigs each sway on their own phase, and the
+	// clusters they carry with them, so the gaps in the crown open and
+	// close (§AJ 5): the phase in CUSTOM0.w on the twig's wood, in UV2.y on
+	// its clusters.
+	float tw = mat_id > 4.5 ? UV2.y : (mat_id < 0.5 ? CUSTOM0.w : -1.0);
+	if (tw >= 0.0 && sway > 0.0) {
+		float size_k = clamp(length(MODEL_MATRIX[1].xyz) / 15.0, 0.5, 1.5);
+		float amp = (0.06 + 0.12 * clamp(speed * 0.1, 0.0, 1.0)) * size_k * sway / 0.45;
+		vec3 side_w = speed > 0.01 ? normalize(cross(dir, normalize(MODEL_MATRIX[1].xyz)) + vec3(1e-4)) : normalize(MODEL_MATRIX[0].xyz);
+		float t1 = TIME * (1.6 + tw * 0.9) + tw * 6.2832 + phase;
+		VERTEX += (side_w * sin(t1) + dir * 0.6 * sin(t1 * 1.37 + 1.1) + normalize(MODEL_MATRIX[1].xyz) * 0.3 * sin(t1 * 0.73 + 2.0)) * amp;
+	}
 	// Rustled (brushed through or bumped, TreeContact): a quick shiver of
 	// the whole crown, a few tens of centimeters on a big tree.
 	float rustle = INSTANCE_CUSTOM.b;
@@ -297,12 +309,15 @@ void fragment() {
 			float edge = retro_tex(look_tex_leaf_card, cuv).a;
 			float card_m = (length(dFdx(world_pos)) + length(dFdy(world_pos))) / max(length(dFdx(UV)) + length(dFdy(UV)), 1e-6);
 			card_m = floor(card_m * 10.0 + 0.5) / 10.0;
-			if (mat_id < 2.5 && distance(world_pos, CAMERA_POSITION_WORLD) < SP_NEAR_M) {
+			if (distance(world_pos, CAMERA_POSITION_WORLD) < SP_NEAR_M) {
 				vec4 l = sp_leaf_cell(cuv * card_m / sp_leaf_m, inst * 3.1 + cluster_key * 17.0);
 				t = vec4(l.rgb, l.a * edge);
 			} else {
 				vec4 m = retro_tex(sp_leaves, cuv * card_m / mass_m);
-				t = vec4(mix(sp_leaf_color * 0.45, m.rgb, m.a) * autumn_tint, edge);
+				// A branchy tree's cluster keeps the mass tile's holes
+				// (cut out to canopy.gap, §AJ 2): sky through every card.
+				float a = mat_id > 4.5 ? edge * step(0.5, m.a) : edge;
+				t = vec4(mix(sp_leaf_color * 0.45, m.rgb, m.a) * autumn_tint, a);
 			}
 		}
 		vec3 c = t.rgb * genes;

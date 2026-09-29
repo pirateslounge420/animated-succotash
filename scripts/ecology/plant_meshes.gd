@@ -527,6 +527,10 @@ class _Builder:
 	## Vine strands: UV2.y holds each strand's 0-1 key; the foliage shader
 	## shows the strands whose key is under the plant's vine amount.
 	var strand_key := 0.0
+	## A branchy tree's twig sway phase (0-1, per twig; -1 none): its wood
+	## carries it in CUSTOM0.w, its leaf clusters in UV2.y, so a cluster
+	## sways with the twig that holds it (§AJ 5, §AL 5).
+	var twig_phase := -1.0
 	## Where vines can hang from: [center, radii] per crown lobe or cone.
 	var hang_from: Array = []
 
@@ -542,7 +546,8 @@ class _Builder:
 		var m := Vector2(mat, strand_key)
 		uv2.append_array([m, m, m])
 		parts.append_array([part, part, part])
-		cu.append_array([0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, -1.0])
+		var w := twig_phase if mat < 0.5 else -1.0
+		cu.append_array([0.0, 0.0, 0.0, w, 0.0, 0.0, 0.0, w, 0.0, 0.0, 0.0, w])
 
 	## A leaf-cluster card (alpha cutout), square with half-size `s`, facing
 	## `facing`, spun randomly.
@@ -792,8 +797,10 @@ class _Builder:
 			if pc.frond:
 				ring = 3
 			strand_key = 1.0 if pc.dead else 0.0
+			twig_phase = _twig_phase(sk, pc) if (order >= 3 or pc.frond) else -1.0
 			wood_tube(pts, rad, ring, order > 0, sw)
 			strand_key = 0.0
+			twig_phase = -1.0
 		# The leaf clusters at the anchors.
 		var list: Array = sk.anchors
 		if far:
@@ -824,13 +831,21 @@ class _Builder:
 					tone = col.lightened(0.08)
 				2:
 					tone = col.darkened(0.08)
+			twig_phase = _twig_phase(sk, pc)
 			if pc.frond:
 				frond_card(p + hang * r * 0.55, tan, hang, r, tone, TWIG_SWAY, key)
 			else:
 				# The card's middle a little out from the twig, so the twig
 				# runs into it: its anchor on the wood.
 				cluster(p + hang * r * 0.45, r, 0.8, tone, TWIG_SWAY, key)
+			twig_phase = -1.0
 			hang_from.append([p, Vector3(r, r, r)])
+
+	## A twig's sway phase: from where it leaves its parent, so the twig and
+	## every cluster on it share it.
+	func _twig_phase(sk: TreeLayouts.Skeleton, pc: TreeLayouts.Piece) -> float:
+		var p := pc.pts[0]
+		return fposmod(p.x * 41.3 + p.y * 17.9 + p.z * 29.1, 1.0)
 
 	## A buttress fin: a flat plank of bark from the trunk out along `dir`,
 	## `height` up the trunk, `reach` out at the ground.
@@ -851,7 +866,7 @@ class _Builder:
 	## A palm's leaflet card: flat along the frond, hanging to one side.
 	func frond_card(center: Vector3, along: Vector3, side: Vector3, r: float, col: Color, sway: float, key: float) -> void:
 		var a1 := along.normalized() * r
-		var a2 := side.normalized() * r * 0.7
+		var a2 := side.normalized() * r
 		var nrm := a1.cross(a2).normalized()
 		if nrm.y < 0.0:
 			nrm = -nrm
@@ -863,7 +878,7 @@ class _Builder:
 				n.append(nrm)
 				c.append(Color(col, sway))
 				uv.append(q[jj])
-				uv2.append(Vector2(5.0, 0.0))
+				uv2.append(Vector2(5.0, twig_phase))
 				parts.append(-1)
 				cu.append_array([center.x, center.y, center.z, key])
 
@@ -994,7 +1009,7 @@ class _Builder:
 					n.append(nrm)
 					c.append(Color(col * (0.88 + 0.12 * nrm.y), sway))
 					uv.append(q[j])
-					uv2.append(Vector2(5.0, 0.0))
+					uv2.append(Vector2(5.0, twig_phase))
 					parts.append(-1)
 					cu.append_array([center.x, center.y, center.z, key])
 

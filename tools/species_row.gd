@@ -27,6 +27,14 @@ extends SceneTree
 ## _run_clock: a temperate year's temperature, rain every 9 days); LOOK_H: where on the trees the camera aims (share of
 ## their height, default 0.45; 0 looks at their feet); TOP=1 looks down
 ## on the row from 30 m up.
+## UP=1 stands under the first tree, 1.4 m up and 0.8 m off its trunk,
+## looking straight up into its crown (the §AJ 4 see-through test: run
+## tools/look/measure_look.py on the frame for the sky share). PERCH=<creature>
+## sits that creature on a limb inside the first tree's crown; SIDE_M=x
+## looks at it level from x m away (hidden from the side, visible from
+## below through the gaps). ANCHORS=1 marks every leaf-cluster anchor
+## with a magenta dot (with BARE=1: the §AL debug view, every dot on a
+## twig).
 
 var out_dir := "/tmp/shots"
 
@@ -117,6 +125,8 @@ func _run() -> void:
 			var bare_m := (mmi.material_override as ShaderMaterial).duplicate() as ShaderMaterial
 			bare_m.set_shader_parameter("leaf_season", 0.0)
 			mmi.material_override = bare_m
+		if OS.get_environment("ANCHORS") == "1":
+			_mark_anchors(sp, at, b, maxi(layout, 0))
 		print("[species] %s: %s, tiles %s" % [sp.name, sp.genus, sp.tiles.keys()])
 	main.leaf_season._scan_t = 0.0 # take the row now
 	var eye: Vector3 = world.to_scene(cam_d, PlanetConst.RADIUS_M + main.chunks.ground_height(cam_d) + 1.7)
@@ -133,6 +143,21 @@ func _run() -> void:
 		var above: Vector3 = world.to_scene((row_d - n * (6.0 if OS.get_environment("TOP_M") == "" else 3.0) / PlanetConst.RADIUS_M + e * (0.0 if OS.get_environment("TOP_M") == "" else -11.0) / PlanetConst.RADIUS_M).normalized(), PlanetConst.RADIUS_M + main.chunks.ground_height(row_d) + (float(OS.get_environment("TOP_M")) if OS.get_environment("TOP_M") != "" else 30.0))
 		var ground_mid: Vector3 = world.to_scene(row_d, PlanetConst.RADIUS_M + main.chunks.ground_height(row_d))
 		cam.global_transform = Transform3D(Basis.looking_at((ground_mid - above).normalized(), n), above)
+	var first_at: Vector3 = trees[0].global_position if not trees.is_empty() else mid
+	var first_d := (row_d + e * (-(names.size() - 1) * 0.5 * spacing) / PlanetConst.RADIUS_M).normalized()
+	var first_h := height
+	var first_sp := SpeciesDB.find(names[0].strip_edges())
+	if height_env == "auto" and first_sp:
+		first_h = clampf((first_sp.height_m.x + first_sp.height_m.y) * 0.5 * 0.6, 8.0, 22.0)
+	var perch_at := Vector3.INF
+	if OS.get_environment("PERCH") != "" and first_sp:
+		perch_at = _perch(first_sp, first_at, first_d, e, first_h, maxi(layout, 0), OS.get_environment("PERCH"))
+	if OS.get_environment("UP") == "1":
+		var foot := first_at + first_d * 1.4 + e * 0.8
+		cam.global_transform = Transform3D(Basis.looking_at(first_d, n), foot)
+	if OS.get_environment("SIDE_M") != "" and perch_at != Vector3.INF:
+		var side_eye := perch_at - n * float(OS.get_environment("SIDE_M"))
+		cam.global_transform = Transform3D(Basis.looking_at((perch_at - side_eye).normalized(), first_d), side_eye)
 	cam.current = true
 
 	var tag := OS.get_environment("TAG") if OS.get_environment("TAG") != "" else "species"
@@ -244,3 +269,51 @@ func _hide_vegetation(node: Node) -> void:
 		if c is MultiMeshInstance3D and c.has_meta("species"):
 			(c as MultiMeshInstance3D).visible = false
 		_hide_vegetation(c)
+
+
+## Sit creature `who` on a limb inside `sp`'s crown (the tree at `at`, up
+## `d`, east `e`, `h` m tall, layout `layout`): on the order-1 limb whose
+## point 70 % out is highest below the crown's top quarter. Returns where.
+func _perch(sp: PlantSpecies, at: Vector3, d: Vector3, e: Vector3, h: float, layout: int, who: String) -> Vector3:
+	var csp := CreatureSpecies.find(who)
+	if csp == null:
+		print("[species] no creature named '%s'" % who)
+		return Vector3.INF
+	var sk := TreeLayouts.skeleton(SpeciesDB.index_of(sp), layout)
+	var best := Vector3.ZERO
+	for pc in sk.pieces:
+		if pc.order != 1 or pc.dead or pc.kind != TreeLayouts.Kind.LIMB:
+			continue
+		var q: Vector3 = pc.at(pc.length() * 0.7)[0]
+		if q.y < 0.8 and q.y > best.y:
+			best = q
+	var basis := Basis(e, d, e.cross(d)).orthonormalized()
+	var p := at + basis * (best * h)
+	var body: Dictionary = CreatureBodies.build(csp)
+	var root: Node3D = body.root
+	get_root().add_child(root)
+	root.global_transform = Transform3D(basis, p)
+	print("[species] %s perched %.1f m up in the %s" % [csp.name, best.y * h, sp.name])
+	return p + d * csp.size_m * 0.5
+
+
+## A magenta dot at each of `sp`'s leaf-cluster anchors (the tree at `at`,
+## drawn with `basis`), drawn over everything.
+func _mark_anchors(sp: PlantSpecies, at: Vector3, basis: Basis, layout: int) -> void:
+	var sk := TreeLayouts.skeleton(SpeciesDB.index_of(sp), layout)
+	var mesh := ImmediateMesh.new()
+	var m := StandardMaterial3D.new()
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	m.albedo_color = Color(1.0, 0.1, 0.9)
+	m.no_depth_test = true
+	m.use_point_size = true
+	m.point_size = 3.0
+	mesh.surface_begin(Mesh.PRIMITIVE_POINTS, m)
+	for an in sk.anchors:
+		mesh.surface_add_vertex(basis * (an[0] as Vector3))
+	mesh.surface_end()
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	get_root().add_child(mi)
+	mi.global_position = at
+	print("[species] %s: %d anchors marked" % [sp.name, sk.anchors.size()])

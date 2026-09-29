@@ -34,6 +34,14 @@ uniform sampler2D look_tex_grass : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D look_tex_dirt : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D look_tex_sand : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D look_tex_stone : filter_nearest_mipmap, repeat_enable;
+// Dappled canopy shade (CanopyDapple, §AJ 3): this chunk's trees' leaf
+// clusters seen from above (1 open sky, 0 full shade), across dapple_span
+// meters of UV centred on the chunk.
+uniform sampler2D dapple_tex : filter_nearest, repeat_disable, hint_default_white;
+uniform float dapple_span = 270.0;
+uniform bool dapple_on = false;
+global uniform vec3 plant_wind;
+global uniform float look_leaf_shadow_m;
 
 varying vec3 world_pos;
 
@@ -90,9 +98,24 @@ void fragment() {
 	ALBEDO = c * t * 2.0 * (1.0 + dapple * 0.35);
 	// Dappled canopy shade: shadow, broken by sun flecks.
 	float canopy = 1.0 - COLOR.a;
+	// Under trees grown from their architecture: the patchwork their
+	// clusters cast, shifting a little as the wind moves them.
+	float dap = 0.0;
+	if (dapple_on) {
+		float gust = clamp(length(plant_wind) * 0.1, 0.15, 1.0);
+		vec2 wob = vec2(sin(TIME * 1.3 + UV.y * 0.9), cos(TIME * 1.1 + UV.x * 0.8)) * 0.18 * gust;
+		dap = 1.0 - texture(dapple_tex, (UV + wob) / dapple_span + 0.5).r;
+	}
 	if (look_canopy_dark > 0.0) {
-		ALBEDO *= 1.0 - look_canopy_dark * canopy * (1.0 - 0.6 * look_night);
-	} else if (canopy > 0.002) {
+		float shade = 1.0 - (1.0 - canopy) * (1.0 - dap);
+		ALBEDO *= 1.0 - look_canopy_dark * shade * (1.0 - 0.6 * look_night);
+	} else if (canopy > 0.002 || dap > 0.002) {
+		// (With the shadow map on, the near clusters cast their own
+		// shadows; the dapple stands in for them beyond that.)
+		dap *= smoothstep(look_leaf_shadow_m * 0.8, look_leaf_shadow_m, dist);
+		ALBEDO *= 1.0 - 0.34 * dap * (1.0 - 0.75 * nk);
+	}
+	if (look_canopy_dark <= 0.0 && canopy > 0.002) {
 		float fn = texture(look_grain_soft, UV * 0.37 + vec2(0.13, 0.71)).r * 0.65
 			+ texture(look_grain_soft, UV * 0.9 + vec2(0.52, 0.27)).r * 0.35;
 		float fleck = smoothstep(0.54, 0.6, fn);
