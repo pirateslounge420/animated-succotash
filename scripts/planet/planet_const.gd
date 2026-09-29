@@ -40,7 +40,7 @@ static func set_circumference(circumference_m: float) -> void:
 const SEA_LEVEL_M := 0.0
 
 ## Vertical scale: heights are 1/10 of Earth's (Everest would stand ~900
-## m), while distances are 1/100. Data and rules keep real-world numbers
+## m), the same 1/10 as distances and time. Data and rules keep real-world numbers
 ## (species altitude bands, biome thresholds, cloud altitudes) and
 ## multiply them by this, so a mountain that would be 4 km on Earth is
 ## 400 m here and has the climate of a 4 km mountain.
