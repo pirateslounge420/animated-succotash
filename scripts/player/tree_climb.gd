@@ -304,7 +304,7 @@ func _choose(input: Vector2, fwd_l: Vector3, right_l: Vector3) -> Array:
 			var ba := _body_angle()
 			var rightward := (_around(li, ba + 0.1) - _around(li, ba)).dot(right_l)
 			var sgn := signf(input.x) * (1.0 if rightward >= 0.0 else -1.0)
-			move[2] = float(move[2]) + sgn * AROUND_M * 1.5 / (maxf(g.radius[j], 0.1) + HUG_M)
+			move[2] = float(move[2]) + sgn * AROUND_M * 3.0 / (maxf(g.radius[j], 0.1) + HUG_M)
 	if not move.is_empty():
 		return move
 	# Round the trunk: the hand on that side goes first, the other follows

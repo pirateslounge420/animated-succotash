@@ -183,14 +183,19 @@ func _initialize() -> void:
 		await frames(20)
 		await release("move_forward")
 		ok(player.climbing, "the stick takes hold again")
-	# 4. Out along a limb: the lowest thick limb that leaves the trunk
-	# above you; climb to its foot, look out along it and push W.
+	# 4. Out along a limb: the lowest thick limb that leaves the trunk on
+	# your side; climb to its foot, look out along it and push W.
 	if player.climbing:
 		var c := player.trees.climb
 		var up_l := Vector3.UP
 		var me_y := alt()
 		var best := -1
 		var best_y := INF
+		# (On your side of the trunk: out along the way you face out.)
+		var frame := g.frame()
+		var out_l := frame.basis.inverse() * (player.global_position - g.base())
+		out_l.y = 0.0
+		out_l = out_l.normalized()
 		for i in g.size():
 			if g.limb[i] == 0 or g.radius[i] < TreeClimb.STRADDLE_R_M:
 				continue
@@ -199,6 +204,10 @@ func _initialize() -> void:
 			for j in g.links[i]:
 				if g.limb[j] == 0:
 					from_trunk = true
+			var t := g.tangent[i]
+			var th := Vector3(t.x, 0.0, t.z)
+			if th.length() < 0.3 or th.normalized().dot(out_l) < 0.5:
+				continue
 			var y: float = g.local[i].y
 			if from_trunk and y > 1.5 and y < best_y:
 				best_y = y
@@ -223,8 +232,9 @@ func _initialize() -> void:
 			await release("move_forward")
 			await release("move_back")
 			await frames(10)
-			var to := g.pos(best) - player.global_position
-			var flat := (to - player.up * to.dot(player.up)).normalized()
+			# Look out along the limb (the way it grows).
+			var along := g.frame().basis * g.tangent[best]
+			var flat := (along - player.up * along.dot(player.up)).normalized()
 			face(flat, 0.1)
 			await press("move_forward")
 			var on_limb := false
