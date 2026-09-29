@@ -16,6 +16,8 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **§AI 1 colour and fall** (`LeafSeason`, at the player's latitude):
   - Colour blends leaf → autumn over the summer → autumn transition, and the mass is recoloured by the same share.
   - Shedding starts at `start_at` and takes `per_day_share` per game-day over `deciduous_days`; crowns are bare in winter and leaf out green over the spring transition.
+  - **Revised mid-build by the designer's §AI.1 (fbde19f).** An interim wiring now follows `seasons.autumn_colour`: the colour runs on the 42-day clock from 12 days before the transition, by each stage's `blend`, and the fall starts at the `dull` stage (day 19.5 of the transition, 24 days at 6 %).
+  - Not wired yet: the dull stage's sat/val, `hue_toward_autumn`, the ±7-day per-tree jitter, the 8-day cluster lead, and the bud → young → full spring stages.
   - A gust over `gust_mps` drops `gust_share` at once.
   - Crowns thin in leaf-sized cells.
   - Falling leaves are the species' leaf card, spinning and flipping, from the trees within 45 m at the rate their crowns lose leaves. They are drawn at twice the leaf's size to read at 480 lines, and unshaded.

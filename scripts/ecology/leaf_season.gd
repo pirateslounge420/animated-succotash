@@ -7,10 +7,13 @@ extends Node3D
 ## around you shares one season) from the season clock (Seasons), so it
 ## is the same whenever you look:
 ##
-##   * colour: over the summer -> autumn transition each deciduous species'
-##     crown blends leaf -> leaf_autumn (the foliage shader's sp_autumn,
-##     which recolours the foliage mass by the same share);
-##   * fall: from fall.start_at through that transition the crown sheds
+##   * colour: on the autumn colour clock (data/seasons.json autumn_colour,
+##     §AI.1 revised: from lead_days before the autumn transition, over
+##     days_total, green -> yellow-green -> peak -> dull by each stage's
+##     share) each deciduous species' crown blends leaf -> leaf_autumn by
+##     the stage's `blend` (the foliage shader's sp_autumn, which recolours
+##     the foliage mass by the same share);
+##   * fall: from the `dull` stage the crown sheds
 ##     fall.per_day_share of what it still holds per game-day over
 ##     fall.deciduous_days, the last of it going as the time runs out, so
 ##     it is bare in winter; a gust above fall.gust_mps drops fall.gust_share
@@ -85,14 +88,65 @@ static func crown_at(p: float, h: float) -> Dictionary:
 	var q := fposmod(p - (3.5 - h), 4.0)
 	if q < 2.0 * h:
 		return {"autumn": 0.0, "leaf": q / (2.0 * h), "rate": 0.0}
-	# The summer -> autumn transition starts at q = 2.
-	var a := clampf((q - 2.0) / (2.0 * h), 0.0, 1.0)
-	var start := 2.0 + float(FALL.get("start_at", 0.35)) * 2.0 * h
-	if q < start:
+	# Game-days from the start of the summer -> autumn transition (q = 2).
+	var t := (q - 2.0) * quarter
+	var ac := _autumn_colour()
+	var a := _blend_at(t, ac)
+	var start: float = ac.fall_day
+	if t < start:
 		return {"autumn": a, "leaf": 1.0, "rate": 0.0}
-	var d := (q - start) * quarter
+	var d := t - start
 	var leaf := _left_after(d)
 	return {"autumn": a, "leaf": leaf, "rate": maxf(leaf - _left_after(d + 1.0), 0.0)}
+
+
+## The autumn colour clock (data/seasons.json autumn_colour, design §AI.1
+## revised): {"lead", "total", "stages" [[start day, blend]...],
+## "fall_day"}, days from the start of the summer -> autumn transition.
+## The turn starts lead_days before it and runs days_total through the
+## stages in order, each its share; the leaves fall from the `dull`
+## stage on. (Older data: a numeric fall.start_at through the
+## transition, and the colour over the transition.)
+static var _ac := {}
+
+
+static func _autumn_colour() -> Dictionary:
+	if not _ac.is_empty():
+		return _ac
+	var d: Dictionary = Seasons.data().get("autumn_colour", {})
+	var start_at = FALL.get("start_at", 0.35)
+	if d.is_empty() or start_at is float or start_at is int:
+		var tr := Seasons.half_transition() * 2.0 * DayCycle.year_days() / 4.0
+		_ac = {"lead": 0.0, "total": tr, "stages": [[0.0, 0.0], [tr, 1.0]],
+			"fall_day": float(start_at) * tr if (start_at is float or start_at is int) else 0.35 * tr}
+		return _ac
+	var lead := float(d.get("lead_days", 12.0))
+	var total := float(d.get("days_total", 42.0))
+	var stages := []
+	var day := -lead
+	var fall_day := -lead + total
+	for st in d.get("stages", []):
+		stages.append([day, float(st.get("blend", 0.0))])
+		if str(st.get("name", "")) == "dull":
+			fall_day = day
+		day += float(st.get("share", 0.25)) * total
+	stages.append([day, stages[-1][1] if not stages.is_empty() else 1.0])
+	_ac = {"lead": lead, "total": total, "stages": stages, "fall_day": fall_day}
+	return _ac
+
+
+## How far into its autumn colour a crown is `t` days from the start of
+## the autumn transition: each stage's blend, eased from one to the next.
+static func _blend_at(t: float, ac: Dictionary) -> float:
+	var stages: Array = ac.stages
+	if t <= float(stages[0][0]):
+		return float(stages[0][1])
+	for i in range(1, stages.size()):
+		var a: Array = stages[i - 1]
+		var b: Array = stages[i]
+		if t < float(b[0]):
+			return lerpf(float(a[1]), float(b[1]), (t - float(a[0])) / maxf(float(b[0]) - float(a[0]), 1e-4))
+	return float(stages[-1][1])
 
 
 ## A deciduous crown's leaf left `d` game-days into its fall.

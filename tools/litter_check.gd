@@ -37,9 +37,13 @@ func _run() -> void:
 	var quarter := DayCycle.year_days() / 4.0
 	var summer := LeafSeason.crown_at(1.0, h)
 	ok(summer.autumn == 0.0 and summer.leaf == 1.0, "summer: green and full (autumn %.2f, leaf %.2f)" % [summer.autumn, summer.leaf])
-	var start := 1.5 - h + float(LeafSeason.FALL.start_at) * 2.0 * h
+	var ac := LeafSeason._autumn_colour()
+	print("[litter] autumn colour clock: from %.0f days before the transition over %.0f days; stages %s; the fall from day %.1f" % [ac.lead, ac.total, ac.stages, ac.fall_day])
+	var start := 1.5 - h + float(ac.fall_day) / quarter
+	var before_turn := LeafSeason.crown_at(1.5 - h - (float(ac.lead) + 1.0) / quarter, h)
+	ok(before_turn.autumn == 0.0 and before_turn.leaf == 1.0, "a day before the turn: green and full")
 	var early := LeafSeason.crown_at(start - 0.001, h)
-	ok(early.autumn > 0.0 and early.leaf == 1.0, "turning before the fall starts: autumn %.2f, leaf still %.2f" % [early.autumn, early.leaf])
+	ok(early.autumn >= 0.99 and early.leaf == 1.0, "at peak, before the dull stage: full colour, leaf still %.2f" % early.leaf)
 	var d5 := LeafSeason.crown_at(start + 5.0 / quarter, h)
 	var expect5 := pow(1.0 - float(LeafSeason.FALL.per_day_share), 5.0)
 	ok(absf(d5.leaf - expect5) < 0.02, "5 days into the fall: leaf %.3f (per_day_share gives %.3f)" % [d5.leaf, expect5])
