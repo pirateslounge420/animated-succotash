@@ -338,14 +338,10 @@ func _process(delta: float) -> void:
 	# Pinning the readouts: while the mouse is free after Esc and no screen
 	# that wants it is open (the inventory, the settings panel, the map).
 	hud.set_pinning(_mouse_freed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED and not player.ui_open and not map_overlay.visible)
-	# The speedometer and the watch face (design §L): speed, meter, the
-	# local clock and today's dawn/dusk here.
-	var lat := CubeSphere.latitude(d)
-	var decl := Astro.declination(world.days)
-	var starts := DayCycle.phase_starts(lat, decl)
+	# The speedometer and the clock face (design §L, §AQ): speed, meter and
+	# the local clock.
 	var clock_h := fposmod(Astro.time_of_day(world.days) + CubeSphere.longitude(d) / TAU, 1.0) * 24.0
-	hud.readouts.feed(player.velocity.length(), player.meter.value, clock_h,
-		starts[0] * 24.0 if starts[0] >= 0.0 else -1.0, starts[2] * 24.0 if starts[2] >= 0.0 else -1.0, world.dev_mode, delta)
+	hud.readouts.feed(player.velocity.length(), player.meter.value, clock_h, world.dev_mode, delta)
 	map_overlay.update_map(d, delta)
 
 

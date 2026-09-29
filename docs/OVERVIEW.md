@@ -135,8 +135,8 @@ hands.
 ## Interface
 
 - Almost none. A small **speedometer** (mph and km/h) that brightens as you go faster; a
-  **watch-face clock** with 12-hour inner and 24-hour outer rings marking dawn and dusk
-  that move with the season; a slim health bar; the super meter as a ring on the charge
+  **classic 12-hour clock face** (hour and minute hands, 12/3/6/9 on the dial); a slim
+  health bar; the super meter as a ring on the charge
   gauge. Typewriter-style font. Map on M (biome, height, temperature, rainfall,
   weather layers) — it never marks your corpse or the enemy.
 

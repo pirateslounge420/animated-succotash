@@ -4,6 +4,10 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — A classic 12-hour clock face (Mike, from chat)
+- The HUD clock is a classic 12-hour clock now (design §AQ): rim, twelve hour ticks, pixel numerals at 12, 3, 6 and 9, a broad hour hand and a thin minute hand (once a game hour). The 24-hour ring, the dawn/dusk marks and the PM dot are gone. 44 px across (was 30). `Readouts.feed` no longer takes dawn/dusk; `data/hud.json` clock: `numerals` (quarters | none), `minute_marks`, colours.
+- Checked by rendering it at eight times of day (the OpenGL renderer draws the HUD fine here) and `tools/hud_pin_check.gd`.
+
 ## 2026-09-29 — Aroids live their real lives; genes, crosses and sports for every plant; HUD pins (Mike, from chat)
 - **HUD** (`c94d7fc`): one label per readout; normal play shows only pinned parts (the two dials by default); H = the full HUD; Esc frees the mouse and a click on a readout pins it (gold mark, saved at once). `tools/hud_pin_check.gd` 0 fails.
 - **Amorphophallus life cycle** (design §AP, `docs/design/AROID_LIFE.md`): all 246 species got a researched `cycle` block (dormancy dry 196 / cold 6 / everwet cycle 43 / evergreen 1; shoot and bud cataphylls and timings; bloom timing, protogyny, heat, scent, pollinator guilds; fruit; tuber; ploidy; hybrids; sports). ~60 wrong regions/origins fixed from the protologues (47 species moved region, 43 of them got that region's bands).

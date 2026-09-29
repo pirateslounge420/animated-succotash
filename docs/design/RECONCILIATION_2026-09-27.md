@@ -1876,3 +1876,13 @@ a unique and rare genetic abnormality." Built, with the full design in
   crested, cutleaf...) are recorded for the mesh builders. The HUD names a sport after
   the common name ("variegated sport") and an aroid's stage ("in bloom, receptive").
 
+## AQ. A classic 12-hour clock — 29 Sept 2026
+
+- **Locked (Mike):** "make the clock face more like a classic 12-hour clock and remove the
+  zones which show dawn and dusk." Supersedes §L's clock bullet: the HUD clock is a
+  plain round clock face — a rim, twelve hour ticks, the numerals 12, 3, 6 and 9 (drawn
+  as pixel numerals on the 480-line frame's own grid; the HUD font can't go that small
+  and stay crisp), a short broad hour hand that goes round twice a day and a long thin
+  minute hand once a game hour (6 real minutes). No 24-hour ring, no dawn/dusk marks, no
+  PM dot. 44 px across (was 30). `data/hud.json` clock (numerals quarters | none,
+  minute_marks, colours).

@@ -14,23 +14,20 @@ extends Control
 ## ceiling, 120 km/h), so it only asserts itself when you're fast. Its
 ## glow warms from glow_cold to glow_warm as the super meter fills.
 ##
-## Clock: a watch face, not digits. One hour hand goes round once in 12
-## hours; the inner ring reads 12, 1..11 and the outer ring the same
-## places as 24, 13..23 (a pilot's watch), so one sweep reads both. A thin
-## minute hand goes round once a game hour (6 real minutes). Two warm
-## marks on the outer ring stand at today's dawn and dusk here (DayCycle,
-## derived from latitude and season, design §F): they move through the
-## year and as you travel.
+## Clock: a classic 12-hour clock face (design §AQ, from play: "more like a
+## classic 12-hour clock"; it was a pilot's watch with a 24-hour ring and
+## dawn and dusk marks). A round face with a rim, twelve hour marks (the
+## quarters bolder), pixel numerals at 12, 3, 6 and 9 drawn on the frame's
+## own pixel grid (the HUD font can't go that small and stay crisp), a
+## short broad hour hand that goes round twice a day, a long thin minute
+## hand once a game hour (6 real minutes), and a cap on the pin.
 
 static var HUD := {}
 
 var speed_mps := 0.0
 var meter := 0.0
-## Local clock, hours 0-24, and today's dawn/dusk start hours here (-1:
-## none today: polar night or midnight sun).
+## Local clock, hours 0-24 (the hands read it on a 12-hour face).
 var clock_h := 0.0
-var dawn_h := -1.0
-var dusk_h := -1.0
 var dev := false
 ## The bottom of the HUD's top-right text (the place readout), so a
 ## readout in that corner sits just below it instead of under it.
@@ -53,12 +50,10 @@ func _ready() -> void:
 
 
 ## Per frame from Hud.
-func feed(p_speed: float, p_meter: float, p_clock_h: float, p_dawn_h: float, p_dusk_h: float, p_dev: bool, delta: float) -> void:
+func feed(p_speed: float, p_meter: float, p_clock_h: float, p_dev: bool, delta: float) -> void:
 	speed_mps = p_speed
 	meter = p_meter
 	clock_h = p_clock_h
-	dawn_h = p_dawn_h
-	dusk_h = p_dusk_h
 	dev = p_dev
 	var sm := float(_sec("speedometer").get("smoothing_s", 0.15))
 	_shown = lerpf(_shown, speed_mps, clampf(delta / maxf(sm, 0.01), 0.0, 1.0))
@@ -196,46 +191,89 @@ func _draw_speed(k: float, mk: float) -> void:
 	_draw_mark(first_x, box.position.y + line_h * 0.5, mk)
 
 
+## Pixel numerals for the clock face, 3 x 5 cells ("#" lit): the frame is
+## 480 lines, and at a 44 px face the HUD font's smallest crisp size (20 px)
+## wouldn't fit, so the four quarter numerals are drawn cell by cell.
+const DIGITS := {
+	"1": [".#.", "##.", ".#.", ".#.", "###"],
+	"2": ["###", "..#", "###", "#..", "###"],
+	"3": ["###", "..#", ".##", "..#", "###"],
+	"6": ["###", "#..", "###", "#.#", "###"],
+	"9": ["###", "#.#", "###", "..#", "###"],
+}
+
+
 ## `k`: the Hud's share of its alpha; `mk`: its pin mark's alpha.
 func _draw_clock(k: float, mk: float) -> void:
 	var c := _sec("clock")
 	var box := _clock_box()
 	var d := box.size.x
-	var a0 := float(c.get("alpha", 0.55))
+	var a0 := float(c.get("alpha", 0.6))
 	var a := a0 * k
-	var mid := box.get_center()
-	var r := d * 0.5
-	var ring := Color(Color(str(c.get("ring_color", "#4C7CFF"))), a)
-	var hand := Color(Color(str(c.get("hand_color", "#7FB0FF"))), minf(a0 + 0.3, 1.0) * k)
-	var dawn_dusk := Color(Color(str(c.get("mark_color", "#FFD23A"))), minf(a0 + 0.35, 1.0) * k)
+	# On the pixel grid, so the rim and the numerals stay crisp.
+	var mid := (box.position + box.size * 0.5).round()
+	var r := floorf(d * 0.5)
+	var ring := Color(Color(str(c.get("ring_color", "#4C7CFF"))), minf(a0 + 0.15, 1.0) * k)
+	var hand := Color(Color(str(c.get("hand_color", "#7FB0FF"))), minf(a0 + 0.35, 1.0) * k)
+	var numeral := Color(Color(str(c.get("numeral_color", c.get("hand_color", "#7FB0FF")))), minf(a0 + 0.3, 1.0) * k)
 	_draw_mark(box.position.x, mid.y, mk)
-	draw_circle(mid, r, Color(Color(str(c.get("face_color", "#0A1250"))), a * 0.8))
-	draw_arc(mid, r, 0.0, TAU, 48, ring, 1.5)
-	draw_arc(mid, r * 0.62, 0.0, TAU, 40, Color(ring, a * 0.6), 1.0)
-	# Hour ticks: the outer ring's 24 (13..24 at the same places as the
-	# inner 1..12) and the inner ring's 12; the quarters longer.
+	# The face and its rim.
+	draw_circle(mid, r, Color(Color(str(c.get("face_color", "#0A1250"))), a * 0.85))
+	draw_arc(mid, r - 0.5, 0.0, TAU, 64, ring, maxf(1.5, d / 24.0))
+	# The hour marks: a tick at each hour; at 12, 3, 6 and 9 a numeral
+	# (or, with numerals off, a longer, bolder tick).
+	var numerals := str(c.get("numerals", "quarters")) == "quarters"
+	var cell := maxf(1.0, floorf(d / 40.0))
 	for h in 12:
 		var ang := _angle12(float(h))
 		var dir := Vector2(sin(ang), -cos(ang))
-		var long := h % 3 == 0
-		draw_line(mid + dir * r * (0.8 if long else 0.87), mid + dir * r * 0.97, ring, 1.5 if long else 1.0)
-		draw_line(mid + dir * r * 0.55, mid + dir * r * 0.62, Color(ring, a * 0.7), 1.0)
-	# Dawn and dusk on the outer ring, where they fall today here.
-	if bool(c.get("dawn_dusk_marks", true)):
-		for hm in [dawn_h, dusk_h]:
-			if hm >= 0.0:
-				var ang := _angle12(hm)
-				var dir := Vector2(sin(ang), -cos(ang))
-				draw_line(mid + dir * r * 0.72, mid + dir * r * 1.08, dawn_dusk, 2.5)
-		# Night in the lower half of the day? A small warm dot: PM.
-		if clock_h >= 12.0:
-			draw_circle(mid + Vector2(0, r * 0.32), 1.6, dawn_dusk)
-	# The hands.
+		if h % 3 == 0:
+			if numerals:
+				_draw_numeral("12" if h == 0 else str(h), mid + dir * r * 0.66, cell, numeral)
+			else:
+				draw_line(mid + dir * r * 0.68, mid + dir * r * 0.9, ring, maxf(2.0, d / 18.0))
+		else:
+			draw_line(mid + dir * r * 0.78, mid + dir * r * 0.9, ring, 1.0)
+	if bool(c.get("minute_marks", false)):
+		for m in 60:
+			if m % 5 != 0:
+				var ma := TAU * m / 60.0
+				draw_rect(Rect2((mid + Vector2(sin(ma), -cos(ma)) * r * 0.86).floor(), Vector2.ONE), Color(ring, ring.a * 0.6))
+	# The hands: a short broad hour hand (twice round a day) and a long thin
+	# minute hand (once a game hour), each with a little tail past the pin.
+	# (Never thinner than a pixel at the tip: unsmoothed, a tapered sliver
+	# would drop out and the hand read short.)
 	var ha := _angle12(clock_h)
-	draw_line(mid, mid + Vector2(sin(ha), -cos(ha)) * r * 0.5, hand, 2.2)
+	_draw_hand(mid, ha, r * 0.55, r * 0.14, maxf(3.0, d / 13.0), maxf(1.6, d / 26.0), hand)
 	var ma := TAU * fposmod(clock_h, 1.0)
-	draw_line(mid, mid + Vector2(sin(ma), -cos(ma)) * r * 0.82, Color(hand, hand.a * 0.8), 1.0)
-	draw_circle(mid, 1.8, hand)
+	var mdir := Vector2(sin(ma), -cos(ma))
+	var mw := 1.0 if d < 60.0 else 2.0
+	draw_line(mid - mdir * r * 0.18, mid + mdir * r * 0.84, hand, mw)
+	draw_circle(mid, maxf(1.5, d / 22.0), hand)
+
+
+## One hand: a tapered bar from `tail` behind the pin (`w_base` wide) to
+## `length` out (`w_tip` wide).
+func _draw_hand(mid: Vector2, ang: float, length: float, tail: float, w_base: float, w_tip: float, col: Color) -> void:
+	var dir := Vector2(sin(ang), -cos(ang))
+	var side := Vector2(-dir.y, dir.x)
+	var back := mid - dir * tail
+	var tip := mid + dir * length
+	draw_colored_polygon(PackedVector2Array([back + side * w_base * 0.5, tip + side * w_tip * 0.5,
+		tip - side * w_tip * 0.5, back - side * w_base * 0.5]), col)
+
+
+## A numeral (DIGITS) centred at `at`, each lit cell `cell` px square.
+func _draw_numeral(text: String, at: Vector2, cell: float, col: Color) -> void:
+	var w := (text.length() * 4 - 1) * cell
+	var origin := (at - Vector2(w, 5.0 * cell) * 0.5).round()
+	for i in text.length():
+		var rows: Array = DIGITS.get(text[i], [])
+		for y in rows.size():
+			var row: String = rows[y]
+			for x in row.length():
+				if row[x] == "#":
+					draw_rect(Rect2(origin + Vector2((i * 4 + x) * cell, y * cell), Vector2(cell, cell)), col)
 
 
 ## The angle (radians, clockwise from 12 o'clock) of hour `h` on a

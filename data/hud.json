@@ -5,7 +5,7 @@
   "pins": "A part shows in normal play only if it's pinned. The pins are settings (user://settings.cfg, saved the moment they change): hud.speedometer and hud.clock for the dials (on by default: the settings panel's Speedometer and Clock switches are the same pins) and hud.pin.<part> for the rest (off by default), so a new game shows just the two dials. The numbers here are for pinning (see modes): dim_alpha, an unpinned part; hover_alpha, an unpinned part under the mouse; preview_alpha, the pin mark of the part under the mouse (a faint mark on an unpinned part is what a click gives it; a pinned part's mark fading to it is what a click takes away); mark_color, the pin mark (•), the one warm accent.",
   "modes": "Normal play: the pinned parts only. H: the full HUD, every part, pinned or not; H again, the pinned ones only (H doesn't hide anything any more). Pinning: Esc frees the mouse and, while no inventory, settings panel or map is open, every part shows, the pinned ones at full brightness with a pin mark (•) before them, the others dimmed (pins.dim_alpha); the part under the mouse brightens and its mark previews the click; a click on a part pins or unpins it (saved at once) and keeps the mouse free; a click anywhere else takes the mouse back and play goes on, showing what's pinned. A caption at the top centre says so, and the two columns step down a line under it. While pinning the speedometer shows at its bright_alpha even at rest, so you can see it to pin it.",
   "speedometer": "Ground/air speed in mph and km/h (dev builds add m/s). It sits dim at alpha dim_alpha below dim_below_mps and brightens toward bright_alpha as speed rises to bright_at_mps (the momentum ceiling), so it only asserts itself when you're moving fast. Its glow warms from glow_cold to glow_warm as the super meter fills. size_px: the numerals. smoothing_s: how quickly the shown number follows the real one. mph_round: the mph readout rounds to this (75 mph at the ceiling, by design).",
-  "clock": "A watch face, not digits: a 12-hour inner ring and a 24-hour outer ring (an old pocket watch / field watch), one hand sweep reads both. A game hour is exactly 6 real minutes (144-minute day). dawn_dusk_marks: two marks on the outer ring at the day's dawn and dusk, which move with the season and your latitude (derived day/night, design §F). size_px: the face diameter. hand_color / ring_color / mark_color: R1a blues plus the one warm accent for the marks. alpha: how faint it sits.",
+  "clock": "A classic 12-hour clock face (design §AQ; it was a pilot's watch with a 24-hour ring and dawn/dusk marks until 29 Sept): a round face and rim, twelve hour ticks, pixel numerals 12, 3, 6 and 9 (numerals: quarters, or none for bolder quarter ticks), a short broad hour hand (twice round a day) and a long thin minute hand (once a game hour: 6 real minutes). minute_marks: sixty minute dots (for a bigger face). size_px: the face diameter in the 480-line frame. hand_color / numeral_color / ring_color / face_color: R1a blues. alpha: how faint the face sits (the hands and numerals are a little brighter).",
   "super_meter": "No third element: the meter shows as a thin ring around the tool's charge gauge (ring_px wide, ring_color), visible only when non-zero, and the speedometer glow warms with it. show_below: hidden when under this share, to keep the screen clean until it means something.",
   "text": "Every HUD and UI font: an early-computer / typewriter face — monospaced, slightly uneven, like a teletype or an 8-bit console font — never a clean modern sans. font: the font file under assets/fonts (a free monospaced typewriter-style TTF; fallback: the engine monospace). Design §Y: the HUD is drawn INSIDE the 480-line internal frame and upscaled with it, so every px size in this file is at the 480 reference and text is automatically chunky and the right size at any window; scale_by_height is off (the upscale does the scaling). base_px: the body size at 480 lines (2026-09-28: raised from 9 to 11 — 9 was hard to read once upscaled; the prompt line and the crosshair name are larger still). 2026-09-29 (from play: still hard to read): font is now VT323 (a DEC terminal face, SIL OFL), drawn without antialiasing on its own 10 px grid, and every size snaps to crisp_px (20 body, 40 headings) so no glyph falls between pixels; base_px 20. The typewriter face stays in assets/fonts.",
   "layout": "Where the readouts sit: corner (top_left, top_right, bottom_left, bottom_right), margin_px from the edges. The health meter keeps its own place (data/combat.json feedback.meter).",
@@ -31,14 +31,13 @@
  },
  "clock": {
   "on_by_default": true,
-  "inner_ring_hours": 12,
-  "outer_ring_hours": 24,
-  "dawn_dusk_marks": true,
-  "size_px": 30,
-  "alpha": 0.55,
+  "size_px": 44,
+  "numerals": "quarters",
+  "minute_marks": false,
+  "alpha": 0.6,
   "hand_color": "#7FB0FF",
+  "numeral_color": "#9FC2FF",
   "ring_color": "#4C7CFF",
-  "mark_color": "#FFD23A",
   "face_color": "#0A1250"
  },
  "super_meter": {
