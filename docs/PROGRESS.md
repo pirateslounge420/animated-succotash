@@ -4,6 +4,17 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-29 — The 4,000 km planet had no forests: geography laid out at 400 km again, built 10x
+- **Found while testing the render distance:** after the 1/10-Earth lock, seed 42's full planet had no rainforest, deciduous, taiga, grassland or scrub. It was all desert (25 %), tundra, alpine and coast (53 % of land), and the camp spawned in hot desert with no trees (`tech_check` and `climb_check`: "no tree near the camp"). The stamp had lost every forest band too.
+- **Cause:** the geography (continent, belt and ridge noise; hotspots; the weather grid; the passes' distances and slopes) is sampled in geographic metres with fixed wavelengths tuned on the 400 km planet. With `GEO_CIRCUMFERENCE_M` at 4,000 km, the same noise drew ten times as many continents a tenth the size: an archipelago with no interiors, so no moisture gradients and no forest.
+- **Fix (code):** `PlanetConst.GEO_CIRCUMFERENCE_M` is 400 km again, the layout the geography was tuned on. The 4,000 km planet is built as a 10x sideways scale model of it (`GEO_SCALE` 10), just as the stamp is a 0.1x one. Heights are unchanged, and everything at walking scale is real size.
+- **Result** (`biome_scale`, seeds 42 and 7):
+  - Every band is back in the old proportions (rainforest 8–11 %, deciduous 12 %, desert 17–23 %, coast 18 %).
+  - Regions are 10x wider: the largest are 45–370 km across, and a straight walk stays 10–43 km in one biome.
+  - Every band has a region of at least 1,600 km² on both seeds. That covers Mike's "biomes change too fast" and "a continent of every biome" on the full planet (#89); only the grow pass for tiny bands remains, and it isn't needed on these seeds.
+- **For the designer:** "landmass at 1/10 Earth" now means continents 10x the old ones, not 10x as many. Per-km feature density (oases, lagoons, rivers) is the old planet's divided by 100 in area, as your note expected. If you wanted more, smaller continents, that's a new noise scale to choose, not this constant.
+- **Tools:** `STAMP=1` / `STAMP=0` in the environment overrides `dev.json` (`World`), so the dev checks can run on the stamp while play is on the full planet.
+
 ## 2026-09-29 — Render distance setting (Mike: "view distance similar to Minecraft")
 - **Settings panel (O / F10) → Display → Render distance, 1–8 chunks** (260 m each; `display.render_chunks`, default 3, the distance the look was tuned at):
   - Click the left half of the row for fewer chunks, the right half for more. The row shows the reach in metres (1: ~400 m, 3: ~920 m, 5: ~1.45 km, 8: ~2.2 km).

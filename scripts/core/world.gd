@@ -103,7 +103,10 @@ func _load_dev_settings() -> void:
 		world_seed = int(dev.seed)
 	if dev.has("spawn_choice"):
 		spawn_choice = int(dev.spawn_choice)
-	use_postage_stamp(bool(dev.get("postage_stamp", false)))
+	# STAMP=1 / STAMP=0 in the environment overrides dev.json (the dev
+	# checks run on the stamp, where every biome is within reach).
+	var stamp_env := OS.get_environment("STAMP")
+	use_postage_stamp(stamp_env == "1" if stamp_env != "" else bool(dev.get("postage_stamp", false)))
 	print("[World] dev mode (data/dev.json): %.0f-minute day, seed %d, spawn %d, %s" % [day_length_s / 60.0, world_seed, spawn_choice,
 		"postage stamp %.0f km around, %d cells per face edge" % [PlanetConst.CIRCUMFERENCE_M / 1000.0, planet_res] if postage_stamp else "full planet"])
 

@@ -114,9 +114,13 @@ func fly_at_trunk(g: BranchGraph, speed: float, height: float) -> Vector3:
 	var base := g.base()
 	var gd: Vector3 = world.dir_of(base)
 	var out := CubeSphere.north(gd)
-	var r0: float = g.radius[g.nearest(base + gd * 1.0)]
-	var pd: Vector3 = world.dir_of(base + out * (r0 + 0.9))
-	player.global_position = world.to_scene(pd, PlanetConst.RADIUS_M + main.chunks.ground_height(pd) + height)
+	# At the trunk itself `height` up (a leaning trunk isn't over its foot:
+	# aimed there, the flight missed it and landed).
+	var ti := g.nearest(base + gd * height)
+	var tp := g.pos(ti)
+	var r0: float = g.radius[ti]
+	var pd: Vector3 = world.dir_of(tp + out * (r0 + 0.9))
+	player.global_position = world.to_scene(pd, world.radius_of(tp))
 	player._heading = -out
 	player._yaw = 0.0
 	player._move = -out * speed
