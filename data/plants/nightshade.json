@@ -1,0 +1,1562 @@
+{
+ "key": "NIGHTSHADE_CATALOGUE",
+ "name": "Datura and Brugmansia (Solanaceae)",
+ "kind": "land",
+ "status": "designer-named 2026-09-28: datura and brugmansia; 7 species",
+ "notes": "Loaded like the other catalogues (data/plants/*.json). Datura: forking annual/perennial herbs of dry disturbed ground, camps and river gravel with UPRIGHT trumpet flowers and spiny thornapple capsules. Brugmansia: small trees of Andean and tropical American forest margins and stream banks with PENDULOUS trumpets; two are extinct in the wild and only persist where people planted them, so on the planet they favour the ground near camps and old settlement stamps. Both flower at dusk, hawkmoth-pollinated (B. sanguinea hummingbird), and the heavy night scent is a pheromone source like the Amorphophallus bloom (`scent`). All are tropane-alkaloid plants: `toxic` (never eaten, never browsed: cannot_be_browsed), and `ceremonial` as for Trichocereus — the ceremony system reads the tag; 'documented' species carry a full ceremony. Silhouette rule: a Datura reads as a low forking mound with upright pale trumpets; a Brugmansia as a small dome tree with long trumpets hanging straight down — the hanging trumpets are the 64 px silhouette.",
+ "_help_realm": "realm gates (design §AA): andes / south_america / north_america / south_asia; 'any' for the cosmopolitan weed D. stramonium.",
+ "plants": {
+  "shrub": [
+   {
+    "name": "Datura stramonium",
+    "display": "Jimsonweed / thornapple",
+    "genus": "Datura",
+    "species": "stramonium",
+    "family": "Solanaceae",
+    "shape": "shrub",
+    "temp_c": [
+     10,
+     30
+    ],
+    "moisture": [
+     0.2,
+     0.6
+    ],
+    "altitude_m": [
+     0,
+     2000
+    ],
+    "height_m": [
+     0.6,
+     1.5
+    ],
+    "density": 0.35,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "sand",
+      "till",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.4,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#4E7A3E",
+    "accent": "#EFE6F2",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       20
+      ],
+      [
+       "young",
+       60
+      ],
+      [
+       "mature",
+       120
+      ],
+      [
+       "old",
+       300
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "summer",
+      "days": 2,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed",
+     "note": "Night-opening trumpet flowers, hawkmoth pollinated; heavy sweet scent after dusk is a pheromone source like the Amorphophallus bloom."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.2,
+      0.6
+     ],
+     "scent": [
+      0.6,
+      1.0
+     ],
+     "alkaloid": [
+      0.5,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "toxic": {
+     "potency": 0.9,
+     "effect": "delirium, dry mouth, blindness for a day; deadly in quantity — never eaten, never browsed"
+    },
+    "ceremonial": "documented",
+    "scent": {
+     "when": "night",
+     "kind": "sweet_heavy",
+     "range_m": 25
+    },
+    "source": "Datura stramonium — annual weed of disturbed ground, camps, field edges and riverbanks; probably Mesoamerican, now worldwide in warm-temperate zones (Kew POWO). Tropane alkaloids; the ethnobotanical literature records ceremonial and divinatory use.",
+    "realm": "any",
+    "traits": {
+     "genus": "Datura",
+     "species": "stramonium",
+     "native_range": "Datura stramonium — annual weed of disturbed ground, camps, field edges and riverbanks; probably Mesoamerican, now worldwide in warm-temperate zones (Kew POWO). Tropane alkaloids; the ethnobotanical literature records ceremonial and divinatory use.",
+     "leaf_shape": "broad ovate, coarsely toothed, rank-smelling",
+     "trunk": "single forking herbaceous stem, often purple",
+     "petiole": "long petiole",
+     "height_m": [
+      0.6,
+      1.5
+     ],
+     "growth_rate": "fast",
+     "reproduction": "seed, annual",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.6,
+     "base": "oblique",
+     "apex": "acute",
+     "margin": "dentate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      8,
+      20
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "appearance": {
+     "flower": {
+      "colour": "#F4EEF8",
+      "secondary": "#C8A8D8",
+      "form": "upright white to pale violet trumpet 6-10 cm, five-pointed, opens at dusk",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#7A9A5A",
+      "form": "upright spiny egg-shaped capsule (thornapple), splits in four; black seeds"
+     },
+     "seasonal": "flowers open at dusk and hang or stand through the night; each lasts a night or two",
+     "silhouette": "a knee-high forking bush with upright white trumpets and spiny capsules, on bare trampled ground near camps"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1.0,
+     "color": "#5C8A3C",
+     "color_2": "#4A2A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.2,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated",
+     "note": "forking in twos or threes at every node with a flower in the fork — the Datura branching pattern"
+    }
+   },
+   {
+    "name": "Datura wrightii",
+    "display": "Sacred datura",
+    "genus": "Datura",
+    "species": "wrightii",
+    "family": "Solanaceae",
+    "shape": "shrub",
+    "temp_c": [
+     12,
+     32
+    ],
+    "moisture": [
+     0.05,
+     0.4
+    ],
+    "altitude_m": [
+     0,
+     2200
+    ],
+    "height_m": [
+     0.5,
+     1.2
+    ],
+    "density": 0.3,
+    "soil": {
+     "classes": [
+      "sand",
+      "basalt",
+      "granite",
+      "sandstone"
+     ],
+     "drainage": "sharp",
+     "ph": "alkaline",
+     "fertility_min": 0.1,
+     "salinity": "none"
+    },
+    "needs": [
+     "dry_ground"
+    ],
+    "color": "#6A8A70",
+    "accent": "#F6F2F8",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       900
+      ],
+      [
+       "old",
+       3000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "summer",
+      "days": 2,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Night-opening trumpet flowers, hawkmoth pollinated; heavy sweet scent after dusk is a pheromone source like the Amorphophallus bloom."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.2,
+      0.6
+     ],
+     "scent": [
+      0.6,
+      1.0
+     ],
+     "alkaloid": [
+      0.5,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "toxic": {
+     "potency": 0.9,
+     "effect": "delirium, dry mouth, blindness for a day; deadly in quantity — never eaten, never browsed"
+    },
+    "ceremonial": "documented",
+    "scent": {
+     "when": "night",
+     "kind": "sweet_heavy",
+     "range_m": 25
+    },
+    "source": "Datura wrightii — perennial of the Mojave and Sonoran deserts, arroyos and roadsides of the SW United States and N Mexico (Kew POWO); grey-green velvety leaves, sprawling mound. Ceremonial use documented in the ethnobotanical literature.",
+    "realm": "north_america",
+    "traits": {
+     "genus": "Datura",
+     "species": "wrightii",
+     "native_range": "Datura wrightii — perennial of the Mojave and Sonoran deserts, arroyos and roadsides of the SW United States and N Mexico (Kew POWO); grey-green velvety leaves, sprawling mound. Ceremonial use documented in the ethnobotanical literature.",
+     "leaf_shape": "grey-green, velvety, wavy-edged",
+     "trunk": "sprawling herbaceous stems from a deep root",
+     "petiole": "long petiole",
+     "height_m": [
+      0.5,
+      1.2
+     ],
+     "growth_rate": "fast",
+     "reproduction": "seed, perennial",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.6,
+     "base": "oblique",
+     "apex": "acute",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      6,
+      15
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.45,
+     "layering": "clumped",
+     "droop": 0.25
+    },
+    "tint": {
+     "hue_shift": -12,
+     "sat": 0.6,
+     "val": 1.0,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "appearance": {
+     "flower": {
+      "colour": "#FBF8FC",
+      "secondary": "#D8C0E8",
+      "form": "huge white trumpet 15-20 cm, violet-tinged throat, opens at dusk and wilts by mid-morning",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#8A9A6A",
+      "form": "nodding round spiny capsule"
+     },
+     "seasonal": "flowers open at dusk and hang or stand through the night; each lasts a night or two",
+     "silhouette": "a low grey mound in the desert wash, covered at dusk in enormous white trumpets glowing in the dark"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 2.0,
+     "color": "#8A7A66",
+     "color_2": "#6A5A4A",
+     "lenticels": "dots",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.2,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated",
+     "note": "forking in twos or threes at every node with a flower in the fork — the Datura branching pattern"
+    }
+   },
+   {
+    "name": "Datura metel",
+    "display": "Devil's trumpet",
+    "genus": "Datura",
+    "species": "metel",
+    "family": "Solanaceae",
+    "shape": "shrub",
+    "temp_c": [
+     16,
+     32
+    ],
+    "moisture": [
+     0.3,
+     0.7
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     0.8,
+     2.0
+    ],
+    "density": 0.3,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "sand",
+      "basalt",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#4A7A48",
+    "accent": "#E6D8F0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       20
+      ],
+      [
+       "young",
+       60
+      ],
+      [
+       "mature",
+       120
+      ],
+      [
+       "old",
+       300
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "clonal": "none",
+     "lifespan": "annual",
+     "bloom": {
+      "season": "summer",
+      "days": 2,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "seed",
+     "note": "Night-opening trumpet flowers, hawkmoth pollinated; heavy sweet scent after dusk is a pheromone source like the Amorphophallus bloom."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.2,
+      0.6
+     ],
+     "scent": [
+      0.6,
+      1.0
+     ],
+     "alkaloid": [
+      0.5,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "toxic": {
+     "potency": 0.9,
+     "effect": "delirium, dry mouth, blindness for a day; deadly in quantity — never eaten, never browsed"
+    },
+    "ceremonial": "documented",
+    "scent": {
+     "when": "night",
+     "kind": "sweet_heavy",
+     "range_m": 25
+    },
+    "source": "Datura metel — S and SE Asia, long cultivated across the Old World tropics (Kew POWO); purple-stemmed, violet or white trumpets. Ceremonial use documented in Indian and Chinese ethnobotany.",
+    "realm": "south_asia",
+    "traits": {
+     "genus": "Datura",
+     "species": "metel",
+     "native_range": "Datura metel — S and SE Asia, long cultivated across the Old World tropics (Kew POWO); purple-stemmed, violet or white trumpets. Ceremonial use documented in Indian and Chinese ethnobotany.",
+     "leaf_shape": "broad, wavy-edged, dark green, purple-veined",
+     "trunk": "purple forking stem",
+     "petiole": "long petiole",
+     "height_m": [
+      0.8,
+      2.0
+     ],
+     "growth_rate": "fast",
+     "reproduction": "seed, annual",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "ovate",
+     "aspect": 1.6,
+     "base": "oblique",
+     "apex": "acute",
+     "margin": "undulate",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      10,
+      22
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mound",
+     "gap": 0.4,
+     "layering": "clumped",
+     "droop": 0.15
+    },
+    "tint": {
+     "hue_shift": -6,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "appearance": {
+     "flower": {
+      "colour": "#EEE0F4",
+      "secondary": "#7A3A8A",
+      "form": "long trumpet 15-20 cm, white, yellow or violet, sometimes doubled",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#7A8A5A",
+      "form": "nodding knobbly capsule"
+     },
+     "seasonal": "flowers open at dusk and hang or stand through the night; each lasts a night or two",
+     "silhouette": "a waist-high purple-stemmed bush hung with long violet trumpets at the village edge"
+    },
+    "bark": {
+     "pattern": "green_stem",
+     "orientation": "none",
+     "depth": 0.1,
+     "scale_cm": 1.0,
+     "color": "#5C8A3C",
+     "color_2": "#4A2A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "shrub",
+     "orders": 4,
+     "branch_angle_deg": [
+      40,
+      70
+     ],
+     "taper_exponent": 1.4,
+     "sinuosity": 0.2,
+     "fork_height_frac": [
+      0.1,
+      0.3
+     ],
+     "buttress": "none",
+     "lean_max_deg": 10,
+     "live_crown_ratio": [
+      0.9,
+      0.9
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.05,
+     "root_flare": false,
+     "spacing_m": 0.3,
+     "confidence": "estimated",
+     "note": "forking in twos or threes at every node with a flower in the fork — the Datura branching pattern"
+    }
+   }
+  ],
+  "canopy": [
+   {
+    "name": "Brugmansia suaveolens",
+    "display": "Angel's trumpet",
+    "genus": "Brugmansia",
+    "species": "suaveolens",
+    "family": "Solanaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     14,
+     26
+    ],
+    "moisture": [
+     0.55,
+     0.9
+    ],
+    "altitude_m": [
+     0,
+     1800
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.25,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt",
+      "till"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.45,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#4E8A4A",
+    "accent": "#F8F4E8",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       900
+      ],
+      [
+       "old",
+       3000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 2,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Night-opening trumpet flowers, hawkmoth pollinated; heavy sweet scent after dusk is a pheromone source like the Amorphophallus bloom."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.2,
+      0.6
+     ],
+     "scent": [
+      0.6,
+      1.0
+     ],
+     "alkaloid": [
+      0.5,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "toxic": {
+     "potency": 0.9,
+     "effect": "delirium, dry mouth, blindness for a day; deadly in quantity — never eaten, never browsed"
+    },
+    "ceremonial": "documented",
+    "scent": {
+     "when": "night",
+     "kind": "sweet_heavy",
+     "range_m": 25
+    },
+    "source": "Brugmansia suaveolens — SE Brazil Atlantic forest margins and stream banks, widely planted through tropical America (Kew POWO); extinct in the wild, persisting where people planted it. Ceremonial and shamanic use documented across Amazonia.",
+    "realm": "south_america",
+    "traits": {
+     "genus": "Brugmansia",
+     "species": "suaveolens",
+     "native_range": "Brugmansia suaveolens — SE Brazil Atlantic forest margins and stream banks, widely planted through tropical America (Kew POWO); extinct in the wild, persisting where people planted it. Ceremonial and shamanic use documented across Amazonia.",
+     "leaf_shape": "large elliptic, soft, drip-tipped",
+     "trunk": "short trunk forking into a dome",
+     "petiole": "long petiole",
+     "height_m": [
+      3.0,
+      5.0
+     ],
+     "growth_rate": "fast",
+     "reproduction": "seed, perennial",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.4,
+     "base": "cuneate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      15,
+      30
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.55,
+     "note": "the trumpets hang straight down below the leaves and read as the silhouette at 64 px"
+    },
+    "tint": {
+     "hue_shift": 0,
+     "sat": 0.85,
+     "val": 0.9,
+     "underside": 0.25
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "appearance": {
+     "flower": {
+      "colour": "#FBF7EA",
+      "secondary": "#F0D8A0",
+      "form": "pendulous white trumpet 25-30 cm hanging straight down, opens white and yellows with age",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#7A9A6A",
+      "form": "smooth spindle-shaped berry, rarely set"
+     },
+     "seasonal": "flowers open at dusk and hang or stand through the night; each lasts a night or two",
+     "silhouette": "a small dome-crowned tree by the water hung with long white trumpets, glowing at dusk; scent carries far"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 2.0,
+     "color": "#8A7A66",
+     "color_2": "#6A5A4A",
+     "lenticels": "dots",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      35,
+      65
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.25,
+     "fork_height_frac": [
+      0.15,
+      0.4
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.8,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated",
+     "note": "small tree forking repeatedly above a short trunk; the crown a dome hung with trumpets"
+    }
+   },
+   {
+    "name": "Brugmansia sanguinea",
+    "display": "Red angel's trumpet",
+    "genus": "Brugmansia",
+    "species": "sanguinea",
+    "family": "Solanaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     8,
+     18
+    ],
+    "moisture": [
+     0.5,
+     0.85
+    ],
+    "altitude_m": [
+     1800,
+     3200
+    ],
+    "height_m": [
+     2.5,
+     6.0
+    ],
+    "density": 0.25,
+    "soil": {
+     "classes": [
+      "basalt",
+      "till",
+      "alluvium",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.4,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#4A7A44",
+    "accent": "#D83A2A",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       900
+      ],
+      [
+       "old",
+       3000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 2,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Night-opening trumpet flowers, hawkmoth pollinated; heavy sweet scent after dusk is a pheromone source like the Amorphophallus bloom."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.2,
+      0.6
+     ],
+     "scent": [
+      0.6,
+      1.0
+     ],
+     "alkaloid": [
+      0.5,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "toxic": {
+     "potency": 0.9,
+     "effect": "delirium, dry mouth, blindness for a day; deadly in quantity — never eaten, never browsed"
+    },
+    "ceremonial": "documented",
+    "scent": {
+     "when": "night",
+     "kind": "sweet_heavy",
+     "range_m": 25
+    },
+    "source": "Brugmansia sanguinea — Andean cloud forest and páramo edge, Colombia to N Chile, 1800-3200 m (Kew POWO); scarlet-and-yellow trumpets; the Andean ceremonial species (huanto, floripondio).",
+    "realm": "andes",
+    "traits": {
+     "genus": "Brugmansia",
+     "species": "sanguinea",
+     "native_range": "Brugmansia sanguinea — Andean cloud forest and páramo edge, Colombia to N Chile, 1800-3200 m (Kew POWO); scarlet-and-yellow trumpets; the Andean ceremonial species (huanto, floripondio).",
+     "leaf_shape": "elliptic, felted, wavy",
+     "trunk": "short trunk forking into a rounded crown",
+     "petiole": "long petiole",
+     "height_m": [
+      2.5,
+      6.0
+     ],
+     "growth_rate": "fast",
+     "reproduction": "seed, perennial",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.4,
+     "base": "cuneate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      12,
+      25
+     ],
+     "compound": null,
+     "texture": "hairy_tomentose",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.55,
+     "note": "the trumpets hang straight down below the leaves and read as the silhouette at 64 px"
+    },
+    "tint": {
+     "hue_shift": -4,
+     "sat": 0.8,
+     "val": 0.85,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "appearance": {
+     "flower": {
+      "colour": "#D83A2A",
+      "secondary": "#F0C040",
+      "form": "hanging tubular trumpet 20-25 cm, scarlet with a yellow base; scentless, hummingbird-pollinated",
+      "scent": "none"
+     },
+     "fruit": {
+      "colour": "#7A8A5A",
+      "form": "smooth green spindle"
+     },
+     "seasonal": "flowers open at dusk and hang or stand through the night; each lasts a night or two",
+     "silhouette": "a small felted tree on the cold wet slope, red-and-yellow trumpets hanging in the mist"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 2.0,
+     "color": "#8A7A66",
+     "color_2": "#6A5A4A",
+     "lenticels": "dots",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      35,
+      65
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.25,
+     "fork_height_frac": [
+      0.15,
+      0.4
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.8,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated",
+     "note": "small tree forking repeatedly above a short trunk; the crown a dome hung with trumpets"
+    }
+   },
+   {
+    "name": "Brugmansia arborea",
+    "display": "Tree datura",
+    "genus": "Brugmansia",
+    "species": "arborea",
+    "family": "Solanaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     10,
+     20
+    ],
+    "moisture": [
+     0.45,
+     0.8
+    ],
+    "altitude_m": [
+     2000,
+     3000
+    ],
+    "height_m": [
+     3.0,
+     7.0
+    ],
+    "density": 0.2,
+    "soil": {
+     "classes": [
+      "basalt",
+      "till",
+      "granite"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.35,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#5A8A50",
+    "accent": "#F6F4EC",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       900
+      ],
+      [
+       "old",
+       3000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 2,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Night-opening trumpet flowers, hawkmoth pollinated; heavy sweet scent after dusk is a pheromone source like the Amorphophallus bloom."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.2,
+      0.6
+     ],
+     "scent": [
+      0.6,
+      1.0
+     ],
+     "alkaloid": [
+      0.5,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "toxic": {
+     "potency": 0.9,
+     "effect": "delirium, dry mouth, blindness for a day; deadly in quantity — never eaten, never browsed"
+    },
+    "ceremonial": "documented",
+    "scent": {
+     "when": "night",
+     "kind": "sweet_heavy",
+     "range_m": 25
+    },
+    "source": "Brugmansia arborea — Andes of Ecuador to N Chile, 2000-3000 m dry inter-Andean valleys (Kew POWO); the smallest-flowered tree datura. Ceremonial use documented alongside B. sanguinea.",
+    "realm": "andes",
+    "traits": {
+     "genus": "Brugmansia",
+     "species": "arborea",
+     "native_range": "Brugmansia arborea — Andes of Ecuador to N Chile, 2000-3000 m dry inter-Andean valleys (Kew POWO); the smallest-flowered tree datura. Ceremonial use documented alongside B. sanguinea.",
+     "leaf_shape": "ovate-elliptic, soft-hairy",
+     "trunk": "short trunk, forking",
+     "petiole": "long petiole",
+     "height_m": [
+      3.0,
+      7.0
+     ],
+     "growth_rate": "fast",
+     "reproduction": "seed, perennial",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.4,
+     "base": "cuneate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      10,
+      20
+     ],
+     "compound": null,
+     "texture": "velvety",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.45
+    },
+    "tint": {
+     "hue_shift": -2,
+     "sat": 0.75,
+     "val": 0.9,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "appearance": {
+     "flower": {
+      "colour": "#F8F6EE",
+      "secondary": "#E8E0C8",
+      "form": "short flared white trumpet 12-17 cm, hanging at a slant; strong night scent",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#8A9A6A",
+      "form": "ovoid felted berry"
+     },
+     "seasonal": "flowers open at dusk and hang or stand through the night; each lasts a night or two",
+     "silhouette": "a small grey-green tree with short white bells, in the dry high valley"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 2.0,
+     "color": "#8A7A66",
+     "color_2": "#6A5A4A",
+     "lenticels": "dots",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      35,
+      65
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.25,
+     "fork_height_frac": [
+      0.15,
+      0.4
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.8,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated",
+     "note": "small tree forking repeatedly above a short trunk; the crown a dome hung with trumpets"
+    }
+   },
+   {
+    "name": "Brugmansia versicolor",
+    "display": "Peach angel's trumpet",
+    "genus": "Brugmansia",
+    "species": "versicolor",
+    "family": "Solanaceae",
+    "shape": "broadleaf",
+    "temp_c": [
+     18,
+     28
+    ],
+    "moisture": [
+     0.6,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1000
+    ],
+    "height_m": [
+     3.0,
+     5.0
+    ],
+    "density": 0.2,
+    "soil": {
+     "classes": [
+      "alluvium",
+      "basalt"
+     ],
+     "drainage": "moderate",
+     "ph": "neutral",
+     "fertility_min": 0.45,
+     "salinity": "none"
+    },
+    "needs": [],
+    "color": "#4A8A48",
+    "accent": "#F8C8A0",
+    "growth": {
+     "stages": [
+      [
+       "sprout",
+       60
+      ],
+      [
+       "young",
+       365
+      ],
+      [
+       "mature",
+       900
+      ],
+      [
+       "old",
+       3000
+      ]
+     ],
+     "final_size": 1.0
+    },
+    "repro": {
+     "mode": "seed",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "clonal": "sucker",
+     "lifespan": "perennial",
+     "bloom": {
+      "season": "any",
+      "days": 2,
+      "interval_years": [
+       1,
+       1
+      ]
+     },
+     "dormant": "cold",
+     "note": "Night-opening trumpet flowers, hawkmoth pollinated; heavy sweet scent after dusk is a pheromone source like the Amorphophallus bloom."
+    },
+    "genes": {
+     "size": [
+      0.3,
+      0.7
+     ],
+     "bloom_colour": [
+      0.2,
+      0.6
+     ],
+     "scent": [
+      0.6,
+      1.0
+     ],
+     "alkaloid": [
+      0.5,
+      0.9
+     ],
+     "allocation": [
+      0.4,
+      0.7
+     ]
+    },
+    "cannot_be_browsed": true,
+    "toxic": {
+     "potency": 0.9,
+     "effect": "delirium, dry mouth, blindness for a day; deadly in quantity — never eaten, never browsed"
+    },
+    "ceremonial": "documented",
+    "scent": {
+     "when": "night",
+     "kind": "sweet_heavy",
+     "range_m": 25
+    },
+    "source": "Brugmansia versicolor — Ecuadorian lowland Guayas basin, riverbanks (Kew POWO); extinct in the wild, kept by people. Ceremonial use as for the genus.",
+    "realm": "south_america",
+    "traits": {
+     "genus": "Brugmansia",
+     "species": "versicolor",
+     "native_range": "Brugmansia versicolor — Ecuadorian lowland Guayas basin, riverbanks (Kew POWO); extinct in the wild, kept by people. Ceremonial use as for the genus.",
+     "leaf_shape": "very large, soft, elliptic",
+     "trunk": "short trunk forking into a wide dome",
+     "petiole": "long petiole",
+     "height_m": [
+      3.0,
+      5.0
+     ],
+     "growth_rate": "fast",
+     "reproduction": "seed, perennial",
+     "pollinator": "moth",
+     "disperser": [
+      "gravity",
+      "human"
+     ],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "oak",
+    "leaf_type": "broadleaf",
+    "leaf": {
+     "type": "simple",
+     "outline": "elliptic",
+     "aspect": 2.4,
+     "base": "cuneate",
+     "apex": "acuminate",
+     "margin": "entire",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      20,
+      35
+     ],
+     "compound": null,
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "rounded",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.55,
+     "note": "the trumpets hang straight down below the leaves and read as the silhouette at 64 px"
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.9,
+     "val": 0.9,
+     "underside": 0.2
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "appearance": {
+     "flower": {
+      "colour": "#FBE8D0",
+      "secondary": "#F8B888",
+      "form": "the longest trumpet, 30-50 cm, hanging straight down; opens white and turns peach-pink over a day or two",
+      "scent": "sweet"
+     },
+     "fruit": {
+      "colour": "#7A9A6A",
+      "form": "long smooth spindle, rarely set"
+     },
+     "seasonal": "flowers open at dusk and hang or stand through the night; each lasts a night or two",
+     "silhouette": "a riverside dome tree trailing half-metre trumpets that shade from white to peach"
+    },
+    "bark": {
+     "pattern": "fissured",
+     "orientation": "vertical",
+     "depth": 0.3,
+     "scale_cm": 2.0,
+     "color": "#8A7A66",
+     "color_2": "#6A5A4A",
+     "lenticels": "dots",
+     "confidence": "documented"
+    },
+    "architecture": {
+     "model": "leeuwenberg",
+     "habit": "multi_stem",
+     "orders": 5,
+     "branch_angle_deg": [
+      35,
+      65
+     ],
+     "taper_exponent": 1.5,
+     "sinuosity": 0.25,
+     "fork_height_frac": [
+      0.15,
+      0.4
+     ],
+     "buttress": "none",
+     "lean_max_deg": 12,
+     "live_crown_ratio": [
+      0.8,
+      0.6
+     ],
+     "self_prune": false,
+     "dead_limbs": 0.1,
+     "root_flare": false,
+     "spacing_m": 0.5,
+     "confidence": "estimated",
+     "note": "small tree forking repeatedly above a short trunk; the crown a dome hung with trumpets"
+    }
+   }
+  ]
+ }
+}

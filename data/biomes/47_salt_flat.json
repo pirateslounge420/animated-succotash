@@ -394,24 +394,26 @@
      "venation": "none",
      "arrangement": "alternate",
      "size_cm": [
-      0.15,
-      0.35
+      0.1,
+      0.3
      ],
      "compound": null,
      "texture": "waxy_glaucous",
-     "confidence": "documented"
+     "confidence": "documented",
+     "note": "plume foliage: scale leaves on fine, wiry, much-branched twigs read as soft feathery sprays, never as a solid mass"
     },
     "canopy": {
-     "form": "vase",
-     "gap": 0.45,
+     "form": "weeping",
+     "gap": 0.65,
      "layering": "sparse",
-     "droop": 0.5
+     "droop": 0.8,
+     "note": "feathery — long arching whip twigs, plume-like foliage, see-through at every range; pink flower plumes on the tips in summer"
     },
     "tint": {
-     "hue_shift": -10,
-     "sat": 0.6,
-     "val": 1.0,
-     "underside": 0.05,
+     "hue_shift": -14,
+     "sat": 0.55,
+     "val": 1.05,
+     "underside": 0.1,
      "autumn": "#d8a040",
      "drop": true
     },
@@ -430,13 +432,13 @@
     },
     "architecture": {
      "model": "champagnat",
-     "habit": "multi_stem",
-     "orders": 4,
+     "habit": "weeping",
+     "orders": 6,
      "branch_angle_deg": [
-      30,
+      25,
       60
      ],
-     "taper_exponent": 1.5,
+     "taper_exponent": 2.0,
      "sinuosity": 0.6,
      "fork_height_frac": [
       0.0,
@@ -445,14 +447,31 @@
      "buttress": "none",
      "lean_max_deg": 25,
      "live_crown_ratio": [
-      0.9,
-      0.7
+      0.95,
+      0.8
      ],
      "self_prune": false,
-     "dead_limbs": 0.3,
+     "dead_limbs": 0.2,
      "root_flare": false,
-     "spacing_m": 0.2,
-     "confidence": "estimated"
+     "spacing_m": 0.08,
+     "confidence": "estimated",
+     "note": "many fine whip-like twigs that thin fast and arch over (feathery, plume-like)"
+    },
+    "foliage": {
+     "style": "plume",
+     "twig_density": 0.9,
+     "twig_len_m": [
+      0.4,
+      1.2
+     ],
+     "wisp": 0.85,
+     "note": "foliage drawn as fine drooping sprays of scale-leaved twigs rather than leaf clumps; a soft feathery haze around the stems"
+    },
+    "flower": {
+     "colour": "#E8A0B8",
+     "secondary": "#F4D0DC",
+     "form": "dense pink plumes 2-5 cm on the twig tips",
+     "season": "summer"
     }
    },
    {

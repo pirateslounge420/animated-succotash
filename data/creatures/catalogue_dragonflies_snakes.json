@@ -1,5 +1,5 @@
 {
- "notes": "Creature catalogue in the creatures.json schema plus the D4 fields. Load like creatures.json (extend the loader to read data/creatures/*.json). Dragonflies: their larvae live underwater for years and eat tadpoles and small fish, so a pond's dragonflies depend on its water having stayed through the seasons; adults hunt insects over water and meadows and are eaten by birds. Venomous snakes: `venom.potency` 0-1 sets bite consequence — below 0.5 pain and a slow day, 0.5-0.8 serious and needs camp medicine, above 0.8 deadly without it; `sound` rattle/hiss/rasp is the audio warning most give before striking, and skittish ones only bite when stepped on — so sneaking and torchlight matter. Snakes hibernate in cold bands (den in rock), hunt rodents so they follow rodent booms near camps, and several live in the branch graph. 'invented' is absent: all real.",
+ "notes": "Creature catalogue in the creatures.json schema plus the D4 fields. Load like creatures.json (extend the loader to read data/creatures/*.json). Dragonflies: their larvae live underwater for years and eat tadpoles and small fish, so a pond's dragonflies depend on its water having stayed through the seasons; adults hunt insects over water and meadows and are eaten by birds. Venomous snakes: `venom.potency` 0-1 sets bite consequence — below 0.5 pain and a slow day, 0.5-0.8 serious and needs camp medicine, above 0.8 deadly without it; `sound` rattle/hiss/rasp is the audio warning most give before striking, and skittish ones only bite when stepped on — so sneaking and torchlight matter. Snakes hibernate in cold bands (den in rock), hunt rodents so they follow rodent booms near camps, and several live in the branch graph. 'invented' is absent: all real. Mambas (black and green) are canopy snakes: they live in the branch graph, black mamba coming down more (`ground_time` = share of its time on the ground).",
  "creatures": [
   {
    "name": "Common darter",
@@ -631,22 +631,22 @@
    "name": "Black mamba",
    "genus": "Dendroaspis",
    "species": "polylepis",
-   "role": "ground",
+   "role": "canopy",
    "body": "quadruped",
    "spawn": "ambient",
    "temp_c": [
     18,
-    28
+    29
    ],
    "moisture": [
     0.2,
-    0.6
+    0.7
    ],
    "active": "day",
-   "one_per_radius_m": 300,
+   "one_per_radius_m": 250,
    "size_m": 2.5,
-   "color": "#6A6A6A",
-   "accent": "#1A1A1A",
+   "color": "#4A4A48",
+   "accent": "#161616",
    "speed_mps": 5,
    "shy_m": 8,
    "sound": "hiss",
@@ -662,11 +662,12 @@
     "effect": "deadly within hours"
    },
    "nest": {
-    "type": "burrow",
-    "site": "termite_mound"
+    "type": "tree",
+    "site": "tree_hollow"
    },
    "reproduce_days": 365,
-   "source": "African savanna and rocky hills; fastest snake; lives in termite mounds and rock cracks; rears up and opens a black mouth."
+   "source": "African savanna woodland and rocky hills; fastest snake; semi-arboreal — hunts and rests in the branch graph and drops to the ground to travel; rears up and opens a black mouth. Canopy role: lives in trees like the green mamba, comes down to move between them (ground_time).",
+   "ground_time": 0.4
   },
   {
    "name": "Green mamba",
@@ -686,8 +687,8 @@
    "active": "day",
    "one_per_radius_m": 200,
    "size_m": 1.8,
-   "color": "#40C040",
-   "accent": "#20A020",
+   "color": "#3CC43C",
+   "accent": "#1E9A1E",
    "speed_mps": 3,
    "shy_m": 6,
    "sound": "none",
@@ -707,7 +708,8 @@
     "site": "tree_hollow"
    },
    "reproduce_days": 365,
-   "source": "East African coastal forest canopy; lives in the branch graph, rarely comes down."
+   "source": "East African coastal forest canopy; lives in the branch graph, rarely comes down.",
+   "ground_time": 0.05
   },
   {
    "name": "Egyptian cobra",
