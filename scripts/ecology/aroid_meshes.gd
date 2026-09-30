@@ -20,7 +20,9 @@ static func get_mesh(kind: String) -> Mesh:
 			"spathe":
 				_cache[kind] = _spathe()
 			"appendix":
-				_cache[kind] = _lathe([[0.0, 1.0], [0.3, 0.95], [0.7, 0.75], [0.92, 0.45], [1.0, 0.0]], false)
+				# The spadix's appendix: a thick pointed column, fattest a
+				# little up from its foot (the titan arum's 3 m spike).
+				_cache[kind] = _lathe([[0.0, 0.85], [0.12, 1.0], [0.45, 0.88], [0.75, 0.6], [0.93, 0.28], [1.0, 0.0]], false)
 			"pollen":
 				_cache[kind] = _lathe([[0.0, 1.0], [1.0, 1.0]], true)
 			"berries":
@@ -87,12 +89,46 @@ static func _add_lathe(st: SurfaceTool, profile: Array, uvx: float, inward: bool
 static func _spathe() -> ArrayMesh:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var outer := [[0.0, 0.3], [0.2, 0.55], [0.5, 0.82], [0.8, 1.0], [1.0, 1.12]]
-	var inner := [[0.02, 0.26], [0.2, 0.5], [0.5, 0.76], [0.8, 0.93], [1.0, 1.05]]
-	_add_lathe(st, outer, 0.0, false)
-	_add_lathe(st, inner, 1.0, true)
+	# A pleated bell (the titan arum: from reference photos, a narrow
+	# green neck, a wide fluted flare and a frilled rim rolled back past
+	# the vertical), the inside the second colour.
+	var outer := [[0.0, 0.28], [0.12, 0.34], [0.35, 0.5], [0.6, 0.76], [0.8, 1.02], [0.92, 1.24], [1.0, 1.42], [1.03, 1.5], [1.0, 1.55]]
+	var inner := [[0.02, 0.24], [0.12, 0.3], [0.35, 0.45], [0.6, 0.7], [0.8, 0.95], [0.92, 1.17], [1.0, 1.36], [1.03, 1.44], [1.005, 1.49]]
+	_add_pleated(st, outer, 0.0, false, 64, 16, 0.1)
+	_add_pleated(st, inner, 1.0, true, 64, 16, 0.1)
 	var mesh := st.commit()
 	return mesh
+
+
+## A lathe with `pleats` ridges round it: the radius swells by `depth`
+## (a share) on the ridges, more toward the top (the frilled rim).
+static func _add_pleated(st: SurfaceTool, profile: Array, uvx: float, inward: bool, sides_n: int, pleats: int, depth: float) -> void:
+	var ymax := 0.0
+	for pr in profile:
+		ymax = maxf(ymax, float(pr[0]))
+	var pt := func(i: int, s: int) -> Vector3:
+		var y := float(profile[i][0])
+		var r := float(profile[i][1])
+		var a := TAU * s / sides_n
+		var k := depth * (0.3 + 0.7 * y / maxf(ymax, 1e-3))
+		var rr := r * (1.0 + k * cos(a * pleats))
+		return Vector3(cos(a) * rr, y, sin(a) * rr)
+	for i in profile.size() - 1:
+		for s in sides_n:
+			var p00: Vector3 = pt.call(i, s)
+			var p01: Vector3 = pt.call(i, s + 1)
+			var p10: Vector3 = pt.call(i + 1, s)
+			var p11: Vector3 = pt.call(i + 1, s + 1)
+			var nrm := (p10 - p00).cross(p01 - p00).normalized()
+			if nrm.length() < 0.5:
+				nrm = Vector3.UP
+			if inward:
+				nrm = -nrm
+			var tri := [p00, p10, p11, p00, p11, p01] if not inward else [p00, p11, p10, p00, p01, p11]
+			for v in tri:
+				st.set_normal(nrm)
+				st.set_uv(Vector2(uvx, v.y))
+				st.add_vertex(v)
 
 
 ## An infructescence: rows of berries round a column (octahedra, each

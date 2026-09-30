@@ -315,7 +315,7 @@ func _begin(e: Dictionary) -> Dictionary:
 	var ped_m := float(PATTERN_MODE.get(str(pet.get("pattern", "mottled")), 1.0))
 	var sp_out := _col(spa.get("outside"), Color(0.45, 0.2, 0.25))
 	var sp_in := _col(spa.get("inside"), Color(0.3, 0.05, 0.1))
-	var app_c := _col(sp.flower.get("spadix"), Color(0.8, 0.7, 0.45))
+	var app_c := _col(sp.flower.get("spadix"), Color(0.88, 0.84, 0.55))
 	var fr_u := _col(fr.get("unripe"), Color(0.4, 0.6, 0.25))
 	var fr_r := _col(fr.get("ripe"), Color(0.85, 0.15, 0.1))
 	var ped_cm = bud.get("peduncle_cm", [10, 30])
@@ -416,8 +416,10 @@ func _plant_step(w: Dictionary, i: int, days: float, blooms: Array) -> void:
 		var fl := str(st.flower)
 		if fl != "":
 			any_part = true
-			var s_len := clampf(h * 0.28, 0.03, 1.5)
-			var a_len := clampf(h * 0.33, 0.03, 2.4)
+			var dims := bloom_dims(h)
+			var s_len: float = dims.x
+			var a_len: float = dims.y
+			var a_r: float = dims.z
 			var ped := minf(ped_mean, maxf(h, 0.05))
 			var at := o
 			if str(st.leaf) != "dormant":
@@ -444,7 +446,9 @@ func _plant_step(w: Dictionary, i: int, days: float, blooms: Array) -> void:
 							_emit(lists.peduncle, side * s_len * 0.07, up * ped, fwd * s_len * 0.07, hp, ped_c, ped_c2, ped_m)
 						var top := hp + up * ped
 						_emit(lists.spathe, side * s_len * 0.42 * ok_, up * s_len, fwd * s_len * 0.42 * ok_, top, so, si, 10.0)
-						_emit(lists.appendix, side * s_len * 0.12, up * a_len, fwd * s_len * 0.12, top + up * s_len * 0.12, app_c, app_c, 0.0)
+						# The appendix rises from the spathe's foot, out past its
+						# rim to twice its height.
+						_emit(lists.appendix, side * a_r, up * a_len, fwd * a_r, top + up * s_len * 0.05, app_c, app_c, 0.0)
 						if st.male:
 							_emit(lists.pollen, side * s_len * 0.15, up * s_len * 0.05, fwd * s_len * 0.15, top + up * s_len * 0.14, Color(0.95, 0.8, 0.25).srgb_to_linear(), Color.BLACK, 12.0)
 					"wilt":
@@ -454,7 +458,7 @@ func _plant_step(w: Dictionary, i: int, days: float, blooms: Array) -> void:
 						var top2 := hp + up * ped
 						var lean := Basis(fwd, 0.9 * t3)
 						_emit(lists.spathe, side * s_len * 0.42 * lerpf(1.0, 0.55, t3), up * s_len * lerpf(1.0, 0.45, t3), fwd * s_len * 0.42 * lerpf(1.0, 0.55, t3), top2, so.darkened(0.5 * t3), si.darkened(0.5 * t3), 10.0)
-						_emit(lists.appendix, lean * (side * s_len * 0.12), lean * (up * a_len * lerpf(1.0, 0.7, t3)), lean * (fwd * s_len * 0.12), top2 + up * s_len * 0.12, app_c.darkened(0.45 * (1.0 - k)), app_c, 0.0)
+						_emit(lists.appendix, lean * (side * a_r), lean * (up * a_len * lerpf(1.0, 0.7, t3)), lean * (fwd * a_r), top2 + up * s_len * 0.05, app_c.darkened(0.45 * (1.0 - k)), app_c, 0.0)
 					"fruit":
 						var pl := ped * lerpf(1.0, 1.35, t3)
 						if ped > 0.02:
@@ -489,6 +493,14 @@ func _commit(w: Dictionary) -> void:
 		if buf.size() > 0:
 			pm.buffer = buf
 		pmi.visible = buf.size() > 0
+
+
+## An open inflorescence's sizes for a plant `h` tall: the spathe's height,
+## the appendix's length (twice it, from the spathe's foot: the titan arum's
+## 3 m spike over its 1.3 m spathe) and the appendix's radius (m).
+static func bloom_dims(h: float) -> Vector3:
+	var s_len := clampf(h * 0.28, 0.03, 1.5)
+	return Vector3(s_len, clampf(s_len * 2.15, 0.05, 3.2), s_len * 0.11)
 
 
 ## One part instance: its basis columns (x, y, z: sizes built in), origin,

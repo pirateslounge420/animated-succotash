@@ -82,7 +82,10 @@ void fragment() {
 		c = mix(c, c2, smoothstep(0.7, 0.74, n));
 		c *= 0.85 + 0.3 * n;
 	} else if (mode > 9.5 && mode < 10.5) {
-		c = UV.x > 0.5 ? c2 : c;
+		// The spathe: the inside colour within, and the outside flushing
+		// to it up toward the frilled rim (the titan arum's green bell
+		// turning maroon at its limb).
+		c = UV.x > 0.5 ? c2 : mix(c, c2, smoothstep(0.72, 0.98, UV.y) * 0.85);
 	} else if (mode > 10.5 && mode < 11.5) {
 		c *= 0.7 + 0.5 * clamp(dot(NORMAL, VIEW), 0.0, 1.0);
 	}

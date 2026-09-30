@@ -453,6 +453,30 @@ static func _build_impostor(sp: PlantSpecies, idx: int) -> Array:
 	return arrays
 
 
+static func _aroid_leaf(b: _Builder, leaf: Color, wood: Color, far: bool) -> void:
+	b.cylinder(Vector3.ZERO, 0.032, 0.62, 5 if far else 8, wood, 0.0, 0.0)
+	var top := Vector3(0, 0.62, 0)
+	var per := 3 if far else 6
+	for k in 3:
+		var a := TAU * k / 3.0 + 0.4
+		var d := Vector3(cos(a), 0.2, sin(a)).normalized()
+		var end := top + d * 0.28
+		b.strut(top, end, 0.013, wood)
+		# The fork: three more, each hung with big drooping leaflets.
+		for f in [-0.75, 0.0, 0.75]:
+			var d2 := (d.rotated(Vector3.UP, f) + Vector3(0, -0.15, 0)).normalized()
+			var len2 := 0.3 if f == 0.0 else 0.26
+			var end2 := end + d2 * len2
+			b.strut(end, end2, 0.008, wood)
+			for j in per:
+				var t := (j + 0.5) / per
+				var at := end + d2 * len2 * t
+				var side := d2.cross(Vector3.UP).normalized()
+				for sgn in [-1.0, 1.0]:
+					b.frond(at, (side * sgn * 0.75 + d2 * 0.35 + Vector3.DOWN * 0.45).normalized(), 0.19 * (1.0 - 0.3 * t), 0.05, leaf, 0.8, 0.3)
+			b.frond(end2, (d2 + Vector3.DOWN * 0.35).normalized(), 0.16, 0.045, leaf, 0.9, 0.4)
+
+
 static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 	var b := _Builder.new()
 	b.far = lod == LOD_FAR
@@ -472,6 +496,13 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 	b.rng.seed = idx * 7919 + 11
 	if sp.shape == S.CACTUS:
 		b.wood = leaf # ribbed: the bark streaks read as cactus ribs
+	if not sp.aroid.is_empty():
+		# An Amorphophallus leaf (from reference photos of the titan arum):
+		# one mottled petiole, a tree in itself, forking at its top into
+		# three rachises that fork again, each hung with leaflets, a canopy
+		# as wide as the plant is tall. (Was the umbrella tree stand-in.)
+		_aroid_leaf(b, leaf, wood, far)
+		return b.commit_arrays()
 	match sp.shape:
 		S.CONIFER:
 			b.trunk(0.04, 0.3, 0.0, 0.0)

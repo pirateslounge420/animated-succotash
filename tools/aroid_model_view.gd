@@ -87,17 +87,19 @@ func _run() -> void:
 	var ped_m := float(AroidGarden.PATTERN_MODE.get(str(pet.get("pattern", "mottled")), 1.0))
 	var so := _col(spa.get("outside"), Color(0.45, 0.2, 0.25))
 	var si := _col(spa.get("inside"), Color(0.3, 0.05, 0.1))
-	var app_c := _col(sp.flower.get("spadix") if sp.flower != null else null, Color(0.8, 0.7, 0.45))
+	var app_c := _col(sp.flower.get("spadix") if sp.flower != null else null, Color(0.88, 0.84, 0.55))
 	var ped_cm = bud.get("peduncle_cm", [10, 30])
 	var ped := minf((float(ped_cm[0]) + float(ped_cm[1])) * 0.005, h)
-	var s_len := clampf(h * 0.28, 0.03, 1.5)
-	var a_len := clampf(h * 0.33, 0.03, 2.4)
+	var dims := AroidGarden.bloom_dims(h)
+	var s_len: float = dims.x
+	var a_len: float = dims.y
+	var a_r: float = dims.z
 	var o := Vector3(h * 0.5, 0, 0)
 	var top := o + Vector3.UP * ped
 	var parts := {
 		"peduncle": [Vector3(s_len * 0.07, 0, 0), Vector3(0, ped, 0), Vector3(0, 0, s_len * 0.07), o, ped_c, ped_c2, ped_m],
 		"spathe": [Vector3(s_len * 0.42, 0, 0), Vector3(0, s_len, 0), Vector3(0, 0, s_len * 0.42), top, so, si, 10.0],
-		"appendix": [Vector3(s_len * 0.12, 0, 0), Vector3(0, a_len, 0), Vector3(0, 0, s_len * 0.12), top + Vector3.UP * s_len * 0.12, app_c, app_c, 0.0],
+		"appendix": [Vector3(a_r, 0, 0), Vector3(0, a_len, 0), Vector3(0, 0, a_r), top + Vector3.UP * s_len * 0.05, app_c, app_c, 0.0],
 		"pollen": [Vector3(s_len * 0.15, 0, 0), Vector3(0, s_len * 0.05, 0), Vector3(0, 0, s_len * 0.15), top + Vector3.UP * s_len * 0.14, Color(0.95, 0.8, 0.25).srgb_to_linear(), Color.BLACK, 12.0],
 	}
 	for p in parts:
@@ -120,7 +122,7 @@ func _run() -> void:
 		mi.multimesh = mm
 		mi.material_override = mat
 		root.add_child(mi)
-	var total_h: float = ped + s_len * 0.12 + a_len
+	var total_h: float = ped + s_len * 0.05 + a_len
 	print("[model] bloom: peduncle %.2f m, spathe %.2f m, appendix %.2f m: %.1f m tall" % [ped, s_len, a_len, total_h])
 	var cam := Camera3D.new()
 	cam.fov = 45.0
@@ -130,14 +132,16 @@ func _run() -> void:
 	# Both, from a little above eye height, back far enough for the taller.
 	var tall := maxf(h, total_h)
 	var mid := Vector3(0, tall * 0.45, 0)
-	var eye := mid + Vector3(0.35, 0.25, 1.0).normalized() * tall * 2.3
+	var eye := mid + Vector3(0.35, 0.12, 1.0).normalized() * tall * 2.3
 	cam.global_transform = Transform3D(Basis.looking_at((mid - eye).normalized(), Vector3.UP), eye)
 	await _frames(6)
 	var tag := sp.name.replace(" ", "_").to_lower()
 	get_root().get_texture().get_image().save_png("%s/model_%s.png" % [out_dir, tag])
 	# The inflorescence, close.
-	var bm := top + Vector3.UP * (s_len * 0.12 + a_len) * 0.45
-	var be := bm + Vector3(0.5, 0.15, 1.0).normalized() * (a_len + s_len) * 1.4
+	# From a little below the rim, as the photos are: the frilled limb,
+	# the maroon inside and the spike over it.
+	var bm := top + Vector3.UP * (s_len * 0.5 + a_len * 0.3)
+	var be := top + Vector3.UP * s_len * 0.55 + Vector3(0.5, 0.0, 1.0).normalized() * (a_len + s_len) * 1.15
 	cam.global_transform = Transform3D(Basis.looking_at((bm - be).normalized(), Vector3.UP), be)
 	await _frames(6)
 	get_root().get_texture().get_image().save_png("%s/model_%s_bloom.png" % [out_dir, tag])
