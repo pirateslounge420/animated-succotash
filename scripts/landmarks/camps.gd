@@ -277,6 +277,9 @@ func update_camps(delta: float) -> void:
 	var pp := player.global_position
 	for key in _camps:
 		_animate(_camps[key], delta, pp)
+		# Found (design 30 Sept §AZ): the first time you come to its fire.
+		if (_camps[key] as Node3D).global_position.distance_to(pp) < 30.0:
+			GameLog.add_once("camp:" + str(key), "Found a camp, folk at the fire.", "camp_found")
 
 
 ## Build the camps in reach now, not at the next half-second refresh

@@ -227,6 +227,14 @@ var spawner: CreatureSpawner
 var camps: Camps
 var hp := MAX_HP
 var dead := false
+## What is killing you, for the log (design 30 Sept §AZ): "fall",
+## "creature:<name>", "dark", set by whoever deals the blow before it
+## lands; main reads it on death.
+var death_cause := ""
+## The keys are a text box's (the log, LogPanel): the movement actions
+## are let go each frame so typing "w" doesn't walk you.
+var typing := false
+const TYPING_ACTIONS := ["move_forward", "move_back", "move_left", "move_right", "jump", "crouch", "sprint", "interact", "shoot", "weapon_swap"]
 var first_person := true
 var _grab_at := Vector3.ZERO
 ## Movement state (Melee-spacie feel, wall jump).
@@ -610,6 +618,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if typing:
+		for a in TYPING_ACTIONS:
+			if InputMap.has_action(a):
+				Input.action_release(a)
 	var stick := Vector2(Input.get_joy_axis(0, JOY_AXIS_RIGHT_X), Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y))
 	if stick.length() > 0.15:
 		_yaw -= stick.x * STICK_SENSITIVITY * delta
@@ -1636,6 +1648,7 @@ func _plant_foot() -> void:
 ## Fall damage for a drop of `fell` metres (over FALL_SAFE_M).
 func _fall_damage(fell: float) -> void:
 	if fell > FALL_SAFE_M:
+		death_cause = "fall"
 		_damage((fell - FALL_SAFE_M) * FALL_DAMAGE_PER_M)
 
 
@@ -1645,6 +1658,7 @@ func _fall_damage(fell: float) -> void:
 func _start_roll(fell: float, fall_v: float) -> void:
 	meter.perfect("roll")
 	if fell > ROLL_SAFE_M:
+		death_cause = "fall"
 		_damage((fell - FALL_SAFE_M) * FALL_DAMAGE_PER_M * ROLL_DAMAGE)
 	var h := _move - up * _move.dot(up)
 	# The roll goes where you look (design §R), a perfect contact.

@@ -53,6 +53,9 @@ var ripples: RippleSim
 var hud: Hud
 var map_overlay: MapOverlay
 var inventory_screen: InventoryScreen
+var log_panel: LogPanel
+var _last_biome := -1
+var _last_sun_el := NAN
 ## The settings panel (O / F10): the HUD switches (design §L).
 var settings_panel: SettingsPanel
 ## A short line in place of the prompt ("Your hands are full"), and how
@@ -173,6 +176,7 @@ func _on_planet_ready() -> void:
 	# first hearth: the opening camp (design 30 Sept §AY).
 	WorldSave.open(world.world_seed)
 	Hearth.setup(camp.site)
+	GameLog.load_saved()
 	if Tuning.profile() == "ambient":
 		Torch.lay_bundle(world, chunks, camp.fire())
 	# Waking on the mat, facing the fire; the camera looks down over a
@@ -252,6 +256,9 @@ func _on_planet_ready() -> void:
 	inventory_screen.name = "Inventory"
 	inventory_screen.inventory = player.inventory
 	hud.add_child(inventory_screen)
+	log_panel = LogPanel.new()
+	log_panel.name = "Log"
+	hud.add_child(log_panel)
 
 	hud.hide_loading()
 	_playing = true
@@ -337,6 +344,7 @@ func _process(delta: float) -> void:
 	Torch.remake_bundles(world, chunks, world.days)
 	FireStore.tick(get_tree(), delta, player.global_position)
 	WorldSave.flush(delta)
+	player.typing = log_panel.visible
 	# After everything that touches the water this frame has moved; round
 	# whichever camera is drawing.
 	var view := get_viewport().get_camera_3d()
@@ -388,6 +396,7 @@ func _process(delta: float) -> void:
 	# the local clock.
 	var clock_h := fposmod(Astro.time_of_day(world.days) + CubeSphere.longitude(d) / TAU, 1.0) * 24.0
 	GameLog.now_text = "Day %d · %02d:%02d" % [int(floor(world.days)) + 1, int(clock_h), int(fmod(clock_h, 1.0) * 60.0)]
+	_log_events()
 	hud.readouts.feed(player.velocity.length(), player.meter.value, clock_h, world.dev_mode, delta)
 	map_overlay.update_map(d, delta)
 
@@ -416,6 +425,8 @@ func _above_clouds(w: Dictionary) -> void:
 ## punch or a shove is all you have till you find your body).
 func _on_player_died() -> void:
 	hud.show_death()
+	GameLog.add(_death_line(player.death_cause), "death_cause")
+	player.death_cause = ""
 	var death_dir: Vector3 = player.surface_dir
 	PlayerCorpse.drop(world, player.global_position, player.global_basis, player.inventory)
 	await get_tree().create_timer(3.5).timeout
@@ -482,6 +493,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif settings_panel.visible and event is InputEventMouseMotion:
 		# Dragging a volume slider.
 		settings_panel.drag(event.position)
+	elif event.is_action_pressed("log") and not log_panel.visible and not inventory_screen.visible and not settings_panel.visible:
+		log_panel.open()
 	elif event.is_action_pressed("inventory"):
 		_toggle_inventory(not inventory_screen.visible)
 	elif event.is_action_pressed("release_mouse") and inventory_screen.visible:
@@ -736,6 +749,34 @@ func _sample_words(it: Dictionary) -> String:
 	if it.has("seed"):
 		return "%s of %s: %s seed" % [what, it.get("binomial", "it"), str(it.seed)]
 	return "%s of %s" % [what, it.get("binomial", "it")]
+
+
+## What killed you, as the log says it (hud.json log.death_lines):
+## "Fell", "Drowned", "Killed by a wolf", "Taken by the dark", "Froze".
+static func _death_line(cause: String) -> String:
+	var lines: Dictionary = Tuning.section("hud", "log").get("death_lines", {})
+	if cause.begins_with("creature:"):
+		return str(lines.get("creature", "Killed by a {creature}")).replace("{creature}", cause.substr(9).to_lower())
+	return str(lines.get(cause, "Died" if cause == "" else cause.capitalize()))
+
+
+## The world's own lines in the log (design 30 Sept §AZ, hud.json log
+## events): a biome first entered, dawn and dusk.
+func _log_events() -> void:
+	var map: PlanetData = world.planet
+	if map != null and not map.biome.is_empty():
+		var b: int = map.biome[map.cell_at(player.surface_dir)]
+		if b != _last_biome:
+			_last_biome = b
+			var name := BiomeTemplates.name_of(b)
+			GameLog.add_once("biome:" + name, "Came into the %s." % name.to_lower(), "biome_entered")
+	var el := sky.sun_elevation_deg
+	if not is_nan(_last_sun_el):
+		if _last_sun_el < -1.0 and el >= -1.0:
+			GameLog.add("Dawn.", "dawn")
+		elif _last_sun_el >= -1.0 and el < -1.0:
+			GameLog.add("Dusk.", "dusk")
+	_last_sun_el = el
 
 
 func _say_note(text: String) -> void:

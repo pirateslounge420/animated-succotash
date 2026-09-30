@@ -25,6 +25,8 @@ const DEFAULTS := {
 	# carried thing down while it's open. Tab by the designer's call
 	# (2026-09-28); I stays as a second key.
 	"inventory": [KEY_TAB, KEY_I],
+	# The log (design 30 Sept §AZ, LogPanel).
+	"log": [KEY_ENTER, KEY_KP_ENTER],
 	"inventory_drop": [KEY_G],
 	"toggle_map": [KEY_M],
 	"toggle_hud": [KEY_H],

@@ -450,7 +450,7 @@ func _attack(delta: float, ctx: Dictionary, to_player: float) -> void:
 			heading = _tangent_to(pd)
 			if _bite_cd <= 0.0:
 				_bite_cd = 1.3
-				spawner.player_hit(species.bite, global_position)
+				spawner.player_hit(species.bite, global_position, species.name)
 		return
 	if to_player > reach:
 		mode = "go"
@@ -460,7 +460,7 @@ func _attack(delta: float, ctx: Dictionary, to_player: float) -> void:
 		heading = _tangent_to(pd)
 		if _bite_cd <= 0.0:
 			_bite_cd = 1.3
-			spawner.player_hit(species.bite, global_position)
+			spawner.player_hit(species.bite, global_position, species.name)
 
 
 func _call_interval() -> float:

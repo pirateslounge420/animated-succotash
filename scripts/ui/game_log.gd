@@ -21,6 +21,30 @@ static func add(text: String, kind := "") -> void:
 	for l in listeners:
 		if l.is_valid():
 			l.call(e)
+	_save()
+
+
+## Kept per world (hud.json log.persist, WorldSave): main calls
+## load_saved() once the world's save is open.
+static func load_saved() -> void:
+	entries.clear()
+	_once.clear()
+	if not bool(Tuning.section("hud", "log").get("persist", true)):
+		return
+	var saved = WorldSave.data.get("log", null)
+	if saved is Array:
+		for e in saved:
+			if e is Dictionary:
+				entries.append(e)
+				if str(e.get("kind", "")) in ["biome_entered", "camp_found"]:
+					_once[str(e.get("key", ""))] = true
+
+
+static func _save() -> void:
+	if not bool(Tuning.section("hud", "log").get("persist", true)):
+		return
+	WorldSave.data["log"] = entries
+	WorldSave.mark_dirty()
 
 
 ## A line once: the same text again (a biome re-entered) is skipped.
@@ -30,6 +54,8 @@ static func add_once(key: String, text: String, kind := "") -> void:
 		return
 	_once[key] = true
 	add(text, kind)
+	if not entries.is_empty():
+		entries[entries.size() - 1]["key"] = key
 
 
 static func clear() -> void:

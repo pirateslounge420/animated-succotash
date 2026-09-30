@@ -1001,10 +1001,12 @@ func _fade_prints(delta: float) -> void:
 # --- Combat --------------------------------------------------------------------
 
 ## A creature bit or struck the player (Creature._attack).
-func player_hit(amount: float, from_pos: Vector3) -> void:
+func player_hit(amount: float, from_pos: Vector3, who := "") -> void:
 	# A lit fire is a safe zone: nothing hostile hurts you by one.
 	if Campfire.lit_near(get_tree(), player.global_position, Tuning.num("combat", "death", "fire_safe_m")):
 		return
+	if who != "":
+		player.death_cause = "creature:" + who
 	player.take_hit(amount, from_pos)
 
 
