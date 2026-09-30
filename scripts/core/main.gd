@@ -35,6 +35,7 @@ var creatures: CreatureSpawner
 var aroid_garden: AroidGarden
 ## Flowers, pollinators and fruit on the trees round the player (FruitCrop).
 var fruit_crop: FruitCrop
+var fuel_field: FuelField
 var mythics: Mythics
 ## Dev mode only (data/dev.json): the F7 rig spawner.
 var dev_spawn: DevSpawn
@@ -201,6 +202,10 @@ func _on_planet_ready() -> void:
 	fruit_crop = FruitCrop.new()
 	fruit_crop.name = "FruitCrop"
 	add_child(fruit_crop)
+	fuel_field = FuelField.new()
+	fuel_field.name = "FuelField"
+	add_child(fuel_field)
+	fuel_field.setup(world, chunks, player)
 	fruit_crop.setup(world, chunks, player)
 	# Mythic creatures before they spawn: biome cues.
 	mythics = Mythics.new()
@@ -325,6 +330,7 @@ func _process(delta: float) -> void:
 	fruit_crop.rain_mm_h = float(weather.get("rain_mm_h", 0.0))
 	Torch.weather = weather
 	Torch.remake_bundles(world, chunks, world.days)
+	FireStore.tick(get_tree(), delta, player.global_position)
 	# After everything that touches the water this frame has moved; round
 	# whichever camera is drawing.
 	var view := get_viewport().get_camera_3d()
@@ -340,8 +346,12 @@ func _process(delta: float) -> void:
 		prompt = "%s: take the arrow back" % Controls.interact_word()
 	elif PlayerCorpse.in_reach(player.global_position, Tuning.num("combat", "death", "corpse_pick_m")) != null:
 		prompt = "%s: take your things back" % Controls.interact_word()
+	elif _fire_in_reach() != null and player.inventory.has_kind("fuel"):
+		prompt = "%s: put the %s on the fire" % [Controls.interact_word(), Inventory.title(player.inventory.carried[player.inventory.slot_of("fuel")]).to_lower()]
 	elif player.torch.can_light():
 		prompt = "%s: light the torch" % Controls.interact_word()
+	elif _fire_in_reach() != null and player.torch.lit() and not FireStore.is_lit(_fire_in_reach()):
+		prompt = "%s: light the fire" % Controls.interact_word()
 	elif WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M) != null:
 		var near_item := WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M)
 		var count := int(near_item.item.get("count", 1))
@@ -492,10 +502,34 @@ func _unhandled_input(event: InputEvent) -> void:
 		var plant := _sample_in_reach()
 		var spent := true
 		var planted := PlantedTorch.in_reach(player.reach_from(), float(Tuning.section("torch", "planted").get("pickup_reach_m", 2.0)))
-		if player.torch.can_light():
+		var fire := _fire_in_reach()
+		if fire != null and player.inventory.has_kind("fuel"):
+			# Fuel onto the fire (§AX): the first piece in the pack.
+			var fi := player.inventory.slot_of("fuel")
+			var fuel: Dictionary = player.inventory.carried[fi]
+			match FireStore.add_fuel(fire, fuel, world.days):
+				"full":
+					_say_note("The fire is stacked full.")
+				"hiss":
+					player.inventory.take(fi)
+					_say_note("The wet %s hisses on the embers and won't catch." % Inventory.title(fuel).to_lower())
+				"cold":
+					player.inventory.take(fi)
+					_say_note("You lay the %s on the dead fire. It needs a flame." % Inventory.title(fuel).to_lower())
+				_:
+					player.inventory.take(fi)
+					_say_note("You put the %s on the fire." % Inventory.title(fuel).to_lower())
+		elif player.torch.can_light():
 			# The lighting ritual (§AW): the torch in hand held to the flame.
 			player.torch.light()
 			_say_note("You light the torch.")
+		elif fire != null and player.torch.lit() and not FireStore.is_lit(fire):
+			# A lit torch to embers or a dead fire (§AX).
+			match FireStore.relight(fire):
+				"no_fuel":
+					_say_note("There is nothing left to burn. It needs fuel.")
+				_:
+					_say_note("You light the fire from the torch.")
 		elif player.spear.in_reach():
 			player.grab_toward(player.spear.thrown.global_position)
 			player.spear.pick_up()
@@ -622,6 +656,16 @@ func _take_lying(lying: WorldItem, say := true) -> void:
 		if say:
 			_say_note("You take a torch." if not bool(one.get("lit", false)) else "You take the torch.")
 		return
+	if kind == "fuel":
+		if player.inventory.add(it):
+			lying.pick_up()
+			var wet := float(_local_weather.get("rain_mm_h", 0.0)) > 0.1 or player.ground_wet > 0.5
+			FuelField.gathered(it, wet, world.days)
+			if say:
+				_say_note("You pick up the %s%s." % [Inventory.title(it).to_lower(), ", wet through" if wet else ""])
+		elif say:
+			_say_note("Your hands are full.")
+		return
 	if TOOL_OF.has(kind):
 		var slot := str(Inventory.kind_info(kind).get("slot", ""))
 		var worn = player.inventory.worn_in(slot)
@@ -640,6 +684,11 @@ func _take_lying(lying: WorldItem, say := true) -> void:
 		lying.pick_up()
 	elif say:
 		_say_note("Your hands are full.")
+
+
+## The campfire within reach of the hands (lit or not), or null.
+func _fire_in_reach() -> Node3D:
+	return FireStore.nearest(get_tree(), player.reach_from(), float(Tuning.table("torch").get("lighting_reach_m", 2.2)) + 0.6)
 
 
 ## The fruit under the crosshair within reach of the hands (FruitCrop), or {}.

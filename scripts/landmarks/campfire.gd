@@ -66,7 +66,8 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 		var l := CreatureBodies.cone(root, 0.06, 0.06, 0.9, Vector3(0, 0.12, 0), Color(0.3, 0.2, 0.12))
 		l.rotation = Vector3(PI * 0.5, i * TAU / 3.0, 0)
 		PropCollision.capsule(body, l.transform, 0.06, 0.9)
-	CreatureBodies.ball(root, Vector3(0.3, 0.06, 0.3), Vector3(0, 0.08, 0), COALS, 1.0) # coals
+	var coals := CreatureBodies.ball(root, Vector3(0.3, 0.06, 0.3), Vector3(0, 0.08, 0), COALS, 1.0)
+	coals.name = "Coals"
 	var flames := Node3D.new()
 	flames.name = "Flames"
 	flames.position = Vector3(0, 0.1, 0)
@@ -94,6 +95,9 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 		var log_seat := CreatureBodies.cone(root, 0.18, 0.18, 1.5, Vector3(0, 0.18, 2.0), Color(0.36, 0.25, 0.16))
 		log_seat.rotation.z = PI * 0.5
 		PropCollision.capsule(body, log_seat.transform, 0.18, 1.5)
+	# Its fuel store (design 30 Sept §AX, FireStore): every fire built so
+	# far is a folk's fire, tended.
+	FireStore.register(root, world, d, true)
 	return root
 
 
@@ -156,5 +160,8 @@ static func lit_near(tree: SceneTree, pos: Vector3, radius: float) -> bool:
 static func flicker(camp: Node3D, time: float) -> void:
 	var f := time * 9.0
 	var k := 0.85 + 0.1 * sin(f) + 0.07 * sin(f * 2.3 + 1.0) + 0.05 * sin(f * 5.1)
-	(camp.get_node("Flames") as Node3D).scale = Vector3(1.0, k, 1.0)
-	(camp.get_node("Light") as OmniLight3D).light_energy = LIGHT_ENERGY * lerpf(DAY_SHARE, 1.0, night) * k
+	# How far the store has burnt down (FireStore.apply): low flames are
+	# smaller and dimmer, embers give a little light, a dead fire none.
+	var burn := float(camp.get_meta("burn", 1.0))
+	(camp.get_node("Flames") as Node3D).scale = Vector3(lerpf(0.7, 1.0, burn), k * lerpf(0.5, 1.0, burn), lerpf(0.7, 1.0, burn))
+	(camp.get_node("Light") as OmniLight3D).light_energy = LIGHT_ENERGY * lerpf(DAY_SHARE, 1.0, night) * k * burn

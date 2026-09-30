@@ -47,6 +47,8 @@ func _ready() -> void:
 	lying.append(self)
 	# A tool lies there as itself, flat on the ground.
 	var tool := _tool_mesh(str(item.get("kind", "")))
+	if tool == null and str(item.get("kind", "")) == "fuel":
+		tool = _fuel_mesh(str(item.get("fuel", "branch")))
 	if tool != null:
 		add_child(tool)
 		Bow._no_shadow(tool)
@@ -92,6 +94,43 @@ static func _tool_mesh(kind: String) -> Node3D:
 		"spear":
 			n = Spear.mesh()
 			n.position = Vector3(0, 0.02, Spear.LENGTH * 0.5)
+	return n
+
+
+## A piece of fuel lying as itself (FuelField): a log, a branch, a bunch
+## of brush or reeds, a dung pat, a peat block, a frond, a rib, a culm.
+static func _fuel_mesh(kind: String) -> Node3D:
+	var n := Node3D.new()
+	var wood := Color(0.36, 0.26, 0.16)
+	var pale := Color(0.62, 0.56, 0.46)
+	match kind:
+		"hardwood_log", "softwood_log":
+			var c := CreatureBodies.cone(n, 0.1, 0.09, 0.8, Vector3(0, 0.1, 0), wood if kind == "hardwood_log" else Color(0.5, 0.36, 0.2))
+			c.rotation = Vector3(PI * 0.5, 0, 0)
+		"branch":
+			var c := CreatureBodies.cone(n, 0.035, 0.02, 0.9, Vector3(0, 0.035, 0), wood, 0.0, 6)
+			c.rotation = Vector3(PI * 0.5, 0.3, 0)
+		"brush", "reeds", "grass_bundle", "palm_frond":
+			var col := Color(0.42, 0.34, 0.2) if kind == "brush" else (Color(0.62, 0.55, 0.3) if kind != "palm_frond" else Color(0.45, 0.42, 0.2))
+			for i in 4:
+				var c := CreatureBodies.cone(n, 0.014, 0.008, 0.7 if kind != "palm_frond" else 1.1, Vector3(0.03 * (i - 1.5), 0.02 + 0.01 * i, 0), col, 0.0, 5)
+				c.rotation = Vector3(PI * 0.5, 0.12 * (i - 1.5), 0)
+		"dung":
+			CreatureBodies.ball(n, Vector3(0.16, 0.05, 0.14), Vector3(0, 0.05, 0), Color(0.3, 0.24, 0.14))
+		"peat":
+			CreatureBodies.box(n, Vector3(0.3, 0.12, 0.16), Vector3(0, 0.06, 0), Color(0.2, 0.15, 0.1))
+		"driftwood":
+			var c := CreatureBodies.cone(n, 0.06, 0.03, 0.9, Vector3(0, 0.06, 0), pale, 0.0, 7)
+			c.rotation = Vector3(PI * 0.5, 0.5, 0)
+		"bamboo":
+			var c := CreatureBodies.cone(n, 0.04, 0.04, 1.2, Vector3(0, 0.04, 0), Color(0.6, 0.6, 0.3), 0.0, 8)
+			c.rotation = Vector3(PI * 0.5, 0, 0)
+		"cactus_rib":
+			var c := CreatureBodies.cone(n, 0.03, 0.02, 0.8, Vector3(0, 0.03, 0), Color(0.68, 0.64, 0.5), 0.0, 6)
+			c.rotation = Vector3(PI * 0.5, 0, 0)
+		_:
+			var c := CreatureBodies.cone(n, 0.04, 0.03, 0.7, Vector3(0, 0.04, 0), wood, 0.0, 6)
+			c.rotation = Vector3(PI * 0.5, 0, 0)
 	return n
 
 

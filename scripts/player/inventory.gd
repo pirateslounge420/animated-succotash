@@ -165,9 +165,27 @@ func count() -> int:
 	return n
 
 
-## Carried things past the free handful (0 when not overburdened).
+## What you carry as a load: a thing counts its `carry_items` (a log is
+## two, fuel.json kinds), else one.
+func carry_load() -> int:
+	var n := 0
+	for it in carried:
+		if it != null:
+			n += maxi(1, int((it as Dictionary).get("carry_items", 1)))
+	return n
+
+
+## Carried load past the free handful (0 when not overburdened).
 func over() -> int:
-	return maxi(0, count() - int(Tuning.num("movement", "burden", "free_items")))
+	return maxi(0, carry_load() - int(Tuning.num("movement", "burden", "free_items")))
+
+
+## The first carry slot holding a thing of `kind`, or -1.
+func slot_of(kind: String) -> int:
+	for i in carried.size():
+		if carried[i] is Dictionary and str(carried[i].get("kind", "")) == kind:
+			return i
+	return -1
 
 
 ## Wear `it` in its slot: worn if a worn place is free, else as a spare.
