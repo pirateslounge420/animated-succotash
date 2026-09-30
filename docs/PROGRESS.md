@@ -4,6 +4,12 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-09-30 — Titan arum, round two (Mike, from more photos)
+- **The spathe is a rolled sheet, not a bowl:** it wraps a little more than once round, the outer edge a flap lying over the seam down one side, closed at the neck and rolling open toward the rim, where it unfurls into the frill. The rim wavers (a torn edge). `AroidMeshes._add_pleated(seam_at, overlap, open_from)`; every Amorphophallus spathe has it.
+- **The leaf is built like a small tree:** three arms forking twice into twigs, each carrying a clump of crossed leaf cards (as tree foliage does), leaflets hanging under; layered foliage with the arms showing through, not a plate.
+- The seam's side is fixed on the mesh, so in play each bloom's flap faces where its plant happens to turn. **Queued (Mike: "yes" to more epic):** a leaflet tile with lobed edges; crisp white rings on the petiole instead of the generic bark mottle.
+- The in-the-wild render was stopped at Mike's word; the model viewer is the way to look at aroids.
+
 ## 2026-09-30 — Titan arum made epic (Mike: "the largest inflorescence known to man", with reference photos)
 - **A picture in seconds:** `tools/aroid_model_view.gd` draws one Amorphophallus on its own (leaf and bloom, plain ground, one sun), no planet. `aroid_view`'s in-the-wild walk took 20+ minutes a spot on this machine's software renderer (and twice sat on a stale class list after new scripts landed; `godot --editor --quit` refreshes it); it now has `FIND=1` (headless search, prints the spot) and `AT=` (go straight there).
 - **The bloom, from the photos:** the spadix appendix now rises from the spathe's foot to 2.15x the spathe's height (3.1 m over a 1.4 m spathe on a 5 m plant; was a stub sat on the rim). The spathe is a pleated bell with a frilled rim that flares past its height and rolls back, green below flushing to the maroon inside colour toward the rim. `AroidGarden.bloom_dims()` holds the proportions.
