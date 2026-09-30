@@ -90,6 +90,9 @@ static var BOUNCE_ON := Tuning.enabled("bounce")
 static var SWING_ON := Tuning.enabled("swing")
 static var REDIRECT_ON := Tuning.enabled("redirect")
 static var ROLL_ON := Tuning.enabled("roll")
+## The third-person camera (design 30 Sept §AV: off in the ambient
+## profile, first person only; movement.json camera.third_person).
+static var THIRD_PERSON_ON := bool(Tuning.section("movement", "camera").get("third_person", true))
 ## Every contact re-aims momentum to the look (design §R): the kept share
 ## by turn angle, the tech's factor, the physics limit.
 static var REDIRECT := Tuning.section("movement", "redirect")
@@ -598,7 +601,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		swap_weapon()
 	elif event.is_action_pressed("release_mouse"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	elif event.is_action_pressed("toggle_view"):
+	elif event.is_action_pressed("toggle_view") and THIRD_PERSON_ON:
 		first_person = not first_person
 		_apply_view()
 	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -2186,6 +2189,8 @@ func _dead_step(delta: float) -> void:
 func _apply_view() -> void:
 	if _spring == null:
 		return
+	if not THIRD_PERSON_ON:
+		first_person = true
 	var hidden := BODY_LAYER
 	if not bool(Tuning.num("movement", "camera", "first_person_body")):
 		hidden |= PlayerBody.VIEW_LAYER
