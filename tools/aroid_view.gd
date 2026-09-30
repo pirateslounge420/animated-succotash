@@ -16,6 +16,9 @@ extends SceneTree
 ## inflorescence (aroid_inflorescence.png).
 
 var out_dir := "/tmp/shots"
+## Frames at least after a spot loads (WAIT_F=: fewer on a slow renderer;
+## the chunks are loaded in one go before them).
+var WAIT_F := int(OS.get_environment("WAIT_F")) if OS.get_environment("WAIT_F") != "" else 90
 var main
 var world
 
@@ -39,7 +42,7 @@ func goto(d: Vector3) -> void:
 	main.player.spawn_at(d)
 	for k in 500:
 		await process_frame
-		if k > 90 and main.chunks._pending.is_empty():
+		if k > WAIT_F and main.chunks._pending.is_empty():
 			break
 
 
@@ -204,6 +207,10 @@ func _run() -> void:
 			get_root().get_texture().get_image().save_png("%s/aroid_inflorescence.png" % out_dir)
 			cam.fov = 55.0
 			print("[aroid_view] wild and inflorescence shots -> %s/aroid_wild.png, aroid_inflorescence.png" % out_dir)
+	# (A species asked for: its own pictures only.)
+	if want_sp != "":
+		quit()
+		return
 	# The sports, as a demonstration: three plants in leaf given colour
 	# sports (variegated, golden, dark) in their instance data.
 	world.days = shots.get("leaf", start)
