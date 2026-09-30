@@ -308,7 +308,9 @@ func _apply(on: bool) -> void:
 
 
 func _play(kind: String) -> void:
-	_voice.stream = SoundSynth.stream(kind, randi())
+	# The synth has no torch sounds yet: a crack for the lighting, a scuff
+	# for going out (SoundSynth kinds).
+	_voice.stream = SoundSynth.stream({"torch_light": "crack", "torch": "scuff"}.get(kind, kind), randi())
 	_voice.play()
 
 

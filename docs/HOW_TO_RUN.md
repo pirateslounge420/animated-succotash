@@ -32,6 +32,8 @@
 - To stop, press **Esc** to free the mouse and close the game window. Or, back in the editor, press the **■ Stop** button.
 
 ## 5. Keys (keyboard and mouse)
+The game plays in the **ambient profile** (`data/movement.json` `profile`, design 30 Sept §AT–§BA): a slow first-person walk. Space jumps, right click interacts and climbs, and the wall jump, cling, bounce, swing, redirect, roll and super meter are off. You wake with nothing; a bundle of torches lies by every camp fire (right click takes one, Q brings it to hand; right click a lit fire with it to light it; right click the ground to plant it, right click it to take it back). Fires burn down: right click fuel lying about (logs, branches, brush, dung, reeds, whatever the biome offers) to gather it, right click the fire with it to feed it; a dead fire relights only from a lit torch. Right click a camp's fire to make it your hearth: you wake there when you die. At night, away from a fire, the dark closes in: listen. Set `profile` to `shinobi` for the ninja game (everything below on).
+
 You start in first person. Walk and sprint speeds, the jump and every other movement and weapon number are in `data/movement.json` and `data/combat.json` (each part explained at the top of the file); edit them and restart the game.
 
 | Key | What it does |
@@ -44,6 +46,7 @@ You start in first person. Walk and sprint speeds, the jump and every other move
 | Mouse | Look around (straight up and down too) |
 | Left mouse button | Bare hands: a tap jabs, hold to wind up a haymaker and let go to throw it (faster you're going, harder it lands). Bow: hold to draw, release to shoot. Spear: a quick tap thrusts; hold to raise, release to throw. Works in the air too. No aim arc: you learn the drop by eye; a bright streak follows the arrow or spear once it flies. With super meter (the gold ring round the gauge, filled by perfect wall jumps, rolls and swing releases, and by hits), keep holding past full charge until the gauge fills again in red: a super shot (critical, triple damage, faster, farther, a red streak) that empties the meter; a super-thrown spear kills what it hits outright and pins it. Arrows and a thrown spear carry your own speed. A spear thrust hurts more the faster you're closing on the target, and at 25 m/s (90 km/h) it kills anything but a mythical creature; a thrust into a trunk or wall at speed hurts you instead |
 | Q | Cycle bow, spear (whichever you have) and bare hands |
+| Enter | The log: what happened, stamped in game time (deaths and why, the torch, the fire, the hearth, camps found, biomes entered, dawn and dusk). Type a note in the box and Enter keeps it; Esc closes. Kept per world |
 | Tab (or I) | Inventory: what you carry and wear. The world doesn't stop. Click a line to choose it; G sets a carried thing down, right click wears a spare. Tab or Esc closes it |
 | V or F5 | Switch between first and third person |
 | M | Map. While it's open, 1 = biomes, 2 = height, 3 = temperature, 4 = rainfall, 5 = live weather |

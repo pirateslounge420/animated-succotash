@@ -36,6 +36,7 @@ var aroid_garden: AroidGarden
 ## Flowers, pollinators and fruit on the trees round the player (FruitCrop).
 var fruit_crop: FruitCrop
 var fuel_field: FuelField
+var dread: Dread
 var mythics: Mythics
 ## Dev mode only (data/dev.json): the F7 rig spawner.
 var dev_spawn: DevSpawn
@@ -215,6 +216,10 @@ func _on_planet_ready() -> void:
 	fuel_field.name = "FuelField"
 	add_child(fuel_field)
 	fuel_field.setup(world, chunks, player)
+	dread = Dread.new()
+	dread.name = "Dread"
+	add_child(dread)
+	dread.setup(world, chunks, player, sky)
 	fruit_crop.setup(world, chunks, player)
 	# Mythic creatures before they spawn: biome cues.
 	mythics = Mythics.new()
@@ -345,6 +350,7 @@ func _process(delta: float) -> void:
 	FireStore.tick(get_tree(), delta, player.global_position)
 	WorldSave.flush(delta)
 	player.typing = log_panel.visible
+	dread.update_dread(delta)
 	# After everything that touches the water this frame has moved; round
 	# whichever camera is drawing.
 	var view := get_viewport().get_camera_3d()

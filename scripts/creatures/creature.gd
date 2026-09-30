@@ -258,6 +258,10 @@ func say() -> void:
 	var now := Time.get_ticks_msec()
 	if species.role != "pack" and now < int(_last_call.get(species.sound, 0)) + SAME_CALL_GAP_MS:
 		return
+	# The bed thins (design 30 Sept §BA, Dread stage 1): birds, frogs and
+	# insects fall quiet as the dark closes in.
+	if species.role != "pack" and randf() > Dread.bed_gain:
+		return
 	_last_call[species.sound] = now
 	Audio3D.play(voice)
 
