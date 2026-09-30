@@ -160,8 +160,8 @@ func _draw() -> void:
 	if weapon != "" and not _dead and Settings.get_bool("hud.weapon"):
 		var font := get_theme_default_font()
 		var at := Vector2(10, size.y - 76)
-		draw_string_outline(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, HudText.px(9), 3, Color(0.05, 0.07, 0.15))
-		draw_string(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, HudText.px(9), Color(0.95, 0.97, 1.0))
+		draw_string_outline(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, HudText.px(20), 3, Color(0.05, 0.07, 0.15))
+		draw_string(font, at, weapon, HORIZONTAL_ALIGNMENT_LEFT, -1, HudText.px(20), Color(0.95, 0.97, 1.0))
 	if not _dead and Settings.get_bool("hud.damage"):
 		_draw_numbers(fb, ink)
 	# The small dot in the middle of the view (or the X), and the name of

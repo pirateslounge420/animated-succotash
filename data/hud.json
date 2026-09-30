@@ -7,7 +7,7 @@
   "speedometer": "Ground/air speed in mph and km/h (dev builds add m/s). It sits dim at alpha dim_alpha below dim_below_mps and brightens toward bright_alpha as speed rises to bright_at_mps (the momentum ceiling), so it only asserts itself when you're moving fast. Its glow warms from glow_cold to glow_warm as the super meter fills. size_px: the numerals. smoothing_s: how quickly the shown number follows the real one. mph_round: the mph readout rounds to this (75 mph at the ceiling, by design).",
   "clock": "An old railway pocket watch (design §AQ, from the designer's own watch; until 29 Sept a pilot's watch in HUD blue with dawn/dusk marks): a polished steel case with its crown at 12 (case), a white enamel dial, a minute track round the edge (minute_track: a tick a minute, a square every five), bold black numerals (numerals: all | quarters | none, ticks where there is no numeral), the 24-hour numerals 13-24 small and red inside them (hours_24), black skeleton hands (the hour hand twice round a day, the minute hand once a game hour: 6 real minutes) and a thin red seconds hand (seconds_hand: once a game minute, 6 real seconds). No brand, no dawn or dusk marks. Every figure is drawn cell by cell on the 480-line frame's own pixel grid. size_px: the case's diameter (the crown adds about a tenth above it). alpha: the whole watch. Colours: dial, numerals and hands, the red accent (24-hour numerals, seconds hand, cap), the minute ticks, and the case's steel, its dark edge and its highlight.",
   "super_meter": "No third element: the meter shows as a thin ring around the tool's charge gauge (ring_px wide, ring_color), visible only when non-zero, and the speedometer glow warms with it. show_below: hidden when under this share, to keep the screen clean until it means something.",
-  "text": "Every HUD and UI font: an early-computer / typewriter face — monospaced, slightly uneven, like a teletype or an 8-bit console font — never a clean modern sans. font: the font file under assets/fonts (a free monospaced typewriter-style TTF; fallback: the engine monospace). Design §Y: the HUD is drawn INSIDE the 480-line internal frame and upscaled with it, so every px size in this file is at the 480 reference and text is automatically chunky and the right size at any window; scale_by_height is off (the upscale does the scaling). base_px: the body size at 480 lines (2026-09-28: raised from 9 to 11 — 9 was hard to read once upscaled; the prompt line and the crosshair name are larger still). 2026-09-29 (from play: still hard to read): font is now VT323 (a DEC terminal face, SIL OFL), drawn without antialiasing on its own 10 px grid, and every size snaps to crisp_px (20 body, 40 headings) so no glyph falls between pixels; base_px 20. The typewriter face stays in assets/fonts.",
+  "text": "Every HUD and UI font: an early-computer / typewriter face — monospaced, slightly uneven, like a teletype or an 8-bit console font — never a clean modern sans. font: the font file under assets/fonts (a free monospaced typewriter-style TTF; fallback: the engine monospace). Design §Y: the HUD is drawn INSIDE the 480-line internal frame and upscaled with it, so every px size in this file is at the 480 reference and text is automatically chunky and the right size at any window; scale_by_height is off (the upscale does the scaling). base_px: the body size at 480 lines (2026-09-28: raised from 9 to 11 — 9 was hard to read once upscaled; the prompt line and the crosshair name are larger still). 2026-09-29 (from play: still hard to read): font is now VT323 (a DEC terminal face, SIL OFL), drawn without antialiasing on its own 10 px grid, and every size snaps to crisp_px (20 body, 40 headings) so no glyph falls between pixels; base_px 20. 2026-09-30 (Mike: bigger, more legible): base_px 30, the prompt and names 30, the small readouts 20; VT323 is crisp at multiples of 10. The typewriter face stays in assets/fonts.",
   "layout": "Where the readouts sit: corner (top_left, top_right, bottom_left, bottom_right), margin_px from the edges. The health meter keeps its own place (data/combat.json feedback.meter).",
   "reticle": "The crosshair (first person, or while aiming): size_px at the 480 reference (design §Y), thickness_px, gap_px, color. A bit larger than before, per §W.",
   "plant_name": "The genus/species readout for the plant under the reticle: shown only within reach_m of it (about a metre, design §W); nothing beyond that. Two lines: the binomial at name_px, then the common name and where on Earth it comes from (the entry's `origin`, or the first clause of its research note) at origin_px. Sizes are at the 480-line reference like everything else here."
@@ -25,7 +25,7 @@
   "bright_at_mps": 33.3,
   "glow_cold": "#4C7CFF",
   "glow_warm": "#FFD23A",
-  "size_px": 9,
+  "size_px": 20,
   "smoothing_s": 0.15,
   "mph_round": 1
  },
@@ -54,8 +54,8 @@
  },
  "text": {
   "font": "assets/fonts/vt323.ttf",
-  "base_px": 20,
-  "crisp_px": [20, 40],
+  "base_px": 30,
+  "crisp_px": [20, 30, 40],
   "scale_by_height": false,
   "ref_height_px": 480,
   "min_scale": 1.0,
@@ -74,8 +74,8 @@
  },
  "plant_name": {
   "reach_m": 1.2,
-  "name_px": 14,
-  "origin_px": 11
+  "name_px": 30,
+  "origin_px": 20
  },
  "pins": {
   "dim_alpha": 0.45,

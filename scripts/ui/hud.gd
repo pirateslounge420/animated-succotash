@@ -93,6 +93,9 @@ func _ready() -> void:
 	_context.size_flags_horizontal = Control.SIZE_SHRINK_END
 	_context.visible = false
 	_hint = _label(HORIZONTAL_ALIGNMENT_LEFT)
+	# (The four lines of key help stay at the small size: reference, not
+	# reading.)
+	_hint.add_theme_font_size_override("font_size", HudText.px(20))
 	# (Up above the subtitle, the prompt and the weapon line: at the start
 	# it sat on the Elder's first words and the bow.)
 	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 9)
@@ -104,12 +107,12 @@ func _ready() -> void:
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 47)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_prompt.add_theme_font_size_override("font_size", HudText.px(15))
+	_prompt.add_theme_font_size_override("font_size", HudText.px(30))
 	_subtitle = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_subtitle.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 80)
 	_subtitle.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_subtitle.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_subtitle.add_theme_font_size_override("font_size", HudText.px(15))
+	_subtitle.add_theme_font_size_override("font_size", HudText.px(30))
 	_debug = _label(HORIZONTAL_ALIGNMENT_LEFT)
 	_debug.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT, Control.PRESET_MODE_MINSIZE, 9)
 	_debug.grow_vertical = Control.GROW_DIRECTION_BOTH
@@ -201,7 +204,7 @@ func _build_loading() -> void:
 	var title := Label.new()
 	title.text = "Generating planet"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", HudText.px(17))
+	title.add_theme_font_size_override("font_size", HudText.px(30))
 	box.add_child(title)
 	_loading_label = Label.new()
 	_loading_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
