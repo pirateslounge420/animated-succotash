@@ -454,27 +454,49 @@ static func _build_impostor(sp: PlantSpecies, idx: int) -> Array:
 
 
 static func _aroid_leaf(b: _Builder, leaf: Color, wood: Color, far: bool) -> void:
-	b.cylinder(Vector3.ZERO, 0.032, 0.62, 5 if far else 8, wood, 0.0, 0.0)
-	var top := Vector3(0, 0.62, 0)
-	var per := 3 if far else 6
+	# The petiole, then a small tree (from play: "build it like a small
+	# tree"): three arms forking twice more into twigs, each twig tip
+	# carrying a clump of crossed leaf cards (the way a tree's leaf
+	# clusters go) and leaflets hanging below, so it reads as layered
+	# foliage with the arms showing through, not a solid plate.
+	b.cylinder(Vector3.ZERO, 0.032, 0.6, 5 if far else 8, wood, 0.0, 0.0)
+	var top := Vector3(0, 0.6, 0)
+	var tips: Array = []
 	for k in 3:
 		var a := TAU * k / 3.0 + 0.4
-		var d := Vector3(cos(a), 0.2, sin(a)).normalized()
-		var end := top + d * 0.28
-		b.strut(top, end, 0.013, wood)
-		# The fork: three more, each hung with big drooping leaflets.
-		for f in [-0.75, 0.0, 0.75]:
+		var d := Vector3(cos(a), 0.5, sin(a)).normalized()
+		var end := top + d * 0.26
+		b.strut(top, end, 0.014, wood)
+		tips.append([end, d, 0.2])
+		for f in [-0.8, 0.0, 0.8]:
 			var d2 := (d.rotated(Vector3.UP, f) + Vector3(0, -0.15, 0)).normalized()
-			var len2 := 0.3 if f == 0.0 else 0.26
-			var end2 := end + d2 * len2
+			var end2 := end + d2 * 0.22
 			b.strut(end, end2, 0.008, wood)
-			for j in per:
-				var t := (j + 0.5) / per
-				var at := end + d2 * len2 * t
-				var side := d2.cross(Vector3.UP).normalized()
-				for sgn in [-1.0, 1.0]:
-					b.frond(at, (side * sgn * 0.75 + d2 * 0.35 + Vector3.DOWN * 0.45).normalized(), 0.19 * (1.0 - 0.3 * t), 0.05, leaf, 0.8, 0.3)
-			b.frond(end2, (d2 + Vector3.DOWN * 0.35).normalized(), 0.16, 0.045, leaf, 0.9, 0.4)
+			tips.append([end2, d2, 0.22])
+			if far:
+				continue
+			tips.append([end + d2 * 0.11, d2, 0.17])
+			for f2 in [-0.6, 0.6]:
+				var d3 := (d2.rotated(Vector3.UP, f2) + Vector3(0, -0.25, 0)).normalized()
+				var end3 := end2 + d3 * 0.15
+				b.strut(end2, end3, 0.005, wood)
+				tips.append([end3, d3, 0.18])
+	# A clump of leaf cards at every twig tip, plus one at each fork.
+	var key := 0.0
+	for t in tips:
+		var p: Vector3 = t[0]
+		var d: Vector3 = t[1]
+		var r: float = t[2]
+		var side := d.cross(Vector3.UP).normalized()
+		b.frond_card(p + Vector3.UP * r * 0.15, d, side, r, leaf, 0.9, key)
+		b.frond_card(p + d * r * 0.3, (d + Vector3.UP * 0.9).normalized(), side, r * 0.9, leaf.lightened(0.06), 0.9, key)
+		b.frond_card(p, side, (d + Vector3.UP * 0.6).normalized(), r * 0.85, leaf.darkened(0.05), 0.9, key)
+		key = fmod(key + 0.37, 1.0)
+		if not far:
+			var out := Vector3(p.x, 0, p.z).normalized()
+			for sgn in [-1.0, 1.0]:
+				var sd: Vector3 = out.cross(Vector3.UP) * float(sgn)
+				b.frond(p, (out * 0.6 + sd * 0.5 + Vector3.DOWN * 0.6).normalized(), 0.18, 0.05, leaf, 0.9, 0.4)
 
 
 static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
