@@ -31,7 +31,7 @@ func setup(p_world: Node, p_chunks: ChunkManager, p_player: Node3D) -> void:
 
 
 func _process(delta: float) -> void:
-	if world == null or player == null:
+	if world == null or player == null or Tuning.profile() != "ambient":
 		return
 	_timer -= delta
 	if _timer > 0.0:

@@ -108,6 +108,9 @@ static func is_lit(fire: Node3D) -> bool:
 ## Burn every fire in the scene down over `delta` seconds. `near` is the
 ## player's position: only fires within earshot go in the log.
 static func tick(tree: SceneTree, delta: float, near: Vector3) -> void:
+	# The shinobi profile keeps its fires burning (design §AT: two games).
+	if Tuning.profile() != "ambient":
+		return
 	for f in tree.get_nodes_in_group(Campfire.GROUP):
 		var fire := f as Node3D
 		if fire == null or not fire.is_inside_tree():
