@@ -354,6 +354,8 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 	var fire := Campfire.build(root, world, chunks, d, false)
 	fire.global_position = at
 	root.set_meta("fire", fire)
+	# A camp's fire can be made your hearth (design 30 Sept §AY).
+	fire.set_meta("hearth_ok", true)
 	# What a camp has (design 30 Sept §AW): a bundle of unlit torches by
 	# the fire, in the ambient profile.
 	if Tuning.profile() == "ambient":

@@ -142,6 +142,7 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	site = p_site
 	name = "Encampment"
 	_fire = Campfire.build(self, world, chunks, site, false)
+	_fire.set_meta("hearth_ok", true)
 	# The player's side of the fire, and the two NPCs across it.
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()

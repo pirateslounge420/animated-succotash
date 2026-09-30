@@ -77,6 +77,7 @@ var _mouse_freed := false
 ## Quitting frees everything at once; detach the meshes first (see
 ## NodeRelease).
 func _exit_tree() -> void:
+	WorldSave.flush(0.0, true)
 	NodeRelease.detach_all(self)
 	Look.finish()
 	SculptedBodies.finish()
@@ -168,6 +169,10 @@ func _on_planet_ready() -> void:
 	camp = Encampment.new()
 	root.add_child(camp)
 	camp.build(world, chunks, spawn_dir)
+	# The world's kept things (WorldSave: the hearth, the log), and the
+	# first hearth: the opening camp (design 30 Sept §AY).
+	WorldSave.open(world.world_seed)
+	Hearth.setup(camp.site)
 	if Tuning.profile() == "ambient":
 		Torch.lay_bundle(world, chunks, camp.fire())
 	# Waking on the mat, facing the fire; the camera looks down over a
@@ -331,6 +336,7 @@ func _process(delta: float) -> void:
 	Torch.weather = weather
 	Torch.remake_bundles(world, chunks, world.days)
 	FireStore.tick(get_tree(), delta, player.global_position)
+	WorldSave.flush(delta)
 	# After everything that touches the water this frame has moved; round
 	# whichever camera is drawing.
 	var view := get_viewport().get_camera_3d()
@@ -352,6 +358,8 @@ func _process(delta: float) -> void:
 		prompt = "%s: light the torch" % Controls.interact_word()
 	elif _fire_in_reach() != null and player.torch.lit() and not FireStore.is_lit(_fire_in_reach()):
 		prompt = "%s: light the fire" % Controls.interact_word()
+	elif Hearth.can_set(_fire_in_reach()):
+		prompt = "%s: make this your hearth" % Controls.interact_word()
 	elif WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M) != null:
 		var near_item := WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M)
 		var count := int(near_item.item.get("count", 1))
@@ -416,6 +424,10 @@ func _on_player_died() -> void:
 	await get_tree().process_frame
 	var dt := Tuning.section("combat", "death")
 	var fire: Vector3 = camps.wake_fire(death_dir, float(dt.get("wake_search_m", 4000.0)), float(dt.get("wake_place_m", 150.0)), camp.site)
+	# The ambient profile wakes you at your hearth (design 30 Sept §AY,
+	# camps.json wake_at_home), wherever you died.
+	if Tuning.profile() == "ambient" and bool(Tuning.table("camps").get("wake_at_home", true)) and Hearth.dir != Vector3.ZERO:
+		fire = Hearth.dir
 	# Lying a couple of metres from the fire, feet to it.
 	var d: Vector3 = CreatureSpawner._offset(fire, CubeSphere.longitude(death_dir) * 7.0, 2.4)
 	if fire == camp.site:
@@ -530,6 +542,10 @@ func _unhandled_input(event: InputEvent) -> void:
 					_say_note("There is nothing left to burn. It needs fuel.")
 				_:
 					_say_note("You light the fire from the torch.")
+		elif Hearth.can_set(fire):
+			# This fire is home now: you wake here when you die (§AY).
+			Hearth.set_home(world.dir_of(fire.global_position))
+			_say_note("This fire is your hearth now.")
 		elif player.spear.in_reach():
 			player.grab_toward(player.spear.thrown.global_position)
 			player.spear.pick_up()
