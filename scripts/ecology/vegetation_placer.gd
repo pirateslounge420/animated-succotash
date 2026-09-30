@@ -77,6 +77,13 @@ const GIANT_SCALE := 1.25
 ## trees roll near the top of their species' band, with giants and a thin
 ## young cohort in the gaps (_roll_height()).
 static var STAND := Tuning.table("stand")
+## Stand dominance (design 30 Sept §BH, stand.json "dominance"): each
+## stand (a cell stand_m across) picks one dominant species per tier and
+## weights it hard, 1-3 associates, a rare accent; the species salad only
+## in salad_biomes. The understory tiers follow with their own dominant in
+## the same stand cell.
+static var DOM: Dictionary = STAND.get("dominance", {})
+static var SALAD := PackedInt32Array(Array(DOM.get("salad_biomes", [])).map(func(k): return BiomeTemplates.id_of_key(str(k))))
 const SPACING_M := {0: 34.0, 1: 8.2, 2: 4.9, 3: 3.8}
 const FILL := {0: 0.55, 1: 0.9, 2: 0.65, 3: 0.95}
 ## Moist forest packs tighter (layered, view-framing woods like the
@@ -925,6 +932,72 @@ class _Context:
 				var v := VegetationPlacer._dominance_noise[SpeciesDB.index_of(sp)].get_noise_3dv(center * PlanetConst.RADIUS_M)
 				dominance[sp] = 0.35 + 1.3 * smoothstep(-0.2, 0.5, v)
 			_species[tier] = _local_assemblage(list)
+			_apply_dominance(tier, mid)
+
+	## Stand dominance (design 30 Sept §BH): the stand this chunk's middle
+	## is in (a cell of stand_m across, its size drawn per coarse cell)
+	## rolls a dominant for this tier, its associates, and the rest as
+	## accents; the dominance factors are set so that at the chunk's middle
+	## the species' weights come out in those shares (the dominant 60-85 %
+	## of stems, salad_dominant_share in the salad biomes where every
+	## other species is an associate). The roll is by the species' own
+	## fit here and the old slow dominance noise, so a pine wood is pine
+	## where pine fits and the next valley's stand is another.
+	func _apply_dominance(tier: int, mid: _Site) -> void:
+		var dom: Dictionary = VegetationPlacer.DOM
+		if not bool(dom.get("enabled", true)) or tier == T.EPIPHYTE:
+			return
+		var list: Array[PlantSpecies] = _species.get(tier, [] as Array[PlantSpecies])
+		if list.size() < 2:
+			return
+		var band = dom.get("stand_m", [100, 400])
+		var p: Vector3 = data.center * PlanetConst.RADIUS_M
+		var coarse := float(band[1])
+		var srng := RandomNumberGenerator.new()
+		srng.seed = hash([Vector3i((p / coarse).floor()), "stand_size", map.terrain.world_seed])
+		var size := srng.randf_range(float(band[0]), float(band[1]))
+		var rng2 := RandomNumberGenerator.new()
+		rng2.seed = hash([Vector3i((p / size).floor()), "stand", tier, map.terrain.world_seed])
+		var fit := {}
+		var pool: Array = []
+		var pool_w: Array = []
+		for sp in list:
+			var f := maxf(sp.suitability(mid.t, mid.m, mid.h, mid.rock), 0.02)
+			fit[sp] = f
+			pool.append(sp)
+			pool_w.append(f * float(dominance.get(sp, 1.0)))
+		var salad := VegetationPlacer.SALAD.has(mid.biome)
+		var ds = dom.get("dominant_share", [0.6, 0.85])
+		var share := float(dom.get("salad_dominant_share", 0.25)) if salad else rng2.randf_range(float(ds[0]), float(ds[1]))
+		var asc = dom.get("associates", [1, 3])
+		var n_assoc := list.size() - 1 if salad else mini(rng2.randi_range(int(asc[0]), int(asc[1])), list.size() - 1)
+		var picks: Array = []
+		for k in 1 + n_assoc:
+			var total := 0.0
+			for w in pool_w:
+				total += float(w)
+			var r := rng2.randf() * total
+			var idx := pool.size() - 1
+			for i in pool.size():
+				r -= float(pool_w[i])
+				if r <= 0.0:
+					idx = i
+					break
+			picks.append(pool[idx])
+			pool.remove_at(idx)
+			pool_w.remove_at(idx)
+		var accent := float(dom.get("accent_share", 0.03))
+		var rest := list.size() - picks.size()
+		var assoc_share := (1.0 - share - (accent if rest > 0 else 0.0)) / maxf(n_assoc, 1.0)
+		for sp in list:
+			var target: float
+			if sp == picks[0]:
+				target = share
+			elif picks.has(sp):
+				target = assoc_share
+			else:
+				target = accent / rest
+			dominance[sp] = target / float(fit[sp])
 
 	## A place holds only a few species of one big catalogue genus (246
 	## Amorphophallus could all fit a tropical Asian forest by climate):
