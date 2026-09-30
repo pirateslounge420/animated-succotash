@@ -141,7 +141,7 @@ func _run() -> void:
 	# From a little below the rim, as the photos are: the frilled limb,
 	# the maroon inside and the spike over it.
 	var bm := top + Vector3.UP * (s_len * 0.5 + a_len * 0.3)
-	var be := top + Vector3.UP * s_len * 0.55 + Vector3(0.5, 0.0, 1.0).normalized() * (a_len + s_len) * 1.15
+	var be := top + Vector3.UP * s_len * 0.3 + Vector3(0.35, 0.0, 1.0).normalized() * (a_len + s_len) * 1.15
 	cam.global_transform = Transform3D(Basis.looking_at((bm - be).normalized(), Vector3.UP), be)
 	await _frames(6)
 	get_root().get_texture().get_image().save_png("%s/model_%s_bloom.png" % [out_dir, tag])
