@@ -94,15 +94,21 @@ static func _spathe() -> ArrayMesh:
 	# the vertical), the inside the second colour.
 	var outer := [[0.0, 0.28], [0.12, 0.34], [0.35, 0.5], [0.6, 0.76], [0.8, 1.02], [0.92, 1.24], [1.0, 1.42], [1.03, 1.5], [1.0, 1.55]]
 	var inner := [[0.02, 0.24], [0.12, 0.3], [0.35, 0.45], [0.6, 0.7], [0.8, 0.95], [0.92, 1.17], [1.0, 1.36], [1.03, 1.44], [1.005, 1.49]]
-	_add_pleated(st, outer, 0.0, false, 64, 16, 0.1)
-	_add_pleated(st, inner, 1.0, true, 64, 16, 0.1)
+	# The spathe is a rolled sheet, not a tube: a slit runs down one side
+	# from the rim to near the neck (reference photo), its edges peeling
+	# outward, the inside showing through it.
+	_add_pleated(st, outer, 0.0, false, 64, 16, 0.1, 1.1, 0.28, 0.35)
+	_add_pleated(st, inner, 1.0, true, 64, 16, 0.1, 1.1, 0.28, 0.35)
 	var mesh := st.commit()
 	return mesh
 
 
 ## A lathe with `pleats` ridges round it: the radius swells by `depth`
 ## (a share) on the ridges, more toward the top (the frilled rim).
-static func _add_pleated(st: SurfaceTool, profile: Array, uvx: float, inward: bool, sides_n: int, pleats: int, depth: float) -> void:
+## `slit_at` (radians round), `slit_half` (half-width at the rim) and
+## `slit_from` (height it opens from): a slit down that side, widening
+## toward the rim, its edges flared out.
+static func _add_pleated(st: SurfaceTool, profile: Array, uvx: float, inward: bool, sides_n: int, pleats: int, depth: float, slit_at := -10.0, slit_half := 0.0, slit_from := 1.0) -> void:
 	var ymax := 0.0
 	for pr in profile:
 		ymax = maxf(ymax, float(pr[0]))
@@ -112,9 +118,19 @@ static func _add_pleated(st: SurfaceTool, profile: Array, uvx: float, inward: bo
 		var a := TAU * s / sides_n
 		var k := depth * (0.3 + 0.7 * y / maxf(ymax, 1e-3))
 		var rr := r * (1.0 + k * cos(a * pleats))
+		# Near the slit the edges roll outward.
+		var da := absf(wrapf(a - slit_at, -PI, PI))
+		var open := clampf((y - slit_from) / maxf(ymax - slit_from, 1e-3), 0.0, 1.0)
+		var edge := clampf(1.0 - (da - slit_half * open) / 0.5, 0.0, 1.0)
+		rr *= 1.0 + 0.18 * edge * edge * open
 		return Vector3(cos(a) * rr, y, sin(a) * rr)
 	for i in profile.size() - 1:
+		var ym := (float(profile[i][0]) + float(profile[i + 1][0])) * 0.5
+		var open_m := clampf((ym - slit_from) / maxf(ymax - slit_from, 1e-3), 0.0, 1.0)
 		for s in sides_n:
+			var am := TAU * (s + 0.5) / sides_n
+			if absf(wrapf(am - slit_at, -PI, PI)) < slit_half * open_m:
+				continue
 			var p00: Vector3 = pt.call(i, s)
 			var p01: Vector3 = pt.call(i, s + 1)
 			var p10: Vector3 = pt.call(i + 1, s)
