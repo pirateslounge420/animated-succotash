@@ -1471,7 +1471,7 @@ func fruit_at(from: Vector3, dir: Vector3, hand: Vector3, reach := PICK_M) -> Di
 	var best := {}
 	var best_t := INF
 	for p in _pickable:
-		var chunk: TerrainChunk = p[0]
+		var chunk = p[0]
 		if not is_instance_valid(chunk) or _picked.has(p[3]):
 			continue
 		var at: Vector3 = chunk.to_global(p[1])
