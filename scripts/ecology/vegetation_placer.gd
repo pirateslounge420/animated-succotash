@@ -83,6 +83,9 @@ static var STAND := Tuning.table("stand")
 ## in salad_biomes. The understory tiers follow with their own dominant in
 ## the same stand cell.
 static var DOM: Dictionary = STAND.get("dominance", {})
+## The trail's strip (roads.json trail): understory kept clear this far
+## either side of the tread, a tree within tree_at_bend_m of each bend.
+static var ROAD_TRAIL: Dictionary = Tuning.section("roads", "trail")
 static var SALAD := PackedInt32Array(Array(DOM.get("salad_biomes", [])).map(func(k): return BiomeTemplates.id_of_key(str(k))))
 const SPACING_M := {0: 34.0, 1: 8.2, 2: 4.9, 3: 3.8}
 const FILL := {0: 0.55, 1: 0.9, 2: 0.65, 3: 0.95}
@@ -146,6 +149,7 @@ static func compute_base(key: Vector3i, map: PlanetData, data: Dictionary) -> Di
 	var hosts: Array = []
 	_place_tier(ctx, T.EMERGENT, plants, hosts)
 	_place_tier(ctx, T.CANOPY, plants, hosts)
+	_place_road_trees(ctx, plants, hosts)
 	# Each tree's light from the crowns over it: its leaf size.
 	_light_pass(plants, _Light.new(data.center, hosts), true)
 	return {"plants": plants, "hosts": hosts}
@@ -185,6 +189,23 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 				continue
 			if tier == T.CANOPY and ctx.near_emergent(site.dir):
 				continue
+			# The roads (design 30 Sept §BC): the tread and a strip either
+			# side kept clear of the understory, the trees off the tread;
+			# the rooms (§BB): the understory thinned on a room's floor,
+			# thickened along its edge and a corridor's sides.
+			var fill_scale := 1.0
+			var gap := ctx.road_gap(site.dir)
+			if gap < INF:
+				var half := ctx.road_width(site.dir) * 0.5
+				var clear := half + (float(ROAD_TRAIL.get("understory_clear_m", 1.0)) if tier >= T.SHRUB else 1.5)
+				if gap < clear:
+					continue
+				if tier == T.SHRUB:
+					fill_scale = RoadNetwork.wall_scale(ctx._rooms, gap, clear, site.dir)
+			elif tier == T.SHRUB and not ctx._rooms.is_empty():
+				fill_scale = RoadNetwork.wall_scale(ctx._rooms, INF, 0.0, site.dir)
+			if tier == T.GROUND and not ctx._rooms.is_empty():
+				fill_scale = minf(RoadNetwork.wall_scale(ctx._rooms, INF, 0.0, site.dir), 1.0)
 			# Most cells come to nothing, so decide that cheaply first: is
 			# anything viable here at all (the chance is only drawn then), and
 			# does the draw beat the best chance the cell could have (the
@@ -202,7 +223,7 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 			var shade_f := 1.0
 			if tier == T.GROUND:
 				shade_f = 1.0 - 0.7 * clampf(ctx.shade_at(gx, gy), 0.0, 1.0)
-			var p_max := clump * 1.0 * float(FILL[tier])
+			var p_max := clump * 1.0 * float(FILL[tier]) * fill_scale
 			if tier == T.GROUND:
 				p_max *= shade_f
 			var roll := ctx.rng.randf()
@@ -213,7 +234,7 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 				var w := ctx.weight(candidates[k], site)
 				weights[k] = w
 				total += w
-			var p := clump * minf(total, 1.0) * float(FILL[tier])
+			var p := clump * minf(total, 1.0) * float(FILL[tier]) * fill_scale
 			if tier == T.GROUND:
 				p *= shade_f
 			if roll >= p:
@@ -334,6 +355,56 @@ static func _lean(ctx: _Context, sp: PlantSpecies, d: Vector3) -> Vector2:
 	return Vector2(toward.dot(side), toward.dot(fwd))
 
 
+## The road's own trees (design 30 Sept §BC): a canopy tree of the
+## stand's dominant within tree_at_bend_m of each bend, on the outside
+## of the turn, and the lone old tree of an off-road find: a giant of
+## the emergent (else canopy) dominant.
+static func _place_road_trees(ctx: _Context, out: Dictionary, hosts: Array) -> void:
+	for i in ctx._road_bends.size():
+		var b := ctx._road_bends[i]
+		var list := ctx.species_for(T.CANOPY)
+		if list.is_empty():
+			continue
+		var sp := _dominant_of(ctx, list)
+		var side := 1.0 if PlantGenetics.unit(hash([b, "bend"]), 1) < 0.5 else -1.0
+		var d := CreatureSpawner._offset(b, PlantGenetics.unit(hash([b, "bend"]), 2) * TAU, ctx.road_width(b) * 0.5 + float(ROAD_TRAIL.get("tree_at_bend_m", 3.0)) * 0.8)
+		if ctx.in_clearing(d) or _crowded(d, hosts):
+			continue
+		var site := ctx.site_at(d)
+		if ctx.weight(sp, site) <= 0.0:
+			continue
+		var h := lerpf(sp.height_m.x, sp.height_m.y, 0.85) * float(SIZE_SCALE[T.CANOPY])
+		_emit(out, SpeciesDB.index_of(sp), d, PlanetConst.RADIUS_M + site.h, ctx.rng, h, 0.05 * side)
+		hosts.append([d, h * 0.04, h, SpeciesDB.index_of(sp), 0.0])
+	for i in ctx._old_trees.size():
+		var d := ctx._old_trees[i]
+		var list := ctx.species_for(T.EMERGENT)
+		var tier := T.EMERGENT
+		if list.is_empty():
+			list = ctx.species_for(T.CANOPY)
+			tier = T.CANOPY
+		if list.is_empty() or ctx.in_clearing(d):
+			continue
+		var sp := _dominant_of(ctx, list)
+		var site := ctx.site_at(d)
+		if ctx.weight(sp, site) <= 0.0:
+			continue
+		var h := sp.height_m.y * float(SIZE_SCALE[tier]) * float(STAND.get("giant_scale", 1.3))
+		_emit(out, SpeciesDB.index_of(sp), d, PlanetConst.RADIUS_M + site.h, ctx.rng, h, 0.03)
+		hosts.append([d, h * 0.045, h, SpeciesDB.index_of(sp), 0.0])
+		ctx.add_emergent(d)
+
+
+## The stand's dominant among `list`: the species with the largest
+## dominance factor here (_apply_dominance).
+static func _dominant_of(ctx: _Context, list: Array[PlantSpecies]) -> PlantSpecies:
+	var best: PlantSpecies = list[0]
+	for sp in list:
+		if float(ctx.dominance.get(sp, 1.0)) > float(ctx.dominance.get(best, 1.0)):
+			best = sp
+	return best
+
+
 ## In a stand: at least two other trees within 9 m (design §AK 2: forest-
 ## grown), else a lone, open-grown tree.
 static func _crowded(d: Vector3, hosts: Array) -> bool:
@@ -442,6 +513,9 @@ static func _place_young(ctx: _Context, out: Dictionary, light: _Light) -> void:
 				continue
 			var site := ctx.site(gx, gy)
 			if ctx.in_clearing(site.dir) or not light.near(site.dir, YOUNG_NEAR_M):
+				continue
+			var gap := ctx.road_gap(site.dir)
+			if gap < ctx.road_width(site.dir) * 0.5 + float(ROAD_TRAIL.get("understory_clear_m", 1.0)):
 				continue
 			var lit := light.at(site.dir, 0.5)
 			var total := 0.0
@@ -857,6 +931,12 @@ class _Context:
 	var _hot_center := Vector3.ZERO
 	var _hot_r := 0.0
 	var _clearings: Array = [] # [dir, radius_m]
+	## The roads (design 30 Sept §BC) and rooms (§BB) round this chunk:
+	## polyline segments and room discs, from RoadNetwork.
+	var _road_segs: Array = []
+	var _rooms: Array = []
+	var _road_bends := PackedVector3Array()
+	var _old_trees := PackedVector3Array()
 
 	func _init(p_key: Vector3i, p_map: PlanetData, p_data: Dictionary, salt: int) -> void:
 		map = p_map
@@ -873,7 +953,40 @@ class _Context:
 		_clearings.append_array(Ruins.clearings_near(map, data.center, chunk_m * 0.75))
 		_clearings.append_array(Encampment.clearings_near(data.center, chunk_m * 0.75))
 		world = RealmMap.world_at(data.center)
+		if RoadNetwork.instance != null:
+			var reach := chunk_m * 0.75 + 20.0
+			var near := RoadNetwork.instance.links_near(data.center, reach + 140.0)
+			_road_segs = RoadNetwork.segments_in(near, data.center, reach)
+			_rooms = RoadNetwork.instance.rooms_near(data.center, reach)
+			var limit := cos(reach / PlanetConst.RADIUS_M)
+			for link in near:
+				for b in link.get("bends", PackedVector3Array()):
+					if b.dot(data.center) >= limit and TerrainChunk.key_at(b) == key:
+						_road_bends.append(b)
+				var lm: Dictionary = link.get("landmark", {})
+				if not lm.is_empty() and str(lm.kind) == "old_tree" and TerrainChunk.key_at(lm.dir) == key:
+					_old_trees.append(lm.dir)
 		_filter_species()
+
+	## The site at a surface direction inside this chunk (the road's bend
+	## trees, the lone old tree).
+	func site_at(d: Vector3) -> _Site:
+		var uv := CubeSphere.face_uv(key.x, d)
+		var gx := clampf(((uv.x + 1.0) * 0.5 * TerrainChunk.CHUNKS_PER_FACE - key.y) * TerrainChunk.QUADS, 0.0, TerrainChunk.QUADS - 0.001)
+		var gy := clampf(((uv.y + 1.0) * 0.5 * TerrainChunk.CHUNKS_PER_FACE - key.z) * TerrainChunk.QUADS, 0.0, TerrainChunk.QUADS - 0.001)
+		return site(gx, gy)
+
+	## Distance (m) to the nearest road, INF with none near.
+	func road_gap(d: Vector3) -> float:
+		if _road_segs.is_empty():
+			return INF
+		var r := RoadNetwork.nearest_seg(_road_segs, d, 60.0)
+		return float(r.dist_m) if not r.is_empty() else INF
+
+	## The road's width where `d` is nearest it (0 with none).
+	func road_width(d: Vector3) -> float:
+		var r := RoadNetwork.nearest_seg(_road_segs, d, 60.0)
+		return float((r.link as Dictionary).get("width_m", 2.0)) if not r.is_empty() else 0.0
 
 	## Mythical folk camps (Territories), ruins and the opening encampment
 	## are kept clear of plants.

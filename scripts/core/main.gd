@@ -39,6 +39,7 @@ var fuel_field: FuelField
 var dread: Dread
 var sound_bed: SoundBed
 var water_sounds: WaterSounds
+var road_props: RoadProps
 var mythics: Mythics
 ## Dev mode only (data/dev.json): the F7 rig spawner.
 var dev_spawn: DevSpawn
@@ -230,6 +231,10 @@ func _on_planet_ready() -> void:
 	water_sounds.name = "WaterSounds"
 	add_child(water_sounds)
 	water_sounds.setup(world, chunks, player)
+	road_props = RoadProps.new()
+	road_props.name = "RoadProps"
+	add_child(road_props)
+	road_props.setup(world, chunks, player)
 	fruit_crop.setup(world, chunks, player)
 	# Mythic creatures before they spawn: biome cues.
 	mythics = Mythics.new()

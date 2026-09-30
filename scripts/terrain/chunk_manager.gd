@@ -58,6 +58,8 @@ const TWIG_OUT_M := 35.0
 var world: Node
 var map: PlanetData
 var rivers: RiverNetwork
+## The trail network (design 30 Sept §BC), laid before plants.
+var roads: RoadNetwork
 var chunks := {} # Vector3i -> TerrainChunk
 
 var _pending := {} # Vector3i -> task id (base)
@@ -94,6 +96,7 @@ func setup(p_world: Node) -> void:
 	world = p_world
 	map = world.planet
 	rivers = RiverNetwork.new(map)
+	roads = RoadNetwork.new(map, rivers)
 	SpeciesDB.all() # load plant data on the main thread before workers need it
 	BiomeTemplates.color_of(0) # same for the biome color table
 	CreatureSpecies.all() # and creature data (vegetation keeps folk camps clear)

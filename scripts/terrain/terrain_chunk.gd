@@ -51,6 +51,8 @@ const BANK_M := 12.0
 const SAND := Color(0.9, 0.84, 0.64)
 const ROCK := Color(0.46, 0.45, 0.44)
 const SNOW := Color(0.93, 0.95, 1.0)
+## A trail's bare tread (design 30 Sept §BC; Footsteps reads it as dirt).
+const PATH := Color(0.52, 0.42, 0.29)
 const WET_BANK := Color(0.28, 0.3, 0.22)
 const SEABED := Color(0.32, 0.42, 0.4)
 
@@ -230,7 +232,7 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 		"river_dist": river_dist,
 		"water_level": level,
 		"salt": salt,
-		"colors": _vertex_colors(map, dirs_out, h, normals),
+		"colors": _vertex_colors(map, dirs_out, h, normals, RoadNetwork.segments_in(RoadNetwork.instance.links_near(center, CHUNK_M * 0.8 + 20.0), center, CHUNK_M * 0.8 + 20.0) if RoadNetwork.instance != null else []),
 		"water": _water_quads(key, dirs_out, fine_h, level, salt, in_river),
 		"rivers": _river_ribbons(key, center, rivers, segs, falls),
 		"falls": falls,
@@ -382,7 +384,7 @@ const WETLANDS := [
 ]
 
 
-static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloat32Array, normals: PackedVector3Array) -> PackedColorArray:
+static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloat32Array, normals: PackedVector3Array, road_segs: Array = []) -> PackedColorArray:
 	var out := PackedColorArray()
 	out.resize(d.size())
 	for i in d.size():
@@ -400,6 +402,12 @@ static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloa
 		# Bare rock on steep ground (not under snow).
 		var steep := 1.0 - normals[i].dot(dir)
 		col = col.lerp(ROCK, smoothstep(0.3, 0.5, steep) * (1.0 - smoothstep(0.85, 0.95, col.b)))
+		# The road's tread (design 30 Sept §BC, roads.json trail): bare
+		# path along the trail, worn and half taken back.
+		if not road_segs.is_empty():
+			var tread := RoadNetwork.tread_at(road_segs, dir)
+			if tread > 0.0:
+				col = col.lerp(PATH, tread)
 		out[i] = col
 	_bake_hollow_ao(h, out)
 	return out
