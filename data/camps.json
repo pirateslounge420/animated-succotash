@@ -4,11 +4,110 @@
   "only_at_ruins": "true: camps exist only at inhabited ruins (about half of them) and at the opening encampment; the wild riverside camps and the cliff rock shelters are not placed, and wanderers never make a fire for you. false: the older rule (nearest camp of any kind).",
   "wake_random": "true: after a death you wake at a RANDOM inhabited ruin's fire within wake_radius_m of where you died, a different one each time; false: the nearest.",
   "wake_radius_m": "How far from where you died the fire can be. If no inhabited ruin lies within it the search widens (x2, up to widen_steps times); failing that you wake at the opening camp.",
-  "wake_at_home": "Design 30 Sept §AY: true (ambient profile) - after a death you wake at your HEARTH: the opening camp until you make another camp's fire your hearth (right click it). Overrides wake_random. false: the 29 Sept rule."
+  "wake_at_home": "Design 30 Sept §AY: true (ambient profile) - after a death you wake at your HEARTH: the opening camp until you make another camp's fire your hearth (right click it). Overrides wake_random. false: the 29 Sept rule.",
+  "sim": "Design 30 Sept §BL–§BN, the camp simulation. Every number here is a first guess unless the note says 'Mike'; tune by play. tick_game_h: the sim steps once per game hour and catches up missed ticks on load (camps grow while unloaded). store: what a camp banks (wood and food, both VISIBLE as a woodpile and a food store; no HUD) and how many days' worth the folk try to keep. loop: the folk's safe daytime gather loop. population: start 3-5 (Mike), forage_cap, what a fundamental or a crop adds, the tribal ceiling (~24, Mike to confirm). births: need a man and a woman, a surplus, a slow clock; a child grows up in ~40 game days (Mike to confirm vs an adult after a delay). collapse: what takes a camp — fuel reach stripped, the fire low, the dark walks in; survivors walk to the nearest fire (some got on the way); starvation moves them instead. embers_game_h: a camp fire's embers linger this long so it can be saved. abandon: an empty camp is a ruin after ruin_after_game_days and the forest takes it back over forest_takes_game_days. restraint: take vs regrow. ladder: fire -> food -> storage -> specialist -> exchange; specialists appear at the storage rung (headman, plantkeeper) and where the site allows (maker). wildfire: rare; needs all three."
  },
  "only_at_ruins": true,
  "wake_random": true,
  "wake_radius_m": 12000.0,
  "widen_steps": 3,
- "wake_at_home": true
+ "wake_at_home": true,
+ "sim": {
+  "tick_game_h": 1,
+  "catch_up_on_load": true,
+  "store": {
+   "wood_days_target": 5.0,
+   "food_days_target": 7.0,
+   "food_units_per_folk_day": 1.0,
+   "wood_units_per_night": 4.0,
+   "visible": true
+  },
+  "loop": {
+   "gather_reach_m": 300.0,
+   "reach_grows_when_stripped": true,
+   "gather_hours": [
+    7,
+    17
+   ],
+   "player_gather_counts": true
+  },
+  "population": {
+   "start": [
+    3,
+    5
+   ],
+   "forage_cap": 6,
+   "fundamental_adds": 6,
+   "crop_adds": 4,
+   "village_cap": 24
+  },
+  "births": {
+   "needs_both_sexes": true,
+   "needs_surplus_days": 10,
+   "every_game_days": [
+    20,
+    40
+   ],
+   "child_grows_game_days": 40,
+   "child_gathers": false
+  },
+  "collapse": {
+   "fire_low_nights_to_taken": 2,
+   "taken_per_night": [
+    1,
+    3
+   ],
+   "survivors_walk_to_nearest_fire": true,
+   "survivor_lost_chance_per_night": 0.35,
+   "starve_moves_after_days": 6,
+   "never_each_other": true
+  },
+  "embers_game_h": 2.0,
+  "abandon": {
+   "ruin_after_game_days": 60,
+   "forest_takes_game_days": 365,
+   "needful_things_left": [
+    "pot",
+    "fuel_pile",
+    "torch_bundle"
+   ]
+  },
+  "restraint": {
+   "take_vs_regrow_max": 1.0
+  },
+  "ladder": [
+   "fire",
+   "food",
+   "storage",
+   "specialist",
+   "exchange"
+  ],
+  "specialists": {
+   "headman": "at_storage",
+   "plantkeeper": "at_storage",
+   "maker": "site_allows_and_surplus"
+  },
+  "player_nudges": [
+   "gather_to_store",
+   "bring_seeds_or_tubers",
+   "bring_material_for_maker",
+   "bring_a_pot",
+   "help_restore_ruin"
+  ],
+  "wildfire": {
+   "rare": true,
+   "needs": [
+    "fire_prone_biome",
+    "dry_spell",
+    "ignition"
+   ],
+   "dry_spell_game_days": 20,
+   "ignitions": [
+    "lightning",
+    "dropped_torch"
+   ],
+   "camp_response": "walk_away",
+   "fire_followers_bloom": true
+  }
+ }
 }

@@ -1,0 +1,319 @@
+{
+ "id": "karst",
+ "name": "Karst folk",
+ "one_line": "The streams vanish into the rock, so the water is in the cave and the cistern; the walls are the stones cleared from the field; and the rock itself, burnt, is plaster, mortar and the lime that turns maize into a staple.",
+ "where": {
+  "site_rule": "karst",
+  "biomes": [
+   "TROPICAL_DRY_FOREST",
+   "MEDITERRANEAN_SCRUB",
+   "TEMPERATE_DECIDUOUS",
+   "JUNGLE",
+   "SAVANNA"
+  ],
+  "needs": [
+   "geology rock == karst and a cave or sinkhole within 200 m",
+   "a cenote, cave pool or resurgence for water, or rain enough to fill a cistern"
+  ]
+ },
+ "fundamental": "crop",
+ "food": {
+  "staples": [
+   "maize from the milpa, soaked in limewater, with beans and squash between",
+   "nuts and figs from the trees that grow on old walls",
+   "goat and sheep where the country is dry; snails, game and honey at the sinkhole mouth"
+  ],
+  "how": [
+   "the milpa: a patch of thin soil between the rocks, cleared, burned, planted, rested",
+   "the sinkhole garden: the lush ring at a cenote mouth; walled plots on the dolina floor where the soil collects",
+   "goats on the rock pasture, uphill in winter; snaring and gathering at the cave mouth"
+  ],
+  "preserve": [
+   "maize dried on the cob and kept in the dry cave; nuts in a plastered pit",
+   "cheese and meat hung in the cold draught of the cave"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "branch",
+   "brush",
+   "hardwood_log"
+  ],
+  "note": "branch and brush off the thin woods; hardwood where the dressing biome grows it; the kiln eats brush by the cartload, so kiln and hearth compete for one hillside. Caves are cold but dry: a small fire goes far"
+ },
+ "shelter": {
+  "materials": [
+   "limestone",
+   "lime plaster",
+   "pole and brush thatch"
+  ],
+  "form": "a cave mouth walled across with dry stone; round corbelled stone huts out in the fields; every plot walled, every path a lane between walls"
+ },
+ "light": [
+  "cane_torch"
+ ],
+ "dressing": {
+  "by_biome": {
+   "TROPICAL_DRY_FOREST": {
+    "fuel": "branch and brush; hardwood is scarce and the kiln wants it",
+    "food": "maize, beans and squash on the milpa; ramón nuts; honey; the cenote is the well",
+    "shelter": "a plastered stone hut with a thatch roof; the cenote at the centre, steps cut into it",
+    "palette": "lime white, dry-forest grey-green, cenote turquoise"
+   },
+   "MEDITERRANEAN_SCRUB": {
+    "fuel": "brush (juniper, scrub oak), branch",
+    "food": "sheep and goats on the rock, wheat in the walled fields, figs and vines on the terraces, cheese",
+    "shelter": "a corbelled stone field hut, slab roofs weighted against the wind, the cistern under the yard",
+    "palette": "pale grey stone, terra rossa red, juniper green"
+   },
+   "TEMPERATE_DECIDUOUS": {
+    "fuel": "hardwood and branch: the one karst with wood to spare",
+    "food": "maize and beans in the valley, walnuts and chestnuts, hogs on the mast, cheese cooled in the cave",
+    "shelter": "the cave mouth walled, a stone hut beside a sinkhole pond",
+    "palette": "grey limestone, oak green, leaf brown, soot"
+   },
+   "JUNGLE": {
+    "fuel": "bamboo, branch, brush",
+    "food": "rice on the flat dolina floor between the towers, taro, fish from the resurgence",
+    "shelter": "a house of bamboo and thatch on a stone footing on the dolina floor; the cave is the store",
+    "palette": "tower-karst grey, paddy green, mist white"
+   },
+   "SAVANNA": {
+    "fuel": "brush and dry branch; dung when a herd comes",
+    "food": "millet on the dolina floor, goats on the rock, game at the sinkhole pool",
+    "shelter": "a stone-walled yard at the cave mouth, thatch on a stone footing",
+    "palette": "buff grass, grey pinnacle rock, red earth"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "cave_water",
+  "plantkeeper": {
+   "knows": [
+    "maize, beans and squash: the milpa's three, and why the maize wants lime; ramón (breadnut), the tree that grows on old walls and feeds a hungry year",
+    "elder, nettle and mallow: the lime-lovers that mark a kiln site or a wall",
+    "hart's-tongue fern and moss in the cool of a crack or a cave mouth; wild thyme, sage and juniper on the rock pasture",
+    "which cave pool is sweet and which stands stale"
+   ],
+   "teaches_flavour": "why a sinkhole grows tall and green in dry country; why the plants on a kiln ring are the plants on a coast midden (lime)",
+   "teaches_practical": "nixtamal: maize soaked in limewater, or it starves you slowly; which plants say there is water under the rock"
+  },
+  "maker": {
+   "craft": "lime-burner and mason",
+   "works": [
+    "limestone and lime",
+    "stone",
+    "clay"
+   ],
+   "makes": [
+    "quicklime and slaked lime",
+    "plaster, mortar and whitewash",
+    "the cistern's lining",
+    "dry-stone walls and huts"
+   ],
+   "wants_from_player": [
+    "brush and wood for the kiln",
+    "clay"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "cave_water",
+   "name": "Cave water",
+   "verb": "the water is all underground: follow the cool draught at a cave mouth to the pool, or the vanishing stream to where it comes up again",
+   "teaches": "the karst's first lesson, and why the headman gives this one: nothing here works until you know where the water went; it is also the one the player carries out of the karst, since every cave and sinkhole after this is a drink",
+   "unlocks": "cave pools, cenotes and resurgences count as drinking water for the player and the camp",
+   "player_can": true,
+   "category": "water"
+  },
+  {
+   "id": "lined_spring",
+   "name": "The lined spring",
+   "verb": "line the resurgence or the seep with fitted stone so it stays clean and does not silt",
+   "teaches": "where the water comes back up is the one fixed thing on the hillside; every path leads to it",
+   "unlocks": "a clean spring the camp returns to; a lined spring in the bramble is a ruin",
+   "player_can": true,
+   "category": "water"
+  },
+  {
+   "id": "chultun",
+   "name": "The cistern",
+   "verb": "cut a bottle-shaped hole in the soft rock, plaster it with lime, apron the mouth so the rain runs in",
+   "teaches": "where there is no cenote the rain is the only water, and the rock will not hold it; the plastered hole is the karst's water ceiling",
+   "unlocks": "a camp with no cenote holds through the dry season; the ceiling rises above a handful; a dry cistern keeps nuts and grain",
+   "player_can": false,
+   "category": "water"
+  },
+  {
+   "id": "lime_kiln",
+   "name": "Lime",
+   "verb": "stack limestone over a pit of brush and branch, burn it a day and a night, slake the white lumps with water",
+   "teaches": "the rock is the material: burnt, it is plaster, mortar, whitewash and the limewater that makes maize a staple; and the kiln eats a hillside of brush, the karst's restraint line",
+   "unlocks": "plaster, mortar, whitewash; the cistern's lining; the lime for nixtamal",
+   "player_can": false,
+   "category": "materials"
+  },
+  {
+   "id": "nixtamal",
+   "name": "Nixtamal",
+   "verb": "soak maize in limewater (or wood-ash lye) overnight, rinse, hull, grind",
+   "teaches": "maize alone starves people slowly; soaked in lime it gives up its niacin, and that is why one grain could feed a civilisation",
+   "unlocks": "maize counts as a full staple for the player and the camp; without it maize is half a meal",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "dry_stone",
+   "name": "Dry-stone walling",
+   "verb": "clear the field of stone and fit the stone into a wall without mortar; corbel it inward and it is a hut",
+   "teaches": "the wall is the field's waste made useful; it stands five hundred years and is the ruin",
+   "unlocks": "walled plots, terraces on the slope, a round field hut; ridges under the moss when they fall",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "cane_torch",
+   "name": "Cane torch",
+   "verb": "bind dry cane, reed or bamboo in a bundle and light one end",
+   "teaches": "a cave is entered by torch and left before it burns down; the charred end marks the wall on the way in",
+   "unlocks": "a bright, fast-burning torch from reeds or bamboo; its charred stub marks rock: the karst folk's waymark inside a cave",
+   "player_can": true,
+   "category": "light"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "lime",
+   "plaster and whitewash",
+   "dried maize"
+  ],
+  "wants": [
+   "brush and wood for the kiln",
+   "clay pots",
+   "salt"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire at the cave mouth, water from the pool",
+   "the milpa on the thin soil; the walls begin as the field is cleared of stone",
+   "the cistern and the dry cave: water and grain keep",
+   "the lime-burner",
+   "lime and plaster go out on the road; salt and pots come back"
+  ],
+  "restraint": "the milpa is rested and the scrub let back; the kiln burns brush and branch, never the hardwood the hearth needs, and only when the walls need mortar; the rock pasture is grazed in winter and left in summer; the cistern takes only the rain",
+  "ceiling_hint": "a cenote or a cave stream and soil enough for a milpa reaches the village ceiling; dry karst with no cenote is a foraging handful that lives from the cistern and moves when it runs dry"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "wall_network",
+    "what": "a net of dry-stone walls across a hillside, lanes between them, the cleared field stones in cairns; ridges under the moss where they fell",
+    "legible": "cleared",
+    "restore": "restored: the camp rebuilds the walls on the old footings",
+    "inherits": "walled plots and pasture from the first season"
+   },
+   {
+    "id": "chultun_cistern",
+    "what": "a hole with a plastered lip in the rock, a bottle underneath, full of leaves",
+    "legible": "cleared",
+    "restore": "restored: dug out and replastered by the lime-burner",
+    "inherits": "water through the first dry season"
+   },
+   {
+    "id": "lime_kiln_ring",
+    "what": "a ring of burnt stone and a white scatter where only lime-lovers grow",
+    "legible": "heap",
+    "restore": "cleared: the pit is dug out and fired again",
+    "inherits": "the pit is dug; the first burn is half the work"
+   },
+   {
+    "id": "cenote_steps",
+    "what": "a sinkhole with steps worn into the rock and a shrine ledge above the water",
+    "legible": "restored",
+    "restore": "restored: fallen brush cleared, the steps re-cut",
+    "inherits": "water and the shrine from day one"
+   },
+   {
+    "id": "soot_cave",
+    "what": "a cave with a soot-black ceiling, a metre of ash and pot sherds inside the mouth, the wall across it fallen to a ridge",
+    "legible": "cleared",
+    "restore": "restored: the wall across the mouth rebuilt, the hearth relit on the old ash",
+    "inherits": "a dry shelter and a cold store from the first night"
+   }
+  ],
+  "plants_differ": "lime-lovers on the kiln ring and along the walls (elder, nettle, mallow, wild thyme in the cracks) where the hillside grows scrub; a ring of tall lush green at a cenote mouth in dry country; ferns and moss in the cool of the cave mouth"
+ },
+ "aesthetic": {
+  "silhouette": "grey walls netting a hillside; a round corbelled hut like a beehive; a black cave mouth walled halfway; a white plastered house; a sinkhole ringed with green",
+  "palette": [
+   "limestone grey and lime white",
+   "terra rossa red",
+   "cenote turquoise",
+   "soot black"
+  ],
+  "sounds": [
+   "water dripping in a cave",
+   "a stream going quiet into the rock",
+   "goat bells on rock; the kiln roaring; swifts at a sinkhole mouth"
+  ],
+  "props": [
+   "dry-stone walls and cairns",
+   "the beehive hut",
+   "the plastered cistern mouth and the lime kiln ring",
+   "worn steps into a cenote; a cane torch stub"
+  ]
+ },
+ "folk_kinds": [
+  "goblin",
+  "human"
+ ],
+ "real_world": [
+  {
+   "analogue": "Maya of the Yucatán (a living people): cenotes and chultuns",
+   "region": "Yucatán Peninsula, Mexico; the Puuc hills",
+   "note": "a limestone peninsula with almost no rivers: the cenotes (Yucatec ts'onot, a sinkhole open on the water table) were the only perennial drinking water, cities such as Chichén Itzá were built around them, and they were sacred, the home of the rain god Chaac and a door to the underworld, given offerings; in the Puuc hills, far above the aquifer, bottle-shaped chultuns cut in the rock with a plastered apron caught the rain instead, and elsewhere stored ramón nuts",
+   "source": "https://en.wikipedia.org/wiki/Cenote"
+  },
+  {
+   "analogue": "Nixtamalization",
+   "region": "Mesoamerica, earliest evidence on Guatemala's Pacific coast c. 1500–1200 BCE",
+   "note": "maize soaked and cooked in limewater or wood-ash lye: it softens the hull, frees the niacin and adds calcium; where maize spread without the process (northern Italy, the US South) pellagra followed",
+   "source": "https://en.wikipedia.org/wiki/Nixtamalization"
+  },
+  {
+   "analogue": "Maya lime burning",
+   "region": "Puuc region, northern Yucatán, c. 650–850 CE",
+   "note": "annular pit-kilns burned limestone at 800 °C and more into quicklime for plaster, mortar and stucco; the kilns needed less wood than open burning, which mattered in a fuel-scarce landscape, and nearly half the household groups had their own",
+   "source": "https://www.sciencedirect.com/science/article/abs/pii/S0278416517300235"
+  },
+  {
+   "analogue": "The Dinaric karst: the Kras of Slovenia and Istria",
+   "region": "Slovenia, Croatia, north-east Italy",
+   "note": "the Kras plateau gave karst its name; the Reka sinks into the Škocjan caves; villages drank from clay-lined ponds (kali) and rain cisterns (štirne) because the rock holds nothing; fields were cleared stone by stone into dry-stone walls, and in Istria into round corbelled kažun field huts (most 18th–19th c.); dry-stone walling is UNESCO intangible heritage (2018)",
+   "source": "https://en.wikipedia.org/wiki/Karst_Plateau"
+  },
+  {
+   "analogue": "Guangxi karst farmers (Zhuang, Han and others)",
+   "region": "Guilin and Yangshuo, South China Karst",
+   "note": "rice on the flat valley and dolina floors between limestone towers (fenglin) and peak clusters (fengcong); the soil on the slopes is thin and goes to bare rock when stripped; the water drains underground; a World Heritage karst since 2007",
+   "source": "https://en.wikipedia.org/wiki/South_China_Karst"
+  },
+  {
+   "analogue": "Mammoth Cave",
+   "region": "Kentucky, USA; Early Woodland c. 1000–200 BCE",
+   "note": "people went more than 19 miles into the cave by the light of river-cane torches to mine gypsum and mirabilite from the walls, leaving cane baskets, gourds, woven slippers and drawings made with charred torch tips; saltpetre for gunpowder was dug there much later (1812), a note only",
+   "source": "https://archaeology.ky.gov/Find-a-Site/Pages/Mammoth-Cave.aspx"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Cenote",
+  "https://en.wikipedia.org/wiki/Chultun",
+  "https://en.wikipedia.org/wiki/Nixtamalization",
+  "https://www.sciencedirect.com/science/article/abs/pii/S0278416517300235",
+  "https://www.visitkras.info/en/water-in-the-karst-village-ponds-drinking-troughs-water-holes-and-wells",
+  "https://ich.unesco.org/en/Decisions/13.COM/10.b.10",
+  "https://archaeology.ky.gov/Find-a-Site/Pages/Mammoth-Cave.aspx"
+ ]
+}

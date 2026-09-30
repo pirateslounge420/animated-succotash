@@ -331,10 +331,7 @@ something back, or shake their head; accept or withdraw. No shop menu, no curren
 words. Needs things worth trading (torches, food, dead wood, later arrows), so it lands
 after §AW–§AX.
 
-## BJ. Camp folk live — open brainstorm, not locked
-
-Folk gather wood, tend the fire, cook, sleep; the fire can die if they cannot reach fuel
-(§AX). NPCs "doing their own thing" at the hearth. Not built; design later.
+## BJ. Camp folk live — SUPERSEDED by §BL (afternoon session)
 
 ## BK. What this supersedes, by section
 
@@ -343,10 +340,249 @@ speedometer unpinned (§AU). §B: figures only (§AV). §C: ambient cut softened
 `wake_random`: §AY for the ambient profile. §A "cling keeps momentum": dormant. Everything
 else stands.
 
-## Order of work (two Claude Code prompts)
+---
 
-**A — the ambient cut (play-test after):** §AU profile → §AV first person → §BD ambient
-floor and the regression → §AW torch and empty hands → §AX fuel → §AY hearth → §AZ log →
-§BA dread with one hunter.
-**B — the forgotten world (next):** §BG sound split → §BE current and waterfalls → §BH
-dominance → §BC roads → §BB rooms → §BF travellers. §BI after.
+# Afternoon session — 30 Sept 2026: camps are alive; the peoples
+
+Decided by voice and chat after the morning push. Confirmed. Where this contradicts §AX or
+§BI–§BJ above, this wins. The line the whole thing stands on (Mike): **the wild you are
+walking through was somebody's garden.** The game is ambient and, quietly, educational: real
+techniques from before modern culture, simplified, discovered by walking.
+
+## BL. Camps are alive — the camp simulation — LOCKED
+
+- **Every camp banks two things you can see: a woodpile and a food store.** No HUD. A thin
+  pile means trouble tonight. (`camps.json → sim.store`.)
+- **Folk run a safe daytime loop:** gather wood and food within a reach, bring it back, feed
+  the fire, eat, sleep. **The player's gathering goes into the same store** — helping is
+  doing what they do. (Supersedes §BJ.)
+- **The fire is the link** (§AX, §BA). Fed, they are safe. Woods stripped → longer walks →
+  less wood a day → one night it burns low → **the dark walks in.** Some are taken;
+  **survivors walk to the nearest fire and join it** (some are got on the way). A camp that
+  suddenly grows means one nearby went out. Camp folk **never turn on each other**: every
+  human light is on the player's side; the dark is the only antagonist.
+- **Starvation moves them, it does not kill them:** food short → they abandon and walk to
+  a neighbour. Two readable kinds of empty camp: no woodpile and blood; or just left.
+- **Embers linger** at a camp fire (`sim.embers_game_h`, longer than the player's own
+  `fuel.json embers_min`) so a camp can be **saved** with an armful of fuel if you reach it
+  in time; survivors may come back to a relit fire. Not a distress signal: no cry for help,
+  no marker — you might hear something across a valley if you are close; mostly you walk up
+  on the aftermath.
+- **Growth happens without you, and while unloaded.** The sim is a store plus a timestamp;
+  on load it resolves the ticks it missed (`sim.tick_game_h`, `catch_up_on_load`). The whole
+  planet grows at once for nothing. **Plantings the player makes persist the same way**
+  (§BP digging stick; PlantGrowth already runs at real rates ×10 time).
+- **Population is gated by food.** A camp starts at 3–5 folk. Foraging feeds a handful;
+  a fundamental (§BM) or a crop that takes in that soil raises the ceiling; the tribal
+  ceiling is a number in data (`sim.population`). **Births need a man and a woman at the
+  camp, a food surplus, and a slow clock** (`sim.births`); an isolated camp can grow. A
+  child is a small figure by the fire who does not gather and grows up in ~40 game days
+  (Mike to confirm vs "an adult after a delay"). Folk are men and women; the rig reads it
+  at silhouette distance (build, height, voice).
+- **The player nudges, never manages:** gather for them; **bring seeds, tubers, cuttings**
+  (a species the wild spawner would allow on that soil and climate gets planted by a folk
+  within days — wrong soil, the seeds just sit in the store); bring a material the maker
+  works; bring a pot. The store is a pot of stuff the sim checks each tick: **the site
+  decides what sticks.** No trade UI, no inspiration mechanic. If a feature needs the
+  player to stand at a camp for an hour, it is the wrong game.
+- **Camps only go backwards from resources or the dark.** An empty camp half-persists as
+  a ruin and is half taken back by the forest (`sim.abandon`); **the ruins you spawn near
+  are this same process run for centuries** — the ladder (§BM) run once before, all the
+  way past exchange to the rung we do not build. A fresh ruin holds a few needful things
+  (a pot, a half-burnt fuel pile, a torch bundle), never treasure, never collect-them-all.
+- **Restraint is a rule, not a lecture:** a camp may grow into a village **as long as it
+  takes less than the land regrows** (`sim.restraint`). The moment it outruns its woods,
+  the fire dims and the dark walks in — the survival mechanic already built does the
+  moralising. The techniques of living in balance (§BP: coppice, weir, swidden left to
+  close, the burn in season, terra preta) are how a village stays under that line.
+- **Ceiling: exchange, not hierarchy.** Camps climb fire → food → storage → specialist →
+  exchange (§BM) and stop there on purpose. Chiefs, walls, tribute and war are the next
+  rung in real history and a different game with a different antagonist; this world sits
+  at the moment just before.
+- **Camps are derived from the site, never authored as types** (§BO). What they burn, eat,
+  build with, and which specialists they can have all come from the land within reach.
+- **Wildfire is rare** and needs three things at once: a fire-prone biome, a dry spell from
+  the weather sim, and an ignition — lightning, or the player's torch dropped in dry grass
+  (anywhere else it just goes out). A burn strips fuel woods, leaves standing dead wood,
+  and **fire-followers** bloom after (seeds dormant for decades, `seasons`/flora). **Camps
+  walk away from fire rather than die** — early on there is nothing to carry; later they
+  carry what they can and rebuild a valley over. An abandoned camp in a burn scar reads
+  differently from one the dark took. Because nobody can *make* fire (§BP), lightning is
+  the only new fire that ever enters the world.
+
+## BM. The four fundamentals, and the ladder — LOCKED
+
+**Fire made us human; storing food made us civilised.** The spawn is the floor of being
+human (a lit hearth, the folk who found you); the granary is what lets a camp grow.
+
+- **The fundamental is not "learn to farm"; it is "find the one thing your land gives
+  reliably and stay put for it."** Four routes, each raising the food ceiling its own way,
+  the land deciding which a camp can take:
+  1. **crop** — river and valley folk (the flood drops fresh silt; seeds dropped by the
+     water come back); the digging stick, the terrace, the flood crop;
+  2. **fish run** — coast and lake folk (the weir: a V of stakes in the tideline, the tide
+     goes out and the fish are left behind the fence; towns without a single seed);
+  3. **herd** — steppe, savanna, taiga, highland folk (dung fuel, milk, moving with the
+     grass). **Build last** — it needs animals that move and breed;
+  4. **managed burn** — grassland, savanna and scrub folk (burn the old grass in season,
+     the new growth comes back sweet and the game follows; a grassland never burned goes
+     to thorn — the fire *is* the farming; piggybacks on the wildfire rules).
+  `forage` is the floor everyone starts on; rock-shelter folk stay there, honestly.
+- **The ladder every camp climbs:** **fire → food → storage → specialist → exchange.**
+  Storage is the hinge: a surplus you cannot keep is rot, so pits, racks, smoke, salt and
+  the clay pot come before any craft; the first person who does not gather is the
+  specialist, and specialists are the surplus wearing a job. Exchange is the last rung: two
+  camps with different specialists, the pot travels to the fishing village and the salt
+  comes back — **the mute travellers (§BF) get a reason to be walking, and a busy path is
+  a road kept clear.** Stop there (§BL).
+- **Which rung a camp can reach, and how fast, comes from the land and from what the
+  player brings.** Procedural without being random.
+
+## BN. Three faces at any grown camp — LOCKED
+
+- **The headman** — bestows the site's technique (§BP) on contact. (A quest gate comes
+  later: their woodpile is low, you turn up with an armful, now they will teach you. Same
+  contact, gated by helping.)
+- **The plantkeeper** — the cook-shaman; historically one person: the one who knows which
+  plant feeds you knows which heals you and which kills you. Her knowledge is **the local
+  plant list** (the catalogue's species in this biome: what to eat raw, what to dry, what
+  cures, what kills — practical *and* flavour). She is why the 1,224 plant entries pay
+  rent. Later she sends you into the biome for a plant, a fungus, a fish, a wood, a resin
+  — never an ore, feather or beetle — makes something with it, and shares the knowledge:
+  quests that teach the world.
+- **The maker** — the craft the land supports: netmaker, potter, smith, weaver, knapper.
+  **The player never crafts; makers do.** A material is useless in your pack; carrying
+  clay across three biomes to the one potter who can throw it is what makes the world
+  feel connected rather than looted. That is the collectible loop Mike wants (Minecraft's
+  gathering without its crafting grid), and the whole no-tool-tiers rule survives as long
+  as **the smith is a place, not a tech level.**
+- Headman and plantkeeper appear at the storage rung; the maker only where the site
+  allows one and there is surplus.
+
+## BO. Peoples — ways of life derived from the site — LOCKED
+
+- **A people is a way of life, not a nation.** Seventeen lives (`data/peoples/`, one file
+  each; `biome_map.json` says which life a site lives; the README is the schema, `coast.json`
+  the worked example, `tools/peoples_check.py` the gate). **The way of life is the verb; the
+  biome is the noun:** two coast camps both build weirs and pile middens, but one burns
+  driftwood and dries cod on a cold rock shore and the other burns palm frond and smokes reef
+  fish. Seventeen lives, fifty-two dressings, nothing hand-authored twice — and not one people
+  per biome (that is copy-paste with extra steps).
+- **Our own folklore.** Never a real nation's name in play. The fantastical folk — goblins
+  (already the tribal folk in the repo), orcs, fae, small folk — are dressings on a way of
+  life, **all friendly** (a friendly orc is the stronger beat: the player braces and nothing
+  happens). They read at silhouette distance. **Mute, plus a line in the log** (§AZ): "The
+  coast folk showed you the weir." No speech, no dialogue system.
+- **Real peoples are what we learn from**, cited in each file's `real_world` (the Pacific
+  Northwest and the Jōmon for the coast; the Marsh Arabs and the Viking bog-iron smiths for
+  the marsh; Egypt for the flood crop; the Sámi for the taiga; the Inuit qulliq for the
+  tundra; the Andes for chuño; the Uros and the chinampas for the lake; the Sundarbans for
+  the mangrove; the Maasai for the savanna; the Hohokam canals and the qanat for the
+  desert; California's acorn-and-burn peoples for the scrub). Written with respect and
+  accuracy — these are living cultures and their ancestors.
+- **Materials, not elements.** Flint, obsidian, clay, ochre, salt, resin, pitch, cordage,
+  hide, shell, bone, charcoal, peat, lime — and **bog iron, worked only by the marsh
+  smith** (iron seeps into a marsh, bacteria precipitate it as lumps you rake from the
+  muck, roasted in a clay bloomery with charcoal from the old-growth folk: no mine, no
+  pickaxe, and a bog regrows its deposit over decades). Metallurgy, forges, smelting, the
+  periodic table, tool tiers (pickaxe, shovel) stay cut (27 Sept §0, §T). The fishing pole
+  returns **only as a technique** (§BP) — the spear is still the fast way, and still a
+  wild find (§AW).
+
+## BP. Techniques — verbs learned, permanent, weightless — LOCKED
+
+- **Camps give you verbs, not tools.** Teaching beats giving: a technique weighs nothing,
+  cannot be lost in a river, and means the reward for finding people is being permanently
+  better at living out there. `data/techniques.json` is the list (73 after the peoples fill), each with
+  `taught_by` peoples; the headman bestows the site's one; `player_can` says whether the
+  player performs it or it raises the camp's ceilings.
+- **First to build: the fishing line** (coast folk): twist a line, carve a hook of bone or
+  shell, cut a pole. Skill-based like the spear (§AW): click to lunge, hold to throw
+  remains the spear's; the pole is the patient way.
+- **Fire is never made, only carried — no fire drill.** Mike's call, and the right one: if
+  you can make fire anywhere, hearths stop mattering and the dark stops mattering. The
+  progression is in **what you carry the flame in and what you feed it**, all gathered,
+  all from somewhere specific: the **resin torch** (cattail head dipped in pine pitch —
+  longer, brighter, shrugs off drizzle), **fatwood** (resin-soaked pine heartwood, found
+  not made), the **ember carrier** (tinder fungus or punk wood wrapped in bark: no light,
+  but holds a live coal a day or more so you can lay a new fire from it — it still starts
+  from a hearth and still goes cold if neglected; designer to confirm it counts), the
+  **fat lamp** (a stone bowl, rendered fat, a moss wick: dim, hours, will not blow out,
+  sets down inside a shelter), **candlenuts** (oil-rich nuts strung on a stick, tropical).
+  Hearth fuels as `fuel.json`: hardwood for the long night, dung and peat where there are
+  no trees.
+- **Techniques the player can carry elsewhere are the harmony techniques:** coppicing
+  (cut hazel to the stump and it throws straight poles every seven years — a fuel crop
+  with no clearing; **first**, since it keeps fires lit), the weir, the clam garden, the
+  Three Sisters plot, the chinampa, terra preta, the small swidden left to close, the burn
+  in season, peat cut and dried, the qanat. Each is a specialist's knowledge, and each is
+  what keeps a village under the restraint line (§BL).
+- **Irrigation is a rule, not fluid physics:** a plot near water or a dug channel counts as
+  watered, and the ditch visibly carries water. The digging stick digs it.
+
+## BQ. Ruins — the part of the craft that does not rot — LOCKED
+
+- **Generator rule:** wood, rope, hide and thatch are gone in a generation; **waste and
+  stone remain.** Every craft has one signature heap (each people file's `ruin.signatures`):
+  slag mounds and a bloomery pit in the marsh, peat cuttings gone to pool; **shell
+  middens** on the coast (a mound a different colour from the shore, lime-rich, so
+  different plants grow on it), weir stakes in the tideline, salt pans in the rock; the
+  kiln hump and the clay pit turned pond on the river, terraces stepping the bank; charcoal
+  platforms (flat black circles where nothing grows) and coppice stools grown out into
+  many-trunked trees in old growth; a knapping floor glittering with flakes, a lime kiln,
+  dry-stone walls in the mountains; a stone ring, a lined spring and a scorched line in
+  the grassland (it forgets fastest); ochre on the ceiling and a metre of ash under the
+  hearth in the rock shelter; black earth that still grows better in the tropical forest.
+- **Ruins per biome make sense from the industries the environment produced** (Mike):
+  the people file's signatures are dressed by biome like everything else.
+- **Legibility grows with restoration.** At first a ruin is an ambiguous heap in the
+  bramble. When a camp moves in it clears it and the shape comes back — kiln, weir line,
+  terrace — and now the player can read it. **Restoring is the reveal**, and it is just the
+  camp's normal growth pointed at the old stones instead of new ones. Consistent with
+  legible decay (§BC): the abutments were always there under the ivy.
+- **A camp squatting in a ruin inherits a head start** (`ruin.signatures[].inherits`): the
+  clay pit is already dug, the coppice stools still throw poles, the weir works from the
+  first season, the black earth grows better. Ruin-dwellers become the potter faster.
+- **The ending stays unnamed.** Whether they outran the woods, the dark took them, or they
+  turned on each other, the player only ever sees what was left standing. Nothing in the
+  game says.
+
+## BS. The land is finished; the weather only dresses it — LOCKED
+
+Mike: the world has been shaped by weather over the millions of years it has been forming,
+so live weather should not change the environment much — **the weather has already shaped
+the environment.** Same rule as plate tectonics (27 Sept §0): **erosion is baked at world
+generation** — valleys, canyons, dunes, glacial troughs, karst, river terraces, badlands are
+the record of ages of weather, laid down once. The live water cycle and wind (§0, §AB)
+change what the land *wears* — moisture, the season's leaf, snow cover, river stage and
+current, fire risk, a dry spell, a burn scar and its fire-followers — never the landform
+itself. No live erosion, no terrain deformation from rain, no rivers cutting new beds.
+(Scope guard as much as realism.)
+
+## BT. Canopy folk — the seventeenth life — LOCKED
+
+Mike: a village that lives in the trees in really old growth, never comes down, harvests
+everything up there, with **vine bridges** connecting the houses. `data/peoples/canopy.json`
+(site rule `canopy`: an old-growth stand with three or more giant trees, rare). Platforms
+lashed in the crotches of giants; vine and rope bridges between trees; rope ladders they
+lower only once the headman has met you — **the player reaches them by climbing** (the
+tree-climb system kept in §AU finally has a destination). A lined **hearth box** keeps fire
+on wood — a canopy camp that lets its hearth spill burns the village (restraint again).
+Harvest: fruit, nuts, honeycomb, eggs, resin (the dammar torch is their light). **The
+living root bridge** — figs' roots trained across a gap over fifteen to thirty years,
+stronger every year — is their harmony technique and the one ruin that *grows* after its
+makers are gone. On the ground a canopy village leaves almost nothing: lashing scars and
+worn footholds on the giants, a fallen cable, a midden at the foot of the biggest tree.
+The fae people of our folklore, if any is. Real analogues in the file: the Korowai and
+Kombai tree houses, the Khasi–Jaintia root bridges, the Iya Valley kazurabashi,
+Q'eswachaka, the honey-climbers of the Congo basin.
+
+## BR. Order of work — prompt C (after A and B are played; §BR sits after §BT on purpose — it is the to-do)
+
+Data first: the seventeen people files (parallel research agents against `coast.json`,
+`peoples_check --strict` 0 errors), `techniques.json`, `camps.json → sim`. Then the engine:
+§BL store and loop and ticks (catch-up on load) → §BM population and the ladder with
+`crop` and `fish_run` only → §BN the three faces (headman bestows: the log line, the
+technique flag) → §BP the fishing line, coppice, resin torch, ember carrier, fat lamp → §BQ
+signature heaps at ruins, restoration as legibility, inheritance → §BL collapse (the dark
+takes a camp, survivors walk), wildfire. Herd and managed burn last.

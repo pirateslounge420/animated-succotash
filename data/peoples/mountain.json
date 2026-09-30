@@ -1,0 +1,319 @@
+{
+ "id": "mountain",
+ "name": "Mountain folk",
+ "one_line": "They never had metal and never missed it: volcanic glass for a knife, burnt lime for a house, fitted stone for a wall that outlives its builders, and goats where nothing can be planted.",
+ "where": {
+  "site_rule": "by_biome",
+  "biomes": [
+   "ALPINE_MEADOW",
+   "VOLCANIC_FIELD",
+   "HOT_SPRING"
+  ],
+  "needs": [
+   "a slope of loose stone, a crag or a lava flow within reach",
+   "a spring or meltwater stream"
+  ]
+ },
+ "fundamental": "herd",
+ "food": {
+  "staples": [
+   "goat milk and cheese",
+   "wild goat and marmot from the crags",
+   "roots and berries at the treeline",
+   "grass seed threshed like grain on the lava"
+  ],
+  "how": [
+   "the herd up to the high grass in summer, down in winter",
+   "the spear on the crags; a snare at the burrow",
+   "gathering below the treeline; a stew boiled in the hot pool where there is one"
+  ],
+  "preserve": [
+   "hard cheese dried in the wind",
+   "meat dried in thin cold air",
+   "a stone larder dug under the wall, cold all summer"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "branch",
+   "brush",
+   "softwood_log",
+   "dung"
+  ],
+  "note": "branch and brush from the treeline; pine and larch logs where the slope still has them; above the trees only the herd's dung, dried on the wall (no herd, no fire up high); a lava field has brush and dwarf willow and little else; a hot spring cooks with no fuel at all"
+ },
+ "shelter": {
+  "materials": [
+   "stone",
+   "turf",
+   "softwood pole",
+   "lime plaster",
+   "hide"
+  ],
+  "form": "low houses of double-skinned dry stone packed with earth, a turf roof roped down against the wind, the goats under the far end of the same roof; whitewashed inside once the kiln has burned; a stone fold beside"
+ },
+ "light": [
+  "rushlight"
+ ],
+ "dressing": {
+  "by_biome": {
+   "ALPINE_MEADOW": {
+    "fuel": "branch and softwood from the treeline below; dung on the high pasture",
+    "food": "milk and cheese, marmot and wild goat, bilberries and roots at the treeline",
+    "shelter": "dry-stone huts with turf roofs at the treeline; a summer hut and fold up on the grass; the kiln where the rock is limestone",
+    "palette": "meadow green, grey scree, lichen yellow, whitewash, snow"
+   },
+   "VOLCANIC_FIELD": {
+    "fuel": "brush and dwarf willow, dung; little wood, so no kiln: the lime comes up from the meadow camps by exchange",
+    "food": "pioneer berries (sea buckthorn, the lava bilberry), fireweed shoots, grass seed, fern pith in a hard year, goats on the first grass",
+    "shelter": "black lava blocks laid dry, turf roofs, no plaster; the obsidian flow is here and so is the knapping floor",
+    "palette": "black lava, red cinder, rust and map lichen, fireweed pink, obsidian glint"
+   },
+   "HOT_SPRING": {
+    "fuel": "the warm ground does half the fire's work: branch from the birch and pine, and the pool for cooking",
+    "food": "food boiled in the hot pool, cattail root, fish and wildfowl where the water cools, milk",
+    "shelter": "dry stone on warm ground, a bath cut in the sinter, a winter refuge for the whole slope; where the crust is travertine the kiln burns it",
+    "palette": "white and rust sinter, orange and green mats, steam, dark pine"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "obsidian_knapping",
+  "plantkeeper": {
+   "knows": [
+    "gentian root, the bitter tonic; alpenrose, the poison",
+    "dwarf juniper for smoke and flavour",
+    "sea buckthorn and fireweed on the lava",
+    "which hot pool cooks and which scalds"
+   ],
+   "teaches_flavour": "why the goats leave the alpenrose alone; why a different flower grows on the kiln rubble; edelweiss is a token, not a cure",
+   "teaches_practical": "gentian root for a sick stomach; alpenrose is poison to eat; juniper smoke keeps flies off the fold; a coloured mat means the water is too hot"
+  },
+  "maker": {
+   "craft": "knapper",
+   "works": [
+    "obsidian",
+    "flint",
+    "stone",
+    "lime"
+   ],
+   "makes": [
+    "blade",
+    "scraper",
+    "quicklime, slaked to mortar and whitewash"
+   ],
+   "wants_from_player": [
+    "hide",
+    "cordage",
+    "resin"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "obsidian_knapping",
+   "name": "Knapping",
+   "verb": "strike a core of obsidian or flint with a hammerstone; the flake comes off with an edge a few nanometres thick",
+   "teaches": "stone gives you a knife long before it gives you metal: sharper than a surgeon's scalpel, brittle, made in a minute; every flow has its own chemistry, so a blade found three hundred miles away names the volcano it came from",
+   "unlocks": "the player knaps a knife: dress a carcass, cut cordage; the knapping floor glitters for ten thousand years",
+   "player_can": true,
+   "category": "materials"
+  },
+  {
+   "id": "lime_kiln",
+   "name": "Lime",
+   "verb": "stack limestone and wood in a stone-ringed pit, burn it a day and a night to quicklime, slake it with water",
+   "teaches": "what turned a dry-stone hut into a house: mortar, plaster, whitewash that throws the fire's light back; five loads of wood for one of lime, so the kiln is the mountain's hunger",
+   "unlocks": "the camp's plaster and whitewash; the kiln ring is the ruin",
+   "player_can": false,
+   "category": "materials"
+  },
+  {
+   "id": "dry_stone",
+   "name": "Dry-stone walling",
+   "verb": "two faces, hearting between, through-stones tying them, the wall leaning in as it rises, copes on top; no mortar",
+   "teaches": "fitted well, a wall stands five hundred years and shrugs off an earthquake; fallen, it reads as a ridge under the moss",
+   "unlocks": "houses, folds and terraces; the camp's shelter ceiling",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "terrace",
+   "name": "Terracing",
+   "verb": "step the slope behind dry-stone risers so the soil stays and the water walks down",
+   "teaches": "a plot on a hillside, and hay for the goats' winter",
+   "unlocks": "a crop plot and a hay plot on a slope; terraces gone to bramble read as ridges (ruin)",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "goat_herd",
+   "name": "The goat herd",
+   "verb": "follow the wild goats, then keep them: a fold of dry stone, the kids brought in, the milkers kept and the young males eaten",
+   "teaches": "the herd began on a mountain: a goat climbs where nothing can be planted and turns scrub into milk, hair, hide, tallow and fuel; it also eats the forest's children, which is the whole restraint of this life",
+   "unlocks": "the camp's herd ceiling: milk and cheese, dung for the fire above the trees, tallow for the light (built last in the engine)",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "rushlight",
+   "name": "Rushlight",
+   "verb": "peel a rush from the spring's edge to its pith, draw it through melted tallow, wedge it in a split stick",
+   "teaches": "the herder's light: a stem and a thumb of fat, half an hour of flame, made by the dozen",
+   "unlocks": "a short, cheap light to set down inside a shelter; any rendered fat serves, and the herd's tallow makes it by the handful",
+   "player_can": true,
+   "category": "light"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "obsidian blades",
+   "lime",
+   "cheese",
+   "goat hide"
+  ],
+  "wants": [
+   "salt (for the cheese and the goats)",
+   "hide, cordage and resin for hafting",
+   "clay pots"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire in the lee of a dry-stone wall",
+   "the fold and the goats on the high grass: the herd",
+   "cheese in the cold store; the kiln burns and the hut becomes a house",
+   "the knapper",
+   "blades go down the mountain and salt comes up"
+  ],
+  "restraint": "the herd is kept below what the meadow regrows and off the saplings at the treeline (a goat eats the forest's children, and a slope stripped of young trees has no wood in a generation); the kiln burns only in a year with wood to spare; a quarry face never heals, so blades are struck thin and the cores worked to the last flake",
+  "ceiling_hint": "the herd is the fundamental built last in the engine, so until then a mountain camp stays a handful on forage and knapping and the kiln and the terrace wait; with the herd, an alpine meadow with a treeline reaches the tribal ceiling, and a lava field or a hot spring stays a small camp on a trade road"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "knapping_floor",
+    "what": "a glitter of black and grey flakes underfoot, a carpet of them, where nothing grows",
+    "legible": "heap",
+    "restore": "cleared: the new knapper sits where the old one sat",
+    "inherits": "the cores and big flakes still cut: a camp's first knives come off the old floor"
+   },
+   {
+    "id": "lime_kiln",
+    "what": "a stone ring sunk in the hillside, burnt red inside, a spill of white lime and ash below it",
+    "legible": "cleared",
+    "restore": "restored: relined and fired again",
+    "inherits": "a kiln that draws from the first burn; whitewash a season sooner"
+   },
+   {
+    "id": "fallen_walls",
+    "what": "long ridges under the moss where dry-stone walls came down; a stretch still standing where the through-stones held",
+    "legible": "heap",
+    "restore": "restored: the camp rebuilds on the old footing",
+    "inherits": "the stone is already quarried and carried: walls go up in a season"
+   },
+   {
+    "id": "terraces",
+    "what": "steps in the slope gone to bramble; risers of stone under the roots",
+    "legible": "restored",
+    "restore": "restored: risers rebuilt, the steps come back",
+    "inherits": "level soil that held for centuries: a plot the first spring"
+   },
+   {
+    "id": "fold_ring",
+    "what": "a ring of low wall too small for a house, the ground inside it greener",
+    "legible": "cleared",
+    "restore": "restored: rebuilt to goat height",
+    "inherits": "a pen ready for the herd, the day the herd exists"
+   }
+  ],
+  "plants_differ": "lime-loving plants on the kiln and the mortar rubble (thyme, rock-rose, saxifrage) in a meadow whose acid ground grows alpenrose and gentian; nothing at all on the flake floor; nettles on the old fold where the dung lay; the terraces hold deeper soil and grow taller than the slope"
+ },
+ "aesthetic": {
+  "silhouette": "low stone houses with roofs weighted by stone; a ring fold; a kiln smoking on the hillside; a goat standing on a wall",
+  "palette": [
+   "grey stone",
+   "lichen yellow",
+   "whitewash",
+   "obsidian black",
+   "meadow green"
+  ],
+  "sounds": [
+   "wind over stone",
+   "goats bleating on the slope",
+   "the click of the knapper's hammerstone",
+   "the kiln's roar"
+  ],
+  "props": [
+   "the knapping floor",
+   "the fold",
+   "the kiln ring",
+   "a dry-stone wall",
+   "a shelf of cheeses"
+  ]
+ },
+ "folk_kinds": [
+  "orc",
+  "human"
+ ],
+ "real_world": [
+  {
+   "analogue": "Anatolian obsidian (Göllü Dağ, the Kaletepe workshop, Çatalhöyük)",
+   "region": "Cappadocia, central Anatolia, early Neolithic",
+   "note": "an open-air blade workshop among the oldest known; its glass reached Syria and Cyprus, up to 700 km off; Çatalhöyük, some 160 km away, knapped almost all its tools from Cappadocian obsidian; each flow's chemistry (XRF) names the volcano a blade came from",
+   "source": "https://en.wikipedia.org/wiki/G%C3%B6ll%C3%BC_Da%C4%9F"
+  },
+  {
+   "analogue": "Ganj Dareh goat herders",
+   "region": "Kermanshah, central Zagros, Iran, c. 8200 BCE",
+   "note": "the earliest evidence of goat domestication: almost no adult males in the bone, young males eaten and females kept to breed, a managed herd ten thousand years ago on a mountain",
+   "source": "https://en.wikipedia.org/wiki/Ganj_Dareh"
+  },
+  {
+   "analogue": "'Ain Ghazal and the lime-plaster Neolithic",
+   "region": "Jordan and the Levant, c. 7500–6000 BCE",
+   "note": "lime plaster on floors and walls, renewed every few years, and statues of plaster on reed cores; burnt lime was a floor binder long before it was mortar; a heavy fuel cost for a town at the steppe-forest edge that later shrank as its land degraded",
+   "source": "https://en.wikipedia.org/wiki/Ayn_Ghazal_(archaeological_site)"
+  },
+  {
+   "analogue": "Maya burnt lime",
+   "region": "Yucatán and the Puuc hills, c. 600–950 CE",
+   "note": "about five volumes of wood burnt for one of lime; stucco, mortar, plazas and nixtamal all needed it; stone-ringed pit kilns at Kiuic cut the fuel by a fifth, a conservation technique, and the ring is what survives",
+   "source": "https://edgeeffects.net/ancient-maya/"
+  },
+  {
+   "analogue": "Inca masonry (the walls only; the Andes are highland folk)",
+   "region": "Peru, 15th–16th century CE",
+   "note": "ashlar fitted without mortar by hammerstone alone, walls leaning inward, trapezoid doors; in an earthquake the blocks dance and settle back; the fine work was for temples, the rest fieldstone and adobe",
+   "source": "https://en.wikipedia.org/wiki/Inca_architecture"
+  },
+  {
+   "analogue": "Alpine transhumance and dry-stone walling",
+   "region": "the Alps and Pyrenees, from c. 3000 BCE",
+   "note": "herds driven to the high pastures every summer since the Neolithic; without the grazing most meadows below 2,000 m would be forest; the art of dry-stone walling was inscribed by UNESCO in 2018 (Switzerland, Spain, France and Italy among others)",
+   "source": "https://en.wikipedia.org/wiki/Transhumance_in_the_Alps"
+  },
+  {
+   "analogue": "Hebridean blackhouse",
+   "region": "Scottish Highlands and Islands, roofed into the 1970s",
+   "note": "double dry-stone walls packed with earth, a turf-and-straw thatch, no chimney, the fire in the middle and the animals at the far end under one roof",
+   "source": "https://en.wikipedia.org/wiki/Blackhouse"
+  },
+  {
+   "analogue": "Whakarewarewa (Tūhourangi Ngāti Wāhiao Māori)",
+   "region": "Rotorua, Aotearoa New Zealand, since c. 1325",
+   "note": "a village on geothermal ground for seven centuries: the hot pools and steam cook, bathe and heat the houses to this day",
+   "source": "https://en.wikipedia.org/wiki/Whakarewarewa"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/G%C3%B6ll%C3%BC_Da%C4%9F",
+  "https://www.sciencedirect.com/science/article/abs/pii/S0305440305002505",
+  "https://en.wikipedia.org/wiki/Obsidian",
+  "https://en.wikipedia.org/wiki/Ganj_Dareh",
+  "https://en.wikipedia.org/wiki/Lime_kiln",
+  "https://en.wikipedia.org/wiki/Ayn_Ghazal_(archaeological_site)",
+  "https://en.wikipedia.org/wiki/Dry_stone",
+  "https://en.wikipedia.org/wiki/Transhumance_in_the_Alps"
+ ]
+}

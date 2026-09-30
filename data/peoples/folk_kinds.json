@@ -1,0 +1,25 @@
+{
+ "_help": "Design 30 Sept §BO: the fantastical folk are dressings on a way of life, our own folklore, ALL friendly (the dark is the only antagonist). A people file's folk_kinds says which kinds tend to live that life. Silhouette notes are for the rig; the cloaked_figure rig is the base.",
+ "kinds": {
+  "human": {
+   "silhouette": "the folk rig as is",
+   "note": "the default everywhere"
+  },
+  "goblin": {
+   "silhouette": "short, long-armed, big ears under the hood; folk_scale 0.75",
+   "note": "already in the repo as the tribal folk; at home in marsh, karst and rock shelter"
+  },
+  "orc": {
+   "silhouette": "tall and broad, tusks, folk_scale 1.15",
+   "note": "friendly: the player braces and nothing happens. Steppe, mountain, savanna"
+  },
+  "fae": {
+   "silhouette": "slight, folk_scale 0.85, a faint light at the hood at night",
+   "note": "old growth, lake, tropical forest; kin to the bog wisp and the small folk in creatures.json"
+  },
+  "small_folk": {
+   "silhouette": "folk_scale 0.6, lantern-carrying",
+   "note": "creatures.json Parvulus lucernifer; hills, old growth"
+  }
+ }
+}

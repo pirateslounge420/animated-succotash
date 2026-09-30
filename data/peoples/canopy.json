@@ -1,0 +1,345 @@
+{
+ "id": "canopy",
+ "name": "Canopy folk",
+ "one_line": "They went up and never came down: platforms lashed in the crotches of the giants, vine bridges between them, and a fire that sits in a box of clay because the whole village is made of wood.",
+ "where": {
+  "site_rule": "canopy",
+  "biomes": [
+   "TEMPERATE_RAINFOREST",
+   "TROPICAL_RAINFOREST",
+   "JUNGLE",
+   "CLOUD_FOREST",
+   "TEMPERATE_DECIDUOUS"
+  ],
+  "needs": [
+   "an old-growth stand with three or more giants (stand.json giant) within 60 m: the trees are the village",
+   "no ladder is lowered for a stranger: the player climbs the trunk and the branch graph to the first platform (§AU); their own rope ladders come down once the headman has met you",
+   "water in the crown (bromeliad tanks, tree holes, rain off a bark gutter into a bamboo cup) and a stream at the foot for the rest"
+  ]
+ },
+ "fundamental": "forage",
+ "food": {
+  "staples": [
+   "fruit and nuts off the crown: fig, wild mango and durian, or hazel, chestnut, acorn and beech mast, by biome",
+   "honeycomb from the hollow-tree hives",
+   "birds' eggs from the nests the bridges pass",
+   "squirrel, bird and monkey by blowpipe and snare on the branch roads",
+   "tree-fern crozier, epiphyte shoots and sap boiled down in season"
+  ],
+  "how": [
+   "the crown read like a field: which tree fruits this month, which hollow hums, which nest is within reach",
+   "a vine loop round trunk and waist, footholds cut in the bark, the loop whipped up as you go",
+   "blowpipe and snare along the branches; the dart's poison milked from the upas tree",
+   "the hive smoked with a bundle of embers and a third of the comb left",
+   "no canopy garden is attested anywhere, so none here: the crown is foraged, and the only thing planted is the fig for a bridge"
+  ],
+  "preserve": [
+   "nuts and dried fruit in bark boxes hung from the rafters, out of the damp and the rats",
+   "meat and fish from the foot smoked on a rack over the hearth box",
+   "honey in a bamboo tube stoppered with leaf"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "branch",
+   "bamboo",
+   "palm_frond",
+   "brush"
+  ],
+  "note": "everything burned is carried up: dead branch and bark stripped from the giants themselves, bamboo and frond hauled from the foot in a net; no log ever comes up, too heavy for a rope and too long-burning for a box; the woodpile is a bundle hung under the eaves and it is always small, which is the whole of their restraint"
+ },
+ "shelter": {
+  "materials": [
+   "pole",
+   "bark",
+   "rattan and liana lashing",
+   "leaf thatch",
+   "clay for the hearth box"
+  ],
+  "form": "a platform lashed in the crotch of a giant 8–15 m up, four to ten props under it, a leaf roof and a floor of bark or split bamboo; one family to a tree; the trees joined by vine bridges so the village is a web with no ground floor"
+ },
+ "light": [
+  "dammar_torch"
+ ],
+ "dressing": {
+  "by_biome": {
+   "TEMPERATE_RAINFOREST": {
+    "fuel": "dead hemlock and cedar branch off the giants, brush hauled up in a net; fir pitch stands in for dammar",
+    "food": "hazelnut, salal and huckleberry off the crown edge; eggs; squirrel and grouse; salmon carried up from the foot in season",
+    "shelter": "cedar-bark shingles on a plank floor, moss stuffed in the lashings against the wet",
+    "palette": "cedar red, moss green, fog, lichen grey"
+   },
+   "TROPICAL_RAINFOREST": {
+    "fuel": "dead branch, palm frond, dry bamboo from the foot",
+    "food": "figs, wild mango and brazil nut off the crown; honey; monkey and toucan by blowpipe; bromeliad water",
+    "shelter": "a platform on a strangler-fig buttress, palm thatch, split-bamboo floor",
+    "palette": "buttress grey, fig green, bromeliad red, honey gold"
+   },
+   "JUNGLE": {
+    "fuel": "bamboo above all, hauled up and split; frond in the wet",
+    "food": "durian, rambutan and wild mango in season; squirrel and hornbill by blowpipe; sago pith carried up from the foot",
+    "shelter": "bamboo floor and walls, rattan lashing, leaf thatch, the Papuan way",
+    "palette": "bamboo yellow, rattan brown, monsoon grey, hornbill black and white"
+   },
+   "CLOUD_FOREST": {
+    "fuel": "damp branch dried in a net over the hearth box; bamboo",
+    "food": "wild avocado and the laurels' fruit, tree-fern crozier, eggs; water from every bromeliad tank and tree hole",
+    "shelter": "a low walled platform against the cold, moss-chinked, the hearth box inside",
+    "palette": "moss green, mist white, orchid pink, bromeliad red"
+   },
+   "TEMPERATE_DECIDUOUS": {
+    "fuel": "dead oak and beech branch, brush; a winter's bundles hung under every eave",
+    "food": "acorn, beech mast, chestnut and hazel off the crown; maple sap boiled down in spring; squirrel, pigeon and dormouse; the hive in the hollow oak",
+    "shelter": "oak-bark shingles on a walled platform against the winter; the bridges sag under snow and are re-lashed each spring",
+    "palette": "oak brown, bare-branch grey, mast gold, snow"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "canopy_harvest",
+  "plantkeeper": {
+   "knows": [
+    "which fig ripens which month, and that the fig is the crown's bread",
+    "bromeliad tanks and tree holes as cups: which are sweet and which are frog soup",
+    "the hive tree by its hum and by the bees at the hole",
+    "strangler fig from rubber fig: the one you climb and the one you train",
+    "the upas tree's milk for the dart, and the tree-fern crozier that feeds"
+   ],
+   "teaches_flavour": "why the crown is a field with no ground: fruit that never falls ripe, eggs, honey, a squirrel's cache; why the midden tree at the foot grows the fattest figs",
+   "teaches_practical": "tip the frogs out and drink the bromeliad tank; never take the whole clutch; smoke the hive and leave a third; the upas milk is for the dart, never the wound; a hearth box that has cracked is a burning village"
+  },
+  "maker": {
+   "craft": "bridge-weaver",
+   "works": [
+    "vine and liana",
+    "rattan",
+    "bast fibre (fig, lime, cedar)",
+    "bamboo"
+   ],
+   "makes": [
+    "vine bridges",
+    "rope ladders",
+    "climbing loops and belts",
+    "nets and baskets"
+   ],
+   "wants_from_player": [
+    "pitch and resin to seal a lashing",
+    "an obsidian or bog-iron blade",
+    "salt"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "canopy_harvest",
+   "name": "Reading the crown",
+   "verb": "loop a vine round the trunk and your waist, cut footholds, whip the loop up as you climb; in the crown read the tree: which branch fruits, which hollow hums, which nest is within reach, which bromeliad tank is sweet; take part and come down slow",
+   "teaches": "the headman's first lesson because it is what the climb is for: forage lifted off the floor into a field that never empties if you take part; Efe men climb twenty metres for honey on an ordinary day, and one Baka man in fifteen dies of the fall, so slow is the rule and the bridges only matter once you have a reason to be up there",
+   "unlocks": "the player harvests fruit, eggs, comb and water in the crown of any giant tree; a giant reads as a larder",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "vine_bridge",
+   "name": "Vine bridge",
+   "verb": "twist liana or hardy-kiwi vine into cables as thick as an arm, anchor them round two trunks, hang a floor of cross-poles and walk it in; rebuild it every third year, before it rots",
+   "teaches": "a bridge that is a rope, not a beam: the whole village hangs between the trees on something that must be remade, so the remaking is the village's calendar; the Iya folk rebuild theirs every three years and the Q'eswachaka is rewoven every June, and the year it was not, it fell",
+   "unlocks": "the player crosses their bridges; taught, lashes a short one between two close trees (a gap, not a gorge)",
+   "player_can": true,
+   "category": "travel"
+  },
+  {
+   "id": "rope_ladder",
+   "name": "Rope ladder",
+   "verb": "two bast ropes, bamboo rungs lashed a forearm apart, coiled at the platform lip and let down; hauled up at dusk",
+   "teaches": "the village's door: down for their own, up for the dark and for strangers; a notched pole hung under a Papuan tree house shakes with every step and tells the house someone is coming",
+   "unlocks": "once the headman has met you their ladders come down for you; the player can hang one from a platform or a thick branch",
+   "player_can": true,
+   "category": "travel"
+  },
+  {
+   "id": "root_bridge",
+   "name": "Living root bridge",
+   "verb": "plant a rubber fig on each bank, lead its aerial roots across a hollowed palm trunk or a bamboo, twist them, tie them, wait: fifteen to thirty years before it bears a person, and it grows stronger every year after",
+   "teaches": "the ultimate harmony technique: the one bridge that gets stronger as it ages and that nobody has to rebuild — a village planting a crossing its grandchildren will walk; the Khasi ones hold fifty people and are thought to last centuries",
+   "unlocks": "the camp's crossing that never rots; the ruin's one signature that grows",
+   "player_can": false,
+   "category": "travel"
+  },
+  {
+   "id": "tree_platform",
+   "name": "Tree platform",
+   "verb": "pick a giant with a crotch 8–15 m up, lash a frame of poles into it with rattan, prop it from below with four to ten poles, floor it with bark or split bamboo, roof it with leaf",
+   "teaches": "a house with no ground: above the mosquitoes, the flood and the things that walk at night; it rots in a decade and is lashed again on the same scars, so the tree is the house and the platform is only its coat",
+   "unlocks": "the camp's shelter: one family per giant, the village the size of the stand",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "hearth_box",
+   "name": "Hearth box",
+   "verb": "a box of poles floored with a hand of clay and a bed of sand, set on the platform; the fire lives in it and never touches the floor; if the clay cracks, the folk cut the box loose and let it fall",
+   "teaches": "fire on wood is the whole tension of living up here: a spilt hearth is not a lost hut but a burning village and a burning tree, so the fire is kept small, watched and boxed — restraint made furniture",
+   "unlocks": "the player lays a fire on a platform, a bridge-head or a big branch without burning it; the ember comes up in a bark bundle",
+   "player_can": true,
+   "category": "fire"
+  },
+  {
+   "id": "dammar_torch",
+   "name": "Dammar torch",
+   "verb": "knock the hardened resin off the bark where a dipterocarp has bled, pound it and pack it into a leaf or bark tube or a split bamboo, light it at the hearth box",
+   "teaches": "the forest's own candle: slow, bright, sweet-smoking, and it drips less than pitch; hung at the bridge-head it lets a crossing be made after dark",
+   "unlocks": "the dammar torch: a slow bright hand light in the wet forests; fir pitch is the temperate stand-in",
+   "player_can": true,
+   "category": "light"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "vine and rattan cable, rope ladders",
+   "honey and dried fruit",
+   "dammar resin and feathers",
+   "bast fibre and nets"
+  ],
+  "wants": [
+   "pitch and resin from the collier",
+   "an obsidian or bog-iron blade",
+   "salt",
+   "clay for the hearth box"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire in a box on the first platform; the ember carried up in bark",
+   "the crown read: fruit, eggs, comb — forage, but lifted",
+   "bark boxes of nuts and dried fruit under the eaves, honey in bamboo: storage",
+   "the bridge-weaver: the first who does not climb for food",
+   "cable, ladders and honey go down the ladder; salt, blades and pitch come up"
+  ],
+  "restraint": "the woodpile is a bundle and the fire is a box, and both stay small because a village made of wood cannot afford otherwise; eggs by the one, never the clutch; the hive smoked and a third left; the strangler fig climbed, never felled; a bridge rebuilt every third year so no gap grows wider than a vine can be twisted; the root bridge planted for the grandchildren",
+  "ceiling_hint": "one family per giant: three giants are a hamlet, ten are the tribal ceiling; their ladders stay up for a stranger and come down once the headman has met you; a tropical crown with figs and hives grows fastest, an oak crown feeds a winter on mast, a cloud forest stays a few platforms in the mist"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "lashing_scars",
+    "what": "a ring of giants with old lashing scars girdling the trunks at a height, and footholds cut or worn into the bark up to the first crotch; nothing on the ground at all",
+    "legible": "heap",
+    "restore": "cleared: a new platform lashed on the old scars, the footholds re-cut",
+    "inherits": "the giants are chosen: the first platform goes up in days, not seasons"
+   },
+   {
+    "id": "fallen_cable",
+    "what": "a rotted vine line lying across a gap, bridge-poles in the litter under it, half of it still hanging from one trunk",
+    "legible": "cleared",
+    "restore": "restored: a new bridge on the old anchor trees",
+    "inherits": "the anchors and the line of the bridge"
+   },
+   {
+    "id": "living_root_bridge",
+    "what": "a living root bridge across the stream at the foot, thicker and stronger than the day its makers died: the one thing here that grew after them",
+    "legible": "restored",
+    "restore": "restored as it stands: it never needed restoring; the camp keeps it clear of strangler and rot",
+    "inherits": "a crossing from day one, and a village that reads as old"
+   },
+   {
+    "id": "crown_midden",
+    "what": "a mound of nutshell, eggshell, bone and old comb at the foot of the biggest tree, dropped from above for a century; figs and fruit trees thick on it",
+    "legible": "heap",
+    "restore": "cleared: the new camp's midden falls on the old one",
+    "inherits": "the midden's fruit trees, and the proof the crown fed people"
+   },
+   {
+    "id": "climbing_posts",
+    "what": "notched poles rotting against the trunks and a hung trunk-ladder gone to punk; the notches read as a way up",
+    "legible": "cleared",
+    "restore": "restored: new notched poles hung on the old pegs",
+    "inherits": "the way up for folk who cannot climb bark"
+   }
+  ],
+  "plants_differ": "figs and fruit trees thick on the midden at the foot of the biggest tree, where the wild stand would be mixed; rubber figs along the stream with their roots knotted across it; epiphytes stripped thin on the village trees and heavy on the trees around; nothing else, because a canopy village leaves the ground alone"
+ },
+ "aesthetic": {
+  "silhouette": "platforms in the crotches of giants under leaf roofs, bridges sagging between them, ladders coiled at the lip; smoke leaking from a box; nothing on the ground but a midden",
+  "palette": [
+   "bark grey",
+   "rattan brown",
+   "fig green",
+   "honey gold",
+   "smoke through leaves"
+  ],
+  "sounds": [
+   "a bridge creaking",
+   "birds close, not distant",
+   "the slap of a vine loop on a trunk",
+   "nutshell dropping through leaves"
+  ],
+  "props": [
+   "the hearth box",
+   "a coiled rope ladder",
+   "a vine bridge",
+   "bark boxes hung under the eaves",
+   "a blowpipe and quiver",
+   "a notched climbing pole"
+  ]
+ },
+ "folk_kinds": [
+  "fae",
+  "small_folk",
+  "human"
+ ],
+ "real_world": [
+  {
+   "analogue": "Korowai and Kombai tree houses",
+   "region": "southern lowlands of Papua, Indonesia — living peoples, about 4,000 Korowai and 5,600 Kombai",
+   "note": "a family house sits about 8–12 m up (the Kombai guoro 3–15 m) in a banyan or on a tree pruned to a central post, four to ten props, sago-bark floor and walls, leaf roof, rattan lashing, a fireplace to each room; a notched dry trunk hung from the house is the ladder, and it shakes to announce a visitor; sago and bananas the staple, one sago palm a week per household. The 35 m house in the BBC's Human Planet (2011) was commissioned for the film crew, as the BBC admitted in 2018: houses of 40–50 m are for cameras and tourists, not daily life",
+   "source": "https://www.papuaerfgoed.org/en/theme/life-korowai-tree-house"
+  },
+  {
+   "analogue": "Khasi and Jaintia living root bridges (jingkieng jri)",
+   "region": "Meghalaya, north-east India — living peoples",
+   "note": "aerial roots of the rubber fig (Ficus elastica) led across a stream on hollowed areca trunks or bamboo and knotted; usable after ten to twenty-five years by different accounts, holding fifty people when mature and thought to last centuries; the Umshiang double-decker at Nongriat; about 75 geo-located in 2017; on UNESCO's tentative list since 2022; the Khasi also grow ladders and platforms of root",
+   "source": "https://en.wikipedia.org/wiki/Living_root_bridge"
+  },
+  {
+   "analogue": "Iya-no-Kazurabashi",
+   "region": "Iya valley, Tokushima, Japan",
+   "note": "45 m long and 14 m above the river, five to six tonnes of hardy-kiwi vine (Actinidia arguta, shirakuchi-kazura — not wisteria), rebuilt every three years; legend has the Heike refugees building it to be cut behind them; a national Important Tangible Folk Cultural Property, with steel cable hidden in the vine today",
+   "source": "https://miyoshi-tourism.jp/en/spot/46/"
+  },
+  {
+   "analogue": "Q'eswachaka",
+   "region": "Apurímac river, Cusco, Peru — living Quechua communities",
+   "note": "the last Inca grass-rope bridge, about 28 m: four communities twist ichu grass family by family into cables and reweave the whole bridge in three days each June, on UNESCO's intangible heritage list since 2013; when the pandemic stopped the renewal in 2021 it fell, and was rebuilt — a bridge that is a rope is a bridge only as long as it is remade",
+   "source": "https://ich.unesco.org/en/RL/knowledge-skills-and-rituals-related-to-the-annual-renewal-of-the-qeswachaka-bridge-00594"
+  },
+  {
+   "analogue": "Forest foragers who climb: Aka, Mbuti, Efe, Baka, Batek",
+   "region": "Congo basin and peninsular Malaysia — living peoples",
+   "note": "a vine looped round trunk and waist, footholds cut with an axe, the loop whipped up as they climb; the Batek build rattan 'vine ladders' at 45° to bridge canopy gaps and climb 50 m trees daily; Efe men climb 19 m on average for honey and up to 52 m; the Baka smoke the hive and leave three strips of comb 'so the bees can come back'; in one study 6.6% of Baka men's deaths were climbing falls",
+   "source": "https://www.sciencedirect.com/science/article/abs/pii/S0047248414000323"
+  },
+  {
+   "analogue": "Dammar torches",
+   "region": "Malaysia, Sumatra and Borneo",
+   "note": "dammar, the resin that dipterocarps (Shorea, Hopea, Vatica) bleed and harden on the bark, was gathered from natural exudations as 'damar laut' and used locally for torches; Malaysia's forestry department still lists the resin torch as the traditional use of balau resin",
+   "source": "https://prosea.prota4u.org/view.aspx?id=3828"
+  },
+  {
+   "analogue": "Penan",
+   "region": "Sarawak, Borneo — living people, 10–12,000",
+   "note": "hunter-gatherers famous for the silent blowpipe and poison dart; wild pig prized, deer, smaller game and fish; wild sago pith the staple, trampled and sun-dried; ferns and fruit gathered; most now settled but living from the forest",
+   "source": "https://www.survivalinternational.org/peoples/penan"
+  }
+ ],
+ "sources": [
+  "https://www.papuaerfgoed.org/en/theme/life-korowai-tree-house",
+  "https://en.wikipedia.org/wiki/Korowai_people",
+  "https://en.wikipedia.org/wiki/Living_root_bridge",
+  "https://www.worldheritagesite.org/tentative/jingkieng-jri-living-root-bridge/",
+  "https://www.pref.tokushima.lg.jp/en/japanese/tourism/spot/kazurabashi",
+  "https://ich.unesco.org/en/RL/knowledge-skills-and-rituals-related-to-the-annual-renewal-of-the-qeswachaka-bridge-00594",
+  "https://www.sciencedirect.com/science/article/abs/pii/S0047248414000323",
+  "https://www.forestpeoples.org/publications-resources/news/article/cameroons-baka-people-and-the-art-of-listening-for-honey-bees/"
+ ]
+}

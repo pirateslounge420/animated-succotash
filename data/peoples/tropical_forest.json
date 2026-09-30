@@ -1,0 +1,319 @@
+{
+ "id": "tropical_forest",
+ "name": "Rainforest folk",
+ "one_line": "The rain washes the soil out in a few seasons, so they farmed by moving: burn a patch, plant in the ash, walk away and let the forest close — and the forest itself is their ruin.",
+ "where": {
+  "site_rule": "by_biome",
+  "biomes": [
+   "TROPICAL_RAINFOREST",
+   "JUNGLE",
+   "CLOUD_FOREST",
+   "TROPICAL_DRY_FOREST"
+  ],
+  "needs": [
+   "a stream or river within 300 m (drink, fish, the canoe landing), and ground above its flood line for the garden and the posts"
+  ]
+ },
+ "fundamental": "crop",
+ "food": {
+  "staples": [
+   "manioc (bitter and sweet), taro and yam from the swidden",
+   "palm fruit (moriche, açaí) and brazil nut from the grove",
+   "river fish",
+   "honey in season"
+  ],
+  "how": [
+   "swidden garden: burn, plant, three years, walk away",
+   "digging stick for tubers and cuttings",
+   "fish speared in the shallows, or a vine-poison pool",
+   "a wild hive smoked and cut; the grove gathered on the way past"
+  ],
+  "preserve": [
+   "manioc grated, squeezed and toasted to a flour that keeps for months",
+   "fish and game smoked on a rack over the hearth; honey in a gourd, nuts in the shell"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "palm_frond",
+   "bamboo",
+   "branch",
+   "hardwood_log"
+  ],
+  "note": "wet wood barely burns: fronds and dead bamboo for the flame, wood dried on a rack over the hearth, candlenuts for light; the fire lives under the roof and is never let go out; only the dry forest has dead wood everywhere (branch, log, brush), and only half the year"
+ },
+ "shelter": {
+  "materials": [
+   "hardwood posts",
+   "palm thatch",
+   "bamboo",
+   "bark and liana lashing"
+  ],
+  "form": "the longhouse: one roof for several families on hardwood posts, palm thatch to the ground, a hearth and hammocks to each family; a raised floor where it floods; the house is rebuilt every generation and the site is not"
+ },
+ "light": [
+  "candlenut"
+ ],
+ "dressing": {
+  "by_biome": {
+   "TROPICAL_RAINFOREST": {
+    "fuel": "palm frond, dead bamboo along the river, wood dried over the fire",
+    "food": "manioc and taro in the swidden; brazil nut, moriche and açaí; river fish",
+    "shelter": "the longhouse: hardwood posts, palm thatch to the ground",
+    "palette": "black earth, wet green, thatch gold, annatto red"
+   },
+   "JUNGLE": {
+    "fuel": "bamboo above all; branch in the dry months",
+    "food": "hill rice and taro in the swidden, yam, banana; bamboo shoots",
+    "shelter": "bamboo walls and floor on stilts, grass or palm thatch",
+    "palette": "bamboo yellow-green, teak brown, monsoon grey"
+   },
+   "CLOUD_FOREST": {
+    "fuel": "bamboo thicket and branch, all of it damp; a drying rack over every hearth",
+    "food": "taro, highland banana and enset; the swidden closes slowly in the cold and the fallow is long",
+    "shelter": "a low house on the ground, bamboo and mud walls against the cold, the hearth inside, thatch to the eaves",
+    "palette": "moss green, mist white, grey bark, orchid pink"
+   },
+   "TROPICAL_DRY_FOREST": {
+    "fuel": "branch and hardwood log: dead wood everywhere in the dry season; brush",
+    "food": "maize, beans and squash sown in the burn; manioc where it stays damp; fruit with the rains",
+    "shelter": "pole and thatch, wattle walls plastered with mud, a shade roof for the dry half of the year",
+    "palette": "dry gold, ash grey, peeling red bark, a green flush at the rains"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "swidden",
+  "plantkeeper": {
+   "knows": [
+    "manioc: bitter from sweet, and the press",
+    "taro and giant taro (the corm cooked, never raw)",
+    "moriche and açaí palm fruit; brazil nut",
+    "annatto for paint and against insects",
+    "the fish-poison vine"
+   ],
+   "teaches_flavour": "why the nut grove stands where it does; why the black earth grows taller trees; why the swidden is left to close",
+   "teaches_practical": "bitter manioc kills raw: grate it, squeeze it in the woven press, toast the meal; the sweet kind boils; crush the poison vine in a still pool and the fish float up"
+  },
+  "maker": {
+   "craft": "potter",
+   "works": [
+    "clay",
+    "burnt bark for temper",
+    "resin"
+   ],
+   "makes": [
+    "pot and urn",
+    "griddle for the manioc meal",
+    "the sherds the black earth is made of"
+   ],
+   "wants_from_player": [
+    "clay",
+    "resin",
+    "dry bamboo for the firing"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "swidden",
+   "name": "Swidden",
+   "verb": "cut a garden-sized patch as the rains end, let it dry, burn it, plant manioc cuttings and taro in the ash; three years, then walk away and let the forest close; come back in thirty",
+   "teaches": "the forest's crop and the restraint rule in one lesson: done small it is the most sustainable farming there is, done big it kills the forest — which is why the headman teaches this one first, before the grove",
+   "unlocks": "the camp's crop ceiling; a swidden left to close comes back as forest, not scrub",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "terra_preta",
+   "name": "Black earth",
+   "verb": "hearth charcoal, bone and fish waste, broken pots, all raked into the garden and the midden for generations",
+   "teaches": "a soil that keeps itself: the one thing these folk left that grows better than the land around it, two thousand years on",
+   "unlocks": "a garden that never needs to move; the ruin's black earth",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "forest_garden",
+   "name": "Forest garden",
+   "verb": "plant the useful trees where you camp — nut, palm, fruit — and tend them on the way past",
+   "teaches": "the forest remembers where people lived: a grove of the useful kind marks an old village long after the posts are gone",
+   "unlocks": "groves cluster on old sites; the player can read a grove as a ruin",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "digging_stick",
+   "name": "Digging stick",
+   "verb": "a fire-hardened stick: dig tubers, plant cuttings",
+   "teaches": "manioc grows from a stick of stem pushed into the ash and taro from the top of the last one: the crop that is its own seed",
+   "unlocks": "the player plants and digs; a cutting in the store gets planted by a folk within days",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "candlenut",
+   "name": "Candlenuts",
+   "verb": "string oil-rich nuts on a palm-leaf rib, light the top one; they burn down one after another",
+   "teaches": "a short bright light where wet wood will not burn, and a clock: about a quarter of an hour a nut",
+   "unlocks": "a hand light for the tropics; set in a split stick it is a lamp",
+   "player_can": true,
+   "category": "light"
+  },
+  {
+   "id": "honey",
+   "name": "Honey",
+   "verb": "smoke the wild hive with a smouldering bundle, cut the comb out, leave the brood",
+   "teaches": "the sweetest thing in the world, and the forest's gift to the exchange road",
+   "unlocks": "honey in the store: exchange",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "managed_burn",
+   "name": "The burn",
+   "verb": "in the dry forest, burn the fallow and the dry grass before the rains, a break cut round it first",
+   "teaches": "here the burn is the swidden's season, not a separate craft; lit late in the dry it runs, and the camp walks",
+   "unlocks": "the dry-forest crop; wildfire.json rules",
+   "player_can": false,
+   "category": "food"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "manioc flour",
+   "pots and griddles",
+   "honey",
+   "annatto"
+  ],
+  "wants": [
+   "salt",
+   "stone for an axe head",
+   "dried fish"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire under the roof (wet wood: it is never let go out)",
+   "the swidden: manioc and taro in the ash — the crop",
+   "flour toasted dry, fish smoked, honey in gourds: storage",
+   "the potter",
+   "flour, pots and honey go downriver; salt and stone come up"
+  ],
+  "restraint": "a garden-sized patch, never a field; three years and walk away, thirty to let the forest close; the black earth is how a village stays put — feed the soil instead of clearing more; the dry-forest burn only in season, the break cut first",
+  "ceiling_hint": "black earth on a river reaches the tribal ceiling (the ring villages and mound towns of the analogues); a poor-soil interfluve stays one longhouse; the cloud forest stays small, the swidden closes slowly in the cold"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "black_earth",
+    "what": "a patch of black soil under the litter where the rest of the forest is red or yellow; taller trees and more of the useful kind on it; charcoal and sherds all through it",
+    "legible": "cleared",
+    "restore": "restored: the camp's garden goes on the black earth and never has to move",
+    "inherits": "soil that stays rich: the crop ceiling without the fallow"
+   },
+   {
+    "id": "useful_grove",
+    "what": "brazil nut, peach palm, açaí and moriche in a stand where the wild forest would be a hundred kinds mixed: a village's orchard, planted and outliving the village",
+    "legible": "heap",
+    "restore": "cleared: the understory cut back and the grove reads as an orchard",
+    "inherits": "fruit and nuts from the first season"
+   },
+   {
+    "id": "post_mound",
+    "what": "an oval of low humps where the longhouse posts rotted, a hearth hollow in the middle, the ground blackest inside the ring",
+    "legible": "cleared",
+    "restore": "restored: new posts in the old holes",
+    "inherits": "a level dry floor on the deepest black earth"
+   },
+   {
+    "id": "canoe_landing",
+    "what": "a cut in the bank trodden to a ramp, a dugout rotted to a trough in the mud",
+    "legible": "heap",
+    "restore": "cleared: the ramp re-cut, a new dugout beached on it",
+    "inherits": "the fishing place and the river path"
+   },
+   {
+    "id": "pot_sherds",
+    "what": "broken pots through the black earth, far more than a camp breaks by accident: the potter's waste, worked in on purpose; red and white paint gone to pink",
+    "legible": "cleared",
+    "restore": "restored: the potter finds the old clay pit and the new sherds go into the same ground",
+    "inherits": "the clay pit is dug: the potter comes sooner"
+   }
+  ],
+  "plants_differ": "a grove of the useful kind (nut, palm, fruit) where the wild forest is mixed; taller, faster growth on the black earth; papaya, chili and cotton gone wild at the old clearing's edge"
+ },
+ "aesthetic": {
+  "silhouette": "one long roof to the ground in a clearing of burnt stumps, smoke leaking through the thatch; tall nut trees standing over it",
+  "palette": [
+   "black earth",
+   "thatch gold",
+   "wet green",
+   "annatto red"
+  ],
+  "sounds": [
+   "rain on thatch",
+   "frogs at dusk",
+   "the rasp of the grater, the press dripping"
+  ],
+  "props": [
+   "the manioc press hanging from a post",
+   "a griddle on three stones",
+   "a dugout at the landing",
+   "a rack of fuel drying over the hearth"
+  ]
+ },
+ "folk_kinds": [
+  "human",
+  "fae",
+  "goblin"
+ ],
+ "real_world": [
+  {
+   "analogue": "Kuikuro and the upper Xingu peoples",
+   "region": "upper Xingu, Mato Grosso, Brazil — living peoples on village sites hundreds to thousands of years old",
+   "note": "still make dark earth (eegepe) on purpose: middens of food waste and ash near the village centre, ash and charcoal spread on fields and round the base of trees; the ancient dark earth under their sites is enriched in the same carbon and phosphorus. Across Amazonia such earth was made c. 450 BCE–950 CE from charcoal, bone, broken pottery and compost, lies up to 2 m deep, holds seventy times the carbon of the soil around it and is still fertile. Bitter manioc is the staple, grated, squeezed and toasted",
+   "source": "https://eaps.mit.edu/news-impact/ancient-amazonians-intentionally-created-fertile-dark-earth/"
+  },
+  {
+   "analogue": "Marajoara culture",
+   "region": "Marajó island, mouth of the Amazon, c. 800–1400 CE",
+   "note": "earth mounds (tesos) filled with refuse to stand above the flood, malocas in concentric ovals, polychrome funerary urns; açaí and fish taken with poison lianas; perhaps 100,000 people",
+   "source": "https://en.wikipedia.org/wiki/Marajoara_culture"
+  },
+  {
+   "analogue": "Kayapó (Mebêngôkre)",
+   "region": "southeastern Amazonia, Brazil — living people",
+   "note": "shifting cultivation: sweet potato four to five years, yam and taro five to six, manioc four to six; some 250 food plants and 650 medicinal; forest islands (apêtê) planted in the savanna and shielded with cool fires — how many were made from nothing is debated; women manage most of the fire",
+   "source": "https://en.wikipedia.org/wiki/Kayapo"
+  },
+  {
+   "analogue": "Kuk Swamp",
+   "region": "Wahgi valley, Papua New Guinea highlands",
+   "note": "taro planted about 9,000 years ago in drained swamp, banana and sugarcane by 6,900–6,400 years ago; wooden digging sticks found; UNESCO 2008 — a crop in the highlands, one of the places farming began on its own",
+   "source": "https://en.wikipedia.org/wiki/Kuk_Swamp"
+  },
+  {
+   "analogue": "Maya milpa",
+   "region": "Yucatán and Mesoamerica — living practice",
+   "note": "the dry-forest swidden: two years of maize, beans and squash (and a dozen more), eight years fallow; called one of the most successful human inventions ever",
+   "source": "https://en.wikipedia.org/wiki/Milpa"
+  },
+  {
+   "analogue": "Mbuti of the Ituri",
+   "region": "Ituri forest, Congo basin — living people",
+   "note": "forest foragers: wild honey in season, net hunting, leaf-and-sapling huts lashed with vine; meat and forest goods exchanged with farming villagers for pots, iron and crops",
+   "source": "https://en.wikipedia.org/wiki/Mbuti_people"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Terra_preta",
+  "https://eaps.mit.edu/news-impact/ancient-amazonians-intentionally-created-fertile-dark-earth/",
+  "https://en.wikipedia.org/wiki/Shifting_cultivation",
+  "https://en.wikipedia.org/wiki/Cassava",
+  "https://en.wikipedia.org/wiki/Kuk_Swamp",
+  "https://en.wikipedia.org/wiki/Aleurites_moluccanus",
+  "https://www.scientificamerican.com/article/amazon-rainforest-was-shaped-by-an-ancient-hunger-for-fruits-and-nuts/",
+  "https://www.nationalgeographic.com/science/article/160303-thailand-farmers-slash-and-burn-forests-climate-environment"
+ ]
+}

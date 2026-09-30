@@ -1,0 +1,350 @@
+{
+ "id": "river",
+ "name": "River folk",
+ "one_line": "The flood does the farming: every year the river rises, spreads over the flats and leaves fresh silt, and the bank gives the clay for the pot that keeps the surplus.",
+ "where": {
+  "site_rule": "river",
+  "biomes": [
+   "FLOODPLAIN_FOREST",
+   "TEMPERATE_DECIDUOUS",
+   "TALLGRASS_PRAIRIE",
+   "STEPPE",
+   "SAVANNA",
+   "TROPICAL_DRY_FOREST",
+   "HOT_DESERT"
+  ],
+  "needs": [
+   "a river reach of order 2 or more within 200 m",
+   "a flat the flood reaches (or a bank steep enough to terrace), and clay in the bank"
+  ]
+ },
+ "fundamental": "crop",
+ "food": {
+  "staples": [
+   "the flood crop: grain or tubers on the silt",
+   "fish from the weir",
+   "waterfowl and eggs from the backwaters",
+   "nuts and fruit of the bank trees, mussels from the shallows"
+  ],
+  "how": [
+   "plant the flats as the flood goes down",
+   "a weir of stone or stakes across the reach, pointed upstream",
+   "a channel from the river to the far plot",
+   "terraces where the bank is steep"
+  ],
+  "preserve": [
+   "grain in lidded clay jars, sealed with resin",
+   "storage pits lined with clay above the flood line",
+   "fish and tubers dried on racks"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "branch",
+   "hardwood_log",
+   "brush",
+   "reeds"
+  ],
+  "note": "coppice poles and the bank's broadleaf wood feed the hearth; brush burns hot and fast and is what the kiln wants; the prairie and steppe river add grass_bundle, the desert river cactus_rib"
+ },
+ "shelter": {
+  "materials": [
+   "coppice pole",
+   "withy",
+   "daub (clay and straw)",
+   "reed thatch"
+  ],
+  "form": "wattle-and-daub huts on the terrace above the flood line, storage jars under a thatch lean-to, the kiln downwind at the edge"
+ },
+ "light": [
+  "clay_lamp"
+ ],
+ "dressing": {
+  "by_biome": {
+   "FLOODPLAIN_FOREST": {
+    "fuel": "cottonwood and willow branch, coppice poles",
+    "food": "the flood crop on the silt, catfish from the weir, pecan and mulberry",
+    "shelter": "wattle and daub on the natural levee above the flood",
+    "palette": "silt brown, cottonwood green, cypress rust"
+   },
+   "TEMPERATE_DECIDUOUS": {
+    "fuel": "hazel coppice, ash and oak logs",
+    "food": "grain on the flats, trout and eel at the weir, hazelnuts",
+    "shelter": "wattle-and-daub roundhouses under thatch",
+    "palette": "hazel green, thatch gold, red clay"
+   },
+   "TALLGRASS_PRAIRIE": {
+    "fuel": "cottonwood branch from the gallery wood, grass bundles",
+    "food": "maize, beans and squash on the bottoms, catfish",
+    "shelter": "earth lodge of poles and sod on the bluff",
+    "palette": "bluestem gold, muddy water, black bottom soil"
+   },
+   "STEPPE": {
+    "fuel": "elm and willow of the ravine, reeds, grass bundles",
+    "food": "millet on the river flat, pike and carp, waterfowl",
+    "shelter": "pit house dug into the terrace, roofed with poles and earth",
+    "palette": "feather-grass silver, loess yellow, reed"
+   },
+   "SAVANNA": {
+    "fuel": "acacia branch and brush, reeds",
+    "food": "sorghum and millet on the flood flat, catfish and tilapia, fig",
+    "shelter": "mud-and-thatch huts on the levee, granary jars up on stones",
+    "palette": "red laterite, sorghum bronze, one green river line"
+   },
+   "TROPICAL_DRY_FOREST": {
+    "fuel": "brush and branch from the dry wood",
+    "food": "maize and squash on the flood flat, river fish, dry-season fruit",
+    "shelter": "pole-and-daub huts, palm thatch",
+    "palette": "dust, red peeling bark, the river's green ribbon"
+   },
+   "HOT_DESERT": {
+    "fuel": "mesquite and tamarisk brush, cactus rib",
+    "food": "the flood crop is everything: grain and beans on the silt, date and fig on the bank, fish from the weir",
+    "shelter": "mud brick on the bank, flat roofs, a channel to the plots",
+    "palette": "mud-brick tan, green ribbon, bleached sky"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "digging_stick",
+  "plantkeeper": {
+   "knows": [
+    "cattail and arrowhead: root flour, spring shoots, tinder fluff",
+    "willow bark against pain and fever",
+    "nettle on the old middens: fibre and soup",
+    "water hemlock by the bank, which kills"
+   ],
+   "teaches_flavour": "why nettles stand tall where the old camp was; why the silt flat grows taller than the wood behind it",
+   "teaches_practical": "cattail root and shoots in the hungry spring; willow bark chewed for fever; the parsnip-looking thing by the water is hemlock"
+  },
+  "maker": {
+   "craft": "potter",
+   "works": [
+    "clay",
+    "sand and shell grit (temper)",
+    "resin"
+   ],
+   "makes": [
+    "pot and lidded storage jar",
+    "saucer lamp",
+    "the kiln itself"
+   ],
+   "wants_from_player": [
+    "brush and dry branch for the kiln",
+    "resin to seal the jars",
+    "shell for temper"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "digging_stick",
+   "name": "Digging stick",
+   "verb": "a fire-hardened stick: dig tubers, plant tubers and seed, cut a channel",
+   "teaches": "the first farming tool and the last one anyone needs; the flood is the river's work and the stick is the folk's, which is why the headman gives you this and not the crop: it is the one river verb you can carry anywhere",
+   "unlocks": "the player plants seeds, tubers and cuttings, digs tubers, and cuts a channel from a stream to a plot (a plot near water or a channel counts as watered: a rule, not physics)",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "flood_crop",
+   "name": "Flood-plain crop",
+   "verb": "plant on the silt as the flood goes down",
+   "teaches": "they did not invent farming so much as notice it: seeds dropped by the water came back; every year the river rises, spreads over the flats and leaves fresh silt, fertiliser delivered, so the plot is never worn out",
+   "unlocks": "the camp's crop ceiling on any flat the flood reaches; the river's food rung",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "clay_pot",
+   "name": "Pottery",
+   "verb": "dig riverbank clay, temper it with sand or shell, coil a pot, fire it in a domed kiln of clay and brush",
+   "teaches": "the river's second gift: a bank is a pit of clay, the clay gives the pot, the pot keeps the surplus dry through the flood; storage is the hinge of the ladder, and the kiln hump is what a thousand years leave",
+   "unlocks": "storage jars: the camp banks grain; the potter; a pot for the player to carry to a camp that has none",
+   "player_can": false,
+   "category": "materials"
+  },
+  {
+   "id": "weir",
+   "name": "The river weir",
+   "verb": "a curve of stones or stakes across the reach, pointed upstream so the current cannot push it over; fish going up or down are held in the pen behind it",
+   "teaches": "the coast's fence works in a river too, and stone lasts: the oldest structures people ever made are weirs",
+   "unlocks": "the camp's fish_run alongside the crop; the player can build one at a suitable reach",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "irrigation_channel",
+   "name": "Channel",
+   "verb": "cut a ditch from the river to a plot the flood does not reach",
+   "teaches": "the flood waters the flats for free; the channel carries the river to the plot that is not flat: the beginning of the canal, and in the ruins, of everything the canal paid for",
+   "unlocks": "a plot away from the bank counts as watered; the ditch visibly carries water, no fluid physics",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "terrace",
+   "name": "Terracing",
+   "verb": "step a steep bank into flats held by walls of stone or turf, so the soil stays and the water walks down",
+   "teaches": "where the valley is narrow the flood has no flat to spread on, so the folk make one: the slope becomes steps, each holding its soil and passing its water to the next",
+   "unlocks": "crops on a hillside; the crop ceiling in a gorge; terraces gone to bramble read as ridges (ruin)",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "coppice",
+   "name": "Coppicing",
+   "verb": "cut the riverside willow and hazel to the stump; it throws straight rods again in a year or two, poles in seven",
+   "teaches": "a woodlot that is a fuel crop, no clearing; the withies are the weir's fence, the fish trap and the basket, so the same stools feed the fire and the store",
+   "unlocks": "a fuel and withy crop the bank regrows; the fix for the restraint rule",
+   "player_can": true,
+   "category": "fuel"
+  },
+  {
+   "id": "clay_lamp",
+   "name": "Clay lamp",
+   "verb": "a fired saucer with a pinched spout; fat or oil in the dish, a twist of rush laid in the spout; lit from the hearth",
+   "teaches": "the river gave the pot and the pot gives the light: the same dish lies in every river ruin for five thousand years; where fat is scarce the oil is a crop too (castor on the Nile, sesame in Sumer)",
+   "unlocks": "a lamp to set down inside a shelter: dim, hours, will not blow out; the potter makes the dish and the player fills and lights it",
+   "player_can": true,
+   "category": "light"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "clay pots",
+   "grain",
+   "withies"
+  ],
+  "wants": [
+   "resin and pitch",
+   "salt",
+   "shell"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire on the terrace above the flood line",
+   "the flood crop: seeds dropped by the water come back",
+   "the pot: grain kept dry through the flood, the hinge",
+   "the potter",
+   "pots go down the road to the coast; salt and shell come back"
+  ],
+  "restraint": "the flood renews the field, so the plot is never exhausted; the bank is coppiced for fuel and withies, never cleared; the weir is a fence, not a wall, and the run passes it; the slope is terraced, not stripped",
+  "ceiling_hint": "a wide flat with a yearly flood reaches the tribal ceiling and, in the ruins, went past it (the mound); a gorge river stays a handful of huts on a terrace"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "kiln_hump",
+    "what": "a hump on the bank of red-burnt earth with broken sherds in the turf: where the domed kiln stood",
+    "legible": "heap",
+    "restore": "cleared: the potter builds the new kiln on the old firing floor",
+    "inherits": "a kiln floor and a sherd heap: the potter comes sooner"
+   },
+   {
+    "id": "clay_pit_pond",
+    "what": "a round pond in the flat that no stream feeds: the clay pit, gone to water",
+    "legible": "cleared",
+    "restore": "restored: dug out again for clay",
+    "inherits": "clay already found and already dug"
+   },
+   {
+    "id": "terrace_ridges",
+    "what": "ridges stepping a slope under bramble and trees, a flat behind each",
+    "legible": "cleared",
+    "restore": "restored: the walls rebuilt, the flats planted",
+    "inherits": "the soil the terraces held: a crop on the slope in the first year"
+   },
+   {
+    "id": "weir_line",
+    "what": "a curve of stones across the reach, points upstream, that the low water shows and the flood hides",
+    "legible": "heap",
+    "restore": "restored: the fallen stones lifted back onto the line",
+    "inherits": "the weir works from the first low water"
+   },
+   {
+    "id": "mound",
+    "what": "the rare big one: a flat-topped hill of earth on the floodplain, too regular to be the river's work, carried up a basket at a time over generations",
+    "legible": "restored",
+    "restore": "restored: the camp clears the trees off it and keeps its fire on top",
+    "inherits": "high ground the flood never reaches: the fire stays lit through the inundation"
+   }
+  ],
+  "plants_differ": "the silt flat grows lusher than the wood behind it; nettle and dock stand tall on the old middens and house floors; willow gone to many-trunked stools where the coppice was; the pond grows reeds the river does not"
+ },
+ "aesthetic": {
+  "silhouette": "wattle-and-daub huts on a terrace above the flood line; a domed kiln smoking downwind; jars in rows; a curve of stones in the river",
+  "palette": [
+   "silt brown",
+   "willow grey-green",
+   "fired-clay red",
+   "reed gold"
+  ],
+  "sounds": [
+   "the river, always",
+   "the weir's steady rush",
+   "the kiln's roar on firing day",
+   "frogs at dusk"
+  ],
+  "props": [
+   "the kiln",
+   "stacked jars",
+   "coppice stools and withy bundles",
+   "the weir",
+   "a channel with water in it"
+  ]
+ },
+ "folk_kinds": [
+  "human",
+  "fae"
+ ],
+ "real_world": [
+  {
+   "analogue": "Nile basin irrigation (the inundation)",
+   "region": "Egypt, from the Old Kingdom to 1970",
+   "note": "the river rose each summer with silt from the Ethiopian highlands; fields were dyked into basins, flooded, closed about 45 days to soak and drop their silt, then sown in the mud; read on the nilometer and kept for thousands of years until the Aswan High Dam ended the flood in 1970",
+   "source": "https://en.wikipedia.org/wiki/Flooding_of_the_Nile"
+  },
+  {
+   "analogue": "Brewarrina fish traps (Baiame's Ngunnhu), Ngemba Wayilwan people",
+   "region": "Barwon River, New South Wales, Australia",
+   "note": "400 m of dry-stone weirs and teardrop pens, their convex walls facing upstream to stand the current; fish herded in at high water and low; reworked for so long that no start date can be given; National Heritage listed 2005",
+   "source": "https://en.wikipedia.org/wiki/Brewarrina_Aboriginal_Fish_Traps"
+  },
+  {
+   "analogue": "Cahokia and the Mississippian mound builders",
+   "region": "American Bottom, Mississippi floodplain, Illinois, c. 800–1400 CE",
+   "note": "the largest pre-Columbian settlement north of Mexico, 10–20,000 people at its peak c. 1050–1150, some 120 earthen mounds; Monks Mound covers 5 ha and stands 30 m; maize on the floodplain fed it: the rung this game does not build, seen only as a hill",
+   "source": "https://whc.unesco.org/en/list/198/"
+  },
+  {
+   "analogue": "Xianrendong cave pottery, and the first kilns",
+   "region": "Jiangxi, China, c. 20,000–19,000 years ago; Yarim Tepe, Iraq, c. 6000 BCE",
+   "note": "the oldest pottery known, made by foragers in the last glacial maximum, its sherds scorched from cooking: the pot came thousands of years before the crop; pots were pit-fired in a trench of fuel until the first true kilns, a chamber round the pots with a stoke hole, passed 900 °C",
+   "source": "https://en.wikipedia.org/wiki/Xianren_Cave"
+  },
+  {
+   "analogue": "Eridu canal network, Sumer",
+   "region": "southern Mesopotamia, Iraq",
+   "note": "over 200 primary canals off the Euphrates and 4,000 branch canals feeding some 700 farms, mapped in 2025; the river ran high on its own levees, so water reached the fields by gravity and breaks in the levee spread it over the plain; the land was left when the Euphrates shifted course early in the first millennium BCE",
+   "source": "https://www.durham.ac.uk/departments/academic/archaeology/archaeology-news/archaeologists-discover-ancient-irrigation-network-in-mesopotamia--/"
+  },
+  {
+   "analogue": "Hemudu and Tianluoshan rice on the Yangtze",
+   "region": "Yangtze delta, Zhejiang, China, c. 5500–3300 BCE",
+   "note": "rice tended with bone hoes on the wet flats south of Hangzhou Bay while it was still becoming domesticated; stilt houses over the wet ground, black pottery, and fishing and acorn gathering alongside the crop",
+   "source": "https://en.wikipedia.org/wiki/Hemudu_culture"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Flooding_of_the_Nile",
+  "https://en.wikipedia.org/wiki/Brewarrina_Aboriginal_Fish_Traps",
+  "https://whc.unesco.org/en/list/198/",
+  "https://en.wikipedia.org/wiki/Xianren_Cave",
+  "https://en.wikipedia.org/wiki/Kiln",
+  "https://www.durham.ac.uk/departments/academic/archaeology/archaeology-news/archaeologists-discover-ancient-irrigation-network-in-mesopotamia--/",
+  "https://en.wikipedia.org/wiki/Hemudu_culture",
+  "https://en.wikipedia.org/wiki/Osier_bed"
+ ]
+}

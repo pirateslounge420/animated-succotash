@@ -1,0 +1,319 @@
+{
+ "id": "taiga",
+ "name": "Taiga folk",
+ "one_line": "They followed the reindeer through the snow forest and lived on birch: bark for the boat and the box, fungus off the trunk to carry the fire, pitch out of the old pine stumps.",
+ "where": {
+  "site_rule": "by_biome",
+  "biomes": [
+   "TAIGA",
+   "KRUMMHOLZ"
+  ],
+  "needs": [
+   "a stand of birch among the conifers",
+   "a stream, or a lake beyond the lake folk's 200 m, for fish",
+   "lichen ground within a day's walk for the herd's winter"
+  ]
+ },
+ "fundamental": "herd",
+ "food": {
+  "staples": [
+   "fish from the lakes and rivers (whitefish, pike, trout)",
+   "reindeer meat, milk and blood",
+   "berries: bilberry, lingonberry, cloudberry off the bog",
+   "pine inner bark, dried and ground",
+   "moose, hare and grouse in season"
+  ],
+  "how": [
+   "net and spear in the lake; a line through the ice",
+   "the herd: followed in summer, penned and milked in autumn",
+   "snares on the hare runs; berries by the basketful",
+   "bark peeled from the pines in spring when the sap rises"
+  ],
+  "preserve": [
+   "drying and smoking on racks",
+   "the winter itself: meat frozen in the store",
+   "cloudberries keep in their own juice, lingonberries in water",
+   "a store on a post the animals cannot climb"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "softwood_log",
+   "hardwood_log",
+   "branch"
+  ],
+  "note": "spruce and pine logs for the long night; dead branch snapped off the lower trunk; birch logs where the stand allows; birch bark and fatwood splints are kindling, never the fire"
+ },
+ "shelter": {
+  "materials": [
+   "pole",
+   "hide",
+   "birch bark",
+   "turf"
+  ],
+  "form": "a pole tent whose cover travels with the herd and whose frame is left standing; a turf hut over a skin of birch bark for winter; a store on one post; racks between the trees"
+ },
+ "light": [
+  "resin_torch",
+  "fatwood"
+ ],
+ "dressing": {
+  "by_biome": {
+   "TAIGA": {
+    "fuel": "spruce and pine logs, birch where it grows; fatwood out of the old stumps",
+    "food": "lake fish on the rack, bilberry and lingonberry underfoot, the herd in the lichen woods all winter",
+    "shelter": "turf-and-bark hut under the spruce, a bark tent in summer, a store on a post",
+    "palette": "spruce black-green, birch white, lichen grey, ember red"
+   },
+   "KRUMMHOLZ": {
+    "fuel": "scarce: wind-killed branch off the flagged spruce, dwarf birch and willow bundles; bark and fatwood carried up from the forest",
+    "food": "the herd's summer edge: milk at the pens, cloudberry and heath berry, char from the tarns",
+    "shelter": "a hide tent turned from the wind and pitched behind a rock; no hut, nobody winters here",
+    "palette": "flagged spruce, larch gold, lichen white, bare grey stone"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "ember_carrier",
+  "plantkeeper": {
+   "knows": [
+    "bilberry, lingonberry, cloudberry: which bog, which month",
+    "pine inner bark: spring only, one side of the tree",
+    "tinder fungus and chaga on the birch trunks",
+    "Labrador tea: a few leaves, never a strong brew",
+    "reindeer lichen: the herd's winter, decades to regrow"
+   ],
+   "teaches_flavour": "why the birch matters more than the spruce; which stump smells of pitch when it is split; why the old camps grow fireweed and nettle",
+   "teaches_practical": "cloudberry against scurvy through the dark months; peel bark on one side and the pine lives to be peeled again; the hoof-shaped fungus holds a coal, the black one makes tea"
+  },
+  "maker": {
+   "craft": "bark-worker",
+   "works": [
+    "birch bark",
+    "pine root",
+    "antler",
+    "sinew",
+    "pitch"
+   ],
+   "makes": [
+    "bark boxes and buckets",
+    "a canoe hull sewn with root and sealed with pitch",
+    "tar",
+    "snowshoes"
+   ],
+   "wants_from_player": [
+    "hide",
+    "cordage fibre",
+    "salt",
+    "a clay pot (the pitch is cooked in it)"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "ember_carrier",
+   "name": "Ember carrier",
+   "verb": "take a live coal from the hearth, bed it in tinder fungus and punk wood, fold birch bark around it",
+   "teaches": "fire is never made, only carried: a people who move with a herd take the hearth with them in a fungus the size of a fist. It gives no light, it goes cold if you forget it, and every fire it lays is the old fire moved",
+   "unlocks": "carry fire for a day or more with no light; lay a new fire from it; it goes cold if neglected",
+   "player_can": true,
+   "category": "fire"
+  },
+  {
+   "id": "birch_bark",
+   "name": "Birch bark",
+   "verb": "peel the outer bark in sheets in early summer when it lifts; sew boxes with split root; take the tinder fungus off the same trunk",
+   "teaches": "the birch is the taiga's clay: it holds water, sheds rain, burns wet, and the tree lives on if you take only the outer skin",
+   "unlocks": "containers, a canoe, the ember carrier's wrap; the bark-worker's craft",
+   "player_can": false,
+   "category": "materials"
+  },
+  {
+   "id": "resin_torch",
+   "name": "Resin torch",
+   "verb": "twist a strip of bark, dip it in pine pitch",
+   "teaches": "a torch that shrugs off drizzle and burns brighter and longer; pitch is what the forest gives instead of fat",
+   "unlocks": "a torch that burns longer and brighter and shrugs off drizzle (torch.json resin block)",
+   "player_can": true,
+   "category": "light"
+  },
+  {
+   "id": "fatwood",
+   "name": "Fatwood",
+   "verb": "split the resin-soaked heart out of an old pine stump; it is dark, heavy and smells of turpentine",
+   "teaches": "a hot, long torch found not made: the stump hardened after the tree died, and the older the stump the better the wood",
+   "unlocks": "fatwood splints: a hot, long-burning torch that lights wet; kindling that catches from a coal",
+   "player_can": true,
+   "category": "light"
+  },
+  {
+   "id": "drying_rack",
+   "name": "Drying and smoking",
+   "verb": "racks between two spruces in the wind, or over a slow smoky fire in the hut",
+   "teaches": "the first storage: fish and meat keep through the dark months",
+   "unlocks": "fish and meat keep through the lean season",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "pitch",
+   "name": "Pitch and tar",
+   "verb": "cook pine resin in a pot; or pack resinous wood and birch bark in a turf-covered pit and burn it slow until the tar runs out the bottom",
+   "teaches": "the same fire that cooks food can cook a tree into glue; one pit seals a boat and a hundred torches",
+   "unlocks": "glue for the spear, tar for the canoe seams and the torches; the camp's trade good downriver",
+   "player_can": false,
+   "category": "materials"
+  },
+  {
+   "id": "herd",
+   "name": "The herd",
+   "verb": "follow the reindeer, then keep them: pen and milk them in autumn, walk them to the lichen woods for winter and up to the treeline for summer",
+   "teaches": "the taiga's fundamental: food, hide and a beast to carry the tent where nothing can be planted; built last",
+   "unlocks": "the taiga's food ceiling; milk, hide, antler and sinew; the fence and the pen",
+   "player_can": false,
+   "category": "food"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "birch bark",
+   "tar and pitch",
+   "dried fish",
+   "antler and sinew",
+   "hide",
+   "tinder fungus"
+  ],
+  "wants": [
+   "salt",
+   "cordage fibre",
+   "clay pots"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire in the lee of the spruce",
+   "fish from the lake, berries from the bog",
+   "racks and the store on a post",
+   "the bark-worker: boxes, the canoe, tar",
+   "tar and bark go downriver; salt comes back"
+  ],
+  "restraint": "bark is peeled from one side of a living pine and some cambium always left, so the tree lives and is peeled again in a generation; the herd is moved before the lichen is grazed out (it regrows in decades, not seasons); tar wood comes from old stumps and standing dead, not the living stand",
+  "ceiling_hint": "the herd is built last in the engine, so until it exists fish and forage carry a taiga camp to a handful; with the herd (lichen woods for winter, a treeline edge for summer) it reaches the tribal ceiling; a krummholz site alone is a summer camp that never grows"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "hearth_ring",
+    "what": "a ring of fire-cracked stones under the moss, often several in a row where the tents stood; the ground around them greener",
+    "legible": "heap",
+    "restore": "cleared: the new camp's fire goes on the old stones",
+    "inherits": "a dry floor, and ground that grows nettle and fireweed"
+   },
+   {
+    "id": "bark_stripped_pine",
+    "what": "a living pine with a long scar face on one side, bark healed in over the edges; a loose line of them along the old trail. Readable from the first: nothing to restore",
+    "legible": "heap",
+    "restore": "restored: the plantkeeper peels the far side; the scar says the tree was fed on before",
+    "inherits": "bark flour from the first spring, and proof the site fed people for centuries"
+   },
+   {
+    "id": "tar_pit",
+    "what": "a funnel-shaped hollow with a black, hard bottom and a channel out the low side; nothing grows in it",
+    "legible": "heap",
+    "restore": "restored: cleared of needles and relined with turf",
+    "inherits": "pitch from the first firing"
+   },
+   {
+    "id": "reindeer_fence",
+    "what": "a line of post stubs gone to moss, closing on a stone pen; grass where the herd stood",
+    "legible": "cleared",
+    "restore": "restored: new poles on the old stubs",
+    "inherits": "the pen works from the first autumn; the herd ceiling opens early"
+   },
+   {
+    "id": "store_posts",
+    "what": "four post stumps in a square, or one thick one, where the store stood clear of the animals",
+    "legible": "cleared",
+    "restore": "restored: a new store on the old post",
+    "inherits": "storage from the first season"
+   }
+  ],
+  "plants_differ": "nettle and fireweed in a ring on the old hearths (bone, ash and dung), grass in the pen where the forest floor is otherwise moss and lichen; and the bark-stripped pines, scarred on the side that faced the trail"
+ },
+ "aesthetic": {
+  "silhouette": "a pole tent among black spruce; a store on one post; racks like ladders between trunks; white birch against the dark",
+  "palette": [
+   "spruce black-green",
+   "birch white",
+   "lichen grey",
+   "larch gold",
+   "ember red"
+  ],
+  "sounds": [
+   "wind in the spruce",
+   "reindeer grunting",
+   "the crack of a birch log",
+   "snow sliding off a branch"
+  ],
+  "props": [
+   "drying racks",
+   "a store on a post",
+   "an upturned bark canoe",
+   "the tar pit's black funnel",
+   "a pole fence"
+  ]
+ },
+ "folk_kinds": [
+  "human",
+  "fae",
+  "small_folk"
+ ],
+ "real_world": [
+  {
+   "analogue": "Sámi",
+   "region": "Sápmi: northern Norway, Sweden, Finland and the Kola Peninsula; a living people",
+   "note": "reindeer herding grew out of wild-reindeer hunting; rows of stone hearths at inland sites dated 1000–1300 AD mark the change. The lavvu (pole tent) and the goahti (a turf hut laid over birch bark on a timber frame); the njalla, a store on one smoothed post animals cannot climb. Scots pine inner bark peeled in spring, eaten fresh, roasted, or dried and ground into flour mixed with reindeer milk; scars dendro-dated to at least 1450 AD, with evidence back to c. 2800 BP; some cambium was always left so the tree lived, and the scars stand for centuries",
+   "source": "https://www.fs.usda.gov/rm/pubs_other/rmrs_2009_ostland_l001.pdf"
+  },
+  {
+   "analogue": "Evenki",
+   "region": "Siberian taiga from the Ob to the Sea of Okhotsk; a living people",
+   "note": "reindeer ridden and milked, not eaten (wild reindeer and elk were hunted); a saddle set on the shoulders; a family kept some 25 animals. Conical tents of birch bark or reindeer skin on birch poles; the frames were left standing and only the covers carried on",
+   "source": "https://en.wikipedia.org/wiki/Evenki_people"
+  },
+  {
+   "analogue": "Finnish tar burners (tervahauta)",
+   "region": "Ostrobothnia and Kainuu, Finland",
+   "note": "pines debarked years ahead so resin flooded the wood; the wood stacked in a funnel-shaped pit, covered with moss, peat and soil, and burned slow with little air for days; tar ran out the bottom after about a day. Big pits took up to 1,000 m³ of wood; exports peaked in 1863 at nearly 30 million litres",
+   "source": "https://wiki.aineetonkulttuuriperinto.fi/wiki/Tar_burning_in_pits"
+  },
+  {
+   "analogue": "Tinder fungus and Ötzi's fire kit",
+   "region": "Europe; Alps c. 3300 BCE, Star Carr (Mesolithic Britain)",
+   "note": "Fomes fomentarius grows on birch in the north; its inner layer, soaked, beaten and stretched, is amadou, which catches a spark and smoulders for hours. Ötzi carried four pieces of it. Star Carr shows it in use with flint and pyrite. We keep the fungus and drop the pyrite: in our world a coal is carried in it, never struck",
+   "source": "https://en.wikipedia.org/wiki/Amadou"
+  },
+  {
+   "analogue": "Innu (Montagnais-Naskapi)",
+   "region": "Nitassinan, the Labrador Peninsula; a living people",
+   "note": "caribou provided practically all the necessities of life; a few families wintered together at hunting camps and gathered in summer. Birchbark wigwams in the south, caribou hide in the north; canoes in summer, snowshoes and toboggans in winter. Bark canoes were sewn with split spruce root and the seams sealed with hot spruce or pine resin",
+   "source": "https://thecanadianencyclopedia.ca/en/article/innu-montagnais-naskapi"
+  },
+  {
+   "analogue": "Birch tar, the oldest glue",
+   "region": "Europe, Neanderthal sites",
+   "note": "birch bark heated without air gives a black tar; tar-hafted tools from Königsaue and Campitello are about 200,000 years old, a Zandmotor flake about 50,000. Pitch predates the pot",
+   "source": "https://www.universiteitleiden.nl/en/news/2019/10/neanderthal-glue-from-the-north-sea"
+  }
+ ],
+ "sources": [
+  "https://www.fs.usda.gov/rm/pubs_other/rmrs_2009_ostland_l001.pdf",
+  "https://en.wikipedia.org/wiki/Goahti",
+  "https://saamelaisensyklopedia.fi/wiki/Njalla,_a_small_store_house_on_the_top_of_a_wooden_pole.html",
+  "https://en.wikipedia.org/wiki/Reindeer_herding",
+  "https://wiki.aineetonkulttuuriperinto.fi/wiki/Tar_burning_in_pits",
+  "https://en.wikipedia.org/wiki/Fatwood",
+  "https://en.wikipedia.org/wiki/Fomes_fomentarius",
+  "https://thecanadianencyclopedia.ca/en/article/birchbark-canoe"
+ ]
+}

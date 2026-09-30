@@ -1,0 +1,312 @@
+{
+ "id": "tundra",
+ "name": "Tundra folk",
+ "one_line": "No tree for a hundred miles, so the lamp was the hearth: a bowl of seal fat that heated, lit and cooked, in houses of snow, sod and whalebone.",
+ "where": {
+  "site_rule": "by_biome",
+  "biomes": [
+   "TUNDRA",
+   "SEA_ICE"
+  ],
+  "needs": [
+   "a shore, a river crossing or a char river within a day's walk",
+   "a bank to dig the autumn house into"
+  ]
+ },
+ "fundamental": "fish_run",
+ "food": {
+  "staples": [
+   "seal (the lamp's fat and the winter's meat)",
+   "caribou at the crossing",
+   "Arctic char at the weir",
+   "whale and walrus where the shore allows",
+   "seabird eggs, crowberry and bog bilberry in the short summer"
+  ],
+  "how": [
+   "the fish_run here is the sea and the crossing: seals harpooned at the breathing hole and the floe edge, the char run, the caribou swimming the river in autumn",
+   "a stone weir across the char river, the fish speared with a three-pronged leister",
+   "caribou lanced from a skin kayak as the herd swims the crossing, turned there by lines of stone figures",
+   "the big skin boat (umiak) for the whale"
+  ],
+  "preserve": [
+   "dried on racks in the wind (nikku)",
+   "cached under stones on the permafrost: the ground is the freezer",
+   "fermented under stones on the shore (igunaq): summer meat that ripens over autumn and freezes for winter; done wrong it kills",
+   "fat rendered and kept in skin bags for the lamp"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "driftwood",
+   "dung",
+   "brush"
+  ],
+  "note": "the real hearth is the lamp: rendered seal or whale fat in a soapstone bowl (fat_lamp) gives heat, light and cooking from one flame, so for tundra folk the lamp IS the fire and the woodpile is a fat store. A fire, when there is one, burns driftwood off the tide line on the coast and dried dung and dwarf-willow brush inland. On the sea ice nothing burns but the lamp."
+ },
+ "shelter": {
+  "materials": [
+   "snow",
+   "sod",
+   "stone",
+   "whalebone",
+   "driftwood",
+   "hide"
+  ],
+  "form": "three houses a year: a dome of snow blocks in winter, a sod-and-whalebone house (qarmaq) dug a metre into a bank in autumn and spring, a skin tent in a ring of stones in summer; a low tunnel entrance as a cold trap, a raised sleeping platform, the lamp in the middle"
+ },
+ "light": [
+  "fat_lamp"
+ ],
+ "dressing": {
+  "by_biome": {
+   "TUNDRA": {
+    "fuel": "dung and dwarf-willow brush; driftwood where the shore is near; the lamp does the rest",
+    "food": "caribou at the crossing, char at the weir, eggs and berries in the short summer",
+    "shelter": "the sod-and-whalebone qarmaq dug into a bank; a skin tent in a ring of stones on the moss",
+    "palette": "lichen grey-white, moss green, sod brown, whalebone ivory"
+   },
+   "SEA_ICE": {
+    "fuel": "nothing burns; the lamp alone, fed by the seal it lights",
+    "food": "seal at the breathing hole and the floe edge; char through a hole in the ice",
+    "shelter": "the snow house of the winter sealing camp, blocks cut from wind-packed drift (no camp is placed on the ice: a tundra camp walks out to it and back)",
+    "palette": "blue-white, lamp gold, seal black"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "fat_lamp",
+  "plantkeeper": {
+   "knows": [
+    "Arctic cottongrass heads and dried moss for the lamp wick; sphagnum for wadding and the house's cracks",
+    "crowberry and bog bilberry, and that crowberries keep under the snow",
+    "willow leaves and sorrel eaten green against scurvy (raw meat and fat did most of that work)",
+    "reindeer lichen: where it grows the herd will come"
+   ],
+   "teaches_flavour": "why the old house pits grow the greenest grass on the tundra; which grass the wick is made of",
+   "teaches_practical": "cottongrass and moss for the wick; the berries that hang under the snow; willow and sorrel to eat green"
+  },
+  "maker": {
+   "craft": "hide-worker",
+   "works": [
+    "hide",
+    "sinew",
+    "bone",
+    "ivory",
+    "soapstone",
+    "driftwood"
+   ],
+   "makes": [
+    "parka",
+    "kamik boots",
+    "the lamp",
+    "bone needles"
+   ],
+   "wants_from_player": [
+    "driftwood",
+    "soapstone",
+    "cordage fibre"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "fat_lamp",
+   "name": "Fat lamp",
+   "verb": "a soapstone bowl, rendered seal fat, a wick of cottongrass or dried moss laid along the rim and trimmed with a stick so it does not smoke",
+   "teaches": "the headman's technique because for these folk it is the fire itself: with no tree within a hundred miles, one flame gave heat, light, cooking, melted snow and dried the clothes; the women tended it and never let it go out",
+   "unlocks": "a light that burns for hours and does not blow out; set it down inside a shelter",
+   "player_can": true,
+   "category": "light"
+  },
+  {
+   "id": "dung_fuel",
+   "name": "Dung fires",
+   "verb": "gather dry caribou and musk-ox dung, and dwarf willow with it",
+   "teaches": "fuel where there are no trees; the summer fire outside the tent, while the lamp carries the winter",
+   "unlocks": "dung and brush in the fire pit; a camp's fuel store inland",
+   "player_can": true,
+   "category": "fuel"
+  },
+  {
+   "id": "hide_working",
+   "name": "Hide",
+   "verb": "scrape the skin with a bone scraper, chew and work it soft, cut it with the half-moon knife, sew with sinew and a bone needle in a stitch that keeps water out",
+   "teaches": "clothing is what let people live where nothing grows; every warm thing the player could wear comes from here: the parka, the kamik boots, the kayak's skin",
+   "unlocks": "the camp sews parkas, boots and skin covers; the player wears what the maker makes",
+   "player_can": false,
+   "category": "materials"
+  },
+  {
+   "id": "snow_sod_house",
+   "name": "Snow and sod",
+   "verb": "cut wind-packed snow into blocks and spiral them into a dome; dig into a bank and roof it with whale ribs, sod and skins; pitch a skin tent in a ring of stones",
+   "teaches": "shelter where there are no trees: the low tunnel is a cold trap, the sleeping platform sits above the cold, and the lamp glazes the snow walls to ice",
+   "unlocks": "the camp's three houses, one a season; the winter sealing camp out on the ice",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "stone_cache",
+   "name": "Stone cache",
+   "verb": "pile fitted stones over meat and fish on the permafrost so fox and bear cannot get in; the cold does the rest",
+   "teaches": "the tundra's storage, the hinge of the ladder: a surplus you cannot keep is rot, and here the ground is a freezer",
+   "unlocks": "food keeps through the dark; the player can cache food under stones and come back for it",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "inuksuk",
+   "name": "Stone figure",
+   "verb": "stack stones into a figure that reads at a distance: this way, a cache here, the crossing is there",
+   "teaches": "a mark that stands in the place of a person; a line of them turns a caribou herd, and a chain of them is a road across land with no landmarks",
+   "unlocks": "the player can raise a waymark that persists and reads along the road",
+   "player_can": true,
+   "category": "marks"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "sewn skins and sinew",
+   "ivory",
+   "rendered fat",
+   "dried meat and fish"
+  ],
+  "wants": [
+   "driftwood",
+   "soapstone",
+   "cordage fibre"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "the lamp lit in a skin tent: a hearth that needs no tree",
+   "the seal, the char weir and the crossing: the fish_run",
+   "the stone cache and the drying rack: meat keeps through the dark",
+   "the hide-worker",
+   "sewn skins, sinew and ivory go along the coast; driftwood and soapstone come back"
+  ],
+  "restraint": "the hunt takes the crossing's share and lets the herd pass; the cache is filled, not the river emptied; one whale feeds a village for a winter and its bones become the house; dung and willow are gathered, never stripped, because the lamp carries the winter",
+  "ceiling_hint": "a whaling shore (a whale a year) reaches the tribal ceiling in whalebone houses; an inland crossing feeds a band; a bare coast stays a family or two"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "tent_ring",
+    "what": "a ring of stones in the moss where a skin tent's skirt was weighted; a small hearth of stones to one side",
+    "legible": "heap",
+    "restore": "cleared: the summer tent goes up on the old ring",
+    "inherits": "a dry, level, wind-tested pitch"
+   },
+   {
+    "id": "sod_house_pit",
+    "what": "oval hollows a metre deep with a low tunnel toward the shore; the greenest grass on the tundra grows in them",
+    "legible": "cleared",
+    "restore": "restored: the camp re-roofs the old pit with skins over the old bone",
+    "inherits": "the walls and the frame: the autumn house in a week"
+   },
+   {
+    "id": "whale_rib",
+    "what": "a rib or jaw arch standing alone on the shore, ivory-white, where a roof was",
+    "legible": "heap",
+    "restore": "cleared: raised again as the frame of the sod house roof",
+    "inherits": "the roof frame, which no tundra grows"
+   },
+   {
+    "id": "stone_cache",
+    "what": "a low cairn of fitted stones, hollow inside: the fox-proof larder",
+    "legible": "cleared",
+    "restore": "restored: re-stacked and filled",
+    "inherits": "storage from the first hunt"
+   },
+   {
+    "id": "inuksuk",
+    "what": "a stone figure on a rise, still standing; a line of them leads to the crossing or the cache",
+    "legible": "heap",
+    "restore": "restored: the fallen ones re-stacked so the line reads again",
+    "inherits": "the road: waymarks to the crossing, the weir and the cache"
+   }
+  ],
+  "plants_differ": "sod-house pits and old middens grow the lushest grass and sedge on the tundra: nitrogen and phosphorus from bone, blood and fat, still measurable in the ponds beside whalebone-house villages four hundred years after they emptied; the rest of the tundra is lichen, moss and dwarf shrub"
+ },
+ "aesthetic": {
+  "silhouette": "low domes and mounds that barely break the horizon; a whale-rib arch; a rack of split fish; a stone figure on the rise; a kayak on its stand",
+  "palette": [
+   "snow blue-white",
+   "lichen grey",
+   "whalebone ivory",
+   "seal black",
+   "lamp gold"
+  ],
+  "sounds": [
+   "wind over snow",
+   "the lamp's small hiss",
+   "sea ice groaning",
+   "the herd's hooves at the crossing"
+  ],
+  "props": [
+   "the lamp on its stand",
+   "a whale-rib arch",
+   "a kayak on a stand",
+   "drying rack",
+   "stone cache",
+   "stone figure"
+  ]
+ },
+ "folk_kinds": [
+  "human"
+ ],
+ "real_world": [
+  {
+   "analogue": "Inuit: the qulliq",
+   "region": "Arctic Canada, Greenland and Alaska; a living people",
+   "note": "a soapstone lamp burning seal (or whale) blubber with a wick of Arctic cottongrass or dried moss lit along the rim and trimmed with a taqquti; tended by the women, it heated, lit and cooked for the tent, the qarmaq and the snow house, melted snow and dried clothes; older than the Inuit themselves (the Dorset people, the Tuniit, burned soapstone lamps from c. 500 BCE) and on Nunavut's coat of arms today",
+   "source": "https://en.wikipedia.org/wiki/Qulliq"
+  },
+  {
+   "analogue": "Inuit: clothing and the hide craft",
+   "region": "Arctic Canada",
+   "note": "caribou-skin parkas and sealskin kamik boots; skins scraped, worked and chewed soft, cut with the ulu, sewn with sinew from the caribou's back and needles of bone; a year's clothing was a year of women's work, and it is what let people live where nothing grows",
+   "source": "https://indigenouspeoplesatlasofcanada.ca/article/clothing/"
+  },
+  {
+   "analogue": "Early Inuit (Thule culture) whalebone houses",
+   "region": "Arctic Canada and Greenland, c. 1000–1600 CE",
+   "note": "oval houses of stone, sod and whalebone dug a metre down, a sunken cold-trap entrance, a roof of bowhead ribs and jaws; given up for the snow house as the Little Ice Age cooled, while the qarmaq (a low wall of stone, sod or snow, a whalebone frame, skins over, moss in the cracks) stayed the autumn and spring house into the 1950s; the whale bones and waste still enrich the ponds and grass around the pits",
+   "source": "https://www.thecanadianencyclopedia.ca/en/article/thule-winter-house"
+  },
+  {
+   "analogue": "Inuksuit",
+   "region": "Arctic Canada, Alaska and Greenland",
+   "note": "inuksuk: 'that which acts in the capacity of a human'; stone markers for routes, fishing places, camps, caches and sacred sites, and in lines as drift fences to turn caribou; the human-shaped inunnguaq is only one kind; Inuksuk Point on Baffin Island holds more than a hundred",
+   "source": "https://en.wikipedia.org/wiki/Inuksuk"
+  },
+  {
+   "analogue": "Igunaq and the meat cache",
+   "region": "Inuit and Chukchi Arctic",
+   "note": "summer walrus, seal, caribou or birds buried under stones near the shore to ferment through autumn and freeze through winter, eaten the next year; the cold does the preserving, and done wrong it can kill (botulism)",
+   "source": "https://en.wikipedia.org/wiki/Igunaq"
+  },
+  {
+   "analogue": "Yup'ik",
+   "region": "south-west Alaska, St Lawrence Island and Chukotka; a living people",
+   "note": "sod houses, the qasgiq men's house and the ena beside it, sometimes joined by a tunnel; spring and summer at fish camp for salmon and seal, winter at the village; the seal-oil lamp (naniq) the furniture of the house",
+   "source": "https://en.wikipedia.org/wiki/Yupik_peoples"
+  },
+  {
+   "analogue": "Nenets (and the Sámi): a herd note",
+   "region": "Yamal and the Russian Arctic; Sápmi in Fennoscandia; living peoples",
+   "note": "reindeer herders of the tundra-taiga edge, not sea folk: the conical skin tent (chum) on poles, migrations of hundreds of kilometres a year, the reindeer giving meat, hide, sinew and draught; wood carried north as the trees run out — the herd fundamental belongs to the taiga file, this one keeps the sea",
+   "source": "https://en.wikipedia.org/wiki/Nenets_people"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Qulliq",
+  "https://en.wikipedia.org/wiki/Qarmaq",
+  "https://www.thecanadianencyclopedia.ca/en/article/thule-winter-house",
+  "https://en.wikipedia.org/wiki/Igloo",
+  "https://en.wikipedia.org/wiki/Inuksuk",
+  "https://indigenouspeoplesatlasofcanada.ca/article/clothing/",
+  "https://en.wikipedia.org/wiki/Igunaq",
+  "https://www.uaf.edu/news/archives/news-archives-2002-2010/a_news/20081003125456.php"
+ ]
+}

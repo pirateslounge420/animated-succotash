@@ -1,0 +1,316 @@
+{
+ "id": "old_growth",
+ "name": "Old-growth folk",
+ "one_line": "They never cleared the forest; they cut it to the stump and it kept giving: coppice poles, a mound of charcoal smoking in the glade, and a garden of maize, beans and squash under the old trees.",
+ "where": {
+  "site_rule": "by_biome",
+  "biomes": [
+   "TEMPERATE_DECIDUOUS",
+   "TEMPERATE_RAINFOREST"
+  ],
+  "needs": [
+   "hazel, ash, maple or alder to cut to the stump",
+   "a deep-soiled flat for one garden-sized clearing, and a stream or spring"
+  ]
+ },
+ "fundamental": "crop",
+ "food": {
+  "staples": [
+   "maize, beans and squash from the clearing",
+   "hazelnuts, beech mast, acorns and chestnuts in autumn",
+   "deer and small game from the coppice edge; honey from wild hives",
+   "mushrooms, spring greens and berries"
+  ],
+  "how": [
+   "the Three Sisters plot in a small clearing",
+   "nutting in autumn, the woods' own harvest",
+   "snares and the spear along the cut stands, where the browse is",
+   "smoking a hollow tree for its comb"
+  ],
+  "preserve": [
+   "corn braided by the husk and hung under the roof",
+   "nuts in a bark-lined pit",
+   "meat smoked over a slow fire; honey keeps itself"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "hardwood_log",
+   "branch",
+   "brush",
+   "softwood_log"
+  ],
+  "note": "coppice poles are the fuel crop: hazel and ash cut to the stump and back in seven years; branch and brush off the cut for kindling; oak and beech logs for the long night; the rainforest burns spruce and hemlock, resin-rich and always damp, so fatwood and pitch matter more there"
+ },
+ "shelter": {
+  "materials": [
+   "pole",
+   "bark",
+   "withies",
+   "thatch"
+  ],
+  "form": "a longhouse of bent poles and bark sheets, a row of hearths down the middle and several families under one roof; or pit-houses dug into a dry slope; a hurdle fence of hazel withies round the plot"
+ },
+ "light": [
+  "resin_torch",
+  "fatwood"
+ ],
+ "dressing": {
+  "by_biome": {
+   "TEMPERATE_DECIDUOUS": {
+    "fuel": "hazel and ash coppice; oak and beech logs for the night",
+    "food": "maize, beans and squash in the clearing; hazelnuts, acorns, beech mast; deer",
+    "shelter": "a bark longhouse on a pole frame; hazel hurdles round the plot",
+    "palette": "oak green, bark grey, hazel gold, charcoal black"
+   },
+   "TEMPERATE_RAINFOREST": {
+    "fuel": "vine maple coppice and redwood stump-sprouts; spruce and hemlock logs, fatwood from old stumps",
+    "food": "the plot in the one sunny flat, squash and beans over maize; salal, huckleberry, bracken root; elk",
+    "shelter": "poles and bark under the giants, moss-chinked; a pit-house in a dry terrace against the wet",
+    "palette": "moss green, fog grey, redwood bark, black soil"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "coppice",
+  "plantkeeper": {
+   "knows": [
+    "hazelnuts, beech mast and acorns (leached before eating)",
+    "wood sorrel, ramsons and fiddleheads in spring; elderberry and hawthorn at the edge",
+    "chanterelle from death cap",
+    "tinder fungus and punk wood off a dead birch or beech"
+   ],
+   "teaches_flavour": "why the last-cut glade is where the bluebells and the butterflies are; why nettle and elder mark an old hearth",
+   "teaches_practical": "leach acorns in running water before you eat them; the death cap looks like supper and kills in a week; which fungus holds a coal"
+  },
+  "maker": {
+   "craft": "collier",
+   "works": [
+    "wood",
+    "resin",
+    "bark",
+    "withies"
+   ],
+   "makes": [
+    "charcoal",
+    "pitch and birch tar",
+    "resin torches, hurdles and withies"
+   ],
+   "wants_from_player": [
+    "clay pots",
+    "salt"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "coppice",
+   "name": "Coppicing",
+   "verb": "cut hazel or ash to the stump in winter; it does not die, it throws up a crown of straight poles, ready again in about seven years",
+   "teaches": "the first harmony technique, because it keeps the fire lit: a stool cut this way outlives any tree left alone, and a woodlot cut in rotation is a fuel crop with no clearing, the woods never emptier than one year's cut",
+   "unlocks": "the player cuts a stool and comes back to poles; the camp's fuel ceiling without stripping its woods",
+   "player_can": true,
+   "category": "fuel"
+  },
+  {
+   "id": "three_sisters",
+   "name": "The Three Sisters",
+   "verb": "maize, beans and squash in one mound: the stalk holds the bean up, the bean feeds the soil, the squash leaf shades out the weeds",
+   "teaches": "three plants that feed each other and then feed you; a clearing the size of a garden, never a field",
+   "unlocks": "the forest's crop ceiling: corn braided under the roof, a pit of nuts, then the specialist",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "charcoal",
+   "name": "Charcoal burning",
+   "verb": "stack the poles in a mound round a chimney, seal it with bracken and turf, light it and starve it of air for days, watching the smoke go from white to blue",
+   "teaches": "nearly pure carbon, hotter than any wood; what the marsh smith's bloomery needs, so the two peoples are married by trade",
+   "unlocks": "charcoal in the store; exchange with the marsh; the collier",
+   "player_can": false,
+   "category": "fuel"
+  },
+  {
+   "id": "pitch",
+   "name": "Pitch and birch tar",
+   "verb": "cook pine resin, or birch bark sealed in a pot with a second pot beneath to catch the tar, slow and without air",
+   "teaches": "the oldest glue there is: Neanderthals hafted flint with birch tar fifty thousand years ago and more; glue for the spear, tar for the boat, pitch for the torch",
+   "unlocks": "the maker glues and seals; resin torches",
+   "player_can": false,
+   "category": "materials"
+  },
+  {
+   "id": "resin_torch",
+   "name": "Resin torch",
+   "verb": "dip a cattail head or a twist of bark in pine pitch",
+   "teaches": "a brighter, longer flame that shrugs off drizzle",
+   "unlocks": "the resin torch (torch.json resin block)",
+   "player_can": true,
+   "category": "light"
+  },
+  {
+   "id": "fatwood",
+   "name": "Fatwood",
+   "verb": "split the resin-soaked heart out of an old pine stump; the tree left it there when it died",
+   "teaches": "a torch found, not made; lights wet and burns hot",
+   "unlocks": "fatwood splints",
+   "player_can": true,
+   "category": "light"
+  },
+  {
+   "id": "ember_carrier",
+   "name": "Ember carrier",
+   "verb": "a live coal wrapped in tinder fungus or punk wood, then in bark",
+   "teaches": "no light, but a coal for a day or more; the Iceman carried embers in a birch-bark box five thousand years ago. Fire is never made, only carried",
+   "unlocks": "carry fire; lay a new hearth from it; it goes cold if neglected",
+   "player_can": true,
+   "category": "fire"
+  },
+  {
+   "id": "honey",
+   "name": "Honey",
+   "verb": "smoke the wild hive in the hollow tree and take part of the comb",
+   "teaches": "the sweetest thing in the forest and the one food that never rots; take some and the bees stay",
+   "unlocks": "honey in the store: a trade good",
+   "player_can": false,
+   "category": "food"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "charcoal",
+   "pitch, birch tar and resin",
+   "coppice poles and withies",
+   "honey and hazelnuts"
+  ],
+  "wants": [
+   "clay pots",
+   "salt and dried fish",
+   "an iron axe from the marsh smith"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "a fire under the old trees; the ember carried in",
+   "the clearing: maize, beans and squash in one plot",
+   "corn braided under the eaves, nuts in a bark-lined pit, smoke over the meat",
+   "the collier: the first one who does not gather",
+   "charcoal walks to the marsh smith; pots and salt walk back"
+  ],
+  "restraint": "the coppice is the rule made wood: cut a different stand each winter, seven stands round the camp, and the woods are never emptier than one year's cut; the clearing stays a garden, not a field; the hive is smoked, never felled",
+  "ceiling_hint": "a deciduous forest with a deep-soiled flat reaches the village; the rainforest is rich in fuel and poor in maize and stays a few hearths"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "charcoal_platform",
+    "what": "a flat black circle ten paces across where nothing grows, the soil studded with charcoal; the trees round its rim grow thin",
+    "legible": "heap",
+    "restore": "cleared: the collier burns on the old platform, and the circle is the size it always was",
+    "inherits": "a level, stone-free pitstead; the first burn needs no clearing"
+   },
+   {
+    "id": "coppice_stools",
+    "what": "many-trunked hazel and ash in ranks, a crown of thick stems out of one huge stool: the giveaway that someone cut here",
+    "legible": "cleared",
+    "restore": "restored: cut back to the stump, the stools throw poles again next spring",
+    "inherits": "the woodlot works from the first cut; stools older than any tree standing"
+   },
+   {
+    "id": "house_hollows",
+    "what": "a long rectangle of post-stubs with a row of hearth-stones down the middle, or round hollows dug into the slope",
+    "legible": "cleared",
+    "restore": "restored: new poles in the old holes, the hearths relit in a row",
+    "inherits": "level floors and a row of hearths"
+   },
+   {
+    "id": "tar_pit",
+    "what": "a small stone-lined pit with a black glazed rim and a broken pot in the bottom",
+    "legible": "restored",
+    "restore": "restored: a new pot set in the old pit",
+    "inherits": "pitch from the first season"
+   }
+  ],
+  "plants_differ": "nothing on the charcoal platform, and the trees round it grow slow; the coppice stools wear a crown of stems from one root; nettle and elder on the old hearths and middens; the spring flowers thickest in the last-cut glade"
+ },
+ "aesthetic": {
+  "silhouette": "a long low roof under tall trees; a mound smoking in a clearing; ranks of straight poles against a rack; a hurdle fence round the plot",
+  "palette": [
+   "bark grey",
+   "hazel gold",
+   "oak green",
+   "charcoal black"
+  ],
+  "sounds": [
+   "an axe in the coppice",
+   "a mound hissing slow",
+   "bees",
+   "corn leaves in the wind"
+  ],
+  "props": [
+   "the charcoal mound",
+   "stacked poles",
+   "a hurdle fence",
+   "braided corn under the eaves",
+   "the tar pot in its pit"
+  ]
+ },
+ "folk_kinds": [
+  "human",
+  "fae",
+  "small_folk"
+ ],
+ "real_world": [
+  {
+   "analogue": "Coppice woodsmanship of lowland England (Bradfield Woods, Suffolk)",
+   "region": "eastern England; the craft across temperate Europe",
+   "note": "cut on rotation since at least 1252; some ash stools are thought to be over a thousand years old; hazel on a seven-year cycle for hurdles, chestnut and oak on longer ones; the woods Oliver Rackham wrote from",
+   "source": "https://www.suffolkwildlifetrust.org/bradfieldwoods"
+  },
+  {
+   "analogue": "Colliers and the charcoal clamp (Meiler)",
+   "region": "Europe and the Appalachians, into the 20th century",
+   "note": "wood stacked round a chimney, sealed with bracken and turf, burned starved of air for days and watched day and night; about 30 kg of charcoal from 100 kg of wood, and the only fuel hot enough to work iron; the platforms are still flat black circles in the woods, with tree cover lower or absent",
+   "source": "https://en.wikipedia.org/wiki/Charcoal_pile"
+  },
+  {
+   "analogue": "Neanderthal birch tar",
+   "region": "Europe, c. 200,000–50,000 years ago",
+   "note": "flint hafted with tar distilled from birch bark at Campitello (Italy, c. 200,000 years), Königsaue (Germany) and on a 50,000-year-old tool from the Dutch North Sea: the oldest glue we know",
+   "source": "https://www.universiteitleiden.nl/en/news/2019/10/neanderthal-glue-from-the-north-sea"
+  },
+  {
+   "analogue": "Ötzi's fire kit",
+   "region": "the Alps, c. 3300 BCE",
+   "note": "the Iceman carried tinder fungus (Fomes fomentarius) in his belt pouch and a birch-bark container blackened inside, with maple leaves and charcoal: embers wrapped to carry; his axe and arrows were hafted with birch tar",
+   "source": "https://www.iceman.it/en/oetzi/equipment"
+  },
+  {
+   "analogue": "Haudenosaunee (Iroquois) longhouse villages",
+   "region": "the Eastern Woodlands: present-day New York and Ontario",
+   "note": "longhouses of bent poles and elm bark, about 24 m long, up to twenty families to a row of hearths; maize, beans and squash planted together in mounds, the women planting and the men clearing; corn braided from the rafters, food kept in bark-lined pits",
+   "source": "https://www.haudenosauneeconfederacy.com/historical-life-as-a-haudenosaunee/food-and-hunting/"
+  },
+  {
+   "analogue": "Satoyama",
+   "region": "Japan",
+   "note": "the village wood between paddy and mountain, cut for firewood and charcoal every 15–20 years, its leaf litter carried to the fields; left uncut it closes to dark laurel forest and the butterflies go",
+   "source": "https://en.wikipedia.org/wiki/Satoyama"
+  },
+  {
+   "analogue": "Zeidlerei, tree beekeeping",
+   "region": "the forests of central Europe, recorded from 959 CE",
+   "note": "hives cut into old trees six metres up with a board over the door, smoked and part-emptied, the colony left to go on; honey hunting itself is older than any farming, painted on rock walls 8,000 years ago",
+   "source": "https://en.wikipedia.org/wiki/Honey_hunting"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Coppicing",
+  "https://www.suffolkwildlifetrust.org/bradfieldwoods",
+  "https://www.woodlandtrust.org.uk/plant-trees/managing-trees-and-woods/types-of-woodland-management/",
+  "https://en.wikipedia.org/wiki/Charcoal_pile",
+  "https://www.frontiersin.org/journals/environmental-science/articles/10.3389/fenvs.2019.00051/full",
+  "https://www.universiteitleiden.nl/en/news/2019/10/neanderthal-glue-from-the-north-sea",
+  "https://en.wikipedia.org/wiki/Three_Sisters_(agriculture)"
+ ]
+}

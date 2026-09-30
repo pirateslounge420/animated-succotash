@@ -1,0 +1,319 @@
+{
+ "id": "mangrove",
+ "name": "Mangrove folk",
+ "one_line": "They built the town on legs over the tide and kept the fish alive in a walled pond; the streets were water, the wealth was honey, and the shells piled up into an island.",
+ "where": {
+  "site_rule": "mangrove",
+  "biomes": [
+   "MANGROVE",
+   "ESTUARY",
+   "LAGOON"
+  ],
+  "needs": [
+   "tidal forest at the site: roots the tide covers and uncovers, a channel a boat can use at low water",
+   "a fresh seep or river arm to drink from; nipa marks it"
+  ]
+ },
+ "fundamental": "fish_run",
+ "food": {
+  "staples": [
+   "crab from under the roots",
+   "oysters and cockles off the stilt roots",
+   "fish and shrimp from the fence and the pond",
+   "honey in the flowering season",
+   "nipa sugar and the sour fruit of the mangrove apple"
+  ],
+  "how": [
+   "a fence of stakes and screens across a tidal creek; the ebb leaves the fish behind it; basket traps in the channels",
+   "oysters cut from the roots at low tide, from the boat",
+   "a hook on a line under the roots for the mud crab; a spear from the boat over the shallows",
+   "the pond: fry come in on the spring tide and are kept until wanted",
+   "smoke a wild hive deep in the forest, in season"
+  ],
+  "preserve": [
+   "smoking over a slow fire on the platform; shrimp sun-dried on the walkway",
+   "nipa vinegar to keep fish; honey keeps itself"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "hardwood_log",
+   "branch",
+   "palm_frond"
+  ],
+  "note": "mangrove wood is dense and burns hot and slow, the long-night log; dry fronds for the quick fire; green leaves for the honey smoke; a kiln of it makes the best charcoal there is, a craft the ruins ran"
+ },
+ "shelter": {
+  "materials": [
+   "mangrove pole",
+   "nipa thatch",
+   "cordage",
+   "the boat"
+  ],
+  "form": "houses on poles above the highest tide, a hearth box of clay on the floor, walkways of poles between them, boats moored underneath; a family without a house lives in its boat"
+ },
+ "light": [
+  "candlenut"
+ ],
+ "dressing": {
+  "by_biome": {
+   "MANGROVE": {
+    "fuel": "mangrove log and branch; frond for the quick fire",
+    "food": "crab, oysters off the roots, pond fish, honey in season",
+    "shelter": "poles over the tide, nipa thatch, walkways between",
+    "palette": "root red, mud, green over tannin-brown water"
+   },
+   "ESTUARY": {
+    "fuel": "branch, driftwood the river brings, reeds",
+    "food": "mullet and shrimp in the fence, cockles, the thickest nipa: sugar and vinegar",
+    "shelter": "stilt houses strung along the channel bank",
+    "palette": "silt brown, nipa green, brown water"
+   },
+   "LAGOON": {
+    "fuel": "palm frond, mangrove branch, driftwood",
+    "food": "reef fish speared from the boat, sea-grass shellfish, crab",
+    "shelter": "houses far out over the shallows, boats under the floors",
+    "palette": "turquoise, coral white, black mangrove"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "fishpond",
+  "plantkeeper": {
+   "knows": [
+    "nipa palm: sewn thatch; the flower stalk tapped for sap, boiled to sugar or soured to vinegar; the young fruit",
+    "sea purslane and saltwort as greens",
+    "mangrove fern shoots to eat; the fern stands where the water is fresh",
+    "mangrove apple fruit, sour and safe; which flowering tells you the hives are full",
+    "mangrove bark to tan lines and nets so they do not rot"
+   ],
+   "teaches_flavour": "why the honey tastes of the forest: the bees work whichever mangrove is in flower; why the midden grows plants the mud does not",
+   "teaches_practical": "greens against the months of fish and salt; the fern means fresh water; vinegar keeps a catch the smoke cannot"
+  },
+  "maker": {
+   "craft": "boat-builder",
+   "works": [
+    "mangrove wood",
+    "nipa",
+    "cordage",
+    "resin"
+   ],
+   "makes": [
+    "dugout canoe",
+    "paddle",
+    "fish trap",
+    "the stilt house and its walkway"
+   ],
+   "wants_from_player": [
+    "resin and pitch",
+    "a blade: obsidian, or bog iron from the marsh smith",
+    "salt"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "fishpond",
+   "name": "Fishpond",
+   "verb": "wall a pond in the back-basin of the forest with mud bunds and a gate of poles; fry come in on the spring tide and fatten on the green scum until wanted",
+   "teaches": "fish kept alive is storage without salt or smoke, the hinge of the ladder; the headman teaches it because it is how this land feeds a village, and because a pond walled small is the difference between a village and a drowned forest",
+   "unlocks": "the camp's fish_run ceiling; a camp on a ruin's bunds has it the first season",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "stilt_house",
+   "name": "Stilt house",
+   "verb": "drive mangrove poles into the mud, lash a platform above the highest tide, thatch it with nipa; a hearth box of clay on the floor; boats for streets",
+   "teaches": "the water is not the house's enemy but its road; a house that floods was built low",
+   "unlocks": "a house over the water; the camp's shelter and its walkways",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "honey",
+   "name": "Honey",
+   "verb": "in the flowering season go deep by boat, find the rock-bee comb hung under a bough, smoke it with a torch of green leaves, cut the honey side and leave the brood",
+   "teaches": "the sweetest thing in the world, taken from the most dangerous place in it; half the comb is left so the hive comes back, restraint you can taste",
+   "unlocks": "honey and wax: the mangrove's trade good up the river",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "oyster_roots",
+   "name": "Oysters off the roots",
+   "verb": "at low tide, from the boat, cut the oysters off the stilt roots with a knife: the oyster, never the root",
+   "teaches": "the roots are the oyster's bed and the fish's nursery; cut the root and the bed is gone in a year",
+   "unlocks": "the player gathers oysters and cockles at low tide in any tidal forest",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "forest_garden",
+   "name": "Forest garden",
+   "verb": "plant useful trees wherever you camp: nipa at the fresh fringe, coconut on the bank, candlenut behind the houses",
+   "teaches": "roof, light and sweet grow at the door if someone planted them; a ruin is found by its grove",
+   "unlocks": "the camp's shelter and light ceilings: nipa thatch that sheds a monsoon, nipa sugar and vinegar, candlenuts; the nipa stand at a ruin is its signpost",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "candlenut",
+   "name": "Candlenuts",
+   "verb": "string the oil-rich nuts on a palm-leaf rib and light the end; they burn one after another",
+   "teaches": "each nut burns about a quarter of an hour, so the rib is a clock as well as a light",
+   "unlocks": "a short tropical light the player carries; the nuts come from the grove behind the camp",
+   "player_can": true,
+   "category": "light"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "honey and wax",
+   "smoked oysters and dried shrimp",
+   "nipa sugar and vinegar",
+   "mangrove poles and shell for lime"
+  ],
+  "wants": [
+   "salt (no sun for pans under the rain)",
+   "resin and pitch",
+   "a blade of obsidian or bog iron",
+   "clay pots"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire in a clay box on a platform over the tide",
+   "the fish fence, then the pond: the fish_run",
+   "smoke racks, the vinegar jar, the sugar pot; the midden begins",
+   "the boat-builder",
+   "honey and wax go up the river in the dugout"
+  ],
+  "restraint": "poles cut from the landward stand, the seaward fringe left to breed the fish; the pond walled small in the back-basin, never the whole forest; the oyster cut off the root, never the root off the tree; half the comb left, and the hives only in season",
+  "ceiling_hint": "a river mouth with nipa at the fringe, a pond in the basin and hives in the back forest reaches the tribal ceiling; a thin fringe on a rock coast stays a family and a boat"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "pile_stumps",
+    "what": "rows of stumps in the mud, seen at low tide, where houses stood on poles",
+    "legible": "cleared",
+    "restore": "restored: new poles go in beside the old stubs",
+    "inherits": "the line of the old town; the first house goes up in a season"
+   },
+   {
+    "id": "shell_midden",
+    "what": "a mound of oyster and cockle shell rising out of the tidal forest, white under the roots; lime-rich, so different plants grow on it",
+    "legible": "heap",
+    "restore": "cleared: the new camp's shell goes on the old heap",
+    "inherits": "dry ground above the tide, and the site's proof that it fed people"
+   },
+   {
+    "id": "pond_bunds",
+    "what": "low mud walls in rectangles through the forest, mangrove grown back along them, water still standing inside at low tide",
+    "legible": "cleared",
+    "restore": "restored: the wall patched and a gate hung; the pond fills on the next spring tide",
+    "inherits": "the fishpond from the first season"
+   },
+   {
+    "id": "canoe_landing",
+    "what": "a cut in the bank with a ramp of logs and packed shell, a hollow where boats were dragged up",
+    "legible": "cleared",
+    "restore": "restored: the ramp relaid",
+    "inherits": "a landing; the boat-builder's yard"
+   },
+   {
+    "id": "kiln_mound",
+    "what": "a low round mound of burnt clay and black earth at the forest edge, charcoal crumbs in it, nothing growing on it",
+    "legible": "heap",
+    "restore": "cleared: the round floor shows",
+    "inherits": "a floor baked hard; proof the old people burned charcoal here, a rung above the camp"
+   }
+  ],
+  "plants_differ": "the midden grows lime-lovers above the tide (buttonwood, sea purslane thickets, a strangler fig) where the forest around is root and mud; nipa stands mark where people planted it at a freshwater seep"
+ },
+ "aesthetic": {
+  "silhouette": "houses on legs over the water, walkways of poles between them, boats moored under the floors, smoke through thatch",
+  "palette": [
+   "root red",
+   "tannin-brown water",
+   "nipa green",
+   "oyster grey"
+  ],
+  "sounds": [
+   "the tide sucking through roots",
+   "fiddler crabs clicking on the mud",
+   "a paddle, then bees in the flowering trees"
+  ],
+  "props": [
+   "a dugout pulled up on the landing",
+   "fish traps drying on the walkway",
+   "the midden",
+   "the pond gate and a smoke torch of green leaves"
+  ]
+ },
+ "folk_kinds": [
+  "human",
+  "goblin"
+ ],
+ "real_world": [
+  {
+   "analogue": "Sundarbans honey collectors (mawali / mouli) and Bonbibi",
+   "region": "Ganges delta, Bangladesh and India",
+   "note": "rock bees (Apis dorsata) hang their combs in the mangrove; the mouli go in by boat in the spring flowering season, invoke Bonbibi, the forest's guardian honoured by Hindus and Muslims alike, against the tiger, and smoke and cut the comb; tigers take collectors every year",
+   "source": "https://en.wikipedia.org/wiki/Sundarban_Honey"
+  },
+  {
+   "analogue": "Tambak fishponds",
+   "region": "Java and the Philippines",
+   "note": "brackish ponds banked off in the mangrove for milkfish fry the tide brings; a Javanese law of 1400 CE already punished 'him who steals from a tambak', and ponds were likely on Mactan before 1521; ponds made too many ate the mangroves in the 20th century, the restraint rule in the record",
+   "source": "https://www.fao.org/4/x6943e/x6943e06.htm"
+  },
+  {
+   "analogue": "Sama-Bajau (the Sama Dilaut)",
+   "region": "Sulu Archipelago, Sabah, eastern Indonesia",
+   "note": "lived on lepa houseboats (a dugout keel built up with strakes, a house amidships) and in stilt villages over the reef shallows; free-diving spearfishers and esteemed boat-builders; most have since moved to land",
+   "source": "https://en.wikipedia.org/wiki/Sama-Bajau"
+  },
+  {
+   "analogue": "TRY Oyster Women's Association",
+   "region": "Tanbi wetlands, The Gambia",
+   "note": "women cut the West African mangrove oyster off the stilt roots at low tide and cook and smoke it; since 2007 some 500 harvesters in 15 villages keep an eight-month closed season and use knives that spare the root",
+   "source": "https://www.equatorinitiative.org/wp-content/uploads/2017/05/case_1370356657.pdf"
+  },
+  {
+   "analogue": "Saloum Delta shell mounds",
+   "region": "Senegal",
+   "note": "218 shell mounds, some hundreds of metres long, built over about two thousand years of cockle and oyster gathering; 28 are burial tumuli, baobabs grow on them, and the delta's villages still live by shellfish and fishing",
+   "source": "https://whc.unesco.org/en/list/1359/"
+  },
+  {
+   "analogue": "Matang Mangrove Forest Reserve",
+   "region": "Perak, Malaysia",
+   "note": "Rhizophora cut for charcoal and poles on a 30-year rotation under management since 1902, the kilns in the forest; the nearest thing to a mangrove coppice",
+   "source": "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0105069"
+  },
+  {
+   "analogue": "Nipa palm (attap)",
+   "region": "estuaries of Southeast Asia, India to Australia",
+   "note": "roofs of sewn nipa thatch; the flower stalk tapped for sweet sap about thirty days a stalk, boiled to sugar or left to sour into vinegar or tuba; spreads by floating seed and by planting",
+   "source": "https://en.wikipedia.org/wiki/Nypa_fruticans"
+  },
+  {
+   "analogue": "Tumaco-La Tolita culture",
+   "region": "Pacific mangrove coast of Colombia and Ecuador, c. 350 BCE-400 CE",
+   "note": "houses on piles in the tidal forest, earthen mounds (tolas), raised fields whose channels held water and drew fish; the first people known to work platinum",
+   "source": "https://en.wikipedia.org/wiki/Tumaco-La_Tolita_culture"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Sundarban_Honey",
+  "https://en.wikipedia.org/wiki/Bonbibi",
+  "https://www.fao.org/4/x6943e/x6943e06.htm",
+  "https://en.wikipedia.org/wiki/Sama-Bajau",
+  "https://www.equatorinitiative.org/wp-content/uploads/2017/05/case_1370356657.pdf",
+  "https://whc.unesco.org/en/list/1359/",
+  "https://en.wikipedia.org/wiki/Nypa_fruticans",
+  "https://en.wikipedia.org/wiki/Aleurites_moluccanus"
+ ]
+}

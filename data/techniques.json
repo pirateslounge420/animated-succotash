@@ -1,0 +1,864 @@
+{
+ "_help": {
+  "about": "Techniques (design 30 Sept §BO–§BP): verbs learned from peoples, permanent and weightless. taught_by lists people ids (data/peoples). player_can: the player performs it in the world; otherwise it is a camp thing that raises the camp's ceilings. first_to_build marks the one to implement first. Restart after editing.",
+  "category": "light | fire | fuel | food | water | materials | shelter | marks | travel"
+ },
+ "techniques": [
+  {
+   "id": "resin_torch",
+   "name": "Resin torch",
+   "category": "light",
+   "taught_by": [
+    "old_growth",
+    "taiga"
+   ],
+   "verb": "dip a cattail head or bark twist in pine pitch",
+   "unlocks": "a torch that burns longer and brighter and shrugs off drizzle (torch.json resin block)",
+   "player_can": true
+  },
+  {
+   "id": "fatwood",
+   "name": "Fatwood",
+   "category": "light",
+   "taught_by": [
+    "taiga",
+    "old_growth"
+   ],
+   "verb": "split resin-soaked heartwood out of an old pine stump",
+   "unlocks": "fatwood splints: a hot, long-burning torch found not made",
+   "player_can": true
+  },
+  {
+   "id": "ember_carrier",
+   "name": "Ember carrier",
+   "category": "fire",
+   "taught_by": [
+    "taiga",
+    "old_growth",
+    "rock_shelter"
+   ],
+   "verb": "wrap a live coal in tinder fungus or punk wood and bark",
+   "unlocks": "carry fire for a day or more with no light; lay a new fire from it; it goes cold if neglected (fire is never made, only carried)",
+   "player_can": true
+  },
+  {
+   "id": "fat_lamp",
+   "name": "Fat lamp",
+   "category": "light",
+   "taught_by": [
+    "tundra",
+    "coast",
+    "rock_shelter"
+   ],
+   "verb": "a stone bowl, rendered fat, a moss wick",
+   "unlocks": "a dim light that burns for hours and won't blow out; set it down inside a shelter",
+   "player_can": true
+  },
+  {
+   "id": "candlenut",
+   "name": "Candlenuts",
+   "category": "light",
+   "taught_by": [
+    "tropical_forest",
+    "mangrove"
+   ],
+   "verb": "string oil-rich nuts on a rib; they burn one after another",
+   "unlocks": "a short tropical light source",
+   "player_can": true
+  },
+  {
+   "id": "peat_fuel",
+   "name": "Peat cutting",
+   "category": "fuel",
+   "taught_by": [
+    "marsh"
+   ],
+   "verb": "cut peat in bricks, stack it to dry over summer",
+   "unlocks": "a slow smoky fuel harvested, not chopped; a camp's fuel without a forest",
+   "player_can": true
+  },
+  {
+   "id": "dung_fuel",
+   "name": "Dung fires",
+   "category": "fuel",
+   "taught_by": [
+    "steppe",
+    "savanna_herders",
+    "tundra",
+    "highland"
+   ],
+   "verb": "gather and dry herd dung",
+   "unlocks": "fuel where there are no trees; depends on the animals, which depend on the grass",
+   "player_can": true
+  },
+  {
+   "id": "charcoal",
+   "name": "Charcoal burning",
+   "category": "fuel",
+   "taught_by": [
+    "old_growth"
+   ],
+   "verb": "stack wood in a mound, seal it with turf, burn it slow for days",
+   "unlocks": "charcoal: hotter than any wood; what the marsh bloomery needs (exchange)",
+   "player_can": false
+  },
+  {
+   "id": "coppice",
+   "name": "Coppicing",
+   "category": "fuel",
+   "taught_by": [
+    "old_growth",
+    "river"
+   ],
+   "verb": "cut hazel or ash to the stump; it throws straight poles again in seven years",
+   "unlocks": "a woodlot that is a fuel crop, no clearing; the fix for the restraint rule",
+   "player_can": true
+  },
+  {
+   "id": "pitch",
+   "name": "Pitch and tar",
+   "category": "materials",
+   "taught_by": [
+    "old_growth",
+    "taiga"
+   ],
+   "verb": "cook pine resin or birch bark in a pot",
+   "unlocks": "glue for the spear, tar for boats and torches",
+   "player_can": false
+  },
+  {
+   "id": "weir",
+   "name": "The weir",
+   "category": "food",
+   "taught_by": [
+    "coast",
+    "river"
+   ],
+   "verb": "drive stakes in a V at the tideline or across a river; the tide or the current leaves fish behind it",
+   "unlocks": "a camp's fish_run ceiling; the player can build one at a suitable shore",
+   "player_can": true
+  },
+  {
+   "id": "fishing_line",
+   "name": "Line and hook",
+   "category": "food",
+   "taught_by": [
+    "coast",
+    "lake"
+   ],
+   "verb": "twist a line, carve a hook of bone or shell, cut a pole",
+   "unlocks": "fish with a pole and line, the patient way; the spear stays the fast way",
+   "player_can": true,
+   "first_to_build": true
+  },
+  {
+   "id": "clam_garden",
+   "name": "Clam garden",
+   "category": "food",
+   "taught_by": [
+    "coast"
+   ],
+   "verb": "wall a beach terrace at the low-tide line; clams thrive in the flat behind it",
+   "unlocks": "a shellfish crop that needs no seed",
+   "player_can": false
+  },
+  {
+   "id": "salt_pan",
+   "name": "Salt pans",
+   "category": "food",
+   "taught_by": [
+    "coast",
+    "desert"
+   ],
+   "verb": "seawater or brine in a shallow rock pan; the sun does the work",
+   "unlocks": "salt: food keeps; the coast's trade good inland",
+   "player_can": true
+  },
+  {
+   "id": "drying_rack",
+   "name": "Drying and smoking",
+   "category": "food",
+   "taught_by": [
+    "coast",
+    "steppe",
+    "taiga",
+    "lake"
+   ],
+   "verb": "racks in the wind, or over a slow smoky fire",
+   "unlocks": "fish and meat keep through the lean season; the first storage",
+   "player_can": true
+  },
+  {
+   "id": "flood_crop",
+   "name": "Flood-plain crop",
+   "category": "food",
+   "taught_by": [
+    "river"
+   ],
+   "verb": "plant on the silt the flood leaves",
+   "unlocks": "the river's crop ceiling: fertiliser delivered every year",
+   "player_can": false
+  },
+  {
+   "id": "digging_stick",
+   "name": "Digging stick",
+   "category": "food",
+   "taught_by": [
+    "river",
+    "tropical_forest",
+    "highland"
+   ],
+   "verb": "a fire-hardened stick: dig tubers, plant tubers, cut a channel",
+   "unlocks": "plant and dig; irrigate a plot from a stream (irrigation is a rule: a plot near water or a channel counts as watered)",
+   "player_can": true
+  },
+  {
+   "id": "irrigation_channel",
+   "name": "Channel",
+   "category": "food",
+   "taught_by": [
+    "river",
+    "desert"
+   ],
+   "verb": "cut a ditch from a stream to a plot (a qanat where it is dry)",
+   "unlocks": "a plot away from the bank is watered; the ditch visibly carries water, no fluid physics",
+   "player_can": true
+  },
+  {
+   "id": "terrace",
+   "name": "Terracing",
+   "category": "food",
+   "taught_by": [
+    "river",
+    "mountain",
+    "highland"
+   ],
+   "verb": "step a slope so the soil stays and the water walks down",
+   "unlocks": "crops on a hillside; terraces gone to bramble read as ridges (ruin)",
+   "player_can": false
+  },
+  {
+   "id": "swidden",
+   "name": "Swidden",
+   "category": "food",
+   "taught_by": [
+    "tropical_forest"
+   ],
+   "verb": "clear a garden-sized patch, burn it, plant in the ash, walk away in a few years and let the forest close",
+   "unlocks": "the rainforest's crop; sustainable small, deadly big (restraint)",
+   "player_can": false
+  },
+  {
+   "id": "terra_preta",
+   "name": "Black earth",
+   "category": "food",
+   "taught_by": [
+    "tropical_forest"
+   ],
+   "verb": "charcoal, bone and broken pots worked into poor soil for generations",
+   "unlocks": "soil that stays rich; a ruin that grows better than the land around it",
+   "player_can": false
+  },
+  {
+   "id": "forest_garden",
+   "name": "Forest garden",
+   "category": "food",
+   "taught_by": [
+    "tropical_forest",
+    "mangrove"
+   ],
+   "verb": "plant useful trees wherever you camp",
+   "unlocks": "groves of nut and palm cluster on old village sites; the forest remembers",
+   "player_can": false
+  },
+  {
+   "id": "chuno",
+   "name": "Chuño",
+   "category": "food",
+   "taught_by": [
+    "highland"
+   ],
+   "verb": "freeze potatoes on cold nights, tread the water out, dry them in the sun",
+   "unlocks": "food that keeps for years; the highland's storage",
+   "player_can": false
+  },
+  {
+   "id": "managed_burn",
+   "name": "The burn",
+   "category": "food",
+   "taught_by": [
+    "steppe",
+    "savanna_herders",
+    "tropical_forest"
+   ],
+   "verb": "burn the old grass in season; new growth comes back sweet and the game follows it",
+   "unlocks": "grassland stays grassland; fire-followers bloom; the grassland's farming (wildfire.json rules)",
+   "player_can": false
+  },
+  {
+   "id": "herd",
+   "name": "The herd",
+   "category": "food",
+   "taught_by": [
+    "steppe",
+    "savanna_herders",
+    "taiga",
+    "highland"
+   ],
+   "verb": "follow, then keep, the animals: goats, cattle, reindeer, llamas",
+   "unlocks": "fuel and food where nothing can be planted; built last",
+   "player_can": false,
+   "note": "expensive: animals that move and breed"
+  },
+  {
+   "id": "wild_rice",
+   "name": "Wild rice",
+   "category": "food",
+   "taught_by": [
+    "lake"
+   ],
+   "verb": "bend the stalks over the canoe and knock the grain in",
+   "unlocks": "a lake crop nobody planted",
+   "player_can": false
+  },
+  {
+   "id": "floating_garden",
+   "name": "Floating garden",
+   "category": "food",
+   "taught_by": [
+    "lake"
+   ],
+   "verb": "build a garden bed on the water from reeds and mud",
+   "unlocks": "chinampas: a crop on the lake",
+   "player_can": false
+  },
+  {
+   "id": "fishpond",
+   "name": "Fishpond",
+   "category": "food",
+   "taught_by": [
+    "mangrove",
+    "coast"
+   ],
+   "verb": "wall a pond on the reef or the tide flat",
+   "unlocks": "fish kept alive until wanted",
+   "player_can": false
+  },
+  {
+   "id": "honey",
+   "name": "Honey",
+   "category": "food",
+   "taught_by": [
+    "mangrove",
+    "tropical_forest",
+    "old_growth"
+   ],
+   "verb": "smoke a wild hive, take the comb",
+   "unlocks": "the sweetest thing in the world; the mangrove's trade good",
+   "player_can": false
+  },
+  {
+   "id": "water_from_sand",
+   "name": "Water from sand",
+   "category": "water",
+   "taught_by": [
+    "desert"
+   ],
+   "verb": "a reed pushed into damp sand, sucked; water carried in ostrich eggshells",
+   "unlocks": "drink where there is no river",
+   "player_can": true
+  },
+  {
+   "id": "qanat",
+   "name": "Qanat",
+   "category": "water",
+   "taught_by": [
+    "desert"
+   ],
+   "verb": "a tunnel from a hillside spring, carried underground so it does not evaporate",
+   "unlocks": "a desert camp's water and its plots",
+   "player_can": false
+  },
+  {
+   "id": "lined_spring",
+   "name": "The lined spring",
+   "category": "water",
+   "taught_by": [
+    "steppe",
+    "savanna_herders",
+    "karst"
+   ],
+   "verb": "line a spring with stones so it stays clean",
+   "unlocks": "the one fixed thing on the grassland; every band comes back to it",
+   "player_can": true
+  },
+  {
+   "id": "cave_water",
+   "name": "Cave water",
+   "category": "water",
+   "taught_by": [
+    "karst"
+   ],
+   "verb": "the water is all underground; find the cave pool",
+   "unlocks": "a karst camp's water",
+   "player_can": true
+  },
+  {
+   "id": "bog_iron",
+   "name": "Bog iron",
+   "category": "materials",
+   "taught_by": [
+    "marsh"
+   ],
+   "verb": "rake iron lumps out of the marsh, roast them in a clay bloomery packed with charcoal, hammer the sponge clean",
+   "unlocks": "the only metal in the world; a place, not a tech level; the bog regrows its iron over decades",
+   "player_can": false
+  },
+  {
+   "id": "reed_building",
+   "name": "Reed building",
+   "category": "shelter",
+   "taught_by": [
+    "marsh",
+    "lake"
+   ],
+   "verb": "bundle reeds into pillars and arches; thatch, mats, boats",
+   "unlocks": "a house of reed",
+   "player_can": false
+  },
+  {
+   "id": "trackway",
+   "name": "Trackway",
+   "category": "shelter",
+   "taught_by": [
+    "marsh"
+   ],
+   "verb": "lay split timber across the bog",
+   "unlocks": "cross a marsh dry-footed; the bog preserves it",
+   "player_can": false
+  },
+  {
+   "id": "clay_pot",
+   "name": "Pottery",
+   "category": "materials",
+   "taught_by": [
+    "river",
+    "lake"
+   ],
+   "verb": "dig riverbank clay, throw a pot, fire it in a domed kiln of clay and brush",
+   "unlocks": "storage: the hinge of the ladder; the kiln hump is the ruin",
+   "player_can": false
+  },
+  {
+   "id": "obsidian_knapping",
+   "name": "Knapping",
+   "category": "materials",
+   "taught_by": [
+    "mountain",
+    "desert",
+    "rock_shelter"
+   ],
+   "verb": "strike flakes off obsidian or flint",
+   "unlocks": "a knife: dress carcasses, cut cordage; the knapping floor glitters for ten thousand years",
+   "player_can": true
+  },
+  {
+   "id": "lime_kiln",
+   "name": "Lime",
+   "category": "materials",
+   "taught_by": [
+    "mountain",
+    "karst"
+   ],
+   "verb": "burn limestone in a kiln; slake it with water",
+   "unlocks": "mortar, plaster and whitewash: a hut becomes a house",
+   "player_can": false
+  },
+  {
+   "id": "dry_stone",
+   "name": "Dry-stone walling",
+   "category": "shelter",
+   "taught_by": [
+    "mountain",
+    "highland",
+    "karst"
+   ],
+   "verb": "fit stones without mortar so well they stand five hundred years",
+   "unlocks": "walls and terraces; ridges under the moss when they fall",
+   "player_can": false
+  },
+  {
+   "id": "cordage",
+   "name": "Cordage and baskets",
+   "category": "materials",
+   "taught_by": [
+    "steppe",
+    "savanna_herders",
+    "desert",
+    "coast"
+   ],
+   "verb": "twist grass or bark fibre into rope; coil and weave baskets",
+   "unlocks": "carry more (burden); snares, nets, lines",
+   "player_can": true
+  },
+  {
+   "id": "hide_working",
+   "name": "Hide",
+   "category": "materials",
+   "taught_by": [
+    "rock_shelter",
+    "tundra",
+    "steppe"
+   ],
+   "verb": "scrape, smoke and sew with sinew and a bone needle",
+   "unlocks": "every warm thing to wear; shelter skins",
+   "player_can": false
+  },
+  {
+   "id": "ochre",
+   "name": "Ochre",
+   "category": "marks",
+   "taught_by": [
+    "rock_shelter",
+    "desert"
+   ],
+   "verb": "grind red and yellow iron earth on a stone, mix it with fat",
+   "unlocks": "paint, sunscreen, insect repellent, hide cure; mark your own trail beside the forgotten waymarks",
+   "player_can": true
+  },
+  {
+   "id": "birch_bark",
+   "name": "Birch bark",
+   "category": "materials",
+   "taught_by": [
+    "taiga",
+    "lake"
+   ],
+   "verb": "peel bark in sheets; sew containers and canoes; tinder fungus off the trunk",
+   "unlocks": "containers, a canoe, the ember carrier's wrap",
+   "player_can": false
+  },
+  {
+   "id": "snow_sod_house",
+   "name": "Snow and sod",
+   "category": "shelter",
+   "taught_by": [
+    "tundra"
+   ],
+   "verb": "build from snow blocks, sod, whalebone and driftwood",
+   "unlocks": "shelter where there are no trees; the lamp is the hearth",
+   "player_can": false
+  },
+  {
+   "id": "stilt_house",
+   "name": "Stilt house",
+   "category": "shelter",
+   "taught_by": [
+    "mangrove",
+    "lake"
+   ],
+   "verb": "a platform on poles over the tide; boats for streets",
+   "unlocks": "a house over the water",
+   "player_can": false
+  },
+  {
+   "id": "reed_boat",
+   "name": "Reed boat",
+   "category": "travel",
+   "taught_by": [
+    "lake",
+    "marsh"
+   ],
+   "verb": "bundle reeds into a hull",
+   "unlocks": "cross the lake; a boat to fish from",
+   "player_can": false,
+   "note": "the spec's boats stay a someday; this is a camp craft first"
+  },
+  {
+   "id": "fire_carried_only",
+   "name": "Fire is carried, never made",
+   "category": "fire",
+   "taught_by": [
+    "*"
+   ],
+   "verb": "every flame is borrowed from a hearth; the only new fire is lightning",
+   "unlocks": "the hearth economy's law (§AW–§AX); no fire drill exists",
+   "player_can": false
+  },
+  {
+   "id": "adobe",
+   "name": "Mud and stone",
+   "category": "shelter",
+   "taught_by": [
+    "desert"
+   ],
+   "verb": "puddle clay with straw and water, lay it in courses or bricks on a stone footing, plaster it; roof with poles and brush and a hand of mud",
+   "unlocks": "the camp's storage rung and its rooms; wall stubs and a melted mound are the ruin",
+   "player_can": false
+  },
+  {
+   "id": "ichu_torch",
+   "name": "Ichu torch",
+   "category": "light",
+   "taught_by": [
+    "highland"
+   ],
+   "verb": "twist a bundle of dry ichu grass tight, bind it with a grass cord, light it at the hearth",
+   "unlocks": "a short bright torch made from any tussock; burns fast and dies in the wind",
+   "player_can": true
+  },
+  {
+   "id": "chultun",
+   "name": "The cistern",
+   "category": "water",
+   "taught_by": [
+    "karst"
+   ],
+   "verb": "cut a bottle-shaped hole in the soft rock, plaster it with lime, apron the mouth so the rain runs in",
+   "unlocks": "a camp with no cenote holds through the dry season; the ceiling rises above a handful; a dry cistern keeps nuts and grain",
+   "player_can": false
+  },
+  {
+   "id": "nixtamal",
+   "name": "Nixtamal",
+   "category": "food",
+   "taught_by": [
+    "karst"
+   ],
+   "verb": "soak maize in limewater (or wood-ash lye) overnight, rinse, hull, grind",
+   "unlocks": "maize counts as a full staple for the player and the camp; without it maize is half a meal",
+   "player_can": true
+  },
+  {
+   "id": "cane_torch",
+   "name": "Cane torch",
+   "category": "light",
+   "taught_by": [
+    "karst"
+   ],
+   "verb": "bind dry cane, reed or bamboo in a bundle and light one end",
+   "unlocks": "a bright, fast-burning torch from reeds or bamboo; its charred stub marks rock: the karst folk's waymark inside a cave",
+   "player_can": true
+  },
+  {
+   "id": "fishing_torch",
+   "name": "Fishing torch",
+   "category": "light",
+   "taught_by": [
+    "lake"
+   ],
+   "verb": "split the end of a pole and wedge in strips of birch bark (a twist of dry reed where there is no birch); stand it upright in the bow so the flame hangs out over the water",
+   "unlocks": "a torch that lights the shallows from a boat or a pile at night; fish come to the light and can be speared",
+   "player_can": true
+  },
+  {
+   "id": "oyster_roots",
+   "name": "Oysters off the roots",
+   "category": "food",
+   "taught_by": [
+    "mangrove"
+   ],
+   "verb": "at low tide, from the boat, cut the oysters off the stilt roots with a knife: the oyster, never the root",
+   "unlocks": "the player gathers oysters and cockles at low tide in any tidal forest",
+   "player_can": true
+  },
+  {
+   "id": "eel_trap",
+   "name": "Eel trap",
+   "category": "food",
+   "taught_by": [
+    "marsh"
+   ],
+   "verb": "weave a long basket of willow withies or reed with a funnel mouth; set it in a channel, mouth downstream, on a dark autumn night",
+   "unlocks": "the camp's fish_run ceiling; the player can set a trap in a marsh channel",
+   "player_can": true
+  },
+  {
+   "id": "fir_candle",
+   "name": "Fir candle",
+   "category": "light",
+   "taught_by": [
+    "marsh"
+   ],
+   "verb": "dig the resin-black pine root out of the peat face, dry it by the fire, split it into thin splinters a forearm long, stand one in a split stick",
+   "unlocks": "a hot bright splint for inside the reed house, found at the peat face; a bundle sees out an evening",
+   "player_can": true
+  },
+  {
+   "id": "goat_herd",
+   "name": "The goat herd",
+   "category": "food",
+   "taught_by": [
+    "mountain"
+   ],
+   "verb": "follow the wild goats, then keep them: a fold of dry stone, the kids brought in, the milkers kept and the young males eaten",
+   "unlocks": "the camp's herd ceiling: milk and cheese, dung for the fire above the trees, tallow for the light (built last in the engine)",
+   "player_can": false
+  },
+  {
+   "id": "rushlight",
+   "name": "Rushlight",
+   "category": "light",
+   "taught_by": [
+    "mountain"
+   ],
+   "verb": "peel a rush from the spring's edge to its pith, draw it through melted tallow, wedge it in a split stick",
+   "unlocks": "a short, cheap light to set down inside a shelter; any rendered fat serves, and the herd's tallow makes it by the handful",
+   "player_can": true
+  },
+  {
+   "id": "three_sisters",
+   "name": "The Three Sisters",
+   "category": "food",
+   "taught_by": [
+    "old_growth"
+   ],
+   "verb": "maize, beans and squash in one mound: the stalk holds the bean up, the bean feeds the soil, the squash leaf shades out the weeds",
+   "unlocks": "the forest's crop ceiling: corn braided under the roof, a pit of nuts, then the specialist",
+   "player_can": false
+  },
+  {
+   "id": "clay_lamp",
+   "name": "Clay lamp",
+   "category": "light",
+   "taught_by": [
+    "river"
+   ],
+   "verb": "a fired saucer with a pinched spout; fat or oil in the dish, a twist of rush laid in the spout; lit from the hearth",
+   "unlocks": "a lamp to set down inside a shelter: dim, hours, will not blow out; the potter makes the dish and the player fills and lights it",
+   "player_can": true
+  },
+  {
+   "id": "thorn_fence",
+   "name": "The thorn fence",
+   "category": "shelter",
+   "taught_by": [
+    "savanna_herders"
+   ],
+   "verb": "cut acacia or thorn brush and stack it in a ring, cut ends in; the gap is closed at dusk with one more bush",
+   "unlocks": "the camp's night: a boma around herd, hearth and houses; the pen's dung is its fuel and, in time, its midden",
+   "player_can": false
+  },
+  {
+   "id": "acorn_leaching",
+   "name": "Acorn leaching",
+   "category": "food",
+   "taught_by": [
+    "savanna_herders"
+   ],
+   "verb": "dry and crack the acorns, grind them on the bedrock mortar, spread the meal in a basin scooped in sand and pour water through until it stops running brown",
+   "unlocks": "acorn meal: the scrub's storage crop, a year in the granary; the mortar holes are the ruin",
+   "player_can": true
+  },
+  {
+   "id": "fire_stick",
+   "name": "Fire-stick",
+   "category": "light",
+   "taught_by": [
+    "savanna_herders"
+   ],
+   "verb": "a twist of cured grass or a dry thorn branch lit at the hearth and carried burning at arm's length",
+   "unlocks": "a fast torch that burns out in minutes; dropped lit in cured grass in a dry spell it starts a fire (wildfire.json)",
+   "player_can": true
+  },
+  {
+   "id": "stone_cache",
+   "name": "Stone cache",
+   "category": "food",
+   "taught_by": [
+    "tundra"
+   ],
+   "verb": "pile fitted stones over meat and fish on the permafrost so fox and bear cannot get in; the cold does the rest",
+   "unlocks": "food keeps through the dark; the player can cache food under stones and come back for it",
+   "player_can": true
+  },
+  {
+   "id": "inuksuk",
+   "name": "Stone figure",
+   "category": "marks",
+   "taught_by": [
+    "tundra"
+   ],
+   "verb": "stack stones into a figure that reads at a distance: this way, a cache here, the crossing is there",
+   "unlocks": "the player can raise a waymark that persists and reads along the road",
+   "player_can": true
+  },
+  {
+   "id": "canopy_harvest",
+   "name": "Reading the crown",
+   "category": "food",
+   "taught_by": [
+    "canopy"
+   ],
+   "verb": "loop a vine round the trunk and your waist, cut footholds, whip the loop up as you climb; in the crown read the tree: which branch fruits, which hollow hums, which nest is within reach, which bromeliad tank is sweet; take part and come down slow",
+   "unlocks": "the player harvests fruit, eggs, comb and water in the crown of any giant tree; a giant reads as a larder",
+   "player_can": true
+  },
+  {
+   "id": "vine_bridge",
+   "name": "Vine bridge",
+   "category": "travel",
+   "taught_by": [
+    "canopy"
+   ],
+   "verb": "twist liana or hardy-kiwi vine into cables as thick as an arm, anchor them round two trunks, hang a floor of cross-poles and walk it in; rebuild it every third year, before it rots",
+   "unlocks": "the player crosses their bridges; taught, lashes a short one between two close trees (a gap, not a gorge)",
+   "player_can": true
+  },
+  {
+   "id": "rope_ladder",
+   "name": "Rope ladder",
+   "category": "travel",
+   "taught_by": [
+    "canopy"
+   ],
+   "verb": "two bast ropes, bamboo rungs lashed a forearm apart, coiled at the platform lip and let down; hauled up at dusk",
+   "unlocks": "once the headman has met you their ladders come down for you; the player can hang one from a platform or a thick branch",
+   "player_can": true
+  },
+  {
+   "id": "root_bridge",
+   "name": "Living root bridge",
+   "category": "travel",
+   "taught_by": [
+    "canopy"
+   ],
+   "verb": "plant a rubber fig on each bank, lead its aerial roots across a hollowed palm trunk or a bamboo, twist them, tie them, wait: fifteen to thirty years before it bears a person, and it grows stronger every year after",
+   "unlocks": "the camp's crossing that never rots; the ruin's one signature that grows",
+   "player_can": false
+  },
+  {
+   "id": "tree_platform",
+   "name": "Tree platform",
+   "category": "shelter",
+   "taught_by": [
+    "canopy"
+   ],
+   "verb": "pick a giant with a crotch 8–15 m up, lash a frame of poles into it with rattan, prop it from below with four to ten poles, floor it with bark or split bamboo, roof it with leaf",
+   "unlocks": "the camp's shelter: one family per giant, the village the size of the stand",
+   "player_can": false
+  },
+  {
+   "id": "hearth_box",
+   "name": "Hearth box",
+   "category": "fire",
+   "taught_by": [
+    "canopy"
+   ],
+   "verb": "a box of poles floored with a hand of clay and a bed of sand, set on the platform; the fire lives in it and never touches the floor; if the clay cracks, the folk cut the box loose and let it fall",
+   "unlocks": "the player lays a fire on a platform, a bridge-head or a big branch without burning it; the ember comes up in a bark bundle",
+   "player_can": true
+  },
+  {
+   "id": "dammar_torch",
+   "name": "Dammar torch",
+   "category": "light",
+   "taught_by": [
+    "canopy"
+   ],
+   "verb": "knock the hardened resin off the bark where a dipterocarp has bled, pound it and pack it into a leaf or bark tube or a split bamboo, light it at the hearth box",
+   "unlocks": "the dammar torch: a slow bright hand light in the wet forests; fir pitch is the temperate stand-in",
+   "player_can": true
+  }
+ ]
+}

@@ -1,0 +1,369 @@
+{
+ "id": "lake",
+ "name": "Lake folk",
+ "one_line": "Still water is a garden that floats: traps in the shallows, rice knocked into a canoe, and beds of mud and reed staked out on the lake itself.",
+ "where": {
+  "site_rule": "lake",
+  "biomes": [
+   "LAGOON",
+   "TEMPERATE_DECIDUOUS",
+   "TAIGA",
+   "PUNA",
+   "TROPICAL_RAINFOREST",
+   "FRESHWATER_MARSH"
+  ],
+  "needs": [
+   "a lake or lagoon shore within 200 m (not the sea)",
+   "shallows for traps and beds, and a reedbed; a stream where the lagoon is brackish"
+  ]
+ },
+ "fundamental": "fish_run",
+ "food": {
+  "staples": [
+   "fish from the traps",
+   "wild rice (the cold lakes)",
+   "greens, squash and beans from the floating beds",
+   "wildfowl and eggs",
+   "cattail root and the reed's white base"
+  ],
+  "how": [
+   "fish traps and stake weirs in the shallows",
+   "spear by torchlight and line from a boat",
+   "the rice knocked into the canoe",
+   "the floating garden",
+   "wildfowl netted in the reeds at dusk"
+  ],
+  "preserve": [
+   "drying racks in the lake wind, or reed smoke",
+   "parched rice in bark boxes and pots",
+   "sugar that keeps dry all year (the maple lake)"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "reeds",
+   "driftwood",
+   "branch",
+   "hardwood_log",
+   "softwood_log"
+  ],
+  "note": "cut reed dried in stooks is the lake's own fuel: quick, smoky, always there; driftwood off the shore; the shore forest adds branch and log by dressing; on a reed island the hearth sits on a flat stone so the island does not burn"
+ },
+ "shelter": {
+  "materials": [
+   "reeds",
+   "poles and wattle",
+   "lake clay",
+   "birch bark"
+  ],
+  "form": "a house on legs over the shallows, or a reed house on a reed island; walls plastered with lake clay; a boat pulled up and a rack at every door"
+ },
+ "light": [
+  "fishing_torch"
+ ],
+ "dressing": {
+  "by_biome": {
+   "TEMPERATE_DECIDUOUS": {
+    "fuel": "hardwood and branch from the shore wood, reed for kindling",
+    "food": "perch and whitefish from the traps, squash and beans on the beds, maple sugar in spring",
+    "shelter": "wattle-and-daub houses on piles along the shore, roofs of reed and bark; the canoe landing",
+    "palette": "beech green, daub ochre, reed gold, still grey water"
+   },
+   "TAIGA": {
+    "fuel": "softwood and birch, driftwood; the reeds are short here",
+    "food": "wild rice knocked into the canoe, whitefish and pike speared by torchlight, blueberries; fish frozen on the rack in winter",
+    "shelter": "birchbark wigwams at the canoe landing, a parching pit beside the fire; in winter the ice is the road",
+    "palette": "spruce black-green, birch white, rice gold, black water"
+   },
+   "PUNA": {
+    "fuel": "reed above all, tola brush from the shore; there is no tree",
+    "food": "small lake fish, duck and eggs, the reed's white base, potatoes from the shore folk",
+    "shelter": "reed houses on reed islands, rebuilt from the top as the bottom rots; reed boats; the hearth on a stone",
+    "palette": "totora gold, deep lake blue, thin high sky, straw"
+   },
+   "TROPICAL_RAINFOREST": {
+    "fuel": "driftwood and branch, bamboo where it grows",
+    "food": "catfish from the traps, tomatoes and gourds on the beds, water-lily seed and lotus root",
+    "shelter": "houses of pole and woven bamboo on stilts over the water; boats for streets",
+    "palette": "hyacinth green, brown water, teak, egret white"
+   },
+   "FRESHWATER_MARSH": {
+    "fuel": "reed, and little else; a stick of driftwood",
+    "food": "eel and pike from the traps, wildfowl and eggs, cattail root; rice where the water is right",
+    "shelter": "reed houses on a hummock of reed and mud: the beginning of an island",
+    "palette": "reed gold, cattail brown, grey water, wildfowl white"
+   },
+   "LAGOON": {
+    "fuel": "driftwood, reed off the fresh edge",
+    "food": "mullet and eel from the fish traps, shellfish; the beds only in the fresh corner where the stream comes in",
+    "shelter": "stilt houses over the brackish shallows, a reed-and-driftwood weir between the piles",
+    "palette": "seagrass green, sand, brackish grey-blue, samphire"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "floating_garden",
+  "plantkeeper": {
+   "knows": [
+    "reed and cattail: the white base to eat, the stem to build, the fluff for tinder",
+    "wild rice, and the week the heads fill",
+    "willow: the stake that roots and holds a bed's edge",
+    "water lily and lotus, seed and root",
+    "the maple, and the weeks the sap runs"
+   ],
+   "teaches_flavour": "why the rice is knocked, never cut: what falls in the water is next year's bed; why a reed island smells of rot underneath and grows green on top",
+   "teaches_practical": "cattail root is bread when the traps are empty; reed cut in autumn lasts in a roof, reed cut green rots by spring; do not drink where the reedbed is still"
+  },
+  "maker": {
+   "craft": "boatwright",
+   "works": [
+    "reeds",
+    "birch bark",
+    "cordage",
+    "pitch"
+   ],
+   "makes": [
+    "a reed boat or a bark canoe, by dressing",
+    "paddle, push pole and the rice knockers",
+    "fish traps of split reed"
+   ],
+   "wants_from_player": [
+    "pitch and resin (the seams)",
+    "cordage fibre",
+    "obsidian (a knife for bark and reed)"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "floating_garden",
+   "name": "Floating garden",
+   "verb": "stake a rectangle in the shallows, fence it with wattle, fill it with lake mud and rotting reed until it stands above the water; plant willows at the corners to root the edge",
+   "teaches": "the one crop every lake gives, from the cold reed lake to the lagoon's fresh corner: nothing cleared, nothing burned, the lake bed lifted into a bed and dressed again each year with the same mud; the headman's gift because it works at every shore and is why a lake village stays under the line",
+   "unlocks": "the camp's crop ceiling; a grid of beds and canals; willows in lines (ruin)",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "wild_rice",
+   "name": "Wild rice",
+   "verb": "two to a canoe: one poles, one bends the stalks over the gunwale and taps the grain in with a pair of sticks; then parch, tread and winnow",
+   "teaches": "a crop nobody planted: half the grain falls in the water and that is next year's bed (the cold lakes only: taiga and the temperate shore)",
+   "unlocks": "the camp's grain ceiling where rice grows; a store that keeps the winter",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "fishing_line",
+   "name": "Line and hook",
+   "verb": "twist a line, carve a hook of bone or shell, cut a pole; fish from the boat or the end of a pile",
+   "teaches": "the patient way to fish; on still water the line beats the spear",
+   "unlocks": "the player fishes with a pole and line",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "drying_rack",
+   "name": "Drying and smoking",
+   "verb": "racks in the lake wind, or over a slow reed-smoke fire",
+   "teaches": "the first storage: fish keep, and so does the rice",
+   "unlocks": "fish and rice keep through the lean season",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "reed_building",
+   "name": "Reed building",
+   "verb": "cut reed in autumn, dry it, bind it in bundles; bundles into pillars and arches, mats for wall and floor, and a whole island laid layer on layer",
+   "teaches": "a house, a floor and the ground itself from one plant, rebuilt from the top as the bottom rots",
+   "unlocks": "a house of reed; a reed island on the deep lake",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "stilt_house",
+   "name": "Stilt house",
+   "verb": "drive poles into the lake bed, lay a platform above the flood, walls of wattle and lake clay, a roof of reed",
+   "teaches": "the flood passes under the floor; the boat is the door",
+   "unlocks": "a house over the water; pile stumps in the mud (ruin)",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "birch_bark",
+   "name": "Birch bark",
+   "verb": "peel bark in one sheet in early summer; sew boxes and a canoe with split spruce root, seal the seams with gum",
+   "teaches": "a canoe light enough to carry over a portage; boxes for rice and sugar; the ember carrier's wrap (the birch lake)",
+   "unlocks": "containers, a canoe",
+   "player_can": false,
+   "category": "materials"
+  },
+  {
+   "id": "clay_pot",
+   "name": "Pottery",
+   "verb": "dig clay where the lake bed shows at low water, coil a pot, fire it in a hump of clay and brush",
+   "teaches": "the pot is the hinge: rice, sugar and fish oil keep in it, and on a reed island the stove sits in it",
+   "unlocks": "storage; sherds in the shallows for ten thousand years (ruin)",
+   "player_can": false,
+   "category": "materials"
+  },
+  {
+   "id": "reed_boat",
+   "name": "Reed boat",
+   "verb": "bind dry reed into two long bundles, lash them into a hull with a curved prow",
+   "teaches": "a boat from the same plant as the house; it soaks, sinks slowly, and is replaced in a season or two",
+   "unlocks": "cross the lake; set traps and knock rice from it (a camp craft first)",
+   "player_can": false,
+   "category": "travel"
+  },
+  {
+   "id": "fishing_torch",
+   "name": "Fishing torch",
+   "verb": "split the end of a pole and wedge in strips of birch bark (a twist of dry reed where there is no birch); stand it upright in the bow so the flame hangs out over the water",
+   "teaches": "the light on the water is the lake's lamp: the fish rise to it and you see them while they cannot see you; the spear does the rest; spare bark is carried to feed it",
+   "unlocks": "a torch that lights the shallows from a boat or a pile at night; fish come to the light and can be speared",
+   "player_can": true,
+   "category": "light"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "dried fish",
+   "wild rice",
+   "reed mats and cordage",
+   "pots"
+  ],
+  "wants": [
+   "pitch and resin",
+   "obsidian",
+   "seed and cuttings for the beds"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire on the shore, a boat before a house",
+   "traps in the shallows: the fish_run",
+   "racks, the parching pit and the pot",
+   "the boatwright",
+   "rice and mats go out by water; pitch and obsidian come back"
+  ],
+  "restraint": "traps take the shallows, never the spawning run; rice is knocked, not cut, and half of it seeds the bed; reed is cut once it has finished growing, and the island is rebuilt from the top rather than begun again; the bed takes mud from the lake and nothing from the forest",
+  "ceiling_hint": "a lake with a rice bed or room for beds reaches the tribal ceiling; a cold tarn with one trap stays a family"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "pile_stumps",
+    "what": "rows of stake stubs in the mud of the shallows, seen at low water; the mud keeps what stood on them",
+    "legible": "cleared",
+    "restore": "restored: new piles driven on the old rows",
+    "inherits": "the firm bar the old builders found; a house over the water in a season"
+   },
+   {
+    "id": "reed_hummock",
+    "what": "a low mound on the shore or grounded in the shallows, a sunk reed island rotted to black earth",
+    "legible": "heap",
+    "restore": "cleared: the camp lays new reed on the old mound",
+    "inherits": "the richest soil on the shore; the first bed is half built"
+   },
+   {
+    "id": "garden_grid",
+    "what": "rectangles of ditch in the shallows, a grid of old beds and canals, willows still standing in lines at the corners",
+    "legible": "cleared",
+    "restore": "restored: the ditches cleared and the beds dressed with new mud",
+    "inherits": "the beds are cut; the garden works from the first season"
+   },
+   {
+    "id": "parching_pit",
+    "what": "a stone-lined pit under the turf, black with old fire, beside a trodden hollow",
+    "legible": "cleared",
+    "restore": "restored: the pit relined and the rice parched in it again",
+    "inherits": "the rice keeps from the first harvest"
+   },
+   {
+    "id": "canoe_landing",
+    "what": "a smooth cut in the bank where boats were dragged up, the stones raked to the sides; sometimes a boat's ribs in the mud",
+    "legible": "restored",
+    "restore": "restored: dragged clear again, a boat on it",
+    "inherits": "a place to keep the boat; the boatwright comes sooner"
+   },
+   {
+    "id": "pot_sherds",
+    "what": "sherds in the shallows and a clay pit gone to pond behind the shore",
+    "legible": "heap",
+    "restore": "cleared: the pit is dug out and the kiln hump raised beside it",
+    "inherits": "the bed is clay, and the pit is already dug"
+   }
+  ],
+  "plants_differ": "willows in straight lines at old bed corners on a shore that otherwise grows reed; nettle and willowherb thick on a reed hummock rotting rich; a wild-rice bed that keeps itself where the folk once knocked it in"
+ },
+ "aesthetic": {
+  "silhouette": "a flat shore, a row of piles, houses on legs over the water; racks; the low hump of a reed island with a boat pulled up on it",
+  "palette": [
+   "reed gold",
+   "still grey water",
+   "birch white",
+   "lake-clay ochre",
+   "willow green"
+  ],
+  "sounds": [
+   "a paddle dripping",
+   "reeds hissing in the wind",
+   "rice heads rattling on the gunwale",
+   "a loon or a bittern at dusk"
+  ],
+  "props": [
+   "fish traps of woven reed",
+   "a boat pulled up, a torch pole in the bow",
+   "drying racks",
+   "the parching pit and a winnowing tray",
+   "stakes and willows at a bed's edge"
+  ]
+ },
+ "folk_kinds": [
+  "human",
+  "fae"
+ ],
+ "real_world": [
+  {
+   "analogue": "The Uros (Uru people)",
+   "region": "Lake Titicaca, Peru and Bolivia; living",
+   "note": "floating islands of totora reed on a base of root blocks (khili), new reed laid on top every few weeks to months as the bottom rots; an island lasts about 25 to 30 years; houses and boats (balsas) of the same reed; fish, wildfowl and the reed's white base eaten; the stove sits on flat stones so the island does not burn; about 1,200 people on some 60 to 70 islands",
+   "source": "https://en.wikipedia.org/wiki/Uru_people"
+  },
+  {
+   "analogue": "Chinampas of Xochimilco",
+   "region": "Basin of Mexico, from c. 1100 CE; still farmed",
+   "note": "rectangles staked in the shallow lake bed and fenced with wattle, filled with mud, lake sediment and rotting vegetation until above the water; ahuejote willows planted at the edges rooted them; beds about 30 x 2.5 m with canoe canals between; maize, beans, squash, amaranth, chilli and flowers, several harvests a year; a dike kept the brackish water of Texcoco off the fresh gardens",
+   "source": "https://en.wikipedia.org/wiki/Chinampa"
+  },
+  {
+   "analogue": "Anishinaabe (Ojibwe): manoomin, birchbark and the sugar bush",
+   "region": "Great Lakes, USA and Canada; living",
+   "note": "wild rice in late August: two to a canoe, one poles, one bends the stalks over the gunwale with cedar knockers and taps, and what falls in the water reseeds the bed; then parched over fire, trodden in moccasins in a lined pit, winnowed on a birchbark tray; the same bark, sewn with split spruce root and sealed with spruce gum, is the canoe, and in a split pole over the bow it is the night-spearing torch (Lac du Flambeau is named for it); from mid-March the maples are tapped into bark makakoon and about 35 gallons of sap boil to one of syrup, granulated to a sugar that keeps for months",
+   "source": "https://www.7generations.org/how-to-harvest-and-prepare-wild-rice-manoomin/"
+  },
+  {
+   "analogue": "Prehistoric pile dwellings around the Alps",
+   "region": "Austria, France, Germany, Italy, Slovenia, Switzerland, c. 5000 to 500 BCE",
+   "note": "111 sites of stilt houses on lake shores, rivers and wetlands, UNESCO listed; farmers and herders who fished at almost every site; the waterlogged mud kept house timbers, nets, textiles, dugouts and a wheel of c. 3400 BCE; the pile fields under the water are the ruin, and tree rings date the houses to the year",
+   "source": "https://whc.unesco.org/en/list/1363/"
+  },
+  {
+   "analogue": "The Intha of Inle Lake",
+   "region": "Shan State, Myanmar; living",
+   "note": "floating beds of lake-bottom weed and water hyacinth heaped with silt and staked to the bed with bamboo, rising and falling with the lake; tomatoes above all; houses of wood and woven bamboo on stilts; the fishermen row standing on one leg to see over the weed",
+   "source": "https://en.wikipedia.org/wiki/Inle_Lake"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Uru_people",
+  "https://en.wikipedia.org/wiki/Chinampa",
+  "https://www.7generations.org/how-to-harvest-and-prepare-wild-rice-manoomin/",
+  "https://www.mnhs.org/mnopedia/search/index/thing/maple-sugaring-and-ojibwe",
+  "https://thecanadianencyclopedia.ca/en/article/birchbark-canoe",
+  "https://ojibwe.lib.umn.edu/collection/densmore-on-spearing-at-night-with-a-torch",
+  "https://whc.unesco.org/en/list/1363/",
+  "https://en.wikipedia.org/wiki/Inle_Lake"
+ ]
+}

@@ -1,0 +1,318 @@
+{
+ "id": "steppe",
+ "name": "Steppe folk",
+ "one_line": "The land gave nothing you could hold, so they learned to move with it: dung for the fire, the burn for the grass, rope to hold the tent, and one spring everyone came back to.",
+ "where": {
+  "site_rule": "by_biome",
+  "biomes": [
+   "TALLGRASS_PRAIRIE",
+   "SHORTGRASS_PRAIRIE",
+   "STEPPE",
+   "SAGEBRUSH"
+  ],
+  "needs": [
+   "a spring or a pool that holds through the dry season; a wild herd within a day's walk and old grass to burn in season"
+  ]
+ },
+ "fundamental": "herd",
+ "food": {
+  "staples": [
+   "the wild herd: bison on the prairie, saiga and wild horse on the steppe, pronghorn in the sage",
+   "roots, grass seed and berries: prairie turnip dug in early summer, chokecherry, saskatoon, buffaloberry",
+   "milk, only once a herd is kept"
+  ],
+  "how": [
+   "follow the wild herd on foot with the dogs: it is read and met at the water, never owned",
+   "the burn draws the herd: burned ground greens first and the animals walk to it",
+   "a surround on a still day; in the old days a drive between cairn lanes over a cliff",
+   "snares for hare and grouse; a fire-hardened digging stick for the roots"
+  ],
+  "preserve": [
+   "meat sliced thin and dried on racks in the wind",
+   "pemmican: dried meat pounded with rendered fat and berries, packed in a hide bag; keeps for years",
+   "roots sliced, braided and hung to dry"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "dung",
+   "grass_bundle",
+   "brush",
+   "branch"
+  ],
+  "note": "no trees: dried dung of whatever herd grazes here, gathered by the basket and stacked out of the rain against winter; grass twists for kindling; sagebrush brush in the sage, cottonwood or elm branch only in the draws. The fire depends on the animals and the animals on the grass, which is why the camp walks"
+ },
+ "shelter": {
+  "materials": [
+   "hide",
+   "poles, carried on a travois and kept for years",
+   "grass_bundle",
+   "cordage"
+  ],
+  "form": "a cone of poles under sewn hides, pegged down with a ring of stones, no bigger than a family; a round lattice tent under felt once there is wool; a rack and a dung pile beside each. No lamp: the fire is the light and the tent glows with it"
+ },
+ "light": [],
+ "dressing": {
+  "by_biome": {
+   "TALLGRASS_PRAIRIE": {
+    "fuel": "dung, with oak and hazel branch from the savanna edge; the richest fuel of the four",
+    "food": "bison in grass taller than a man, prairie turnip, hazelnuts and plums at the oak edge; the biggest camps",
+    "shelter": "hide over poles cut at the oak edge; grass mats on the floor",
+    "palette": "bluestem copper, tall gold, bur-oak green, black after the burn"
+   },
+   "SHORTGRASS_PRAIRIE": {
+    "fuel": "dung almost alone; cottonwood branch only in the draws",
+    "food": "bison on the short sod, pronghorn, prairie turnip, yucca pods and prickly-pear fruit",
+    "shelter": "hide cones set in the lee of a draw; poles carried from far away and kept",
+    "palette": "buffalograss dun, big sky, scarlet globemallow"
+   },
+   "STEPPE": {
+    "fuel": "dung; elm and pea-shrub brush from the ravines",
+    "food": "saiga and wild horse, onion and tulip bulbs in spring, wormwood tea; milk when a herd is kept",
+    "shelter": "hide and grass at first; a round lattice tent under felt where there is wool",
+    "palette": "feather-grass silver, wormwood grey, tulip red for a week in spring"
+   },
+   "SAGEBRUSH": {
+    "fuel": "sagebrush brush and dung; juniper branch on the slopes",
+    "food": "pronghorn and jackrabbit, ricegrass seed, balsamroot, pinyon nuts on the slopes; the leanest of the four",
+    "shelter": "a low lodge of brush and grass bundles, hide when there is hide; cold and dry every night",
+    "palette": "sage silver-green, alkali white, juniper dark"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "dung_fuel",
+  "plantkeeper": {
+   "knows": [
+    "prairie turnip (breadroot): dug May to July while the flower stalk shows, braided and dried",
+    "wild onion and steppe tulip bulbs in spring; ricegrass seed and balsamroot",
+    "soapweed yucca: pods to eat, leaves for cordage, root for soap",
+    "chokecherry, saskatoon and buffaloberry for the pemmican",
+    "wormwood and big sagebrush: tea and smoke, never food; which grass comes back sweet after the burn"
+   ],
+   "teaches_flavour": "why the burned strip greens first and the herd goes to it; why nettles stand where a camp stood",
+   "teaches_practical": "prairie turnip against the lean months; wormwood tea for worms, sagebrush smoke for a fever; death camas grows beside the wild onion and looks like it: the bulb that does not smell of onion kills"
+  },
+  "maker": {
+   "craft": "cordage-maker",
+   "works": [
+    "grass and yucca fibre",
+    "sinew and rawhide",
+    "bone"
+   ],
+   "makes": [
+    "rope and snares",
+    "coiled basket",
+    "rawhide bag and sewn tent cover"
+   ],
+   "wants_from_player": [
+    "hide",
+    "straight poles",
+    "salt"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "dung_fuel",
+   "name": "Dung fires",
+   "verb": "gather the herd's dry dung by the basket, stack it out of the rain, burn it slow",
+   "teaches": "the first thing the grassland teaches, and why the headman gives it: fire without a tree. Dry, it burns low and even for hours; damp, it smokes. The fire depends on the animals and the animals on the grass; stay too long and both are gone, which is why the camp walks",
+   "unlocks": "dung as hearth fuel (fuel.json dung): a fire kept where nothing grows taller than the grass",
+   "player_can": true,
+   "category": "fuel"
+  },
+  {
+   "id": "managed_burn",
+   "name": "The burn",
+   "verb": "in the dry windy weeks before the green-up, light a twist of grass at the hearth and walk a strip of old grass into fire; it runs to the last burn's edge and dies there for lack of fuel",
+   "teaches": "the second craft: the fire is the farming. Burned ground greens first and sweetest and the herd walks to it; a grassland never burned goes to scrub and thorn",
+   "unlocks": "the camp's managed_burn ceiling: a strip a season, the herd drawn to it, grassland kept grassland; fire-followers bloom (wildfire rules)",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "herd",
+   "name": "The herd",
+   "verb": "follow the wild herd on foot with the dogs; keep a tame one last",
+   "teaches": "on the grassland the herd was never owned to begin with: it was followed, read, and met at the water. Keeping one is the last rung, not the first",
+   "unlocks": "the herd ceiling: meat, hide and dung from the followed herd; milk once it is kept; built last in the engine",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "lined_spring",
+   "name": "The lined spring",
+   "verb": "dig the spring out to its eye, wall the basin with stones, floor it with gravel so the water runs clear and the hooves stay out",
+   "teaches": "the one fixed thing. A band can leave everything else behind; it comes back to the water it lined",
+   "unlocks": "a site the sim treats as home: bands return to it and water stays clean; the player can line a spring",
+   "player_can": true,
+   "category": "water"
+  },
+  {
+   "id": "drying_rack",
+   "name": "Drying and pemmican",
+   "verb": "slice meat thin and hang it on a rack in the wind; pound the dry meat, mix it with rendered fat and berries, pack it in a hide bag",
+   "teaches": "the first storage, and a store that walks: a bag of pemmican keeps for years and weighs a quarter of the meat that went into it",
+   "unlocks": "meat and roots keep through winter; the store goes on the travois when the camp moves",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "cordage",
+   "name": "Cordage and baskets",
+   "verb": "twist dry grass, yucca leaf or sagebrush bark into two-ply rope; coil baskets; set snares; lash two poles in a V for the travois",
+   "teaches": "what holds the tent up and the camp together; a camp with no wood keeps its poles by carrying them, and the whole camp moves in a morning when the grass or the fire says so",
+   "unlocks": "carry more (burden); snares for hare and grouse; rope for the tent; a steppe camp walks away with its store and its poles (the §BL abandon rule)",
+   "player_can": true,
+   "category": "materials"
+  },
+  {
+   "id": "hide_working",
+   "name": "Hide",
+   "verb": "scrape, brain-tan and smoke the hide; sew with sinew and a bone awl",
+   "teaches": "the tent cover, the winter robe, the bag the pemmican lives in: everything that keeps the wind out is a hide",
+   "unlocks": "shelter skins, robes, rawhide bags; the maker wants hides",
+   "player_can": false,
+   "category": "materials"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "hide and rawhide",
+   "rope and baskets",
+   "pemmican"
+  ],
+  "wants": [
+   "straight poles",
+   "salt",
+   "clay pots"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "a dung fire beside the lined spring",
+   "the burn strip, and the wild herd followed to it",
+   "racks, then pemmican in hide bags: storage that walks",
+   "the cordage-maker",
+   "hide and rope go to the river and forest folk; poles and salt come back"
+  ],
+  "restraint": "a strip is burned each season, never the whole plain; the camp moves before the grass and the dung run out; the surround takes the herd's edge. The old drives over the cliff took more than could be dried, and that is the rung the bone bed ran past",
+  "ceiling_hint": "the herd is built last in the engine, so managed_burn carries a steppe camp until then: the burned strip draws the wild herd that feeds the camp and fuels its fire. Tallgrass with a lined spring reaches the tribal ceiling; sagebrush stays a handful that moves often"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "tent_rings",
+    "what": "rings of fist-sized stones 2 to 7 m across in the grass, in groups, where tent covers were pegged down; the poles and hides are long gone",
+    "legible": "cleared",
+    "restore": "restored: the new tent is pegged inside the old ring",
+    "inherits": "a levelled floor and the stones already carried"
+   },
+   {
+    "id": "lined_spring",
+    "what": "a wet hollow with stones showing through the silt; nettles and sedge around it",
+    "legible": "cleared",
+    "restore": "restored: silted out, stones reset, the water runs clear",
+    "inherits": "clean water from the first day; the reason every band came back"
+   },
+   {
+    "id": "burn_line",
+    "what": "a stripe of younger, greener grass with fire-follower flowers, and a black line of ash under the turf at its edge",
+    "legible": "restored",
+    "restore": "restored: the camp burns again along the old line",
+    "inherits": "a strip that greens first; the herd already knows the way to it"
+   },
+   {
+    "id": "bone_bed",
+    "what": "at the foot of a cliff, bison bone under the turf metres deep, and lines of small cairns running to the lip above",
+    "legible": "heap",
+    "restore": "cleared: nothing is rebuilt; the camp restacks the cairn lanes as waymarks and takes bone for the maker",
+    "inherits": "bone for awls and scrapers; a cliff the herd was driven to for longer than anyone remembers"
+   },
+   {
+    "id": "stone_wheel",
+    "what": "rare: a cairn on a hilltop inside a wide ring of cobbles with spokes, older than any camp; seen for a day's walk",
+    "legible": "cleared",
+    "restore": "restored: nobody rebuilds it; the camp keeps the grass short around it and adds a stone",
+    "inherits": "a landmark and nothing else: it was never a house, and what it meant the grass forgot"
+   }
+  ],
+  "plants_differ": "the burned strip greens first in spring and flowers with fire-followers; nettles and goosefoot stand on old camp floors where dung and bone fed the soil; a taller ring of grass where a tent stood"
+ },
+ "aesthetic": {
+  "silhouette": "cones of hide against a flat horizon; a rack of meat like flags; smoke going sideways in the wind; at night the tents glow from inside",
+  "palette": [
+   "straw gold",
+   "dun hide",
+   "ash grey",
+   "big sky",
+   "burn-strip green"
+  ],
+  "sounds": [
+   "wind in grass, always",
+   "dogs",
+   "a rope creaking against a pole",
+   "a grass fire crackling far off"
+  ],
+  "props": [
+   "tent poles and a travois leaned together",
+   "drying racks",
+   "a dung pile",
+   "the lined spring, walled with stones",
+   "coiled rope and baskets"
+  ]
+ },
+ "folk_kinds": [
+  "orc",
+  "human"
+ ],
+ "real_world": [
+  {
+   "analogue": "Plains peoples before the horse (Blackfoot, Lakota, Cheyenne and their ancestors)",
+   "region": "Great Plains of North America, before c. 1730",
+   "note": "small bands on foot, dogs pulling the V-shaped travois; tipis about 3 m across pegged with stones (4,290 tipi rings on Alberta's inventory by 1989); dried bison dung, 'buffalo chips', was the fuel where there was no wood; pemmican (dried meat pounded with fat and saskatoon or chokecherry, in hide bags) kept for years and 1 kg fed like 4 kg of fresh meat; the prairie turnip was dug May to July, braided and dried; medicine wheels of cairn, ring and spokes on the hills are up to 5,200 years old (Majorville, Alberta) and remain sacred places",
+   "source": "https://en.wikipedia.org/wiki/Tipi_ring"
+  },
+  {
+   "analogue": "Head-Smashed-In Buffalo Jump (Blackfoot)",
+   "region": "Porcupine Hills, southern Alberta",
+   "note": "in use for at least 5,500 years; runners in wolf and coyote skins moved the herd into drive lanes lined by hundreds of cairns; bone deposits at the cliff foot are 12 m deep; a UNESCO World Heritage Site since 1981",
+   "source": "https://en.wikipedia.org/wiki/Head-Smashed-In_Buffalo_Jump"
+  },
+  {
+   "analogue": "Mongolian herders and the ger",
+   "region": "Mongolian steppe",
+   "note": "argal, dried cattle dung gathered from the pasture, is the hearth fuel where there are no trees; a stored pile of it is read as a sign the herders mean to come back; the ger is a willow lattice under felt, held by ropes, up or down in a couple of hours",
+   "source": "https://www.discovermongolia.mn/blogs/treasure-of-steppe-dried-dung"
+  },
+  {
+   "analogue": "Scythian and Kazakh steppe pastoralists",
+   "region": "Eurasian steppe, Ukraine to Tuva, from the Bronze Age",
+   "note": "Herodotus described the Scythians living in felt tents; sheep, cattle and horses moved between seasonal pastures; sheltered winter sites in Tuva were reused from the Bronze Age into modern times; Kazakh and Kyrgyz yurt-making is a UNESCO-listed craft",
+   "source": "https://www.sciencedirect.com/science/article/pii/S2352226723000399"
+  },
+  {
+   "analogue": "Aboriginal fire-stick farming (Bill Gammage, The Biggest Estate on Earth, 2011)",
+   "region": "Australia",
+   "note": "cool burning in mosaics for thousands of years kept grass open beside shelter to lure kangaroos; Gammage argues the whole continent was managed as one estate, and that a decision not to burn regulated plants and animals as much as burning did",
+   "source": "https://theconversation.com/the-biggest-estate-on-earth-how-aborigines-made-australia-3787"
+  },
+  {
+   "analogue": "Prairie fire ecology (Konza Prairie, National Park Service)",
+   "region": "Great Plains",
+   "note": "without fire, tallgrass goes to dogwood, sumac and red cedar under a litter layer that shades and cools the soil; bison graze recently burned patches first; the Plains burned mostly December to April, the dry windy season, and people set many of those fires to draw or drive game",
+   "source": "https://keep.konza.k-state.edu/prairieecology/fire.html"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Tipi_ring",
+  "https://en.wikipedia.org/wiki/Head-Smashed-In_Buffalo_Jump",
+  "https://en.wikipedia.org/wiki/Dry_dung_fuel",
+  "https://en.wikipedia.org/wiki/Fire-stick_farming",
+  "https://www.nps.gov/lamr/learn/nature/fire-history-of-the-great-plains.htm",
+  "https://en.wikipedia.org/wiki/Pediomelum_esculentum",
+  "https://en.wikipedia.org/wiki/Majorville_Cairn_and_Medicine_Wheel_site",
+  "https://en.wikipedia.org/wiki/Yurt"
+ ]
+}

@@ -1,0 +1,355 @@
+{
+ "id": "desert",
+ "name": "Desert folk",
+ "one_line": "Water is the whole craft: a reed in wet sand, a ditch from the stream, a tunnel under the hills; salt for the road, and a fire the size of a hat against the coldest night in the world.",
+ "where": {
+  "site_rule": "by_biome",
+  "biomes": [
+   "COLD_DESERT",
+   "HOT_DESERT",
+   "OASIS",
+   "BADLANDS",
+   "CANYON",
+   "SALT_FLAT"
+  ],
+  "needs": [
+   "water within reach: a soak in wet sand, a spring, a stream, or a qanat line",
+   "shade (an overhang, a palm, poles for a ramada) and brush to burn; the camp is only as big as its firewood walk"
+  ]
+ },
+ "fundamental": "crop",
+ "food": {
+  "staples": [
+   "mesquite pod flour",
+   "grass seed ground on the stone (ricegrass, grama)",
+   "maize, beans and squash on the watered plot",
+   "cactus fruit and pads; agave hearts from the pit",
+   "dates at the oasis; hare and lizard everywhere"
+  ],
+  "how": [
+   "a channel from the stream to the plot; a check dam of stones across the wash",
+   "seed knocked into a basket, ground on a slab",
+   "saguaro fruit hooked down with a rib pole",
+   "agave hearts roasted two days in a stone-lined pit",
+   "a reed in wet sand where there is no open water"
+  ],
+  "preserve": [
+   "sun-drying: fruit, meat strips, everything dries in a day",
+   "salt from the flat",
+   "the pot and the mud storeroom: seed and flour sealed against mice"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "brush",
+   "cactus_rib",
+   "dung",
+   "branch",
+   "palm_frond"
+  ],
+  "note": "almost none: tiny hoarded fires of brush, dead cactus rib and dung; a canyon adds branch from the stream gallery and the oasis palm frond. No lamp, no torch technique: the desert teaches water, not light, and the desert night is the coldest dark in the game"
+ },
+ "shelter": {
+  "materials": [
+   "stone",
+   "adobe (mud and straw)",
+   "poles, brush and palm frond",
+   "hide"
+  ],
+  "form": "a flat-roofed block of mud-and-stone rooms that grows a room at a time, ladders to the roof, a ramada of poles and brush for the shade, a storeroom; in a canyon the rooms stack under the overhang"
+ },
+ "light": [],
+ "dressing": {
+  "by_biome": {
+   "HOT_DESERT": {
+    "fuel": "dead cactus rib, brush, mesquite twig",
+    "food": "mesquite pods, saguaro fruit, prickly pear, hare",
+    "shelter": "a ramada of poles and brush; mud walls only where a wash gives clay",
+    "palette": "buff, creosote green, saguaro green, rust rock"
+   },
+   "COLD_DESERT": {
+    "fuel": "sagebrush and saltbush twig, dung",
+    "food": "ricegrass seed on the grinding stone, saltbush seed, hare; a thin year",
+    "shelter": "a pit house dug into the ground against the freezing night, brush roof over it",
+    "palette": "grey-green, alkali white, blue shadow, frost"
+   },
+   "OASIS": {
+    "fuel": "palm frond, date stones, tamarisk",
+    "food": "dates and figs, the channel-fed plot of grain and beans",
+    "shelter": "mud-brick houses in the palm shade, roofed with palm trunk and frond; channels between the plots",
+    "palette": "palm green, mud gold, water blue, white sand"
+   },
+   "CANYON": {
+    "fuel": "branch from the cottonwood gallery, juniper, pinyon",
+    "food": "maize, beans and squash on check-dammed plots, pinyon nuts, the seasonal stream's fish",
+    "shelter": "cliff dwellings of stacked sandstone under the overhang, a kiva sunk in the ledge",
+    "palette": "red sandstone, cottonwood gold, juniper green, deep shadow"
+   },
+   "BADLANDS": {
+    "fuel": "sagebrush, juniper from the ravines, dung",
+    "food": "grama and ricegrass seed on the stone, prickly pear, yucca fruit; hunting on the flats",
+    "shelter": "dug into the clay bank and daubed with it; sumac and juniper poles",
+    "palette": "banded clay: grey, ochre, rust; fossil-bone white"
+   },
+   "SALT_FLAT": {
+    "fuel": "greasewood, saltcedar, dung; nearly nothing",
+    "food": "salt and nothing else: glasswort and saltgrass seed at the margin; food walks in from elsewhere",
+    "shelter": "a brush windbreak on the rim; nobody sleeps on the crust",
+    "palette": "salt white, grey, mirage blue"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "water_from_sand",
+  "plantkeeper": {
+   "knows": [
+    "mesquite: pods to flour, roots to the water table",
+    "saguaro, prickly pear and agave: which month the fruit comes, how to skin a pad, why the agave heart is pit-roasted",
+    "Indian ricegrass and grama: seed for the stone",
+    "yucca: fibre, soap and fruit",
+    "date palm and fig at the oasis; pinyon in the canyon"
+   ],
+   "teaches_flavour": "why the dead canal still greens; why mesquite is the desert's tree; the year the saguaro fruits and the year it does not",
+   "teaches_practical": "shade and water before food: the sun kills in a day, hunger in a month; which cactus is a cup; agave raw will hurt you; creosote smells of rain because rain is coming"
+  },
+  "maker": {
+   "craft": "potter",
+   "works": [
+    "clay",
+    "ochre and mineral paint; beeweed boiled black",
+    "yucca fibre for the brush"
+   ],
+   "makes": [
+    "coiled pots, scraped and polished",
+    "painted jars: black on white, red on buff",
+    "water jars, seed jars, corrugated cooking pots"
+   ],
+   "wants_from_player": [
+    "clay",
+    "brush and dung for the firing",
+    "cordage and ochre"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "water_from_sand",
+   "name": "Water from sand",
+   "verb": "push a hollow reed through a grass filter into damp sand at a soak, tamp, wait, suck; fill ostrich eggshells, stopper them with grass, bury the cache for the way back",
+   "teaches": "the headman gives this first because it is the one thing every desert camp knows, oasis or salt flat: the channel needs a stream, the sip-well needs only wet sand. It turns the desert from a wall into a road",
+   "unlocks": "drink at a soak with no open water; eggshell canteens: water carried and cached",
+   "player_can": true,
+   "category": "water"
+  },
+  {
+   "id": "irrigation_channel",
+   "name": "Channel",
+   "verb": "cut a ditch from the stream to the plot, a hand's drop in a hundred paces; a check dam of stones across a wash holds the storm's silt and water",
+   "teaches": "water is the crop: bring it and the seed does the rest. Some dug three hundred miles of ditch with sticks and baskets and the modern town still runs on their lines",
+   "unlocks": "a plot away from the bank counts as watered (a rule, not fluid physics); the crop ceiling at an oasis or a canyon stream",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "qanat",
+   "name": "Qanat",
+   "verb": "a mother well at the foot of the hills, a tunnel sloped a hair downhill for miles, dug from a line of shafts; the water walks out into daylight at the village having never seen the sun",
+   "teaches": "centuries of water without a pump and without a drop lost to the sun; the line of spoil rings on the surface is how you find one, and how the ruin is read",
+   "unlocks": "a desert camp's water and its plots where no stream reaches; a restored qanat is the largest inheritance in the desert",
+   "player_can": false,
+   "category": "water"
+  },
+  {
+   "id": "salt_pan",
+   "name": "Salt pans",
+   "verb": "scrape the crust of the flat, or pool brine in a shallow pan and let the sun take the water",
+   "teaches": "salt keeps food and is the desert's coin: it walks out on the road and pots, grain and dried fish walk back",
+   "unlocks": "salt: preserved food; exchange",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "obsidian_knapping",
+   "name": "Knapping",
+   "verb": "strike flakes off obsidian or flint with a hammerstone; press the edge sharp with an antler tine",
+   "teaches": "the sharpest edge in the world, made in a minute and thrown away; the knapping floor glitters for ten thousand years",
+   "unlocks": "a knife: dress carcasses, cut cordage, split cactus fruit",
+   "player_can": true,
+   "category": "materials"
+  },
+  {
+   "id": "cordage",
+   "name": "Cordage and baskets",
+   "verb": "beat and twist yucca or agave leaf into cord; coil a basket so tight, pitched, that it holds water",
+   "teaches": "the desert's rope and its baskets: a burden basket on a tumpline carries the harvest home; sandals of the same fibre",
+   "unlocks": "carry more (burden); snares, sandals, a net for the hare drive",
+   "player_can": true,
+   "category": "materials"
+  },
+  {
+   "id": "ochre",
+   "name": "Ochre",
+   "verb": "grind red and yellow earth on a stone with a little fat",
+   "teaches": "paint for the pot, the rock and the skin; a handprint on the overhang is the oldest signature there is",
+   "unlocks": "mark your own trail beside the forgotten waymarks; sunscreen",
+   "player_can": true,
+   "category": "marks"
+  },
+  {
+   "id": "adobe",
+   "name": "Mud and stone",
+   "verb": "puddle clay with straw and water, lay it in courses or bricks on a stone footing, plaster it; roof with poles and brush and a hand of mud",
+   "teaches": "a house that is cool at noon and warm at midnight, and a storeroom that mice and sun cannot open; the walls outlast the roof by centuries",
+   "unlocks": "the camp's storage rung and its rooms; wall stubs and a melted mound are the ruin",
+   "player_can": false,
+   "category": "shelter"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "salt",
+   "obsidian and flint",
+   "ochre",
+   "painted pots and dried dates"
+  ],
+  "wants": [
+   "wood of any kind",
+   "clay",
+   "hide",
+   "dried fish and grain off the road"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "a fire of brush in the lee of a rock, hoarded",
+   "water: the soak and the eggshell cache; then the channel from the stream, and the plot (crop)",
+   "the storeroom: mud walls, pots, dried fruit and seed",
+   "the potter",
+   "salt goes out on the road; pots, grain and fish come back"
+  ],
+  "restraint": "the channel takes what the stream gives in a wet year and is cut back in a dry one; the mesquite is never felled, only its pods taken; a soak is covered against animals and never drunk dry; a camp that outruns its brush burns its roof poles next, and then the dark",
+  "ceiling_hint": "with water to bring — an oasis, a canyon stream, a qanat — the desert reaches the tribal ceiling and a town of mud rooms; away from water the camp stays a foraging handful that moves between soaks and never plants. Herding (the Bedouin's desert) is the herd fundamental, built last, not this life"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "canal_line",
+    "what": "a shallow straight trough across the flat, greener than the ground beside it, from where a stream was to where a field was",
+    "legible": "heap",
+    "restore": "cleared: the camp re-cuts the ditch on the old line",
+    "inherits": "a watered plot from the first season; the grade is already right"
+   },
+   {
+    "id": "qanat_shafts",
+    "what": "a line of low doughnut mounds marching straight from the hills, each a filled shaft; a dry tunnel under them",
+    "legible": "heap",
+    "restore": "restored: a shaft re-dug and the tunnel cleared of silt, the water runs again",
+    "inherits": "water where there is no stream: the largest head start in the desert"
+   },
+   {
+    "id": "cliff_dwelling",
+    "what": "stacked sandstone rooms under an overhang, roofs gone, soot on the rock above, a round pit that was a kiva",
+    "legible": "heap",
+    "restore": "restored: the camp roofs the rooms with poles and brush",
+    "inherits": "walls and shade; the coldest night's best shelter"
+   },
+   {
+    "id": "pueblo_stubs",
+    "what": "knee-high wall stubs of stone and mud in a grid on a rise, a mound of melted adobe, sherds everywhere",
+    "legible": "cleared",
+    "restore": "restored: new courses on old footings",
+    "inherits": "level floors and a storeroom's footprint; the sherd scatter points at the clay, so the potter comes sooner"
+   },
+   {
+    "id": "soak_camp",
+    "what": "by a soak: a hearth stain, white eggshell fragments (some engraved), and a grinding slab with a hollow polished by seed, its muller beside it, left for whoever came next",
+    "legible": "cleared",
+    "restore": "restored: the camp's own eggshell cache goes into the same sand; the slab is roughened and used again",
+    "inherits": "the soak itself, proof that water can be had here; seed flour from the first harvest"
+   },
+   {
+    "id": "rock_art",
+    "what": "ochre handprints and figures on the overhang wall; pecked spirals on the varnished boulder",
+    "legible": "heap",
+    "restore": "restored: the camp paints beside them, never over them",
+    "inherits": "waymarks: the paintings point at the water"
+   }
+  ],
+  "plants_differ": "the old canal line greens with mesquite, saltbush and grass long after it runs dry; where fields were over-watered a salt crust grows only glasswort; date palms outlive the people who planted them by a century"
+ },
+ "aesthetic": {
+  "silhouette": "a flat-roofed block of rooms with ladders, a ramada's flat shade, the straight line of a channel; under a canyon wall, rooms stacked like a wasp's nest",
+  "palette": [
+   "buff",
+   "red sandstone",
+   "mesquite green",
+   "salt white",
+   "ochre red"
+  ],
+  "sounds": [
+   "water running in a ditch",
+   "a grinding stone",
+   "coyotes at night",
+   "a small fire in a big silence"
+  ],
+  "props": [
+   "a channel with a wooden head gate",
+   "a ramada and ladders to the roof",
+   "painted pots and a sherd scatter",
+   "a grinding slab",
+   "an eggshell cache and salt cakes"
+  ]
+ },
+ "folk_kinds": [
+  "human",
+  "goblin"
+ ],
+ "real_world": [
+  {
+   "analogue": "Hohokam",
+   "region": "Salt and Gila river valleys, Phoenix basin, Arizona, c. 450–1450 CE",
+   "note": "some 300 miles of hand-dug main canals in the Phoenix basin alone, watering a quarter-million acres at grades of a few feet a mile; maize, beans, squash, cotton and agave; red-on-buff pottery; floods in the 1300s wrecked the canal heads and the system was left by c. 1450. The Akimel and Tohono O'odham are their likely descendants, and Phoenix's modern canals follow their lines",
+   "source": "https://en.wikipedia.org/wiki/Hohokam"
+  },
+  {
+   "analogue": "Ancestral Puebloans (Mesa Verde)",
+   "region": "Colorado Plateau, cliff dwellings c. 1190–1280 CE",
+   "note": "some 600 cliff dwellings of sandstone and adobe mortar under the overhangs, with kivas; dry farming of maize, beans and squash on the mesa top, with over a thousand check dams and hundreds of terraces holding each storm's soil and water, and reservoirs; left in the drought of 1276–99. Their descendants are the Hopi, Zuni and Rio Grande pueblos, who still coil, paint and open-fire their pottery",
+   "source": "https://en.wikipedia.org/wiki/Mesa_Verde_National_Park"
+  },
+  {
+   "analogue": "Persian qanat (kariz)",
+   "region": "Iran, from about 3,000 years ago; spread as karez, foggara, khettara and falaj",
+   "note": "a mother well at the foot of the hills and a tunnel sloped downhill for kilometres (most under 5 km, one near Kerman about 70 km), dug from vertical shafts every 20–35 m whose spoil rings mark the line across the surface like a string of craters; no pump, no evaporation; kept by muqannis whose trade passed father to son; eleven listed by UNESCO in 2016",
+   "source": "https://en.wikipedia.org/wiki/Qanat"
+  },
+  {
+   "analogue": "San peoples (Ju/'hoansi and others)",
+   "region": "Kalahari, southern Africa",
+   "note": "sip-wells: a hollow stem with a grass filter pushed into wet sand and sucked; water carried in stoppered ostrich eggshells and buried in caches along the way; tsamma melons and water tubers. Engraved eggshell canteens at Diepkloof Rock Shelter are about 60,000 years old",
+   "source": "https://khwattuarchive.org/2018/11/traditional-water-sources/"
+  },
+  {
+   "analogue": "Western Desert peoples (Martu, Pitjantjatjara, Ngaatjatjarra)",
+   "region": "central and western Australia",
+   "note": "soaks (native wells) dug metres down through sand to seepage and covered with branches against animals, every one named and its place taught; grass and acacia seed ground to flour on a slab with a muller and baked as damper; big grindstones left at camps for the next visit — Australian grindstone fragments are about 30,000 years old",
+   "source": "https://en.wikipedia.org/wiki/Soakage_(source_of_water)"
+  },
+  {
+   "analogue": "Nabataean and Byzantine Negev farms (Avdat, Shivta)",
+   "region": "Negev highlands, c. 3rd century BCE – 7th century CE",
+   "note": "runoff farming on about 100 mm of rain a year: hillside catchments, channels and stone terraces across the wadi that hold each winter flood's water and silt, cisterns, and grape mounds; Evenari's reconstructed farms at Avdat and Shivta from the late 1950s proved the yields",
+   "source": "https://en.wikipedia.org/wiki/Avdat"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Hohokam",
+  "https://archive.archaeology.org/1103/insider/phoenix_water_crisis_hohokam.html",
+  "https://en.wikipedia.org/wiki/Qanat",
+  "https://en.wikipedia.org/wiki/Mesa_Verde_National_Park",
+  "https://www.nps.gov/places/farming-terrace-trail.htm",
+  "https://khwattuarchive.org/2018/11/traditional-water-sources/",
+  "https://australian.museum/learn/cultures/first-nations-collections/cultural-objects/grindstones/",
+  "https://www8.nau.edu/hcpo-p/pottery.html"
+ ]
+}

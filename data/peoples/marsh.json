@@ -1,0 +1,319 @@
+{
+ "id": "marsh",
+ "name": "Marsh folk",
+ "one_line": "It looked like the worst place to live and was one of the richest: everything in a marsh is stored energy. Peat to burn, reed to build, eels in every ditch, and iron you rake out of the muck.",
+ "where": {
+  "site_rule": "marsh",
+  "biomes": [
+   "SWAMP",
+   "FRESHWATER_MARSH",
+   "WET_MEADOW",
+   "BOG",
+   "FEN"
+  ],
+  "needs": [
+   "standing water or a wetland within 200 m, a hummock or dry rise to build on, and reeds within reach",
+   "peat within reach for the full life; without it the fire runs on reed and willow brush",
+   "an iron seep (red water, an oily sheen on the pool) for the smith, and charcoal from a forest people, or there is no iron"
+  ]
+ },
+ "fundamental": "fish_run",
+ "food": {
+  "staples": [
+   "eels",
+   "pike, perch and tench from the channels",
+   "wildfowl and their eggs",
+   "cattail root, shoots and pollen; cranberry on the bog"
+  ],
+  "how": [
+   "eel traps in the channels on dark autumn nights",
+   "spear from a punt or a reed boat",
+   "nets and decoys for wildfowl at dawn; eggs from the reedbed in spring",
+   "cattail root dug from the shallows in the lean months"
+  ],
+  "preserve": [
+   "eels smoked over a slow peat fire",
+   "fish dried on racks in the wind; cranberries kept in cold water",
+   "salt only when the coast folk bring it"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "peat",
+   "reeds",
+   "brush",
+   "branch",
+   "hardwood_log"
+  ],
+  "note": "peat wherever there is a bog: cut in spring, dried on the meadow all summer, burned all winter, slow and smoky; reeds and dead willow brush for the quick fire everywhere; a swamp adds dead cypress and tupelo, a fen alder branch, a bog stunted spruce; nobody chops a forest here"
+ },
+ "shelter": {
+  "materials": [
+   "reed bundles and reed mats",
+   "willow withies and alder posts",
+   "turf; saw sedge for the ridge"
+  ],
+  "form": "arched reed houses on a hummock or a raised island of reed and mud; the peat stack beside the door; a clay chimney where the smith is; a line of split timber out across the water"
+ },
+ "light": [
+  "fir_candle"
+ ],
+ "dressing": {
+  "by_biome": {
+   "SWAMP": {
+    "fuel": "dead cypress and tupelo, cane; peat where the swamp floor is deep",
+    "food": "catfish and gar, turtle and frog, taro cooked long, palm heart, pickerelweed seed",
+    "shelter": "a platform on cypress posts, palmetto thatch, cane walls, Spanish moss for bedding",
+    "palette": "tupelo green, blackwater, Spanish-moss grey"
+   },
+   "FRESHWATER_MARSH": {
+    "fuel": "reeds and willow brush; peat carried in from the nearest bog",
+    "food": "cattail root and pollen, eels, duck, manna grits from reed sweet-grass seed",
+    "shelter": "reed houses on an island of reed and mud; the reedbed is the wall",
+    "palette": "cattail brown, reed gold, iris yellow"
+   },
+   "WET_MEADOW": {
+    "fuel": "rush and willow brush; this is the drying ground, so the peat stack stands here",
+    "food": "eels from the ditches, meadow fowl, meadowsweet for the mead; the hay feeds nothing until there is a herd",
+    "shelter": "turf walls and rush thatch on the dry rise; a summer camp unless peat is near",
+    "palette": "meadowsweet cream, ragged-robin pink, rush green"
+   },
+   "BOG": {
+    "fuel": "peat, the whole reason for being here; spruce branch for kindling",
+    "food": "cranberry and grouse; the sour water holds few fish, so the camp eats from the fen edge and the streams",
+    "shelter": "turf and spruce pole on the peat, the trackway to the cutting; the coldest of the marsh lives",
+    "palette": "sphagnum red, cottongrass white, peat black"
+   },
+   "FEN": {
+    "fuel": "alder and tamarack branch, sedge, peat from the fen edge",
+    "food": "pike and tench, eels, fowl off the sedge; the richest water of the five",
+    "shelter": "reed walls and saw-sedge thatch on alder posts; the iron seep is usually at this edge",
+    "palette": "alder green, brown moss, sedge straw, iron-red water"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "peat_fuel",
+  "plantkeeper": {
+   "knows": [
+    "cattail: root starch, spring shoots, pollen flour; reed sweet-grass seed as manna grits",
+    "cranberry and bog myrtle",
+    "sphagnum moss as a wound dressing; meadowsweet and willow bark against pain",
+    "yellow flag iris and marsh marigold: not raw, or not at all; taro (swamp) only after long cooking",
+    "cottongrass for wicks, bog fir for the candle, saw sedge for the ridge of a roof"
+   ],
+   "teaches_flavour": "which pools are sour (bog) and which sweet (fen) by what grows at the edge; why iron-red water grows nothing but the plants that eat flies",
+   "teaches_practical": "cattail root in the lean months; sphagnum packs a wound; yellow flag will make you sick; the sour pools are not for drinking"
+  },
+  "maker": {
+   "craft": "smith",
+   "works": [
+    "iron bloom",
+    "reed",
+    "peat"
+   ],
+   "makes": [
+    "a knife blade, an axe head",
+    "an eel spear and fish-hooks",
+    "a bar of iron to carry",
+    "reed mats and eel traps"
+   ],
+   "wants_from_player": [
+    "charcoal",
+    "pitch",
+    "clay"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "peat_fuel",
+   "name": "Peat cutting",
+   "verb": "cut peat in bricks with a long spade, stack them loose on the meadow, turn them, bring them in dry at summer's end",
+   "teaches": "the first thing a stranger is shown, because it is why the fire is lit: plants that fell into water too sour to rot, packed for thousands of years, a fuel you harvest and do not chop, and a forest left standing",
+   "unlocks": "the player cuts peat at a bog face; a camp's fuel without a forest; the cutting fills with water behind you",
+   "player_can": true,
+   "category": "fuel"
+  },
+  {
+   "id": "eel_trap",
+   "name": "Eel trap",
+   "verb": "weave a long basket of willow withies or reed with a funnel mouth; set it in a channel, mouth downstream, on a dark autumn night",
+   "teaches": "the marsh's fish run: every autumn the silver eels run to the sea down every ditch, and a basket in the water takes them without a hook; what let people count rent in eels",
+   "unlocks": "the camp's fish_run ceiling; the player can set a trap in a marsh channel",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "reed_building",
+   "name": "Reed building",
+   "verb": "bundle reeds into pillars, bend them into arches, tie cross-bundles across and hang mats over the lot; no wood, no nail",
+   "teaches": "a hall built of grass that stands ten years and is then rebuilt from the same bed; the reed is the forest here",
+   "unlocks": "a house of reed; mats, baskets, a windbreak",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "bog_iron",
+   "name": "Bog iron",
+   "verb": "rake the rust-brown lumps out of the seep, roast them in a clay chimney the height of a man packed with charcoal, pull out the spongy bloom and hammer it clean",
+   "teaches": "iron dissolved in groundwater seeps into the marsh and bacteria drop it as lumps: no mine, no pickaxe; it never melts, and a raked seep grows back in a generation",
+   "unlocks": "the only metal in the world, worked at this one hearth; a place, not a tech level; the slag heap is the ruin",
+   "player_can": false,
+   "category": "materials"
+  },
+  {
+   "id": "trackway",
+   "name": "Trackway",
+   "verb": "drive crossed pegs into the peat, lay a rail between, set split planks along the top",
+   "teaches": "a road across water; built in a season, walked for a few years, and kept by the bog for near six thousand",
+   "unlocks": "cross a marsh dry-footed; camps on both sides of it join; the bog preserves it as a ruin",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "reed_boat",
+   "name": "Reed boat",
+   "verb": "bundle reeds into a hull, tie it tight, pitch the seams",
+   "teaches": "the marsh has no roads but its channels; the boat is the road",
+   "unlocks": "a punt to fish and trap from; the camp's reach across the water",
+   "player_can": false,
+   "category": "travel"
+  },
+  {
+   "id": "fir_candle",
+   "name": "Fir candle",
+   "verb": "dig the resin-black pine root out of the peat face, dry it by the fire, split it into thin splinters a forearm long, stand one in a split stick",
+   "teaches": "a pine that fell into the bog before the peat grew over it, kept for thousands of years and still full of resin: a splinter burns like a candle. Found, not made; the peat cutter's light",
+   "unlocks": "a hot bright splint for inside the reed house, found at the peat face; a bundle sees out an evening",
+   "player_can": true,
+   "category": "light"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "bog iron: a blade, a hook, an axe head",
+   "reed mats and baskets",
+   "smoked eel",
+   "peat bricks"
+  ],
+  "wants": [
+   "charcoal",
+   "pitch",
+   "salt",
+   "clay pots"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire on the hummock: reeds and dead willow, then the first peat stack",
+   "the eel run: traps in the channels (the fish_run)",
+   "smoked eel on the rack; the peat stack is the store you can see",
+   "the smith: the seep raked, the bloomery built, charcoal wanted",
+   "iron goes out along the trackway; charcoal, salt and pots come in"
+  ],
+  "restraint": "peat is cut from one face and the old face left to fill; a seep is raked once a generation and then let be; reeds are cut in winter after the seed has dropped and the birds have gone; the eel run is trapped, never dammed shut",
+  "ceiling_hint": "a fen with a seep and a bog within reach climbs to exchange and the smith, the only smith there is; a bog alone feeds a handful; a wet meadow without peat is a summer camp"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "slag_mound",
+    "what": "a black glassy heap beside a burnt clay pit; nothing grows on it, and the pool next to it runs red",
+    "legible": "heap",
+    "restore": "cleared: the pit is dug out and re-lined; the heap stays, and grows",
+    "inherits": "the bloomery site and the seep it was built beside: a smith a generation early"
+   },
+   {
+    "id": "peat_cuttings",
+    "what": "straight-sided pools in the bog, too square to be natural, lily on them",
+    "legible": "cleared",
+    "restore": "restored: the camp opens the next face beside the old one",
+    "inherits": "a peat face already opened; fuel the first summer"
+   },
+   {
+    "id": "trackway_timbers",
+    "what": "split planks under the peat, sound as the day they were laid; seen only when a camp clears the line and pulls them up",
+    "legible": "cleared",
+    "restore": "restored: new pegs and planks on the old line",
+    "inherits": "a dry way across the marsh from the first day"
+   },
+   {
+    "id": "house_islands",
+    "what": "low round islands of reed and mud, higher than the marsh around them, willow grown up on them",
+    "legible": "heap",
+    "restore": "restored: the camp builds on the old platforms",
+    "inherits": "dry ground above the flood"
+   }
+  ],
+  "plants_differ": "iron-red water and slag ground grow almost nothing but sundew, bog-rush and a rust stain on the moss; the old house islands carry willow and nettle where everything else is reed; a flooded cutting fills with lily and then bulrush before the bog closes it"
+ },
+ "aesthetic": {
+  "silhouette": "arched reed houses low on a hummock; the peat stack, black and square; one clay chimney smoking; a straight line of timber out across the water",
+  "palette": [
+   "reed gold",
+   "peat black",
+   "iron-red water",
+   "sphagnum red",
+   "willow grey"
+  ],
+  "sounds": [
+   "a bittern booming",
+   "reeds hissing in the wind",
+   "frogs at dusk; a punt pole knocking",
+   "the smith's hammer, the only hammer in the world"
+  ],
+  "props": [
+   "the peat stack",
+   "eel traps on a pole",
+   "the bloomery chimney and the slag heap",
+   "a reed boat pulled up; the trackway"
+  ]
+ },
+ "folk_kinds": [
+  "goblin",
+  "human"
+ ],
+ "real_world": [
+  {
+   "analogue": "Marsh Arabs (Maʻdān, Ahwaris) and the mudhif",
+   "region": "Tigris–Euphrates marshes, southern Iraq",
+   "note": "reed halls (mudhif) of bundled-reed arches and mats, no wood or nails, rebuilt every ten years; a carved elevation of one from Uruk, c. 3300 BCE, is in the British Museum; water buffalo for milk and dung fuel, mashoof boats sealed with bitumen, fish speared from the boat, rice; the marshes were drained in the 1990s and partly refilled after 2003, and the Ahwar were listed by UNESCO in 2016",
+   "source": "https://en.wikipedia.org/wiki/Marsh_Arabs"
+  },
+  {
+   "analogue": "Bog-iron smiths of the Iron Age and Viking age",
+   "region": "Denmark, Norway, Iceland; c. 500 BCE–1300 CE",
+   "note": "an oily sheen on the bog water (járnbrák, the iron slick) marked the seep; pea-sized nodules were cut out with a turf knife and roasted in a clay bloomery about 80 cm tall with charcoal, ore to charcoal 1:1; a smelt gave a bloom of a few kilos, hammered clean; at Snorup in Jutland the Iron Age left slag-pit furnaces on phosphorus-rich bog ore, each used once and abandoned as a pit of slag, and at Eiðar in east Iceland the slag heaps stood building-high (something like 1,000 tonnes of iron); the same bog could be re-harvested about once a generation",
+   "source": "https://www.hurstwic.org/history/articles/manufacturing/text/bog_iron.htm"
+  },
+  {
+   "analogue": "The Sweet Track",
+   "region": "Somerset Levels, England, 3807 BCE",
+   "note": "about 1,800 m of oak plank on crossed pegs of ash, oak and lime with hazel and alder rails, built in one season by tree-ring date, used about ten years and drowned; the bog kept it until a peat-cutter, Ray Sweet, found it in 1970; the Post Track under it is thirty years older",
+   "source": "https://en.wikipedia.org/wiki/Sweet_Track"
+  },
+  {
+   "analogue": "The Fens before drainage",
+   "region": "East Anglia, England, medieval to 1600s",
+   "note": "eels as money (Ramsey Abbey paid 3,000 eels for quarrying rights in 1150), wildfowl, reed and sedge cut by boat under manorial rules, turf for fuel, summer grazing, bone skates on the winter floods; the 'Fen Tigers' fought Vermuyden's drainage from 1630, and the drained peat has been shrinking since (the Holme Fen posts, 1848)",
+   "source": "https://www.greatfen.org.uk/about-great-fen/heritage/brief-history-great-fen"
+  },
+  {
+   "analogue": "Turbary: Irish turf and the Norfolk Broads",
+   "region": "Ireland; Norfolk, England",
+   "note": "peat grows about a millimetre a year; turf is cut by hand with a two-sided spade (the sleán), footed and stacked to dry through the summer, burned all winter; the medieval Norfolk turbaries (Norwich Cathedral took 320,000 tonnes a year) flooded as the sea rose and became the Broads, proved artificial only in the 1960s by Joyce Lambert",
+   "source": "https://en.wikipedia.org/wiki/The_Broads"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Marsh_Arabs",
+  "https://en.wikipedia.org/wiki/Mudhif",
+  "https://www.hurstwic.org/history/articles/manufacturing/text/bog_iron.htm",
+  "https://www.hmsjournal.org/index.php/home/article/view/294",
+  "https://www.dsl.ac.uk/entry/snd/fir",
+  "https://en.wikipedia.org/wiki/Sweet_Track",
+  "https://www.greatfen.org.uk/about-great-fen/heritage/brief-history-great-fen",
+  "https://en.wikipedia.org/wiki/The_Broads"
+ ]
+}

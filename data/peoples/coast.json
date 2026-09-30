@@ -1,0 +1,311 @@
+{
+ "id": "coast",
+ "name": "Coast folk",
+ "one_line": "The sea was a garden already, so they never farmed: weirs, middens and salt, and towns without a single seed.",
+ "where": {
+  "site_rule": "coast",
+  "biomes": [
+   "BEACH",
+   "ROCKY_SHORE",
+   "DUNES",
+   "ESTUARY",
+   "SALT_MARSH",
+   "MARITIME_FOREST"
+  ],
+  "needs": [
+   "the tideline within 300 m",
+   "a stream or spring for fresh water"
+  ]
+ },
+ "fundamental": "fish_run",
+ "food": {
+  "staples": [
+   "shellfish",
+   "fish from the weir",
+   "seaweed",
+   "seabird eggs",
+   "salmon or herring runs in season"
+  ],
+  "how": [
+   "weir at the tideline",
+   "gathering at low tide",
+   "clam garden",
+   "line and hook from the rocks",
+   "spear in the shallows"
+  ],
+  "preserve": [
+   "drying on racks in the wind",
+   "smoking over a slow fire",
+   "salt from the pans"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "driftwood",
+   "grass_bundle"
+  ],
+  "note": "driftwood from the tide line; dune grass for kindling; a maritime forest adds branch"
+ },
+ "shelter": {
+  "materials": [
+   "driftwood",
+   "plank",
+   "hide",
+   "sod",
+   "whalebone"
+  ],
+  "form": "low houses turned from the wind, a drying rack beside each, an upturned boat as a roof"
+ },
+ "light": [
+  "fat_lamp"
+ ],
+ "dressing": {
+  "by_biome": {
+   "ROCKY_SHORE": {
+    "fuel": "driftwood",
+    "food": "cod and shellfish dried on cold rock",
+    "shelter": "sod and whalebone in the lee of the rock",
+    "palette": "slate, kelp green, gull white"
+   },
+   "BEACH": {
+    "fuel": "driftwood and dune grass",
+    "food": "clams from the garden, surf fish",
+    "shelter": "driftwood frames, hide",
+    "palette": "sand, driftwood grey, sea blue"
+   },
+   "DUNES": {
+    "fuel": "dune grass, driftwood",
+    "food": "clams, dune berries",
+    "shelter": "dug into the lee of a dune",
+    "palette": "pale sand, marram green"
+   },
+   "ESTUARY": {
+    "fuel": "driftwood, reeds",
+    "food": "eels, mullet, the weir's best catch",
+    "shelter": "plank on stilts over the mud",
+    "palette": "mud brown, reed gold"
+   },
+   "SALT_MARSH": {
+    "fuel": "reeds, driftwood",
+    "food": "samphire, shellfish, wildfowl",
+    "shelter": "reed and driftwood on a hummock",
+    "palette": "salt green, grey water"
+   },
+   "MARITIME_FOREST": {
+    "fuel": "branch, driftwood",
+    "food": "salmon run, shellfish, berries",
+    "shelter": "plank houses, the richest coast",
+    "palette": "cedar red, deep green, fog"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "fishing_line",
+  "plantkeeper": {
+   "knows": [
+    "seaweed (kelp, dulse) as food and salt",
+    "samphire",
+    "sea buckthorn",
+    "beach pea",
+    "which shellfish are safe when"
+   ],
+   "teaches_flavour": "which seaweed to eat raw and which to dry; why the midden grows different plants",
+   "teaches_practical": "red tide months when shellfish kill; sea buckthorn against scurvy"
+  },
+  "maker": {
+   "craft": "netmaker",
+   "works": [
+    "cordage",
+    "shell",
+    "bone",
+    "salt"
+   ],
+   "makes": [
+    "net",
+    "line and hook",
+    "salt",
+    "dried fish"
+   ],
+   "wants_from_player": [
+    "cordage fibre",
+    "resin",
+    "clay"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "fishing_line",
+   "name": "Line and hook",
+   "verb": "twist a line, carve a hook of bone or shell, cut a pole",
+   "teaches": "the patient way to fish; the spear stays the fast way",
+   "unlocks": "the player fishes with a pole and line",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "weir",
+   "name": "The weir",
+   "verb": "drive stakes in a V at the tideline; the tide comes in over it and goes out, and the fish are left behind the fence",
+   "teaches": "no skill, no luck, just geometry and patience: what let people build towns without a seed",
+   "unlocks": "the camp's fish_run ceiling; the player can build one at a suitable shore",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "clam_garden",
+   "name": "Clam garden",
+   "verb": "wall a beach terrace at the low-tide line; clams thrive in the flat behind it",
+   "teaches": "a shellfish crop with no seed, tended for centuries",
+   "unlocks": "the camp's shellfish ceiling",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "salt_pan",
+   "name": "Salt pans",
+   "verb": "seawater in a shallow rock pan; the sun does the work",
+   "teaches": "salt makes food keep; it is what the coast trades inland",
+   "unlocks": "salt: preserved food; exchange",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "drying_rack",
+   "name": "Drying racks",
+   "verb": "racks in the wind, or over a slow smoky fire",
+   "teaches": "the first storage",
+   "unlocks": "fish keep through the lean season",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "fat_lamp",
+   "name": "Fat lamp",
+   "verb": "a stone bowl, rendered seal or fish fat, a moss wick",
+   "teaches": "light that burns for hours and does not blow out",
+   "unlocks": "a lamp to set down inside a shelter",
+   "player_can": true,
+   "category": "light"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "salt",
+   "dried fish",
+   "shell",
+   "cordage"
+  ],
+  "wants": [
+   "cordage fibre",
+   "resin and pitch",
+   "clay pots",
+   "charcoal"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire in the lee of the rock",
+   "the weir: the fish_run",
+   "drying racks and the midden begins",
+   "the netmaker",
+   "salt goes inland on the road"
+  ],
+  "restraint": "a weir takes only what the tide gives; the clam garden is tended, never stripped; the midden grows a hill over centuries without the shore emptying",
+  "ceiling_hint": "the richest coast (a salmon run) reaches the tribal ceiling; a bare beach stays a handful"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "shell_midden",
+    "what": "a mound of shell a different colour from the shore; lime-rich, so different plants grow on it",
+    "legible": "heap",
+    "restore": "cleared: the new camp's midden starts on the old one",
+    "inherits": "nothing but the site's proof that it fed people"
+   },
+   {
+    "id": "weir_stakes",
+    "what": "a V of stake stubs in the tideline, visible at low tide",
+    "legible": "cleared",
+    "restore": "restored: new stakes on the old line",
+    "inherits": "the weir works from the first season"
+   },
+   {
+    "id": "salt_pans",
+    "what": "shallow pans cut in shoreline rock",
+    "legible": "restored",
+    "restore": "restored: cleared of weed and sand",
+    "inherits": "salt from day one"
+   },
+   {
+    "id": "house_pits",
+    "what": "rectangular hollows in the turf where plank houses stood",
+    "legible": "cleared",
+    "restore": "restored: the camp builds on the old floors",
+    "inherits": "level ground"
+   }
+  ],
+  "plants_differ": "lime-loving plants on the midden (nettle, elder, mallow) in a shore that otherwise grows grass and thrift"
+ },
+ "aesthetic": {
+  "silhouette": "low, wind-turned houses; racks of fish like flags; an upturned boat",
+  "palette": [
+   "driftwood grey",
+   "kelp green",
+   "slate",
+   "gull white",
+   "salt"
+  ],
+  "sounds": [
+   "surf",
+   "gulls",
+   "racks creaking in the wind",
+   "a line whipping"
+  ],
+  "props": [
+   "drying racks",
+   "net poles",
+   "the midden",
+   "an upturned boat",
+   "salt pans"
+  ]
+ },
+ "folk_kinds": [
+  "human",
+  "goblin"
+ ],
+ "real_world": [
+  {
+   "analogue": "Pacific Northwest peoples (Coast Salish, Haida, Tlingit, Nuu-chah-nulth)",
+   "region": "NW coast of North America",
+   "note": "salmon runs, cedar plank houses, clam gardens terraced into the beach; large permanent towns with no farming",
+   "source": "https://en.wikipedia.org/wiki/Clam_garden"
+  },
+  {
+   "analogue": "Jōmon Japan",
+   "region": "Japanese archipelago, c. 14,000–300 BCE",
+   "note": "shell middens by the thousand, pottery ten thousand years old, settled foraging",
+   "source": "https://en.wikipedia.org/wiki/J%C5%8Dmon_period"
+  },
+  {
+   "analogue": "Ertebølle culture",
+   "region": "southern Scandinavia, c. 5300–3950 BCE",
+   "note": "kitchen middens (køkkenmøddinger) on the shore; fish weirs in the fjords",
+   "source": "https://en.wikipedia.org/wiki/Ertebølle_culture"
+  },
+  {
+   "analogue": "Fish weirs generally",
+   "region": "worldwide",
+   "note": "stake weirs at the tideline are among the oldest fixed structures; the Boylston Street weir in Boston is ~5,000 years old",
+   "source": "https://en.wikipedia.org/wiki/Fishing_weir"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Fishing_weir",
+  "https://en.wikipedia.org/wiki/Clam_garden",
+  "https://en.wikipedia.org/wiki/Midden",
+  "https://en.wikipedia.org/wiki/J%C5%8Dmon_period",
+  "https://en.wikipedia.org/wiki/Qulliq",
+  "https://en.wikipedia.org/wiki/Sea_salt"
+ ]
+}

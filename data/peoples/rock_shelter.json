@@ -1,0 +1,319 @@
+{
+ "id": "rock_shelter",
+ "name": "Shelter folk",
+ "one_line": "The one house nobody had to build: an overhang, a hearth in the same spot for ten thousand years, and hands on the ceiling.",
+ "where": {
+  "site_rule": "rock_shelter",
+  "biomes": [
+   "CAVES",
+   "CANYON",
+   "TEMPERATE_DECIDUOUS",
+   "MEDITERRANEAN_SCRUB",
+   "SAVANNA",
+   "TROPICAL_DRY_FOREST",
+   "TEPUI"
+  ],
+  "needs": [
+   "an overhang, a recess at a cliff foot, or a cave mouth: a roof nobody built, with a dry floor above the flood and back from the drip line",
+   "a spring, seep or stream within a short walk"
+  ]
+ },
+ "fundamental": "forage",
+ "food": {
+  "staples": [
+   "game from the valley below (deer, ibex, antelope, wallaby by biome)",
+   "nuts in season: acorn, hazel, pinyon, marula by biome",
+   "roots and tubers dug with a stick",
+   "eggs, grubs, snails, honey when found"
+  ],
+  "how": [
+   "the spear, from a lookout the roof gives for free",
+   "snares on the game trails below the cliff",
+   "gathering by season within a day's walk, then the next overhang"
+  ],
+  "preserve": [
+   "strips smoked over the hearth (the smoke leaves under the lip) or dried on the sun-side rock",
+   "nuts cached in a pit at the back wall"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "branch",
+   "brush",
+   "dung"
+  ],
+  "note": "whatever the land outside gives, dragged up: dead branch from the woods, brush from the scrub, dung on the savanna; small fires, set back from the drip line so the smoke rolls out under the lip"
+ },
+ "shelter": {
+  "materials": [
+   "the rock itself",
+   "hide",
+   "brush",
+   "stacked stone"
+  ],
+  "form": "nothing built: the overhang is the roof; a hide screen or a low stacked-stone wall along the drip line closes the mouth; the hearth back from the lip; beds of grass and brush on the dry floor at the back"
+ },
+ "light": [],
+ "dressing": {
+  "by_biome": {
+   "CAVES": {
+    "fuel": "branch dragged in from whatever grows at the mouth; a shelter burns small",
+    "food": "what the valley outside gives; game taken at the entrance",
+    "shelter": "the cave mouth itself: the hearth at the daylight line, never deeper; the dark at the back is left alone",
+    "palette": "limestone grey, soot black, hearth orange on the ceiling"
+   },
+   "CANYON": {
+    "fuel": "juniper and pinyon branch from the rim, cottonwood from the floor, dung",
+    "food": "pinyon nuts, agave hearts pit-roasted, bighorn, cactus fruit",
+    "shelter": "an alcove in the sandstone wall, sun-warmed in winter, shaded in summer; a stacked-stone wall at the lip",
+    "palette": "red sandstone, ochre bands, cottonwood gold, desert-varnish black"
+   },
+   "TEMPERATE_DECIDUOUS": {
+    "fuel": "oak and beech branch, hazel brush",
+    "food": "acorns and hazelnuts, deer, the river's fish in the valley",
+    "shelter": "a limestone cliff-foot abri above a river bend, hide screens against the north wind; the classic",
+    "palette": "limestone cream, oak brown, moss green, ochre red"
+   },
+   "MEDITERRANEAN_SCRUB": {
+    "fuel": "aromatic brush (rosemary, cistus), pine branch",
+    "food": "holm-oak acorns, ibex and rabbit, wild olive, snails after rain",
+    "shelter": "a valley-facing overhang in limestone, cool in the summer heat; a brush screen",
+    "palette": "pale limestone, sage grey-green, terracotta ochre, hard blue shade"
+   },
+   "SAVANNA": {
+    "fuel": "acacia branch, dung, dry grass to catch",
+    "food": "antelope, tubers, baobab and marula fruit, honey, flying termites in season",
+    "shelter": "the overhang of a granite kopje or a sandstone escarpment; the shade is the point; a thorn fence at the lip",
+    "palette": "granite grey, red laterite ochre, dry-grass gold"
+   },
+   "TROPICAL_DRY_FOREST": {
+    "fuel": "dry-season deadfall branch, brush",
+    "food": "deer and wild pig, wild yams, fruit in the wet season, palm hearts",
+    "shelter": "a limestone overhang lived in through the dry months, the floor swept; a leaf screen in the rains",
+    "palette": "bleached grey trunks, red-peeling bark, ochre red, dust"
+   },
+   "TEPUI": {
+    "fuel": "scant: stunted Bonnetia branch and shrub brush from the clefts; every fire is small and precious",
+    "food": "little on the summit: a waystation, fed from the slope forest below; frogs and what the clefts give",
+    "shelter": "a recess in the black-crusted quartzite out of the cloud-wind; the cosiest ceiling in the game because outside it never stops raining",
+    "palette": "black quartzite, white summit sand, cloud grey, sundew red"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "ochre",
+  "plantkeeper": {
+   "knows": [
+    "nettles at the drip line: greens in spring, fibre in autumn",
+    "tinder fungus and punk wood, the ember carrier's heart",
+    "the fat-bearing nuts by biome (acorn, hazel, pinyon, marula) and how to leach the bitter ones",
+    "aromatic leaves laid in the bedding to keep the biting insects down"
+   ],
+   "teaches_flavour": "why nettles crowd the drip line and nothing grows under the roof; how the ash under the hearth tells the years like tree rings",
+   "teaches_practical": "leach acorns in the stream before you eat them; punk wood holds a coal, green wood kills one"
+  },
+  "maker": {
+   "craft": "hide-worker and painter",
+   "works": [
+    "hide",
+    "ochre",
+    "sinew",
+    "bone"
+   ],
+   "makes": [
+    "cloaks",
+    "hide bags",
+    "paint",
+    "needles"
+   ],
+   "wants_from_player": [
+    "fat or tallow",
+    "cordage",
+    "obsidian"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "ochre",
+   "name": "Ochre",
+   "verb": "grind red and yellow iron earth on a stone, mix it with fat",
+   "teaches": "practical long before it was art: sunscreen, insect repellent, the cure rubbed into hide; then a hand pressed to the wall and the paint blown round it, the oldest signature there is. It is the player's own mark on the world, laid beside the forgotten waymarks",
+   "unlocks": "paint: mark your own trail on rock and tree beside the old waymarks; ochre in the store lets the maker cure hide",
+   "player_can": true,
+   "category": "marks"
+  },
+  {
+   "id": "ember_carrier",
+   "name": "Ember carrier",
+   "verb": "wrap a live coal in tinder fungus or punk wood and bark",
+   "teaches": "fire is never made, only carried; a shelter people's whole life is carrying it from one overhang to the next (the Iceman carried his in maple leaves in a birch-bark box)",
+   "unlocks": "carry fire for a day or more with no light; lay a new fire from it; it goes cold if neglected",
+   "player_can": true,
+   "category": "fire"
+  },
+  {
+   "id": "obsidian_knapping",
+   "name": "Knapping",
+   "verb": "strike flakes off flint, chert or obsidian at the mouth of the shelter",
+   "teaches": "the edge is in the stone already; you take away what is not knife. The floor of flakes outlasts everything else you own",
+   "unlocks": "a knife: dress carcasses, cut cordage; the knapping floor glitters for ten thousand years",
+   "player_can": true,
+   "category": "materials"
+  },
+  {
+   "id": "hide_working",
+   "name": "Hide",
+   "verb": "scrape the flesh side on a beam, smoke it over the hearth, rub in fat and ochre, sew with sinew and a bone needle",
+   "teaches": "every warm thing the player could wear began here; smoke and ochre are what keep a skin from rotting",
+   "unlocks": "the maker turns hide into cloaks, bags and shelter skins; the camp's shelter ceiling",
+   "player_can": false,
+   "category": "materials"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "ochre",
+   "hide",
+   "sinew and bone needles",
+   "flint flakes"
+  ],
+  "wants": [
+   "fat and tallow",
+   "cordage",
+   "obsidian"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "the hearth under a roof nobody built",
+   "forage: game, nuts and roots within a day's walk",
+   "smoke over the hearth; a nut cache at the back wall",
+   "the hide-worker and painter",
+   "hide and ochre go out on the road; the shelter grows no further"
+  ],
+  "restraint": "the camp is small because the roof is: it takes what a day's walk regrows, and when the near woods thin it moves to the next overhang and comes back in a few years. The same shelters were lived in for tens of thousands of years by never being over-lived",
+  "ceiling_hint": "a shelter camp stays a handful: no fundamental, no village, the floor of the ladder and honestly so; what it has instead is the oldest fire in the world, still lit"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "ochre_wall",
+    "what": "hands and animals in red and yellow on the ceiling and back wall, under soot and moss",
+    "legible": "cleared",
+    "restore": "cleared: a camp scrubs the soot back and the hands come out; a restored camp paints its own beside them",
+    "inherits": "the waymark is already on the wall: the site reads as a shelter from across the valley"
+   },
+   {
+    "id": "ash_hearth",
+    "what": "a metre of layered ash and charcoal under the hearth spot, every band a generation",
+    "legible": "heap",
+    "restore": "cleared: the new fire is laid on the old ash in the same spot",
+    "inherits": "a dry, drained hearth floor; the fire lights first time"
+   },
+   {
+    "id": "knapping_floor",
+    "what": "a scatter of flakes and spent cores glittering at the mouth",
+    "legible": "heap",
+    "restore": "restored: the knapper works the same spot",
+    "inherits": "good stone already sorted; the knapper starts from the first day"
+   },
+   {
+    "id": "grinding_stone",
+    "what": "a slab with a worn hollow, red in the grain",
+    "legible": "restored",
+    "restore": "restored: set upright by the hearth and ground on again",
+    "inherits": "ochre from the first day; the maker's paint and hide cure"
+   },
+   {
+    "id": "drip_wall",
+    "what": "a tumbled line of stacked stone along the drip line at the mouth",
+    "legible": "cleared",
+    "restore": "restored: the camp restacks it and the mouth is closed against the wind",
+    "inherits": "a windbreak; the shelter ceiling from the first night"
+   }
+  ],
+  "plants_differ": "nettle, goosefoot and elder crowd the drip line and the old ash, rich with bone and charcoal; nothing grows under the roof itself, and the dry floor stays bare for ten thousand years"
+ },
+ "aesthetic": {
+  "silhouette": "a lit mouth in a cliff: the hearth glow on the ceiling, the only fire in the game that lights stone instead of sky, the cosiest light there is; a hide screen and a low wall at the lip; figures against the orange",
+  "palette": [
+   "hearth orange on grey stone",
+   "soot black",
+   "ochre red and yellow",
+   "moss at the drip line"
+  ],
+  "sounds": [
+   "the fire's crackle echoing off the roof",
+   "water dripping at the lip",
+   "flint clicking",
+   "wind that stops at the mouth"
+  ],
+  "props": [
+   "the hearth in its ash pit",
+   "the knapping floor",
+   "the grinding stone",
+   "a hide stretched on a frame",
+   "hands on the ceiling"
+  ]
+ },
+ "folk_kinds": [
+  "goblin",
+  "human",
+  "small_folk"
+ ],
+ "real_world": [
+  {
+   "analogue": "Blombos Cave",
+   "region": "southern Cape coast, South Africa, c. 100,000 years ago",
+   "note": "two abalone shells holding red paint: ochre ground on quartzite slabs, mixed with heated crushed bone, charcoal and a liquid, the oldest known paint-making kit; engraved ochre from the same cave is c. 75,000 years old",
+   "source": "https://www.science.org/doi/10.1126/science.1211535"
+  },
+  {
+   "analogue": "Hand stencils: Maros-Pangkep karst (Sulawesi) and El Castillo (Cantabria)",
+   "region": "Indonesia and Spain, c. 37,000–51,000 years ago",
+   "note": "red-ochre hand stencils at Leang Timpuseng at least 39,900 years old, a warty pig at Leang Tedongnge at least 45,500, a hunting scene at Leang Karampuang c. 51,200; at El Castillo a red disk c. 40,800 and hand stencils c. 37,300, Europe's oldest dated paintings, in a cave mouth lived in from the Proto-Aurignacian to the Bronze Age; all dated by uranium-series on the calcite over the paint",
+   "source": "https://en.wikipedia.org/wiki/Caves_in_the_Maros-Pangkep_karst"
+  },
+  {
+   "analogue": "The Dordogne abris (Abri Pataud, Laugerie, Cro-Magnon)",
+   "region": "Vézère valley, France, c. 35,000–20,000 years ago",
+   "note": "limestone cliff-foot shelters above a river; Abri Pataud at Les Eyzies holds 15,000 years of layers, Aurignacian to Solutrean, hearths, burials and some two million finds; the Cro-Magnon shelter next door gave its name to us all in 1868",
+   "source": "https://www.mnhn.fr/en/abri-pataud-pataud-shelter"
+  },
+  {
+   "analogue": "Bhimbetka rock shelters",
+   "region": "Madhya Pradesh, India, Acheulean to medieval",
+   "note": "more than 750 sandstone shelters, some 400 painted in red hematite, manganese black and charcoal; lived in from the Lower Palaeolithic, painted from the Mesolithic (c. 10,000 BCE) into historic times; UNESCO 2003",
+   "source": "https://whc.unesco.org/en/list/925/"
+  },
+  {
+   "analogue": "Madjedbebe and Ubirr",
+   "region": "Mirarr country, Arnhem Land and Kakadu, northern Australia, 65,000 years to now",
+   "note": "Madjedbebe shelter occupied 65,000 ± 6,000 years ago (at least 50,000), ground ochre and grinding stones in its lowest levels; the Ubirr galleries nearby painted and repainted over millennia, most of what shows c. 2,000 years old, x-ray fish and a thylacine",
+   "source": "https://en.wikipedia.org/wiki/Madjedbebe"
+  },
+  {
+   "analogue": "Himba otjize",
+   "region": "Kunene, Namibia, living practice",
+   "note": "red ochre ground and mixed with butterfat, perfumed with Commiphora resin, worn on skin and hair: ochre-and-butter mixes of this kind test at SPF 3.5–10.7 on skin, and it is used where water is scarce because it flakes off with the dirt; also said to keep mosquitoes off",
+   "source": "https://en.wikipedia.org/wiki/Otjize"
+  },
+  {
+   "analogue": "Mesa Verde cliff dwellings (a note, not this people)",
+   "region": "Colorado, USA, c. 1190–1285 CE",
+   "note": "Ancestral Puebloan farmers built more than 600 stone villages into sandstone alcoves; a shelter site lived by canyon and desert folk with a crop, not by foragers: the same roof, a different life",
+   "source": "https://en.wikipedia.org/wiki/Mesa_Verde_National_Park"
+  }
+ ],
+ "sources": [
+  "https://www.science.org/doi/10.1126/science.1211535",
+  "https://en.wikipedia.org/wiki/Caves_in_the_Maros-Pangkep_karst",
+  "https://en.wikipedia.org/wiki/Cave_of_El_Castillo",
+  "https://www.mnhn.fr/en/abri-pataud-pataud-shelter",
+  "https://whc.unesco.org/en/list/925/",
+  "https://en.wikipedia.org/wiki/Madjedbebe",
+  "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0136090",
+  "https://www.iceman.it/en/oetzi/equipment"
+ ]
+}

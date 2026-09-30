@@ -1,0 +1,127 @@
+{
+ "_help": {
+  "about": "Which way of life a camp or ruin lives (design 30 Sept §BO). site_rules are tried in order at the site; the first that matches wins; 'by_biome' falls through to the table. null = no camps here. The biome then DRESSES the life (each people file's dressing.by_biome).",
+  "site_rules": "when: a plain-language test for the site placer; people: a data/peoples id.",
+  "canopy": "Design 30 Sept §BT: the tree-dwellers. Their whole village is up in the giants — platforms, vine bridges, rope ladders — and they never come down; the player climbs to reach them (the tree-climb system, §AU)."
+ },
+ "site_rules": [
+  {
+   "id": "rock_shelter",
+   "when": "an overhang, a cliff foot with a recess, or a cave mouth at the site",
+   "people": "rock_shelter"
+  },
+  {
+   "id": "karst",
+   "when": "geology rock == karst and a cave or sinkhole within 200 m",
+   "people": "karst"
+  },
+  {
+   "id": "canopy",
+   "when": "an old-growth stand with three or more giant trees (stand.json giant) within 60 m of the site, in TEMPERATE_RAINFOREST, TROPICAL_RAINFOREST, JUNGLE, CLOUD_FOREST or TEMPERATE_DECIDUOUS; rare (about one such site in six)",
+   "people": "canopy"
+  },
+  {
+   "id": "mangrove",
+   "when": "biome MANGROVE (tidal forest)",
+   "people": "mangrove"
+  },
+  {
+   "id": "coast",
+   "when": "the tideline within 300 m",
+   "people": "coast"
+  },
+  {
+   "id": "lake",
+   "when": "a lake or lagoon shore within 200 m (not the sea)",
+   "people": "lake"
+  },
+  {
+   "id": "marsh",
+   "when": "biome in SWAMP, BOG, FEN, FRESHWATER_MARSH, WET_MEADOW, or wetland within 200 m",
+   "people": "marsh"
+  },
+  {
+   "id": "river",
+   "when": "a river reach of order 2 or more within 200 m",
+   "people": "river"
+  },
+  {
+   "id": "by_biome",
+   "when": "otherwise",
+   "people": "by_biome"
+  }
+ ],
+ "by_biome": {
+  "ICE_SHEET": null,
+  "TUNDRA": "tundra",
+  "ALPINE_TUNDRA": "highland",
+  "KRUMMHOLZ": "taiga",
+  "TAIGA": "taiga",
+  "TEMPERATE_DECIDUOUS": "old_growth",
+  "TEMPERATE_RAINFOREST": "old_growth",
+  "CLOUD_FOREST": "tropical_forest",
+  "TALLGRASS_PRAIRIE": "steppe",
+  "SHORTGRASS_PRAIRIE": "steppe",
+  "STEPPE": "steppe",
+  "SAGEBRUSH": "steppe",
+  "MEDITERRANEAN_SCRUB": "savanna_herders",
+  "THORN_SCRUB": "savanna_herders",
+  "PARAMO": "highland",
+  "PUNA": "highland",
+  "ALPINE_MEADOW": "mountain",
+  "COLD_DESERT": "desert",
+  "HOT_DESERT": "desert",
+  "TROPICAL_RAINFOREST": "tropical_forest",
+  "JUNGLE": "tropical_forest",
+  "TROPICAL_DRY_FOREST": "tropical_forest",
+  "SAVANNA": "savanna_herders",
+  "SWAMP": "marsh",
+  "FLOODPLAIN_FOREST": "river",
+  "FRESHWATER_MARSH": "marsh",
+  "WET_MEADOW": "marsh",
+  "SALT_MARSH": "coast",
+  "BOG": "marsh",
+  "FEN": "marsh",
+  "BEACH": "coast",
+  "DUNES": "coast",
+  "ROCKY_SHORE": "coast",
+  "MARITIME_FOREST": "coast",
+  "MANGROVE": "mangrove",
+  "ESTUARY": "coast",
+  "LAGOON": "lake",
+  "FRESHWATER": null,
+  "OASIS": "desert",
+  "SHELF_SEA": null,
+  "CORAL_REEF": null,
+  "KELP_FOREST": null,
+  "DEEP_OCEAN": null,
+  "SEA_ICE": null,
+  "VOLCANIC_FIELD": "mountain",
+  "BADLANDS": "desert",
+  "CANYON": "desert",
+  "SALT_FLAT": "desert",
+  "HOT_SPRING": "mountain",
+  "GLACIER": null,
+  "CAVES": "rock_shelter",
+  "TEPUI": "highland"
+ },
+ "lives": [
+  "coast",
+  "marsh",
+  "river",
+  "old_growth",
+  "tropical_forest",
+  "mountain",
+  "steppe",
+  "savanna_herders",
+  "desert",
+  "tundra",
+  "taiga",
+  "highland",
+  "lake",
+  "mangrove",
+  "rock_shelter",
+  "karst",
+  "canopy"
+ ]
+}

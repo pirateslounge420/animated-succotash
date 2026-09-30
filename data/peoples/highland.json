@@ -1,0 +1,332 @@
+{
+ "id": "highland",
+ "name": "Highland folk",
+ "one_line": "Potatoes and quinoa on terraces at 4,000 m, and the frost that kills the crop is what keeps it: the cold nights freeze-dry the harvest for years.",
+ "where": {
+  "site_rule": "by_biome",
+  "biomes": [
+   "ALPINE_TUNDRA",
+   "PARAMO",
+   "PUNA",
+   "TEPUI"
+  ],
+  "needs": [
+   "a slope facing the morning sun, above the valley floor (frost drains downhill), with a spring or meltwater stream above it to head the channels",
+   "a flat, open ground that freezes hard on clear nights (the chuño ground)",
+   "loose stone within reach"
+  ]
+ },
+ "fundamental": "crop",
+ "food": {
+  "staples": [
+   "potatoes, many kinds: floury ones to eat, bitter frost-hardy ones for chuño",
+   "quinoa",
+   "oca, ulluco and mashua; tarwi lupin, soaked for days to take the bitterness",
+   "charki (dried meat) where there is a herd"
+  ],
+  "how": [
+   "terraces stepping the slope, a channel walking the water bench to bench",
+   "the digging stick and the foot-plough; raised beds between ditches where the plain floods (the water holds the night's warmth)",
+   "fields rest years between potato crops, sector by sector",
+   "the herd on the high grass above the fields (built last)"
+  ],
+  "preserve": [
+   "chuño: spread on the cold ground at night, trodden, dried in the sun; keeps for years",
+   "tunta: the same, soaked in running water before drying; comes out white",
+   "charki: meat cut thin, salted and dried in the thin air",
+   "the storehouse on the hillside: stone, a channel of cold air under the floor, muña mint against the weevil"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "dung",
+   "brush",
+   "grass_bundle"
+  ],
+  "note": "llama and alpaca dung dried in cakes on the corral wall; tola shrub and yareta (a cushion plant that burns like resin and grows a finger a year); ichu bundles for kindling; a queñua grove adds branch, cut with restraint"
+ },
+ "shelter": {
+  "materials": [
+   "dry stone",
+   "turf",
+   "ichu thatch"
+  ],
+  "form": "low houses of stone and turf under a steep grass thatch, turned from the wind, walled yards and a corral of the same stone; everything hugs the ground"
+ },
+ "light": [
+  "ichu_torch"
+ ],
+ "dressing": {
+  "by_biome": {
+   "PUNA": {
+    "fuel": "dung, tola brush and yareta; a queñua grove adds branch",
+    "food": "potatoes and quinoa on the terraces, chuño on the cold flat, charki",
+    "shelter": "stone and turf under ichu thatch; a stone corral; a row of round storehouses on the slope",
+    "palette": "straw gold, tola grey-green, dun, frost white, snow on the peaks"
+   },
+   "PARAMO": {
+    "fuel": "brush (dwarf shrub, dead frailejón stalks) and tussock bundles; everything burns wet and slow",
+    "food": "potatoes, oca and mashua on drained beds; the mist and the milder nights mean more is eaten fresh and less freeze-dried",
+    "shelter": "stone footings and turf under a thick tussock thatch; walls twice as thick against the wet",
+    "palette": "mist grey, frailejón silver-green, peat black, gold at dusk"
+   },
+   "ALPINE_TUNDRA": {
+    "fuel": "dung and a little dwarf-willow brush; carried up, mostly",
+    "food": "no crop takes: the herd's summer grazing, a hunter's lookout, a few greens; the camp comes up for the season and goes down",
+    "shelter": "a stone ring roofed with hide, a few nights at a time",
+    "palette": "scree grey, lichen yellow-green, moss campion pink, snow"
+   },
+   "TEPUI": {
+    "fuel": "brush: dead bonnetia wood and rosette stalks gathered a long way across the rock; almost nothing to burn, so the fire is small and the camp is tiny",
+    "food": "no crop takes on bare quartzite: a pocket of soil in a sinkhole grows a few tubers; most food is carried up",
+    "shelter": "under an overhang in the rock mazes, a wall of loose blocks across the mouth; the rain never stops",
+    "palette": "black rock, pink quartzite, moss green, cloud"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "chuno",
+  "plantkeeper": {
+   "knows": [
+    "potatoes by the hundred: which to eat, which to freeze (the bitter ones), which to keep for seed",
+    "quinoa and its bitter coat; oca, ulluco and mashua; tarwi lupin, soaked",
+    "muña mint for the store; yareta and tola for the fire; ichu for the roof and the rope",
+    "the puna gentian and ground rosette by sight; which slope frosts first"
+   ],
+   "teaches_flavour": "why the bitter potato is the one worth keeping; why old terrace soil is black; why the herd goes up when the fields go in",
+   "teaches_practical": "wash quinoa or the saponin scours your gut; soak tarwi three days; muña in the store keeps the weevil off; the blue lupin on a ruin was somebody's field"
+  },
+  "maker": {
+   "craft": "weaver",
+   "works": [
+    "wool",
+    "grass fibre",
+    "hide"
+   ],
+   "makes": [
+    "cloth and blankets",
+    "rope (a grass rope strong enough to bridge a gorge)",
+    "bags and slings"
+   ],
+   "wants_from_player": [
+    "salt",
+    "dye plants (a bark, a root, a lichen)",
+    "clay for spindle whorls",
+    "obsidian for a shearing blade"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "chuno",
+   "name": "Chuño",
+   "verb": "spread the bitter potatoes on the cold flat; the night freezes them, the sun thaws them; tread them barefoot to press the water out; leave them in the sun until they weigh nothing",
+   "teaches": "the frost that kills the crop is what keeps it: storage with no pot, no salt and no smoke, and it lasts years. The headman teaches this one because storage is the hinge of the ladder and this is the one verb no other life has (the terrace is shared with the river and mountain folk)",
+   "unlocks": "the camp's storage rung: the store does not rot, and a hard year is fed from the last good one",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "terrace",
+   "name": "Terracing",
+   "verb": "step the slope with a dry-stone wall, backfill with rubble, then gravel, then soil carried up in baskets; a channel walks the water from bench to bench",
+   "teaches": "a hillside has no soil until you build it; the wall holds the day's warmth against the frost and stands after everything else is gone",
+   "unlocks": "the crop ceiling on a slope; terraces gone to bramble read as ridges (ruin)",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "digging_stick",
+   "name": "Digging stick",
+   "verb": "a fire-hardened stick with a footrest: dig tubers, plant tubers, cut a channel",
+   "teaches": "the potato is planted from a potato: cut it, drop it, cover it; no seed, no sowing",
+   "unlocks": "plant and dig; irrigate a plot from a stream (a plot near water or a channel counts as watered)",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "dung_fuel",
+   "name": "Dung fires",
+   "verb": "gather the herd's dung from the corral and the grazing, pat it into cakes, dry them on the wall in the sun",
+   "teaches": "on a plateau with no trees the herd is the woodpile, and the corral wall is where it dries",
+   "unlocks": "fuel where there are no trees; depends on the animals, which depend on the grass",
+   "player_can": true,
+   "category": "fuel"
+  },
+  {
+   "id": "dry_stone",
+   "name": "Dry-stone walling",
+   "verb": "fit field stone without mortar: big at the base, the face leaning in, long stones tied through the courses",
+   "teaches": "the wall is the one thing that does not rot; house stub, corral ring, terrace face and storehouse are all the same skill",
+   "unlocks": "walls, corrals, terraces and storehouses; ridges under the moss when they fall",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "herd",
+   "name": "The herd",
+   "verb": "follow the llamas and alpacas to the high grass, then keep them: a corral of stone, the wet bofedal in the dry season",
+   "teaches": "the herd carries the load, gives the wool and the fuel, and eats what no one can plant",
+   "unlocks": "fuel, wool and carrying where nothing can be planted; the highland's second fundamental, built last",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "ichu_torch",
+   "name": "Ichu torch",
+   "verb": "twist a bundle of dry ichu grass tight, bind it with a grass cord, light it at the hearth",
+   "teaches": "the light of a land with no trees: bright, fast and cheap; carry two",
+   "unlocks": "a short bright torch made from any tussock; burns fast and dies in the wind",
+   "player_can": true,
+   "category": "light"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "wool",
+   "cloth",
+   "rope",
+   "chuño"
+  ],
+  "wants": [
+   "salt",
+   "clay pots",
+   "obsidian",
+   "dye plants"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "a fire of dung and yareta in the lee of a wall",
+   "the terrace: the crop",
+   "chuño on the cold flat and the storehouse on the hill",
+   "the weaver",
+   "cloth and chuño go down the mountain; salt and pots come up"
+  ],
+  "restraint": "a field rests years between potato crops and the sectors turn in rotation; yareta is cut only where it has grown back, and it grows a finger a year; the herd is moved off the bofedal before it is grazed bare; the terrace holds the soil so the slope does not walk downhill",
+  "ceiling_hint": "terraces with a running channel reach the tribal ceiling on a good slope; the herd is the second fundamental (built last in the engine) and lifts the ceiling on the bare high grass where no crop takes; the bare top and the tepui stay a handful"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "terrace_walls",
+    "what": "the hill in steps: dry-stone faces stepping the slope under bramble, a groove between each where the channel ran",
+    "legible": "cleared",
+    "restore": "restored: the walls stacked back, the channel re-cut",
+    "inherits": "deep, warm soil from the first season"
+   },
+   {
+    "id": "house_stubs",
+    "what": "knee-high rings and rectangles of dry stone, the thatch and roof-poles long gone",
+    "legible": "heap",
+    "restore": "cleared: the camp builds on the old floors",
+    "inherits": "level ground and half a wall"
+   },
+   {
+    "id": "corral_ring",
+    "what": "a wide stone ring, greener inside than out (a century of dung)",
+    "legible": "cleared",
+    "restore": "restored: the gaps walled, the herd penned",
+    "inherits": "a corral and the richest soil on the hill"
+   },
+   {
+    "id": "storehouses",
+    "what": "a row of round stone stubs along the slope, all one size, a channel under each floor",
+    "legible": "cleared",
+    "restore": "restored: re-roofed in ichu; the cold air runs under the floor again",
+    "inherits": "the storage rung from day one"
+   },
+   {
+    "id": "freeze_ground",
+    "what": "a flat trodden patch on the cold side of the site, strangely bare, stones cleared to a rim",
+    "legible": "restored",
+    "restore": "restored: potatoes spread white on the frost again",
+    "inherits": "a chuño ground that needs no clearing"
+   },
+   {
+    "id": "lined_spring",
+    "what": "a spring boxed in cut stone above the terraces, the head of the channel",
+    "legible": "cleared",
+    "restore": "restored: cleaned out, the channel runs again",
+    "inherits": "water at the top of the site"
+   }
+  ],
+  "plants_differ": "old terrace soil is deeper and blacker and greens first in spring; lupin and quinoa self-sow on the ruin (a blue-flowered slope was a field); muña at the store door; the corral ring is the greenest circle on the hill"
+ },
+ "aesthetic": {
+  "silhouette": "a hillside in steps; low stone houses under steep thatch hugging the ground; a corral ring; a row of round silos on the slope; llamas on the skyline",
+  "palette": [
+   "straw gold",
+   "dry-stone grey",
+   "tola grey-green",
+   "chuño white on black frost ground",
+   "woven red-brown"
+  ],
+  "sounds": [
+   "wind in the ichu",
+   "a llama's hum",
+   "water in the channel",
+   "feet treading the frozen ground"
+  ],
+  "props": [
+   "stepped terrace walls",
+   "a stone corral",
+   "a row of round storehouses",
+   "the chuño ground, potatoes spread white",
+   "dung cakes drying on a wall",
+   "a loom pegged to the ground"
+  ]
+ },
+ "folk_kinds": [
+  "human",
+  "small_folk"
+ ],
+ "real_world": [
+  {
+   "analogue": "Chuño and the potato — Quechua and Aymara of the altiplano",
+   "region": "Peru and Bolivia, 3,800 m and up",
+   "note": "bitter frost-hardy potatoes spread out on June nights at about −5 °C, thawed by day, trodden barefoot to press the water out, sun-dried; black chuño, or white tunta if soaked in running water first; keeps for years, some say decades; older than the Inca (found at Tiwanaku). Still made today; at the Parque de la Papa near Pisac six Quechua communities keep about 1,400 native varieties in their own fields",
+   "source": "https://en.wikipedia.org/wiki/Chu%C3%B1o"
+  },
+  {
+   "analogue": "Andean terraces, raised fields and storehouses (Tiwanaku, Inca)",
+   "region": "Lake Titicaca basin and central Andes, c. 1000 BCE–1533 CE",
+   "note": "waru waru: raised beds about a metre high between water canals, the water holding the day's warmth so the potatoes do not freeze; Inca andenes: stone-faced terraces with built-in channels; thousands of stone storehouses (qullqa) on cool hillsides with a channel under the floor kept chuño and quinoa two to four years, 2,573 at the Mantaro valley alone",
+   "source": "https://en.wikipedia.org/wiki/Qullqa"
+  },
+  {
+   "analogue": "Llama and alpaca herders of the altiplano (Aymara, Quechua)",
+   "region": "Peru, Bolivia, Chile, Argentina, 3,800–5,000 m",
+   "note": "the herd gives wool, meat, carrying, and dung for fuel and fertiliser (taquia; the first silver furnaces at Potosí burned it); before the herd, yareta was the fuel: it likely fed the fire at Cuncaicha rock shelter, 4,480 m, 12,500 years ago",
+   "source": "https://www.fao.org/4/y3549e/y3549e12.htm"
+  },
+  {
+   "analogue": "Tibetan plateau: tsampa and yak dung",
+   "region": "Tibet and the Himalaya, 3,500–5,000 m",
+   "note": "roasted barley flour kneaded with butter tea is a staple that needs no cooking fire at all; the plateau hearth burns yak dung, dried on the walls in the sun",
+   "source": "https://en.wikipedia.org/wiki/Tsampa"
+  },
+  {
+   "analogue": "Enset, the false banana",
+   "region": "Ethiopian highlands, 1,500–3,100 m",
+   "note": "a banana-like plant whose stem and corm, not its fruit, are scraped and fermented in pits for months into kocho; feeds some 20 million people, five to seven years to mature, drought-hardy: 'the tree against hunger'",
+   "source": "https://alliancebioversityciat.org/stories/enset-false-banana-ethiopia"
+  },
+  {
+   "analogue": "Kuk Early Agricultural Site",
+   "region": "Wahgi valley, Papua New Guinea highlands, 1,500 m",
+   "note": "mounds on the wetland edge from about 7,000 years ago and ditches dug with wooden tools from 4,000; taro, banana and yam, an independent origin of farming; the sweet potato came later and its mounds are still the highland garden; World Heritage 2008",
+   "source": "https://whc.unesco.org/en/list/887/"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Chu%C3%B1o",
+  "https://www.culturalsurvival.org/publications/cultural-survival-quarterly/quechua-guardians-potato",
+  "https://en.wikipedia.org/wiki/Qullqa",
+  "https://en.wikipedia.org/wiki/Inca_agriculture",
+  "https://en.wikipedia.org/wiki/Waru_Waru",
+  "https://www.fao.org/4/y3549e/y3549e12.htm",
+  "https://www.sciencedirect.com/science/article/abs/pii/S0277379123002925",
+  "https://whc.unesco.org/en/list/887/"
+ ]
+}

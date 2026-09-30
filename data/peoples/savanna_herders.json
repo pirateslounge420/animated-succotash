@@ -1,0 +1,320 @@
+{
+ "id": "savanna_herders",
+ "name": "Savanna folk",
+ "one_line": "Fire is their plough: the old grass burned in season comes back sweet, the game follows it and the cattle last of all; a ring of thorn keeps the herd in and the night out.",
+ "where": {
+  "site_rule": "by_biome",
+  "biomes": [
+   "SAVANNA",
+   "MEDITERRANEAN_SCRUB",
+   "THORN_SCRUB"
+  ],
+  "needs": [
+   "open grass or scrub with fire-shaped trees in reach (acacia, oak, mesquite) and a dry season to cure it",
+   "a spring or waterhole within 500 m; the lined spring is the camp's fixed point"
+  ]
+ },
+ "fundamental": "managed_burn",
+ "food": {
+  "staples": [
+   "milk, fresh and soured in a smoked gourd; on the savanna, blood mixed into it",
+   "game on the green flush after the burn; honey from hollow trees and hung log hives",
+   "acorn meal leached in a sand basin (scrub)",
+   "greens, tubers and fruit: baobab, fig, prickly pear, mesquite pod"
+  ],
+  "how": [
+   "the burn in season, then the hunt on the new grass",
+   "milking at dawn and dusk inside the fence; when milk runs short, a blunt arrow to the neck vein, the cow walks away and the wound is closed with dung",
+   "answer the honeyguide and follow it; smoke the hive, take the comb, leave the wax",
+   "acorns knocked down in autumn, dried, cracked, ground on the rock, leached"
+  ],
+  "preserve": [
+   "milk soured in a gourd smoked with olive wood; meat in strips dried in sun and smoke; honey stoppered in a gourd never spoils",
+   "acorns whole in a raised granary of woven branches: a year or more"
+  ]
+ },
+ "fuel": {
+  "kinds": [
+   "dung",
+   "brush",
+   "branch",
+   "grass_bundle"
+  ],
+  "note": "dung cakes from the pen, dried on the fence, are the slow fuel where trees are few (they depend on the herd, which depends on the grass, which depends on the burn); acacia and thorn brush burn hot and fast; grass is kindling and the brand; the scrub adds oak branch"
+ },
+ "shelter": {
+  "materials": [
+   "thorn brush",
+   "poles and grass thatch",
+   "dung and mud plaster",
+   "hide and bark"
+  ],
+  "form": "a ring of cut thorn around a trampled yard where the herd sleeps; low round houses of pole, grass and dung plaster along the inside of the ring, the fire in the middle; in the scrub, a bark-and-brush house beside the mortar rock and a granary on stilts"
+ },
+ "light": [
+  "fire_stick"
+ ],
+ "dressing": {
+  "by_biome": {
+   "SAVANNA": {
+    "fuel": "dung cakes drying on the fence; acacia brush for a fast hot fire",
+    "food": "milk and blood; game on the burn; honey; baobab fruit",
+    "shelter": "a boma of acacia thorn; low dung-plastered houses in a ring inside it, the cattle in the middle at night",
+    "palette": "dry gold, acacia green, red earth, ash grey"
+   },
+   "MEDITERRANEAN_SCRUB": {
+    "fuel": "oak branch, cork bark, cut scrub; dung from the goat fold",
+    "food": "acorn meal from the sand basin; deer and hare on the burned flush; wild olive, manzanita berry, honey",
+    "shelter": "bark and brush houses by the mortar rock; an acorn granary on stilts; a brush fold for the goats; the burn runs under the oaks and never into the chamise",
+    "palette": "oak green, straw gold, red-brown bark, grey rock"
+   },
+   "THORN_SCRUB": {
+    "fuel": "thorn brush, mesquite branch, goat dung",
+    "food": "goat milk; honey from hollow baobab and hung log hives; mesquite-pod meal; prickly pear fruit",
+    "shelter": "a fence of cut thorn around a goat pen and brush huts; a lined waterhole; the burn is small and careful here, a brush fire in the thorn is the one that gets away",
+    "palette": "grey thorn, bleached bone, cactus green, dust"
+   }
+  }
+ },
+ "specialists": {
+  "headman_teaches": "managed_burn",
+  "plantkeeper": {
+   "knows": [
+    "which grass comes back sweet after a burn and which rank; which oak is sweet and which needs a day in the sand basin",
+    "the honeyguide: its chatter is an offer; answer it and it leads you to the hive",
+    "baobab, prickly pear and agave: fruit, leaves for the pot, water in the trunk and the pad",
+    "the white-sapped spurge that blinds; olive wood and wild thyme that smoke a gourd so milk keeps"
+   ],
+   "teaches_flavour": "why the grass on an old pen grows greener a thousand years after the herd left; why the bird sings to people; what blooms in the ash a week after the burn",
+   "teaches_practical": "the spurge's white sap blinds; smoke the milk gourd with olive wood or the milk turns; sweet acorns want one leaching and bitter ones a day; never burn on a wind"
+  },
+  "maker": {
+   "craft": "basket-weaver",
+   "works": [
+    "grass",
+    "reed",
+    "bark",
+    "hide"
+   ],
+   "makes": [
+    "baskets coiled and twined tight enough to hold water",
+    "cordage, mats and the thorn fence",
+    "gourds, smoked and stoppered"
+   ],
+   "wants_from_player": [
+    "salt",
+    "obsidian blades",
+    "clay"
+   ]
+  }
+ },
+ "techniques": [
+  {
+   "id": "managed_burn",
+   "name": "The burn",
+   "verb": "on a still morning in the dry season, put the brand to the old grass and walk the fire's edge; it runs low and fast and dies at the last burn's line",
+   "teaches": "the fire is the farming: a grassland never burned goes to thorn; burned in season it comes back sweet, the game follows the green and the herd follows the game. The headman teaches it first because everything else this people does comes after the burn",
+   "unlocks": "grassland stays grassland; fire-followers bloom; the game and grazing ceiling (wildfire.json rules)",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "dung_fuel",
+   "name": "Dung fires",
+   "verb": "gather the pen's dung, pat it into cakes, dry them on the fence in the sun",
+   "teaches": "fuel where there are no trees, harvested not chopped; the smoke keeps the flies off the herd",
+   "unlocks": "a slow smoky hearth fuel from the pen; the woodpile stops depending on the trees",
+   "player_can": true,
+   "category": "fuel"
+  },
+  {
+   "id": "herd",
+   "name": "The herd",
+   "verb": "follow the animals to the new grass, then keep them: goats first, cattle last; milk at dawn and dusk, bleed a cow at the neck when the milk runs short",
+   "teaches": "milk is a harvest that walks; the animals turn grass people cannot eat into food, fuel and hide",
+   "unlocks": "milk, blood, dung and hide: the herd ceiling; built last (animals that move and breed)",
+   "player_can": false,
+   "category": "food"
+  },
+  {
+   "id": "lined_spring",
+   "name": "The lined spring",
+   "verb": "dig the seep out and line it with stones so the herd cannot trample it to mud",
+   "teaches": "the one fixed thing on the grassland; every band and every herd comes back to it, so the camps are strung along the water like beads",
+   "unlocks": "clean water through the dry season; the camp's fixed point, and the ruin that outlasts the rest",
+   "player_can": true,
+   "category": "water"
+  },
+  {
+   "id": "cordage",
+   "name": "Cordage and baskets",
+   "verb": "twist grass, bark or sedge root into rope; coil and twine a basket so tight it holds water",
+   "teaches": "the basket is the storage here: acorns, seed, milk, water, a child; the finest are a lifetime's work",
+   "unlocks": "carry more (burden); snares, lines, the acorn basket",
+   "player_can": true,
+   "category": "materials"
+  },
+  {
+   "id": "thorn_fence",
+   "name": "The thorn fence",
+   "verb": "cut acacia or thorn brush and stack it in a ring, cut ends in; the gap is closed at dusk with one more bush",
+   "teaches": "what a savanna camp builds against the dark: the herd sleeps inside, the houses face in, the fire is in the middle; it is cut again every dry season or it rots",
+   "unlocks": "the camp's night: a boma around herd, hearth and houses; the pen's dung is its fuel and, in time, its midden",
+   "player_can": false,
+   "category": "shelter"
+  },
+  {
+   "id": "acorn_leaching",
+   "name": "Acorn leaching",
+   "verb": "dry and crack the acorns, grind them on the bedrock mortar, spread the meal in a basin scooped in sand and pour water through until it stops running brown",
+   "teaches": "a bitter nut becomes a staple with a rock, a basket and patience; an oak grove is an orchard nobody planted",
+   "unlocks": "acorn meal: the scrub's storage crop, a year in the granary; the mortar holes are the ruin",
+   "player_can": true,
+   "category": "food"
+  },
+  {
+   "id": "fire_stick",
+   "name": "Fire-stick",
+   "verb": "a twist of cured grass or a dry thorn branch lit at the hearth and carried burning at arm's length",
+   "teaches": "a light found anywhere there is dry grass, bright and short; and the brand that puts the burn to the country, which is where the farming got its name",
+   "unlocks": "a fast torch that burns out in minutes; dropped lit in cured grass in a dry spell it starts a fire (wildfire.json)",
+   "player_can": true,
+   "category": "light"
+  }
+ ],
+ "materials": {
+  "gives": [
+   "baskets, mats and cordage",
+   "hide",
+   "honey"
+  ],
+  "wants": [
+   "salt",
+   "obsidian blades",
+   "clay pots"
+  ]
+ },
+ "growth": {
+  "ladder": [
+   "fire inside the first ring of thorn",
+   "the burn: the green flush and the game on it",
+   "gourds and baskets: milk soured, meat dried, acorns in the granary",
+   "the basket-weaver",
+   "baskets, hide and honey go out on the road; salt and blades come back"
+  ],
+  "restraint": "burn small and in season, one stretch a year, so the last burn's line stops this one; move the herd before the grass is eaten to dust; cut the fence from brush that regrows, never the shade trees; burn under the oaks, never fell them",
+  "ceiling_hint": "the burn alone feeds a band on game and greens; the herd is the second fundamental and is built last, goats then cattle, and only a herd with a lined spring and sweet grass fills the boma to the tribal ceiling; a thorn scrub camp stays a goat-fold handful"
+ },
+ "ruin": {
+  "signatures": [
+   {
+    "id": "bedrock_mortars",
+    "what": "cup-shaped holes worn into a flat rock by generations of grinding, dozens on one outcrop, under moss and leaf litter",
+    "legible": "cleared",
+    "restore": "restored: the new camp grinds in the old holes",
+    "inherits": "acorn meal from the first autumn; the grove around the rock is old and heavy-bearing"
+   },
+   {
+    "id": "kraal_midden",
+    "what": "a low round mound greener than the plain, ringed by a faint bank where the thorn stood; the dung of centuries, the grass on it lush and the game on it",
+    "legible": "heap",
+    "restore": "cleared: the new ring goes up on the old bank; the pen is the midden",
+    "inherits": "the sweetest grass on the plain inside the fence; the herd fattens from the first season"
+   },
+   {
+    "id": "scorched_line",
+    "what": "a line where the grass changes: young thorn on one side, open sweet grass on the other, a few blackened tree bases; the grassland forgets fastest",
+    "legible": "heap",
+    "restore": "restored: the camp burns to the old line",
+    "inherits": "the burn's edge is already drawn; the first burn stops where the last one did"
+   },
+   {
+    "id": "lined_waterhole",
+    "what": "a stone-lined hollow at a seep, silted and choked with reed",
+    "legible": "cleared",
+    "restore": "restored: dug out, the stones reset",
+    "inherits": "water from day one; every herd on the plain comes here"
+   }
+  ],
+  "plants_differ": "dark, lush grass and a few fat shrubs on the old pen rings, a nutrient hotspot centuries after the herd left, and the game grazes it; big-crowned oaks and acacias standing open in grass where the burn kept the thorn down, and a wall of thorn where it stopped"
+ },
+ "aesthetic": {
+  "silhouette": "a flat-topped tree, a ring of thorn, a curl of dung smoke; low round houses hugging the inside of the fence; in the scrub a granary on stilts beside a pocked rock",
+  "palette": [
+   "dry-grass gold",
+   "acacia green",
+   "red earth",
+   "ash grey"
+  ],
+  "sounds": [
+   "cattle lowing at dusk, goat bells, cicadas",
+   "the crackle and wind of a grass fire",
+   "a honeyguide chattering, pestles knocking on rock"
+  ],
+  "props": [
+   "the thorn fence, dung cakes drying on it",
+   "gourds and baskets",
+   "a hung log hive",
+   "the mortar rock and an acorn granary",
+   "the lined waterhole"
+  ]
+ },
+ "folk_kinds": [
+  "orc",
+  "human"
+ ],
+ "real_world": [
+  {
+   "analogue": "Maasai",
+   "region": "Rift Valley savanna of Kenya and Tanzania",
+   "note": "cattle herders whose traditional food is milk, meat and blood, the blood drawn from a living cow's neck with a blunt arrow and mixed with milk; the enkang is a ring of acacia thorn with low houses of pole, mud and dung inside it and the herd penned in the middle at night; pasture burned to bring the green flush",
+   "source": "https://en.wikipedia.org/wiki/Maasai_people"
+  },
+  {
+   "analogue": "Ancient herder corrals as nutrient hotspots (Marshall et al. 2018, Nature)",
+   "region": "southern Kenya, sites 3,700–1,550 years old",
+   "note": "dung packed into oval corrals left the soil rich in phosphorus, calcium and magnesium; three thousand years on, the old pens are still greener patches that gazelle, wildebeest and zebra come to graze: the kraal midden is the ruin that grows better",
+   "source": "https://phys.org/news/2018-08-ancient-african-herders-ecological-impact.html"
+  },
+  {
+   "analogue": "Fulani (Fulɓe) and Nuer cattle camps",
+   "region": "the Sahel and savanna of West Africa; the Nile floodplain of South Sudan",
+   "note": "the Fulani are the largest nomadic pastoral people in the world, zebu cattle walked with the seasons and milk fresh and soured (kossam) at the centre of the diet; the Nuer keep wet-season villages and dry-season cattle camps where dung fires smoulder all night so the smoke keeps flies and mosquitoes off the herd",
+   "source": "https://en.wikipedia.org/wiki/Fula_people"
+  },
+  {
+   "analogue": "California acorn peoples (Miwok, Pomo, Yokuts) and their burning",
+   "region": "California's oak savanna and foothills",
+   "note": "acorns the staple: cracked, ground on bedrock mortars (Chaw'se has ~1,185 mortar holes in one limestone outcrop, the most in North America), leached in sand basins, stored whole in stilt granaries; Pomo coiled and feathered baskets are among the finest ever made; fire and pruning were ancient horticulture here, burning under the oaks kept the ground open and burned shrubs threw the straight shoots the weavers needed (Anderson)",
+   "source": "https://en.wikipedia.org/wiki/Indian_Grinding_Rock_State_Historic_Park"
+  },
+  {
+   "analogue": "Iberian dehesa / montado",
+   "region": "Extremadura and Andalusia in Spain, Alentejo in Portugal",
+   "note": "an open oak savanna kept by people: holm and cork oak spaced for grass beneath, scrub cleared every 7–10 years, cork stripped every 9–12 years, acorns fattening the black pigs, firewood, charcoal and honey from the same trees; a landscape that reads as wild and is a garden",
+   "source": "https://en.wikipedia.org/wiki/Dehesa"
+  },
+  {
+   "analogue": "Aboriginal fire-stick farming",
+   "region": "northern Australian savanna (Arnhem Land)",
+   "note": "cool burns early in the dry season, patch by patch, so a late-season wildfire has nothing to run on and the green pick draws kangaroo; Rhys Jones named it fire-stick farming in 1969 (now usually 'cultural burning'); the burn that made and keeps the savanna",
+   "source": "https://en.wikipedia.org/wiki/Fire-stick_farming"
+  },
+  {
+   "analogue": "The honeyguide and the honey-hunters (Yao, Hadza)",
+   "region": "Niassa, Mozambique; Hadza country, Tanzania",
+   "note": "the greater honeyguide answers a Yao honey-hunter's 'brrr-hm' call and leads him to a hive in a hollow tree; three hunts in four find honey with the bird, and it is left the wax it can digest; the Hadza get up to a tenth of their food this way",
+   "source": "https://www.audubon.org/news/meet-greater-honeyguide-bird-understands-humans"
+  }
+ ],
+ "sources": [
+  "https://en.wikipedia.org/wiki/Maasai_people",
+  "https://en.wikipedia.org/wiki/Boma_(enclosure)",
+  "https://en.wikipedia.org/wiki/Nuer_people",
+  "https://phys.org/news/2018-08-ancient-african-herders-ecological-impact.html",
+  "https://en.wikipedia.org/wiki/Indian_Grinding_Rock_State_Historic_Park",
+  "https://link.springer.com/article/10.1023/A:1018757317568",
+  "https://en.wikipedia.org/wiki/Dehesa",
+  "https://en.wikipedia.org/wiki/Fire-stick_farming"
+ ]
+}
