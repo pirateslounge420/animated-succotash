@@ -275,6 +275,10 @@ static func mesh_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> ArrayMe
 	var idx := SpeciesDB.index_of(sp)
 	if lod == LOD_FAR or not TreeLayouts.branchy(sp):
 		layout = -1
+	# Young layouts (TreeLayouts slots) have the near level only: slim
+	# young wood gains nothing from more.
+	if layout >= TreeLayouts.COUNT:
+		lod = LOD_NEAR
 	var key := Vector3i(idx, lod, layout)
 	if _cache.has(key):
 		return _cache[key]
@@ -306,7 +310,13 @@ static func use_seed(world_seed: int) -> void:
 ## (mesh_for) instead of building them.
 static func warm(species_indices: Array) -> void:
 	var all := SpeciesDB.all()
-	for idx in species_indices:
+	for key in species_indices:
+		# Understory young come keyed by stage (PlantGrowth.JUV_KEY).
+		var idx: int = int(key) % PlantGrowth.JUV_KEY
+		var code: int = int(key) / PlantGrowth.JUV_KEY
+		if code > 0:
+			young_arrays(all[idx], code, LOD_NEAR)
+			continue
 		for lod in 3:
 			if lod == LOD_FAR or not TreeLayouts.branchy(all[idx]):
 				arrays_for(all[idx], lod)
@@ -320,6 +330,8 @@ static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> Array
 	var idx := SpeciesDB.index_of(sp)
 	if lod == LOD_FAR or not TreeLayouts.branchy(sp):
 		layout = -1
+	if layout >= TreeLayouts.COUNT:
+		lod = LOD_NEAR
 	var key := Vector3i(idx, lod, layout)
 	_mutex.lock()
 	var cached = _arrays.get(key)
@@ -339,6 +351,128 @@ static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> Array
 	var out: Array = _arrays[key]
 	_mutex.unlock()
 	return out
+
+
+## The young layouts (TreeLayouts slots) a chunk's trees grow, ahead of
+## need (chunk workers; `prepared`: VegetationPlacer.prepare()'s output).
+static func warm_layouts(prepared: Dictionary) -> void:
+	var all := SpeciesDB.all()
+	for key in prepared:
+		var entry: Array = prepared[key]
+		if entry.size() < 4:
+			continue
+		var sp: PlantSpecies = all[int(key) % PlantGrowth.JUV_KEY]
+		for l in (entry[3] as Dictionary):
+			if int(l) >= TreeLayouts.COUNT:
+				arrays_for(sp, LOD_NEAR, int(l))
+
+
+## An understory young plant's mesh (design §AR; `code`:
+## PlantGrowth.young_code): a seedling, or a sapling / young tree in its
+## species' young form (a young layout when it grows from its architecture:
+## open-grown or forest-grown), else the grown mesh (scaled down).
+static func young_mesh(sp: PlantSpecies, code: int, lod := LOD_NEAR) -> ArrayMesh:
+	var layout := _young_layout(sp, code)
+	if code > 1 and layout < 0:
+		return mesh_for(sp, lod)
+	if code > 1:
+		return mesh_for(sp, lod, layout)
+	var key := Vector3i(SpeciesDB.index_of(sp), lod, -2)
+	if _cache.has(key):
+		return _cache[key]
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, young_arrays(sp, code, lod), [], {}, FORMAT)
+	_cache[key] = mesh
+	return mesh
+
+
+## Its arrays (thread-safe; built once and shared).
+static func young_arrays(sp: PlantSpecies, code: int, lod := LOD_NEAR) -> Array:
+	var layout := _young_layout(sp, code)
+	if code > 1:
+		return arrays_for(sp, lod, layout) if layout >= 0 else arrays_for(sp, lod)
+	var idx := SpeciesDB.index_of(sp)
+	var key := Vector3i(idx, lod, -2)
+	_mutex.lock()
+	var cached = _arrays.get(key)
+	_mutex.unlock()
+	if cached != null:
+		return cached
+	var built := _build_seedling(sp, idx, lod)
+	_mutex.lock()
+	if not _arrays.has(key):
+		_arrays[key] = built
+	var out: Array = _arrays[key]
+	_mutex.unlock()
+	return out
+
+
+## The young layout an understory code grows (-1: none: a seedling, or a
+## species without an architecture).
+static func _young_layout(sp: PlantSpecies, code: int) -> int:
+	if code <= 1 or not TreeArch.grows(sp):
+		return -1
+	var slot := 2 if code <= 3 else 1
+	var sub := 0 if code % 2 == 0 else TreeLayouts.COUNT / 2
+	return slot * TreeLayouts.COUNT + sub
+
+
+## A seedling (design §AR), unit frame, by its species' young form: a
+## tree's thin stem with its first leaves (two seed leaves low, true leaves
+## up it; a conifer's whorls of needles), a palm's or cycad's first strap
+## leaves from the ground (a fern's small fronds), a cactus' little globe,
+## a rosette's first leaves.
+static func _build_seedling(sp: PlantSpecies, idx: int, lod: int) -> Array:
+	var b := _Builder.new()
+	b.hero = lod == LOD_HERO
+	b.freq = 1
+	b.rng.seed = hash([idx, "seedling"])
+	var leaf := sp.color
+	var stem := sp.accent.lerp(leaf, 0.45)
+	b.wood = stem
+	var needles := sp.leaf_type in ["needle", "scale"] or sp.shape == S.CONIFER or sp.shape == S.CYPRESS
+	match sp.juvenile:
+		"establishment", "sporeling", "rosette":
+			# Strap leaves (a palm's undivided first leaves, a cycad's first
+			# fronds) or small fronds, straight from the ground.
+			var n := 3 if sp.juvenile == "establishment" else 5
+			for k in n:
+				var a := TAU * (k + b.rng.randf_range(-0.2, 0.2)) / n
+				var w := 0.09 if sp.juvenile == "establishment" else 0.16
+				b.frond(Vector3.ZERO, Vector3(cos(a) * 0.35, 1.0, sin(a) * 0.35), b.rng.randf_range(0.8, 1.0), w, leaf.lightened(0.04 * k), 1.0, 0.1)
+		"globe":
+			b.blob(Vector3(0, 0.5, 0), Vector3(0.45, 0.5, 0.45), leaf, 0.0)
+		"tuft", "shoot":
+			for k in 7:
+				var a := TAU * k / 7.0 + 0.3
+				b.blade(Vector3(cos(a) * 0.03, 0, sin(a) * 0.03), Vector3(cos(a) * 0.3, 1.0, sin(a) * 0.3), 0.05, leaf, 1.0)
+		_:
+			# A tree: the stem, and its first leaves.
+			b.tube([[Vector3.ZERO, 0.018, 0.0], [Vector3(0.01, 0.55, 0.0), 0.012, 0.3], [Vector3(0.0, 0.95, 0.01), 0.006, 0.6]], 5, stem)
+			if needles:
+				# Whorls of needles up the stem, a tuft at the top.
+				for tier in 3:
+					var y := lerpf(0.35, 0.95, tier / 2.0)
+					var reach := lerpf(0.34, 0.16, tier / 2.0)
+					for k in 7:
+						var a := TAU * (k + 0.5 * tier) / 7.0
+						b.blade(Vector3(0, y, 0), Vector3(cos(a) * reach, y + reach * 0.35, sin(a) * reach), 0.025, leaf.darkened(0.05 * tier), lerpf(0.4, 0.8, y))
+			else:
+				# Two seed leaves low down, then the true leaves up the stem,
+				# one side then the other, the top ones smallest.
+				var lsz := clampf(sp.leaf_m / 0.7, 0.1, 0.3)
+				for k in 2:
+					var a := PI * k + 0.4
+					var out := Vector3(cos(a), 0.3, sin(a))
+					b.card(Vector3(cos(a) * 0.08, 0.28, sin(a) * 0.08), out + Vector3(0, 0.6, 0), 0.08, leaf.lightened(0.12), 0.3)
+				var n := 4
+				for k in n:
+					var y := lerpf(0.45, 0.92, float(k) / (n - 1))
+					var a := 2.39996 * k
+					var out := Vector3(cos(a), 0.0, sin(a))
+					var sz := lsz * lerpf(1.0, 0.7, float(k) / n)
+					b.card(Vector3(0, y, 0) + out * sz * 0.8, out + Vector3(0, 0.9, 0), sz, leaf * (0.95 + 0.05 * k), lerpf(0.4, 0.9, y))
+	return b.commit_arrays()
 
 
 ## A tree's growth, 0-1 through its stages (spec Phase 6: sprout, sapling,
@@ -709,7 +843,9 @@ class _Builder:
 				uv.append(q[k])
 				uv2.append(Vector2(2.0, 0.0))
 				parts.append(-1)
-				cu.append_array([0.0, 0.0, 0.0, -1.0])
+				# Its middle, so the shader can size it (shade leaves are
+				# bigger: PlantGrowth.leaf_scale).
+				cu.append_array([center.x, center.y, center.z, -1.0])
 
 	## Round parts get half as many sides again right around the player:
 	## smooth silhouettes up close, light meshes farther off.

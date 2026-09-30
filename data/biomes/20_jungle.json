@@ -130,7 +130,80 @@
      "spacing_m": 0.5,
      "confidence": "documented"
     },
-    "silhouette": "single trunk with huge ragged fishtail fronds"
+    "silhouette": "single trunk with huge ragged fishtail fronds",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      9,
+      15
+     ],
+     "trunk_years": 4,
+     "first_seed_years": 15,
+     "lifespan_years": [
+      20,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The first seedling leaves are small undivided bifid blades with ragged (bitten-off) tips; for a few years it is a stemless rosette while the trunk base widens. Later leaves become huge twice-pinnate fronds of wedge-shaped 'fishtail' leaflets. A single smooth ringed trunk then rises; at ~15 years it flowers from the top downward for several years and dies.",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree Caryota urens (to 20 m, flowers after ~15 yr, hapaxanthic: no new leaves after first inflorescence, flowers top-down for several years then dies; fruit dark scarlet-red, 32-38 weeks to develop, 2 seeds; fresh seed germinates well, viable 30-90 days); Palmpedia (bifid eophylls)"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#d8cfa0",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      3000,
+      30000
+     ],
+     "pollinators": [
+      "bee",
+      "stingless_bee",
+      "fly"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.2,
+      2.0
+     ],
+     "unripe_colour": "#6f8f3e",
+     "ripe_colour": "#a3232b",
+     "ripen_days": [
+      224,
+      266
+     ],
+     "hang_days": [
+      20,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      5000,
+      30000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (huge pendent once-branched inflorescences like horse tails, protandrous triads of 2 male + 1 female flowers, each inflorescence ~6 weeks in flower; fruit 32-38 weeks, scarlet-red); Palmweb (globose fruit ~1.5-2 cm, mesocarp full of irritant needle crystals)"
+    }
    },
    {
     "name": "Sal",
@@ -244,7 +317,78 @@
      "spacing_m": 1.5,
      "confidence": "documented"
     },
-    "silhouette": "tall straight dark bole, dense rounded crown"
+    "silhouette": "tall straight dark bole, dense rounded crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      15,
+      60
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      150,
+      300
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed germinates within days of falling at the start of the monsoon, sometimes still on the tree; 2 thick, unequal fleshy cotyledons, then broad shiny leaves. Young sal is famous for 'die-back': the shoot dies back to the ground in drought, frost or fire for several years while the taproot grows, then one shoot escapes and grows away as a straight whip. Coppices freely.",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree Database (up to 6 m at 6 yr, mature 18-32 m; fruits regularly from ~15 yr; seed dead within 2 weeks; needs much light; coppices); Troup, Silviculture of Indian Trees (seedling die-back; seedlings bear moderate shade); Wikipedia (to 40 m); lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#f0e3a6",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      300
+     ],
+     "pollinators": [
+      "wind",
+      "bee"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      5,
+      8
+     ],
+     "unripe_colour": "#8fae5a",
+     "ripe_colour": "#b58a55",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      3,
+      14
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      2000,
+      50000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Atluri et al. 2004 Current Science (sal: explosive pollen release, wind pollination with insect visitors, mixed mating); ICRAF/Troup (creamy fragrant flowers in big panicles Feb-Apr; ovoid nut with 5 unequal wings to ~7 cm ripens May-June; good seed years every 3-5 yr); seeds pressed for sal butter and eaten as famine food"
+    }
    },
    {
     "name": "Teak",
@@ -358,7 +502,78 @@
      "spacing_m": 1.5,
      "confidence": "documented"
     },
-    "silhouette": "straight bole, open crown of huge leaves"
+    "silhouette": "straight bole, open crown of huge leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      15,
+      45
+     ],
+     "height_years": [
+      11,
+      45
+     ],
+     "first_seed_years": 9,
+     "lifespan_years": [
+      150,
+      500
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two rounded cotyledons, then pairs of rough, hairy, opposite leaves that on vigorous saplings and coppice shoots are huge (60 cm or more). The sapling is a fast, straight whip with a four-angled stem and a few pairs of giant leaves, often several metres tall in 2-3 years, before it forks and spreads into a tall tree with a rounded crown.",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (Tectona grandis: 13 m at 5 yr, 16.5 m at 10, 21.5 m at 20, up to 45 m at 80; first flowering usually at 8-10 yr; very strong light demander; rotation ~80 yr); Wikipedia Teak (germination 15-30 days after pretreatment; Kannimara teak ~47.5 m, 450-500 yr old)."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 1,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f7f4ea",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      800,
+      3000
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.02,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.2,
+      1.8
+     ],
+     "unripe_colour": "#b8c890",
+     "ripe_colour": "#9c7a52",
+     "ripen_days": [
+      110,
+      140
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      900
+     ],
+     "crop_per_tree": [
+      1000,
+      30000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (flowers Jun-Sep in Thailand; fruit mature ~4 months after fertilisation, Nov-Jan; natural fruit set 0.5-5%; bees the main pollinators; hard woody fruit in an inflated bladder-like calyx, 1,000-3,500 fruits/kg); Wikipedia (panicles 25-40 cm of small white fragrant flowers; fruit 1.2-1.8 cm). One-day flowers, crop, decay estimated."
+    }
    },
    {
     "name": "Trumpet tree",
@@ -471,7 +686,79 @@
      "spacing_m": 1.0,
      "confidence": "documented"
     },
-    "silhouette": "candelabra of pale stems, umbrella leaf tufts"
+    "silhouette": "candelabra of pale stems, umbrella leaf tufts",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      25,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Tiny seeds wait in the soil until a gap opens. The seedling's first leaves are small and simple or barely lobed; each new leaf is larger and more deeply cut until the huge umbrella-like palmate leaves (deep lobes, pale undersides) appear. It shoots up as an unbranched hollow pole topped by a tuft of big leaves, with stilt roots at the base, branching candelabra-like only later.",
+     "confidence": "estimated",
+     "source": "Alvarez-Buylla & Martinez-Ramos 1992 J. Ecol. (C. obtusifolia demography: fast-growing gap pioneer); Vazquez-Yanes & Smith 1982 (light-triggered germination); Wikipedia Cecropia (germination needs full sun and fluctuating temperatures, seeds viable >5 yr in soil, 5-15 m); values estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#c9c79a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      8
+     ],
+     "pollinators": [
+      "wind",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "syncarp",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      15,
+      50
+     ],
+     "unripe_colour": "#8c9c6a",
+     "ripe_colour": "#7c6a44",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      5,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      5,
+      20
+     ],
+     "crop_per_tree": [
+      50,
+      600
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia Cecropia (dioecious; spikes in groups inside a spathe; mainly wind-pollinated via pendulous spikes, small beetles and flies secondary; achenes in fleshy perianths eaten by bats, birds, monkeys; up to a million seeds per tree); Berg & Franco-Rosselli 2005 Flora Neotropica 94; timings estimated"
+    }
    },
    {
     "name": "Umbrella tree",
@@ -587,7 +874,78 @@
      "spacing_m": 1.5,
      "confidence": "documented"
     },
-    "silhouette": "stilt-rooted pale trunk, tiered umbrella crown"
+    "silhouette": "stilt-rooted pale trunk, tiered umbrella crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      5,
+      14
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Tiny seeds wait in the soil seed bank until a gap opens. The seedling's first leaves are simple and toothed, then palmately lobed, then the big umbrella-like leaves divided into 12-15 radiating leaflets on long stalks. The sapling is an unbranched pole topped by a rosette of these leaves, growing metres a year; stilt roots flare from the base and branching comes later into a flat, umbrella crown.",
+     "confidence": "estimated",
+     "source": "Wikipedia (pioneer of disturbed forest; in Nigeria it formed a closed canopy at 10 m within five years; to 20-45 m); PROTA/Useful Tropical Plants (very fast growth, short life of ~15-25 yr, soil seed bank, light-demanding germination); juvenile leaf sequence estimated from Cecropia-like Urticaceae"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 2,
+     "flower_colour": "#c8c070",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      12
+     ],
+     "pollinators": [
+      "wind",
+      "bee"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "syncarp",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      7,
+      11
+     ],
+     "unripe_colour": "#6f9a48",
+     "ripe_colour": "#c8b85a",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      3,
+      14
+     ],
+     "drop": "falls",
+     "rot_days": [
+      5,
+      15
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Estimated from PROTA/Useful Tropical Plants and Cecropia-group ecology: dioecious; one 'flower' here is a head of tiny flowers (males many small heads on branched stalks, females single heads) that grows into a soft, finger-like, greenish-yellow compound fruit eaten by chimpanzees, monkeys, bats, squirrels and birds; pulp edible"
+    }
    }
   ],
   "shrub": [
@@ -698,7 +1056,30 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "dense thorny clump of arching culms"
+    "silhouette": "dense thorny clump of arching culms",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      4,
+      9
+     ],
+     "culm_days": 90,
+     "first_seed_years": 40,
+     "lifespan_years": [
+      8,
+      15
+     ],
+     "shade": "intermediate",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "After a gregarious flowering, masses of grain-like seeds sprout within 1-3 weeks. The seedling is a grassy tuft of thin leafy shoots; each monsoon it sends up thicker, taller culms from a knot of short rhizomes until, after 5-8 years, full-size culms rise in about 3 months, zigzagging and armed with curved thorny branch clusters at the lower nodes.",
+     "confidence": "documented",
+     "source": "Wikipedia (culms 10-35 m, 3-20 cm thick, curved spines, up to 50 cm growth per night, 90 cm in 24 h at Kew 1855); Janzen 1976 Annu. Rev. Ecol. Syst. (gregarious flowering every ~32-45 yr, clumps die after seeding); culm lifespan and clump maturity estimated. lifespan_years is the culm."
+    }
    },
    {
     "name": "Elephant ear",
@@ -784,7 +1165,79 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "giant arrow-shaped leaves held up on stalks"
+    "silhouette": "giant arrow-shaped leaves held up on stalks",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "trunk_years": 2,
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: one small heart- to arrow-shaped leaf on a thin stalk from a pea-sized corm, then a low rosette of a few glossy green arrowhead leaves on long fleshy stalks. Within 1-2 years a thick, ringed, above-ground stem forms and suckers sprout at its base; leaves grow to 1-2 m, held nearly upright with the tip pointing up.",
+     "confidence": "estimated",
+     "source": "Useful Tropical Plants (Alocasia macrorrhizos: 2-4 m, occasionally 5; stems to 3 m or more and 20 cm thick; 400-600 days to mature; seed germinates best at 24 C; grows best in some shade, tolerates full sun and deep shade; thermogenic spadix, insect-pollinated). Germination days, first flowering and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 6,
+     "flower_colour": "#e2dfa8",
+     "flower_form": "spike",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      2,
+      8
+     ],
+     "pollinators": [
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "syncarp",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      5,
+      10
+     ],
+     "unripe_colour": "#6a8a40",
+     "ripe_colour": "#d8402a",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      7,
+      21
+     ],
+     "crop_per_tree": [
+      2,
+      10
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Estimated from Flora of China / PROSEA as recalled (inflorescences several together among the leaf bases, boat-shaped pale yellow-green spathe 13-35 cm; ovoid head of ~1 cm red berries exposed as the spathe tube splits) and Colocasiomyia fly pollination of Alocasia; Wikipedia: tissues full of raphides."
+    }
    },
    {
     "name": "Giant bamboo",
@@ -893,7 +1346,30 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "huge clump of thick arching culms"
+    "silhouette": "huge clump of thick arching culms",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      25
+     ],
+     "height_years": [
+      4,
+      9
+     ],
+     "culm_days": 100,
+     "first_seed_years": 40,
+     "lifespan_years": [
+      10,
+      15
+     ],
+     "shade": "intermediate",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The seedling is a grassy tuft of thin leafy shoots. Each rainy season the young clump sends up stouter culms than the year before, reaching full-size culms (up to ~30 m tall, 20-28 cm thick) after roughly a decade. New shoots are fat conical spears wrapped in large brown hairy sheaths that elongate up to 40 cm a day; culm branches and leaves appear only after the culm reaches full height.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dendrocalamus giganteus (to 30 m, record 42 m; culms to 28 cm thick; up to 40 cm/day, record 46 cm in 24 h at Peradeniya; dense clumps). Culm elongation time (~3-4 months), culm lifespan, clump build-up and gregarious flowering interval (reported ~40 yr) estimated from bamboo literature."
+    }
    },
    {
     "name": "Guadua bamboo",
@@ -1002,7 +1478,30 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "tall clump of straight banded culms"
+    "silhouette": "tall clump of straight banded culms",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      3,
+      7
+     ],
+     "culm_days": 150,
+     "first_seed_years": 30,
+     "lifespan_years": [
+      8,
+      12
+     ],
+     "shade": "intolerant",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling is a grass-like tuft of broad, bright-green bamboo leaves on thin wiry shoots; each year the rhizome sends up thicker, taller culms (a young clump's are pencil-thin and 1-3 m), reaching full 15-30 m, 10-20 cm-thick culms after ~5-7 years. New culms shoot up in 4-6 months in hairy triangular sheaths, then branch; lower branches thorny.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Guadua angustifolia: flowering cycle ~30-35 yr); guadua forestry literature (new culms reach full height in ~4-6 months, mature and harvested at 4-6 yr, culms die at ~8-12 yr while the clump persists). Values partly estimated."
+    }
    },
    {
     "name": "Hanging lobster-claw",
@@ -1088,7 +1587,77 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "fan of paddle leaves, hanging red-yellow bracts"
+    "silhouette": "fan of paddle leaves, hanging red-yellow bracts",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      1.5,
+      3
+     ],
+     "first_seed_years": 2.5,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed is slow and erratic (2-12 months). The seedling is a rolled shoot unfurling paddle-shaped, banana-like leaves; a creeping rhizome soon sends up more leafy shoots into a clump 1.5-4 m tall. Each mature shoot ends in one pendent chain of red, yellow-tipped boat-shaped bracts, flowers once and dies back, replaced by new shoots.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Heliconia rostrata: pendent inflorescence, flowers beneath the bracts with copious nectar for hummingbirds); Berry & Kress 1991, Heliconia: an identification guide. Germination and ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 1,
+     "flower_colour": "#d8312f",
+     "flower_form": "tube",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      5,
+      15
+     ],
+     "pollinators": [
+      "bird"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.0,
+      1.5
+     ],
+     "unripe_colour": "#e2d27a",
+     "ripe_colour": "#2d4f9e",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      100,
+      800
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Berry & Kress 1991 (hanging lobster-claw: pendent chain of up to ~35 red bracts tipped yellow-green, yellow flowers lasting one day, blue drupes); Wikipedia (hummingbird-pollinated). Colour given is the red bracts. Timings and counts estimated."
+    }
    },
    {
     "name": "Wild banana",
@@ -1197,7 +1766,78 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "clump of arching torn banana leaves"
+    "silhouette": "clump of arching torn banana leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      180
+     ],
+     "height_years": [
+      0.6,
+      1.2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      1.5,
+      2.5
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: the first leaves are small, narrow and lance-shaped, rolled round one another into a short soft pseudostem. Each new leaf is broader until the plant is a small copy of the adult with a green, often dark-blotched pseudostem. Each pseudostem flowers once and dies; narrow-leaved 'sword suckers' rise from the rhizome to replace it, so the clump lives on for decades.",
+     "confidence": "estimated",
+     "source": "ProMusa and Simmonds 'Bananas' (pseudostem fruits ~1-1.5 yr after emergence and then dies; suckers replace it; seeds of wild bananas germinate slowly and erratically over weeks to months); timings from seed estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 5,
+     "flower_colour": "#6f2648",
+     "flower_form": "tube",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      12,
+      20
+     ],
+     "pollinators": [
+      "bat",
+      "bird"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      7,
+      13
+     ],
+     "unripe_colour": "#5d8a3a",
+     "ripe_colour": "#e2c23a",
+     "ripen_days": [
+      80,
+      120
+     ],
+     "hang_days": [
+      5,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      21
+     ],
+     "crop_per_tree": [
+      40,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "ProMusa/Simmonds (hanging inflorescence from the top of the pseudostem; one purple-red bract lifts each day over a 'hand' of 12-20 tubular flowers, female hands first, then male; wild fruit short, curved, full of hard black seeds, little sweet pulp); nectar bats (Macroglossus, Eonycteris) and sunbirds pollinate; set and crop estimated"
+    }
    }
   ],
   "ground": [
@@ -1291,7 +1931,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "waist-high tiers of triangular fronds"
+    "silhouette": "waist-high tiers of triangular fronds",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      42,
+      120
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      25,
+      72
+     ],
+     "shade": "intolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Young plants appear 6-7 weeks after spores land on burnt or disturbed bare soil: the first fronds are small, simple and lobed, becoming finely divided and adult-like after about 18 weeks. After up to 10 fronds a rhizome starts, which may grow 2 m in the first year; by year two the patch can be about 2 m across, sending up single, triangular, much-divided fronds from underground.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pteridium aquilinum (young plants 6-7 weeks after spores shed; adult-like fronds after 18 weeks; rhizome to 217 cm in year 1; spores usually in the 3rd-4th season; cover under 5% below 25% of full sun); Wikipedia (individual rhizomes live up to 72 yr; colonies 650 to over 1,400 yr old)."
+    }
    },
    {
     "name": "Cogon grass",
@@ -1379,7 +2041,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "dense upright grass with white fluffy plumes"
+    "silhouette": "dense upright grass with white fluffy plumes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.3,
+      1.5
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      1,
+      3
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small upright tufts of flat, pale yellow-green leaves with a whitish, off-centre midrib and finely serrated edges. Within 3-6 weeks they form sharp-tipped white rhizomes that run outward and send up new shoots, so one seedling becomes a dense, knee- to waist-high sward; fluffy silvery-white plumes appear in spring or after fire or cutting.",
+     "confidence": "documented",
+     "source": "MacDonald cogongrass biology review (no seed dormancy, viability lost within 1 yr, light needed, rhizomes form 3-6 weeks after emergence, light compensation ~2% full sun, flowers late winter/spring and after disturbance, leaves to 1.2-1.5 m). Shoot lifespan and first-flowering age estimated; the rhizome clone persists indefinitely."
+    }
    },
    {
     "name": "Lantana",
@@ -1491,7 +2175,29 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "sprawling scrubby mound with multicolour flower heads"
+    "silhouette": "sprawling scrubby mound with multicolour flower heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 0.7,
+     "lifespan_years": [
+      10,
+      25
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then rough, toothed, strongly scented opposite leaves on a square, prickly stem. The seedling grows fast into a sprawling, many-stemmed, thorny bush, flowering within its first year with flat heads of small tubular flowers that change from yellow to orange and red, then clusters of glossy green berries ripening purple-black.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Lantana camara: ~2 m, scrambling to 6 m, dense thickets; shade-intolerant, forest edges; flowers all year in frost-free climates; drupes green to dark purple, up to 12,000 per plant, bird-dispersed); germination and ages estimated."
+    }
    },
    {
     "name": "Spiral ginger",
@@ -1577,7 +2283,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "spiralled leafy canes with red cone"
+    "silhouette": "spiralled leafy canes with red cone",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      0.5,
+      1.5
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a single slender cane with leaves set in a rising spiral (the corkscrew habit of Costus), from a small rhizome. New canes rise from the spreading rhizome each season and reach full height within months, so the plant becomes a clump of unbranched spiral canes topped by red cone-like spikes; each cane lives only a year or two, the clump for many years.",
+     "confidence": "estimated",
+     "source": "Wikipedia Costus spicatus (herb to 1.8-2.1 m, leaves ~30 x 10 cm, short red cone with sequential red-orange flowers, ant-guarded seeds, Lesser Antilles/Hispaniola/Puerto Rico); TopTropicals (semi-shade, flowers much of the year); Costus seed germination and cane lifespan estimated from ginger growers"
+    }
    },
    {
     "name": "Torch ginger",
@@ -1663,7 +2391,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tall leafy canes, red torch flowers on separate stalks"
+    "silhouette": "tall leafy canes, red torch flowers on separate stalks",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2.5,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed sprouts after 4-8 weeks as a rolled, spear-like shoot that unfurls into a leafy cane with two ranks of glossy lance-shaped leaves (reddish beneath when young). ~30 cm at 4 months and ~1.2 m after a year; new canes then rise from a spreading rhizome (each cane lives 1-2 years), and the torch-like flower heads come up on separate stalks from the ground.",
+     "confidence": "documented",
+     "source": "Torch-ginger seed-raising record (My Nice Garden 2011: >30 days to germinate, 33 cm at 4 months, ~1.2 m after a year; rhizome divisions flower within 9 months); Choon et al. growth-stage studies of Etlingera elatior; Wikipedia. Clump lifespan estimated."
+    }
    }
   ],
   "epiphyte": [
@@ -1752,7 +2502,78 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tendril vine with three-lobed leaves"
+    "silhouette": "tendril vine with three-lobed leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      2.5
+     ],
+     "first_seed_years": 1.2,
+     "lifespan_years": [
+      6,
+      12
+     ],
+     "shade": "intermediate",
+     "juvenile": "vine",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal seedling with oval cotyledons; the first leaves are simple, unlobed, finely toothed ovals, and only after several nodes does it make the glossy, deeply three-lobed adult leaves. The green, grooved stem climbs fast with long coiling tendrils from each leaf axil and can cover a small tree within a season or two.",
+     "confidence": "documented",
+     "source": "Wikipedia (flowers 5-7.5 cm; fruit 4-7.5 cm, purple or yellow; carpenter bees the main pollinators); Morton, Fruits of Warm Climates (seedlings bear in about 12-18 months, fruit ripens 70-80 days after pollination and falls, vines productive about 5-7 years)"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      3
+     ],
+     "hemisphere": "south",
+     "flower_days": 0.6,
+     "flower_size_cm": 6,
+     "flower_colour": "#e8e0ee",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee"
+     ],
+     "fruit_set": 0.35,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      4,
+      8
+     ],
+     "unripe_colour": "#5d8f3a",
+     "ripe_colour": "#4a2440",
+     "ripen_days": [
+      70,
+      90
+     ],
+     "hang_days": [
+      1,
+      7
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      40
+     ],
+     "crop_per_tree": [
+      100,
+      500
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (white petals with a purple-banded corona; fruit dark purple with fine white specks, ~250 seeds; carpenter-bee pollination, purple form self-compatible); Morton (single-day flowers, fruit ripe 70-80 days after pollination and drops); crop from 10-20 kg per vine at ~35-50 g"
+    }
    },
    {
     "name": "Rattan vine",
@@ -1865,7 +2686,80 @@
      "spacing_m": 2.0,
      "confidence": "estimated"
     },
-    "silhouette": "thin spiny cane snaking through canopy"
+    "silhouette": "thin spiny cane snaking through canopy",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      6,
+      14
+     ],
+     "trunk_years": 2,
+     "first_seed_years": 7,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "tolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seeds sprout in 1-3 months; the first leaves are bifid 'fishtail' eophylls, then a small spiny rosette of pinnate leaves that suckers into a clump. After a year or two slender stems a few centimetres thick begin to climb, hooking into trees with spiny whip-like flagella and scrambling on for tens of metres.",
+     "confidence": "estimated",
+     "source": "Wikipedia (clustering, dioecious; stems a few cm thick climb ~10 m then run 200 m or more; fruits top-shaped with shiny reddish-brown scales, edible); germination and rosette stage from rattan culture; first flowering and lifespan estimated. lifespan_years is a stem."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#e4dcb6",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      200,
+      2000
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.5,
+      2
+     ],
+     "unripe_colour": "#8c8f55",
+     "ripe_colour": "#b0703e",
+     "ripen_days": [
+      240,
+      330
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      300,
+      3000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (dioecious; inflorescences in spiny spathes; fruits top-shaped, covered with shiny reddish-brown overlapping scales, edible); flowering season, ripening time and counts estimated from Indian rattans."
+    }
    },
    {
     "name": "Staghorn fern",
@@ -1951,7 +2845,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "antler fronds hanging from shield on trunk"
+    "silhouette": "antler fronds hanging from shield on trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      150
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Spores give green heart-shaped prothalli on bark; the first sporophyte fronds are small, simple, spoon-shaped and felted with white star-hairs. Soon it forms round, flat shield fronds that clasp the branch (green, later brown and papery), from which grey-green, forked 'antler' fronds arch out; pups around it build a ball-shaped colony.",
+     "confidence": "estimated",
+     "source": "Estimated from staghorn fern cultivation from spore (prothalli in weeks, first fronds after a few months, fertile antler fronds after several years) and the species' form as a clumping epiphyte of eastern Australian rainforest margins"
+    }
    }
   ]
  },

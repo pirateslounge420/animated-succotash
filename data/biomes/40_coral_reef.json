@@ -130,7 +130,80 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "leaning ringed pole with a tousled feather crown"
+    "silhouette": "leaning ringed pole with a tousled feather crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
+     ],
+     "height_years": [
+      20,
+      50
+     ],
+     "trunk_years": 4,
+     "first_seed_years": 7,
+     "lifespan_years": [
+      60,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The husked nut lies on the sand and after 2-6 months a pointed shoot pushes out of one end while the nut's flesh feeds the seedling. First leaves are entire, stiff, strap-like blades split only at the tip (bifid), in a stemless fan-like rosette; pinnate fronds come later, and a trunk rises after ~3-5 years, widening from a bulbous base ('bole').",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut (tall palms bear at 6-10 yr, live 60-100 yr; ~11 months from female flower opening to harvest; up to 15 inflorescences/yr; ~80 nuts/yr, up to 150; nut ~1.4 kg; largely cross-pollinated, dwarfs selfing); ICRAF Agroforestree (tall selections 24-30 m, flowers after ~6th yr); germination from FAO coconut guides"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#efe2a0",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      20,
+      50
+     ],
+     "pollinators": [
+      "bee",
+      "wind",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      20,
+      30
+     ],
+     "unripe_colour": "#5c8a2c",
+     "ripe_colour": "#7a5230",
+     "ripen_days": [
+      330,
+      400
+     ],
+     "hang_days": [
+      20,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      900
+     ],
+     "crop_per_tree": [
+      50,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut and ICRAF (new inflorescence among the leaves every ~3-4 weeks, up to 15/yr, thousands of small male flowers and ~20-50 large 25 mm female flowers per inflorescence; cross-pollinated by insects and wind; ~11-12 months to a mature brown nut that drops; 50-150 nuts per palm per year)"
+    }
    },
    {
     "name": "Pisonia",
@@ -243,7 +316,78 @@
      "spacing_m": 1.0,
      "confidence": "estimated"
     },
-    "silhouette": "broad spreading pale-leaved tree with soft thick trunk"
+    "silhouette": "broad spreading pale-leaved tree with soft thick trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are rare; most young trees arise when fallen branches or trunks root and sprout. Young stems are soft, thick and pale grey, with large, thin, bright pale-green oval leaves in loose pairs toward the shoot tips, making a leafy, open whip that soon forks into a spreading, soft-wooded tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia (to 20 m in dense stands on coral cays; clusters of green sweet-smelling flowers; sticky barbed fruits spread on seabird feathers; frequent vegetative reproduction from fallen branches and basal shoots); growth rate and ages estimated from its soft, fast-growing wood"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      1
+     ],
+     "hemisphere": "south",
+     "flower_days": 3,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#c8d8a0",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      100
+     ],
+     "pollinators": [
+      "fly",
+      "bee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.8,
+      1.3
+     ],
+     "unripe_colour": "#8aa860",
+     "ripe_colour": "#6a5a3a",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      1000,
+      50000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (clusters of green, sweet-smelling flowers; sticky, barbed fruits that cling to seabird feathers); the fruit is a ribbed, glandular, one-seeded anthocarp about 1 cm long; timing, pollinators and crop estimated"
+    }
    }
   ],
   "shrub": [
@@ -360,7 +504,78 @@
      "spacing_m": 0.25,
      "confidence": "estimated"
     },
-    "silhouette": "dense bright-green mound of spoon leaves on beach edge"
+    "silhouette": "dense bright-green mound of spoon leaves on beach edge",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 oval cotyledons, then fleshy, glossy, bright-green spoon-shaped leaves crowded in a tuft at the shoot tip. Grows fast into a rounded, mounding shrub of thick, soft, pithy branches that sprawl over the sand and root where they touch, forming dense hedges along the beach.",
+     "confidence": "estimated",
+     "source": "Wikipedia Scaevola taccada (3-10 m, branchlets 1-1.5 cm thick, leaves 8-25 cm; flowers all year; white fruit floats in seawater); Useful Tropical Plants/Hawaii native plant guides (slow, erratic germination of the corky stone, fast growth); ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#f8f5ee",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      8
+     ],
+     "pollinators": [
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.0,
+      1.5
+     ],
+     "unripe_colour": "#8fbf6a",
+     "ripe_colour": "#f1f0e6",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      500,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia Scaevola taccada: flowers all year in small axillary clusters, white 'half flowers' 2-2.5 cm with the 5 petal lobes fanned to one side, sometimes violet-streaked, pollinated by large bees or selfed; round fleshy drupe ripening green to white, corky stone floats in seawater; ripening time, set and crop estimated"
+    }
    },
    {
     "name": "Octopus bush",
@@ -476,7 +691,79 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "flat-topped candelabra of thick limbs, silver leaf rosettes"
+    "silhouette": "flat-topped candelabra of thick limbs, silver leaf rosettes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      28
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings grow a single stout, pale stem topped by a loose rosette of large, fleshy, spoon-shaped leaves covered in silky silver hairs; after a year they are only ~35 cm tall. Branching comes later and sympodially, each shoot ending in a flat cluster of coiled white flower sprays, building the broad, rounded, silvery bush of the beach strand.",
+     "confidence": "documented",
+     "source": "Same species as Heliotropium arboreum (synonym; also Tournefortia argentea). Useful Tropical Plants (under 75 cm/yr, germination 2-4 weeks, seedlings ~35 cm after 12+ months); Hawaii-Pacific Weed Risk Assessment (4+ yr to reproduce, not shade tolerant); Plants of Hawaii. Lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f7f5ec",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      150,
+      600
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      0.6
+     ],
+     "unripe_colour": "#7f9a52",
+     "ripe_colour": "#eeeadb",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      2000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Plants of Hawaii (drupe white, fleshy, globose ~4 mm, corky floating endocarp; corolla white 2.5-3.3 mm); Wikipedia (flowers ~0.6 cm); Useful Tropical Plants (flowers and fruits nearly all year; bees, butterflies). Ripening, hang and rot times, fruit set and crop estimated."
+    }
    }
   ],
   "ground": [
@@ -568,7 +855,79 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "trailing vine mat of notched round leaves, pink trumpets"
+    "silhouette": "trailing vine mat of notched round leaves, pink trumpets",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "vine",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two broad, deeply notched, butterfly-shaped cotyledons, then thick, glossy, two-lobed 'goat's-foot' leaves on a trailing stem. The seedling runs straight out over the sand as a cord-like runner that roots at the nodes and branches, spreading many metres into a net of runners and leathery leaves across the upper beach and foredune.",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (flowers pink-violet, open one morning, bees main pollinators, capsule 12-17 mm, seeds need scarification); ANPSA (flowers 20-25 mm wide, last one day, any time of year, fast spreading); Wikipedia (runners several m, rarely 30 m, floating hairy seeds). Plant lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 0.5,
+     "flower_size_cm": 4,
+     "flower_colour": "#c4509c",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "moth"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.2,
+      1.7
+     ],
+     "unripe_colour": "#7fa04e",
+     "ripe_colour": "#7a5a38",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (funnel flowers 30-60 mm long, pink to violet, one-day, bees plus butterflies and moths, spherical capsule 12-17 mm with 4 floating hairy seeds); ANPSA (flowers year-round in the tropics). Fruit set, ripening, hang, rot and crop estimated."
+    }
    },
    {
     "name": "Crustose coralline alga",
@@ -652,7 +1011,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "pink calcified crust on reef rock"
+    "silhouette": "pink calcified crust on reef rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      3,
+      12
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores settle on bare reef rock and within days to weeks grow into tiny, pink, flat, disc-shaped crusts a few mm wide. Discs spread at the margin and merge into a hard, stony, pink to mauve crust with a smooth, faintly glossy surface that paves and cements the reef crest. It sheds its thin surface layer now and then, which helps keep it free of fouling.",
+     "confidence": "estimated",
+     "source": "Wikipedia Coralline algae (crusts expand 0.1-80 mm a year; intertidal to 270 m; Hydrolithon onkodes forms 'castles' with the chiton Cryptoplax). Growth, age at first conceptacles and crust longevity for P. onkodes estimated from crustose coralline literature."
+    }
    },
    {
     "name": "Halimeda",
@@ -736,7 +1117,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "clump of chained green calcified discs"
+    "silhouette": "clump of chained green calcified discs",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.1,
+      0.4
+     ],
+     "first_seed_years": 0.4,
+     "lifespan_years": [
+      0.5,
+      1
+     ],
+     "shade": "intermediate",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling stage to draw: new plants mostly grow from broken-off pieces that anchor with fine rhizoids and add a new flat, kidney-shaped segment almost every night (green at first, hardening white-green with lime within ~1-2 days), building branched chains like tiny prickly-pear pads that tangle into a cushion. After spawning the whole thallus bleaches white and dies.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Halimeda: segments 60-80% aragonite, calcification from ~36 h; sexual reproduction completed in ~36 h and holocarpic, leaving the thallus white and dead; lifespan a few months to a year; spreads by fragmentation; H. opuntia up to ~54 g CaCO3 per m2 per yr). Timings estimated."
+    }
    },
    {
     "name": "Sea grapes alga",
@@ -820,7 +1223,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "green runner mat studded with grape-like beads"
+    "silhouette": "green runner mat studded with grape-like beads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      0.1,
+      0.5
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      1,
+      3
+     ],
+     "shade": "intermediate",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling: new plants start from torn fragments or swimming gametes' zygotes. A fragment glues itself down with colourless rhizoids within days and runs a pale green stolon over sand or rock, sending up short upright branches covered in little glossy green grape-like spheres. The whole plant is a single giant cell with many nuclei.",
+     "confidence": "estimated",
+     "source": "AlgaeBase / Guiry (Caulerpa: siphonous coenocytic thallus, stolons with erect ramuli, holocarpic sexual reproduction, spread by fragments); Mediterranean studies of C. racemosa var. cylindracea (stolons grow ~1-2 cm/day in summer, seasonal die-back); values estimated"
+    }
    },
    {
     "name": "Turbinaria alga",
@@ -916,7 +1341,29 @@
      "confidence": "documented",
      "note": "alga; short stipe, no stem surface"
     },
-    "silhouette": "stiff brown bushlet of toothed top-shaped blades"
+    "silhouette": "stiff brown bushlet of toothed top-shaped blades",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      0.3,
+      0.8
+     ],
+     "first_seed_years": 0.7,
+     "lifespan_years": [
+      1,
+      3
+     ],
+     "shade": "intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "different",
+     "juvenile_note": "A germling from a settled zygote (or a regrowing holdfast): a tiny disc holdfast with a few flat, leaf-like blades. As it grows the axis lengthens and the 'leaves' become stiff, top-shaped (turbinate) blades with a toothed triangular rim and an air bladder inside, stacked spirally up an erect stem 5-30 cm tall.",
+     "confidence": "estimated",
+     "source": "PROSEA Turbinaria (T. ornata 20-30 cm; young populations appear Jan-May and receptacles develop Oct-Dec in the Philippines); Univ. Hawaii reef algae pages (reproductive at 2-20 cm, thalli scoured off in winter, perennial holdfast regrows blades, spreads by fragments); Wikipedia (buoyant fronds raft)."
+    }
    },
    {
     "name": "Turtle grass",
@@ -1011,7 +1458,29 @@
      "confidence": "documented",
      "note": "submerged seagrass; rhizome and sheaths only"
     },
-    "silhouette": "short broad-ribbon seagrass lawn"
+    "silhouette": "short broad-ribbon seagrass lawn",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      10
+     ],
+     "height_years": [
+      0.7,
+      2.5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds about 1 cm long are released when the ripe fruit splits and root within days on the sandy bottom. The seedling is a short shoot of 2-5 flat, bright-green ribbon leaves with rounded tips, anchored by a few thick roots; it grows a buried rhizome and after a year or two starts sending up new leaf shoots, spreading into a patch.",
+     "confidence": "estimated",
+     "source": "Wikipedia Thalassia testudinum (leaves to 30 cm x 2 cm; rhizomes 5-10 cm deep; flowers Apr-Jul; fruit 20-25 mm with 1-6 seeds, splitting after ~8 weeks; low-tide mark to 30 m). Seed germination without dormancy, shoot lifespan (up to ~10-15 yr by leaf-scar ageing) and seedling-to-flowering time estimated from seagrass literature."
+    }
    }
   ],
   "epiphyte": []

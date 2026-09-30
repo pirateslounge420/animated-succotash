@@ -135,7 +135,79 @@
      "spacing_m": 3.0,
      "confidence": "documented"
     },
-    "silhouette": "huge grey bottle trunk, sparse root-like crown"
+    "silhouette": "huge grey bottle trunk, sparse root-like crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      60
+     ],
+     "height_years": [
+      20,
+      90
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      500,
+      2500
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling has broad cotyledons and simple, undivided first leaves; hand-shaped leaves with 3, then 5-7 leaflets come later. Young baobabs look nothing like adults: a slender, straight, tapering grey-green whip over a swollen tuberous taproot, with thin branches; the huge bottle trunk and wide crown form only after decades. Seeds are hard and germinate slowly unless scarified.",
+     "confidence": "documented",
+     "source": "Ethiopian Forestry Dev. baobab study (simple juvenile leaves, 5-7-foliate adult leaves, trees over 1000 yr); Anjarwalla et al. 2021 bioRxiv (seed-grown trees first flower at 8-23 yr; acid-treated seed sprouts in ~5 d); Patrut et al. 2018 Nature Plants (radiocarbon ages to ~2500 yr); height curve estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      12
+     ],
+     "hemisphere": "south",
+     "flower_days": 1,
+     "flower_size_cm": 15,
+     "flower_colour": "#f4f1e6",
+     "flower_form": "brush",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bat",
+      "moth",
+      "mammal"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      12,
+      25
+     ],
+     "unripe_colour": "#6f8a4a",
+     "ripe_colour": "#8f7d5e",
+     "ripen_days": [
+      150,
+      220
+     ],
+     "hang_days": [
+      30,
+      150
+     ],
+     "drop": "falls",
+     "rot_days": [
+      120,
+      540
+     ],
+     "crop_per_tree": [
+      20,
+      250
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Venter & Witkowski 2019 For Ecol Manage (southern Africa: flowering 1-5 months peaking Nov, 290-710 flowers per tree, fruit set ~20%); EFD Ethiopia study (57-157 fruits/tree in Benin, 77 in South Africa); Baum 1995 (pendent white flowers open at dusk for one night, fruit-bat pollination)"
+    }
    },
    {
     "name": "Caatinga catingueira",
@@ -253,7 +325,78 @@
      "spacing_m": 0.8,
      "confidence": "estimated"
     },
-    "silhouette": "small open feathery tree, mottled pale trunk"
+    "silhouette": "small open feathery tree, mottled pale trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      15
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      50,
+      120
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two thick rounded cotyledons, then small feathery pinnate leaves of rounded leaflets. It grows as a thin whip that, in the drought-deciduous Caatinga, drops its leaves each dry season and often forks low, becoming a small multi-branched tree with smooth mottled bark.",
+     "confidence": "estimated",
+     "source": "Flora do Brasil / Reflora (Cenostigma pyramidale: Caatinga tree 4-12 m, yellow flowers in terminal racemes, flat woody pods with explosive dehiscence); Brazilian seed-technology studies of catingueira (fast, high germination without dormancy); growth and ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      4
+     ],
+     "hemisphere": "south",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#f2c62e",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      40
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      7,
+      12
+     ],
+     "unripe_colour": "#7f9b4a",
+     "ripe_colour": "#6a4a2c",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      0,
+      14
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Flora do Brasil (yellow flowers in racemes during the rains, flat woody pods that twist open explosively); phenology studies in Caatinga (flowering with the rains Dec-Apr, bee-pollinated); counts and timings estimated from related Caesalpinia/Libidibia"
+    }
    },
    {
     "name": "Honey mesquite",
@@ -371,7 +514,77 @@
      "spacing_m": 0.6,
      "confidence": "estimated"
     },
-    "silhouette": "low wide feathery crown on crooked trunk"
+    "silhouette": "low wide feathery crown on crooked trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      12,
+      40
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      100,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two thick oblong cotyledons, a first once-pinnate leaf, then bright green, feathery bipinnate leaves with a few pairs of long leaflets and paired spines at the nodes of a zigzag stem. The taproot races ahead and a bud zone at the stem base resprouts if the top is killed, so young plants become low, thorny, multi-stemmed bushes; suppressed plants decades old can look like seedlings.",
+     "confidence": "documented",
+     "source": "USDA FEIS Prosopis glandulosa (scarified seed germinates in ~7 h at 33 C; best emergence from 0.5-1.5 cm; seed by age 3; 27-yr-old plants 0.2-1.5 m in an exclosure; trees 6-12 m; max ages 110-217 yr, most under 100); ICRAF Agroforestree (3-9 m; first fruit at 3-4 yr)."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#ecd97a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      100,
+      250
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.01,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      10,
+      20
+     ],
+     "unripe_colour": "#8aaa5a",
+     "ripe_colour": "#d8c07a",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      120,
+      540
+     ],
+     "crop_per_tree": [
+      100,
+      4000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS P. glandulosa (spring racemes with the leaves; bee pollinated, 160+ bee species; pods 10-20 cm, ~12 seeds, mature in 2-3 months, fall by late summer; 97-131 pods/tree in one study); ICRAF (racemes 5-14 cm; pods 8-30 cm, straw-yellow or violet-tinged). Flowers per raceme, fruit set and decay estimated."
+    }
    },
    {
     "name": "Red quebracho",
@@ -483,7 +696,79 @@
      "spacing_m": 1.0,
      "confidence": "estimated"
     },
-    "silhouette": "rounded open crown on straight dark trunk"
+    "silhouette": "rounded open crown on straight dark trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      35,
+      120
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      250,
+      500
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 leafy cotyledons, then glossy, leathery, narrow lance-shaped leaves. The sapling is a slow, slender whip with dark bark that takes decades to overtop the thorny Chaco scrub; the adult has a straight trunk of extremely hard red heartwood and a rounded, open, semi-evergreen crown.",
+     "confidence": "estimated",
+     "source": "Wikipedia Schinopsis balansae (to 24 m, trunk over 1 m; wood density 1.2, 'axe-breaker'; quebracho tannin); Flora Argentina/Anacardiaceae (dioecious, small panicled flowers, one-winged samara); Chaco quebracho growth studies (very slow diameter growth); germination, growth curve and ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      2
+     ],
+     "hemisphere": "south",
+     "flower_days": 3,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#e8e4b0",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      300
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wasp"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      2.5,
+      4
+     ],
+     "unripe_colour": "#9fb06a",
+     "ripe_colour": "#8a4a32",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Flora Argentina and Chaco forestry notes on quebracho colorado (dioecious; tiny whitish-green flowers in terminal panicles in the southern summer; one-winged samara ripening reddish-brown in autumn, wind-dispersed); insect pollination as in other Anacardiaceae; counts and timing estimated"
+    }
    },
    {
     "name": "Umbrella thorn",
@@ -602,7 +887,79 @@
      "spacing_m": 1.0,
      "confidence": "documented"
     },
-    "silhouette": "flat-topped disc on bare thorny limbs"
+    "silhouette": "flat-topped disc on bare thorny limbs",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      21
+     ],
+     "height_years": [
+      10,
+      35
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      150,
+      650
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two oval cotyledons, then tiny feathery bipinnate leaves on a thin stem with paired spines, some long, straight and white, others short and hooked. The taproot dives deep first. Browsed saplings become dense, low, cage-like spiny bushes for years; once a leader escapes browsers it gains about 1.5 m in two years and only later spreads the flat umbrella crown.",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (Acacia tortilis): up to 21 m, about 1.5 m in 2 years, a 6-7-year-old tree yields 5-6 kg of clean seed, 10-12 kg pods a year at 10 yr; Andersen & Krzywinski 2007 (BMC Ecology): radiocarbon ages of 200-650 yr for trees in Egypt's Eastern Desert, radial growth up to 2.4 mm a year. Germination and height curve estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#f5f0d8",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      8
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "pod",
+     "fruit_shape": "coiled",
+     "fruit_size_cm": [
+      7,
+      10
+     ],
+     "unripe_colour": "#9aae5c",
+     "ripe_colour": "#b8904e",
+     "ripen_days": [
+      90,
+      180
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (Acacia tortilis): white or pale yellowish-white heads 0.5-1.1 cm, pods 7-10 cm by 6-10 mm, spirally twisted, 10-12 kg pods per 10-yr tree; the Turkana make porridge from the pods, the Maasai eat immature seeds; Wikipedia: aromatic flowers, springlike coiled pods. Flowering at the onset of the rains, ripening, pod fall and rot times estimated."
+    }
    }
   ],
   "shrub": [
@@ -720,7 +1077,77 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "dense thorny grey-white mound"
+    "silhouette": "dense thorny grey-white mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two oval cotyledons, then small bipinnate leaves with only one or two pairs of pinnae and a few pairs of glossy dark green leaflets, on a zigzag stem armed with paired straight whitish spines. It branches low into a dense, rigid, very thorny little shrub whose dark bark and dark foliage give the blackbrush look early.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Vachellia rigidula): shrub 1.5-4.6 m of South Texas and NE Mexico, rich in amines and alkaloids. Germination, growth, first flowering and lifespan estimated from related Tamaulipan thornscrub acacias."
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#f5edc6",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      5,
+      12
+     ],
+     "unripe_colour": "#7b8f45",
+     "ripe_colour": "#3d2a22",
+     "ripen_days": [
+      70,
+      120
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from the species' usual description: fragrant creamy-white to pale yellow cylindrical flower spikes in early spring, a noted bee plant; narrow dark reddish-brown to blackish pods that split in summer. Fruit set, timings and crop estimated from related acacias."
+    }
    },
    {
     "name": "Facheiro cactus",
@@ -821,7 +1248,78 @@
      "spacing_m": 0.6,
      "confidence": "estimated"
     },
-    "silhouette": "blue columnar cactus, few upright arms"
+    "silhouette": "blue columnar cactus, few upright arms",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      20,
+      50
+     ],
+     "first_seed_years": 12,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "globe",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny pale globes with fine spines that soon elongate into a single upright, ribbed column, strikingly blue with a waxy bloom. Young stems carry dense golden to brown spines; with age it branches from low down into a candelabra of powder-blue columns, with tufts of long white wool at the flowering areoles near the tips.",
+     "confidence": "estimated",
+     "source": "Estimated from columnar cacti of the Caatinga (Pilosocereus: nurse-plant establishment, slow early growth, branching from the base, woolly flowering areoles) and the species' description as a blue, tree-like cactus to about 10 m"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      1
+     ],
+     "hemisphere": "south",
+     "flower_days": 0.5,
+     "flower_size_cm": 4,
+     "flower_colour": "#f2efe4",
+     "flower_form": "tube",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bat",
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      3,
+      5
+     ],
+     "unripe_colour": "#6f8f5a",
+     "ripe_colour": "#9a2a6a",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      3,
+      15
+     ],
+     "drop": "splits",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Estimated from Pilosocereus: nocturnal, white, tubular-bell flowers from woolly areoles visited by glossophagine bats; depressed-globose fruits that split to show magenta-purple pulp with small black seeds, eaten by birds, lizards and people"
+    }
    },
    {
     "name": "Madagascar ocotillo",
@@ -909,7 +1407,80 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tall spiny grey poles, leaves in rows"
+    "silhouette": "tall spiny grey poles, leaves in rows",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      25,
+      60
+     ],
+     "trunk_years": 8,
+     "first_seed_years": 15,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Young plants are a low, sprawling tangle of many thin, grey, spiny stems set with small round-oval fleshy leaves and conical spines in neat rows; this juvenile bush lasts several years. Then one strong central stem shoots up and becomes a tall grey spiny column that branches only high up, while the basal tangle dies off. Leafy in the wet season, bare in the dry.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Alluaudia procera: main stem to 15 m; young plants a tangle of stems for several years before a strong central stem develops; ~2.5 cm oval leaves with conical spines, deciduous in the long dry season; dioecious) and Wikipedia Didiereaceae (juvenile procumbent shrub phase). Rates, ages and first flowering estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "south",
+     "flower_days": 2,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#d8dca0",
+     "flower_form": "tiny",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      10,
+      60
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wasp"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#9aa060",
+     "ripe_colour": "#8a6a45",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (small green-yellow unisexual flowers of four tepals clustered at the stem tops, on separate male and female plants). Flowering months, insect pollinators, the small dry one-seeded fruit and timings estimated from Didiereaceae descriptions."
+    }
    },
    {
     "name": "Mandacaru",
@@ -1010,7 +1581,79 @@
      "spacing_m": 0.7,
      "confidence": "estimated"
     },
-    "silhouette": "green ribbed candelabra cactus"
+    "silhouette": "green ribbed candelabra cactus",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      15
+     ],
+     "height_years": [
+      12,
+      35
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "globe",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Two small fleshy cotyledons, then a little spiny green globe that stretches into a slender 4-6 ribbed column with yellowish spines, often sheltered by a shrub. After some years it branches from low down and candelabra-like, becoming a tree-like cactus with a woody trunk.",
+     "confidence": "estimated",
+     "source": "Wikipedia Cereus jamacaru (to 5-9 m, rarely 15 m; trunk to 45 cm; 4-6 ribs; spines to 10 cm; flowers ~30 cm, one night; fruit ~12 x 6 cm, carmine red, white pulp, seeds ~3 mm); growth rates and ages estimated from columnar cereoid cacti"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      1
+     ],
+     "hemisphere": "south",
+     "flower_days": 0.5,
+     "flower_size_cm": 15,
+     "flower_colour": "#f4f1e2",
+     "flower_form": "tube",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "moth",
+      "bat",
+      "bee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      8,
+      12
+     ],
+     "unripe_colour": "#6f9448",
+     "ripe_colour": "#c8283e",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      3,
+      20
+     ],
+     "drop": "splits",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      20,
+      200
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia Cereus jamacaru (white nocturnal flowers ~30 cm long open at dusk, wither by morning; fruit ~12 cm long, carmine to coral red, splitting to white pulp with black seeds, eaten by people and birds); hawkmoth pollination from Caatinga cactus studies; ripening and crop estimated"
+    }
    },
    {
     "name": "Myrrh bush",
@@ -1128,7 +1771,78 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "sparse twiggy shrub with peeling papery bark"
+    "silhouette": "sparse twiggy shrub with peeling papery bark",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      90
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed germination is slow and poor, so most new plants start as fallen branches or stakes that root. The seedling is a small spiny stem with trifoliate leaves; young roots are swollen, juicy and water-storing. It grows slowly into a squat, spiny, much-branched small tree with peeling grey-green papery bark that bleeds aromatic resin when cut.",
+     "confidence": "estimated",
+     "source": "ICRAF Agroforestree Commiphora africana (small tree usually <5 m, rarely 10 m; flowers in the first half of the dry season before the leaves; 4 red petals forming a ~6 mm tube; reddish resinous fruits 6-8 mm; juicy sweet roots of young plants chewed); germination, growth and ages estimated from Commiphora literature"
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      3
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#b23a3a",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      8
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.6,
+      1.2
+     ],
+     "unripe_colour": "#6f8a4a",
+     "ripe_colour": "#b8453a",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree Commiphora africana (red 4-petalled flowers ~6 mm on leafless spur shoots early in the dry season; fruits reddish, resinous, 6-8 mm, splitting to show a hard stone dispersed by birds and animals); ripening and crop estimated"
+    }
    },
    {
     "name": "Texas ebony",
@@ -1244,7 +1958,78 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "dense dark rounded small tree"
+    "silhouette": "dense dark rounded small tree",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hard seeds germinate after scarification; epigeal, then small bipinnate leaves with a few pairs of tiny, dark, rounded leaflets. The seedling is a bushy, zigzag-branched shrub armed with paired spines at each node, often several stems from the base; it slowly forms a dense, dark-green, rounded evergreen crown and can be raised as a small single-trunked tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia Ebenopsis ebano (7.6-9.1 m, crown 1.8-4.6 m; fragrant flowers; seedpods host bean weevils; dry forest and matorral of S Texas and NE Mexico, 20-27 C, ~900 mm rain). Growth rate, fruiting age, lifespan and germination estimated from Texas native-plant horticulture."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 3,
+     "flower_colour": "#f1e8b8",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      10,
+      15
+     ],
+     "unripe_colour": "#6f8e45",
+     "ripe_colour": "#3a2a1f",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      120,
+      365
+     ],
+     "drop": "persists",
+     "rot_days": [
+      365,
+      1095
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "Wikipedia (fragrant flowers; seedpods attacked by bean weevils). Creamy catkin-like spikes in early summer after rains, thick woody dark pods 10-15 cm that hang on through winter, and seeds eaten green-boiled or roasted as a coffee substitute are from Texas native-plant references; set, crop and decay estimated."
+    }
    }
   ],
   "ground": [
@@ -1334,7 +2119,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "loose grass tussock with bottlebrush heads"
+    "silhouette": "loose grass tussock with bottlebrush heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.12,
+      0.35
+     ],
+     "first_seed_years": 0.25,
+     "lifespan_years": [
+      10,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A fine blue-green grass seedling that tillers within weeks into a small tuft; it is ~27 cm tall at 30 days and ~80 cm at 90 days, already pushing up bristly purple-grey bottlebrush seed heads. Mature plants are dense leafy tussocks with many wiry flowering stems.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pennisetum ciliare (germinates after >6 mm rain above 10C, 60-90% of fresh seed dormant; 26.7, 72.6 and 82.8 cm at 30, 60, 90 days; flowers within 3 months, heads ~6 weeks after rain; tussocks live 10-20 yr; up to 38,000 seeds/plant; establishment poorer under canopy)"
+    }
    },
    {
     "name": "Elephant's foot",
@@ -1435,7 +2242,29 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "leafless green pencil-stick shrub"
+    "silhouette": "leafless green pencil-stick shrub",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Mostly spread by broken stems (cuttings root in 2-4 weeks); seedlings are rare. The young plant is a few pencil-thin, smooth, bright green succulent sticks with tiny linear leaves at the tips that soon fall, forking repeatedly into a bushy tangle of green twigs; lower stems turn grey-brown and woody with age.",
+     "confidence": "estimated",
+     "source": "Estimated from Useful Tropical Plants and PROTA accounts of Euphorbia tirucalli (fast-growing succulent shrub or tree to 7-10 m, hedge plant grown from cuttings, dioecious, seed rarely set in cultivation)."
+    }
    },
    {
     "name": "Kinglet agave",
@@ -1521,7 +2350,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "small stiff spiny rosette"
+    "silhouette": "small stiff spiny rosette",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      4,
+      10
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      15,
+      25
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are rarely seen; nearly all young rosettes are pups rising from rhizomes about 10 cm down, spreading 2-3 times the parent's width, so plants form dense colonies. A young rosette is a tight upright cup of a few stiff, thick, yellow-green, slightly incurved leaves with small down-hooked edge teeth and a sharp tip spine; it adds only 4-11 leaves a year.",
+     "confidence": "documented",
+     "source": "USDA FEIS Agave lechuguilla: 50% germination in ~4 days at 25-30 C; 3.9-10.8 new leaves/plant/yr; rosette of 20-50 leaves, 20-60 cm; leaves live 12-15 yr; flowers once, typically at 10-20 yr (stalk 1-4 m), then dies and is replaced by clones; rhizomes ~10 cm deep; seedlings rarely observed. Rosette size-age estimated."
+    }
    },
    {
     "name": "Prickly pear",
@@ -1622,7 +2473,78 @@
      "spacing_m": 0.25,
      "confidence": "estimated"
     },
-    "silhouette": "sprawling mound of flat green pads"
+    "silhouette": "sprawling mound of flat green pads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "globe",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two fleshy green cotyledons, then a small upright spiny stem that flattens into the first little pad; new pads sprout from areoles along its rim, each flushing tiny cone-shaped leaves that soon fall. It builds a sprawling heap of big, round, blue-green pads (15-30 cm) with white-yellow spines and barbed glochids; fallen pads root into new plants.",
+     "confidence": "estimated",
+     "source": "Wikipedia Opuntia engelmannii (clumps to 3.5 m; pads 15-30 x 12-20 cm; flowers Apr-May lasting 1-2 days, yellow, 6-9 cm, bee pollinated; purple fruits 3.5-9 cm, edible); seedling growth and ages estimated from Opuntia demography studies"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 1.5,
+     "flower_size_cm": 7,
+     "flower_colour": "#f2d34a",
+     "flower_form": "cup",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee",
+      "beetle"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3.5,
+      9
+     ],
+     "unripe_colour": "#6f9a4a",
+     "ripe_colour": "#7a1f4a",
+     "ripen_days": [
+      70,
+      120
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "persists",
+     "rot_days": [
+      14,
+      45
+     ],
+     "crop_per_tree": [
+      50,
+      500
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (flowers Apr-May, each lasting 1-2 days, yellow sometimes red-tinged, 6-9 cm; copious nectar; solitary bees (Anthophorini, Andrenidae, Megachilidae) pollinate, sap beetles visit; fruit purple, 3.5-9 x 2-4 cm, fleshy, sweet, 144-172 seeds); fruits ripen late summer and hang for months; crop estimated"
+    }
    },
    {
     "name": "Threeawn grass",
@@ -1710,7 +2632,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "wispy fine tussock with purplish awns"
+    "silhouette": "wispy fine tussock with purplish awns",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      10
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      4,
+      12
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a very thin, in-rolled first blade whose root races ahead (37 cm in 30 days). It becomes a small, tight bunch of wiry, curly, in-rolled grey-green leaves; by its first summer it sends up slender stems with nodding purplish panicles, each seed carrying three long spreading awns (2.5-13 cm) that bleach silvery-tan.",
+     "confidence": "documented",
+     "source": "USDA FEIS Aristida purpurea: 92% germination within 10 days (optimum 20-25 C; inhibited below 10 C and above 30 C); greenhouse seedlings grew 37-cm roots in 30 days; culms 15-30 cm, awns 2.5-13 cm; S Idaho: growth from late March, flowering mid-June, seed mature mid-Aug, shed Sep. Lifespan of this short-lived bunchgrass estimated."
+    }
    }
   ],
   "epiphyte": [
@@ -1798,7 +2742,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "small grey ball tufts on branches"
+    "silhouette": "small grey ball tufts on branches",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2.5,
+     "lifespan_years": [
+      8,
+      20
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Plumed seeds stick to twigs, bark and even power lines; the seedling is a tiny grey tuft of thin, curved, scaly leaves. Shoots branch as they grow, so within a few years a young plant becomes a spiky grey tuft and then a round ball of many recurved shoots, golf-ball to soccer-ball size, each sending up a thin stalk with one or two small pale-violet flowers.",
+     "confidence": "estimated",
+     "source": "Wikipedia Tillandsia recurvata (ball moss: balls golf-ball to soccer-ball size made of many joined shoots; seeds plentiful, with fine hairs; southern USA to Argentina and Chile; favours humid, sheltered sites; frost-sensitive). Flowering age, growth and ball lifespan estimated."
+    }
    }
   ]
  },

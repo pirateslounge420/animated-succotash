@@ -113,7 +113,78 @@
      "confidence": "documented",
      "note": "alga; smooth rope-like stipe, no bark"
     },
-    "silhouette": "long rope stipe to a bulb float trailing long straps"
+    "silhouette": "long rope stipe to a bulb float trailing long straps",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      30,
+      60
+     ],
+     "height_years": [
+      0.2,
+      0.4
+     ],
+     "first_seed_years": 0.4,
+     "lifespan_years": [
+      0.6,
+      1.5
+     ],
+     "shade": "intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Microscopic gametophytes overwinter on rock; in late winter a tiny sporophyte appears as one flat blade on a thread-like stipe with a small claw-like holdfast. The stipe lengthens and swells at the top into a hollow ball float, the blade splits into two tufts of ribbon blades (30-64 in all, up to 4 m), and a whip-like stipe up to 36 m lifts the float to the surface by summer.",
+     "confidence": "documented",
+     "source": "Wikipedia Nereocystis (usually annual, sometimes persisting up to 18 months; to 36 m; blades grow up to 15 cm/day, 30-64 blades to 4 m; single large pneumatocyst; sori form on the blades and drop to the seafloor at maturity); seasonal timing from Pacific NW kelp-bed studies"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      11
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 8,
+     "flower_colour": "#4e3a1e",
+     "flower_form": "tiny",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      2,
+      10
+     ],
+     "pollinators": [
+      "water"
+     ],
+     "fruit_set": 0.8,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      4,
+      15
+     ],
+     "unripe_colour": "#7a6a36",
+     "ripe_colour": "#3f2c16",
+     "ripen_days": [
+      14,
+      30
+     ],
+     "hang_days": [
+      0,
+      5
+     ],
+     "drop": "falls",
+     "rot_days": [
+      3,
+      14
+     ],
+     "crop_per_tree": [
+      100,
+      800
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Kelp has no flowers or fruit: 'flowers/fruit' are the dark sori, oblong spore patches on the blades that mature in summer-autumn and then cut themselves out and sink, releasing swimming spores near the parent (Wikipedia; Amsler & Neushul). Bull kelp blades are eaten (pickled). Sizes and timings estimated"
+    }
    },
    {
     "name": "Giant kelp",
@@ -209,7 +280,77 @@
      "confidence": "documented",
      "note": "alga; no bark"
     },
-    "silhouette": "towering brown vine of bladdered blades to the surface"
+    "silhouette": "towering brown vine of bladdered blades to the surface",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      60
+     ],
+     "height_years": [
+      0.4,
+      1.0
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      3,
+      7
+     ],
+     "shade": "intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Spores settle and grow into microscopic gametophytes; the young sporophyte is a single thin, ruffled golden-brown strap blade on a tiny stipe and claw-like holdfast. The primary blade tears repeatedly from the base into separate blades that each grow a gas bulb and a stipe, so the plantlet becomes a bunch of fronds rising to the surface. Under a closed canopy juveniles stall until light returns.",
+     "confidence": "documented",
+     "source": "Wikipedia Macrocystis (grows up to 60 cm/day, fronds live ~100 days, young kelp with 1-2 primary blades that split, sporophylls at the base); Kinlan et al. 2003 J. Phycol. (arrested development of microscopic stages in low light); North 1994 (individuals live several years, up to ~7)"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "south",
+     "flower_days": 30,
+     "flower_size_cm": 15,
+     "flower_colour": "#5b4322",
+     "flower_form": "tiny",
+     "flower_position": "trunk",
+     "flowers_per_cluster": [
+      23,
+      155
+     ],
+     "pollinators": [
+      "water"
+     ],
+     "fruit_set": 0.8,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      15,
+      40
+     ],
+     "unripe_colour": "#7b6a33",
+     "ripe_colour": "#4a3419",
+     "ripen_days": [
+      14,
+      40
+     ],
+     "hang_days": [
+      30,
+      90
+     ],
+     "drop": "splits",
+     "rot_days": [
+      14,
+      45
+     ],
+     "crop_per_tree": [
+      23,
+      155
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "Kelp has no flowers or fruit: 'flowers/fruit' are the fertile sporophylls, short blades without gas bladders in a bunch just above the holdfast, whose dark-brown sori release swimming spores into the water. 23-155 sporophylls per plant, fertile year-round (Fernandez et al. 2021, NZ reproductive phenology). Sorus timings and decay estimated."
+    }
    },
    {
     "name": "Oarweed",
@@ -306,7 +447,77 @@
      "confidence": "documented",
      "note": "alga; no bark"
     },
-    "silhouette": "broad hand-split brown blade on a flexible stipe"
+    "silhouette": "broad hand-split brown blade on a flexible stipe",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      0.7,
+      2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      4,
+      6
+     ],
+     "shade": "tolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Microscopic spores settle within a day and grow into microscopic gametophytes; young sporophytes appear as tiny brown, undivided strap blades on a thread-like stalk, splitting into finger-like straps as the blade widens. Each winter-spring a new blade grows from the stipe-blade junction (up to 1.3 cm a day), pushing the worn old blade off its tip; the holdfast is a conical tangle of rhizoids.",
+     "confidence": "documented",
+     "source": "MarLIN species review (Laminaria digitata: growth 1.3 cm/day Feb-Jul, slower Aug-Jan; lives 4-6 yr; sporophytes mature at 18-20 months; zoospores settle within 24 h; recruits all year; standing crop recovers in 18-20 months, full recovery ~25 months; 2-4 m); Wikipedia (sori over central blade)."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      12
+     ],
+     "hemisphere": "north",
+     "flower_days": 21,
+     "flower_size_cm": 15,
+     "flower_colour": "#4a3a1e",
+     "flower_form": "tiny",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "water"
+     ],
+     "fruit_set": 0.9,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      10,
+      40
+     ],
+     "unripe_colour": "#6b5a2a",
+     "ripe_colour": "#3e2e16",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      1,
+      3
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Kelp has no flowers or fruit: this block treats the sori (dark, slightly raised spore patches over the central blade) as flower and fruit. MarLIN (sori all year, peaks Jul-Aug and Nov-Dec; zoospores released into the water). Sorus size and timings estimated; blades eaten cooked or dried."
+    }
    },
    {
     "name": "Southern bull kelp",
@@ -402,7 +613,77 @@
      "confidence": "documented",
      "note": "alga; massive holdfast, no bark"
     },
-    "silhouette": "thick leathery brown straps thrashing from a wave-battered holdfast"
+    "silhouette": "thick leathery brown straps thrashing from a wave-battered holdfast",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      4,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Fertilised eggs settle on bare wave-swept rock within days and grow into tiny discs; the juvenile is a small, simple, smooth strap blade on a short stalk above a sucker-like holdfast. Only later does the blade thicken, fill with buoyant honeycomb tissue and split into many long, leathery, golden-brown whip-like straps that thrash in the surf.",
+     "confidence": "estimated",
+     "source": "Wikipedia Durvillaea antarctica (huge, tenacious holdfast; long leathery honeycombed blades; a large plant releases 100 million eggs in 12 h, mostly in winter; eggs settle close by in calm-moderate water; detached plants raft up to 210 days and 10,000 km; eaten as cochayuyo). Growth rate, maturity and lifespan estimated from bull-kelp literature."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      9
+     ],
+     "hemisphere": "south",
+     "flower_days": 0.5,
+     "flower_size_cm": 0.1,
+     "flower_colour": "#5f4e22",
+     "flower_form": "tiny",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1000,
+      10000
+     ],
+     "pollinators": [
+      "water"
+     ],
+     "fruit_set": 0.8,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.1,
+      0.3
+     ],
+     "unripe_colour": "#7a6a2e",
+     "ripe_colour": "#4f4020",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      100000,
+      2000000
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "A kelp has no flowers or fruit: values map its sunken conceptacles (1-3 mm pits over the blades) that release eggs or sperm into the sea, mostly in winter (Wikipedia: 100 million eggs in 12 h). Rot time is for torn fertile blades cast ashore; counts are conceptacles per plant. Timings estimated; blades are eaten cooked as cochayuyo."
+    }
    }
   ],
   "shrub": [
@@ -511,7 +792,80 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low dense heather mound, purple haze in flower"
+    "silhouette": "low dense heather mound, purple haze in flower",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      30,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seeds need light and sprout in 2-6 weeks on bare peat, sand or burnt ground. The seedling is a tiny green sprig of minute, overlapping, scale-like leaves in four rows; it branches into a small upright bush (pioneer phase), then a dense, rounded dome (building phase) that later spreads, thins and opens in the centre as it ages.",
+     "confidence": "documented",
+     "source": "USDA FEIS Calluna vulgaris (pioneer 0-6 yr, building 6-14, mature 14-25, degenerate after 25; lives about 30-40 yr on dry heaths; seeds rarely germinate without light; highly shade-intolerant); Gimingham 1960 Biological Flora of the British Isles."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 8,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#b9709c",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      50
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.15,
+      0.25
+     ],
+     "unripe_colour": "#8a9a60",
+     "ripe_colour": "#8a6a4a",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      60,
+      200
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (flowers Jul-Sep, mauve, in racemes; capsule); FEIS (flowers Jul-Nov in N America, wind and animal dispersal, seed bank long-lived); Gimingham 1960 (bees and wind pollinate; capsules ripen in autumn and shed seed over winter); counts approximate."
+    }
    },
    {
     "name": "Coyote brush",
@@ -623,7 +977,80 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "dense rounded bright-green coyote bush"
+    "silhouette": "dense rounded bright-green coyote bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      15,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      12,
+      25
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny plumed achenes land on bare mineral soil and sprout in 2-4 weeks. The seedling has two small round cotyledons, then small, glossy, bright-green, wedge-shaped leaves with a few teeth, over a deep taproot. It branches quickly from the base into a dense, rounded or sprawling mound of stiff, crowded green twigs.",
+     "confidence": "documented",
+     "source": "USDA FEIS Baccharis pilularis (germination mostly within 15-30 d without pretreatment, shade-intolerant, poor seedling growth in shade, individuals live 10-15 yr but basal sprouting and layering extend it); first flowering age estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#efe8c8",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      10
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.7,
+      1.2
+     ],
+     "unripe_colour": "#c3c99a",
+     "ripe_colour": "#f2f0e6",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      1000,
+      50000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS (dioecious, flowers Jul-Oct, 55 insect visitor species incl. honey bees, achenes 1-2 mm with 6-10 mm pappus, ripe Sep-Nov, dispersed Oct-Jan); counts are flower heads, estimated."
+    }
    },
    {
     "name": "Salal",
@@ -735,7 +1162,79 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "dense glossy thicket, leaves held flat and layered"
+    "silhouette": "dense glossy thicket, leaves held flat and layered",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      27,
+      45
+     ],
+     "height_years": [
+      8,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      16,
+      40
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedlings on rotting logs and stumps (light needed to germinate): two small cotyledons, then leathery, finely toothed oval leaves. Very slow at first (only 8-13 cm after 2-3 years); then spreads by layering and rhizomes into a thicket of zigzag, reddish, glandular-hairy stems with glossy, thick, egg-shaped evergreen leaves.",
+     "confidence": "documented",
+     "source": "USDA FEIS species review (Gaultheria shallon): germination in 27-45 days, light required; seedlings slow, 3-5 in after 2-3 yr; flowers only at >=5 yr; twigs live 16+ yr and rhizomes for centuries; shade-tolerant but less vigorous under dense canopy."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#f2d6d9",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      15
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.6,
+      1.0
+     ],
+     "unripe_colour": "#7e9a5a",
+     "ripe_colour": "#2c1f38",
+     "ripen_days": [
+      70,
+      110
+     ],
+     "hang_days": [
+      30,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      10,
+      40
+     ],
+     "crop_per_tree": [
+      50,
+      500
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS (flowers May-Jul, white to pink urn-shaped flowers on terminal bracteate racemes, ~6 per twig, bee and fly pollinated; hairy blue-black pseudoberries 6-10 mm ripen Aug-Oct and may persist to December, ~126 seeds each; regular good crops). Fruit set, rot and crop estimated."
+    }
    },
    {
     "name": "Sea blite bush",
@@ -850,7 +1349,78 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "grey-green succulent-leaved bush, rounded"
+    "silhouette": "grey-green succulent-leaved bush, rounded",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two narrow, fleshy green cotyledons, then short, fleshy, finger-like leaves that are grey-green and often woolly. It branches low into a small succulent sprig and within a few years becomes a woody-based, mounded to sprawling grey-green subshrub on coastal bluffs, dunes and salt-marsh edges.",
+     "confidence": "estimated",
+     "source": "Wikipedia Suaeda taxifolia (shrub or subshrub to ~1.5 m, woody below, fleshy hairy-waxy leaves; flowers 1-3 per cluster with leaf-like bracts, no petals, fleshy calyx; fruit a utricle in the calyx; salt marsh, beach, dune and scrub of S California and Baja). Germination, growth, flowering season and ages estimated from shrubby Suaeda."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      11
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.25,
+     "flower_colour": "#8fae6a",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind",
+      "self"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.15,
+      0.3
+     ],
+     "unripe_colour": "#86a85e",
+     "ripe_colour": "#6b4a3a",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      30000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia Suaeda taxifolia (petal-less flowers with fleshy hairy sepals, 1-3 per cluster; fruit a utricle enclosed by the calyx). Flowering months, wind/self pollination, ripening (one shiny dark seed ~1.5-2 mm) and crop estimated from Suaeda and other coastal chenopods."
+    }
    }
   ],
   "ground": [
@@ -936,7 +1506,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "pink jointed turf in tide pools"
+    "silhouette": "pink jointed turf in tide pools",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores settle within 2 days and form a tiny pink calcified crust within 3; the first jointed fronds rise from the crust after about 3 weeks and the first full segment takes ~13 weeks. The young plant is a small pink-purple crust sprouting stiff, jointed, feather-branched chalky fronds that thicken into a turf; fronds may be shed and regrow from the perennial crust.",
+     "confidence": "documented",
+     "source": "MarLIN species review (Corallina officinalis: fronds grow 2.2 mm/month at 12-18 C, 0.2 at 6 C; fronds up to 12 cm; spore settlement 48 h, crust 72 h, fronds 3 weeks, first segment 13 weeks; crust perennial; new fronds within 6 months, 10% cover in 12 months on cleared rock; shade-tolerant understorey alga)"
+    }
    },
    {
     "name": "Rockweed",
@@ -1032,7 +1624,29 @@
      "confidence": "estimated",
      "note": "holdfast and short stipe; no stem surface"
     },
-    "silhouette": "small olive forked straps on the rocks"
+    "silhouette": "small olive forked straps on the rocks",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
+     ],
+     "height_years": [
+      1.2,
+      2.5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      2.5,
+      5
+     ],
+     "shade": "intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No juvenile form to draw: fertilised eggs glue to rock and within 2-4 weeks become speck-sized germlings with hair-like rhizoids, growing into a small flat, forked, olive-brown frond. Adults are small stiff tufts of narrow, repeatedly forked strap-like blades (no air bladders) with swollen pointed fruiting tips from about the second year.",
+     "confidence": "documented",
+     "source": "MarLIN species account (Fucus distichus: growth ~10 cm/yr, lifespan 2-5 yr, mostly 2-3; mature at ~2 yr and ~10 cm; gametes Apr-Aug; cited by an earlier research pass); Wikipedia (to 30 cm, fronds <4 mm wide, mostly in rock pools; receptacles form in late autumn under short days)."
+    }
    },
    {
     "name": "Sea palm",
@@ -1128,7 +1742,30 @@
      "confidence": "documented",
      "note": "alga; hollow rubbery stipe, no bark"
     },
-    "silhouette": "miniature palm tree of drooping green straps on surf rock"
+    "silhouette": "miniature palm tree of drooping green straps on surf rock",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      0.15,
+      0.35
+     ],
+     "first_seed_years": 0.35,
+     "lifespan_years": [
+      0.6,
+      1
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Spores drip down the grooved blades at low tide and settle close to the parent; microscopic gametophytes overwinter on rock, mussels or barnacles. In late winter the young sporophyte appears as a single small flat blade on a short stalk, then splits into many grooved blades while the hollow, flexible, rubbery stipe thickens, making a miniature palm by early summer.",
+     "confidence": "estimated",
+     "source": "Wikipedia Postelsia (annual kelp, 50-75 cm; sporangia in blade grooves, spores released at low tide onto the rock below; microscopic dioecious gametophytes; wave-beaten mid to upper intertidal, Vancouver Island to central California). Recruitment timing, growth and die-off estimated from kelp field studies."
+    }
    },
    {
     "name": "Surfgrass",
@@ -1223,7 +1860,29 @@
      "confidence": "documented",
      "note": "submerged seagrass; rhizome and sheaths only"
     },
-    "silhouette": "bright green surfgrass streaming over wave-washed rock"
+    "silhouette": "bright green surfgrass streaming over wave-washed rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds are crescent-shaped with two barbed arms that snag on bushy coralline red algae; the seedling roots into the algal turf and puts up a small tuft of narrow, bright-green, thread-like leaves. Over years it forms rhizomes that bind to rock and makes dense emerald tufts of long, narrow (2-4 mm) ribbon leaves streaming in the surge.",
+     "confidence": "estimated",
+     "source": "Wikipedia (seedlings establish among red coralline algae, attaching by small barbs and roots; rhizomes colonise rock in the mid to low intertidal); slow seedling establishment and ages estimated from surfgrass recruitment studies"
+    }
    },
    {
     "name": "Thrift",
@@ -1312,7 +1971,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tight grassy cushion topped with pink pom-poms"
+    "silhouette": "tight grassy cushion topped with pink pom-poms",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two small oval cotyledons, then narrow, grass-like dark green leaves in a tiny rosette on a stout taproot. Rosettes multiply as the woody base branches, building a dense, rounded cushion of hundreds of linear leaves; from about year 2, leafless stalks 5-30 cm tall carry round pink papery pompom heads.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Armeria maritima: compact evergreen perennial in low clumps with long flower stems and globes of bright pink flowers; flowers Apr-Oct in British salt marshes; bee and butterfly pollinated; sea cliffs, dunes, salt marsh; copper tolerant). Germination, cushion growth, first flowering and lifespan estimated from Woodell & Dale 1993 as recalled."
+    }
    }
   ],
   "epiphyte": []

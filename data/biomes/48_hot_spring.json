@@ -133,7 +133,77 @@
      "spacing_m": 0.6,
      "confidence": "documented"
     },
-    "silhouette": "slender pale trunk, rounded crown of ascending branches"
+    "silhouette": "slender pale trunk, rounded crown of ascending branches",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      10,
+      35
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      70,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny two-winged nutlets sprout in early summer on moss, bare soil or burnt ground. Seedlings have minute round cotyledons, then small, downy, coarsely toothed, rounded leaves on hairy reddish twigs. At the treeline the young tree soon sprouts extra stems from its base, becoming a crooked, multi-stemmed bush with dark reddish-brown bark that whitens and peels only on older stems.",
+     "confidence": "estimated",
+     "source": "Wikipedia (short-lived tree; subarctic mountain birch small, contorted and shrubby); Atkinson 1992 Biological Flora of Betula pendula and B. pubescens (light-demanding pioneer, seed from young age, winged nutlets shed late summer to winter); treeline growth rates and ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 4,
+     "flower_colour": "#b89a55",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      2,
+      3.5
+     ],
+     "unripe_colour": "#89a25b",
+     "ripe_colour": "#8c6d47",
+     "ripen_days": [
+      80,
+      110
+     ],
+     "hang_days": [
+      20,
+      200
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "General Betula pubescens silvics (Atkinson 1992): catkins open with the leaves in spring (May-Jun in the subarctic), wind-pollinated, fruiting catkins 2-3.5 cm break up on the tree from late summer through winter; counts are catkins, estimated."
+    }
    },
    {
     "name": "Lodgepole pine",
@@ -238,7 +308,77 @@
      "spacing_m": 0.6,
      "confidence": "documented"
     },
-    "silhouette": "narrow dark conical pine, straight trunk, dead lower whorls"
+    "silhouette": "narrow dark conical pine, straight trunk, dead lower whorls",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      25,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 3-6 cotyledons and a tuft of single primary needles, then short, twisted, paired needles. Young trees are dense, narrow cones with regular whorls. Open-grown shore pines become bushy, crooked and flat-topped; inland trees become slim, straight poles. Serotinous cones stay closed on the branches for decades.",
+     "confidence": "documented",
+     "source": "USDA Silvics (Lotan & Critchfield): viable seed commonly at 5-10 years; ~3.6 m at 20 years on medium sites; germination peaks in the 2 weeks after snowmelt; very intolerant of shade; shore pine small and short-lived; ages commonly 150-200+, old high-elevation trees to 400+"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#8a2f5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      5
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      6
+     ],
+     "unripe_colour": "#5f6a3a",
+     "ripe_colour": "#b08850",
+     "ripen_days": [
+      450,
+      520
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2500
+     ],
+     "crop_per_tree": [
+      50,
+      1500
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (reddish-purple female strobili in whorls of 2-5, mid-May to mid-July; cones mature Aug-Oct over a year after pollination, purple-green to light brown; Rocky Mountain cones serotinous, sealed until heated to 45-60 C and held for years; 10-24 seeds per cone)"
+    }
    },
    {
     "name": "Manuka",
@@ -353,7 +493,80 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "twiggy gnarled dark shrub-tree, white starry flowers"
+    "silhouette": "twiggy gnarled dark shrub-tree, white starry flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedlings with narrow, sharp-pointed, aromatic leaves come up in crowds on bare, burnt or cleared ground. They grow fast into dense, prickly, fine-leaved sprigs, then bushy shrubs with flaky bark; plants can flower within a couple of years, and the old woody capsules stay clustered along the stems for years.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Leptospermum scoparium: shrub 2-5 m, up to 15 m; one of the first species to regenerate on cleared land, quickly colonising disturbed ground); growth and ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      1
+     ],
+     "hemisphere": "south",
+     "flower_days": 5,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#fbf8f2",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle",
+      "moth"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      0.7
+     ],
+     "unripe_colour": "#8a8a50",
+     "ripe_colour": "#6a5846",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      365,
+      1500
+     ],
+     "crop_per_tree": [
+      1000,
+      100000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (flowers 8-15 mm, rarely 25 mm, white occasionally pink, five petals; visited by hoverflies, Hylaeus bees and honeybees; woody capsules 5-7 mm often stay on the plant year-round, serotinous, releasing seed after fire). Flowering months, flower life, timings and counts estimated."
+    }
    }
   ],
   "shrub": [
@@ -471,7 +684,80 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "low woolly silver-leaved willow mound"
+    "silhouette": "low woolly silver-leaved willow mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      7
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 tiny round cotyledons; the shoots and young leaves are thickly covered in grey-white woolly hairs, leaves broad-oval with large leafy stipules. Grows into a low, gnarled, spreading bush (usually under 1 m tall, 1.5 m across) of stout twigs, silvery-grey with wool; big golden-yellow catkins stand upright on it in early summer.",
+     "confidence": "estimated",
+     "source": "Wikipedia/Stace Salix lanata (under 1 m tall by 1.5 m broad; leaves to 7 x 6.5 cm, stipules ~1 cm; catkins May-July; mountain ledges 600-900 m in Scotland); USDA Woody Plant Seed Manual Salix (fast germination); growth rate and lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 4.0,
+     "flower_colour": "#e0b83a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      40,
+      120
+     ],
+     "pollinators": [
+      "bumblebee",
+      "fly",
+      "bee",
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.5,
+      0.8
+     ],
+     "unripe_colour": "#9fae6a",
+     "ripe_colour": "#b9a27c",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      10000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia/Stace Salix lanata (stout erect catkins with or after the leaves, May-July; males golden-yellow and silky, 2-5 cm, females lengthen in fruit); insect plus wind pollination as in other arctic willows; ripening, set and crop estimated"
+    }
    },
    {
     "name": "Prostrate kanuka",
@@ -586,7 +872,79 @@
      "spacing_m": 0.1,
      "confidence": "documented"
     },
-    "silhouette": "sprawling prostrate twiggy mound, tiny leaves"
+    "silhouette": "sprawling prostrate twiggy mound, tiny leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      80,
+      150
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedlings with narrow, soft, aromatic leaves on thin wiry stems appear in dense crowds on bare or burnt ground. They grow fast into slender, feathery sprigs with drooping young branchlets and tiny linear leaves; exposed and geothermal forms stay low and shrubby, while sheltered ones become small trees with papery, shredding bark.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Kunzea ericoides: to ~10 m, sometimes 18 m; flowers Oct-Feb, white, crowded on side branches, 5 petals, up to 25 stamens; cup-shaped capsule 2-4 mm opens when mature; colonises burnt and cleared land). Growth scaled to the game's shrubby form; ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      2
+     ],
+     "hemisphere": "south",
+     "flower_days": 4,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f8f6f0",
+     "flower_form": "brush",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      5
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.2,
+      0.4
+     ],
+     "unripe_colour": "#7a8a5a",
+     "ripe_colour": "#6a4a2a",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      300
+     ],
+     "crop_per_tree": [
+      1000,
+      50000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (flowers Oct-Feb, small white with up to 25 stamens, crowded on side branches; cup-shaped capsules 2-4 mm open to release seed when mature). Pollinators, timings and counts estimated."
+    }
    },
    {
     "name": "Shrubby cinquefoil",
@@ -706,7 +1064,80 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low dense twiggy mound, yellow flowers"
+    "silhouette": "low dense twiggy mound, yellow flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny round cotyledons, then small silky leaves with 3 narrow leaflets, soon pinnate with 5-7 like the adult. The seedling is a few thin, wiry, upright stems with shreddy reddish-brown bark that branch repeatedly into a low, rounded, twiggy bush; some prostrate forms creep over rock or tundra.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dasiphora fruticosa (0.1-1 m, rarely 1.5 m; upright to prostrate; buttercup-like yellow flowers 2-3 cm across, early to late summer; hairy achene clusters; swamps, rocky and high-elevation sites). Growth rate, age at first flowering and longevity estimated from horticultural and rangeland sources."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#f5d33b",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle",
+      "butterfly"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      0.9
+     ],
+     "unripe_colour": "#9cae6a",
+     "ripe_colour": "#8b6b45",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      30,
+      200
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (flowers 2-3 cm, pale to bright yellow, 5 petals, 15-25 stamens, early-late summer; fruit a cluster of long-haired achenes). Fruit size is the achene head in its persistent calyx; pollinator guilds, timing, set and crop estimated from Potentilla ecology."
+    }
    },
    {
     "name": "Umbrella fern",
@@ -801,7 +1232,29 @@
      "confidence": "documented",
      "note": "wiry straw-brown stipes"
     },
-    "silhouette": "forking tiers of stiff fronds forming a tangled thicket"
+    "silhouette": "forking tiers of stiff fronds forming a tangled thicket",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A green prothallus on bare soil or lava gives rise to small fronds that fork once or twice. The rhizome then creeps and sends up wiry, repeatedly forking fronds whose branches bud and fork again at wide angles without end, piling up into a springy, layered, pale-green thicket 1-3 m deep over its own dead brown fronds.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dicranopteris linearis (pseudo-dichotomously forking fronds with indeterminate growth; thickets 3 m deep, climbing to 10 m on support; rhizomatous clonal mats; pioneer of lava, talus and roadsides; cannot tolerate shade). Rates and ages estimated."
+    }
    }
   ],
   "ground": [
@@ -898,7 +1351,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "flat sword-leaf fans with brown sausage heads"
+    "silhouette": "flat sword-leaf fans with brown sausage heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      0.3,
+      1.2
+     ],
+     "first_seed_years": 1.1,
+     "lifespan_years": [
+      1,
+      2
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Germinates on wet mud or in shallow water: a hair-like shoot, then 2-4 tiny leaves and 2-6 ribbon leaves floating flat on the water before stiff, erect, flat grey-green leaves rise. By the end of its first summer a seedling is 60-85 cm tall and has sent rhizomes out into a clump up to 3 m across. Each shoot lives about a year; the clone persists for decades.",
+     "confidence": "documented",
+     "source": "USDA FEIS (Typha latifolia): germinates best at 25-30 C in high light; 2-4 small then 2-6 floating leaves before erect ones; seedlings 60-85 cm after 84 d; flowers early in 2nd year; ramets die within a year, rhizomes live about 2 yr; one seedling's rhizomes spread 3 m in a season; shade intolerant."
+    }
    },
    {
     "name": "Geothermal kanuka moss",
@@ -988,7 +1463,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "yellow-green moss cushion, silver hair tips"
+    "silhouette": "yellow-green moss cushion, silver hair tips",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores (12-14 um) or broken shoot tips grow a green thread-like protonema film on bare peat or sand, from which tiny upright shoots arise within weeks. These pack into a small dark olive-green cushion; the shoots carry grey-white hair points that bend back when dry, giving a frosted, star-like look. Patches merge into a continuous carpet that can smother dune heath.",
+     "confidence": "estimated",
+     "source": "GB Non-native Species Secretariat factsheet (rapid colonist after heath fires, abundant capsules in large populations, shoot fragments dispersed by wind, exposed sites to partial shade); Univ. Oldenburg neophyte page (0.5-5 cm, carpets on grey dunes); Wikipedia (spores 12-14 um, setae 7-12 mm); timings estimated from moss biology"
+    }
    },
    {
     "name": "Green cyanobacteria mat",
@@ -1072,7 +1569,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "green slimy film in hot runoff"
+    "silhouette": "green slimy film in hot runoff",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.15,
+      0.8
+     ],
+     "first_seed_years": 0.1,
+     "lifespan_years": [
+      3,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No plant form: single rod-shaped cells a few microns long. A new colony shows as a thin olive-green slime film on bare sinter in 50-72 C outflow channels, thickening into a gelatinous, layered mat about 1 cm deep: bright green on top over orange layers of filamentous bacteria. In strong summer sun the surface looks more yellow-orange, in winter greener.",
+     "confidence": "estimated",
+     "source": "Copeland 1936 and T. D. Brock's Yellowstone work (Thermophilic Microorganisms and Life at High Temperatures, 1978): unicellular cyanobacterium of alkaline hot springs forming green mats up to ~72 C, the upper limit for photosynthesis, over Chloroflexus layers (Octopus and Mushroom springs). Colonisation, mat-building times and mat age estimated."
+    }
    },
    {
     "name": "Hot-spring moss",
@@ -1162,7 +1681,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "silvery-green moss cushion"
+    "silhouette": "silvery-green moss cushion",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores, bulbils or broken shoot tips sprout within days into a green felt of branching protonema threads on bare soil, stone or pavement cracks. Within weeks tiny silvery, catkin-like shoots under 1 cm tall rise from it, with closely pressed leaves whose colourless tips give the silver sheen; they pack into small whitish-green cushions that turn silvery when dry.",
+     "confidence": "estimated",
+     "source": "Wikipedia (shoots <1 cm in dense clumps; pavements, roofs, rocks, dunes, alpine herbfields; spores plus bulbils and protonemal gemmae; desiccation-tolerant, survives brief 120 C; hyaline leaf tips screen strong sun); spore-to-shoot and colony timings estimated from moss culture."
+    }
    },
    {
     "name": "Ross' bentgrass",
@@ -1253,7 +1794,30 @@
      "lenticels": "none",
      "confidence": "estimated"
     },
-    "silhouette": "tiny bright-green bentgrass tuft on warm ground"
+    "silhouette": "tiny bright-green bentgrass tuft on warm ground",
+    "growth": {
+     "life": "annual",
+     "season": "autumn",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.2,
+      0.35
+     ],
+     "first_seed_years": 0.45,
+     "lifespan_years": [
+      0.5,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up in December or January on steaming, geothermally heated ground while snow lies all around: hair-thin single blades, soon a small dense tuft of very fine, short, often in-rolled green leaves a few cm tall. By May-June it carries tiny, narrow, purplish panicles on stems 5-20 cm, then yellows and dies by July as summer heat bakes the crust.",
+     "confidence": "documented",
+     "source": "Wikipedia / Yellowstone NPS accounts of Agrostis rossiae: endemic to thermal ground of the Firehole River and Shoshone Geyser Basin; seeds sprout Dec-Jan on warm soil, green by late winter, flowers May-June, plants die by July (sources differ on annual vs perennial). Culms 5-20 cm (batch). Germination days and growth fractions estimated."
+    }
    },
    {
     "name": "Thermophile mat",
@@ -1337,7 +1901,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "orange-yellow microbial mat in hot channel"
+    "silhouette": "orange-yellow microbial mat in hot channel",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      0.05,
+      0.3
+     ],
+     "first_seed_years": 0.02,
+     "lifespan_years": [
+      1,
+      20
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No plant form: rod-shaped to short filamentous bacteria 0.5-0.8 um wide that clump into 10-20 um spheres. On new surfaces in 50-80 C water it shows within days as a thin slimy film, yellow to pinkish-orange from carotenoid pigments, usually mixed into cyanobacterial mats and streamers rather than forming a large mat of its own.",
+     "confidence": "estimated",
+     "source": "Wikipedia Thermus aquaticus (isolated by T. D. Brock from Mushroom Spring, Lower Geyser Basin; grows at 50-80 C, optimum 65-70 C; rods 0.5-0.8 x 5-10 um, filaments >200 um, spherical bodies 10-20 um; yellow to pink or red in sunlight; a chemotroph that needs no light, living partly on cyanobacterial products). Colonisation and film age estimated."
+    }
    },
    {
     "name": "Tufted hairgrass",
@@ -1427,7 +2013,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "dense green tussock with airy seed haze"
+    "silhouette": "dense green tussock with airy seed haze",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a small tuft of fine, dark-green, ribbed, rough-edged leaves. It tillers into a dense, fountain-like tussock, flowering from its second year: a cloud of tall, airy, silvery-purple to golden panicles held well above the leaf mound; the tussock base grows wider and denser each year.",
+     "confidence": "documented",
+     "source": "USDA FEIS Deschampsia cespitosa (densely cespitose, culms 20-120 cm; 95% germination over 30 d with light after cold storage; no seed in the planting year, seed in the second; flowers May-Sep by region; rarely in dense shade; seed viability 1-80% by year). Tussock lifespan estimated."
+    }
    }
   ],
   "epiphyte": []

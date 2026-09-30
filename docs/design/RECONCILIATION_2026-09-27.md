@@ -296,7 +296,14 @@ shows anything else (§P).
     lying by the fire, one or two camp folk nearby (the ones who "found you"), maybe
     an elder line of chatter. Then control returns. Reuses `encampment` folk.
   - Full health, empty carry, no gear — it's all in the bundle back where you fell.
-    The camp folk did not loot you.
+    The camp folk did not loot you. **29 Sept 2026 (Mike): you wake empty-handed, but
+    the folk who saved you have laid a bow, a spear and a fishing pole on the ground
+    beside you, a gift** (later that evening: a bow and a spear, the pole shelved; the
+    same at a new game's opening fire; `main._lay_gifts()`,
+    `items.json` `starting_kit`). Your old tools wait on the body with the rest; the
+    ones you have again stay with it when you take the rest (three tools, never more:
+    §T). With nothing in hand you still defend yourself: bare hands jab and throw a
+    wound-up haymaker (`Fists`, combat `fists`).
   - **The drop is a corpse, not an icon.** Your body stays where you fell, in the
     existing death-slump pose with the cloak on it, holding all your gear. Interact
     to recover it. **No map pin, no compass, no marker** — you find it by retracing
@@ -690,7 +697,9 @@ Both **on by default**, each **toggleable in the settings menu**, both small and
   first fishing item in the game; fishing itself lands with Phase 10, but the pole exists
   in the inventory from day one.
 - **On respawn after death you wake with nothing** — the kit is on your corpse with the
-  rest of your gear (corpse rule above). The walk back is the penalty; the fire is safe.
+  rest of your gear (corpse rule above). **29 Sept 2026 (Mike): you wake empty-handed,
+  a new game or after a death, with the bow, the spear and the fishing pole lying by
+  you, the folk's gift; right click takes each. Bare hands can fight.** The walk back is the penalty; the fire is safe.
   (Designer's call to confirm: if this feels too harsh early, the fallback is that the
   folk who found you leave a spear by the fire — one item, not the kit.)
 - **Arrows stick in whatever they hit** — ground, trunk, ruin, or the **body part of a
@@ -713,7 +722,10 @@ build power, release to act. Power sets both **strength and trajectory**.
   `cast_max_m` (~25–30 m). Aim with the look direction. The line lands on water or not;
   reel in with the same button held (or a second input, tune by feel). Fishing itself
   (bites, fish species by water temperature, catch) is Phase 10; the cast is Phase 1 so
-  the pole is usable from the first play.
+  the pole is usable from the first play. **Built 29 Sept 2026** (`FishingPole`): Q
+  brought it to hand after the bow and the spear. **Shelved the same evening (Mike): the
+  fishing pole goes to a separate fishing-simulator game, to be merged back once it's
+  done; the spear fishes. The built pole lives in `archive/fishing/fishing_pole.gd`.**
 - **Charging never slows you down.** Remove the bow's walk-slowdown while drawing
   (`bow.gd`); no tool reduces speed or momentum while charged. A charge is **held
   through techs** — right click does not cancel it.
@@ -948,15 +960,14 @@ were out there; every time after, it was because you died.
 | input | does |
 |---|---|
 | W (double-tap and hold = sprint), A S D | move |
-| Space | jump; push off while climbing |
-| Shift | sneak / fast-fall / roll tap on landing |
-| **Left mouse** | **the item in hand:** hold to charge (bow draw, spear raise, pole wind-up), release to act |
-| **Right mouse** | **movement, the tech button:** wall jump / cling / bounce / swing |
+| Space | jump; **in the air at a face: wall jump; as you land: bounce** (29 Sept 2026, Mike: moved here from right mouse); push off while climbing; leap off a cling |
+| Shift | sneak / fast-fall / **roll tap on landing: no fall damage** (29 Sept 2026, Mike) |
+| **Left mouse** | **the item in hand:** hold to charge (bow draw, spear raise, pole wind-up, a haymaker with bare hands), release to act |
+| **Right mouse** | **interact and hold on** (29 Sept 2026, Mike: it replaces E): take things, climb the tree in front of you, held in the air at a face: cling, near a branch or vine: catch and swing |
 | **Mouse wheel** | **fishing pole: scroll down reels the line in, scroll up lets it out** |
 | **Tab** (I still works) | inventory |
 | **M** | map (exists: biome / height / temperature / rainfall / weather layers on 1–5) |
-| Q | swap bow / spear / pole |
-| E | interact |
+| Q | swap bow / spear / bare hands (the pole shelved 29 Sept 2026) |
 Bound in `scripts/core/controls.gd` (`reel_in` / `reel_out` are wheel buttons). The map
 keeps the no-marker rules: it never shows your corpse or the enemy shinobi (§P, §Q).
 
@@ -1895,3 +1906,61 @@ a unique and rare genetic abnormality." Built, with the full design in
   the bark, the breaths), 0-100 %, each its own bus (`AudioMix`); footsteps and climbing
   start at half (-6 dB). A snapping handhold and a springing stem stay on the master bus
   (a warning, not a footstep).
+
+## AR. Plants grow at their real rates; seedlings and saplings; shade leaves — 29 Sept 2026
+
+- **Locked (Mike):** "the life cycle of a seed or tuber or any other plant should directly
+  correlate to its speed in real life — since our game time is 10x faster than earth, each
+  plant should grow approximately 10x faster in game than in real life"; "have
+  seedling/sapling versions of plants which evolve over time as they grow"; "light should
+  also be a consideration — plants which grow in shade often grow larger leaves than ones
+  in sunlight."
+- **One game day is one real day of growth** (a game day is 144 real minutes). Every
+  plant's growth block was researched from silvics manuals, FEIS, floras, extension pages
+  and growers' data (PLANT_SCHEMA §4a4: germination days, the years to half and to 90 % of
+  full height, first seed, lifespan, shade tolerance, the young form and its leaves), and
+  a Chapman-Richards curve is fitted per species through its two researched points
+  (`PlantGrowth`). Ages are storage-free: a plant's place and the world clock.
+- **The young:** each stand's regeneration cohort grows young layouts (a sapling: a whip,
+  a cone, a palm's stemless rosette of first leaves, a few stems; a young tree about half
+  grown), and the understory holds seedlings and saplings of the stand's own species,
+  as many as the light lets live: under a closed canopy a shade-tolerant fir, hemlock or
+  beech keeps a seedling bank (it gets going at 1.5 % of full sun), a pine or birch comes
+  up only in the gaps (half of full sun). Each spot's occupant lives its run on the clock:
+  it comes up after its germination, grows at its species' pace slowed by the shade, and
+  either dies young or grows out of the understory. The HUD names them: "seedling",
+  "sapling", "young tree".
+- **Shade leaves:** each plant's light comes from the crowns over it (their optical depth:
+  one crown lets through about a third, a closed canopy a few percent), and its leaves are
+  up to 1.45x their size in deep shade and down to 0.85x in full sun (the shade-tolerant
+  species change most), darker in the shade. Herbs spread wider in the shade too.
+
+## AS. Flowers, pollinators and fruit on the trees — 29 Sept 2026
+
+- **Locked (Mike):** "fruits which grow on trees can be plucked individually, and make
+  sure they have stages of flowers which are pollinated individually by pollinators, and
+  if not plucked fall to the ground after a while and rot."
+- Every fruiting species' `fruiting` block (researched: flowering months and hemisphere,
+  a flower's days open, size, colour and form, where it flowers, flowers per cluster,
+  pollinators, fruit set, fruit kind, shape, size and colours, days to ripen, days it
+  hangs ripe, how it goes, days to rot, crop per tree, edibility) drives `FruitCrop`:
+  every grown tree (and fruiting shrub) near the player carries its crop at real places
+  on it — its twigs among the leaves, the crown's outside, its stem tips, its trunk
+  (cauliflory), an agave's stalk, the bunches under a palm's crown.
+- **One flower at a time:** each place has its own year on the clock: a bud, the open
+  flower, then withering or fruit; the fruit swells and turns from its unripe to its ripe
+  colour, hangs ripe, then falls to the ground under the tree and rots there (or splits
+  open on the branch, dries on the tree, or shatters, by its kind). A tree blooms for a
+  part of its species' season (half a year on in the other hemisphere); nut and cone
+  trees mast some years.
+- **Pollinated one by one:** the species' pollinators come to the open flowers near the
+  player — bees, bumblebees, stingless bees, wasps, flies, beetles and butterflies by day,
+  moths and bats by night, nectar birds — fly flower to flower (mostly on one tree, now
+  and then to the next of its kind) and stay a moment at each. A flower they visit may set
+  fruit (its species' fruit set); one watched to its close without a visit doesn't
+  (wind-pollinated species keep a share); flowers nobody saw are rolled. Rain grounds
+  them.
+- **Picking:** right click picks the fruit in reach, one at a time — ripe or green off the
+  tree, fallen or rotting off the ground; it goes into the pack as a fruit of its species
+  and is gone from the tree for the session. Near you, the fruit that drops is seen to
+  fall (a winged key spins down). The HUD says a tree is "in flower", "in fruit, ripe".

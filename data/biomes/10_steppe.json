@@ -131,7 +131,77 @@
      "spacing_m": 1.0,
      "confidence": "documented"
     },
-    "silhouette": "open rounded crown of small leaves, brittle limbs"
+    "silhouette": "open rounded crown of small leaves, brittle limbs",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      10,
+      35
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      100,
+      250
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two small oblong cotyledons, then alternate, small (2-5 cm), singly toothed, almost symmetrical elm leaves on a thin zigzag stem. Saplings are fast, slender whips, often growing 1 m or more a year, with short side shoots in two flat ranks; browsed or cut stems resprout into bushy multi-stemmed clumps. The open, rounded crown forms after 10-15 years.",
+     "confidence": "documented",
+     "source": "Wikipedia (Ulmus pumila): to 25 m, rarely over 60 yr in N America but 100-150 yr (one over 250) in its native range, not shade-tolerant; USDA Woody Plant Seed Manual (Ulmus): flowers Mar-Apr, fruit ripe and shed Apr-May, seed-bearing from age 8, fresh seed germinates 81-96% with no pretreatment. Height curve estimated from its fast early growth."
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#8a5040",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      15
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      1.0,
+      1.4
+     ],
+     "unripe_colour": "#b8cf7c",
+     "ripe_colour": "#d9c9a0",
+     "ripen_days": [
+      25,
+      45
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      20000,
+      2000000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Ulmus): flowers Mar-Apr before the leaves, samaras 10-14 mm ripe and dispersed Apr-May; Wikipedia: flowers about 3 mm with brownish-red anthers, bloom one week, samaras whitish tan, orbicular, wind-dispersed; young samaras are eaten raw or steamed in N China. Cluster size, fruit set, hang and rot times and crop estimated."
+    }
    }
   ],
   "shrub": [
@@ -227,7 +297,29 @@
      "lenticels": "none",
      "confidence": "estimated"
     },
-    "silhouette": "tight spiny green cushion, yellow-flowered"
+    "silhouette": "tight spiny green cushion, yellow-flowered",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling with two narrow cotyledons, then small, stiff, three-forked leaves ending in yellow spines. It branches densely from the base into a small, round, spiny cushion; year by year the green-yellow hemisphere of interlocked stems and spiny leaves widens, and in early summer it is dotted with small yellow umbels. Grazing animals avoid it, so it spreads in overgrazed steppe.",
+     "confidence": "estimated",
+     "source": "Estimated from the growth form and Patagonian steppe literature on neneo (now Azorella prolifera; hemispherical spiny cushion shrub to ~1 m that increases under heavy grazing); germination from Apiaceae steppe shrubs needing winter cold"
+    }
    },
    {
     "name": "Siberian pea shrub",
@@ -345,7 +437,78 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "upright twiggy shrub, yellow pea flowers"
+    "silhouette": "upright twiggy shrub, yellow pea flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      5,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      40,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two thick oval cotyledons, then small even-pinnate leaves of 4-6 pairs of rounded leaflets. Seedlings reach about 30 cm in the first year and soon send up several stems from the base, forming an upright, open, multi-stemmed shrub with grey-green bark and paired spines at the leaf bases.",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Caragana: to 7 m, seed-bearing at 3-5 yr, flowers Apr-Jun, pods ripen Jun-Jul, 2.5-5 cm with ~6 seeds, split at once, dispersal done by mid-Aug; germination 5-21 days); NDSU extension (medium growth, long-lived, full sun); Alaska ACCS (grows in deciduous understories)"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 2,
+     "flower_colour": "#f2d23c",
+     "flower_form": "pea",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      2.5,
+      5.5
+     ],
+     "unripe_colour": "#8db35a",
+     "ripe_colour": "#8a6a3c",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      0,
+      14
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      300,
+      3000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (yellow bisexual flowers Apr-Jun; pods green to amber/brown Jun-Jul, 2.5-5 cm, ~6 seeds 2.5-4 mm; pods split explosively as soon as ripe); Alaska ACCS (pods 3.5-6 cm, flowers single or in small groups); PFAF (seeds and young pods eaten cooked)"
+    }
    },
    {
     "name": "Steppe spiraea",
@@ -459,7 +622,80 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "arching wands of small leaves, white-flowered"
+    "silhouette": "arching wands of small leaves, white-flowered",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: tiny epigeal cotyledons, then a thin wiry stem with small obovate grey-green leaves. Within 2-3 years it branches from the base into a little twiggy bush of arching brown stems, and spreads by root suckers into low steppe thickets that are smothered in small white flower clusters along last year's shoots.",
+     "confidence": "estimated",
+     "source": "USDA Woody Plant Seed Manual, Spiraea (seed germinates readily with little or no pretreatment; follicles split Aug-winter); Chicago Botanic Garden (May-Jun bloom on old wood); Flora of China/steppe floras (0.5-1.5 m, sessile umbels); timings estimated from the genus"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.7,
+     "flower_colour": "#f7f5ec",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      12
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle",
+      "butterfly"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.2,
+      0.4
+     ],
+     "unripe_colour": "#a3b56b",
+     "ripe_colour": "#a47c4a",
+     "ripen_days": [
+      45,
+      80
+     ],
+     "hang_days": [
+      60,
+      200
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      500,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "USDA Woody Plant Seed Manual, Spiraea (5 small follicles per flower, straw-coloured when ripe, split down one side; Virginia spirea follicles dehisce Aug-late winter); Trees and Shrubs Online (flowers under 1 cm); counts and timings estimated"
+    }
    },
    {
     "name": "Steppe wormwood",
@@ -575,7 +811,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "silvery-white feathery low shrub"
+    "silhouette": "silvery-white feathery low shrub",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      15
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      8,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two tiny oval cotyledons, then finely divided, silky silver-grey leaves in a small rosette. It becomes a low, woody-based subshrub that creeps by rhizomes into silvery patches of short upright shoots with feathery leaves, topped in late summer by sprays of tiny nodding yellowish flower heads.",
+     "confidence": "estimated",
+     "source": "Wikipedia (native range Europe to W Siberia and Iran) with the description estimated from floras as recalled (Flora of the USSR: rhizomatous silvery subshrub 20-60 cm of steppe and overgrazed pasture, flowering Jul-Sep with tiny wind-pollinated heads) and seed biology of related steppe Artemisia."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#d8c860",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.08,
+      0.12
+     ],
+     "unripe_colour": "#9aa070",
+     "ripe_colour": "#6a5a40",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from floras as recalled (tiny globose yellowish heads 2-3 mm in narrow panicles, Jul-Sep; achenes ~1 mm ripen Sep-Oct) and wind pollination typical of Artemisia; crop and timings estimated."
+    }
    }
   ],
   "ground": [
@@ -667,7 +973,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "stiff grey-green needle-grass tuft"
+    "silhouette": "stiff grey-green needle-grass tuft",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are thin tufts of a few rolled, needle-like, grey-green leaves. The plant slowly builds a dense, rounded tussock of stiff, sharp-tipped, rolled blades, pale and tough, with a skirt of old straw at the base; in late spring it carries narrow panicles of seeds with long feathery awns.",
+     "confidence": "estimated",
+     "source": "Estimated from Patagonian steppe tussock grasses (Stipa/Pappostipa: slow establishment on winter-spring moisture, long-lived tussocks) and the species' role as the dominant hard 'coiron' of the steppe"
+    }
    },
    {
     "name": "Crested wheatgrass",
@@ -757,7 +1085,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "green grass clump with flat comb spikes"
+    "silhouette": "green grass clump with flat comb spikes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a single thin blade on unusually long, fast roots, so it establishes quickly. By its first autumn it is a tight tuft of several tillers with flat, slightly hairy, blue-green leaves; from the second year it sends up stiff stems topped by flat, comb-like spikes whose spikelets stick out sideways like fish bones.",
+     "confidence": "documented",
+     "source": "USDA FEIS Agropyron cristatum: germinates at 5-30 C after >=5 d dormancy break; seedlings very hardy and vigorous with long quick-growing roots; culms 25-100 cm; Alberta heading Jun 8, flowering Jun 29, seed ripe Jul 30; stands productive >30 yr (one >40 yr). NRCS plant guide: culms 30-90 cm. First-seed year and tuft size estimated."
+    }
    },
    {
     "name": "Feather grass",
@@ -847,7 +1197,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tuft trailing long feathery silver awns"
+    "silhouette": "tuft trailing long feathery silver awns",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: one or two very narrow, inrolled leaves after the long-awned grain screws itself into the soil; builds a small tuft slowly and flowers only after several years. Mature: a dense tussock of fine, rolled grey-green leaves topped in early summer by silvery, feathery awns 20-35 cm long that wave like plumes.",
+     "confidence": "estimated",
+     "source": "Wikipedia Stipa pennata (60-90 cm, Eurasian steppe from Mongolia to Hungary, silvery plumes in summer); Flora Europaea (plumose awns 25-35 cm); flowering age and tussock lifespan estimated from steppe Stipa ontogeny studies"
+    }
    },
    {
     "name": "Krylov needlegrass",
@@ -937,7 +1309,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "small stiff grey-green bunchgrass"
+    "silhouette": "small stiff grey-green bunchgrass",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: one or two very fine, inrolled leaves from a grain whose hygroscopic awn has screwed it into the soil; it tillers slowly into a small bunch. Mature: a dense tussock of thread-like grey-green leaves with slender culms bearing grains with long, twice-bent, mostly bare awns, dominant over the typical Mongolian steppe.",
+     "confidence": "estimated",
+     "source": "Flora of China / Mongolian steppe literature (typical-steppe dominant, 30-70 cm tussock, scabrous non-plumose awns); growth, flowering age and tussock lifespan estimated from Eurasian Stipa steppe grasses"
+    }
    },
    {
     "name": "Steppe tulip",
@@ -1025,7 +1419,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "low glaucous leaves with a red cup"
+    "silhouette": "low glaucous leaves with a red cup",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      150
+     ],
+     "height_years": [
+      2.5,
+      5
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Year one: a single hair-thin, tubular green cotyledon like a blade of grass, dying back by early summer over a pea-sized bulb that is pushed deeper on a dropper. Following springs: one flat, grey-green, channelled leaf that widens each year; only after 4-6 years does the bulb send up a short stem with 3-4 wavy-edged leaves and a flower.",
+     "confidence": "estimated",
+     "source": "Kazakhstan flora treatment on Zenodo (T. suaveolens = T. schrenkii: steppe and semi-desert, flowers Mar-Apr, fruits May-Jun); Tulipa genus growers (Pacific Bulb Society; Garden of Eaden: seeds germinate after a winter chill, 1 month to 1 yr; species tulips flower about 4-7 yr from seed)."
+    }
    },
    {
     "name": "Valais fescue",
@@ -1115,7 +1531,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tight blue-grey fine-leaved tuft"
+    "silhouette": "tight blue-grey fine-leaved tuft",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      20
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Thread-leaved seedling becomes a dense tuft of very fine, bristle-like bluish (glaucous) leaves, forming a compact low steppe tussock within a few years; flowers from year 2 in early summer and survives summer drought by going dormant.",
+     "confidence": "estimated",
+     "source": "Estimated from Festuca valesiaca steppe ecology and Festuca ovina-group grasses (Grime et al. Comparative Plant Ecology for F. ovina)."
+    }
    }
   ],
   "epiphyte": []

@@ -74,8 +74,38 @@ static func draw_icon(ci: CanvasItem, c: Vector2, r: float, it: Dictionary) -> v
 			ci.draw_circle(c + Vector2(0, r * 0.45), r * 0.3, main)
 		"ring":
 			ci.draw_arc(c, r * 0.55, 0.0, TAU, 20, main, w * 1.8)
+		"fruit":
+			_fruit(ci, c, r, it, main, w)
 		_:
 			ci.draw_circle(c, r * 0.6, main)
+
+
+## A picked fruit by its shape (FruitCrop): on a short stalk with a leaf,
+## a cone or a winged key as themselves.
+static func _fruit(ci: CanvasItem, c: Vector2, r: float, it: Dictionary, col: Color, w: float) -> void:
+	var stalk := Color(0.36, 0.27, 0.16)
+	match str(it.get("shape", "round")):
+		"cone":
+			var pts := PackedVector2Array([c + Vector2(0, -r * 0.85), c + Vector2(r * 0.45, -r * 0.1), c + Vector2(r * 0.3, r * 0.6), c + Vector2(0, r * 0.85), c + Vector2(-r * 0.3, r * 0.6), c + Vector2(-r * 0.45, -r * 0.1)])
+			ci.draw_colored_polygon(pts, col)
+			for k in 4:
+				var y := -r * 0.45 + k * r * 0.33
+				ci.draw_line(c + Vector2(-r * 0.35, y), c + Vector2(r * 0.35, y + r * 0.12), col.darkened(0.35), maxf(1.0, w * 0.6))
+			return
+		"winged":
+			ci.draw_circle(c + Vector2(-r * 0.35, r * 0.4), r * 0.2, col.darkened(0.15))
+			ci.draw_colored_polygon(PackedVector2Array([c + Vector2(-r * 0.3, r * 0.3), c + Vector2(r * 0.8, -r * 0.7), c + Vector2(r * 0.55, -r * 0.2), c + Vector2(-r * 0.2, r * 0.5)]), col.lightened(0.15))
+			return
+		"elongated", "pod":
+			ci.draw_colored_polygon(_ellipse(c + Vector2(0, r * 0.15), r * 0.28, r * 0.75), col)
+		"ovoid":
+			ci.draw_colored_polygon(_ellipse(c + Vector2(0, r * 0.15), r * 0.5, r * 0.65), col)
+		_:
+			ci.draw_circle(c + Vector2(0, r * 0.15), r * 0.6, col)
+	# A glint, the stalk and a leaf.
+	ci.draw_circle(c + Vector2(-r * 0.22, -r * 0.08), r * 0.1, col.lightened(0.45))
+	ci.draw_line(c + Vector2(0, -r * 0.4), c + Vector2(r * 0.12, -r * 0.85), stalk, maxf(1.0, w))
+	_leaf(ci, c + Vector2(r * 0.35, -r * 0.72), r * 0.5, -0.4, Color(0.34, 0.55, 0.24))
 
 
 static func _leaf(ci: CanvasItem, at: Vector2, length: float, tilt: float, col: Color) -> void:

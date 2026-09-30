@@ -126,7 +126,77 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "wispy grey-green drooping conifer-like tree"
+    "silhouette": "wispy grey-green drooping conifer-like tree",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      21
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      40,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two small green cotyledons, then a thread-like stem bearing whorls of tiny toothed scale leaves on jointed green twigs, like a horsetail. Grows 1-3 m a year as a narrow pine-like cone with a straight leader and drooping needle-like branchlets, only later opening into an irregular wispy crown.",
+     "confidence": "documented",
+     "source": "PROSEA (early growth >3 m/yr, >10 m at 10 yr, lifespan 40-50 yr, epigeal germination within 2 weeks, no pretreatment, seedlings fail in the shade of Casuarina stands); Parrotta 1993 USDA SO-ITF-SM-46 (flowering from 2-3 yr)"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      5
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 5,
+     "flower_size_cm": 2,
+     "flower_colour": "#a0673a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.0,
+      2.4
+     ],
+     "unripe_colour": "#7d9a5a",
+     "ripe_colour": "#7a5634",
+     "ripen_days": [
+      126,
+      140
+     ],
+     "hang_days": [
+      60,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      180,
+      1000
+     ],
+     "crop_per_tree": [
+      1000,
+      30000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "PROSEA Casuarina equisetifolia (male spikes 7-40 mm at twig tips, female heads grow into woody cone-like infructescences 10-24 x 9-13 mm, wind-pollinated, cones mature 18-20 weeks after flowering, valves open to release samaras 6-8 mm); Parrotta 1993 (two flowering peaks)"
+    }
    },
    {
     "name": "Coconut palm",
@@ -244,7 +314,80 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "leaning ringed pole with arching feather fronds"
+    "silhouette": "leaning ringed pole with arching feather fronds",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
+     ],
+     "height_years": [
+      20,
+      50
+     ],
+     "trunk_years": 4,
+     "first_seed_years": 7,
+     "lifespan_years": [
+      60,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The husked nut lies on the sand and after 2-6 months a pointed shoot pushes out of one end while the nut's flesh feeds the seedling. First leaves are entire, stiff, strap-like blades split only at the tip (bifid), in a stemless fan-like rosette; pinnate fronds come later, and a trunk rises after ~3-5 years, widening from a bulbous base ('bole').",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut (tall palms bear at 6-10 yr, live 60-100 yr; ~11 months from female flower opening to harvest; up to 15 inflorescences/yr; ~80 nuts/yr, up to 150; nut ~1.4 kg; largely cross-pollinated, dwarfs selfing); ICRAF Agroforestree (tall selections 24-30 m, flowers after ~6th yr); germination from FAO coconut guides"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#efe2a0",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      20,
+      50
+     ],
+     "pollinators": [
+      "bee",
+      "wind",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      20,
+      30
+     ],
+     "unripe_colour": "#5c8a2c",
+     "ripe_colour": "#7a5230",
+     "ripen_days": [
+      330,
+      400
+     ],
+     "hang_days": [
+      20,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      900
+     ],
+     "crop_per_tree": [
+      50,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut and ICRAF (new inflorescence among the leaves every ~3-4 weeks, up to 15/yr, thousands of small male flowers and ~20-50 large 25 mm female flowers per inflorescence; cross-pollinated by insects and wind; ~11-12 months to a mature brown nut that drops; 50-150 nuts per palm per year)"
+    }
    },
    {
     "name": "Maritime pine",
@@ -350,7 +493,77 @@
      "spacing_m": 0.6,
      "confidence": "documented"
     },
-    "silhouette": "flat-topped umbrella on a leaning red-plated trunk"
+    "silhouette": "flat-topped umbrella on a leaning red-plated trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      22,
+      70
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      150,
+      300
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 6-9 cotyledons and bluish, finely toothed single primary needles through the first year or so, then long (15-25 cm), stout, grey-green paired needles. Young trees grow fast into open cones with thick, orange-brown, deeply fissured bark developing early; cones cluster in whorls on the branches.",
+     "confidence": "estimated",
+     "source": "Wikipedia (fast-growing hard pine, 20-35 m; dense natural regeneration; cones 8-22 cm, green then glossy red-brown at 24 months, opening slowly over years or after fire); growth curve, first cones and lifespan estimated from Atlantic maritime-pine forestry"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#a0405a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      8,
+      22
+     ],
+     "unripe_colour": "#6a8a3a",
+     "ripe_colour": "#9a4a28",
+     "ripen_days": [
+      480,
+      560
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      1000,
+      2500
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (cones conic, 8-22 cm long and 4-6 cm wide, green, ripening glossy red-brown when 24 months old, then opening slowly over years or after being heated by fire); spring pollination; crop and decay estimated"
+    }
    },
    {
     "name": "Screw pine",
@@ -466,7 +679,79 @@
      "spacing_m": 1.0,
      "confidence": "documented"
     },
-    "silhouette": "candelabra of leaf tufts on stilt roots"
+    "silhouette": "candelabra of leaf tufts on stilt roots",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      180
+     ],
+     "height_years": [
+      7,
+      20
+     ],
+     "trunk_years": 2,
+     "first_seed_years": 15,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling sprouts from a woody, wedge-shaped key as a stemless rosette of long, stiff, strap-like leaves with small prickles on margins and keel, spiralling in three ranks. After a couple of years a trunk appears, soon propped on thick aerial stilt roots; it stays a single leafy tuft on a stem until it starts to flower and branch.",
+     "confidence": "documented",
+     "source": "Wikipedia (grows fairly quickly to 4-14 m; plants from seed flower at about 15 years, cuttings at 3-4 and fruit by 4-6; buoyant keys stay viable for months at sea); lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 4,
+     "flower_size_cm": 8,
+     "flower_colour": "#f1ead0",
+     "flower_form": "spike",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind",
+      "bee"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "syncarp",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      10,
+      30
+     ],
+     "unripe_colour": "#4f7f3a",
+     "ripe_colour": "#e8782a",
+     "ripen_days": [
+      365,
+      700
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      4,
+      20
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (male trees flower every 2 months, females 1-3 times a year; small insects such as bees and wind pollinate; head 4-20 cm wide, 8-30 cm long; keys yellow, orange or red with a green top; 1-2 years from pollination to ripe fruit); crop and decay estimated"
+    }
    },
    {
     "name": "Sea grape",
@@ -579,7 +864,79 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "low gnarled dome of big round leaves"
+    "silhouette": "low gnarled dome of big round leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling on the upper beach; its first leaves are already the typical almost circular, thick, leathery blades with red veins, often larger on saplings than on the adult. On windy dunes it sprawls into a low, many-stemmed shrub; in shelter it becomes a short, crooked tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia Coccoloba uvifera (whitish-green flowers on long spikes, cross-pollination by insects incl. honey bees, fruit ~2 cm green to purplish-red in grape-like bunches, eaten raw or as jelly and wine; salt tolerant, moderately tolerant of shade and drought, no frost); growth and ages estimated from Florida extension notes"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#eef0dc",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      300
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wasp"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.5,
+      2.2
+     ],
+     "unripe_colour": "#7ea04e",
+     "ripe_colour": "#5e2848",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      3,
+      14
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      500,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia Coccoloba uvifera (dioecious; small whitish flowers on long spikes; cross-pollination by insects incl. honey bees; fruits ~2 cm in grape-like bunches, green ripening to purple, ripen unevenly, eaten raw, as jam or wine); ripening time and crop estimated"
+    }
    }
   ],
   "shrub": [
@@ -697,7 +1054,79 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "silvery spreading crown on a short trunk"
+    "silhouette": "silvery spreading crown on a short trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      28
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings grow a single stout, pale stem topped by a loose rosette of large, fleshy, spoon-shaped leaves covered in silky silver hairs; after a year they are only ~35 cm tall. Branching comes later and sympodially, each shoot ending in a flat cluster of coiled white flower sprays, building the broad, rounded, silvery bush of the beach strand.",
+     "confidence": "documented",
+     "source": "Useful Tropical Plants (Tournefortia argentea: under 75 cm/yr, germination 2-4 weeks, seedlings ~35 cm after 12+ months, sunny sites); Hawaii-Pacific Weed Risk Assessment (4+ yr to reproduce, not shade tolerant, buoyant seeds); Plants of Hawaii; Wikipedia. H. foertherianum is a synonym. Lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f7f5ec",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      150,
+      600
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      0.6
+     ],
+     "unripe_colour": "#7f9a52",
+     "ripe_colour": "#eeeadb",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      2000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Plants of Hawaii (drupe white, fleshy, globose ~4 mm, corky floating endocarp; corolla white 2.5-3.3 mm); Wikipedia (flowers ~0.6 cm); Useful Tropical Plants (flowers and fruits nearly all year; bees, butterflies). Ripening, hang and rot times, fruit set and crop estimated."
+    }
    },
    {
     "name": "Beach naupaka",
@@ -813,7 +1242,78 @@
      "spacing_m": 0.25,
      "confidence": "estimated"
     },
-    "silhouette": "dense bright green succulent mound"
+    "silhouette": "dense bright green succulent mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 oval cotyledons, then fleshy, glossy, bright-green spoon-shaped leaves crowded in a tuft at the shoot tip. Grows fast into a rounded, mounding shrub of thick, soft, pithy branches that sprawl over the sand and root where they touch, forming dense hedges along the beach.",
+     "confidence": "estimated",
+     "source": "Wikipedia Scaevola taccada (3-10 m, branchlets 1-1.5 cm thick, leaves 8-25 cm; flowers all year; white fruit floats in seawater); Useful Tropical Plants/Hawaii native plant guides (slow, erratic germination of the corky stone, fast growth); ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#f8f5ee",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      8
+     ],
+     "pollinators": [
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.0,
+      1.5
+     ],
+     "unripe_colour": "#8fbf6a",
+     "ripe_colour": "#f1f0e6",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      500,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia Scaevola taccada: flowers all year in small axillary clusters, white 'half flowers' 2-2.5 cm with the 5 petal lobes fanned to one side, sometimes violet-streaked, pollinated by large bees or selfed; round fleshy drupe ripening green to white, corky stone floats in seawater; ripening time, set and crop estimated"
+    }
    },
    {
     "name": "Sea buckthorn",
@@ -930,7 +1430,77 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "thorny silvery-grey thicket with orange berries"
+    "silhouette": "thorny silvery-grey thicket with orange berries",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      5,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      70
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then narrow willow-like leaves, grey-green above and silvery-scaled beneath, on a thin single stem. For its first years the plant is a wispy, spiny sprig; soon it throws up root suckers all around, so a young plant becomes a spreading, silvery, thorny thicket rather than a single bush.",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Hippophae: flowers Mar-Apr before leaves, fruit Sep-Oct persisting to March, epigeal, 40-day germination tests); ICRAF Agroforestree (fruits from ~3 yr, peak 7-8 yr, 10-20 cm/yr, dies under >50% canopy); Wikipedia (4-5 yr from seed to fruit, productive ~30 yr). Max lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#b4a24a",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      6
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      1.0
+     ],
+     "unripe_colour": "#8aa35a",
+     "ripe_colour": "#f28a1a",
+     "ripen_days": [
+      100,
+      160
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      10,
+      40
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (dioecious, wind-pollinated, tiny yellow flowers before leaves, drupe 5-12 mm reddish-orange ripening late Jul-early Oct, 5-7 kg per plant); USDA WPSM (fruits persist to March); Wikipedia (berries 6-8 mm, 270-480 mg, edible, sour). Fruit set estimated."
+    }
    },
    {
     "name": "Wax myrtle",
@@ -1043,7 +1613,77 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "dense rounded olive-green multi-stem bush"
+    "silhouette": "dense rounded olive-green multi-stem bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with small oval cotyledons, then narrow, aromatic, olive-green leaves toothed near the tip and dotted with tiny amber resin glands, as in the adult. It soon branches from the base into a dense, twiggy evergreen bush; nitrogen-fixing root nodules let it grow fast (often ~1 m a year) on poor sand, and it spreads by root sprouts into thickets.",
+     "confidence": "estimated",
+     "source": "Wikipedia (to 14 m; dioecious catkins late winter-spring; waxy globular fruit in late summer-fall; birds strip the wax, needed for germination); USDA Woody Plant Seed Manual Myrica (small waxy dry drupes persisting over winter; no endosperm); growth and ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#b7a65a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      20
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.2,
+      0.4
+     ],
+     "unripe_colour": "#8fa870",
+     "ripe_colour": "#b7c1c6",
+     "ripen_days": [
+      150,
+      210
+     ],
+     "hang_days": [
+      90,
+      200
+     ],
+     "drop": "persists",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      2000,
+      30000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (dioecious, wind-pollinated catkins late winter-spring; fruit ripe late summer-fall, globular with a pale blue-grey wax coat, used for bayberry candles); USDA Woody Plant Seed Manual Myrica (tiny dry waxy drupes that persist on the shrub over winter); set and crop estimated"
+    }
    }
   ],
   "ground": [
@@ -1135,7 +1775,79 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "sprawling runners with round leaves"
+    "silhouette": "sprawling runners with round leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "vine",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two broad, deeply notched, butterfly-shaped cotyledons, then thick, glossy, two-lobed 'goat's-foot' leaves on a trailing stem. The seedling runs straight out over the sand as a cord-like runner that roots at the nodes and branches, spreading many metres into a net of runners and leathery leaves across the upper beach and foredune.",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (flowers pink-violet, open one morning, bees main pollinators, capsule 12-17 mm, seeds need scarification); ANPSA (flowers 20-25 mm wide, last one day, any time of year, fast spreading); Wikipedia (runners several m, rarely 30 m, floating hairy seeds). Plant lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 0.5,
+     "flower_size_cm": 4,
+     "flower_colour": "#c4509c",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "moth"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.2,
+      1.7
+     ],
+     "unripe_colour": "#7fa04e",
+     "ripe_colour": "#7a5a38",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (funnel flowers 30-60 mm long, pink to violet, one-day, bees plus butterflies and moths, spherical capsule 12-17 mm with 4 floating hairy seeds); ANPSA (flowers year-round in the tropics). Fruit set, ripening, hang, rot and crop estimated."
+    }
    },
    {
     "name": "Beach spinifex",
@@ -1222,7 +1934,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "silvery hairy grass tufts with runners"
+    "silhouette": "silvery hairy grass tufts with runners",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      90
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      25
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a small tuft of silky, silver-grey, inrolled leaves, 30-40 cm tall after 18 months. It then sends stout runners over the sand that root at each node and raise leaf tufts; runners can reach 2-3 m in a season when buried by blown sand. Sexes on separate plants; females bear 20-30 cm spiky seed-head balls that roll away in the wind.",
+     "confidence": "documented",
+     "source": "NZ DOC Science for Conservation 122 (germination 1-3 months; 30-40 cm in 18 months; fertilised runners ~2.6 m); NZPCN spinifex guide (germination 2-6 weeks, flowers Nov-Dec, large single-sex patches, heads to 150 spikelets); ANPSA (dioecious stoloniferous perennial)"
+    }
    },
    {
     "name": "Bitter panicgrass",
@@ -1311,7 +2045,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "stout blue-green grass clumps"
+    "silhouette": "stout blue-green grass clumps",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small, bluish-green tufts of thick, waxy, hairless leaves. Strong rhizomes soon run through the sand and send up scattered, stiff, blue-grey leafy culms rather than a dense bunch, knitting the foredune; narrow, compact panicles appear in late summer.",
+     "confidence": "estimated",
+     "source": "Estimated from the genus (FEIS Panicum virgatum germination and establishment) and the species' ecology as a rhizomatous Atlantic-Gulf foredune grass with poor seed set that is usually planted from culm cuttings for dune stabilisation (USDA NRCS)"
+    }
    },
    {
     "name": "Sea holly",
@@ -1401,7 +2157,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "spiny blue-grey rosette"
+    "silhouette": "spiny blue-grey rosette",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      2,
+      4
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      8,
+      25
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two narrow strap-like cotyledons, then small long-stalked, rounded, waxy blue-grey leaves with soft marginal teeth lying flat on the sand while a thick taproot plunges deep (to metres). Over 2-3 years the rosette of stiff, leathery, spiny-edged glaucous leaves grows larger before the first branched flowering stem.",
+     "confidence": "estimated",
+     "source": "Useful Temperate Plants (germinates in 5-90 days at 20 C; very long taproot, resents disturbance); Isermann & Rooney 2014, Biological Flora of the British Isles: Eryngium maritimum (J. Ecol.); Wikipedia (flowers Jun-Sep, 1.5-2.5 cm heads). Ages estimated."
+    }
    },
    {
     "name": "Sea purslane",
@@ -1491,7 +2269,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "flat succulent mat with pink stems"
+    "silhouette": "flat succulent mat with pink stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      15
+     ],
+     "height_years": [
+      0.3,
+      1.0
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 small fleshy cotyledons, then opposite, thick, glossy, finger-shaped leaves on a reddish stem. The stems creep over sand or mud and root at every node, quickly making a spreading succulent mat that is often reddish in full sun, with small pink star-shaped flowers.",
+     "confidence": "estimated",
+     "source": "Flora of N America and PROSEA/Useful Tropical Plants Sesuvium portulacastrum (creeping succulent perennial of tropical beaches and salt flats, rooting at nodes, flowering within the first season, mostly spreading vegetatively); timings estimated"
+    }
    },
    {
     "name": "Sea rocket",
@@ -1584,7 +2384,30 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "low fleshy sprawling clump"
+    "silhouette": "low fleshy sprawling clump",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      0.15,
+      0.3
+     ],
+     "first_seed_years": 0.3,
+     "lifespan_years": [
+      0.4,
+      0.8
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Big seeds in corky, floating pod segments sprout in the drift line (in spring on Atlantic coasts, after autumn rains in the Mediterranean). Two thick, fleshy, kidney-shaped cotyledons, then glossy, succulent, blue-green, deeply lobed leaves; it branches from the base into a sprawling, bushy clump that flowers pale lilac within about two months.",
+     "confidence": "estimated",
+     "source": "Wikipedia (annual, 15-45 cm, flowers Jun-Aug in the UK, white to lilac 4-petalled flowers to 2.5 cm, corky 1-3 cm fruits float); Davy et al. 2006 Biological Flora of the British Isles (spring germination in the north, autumn in the Mediterranean); timings estimated."
+    }
    }
   ],
   "epiphyte": []

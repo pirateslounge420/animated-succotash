@@ -123,7 +123,77 @@
      "spacing_m": 0.6,
      "confidence": "documented"
     },
-    "silhouette": "short twisted dark pine leaning downwind"
+    "silhouette": "short twisted dark pine leaning downwind",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      25,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 3-6 cotyledons and a tuft of single primary needles, then short, twisted, paired needles. Young trees are dense, narrow cones with regular whorls. Open-grown shore pines become bushy, crooked and flat-topped; inland trees become slim, straight poles. Serotinous cones stay closed on the branches for decades.",
+     "confidence": "documented",
+     "source": "USDA Silvics (Lotan & Critchfield): viable seed commonly at 5-10 years; ~3.6 m at 20 years on medium sites; germination peaks in the 2 weeks after snowmelt; very intolerant of shade; shore pine small and short-lived; ages commonly 150-200+, old high-elevation trees to 400+"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#8a2f5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      5
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      6
+     ],
+     "unripe_colour": "#5f6a3a",
+     "ripe_colour": "#b08850",
+     "ripen_days": [
+      450,
+      520
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2500
+     ],
+     "crop_per_tree": [
+      50,
+      1500
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (reddish-purple female strobili in whorls of 2-5, mid-May to mid-July; cones mature Aug-Oct over a year after pollination, purple-green to light brown; Rocky Mountain cones serotinous, sealed until heated to 45-60 C and held for years; 10-24 seeds per cone)"
+    }
    },
    {
     "name": "Scots pine",
@@ -229,7 +299,77 @@
      "spacing_m": 0.6,
      "confidence": "documented"
     },
-    "silhouette": "flat-topped umbrella on an orange-barked trunk"
+    "silhouette": "flat-topped umbrella on an orange-barked trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      35,
+      100
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      200,
+      760
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 5-7 cotyledons; in its first year it has single, flat, finely serrated primary needles 2-3 cm long, then short, twisted, blue-green paired needles. Young trees are regular, bushy cones; later the lower branches drop and the crown becomes flat or rounded above a tall trunk whose upper bark is orange and flaky.",
+     "confidence": "documented",
+     "source": "Wikipedia (to 35 m, over 45 m on the best sites; normally lives 150-300 years, over 760 in Lapland; first-year seedlings have single serrated leaves 2-3 cm; seeds released 22-24 months after pollination); growth and first cones from European yield tables"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#b0305a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      3,
+      7.5
+     ],
+     "unripe_colour": "#6a8a3a",
+     "ripe_colour": "#9a7a4a",
+     "ripen_days": [
+      530,
+      700
+     ],
+     "hang_days": [
+      60,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      700,
+      1800
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (pollen released mid to late spring; first-year conelets globose, 4-8 mm; mature cones 3-7.5 cm, green then grey-green to yellow-brown; seeds released 22-24 months after pollination); crop and decay estimated"
+    }
    }
   ],
   "shrub": [
@@ -348,7 +488,77 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "dense rounded glossy bush"
+    "silhouette": "dense rounded glossy bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with small cotyledons, then oblong, aromatic, dull green leaves sparsely toothed near the tip and resin-dotted, like the adult's. It branches low into a stiff, rounded, grey-twigged bush and sends up root suckers, so on dunes and old fields single plants become dense, flat-topped colonies; root nodules fix nitrogen in poor sand.",
+     "confidence": "estimated",
+     "source": "Wikipedia (to 4.5 m; catkins 3-18 mm, green to red; fruit 3-5.5 mm with pale blue-purple wax, key winter food of yellow-rumped warblers; nitrogen-fixing nodules); USDA Woody Plant Seed Manual Myrica (2-8 ft shrub; waxy drupes persist over winter); ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#a8704a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      20
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.3,
+      0.55
+     ],
+     "unripe_colour": "#98ab78",
+     "ripe_colour": "#c4c8cf",
+     "ripen_days": [
+      120,
+      160
+     ],
+     "hang_days": [
+      120,
+      210
+     ],
+     "drop": "persists",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (catkins 3-18 mm, green to red; fruit 3-5.5 mm with a pale blue-grey waxy coat, eaten through winter by yellow-rumped warblers and tree swallows); USDA Woody Plant Seed Manual Myrica (mostly dioecious, dry waxy drupes persisting over winter); wind pollination; months, set and crop estimated"
+    }
    },
    {
     "name": "Coastal juniper",
@@ -456,7 +666,77 @@
      "spacing_m": 0.1,
      "confidence": "documented"
     },
-    "silhouette": "low prickly blue-green mound"
+    "silhouette": "low prickly blue-green mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      150,
+      730
+     ],
+     "height_years": [
+      15,
+      40
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      120,
+      1600
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: 2 (up to 6) slender cotyledons, then whorls of three sharp, needle-like leaves with a white band above - the same prickly needles the adult keeps all its life (it never makes scale leaves). Seedlings are tiny, slow, prickly sprigs that build over decades into a dense, spreading grey-green shrub, a low mat, or a narrow column.",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Juniperus: J. communis flowers Apr-May, cones take 2-3 seasons, green to bluish-black glaucous, persist; 1-3 seeds; bears from 10-20 yr, heavy crops every 2-5 yr; deep dormancy; 2-6 cotyledons); Wikipedia (ripens in 18 months, cones 4-12 mm, a Lapland plant aged 1,647 yr). Growth rate estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#8fa070",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      1.2
+     ],
+     "unripe_colour": "#6f8f5a",
+     "ripe_colour": "#3c4a6e",
+     "ripen_days": [
+      480,
+      900
+     ],
+     "hang_days": [
+      90,
+      365
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia (dioecious, wind-pollinated; berry-like cones 4-12 mm, green ripening in ~18 months to purple-black with a blue bloom; too bitter raw, dried as spice and for gin); USDA WPSM (2-3 seasons to ripen, cones persist). Set, crop and rot estimated."
+    }
    },
    {
     "name": "Coastal wattle",
@@ -570,7 +850,78 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "spreading multi-stem shrub with yellow spikes"
+    "silhouette": "spreading multi-stem shrub with yellow spikes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2.5,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: two cotyledons, then feathery bipinnate juvenile leaves (like a tiny fern frond) for the first season or two, gradually replaced by long, flat, bright-green phyllodes with 2-4 parallel veins. Young plants are fast, bushy, many-branched shrubs that flower by year 2-3. Mass germination follows fire.",
+     "confidence": "documented",
+     "source": "Herbiguide (feathery juvenile leaves for the first season or two; prolific seed at 2-3 yr; lives ~50 yr in native range, often <25 yr elsewhere; seedlings in winter and after fire); IUCN GISD (sexual maturity 2-3 yr; up to 11,500 seeds/tree; seeds viable ~50 yr)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "south",
+     "flower_days": 4,
+     "flower_size_cm": 3.5,
+     "flower_colour": "#f7d31e",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "pod",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      5,
+      15
+     ],
+     "unripe_colour": "#7f9a52",
+     "ripe_colour": "#6b4a2e",
+     "ripen_days": [
+      100,
+      150
+     ],
+     "hang_days": [
+      7,
+      40
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      500,
+      3000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Herbiguide (golden cylindrical spikes 20-50 mm, usually paired in leaf axils, Jun-Oct; pods 50-150 mm, straight or curled, 4-10 seeds); IUCN GISD (flowers Jul-Aug native, Feb-Mar in Portugal with pods formed Mar-Jul; up to 11,500 seeds per tree)"
+    }
    },
    {
     "name": "Creeping willow",
@@ -687,7 +1038,80 @@
      "spacing_m": 0.1,
      "confidence": "documented"
     },
-    "silhouette": "low grey-green creeping mound"
+    "silhouette": "low grey-green creeping mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      3
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedling with 2 round cotyledons, then small oval leaves silvery-silky beneath. Stems creep underground and turn up as slender, ascending shoots 20-100 cm tall, so a young plant becomes a low, loose, silvery-grey patch; on dunes it keeps growing up through blown sand.",
+     "confidence": "estimated",
+     "source": "Stace, New Flora of the British Isles, and Meikle (BSBI) for form (creeping underground stems, 0.3-1.5 m) and phenology; USDA Woody Plant Seed Manual Salix (fast germination, no dormancy); growth rate, first seed and lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#d9c86a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      15,
+      40
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#a8b375",
+     "ripe_colour": "#bfae88",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      200,
+      10000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Stace and Meikle (BSBI): small catkins 1-2.5 cm just before the leaves in Apr-May, capsules hairy ~3-5 mm; visited by early bees and bumblebees; ripening, set and crop estimated"
+    }
    }
   ],
   "ground": [
@@ -778,7 +1202,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "upright grass tufts in lines"
+    "silhouette": "upright grass tufts in lines",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1,
+      2.5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      8,
+      20
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are uncommon (only 21-48% of florets set seed); most plants start as a rhizome piece or a planted culm that sends up a tuft of stiff, rolled, grey-green blades and 35-40 new culms in its first season. Rhizomes run 1-3.5 m a year under the sand, lining up new tufts; tufts thicken under burial and from year 2 send up tight, spike-like, straw-coloured panicles.",
+     "confidence": "estimated",
+     "source": "USDA NRCS plant guide (Ammophila breviligulata): >90% germination after cold stratification; 21-48% of florets set viable seed; one culm yields ~35-40 culms per season; rhizomes spread 1.2-3.5 m/yr, over 12 m from the parent; 0.3-1.5 m tall; tolerates ~30 cm of sand a year; seed heads late Jul-Aug. First seed and lifespan (decline on stable sand) estimated."
+    }
    },
    {
     "name": "Dune evening primrose",
@@ -865,7 +1311,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "grey-hairy sprawling mound"
+    "silhouette": "grey-hairy sprawling mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.3,
+      0.8
+     ],
+     "first_seed_years": 0.4,
+     "lifespan_years": [
+      1.5,
+      4
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Starts as a small rosette of soft, grey-silky, oblong leaves with a few shallow teeth; within weeks it sends out sprawling, hairy stems that lie along the sand with upturned tips, making a low grey-green mound. Large lemon-yellow flowers open at dusk and wilt orange by midday; the stems catch blowing sand, so the plant rides up with the dune.",
+     "confidence": "estimated",
+     "source": "Estimated from Flora of North America (O. drummondii: annual or short-lived perennial of Gulf coast dunes, decumbent grey-strigose stems, yellow vespertine flowers) and invasive-range reports (flowers within its first season, spreads along coastal dunes)"
+    }
    },
    {
     "name": "Lyme grass",
@@ -954,7 +1422,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "stout blue-grey grass tufts"
+    "silhouette": "stout blue-grey grass tufts",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are stiff, broad, blue-grey grass tufts on bare sand. They send out long rhizomes that throw up new tufts and grow up through burial by blowing sand, building low dunes of coarse, glaucous blue leaves topped by thick, wheat-like flower spikes up to about 1.5 m.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Leymus arenarius: dune-building grass, notably in Iceland after volcanic events; salt-tolerant germination; nitrogen boosts growth and seed yield; mycorrhizae aid seedling survival); growth and ages estimated from dune-grass ecology."
+    }
    },
    {
     "name": "Marram grass",
@@ -1041,7 +1531,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "dense grey-green upright tufts"
+    "silhouette": "dense grey-green upright tufts",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      8,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are rare (low seed viability and survival): a thin bright green blade in a damp dune slack, becoming a small tuft of in-rolled, sharp-tipped grey-green leaves. Most new plants grow from buried rhizome pieces. Tufts climb up through accreting sand, lengthening their leaves when buried, and become stiff, dense, spiky clumps of wiry rolled leaves up to 1.2 m.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Ammophila arenaria: stems to 1.2 m; rhizomes grow 2 m sideways in 6 months; one clump makes ~100 new shoots a year; seeds ripen by September and germinate the next spring, low viability and seedling survival; flowers May-Aug, panicle to 30 cm; survives burial >1 yr). Clump growth, first flowering and lifespan estimated."
+    }
    },
    {
     "name": "Sand sedge",
@@ -1128,7 +1640,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "small tufts in straight lines"
+    "silhouette": "small tufts in straight lines",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      1,
+      2
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      2,
+      5
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small tufts of narrow, channelled grey-green leaves and are rare in the wild. Established plants run a long straight rhizome just under the sand, sending up a small leafy shoot every few nodes, so the plant shows as neat straight lines of short tufts marching across dunes.",
+     "confidence": "estimated",
+     "source": "Noble, Bell & Harper 1979 J. Ecol. (clonal structure, straight rhizome lines with shoots at intervals); Wildlife Trusts / BSBI atlas (dune pioneer, open sand, 10-40 cm); germination from Schutz 2000 review of Carex; shoot lifespan estimated from genus"
+    }
    },
    {
     "name": "Sea oats",
@@ -1217,7 +1751,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "tall tufts with nodding golden heads"
+    "silhouette": "tall tufts with nodding golden heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up in spring on bare foredune sand as a single narrow grass shoot with thin, rolled leaves and deep roots. By the end of the first season it is a small tuft; in the second it tillers heavily and sends rhizomes 0.6-1.8 m a year, new shoots pushing up through blown sand. The tall arching culms with flat golden spikelets come later.",
+     "confidence": "documented",
+     "source": "USDA FEIS (Uniola paniculata): 30 days cold-moist at 4 C then 78-89% germination at alternating temperatures; seedlings establish in the first season and tiller extensively by the second; lateral spread 0.6-1.8 m a year; sand burial stimulates growth; flowers Jun-Nov; about 30% of ovaries set seed. Wikipedia: 1-2 m. First flowering and clump lifespan estimated."
+    }
    }
   ],
   "epiphyte": []

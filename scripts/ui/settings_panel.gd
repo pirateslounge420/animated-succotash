@@ -26,7 +26,7 @@ const ITEMS := [
 	["hud.reticle", "Crosshair dot", "bool"],
 	["hud.names", "Names (plants, animals)", "bool"],
 	["hud.damage", "Damage numbers", "bool"],
-	["hud.prompts", "Prompts (E: ...)", "bool"],
+	["hud.prompts", "Prompts (Right click: ...)", "bool"],
 	["hud.subtitles", "Subtitles", "bool"],
 	["", "Display", "head"],
 	["display.render_chunks", "Render distance", "chunks"],

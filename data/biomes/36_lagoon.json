@@ -138,7 +138,80 @@
      "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "dark rounded mangrove dome above spiky pneumatophores"
+    "silhouette": "dark rounded mangrove dome above spiky pneumatophores",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Cryptoviviparous: the embryo germinates inside the fruit on the tree. A stranded propagule sheds its skin, opens two thick, folded, fleshy green cotyledons like a butterfly and anchors with a hairy radicle. The seedling is a slender single stem with opposite, leathery, narrow leaves, grey-hairy beneath; pencil-like pneumatophores soon ring the young tree.",
+     "confidence": "documented",
+     "source": "USDA Tropical Tree Seed Manual, Avicennia germinans (14-20 m, young trees add ~60 cm/yr, viviparous, propagules float >4 months); Useful Tropical Plants (seedlings 26 cm at 4 months); first flowering age and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#f7f3e3",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      6,
+      20
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      4
+     ],
+     "unripe_colour": "#6d8f4a",
+     "ripe_colour": "#a9ad6a",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA Tropical Tree Seed Manual (flowers May-Jul, white with yellow base, nectar-rich honey flowers, flattened 2-valved capsule, propagules peak Sep-Oct); Useful Tropical Plants (cotyledons eaten in famine after careful preparation); flower life, fruit set and crop estimated."
+    }
    },
    {
     "name": "Coconut palm",
@@ -251,7 +324,80 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "leaning ringed pole with a tousled feather crown"
+    "silhouette": "leaning ringed pole with a tousled feather crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
+     ],
+     "height_years": [
+      20,
+      50
+     ],
+     "trunk_years": 4,
+     "first_seed_years": 7,
+     "lifespan_years": [
+      60,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The husked nut lies on the sand and after 2-6 months a pointed shoot pushes out of one end while the nut's flesh feeds the seedling. First leaves are entire, stiff, strap-like blades split only at the tip (bifid), in a stemless fan-like rosette; pinnate fronds come later, and a trunk rises after ~3-5 years, widening from a bulbous base ('bole').",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut (tall palms bear at 6-10 yr, live 60-100 yr; ~11 months from female flower opening to harvest; up to 15 inflorescences/yr; ~80 nuts/yr, up to 150; nut ~1.4 kg; largely cross-pollinated, dwarfs selfing); ICRAF Agroforestree (tall selections 24-30 m, flowers after ~6th yr); germination from FAO coconut guides"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#efe2a0",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      20,
+      50
+     ],
+     "pollinators": [
+      "bee",
+      "wind",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      20,
+      30
+     ],
+     "unripe_colour": "#5c8a2c",
+     "ripe_colour": "#7a5230",
+     "ripen_days": [
+      330,
+      400
+     ],
+     "hang_days": [
+      20,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      900
+     ],
+     "crop_per_tree": [
+      50,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut and ICRAF (new inflorescence among the leaves every ~3-4 weeks, up to 15/yr, thousands of small male flowers and ~20-50 large 25 mm female flowers per inflorescence; cross-pollinated by insects and wind; ~11-12 months to a mature brown nut that drops; 50-150 nuts per palm per year)"
+    }
    },
    {
     "name": "Red mangrove",
@@ -372,7 +518,79 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "glossy dome propped on arching stilt-root cage"
+    "silhouette": "glossy dome propped on arching stilt-root cage",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      8,
+      30
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Viviparous: the seed sprouts on the tree and a green, pencil-like hypocotyl 20-30 cm long hangs from the brown fruit. It drops, floats (weeks, up to a year), lodges upright in mud, roots from the lower tip within days and opens a pair of glossy leaves at the top. The sapling is a single stem that soon throws down arching red-brown prop roots.",
+     "confidence": "documented",
+     "source": "Tropical Plants Database (theferns.info) Rhizophora mangle (1-1.5 m/yr on productive sites; 5-20 m, rarely 30; flowers year-round; flowering by 6 yr, even 3-5 yr at 0.5-1 m tall; propagules 8-30 cm); Wikipedia (to 24 m, commonly ~6 m; propagules may float over a year); lifespan and shade estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2,
+     "flower_colour": "#efe3a0",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      4
+     ],
+     "pollinators": [
+      "wind",
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.08,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      15,
+      30
+     ],
+     "unripe_colour": "#8a7a45",
+     "ripe_colour": "#5a7a30",
+     "ripen_days": [
+      240,
+      400
+     ],
+     "hang_days": [
+      7,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Tropical Plants Database (flowers all year; bees and wind; 4-7 months from fertilization to hypocotyl emergence plus 4-6 months more before it falls; propagules 8-30 cm); Wikipedia (pale yellow flowers; self or wind pollination); fruit size given for the hanging propagule; set, crop and decay estimated"
+    }
    },
    {
     "name": "Tamarisk",
@@ -487,7 +705,80 @@
      "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "wispy feathery small tree, pink haze in summer"
+    "silhouette": "wispy feathery small tree, pink haze in summer",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      3
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds sprout within a day on wet mud; seedlings are tiny, with two small cotyledons and thread-thin shoots set with minute scale leaves, growing a few mm a day. They branch from the base into a feathery, multi-stemmed shrub of slender purplish-brown stems and blue-green scale-leaved sprays, later a small gnarled tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia Tamarix gallica (to ~5 m; pink flowers in narrow feathery spikes, first in May and sometimes again in August); USDA FEIS Tamarix spp. incl. French tamarisk (germination <24 h, seedlings 2-5 mm/day, flowering from year 1-3, resprouts 3-4 m in a season). Height-age curve and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#efbacd",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#aab68c",
+     "ripe_colour": "#c2a57e",
+     "ripen_days": [
+      20,
+      40
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      100000,
+      5000000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (tiny pink flowers in feathery spikes, May and again in August); USDA FEIS Tamarix spp. (5-merous flowers, insect cross-pollinated, ~20 flowers per 2.5 cm of raceme, 8-20+ tiny plumed seeds per capsule). Flower life, fruit set, ripening and crop estimated."
+    }
    }
   ],
   "shrub": [
@@ -605,7 +896,78 @@
      "spacing_m": 0.25,
      "confidence": "estimated"
     },
-    "silhouette": "dense bright-green mound of spoon leaves on beach edge"
+    "silhouette": "dense bright-green mound of spoon leaves on beach edge",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 oval cotyledons, then fleshy, glossy, bright-green spoon-shaped leaves crowded in a tuft at the shoot tip. Grows fast into a rounded, mounding shrub of thick, soft, pithy branches that sprawl over the sand and root where they touch, forming dense hedges along the beach.",
+     "confidence": "estimated",
+     "source": "Wikipedia Scaevola taccada (3-10 m, branchlets 1-1.5 cm thick, leaves 8-25 cm; flowers all year; white fruit floats in seawater); Useful Tropical Plants/Hawaii native plant guides (slow, erratic germination of the corky stone, fast growth); ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#f8f5ee",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      8
+     ],
+     "pollinators": [
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.0,
+      1.5
+     ],
+     "unripe_colour": "#8fbf6a",
+     "ripe_colour": "#f1f0e6",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      500,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia Scaevola taccada: flowers all year in small axillary clusters, white 'half flowers' 2-2.5 cm with the 5 petal lobes fanned to one side, sometimes violet-streaked, pollinated by large bees or selfed; round fleshy drupe ripening green to white, corky stone floats in seawater; ripening time, set and crop estimated"
+    }
    },
    {
     "name": "Buttonwood",
@@ -721,7 +1083,80 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "irregular dark shrub-tree, sprawling low branches"
+    "silhouette": "irregular dark shrub-tree, sprawling low branches",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The tiny corky two-winged fruits float on the tide and sprout on wet sand or marl above the mangroves. Seedlings carry small leathery lance-shaped leaves (silvery-hairy in the silver form) and soon branch from the base into a bushy, often leaning, multi-stemmed shrub that ages into a gnarled, twisted small tree; broken branches root readily.",
+     "confidence": "estimated",
+     "source": "Useful Tropical Plants (theferns.info: 4-20 m, medium growth, full sun, sow fresh seed, large cuttings root); Wikipedia (multi-trunked shrub 1-4 m to tree 20 m); FNPS (long-lived, flowers/fruits all year); ResearchGate buttonwood germination study (germination peaking in week 2)"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 0.7,
+     "flower_colour": "#d9dcaa",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      35,
+      56
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "syncarp",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.8,
+      1.5
+     ],
+     "unripe_colour": "#7f9a4a",
+     "ripe_colour": "#7a4a2e",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      500,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (button-like heads 5-8 mm, 35-56 flowers, red-brown cone-like fruit heads 5-15 mm that burst when ripe, water-dispersed); FNPS (flowers and fruits all year, bee and hairstreak nectar plant). Fruit set, ripening time and crop estimated."
+    }
    },
    {
     "name": "Shrubby seablite",
@@ -838,7 +1273,78 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "compact grey-green succulent bush"
+    "silhouette": "compact grey-green succulent bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two fleshy, strap-like cotyledons, then small, fleshy, half-round blue-green leaves crowded along a thin stem. It hardens into a woody-based, densely branched evergreen bush of glaucous succulent leaves, often forming low hummocks on shingle at the top of salt marshes; leaves may redden in winter.",
+     "confidence": "estimated",
+     "source": "Wikipedia Suaeda vera (small shrub of arid salt flats and salt marshes; in Britain mainly where shingle meets salt marsh; seeds germinate more readily in fresh than in salt water). Stature (to ~1.2 m), growth rate, age at first flowering and lifespan estimated from shrubby halophytes."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.2,
+     "flower_colour": "#9ab070",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind",
+      "self"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.12,
+      0.2
+     ],
+     "unripe_colour": "#8aa865",
+     "ripe_colour": "#4a3a30",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      30000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "British flora accounts (tiny green petal-less flowers 1-3 in the leaf axils, Jul-Oct; fruit a utricle in the persistent fleshy perianth with one shiny black seed ~1-1.5 mm). Pollination, ripening, persistence and crop estimated from Suaeda biology."
+    }
    }
   ],
   "ground": [
@@ -936,7 +1442,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "tall even reed wall with feathery plumed tops"
+    "silhouette": "tall even reed wall with feathery plumed tops",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      3,
+      8
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small, weak, grass-like tufts of soft green leaves on wet mud. After a season rhizomes and long surface runners spread out; every spring new culms shoot up like thin canes to full height in a few months, with long, broad, grey-green leaves all along the stem and a big, silky, purple-brown plume that fades to grey-buff.",
+     "confidence": "documented",
+     "source": "USDA FEIS Phragmites australis (germination needs light, moisture and warm alternating temperatures after cold stratification; seedling survival very low; 3-4 years to viable seed; maximum height at 5-8 years; no part of a clone lives more than 8 years though clones persist far longer; culms die back yearly)"
+    }
    },
    {
     "name": "Dwarf eelgrass",
@@ -1025,7 +1553,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "short fine-leaved seagrass lawn on tidal mud"
+    "silhouette": "short fine-leaved seagrass lawn on tidal mud",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      0.15,
+      0.5
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      0.5,
+      2
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A 2 mm seed germinates on sandy mud of the middle shore; the seedling is a tiny tuft of 2-3 thread-narrow, dark green, blunt leaves with a few fine roots. It soon sends out a thin creeping rhizome that branches and roots at each node, with a tuft of 2-5 short strap leaves at every node, knitting into a flat green turf that lies limp on the mud at low tide.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Zostera noltei): leaves to 22 cm in groups of 2-5, up to 4 roots per node, seeds about 2 mm; grows in spring, flowers in dense summer beds, loses most leaves over winter; rhizome clumps may live many years; intertidal, harmed by nutrients and turbid water. Germination, shoot life and flowering age estimated."
+    }
    },
    {
     "name": "Neptune grass",
@@ -1114,7 +1664,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "dense dark ribbon meadow on the seabed"
+    "silhouette": "dense dark ribbon meadow on the seabed",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The floating 'sea olive' splits and drops its seed, which germinates at once: a small white root, then a tuft of 3-6 short, bright green strap leaves from the stout seed, anchored by hairy roots in sand or rock crevices. A new leaf appears only about every 51 days and the rhizome creeps just 1-6 cm a year, so a patch spreads extremely slowly.",
+     "confidence": "estimated",
+     "source": "Wikipedia (leaves to 1-1.5 m x 1 cm; horizontal rhizome 1-6 cm/yr, vertical 0.1-4 cm/yr; a new leaf about every 51 days; flowers Sept-Oct, fruit matures in about 6 months; an Ibiza clone ~8 km across is estimated at 100,000 yr). Shoot lifespan, time to full leaf length and first flowering (rare, episodic) estimated."
+    }
    },
    {
     "name": "Perennial glasswort",
@@ -1207,7 +1779,29 @@
      "threshold_h": 13.0,
      "response": "flower"
     },
-    "silhouette": "woody-based glasswort mound of jointed green fingers"
+    "silhouette": "woody-based glasswort mound of jointed green fingers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling like a glasswort: 2 fleshy cotyledons, then jointed, leafless, succulent green stems. It turns woody at the base and grows into an upright to sprawling bush of many jointed green stems (red-tinged in autumn), up to about 1 m, building low hummocks on the upper salt marsh; sprawling stems root.",
+     "confidence": "estimated",
+     "source": "Flora Iberica/Flora Europaea Sarcocornia fruticosa (woody perennial glasswort, erect shrublet to 1 m+, upper salt marsh); halophyte germination studies (fresh seed germinates within 1-3 weeks when salinity is low); growth and ages estimated"
+    }
    },
    {
     "name": "Saltmarsh rush",
@@ -1302,7 +1896,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "stiff dark-green rush tussock of vertical needles"
+    "silhouette": "stiff dark-green rush tussock of vertical needles",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny tufts of thread-fine, grey-green, sharp-tipped stems on bare upper-marsh mud after rain has lowered the salinity. They spread by short creeping rhizomes into dense, spiky, blue-green clumps of stiff, pungent-tipped stems, with pale straw-coloured flower clusters branching out just below the tip in late summer.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Juncus maritimus: coastal rush of the western Palearctic, Europe to the Maghreb); timings estimated from salt-marsh Juncus ecology (germination after rain lowers salinity, slow clonal spread)."
+    }
    },
    {
     "name": "Sea purslane",
@@ -1397,7 +2013,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "flat pink-stemmed succulent mat on sand"
+    "silhouette": "flat pink-stemmed succulent mat on sand",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      15
+     ],
+     "height_years": [
+      0.3,
+      1.0
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 small fleshy cotyledons, then opposite, thick, glossy, finger-shaped leaves on a reddish stem. The stems creep over sand or mud and root at every node, quickly making a spreading succulent mat that is often reddish in full sun, with small pink star-shaped flowers.",
+     "confidence": "estimated",
+     "source": "Flora of N America and PROSEA/Useful Tropical Plants Sesuvium portulacastrum (creeping succulent perennial of tropical beaches and salt flats, rooting at nodes, flowering within the first season, mostly spreading vegetatively); timings estimated"
+    }
    },
    {
     "name": "Tape seagrass",
@@ -1486,7 +2124,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "very long tape leaves swaying from a fibrous rhizome"
+    "silhouette": "very long tape leaves swaying from a fibrous rhizome",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      7
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds have no dormancy and sprout within days of release from the big ribbed fruit, often while drifting. The seedling is a small fan of a few short, flat, ribbon-like leaves from a stout rhizome; it anchors with thick cord-like roots and grows into a tall shoot of long, strap-like leaves (to 1.5 m) sheathed at the base in black fibrous remains of old leaves.",
+     "confidence": "estimated",
+     "source": "Wikipedia Enhalus acoroides (leaves 30-150 cm; rhizomes ~1.5 cm thick; the only surface-pollinated seagrass, male flowers detach and float; fruit round, 4-6 cm, dark and ribbed, with 6-7 white seeds; to ~4 m deep on mud, sand and coral flats). Seed germination speed, growth and shoot lifespan estimated from seagrass literature."
+    }
    },
    {
     "name": "Turtle grass",
@@ -1575,7 +2235,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "short broad-ribbon seagrass lawn"
+    "silhouette": "short broad-ribbon seagrass lawn",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      10
+     ],
+     "height_years": [
+      0.7,
+      2.5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds about 1 cm long are released when the ripe fruit splits and root within days on the sandy bottom. The seedling is a short shoot of 2-5 flat, bright-green ribbon leaves with rounded tips, anchored by a few thick roots; it grows a buried rhizome and after a year or two starts sending up new leaf shoots, spreading into a patch.",
+     "confidence": "estimated",
+     "source": "Wikipedia Thalassia testudinum (leaves to 30 cm x 2 cm; rhizomes 5-10 cm deep; flowers Apr-Jul; fruit 20-25 mm with 1-6 seeds, splitting after ~8 weeks; low-tide mark to 30 m). Seed germination without dormancy, shoot lifespan (up to ~10-15 yr by leaf-scar ageing) and seedling-to-flowering time estimated from seagrass literature."
+    }
    }
   ],
   "epiphyte": []

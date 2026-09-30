@@ -1,8 +1,8 @@
 extends "res://tools/tech_check.gd"
 ## The super meter and overcharge (design §S, SuperMeter):
-##   - a perfect tap wall jump fills the meter; a second one in the same
-##     series fills it more (the chain bonus); getting out of a cling
-##     instead ends the series but keeps the meter;
+##   - a perfect wall jump (jump at the face) fills the meter; a second
+##     one in the same series fills it more (the chain bonus); a cling
+##     (right click held) instead ends the series but keeps the meter;
 ##   - with meter, a bow held past the full draw for the overcharge's
 ##     extra_s looses a super shot (critical, a red streak, falls less)
 ##     and empties the meter; let go before that, a normal shot and the
@@ -23,6 +23,8 @@ func _initialize() -> void:
 	while not main._playing:
 		await process_frame
 	player = main.player
+	# (You wake empty-handed, the folk's gifts by you: taken, as play does.)
+	main.take_gifts()
 	await frames(90)
 	var camp_d: Vector3 = player.surface_dir
 	var m := player.meter
@@ -32,19 +34,19 @@ func _initialize() -> void:
 	var g := trunk_near(player.global_position)
 	fly_at_trunk(g, 6.0, 1.3)
 	await wait_contact()
-	await press("wall_jump")
+	await press("jump")
 	await frames(2)
-	await release("wall_jump")
+	await release("jump")
 	await frames(2)
 	var v1 := m.value
-	print("[super] after a tap wall jump: meter %.3f, series %d, perfects %d" % [v1, m.series, m.perfects])
+	print("[super] after a wall jump: meter %.3f, series %d, perfects %d" % [v1, m.series, m.perfects])
 	ok(v1 > 0.0 and m.perfects == 1, "a perfect wall jump fills the meter (%.2f)" % v1)
 	fly_at_trunk(g, 6.0, 1.3)
 	player._wj_chain = 1
 	await wait_contact()
-	await press("wall_jump")
+	await press("jump")
 	await frames(2)
-	await release("wall_jump")
+	await release("jump")
 	await frames(2)
 	var gain2 := m.value - v1
 	print("[super] second in the series: +%.3f (first +%.3f)" % [gain2, v1])
@@ -53,9 +55,9 @@ func _initialize() -> void:
 	fly_at_trunk(g, 6.0, 3.0)
 	await wait_contact()
 	var before := m.value
-	await press("wall_jump")
+	await press("interact")
 	await frames(40)
-	await release("wall_jump")
+	await release("interact")
 	await frames(2)
 	print("[super] out of a cling: series %d, meter %.3f -> %.3f" % [m.series, before, m.value])
 	ok(m.series == 0 and absf(m.value - before) < 1e-6, "a cling instead of the tap ends the series, the meter kept")

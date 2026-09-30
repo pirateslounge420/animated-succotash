@@ -38,25 +38,26 @@
     "color": "#4A8A4A",
     "accent": "#E080B0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1095
      ],
-     "final_size": 1.0
+     "height_years": [
+      4,
+      10
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "protocorm",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The dust-like seed needs a soil fungus: it swells into a tiny white protocorm that lives underground, feeding on the fungus, for one to several years before a first small pleated leaf appears. Young plants carry one, later two, broad, ribbed, hairy elliptic basal leaves lying close to the ground; only after many years does a leafless stalk lift the pink pouch flower.",
+     "confidence": "estimated",
+     "source": "Wikipedia Cypripedium acaule (takes many years from seed to mature plant; two elliptic basal leaves; to 0.4 m; flowers Apr-Jun; deceptive, nectarless, bumblebee queens; partial shade, acid pine and oak woods; mycorrhizal pelotons); years to first leaf, flowering and lifespan estimated from Cypripedium demography literature (Gill, Primack)"
     },
     "repro": {
      "mode": "seed",
@@ -222,25 +223,26 @@
     "color": "#4A8A4A",
     "accent": "#D080A0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      180,
+      730
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "protocorm",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-like seed germinates only with a Tulasnella fungus, forming a tiny underground protocorm fed by the fungus for months to years. The first visible plant is a small rosette of 2-5 grey-green, oval-lance leaves that appears in autumn and grows slowly through winter; after several years a 20-40 cm stem rises in early summer with up to 12 flowers whose furry brown lip mimics a bee.",
+     "confidence": "estimated",
+     "source": "Wikipedia Ophrys apifera (rosettes appear in autumn and grow through winter; flowers mid-April in S Europe, June-July in UK; 1-12 flowers; mostly self-pollinating in the north, Eucera bees in the Mediterranean; germination needs Tulasnella and may take months or years underground); Wells & Cox population studies (short-lived, often flowers once or twice)"
     },
     "repro": {
      "mode": "seed",
@@ -406,25 +408,26 @@
     "color": "#4A8A4A",
     "accent": "#F8F4F0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      4
+     ],
+     "first_seed_years": 3.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "protocorm",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-like seeds germinate only with a mycorrhizal fungus, swelling into a tiny green protocorm a few mm across with fine hairs; the first strap leaf and silvery-green roots follow after months. Young plants are a pair of small, fleshy, broad oval leaves on a very short stem, gripping bark with thick flat roots and adding 1-2 leaves a year.",
+     "confidence": "estimated",
+     "source": "Estimated from Phalaenopsis seed-culture practice (protocorms in weeks, first leaf in 2-3 months, flowering size about 3-4 years from sowing) and the species' ecology as a shade-loving lowland epiphyte; lifespan estimated"
     },
     "repro": {
      "mode": "seed",
@@ -588,25 +591,26 @@
     "color": "#4A8A4A",
     "accent": "#F8F4F0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      180,
+      730
      ],
-     "final_size": 1.0
+     "height_years": [
+      5,
+      12
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "tolerant",
+     "juvenile": "protocorm",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-like seed germinates only with a specific fungus into a tiny protocorm on the bark of pond apple or pop ash. The plant never makes real leaves: the young orchid is a few flat, grey-green photosynthetic roots radiating from a minute stem, slowly spreading into a flat root web 18-20 cm across before it can flower.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dendrophylax lindenii (leafless, leaves reduced to scales; flowers only once the root mass is ~180-200 mm across; flowers Jun-Aug, white, 3-4 x 7-9 cm; hawkmoth-pollinated; on Annona glabra and Fraxinus caroliniana in swamp forest; seedlings very hard to raise). Years to flowering and lifespan estimated."
     },
     "repro": {
      "mode": "seed",
@@ -759,25 +763,26 @@
     "color": "#4A8A4A",
     "accent": "#D8C040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      12,
+      35
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "protocorm",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Starts as a dust-like seed that must meet a fungus; it swells into a tiny green protocorm on bark, then a thread of roots and one or two narrow strap leaves. Over years it builds a clump of upright, yellow, cane-like pseudobulbs (to 60 cm) with 6-7 pleated strap leaves near the top, ringed by a basket of stiff, upward-pointing white aerial roots that trap leaf litter.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Ansellia africana: robust clumps, some estimated over a tonne; yellow cane-like pseudobulbs to 60 cm with 6-7 leathery plicate leaves; upward-pointing white aerial roots forming a litter basket; panicles to 85 cm with 10-100 fragrant flowers 6 cm across, each lasting up to ~10 days). Germination, growth and ages estimated from orchid biology."
     },
     "repro": {
      "mode": "seed",

@@ -132,7 +132,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "spiny grey-white shrub with bright green thread leaves"
+    "silhouette": "spiny grey-white shrub with bright green thread leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      12,
+      35
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 long, narrow, fleshy cotyledons and a coiled embryo that uncoils fast; first leaves bright green, fleshy and cylindrical (1-4 cm) like the adult's. Grows slowly into a stiff, rigid, much-branched spiny shrub with pale bark; after 12 years only about 0.7 m tall on dry sites. Resprouts from the root crown.",
+     "confidence": "documented",
+     "source": "USDA FEIS Sarcobatus vermiculatus (transplants 0.73 m tall after 12 yr; to 3 m; vigorous crown sprouting); USDA Woody Plant Seed Manual Sarcobatus (67-91% germination in 2-10 days at 10 C); lifespan estimated from its slow growth"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#a9a35a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      0.4,
+      1.0
+     ],
+     "unripe_colour": "#9db35f",
+     "ripe_colour": "#c7a57a",
+     "ripen_days": [
+      90,
+      130
+     ],
+     "hang_days": [
+      30,
+      240
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS and Woody Plant Seed Manual Sarcobatus (monoecious, wind-pollinated; male flowers in small cone-like spikes at twig tips, female flowers single in leaf axils; tan winged utricles 4-5 mm, 1 cm across the wing, mature late Sep-Nov, a few hang until next summer)"
+    }
    },
    {
     "name": "Iodine bush",
@@ -240,7 +310,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "grey-green succulent jointed bush"
+    "silhouette": "grey-green succulent jointed bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two small fleshy cotyledons, then succulent, jointed, bead-like green stems with only tiny scale leaves, like a miniature pickleweed. It branches from the base into a low, knobbly bush of upright jointed green stems whose segments are often nearly round; the lower stems turn woody and grey, and the plant traps blown sand and salt crust into a hummock.",
+     "confidence": "estimated",
+     "source": "Wikipedia (low shrub to 1.8 m of alkali flats; knobby fleshy jointed green stems with scale leaves; seeds eaten in prehistory) and Gul & Weber 1999 (Can. J. Bot.: fast germination in fresh to saline water). Growth rate, first seed and lifespan estimated from related perennial chenopod shrubs."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#a6a860",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      100
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.07,
+      0.1
+     ],
+     "unripe_colour": "#7a9a4a",
+     "ripe_colour": "#8a5a3a",
+     "ripen_days": [
+      40,
+      80
+     ],
+     "hang_days": [
+      30,
+      150
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      2000,
+      50000
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "Estimated from floras (Jepson / Intermountain Flora as recalled: tiny flowers 3-5 per fleshy bract in cylindric spikes 5-25 mm at the stem tips, summer, wind-pollinated; utricle ~1 mm; spikes break up in autumn) and Wikipedia (seeds ground for food in prehistory)."
+    }
    },
    {
     "name": "Nitre bush",
@@ -352,7 +492,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "spiny grey-green succulent-leaved mound"
+    "silhouette": "spiny grey-green succulent-leaved mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with two fleshy cotyledons, then small, fleshy, bluish-grey wedge-shaped leaves notched at the tip, like the adult's; young twigs are downy. It branches into a stiff, tangled, spine-tipped little shrub that traps blowing sand, so older plants sit on rounded sand hummocks (nabkhas) on saline flats and coastal dunes.",
+     "confidence": "estimated",
+     "source": "Wikipedia Nitraria retusa (to 2.5 m, rarely over 1 m; fleshy bluish-grey leaves 10-15 mm; small sweet-scented whitish-green flowers; red edible drupe 5-10 mm; salt marshes, saline semi-deserts, builds nabkhas); growth, ages and germination estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#e6e8c8",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      20
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wasp"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.5,
+      1.0
+     ],
+     "unripe_colour": "#8aa060",
+     "ripe_colour": "#b0283a",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      500,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (small, sweetly scented whitish or greenish 5-part flowers in small cymes; triangular drupe 5-10 mm turning red, edible and enjoyed by people and eaten by birds, camels and goats); spring flowering in the Sahara-Arabian range; set, ripening and crop estimated"
+    }
    },
    {
     "name": "Saltcedar",
@@ -480,7 +692,80 @@
      "form": "dense pink plumes 2-5 cm on the twig tips",
      "season": "summer"
     },
-    "silhouette": "feathery see-through plume bush with weeping whip twigs"
+    "silhouette": "feathery see-through plume bush with weeping whip twigs",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within hours on wet sand or silt left by a flood; the seedling is a minute two-leaved sprout that grows 2-5 mm a day, with a ~12 cm shoot over a longer root by 8 weeks. It becomes a dense, multi-stemmed shrub of reddish-brown stems and feathery grey-green scale-leaved twigs, pink-plumed in summer, and resprouts hard after fire or cutting.",
+     "confidence": "documented",
+     "source": "USDA FEIS Tamarix spp. (germination <24 h; seed viable ~24-45 days in summer; seedlings 2-5 mm/day in month 1, 11.7 cm shoot at 8 weeks; may flower in year 1, most from year 3; 4-8 m, usually <6 m; resprouts 3-4 m in one season; shrubs 75-100 yr old show no decline). Height-age curve estimated from these."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#e8a6c2",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      60
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#b0b98e",
+     "ripe_colour": "#c4a67c",
+     "ripen_days": [
+      20,
+      40
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      200000,
+      10000000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Tamarix spp. (5 sepals and petals, dense racemes of ~20 flowers per 2.5 cm on new growth; insect cross-pollinated, wind unlikely; ~22 ovules, 8-20+ tiny plumed seeds per flower; up to 2.5 x 10^8 seeds per plant per year, shed all season). Flower life, ripening and capsule persistence estimated."
+    }
    },
    {
     "name": "Shrubby seablite",
@@ -592,7 +877,78 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "compact grey-green succulent bush"
+    "silhouette": "compact grey-green succulent bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two fleshy, strap-like cotyledons, then small, fleshy, half-round blue-green leaves crowded along a thin stem. It hardens into a woody-based, densely branched evergreen bush of glaucous succulent leaves, often forming low hummocks on shingle at the top of salt marshes; leaves may redden in winter.",
+     "confidence": "estimated",
+     "source": "Wikipedia Suaeda vera (small shrub of arid salt flats and salt marshes; in Britain mainly where shingle meets salt marsh; seeds germinate more readily in fresh than in salt water). Stature (to ~1.2 m), growth rate, age at first flowering and lifespan estimated from shrubby halophytes."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.2,
+     "flower_colour": "#9ab070",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind",
+      "self"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.12,
+      0.2
+     ],
+     "unripe_colour": "#8aa865",
+     "ripe_colour": "#4a3a30",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      30000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "British flora accounts (tiny green petal-less flowers 1-3 in the leaf axils, Jul-Oct; fruit a utricle in the persistent fleshy perianth with one shiny black seed ~1-1.5 mm). Pollination, ripening, persistence and crop estimated from Suaeda biology."
+    }
    }
   ],
   "ground": [
@@ -681,7 +1037,29 @@
      "lenticels": "none",
      "confidence": "estimated"
     },
-    "silhouette": "flat grey-green salt-crusted mat, pink flowers"
+    "silhouette": "flat grey-green salt-crusted mat, pink flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedlings with narrow, rolled, grey-green leaves on wiry stems; it creeps by rhizomes and rooting stems into a low, dense, matted subshrub of small, salt-crusted, heath-like leaves, dotted with tiny pink-purple five-petalled flowers from the second year.",
+     "confidence": "estimated",
+     "source": "Estimated from Jepson eFlora and Calflora descriptions of Frankenia salina (rhizomatous perennial herb or subshrub 1-4 dm of coastal salt marshes and alkali flats) and salt-marsh subshrub growth."
+    }
    },
    {
     "name": "Glasswort",
@@ -770,7 +1148,30 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "carpet of stubby jointed green candles, red by autumn"
+    "silhouette": "carpet of stubby jointed green candles, red by autumn",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      0.15,
+      0.35
+     ],
+     "first_seed_years": 0.45,
+     "lifespan_years": [
+      0.5,
+      0.75
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 fleshy, finger-like green cotyledons, then a leafless, jointed, succulent green stem (the tiny leaves are fused into the segments) that branches into a little candelabra 10-30 cm tall. Flowers hide in the joints late in summer; the whole plant turns red or purple in autumn, sheds seed and dies.",
+     "confidence": "documented",
+     "source": "Davy, Bishop & Costa 2001, Biological Flora of the British Isles: Salicornia (spring germination on the marsh after rain lowers salinity, flowering Aug-Sep, seed shed in autumn, strictly annual); Wikipedia S. europaea (shoots harvested Jun-Aug, turns red/purple in autumn, edible)"
+    }
    },
    {
     "name": "Halocnemum",
@@ -852,7 +1253,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "knobby grey-green succulent hummock"
+    "silhouette": "knobby grey-green succulent hummock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny succulent green stems with two fleshy cotyledons that branch into short, jointed, bead-like green shoots. Over years it builds a low, woody-based cushion of densely branched, glaucous succulent twigs tipped with short cone-like fertile spikes; often forms mounds that trap sand on salt flats and redden in autumn.",
+     "confidence": "estimated",
+     "source": "Estimated from halophyte literature on Halocnemum strobilaceum (perennial succulent subshrub of Mediterranean to Central Asian salt flats; rapid germination at low salinity) and related Salicornioideae."
+    }
    },
    {
     "name": "Pickleweed",
@@ -939,7 +1362,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "woody-based glasswort mound of jointed green fingers"
+    "silhouette": "woody-based glasswort mound of jointed green fingers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling like a glasswort: 2 fleshy cotyledons, then jointed, leafless, succulent green stems. It turns woody at the base and grows into an upright to sprawling bush of many jointed green stems (red-tinged in autumn), up to about 1 m, building low hummocks on the upper salt marsh; sprawling stems root.",
+     "confidence": "estimated",
+     "source": "Flora Iberica/Flora Europaea Sarcocornia fruticosa (woody perennial glasswort, erect shrublet to 1 m+, upper salt marsh); halophyte germination studies (fresh seed germinates within 1-3 weeks when salinity is low); growth and ages estimated"
+    }
    },
    {
     "name": "Saltgrass",
@@ -1027,7 +1472,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "short stiff two-ranked saltgrass turf"
+    "silhouette": "short stiff two-ranked saltgrass turf",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are rare (germination is episodic, needing fresh water on saline ground); the seedling is a small tuft of short, stiff, grey-green leaves in two neat opposite ranks. Scaly rhizomes then run through the soil and send up rows of short, stiff, leafy shoots, forming a dense, low turf patch; male and female plants are separate.",
+     "confidence": "documented",
+     "source": "USDA FEIS Distichlis spicata (dioecious; seeds need stratification and scarification, germination rare and episodic, seedling survival 0-95% with falling salinity; rhizomes to 180 cm long, 10-25 cm deep; 15-45 cm tall, usually <30 cm; photosynthesis rises with light). Time to flowering and clone lifespan estimated."
+    }
    }
   ],
   "epiphyte": []

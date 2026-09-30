@@ -35,7 +35,9 @@ func _initialize() -> void:
 	player = main.player
 	await frames(120)
 	var inv := player.inventory
-	ok(inv.worn_in("ranged") != null and inv.worn_in("ranged").kind == "bow" and inv.worn_in("melee").kind == "spear", "starts wearing the bow (ranged) and the spear (melee)")
+	ok(inv.worn_in("ranged") == null and inv.worn_in("melee") == null, "wakes empty-handed (the folk's gifts on the ground by you)")
+	main.take_gifts()
+	ok(inv.worn_in("ranged") != null and inv.worn_in("ranged").kind == "bow" and inv.worn_in("melee").kind == "spear", "the gifts taken: the bow (ranged) and the spear (melee)")
 	ok(inv.carried.size() == 10 and inv.count() == 0, "ten empty carry slots")
 
 	# E on plants: walk about near the camp looking down at the ground ahead

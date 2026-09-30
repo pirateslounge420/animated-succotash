@@ -105,7 +105,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "low green moss cushion with red-brown stems"
+    "silhouette": "low green moss cushion with red-brown stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      4,
+      15
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores or shoot fragments sprout into green protonema threads on wet gravel or seepage mud; small upright shoots with lance-shaped, red-based leaves and a strong midrib appear within weeks, then crowd into a dense turf, green above and wine-red to brown below, bound together by reddish rhizoid felt.",
+     "confidence": "estimated",
+     "source": "Cosmopolitan moss of fens, seepages and streamsides and one of the commonest Antarctic mosses, where sporophytes are rare and shoots extend only a few mm a year; timings estimated from moss growth studies."
+    }
    },
    {
     "name": "Ice algae",
@@ -188,7 +210,30 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "brown stain film on the underside of sea ice"
+    "silhouette": "brown stain film on the underside of sea ice",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      30,
+      60
+     ],
+     "height_years": [
+      0.1,
+      0.2
+     ],
+     "first_seed_years": 0.15,
+     "lifespan_years": [
+      0.2,
+      0.4
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No juvenile form: single glassy, boat-shaped diatom cells divide every few days and link into ribbon- or tree-like colonies in the brine channels at the underside of sea ice. By spring they stain the bottom few centimetres of the ice golden-brown, then are released into the water as the ice melts; a few cells overwinter in the ice to seed next year's bloom.",
+     "confidence": "estimated",
+     "source": "Arctic sea-ice algae literature (N. frigida is the key colonial pennate diatom of bottom-ice communities; spring bloom roughly Mar-Jun when light returns, growth at <1% of surface light, released at ice melt); values are for the visible bloom layer"
+    }
    },
    {
     "name": "Map lichen",
@@ -263,7 +308,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "yellow-green crust map with black borders on rock"
+    "silhouette": "yellow-green crust map with black borders on rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1825
+     ],
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      500,
+      9500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
+     "confidence": "documented",
+     "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
+    }
    }
   ],
   "epiphyte": []

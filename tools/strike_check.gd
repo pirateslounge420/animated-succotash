@@ -58,6 +58,8 @@ func _initialize() -> void:
 	while not main._playing:
 		await process_frame
 	player = main.player
+	# (You wake empty-handed, the folk's gifts by you: taken, as play does.)
+	main.take_gifts()
 	await frames(90)
 	var camp_d: Vector3 = player.surface_dir
 	var s: Dictionary = Hits.data().strike

@@ -47,25 +47,26 @@
     "color": "#6A9A4A",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      4,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      10,
+      35
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      150,
+      650
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two oval cotyledons, then tiny feathery bipinnate leaves on a thin stem with paired spines, some long, straight and white, others short and hooked. The taproot dives deep first. Browsed saplings become dense, low, cage-like spiny bushes for years; once a leader escapes browsers it gains about 1.5 m in two years and only later spreads the flat umbrella crown.",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (Acacia tortilis): up to 21 m, about 1.5 m in 2 years, a 6-7-year-old tree yields 5-6 kg of clean seed, 10-12 kg pods a year at 10 yr; Andersen & Krzywinski 2007 (BMC Ecology): radiocarbon ages of 200-650 yr for trees in Egypt's Eastern Desert, radial growth up to 2.4 mm a year. Germination and height curve estimated."
     },
     "repro": {
      "mode": "seed",
@@ -239,6 +240,56 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#f5f0d8",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      8
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "pod",
+     "fruit_shape": "coiled",
+     "fruit_size_cm": [
+      7,
+      10
+     ],
+     "unripe_colour": "#9aae5c",
+     "ripe_colour": "#b8904e",
+     "ripen_days": [
+      90,
+      180
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (Acacia tortilis): white or pale yellowish-white heads 0.5-1.1 cm, pods 7-10 cm by 6-10 mm, spirally twisted, 10-12 kg pods per 10-yr tree; the Turkana make porridge from the pods, the Maasai eat immature seeds; Wikipedia: aromatic flowers, springlike coiled pods. Flowering at the onset of the rains, ripening, pod fall and rot times estimated."
     }
    },
    {
@@ -279,25 +330,26 @@
     "color": "#6A9A4A",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      7,
+      25
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hot-water-soaked seed sprouts quickly; seedlings have two oval cotyledons, reach the two-leaf stage in 6-8 weeks and carry feathery bipinnate leaves and pairs of straight white spines. Young trees shoot up 1-1.5 m a year as slender single-stemmed whips, and the powdery greenish-yellow bark that names the tree shows early; the flat-topped crown spreads later.",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (Vachellia xanthophloea): 15-25 m, about 1.5 m a year under ideal conditions, seed soaked overnight in hot water, two-leaf stage 6-8 weeks after sowing, dappled shade below; ICRAF Agroforestree: 1-1.5 m a year. First flowering, lifespan and height curve estimated."
     },
     "repro": {
      "mode": "seed",
@@ -471,6 +523,56 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      11
+     ],
+     "hemisphere": "south",
+     "flower_days": 2,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#f6c62a",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      10
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      5,
+      19
+     ],
+     "unripe_colour": "#9db56a",
+     "ripe_colour": "#b3a488",
+     "ripen_days": [
+      120,
+      180
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (Acacia xanthophloea): fragrant golden balls Sep-Nov, insect-pollinated, fruit develops over 4-6 months (Jan-Apr); pods straight, flat, papery, 5-19 cm, green turning pale greyish-brown, breaking into segments, 5-10 seeds; PlantZAfrica: flowers Aug/Sep-Nov, pods split to release seeds, bees drawn by colour and scent. Fruit set, crop and rot estimated."
     }
    },
    {
@@ -511,25 +613,26 @@
     "color": "#6A9A4A",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      42
      ],
-     "final_size": 1.0
+     "height_years": [
+      25,
+      80
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal, with two thick oval cotyledons and grey-green feathery bipinnate leaves on a zigzag stem armed with pairs of large, swollen-based, white spines. The seedling pours its effort into a taproot that heads down toward groundwater (in old trees it may reach tens of metres) while the shoot grows slowly, so young plants are sparse, very spiny, grey-green bushes for years.",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (Vachellia erioloba): 2 m shrub to 16 m tree, slow-growing, starts flowering at about 10 years, seeds take 4-6 weeks to germinate after a boiling-water soak, taproot can reach 60 m; ICRAF Agroforestree: flowers at about 10 yr, regular pod crops by 20 yr, crown to 18 m. Height curve and lifespan estimated."
     },
     "repro": {
      "mode": "seed",
@@ -703,6 +806,56 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "south",
+     "flower_days": 2,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#f2c318",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.02,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      6,
+      13
+     ],
+     "unripe_colour": "#8f9d7a",
+     "ripe_colour": "#a39c8e",
+     "ripen_days": [
+      150,
+      240
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      25,
+      1200
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (Acacia erioloba): fragrant golden-yellow balls mainly Aug-Oct (winter into summer), insect-pollinated; half-moon pods 6-13 x 1.8-6.5 cm, 1.3-2.5 cm thick, dense grey hairs, 7-30 g, 25-1200 pods per tree a year; PlantZAfrica: pods never open and fall in winter. Seeds reportedly roasted as a coffee substitute; ripening and rot times estimated."
     }
    },
    {
@@ -744,25 +897,26 @@
     "color": "#6A9A4A",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      10,
+      35
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: 2 cotyledons, then a few feathery bipinnate true leaves before narrow silvery-grey phyllodes take over in the first months. It sends a taproot ~3 m down while only 20 cm tall and stays a slender silver sprig for years (20 cm at 6-8 months), then becomes a many-stemmed shrub whose branches angle upward like a funnel.",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree DB and Winrock FACT sheet (germinates in ~10 days after scarification; 20 cm at 6-8 months; 3 m multi-stemmed shrub at 10 yr on 370 mm rain); Hawaii PRA (reproductive maturity 10+ yr); The Conversation 2019 (lives three centuries or more; 3 m taproot at 20 cm tall)"
     },
     "repro": {
      "mode": "seed",
@@ -930,6 +1084,56 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      8
+     ],
+     "hemisphere": "south",
+     "flower_days": 3,
+     "flower_size_cm": 2,
+     "flower_colour": "#f5c518",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      2,
+      5
+     ],
+     "unripe_colour": "#8da56a",
+     "ripe_colour": "#b08a5a",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      7,
+      45
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      100,
+      5000
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "Wikipedia/Flora of Australia (bright yellow spikes 15-25 mm, Mar-May or Aug, after rain; flat winged pods 2-4 cm); ICRAF (pods light brown 2-5 cm; seeds ground and cooked by Aboriginal people); ripening time, fruit set and crop estimated from related arid wattles"
     }
    }
   ],
@@ -973,25 +1177,26 @@
     "color": "#6A9A4A",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two oval cotyledons and small feathery bipinnate leaves on a wiry stem armed with paired straight white spines. Saplings in the black-clay grasslands are browsed and burned back, staying spiny multi-stemmed bushes for years; then they start making swollen hollow thorn bases (bulbs, soft and green at first, hardening purple-black, then grey) that ants move into.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Vachellia drepanolobium): up to 6 m, on East African black-cotton soils, hollow swollen thorns housing Crematogaster and Tetraponera ants (C. mimosae on about half the trees). Germination, growth, first flowering and lifespan estimated from related East African savanna acacias."
     },
     "repro": {
      "mode": "seed",
@@ -1165,6 +1370,56 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      4
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#f3e9e3",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "pod",
+     "fruit_shape": "pod",
+     "fruit_size_cm": [
+      3,
+      7
+     ],
+     "unripe_colour": "#7d8a45",
+     "ripe_colour": "#5a3530",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      20,
+      1500
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from the species' usual description and related East African Vachellia: white to pinkish globose flower heads, sickle-shaped dehiscent pods (drepanolobium = sickle pod), pollinated by bees and other insects while young flowers deter the guarding ants. Flowering months, timings and crop estimated."
     }
    }
   ],

@@ -132,7 +132,78 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low blackish spiny rounded shrub"
+    "silhouette": "low blackish spiny rounded shrub",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      12,
+      35
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      80,
+      300
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings usually come up in clumps from forgotten rodent seed caches: tiny epigeal seedlings with two oval cotyledons and small narrow opposite leaves; most die at the cotyledon stage. Survivors grow very slowly into a dense, rounded, rigidly branched grey shrub whose twigs end in spines and turn blackish when wet, hence the name.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Coleogyne ramosissima (slow-growing shrub 0.3-1.8 m on shallow soils, long-lived, flowers in spring from buds formed ~2 wk after March growth, apetalous solitary terminal flowers, wind-pollinated, achenes 3-4 mm, a masting species, rodent caches give clumped seedlings, 53-83% germination with 7 wk stratification, most seedlings die); ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#e3c64e",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind",
+      "bee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.6
+     ],
+     "unripe_colour": "#9a9a5a",
+     "ripe_colour": "#6e5638",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      0,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      50,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Coleogyne ramosissima (solitary terminal flowers with 4 yellowish petal-like sepals and no petals, spring only; wind pollination; dry leathery achenes 3-4 mm with a twisted style, ripe early summer; mast years with huge crops, scatter-hoarded by rodents)"
+    }
    },
    {
     "name": "Mormon tea",
@@ -233,7 +304,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "broom of upright grey-green jointed stems"
+    "silhouette": "broom of upright grey-green jointed stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two long, narrow, needle-like green cotyledons, then a thin jointed green stem with tiny paired scale leaves at the nodes. Grows slowly into a small tuft of stiff, erect, pale grey-green rush-like twigs; 5-10 years to reach knee height, then a dense broom-like mound. Seedlings are fragile; established plants resprout from the crown after fire or browsing.",
+     "confidence": "documented",
+     "source": "USDA FEIS species reviews (Ephedra nevadensis: 3-week prechill then germination at 20 C, 0.3-1.2 m tall, crown sprouting; Ephedra viridis: 0.6 m after 5-10 yr; Ephedra spp. surviving >100 yr in repeat-photo studies). First seed age estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#cdbf62",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.5,
+      1.1
+     ],
+     "unripe_colour": "#8fa25a",
+     "ripe_colour": "#a07a4e",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS (Ephedra nevadensis: dioecious, wind-pollinated; cones form early spring, open Mar-May, seed mature early summer; seed cones 5-11 mm with 1-2 seeds 4-9 mm; large erratic crops; seeds cached by rodents). Colours, fruit set, hang, rot and crop estimated."
+    }
    },
    {
     "name": "Reaumuria",
@@ -347,7 +488,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "tiny grey succulent-leaved dwarf shrub"
+    "silhouette": "tiny grey succulent-leaved dwarf shrub",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with two tiny cotyledons, then short, fleshy, cylindrical, needle-like leaves on a thin reddish stem above a deep taproot. The young plant becomes a few wiry, pale grey-brown, much-branched stems forming a low, tangled cushion-shrub; the small succulent leaves secrete salt and are shed in drought.",
+     "confidence": "estimated",
+     "source": "Botanical knowledge, not confirmed online (Flora of China Tamaricaceae; Chinese ecophysiology studies of this Gobi xerohalophyte: fast germination after rain, salt-secreting leaves, drought deciduousness); growth and ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f0c8d4",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wasp"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.6
+     ],
+     "unripe_colour": "#9aa06a",
+     "ripe_colour": "#8a6a4a",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      7,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      50,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Botanical knowledge, not confirmed online (Flora of China: small pink-white 5-petalled flowers, solitary or few at twig tips, Jul-Aug; small capsules splitting into 3-4 valves in Aug-Sep; seeds covered in long brown hairs, wind-dispersed); pollinators, set and crop estimated"
+    }
    },
    {
     "name": "Saltbush",
@@ -459,7 +672,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "silvery grey rounded shrub"
+    "silhouette": "silvery grey rounded shrub",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two narrow, fleshy cotyledons, then narrow grey-green leaves coated in silvery scurf. On dry sites first-season seedlings may be only 3-4 cm tall while the taproot grows deep; young plants then branch from the base into a rounded, many-stemmed, silvery-grey shrub within 3-4 years.",
+     "confidence": "documented",
+     "source": "USDA FEIS Atriplex canescens (emergence 7-21 d after sowing, established in 3-4 yr, individuals survive 29 to over 100 yr); USDA Woody Plant Seed Manual, Atriplex (reproductive in the 2nd growing season, 21-day germination test)."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#c8b45a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      20
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      0.8,
+      2
+     ],
+     "unripe_colour": "#b7c98a",
+     "ripe_colour": "#c9ae7c",
+     "ripen_days": [
+      90,
+      120
+     ],
+     "hang_days": [
+      60,
+      240
+     ],
+     "drop": "persists",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      2000,
+      60000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS (dioecious, wind-pollinated, fruits 0.8-1 cm with 4 papery wings, mature 3-4 months after flowering, semipersistent through winter); Woody Plant Seed Manual (17-120 thousand fruits/kg, crops 3 years in 5); seeds ground for meal by Native Americans; crop per plant estimated."
+    }
    },
    {
     "name": "Saxaul",
@@ -568,7 +851,77 @@
      "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "gnarled grey tree with weeping leafless twigs"
+    "silhouette": "gnarled grey tree with weeping leafless twigs",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      3
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds germinate within hours of wetting (the embryo is a ready-made, coiled green seedling) and emerge in 1-3 days: tiny green shoots with two slender cotyledons, then jointed, leafless green twigs. Deep roots race down; young plants are small feathery shrubs of drooping green twigs that later thicken into a gnarled, grey, twisted trunk.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Haloxylon ammodendron: 2-8 m, rarely 12 m; trunk to 25 cm); saxaul literature (very rapid germination, green spirally coiled embryo, short seed viability). Growth and ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.2,
+     "flower_colour": "#d8cc7a",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      0.8,
+      1.0
+     ],
+     "unripe_colour": "#b9c48a",
+     "ripe_colour": "#c9b08a",
+     "ripen_days": [
+      180,
+      220
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      5000,
+      200000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (tiny flowers Mar-Apr; fruit winged by the spreading perianth, ~8 mm across, pale brown or white wings, ripe Oct-Nov; seed 1.5 mm). Wind pollination, timings and counts estimated from shrubby Amaranthaceae."
+    }
    },
    {
     "name": "Winterfat",
@@ -680,7 +1033,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low white-woolly upright shrub"
+    "silhouette": "low white-woolly upright shrub",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      20,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two narrow, woolly cotyledons, then narrow grey-green leaves thick with white star-shaped hairs. Seeds germinate even in near-freezing soil in early spring; the young plant is a small, woolly, silver-grey sprig with a deep taproot, branching from the base into a low, twiggy subshrub that turns white with fluffy fruits by autumn.",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Krascheninnikovia lanata, the North American winterfat: 20-80 cm, flowers Jun-Aug, wind-pollinated, hairy-bracted fruits dispersed fall-winter, may seed in the first year, germinates at near-freezing temperatures). Eurasian K. ceratoides is taller. Lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#a8b09a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      20
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.8
+     ],
+     "unripe_colour": "#c8d0b8",
+     "ripe_colour": "#f2efe8",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      500,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA WPSM (small grey-green wind-pollinated flowers Jun-Aug; one-seeded fruit in two bracts with tufts of white hairs 2-8 mm; disperses fall-winter; abundant annual crops). Timings, set and counts estimated."
+    }
    }
   ],
   "ground": [
@@ -770,7 +1193,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "small grey succulent cushion"
+    "silhouette": "small grey succulent cushion",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two narrow fleshy cotyledons, then pairs of short, fleshy, bristle-tipped leaves on a green stem. It builds a thick woody root-crown and a low, dense cushion of many short, jointed, yellow-green stems 5-20 cm high that partly die back each winter; in autumn the winged fruits give it a pinkish-yellow sheen.",
+     "confidence": "estimated",
+     "source": "Wikipedia (short-leaf anabasis of the southern West Siberian Plain, Central Asia and N China; key forage with wormwood in Mongolia and the Kazakh steppe) and Flora of China as recalled (subshrub 5-20 cm, much-branched woody base, short fleshy mucronate leaves, winged fruiting perianth, fl. Aug-Sep). Rates and ages estimated."
+    }
    },
    {
     "name": "Galleta grass",
@@ -858,7 +1303,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "short grey-green sod grass"
+    "silhouette": "short grey-green sod grass",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings emerge with the summer rains (June-July) as a thin tuft of narrow grey-green blades; roots reach about 25 cm in 6 weeks. From the second year scaly rhizomes 2.5-5 cm deep creep out (up to 1.5-1.8 m) and send up new tufts, so the plant becomes a patchy sod of stiff, curly-bladed culms 20-50 cm tall topped by compact spikes 3-7 cm long.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pleuraphis jamesii (85% germination at 15.5-32 C; seedling roots 24.7 cm at 6 weeks; emergence June-July; rhizomes 1.5-1.8 m long, persist 5-7+ yr; resprouts regain preburn cover within 2 yr; culms 8-61 cm; spikes 3-7 cm). Age at first seed and plant lifespan estimated."
+    }
    },
    {
     "name": "Gobi needlegrass",
@@ -948,7 +1415,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "small fine tussock"
+    "silhouette": "small fine tussock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a single thread-thin, inrolled grey-green leaf after the awned grain drills into gravel; roots grow deep before the tuft thickens. Becomes a small, dense, grey-green tussock of wiry rolled leaves on stony desert steppe, its grains carrying long twisted awns that are feathery near the tip.",
+     "confidence": "estimated",
+     "source": "Flora of China and Mongolian desert-steppe descriptions (short tussock 10-30 cm, awn plumose above); growth, flowering age and tussock lifespan estimated from Eurasian Stipa steppe grasses"
+    }
    },
    {
     "name": "Indian ricegrass",
@@ -1038,7 +1527,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "airy tussock with open panicle"
+    "silhouette": "airy tussock with open panicle",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds are hard and often dormant for a year or more; seedlings appear mainly in cool, wet springs. The seedling is a single thin tiller with rolled, wiry, blue-green leaves above a fast, deep root; it slowly tillers into a small dense bunch and usually flowers from its second year, with airy, open panicles of plump black seeds on zigzag stalks.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Achnatherum hymenoides (seed dormancy, stratification in some ecotypes, 20 C optimum; seedling pulses follow wet Aprils; growth starts early Apr, seed ripe early Jul in Idaho; plants 10-61 cm tall, 20-30 cm across); first seed and lifespan estimated from bunchgrass habit"
+    }
    }
   ],
   "epiphyte": []

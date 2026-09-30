@@ -867,6 +867,9 @@ func _swap_plants(parent: Node) -> void:
 				mmi.multimesh.mesh = PlantMeshes.mesh_for(sp, lod, ch.get_meta("layout"))
 		elif ch.has_meta("far_only"):
 			mmi.visible = lod == PlantMeshes.LOD_FAR
+		elif ch.has_meta("young"):
+			# Understory seedlings and saplings (design §AR).
+			mmi.multimesh.mesh = PlantMeshes.young_mesh(sp, int(ch.get_meta("young")), PlantMeshes.LOD_NEAR)
 		else:
 			mmi.multimesh.mesh = PlantMeshes.mesh_for(sp, lod)
 

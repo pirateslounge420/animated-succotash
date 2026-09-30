@@ -1,16 +1,21 @@
 class_name WorldItem
 extends Node3D
-## A carried thing set down on the ground (the inventory screen's G): a
-## small bundle in the item's colors lying where you put it, until you take
-## it back (E within PICK_M: main's interact). No physics; it sits on the
+## A thing lying on the ground: something you set down (the inventory
+## screen's G), a small bundle in the item's colors, or one of the folk's
+## gifts by the fire where you wake (`gift`: the bow and the spear, drawn
+## as themselves), until you take it (interact, right
+## click, within PICK_M: main's interact). No physics; it sits on the
 ## ground below where it was dropped. Rides the floating origin with the
 ## world root it's parented to.
 
-const PICK_M := 1.8
+const PICK_M := 2.0
 
 static var lying: Array[WorldItem] = []
 
 var item: Dictionary
+## Left for you by the folk who found you (main._lay_gifts()): "take the
+## bow", not "take the bow back".
+var gift := false
 
 
 ## Lay `it` on the ground at planet direction `up` (ground `ground` m
@@ -40,6 +45,12 @@ static func in_reach(pos: Vector3, radius: float) -> WorldItem:
 
 func _ready() -> void:
 	lying.append(self)
+	# A tool lies there as itself, flat on the ground.
+	var tool := _tool_mesh(str(item.get("kind", "")))
+	if tool != null:
+		add_child(tool)
+		Bow._no_shadow(tool)
+		return
 	var cols := Inventory.colors(item)
 	var mesh := CapsuleMesh.new()
 	mesh.radius = 0.07
@@ -67,6 +78,21 @@ func _ready() -> void:
 	band.material_override = bm
 	band.rotation = Vector3(0, 0, PI * 0.5)
 	add_child(band)
+
+
+## The bow or the spear, laid flat (null for anything
+## else).
+static func _tool_mesh(kind: String) -> Node3D:
+	var n: Node3D = null
+	match kind:
+		"bow":
+			n = BowMesh.build(1.3)
+			n.rotation = Vector3(PI * 0.5, 0.0, 0.0)
+			n.position = Vector3(0, 0.02, 0)
+		"spear":
+			n = Spear.mesh()
+			n.position = Vector3(0, 0.02, Spear.LENGTH * 0.5)
+	return n
 
 
 func _exit_tree() -> void:

@@ -144,7 +144,77 @@
      "spacing_m": 1.5,
      "confidence": "documented"
     },
-    "silhouette": "huge broad crown on a stout furrowed trunk"
+    "silhouette": "huge broad crown on a stout furrowed trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      35,
+      100
+     ],
+     "first_seed_years": 35,
+     "lifespan_years": [
+      250,
+      440
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal: the acorn stays in the soil and the seedling puts most of its energy into a taproot (1.4 m deep in the first year) while the shoot is small with a few wavy-lobed leaves. Sapling twigs often grow corky ridges. On prairie edges, fire-killed tops resprout from the root for decades ('grubs') before one stem escapes as a slender sapling.",
+     "confidence": "documented",
+     "source": "USDA Silvics (seed-bearing from ~35 yr, best 75-150; good crops every 2-3 yr; ~30% germinate within a month of seedfall; first-year roots 1.37 m; height growth 0.09-0.52 m/yr; lifespan 200-300 yr; to 52 m); USDA FEIS (remnants 300-400 yr, one ~440; shade-intolerant)"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 8,
+     "flower_colour": "#c6c06a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "nut",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      5
+     ],
+     "unripe_colour": "#8a9e58",
+     "ripe_colour": "#8a6a3e",
+     "ripen_days": [
+      120,
+      170
+     ],
+     "hang_days": [
+      3,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      300
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA Silvics and FEIS Quercus macrocarpa (flowers Apr to mid-Jun; acorns ripen in one season and drop Aug-Nov; 0.9 g in Minnesota to 7.5 g and 5 cm in Texas, with a deep fringed cup covering a third or more; large crops in most years, every 2-3 yr); per-tree crop estimated"
+    }
    }
   ],
   "shrub": [
@@ -271,7 +341,77 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "dense rounded multi-stem thicket"
+    "silhouette": "dense rounded multi-stem thicket",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal: the cotyledons stay inside the nut underground and the shoot comes up in spring after winter cold. First leaves are rounded, double-toothed and softly hairy like the adult. The seedling soon sends up extra stems from the base and from rhizomes 10-15 cm deep, building a clump of many slender stems that spreads into a colonial thicket.",
+     "confidence": "documented",
+     "source": "USDA FEIS Corylus americana (1-3 m thicket-former, rhizome sprouts 30-60 cm from parent, grows at 15% or even 1% light, good crops every 2-3 yr, flowers before leaves, nuts late summer-early fall); USDA NRCS plant guide (cold stratification); first-bearing age from hazel growers"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 5,
+     "flower_colour": "#d9c877",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "nut",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.0,
+      1.6
+     ],
+     "unripe_colour": "#a9bd6e",
+     "ripe_colour": "#8b5a2b",
+     "ripen_days": [
+      140,
+      170
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      900
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS (catkins open in spring before leaves; nuts ripe late summer-early fall in two leafy ragged bracts; eaten raw); hazel pollination biology from Oregon State EM 9074 (wind-pollinated, fertilization delayed months after pollination). Flower size is catkin length; fruit set, crop and nut decay estimated."
+    }
    },
    {
     "name": "Leadplant",
@@ -401,7 +541,78 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low grey-leaved shrub with purple spikes"
+    "silhouette": "low grey-leaved shrub with purple spikes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      25,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two oval cotyledons, then small pinnate leaves with a few grey-hairy leaflets on a thin stem; it pours its energy into a taproot and stays only a few cm tall for a year or two, dying back to the root crown in drought and resprouting. It becomes a low, many-stemmed subshrub with dense, feathery, silvery-grey ('lead-coloured') leaves, topped from about year 3 by spikes of purple flowers.",
+     "confidence": "documented",
+     "source": "USDA FEIS Amorpha canescens: germination needs >20 C, peaks at ~20 d; seedlings die back to the root crown in drought and resprout; plants 0.3-1.1 m; roots 2-6 m deep; tolerates partial shade but prefers open sites. First flowering age and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#5b3a8c",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      200,
+      300
+     ],
+     "pollinators": [
+      "bee",
+      "beetle"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "pod",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#8a9a70",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Amorpha canescens: up to 30 flowering stems and 3,000 flowers per plant, 200-300 per raceme; flowers late Jun-Aug in the north, fruit mature Aug-Sep; solitary bees and beetles main pollinators, honeybees too; hairy indehiscent one-seeded legume, seed ~2 mm. Fruit set, hang and rot times estimated."
+    }
    },
    {
     "name": "Pampas grass",
@@ -501,7 +712,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "huge grass fountain with white plumes"
+    "silhouette": "huge grass fountain with white plumes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      12,
+      25
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny light seeds sprout within days on moist, bare, sunny ground; seedlings die quickly in drought. The seedling is a small grass tuft of fine, saw-edged leaves that tillers fast into a fountain-like tussock of arching blue-green leaves, usually sending up tall silvery-white or pinkish plumes from the second year (sometimes the first).",
+     "confidence": "documented",
+     "source": "IUCN GISD Cortaderia selloana (can flower in the first season from seed; tussocks to 3.5 m across, stalks to 4 m; up to 100,000 seeds per plume; late summer-autumn flowering); regeneration-niche study (germination 2-10 d, drought kills seedlings); PFAF; lifespan estimated from grower reports"
+    }
    },
    {
     "name": "Prairie rose",
@@ -631,7 +864,80 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low prickly rose patch"
+    "silhouette": "low prickly rose patch",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      2,
+      4
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 small oval cotyledons and a first leaf of 1-3 leaflets, then pinnate leaves of 7-11 toothed leaflets on a thin bristly stem. It becomes a low patch of prickly stems 10-50 cm tall that die back to near the base each winter and resprout, flowering on the new shoots; deep roots (3 m+) send up new stems nearby.",
+     "confidence": "documented",
+     "source": "USDA FEIS Rosa arkansana (stems 10-50 cm, die back yearly; roots 2.4-3.7 m deep; flowering May-Aug, ~33 days per population; roses first flower at 2-5 yr; seed dormancy 12-15 months)"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 4.0,
+     "flower_colour": "#f0a3bb",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      6
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "beetle",
+      "fly"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.0,
+      1.5
+     ],
+     "unripe_colour": "#7f9a4c",
+     "ripe_colour": "#c0292e",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      60,
+      240
+     ],
+     "drop": "persists",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      10,
+      200
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS Rosa arkansana (flowers May-Aug, 5-petalled pink, in clusters or solitary; hips 10-15 mm in clusters of 2-3, 15-30 achenes each); hips persist into winter as in most wild roses; hips eaten raw (vitamin C)"
+    }
    }
   ],
   "ground": [
@@ -732,7 +1038,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tall blue-green grass, turkey-foot seed heads"
+    "silhouette": "tall blue-green grass, turkey-foot seed heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      1.5,
+      3.5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a thin first blade; the first season it stays a small tuft of a few flat blue-green leaves while roots grow deep. Short rhizomes then thicken the clump year by year; in late summer it sends up stout purple-bronze stems to 3 m topped by three-branched 'turkey-foot' seed heads, and the foliage turns copper-red in autumn.",
+     "confidence": "documented",
+     "source": "USDA FEIS Andropogon gerardii: leaves 0.75-0.9 m by midsummer, flower stalks to 3 m, flowering Jul-Sep; leaves function at 5-10% of full sun (shade tolerant); clones may live for centuries. USDA NRCS plant guide: emergence in ~4 weeks with irrigation; first-season growth slow, faster from rhizomes later; full sun or partial shade. Clump age and first seed estimated."
+    }
    },
    {
     "name": "Compass plant",
@@ -832,7 +1160,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tall stalk with yellow daisies over cut leaves"
+    "silhouette": "tall stalk with yellow daisies over cut leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
+     ],
+     "height_years": [
+      3,
+      6
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "For its first year or two it is just a few narrow, rough, sandpapery leaves while a carrot-like taproot plunges down (eventually 4 m+). Later basal leaves are huge (to 45 cm), deeply cut into lobes and held upright with their edges pointing north-south (the 'compass'); a tall resinous stalk of yellow sunflower heads comes only after several years.",
+     "confidence": "estimated",
+     "source": "Illinois/Missouri prairie flora and Prairie Moon Nursery growing notes (cold-stratified seed germinates in 2-4 weeks; seedlings spend years building a deep taproot, flowering after 3-5+ yr; plants long-lived); Flora of N America (to 3 m, pinnatifid basal leaves)"
+    }
    },
    {
     "name": "Indiangrass",
@@ -931,7 +1281,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tall grass with golden-bronze plumes"
+    "silhouette": "tall grass with golden-bronze plumes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a single thin tiller; leaves broad, flat and blue-green with a stiff, claw-like ligule where blade meets stem ('rifle sight'). Spreads by short scaly rhizomes into a loose clump; flowering stems 1-2 m carry narrow, golden-brown, plume-like panicles in late summer.",
+     "confidence": "documented",
+     "source": "USDA FEIS Sorghastrum nutans (1-2 m; short scaly rhizomes; seed needs cold stratification and germinates readily if shallow; flowers mid-Jul in N Dakota to Sep-Nov in Texas; moderately shade tolerant); first seed and lifespan estimated"
+    }
    },
    {
     "name": "Little bluestem",
@@ -1032,7 +1404,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "knee-high blue-green tufts, orange in autumn"
+    "silhouette": "knee-high blue-green tufts, orange in autumn",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a single thin tiller with narrow, flat, blue-green leaves. Tillers at the base and within 2-3 years makes a tight bunch 10-25 cm across of flattened, bluish, folded leaves; flowering stems 0.5-1 m turn copper-red in autumn, with fluffy silvery seed tufts along them.",
+     "confidence": "documented",
+     "source": "USDA FEIS Schizachyrium scoparium (germination begins in 4 days at 30 C, ~50% within 6 days after stratification; culms 0.5-2 m; bunches 10-25 cm across; flowers Jul-Dec by region; shade intolerant); first seed and bunch lifespan estimated"
+    }
    },
    {
     "name": "Purple coneflower",
@@ -1131,7 +1525,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "purple daisies with orange cones on stiff stems"
+    "silhouette": "purple daisies with orange cones on stiff stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      21
+     ],
+     "height_years": [
+      1,
+      2.5
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      4,
+      10
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two oval cotyledons, then a low rosette of rough, dark-green, ovate to lance-shaped, coarsely toothed leaves on long stalks. In the first year it usually stays a rosette; from the second it sends up stiff, bristly stems with a few leaves, each topped by a purple-pink daisy with drooping rays around a domed, spiny orange-brown cone, and slowly widens into a clump.",
+     "confidence": "estimated",
+     "source": "Wikipedia Echinacea purpurea (to 120 cm tall and 25 cm wide; herbaceous perennial; seed dormancy broken by fluctuating temperatures or stratification; flowers summer into autumn; dry open woods, prairies and barrens, sun or light shade; clumps divided). Germination days, first-flowering age and lifespan from grower guides (estimated)."
+    }
    },
    {
     "name": "Switchgrass",
@@ -1231,7 +1647,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tall upright grass clump, airy seed cloud"
+    "silhouette": "tall upright grass clump, airy seed cloud",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are thin, upright tufts of narrow leaves with a patch of hairs where blade meets sheath; the first season goes mostly into roots 30-75 cm deep. By year two or three it is a dense clump of stiff, erect, green to blue-green culms with airy, open, pinkish-purple panicles that turn straw-gold in autumn.",
+     "confidence": "documented",
+     "source": "USDA FEIS Panicum virgatum (germinates once soil reaches 20 C; seedlings 30-50 cm tall with roots 30-75 cm deep in 3 months; flowers in its second year; 2-4 years to full cover; moderately shade tolerant; bunch and sod ecotypes, indefinite lifespan via rhizomes)"
+    }
    }
   ],
   "epiphyte": []

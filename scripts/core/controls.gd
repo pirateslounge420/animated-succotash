@@ -7,12 +7,20 @@ const DEFAULTS := {
 	"move_back": [KEY_S, KEY_DOWN],
 	"move_left": [KEY_A, KEY_LEFT],
 	"move_right": [KEY_D, KEY_RIGHT],
+	# Jump; in the air by a wall, cliff, trunk or ruin, the wall jump; just
+	# as you land, the bounce (Mike, 29 Sept 2026: the tech moved here
+	# from the right mouse button).
 	"jump": [KEY_SPACE],
+	# Crouch; in the air, fast-fall; just as you land from a height, the
+	# ninja roll.
 	"crouch": [KEY_SHIFT],
 	# Sprint is a double-tap of move_forward, held (PlanetPlayer); this
 	# action is the gamepad's way in (click the left stick and hold).
 	"sprint": [],
-	"interact": [KEY_E],
+	# The right mouse button (MOUSE_BUTTONS; Mike, 29 Sept 2026: instead
+	# of E): take things, climb the tree in front of you, and hold to cling
+	# to a wall or trunk or to catch and swing on a branch or vine.
+	"interact": [],
 	# The inventory screen (what you carry and wear); G sets the chosen
 	# carried thing down while it's open. Tab by the designer's call
 	# (2026-09-28); I stays as a second key.
@@ -30,16 +38,9 @@ const DEFAULTS := {
 	# MOUSE_BUTTONS). With the spear in hand: tap to thrust, hold and
 	# release to throw.
 	"shoot": [],
-	# Wall jump: in the air, by a wall, cliff, trunk or ruin (the right
-	# mouse button; see MOUSE_BUTTONS).
-	"wall_jump": [],
-	# Swap between the bow, the spear and the fishing pole.
+	# The next tool to hand: the bow, the spear, bare hands (whichever you
+	# have).
 	"weapon_swap": [KEY_Q],
-	# The fishing pole (design §N): the line is reeled in with the mouse
-	# wheel (scroll down toward you) and let out with scroll up; see
-	# MOUSE_BUTTONS. Godot reports the wheel as button presses.
-	"reel_in": [],
-	"reel_out": [],
 	# Dev mode only (data/dev.json): F4 shows collision shapes, F6 the
 	# trees' branch graphs, F7 spawns the next Phase 1 rig beside you (Night
 	# Riders, Pond Crawler, monkey), F8 makes the nearest wolf pack howl.
@@ -56,15 +57,14 @@ const DEFAULTS := {
 ## Mouse buttons per action.
 const MOUSE_BUTTONS := {
 	"shoot": MOUSE_BUTTON_LEFT,
-	"wall_jump": MOUSE_BUTTON_RIGHT,
-	"reel_in": MOUSE_BUTTON_WHEEL_DOWN,
-	"reel_out": MOUSE_BUTTON_WHEEL_UP,
+	"interact": MOUSE_BUTTON_RIGHT,
 }
 
-## Gamepad: left stick moves, A jumps, X interacts, B crouches, Y swaps
-## bow and spear, the left stick held in sprints, the right trigger draws
-## and shoots the bow, the right stick clicked switches first/third person,
-## Back opens the map, the right shoulder wall-jumps.
+## Gamepad: left stick moves, A jumps (and wall-jumps), X interacts (and
+## holds on: climb, cling, swing), B crouches (and rolls), Y swaps tools,
+## the left stick held in sprints, the right trigger draws and shoots the
+## bow, the right stick clicked switches first/third person, Back opens the
+## map.
 const PAD_BUTTONS := {
 	"weapon_swap": JOY_BUTTON_Y,
 	"toggle_view": JOY_BUTTON_RIGHT_STICK,
@@ -73,7 +73,6 @@ const PAD_BUTTONS := {
 	"crouch": JOY_BUTTON_B,
 	"sprint": JOY_BUTTON_LEFT_STICK,
 	"toggle_map": JOY_BUTTON_BACK,
-	"wall_jump": JOY_BUTTON_RIGHT_SHOULDER,
 	"inventory": JOY_BUTTON_START,
 }
 const PAD_AXES := {
@@ -107,3 +106,9 @@ static func ensure() -> void:
 			ja.axis = PAD_AXES[action][0]
 			ja.axis_value = PAD_AXES[action][1]
 			InputMap.action_add_event(action, ja)
+
+
+## The interact button's name for prompts ("Right click: take the arrow
+## back").
+static func interact_word() -> String:
+	return "Right click"

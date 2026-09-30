@@ -138,7 +138,77 @@
      "spacing_m": 0.6,
      "confidence": "estimated"
     },
-    "silhouette": "narrow dark pyramid, straight trunk, twiggy cone-hung crown"
+    "silhouette": "narrow dark pyramid, straight trunk, twiggy cone-hung crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      12,
+      45
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      60,
+      160
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two tiny round cotyledons on wet mud or moss, then toothed rounded leaves that are glossy and sticky when young. Saplings shoot up to about 1 m a year as a straight stem with a narrow conical crown of dark green, blunt- or notch-tipped leaves and stalked purplish buds. After cutting or beaver damage it becomes a multi-stemmed clump of straight poles.",
+     "confidence": "estimated",
+     "source": "European Atlas of Forest Tree Species (normally 10-25 m, exceptionally 35-40 m; lives ~60 yr, up to 160; heart rot after ~60 yr); Claessens et al. 2010 (Forestry 83) abstract: growth very fast to age 7-10, then slows rapidly; Wikipedia (seedlings need light; coppices to straight poles). Height-age and first seed (open trees ~10 yr) estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 7,
+     "flower_colour": "#8e4e3c",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      8
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1,
+      3
+     ],
+     "unripe_colour": "#5f7a3a",
+     "ripe_colour": "#3a2a20",
+     "ripen_days": [
+      180,
+      220
+     ],
+     "hang_days": [
+      180,
+      500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      365,
+      1095
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia / European Atlas: catkins formed the previous autumn open in early spring before bud burst; reddish pendulous male catkins 5-10 cm; female catkins ripen into hard, woody, dark brown to black cone-like fruits 1-3 cm that shed floating winged nutlets mostly through winter to spring. Cluster size, crop and rot times estimated."
+    }
    },
    {
     "name": "Black willow",
@@ -258,7 +328,79 @@
      "spacing_m": 0.5,
      "confidence": "documented"
     },
-    "silhouette": "leaning many-trunked willow with a ragged narrow crown"
+    "silhouette": "leaning many-trunked willow with a ragged narrow crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      9,
+      30
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      55,
+      85
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed germinates within a day on wet mud: two tiny round cotyledons and a hair-thin stem. Grows as a slender whip with narrow lance-shaped leaves, often over 1.2 m in the first year and about 10 m by age 5; leans toward light and often forks into several trunks. Stumps and broken twigs root and sprout.",
+     "confidence": "documented",
+     "source": "USDA Silvics of N America vol. 2 (Pitcher & McKnight): 1.2 m first year, 9.8 m at 5, 15 m at 10, 22 m at 20, 31 m at 40 yr on good sites; seed must land within 12-24 h; first seed ~10 yr; mature at 55 yr, oldest 70-85 yr; very intolerant"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 5.0,
+     "flower_colour": "#d6d27c",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.6
+     ],
+     "unripe_colour": "#9cb068",
+     "ripe_colour": "#b89c6c",
+     "ripen_days": [
+      45,
+      60
+     ],
+     "hang_days": [
+      3,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      50000,
+      1000000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (flowers Feb in the south to late June in the north; mainly insect-pollinated, nectar, some wind; capsules 3-6 mm split 45-60 days after pollination; ~5 million seeds/kg; cottony seed viable only days); dioecious catkins 2.5-7.5 cm"
+    }
    },
    {
     "name": "River red gum",
@@ -375,7 +517,79 @@
      "spacing_m": 2.0,
      "confidence": "documented"
     },
-    "silhouette": "massive white trunk, sparse drooping grey-green crown"
+    "silhouette": "massive white trunk, sparse drooping grey-green crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      8,
+      35
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      300,
+      1000
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two tiny kidney-shaped cotyledons, then 3-4 pairs of opposite, broad lance-shaped, dull grey-green leaves before they turn alternate; juvenile leaves (13-26 cm) are broader and bluer than the narrow, sickle-shaped hanging adult leaves. Shoots up as a thin reddish-stemmed whip, 2-3 m a year on wet sites; northern forms build a lignotuber.",
+     "confidence": "documented",
+     "source": "PROSEA (E. camaldulensis: seed germinates after ~4 days; 1.7-4 m/yr height growth in trials; first flowers at 16-38 months, 24-28 common; juvenile leaves 13-26 x 4.5-8 cm; lignotubers in northern provenances); Wikipedia (river red gums commonly live 500-1000 yr)."
+    },
+    "fruiting": {
+     "flower_months": [
+      11,
+      2
+     ],
+     "hemisphere": "south",
+     "flower_days": 7,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#f3efdc",
+     "flower_form": "brush",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      7,
+      11
+     ],
+     "pollinators": [
+      "bee",
+      "bird",
+      "fly"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      0.8
+     ],
+     "unripe_colour": "#7b9a55",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      150,
+      200
+     ],
+     "hang_days": [
+      60,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      180,
+      900
+     ],
+     "crop_per_tree": [
+      5000,
+      100000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "PROSEA (7-11-flowered umbels, buds 4-6 mm, seed ripe ~6 months after flowering, ~15 seeds per capsule); Wikipedia/EUCLID (white flowers mainly in summer; hemispherical capsules 5-8 mm with exserted valves). Fruit set, hang, rot and crop estimated."
+    }
    },
    {
     "name": "Weeping willow",
@@ -496,7 +710,79 @@
      "spacing_m": 0.5,
      "confidence": "documented"
     },
-    "silhouette": "green curtain dome, whip branches to the water"
+    "silhouette": "green curtain dome, whip branches to the water",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      40,
+      75
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Almost always from cuttings (cultivated trees are female clones) that root in 1-2 weeks. The young tree is a slender whip whose side shoots already hang down; it soon becomes a broad dome of long, thin, curtain-like pendulous branchlets sweeping the ground, with narrow bright-green leaves 4-16 cm. Seedlings, when they occur, have 2 tiny round cotyledons.",
+     "confidence": "estimated",
+     "source": "Wikipedia Salix babylonica (20-25 m, short lifespan 40-75 yr; cultivated weeping willows in Europe and N America are all female clones, propagated vegetatively); USDA Woody Plant Seed Manual Salix (willow seed has no dormancy and germinates within 12-24 h on wet ground (USDA Woody Plant Seed Manual Salix)); growth curve estimated from Salix alba/nigra"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#c8cf7e",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      50
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.4
+     ],
+     "unripe_colour": "#a2b86c",
+     "ripe_colour": "#b9a67c",
+     "ripen_days": [
+      30,
+      45
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      10000,
+      500000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Flora of China Salix babylonica (catkins with the leaves, flowering Mar-Apr, fruit Apr-May; female catkins 1.5-3 cm, capsules 3-4 mm); low fruit set because planted trees are female clones that need pollen from other willows (seed is then hybrid); crop estimated"
+    }
    },
    {
     "name": "White willow",
@@ -617,7 +903,79 @@
      "spacing_m": 0.5,
      "confidence": "documented"
     },
-    "silhouette": "broad silver-flashing rounded crown on a stout trunk"
+    "silhouette": "broad silver-flashing rounded crown on a stout trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      8,
+      30
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within a day on wet silt: a tiny seedling with 2 round cotyledons. The young tree is a fast, slender whip (often 1-2 m a year) with narrow lance leaves silvery-silky beneath and upward-angled branches; later a broad, irregular, often leaning crown over water. Broken twigs root easily; pollarding gives the classic knobbly 'pollard willow'.",
+     "confidence": "estimated",
+     "source": "EUFORGEN Salix alba (20-30 m, fast-growing, short-lived, seed viable only briefly); PFAF (to 25 m at a fast rate; flowers Apr-May, seed ripe in June; seed viable only a few days); USDA Woody Plant Seed Manual Salix (willow seed has no dormancy and germinates within 12-24 h on wet ground (USDA Woody Plant Seed Manual Salix)); growth curve and age at first seed estimated from Salix nigra"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 4.5,
+     "flower_colour": "#d8d26e",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      90
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#a0b56a",
+     "ripe_colour": "#b8a77e",
+     "ripen_days": [
+      35,
+      50
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      50000,
+      1000000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "PFAF Salix alba (flowers Apr-May with the leaves, seed ripens June; bee-pollinated, early nectar and pollen; dioecious); Flora of Great Britain/Stace (catkins 3-6 cm, glabrous capsules ~4-5 mm opening to release cottony seed); fruit set and crop estimated"
+    }
    }
   ],
   "shrub": [
@@ -743,7 +1101,79 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "loose rounded bush at the water line, button flowers"
+    "silhouette": "loose rounded bush at the water line, button flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Small epigeal seedling on wet mud with glossy opposite (sometimes whorled) oval leaves. It branches from the base early, becoming a rounded, many-stemmed shrub with arching stems, often standing in shallow water; cut or burned stems resprout readily.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Cephalanthus occidentalis (to 6 m, flowers Jun-Sep in dense spherical heads of tiny white flowers at branch ends, fruit Sep-Oct as round clusters of nutlets, ~134,000 seeds/lb, low germination without pretreatment, sprouts after fire, increases with light); growth and lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 3,
+     "flower_colour": "#f5f2e6",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      7
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "moth"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#7fa04e",
+     "ripe_colour": "#6b472c",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      60,
+      200
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Cephalanthus occidentalis (white pompom heads Jun-Sep visited by bees, butterflies and moths; ripe Sep-Oct as round brown heads of cone-shaped nutlets that break up over winter); heads per shrub estimated"
+    }
    },
    {
     "name": "Grey willow",
@@ -864,7 +1294,80 @@
      "spacing_m": 0.2,
      "confidence": "documented"
     },
-    "silhouette": "grey-green multi-stem willow bush, rounded and dense"
+    "silhouette": "grey-green multi-stem willow bush, rounded and dense",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within a day on wet mud: two tiny round cotyledons, then a downy shoot with small obovate, dull grey-green leaves (grey-hairy beneath). Branches low into a rounded, dense, many-stemmed bush; twigs downy, with raised ridges under the peeled bark. Fallen or broken stems root where they touch wet ground.",
+     "confidence": "estimated",
+     "source": "Stace, New Flora of the British Isles, and Meikle, Willows and Poplars of GB and Ireland (BSBI) for form, 4-10 (15) m size and phenology; USDA Woody Plant Seed Manual Salix (willow seed has no dormancy and germinates within 12-24 h on wet ground (USDA Woody Plant Seed Manual Salix)); growth rate, first seed and lifespan estimated for a fast, short-lived sallow"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#dcd06a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.6,
+      1.0
+     ],
+     "unripe_colour": "#a9b77a",
+     "ripe_colour": "#c2b28e",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20000,
+      400000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Stace and Meikle (BSBI): catkins before the leaves in Mar-Apr, males 2-3 cm with yellow anthers ('pussy willow'), females grey-green; hairy flask-shaped capsules 7-10 mm shed seed May-June; key early food for bumblebee queens and honeybees; fruit set and crop estimated"
+    }
    },
    {
     "name": "Papyrus",
@@ -959,7 +1462,29 @@
      "confidence": "documented",
      "note": "smooth dark green triangular culms 2-5 m with brown basal sheaths"
     },
-    "silhouette": "tall bare stems each topped by a green mop-head"
+    "silhouette": "tall bare stems each topped by a green mop-head",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      0.7,
+      2
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      20,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: a low tuft of narrow, grass-like green leaves. Only as the thick woody rhizome builds up does it send up the adult culms: leafless, sharply three-angled green stems with brown papery basal sheaths, each topped by a huge mop-like umbel of thread-fine rays. New culms shoot to full height in weeks and live well under a year; the rhizome clump lives for decades.",
+     "confidence": "estimated",
+     "source": "Wikipedia Cyperus papyrus (4-5 m, rarely to ~10 m; C4, highly productive swamp stands; thick woody rhizome with red-brown scales; umbels of 10-30 cm rays; flowers all year where wet; grows fast once established). Seedling form, germination and culm/clump lifespans estimated from swamp ecology literature."
+    }
    }
   ],
   "ground": [
@@ -1047,7 +1572,29 @@
      "confidence": "documented",
      "note": "terete smooth dark green culms 1-3 m, straw sheaths at the base"
     },
-    "silhouette": "clump of tall round leafless green stems in water"
+    "silhouette": "clump of tall round leafless green stems in water",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a few thread-like leaves; soon a thick creeping rhizome sends up round, leafless, spongy, dark-green stems 1-3 m tall, each with a brown tassel of spikelets near the top. In deeper water it also makes long, floppy, ribbon-like submerged leaves. Stems live one or two seasons; the clone spreads for decades.",
+     "confidence": "estimated",
+     "source": "Stace, New Flora of the British Isles, and Flora of China Schoenoplectus lacustris (rhizomatous, culms to 3 m, submerged strap leaves in deep water); wetland seed studies (cold-stratified seed germinates in spring in 2-6 weeks); ramet and clone ages estimated"
+    }
    },
    {
     "name": "Canadian waterweed",
@@ -1136,7 +1683,29 @@
      "confidence": "documented",
      "note": "submerged trailing stems, no bark"
     },
-    "silhouette": "submerged dark-green leafy strands rising toward light"
+    "silhouette": "submerged dark-green leafy strands rising toward light",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      14
+     ],
+     "height_years": [
+      0.2,
+      0.5
+     ],
+     "first_seed_years": 0.3,
+     "lifespan_years": [
+      1,
+      5
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Almost never from seed: a broken stem fragment roots from its nodes within a week or two and grows on. The young plant is a slender, brittle, submerged stem densely set with whorls of three small, translucent, dark-green oblong leaves, branching and rooting as it lengthens into tangled underwater beds that die back to overwintering shoot tips.",
+     "confidence": "estimated",
+     "source": "Wikipedia Elodea canadensis (dioecious; grows rapidly in favourable conditions; stems to 3 m or more; needs 10-25 C water and moderate-bright light; flowers May-Oct). Germination value is for rooting of fragments (seed is rare, and introduced European stands are almost all female); growth rate and stand lifespan estimated."
+    }
    },
    {
     "name": "Cattail",
@@ -1233,7 +1802,29 @@
      "confidence": "documented",
      "note": "round green flower culm inside the leaf fans"
     },
-    "silhouette": "flat sword-leaf fans with brown sausage heads"
+    "silhouette": "flat sword-leaf fans with brown sausage heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      0.3,
+      1.2
+     ],
+     "first_seed_years": 1.1,
+     "lifespan_years": [
+      1,
+      2
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Germinates on wet mud or in shallow water: a hair-like shoot, then 2-4 tiny leaves and 2-6 ribbon leaves floating flat on the water before stiff, erect, flat grey-green leaves rise. By the end of its first summer a seedling is 60-85 cm tall and has sent rhizomes out into a clump up to 3 m across. Each shoot lives about a year; the clone persists for decades.",
+     "confidence": "documented",
+     "source": "USDA FEIS (Typha latifolia): germinates best at 25-30 C in high light; 2-4 small then 2-6 floating leaves before erect ones; seedlings 60-85 cm after 84 d; flowers early in 2nd year; ramets die within a year, rhizomes live about 2 yr; one seedling's rhizomes spread 3 m in a season; shade intolerant."
+    }
    },
    {
     "name": "Common reed",
@@ -1330,7 +1921,29 @@
      "confidence": "documented",
      "note": "hollow jointed culms turning straw-coloured in winter; internodes ~20 cm"
     },
-    "silhouette": "tall even reed wall with feathery plumed tops"
+    "silhouette": "tall even reed wall with feathery plumed tops",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      3,
+      8
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small, weak, grass-like tufts of soft green leaves on wet mud. After a season rhizomes and long surface runners spread out; every spring new culms shoot up like thin canes to full height in a few months, with long, broad, grey-green leaves all along the stem and a big, silky, purple-brown plume that fades to grey-buff.",
+     "confidence": "documented",
+     "source": "USDA FEIS Phragmites australis (germination needs light, moisture and warm alternating temperatures after cold stratification; seedling survival very low; 3-4 years to viable seed; maximum height at 5-8 years; no part of a clone lives more than 8 years though clones persist far longer; culms die back yearly)"
+    }
    },
    {
     "name": "Curled pondweed",
@@ -1419,7 +2032,30 @@
      "confidence": "documented",
      "note": "submerged stems, no bark"
     },
-    "silhouette": "submerged crinkled-leaf stems, olive-brown"
+    "silhouette": "submerged crinkled-leaf stems, olive-brown",
+    "growth": {
+     "life": "annual",
+     "season": "autumn",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.4,
+      0.6
+     ],
+     "first_seed_years": 0.7,
+     "lifespan_years": [
+      0.7,
+      1
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "New plants come mostly from turions: hard, brown, burr- or pinecone-like buds shed in early summer that lie dormant and sprout in autumn (seedlings are rare, so the value above is for turions). The sprout is a slender stem of small narrow leaves that stays green under the ice all winter, then grows fast in spring into long, flattened stems with wavy, finely toothed, lasagna-edged leaves.",
+     "confidence": "documented",
+     "source": "Minnesota DNR (turions sprout in fall; first pondweed up in spring; flowers, fruits and forms turions in June, then dies back in midsummer; wavy serrate leaves); Wikipedia (stems to 1 m; flowers May-Oct; rapid spring growth). Perennial by turions; coded annual for its sprout-to-dieback cycle."
+    }
    },
    {
     "name": "Eurasian water milfoil",
@@ -1512,7 +2148,29 @@
      "confidence": "documented",
      "note": "submerged reddish stems, no bark"
     },
-    "silhouette": "submerged feathery red-stemmed plumes"
+    "silhouette": "submerged feathery red-stemmed plumes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      0.1,
+      0.25
+     ],
+     "first_seed_years": 0.4,
+     "lifespan_years": [
+      1,
+      5
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "New plants come mostly from stem fragments that root from the nodes within days (seedlings are rare, so the value above is for fragments). A young plant is one limp stem with whorls of 4 feathery leaves of 12-21 pairs of thread-like segments; it grows several cm a day toward the light, then branches into a dense surface canopy with small reddish flower spikes held just above the water.",
+     "confidence": "estimated",
+     "source": "Estimated from invasive-species literature on Eurasian watermilfoil (USGS/state extension fact sheets: spreads mainly by fragments and autofragmentation, seed rarely important; fast spring growth to the surface, flowers in summer; overwinters as rootstocks and green shoots)"
+    }
    },
    {
     "name": "Giant water lily",
@@ -1601,7 +2259,29 @@
      "confidence": "documented",
      "note": "petioles submerged and prickly; no stem above water"
     },
-    "silhouette": "giant rimmed green trays floating in a ring"
+    "silhouette": "giant rimmed green trays floating in a ring",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      0.25,
+      0.45
+     ],
+     "first_seed_years": 0.45,
+     "lifespan_years": [
+      1,
+      7
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The pea-sized seed sprouts on the muddy bottom in warm water. First come thin, submerged, awl-like leaves, then small arrow-shaped leaves, then round floating pads, flat and CD-sized at first, each new pad larger than the last; the upturned rim and the red, deeply ribbed, prickly underside develop on the later, bigger pads.",
+     "confidence": "documented",
+     "source": "Kew (giant waterlily): seeds sown Jan-Feb in 28-30 C water, CD-sized leaves within a few weeks, a 2 m leaf grows in 7 days in June, leaves last about 3 weeks, buds from July, fruit ripens in up to 10 weeks; Wikipedia: pads to 3 m, flowers to 40 cm open over two nights, white turning pink, beetle-pollinated; rhizome lives at least 7 yr but often annual."
+    }
    },
    {
     "name": "Sacred lotus",
@@ -1698,7 +2378,29 @@
      "confidence": "documented",
      "note": "tall green petioles and scapes with small scattered prickles"
     },
-    "silhouette": "blue-green parasol leaves held high above water"
+    "silhouette": "blue-green parasol leaves held high above water",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      0.4,
+      1.5
+     ],
+     "first_seed_years": 1.3,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The hard-coated seed (viable for centuries) splits and sends up a green shoot with small rolled leaves; the first leaves are small round shield-shaped blades floating flat on the water. Then prickly stalks up to 2 m lift round, waxy, water-shedding 'umbrella' leaves up to 80-100 cm wide above the water, and runners creep through the mud, swelling into tubers in autumn.",
+     "confidence": "documented",
+     "source": "Wikipedia Nelumbo nucifera (1300-year-old seed germinated, Shen-Miller et al.; leaf blades 80-100 cm on petioles to 2 m; flowers to 35 cm; germinates above 13 C; rhizomes mature in 6-9 months and grow up to 20 m a year); lotus growers (scarified seed sprouts in days, seedlings flower in 1-2 yr)"
+    }
    },
    {
     "name": "Water hyacinth",
@@ -1792,7 +2494,29 @@
      "confidence": "documented",
      "note": "inflated spongy petioles, pale green"
     },
-    "silhouette": "floating raft of glossy round leaves on balloon stalks"
+    "silhouette": "floating raft of glossy round leaves on balloon stalks",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      0.06,
+      0.2
+     ],
+     "first_seed_years": 0.3,
+     "lifespan_years": [
+      0.5,
+      2
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seeds germinate on wet mud at the water's edge; the seedling's first leaves are thin, narrow and strap-like, without swollen stalks. It soon floats free as a small rosette whose later leaves are round and glossy on spongy, bulb-like inflated stalks (long and slender where crowded). Most new plants are daughter rosettes budded off on stolons, so a mat can double in 1-2 weeks.",
+     "confidence": "estimated",
+     "source": "Wikipedia Pontederia crassipes (leaves 10-20 cm across, up to 1 m tall; one spike of 8-15 lavender flowers; mats double in 1-2 weeks; seeds viable over 28 yr; spreads mainly by stolons). Germination time, rosette size-age and ramet lifespan estimated."
+    }
    },
    {
     "name": "White water lily",
@@ -1883,7 +2607,29 @@
      "confidence": "documented",
      "note": "stemless; flexible petioles submerged"
     },
-    "silhouette": "flat notched pads floating with white cups"
+    "silhouette": "flat notched pads floating with white cups",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The seedling stays underwater: first a thread-like leaf, then small, thin, translucent arrow- or heart-shaped submerged leaves; only later do long stalks reach the surface with round, deeply notched floating pads that grow to ~30 cm. A thick rhizome in the mud sends up more pads each spring, forming a floating rosette up to ~1.5 m across with white flowers among them.",
+     "confidence": "estimated",
+     "source": "Wikipedia Nymphaea alba (pads to 30 cm, a plant spreads ~150 cm; flowers 8-20 cm, open by day through summer; full sun); juvenile submerged leaves as in other Nymphaea seedlings; germination, ages and time to flowering estimated"
+    }
    },
    {
     "name": "Yellow flag iris",
@@ -1980,7 +2726,29 @@
      "confidence": "documented",
      "note": "stout flower stems; leaf bases flushed pink-brown"
     },
-    "silhouette": "upright grey-green sword fans with yellow flags"
+    "silhouette": "upright grey-green sword fans with yellow flags",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The seedling is a small flat fan of 2-4 narrow, sword-shaped, grey-green leaves rising from a corky floating seed. By the second or third year the rhizome has thickened and branched into several fans of stiff, erect leaves about 1 m tall and the first bright yellow flowers appear; clumps then creep outward on thick rhizomes into dense stands at the water's edge.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Iris pseudacorus: 1-1.5 m, rarely 2 m; flowers 7-10 cm; spreads quickly by rhizome and water-dispersed seed; very wet, even anoxic soils); germination, first flowering and clump ages estimated from rhizomatous iris growth."
+    }
    }
   ],
   "epiphyte": []

@@ -1,7 +1,8 @@
 extends SceneTree
 ## Run: godot --headless --path . --fixed-fps 60 --script tools/tech_check.gd
 ## Headless checks for the design reconciliation's Phase 1 moves: the
-## right-click tech (wall-jump tap, cling, chain gain, the frame window),
+## techs (Mike, 29 Sept 2026: jump (Space) at a face wall-jumps, interact
+## (right click) held clings; chain gain, the frame window),
 ## the landing roll, impact damage, catch-and-swing on branches, bamboo
 ## and vines (break, flex, snapback, unlimited hang), dead wood, death
 ## (the corpse, waking at a fire, getting your things back) and the fire
@@ -31,7 +32,7 @@ func release(a: String) -> void:
 
 func release_all() -> void:
 	await process_frame
-	for a in ["move_forward", "move_back", "jump", "crouch", "shoot", "wall_jump"]:
+	for a in ["move_forward", "move_back", "jump", "crouch", "shoot", "interact"]:
 		Input.action_release(a)
 
 func alt() -> float:
@@ -146,6 +147,8 @@ func _initialize() -> void:
 	while not main._playing:
 		await process_frame
 	player = main.player
+	# (You wake empty-handed, the folk's gifts by you: taken, as play does.)
+	main.take_gifts()
 	await frames(90)
 	var camp_d: Vector3 = player.surface_dir
 	if OS.get_environment("ONLY") == "rain":
@@ -164,9 +167,9 @@ func _initialize() -> void:
 		return
 	var out := fly_at_trunk(g, 6.0, 1.3)
 	await wait_contact()
-	await press("wall_jump")
+	await press("jump")
 	await frames(2)
-	await release("wall_jump")
+	await release("jump")
 	await frames(2)
 	var v1 := player.velocity
 	var up1 := v1.dot(player.up)
@@ -177,13 +180,13 @@ func _initialize() -> void:
 	fly_at_trunk(g, 6.0, 1.3)
 	player._wj_chain = chain
 	await wait_contact()
-	await press("wall_jump")
+	await press("jump")
 	await frames(2)
-	await release("wall_jump")
+	await release("jump")
 	await frames(2)
 	var up2 := player.velocity.dot(player.up)
-	print("tap wall jump: away %.1f m/s, up %.1f m/s; chained: up %.1f m/s (x%.2f)" % [away1, up1, up2, up2 / maxf(up1, 0.01)])
-	ok(wj1 >= 1 and away1 > 2.0 and up1 > 4.0, "a tap on the trunk kicks off it")
+	print("wall jump: away %.1f m/s, up %.1f m/s; chained: up %.1f m/s (x%.2f)" % [away1, up1, up2, up2 / maxf(up1, 0.01)])
+	ok(wj1 >= 1 and away1 > 2.0 and up1 > 4.0, "jump at the trunk kicks off it")
 	ok(player.wall_jumps == wj1 + 1 and up2 >= up1 * 0.99, "a chained wall jump keeps or builds speed (gain %.2f)" % PlanetPlayer.WJ_GAIN)
 	await settle(camp_d)
 
@@ -201,20 +204,20 @@ func _initialize() -> void:
 	var c0 := player.clings
 	var w0 := player.wall_jumps
 	print("late: wall_f %d floor %s alt %.2f clinging %s climbing %s" % [player._wall_f, player.is_on_floor(), alt(), player.clinging, player.climbing])
-	await press("wall_jump")
+	await press("jump")
 	await frames(2)
-	await release("wall_jump")
+	await release("jump")
 	await frames(2)
 	print("late after: clings +%d wj +%d wall_f %d" % [player.clings - c0, player.wall_jumps - w0, player._wall_f])
 	ok(player.clings == c0 and player.wall_jumps == w0, "pressed %d frames after touching: too late, no wall jump (window %d frames)" % [PlanetPlayer.WJ_WINDOW_F + 3, PlanetPlayer.WJ_WINDOW_F])
 	await settle(camp_d)
 
-	# --- Cling: hold; letting go springs you off (weaker than a perfect
-	# tap, and the chain starts over) -------------------------------------
+	# --- Cling: hold right click; jump springs you off (weaker than a
+	# wall jump, and the chain starts over); letting go lets go --------------
 	g = trunk_near(player.global_position)
 	fly_at_trunk(g, 6.0, 3.0)
 	await wait_contact()
-	await press("wall_jump")
+	await press("interact")
 	await frames(3)
 	var p0 := player.global_position
 	var ended := ""
@@ -231,22 +234,38 @@ func _initialize() -> void:
 	var clung := player.clinging
 	print("cling: held 1 s, moved %.2f m" % held_m)
 	ok(clung and held_m < (0.8 if PlanetPlayer.CLING_SLIDE > 0.0 else 0.2), "holding right click on the trunk clings (and doesn't slip: %.2f m in 1 s)" % held_m)
-	await release("wall_jump")
+	await press("jump")
 	await frames(2)
+	await release("jump")
+	await release("interact")
+	await frames(1)
 	var vj := player.velocity.length()
-	print("let go of a cling: %.1f m/s (a tap kick is %.1f m/s)" % [vj, PlanetPlayer.WJ_SPEED])
-	ok(not player.clinging and vj > PlanetPlayer.WJ_SPEED * 0.7 and vj < PlanetPlayer.WJ_SPEED * 0.99 and player._wj_chain == 0, "letting go of a cling springs you off (a bit less than a tap) and starts the chain over")
+	print("jump out of a cling: %.1f m/s (a wall jump is %.1f m/s)" % [vj, PlanetPlayer.WJ_SPEED])
+	ok(not player.clinging and vj > PlanetPlayer.WJ_SPEED * 0.7 and vj < PlanetPlayer.WJ_SPEED * 0.99 and player._wj_chain == 0, "jump out of a cling springs you off (a bit less than a wall jump) and starts the chain over")
+	await settle(camp_d)
+	# Letting go of right click just lets go.
+	g = trunk_near(player.global_position)
+	fly_at_trunk(g, 6.0, 3.0)
+	await wait_contact()
+	await press("interact")
+	await frames(20)
+	var held_on := player.clinging
+	await release("interact")
+	await frames(2)
+	var vl := player.velocity.length()
+	print("let go of a cling: %.1f m/s" % vl)
+	ok(held_on and not player.clinging and vl < 3.0, "letting go of right click lets go of the trunk (no kick: %.1f m/s)" % vl)
 	await settle(camp_d)
 	g = trunk_near(player.global_position)
 	fly_at_trunk(g, 6.0, 3.0)
 	await wait_contact()
-	await press("wall_jump")
+	await press("interact")
 	var t_cling := 0
 	await frames(3)
 	while player.clinging and t_cling < 400:
 		await frames(1)
 		t_cling += 1
-	await release("wall_jump")
+	await release("interact")
 	# (From play: no slip-down; cling_hold_s 0 is no limit.)
 	print("cling lasted %.2f s (cling_hold_s %.1f: 0 is no limit)" % [t_cling / 60.0, PlanetPlayer.CLING_S])
 	if PlanetPlayer.CLING_S > 0.0:
@@ -304,11 +323,11 @@ func _initialize() -> void:
 		fly_at_trunk(g, 22.0, 1.5)
 		await wait_contact()
 		if tech:
-			await press("wall_jump")
+			await press("jump")
 			await frames(2)
-			await release("wall_jump")
+			await release("jump")
 		await frames(20)
-		print("into a trunk at 22 m/s, %s: lost %.0f health" % ["tapped" if tech else "no tech", hp0 - player.hp])
+		print("into a trunk at 22 m/s, %s: lost %.0f health" % ["wall jump" if tech else "no tech", hp0 - player.hp])
 		if tech:
 			ok(hp0 - player.hp < 0.5, "a tech on contact saves you")
 		else:
@@ -343,7 +362,7 @@ func _initialize() -> void:
 	var by_fire: bool = Campfire.lit_near(self, player.global_position, 12.0)
 	print("died; woke %.0f m from the body, by a lit fire: %s; health %.0f; carrying %d, bow worn %s" % [woke_d, by_fire, player.hp, player.inventory.count(), player.wears("ranged", "bow")])
 	ok(corpse != null and corpse.carried.any(func(x) -> bool: return x != null) and corpse.worn["ranged"][0] != null, "the body stays where you fell with your gear")
-	ok(player.hp == PlanetPlayer.MAX_HP and player.inventory.count() == 0 and not player.wears("ranged", "bow"), "you wake with full health and nothing")
+	ok(player.hp == PlanetPlayer.MAX_HP and player.inventory.count() == 0 and not player.wears("ranged", "bow") and player.in_hand() == "hands", "you wake with full health and nothing (bare hands)")
 	ok(by_fire, "you wake by a camp fire")
 	if corpse != null:
 		# Walk back (teleport) and take it all.
@@ -436,7 +455,7 @@ func rain(camp_d: Vector3) -> void:
 			var s0 := player.swings
 			var sn0 := player.snaps
 			print("   before the catch: on floor %s, wall_f %d, speed %.1f, hands %.2f m from it, graph dead %s" % [player.is_on_floor(), player._wall_f, player.velocity.length(), (player.global_position + player.up * 1.6).distance_to(tg.pos(target[1])), tg.dead])
-			await press("wall_jump")
+			await press("interact")
 			await frames(3)
 			var caught := player.swinging
 			print("   clings %d" % player.clings)
@@ -445,7 +464,7 @@ func rain(camp_d: Vector3) -> void:
 			if caught:
 				await frames(300)
 				ok(player.swinging, "hang as long as you like: still holding after 5 s")
-				await release("wall_jump")
+				await release("interact")
 				await frames(2)
 				ok(not player.swinging, "let go: you fly on")
 		# A dead branch at speed: snaps.

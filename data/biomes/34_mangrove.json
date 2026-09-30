@@ -138,7 +138,79 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "dense round crown over arching stilt roots"
+    "silhouette": "dense round crown over arching stilt roots",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      15,
+      45
+     ],
+     "height_years": [
+      10,
+      40
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      80,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Viviparous, with the genus' biggest propagules: a heavy, warty, green club-shaped hypocotyl 36-64 cm (sometimes over 1 m) long hangs from the fruit. It spears into mud or floats, roots in a couple of weeks and opens a pair of leaves at the top. The sapling is a single stem with big glossy leaves ending in a sharp point (mucro), soon propped on arching stilt roots.",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree Database (to 27-30 m; hypocotyl 36-64 cm, sometimes over 100 cm; 35-40 yr to reach 19 cm diameter in Malaysia; 40-yr rotations; wind-pollinated, self-compatible); Wikipedia (20-25 m on riverbanks, 10-15 m on sea fringes); first flowering, rooting time and lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#efe6c4",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      8
+     ],
+     "pollinators": [
+      "wind",
+      "self",
+      "bee"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      36,
+      64
+     ],
+     "unripe_colour": "#7a6a40",
+     "ripe_colour": "#4f6a2e",
+     "ripen_days": [
+      300,
+      450
+     ],
+     "hang_days": [
+      7,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (inflorescences (1-)3-5(-12)-flowered; hard cream calyx 13-19 mm, 4 white hairy petals 9 mm; fruit 5-7 cm; hypocotyl 36-64 cm; wind-pollinated and self-compatible); fruit size given for the hanging propagule; months to maturity, set, crop and decay estimated from the genus"
+    }
    },
    {
     "name": "Black mangrove",
@@ -254,7 +326,80 @@
      "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "grey-green rounded crown over a pencil-root field"
+    "silhouette": "grey-green rounded crown over a pencil-root field",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Cryptoviviparous: the embryo germinates inside the fruit on the tree. A stranded propagule sheds its skin, opens two thick, folded, fleshy green cotyledons like a butterfly and anchors with a hairy radicle. The seedling is a slender single stem with opposite, leathery, narrow leaves, grey-hairy beneath; pencil-like pneumatophores soon ring the young tree.",
+     "confidence": "documented",
+     "source": "USDA Tropical Tree Seed Manual, Avicennia germinans (14-20 m, young trees add ~60 cm/yr, viviparous, propagules float >4 months); Useful Tropical Plants (seedlings 26 cm at 4 months); first flowering age and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#f7f3e3",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      6,
+      20
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      4
+     ],
+     "unripe_colour": "#6d8f4a",
+     "ripe_colour": "#a9ad6a",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA Tropical Tree Seed Manual (flowers May-Jul, white with yellow base, nectar-rich honey flowers, flattened 2-valved capsule, propagules peak Sep-Oct); Useful Tropical Plants (cotyledons eaten in famine after careful preparation); flower life, fruit set and crop estimated."
+    }
    },
    {
     "name": "Coconut palm",
@@ -287,25 +432,27 @@
     "color": "#3F8F45",
     "accent": "#8A7A5A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      50
+     ],
+     "trunk_years": 4,
+     "first_seed_years": 7,
+     "lifespan_years": [
+      60,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The husked nut lies on the sand and after 2-6 months a pointed shoot pushes out of one end while the nut's flesh feeds the seedling. First leaves are entire, stiff, strap-like blades split only at the tip (bifid), in a stemless fan-like rosette; pinnate fronds come later, and a trunk rises after ~3-5 years, widening from a bulbous base ('bole').",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut (tall palms bear at 6-10 yr, live 60-100 yr; ~11 months from female flower opening to harvest; up to 15 inflorescences/yr; ~80 nuts/yr, up to 150; nut ~1.4 kg; largely cross-pollinated, dwarfs selfing); ICRAF Agroforestree (tall selections 24-30 m, flowers after ~6th yr); germination from FAO coconut guides"
     },
     "repro": {
      "mode": "seed",
@@ -441,7 +588,57 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "leaning ringed pole with arching feather fronds"
+    "silhouette": "leaning ringed pole with arching feather fronds",
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#efe2a0",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      20,
+      50
+     ],
+     "pollinators": [
+      "bee",
+      "wind",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      20,
+      30
+     ],
+     "unripe_colour": "#5c8a2c",
+     "ripe_colour": "#7a5230",
+     "ripen_days": [
+      330,
+      400
+     ],
+     "hang_days": [
+      20,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      900
+     ],
+     "crop_per_tree": [
+      50,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut and ICRAF (new inflorescence among the leaves every ~3-4 weeks, up to 15/yr, thousands of small male flowers and ~20-50 large 25 mm female flowers per inflorescence; cross-pollinated by insects and wind; ~11-12 months to a mature brown nut that drops; 50-150 nuts per palm per year)"
+    }
    },
    {
     "name": "Grey mangrove",
@@ -557,7 +754,80 @@
      "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "pale grey-green crown on a pale trunk"
+    "silhouette": "pale grey-green crown on a pale trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      14
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Cryptoviviparous: the pale grey-green, heart-shaped propagule falls, sheds its skin within days and opens two thick fleshy cotyledons while hairy roots anchor it in the mud. The seedling is a slim stem with opposite, glossy green leaves that are silvery-grey beneath; pencil-like pneumatophores soon ring the young tree, which branches low into a bushy shrub.",
+     "confidence": "estimated",
+     "source": "Almahasheer et al. 2016 Sci. Rep. 6:37785 (Red Sea growth: ~9.6 nodes/yr, internodes 5-11 cm/yr); Duke 1990 J. Ecol. (latitudinal phenology); seedling-bank behaviour from Australian studies; height-growth timings, first flowering and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      12
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f2b233",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      12
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "wasp",
+      "butterfly"
+     ],
+     "fruit_set": 0.04,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.5,
+      3
+     ],
+     "unripe_colour": "#8aa06a",
+     "ripe_colour": "#b3b98c",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Almahasheer et al. 2016 Sci. Rep. (Red Sea: buds from June, peak flowering Nov, propagules ~3 months after flowering, released by April); Duke 1990 (flowering-to-fruit-fall lengthens with latitude, to ~1 yr in temperate Australia/NZ); propagules eaten after soaking/roasting; fruit set and crop estimated."
+    }
    },
    {
     "name": "Mangrove apple",
@@ -678,7 +948,78 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "spreading drooping crown over cone roots"
+    "silhouette": "spreading drooping crown over cone roots",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      20
+     ],
+     "height_years": [
+      5,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Not viviparous: tiny seeds float out of the rotting fruit and germinate on mud. Seedling with 2 small cotyledons, then opposite, thick, round leathery leaves on a slender stem. Within a year or two it sends out horizontal cable roots with pencil-like breathing roots (pneumatophores) poking up through the mud around it, later becoming stout conical pegs 20-50 cm tall.",
+     "confidence": "estimated",
+     "source": "Wikipedia Sonneratia alba (tree to 40 m, white flowers pink at the base, dark-green fruit to 5 cm); Tomlinson, The Botany of Mangroves (non-viviparous seed, pneumatophores, night flowers pollinated by bats and hawkmoths); growth, first seed and lifespan estimated for a pioneer mangrove"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 0.5,
+     "flower_size_cm": 7.0,
+     "flower_colour": "#f7f4ee",
+     "flower_form": "brush",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bat",
+      "moth"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      3,
+      5
+     ],
+     "unripe_colour": "#3f6b36",
+     "ripe_colour": "#5c7a3a",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Tomlinson, The Botany of Mangroves, and Wikipedia Sonneratia: flowers open at dusk and last one night, a big puff of white stamens with tiny petals, visited by nectar bats (Eonycteris, Macroglossus) and hawkmoths; flattened round green berry to 5 cm sitting on a star-shaped calyx, eaten raw or cooked; timing and counts estimated"
+    }
    },
    {
     "name": "Red mangrove",
@@ -799,7 +1140,79 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "dense dark crown on arching prop roots"
+    "silhouette": "dense dark crown on arching prop roots",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      8,
+      30
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Viviparous: the seed sprouts on the tree and a green, pencil-like hypocotyl 20-30 cm long hangs from the brown fruit. It drops, floats (weeks, up to a year), lodges upright in mud, roots from the lower tip within days and opens a pair of glossy leaves at the top. The sapling is a single stem that soon throws down arching red-brown prop roots.",
+     "confidence": "documented",
+     "source": "Tropical Plants Database (theferns.info) Rhizophora mangle (1-1.5 m/yr on productive sites; 5-20 m, rarely 30; flowers year-round; flowering by 6 yr, even 3-5 yr at 0.5-1 m tall; propagules 8-30 cm); Wikipedia (to 24 m, commonly ~6 m; propagules may float over a year); lifespan and shade estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2,
+     "flower_colour": "#efe3a0",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      4
+     ],
+     "pollinators": [
+      "wind",
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.08,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      15,
+      30
+     ],
+     "unripe_colour": "#8a7a45",
+     "ripe_colour": "#5a7a30",
+     "ripen_days": [
+      240,
+      400
+     ],
+     "hang_days": [
+      7,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Tropical Plants Database (flowers all year; bees and wind; 4-7 months from fertilization to hypocotyl emergence plus 4-6 months more before it falls; propagules 8-30 cm); Wikipedia (pale yellow flowers; self or wind pollination); fruit size given for the hanging propagule; set, crop and decay estimated"
+    }
    },
    {
     "name": "White mangrove",
@@ -915,7 +1328,79 @@
      "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "small rounded yellow-green crown"
+    "silhouette": "small rounded yellow-green crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      5,
+      18
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The fleshy, ridged propagule often starts germinating while still floating; once stranded it roots within days and sends up a slim stem with pairs of thick, rounded, notch-tipped leaves on reddish stalks bearing two small glands. Saplings are slender upright whips; in soft mud older plants raise short, peg-like pneumatophores around the trunk.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Laguncularia racemosa: 12-18 m; small white bell-shaped flowers ~5 mm; reddish-brown ridged drupe 12-20 mm, seed sometimes viviparous; pneumatophores or prop roots); growth, rooting and ages estimated from mangrove literature."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#f2efe0",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      60
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.2,
+      2.0
+     ],
+     "unripe_colour": "#6f9a4a",
+     "ripe_colour": "#8a5a3a",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (white bell-shaped flowers ~5 mm in spikes; flattened, ridged reddish-brown drupe 12-20 mm, water-dispersed). Flowering season (spring-summer in Florida and the Caribbean), pollinators, timings and counts estimated."
+    }
    }
   ],
   "shrub": [
@@ -1033,7 +1518,80 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "gnarled leaning multi-stem tree"
+    "silhouette": "gnarled leaning multi-stem tree",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The tiny corky two-winged fruits float on the tide and sprout on wet sand or marl above the mangroves. Seedlings carry small leathery lance-shaped leaves (silvery-hairy in the silver form) and soon branch from the base into a bushy, often leaning, multi-stemmed shrub that ages into a gnarled, twisted small tree; broken branches root readily.",
+     "confidence": "estimated",
+     "source": "Useful Tropical Plants (theferns.info: 4-20 m, medium growth, full sun, sow fresh seed, large cuttings root); Wikipedia (multi-trunked shrub 1-4 m to tree 20 m); FNPS (long-lived, flowers/fruits all year); ResearchGate buttonwood germination study (germination peaking in week 2)"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 0.7,
+     "flower_colour": "#d9dcaa",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      35,
+      56
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "syncarp",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.8,
+      1.5
+     ],
+     "unripe_colour": "#7f9a4a",
+     "ripe_colour": "#7a4a2e",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      500,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (button-like heads 5-8 mm, 35-56 flowers, red-brown cone-like fruit heads 5-15 mm that burst when ripe, water-dispersed); FNPS (flowers and fruits all year, bee and hairstreak nectar plant). Fruit set, ripening time and crop estimated."
+    }
    },
    {
     "name": "Holly mangrove",
@@ -1149,7 +1707,78 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low spiny-leaved thicket"
+    "silhouette": "low spiny-leaved thicket",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.7,
+      2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal germination: the flat whitish seed stays at the mud surface while a shoot with pairs of opposite glossy leaves rises. The young plant is a single soft green stem with holly-like spiny-lobed leaves (leaves grown in shade are often entire and spineless); stems soon lean over, root where they touch the mud and build thickets.",
+     "confidence": "estimated",
+     "source": "PROSEA Acanthus (continuous growth with no resting buds, non-seasonal flowering, hypogeal germination, clumps spread vegetatively); NUS Mangrove guidebook (erect to 2.5 m, spines strongest in exposed plants); growth years and stem life estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 3.5,
+     "flower_colour": "#a79bd3",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      8,
+      24
+     ],
+     "pollinators": [
+      "bee",
+      "bird"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2.5,
+      3
+     ],
+     "unripe_colour": "#5f8d3e",
+     "ripe_colour": "#8a6b42",
+     "ripen_days": [
+      25,
+      35
+     ],
+     "hang_days": [
+      1,
+      7
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Raju et al. 2017 Transylv Rev Syst Ecol Res 19.3 (large-bee pollination, natural fruit set <30%, fruits mature within a month, capsule splits explosively, 4 seeds); PROSEA (flowers last 2 days, sunbirds and insects, non-seasonal); Wikipedia (flowers 3-4 cm, terminal spikes to 16.5 cm, capsule 2.5-3 cm)"
+    }
    },
    {
     "name": "Mangrove fern",
@@ -1243,7 +1872,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "tall coarse fronds in clumps"
+    "silhouette": "tall coarse fronds in clumps",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      90,
+      250
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Young sporophytes start as a few small, entire, spoon-shaped fronds on a naked prothallus in wet mud, then lobed fronds, and only later the stiff once-pinnate adult fronds with broad leathery leaflets. New fronds unfurl reddish-bronze. The plant builds a thick upright rhizome and a dense fountain-like clump of fronds up to 3-4 m.",
+     "confidence": "estimated",
+     "source": "'The gametophyte of Acrostichum aureum L.' (Springer; naked prothallus, juvenile leaves with entire lamina); culture studies summarised on Grokipedia (spores germinate in 4-6 d, sporophytes 89-250 d after sowing); Medina et al. 1990 (growth best in full sun); frond size from Flora descriptions"
+    }
    },
    {
     "name": "Nipa palm",
@@ -1362,7 +2013,79 @@
      "spacing_m": 0.2,
      "confidence": "documented"
     },
-    "silhouette": "trunkless clump of huge feather fronds"
+    "silhouette": "trunkless clump of huge feather fronds",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The seed often starts growing while the fibrous fruit is still on the head or drifting on the tide: a pointed shoot pokes out and the stranded seedling roots in soft estuary mud. First leaves are short, with few broad leaflets; then ever bigger, erect, feather-shaped fronds up to 9 m rise straight from a forking stem that creeps buried in the mud, so the palm never shows a trunk.",
+     "confidence": "estimated",
+     "source": "Wikipedia Nypa fruticans (stem grows beneath the ground; leaves to 9 m; seeds may germinate while water-borne); PROSEA Nypa (flowering starts a few years after planting, tapped for sap from ~5 yr); seedling leaf form and ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 8,
+     "flower_colour": "#d4a93a",
+     "flower_form": "ball",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      30,
+      120
+     ],
+     "pollinators": [
+      "fly",
+      "bee",
+      "beetle"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      8,
+      13
+     ],
+     "unripe_colour": "#6a5a2a",
+     "ripe_colour": "#5a3a1e",
+     "ripen_days": [
+      120,
+      200
+     ],
+     "hang_days": [
+      7,
+      60
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      30,
+      300
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (flowers all year; globular head of female flowers with catkin-like red or yellow male branches below; pollinated by small insects incl. Drosophila flies, bees, beetles; woody fruit head to 25+ cm, up to 30 kg, breaks up into floating fibrous fruits; young seeds edible); fruit size, set and timing estimated"
+    }
    },
    {
     "name": "Orange mangrove",
@@ -1478,7 +2201,77 @@
      "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "tall conical crown over knee roots"
+    "silhouette": "tall conical crown over knee roots",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      15,
+      45
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "tolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Viviparous: the seedling grows on the tree as a cigar-shaped green hypocotyl hanging from a red, star-lobed calyx. It drops, lodges upright in the mud, roots within weeks and unfolds pairs of glossy, leathery, elliptic leaves on a stout single stem; later, knee-like roots loop out of the mud around the young tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia (7-20 m, occasionally 35 m; propagules drop, embed upright in mud and root rapidly); Tomlinson 1986 Botany of Mangroves (shade-tolerant late-successional Bruguiera, knee roots); growth, first flowering and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 5,
+     "flower_size_cm": 3.5,
+     "flower_colour": "#c8322a",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bird"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      10,
+      25
+     ],
+     "unripe_colour": "#4f7a3a",
+     "ripe_colour": "#5d6a34",
+     "ripen_days": [
+      120,
+      210
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia (solitary flowers with a pinkish-green to red-brown calyx and cream petals turning brown; turbinate fruit ~2 cm carrying the green cigar-shaped hypocotyl; propagules eaten after grating, washing and cooking); Tomlinson 1986 (bird pollination with explosive pollen release); timings and counts estimated."
+    }
    }
   ],
   "ground": [
@@ -1598,7 +2391,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "single thin stem with a few leaves"
+    "silhouette": "single thin stem with a few leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      8,
+      30
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Viviparous: the seed sprouts on the tree and a green, pencil-like hypocotyl 20-30 cm long hangs from the brown fruit. It drops, floats (weeks, up to a year), lodges upright in mud, roots from the lower tip within days and opens a pair of glossy leaves at the top. The sapling is a single stem that soon throws down arching red-brown prop roots.",
+     "confidence": "documented",
+     "source": "Tropical Plants Database (theferns.info) Rhizophora mangle (1-1.5 m/yr on productive sites; 5-20 m, rarely 30; flowers year-round; flowering by 6 yr, even 3-5 yr at 0.5-1 m tall; propagules 8-30 cm); Wikipedia (to 24 m, commonly ~6 m; propagules may float over a year); lifespan and shade estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2,
+     "flower_colour": "#efe3a0",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      4
+     ],
+     "pollinators": [
+      "wind",
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.08,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      15,
+      30
+     ],
+     "unripe_colour": "#8a7a45",
+     "ripe_colour": "#5a7a30",
+     "ripen_days": [
+      240,
+      400
+     ],
+     "hang_days": [
+      7,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Tropical Plants Database (flowers all year; bees and wind; 4-7 months from fertilization to hypocotyl emergence plus 4-6 months more before it falls; propagules 8-30 cm); Wikipedia (pale yellow flowers; self or wind pollination); fruit size given for the hanging propagule; set, crop and decay estimated"
+    }
    },
    {
     "name": "Saltwort",
@@ -1688,7 +2553,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "low yellow-green succulent mat"
+    "silhouette": "low yellow-green succulent mat",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny, dark, lens-shaped seeds float on the tide and sprout on bare wet mud. The seedling shows two small cotyledons, then opposite, bright yellow-green, fleshy, club-shaped leaves 1-2 cm long on a few pale stems; the stems then sprawl and root at the nodes, knitting a low, dense, succulent carpet.",
+     "confidence": "estimated",
+     "source": "Wikipedia (dioecious, wind-pollinated perennial subshrub 0.1-1.5 m forming dense colonies, long-lived; seeds 1.1 mm germinate after long seawater flotation; brackish marshes and mangroves); timings estimated."
+    }
    },
    {
     "name": "Sea purslane",
@@ -1778,7 +2665,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "flat succulent mat with pink stems"
+    "silhouette": "flat succulent mat with pink stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      15
+     ],
+     "height_years": [
+      0.3,
+      1.0
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 small fleshy cotyledons, then opposite, thick, glossy, finger-shaped leaves on a reddish stem. The stems creep over sand or mud and root at every node, quickly making a spreading succulent mat that is often reddish in full sun, with small pink star-shaped flowers.",
+     "confidence": "estimated",
+     "source": "Flora of N America and PROSEA/Useful Tropical Plants Sesuvium portulacastrum (creeping succulent perennial of tropical beaches and salt flats, rooting at nodes, flowering within the first season, mostly spreading vegetatively); timings estimated"
+    }
    },
    {
     "name": "Smooth cordgrass",
@@ -1875,7 +2784,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "tall smooth bright green grass stand"
+    "silhouette": "tall smooth bright green grass stand",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.4,
+      2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: one soft shoot with flat, tapering, bright-green leaves; it tillers within weeks and sends out rhizomes, reaching ~15 cm in 3-4 months. The same species as Spartina alterniflora (current name). Each culm lives about a year, but the rhizome clone spreads up to 3 m a season and persists for decades.",
+     "confidence": "documented",
+     "source": "USDA FEIS Spartina alterniflora (germinates Apr-Jun, flowers Jun-Oct, 0.4-2.5 m, shoots die back in autumn); USDA NRCS Cape May PMC Plant Guide (most seed germinates in 7-10 d after 1-4 months cold-wet storage; ~15 cm in 3-4 months; 2.5-3 m lateral spread per season; cover in 2-3 seasons)"
+    }
    },
    {
     "name": "Turtle grass",
@@ -1964,7 +2895,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "submerged ribbon meadow"
+    "silhouette": "submerged ribbon meadow",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      10
+     ],
+     "height_years": [
+      0.7,
+      2.5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds about 1 cm long are released when the ripe fruit splits and root within days on the sandy bottom. The seedling is a short shoot of 2-5 flat, bright-green ribbon leaves with rounded tips, anchored by a few thick roots; it grows a buried rhizome and after a year or two starts sending up new leaf shoots, spreading into a patch.",
+     "confidence": "estimated",
+     "source": "Wikipedia Thalassia testudinum (leaves to 30 cm x 2 cm; rhizomes 5-10 cm deep; flowers Apr-Jul; fruit 20-25 mm with 1-6 seeds, splitting after ~8 weeks; low-tide mark to 30 m). Seed germination without dormancy, shoot lifespan (up to ~10-15 yr by leaf-scar ageing) and seedling-to-flowering time estimated from seagrass literature."
+    }
    }
   ],
   "epiphyte": [
@@ -2053,7 +3006,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "spiny tuber with a few leaves"
+    "silhouette": "spiny tuber with a few leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "globe",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The germinating seed's hypocotyl swells at once into a tiny ball that roots onto spongy paperbark, topped by a pair of leaves. The ball grows into a knobbly, spiny, grey-brown caudex honeycombed inside with smooth and warted chambers that golden ants move into; a short thick stem on top carries a tuft of leathery leaves and tiny white tubular flowers and translucent white berries.",
+     "confidence": "estimated",
+     "source": "Wikipedia Myrmecodia beccarii (epiphyte on Melaleuca and other spongy-barked trees in N Queensland wetlands and mangroves; prickly swollen caudex with hollows housing Philidris ants; white tubular flowers to 10 mm, white translucent one-seeded fruit); growth rates and ages estimated from ant-plant cultivation"
+    }
    },
    {
     "name": "Mangrove bromeliad",
@@ -2140,7 +3115,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "grey-green tank rosette on a branch"
+    "silhouette": "grey-green tank rosette on a branch",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      4,
+      9
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      10,
+      15
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings are tiny, silvery, grass-like tufts that hold no water. Over years the leaf bases widen into a big open tank rosette up to about 1 m across of broad, pale-green, often purple-tinged leaves; it flowers once on a branched stalk up to ~2 m tall with small white flowers, sets thousands of plumed seeds and then dies without making pups.",
+     "confidence": "estimated",
+     "source": "Wikipedia Tillandsia utriculata (largest Florida tank bromeliad, holding up to a litre of water; devastated by the Mexican bromeliad weevil); Florida bromeliad accounts (monocarpic, no offsets, reproduces only by seed; tall branched inflorescence with white flowers). Growth and age at flowering estimated."
+    }
    },
    {
     "name": "Mangrove orchid",
@@ -2227,7 +3224,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "clump of drooping leafy canes"
+    "silhouette": "clump of drooping leafy canes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      90,
+      365
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "protocorm",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-like seed lodges in bark and, with a fungal partner, swells into a tiny green protocorm that sprouts roots and a first leaf over months. The young plant is a small tuft of thin stems with two ranks of short, fleshy, oblong leaves; stems thicken into pseudobulbs at the base and lengthen each year into a clump of cane-like stems, the older ones leafless and flowering.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dendrobium crumenatum (sympodial epiphyte; stems 30-70 cm, swollen at lower nodes; leaves in two ranks; exposed lowland forest and coastal scrub; flowers 9 days after a >5.5 C temperature drop, all at once, lasting one day). Seedling timings and lifespan estimated from Dendrobium culture."
+    }
    },
    {
     "name": "Strangler fig",
@@ -2258,25 +3277,26 @@
     "color": "#3E8A3E",
     "accent": "#7A6A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Usually starts as a bird-dropped seed in a palm boot or branch fork: a tiny leafy shrublet perched on the host, with glossy oval leaves, that sends thin aerial roots down the trunk. Once they reach soil the roots thicken and fuse into a lattice that strangles the host; it can also start on the ground or on rocks as a normal sapling.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Ficus aurea: hemiepiphytic strangler to 30 m that germinates in the host canopy; fast-growing). Germination, ages and lifespan estimated from Ficus."
     },
     "repro": {
      "mode": "seed",
@@ -2405,7 +3425,55 @@
      "spacing_m": 0.4,
      "confidence": "documented"
     },
-    "silhouette": "spreading crown on a lattice of roots"
+    "silhouette": "spreading crown on a lattice of roots",
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#7fa04c",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      2
+     ],
+     "pollinators": [
+      "fig_wasp"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "fig",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.6,
+      1.2
+     ],
+     "unripe_colour": "#6e9a40",
+     "ripe_colour": "#e2b42c",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      1,
+      7
+     ],
+     "drop": "falls",
+     "rot_days": [
+      3,
+      14
+     ],
+     "crop_per_tree": [
+      2000,
+      50000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (Ficus aurea: figs in pairs, 0.6-1.2 cm, green turning yellow; pollinated by Pegoscapus mexicanus; trees flower and fruit asynchronously all year; figs ripe 1-5 days after the wasps emerge; eaten by pigeons, quetzals, toucanets, howler monkeys). Crop and ripening time estimated."
+    }
    }
   ]
  },

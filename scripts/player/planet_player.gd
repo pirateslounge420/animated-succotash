@@ -16,13 +16,13 @@ extends CharacterBody3D
 ##   crouch   hold crouch (Shift): lower, slower and nearly silent
 ##   jump     hold to keep jumping each time you land
 ##   swim     in water deeper than chest height
-##   climb    E facing a tree trunk takes the nearest handhold of its
+##   climb    right click facing a tree trunk takes the nearest handhold of its
 ##            branch graph you can hold (TreeContact, TreeClimb): W/S hand
 ##            over hand up and down the trunk, A/D round it, push toward a
 ##            limb at a fork to climb onto it and along it to shimmy out,
 ##            toward another limb within reach to reach across; slow, a
 ##            beat between reaches, breath and bark at the hands, never a
-##            swing or a leap. E lets go, jump pushes off. A tree without
+##            swing or a leap. Right click lets go, jump pushes off. A tree without
 ##            a graph (bamboo; one not yet in NEAR range) is climbed the
 ##            old way: W/S up and down its trunk, A/D around it, capped
 ##            just into the crown.
@@ -37,8 +37,11 @@ extends CharacterBody3D
 ## Water (Ripples): wading, swimming and dropping in ring the water
 ## (_water_contacts).
 ##
-## Weapons (spec D5): the Bow and the Spear; `weapon` says which is in
-## hand, weapon_swap (Q, the pad's Y) swaps them (swap_weapon()).
+## Tools (spec D5, design §T; Mike, 29 Sept 2026: the fishing pole is
+## shelved for a separate fishing game, the spear fishes): the Bow and the
+## Spear, and bare hands;
+## `weapon` says which is in hand, weapon_swap (Q, the pad's Y) brings the
+## next to hand (swap_weapon()).
 ##
 ## `noise_level` (0 silent .. 1 sprinting) is what wildlife hears
 ## (CreatureSpawner scales how close creatures let you come by it; loosing
@@ -105,10 +108,11 @@ static var SQUAT_S := Tuning.num("movement", "landing", "squat_s")
 static var HEAVY_SQUAT_S := Tuning.num("movement", "landing", "heavy_squat_s")
 static var HEAVY_FALL_M := Tuning.num("movement", "landing", "heavy_fall_m")
 static var SQUAT_DIP_M := Tuning.num("movement", "landing", "dip_m")
-## Right click, the tech button (_tech()): on a steep face, a wall jump
-## (tap) or a cling (hold); near a branch or vine, catch and swing. Timed
-## in physics frames (the game runs locked at 60), so a hitch can't widen
-## the window.
+## The techs (Mike, 29 Sept 2026: split from one right-click button): jump
+## (Space) on a steep face just touched, a wall jump (_wall_kick()); just
+## as you land, a bounce; interact (right click) held on a face, a cling,
+## near a branch or vine, a catch and a swing (_grab()). Timed in physics
+## frames (the game runs locked at 60), so a hitch can't widen the window.
 static var WJ_WINDOW_F := int(Tuning.num("movement", "wall_jump", "window_frames"))
 static var WJ_TAP_F := int(Tuning.num("movement", "wall_jump", "tap_frames"))
 static var WJ_SPEED := Tuning.num("movement", "wall_jump", "speed_mps")
@@ -233,7 +237,8 @@ var _wall_p := Vector3.ZERO
 var _wj_chain := 0
 var _kick_t := 0.0
 static var KICK_S := Tuning.num("movement", "wall_jump", "kick_frames") / 60.0
-## Clinging to a face (right click held): frames held, time left.
+## Clinging to a face (interact, right click, held): frames held, time
+## left.
 var clinging := false
 var _cling_f := 0
 var _cling_left := 0.0
@@ -263,6 +268,7 @@ var _roll_wait_f := 0
 var _pending_fell := 0.0
 var _pending_fall_v := 0.0
 var _crouch_press_f := -9999
+var _crouch_at_land := false
 ## An impact waiting (frames) to see if a tech saves it, and its damage.
 var _impact_f := 0
 var _impact_dmg := 0.0
@@ -279,9 +285,15 @@ var redirects := 0
 var _look := Vector3.FORWARD
 ## A ground jump still rising with jump held (letting go cuts it).
 var _rising_jump := false
-## The frame right click was last pressed in the air (a bounce's early
-## press), and a bounce still open after touchdown (frames left, the fall).
+## The frame jump was last pressed in the air (a bounce's early press, a
+## wall jump's before the face came), and a bounce still open after
+## touchdown (frames left, the fall).
 var _tech_press_f := -9999
+## The frame interact was last pressed in the air (a cling's before the
+## face came), and when main last spent a press on something in reach
+## (taking an arrow isn't a grab as well).
+var _grab_press_f := -9999
+var interact_spent_ms := -9999
 var _bounce_wait_f := 0
 var _bounce_fell := 0.0
 var _bounce_fall_v := 0.0
@@ -303,6 +315,7 @@ var unsticks := 0
 var _grab_t := 0.0
 var bow: Bow
 var spear: Spear
+var fists: Fists
 ## What the crosshair rests on, named (the HUD shows its binomial).
 var look: LookTarget
 ## What you carry and wear (Inventory; the screen on I). Past the movement
@@ -316,8 +329,12 @@ var meter := SuperMeter.new()
 var ui_open := false
 ## The dotted arc of where the shot will go, while drawing or raising.
 var aim_arc: AimArc
-## The weapon in hand: "bow" or "spear" (swap_weapon()).
-var weapon := "bow"
+## What's in hand: "bow", "spear" or "hands" (swap_weapon(): Q
+## cycles them, skipping tools you haven't got; bare hands always there).
+var weapon := "hands"
+## The order Q brings them to hand, and the slot and kind each needs
+## (hands: none).
+const TOOLS := [["bow", "ranged", "bow"], ["spear", "melee", "spear"], ["hands", "", ""]]
 var _since_hit := 99.0
 ## Resting at a fire (_update_health()): a lit campfire within reach, and
 ## healing now; health healed so far by each source (tests, heal()).
@@ -341,7 +358,7 @@ var crouching := false
 var climbing := false
 ## Perched (design §V): sitting on top of a limb or on the crown of a
 ## tree, hands free: look, shoot the bow, throw the spear or cast the
-## fishing pole from there (each tool gates on `not climbing`, which a
+## bare hands from there (each tool gates on `not climbing`, which a
 ## perch is not), drop back to climbing with the stick, or jump off into
 ## a bound.
 ## Entered with crouch while climbing where TreeClimb.perch_hold() allows.
@@ -474,13 +491,16 @@ func _ready() -> void:
 	spear.name = "Spear"
 	add_child(spear)
 	spear.setup(self)
+	fists = Fists.new()
+	fists.name = "Fists"
+	add_child(fists)
+	fists.setup(self)
 	aim_arc = AimArc.new()
 	aim_arc.name = "AimArc"
 	aim_arc.player = self
 	add_child(aim_arc)
-	# Your bow and spear, worn (the inventory's ranged and melee slots).
-	inventory.wear(Inventory.make("bow"))
-	inventory.wear(Inventory.make("spear"))
+	# Nothing on you: you wake empty-handed, the folk's gifts lying by you
+	# (main._lay_gifts(): items.json starting_kit).
 	look = LookTarget.new()
 	look.name = "LookTarget"
 	add_child(look)
@@ -557,6 +577,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		# The click that takes the mouse doesn't also draw the bow.
 		bow.block_until_release()
 		spear.block_until_release()
+		fists.block_until_release()
 	elif event.is_action_pressed("weapon_swap"):
 		swap_weapon()
 	elif event.is_action_pressed("release_mouse"):
@@ -591,6 +612,7 @@ func _physics_process(delta: float) -> void:
 	_update_health(delta)
 	bow.update_bow(delta)
 	spear.update_spear(delta)
+	fists.update_fists(delta)
 	aim_arc.update_arc()
 	_update_camera(delta)
 	_update_climb_legs()
@@ -719,9 +741,9 @@ func _physics_process(delta: float) -> void:
 		_jumped = false
 	elif on_floor:
 		vy = 0.0
-		# The branch bounce (design §J): right click pressed within the
-		# window before touchdown, or just after it, turns the landing into
-		# a bound toward the look.
+		# The branch bounce (design §J): jump pressed within the window
+		# before touchdown, or just after it, turns the landing into a
+		# bound toward the look.
 		var bounced := false
 		if not _was_on_floor:
 			var fell_gross := maxf(_fall_top - radius, 0.0) if _fall_top > -INF else 0.0
@@ -734,7 +756,7 @@ func _physics_process(delta: float) -> void:
 				_land()
 		elif _bounce_wait_f > 0:
 			_bounce_wait_f -= 1
-			if Input.is_action_just_pressed("wall_jump"):
+			if Input.is_action_just_pressed("jump"):
 				_bounce_wait_f = 0
 				bounced = _bounce(_bounce_fall_v)
 		if bounced:
@@ -749,10 +771,15 @@ func _physics_process(delta: float) -> void:
 		# A heavy landing waits a few frames for a late crouch (a roll);
 		# else the fall damage lands.
 		if _roll_wait_f > 0:
-			if Input.is_action_just_pressed("crouch"):
+			# (A press, not a hold from before the landing: crouch held all
+			# the way down is a fast-fall, not a roll.)
+			var crouch_now := Input.is_action_pressed("crouch")
+			if crouch_now and not _crouch_at_land:
 				_roll_wait_f = 0
 				_start_roll(_pending_fell, _pending_fall_v)
 			else:
+				if not crouch_now:
+					_crouch_at_land = false
 				_roll_wait_f -= 1
 				if _roll_wait_f == 0:
 					# A heavy landing without the roll: the series is over,
@@ -788,17 +815,28 @@ func _physics_process(delta: float) -> void:
 		_fall_speed = 0.0
 	if swimming or on_floor:
 		_fall_top = radius
-	# Right click on the ground facing a wall, a rock or a trunk within
-	# reach: onto it, clinging (from play).
-	if Input.is_action_just_pressed("wall_jump") and on_floor and not swimming and _bounce_wait_f <= 0 and _ground_cling(cam_forward):
+	# Interact (right click) on the ground, unless it took something in
+	# reach (main): the tree in front of you, climbed; else a wall, a rock
+	# or a trunk within reach, clung to (from play).
+	var grab_now := Input.is_action_just_pressed("interact") and Time.get_ticks_msec() - interact_spent_ms > 150
+	if grab_now and on_floor and not swimming and (try_climb() or _ground_cling(cam_forward)):
 		_was_on_floor = false
 		return
-	# Right click in the air: the tech (wall jump / cling / catch).
-	if Input.is_action_just_pressed("wall_jump") and not on_floor and not swimming:
+	# Jump in the air: a wall jump off a face just touched (or, pressed
+	# early, when it comes; or the bounce as you land).
+	if Input.is_action_just_pressed("jump") and not on_floor and not swimming:
 		_tech_press_f = Engine.get_physics_frames()
-		if _tech(cam_forward):
-			# Spent on the wall jump, cling or catch: not a bounce as well.
+		if _wall_kick():
 			_tech_press_f = -9999
+			_was_on_floor = false
+			_update_squat(delta)
+			return
+	# Interact in the air: cling to a face just touched, or catch a branch
+	# or vine in reach and swing.
+	if grab_now and not on_floor and not swimming:
+		_grab_press_f = Engine.get_physics_frames()
+		if _grab(cam_forward):
+			_grab_press_f = -9999
 			_was_on_floor = false
 			_update_squat(delta)
 			return
@@ -826,8 +864,9 @@ func _physics_process(delta: float) -> void:
 			_move -= n * _move.dot(n)
 			if not is_on_floor() and _takeoff.dot(n) < 0.0:
 				_takeoff -= n * _takeoff.dot(n)
-		# A steep face touched in the air: right click within WJ_WINDOW_F
-		# frames plants on it (cliff, trunk, ruin wall, boulder).
+		# A steep face touched in the air: jump within WJ_WINDOW_F frames
+		# kicks off it, interact clings to it (cliff, trunk, ruin wall,
+		# boulder).
 		if absf(n.dot(up)) < WJ_STEEP and not is_on_floor():
 			_wall_n = n
 			# The approach: what you were moving at when you first met it
@@ -850,13 +889,17 @@ func _physics_process(delta: float) -> void:
 		var body := col.get_collider()
 		if body is CollisionObject3D and (body as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER:
 			trees.bumped(body, col.get_collider_shape_index(), horizontal.length())
-	# Right click pressed a moment before the face came, and still held:
-	# the cling takes as you meet it (from play: let go to leap, hold again
-	# at the right time to catch the next surface).
-	if _wall_f == 0 and not clinging and not is_on_floor() and not swimming and Input.is_action_pressed("wall_jump") \
-			and Engine.get_physics_frames() - _tech_press_f <= WJ_WINDOW_F:
-		if _tech(cam_forward):
+	# Jump pressed a moment before the face came: the kick as you meet it;
+	# interact pressed a moment before and still held: the cling takes as
+	# you meet it (from play: leap, then hold again at the right time to
+	# catch the next surface).
+	if _wall_f == 0 and not clinging and not is_on_floor() and not swimming:
+		if Engine.get_physics_frames() - _tech_press_f <= WJ_WINDOW_F and _wall_kick():
 			_tech_press_f = -9999
+			_update_squat(delta)
+			return
+		if Input.is_action_pressed("interact") and Engine.get_physics_frames() - _grab_press_f <= WJ_WINDOW_F and _grab(cam_forward):
+			_grab_press_f = -9999
 			_update_squat(delta)
 			return
 	_update_squat(delta)
@@ -872,7 +915,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 	_water_contacts(delta, water, ground, moved.length(), sink)
 
-	if first_person or aiming() or spear.busy() or (BODY_TURNS_FREE and not is_on_floor() and not swimming):
+	if first_person or aiming() or spear.busy() or fists.busy() or (BODY_TURNS_FREE and not is_on_floor() and not swimming):
 		# Aiming (or seeing through your own eyes), or in flight (design
 		# §R: the body turns freely with the look, a moonwalk if you turn
 		# round; it never touches the velocity): face where you look.
@@ -1072,7 +1115,7 @@ func _graph_climb_step(delta: float) -> void:
 
 ## Sit on top of handhold `i` of the tree you're climbing, or duck in
 ## against the trunk where you are (TreeClimb.perch_on_top()): climbing
-## ends, the hands are free (the bow, the spear and the pole work),
+## ends, the hands are free (the bow and the spear work),
 ## crouched, the body pinned to the wood (in the tree's frame, so the
 ## floating origin can't move it).
 func start_perch(i: int) -> void:
@@ -1305,7 +1348,7 @@ func _update_prompt(delta: float, forward: Vector3) -> void:
 	elif climbing:
 		prompt = "W/S climb · A/D around the trunk · E or Space let go"
 	elif not swimming and not tree_ahead(forward).is_empty():
-		prompt = "E: climb the tree"
+		prompt = "%s: climb the tree" % Controls.interact_word()
 	else:
 		prompt = ""
 
@@ -1383,6 +1426,7 @@ func _damage(amount: float) -> void:
 		meter.died()
 		bow.drawing = false
 		spear.cancel()
+		fists.cancel()
 		stop_climb()
 		stop_perch()
 		died.emit()
@@ -1476,6 +1520,7 @@ func _land() -> void:
 			_fall_top = -INF
 			return
 		_roll_wait_f = ROLL_WINDOW_F
+		_crouch_at_land = Input.is_action_pressed("crouch")
 		_pending_fell = fell
 		_pending_fall_v = _fall_speed
 	# A couple of frames of landing squat after a jump or a real drop; more
@@ -1490,7 +1535,7 @@ func _land() -> void:
 
 
 ## The branch bounce (design §J): a perfect landing on top of a branch,
-## ledge or the ground, right click inside the window. The fall turns into
+## ledge or the ground, jump inside the window. The fall turns into
 ## forward speed toward the look (carry of the fall speed, times gain; the
 ## run you had kept by the turn's angle) and you bound off again
 ## (bounce.up_scale of a jump). A chain link, a perfect for the super
@@ -1587,11 +1632,9 @@ func _start_roll(fell: float, fall_v: float) -> void:
 	make_noise(0.35)
 
 
-## Right click in the air. A steep face touched within WJ_WINDOW_F frames:
-## plant on it (a tap becomes a wall jump, a hold a cling), unless it's a
-## branch too thin to kick off; then (or with no face) catch a branch or
-## vine in reach and swing. True if something happened.
-func _tech(cam_forward: Vector3) -> bool:
+## A steep face touched within WJ_WINDOW_F frames that you can plant on
+## (not a limb thin enough to catch instead, nor bamboo).
+func _face_in_window() -> bool:
 	var on_wall := _wall_f <= WJ_WINDOW_F and not climbing
 	if on_wall and _wall_tree:
 		# A limb touched (not the trunk): caught and swung on if it's thin
@@ -1605,10 +1648,34 @@ func _tech(cam_forward: Vector3) -> bool:
 	if not on_wall and _wall_f > WJ_WINDOW_F and _wall_f < WJ_WINDOW_F * 4:
 		# Pressed after the window: a late tech ends the series.
 		meter.broke()
-	if on_wall:
+	return on_wall
+
+
+## Jump in the air by a face: the wall jump, a perfect kick that chains.
+## True if it kicked.
+func _wall_kick() -> bool:
+	if not _face_in_window():
+		return false
+	clings += 1
+	_wall_speed = maxf(_wall_in.length(), (velocity - up * velocity.dot(up)).length())
+	_impact_f = 0
+	_impact_dmg = 0.0
+	_kick_t = 2.0 / 60.0 # the crouch before the kick
+	velocity = _wall_jump(1.0, true)
+	meter.perfect("wall_jump")
+	_fall_top = world.radius_of(global_position)
+	return true
+
+
+## Interact in the air: hold on to a face touched within the window (a
+## cling), else catch a branch or vine in reach and swing. True if
+## something took.
+func _grab(cam_forward: Vector3) -> bool:
+	if _face_in_window():
 		clinging = true
 		clings += 1
-		_cling_f = 0
+		# Past the planting frames at once: a grab, not a kick.
+		_cling_f = WJ_TAP_F + 1
 		_cling_miss_f = 0
 		_cling_left = CLING_S
 		_wall_speed = maxf(_wall_in.length(), (velocity - up * velocity.dot(up)).length())
@@ -1617,14 +1684,13 @@ func _tech(cam_forward: Vector3) -> bool:
 		velocity = Vector3.ZERO
 		_impact_f = 0
 		_impact_dmg = 0.0
-		_kick_t = 2.0 / 60.0 # the crouch before the kick
 		return true
 	return _try_catch(cam_forward)
 
 
-## Right click on the ground: a steep face (a wall, a rock, a trunk)
-## within CLING_REACH_M ahead at chest height, then a hop onto it and a
-## cling. True if it took.
+## Interact on the ground: a steep face (a wall, a rock, a trunk) within
+## CLING_REACH_M ahead at chest height, then a hop onto it and a cling.
+## True if it took.
 const CLING_REACH_M := 0.9
 
 
@@ -1668,11 +1734,7 @@ func _ground_cling(cam_forward: Vector3) -> bool:
 	# Up against it: the ray met it up to CLING_REACH_M off, and a cling
 	# a hand's breadth away loses the face on its first move.
 	move_and_collide(-n * CLING_REACH_M)
-	if not _tech(cam_forward) or not clinging:
-		return false
-	# Past the planting frames at once: a grab, not a kick.
-	_cling_f = WJ_TAP_F + 1
-	return true
+	return _grab(cam_forward) and clinging
 
 
 ## A handhold you catch and swing on rather than kick off: a vine, a
@@ -1715,29 +1777,31 @@ func _cling_axis() -> Vector3:
 var _wall_speed := 0.0
 
 
-## Holding a face (right click held): a tap (let go within WJ_TAP_F
-## frames) kicks off it, a full wall jump that chains; held longer it's a
-## cling: WASD crawls over the face (CLING_CRAWL); it holds still when you
-## don't (CLING_SLIDE 0) and for as long as you like (CLING_S 0). Letting go of right click (or jump) leaps
-## off toward where you look, as steep as you look, at CLING_JUMP of a
-## kick, starting the chain over; crouch drops you off it instead.
+## Holding a face (interact, right click, held): WASD crawls over the
+## face (CLING_CRAWL); it holds still when you don't (CLING_SLIDE 0) and
+## for as long as you like (CLING_S 0). Jump leaps off toward where you
+## look, as steep as you look, at CLING_JUMP of a kick, starting the chain
+## over; letting go of interact lets go of the face; crouch drops you off
+## it and ends the series.
 func _cling_step(delta: float) -> void:
 	_cling_f += 1
 	var jump := Input.is_action_just_pressed("jump")
 	var drop := Input.is_action_just_pressed("crouch") and _cling_f > WJ_TAP_F
-	if jump or drop or not Input.is_action_pressed("wall_jump"):
+	if jump or drop or not Input.is_action_pressed("interact"):
 		clinging = false
 		if drop:
 			velocity = _wall_n * 0.5
 			_wj_chain = 0
 			meter.broke()
-		elif _cling_f <= WJ_TAP_F:
-			velocity = _wall_jump(1.0, true)
-			meter.perfect("wall_jump")
-		else:
+		elif jump:
 			# Out of a cling: it springs you off toward where you look,
-			# up or level as you look (from play), but it wasn't the tap.
+			# up or level as you look (from play). A cling isn't a kick:
+			# the series is over (the meter kept).
 			velocity = _wall_jump(CLING_JUMP, false, true)
+			meter.broke()
+		else:
+			# Let go: off the face, falling; the series over too.
+			velocity = _wall_n * 0.5
 			meter.broke()
 		_fall_top = world.radius_of(global_position)
 		return
@@ -1875,7 +1939,7 @@ func _try_catch(cam_forward: Vector3) -> bool:
 
 ## A pendulum from the handhold, at the speed you came in with: gravity
 ## pulls, the rope holds the body's middle at _sw_len. Let go (release
-## right click, or jump) and you fly on with SWING_CARRY of the speed; a
+## interact, or jump) and you fly on with SWING_CARRY of the speed; a
 ## chain link. Lets go by itself after SWING_MAX_S; hitting something at
 ## speed is an impact.
 func _swing_step(delta: float, cam_forward: Vector3) -> void:
@@ -1883,7 +1947,7 @@ func _swing_step(delta: float, cam_forward: Vector3) -> void:
 	if _sw_graph == null or not _sw_graph.valid() or _sw_i < 0 or _sw_i >= _sw_graph.size():
 		_end_swing()
 		return
-	if Input.is_action_just_pressed("jump") or not Input.is_action_pressed("wall_jump"):
+	if Input.is_action_just_pressed("jump") or not Input.is_action_pressed("interact"):
 		# Let go and fly on: a perfect swing release, thrown toward the look.
 		meter.perfect("swing")
 		_end_swing(true)
@@ -2123,6 +2187,8 @@ func _update_camera(delta: float) -> void:
 	# graph they hold the tree (_reach_arms()).
 	if _body is PlayerBody and not (climbing and _climb_graph) and not swinging:
 		var spear_arm := spear.arm_angle()
+		if is_nan(spear_arm):
+			spear_arm = fists.arm_angle()
 		# The ninja run: between walk and sprint speed, with nothing in
 		# hand to do, the arms trail back, a beat behind (through jumps
 		# too); any action takes them at once, and they ease back in after.
@@ -2269,7 +2335,7 @@ func burden_noise() -> float:
 	return 1.0 + inventory.over() * Tuning.num("movement", "burden", "noise_per_item")
 
 
-## Drawing the bow or raising the spear (slower on the ground, the camera
+## Drawing the bow or raising the spear (the camera
 ## comes over your shoulder; a sprint or a jump carries on).
 func aiming() -> bool:
 	return bow.drawing or spear.raising
@@ -2312,15 +2378,44 @@ func aim_power() -> float:
 	return spear.power() if spear.raising else 0.0
 
 
-## Bow to spear and back (weapon_swap), dropping any draw; holding
-## `shoot` through a swap does nothing until it's let go.
+## The next tool to hand (weapon_swap, Q): bow, spear, bare hands and
+## round again, skipping any you aren't wearing (after a death, the spear
+## is on your body till you fetch it); dropping any draw, and a cast
+## line comes in. Holding `shoot` through a swap does nothing until it's
+## let go.
 func swap_weapon() -> void:
 	bow.drawing = false
 	bow.charge = 0.0
 	spear.cancel()
+	fists.cancel()
 	bow.block_until_release()
 	spear.block_until_release()
-	weapon = "spear" if weapon == "bow" else "bow"
+	fists.block_until_release()
+	weapon = next_tool(weapon)
+
+
+## The next after `from` in the Q order that you have (bare hands always).
+func next_tool(from: String) -> String:
+	var at := 0
+	for i in TOOLS.size():
+		if TOOLS[i][0] == from:
+			at = i
+	for k in range(1, TOOLS.size() + 1):
+		var t: Array = TOOLS[(at + k) % TOOLS.size()]
+		if str(t[1]) == "" or wears(t[1], t[2]):
+			return t[0]
+	return "hands"
+
+
+## What's really in your hand: the tool picked if you have it (and the
+## spear isn't out in the world), else bare hands.
+func in_hand() -> String:
+	match weapon:
+		"bow":
+			return "bow" if wears("ranged", "bow") else "hands"
+		"spear":
+			return "spear" if wears("melee", "spear") and spear.thrown == null else "hands"
+	return "hands"
 
 
 ## A sudden loud moment (loosing an arrow, a thrust, a throw): the noise

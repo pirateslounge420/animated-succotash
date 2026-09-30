@@ -129,7 +129,77 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "short bushy round-crowned pinyon"
+    "silhouette": "short bushy round-crowned pinyon",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      100,
+      190
+     ],
+     "first_seed_years": 35,
+     "lifespan_years": [
+      400,
+      1000
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings, usually from seeds cached by jays under shrubs, have 7-9 cotyledons and bluish primary needles, then unique single, round, stiff, sharp grey-green needles (the only pine with one needle per bundle). Young trees are compact, bluish cones; old ones become rounded, flat-topped and often multi-stemmed.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pinus monophylla: a dominant tree takes ~60 years to reach 2 m and ~150 to reach 8.5 m (about 5 cm/yr); first cones ~35 yrs, good crops from 75-100, peak at 160-200; not shade tolerant; dominants often 400 years, some 800-1,000"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#9a4a5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      3.5,
+      5.5
+     ],
+     "unripe_colour": "#6a7a42",
+     "ripe_colour": "#8a6a3a",
+     "ripen_days": [
+      460,
+      500
+     ],
+     "hang_days": [
+      60,
+      400
+     ],
+     "drop": "splits",
+     "rot_days": [
+      700,
+      1800
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS (strobili late spring-early summer, pollen shed by mid-June; three-season cone cycle, ripe seed about 26 months after the buds form; cones 3.5-5.5 cm, thick-scaled, open Sep-Nov; masting every 2-3 years); its large wingless nuts were a Great Basin staple"
+    }
    },
    {
     "name": "Utah juniper",
@@ -240,7 +310,77 @@
      "spacing_m": 0.15,
      "confidence": "documented"
     },
-    "silhouette": "squat rounded juniper, shreddy grey trunk"
+    "silhouette": "squat rounded juniper, shreddy grey trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      90,
+      730
+     ],
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      350,
+      1000
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings have needle-like juvenile leaves 5-10 mm long, making a soft, prickly little blue-green cone; scale leaves take over within a few years. Growth is very slow (often only a few cm a year) and seedlings usually establish under a nurse shrub, becoming after decades a rounded, bushy, often multi-trunked tree with shreddy grey bark.",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (J. osteosperma: flowers Mar-Apr, cones ripen in 2nd year, reddish-brown with bloom, persist ~2 yr, 1-2 seeds, good crops about every 2 yr, bears from 10-20 yr); Wikipedia (3-6 m, cones 8-13 mm maturing in ~18 months, juvenile needles 5-10 mm). Growth rate and longevity estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#8fa070",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.8,
+      1.3
+     ],
+     "unripe_colour": "#7f9a7a",
+     "ripe_colour": "#8a7088",
+     "ripen_days": [
+      480,
+      560
+     ],
+     "hang_days": [
+      365,
+      730
+     ],
+     "drop": "persists",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      500,
+      20000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia (cones 8-13 mm, blue-brown with whitish waxy bloom, mature in ~18 months, pollen shed early spring; eaten and dispersed by jackrabbits, coyotes, solitaires); USDA WPSM (reddish-brown ripe cones persist ~2 yr). Set, crop and rot estimated."
+    }
    }
   ],
   "shrub": [
@@ -356,7 +496,80 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "grey-green spreading shrub, wedge leaves"
+    "silhouette": "grey-green spreading shrub, wedge leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 9,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings usually come up in tight clumps of 5-30 from a forgotten rodent seed cache. Each has two small oval cotyledons, then tiny wedge-shaped leaves with three teeth at the tip, grey-green above and woolly-white below, on one thin stem. The taproot races ahead while the top grows slowly; after some years it branches into a stiff, twiggy, rounded grey-green shrub.",
+     "confidence": "documented",
+     "source": "USDA FEIS Purshia tridentata (seed needs 4-6 wk chilling at 2 C; seed-bearing at 8-10 yr; plants of 115 and 128 yr; usually 0.9-1.2 m, up to 4.5 m; shade intolerant; natural regeneration mostly from rodent caches); Wikipedia (1-5 m; leaves 5-20 mm, 3-5-lobed)"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#f1e39a",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "achene",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.6,
+      1.2
+     ],
+     "unripe_colour": "#9aa47a",
+     "ripe_colour": "#7a6a55",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      540
+     ],
+     "crop_per_tree": [
+      100,
+      10000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Purshia tridentata (flowers early spring to Jul; insect-pollinated, wind possible in dense stands; highly self-incompatible; achenes 3-13 mm ripen Jul-Sep and fall beneath the shrub when dry, then rodents cache them); Wikipedia (5 pale yellow petals 6-8 mm); fruit set, crop and decay estimated"
+    }
    },
    {
     "name": "Big sagebrush",
@@ -468,7 +681,78 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "silvery-grey rounded shrub, shreddy trunk"
+    "silhouette": "silvery-grey rounded shrub, shreddy trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      5,
+      18
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two small round cotyledons, then narrow, entire, silvery-hairy leaves; the wedge-shaped leaves with three blunt teeth at the tip come a few weeks later. It stays a single-stemmed silver sprig for a year or two while its roots race down, then branches into a rounded, aromatic, silver-grey bush with a short twisted trunk and shreddy bark.",
+     "confidence": "documented",
+     "source": "USDA FEIS Artemisia tridentata subsp. tridentata: germination in 2-3 days at all test temperatures, in late fall/winter or after snowmelt; plants 2-3 yr old can bear viable seed; commonly 40-50 yr, some over 100 yr; 1-2 m, up to 5 m. Height-age curve and shade class estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#cfc27a",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      500
+     ],
+     "pollinators": [
+      "wind",
+      "self"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.15,
+      0.2
+     ],
+     "unripe_colour": "#9aa070",
+     "ripe_colour": "#5a4a35",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      20,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      10000,
+      400000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS basin big sagebrush: flowers late Aug-Oct; seed ripens and disperses Oct-Dec over ~8 weeks, ~90% within 9 m; self- or wind-pollinated; more prolific than Wyoming big sagebrush. Tiny heads of a few florets in leafy panicles; fruit set and crop estimated."
+    }
    },
    {
     "name": "Greasewood",
@@ -582,7 +866,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "bright green spiny shrub with white stems"
+    "silhouette": "bright green spiny shrub with white stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      12,
+      35
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 long, narrow, fleshy cotyledons and a coiled embryo that uncoils fast; first leaves bright green, fleshy and cylindrical (1-4 cm) like the adult's. Grows slowly into a stiff, rigid, much-branched spiny shrub with pale bark; after 12 years only about 0.7 m tall on dry sites. Resprouts from the root crown.",
+     "confidence": "documented",
+     "source": "USDA FEIS Sarcobatus vermiculatus (transplants 0.73 m tall after 12 yr; to 3 m; vigorous crown sprouting); USDA Woody Plant Seed Manual Sarcobatus (67-91% germination in 2-10 days at 10 C); lifespan estimated from its slow growth"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#a9a35a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      0.4,
+      1.0
+     ],
+     "unripe_colour": "#9db35f",
+     "ripe_colour": "#c7a57a",
+     "ripen_days": [
+      90,
+      130
+     ],
+     "hang_days": [
+      30,
+      240
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS and Woody Plant Seed Manual Sarcobatus (monoecious, wind-pollinated; male flowers in small cone-like spikes at twig tips, female flowers single in leaf axils; tan winged utricles 4-5 mm, 1 cm across the wing, mature late Sep-Nov, a few hang until next summer)"
+    }
    },
    {
     "name": "Rubber rabbitbrush",
@@ -696,7 +1050,80 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "grey-green rounded shrub, gold flower top"
+    "silhouette": "grey-green rounded shrub, gold flower top",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      2,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two small oval cotyledons, then thread-like grey-green leaves on white-felted stems while the root races down. By year 2 it is a small rounded bush of many erect, flexible, whitish-woolly green stems from the base, already topped with yellow flower clusters; full grown in about 4 years. Resprouts from stem buds after fire.",
+     "confidence": "documented",
+     "source": "USDA FEIS species review (Ericameria nauseosa): germination 5-20 days without stratification (T50 5-96 days by seed source); plants 'full grown' within 4 years (Stanton); post-fire epicormic sprouting. Lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#e6c01f",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      15,
+      60
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.3,
+      0.6
+     ],
+     "unripe_colour": "#a3a66a",
+     "ripe_colour": "#d8ccae",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      14,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      300
+     ],
+     "crop_per_tree": [
+      2000,
+      50000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS (flowering Jul-Oct by elevation; seed ripe late Sep-Nov; plumed achenes wind-dispersed up to ~150 m; good crops every 1-2 yr, fruit fill variable; no persistent seed bank). Head size, heads per cluster, crop and rot estimated."
+    }
    },
    {
     "name": "Shadscale",
@@ -808,7 +1235,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low grey spiny mound"
+    "silhouette": "low grey spiny mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds need a winter of chilling and sprout in spring. Epigeal seedling with two narrow cotyledons and small, round-oval, grey scurfy leaves; it grows slowly into a compact, rounded, grey-green shrublet whose older twigs harden into short spines. Seedlings survive best beside an established shrub.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Atriplex confertifolia (chilling needed, fungal breakdown of bracteoles, relatively short-lived, seedlings survive best near adults); Woody Plant Seed Manual (rarely germinable without chilling); growth rate and ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#bda45c",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      12
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      1.2
+     ],
+     "unripe_colour": "#b9c48a",
+     "ripe_colour": "#c7ae82",
+     "ripen_days": [
+      150,
+      180
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      200,
+      10000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS (flowers late Mar-mid Jun, dioecious, wind-pollinated, utricles in 2 round bracts 4-12 mm, mature ~25 weeks after flowering, persist through winter); Woody Plant Seed Manual (65-277 thousand fruits/kg); PFAF (seed eaten as mush); crop estimated."
+    }
    }
   ],
   "ground": [
@@ -898,7 +1395,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "silvery arrow leaves under big yellow daisies"
+    "silhouette": "silvery arrow leaves under big yellow daisies",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds need a long cold, wet winter and sprout right after snowmelt with two oval cotyledons. For years the plant is a small rosette of a few narrow, heart-based, silvery-hairy leaves while a taproot plunges deep; only after 3-8 years does it build the big clump of arrowhead-shaped, silver-woolly leaves and golden sunflower heads.",
+     "confidence": "documented",
+     "source": "USDA FEIS Balsamorhiza sagittata (12 weeks cold stratification, germinates at 0-10 C, weak seedling vigour, first flowering 3-4 yr on good sites and 7-8 yr on dry sites, long-lived, taproot to 2.7 m); lifespan figures estimated."
+    }
    },
    {
     "name": "Bluebunch wheatgrass",
@@ -988,7 +1507,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "green bunchgrass with loose spikes"
+    "silhouette": "green bunchgrass with loose spikes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds germinate with the autumn rains (or in spring) into a weak, slow-growing tuft of a few flat, blue-green blades whose roots grow more slowly than crested wheatgrass. Over several years tillers build a dense, erect bunch 30-100 cm tall with slender spikes of widely spaced spikelets (often with spreading awns), turning straw-coloured after seed-set in midsummer.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Pseudoroegneria spicata (facultative autumn germinator; poor establishment, weak seedlings; central Utah: growth from early April, flower stalks late May, full flower late June, seed ripe mid-July; 30-100 cm; roots to 1.4-2 m; light shade to open sites). Bunch size-age, first seed and lifespan estimated."
+    }
    },
    {
     "name": "Idaho fescue",
@@ -1078,7 +1619,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "fine blue-grey bunchgrass tuft"
+    "silhouette": "fine blue-grey bunchgrass tuft",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A fine thread-like first leaf, then a small tuft of very narrow, rolled, blue-green leaves. Tillers multiply each year into a dense round bunch 15-25 cm tall with basal leaves more than half the culm length. Establishment from seed is slow and episodic, but once established it is a long-lived bunchgrass.",
+     "confidence": "documented",
+     "source": "USDA FEIS species review (after-ripening dormancy, episodic establishment, long-lived bunchgrass with dense tufts 15-25 cm); USDA NRCS Plant Guide/Idaho PMC (weak seedling vigour, stands need 2-3 yr, little seed in yr 2 and full seed in yr 3; cited by an earlier research pass). Lifespan estimated."
+    }
    },
    {
     "name": "Indian ricegrass",
@@ -1168,7 +1731,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "airy bunchgrass with open lacy seed heads"
+    "silhouette": "airy bunchgrass with open lacy seed heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds are hard and often dormant for a year or more; seedlings appear mainly in cool, wet springs. The seedling is a single thin tiller with rolled, wiry, blue-green leaves above a fast, deep root; it slowly tillers into a small dense bunch and usually flowers from its second year, with airy, open panicles of plump black seeds on zigzag stalks.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Achnatherum hymenoides (seed dormancy, stratification in some ecotypes, 20 C optimum; seedling pulses follow wet Aprils; growth starts early Apr, seed ripe early Jul in Idaho; plants 10-61 cm tall, 20-30 cm across); first seed and lifespan estimated from bunchgrass habit"
+    }
    },
    {
     "name": "Sandberg bluegrass",
@@ -1258,7 +1843,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "small early-green bunchgrass tuft"
+    "silhouette": "small early-green bunchgrass tuft",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds germinate with autumn or early-spring moisture into a tiny tuft of soft, fine, folded blue-green leaves with boat-shaped tips. It grows through the cool season and forms a small, dense bunch of basal leaves (a few cm up to 30 cm across) with slender culms bearing narrow, often purplish panicles; it cures straw-coloured and goes dormant by early summer.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Poa secunda (50% germination after 3 months after-ripening; Idaho: stalks late April, flowering early June, seed ripe late June, shed June-July; bunches from 1-2 culms to 30 cm across; relatively short-lived; open sun to partial shade, shaded out by sagebrush). Growth rate and lifespan estimated."
+    }
    }
   ],
   "epiphyte": []

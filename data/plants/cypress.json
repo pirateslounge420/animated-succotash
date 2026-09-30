@@ -45,25 +45,26 @@
     "color": "#5A8A4A",
     "accent": "#8A6A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      33,
+      85
+     ],
+     "first_seed_years": 30,
+     "lifespan_years": [
+      400,
+      2624
+     ],
+     "shade": "intermediate",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: 3-9 (usually 6) cotyledons, then soft, flat, feathery needles in two ranks on deciduous side shoots; seedlings grow 20-75 cm in their first year if not flooded over. The sapling is a slender, pyramidal cone; buttress and knees come later and the crown flattens with age. Foliage turns copper-red and drops in autumn.",
+     "confidence": "documented",
+     "source": "USDA Silvics of N. America (seedlings 20-75 cm in year 1; soil saturated but not flooded 1-3 months for germination; intermediate shade tolerance; height growth stops ~200 yr); Wikipedia (3 m at 5 yr, 21 m at 41 yr, 36 m at 96 yr; seed from ~30 yr; 3-9 cotyledons; Black River tree at least 2,624 yr old)."
     },
     "repro": {
      "mode": "seed",
@@ -220,6 +221,54 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#8a6258",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      2,
+      3.5
+     ],
+     "unripe_colour": "#7fa25c",
+     "ripe_colour": "#8b6a44",
+     "ripen_days": [
+      200,
+      260
+     ],
+     "hang_days": [
+      20,
+      90
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      90,
+      540
+     ],
+     "crop_per_tree": [
+      300,
+      8000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics of N. America (male catkins 7-13 cm, pollen shed Mar-Apr; cones 13-36 mm ripen Oct-Dec and disintegrate; 16 (2-34) seeds per cone; good crops every 3-5 yr); Wikipedia (cones 2-3.5 cm; resinous seeds 5-10 mm). Crop per tree and decay time estimated."
     }
    },
    {
@@ -260,25 +309,26 @@
     "color": "#5A8A4A",
     "accent": "#8A6A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      70
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      500,
+      1140
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with about 6 cotyledons and soft, flat, bright-green needles on slender side shoots. Given water it grows fast (often ~1 m a year) into a narrow conical sapling with drooping branchlets; later it widens into a massive, often buttressed or multi-stemmed riverside giant with pendulous, near-evergreen foliage and no knees.",
+     "confidence": "estimated",
+     "source": "Wikipedia Taxodium mucronatum (to 40 m, fast-growing, riparian at 300-2,500 m); Gymnosperm Database (tallest 37.8 m; Tule tree 35.4 m tall, girth 36.2 m; oldest confirmed 1,140 yr at Los Peroles, Chalma tree claimed 2,270 yr). Growth curve and first cones estimated from baldcypress."
     },
     "repro": {
      "mode": "seed",
@@ -436,6 +486,54 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      3
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#8a7058",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#86a45e",
+     "ripe_colour": "#8e6c46",
+     "ripen_days": [
+      200,
+      270
+     ],
+     "hang_days": [
+      20,
+      90
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      90,
+      540
+     ],
+     "crop_per_tree": [
+      300,
+      10000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia T. mucronatum (ovoid cones 1.5-2.5 x 1-2 cm). Late-winter pollination, one-season ripening, cone break-up and crop estimated from Taxodium distichum (USDA Silvics of N. America)."
     }
    },
    {
@@ -478,25 +576,26 @@
     "color": "#2A5A38",
     "accent": "#6A5A4A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      20,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      25,
+      70
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      400,
+      1500
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal, with slender cotyledons; the first shoots bear small, spreading needle-like juvenile leaves before the dark green, appressed scale leaves take over. Fast-growing when young: a dense, narrow cone of upswept branches (a slim column in the fastigiate form, which is what most planted trees are; wild trees spread horizontally).",
+     "confidence": "documented",
+     "source": "conifers.org (20-30 m, fast-growing when young, seeds from its tenth year, up to 1000 yr; cones 2-3 cm, 8-14 scales, serotinous); Wikipedia (to 35 m, >1000 yr, Sarv-e Abarkuh estimated ~4000 yr); USDA Woody Plant Seed Manual (cones ripen second year, 64-280 seeds, 28-d germination test)"
     },
     "repro": {
      "mode": "seed",
@@ -654,6 +753,54 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#9aa35f",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2.5,
+      4
+     ],
+     "unripe_colour": "#6f8a4d",
+     "ripe_colour": "#8a7762",
+     "ripen_days": [
+      600,
+      730
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      365,
+      1800
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (seed cones ovoid-oblong 25-40 mm, 10-14 scales, green maturing brown 20-24 months after pollination, serotinous, can stay sealed for years; pollen cones 3-5 mm shed late winter); conifers.org (glossy brown-grey cones, 8-20 seeds per scale). Set, crop and decay estimated."
     }
    },
    {
@@ -695,25 +842,26 @@
     "color": "#2A5A38",
     "accent": "#7A6A5A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      35
      ],
-     "final_size": 1.0
+     "height_years": [
+      12,
+      45
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      150,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: 3-5 needle-like cotyledons, then whorls of soft, spreading, blue-green needle-like juvenile leaves for the first year or so before the tight, rope-like scale leaves take over. Young trees are dense, narrow bright-green cones or columns with branches to the ground; the flat-topped, wind-sculpted crowns of the headlands come only after decades.",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Cupressus: C. macrocarpa pollinated in March, cones ripen 15-18 months later, cone crops usually begin before age 10, ~140 seeds/cone, 35-day germination tests, epigeal). Growth rate (fast when young) and longevity (the Lone Cypress is thought to be ~250 yr) estimated."
     },
     "repro": {
      "mode": "seed",
@@ -870,6 +1018,54 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#7e9460",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      2,
+      4
+     ],
+     "unripe_colour": "#5e7a48",
+     "ripe_colour": "#7a5a3e",
+     "ripen_days": [
+      450,
+      560
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      3000
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Cupressus: pollination March, woody cones up to 3 cm ripen 15-18 months after pollination, open when ripe, abundant cone crops); empty cones persist on branches for years (hang and rot times, crop and set estimated)."
     }
    },
    {
@@ -912,25 +1108,26 @@
     "color": "#3A7A4A",
     "accent": "#7A6A5A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      20,
+      50
      ],
-     "final_size": 1.0
+     "height_years": [
+      45,
+      130
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      300,
+      600
+     ],
+     "shade": "tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two narrow cotyledons, then a few soft spreading needle-like juvenile leaves in the first months; flattened fern-like sprays of tiny overlapping scale leaves (with white X marks beneath) take over within the first year. Saplings are dense, narrow cones with a nodding leader, branches to the ground.",
+     "confidence": "documented",
+     "source": "USDA FEIS Chamaecyparis lawsoniana (~40 m at ~100 yr, ~55 m at ~200 yr on good sites; seed from 5-20 yr, large crops every 4-5 yr; mature foliage within the first year; moderately shade tolerant; oldest ~600 yr; germinates in spring, usually <50%)"
     },
     "repro": {
      "mode": "seed",
@@ -1088,6 +1285,54 @@
      "root_flare": true,
      "spacing_m": 0.15,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#a8323a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      1.4
+     ],
+     "unripe_colour": "#7c9c8a",
+     "ripe_colour": "#8a5a36",
+     "ripen_days": [
+      150,
+      200
+     ],
+     "hang_days": [
+      60,
+      300
+     ],
+     "drop": "splits",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      2000,
+      40000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Chamaecyparis lawsoniana (crimson pollen cones open in March in Oregon; round seed cones 5-14 mm mature the year they are pollinated, ripen over summer; seed dispersal fall through the following spring; ~9 filled seeds per cone)"
     }
    }
   ],

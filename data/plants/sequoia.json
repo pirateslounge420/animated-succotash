@@ -35,25 +35,26 @@
     "color": "#2A5A38",
     "accent": "#8A4A30",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      50,
+      200
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      800,
+      2200
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 (rarely 3-4) cotyledons on a thin red stem; flat, dark-green, 15-25 mm needles in two flat ranks like a yew spray. Sapling a narrow cone with drooping branch tips and a nodding leader, can add 0.6-2 m a year. Burl buds form in the cotyledon axils, so even young trees resprout rings of shoots from the base.",
+     "confidence": "documented",
+     "source": "USDA Silvics of N America vol. 1 (Olson et al.): seed at 5-15 yr, 30-46 m at 50 yr and 50-67 m at 100 yr on good sites, oldest ~2,200 yr, very tolerant, vigorous sprouting; USDA Woody Plant Seed Manual Sequoia (21-day germination test); Wikipedia (juvenile flat leaves 15-25 mm)"
     },
     "repro": {
      "mode": "seed",
@@ -208,6 +209,54 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      2
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#c2a55e",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.3,
+      2.8
+     ],
+     "unripe_colour": "#5f7d3c",
+     "ripe_colour": "#9a7f4a",
+     "ripen_days": [
+      240,
+      290
+     ],
+     "hang_days": [
+      150,
+      400
+     ],
+     "drop": "splits",
+     "rot_days": [
+      300,
+      1100
+     ],
+     "crop_per_tree": [
+      200,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics and Woody Plant Seed Manual Sequoia (pollen shed late Nov-early Mar; cones 13-29 mm mature Sep-Jan, green to greenish-yellow, open on the tree; seed shed peaks Nov-Feb; opened cones persist through the next season; good crops every 5-7 yr); fruit set and crop estimated"
     }
    },
    {
@@ -239,25 +288,26 @@
     "color": "#2A5A38",
     "accent": "#B04A30",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      70,
+      500
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      2000,
+      3200
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 4-5 cotyledons on a wiry stem, then spreading, sharp, blue-green awl-shaped needles (later leaves press closer to the twig). Grows into a dense, very symmetrical narrow cone with branches to the ground for a century or more, then self-prunes into a massive columnar trunk with a rounded crown. Needs bare mineral soil and sun.",
+     "confidence": "documented",
+     "source": "USDA Silvics of N America vol. 1 (Weatherspoon): open-grown seedlings to 60 cm/yr, plantations 0.5-0.7 m/yr; 34-73 m at 400 yr, levels off near 76 m at 800-1,500 yr; oldest 3,200 yr; shade intolerant; USDA Woody Plant Seed Manual (28-32 day germination tests, cones at about age 20)"
     },
     "repro": {
      "mode": "seed",
@@ -412,6 +462,54 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#b9b067",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      5,
+      9
+     ],
+     "unripe_colour": "#4c7a3b",
+     "ripe_colour": "#5f7c40",
+     "ripen_days": [
+      460,
+      500
+     ],
+     "hang_days": [
+      700,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2500
+     ],
+     "crop_per_tree": [
+      500,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics and Woody Plant Seed Manual (pollination mid-Apr to mid-May; egg-shaped cones 5-9 cm, ~200-230 seeds, mature end of the 2nd season but stay GREEN, closed and attached for up to 20+ yr until heat, drying, squirrels or beetles open them; ~1,500 new cones/yr, up to 20,000)"
     }
    }
   ],
@@ -445,25 +543,26 @@
     "color": "#5A9A4A",
     "accent": "#B06A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      18,
+      60
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      150,
+      450
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: 2 cotyledons, then soft, flat, bright green needles in opposite pairs along deciduous side shoots that turn rusty pink-brown and fall whole in autumn. The sapling is a narrow, very regular pyramid with one straight leader and horizontal branches right to the ground, growing about 1 m a year; the trunk soon flares and becomes fluted below the branches.",
+     "confidence": "documented",
+     "source": "Wikipedia Metasequoia (fast growing, >35 m and 1 m dbh by age 50 in cultivation; Longwood trees 41 m at 70 yr; wild trees 41-265+ yr; cones 1.5-2.5 cm, mature 8-9 months after pollination); first cone age estimated from cultivated trees"
     },
     "repro": {
      "mode": "seed",
@@ -622,6 +721,54 @@
      "root_flare": true,
      "spacing_m": 0.5,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      3
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#a4a25c",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#5f8a3e",
+     "ripe_colour": "#6b4a2b",
+     "ripen_days": [
+      240,
+      270
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      180,
+      540
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (pollen cones 5-6 mm on long hanging spikes in early spring; seed cones globose 1.5-2.5 cm on long stalks, 16-28 scales in opposite pairs, mature 8-9 months after pollination); wind pollinated; cones open on the tree in late autumn-winter and then drop; crop estimated"
     }
    }
   ],

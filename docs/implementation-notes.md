@@ -1817,8 +1817,12 @@ yet (deferred).
   calling now and then). You wake by the nearest camp fire within 4 km
   (`Camps.wake_fire()`: wild, rock shelter or the opening camp; else a
   wandering group's fire put down 150 m off), lying there a moment, full
-  health, nothing on you: no bow or spear until you get them back ("Bare
-  hands"). E by the body takes it all back and it's gone. A lit fire is a
+  health, nothing on you, and the folk's gifts on the ground by you (Mike,
+  29 Sept 2026: a bow and a spear, `main._lay_gifts()`;
+  a new game opens the same way). Right click takes each (a tool into its
+  slot, and into your hand if it was empty). Your old gear waits on the
+  body; right click by it takes it back (a tool you have again stays
+  with it: `PlayerCorpse.recover()`), and it's gone. A lit fire is a
   safe zone: within 8 m nothing hostile hurts you
   (`CreatureSpawner.player_hit()`) and angry animals give up.
 - **Cloaked figures** (`CloakedFigure`; the Falcon/Ganondorf rule): the

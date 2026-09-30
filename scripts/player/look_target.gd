@@ -121,7 +121,13 @@ func _look() -> Array:
 					var tsp: PlantSpecies = SpeciesDB.all()[int(chunk.trees[i][2])]
 					if tsp.binomial() != "":
 						var tr: Array = chunk.trees[i]
-						best = [decorate(tsp.hud_name(), int(tr[9]) if tr.size() > 9 else 0, ""), "tree"]
+						# A young tree says so (its pick's young slot: TreeLayouts).
+						var slot := TreeLayouts.layout_of(int(tr[4])) / TreeLayouts.COUNT if int(tr[4]) >= 0 else 0
+						var young_word := "sapling" if slot == 2 else ("young tree" if slot == 1 else "")
+						# A grown one in flower or fruit says so (FruitCrop).
+						if young_word == "":
+							young_word = FruitCrop.describe_tree(chunk, i)
+						best = [decorate(tsp.hud_name(), int(tr[9]) if tr.size() > 9 else 0, young_word), "tree"]
 	# Plants without colliders, in front of whatever the ray hit: the
 	# nearer of the two is what you're looking at.
 	var plant := _plant_on_ray(from, dir, block_t + 0.3, me)
@@ -207,7 +213,15 @@ func _plant_on_ray(from: Vector3, dir: Vector3, length: float, me: Vector3) -> A
 	# Its sport (packed with its moss: PlantGenetics) and, for an aroid,
 	# where it is in its life (AroidGarden).
 	var sport := PlantGenetics.decode_sport(best_buf[best_k * 20 + 16]) if best_k >= 0 else 0
-	return [decorate(sp.hud_name(), sport, AroidGarden.describe(best_id, best_k)), "plant", best_t, best_sp]
+	var stage := AroidGarden.describe(best_id, best_k)
+	# A young tree of the understory (design §AR): "seedling", "sapling".
+	var young: int = int((_index[best_id] as Dictionary).get("young", 0)) if _index.has(best_id) else 0
+	if young > 0:
+		stage = PlantGrowth.STAGE_WORDS[PlantGrowth.stage_of_code(young)]
+	elif stage == "":
+		# A shrub in flower or fruit (FruitCrop).
+		stage = FruitCrop.describe_plant(best_id, best_k)
+	return [decorate(sp.hud_name(), sport, stage), "plant", best_t, best_sp]
 
 
 ## The name with a sport ("variegated sport") and a stage ("in bloom")
@@ -296,11 +310,13 @@ func _find_new() -> void:
 					continue
 				var sp_idx: int = mmi.get_meta("species")
 				var sp: PlantSpecies = SpeciesDB.all()[sp_idx]
-				# Trees are named through their trunk colliders.
-				if sp.tier == PlantSpecies.Tier.EMERGENT or sp.tier == PlantSpecies.Tier.CANOPY:
+				# Trees are named through their trunk colliders (their young in
+				# the understory, seedlings and saplings, here).
+				var young: int = int(mmi.get_meta("young", 0))
+				if (sp.tier == PlantSpecies.Tier.EMERGENT or sp.tier == PlantSpecies.Tier.CANOPY) and young == 0:
 					continue
 				var mm := mmi.multimesh
 				if mm == null or mm.instance_count == 0 or not mm.use_custom_data or not mm.use_colors:
 					continue
-				_index[mmi.get_instance_id()] = {"mmi": mmi, "sp": sp_idx, "buf": mm.buffer, "n": mm.instance_count, "next": 0, "cells": {}}
+				_index[mmi.get_instance_id()] = {"mmi": mmi, "sp": sp_idx, "buf": mm.buffer, "n": mm.instance_count, "next": 0, "cells": {}, "young": young}
 				_todo.append(mmi.get_instance_id())

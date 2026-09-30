@@ -49,7 +49,7 @@ func release(a: String) -> void:
 
 func release_all() -> void:
 	await process_frame
-	for a in ["move_forward", "move_back", "move_left", "move_right", "jump", "crouch", "shoot", "wall_jump", "sprint", "interact"]:
+	for a in ["move_forward", "move_back", "move_left", "move_right", "jump", "crouch", "shoot", "sprint", "interact"]:
 		Input.action_release(a)
 
 
@@ -119,6 +119,8 @@ func _initialize() -> void:
 	while not main._playing:
 		await process_frame
 	player = main.player
+	# (You wake empty-handed, the folk's gifts by you: taken, as play does.)
+	main.take_gifts()
 	main._weather_timer = 1.0e9
 	await frames(120)
 	# The nearest tree grown from its architecture with a graph and wood to
@@ -402,8 +404,10 @@ func _initialize() -> void:
 	await frames(30)
 	print("[climb] down: lowest %.1f m, %s" % [low, _describe()])
 	ok(low < 2.0 or not player.climbing, "climbs back down (lowest %.1f m)" % low)
-	# 6. Cling (right click): from the ground at the trunk, crawl up with
-	# W, look up and let go: a leap up and off, toward the look.
+	# 6. Cling (right click held; Mike, 29 Sept 2026: at a tree on the
+	# ground right click climbs, so the cling here is taken the way right
+	# click at a wall or rock takes it, _ground_cling, with the button held):
+	# crawl up with W, look up and jump: a leap up and off, toward the look.
 	await release_all()
 	if player.climbing:
 		player.stop_climb()
@@ -413,7 +417,9 @@ func _initialize() -> void:
 	player.velocity = Vector3.ZERO
 	await frames(30)
 	face(-out)
-	await press("wall_jump")
+	await press("interact")
+	player.interact_spent_ms = Time.get_ticks_msec()
+	player._ground_cling(player._camera_forward())
 	await frames(4)
 	if not player.clinging:
 		# Why not: on the floor? what each ray of the fan meets.
@@ -426,7 +432,7 @@ func _initialize() -> void:
 			q.exclude = [player.get_rid()]
 			var h := player.get_world_3d().direct_space_state.intersect_ray(q)
 			print("    ray at %.1f m: %s" % [y, "nothing" if h.is_empty() else "%s at %.2f m, normal.up %.2f" % [h.collider, (h.position - from).length(), (h.normal as Vector3).dot(player.up)]])
-	ok(player.clinging, "right click at a trunk clings to it")
+	ok(player.clinging, "right click held at a trunk clings to it")
 	if player.clinging:
 		var a1 := alt()
 		await press("move_forward")
@@ -468,10 +474,13 @@ func _initialize() -> void:
 		# (A moment to look up: the look is read with the camera.)
 		await frames(3)
 		var p0 := player.global_position
-		await release("wall_jump")
-		await frames(12)
+		await press("jump")
+		await frames(1)
+		await release("jump")
+		await release("interact")
+		await frames(11)
 		var dv := player.global_position - p0
-		print("[climb] let go looking up and out: %.2f m up, %.2f m out in 0.2 s" % [dv.dot(player.up), dv.dot(out)])
-		ok(dv.dot(player.up) > 0.2 and dv.dot(out) > 0.2, "letting go leaps up and out, toward the look")
+		print("[climb] jumped off looking up and out: %.2f m up, %.2f m out in 0.2 s" % [dv.dot(player.up), dv.dot(out)])
+		ok(dv.dot(player.up) > 0.2 and dv.dot(out) > 0.2, "jump out of the cling leaps up and out, toward the look")
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)

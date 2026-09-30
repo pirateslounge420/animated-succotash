@@ -3,9 +3,8 @@
   "about": "What the player can carry and wear (Inventory; the inventory screen on Tab, or I). Restart the game after editing. Spec Appendix R4: a handful of items, weight felt in movement (movement table 'burden'), never read in a menu.",
   "sample_reach_m": "How near a plant must be (from your hands) for E to take a sample of it.",
   "carry_slots": "How many things you can carry. Each slot holds one thing: a bundle of herbs, a plant sample, a cut cactus column, a fish, a mushroom.",
-  "starting_kit": "What a NEW game puts in your hands at the opening fire (design §M, §T): the three tools of the whole game, worn in their slots, plus a quiver of arrows (data/combat.json quiver.start). There are no other tools, ever: no axes, picks, shovels, knives or stone tools, and no tool crafting. After a death you wake with nothing; the kit is on your corpse with the rest.",
-  "equipment.pole": "The fishing pole's slot: one worn, no spares (it is one of the three tools, not gear to collect).",
-  "equipment": "The slots you wear things in: how many are worn and how many spares each keeps. The three tools (bow, spear, pole) are one each with NO spares (design §T: three tools, never more); amulet one worn and two spares; rings two worn and two spares. Spares don't count as carried.",
+  "starting_kit": "The two tools of the whole game (design §M, §T; the fishing pole shelved 29 Sept 2026 for a separate fishing game, the spear fishes), plus a quiver of arrows (data/combat.json quiver.start). You wake empty-handed (a new game and after a death alike: Mike, 29 Sept 2026) and the folk who saved you have laid these on the ground by you, a gift: right click takes each into its slot. There are no other tools, ever: no axes, picks, shovels, knives or stone tools, and no tool crafting.",
+  "equipment": "The slots you wear things in: how many are worn and how many spares each keeps. The two tools (bow, spear) are one each with NO spares (design §T: three tools, never more); amulet one worn and two spares; rings two worn and two spares. Spares don't count as carried.",
   "kinds": "Every kind of item: its name on the screen, the little picture drawn for it (icon), and which equipment slot it's worn in (slot; none = it's carried). color is the picture's main color where the item doesn't bring its own (a plant sample takes its species' colors).",
   "sample_part": "What E on a plant takes, by the plant's shape: a cutting, a seed head, a leaf, or a cut column (a cactus: its own kind of item). Shapes not listed give a cutting.",
   "bundle_genera": "Plants of these genera give a bundle of herbs (cut stems, tied) instead of a sample. It still carries the species."
@@ -16,24 +15,23 @@
   "ranged": {"label": "Ranged", "worn": 1, "spares": 0},
   "melee": {"label": "Melee", "worn": 1, "spares": 0},
   "amulet": {"label": "Amulet", "worn": 1, "spares": 2},
-  "rings": {"label": "Rings", "worn": 2, "spares": 2},
-  "pole": {"label": "Pole", "worn": 1, "spares": 0}
+  "rings": {"label": "Rings", "worn": 2, "spares": 2}
  },
  "starting_kit": {
-  "worn": [{"kind": "spear", "slot": "melee"}, {"kind": "bow", "slot": "ranged"}, {"kind": "fishing_pole", "slot": "pole"}],
+  "worn": [{"kind": "spear", "slot": "melee"}, {"kind": "bow", "slot": "ranged"}],
   "arrows": "combat.quiver.start"
  },
  "kinds": {
   "bow": {"name": "Bow", "icon": "bow", "slot": "ranged", "color": "#8a5a32"},
   "spear": {"name": "Spear", "icon": "spear", "slot": "melee", "color": "#80603a"},
-  "fishing_pole": {"name": "Fishing pole", "icon": "pole", "slot": "pole", "color": "#9a7a4a"},
   "amulet": {"name": "Amulet", "icon": "amulet", "slot": "amulet", "color": "#c8d8f0"},
   "ring": {"name": "Ring", "icon": "ring", "slot": "rings", "color": "#c8d8f0"},
   "plant_sample": {"name": "Plant sample", "icon": "sample", "color": "#5c8a3c"},
   "herb_bundle": {"name": "Bundle of herbs", "icon": "bundle", "color": "#6f9446"},
   "cactus_column": {"name": "Cut cactus column", "icon": "column", "color": "#5f8f55"},
   "fish": {"name": "Fish", "icon": "fish", "color": "#9fb4c8"},
-  "mushroom": {"name": "Mushroom", "icon": "mushroom", "color": "#b07a52"}
+  "mushroom": {"name": "Mushroom", "icon": "mushroom", "color": "#b07a52"},
+  "fruit": {"name": "Fruit", "icon": "fruit", "color": "#b83a2a"}
  },
  "sample_part": {
   "GRASS": "seed", "TUSSOCK": "seed", "REED": "seed", "BAMBOO": "cutting",

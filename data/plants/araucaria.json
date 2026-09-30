@@ -35,25 +35,26 @@
     "color": "#3A7A4A",
     "accent": "#A0A090",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      55,
+      200
+     ],
+     "first_seed_years": 30,
+     "lifespan_years": [
+      800,
+      2000
+     ],
+     "shade": "intermediate",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Young kauri ('rickers') are narrow cones with branches along the whole trunk. Juvenile leaves are 5-10 cm long, lance-shaped and olive-green to bronze or red, much larger than the 2-3.5 cm adult leaves. Little height growth for about 5 years, then 30-40 cm a year; lower branches drop later to leave a clean columnar trunk.",
+     "confidence": "documented",
+     "source": "Tane's Trees Trust kauri guide (germination 2-3 wk, 30 cm at 1 yr, 10-40 cm/yr, viable seed at 25-40 yr, juvenile leaves 5-10 cm, 2 m trees ~1100 yr); Steward & Beveridge 2014 NZ J For Sci (22 m at age 60, slow first 5 yr); Gymnosperm Database (0.35 m/yr; fertile seed at 25-30 yr)"
     },
     "repro": {
      "mode": "seed",
@@ -216,6 +217,54 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      11
+     ],
+     "hemisphere": "south",
+     "flower_days": 10,
+     "flower_size_cm": 2,
+     "flower_colour": "#6f9a74",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      5,
+      7.5
+     ],
+     "unripe_colour": "#6e9577",
+     "ripe_colour": "#7a6a4a",
+     "ripen_days": [
+      570,
+      610
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      180,
+      720
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Gymnosperm Database (conifers.org): pollen cones 2-5 cm; seed cones subglobose 5-7.5 cm, glaucous green; pollination in October, seed mature Feb-Mar of the second year after (19-20 months); cones break up on the tree releasing winged seeds; fertile seed from 25-30 yr"
     }
    }
   ],
@@ -249,25 +298,26 @@
     "color": "#2A5A38",
     "accent": "#6A5A4A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      100,
+      300
+     ],
+     "first_seed_years": 30,
+     "lifespan_years": [
+      600,
+      1300
+     ],
+     "shade": "intermediate",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed germinates hypogeally; the stout shoot bears overlapping, rigid, glossy, triangular, sharp leaves. For decades saplings are a broad, symmetrical dark green cone with regular whorls of 5-7 rope-like branches armoured in spiny leaves right down to the ground. Lower branches are later shed, leaving a tall bare trunk under an umbrella-like crown.",
+     "confidence": "documented",
+     "source": "Wikipedia EN (30-40 m; no seed until ~30-40 yr; ages beyond 1,000 yr; young trees broadly pyramidal; seedlings do best in canopy gaps), Wikipedia ES (first seed ~25 yr, precocious 15; pollen Dec-Jan) and Gymnosperm Database (834-ring sample; ~1,300-yr report). Height-age curve and germination days estimated (very slow growth)."
     },
     "repro": {
      "mode": "seed",
@@ -427,6 +477,54 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      1
+     ],
+     "hemisphere": "south",
+     "flower_days": 14,
+     "flower_size_cm": 11,
+     "flower_colour": "#8a6a40",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      12,
+      20
+     ],
+     "unripe_colour": "#4f6a35",
+     "ripe_colour": "#6a5030",
+     "ripen_days": [
+      450,
+      550
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      5,
+      40
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia EN/ES and Gymnosperm Database: mostly dioecious, pollen shed Dec-Jan from 7-15 cm pollen cones; globular dark brown seed cones 12-20 cm mature ~15-18 months after pollination (seeds ripe Mar-Apr), breaking up to release ~200 seeds 3-4 cm (pinones), eaten boiled or roasted and spread by grass mice and parakeets. Crop estimated."
     }
    },
    {
@@ -458,25 +556,26 @@
     "color": "#2A5A38",
     "accent": "#6A5A4A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      20,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      70
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      200,
+      500
+     ],
+     "shade": "intermediate",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The big seed (pinhao) germinates hypogeally, staying in the soil while a stout shoot rises with spirally set, stiff, sharp-pointed, triangular lance leaves 3-6 cm. Saplings are neat symmetrical cones adding a whorl of 4-8 horizontal branches each year, leaves crowded toward the branch tips. The flat-topped candelabra crown forms only after decades as lower whorls drop.",
+     "confidence": "documented",
+     "source": "Wikipedia (Araucaria angustifolia: usually to 40 m; up to 16 m in 14 yr in plantation; leaves 3-6 cm, persist 10-15 yr) and Gymnosperm Database (25-35(-52) m; max ca. 500 yr; hypogeal germination, 2 cotyledons). Germination days, first coning (~12-20 yr) and shade class estimated from Brazilian forestry accounts."
     },
     "repro": {
      "mode": "seed",
@@ -636,6 +735,54 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      10
+     ],
+     "hemisphere": "south",
+     "flower_days": 14,
+     "flower_size_cm": 12,
+     "flower_colour": "#a08a55",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      18,
+      25
+     ],
+     "unripe_colour": "#4f6a35",
+     "ripe_colour": "#7a5230",
+     "ripen_days": [
+      520,
+      600
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      5,
+      80
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia and Gymnosperm Database: usually dioecious and wind-pollinated; pollen cones 10-18 cm; globose chestnut-brown seed cones 18-25 cm (~1 kg or more) mature in autumn ~18 months after pollination and hold 100-150 seeds ~5 cm long, eaten boiled or roasted and spread by azure jays. Pollination months and crop estimated."
     }
    },
    {
@@ -667,25 +814,26 @@
     "color": "#2A5A38",
     "accent": "#6A5A4A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      720
      ],
-     "final_size": 1.0
+     "height_years": [
+      40,
+      120
+     ],
+     "first_seed_years": 14,
+     "lifespan_years": [
+      300,
+      500
+     ],
+     "shade": "tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Germination is cryptogeal: the seed first sends down a root that swells into a carrot-like underground tuber, and the shoot emerges from it typically 7-11 months (2-24) after sowing. Saplings are dark glossy symmetrical cones, whorls of branches clothed in narrow, glossy, light green, sharp spreading leaves 2.5-5 cm; old trees carry short overlapping leaves and a dome of branches at the top.",
+     "confidence": "documented",
+     "source": "Gymnosperm Database (Araucaria bidwillii: to 50 m; cones from ~14 yr; hypogeal cryptogeal germination via a tuber, emergence 2-(7-11)-24 months after sowing; juvenile leaves glossy, narrow, 2.5-5 cm vs adult 0.7-2.8 cm; masts ~every 3 yr) and Wikipedia (lives ~500 yr). Height-age curve and shade class estimated."
     },
     "repro": {
      "mode": "seed",
@@ -845,6 +993,54 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      11
+     ],
+     "hemisphere": "south",
+     "flower_days": 14,
+     "flower_size_cm": 15,
+     "flower_colour": "#a07a45",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      20,
+      30
+     ],
+     "unripe_colour": "#4a6a30",
+     "ripe_colour": "#6a7a3a",
+     "ripen_days": [
+      500,
+      540
+     ],
+     "hang_days": [
+      0,
+      14
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      5,
+      80
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Gymnosperm Database and Wikipedia: pollen cones to 20 cm mature Sep-Nov; rugby-ball seed cones ~30 x 22 cm, up to 10 kg, fall whole Dec-Mar about 17-18 months after pollination, each with 50-100 nuts 2.5-5 cm (chestnut-like, eaten raw or roasted); heavy crops ~every 3 yr. Crop per tree estimated."
     }
    },
    {
@@ -876,25 +1072,26 @@
     "color": "#3A7A4A",
     "accent": "#6A5A4A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      35,
+      110
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      150,
+      300
+     ],
+     "shade": "tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings and saplings carry soft, bright green, incurved awl-shaped needles 10-15 mm. The young tree is the classic near-perfect pyramid for its first ~40 years: tiers of about five horizontal branches, each floor a neat star, with frond-like branchlets in whorls of 4-7. Adult crowns flatten and carry short, overlapping, incurved scale leaves 5-10 mm.",
+     "confidence": "documented",
+     "source": "Gymnosperm Database (Araucaria heterophylla: 50-70 m; female cones on trees >15 yr, male cones >40 yr; heavy seed fall every 4-5 yr; oldest documented 170 yr; almost symmetrical for ~40 yr) and Wikipedia (slow-growing, 50-65 m; juvenile leaves awl-shaped 10-15 mm vs adult 5-10 mm). Germination days and height-age estimated."
     },
     "repro": {
      "mode": "seed",
@@ -1049,6 +1246,54 @@
      "root_flare": true,
      "spacing_m": 1.5,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      12
+     ],
+     "hemisphere": "south",
+     "flower_days": 14,
+     "flower_size_cm": 4,
+     "flower_colour": "#a0703a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      10,
+      14
+     ],
+     "unripe_colour": "#4f6a35",
+     "ripe_colour": "#7a6a3a",
+     "ripen_days": [
+      520,
+      560
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      10,
+      100
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia and Gymnosperm Database: mostly dioecious; pollen cones ~4 cm in clusters; squat globose seed cones 10-12 x 12-14 cm take ~18 months to mature and disintegrate on the tree, releasing broad-winged nut-like edible seeds 2.5-3 cm. Pollination months and crop estimated."
     }
    }
   ],

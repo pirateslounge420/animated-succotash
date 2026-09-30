@@ -34,6 +34,13 @@ class_name VegetationPlacer
 ## Then per plant: size and lean jitter. Epiphytes attach to trees already
 ## placed; cypress knees scatter around cypress standing in water.
 ##
+## Growth (design §AR, PlantGrowth): the stand's young cohort are young
+## trees (saplings and poles, drawn in their species' young form), the
+## floor under and between the trees carries the canopy species' own
+## seedlings and saplings (_place_young(): as many as the light lets live),
+## and every plant's light from the crowns above it (_Light) sets its leaf
+## size (shade leaves larger) in the MultiMesh custom data's green.
+##
 ## Both compute functions are thread-safe (read-only planet data);
 ## build_nodes() makes one MultiMesh per species on the main thread, and
 ## for branchy canopy trees one more per layout (TreeLayouts): each tree
@@ -60,6 +67,10 @@ const T := PlantSpecies.Tier
 ## widens to match (about with the square root), so the bigger crowns
 ## don't merge into a wall or cost more instances.
 const SIZE_SCALE := {0: 1.45, 1: 1.3, 2: 1.2, 3: 1.2, 4: 1.2}
+## Herbs whose leaves are the plant: they spread them wider in the shade
+## (prepare(); PlantGrowth.leaf_scale).
+const HERB_SPREAD := [PlantSpecies.Shape.FERN, PlantSpecies.Shape.ROSETTE, PlantSpecies.Shape.EPIPHYTE_CLUMP,
+	PlantSpecies.Shape.UMBRELLA, PlantSpecies.Shape.TREE_FERN, PlantSpecies.Shape.PALM]
 const GIANT_CHANCE := 0.15
 const GIANT_SCALE := 1.25
 ## The stand's age (data/stand.json): the tribal planet is old growth, so
@@ -81,7 +92,7 @@ const CLUMP_M := 60.0
 const EPIPHYTE_RATE := 0.9
 
 ## Instance record layout in the per-species PackedFloat32Array.
-const STRIDE := 11 # dir.xyz, radius, yaw, lean_x, lean_z, height, moss, vines, bare
+const STRIDE := 12 # dir.xyz, radius, yaw, lean_x, lean_z, height, moss, vines, bare, stage
 const MM_STRIDE := 20 # MultiMesh buffer floats per instance: 3x4 transform, color, custom
 
 ## Built once on the main thread (warm()) and only read by the chunk
@@ -128,6 +139,8 @@ static func compute_base(key: Vector3i, map: PlanetData, data: Dictionary) -> Di
 	var hosts: Array = []
 	_place_tier(ctx, T.EMERGENT, plants, hosts)
 	_place_tier(ctx, T.CANOPY, plants, hosts)
+	# Each tree's light from the crowns over it: its leaf size.
+	_light_pass(plants, _Light.new(data.center, hosts), true)
 	return {"plants": plants, "hosts": hosts}
 
 
@@ -140,6 +153,11 @@ static func compute_detail(key: Vector3i, map: PlanetData, data: Dictionary, hos
 	_place_tier(ctx, T.GROUND, plants, unused)
 	_place_epiphytes(ctx, plants, hosts)
 	_place_knees(ctx, plants, hosts)
+	# The stand's own young on the floor (after the rest, so they don't
+	# move it), then everything's light under the crowns: leaf size.
+	var light := _Light.new(data.center, hosts)
+	_place_young(ctx, plants, light)
+	_light_pass(plants, light, false)
 	return plants
 
 
@@ -201,7 +219,17 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 					chosen = k
 					break
 			var sp: PlantSpecies = candidates[chosen]
-			var height := _roll_height(ctx.rng, sp, tier) * float(SIZE_SCALE[tier])
+			var rolled := _roll_tree(ctx.rng, sp, tier)
+			var height: float = float(rolled[0]) * float(SIZE_SCALE[tier])
+			var stage: int = PlantGrowth.Stage.MATURE
+			if rolled[1] and not sp.growth.is_empty():
+				# The young cohort: saplings and young trees in their own form
+				# (PlantGrowth.young_tree), heading for a height in the top of
+				# the band.
+				var h_full := lerpf(sp.height_m.x, sp.height_m.y, lerpf(0.7, 1.0, PlantGenetics.unit(hash([sp.name, site.dir]), 1))) * float(SIZE_SCALE[tier])
+				var yt := PlantGrowth.young_tree(sp, site.dir, h_full)
+				height = maxf(float(yt[0]), 0.3)
+				stage = int(yt[1])
 			var sp_idx := SpeciesDB.index_of(sp)
 			# Wet sites mossy, wet and warm ones hung with vines (0-1 each,
 			# per plant; the foliage shader shows them).
@@ -222,20 +250,24 @@ static func _place_tier(ctx: _Context, tier: int, out: Dictionary, hosts: Array)
 					leaf = 0.0
 					vines *= 0.3
 			var lean := _lean(ctx, sp, site.dir) if TreeArch.grows(sp) else Vector2.INF
-			_emit(out, sp_idx, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, height, 0.09, moss, vines, 1.0 - leaf, lean)
+			_emit(out, sp_idx, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, height, 0.09, moss, vines, 1.0 - leaf, lean, stage)
 			if tier == T.EMERGENT or tier == T.CANOPY:
-				hosts.append([site.dir, PlanetConst.RADIUS_M + site.h, height, sp_idx, site.depth, leaf])
+				hosts.append([site.dir, PlanetConst.RADIUS_M + site.h, height, sp_idx, site.depth, leaf, stage])
 				if tier == T.EMERGENT:
 					ctx.add_emergent(site.dir)
 
 
 ## A tree's height (m, before the tier's size scale) from its species'
-## band, by the stand's age (data/stand.json). Old growth: most trees in
-## the top of the band, a scatter of giants among the emergents, a thin
-## young cohort in the gaps; "even": the old roll, slightly favouring
-## the small end. Shrubs and ground cover take shrub_pow instead.
-static func _roll_height(rng: RandomNumberGenerator, sp: PlantSpecies, tier: int) -> float:
+## band, by the stand's age (data/stand.json), and whether it's of the
+## young cohort: [height, young]. Old growth: most trees in the top of the
+## band, a scatter of giants among the emergents, a thin young cohort in
+## the gaps (_place_tier grows those as young trees); "even": the old roll,
+## slightly favouring the small end. Shrubs and ground cover take
+## shrub_pow instead. (The same draws as ever: the rest of the placement
+## doesn't move.)
+static func _roll_tree(rng: RandomNumberGenerator, sp: PlantSpecies, tier: int) -> Array:
 	var t: float
+	var young := false
 	var giant_chance := GIANT_CHANCE
 	var giant_scale := GIANT_SCALE
 	if str(STAND.get("mode", "old_growth")) == "old_growth" and (tier == T.EMERGENT or tier == T.CANOPY):
@@ -243,6 +275,7 @@ static func _roll_height(rng: RandomNumberGenerator, sp: PlantSpecies, tier: int
 			t = lerpf(float(STAND.get("old_min", 0.7)), 1.0, 1.0 - pow(rng.randf(), 1.0 / maxf(float(STAND.get("old_pow", 0.55)), 0.05)))
 		else:
 			t = rng.randf_range(float(STAND.get("young_min", 0.2)), float(STAND.get("young_max", 0.55)))
+			young = true
 		giant_chance = float(STAND.get("giant_chance", giant_chance))
 		giant_scale = float(STAND.get("giant_scale", giant_scale))
 	elif tier == T.EMERGENT or tier == T.CANOPY:
@@ -252,18 +285,19 @@ static func _roll_height(rng: RandomNumberGenerator, sp: PlantSpecies, tier: int
 	var height := lerpf(sp.height_m.x, sp.height_m.y, t)
 	if tier == T.EMERGENT and rng.randf() < giant_chance:
 		height *= giant_scale
-	return height
+		young = false
+	return [height, young]
 
 
 static func _emit(out: Dictionary, sp_idx: int, d: Vector3, radius: float, rng: RandomNumberGenerator, height: float,
-		lean_max := 0.09, moss := 0.0, vines := 0.0, bare := 0.0, lean := Vector2.INF) -> void:
+		lean_max := 0.09, moss := 0.0, vines := 0.0, bare := 0.0, lean := Vector2.INF, stage: int = PlantGrowth.Stage.MATURE) -> void:
 	if not out.has(sp_idx):
 		out[sp_idx] = PackedFloat32Array()
 	var arr: PackedFloat32Array = out[sp_idx]
 	var yaw := rng.randf() * TAU
 	if lean == Vector2.INF:
 		lean = Vector2(rng.randf_range(-lean_max, lean_max), rng.randf_range(-lean_max, lean_max))
-	arr.append_array([d.x, d.y, d.z, radius, yaw, lean.x, lean.y, height, moss, vines, bare])
+	arr.append_array([d.x, d.y, d.z, radius, yaw, lean.x, lean.y, height, moss, vines, bare, float(stage)])
 	out[sp_idx] = arr
 
 
@@ -314,6 +348,9 @@ static func _place_epiphytes(ctx: _Context, out: Dictionary, hosts: Array) -> vo
 	if epis.is_empty():
 		return
 	for host in hosts:
+		# Young trees (saplings, poles) don't carry epiphytes yet.
+		if host.size() > 6 and int(host[6]) < PlantGrowth.Stage.MATURE:
+			continue
 		var d: Vector3 = host[0]
 		var site := ctx.site_at_dir(d)
 		var host_h: float = host[2]
@@ -353,6 +390,187 @@ static func _place_knees(ctx: _Context, out: Dictionary, hosts: Array) -> void:
 			_emit(out, SpeciesDB.index_of(knees), pd, PlanetConst.RADIUS_M + site.h, ctx.rng, size, 0.05)
 
 
+## The forest's young (design §AR): seedlings and saplings of the stand's
+## own species on the floor under and between its trees, as many as the
+## light lets live: a shade-tolerant fir's seedling bank under a closed
+## canopy, a pine's saplings only in the gaps. A spot every YOUNG_SPACING_M
+## (jittered), in a stand (a tree within YOUNG_NEAR_M), takes one of the
+## chunk's tree species by how well it grows there and how well its young
+## come up in that light (PlantGrowth.establish); what stands there now
+## is the spot's run of occupants at this hour of the world clock
+## (PlantGrowth.understory: dying young in the shade, or growing up out of
+## the understory). Drawn by stage (PlantGrowth.JUV_KEY): a seedling, or a
+## sapling in its species' young form, open- or forest-grown by its light.
+const YOUNG_SPACING_M := 3.6
+const YOUNG_FILL := 0.6
+const YOUNG_NEAR_M := 22.0
+## YOUNG=0 in the environment leaves the understory young out (A/B, timing).
+static var YOUNG := OS.get_environment("YOUNG") != "0"
+
+
+static func _place_young(ctx: _Context, out: Dictionary, light: _Light) -> void:
+	if not light.any or not YOUNG:
+		return
+	var candidates: Array[PlantSpecies] = []
+	for tier in [T.EMERGENT, T.CANOPY]:
+		for sp in ctx.species_for(tier):
+			if not sp.growth.is_empty() and not sp.growth.has("stages") and sp.juvenile != "none":
+				candidates.append(sp)
+	if candidates.is_empty():
+		return
+	var cells := maxi(1, int(ctx.chunk_m / YOUNG_SPACING_M))
+	var weights := PackedFloat32Array()
+	weights.resize(candidates.size())
+	for b in cells:
+		for a in cells:
+			var key := hash([ctx.key, a, b, "young"])
+			var gx := (a + 0.5 + (PlantGenetics.unit(key, 1) - 0.5) * 0.7) / cells * TerrainChunk.QUADS
+			var gy := (b + 0.5 + (PlantGenetics.unit(key, 2) - 0.5) * 0.7) / cells * TerrainChunk.QUADS
+			# The spot's fill roll first: most spots stay empty whatever
+			# grows round them (the full test below is stricter), so they
+			# cost no site or weights.
+			var clump := ctx.clump_at(T.SHRUB, gx, gy)
+			var roll := PlantGenetics.unit(key, 3)
+			if roll >= YOUNG_FILL * clump:
+				continue
+			var site := ctx.site(gx, gy)
+			if ctx.in_clearing(site.dir) or not light.near(site.dir, YOUNG_NEAR_M):
+				continue
+			var lit := light.at(site.dir, 0.5)
+			var total := 0.0
+			for k in candidates.size():
+				var w := ctx.weight(candidates[k], site)
+				if w > 0.0:
+					w *= PlantGrowth.establish(candidates[k], lit)
+				weights[k] = w
+				total += w
+			if total <= 0.0 or roll >= minf(total, 1.0) * YOUNG_FILL * clump:
+				continue
+			var pick := PlantGenetics.unit(key, 4) * total
+			var chosen := candidates.size() - 1
+			for k in candidates.size():
+				pick -= weights[k]
+				if pick <= 0.0:
+					chosen = k
+					break
+			var sp: PlantSpecies = candidates[chosen]
+			var tier: int = sp.tier
+			var h_full := lerpf(sp.height_m.x, sp.height_m.y, lerpf(0.7, 1.0, PlantGenetics.unit(key, 5))) * float(SIZE_SCALE[tier])
+			var now := PlantGrowth.understory(sp, key, lit, h_full)
+			if now.is_empty():
+				continue
+			var stage: int = now[1]
+			var code := PlantGrowth.young_code(stage, lit > 0.5)
+			if code <= 0:
+				continue
+			var h := maxf(float(now[0]), 0.05)
+			_emit(out, SpeciesDB.index_of(sp) + PlantGrowth.JUV_KEY * code, site.dir, PlanetConst.RADIUS_M + site.h, ctx.rng, h,
+				0.06, smoothstep(0.45, 0.85, site.m) * 0.5, 0.0, 0.0, Vector2.INF, stage)
+
+
+## Each plant's light from the crowns above it (`light`: the chunk's trees)
+## sets its leaf size (PlantGrowth.leaf_scale: shade leaves bigger), packed
+## with its vines into the record (the custom data's green). Trees
+## (`trees`) are lit at the middle of their crowns, by crowns whose
+## underside is above that (an emergent over a canopy tree, the canopy over
+## a young tree); everything else at its top.
+static func _light_pass(out: Dictionary, light: _Light, trees: bool) -> void:
+	var all := SpeciesDB.all()
+	for key in out:
+		var sp: PlantSpecies = all[int(key) % PlantGrowth.JUV_KEY]
+		var arr: PackedFloat32Array = out[key]
+		for i in arr.size() / STRIDE:
+			var o := i * STRIDE
+			var d := Vector3(arr[o], arr[o + 1], arr[o + 2])
+			var h: float = arr[o + 7]
+			var at_m := h * 0.7 if trees else h
+			var lit := light.at(d, at_m) if light.any else 1.0
+			arr[o + 9] = PlantGrowth.encode_green(arr[o + 9], PlantGrowth.leaf_code(PlantGrowth.leaf_scale(sp, lit)))
+		out[key] = arr
+
+
+## The chunk's tree crowns, for the light under them (_light_pass,
+## _place_young): each tree's crown a disc (its shape's crown radius,
+## PlantMeshes.tree_dims) at the height its crown starts, letting through
+## its canopy gap (and more on a bare tree), binned on a CELL_M grid in the
+## chunk's tangent plane.
+class _Light:
+	const CELL_M := 16.0
+	var cells := {}
+	var any := false
+	var _c: Vector3
+	var _e: Vector3
+	var _n: Vector3
+
+	func _init(center: Vector3, hosts: Array) -> void:
+		_c = center
+		_e = CubeSphere.east(center)
+		_n = CubeSphere.north(center)
+		var all := SpeciesDB.all()
+		for hst in hosts:
+			var sp: PlantSpecies = all[int(hst[3])]
+			var dims := PlantMeshes.tree_dims(sp.shape)
+			if dims.z <= 0.0:
+				continue
+			var ht := float(hst[2])
+			var leaf := float(hst[5]) if hst.size() > 5 else 1.0
+			var op := clampf((1.0 - float(sp.canopy.get("gap", 0.3))) * leaf, 0.0, 0.92)
+			if op <= 0.02:
+				continue
+			var p := xy(hst[0])
+			var k := Vector2i(floori(p.x / CELL_M), floori(p.y / CELL_M))
+			if not cells.has(k):
+				cells[k] = []
+			(cells[k] as Array).append([p.x, p.y, maxf(ht * dims.z, 0.8), ht * dims.w, op])
+			any = true
+
+	func xy(d: Vector3) -> Vector2:
+		var off := (d - _c) * PlanetConst.RADIUS_M
+		return Vector2(off.dot(_e), off.dot(_n))
+
+	## The light (0-1) reaching leaves `at_m` above the ground at `d`: each
+	## crown over them adds its optical depth (its opacity, full out to
+	## 55 % of its radius, fading to nothing a little past its edge), and
+	## the light falls as e^(-1.6 x depth): under one crown about a third
+	## gets through, under two a tenth, under a closed canopy's three or
+	## four a few percent (a forest floor's 1-5 % of full sun).
+	func at(d: Vector3, at_m: float) -> float:
+		var p := xy(d)
+		var cx := floori(p.x / CELL_M)
+		var cy := floori(p.y / CELL_M)
+		var depth := 0.0
+		for oy in range(-2, 3):
+			for ox in range(-2, 3):
+				var list = cells.get(Vector2i(cx + ox, cy + oy))
+				if list == null:
+					continue
+				for rec in list:
+					if float(rec[3]) <= at_m:
+						continue
+					var dist := Vector2(p.x - float(rec[0]), p.y - float(rec[1])).length()
+					var r: float = rec[2]
+					if dist >= r * 1.15 or dist < 0.05:
+						continue
+					depth += float(rec[4]) * (1.0 - smoothstep(r * 0.55, r * 1.15, dist))
+		return exp(-1.6 * depth)
+
+	## A tree trunk within `m` of `d`?
+	func near(d: Vector3, m: float) -> bool:
+		var p := xy(d)
+		var cx := floori(p.x / CELL_M)
+		var cy := floori(p.y / CELL_M)
+		var reach := int(ceil(m / CELL_M))
+		for oy in range(-reach, reach + 1):
+			for ox in range(-reach, reach + 1):
+				var list = cells.get(Vector2i(cx + ox, cy + oy))
+				if list == null:
+					continue
+				for rec in list:
+					if Vector2(p.x - float(rec[0]), p.y - float(rec[1])).length() < m:
+						return true
+		return false
+
+
 ## Worker thread: turn compute_base/compute_detail output into ready
 ## MultiMesh buffers. Positions are relative to the chunk's anchor (its
 ## center at `anchor_r` from the planet center), which doesn't depend on
@@ -382,16 +600,20 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts 
 		if not order.has(s):
 			order[s] = []
 		(order[s] as Array).append(hi)
-	for sp_idx in plants:
+	for pkey in plants:
+		# Understory young come keyed by stage too (PlantGrowth.JUV_KEY).
+		var sp_idx: int = int(pkey) % PlantGrowth.JUV_KEY
+		var young_code: int = int(pkey) / PlantGrowth.JUV_KEY
 		var sp: PlantSpecies = all[sp_idx]
-		var arr: PackedFloat32Array = plants[sp_idx]
+		var arr: PackedFloat32Array = plants[pkey]
 		var count := arr.size() / STRIDE
 		var buf := PackedFloat32Array()
 		buf.resize(count * MM_STRIDE)
 		var trees: Array = []
-		var tall := sp.tier == T.EMERGENT or sp.tier == T.CANOPY
+		var tall := (sp.tier == T.EMERGENT or sp.tier == T.CANOPY) and young_code == 0
 		var branchy := tall and TreeLayouts.branchy(sp)
 		var ords: Array = order.get(sp_idx, [])
+		var spread_ok := sp.shape in HERB_SPREAD and (sp.tier == T.GROUND or sp.tier == T.SHRUB or sp.tier == T.EPIPHYTE)
 		for i in count:
 			var o := i * STRIDE
 			var d := Vector3(arr[o], arr[o + 1], arr[o + 2])
@@ -413,20 +635,30 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts 
 			var sport := PlantGenetics.sport_at(sp, d)
 			var h: float = arr[o + 7] * PlantGenetics.size_of(sport)
 			var moss_s := PlantGenetics.encode_moss(arr[o + 8], sport)
-			basis = basis.scaled(Vector3.ONE * h)
+			# Herbs with big leaves spread them wider in the shade (their
+			# leaves are the plant: PlantGrowth.leaf_scale); a sapling is
+			# mirrored now and then (one layout per species here).
+			var sx := h * (pow(PlantGrowth.leaf_of(arr[o + 9]), 0.8) if spread_ok else 1.0)
+			if young_code >= 2 and PlantGenetics.unit(hash([sp_idx, d]), 7) < 0.5:
+				sx = -sx
+			basis = basis * Basis.from_scale(Vector3(sx, h, absf(sx)))
 			_put(buf, i * MM_STRIDE, basis, pos, moss_s, arr[o + 9], arr[o + 10])
 			if tall:
 				var pick := TreeLayouts.pick(world_seed, key, d, _crowded(d, hosts), TreeArch.grows(sp)) if branchy else -1
+				# A young tree grows a young layout (TreeLayouts: its stage's
+				# slot), drawn and climbed in its young form.
+				if pick >= 0:
+					pick = TreeLayouts.with_slot(pick, TreeLayouts.slot_of(int(arr[o + 11])))
 				trees.append([pos, h, i, pick, -1, rot, ords[i] if i < ords.size() else -1, moss_s])
 		var layouts := {}
 		if branchy:
 			var counts := PackedInt32Array()
-			counts.resize(TreeLayouts.COUNT)
+			counts.resize(TreeLayouts.ALL)
 			for t in trees:
 				var l := TreeLayouts.layout_of(t[3])
 				t[4] = counts[l]
 				counts[l] += 1
-			for l in TreeLayouts.COUNT:
+			for l in TreeLayouts.ALL:
 				if counts[l] == 0:
 					continue
 				var lbuf := PackedFloat32Array()
@@ -440,7 +672,7 @@ static func prepare(plants: Dictionary, center: Vector3, anchor_r: float, hosts 
 					_put(lbuf, int(t[4]) * MM_STRIDE, (t[5] as Basis) * Basis.from_scale(Vector3(mirror, h, h)), t[0],
 						float(t[7]), arr[o + 9], arr[o + 10])
 				layouts[l] = [lbuf, counts[l]]
-		out[sp_idx] = [buf, count, trees, layouts]
+		out[pkey] = [buf, count, trees, layouts]
 	return out
 
 
@@ -482,9 +714,21 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 	# the player comes and goes (TerrainChunk.set_fine).
 	var lod := chunk.plant_lod(parent)
 	var placed: Array = []
-	for sp_idx in prepared:
+	for pkey in prepared:
+		var sp_idx: int = int(pkey) % PlantGrowth.JUV_KEY
+		var young_code: int = int(pkey) / PlantGrowth.JUV_KEY
 		var sp: PlantSpecies = all[sp_idx]
-		var entry: Array = prepared[sp_idx]
+		var entry: Array = prepared[pkey]
+		if young_code > 0:
+			# Understory young (design §AR): their stage's mesh, drawn to the
+			# shrubs' reach (saplings) or the ground cover's (seedlings).
+			# (Always the near level: slim young wood gains nothing from more.)
+			var ymm := _multimesh(PlantMeshes.young_mesh(sp, young_code, PlantMeshes.LOD_NEAR), entry[0], entry[1])
+			var yreach := float(RANGES.get("ground_m", 80.0)) if young_code == 1 else float(RANGES.get("shrub_m", 150.0))
+			var ymi := _instance(parent, sp_idx, sp, ymm, "%s_young%d" % [sp.name.replace(" ", "_"), young_code], yreach)
+			ymi.set_meta("young", young_code)
+			TerrainChunk.plant_shadow(ymi, sp, lod if young_code > 1 else PlantMeshes.LOD_NEAR)
+			continue
 		var layouts: Dictionary = entry[3]
 		var far_only := not layouts.is_empty()
 		# A branchy species' own MultiMesh only ever shows the far crown.
@@ -513,7 +757,7 @@ static func build_nodes(parent: Node3D, chunk: TerrainChunk, prepared: Dictionar
 			# along in the record (TerrainChunk reads them there, not back
 			# from the MultiMesh).
 			var j: int = int(t[2]) * 20
-			var vines := tbuf[j + 17] if j + 19 < tbuf.size() else 0.0
+			var vines := PlantGrowth.vines_of(tbuf[j + 17]) if j + 19 < tbuf.size() else 0.0
 			var bare := tbuf[j + 19] if j + 19 < tbuf.size() else 0.0
 			var sport := PlantGenetics.decode_sport(float(t[7])) if t.size() > 7 else 0
 			placed.append([t[0], t[1], sp_idx, t[2], t[3], t[4], t[5], t[6], vines, bare, sport])
@@ -550,7 +794,7 @@ static func _multimesh(mesh: Mesh, buf: PackedFloat32Array, count: int) -> Multi
 	return mm
 
 
-static func _instance(parent: Node3D, sp_idx: int, sp: PlantSpecies, mm: MultiMesh, node_name: String) -> MultiMeshInstance3D:
+static func _instance(parent: Node3D, sp_idx: int, sp: PlantSpecies, mm: MultiMesh, node_name: String, reach_m := -1.0) -> MultiMeshInstance3D:
 	var mmi := MultiMeshInstance3D.new()
 	mmi.name = node_name
 	mmi.multimesh = mm
@@ -566,6 +810,8 @@ static func _instance(parent: Node3D, sp_idx: int, sp: PlantSpecies, mm: MultiMe
 		reach = float(RANGES.get("grass_m" if grassy else "ground_m", 40.0 if grassy else 80.0))
 	elif sp.tier == T.SHRUB:
 		reach = float(RANGES.get("shrub_m", 150.0))
+	if reach_m > 0.0:
+		reach = reach_m
 	if reach > 0.0:
 		# Each plant by its own distance (the foliage shader shrinks it
 		# away over the last tenth, draw_range_m); the whole node, which
@@ -584,6 +830,7 @@ class _Context:
 
 	var map: PlanetData
 	var data: Dictionary
+	var key: Vector3i
 	var rng := RandomNumberGenerator.new()
 	var chunk_m: float
 	var dominance := {} # PlantSpecies -> factor for this chunk
@@ -604,10 +851,11 @@ class _Context:
 	var _hot_r := 0.0
 	var _clearings: Array = [] # [dir, radius_m]
 
-	func _init(key: Vector3i, p_map: PlanetData, p_data: Dictionary, salt: int) -> void:
+	func _init(p_key: Vector3i, p_map: PlanetData, p_data: Dictionary, salt: int) -> void:
 		map = p_map
 		data = p_data
-		rng.seed = hash([key, map.terrain.world_seed, salt])
+		key = p_key
+		rng.seed = hash([p_key, map.terrain.world_seed, salt])
 		chunk_m = PlanetConst.CIRCUMFERENCE_M / 4.0 / TerrainChunk.CHUNKS_PER_FACE
 		_sample_climate()
 		var hot := map.terrain.nearest_hotspot(data.center)
@@ -784,9 +1032,9 @@ class _Context:
 	func site_at_dir(d: Vector3) -> _Site:
 		var face := CubeSphere.face_of(d)
 		var uv := CubeSphere.face_uv(face, d)
-		var key: Vector3i = data.key
-		var gx := clampf((uv.x + 1.0) * 0.5 * TerrainChunk.CHUNKS_PER_FACE * TerrainChunk.QUADS - key.y * TerrainChunk.QUADS, 0.0, TerrainChunk.QUADS - 0.001)
-		var gy := clampf((uv.y + 1.0) * 0.5 * TerrainChunk.CHUNKS_PER_FACE * TerrainChunk.QUADS - key.z * TerrainChunk.QUADS, 0.0, TerrainChunk.QUADS - 0.001)
+		var ck: Vector3i = data.key
+		var gx := clampf((uv.x + 1.0) * 0.5 * TerrainChunk.CHUNKS_PER_FACE * TerrainChunk.QUADS - ck.y * TerrainChunk.QUADS, 0.0, TerrainChunk.QUADS - 0.001)
+		var gy := clampf((uv.y + 1.0) * 0.5 * TerrainChunk.CHUNKS_PER_FACE * TerrainChunk.QUADS - ck.z * TerrainChunk.QUADS, 0.0, TerrainChunk.QUADS - 0.001)
 		return site(gx, gy)
 
 	func _climate_at(gx: float, gy: float, s: _Site, river_m: float, aspect: float) -> void:

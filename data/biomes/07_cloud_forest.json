@@ -51,25 +51,27 @@
     "color": "#3F8F45",
     "accent": "#8A7A5A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      120,
+      200
+     ],
+     "trunk_years": 50,
+     "first_seed_years": 80,
+     "lifespan_years": [
+      150,
+      250
+     ],
+     "shade": "tolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The first seedling leaves are narrow undivided or two-lobed blades; for decades the young palm is a stemless rosette of stiff pinnate leaves, silvery-white beneath, on the shaded cloud-forest floor while the trunk base thickens underground. Only after roughly half a century does the smooth, wax-coated whitish trunk start to rise.",
+     "confidence": "estimated",
+     "source": "Wikipedia Ceroxylon quindiuense (45 m, rarely 60 m; fruit 1.6-2 cm orange-red; minimum reproductive age ~80 yr); Sanin & Galeano 2011 Phytotaxa (Ceroxylon revision); long stemless phase and growth rate estimated from Andean wax-palm demography studies"
     },
     "repro": {
      "mode": "seed",
@@ -201,7 +203,57 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "impossibly tall white pole with a small frond crown"
+    "silhouette": "impossibly tall white pole with a small frond crown",
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#ece2b8",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      2000,
+      20000
+     ],
+     "pollinators": [
+      "beetle",
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.6,
+      2.0
+     ],
+     "unripe_colour": "#6f8a3c",
+     "ripe_colour": "#d9562a",
+     "ripen_days": [
+      240,
+      365
+     ],
+     "hang_days": [
+      20,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      2000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia Ceroxylon quindiuense (dioecious, fruit globose 1.6-2 cm, orange-red when ripe, eaten by yellow-eared parrots and other birds); Sanin & Galeano 2011 (interfoliar branched inflorescences); flowering, pollinators and ripening estimated from Ceroxylon"
+    }
    }
   ],
   "canopy": [
@@ -234,25 +286,26 @@
     "color": "#2A5A38",
     "accent": "#F0E8C0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      100,
+      250
+     ],
+     "shade": "tolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Young plants carry the biggest leaves of any rhododendron (up to 70-90 cm long), glossy dark green above with silvery-buff felt beneath, held in a loose rosette at the top of a stout, sparsely branched stem. Leaves get smaller as the plant ages and starts to flower; seedlings start tiny on moss and need shelter, humidity and part shade.",
+     "confidence": "estimated",
+     "source": "Wikipedia Rhododendron sinogrande (tree to 12 m; leaves up to 70 cm, occasionally 90 x 35 cm; flowers up to 8 cm, late spring; 2,100-3,600 m); larger leaves on young plants, slow flowering (15+ yr from seed) and growth rates from horticultural experience (estimated)"
     },
     "repro": {
      "mode": "seed",
@@ -379,7 +432,57 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "tiered whorls of huge leathery leaves"
+    "silhouette": "tiered whorls of huge leathery leaves",
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 6,
+     "flower_colour": "#f1e7a6",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      30
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bird",
+      "bee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      3,
+      5
+     ],
+     "unripe_colour": "#6f7f45",
+     "ripe_colour": "#6a4a2f",
+     "ripen_days": [
+      180,
+      240
+     ],
+     "hang_days": [
+      60,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      500
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Wikipedia (flowers up to 8 cm, late spring); creamy to pale yellow bells with a crimson basal blotch in big trusses of about 20-30 (horticultural knowledge); pollinators, capsule size and timing estimated from other large-leaved rhododendrons (subsect. Grandia)"
+    }
    },
    {
     "name": "Campbell's magnolia",
@@ -410,25 +513,26 @@
     "color": "#3E7A50",
     "accent": "#F0A0C0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      100,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two thick oval cotyledons, then alternate, large soft oblong leaves. The sapling is a vigorous single-leadered, rather narrow upright tree (shoots up to ~1.2 m a year) with stout grey twigs; the big furry flower buds are absent for the first 15-30 years, and the crown only broadens into a spreading dome with age.",
+     "confidence": "documented",
+     "source": "PFAF (at least 20 yr from seed to flower; beetle pollinated; seed needs winter cold, may take 18 months); T. Stone 'Plant of the week' (15 yr white forms to 30 yr pink forms from seed, ~10 yr grafted; young trees add up to 4 ft/yr); Wikipedia (30 m, rarely 45; flowers 15-25 cm); lifespan estimated"
     },
     "repro": {
      "mode": "seed",
@@ -556,7 +660,57 @@
      "spacing_m": 0.8,
      "confidence": "documented"
     },
-    "silhouette": "spreading bare crown of pink goblets"
+    "silhouette": "spreading bare crown of pink goblets",
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 20,
+     "flower_colour": "#e7a3bd",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "beetle",
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      10,
+      20
+     ],
+     "unripe_colour": "#6e8f3a",
+     "ripe_colour": "#a8452f",
+     "ripen_days": [
+      150,
+      200
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      240
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia/PFAF (flowers before the leaves late winter-spring, white to deep pink, 15-25 cm; beetle pollinated); fruit a cylindrical cone-like aggregate of follicles that split to hang out red seeds on threads (Flora of China, Yulania); ripening, set and crop estimated from Magnolia"
+    }
    },
    {
     "name": "Cloud-forest oak",
@@ -672,7 +826,77 @@
      "spacing_m": 1.5,
      "confidence": "documented"
     },
-    "silhouette": "massive spreading oak dripping with epiphytes"
+    "silhouette": "massive spreading oak dripping with epiphytes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      25,
+      80
+     ],
+     "first_seed_years": 25,
+     "lifespan_years": [
+      200,
+      400
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal: the acorn stays in the moist humus and sends up a slender shoot with a few stiff, leathery, dark green, obovate leaves with toothed tips. Seedlings persist for years in the gloom under bamboo (Chusquea) and ferns, growing into a thin, sparsely branched whip that shoots up when a gap opens; old trees are draped in mosses, bromeliads and orchids.",
+     "confidence": "estimated",
+     "source": "Wikipedia Quercus costaricensis (to 3,100 m; tough leathery toothed leaves; wind-pollinated; squirrels disperse acorns); Kappelle's studies of Talamanca oak forests (from knowledge); growth and ages estimated from tropical montane oaks"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 6,
+     "flower_colour": "#c2b664",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.12,
+     "fruit_kind": "nut",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      3.5
+     ],
+     "unripe_colour": "#7f9a58",
+     "ripe_colour": "#6e4a2c",
+     "ripen_days": [
+      300,
+      540
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      45,
+      240
+     ],
+     "crop_per_tree": [
+      500,
+      8000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (wind-pollinated; squirrels disperse the acorns); timing estimated from Central American oaks: flowering with the dry-season leaf flush, acorns maturing over roughly 10-18 months, big crops every few years"
+    }
    },
    {
     "name": "Clusia",
@@ -788,7 +1012,78 @@
      "spacing_m": 1.0,
      "confidence": "estimated"
     },
-    "silhouette": "flat-topped dense dark crown, thick leaves"
+    "silhouette": "flat-topped dense dark crown, thick leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      60,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds wrapped in bright orange-red arils are dropped by birds, often onto branches or rock crevices. The seedling has thick, glossy, paddle-shaped (obovate) leaves in opposite pairs like the adult, and on a host tree sends long aerial roots to the ground before becoming self-supporting. In the open it grows as a stout single-stemmed sapling.",
+     "confidence": "estimated",
+     "source": "Pipoly & Graf / Flora of Ecuador and Colombia (Clusia multiflora: dioecious tree or hemiepiphyte 5-20 m in Andean and Central American montane forest, white to pink flowers with resin rewards, capsules splitting to show arillate seeds); growth and ages estimated from Clusia literature"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 5,
+     "flower_colour": "#f5e6ea",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      15
+     ],
+     "pollinators": [
+      "bee",
+      "stingless_bee"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      2,
+      4
+     ],
+     "unripe_colour": "#6e8e4a",
+     "ripe_colour": "#8c6a3e",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Clusia pollination studies (Bittrich & Amaral: resin-collecting bees incl. stingless bees on male and female flowers); Flora of Ecuador (Clusia multiflora many-flowered cymes, white to pink cup flowers; globose capsule opening by valves to show seeds in orange-red arils, bird-dispersed); timings estimated"
+    }
    },
    {
     "name": "Giant highland banana",
@@ -819,25 +1114,26 @@
     "color": "#3E9A3E",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       365
-      ],
-      [
-       "old",
-       730
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      5,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: narrow, lance-shaped first leaves rolled into a short soft pseudostem, each new leaf broader until it is a small copy of the adult. It builds a massive green pseudostem (to ~15 m and ~1 m thick) crowned by leaves up to 5 m long, the largest of all herbs; like other bananas each pseudostem flowers once and then dies.",
+     "confidence": "estimated",
+     "source": "Wikipedia Musa ingens (pseudostem to 15 m, 20 m with leaves, ~94 cm dbh; montane New Guinea); growth rate, time to flowering and pseudostem lifespan estimated from wild Musa, slowed for cool highland forest"
     },
     "repro": {
      "mode": "both",
@@ -962,7 +1258,56 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "giant banana, huge tattered paddle leaves"
+    "silhouette": "giant banana, huge tattered paddle leaves",
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 7,
+     "flower_colour": "#6e4a44",
+     "flower_form": "tube",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      16,
+      20
+     ],
+     "pollinators": [
+      "bat",
+      "bird"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      14,
+      18
+     ],
+     "unripe_colour": "#5f8a3c",
+     "ripe_colour": "#d6c24a",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      5,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      21
+     ],
+     "crop_per_tree": [
+      200,
+      400
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "Wikipedia Musa ingens (bunch up to 60 kg of about twenty hands of 16-20 fruits, over 300 fruits; fruit ~18 cm with yellowish pulp and blackish-brown seeds, sweet and good when cooked); bract colour, pollinators (bats, birds) and timings estimated from wild Musa"
+    }
    },
    {
     "name": "Gnarled cloud-forest tree",
@@ -1082,7 +1427,78 @@
      "spacing_m": 0.6,
      "confidence": "estimated"
     },
-    "silhouette": "gnarled grey tree with a fine-textured crown"
+    "silhouette": "gnarled grey tree with a fine-textured crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      250
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine, hairy, wind-borne seeds sprout on moss and humus; the seedling has small opposite compound leaves with only a few leaflets on a winged midrib, the young shoots densely rusty-hairy. Saplings are slender and leafy, often leaning or forking low, and after cutting or fire they resprout into bushy multi-stemmed clumps; adult leaves carry many pairs of small leaflets.",
+     "confidence": "estimated",
+     "source": "Wikipedia (EN/ES, Weinmannia tomentosa, encenillo): 15-25 m, trunk to 70 cm, 2500-3300 m in the Andes of Colombia and Venezuela, leaves 2-7 cm. Germination, growth rate, first flowering and lifespan estimated from cloud-forest trees of similar habit."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      11
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#f2ead2",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      150
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#b8483a",
+     "ripe_colour": "#a8743e",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      5000,
+      200000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Spanish Wikipedia (Weinmannia tomentosa): creamy-white flower spikes 4-6 cm, Aug-Nov; fruits Oct-Jan, small capsules that turn reddish and then caramel when ripe and open; seeds 1 mm with hairs for wind dispersal; pollinated by honeybees and tachinid flies. Flower counts, fruit set, hang, rot and crop estimated."
+    }
    },
    {
     "name": "Hagenia",
@@ -1202,7 +1618,78 @@
      "spacing_m": 1.2,
      "confidence": "estimated"
     },
-    "silhouette": "wide flat umbrella crown, drooping red plumes"
+    "silhouette": "wide flat umbrella crown, drooping red plumes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      8,
+      30
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seeds need bare, light-flooded ground (landslips, fire scars, forest gaps). Seedlings grow fast as a stout single stem with big pinnate leaves, silky-hairy with toothed leaflets and large stipules sheathing the stem; at 5-10 m it branches into a short thick trunk with a flat, umbrella-like crown of leaf tufts at the branch ends.",
+     "confidence": "estimated",
+     "source": "ICRAF Agroforestree database (Hagenia abyssinica: tree to 20 m; ~400000-500000 seeds/kg). Growth, gap regeneration and ages estimated for this light-demanding Afromontane pioneer."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#c65a5a",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      300,
+      3000
+     ],
+     "pollinators": [
+      "wind",
+      "bee"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "achene",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      0.3,
+      0.6
+     ],
+     "unripe_colour": "#c77266",
+     "ripe_colour": "#8a5a44",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      20000,
+      500000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree database (polygamo-dioecious; drooping terminal panicles up to 60 x 30 cm, female pinkish-red and bulkier, male feathery orange-buff to white; fruit a small dry, winged, one-seeded brown achene; flowers and seeds through the year except the coldest months). Pollination, timings and counts estimated."
+    }
    },
    {
     "name": "Podocarp",
@@ -1318,7 +1805,77 @@
      "spacing_m": 0.5,
      "confidence": "estimated"
     },
-    "silhouette": "rounded dark crown of narrow leaves"
+    "silhouette": "rounded dark crown of narrow leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      40,
+      130
+     ],
+     "first_seed_years": 18,
+     "lifespan_years": [
+      200,
+      500
+     ],
+     "shade": "tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings persist in the shade of the cloud-forest understory. Saplings are narrow, dense cones or columns with a straight leader and spirally set, glossy, linear-lanceolate, sometimes curved leaves that are much larger than the adult's: up to 15 cm long and 2 cm wide, versus 4-9 cm long and under 1.2 cm wide on mature trees.",
+     "confidence": "estimated",
+     "source": "Gymnosperm Database (trees to 30 m and 150 cm dbh; juvenile leaves to 15 x 2 cm vs adult 4-9 cm x 7-12 mm; upper montane cloud forest, 825-3,300 m). Growth rate, germination, age at first cones and lifespan estimated from tropical-montane Podocarpus."
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 7,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#7e9a5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.3,
+      1.8
+     ],
+     "unripe_colour": "#6f8f4a",
+     "ripe_colour": "#b32a3a",
+     "ripen_days": [
+      150,
+      240
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Gymnosperm Database (dioecious; pollen cones solitary, 2.5-3 cm; seed on a succulent red receptacle 6-10 mm, seed with epimatium 7-8 mm, olive green; ripe colour given is the receptacle). Phenology, ripening time, crop and decay estimated from other Podocarpus; bird dispersed."
+    }
    },
    {
     "name": "Tree rhododendron",
@@ -1349,25 +1906,26 @@
     "color": "#2A5A38",
     "accent": "#D02030",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 12,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seeds sprout on moss or mossy banks: two minute round cotyledons, then tiny hairy leaves. For years it is a small, slow sapling, each year's shoot ending in a tuft of long, leathery, dark green leaves, silvery to rusty-felted beneath; later one or a few stems lead and it becomes a tree with rough, peeling reddish-brown bark.",
+     "confidence": "estimated",
+     "source": "Wikipedia Rhododendron arboreum (usually 12 m, to 20 m; leaves 7-19 cm; trusses of 15-20 bell-shaped flowers 5 cm wide, red, pink or white); growth, ages and seedling habits estimated from Himalayan forest ecology and horticultural experience with tree rhododendrons"
     },
     "repro": {
      "mode": "seed",
@@ -1494,7 +2052,57 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "crooked red-barked tree, scarlet flower domes"
+    "silhouette": "crooked red-barked tree, scarlet flower domes",
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 5,
+     "flower_colour": "#c81e32",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      15,
+      20
+     ],
+     "pollinators": [
+      "bird",
+      "bee",
+      "bumblebee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1.5,
+      3
+     ],
+     "unripe_colour": "#7a8a4a",
+     "ripe_colour": "#6a4a30",
+     "ripen_days": [
+      200,
+      280
+     ],
+     "hang_days": [
+      60,
+      300
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (trusses of 15-20 bell-shaped red flowers 5 cm wide); Himalayan observations of nectar-feeding birds (sunbirds, bulbuls, white-eyes, yuhinas) and bees at the flowers (knowledge); flowers eaten locally, capsules not; capsule timing, set and crop estimated"
+    }
    }
   ],
   "shrub": [
@@ -1609,7 +2217,30 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "scrambling bamboo draped over the canopy"
+    "silhouette": "scrambling bamboo draped over the canopy",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      4,
+      10
+     ],
+     "culm_days": 90,
+     "first_seed_years": 30,
+     "lifespan_years": [
+      8,
+      15
+     ],
+     "shade": "tolerant",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings after a mass flowering look like thin grass. The young clump makes new culms each season, at first thread-thin and short, each generation thicker and taller, and dense bunches of whiskery branchlets grow at every node. Its culms arch and lean into surrounding shrubs and trees, scrambling up to several metres.",
+     "confidence": "estimated",
+     "source": "Clark 1989/1995 Chusquea studies (Andean Chusquea: solid culms, clustered branchlets, many species gregarious and monocarpic after long cycles); Flora of Colombia and Venezuela (scandent montane bamboo, 2000-3500 m); flowering cycle, growth and culm life estimated"
+    }
    },
    {
     "name": "Andean miconia",
@@ -1725,7 +2356,78 @@
      "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "bushy shrub of paired three-veined leaves"
+    "silhouette": "bushy shrub of paired three-veined leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with tiny round cotyledons, then opposite, elliptic, leathery leaves with three strong curved veins from the base, as in the adult. It branches low into a small twiggy shrub of stiff paired leaves, often in forest edges and montane scrub, later a small, rounded tree.",
+     "confidence": "estimated",
+     "source": "Estimated from Andean montane Miconia (Melastomataceae) shrubs and small trees: bird-dispersed berries, tiny light-germinating seeds, moderate growth; habit from Flora of Ecuador/Tropicos specimen descriptions"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 1,
+     "flower_colour": "#f2ece4",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      150
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      0.7
+     ],
+     "unripe_colour": "#8aa052",
+     "ripe_colour": "#2f2a4a",
+     "ripen_days": [
+      45,
+      80
+     ],
+     "hang_days": [
+      5,
+      25
+     ],
+     "drop": "falls",
+     "rot_days": [
+      5,
+      15
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Estimated from Andean Miconia: terminal panicles of small white 5-petalled flowers with poricidal anthers buzzed by bees and bumblebees; small blue-black many-seeded berries eaten by birds; flowering spread through the year near the equator"
+    }
    },
    {
     "name": "Andean tree fern",
@@ -1842,7 +2544,30 @@
      "spacing_m": 0.2,
      "confidence": "documented"
     },
-    "silhouette": "wide frond crown on a fibrous trunk"
+    "silhouette": "wide frond crown on a fibrous trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      45,
+      150
+     ],
+     "height_years": [
+      15,
+      40
+     ],
+     "trunk_years": 3,
+     "first_seed_years": 6,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A green heart-shaped prothallus on bare soil gives rise to a few small, simple, then pinnate fronds. The young plant is a trunkless rosette of arching 2-pinnate fronds with scaly, prickly stalks, common on landslides, road banks and pasture edges; a slender trunk starts after a few years and carries a spreading crown of long fronds.",
+     "confidence": "estimated",
+     "source": "Arens & Sanchez Baracaldo 2001 Am. J. Bot. 88 (performance of C. caracasana across a successional mosaic in an Andean cloud forest; a species of disturbed, open and secondary sites) - abstract only; trunk growth and ages estimated from neotropical Cyathea (C. arborea ~30 cm/yr)"
+    }
    },
    {
     "name": "Enset",
@@ -1873,25 +2598,27 @@
     "color": "#3E9A3E",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       365
-      ],
-      [
-       "old",
-       730
-      ]
+     "life": "monocarpic",
+     "germination_days": [
+      20,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      2.5,
+      6
+     ],
+     "trunk_years": 1.5,
+     "first_seed_years": 6,
+     "lifespan_years": [
+      7,
+      14
+     ],
+     "shade": "intermediate",
+     "juvenile": "establishment",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal germination from a big hard black seed. First leaves small, narrow and rolled; the seedling becomes a vase of erect paddle-shaped bright-green leaves with reddish midribs rising from a swelling underground corm, the leaf sheaths building a short fat pseudostem within 1-2 years. Single-stemmed: wild plants do not sucker. Flowers once (after ~4-8 yr, later in cold highlands), then dies.",
+     "confidence": "documented",
+     "source": "Kew POWO (6-12 m, flowers after ~4-8 yr); Useful Tropical Plants (2-10 yr from germination to flowering, ~6 months flower to fruit, germination within ~3 months); Plant Biology 2022 enset reproductive/germination ecology study (T50 ~35-36 days); Tropical Conservation Science 2019 camera-trap study of enset flower and fruit visitors"
     },
     "repro": {
      "mode": "both",
@@ -2016,7 +2743,57 @@
      "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "swollen-based banana with upright red-ribbed leaves"
+    "silhouette": "swollen-based banana with upright red-ribbed leaves",
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 3,
+     "flower_colour": "#efe4c8",
+     "flower_form": "tube",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      15,
+      40
+     ],
+     "pollinators": [
+      "bat",
+      "mammal",
+      "bird"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      8,
+      15
+     ],
+     "unripe_colour": "#6f8f3e",
+     "ripe_colour": "#d9862a",
+     "ripen_days": [
+      150,
+      210
+     ],
+     "hang_days": [
+      15,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      45
+     ],
+     "crop_per_tree": [
+      80,
+      400
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Kew POWO (pendulous 2-3 m inflorescence, maroon bracts each over 30-40 cream flowers 4-8.5 cm long; fruit 8-15 cm, orange, 15-25 hard black seeds in scant pulp); Tropical Conservation Science 2019 (flowers year-round, visited at night by African dormice, Megaloglossus nectar bats, sunbirds); ~6 months to fruit. Fruit set, hang, rot, crop estimated."
+    }
    },
    {
     "name": "Fuchsia",
@@ -2132,7 +2909,77 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "arching shrub hung with red tubular flowers"
+    "silhouette": "arching shrub hung with red tubular flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      35
+     ],
+     "height_years": [
+      1.5,
+      5
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedlings with two round cotyledons and soft, hairy, opposite oval leaves on reddish stalks. Grows fast into a soft-wooded, open, arching shrub of a few stems with big velvety leaves, often in whorls of 3; can flower in its second year, hanging clusters of long scarlet tubes from the branch tips.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Fuchsia boliviana: shrub 2-4 m, rarely 6 m; propagated by seed or cuttings; needs part shade). Growth rates and ages estimated from Fuchsia horticulture."
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      5
+     ],
+     "hemisphere": "south",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#d42a3a",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      40
+     ],
+     "pollinators": [
+      "bird"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.0,
+      2.6
+     ],
+     "unripe_colour": "#7e9a57",
+     "ripe_colour": "#5a1f3d",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      5,
+      20
+     ],
+     "crop_per_tree": [
+      100,
+      1500
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (scarlet flowers 3-7 cm long in drooping corymbs up to 20 cm; edible red-purple fruit 10-26 mm); hummingbird pollination as in other long-tubed Andean fuchsias. Season, timings and counts estimated."
+    }
    },
    {
     "name": "Mountain bamboo",
@@ -2245,7 +3092,30 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "tall dense bamboo stand, arching tops"
+    "silhouette": "tall dense bamboo stand, arching tops",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      4,
+      10
+     ],
+     "culm_days": 90,
+     "first_seed_years": 30,
+     "lifespan_years": [
+      8,
+      14
+     ],
+     "shade": "intermediate",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are thin grassy shoots with a few narrow leaves, forming a small tuft. Each year the young clump sends up taller, thicker culms from its short, thick rhizomes: in the rainy season they emerge as sheathed spears, reach full height in 2-4 months and branch the following year. Full-size culms (up to 20 m tall and 5-12 cm thick) appear only after several years.",
+     "confidence": "documented",
+     "source": "PROTA via Pl@ntUse (Sinarundinaria/Yushania alpina): culms to 20 m and 12.5 cm, new culms reach full height in 2-4 months and branch the next year, usable at 4 yr, individual culms live 8-14 yr, rhizome networks at least 40 yr, flowering intervals 15-40 yr (synchronous in patches); Wikipedia: 2500-3300 m. Seedling growth estimated."
+    }
    }
   ],
   "ground": [
@@ -2337,7 +3207,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "trailing sprays of tiny glossy leaves"
+    "silhouette": "trailing sprays of tiny glossy leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seeds sprout on wet moss or mossy banks in 1-3 weeks with two tiny round cotyledons. The seedling is a small succulent sprig of tiny, glossy, oval, finely toothed leaves in two rows; it branches from the base into arching, fern-like stems densely clothed in little leaves, with tiny white to pink flowers often within its first year.",
+     "confidence": "estimated",
+     "source": "Wikipedia (shrub-like begonia to 1 m with succulent pendent stems ~45 cm clothed in small glossy oval leaves, small white flowers in panicles, no frost tolerance); germination and flowering times from general Begonia species culture; lifespan estimated."
+    }
    },
    {
     "name": "Filmy fern",
@@ -2427,7 +3319,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "translucent filmy fern film on mossy trunks"
+    "silhouette": "translucent filmy fern film on mossy trunks",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Green spores germinate within days into thread- or ribbon-like gametophytes on wet bark or rock; the first sporophyte fronds are tiny, simple to lobed, translucent and one cell thick. A hair-thin creeping rhizome then spreads, sending up small, finely divided, glossy, filmy fronds that build a delicate, often hanging, translucent green mat in constantly wet cloud forest.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Hymenophyllaceae: green spores, long-lived thread or ribbon gametophytes, fronds one cell thick, thin wiry creeping rhizomes, individuals persist many years, desiccation-sensitive); timings estimated from the family."
+    }
    },
    {
     "name": "Hard fern",
@@ -2517,7 +3431,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "small rosette of ladder fronds"
+    "silhouette": "small rosette of ladder fronds",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      150
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout into small heart-shaped prothalli on damp banks and roadcuts; after 2-4 months the first tiny, simple, rounded fronds appear. The young fern is a small tuft of once-pinnate fronds whose new growth unfurls pinkish-red to coppery before turning glossy green; it spreads by short stolons into loose colonies.",
+     "confidence": "estimated",
+     "source": "Estimated from Blechnum spore culture (sporophytes ~2-4 months after sowing) and floras of the Neotropics (fronds 30-60 cm, reddish new fronds, stoloniferous, shaded banks and open forest); no species growth data found."
+    }
    },
    {
     "name": "Moss carpet",
@@ -2597,7 +3533,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "fern-like lacy moss carpet"
+    "silhouette": "fern-like lacy moss carpet",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores or broken shoot tips sprout into a green protonemal film on moist logs, soil or rock, from which creeping shoots arise. Each shoot becomes a flat, twice- to thrice-pinnate, fern-like frond 3-10 cm long, yellow-green to dark green, interwoven into a soft, lacy carpet; red setae with curved brown capsules rise from it in autumn and winter.",
+     "confidence": "estimated",
+     "source": "Wikipedia Thuidium delicatulum (delicate fern moss of North and South America, Alaska to Brazil); moss floras (regularly 2-3-pinnate fronds on moist forest soil, logs and rock, capsules ripening autumn-winter). Spore-to-shoot time, spread rate (a few cm a year) and patch age estimated from pleurocarpous forest mosses."
+    }
    },
    {
     "name": "Peperomia",
@@ -2687,7 +3645,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "succulent-leaved little mound"
+    "silhouette": "succulent-leaved little mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny, with two round cotyledons, then small fleshy leaves. The young plant becomes a clump of erect to sprawling, often reddish, succulent stems with whorls of 3-6 small, narrow, fleshy leaves at each node (like a bedstraw), tipped by thin, green, catkin-like flower spikes.",
+     "confidence": "estimated",
+     "source": "Estimated from Peperomia biology (small-seeded, fast-maturing succulent herbs of moist montane rocks, banks and tree trunks) and the species' whorled-leaf description in Andean floras"
+    }
    }
   ],
   "epiphyte": [
@@ -2757,7 +3737,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "short pale lichen beards on twigs"
+    "silhouette": "short pale lichen beards on twigs",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      180,
+      730
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Soredia or broken bits lodge on twigs and bark and grow into a tiny pale grey-green tuft a few mm tall, fixed by a blackened basal holdfast. Young thalli are shrubby and upright with short side fibrils; as they lengthen they bend over and hang as a beard of stringy, branched strands, each with a stretchy white central cord that shows when a strand is gently pulled apart.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Usnea): thalli from a few mm in polluted air to over 3 m, spread by fragments, soredia or isidia and by spores, very sensitive to sulphur dioxide, slow-growing in nature. Growth (on the order of 1 cm a year), establishment and ages estimated from pendulous beard lichens."
+    }
    },
    {
     "name": "Epidendrum orchid",
@@ -2847,7 +3849,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "leafy canes with an orange flower ball"
+    "silhouette": "leafy canes with an orange flower ball",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "protocorm",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-like seed germinates (with a mycorrhizal fungus) into a tiny green protocorm; first leaf and roots follow after 2-3 months. Seedlings are miniature reed-stems: thin upright canes with two rows of small fleshy leaves, forming a small tuft. Old flower spikes often grow keikis (plantlets with aerial roots) that drop and root, so clumps spread; each cane lives a few years.",
+     "confidence": "estimated",
+     "source": "Estimated from reed-stem Epidendrum culture and seed studies: orchidmall.com reed-stem Epidendrum notes (E. secundum canes 1-30 in, keikis on old spikes); symbiotic seed germination studies of Andean Epidendrum (e.g. E. geminiflorum, Ecuador)."
+    }
    },
    {
     "name": "Epiphytic moss and liverworts",
@@ -2927,7 +3951,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "flat leafy liverwort hanging in mats"
+    "silhouette": "flat leafy liverwort hanging in mats",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate into a tiny green cell mass that buds leafy shoots; young plants form small, flat, olive-green tufts on bark. Shoots then grow into loose, hanging or spreading fronds with two rows of overlapping, rounded, toothed leaves lying flat like a feather, forking as they lengthen.",
+     "confidence": "estimated",
+     "source": "Estimated from leafy liverworts (Plagiochila: large, frond-like, pendent or spreading epiphytes of humid shaded forests and oceanic islands, shoots growing a few cm a year); no species-specific growth data found"
+    }
    },
    {
     "name": "Lowe's pitcher",
@@ -2958,25 +4004,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: a tiny rosette of narrow leaves tipped with miniature pitchers. For years it stays a slow rosette making rounded, winged lower pitchers; then a stem up to 10 m climbs or hangs from mossy trees and makes the famous upper pitchers: hard, glossy, strongly waisted with a wide flared mouth and a lid bristling with white 'nectar' hairs under which tree shrews feed and leave droppings.",
+     "confidence": "estimated",
+     "source": "Wikipedia Nepenthes lowii (1650-2600 m mossy forest, terrestrial or epiphytic; stem >10 m; gets 57-100% of leaf nitrogen from tree shrew droppings; raceme to 45 cm, capsules ~17 x 4 mm); growth and ages estimated from highland Nepenthes cultivation (very slow)"
     },
     "repro": {
      "mode": "both",
@@ -3109,7 +4156,57 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "scrambling vine hung with flared pitchers"
+    "silhouette": "scrambling vine hung with flared pitchers",
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 4,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#7b3b2c",
+     "flower_form": "spike",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      40,
+      100
+     ],
+     "pollinators": [
+      "fly",
+      "bee",
+      "moth"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1.5,
+      2.0
+     ],
+     "unripe_colour": "#6f8a3a",
+     "ripe_colour": "#8a6a40",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      180
+     ],
+     "crop_per_tree": [
+      20,
+      200
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (raceme: peduncle to 20 cm, rachis to 25 cm, two-flowered partial peduncles, sepals to 5 mm; capsules ~17 x 4 mm); Nepenthes are dioecious, flower irregularly through the year, visited by flies, bees, wasps and moths; capsules split to shed tiny wind-borne seeds; timings estimated"
+    }
    },
    {
     "name": "Tank bromeliad",
@@ -3189,7 +4286,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "tank rosette of strap leaves with a red spike"
+    "silhouette": "tank rosette of strap leaves with a red spike",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1.5,
+      3
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      5,
+      9
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are minute, silvery-scaly tufts of narrow leaves that at first hold no water; as they grow the leaf bases widen into an upright, funnel-shaped, pale yellow-green tank rosette. It flowers once, a simple spike of white flowers in green bracts with dark stripes, topped by red-orange bracts, then makes pups and dies.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Guzmania monostachia: C3-CAM tank epiphyte of Florida, the Caribbean and the Andes); bromeliad horticulture and ecophysiology literature (monocarpic rosettes, simple striped spike with red tip, pups after flowering). Ages estimated."
+    }
    },
    {
     "name": "Vireya rhododendron",
@@ -3220,25 +4339,26 @@
     "color": "#2A5A38",
     "accent": "#F09030",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Vireya seeds carry a thread-like tail at each end and lodge in moss on branches or banks. The seedling is a tiny sprig of small, scaly, elliptic leaves; it grows in quick flushes, each ending in a whorl of glossy, leathery leaves, and becomes a loose, straggly, few-stemmed shrub perched on a mossy branch or rooted in the ground.",
+     "confidence": "estimated",
+     "source": "Wikipedia Rhododendron javanicum (evergreen shrub to 5 m, terrestrial or epiphytic; bright orange spring flowers; Indonesia, Malaysia, Philippines); germination, growth and first flowering estimated from vireya growers' experience (seedlings flower in about 2-4 years)"
     },
     "repro": {
      "mode": "seed",

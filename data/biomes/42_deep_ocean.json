@@ -115,7 +115,29 @@
      "confidence": "documented",
      "note": "floating alga; no stem surface"
     },
-    "silhouette": "floating golden-brown tangle with berry floats"
+    "silhouette": "floating golden-brown tangle with berry floats",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.15,
+      0.35
+     ],
+     "first_seed_years": 0.2,
+     "lifespan_years": [
+      0.5,
+      2
+     ],
+     "shade": "intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedlings: it floats all its life, never attaches and has no known sexual stage; new plants are fragments that break off and keep growing (days here = a fragment resuming growth). A young clump is a small floating tangle of golden-brown, finely thorny stems with broad (3-6 mm) toothed blades and smooth, round, pea-sized air bladders on short stalks.",
+     "confidence": "estimated",
+     "source": "Parr 1939 and later Sargasso Sea work (holopelagic, reproduces only by fragmentation); Lapointe 1995 Limnol Oceanogr (pelagic Sargassum doubles in ~11 days in nutrient-rich coastal water, much slower offshore); Schell et al. 2015 (S. fluitans vs S. natans morphology); clump age estimated"
+    }
    },
    {
     "name": "Pelagic sargassum",
@@ -211,7 +233,29 @@
      "confidence": "documented",
      "note": "floating alga; no stem surface"
     },
-    "silhouette": "floating golden-brown tangle with berry floats"
+    "silhouette": "floating golden-brown tangle with berry floats",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.15,
+      0.35
+     ],
+     "first_seed_years": 0.2,
+     "lifespan_years": [
+      0.5,
+      2
+     ],
+     "shade": "intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedlings: it floats all its life with no known sexual stage; new plants are fragments that break off and keep growing (days here = a fragment resuming growth). A young clump is a bushy floating tangle of smooth golden-brown stems with long, very narrow (1-3 mm) toothed blades and round air bladders, each tipped with a small spine.",
+     "confidence": "estimated",
+     "source": "Parr 1939 and Wikipedia Sargassum natans (holopelagic, reproduces by fragmentation); Lapointe 1995 Limnol Oceanogr (doubling in ~11 days in nutrient-rich water, slower in the open Sargasso Sea); Schell et al. 2015 (narrow blades and spine-tipped bladders distinguish S. natans); clump age estimated"
+    }
    }
   ],
   "epiphyte": []

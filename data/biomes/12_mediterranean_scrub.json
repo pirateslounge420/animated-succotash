@@ -125,7 +125,77 @@
      "spacing_m": 0.6,
      "confidence": "documented"
     },
-    "silhouette": "ragged open pine, leaning trunk, tufted crown"
+    "silhouette": "ragged open pine, leaning trunk, tufted crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      18,
+      60
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      120,
+      250
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "After autumn rains, epigeal seedlings with 6-9 cotyledons put out soft, single, blue-green primary needles; thin, bright-green paired needles follow in the second year. Young trees grow fast into loose, open, irregular cones of light-green foliage and may already bear cones at 5-10 years; the crown later becomes open and rounded over grey bark.",
+     "confidence": "estimated",
+     "source": "Wikipedia (15-25 m; cones 5-12 cm, green then glossy red-brown at 24 months, opening slowly over years or after fire); very early coning (from about 5-10 years), growth and lifespan estimated from Mediterranean post-fire pine studies"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#a0506a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      5,
+      12
+     ],
+     "unripe_colour": "#6f8a3a",
+     "ripe_colour": "#9a4a2a",
+     "ripen_days": [
+      480,
+      560
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2000
+     ],
+     "crop_per_tree": [
+      50,
+      2000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia (cones 5-12 cm, green, ripening glossy red-brown when 24 months old, then opening slowly over several years or quickly after fire); the small seeds are ground for the Tunisian pudding assida zgougou; crop and decay estimated"
+    }
    },
    {
     "name": "Coast live oak",
@@ -237,7 +307,77 @@
      "spacing_m": 1.2,
      "confidence": "documented"
     },
-    "silhouette": "broad dark dome on short forked trunk"
+    "silhouette": "broad dark dome on short forked trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      15,
+      50
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      150,
+      300
+     ],
+     "shade": "tolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal: the acorn stays in the soil and first drives down a taproot (about 70 cm in 2 months). The shoot is a thin, reddish, downy stem with small, cupped, glossy, spiny-toothed evergreen leaves. Seedlings grow slowly in the shade of shrubs or grass for years, then form a slender sapling before spreading into a broad dome; it resprouts strongly after fire.",
+     "confidence": "documented",
+     "source": "USDA FEIS Quercus agrifolia (acorns germinate 15-50 d after falling, no dormancy; taproot ~70 cm in 2 months; slow natural top growth; recruitment best in shade; shade tolerant throughout life; 6-25 m; trees may live over 250 yr); first acorn age estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 6,
+     "flower_colour": "#c9bf6a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "nut",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      2.5,
+      3.8
+     ],
+     "unripe_colour": "#8aa35a",
+     "ripe_colour": "#7a4e2a",
+     "ripen_days": [
+      170,
+      220
+     ],
+     "hang_days": [
+      10,
+      150
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      200,
+      10000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS Quercus agrifolia (catkins Mar-Apr, wind-pollinated; acorns 2.5-3.8 cm, the only California black oak maturing in 1 year, ripen Sep-Oct; most drop in fall, some hang until spring; crop failures ~half of years; scrub jays cache ~5,000 acorns each); acorn meal was leached and cooked"
+    }
    },
    {
     "name": "Cork oak",
@@ -349,7 +489,77 @@
      "spacing_m": 1.2,
      "confidence": "documented"
     },
-    "silhouette": "wide rounded crown over thick corky trunk"
+    "silhouette": "wide rounded crown over thick corky trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      20,
+      65
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      200,
+      400
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal: the acorn stays in the soil; a slender stem appears with small, toothed, dark evergreen leaves, grey-felted beneath. Within a few years the bark begins thickening into pale, spongy, deeply fissured cork. Saplings grow best sheltered by shrubs but need more light later; the first 'virgin' cork is stripped when the tree is about 25 years old.",
+     "confidence": "documented",
+     "source": "European Atlas of Forest Tree Species (Quercus suber: usually 20 m, to 25 m; slow-growing; about 200 yr or more); Wikipedia (10-15 m typical; first cork harvest at ~25 yr, then every 9-12 yr; trees can live over 400 yr); growth curve, shade and first acorns estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 5,
+     "flower_colour": "#cdbb62",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "nut",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      2,
+      4.5
+     ],
+     "unripe_colour": "#8aa35a",
+     "ripe_colour": "#8a4a2a",
+     "ripen_days": [
+      180,
+      540
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      300
+     ],
+     "crop_per_tree": [
+      2500,
+      7500
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "European Atlas of Forest Tree Species (flowers from April through summer; both annual and biennial acorns, 2-3 cm, fairly deep cup with long scales); Wikipedia (acorns 2-4.5 cm, bare, smooth, shiny brownish-red; 15-30 kg of acorns per tree per year)"
+    }
    },
    {
     "name": "Holm oak",
@@ -462,7 +672,77 @@
      "spacing_m": 1.2,
      "confidence": "documented"
     },
-    "silhouette": "dense dark rounded dome, low crown"
+    "silhouette": "dense dark rounded dome, low crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      25,
+      90
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      300,
+      1200
+     ],
+     "shade": "tolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Hypogeal: the acorn stays buried and roots deeply before a thin shoot appears. Seedlings and saplings carry holly-like leaves with spiny teeth, dark glossy green above and grey-felted below; adult leaves are smaller, entire and leathery. Young plants grow slowly in the shade of shrubs and trees, often bushy from browsing, before a single stem leads.",
+     "confidence": "documented",
+     "source": "European Atlas of Forest Tree Species (Quercus ilex: to 25 m, rarely 30; lifespan may exceed 1000 yr; shade-tolerant, regenerates under canopy); Wikipedia (young trees spiny-toothed, adults entire; Encina Tres Patas ~1,200 yr); growth rate and first-acorn age estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 5,
+     "flower_colour": "#d0b85a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "nut",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#8fa860",
+     "ripe_colour": "#6b4a2a",
+     "ripen_days": [
+      150,
+      210
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      300
+     ],
+     "crop_per_tree": [
+      1000,
+      8000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "European Atlas of Forest Tree Species (flowers May-Jun with new leaves; acorns ripen the first year, brown, 1.5-2 cm, a third to half in a light green cup; fall Nov-Jan; big crops every 4-6 yr); Wikipedia (1-3 acorns on a short stalk); sweet acorns of subsp. rotundifolia are eaten raw or roasted"
+    }
    },
    {
     "name": "Mediterranean cypress",
@@ -493,25 +773,26 @@
     "color": "#2A5A38",
     "accent": "#6A5A4A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       60000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      20,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      25,
+      70
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      400,
+      1500
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal, with slender cotyledons; the first shoots bear small, spreading needle-like juvenile leaves before the dark green, appressed scale leaves take over. Fast-growing when young: a dense, narrow cone of upswept branches (a slim column in the fastigiate form, which is what most planted trees are; wild trees spread horizontally).",
+     "confidence": "documented",
+     "source": "conifers.org (20-30 m, fast-growing when young, seeds from its tenth year, up to 1000 yr; cones 2-3 cm, 8-14 scales, serotinous); Wikipedia (to 35 m, >1000 yr, Sarv-e Abarkuh estimated ~4000 yr); USDA Woody Plant Seed Manual (cones ripen second year, 64-280 seeds, 28-d germination test)"
     },
     "repro": {
      "mode": "seed",
@@ -628,7 +909,55 @@
      "spacing_m": 0.15,
      "confidence": "documented"
     },
-    "silhouette": "narrow dark green pencil spire"
+    "silhouette": "narrow dark green pencil spire",
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#9aa35f",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2.5,
+      4
+     ],
+     "unripe_colour": "#6f8a4d",
+     "ripe_colour": "#8a7762",
+     "ripen_days": [
+      600,
+      730
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      365,
+      1800
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (seed cones ovoid-oblong 25-40 mm, 10-14 scales, green maturing brown 20-24 months after pollination, serotinous, can stay sealed for years; pollen cones 3-5 mm shed late winter); conifers.org (glossy brown-grey cones, 8-20 seeds per scale). Set, crop and decay estimated."
+    }
    },
    {
     "name": "Stone pine",
@@ -736,7 +1065,77 @@
      "spacing_m": 0.6,
      "confidence": "documented"
     },
-    "silhouette": "flat umbrella disc on bare pink trunk"
+    "silhouette": "flat umbrella disc on bare pink trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
+     ],
+     "height_years": [
+      25,
+      70
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      150,
+      350
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings have 10-13 cotyledons and for 5-10 years carry juvenile foliage: single, soft, silvery blue-green needles 2-4 cm long, making a bushy, rounded, bluish globe rather than a cone. Adult paired, stiff green needles gradually take over by about age 10; the tree then lifts into a flat umbrella crown on a bare trunk.",
+     "confidence": "documented",
+     "source": "Wikipedia (juvenile leaves for 5-10 years, fully adult by ~10; a bushy globe in youth, an umbrella in mid-age; 12-20 m typical, to 25+; cones take 36 months to mature, longest of any pine); first cones and lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#7a6a4a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      8,
+      15
+     ],
+     "unripe_colour": "#6a8a3a",
+     "ripe_colour": "#8a4e28",
+     "ripen_days": [
+      850,
+      1000
+     ],
+     "hang_days": [
+      60,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      1000,
+      3000
+     ],
+     "crop_per_tree": [
+      20,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (broad ovoid cones 8-15 cm that take 36 months to mature, longer than any other pine; edible nuts 2 cm long with a rudimentary wing); about 29-33 months from spring pollination to ripe cone in the third autumn; crop and decay estimated"
+    }
    },
    {
     "name": "Wild olive",
@@ -848,7 +1247,78 @@
      "spacing_m": 0.5,
      "confidence": "documented"
     },
-    "silhouette": "grey-green rounded crown on gnarled twisted trunk"
+    "silhouette": "grey-green rounded crown on gnarled twisted trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      180
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      300,
+      2000
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two oval cotyledons, then pairs of small, short, rounded-oval leaves, much less narrow than the adult's. The young wild olive is a dense, twiggy, often spiny shrub of many stems with tiny leaves (a browse-resistant juvenile form) for years; eventually one or a few stems grow out into a tree with narrow, grey-green, silver-backed leaves and a gnarled, fissured, hollowing trunk.",
+     "confidence": "documented",
+     "source": "Olive horticulture and oleaster ecology: long juvenile phase (seedlings fruit after ~8-15 yr), juvenile foliage small and rounded with spiny shoots; seed with hard endocarp germinates slowly (1-6 months after removal of the stone); trees live many centuries, some over 2000 yr (Wikipedia Olive; Rey & Alcantara 2000 on oleaster recruitment)"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#f1efd8",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      40
+     ],
+     "pollinators": [
+      "wind",
+      "bee"
+     ],
+     "fruit_set": 0.02,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.0,
+      1.5
+     ],
+     "unripe_colour": "#6b8a3a",
+     "ripe_colour": "#2b2230",
+     "ripen_days": [
+      150,
+      210
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      2000,
+      50000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Olive crop literature (Lavee; FAO/IOC): small creamy 4-lobed flowers in axillary racemes of 10-40 in spring, mainly wind pollinated, only ~1-2% of flowers set fruit; fruit green turning purple-black in autumn-winter, ~5-7 months after bloom; wild oleaster fruit small (~1-1.5 cm); bitter until cured"
+    }
    }
   ],
   "shrub": [
@@ -962,7 +1432,79 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "open grey-green shrub on red twisting stems"
+    "silhouette": "open grey-green shrub on red twisting stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
+     ],
+     "height_years": [
+      12,
+      35
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      70,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "After a fire, seedlings come up en masse with the first winter rains: two small round cotyledons, then stiff, pale blue-grey, round-oval leaves held edge-on to the sun on a single reddish stem. It branches into a bushy rounded shrub, and the smooth red-purple bark and twisting limbs of the adult show within a few years. It has no burl, so fire kills it.",
+     "confidence": "documented",
+     "source": "Wikipedia (Arctostaphylos glauca: shrub 1 to over 6 m; seeds need fire to germinate; long-lived, 100+ yr, but does not fruit until about 20 yr old; reproduces by seed and layering). Chaparral seedling ecology from USDA FEIS (Arctostaphylos glandulosa). Germination days and height-age estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      3
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.7,
+     "flower_colour": "#f5eeee",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      40
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee",
+      "bird"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.2,
+      1.5
+     ],
+     "unripe_colour": "#9ab070",
+     "ripe_colour": "#b0603c",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (hanging clusters of narrow urn-shaped white flowers; drupe 12-15 mm, light red, thick pulp in a tough sticky coat, 3-6 nutlets fused into one stone; eaten and made into cider). Winter flowering months, pollinators (bees, hummingbirds), timings and crop estimated from Jepson as recalled and FEIS manzanita accounts."
+    }
    },
    {
     "name": "Chamise",
@@ -1070,7 +1612,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "dense dark wiry shrub, many upright stems"
+    "silhouette": "dense dark wiry shrub, many upright stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      8,
+      30
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up in the first rains after a fire: a thin stem with tiny needle-like leaves in little bundles. By year 2 a small woody lignotuber forms at the root crown. Most young plants seen are resprouts instead: dozens (up to 500) of straight, wand-like green shoots from the burned burl, about 50 cm tall after one season.",
+     "confidence": "documented",
+     "source": "USDA FEIS Adenostoma fasciculatum (heat- and charate-stimulated germination in the first rainy season after fire; ~90% first-year seedling mortality; seed by ~3 yr; sprouts 50 cm yr 1, 85 cm yr 5, 1 m yr 20; lives 100-200 yr; shade intolerant)"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#f3efe2",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      400
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.2,
+      0.3
+     ],
+     "unripe_colour": "#9aa06a",
+     "ripe_colour": "#8b4e2e",
+     "ripen_days": [
+      35,
+      70
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      720
+     ],
+     "crop_per_tree": [
+      5000,
+      100000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Adenostoma fasciculatum (white flowers in showy 2.5-10 cm terminal clusters on current growth in June; fruit develops in July; ripening and dispersal complete by August; achenes; seed output rises with shrub age); pollinators estimated (generalist insects)"
+    }
    },
    {
     "name": "Gum rockrose",
@@ -1182,7 +1796,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "upright sticky dark shrub, big white flowers"
+    "silhouette": "upright sticky dark shrub, big white flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hard seeds wait in the soil until fire or summer heat cracks them; seedlings flood in with the autumn rains. Two small oval cotyledons, then pairs of narrow lance-shaped leaves, dark green and glossy-sticky above with fragrant labdanum resin. It becomes an erect, open, few-stemmed shrub and flowers within 2-3 years.",
+     "confidence": "estimated",
+     "source": "Wikipedia Cistus ladanifer (1-2.5 m, flowers 5-8 cm with 5 white papery petals, sticky leaves 3-10 cm); Talavera et al. 1993 and Narbona et al. studies (flowers last one day, bee- and beetle-pollinated, many-valved capsules with ~1000 seeds; heat-stimulated germination; stands senesce after ~20-30 yr)"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 1,
+     "flower_size_cm": 7,
+     "flower_colour": "#f7f5ef",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bee",
+      "beetle",
+      "fly"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.0,
+      1.5
+     ],
+     "unripe_colour": "#8a9a55",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      60,
+      240
+     ],
+     "drop": "persists",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      100,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (white 5-8 cm flowers, petals often with a maroon blotch); Talavera, Gibbs & Herrera 1993 (Cistus ladanifer: one-day flowers, self-incompatible, pollinated by bees and beetles, globose capsules with ~10 valves opening slowly from late summer, seeds released over months)"
+    }
    },
    {
     "name": "Kermes oak",
@@ -1294,7 +1980,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low dense prickly evergreen mound"
+    "silhouette": "low dense prickly evergreen mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      50,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal: the acorn stays buried and sends up a wiry shoot with tiny (1-4 cm), stiff, glossy, holly-like evergreen leaves edged with spiny teeth. The young plant stays a low, dense, prickly bush; a woody root crown and spreading roots throw up many suckers, so it becomes a thicket (garrigue) that resprouts within weeks after fire, cutting or grazing.",
+     "confidence": "estimated",
+     "source": "Wikipedia Quercus coccifera (usually a shrub under 2 m, rarely a tree 1-6 m, to 10 m in Libya; spinier leaves under grazing); growth, ages and shade estimated from botanical knowledge of this vigorously resprouting garrigue oak"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 3,
+     "flower_colour": "#c9b860",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "nut",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.5,
+      3
+     ],
+     "unripe_colour": "#8aa060",
+     "ripe_colour": "#7a5232",
+     "ripen_days": [
+      480,
+      560
+     ],
+     "hang_days": [
+      5,
+      45
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      300
+     ],
+     "crop_per_tree": [
+      50,
+      1500
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Botanical knowledge, not confirmed online: catkins in spring, wind-pollinated; acorns ripen in their second autumn in a cup covered with stiff, spreading, spiny scales (standard Mediterranean floras); bitter, used only as fodder; crop and decay estimated"
+    }
    },
    {
     "name": "Mastic",
@@ -1410,7 +2166,77 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "dense dark green rounded mound"
+    "silhouette": "dense dark green rounded mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      7,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two fleshy cotyledons, then small leathery leaves with a few pairs of glossy leaflets on a winged stalk. Young plants branch low into a dense, rounded, dark-green, resin-scented bush; after browsing or fire it resprouts vigorously from the root crown.",
+     "confidence": "estimated",
+     "source": "Wikipedia (dioecious evergreen shrub to 4 m, up to 7 m with age; drupes ~4 mm, red then black when ripe, edible with a tart raisin-like taste; mastic resin); germination after autumn rains, growth and ages estimated from Mediterranean maquis shrub studies"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#8a2a3a",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      40
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      0.5
+     ],
+     "unripe_colour": "#c04a3a",
+     "ripe_colour": "#2a2226",
+     "ripen_days": [
+      150,
+      240
+     ],
+     "hang_days": [
+      20,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      2000,
+      50000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (very small flowers, dioecious; drupe about 4 mm, first red then black when ripe, edible); spring wind-pollinated flowering and autumn-winter bird-dispersed fruit as described in Mediterranean floras; set and crop estimated"
+    }
    },
    {
     "name": "Strawberry tree",
@@ -1522,7 +2348,78 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "rounded evergreen head on red peeling stems"
+    "silhouette": "rounded evergreen head on red peeling stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      7,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two tiny round cotyledons, then glossy, finely toothed, dark green oval leaves on red-tinged stems. It forms a woody burl (lignotuber) at the base and grows into a bushy, often multi-stemmed shrub with reddish young shoots, resprouting vigorously from that burl after fire or cutting. The bark turns red-brown and shreddy.",
+     "confidence": "documented",
+     "source": "Wikipedia (Arbutus unedo: 4-7 m, rarely 15 m; germination rarely over 20%, helped by 1 month cold stratification; regrows after fire; shade tolerant) and NC State Extension (slow, 30-60 cm a year; ~4.5 m, up to ~10 m; full sun or part shade). Germination days, first fruiting and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      12
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#f4efe0",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      30
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.7,
+      2
+     ],
+     "unripe_colour": "#b8c070",
+     "ripe_colour": "#d0301c",
+     "ripen_days": [
+      330,
+      390
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia and NC State Extension: white (occasionally pink) urn-shaped flowers 7-8 mm in drooping panicles of 10-30 in autumn-winter, bee-pollinated; rough red berries 7-20 mm (1.3-2.5 cm) take about 12 months to ripen, alongside the next flowers; bland to sweet, edible, bruise easily. Fruit set, hang/rot times and crop estimated."
+    }
    }
   ],
   "ground": [
@@ -1612,7 +2509,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "grey strap rosette with tall branched flower spike"
+    "silhouette": "grey strap rosette with tall branched flower spike",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      90
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Three-angled black seeds sprout after the autumn rains. The seedling shows one grass-like leaf, then a small tuft of flat, keeled, narrowly triangular grey-green leaves over a cluster of swelling spindle-shaped root tubers. Leaves wither in the summer drought and regrow each autumn; after 2-4 years the clump sends up a branched spike of white, brown-veined star flowers.",
+     "confidence": "estimated",
+     "source": "Useful Temperate Plants (theferns.info): seed germinates in 1-3 months at 15 C, rosettes of leaves to 40 cm, flowering stems to 1.2 m, dry rocky hills; Pacific Bulb Society (Asphodelus); age at first flowering and lifespan estimated for a tuberous-rooted geophyte."
+    }
    },
    {
     "name": "Common thyme",
@@ -1698,7 +2617,29 @@
      "lenticels": "none",
      "confidence": "estimated"
     },
-    "silhouette": "low grey-green woody cushion"
+    "silhouette": "low grey-green woody cushion",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      8,
+      20
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny rounded cotyledons, then minute paired grey-green leaves on a thread-thin square stem. It branches from the base within months into a small aromatic sprig and in 2-3 years becomes a dense, woody, grey-green cushion of wiry stems with tiny rolled-edged leaves, covered in whorls of pale pink to mauve flowers in late spring.",
+     "confidence": "estimated",
+     "source": "Wikipedia Thymus vulgaris (15-30 cm tall, ~40 cm wide; purple or pink flowers in early summer; western Mediterranean to S Italy); NC State Extension (15-30 cm x 15-40 cm, blooms May-Jul, full sun, bees and butterflies, uneven seed germination). Germination days, first flowering and lifespan estimated from herb growers."
+    }
    },
    {
     "name": "Esparto grass",
@@ -1788,7 +2729,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tall wiry grey-green tussock"
+    "silhouette": "tall wiry grey-green tussock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A single thin tiller of narrow grey-green leaves that roll up into wiry cylinders in drought. It tillers slowly into a dense, erect tussock of tough rush-like leaves with a skirt of dead ones; seedlings mostly survive in the lee of an old tussock or shrub. Old tussocks die in the centre and become rings; in wet springs they send up tall, silvery, feathery-awned flower plumes.",
+     "confidence": "estimated",
+     "source": "Acta Physiologiae Plantarum 2017 'Environmental factors that limit Stipa tenacissima germination' (base temperature <2 C, drought and burial limit establishment); Seed Sci. Res. (seed dormancy/longevity in S. tenacissima); tussock growth, ring formation and ages estimated from Stipa steppe literature"
+    }
    },
    {
     "name": "French lavender",
@@ -1900,7 +2863,29 @@
      "spacing_m": 0.05,
      "confidence": "estimated"
     },
-    "silhouette": "grey mound topped with purple tufts"
+    "silhouette": "grey mound topped with purple tufts",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two small round cotyledons, then narrow, grey-green, finely hairy, aromatic leaves in opposite pairs on a single square stem. It branches quickly into a small, rounded, silvery-grey bush; from its first or second spring it carries chunky dark-purple flower spikes topped by 'rabbit-ear' purple bracts.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Lavandula stoechas: evergreen shrub 30-100 cm, flowers from March through late spring-early summer, hot dry sunny sites, may be short-lived); germination and ages estimated from horticultural sowing of Lavandula."
+    }
    },
    {
     "name": "Ramose false brome",
@@ -1990,7 +2975,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "short creeping grass mat"
+    "silhouette": "short creeping grass mat",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds sprout with the autumn rains. The seedling is a thin tuft of narrow, stiff, grey-green leaves that roll inward in drought; it spreads by wiry rhizomes into a low, springy sward of short, tough, branching stems with small two-ranked leaves, resprouting quickly after fire.",
+     "confidence": "estimated",
+     "source": "Estimated from Mediterranean garrigue grass ecology (rhizomatous resprouter that dominates burnt shrublands and pine understories; autumn germination); no species growth data found."
+    }
    },
    {
     "name": "Sugarbush protea",
@@ -2102,7 +3109,29 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "upright shrub with big cone-shaped flowerheads"
+    "silhouette": "upright shrub with big cone-shaped flowerheads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      30
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      25,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up with the first autumn-winter rains after a fire, in even-aged crowds. Epigeal: two fleshy, oval cotyledons, then a single upright stem with narrow, hairless, bright green leaves; it branches after a year or two into a dense, upright shrub. Adults are killed by fire and restock only from seed held in the old, closed brown flowerheads.",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (1-4.5 m; germinates 3-4 weeks after sowing in autumn; first flowers about 4-5 yr from seed; semi-serotinous; ~20% of flowers set seed; bird and beetle pollinated; fires every 10-30 yr); Wikipedia (reseeder killed by fire). Lifespan estimated."
+    }
    }
   ],
   "epiphyte": []

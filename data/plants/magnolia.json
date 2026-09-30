@@ -36,25 +36,26 @@
     "color": "#2A5A38",
     "accent": "#F0EEE0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      25,
+      75
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      200
+     ],
+     "shade": "tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two fleshy oblong cotyledons, then glossy evergreen leaves, smaller and thinner than the adult's and less rusty-felted beneath. The sapling is a dense, pyramidal evergreen with a single straight leader and branches down to the ground (46-61 cm in its first year in a nursery). It endures shade for years; flowers start at about 10 years.",
+     "confidence": "documented",
+     "source": "USDA Silvics of North America vol. 2 (Magnolia grandiflora: seed from age 10, optimum ~25; nursery seedlings 46-61 cm in year 1; 18-24 m at 80-120 yr; tolerant of shade when young); USDA Woody Plant Seed Manual (epigeal, germination in 30-50 days after stratification)"
     },
     "repro": {
      "mode": "seed",
@@ -221,6 +222,56 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 25,
+     "flower_colour": "#f7f3e3",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "beetle",
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      7,
+      12
+     ],
+     "unripe_colour": "#7f8f4f",
+     "ripe_colour": "#9b5a3c",
+     "ripen_days": [
+      120,
+      170
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      400
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics vol. 2 (flowers April-June; fruit ripens Sept to late fall; red seeds hang on silken threads before dropping; good crops yearly); USDA Woody Plant Seed Manual; flowers open ~2 days (female then male phase), beetle-pollinated (Thien 1974); set and crop estimated"
     }
    },
    {
@@ -252,25 +303,26 @@
     "color": "#4A8A4A",
     "accent": "#F8F4F0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      15,
+      40
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      100,
+      400
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two thick oval cotyledons, then alternate obovate leaves with a short abrupt tip. Young trees are single-stemmed and upright with a narrow, open crown of stout grey twigs; furry grey flower buds appear only after several years, and the crown rounds out with age.",
+     "confidence": "estimated",
+     "source": "PFAF (10 m, slow growing; beetle pollinated; seed ripe Sep-Nov, needs cold stratification, can take 18 months); Missouri Botanical Garden Plant Finder; age at first flowering and lifespan estimated (old temple trees in China are centuries old)"
     },
     "repro": {
      "mode": "seed",
@@ -439,6 +491,56 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 12,
+     "flower_colour": "#f5f0e6",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "beetle",
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      8,
+      15
+     ],
+     "unripe_colour": "#7a9a48",
+     "ripe_colour": "#b0503a",
+     "ripen_days": [
+      150,
+      200
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      240
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "PFAF (flowers Mar-May in cultivation, before the leaves; beetle pollinated; seeds ripe Sep-Nov); Flora of China Yulania denudata (flowers white, fragrant; aggregate fruit cylindric, often twisted, ~12-15 cm; fr. Aug-Sep); set and crop estimated"
     }
    },
    {
@@ -470,25 +572,26 @@
     "color": "#3E7A50",
     "accent": "#F0A0C0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      100,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two thick oval cotyledons, then alternate, large soft oblong leaves. The sapling is a vigorous single-leadered, rather narrow upright tree (shoots up to ~1.2 m a year) with stout grey twigs; the big furry flower buds are absent for the first 15-30 years, and the crown only broadens into a spreading dome with age.",
+     "confidence": "documented",
+     "source": "PFAF (at least 20 yr from seed to flower; beetle pollinated; seed needs winter cold, may take 18 months); T. Stone 'Plant of the week' (15 yr white forms to 30 yr pink forms from seed, ~10 yr grafted; young trees add up to 4 ft/yr); Wikipedia (30 m, rarely 45; flowers 15-25 cm); lifespan estimated"
     },
     "repro": {
      "mode": "seed",
@@ -657,6 +760,56 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 20,
+     "flower_colour": "#e7a3bd",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "beetle",
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      10,
+      20
+     ],
+     "unripe_colour": "#6e8f3a",
+     "ripe_colour": "#a8452f",
+     "ripen_days": [
+      150,
+      200
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      240
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia/PFAF (flowers before the leaves late winter-spring, white to deep pink, 15-25 cm; beetle pollinated); fruit a cylindrical cone-like aggregate of follicles that split to hang out red seeds on threads (Flora of China, Yulania); ripening, set and crop estimated from Magnolia"
     }
    },
    {
@@ -688,25 +841,26 @@
     "color": "#5AA040",
     "accent": "#D8C040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
      ],
-     "final_size": 1.0
+     "height_years": [
+      25,
+      90
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      200,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two narrow, oblong cotyledons, then the unmistakable square-ended, four-lobed 'tulip' leaves on a straight green stem. In full light seedlings bolt from their second year and may be 3-5.5 m tall at five years: a straight, slender, grey-green whip with a narrow conical crown. Stump sprouts grow even faster, about 1.4 m a year.",
+     "confidence": "documented",
+     "source": "USDA Silvics of North America vol. 2 (Liriodendron tulipifera: 70-90 day stratification, epigeal; 3-5.5 m at 5 yr; site index 30 m: 15.8 m at 20 yr, 27 m at 40, 32 m at 60, 37 m at 100; flowers at 15-20 yr; 30-46 m mature, to 61 m; lives 200-250, up to 300 yr; shade-intolerant)."
     },
     "repro": {
      "mode": "seed",
@@ -876,6 +1030,57 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 4.5,
+     "flower_colour": "#d4cf6a",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "fly",
+      "beetle",
+      "bee",
+      "bumblebee"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "samara",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      4,
+      8
+     ],
+     "unripe_colour": "#8fa65a",
+     "ripe_colour": "#b08a58",
+     "ripen_days": [
+      100,
+      150
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      180,
+      700
+     ],
+     "crop_per_tree": [
+      500,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (solitary flowers 4-5 cm, yellow-green with an orange band, Apr-Jun, receptive 12-24 h; flies, beetles, honeybees, bumblebees; cone-like aggregate of samaras ripe Aug-Oct, shed mid-Oct to mid-March; 5-20% sound seed; large trees 29,000+ sound seeds). Crop count estimated."
     }
    }
   ],

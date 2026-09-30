@@ -38,6 +38,20 @@ class_name TreeArch
 ## Every number is a range centre jittered ±20 % per layout. Budgets keep
 ## a layout within MAX_* pieces (design §W). Pure function of the world
 ## seed, species and layout (thread-safe: its own RNG).
+##
+## Young trees (design §AR; `slot` 1 a young tree about half grown, 2 a
+## sapling about a fifth grown: TreeLayouts' young layouts) grow as their
+## species' young form (growth.juvenile): a whip (one slender leader, short
+## laterals, a narrow crown), a cone (a leader and whorls or tiers longest
+## at the foot, down to the ground), several stems from the base
+## (multi_stem), or for palms, cycads and tree ferns the stemless rosette of
+## the establishment years (a sapling: fronds straight from the ground,
+## the first ones undivided when its juvenile leaves differ) and then a
+## short trunk. Young trees keep their leader (whatever the adult's
+## habit), carry their crowns low (a sapling's to the ground), fewer
+## orders, no deadwood, no buttresses and no flare, are slimmer, and their
+## leaf clusters are larger for their size (leaves don't shrink with the
+## tree).
 
 const S := PlantSpecies.Shape
 const K := TreeLayouts.Kind
@@ -95,6 +109,12 @@ class _G:
 	var self_prune := false
 	var cluster_r := 0.02
 	var up := Vector3.UP
+	## A young layout's slot (0 grown) and the species' young form.
+	var slot := 0
+	var juv := "whip"
+	## Its share of the piece budgets (MAX_*): a young tree is simpler
+	## wood, and understory saplings are many.
+	var budget := 1.0
 
 	func j(v: float) -> float:
 		return v * rng.randf_range(0.8, 1.2)
@@ -146,11 +166,14 @@ class _G:
 		return sk.add(pc)
 
 
-static func grow(sp: PlantSpecies, idx: int, layout: int, world_seed: int, forest: bool) -> TreeLayouts.Skeleton:
+static func grow(sp: PlantSpecies, idx: int, layout: int, world_seed: int, forest: bool, slot := 0) -> TreeLayouts.Skeleton:
 	var a: Dictionary = sp.arch
 	var g := _G.new()
 	g.sp = sp
-	g.rng.seed = hash([world_seed, idx, layout, "arch"])
+	g.slot = slot
+	g.juv = sp.juvenile
+	g.budget = [1.0, 0.55, 0.3][clampi(slot, 0, 2)]
+	g.rng.seed = hash([world_seed, idx, layout, "arch"]) if slot == 0 else hash([world_seed, idx, layout, "arch", slot])
 	g.sk = TreeLayouts.Skeleton.new()
 	g.sk.arch = true
 	g.sk.open = not forest
@@ -160,12 +183,16 @@ static func grow(sp: PlantSpecies, idx: int, layout: int, world_seed: int, fores
 	g.model = str(a.get("model", "rauh"))
 	g.habit = str(a.get("habit", "decurrent"))
 	g.h_m = maxf((sp.height_m.x + sp.height_m.y) * 0.5, 2.0)
+	var young := slot > 0
+	if young:
+		# The young tree's own height, for its leaves' size and its spacing.
+		g.h_m = maxf(g.h_m * (0.5 if slot == 1 else 0.2), 0.8)
 	g.droop = float(sp.canopy.get("droop", 0.1))
 	g.gap = float(sp.canopy.get("gap", 0.3))
 	g.layering = str(sp.canopy.get("layering", "clumped"))
 	g.arrangement = sp.leaf_arrangement if sp.leaf_arrangement != "" else "alternate"
-	g.dead_share = float(a.get("dead_limbs", 0.2))
-	g.self_prune = bool(a.get("self_prune", false))
+	g.dead_share = float(a.get("dead_limbs", 0.2)) * (0.0 if slot == 2 else (0.3 if slot == 1 else 1.0))
+	g.self_prune = bool(a.get("self_prune", false)) and slot != 2
 	g.sinu = float(a.get("sinuosity", 0.3))
 	# A leaf cluster: a few leaves across, a card a quarter to one and a
 	# half meters wide.
@@ -175,11 +202,23 @@ static func grow(sp: PlantSpecies, idx: int, layout: int, world_seed: int, fores
 		return g.sk
 	var lcr := _pair(a.get("live_crown_ratio"), Vector2(0.7, 0.4))
 	g.crown_base = clampf(1.0 - g.j(lcr.y if forest else lcr.x), 0.03, 0.85)
+	if young:
+		# Low crowns: a sapling's to the ground, a young tree in a stand
+		# already shedding its lowest limbs.
+		var ylcr := (0.92 if not forest else 0.78) if slot == 2 else (0.85 if not forest else 0.62)
+		g.crown_base = clampf(1.0 - ylcr * g.rng.randf_range(0.95, 1.05), 0.02, 0.5)
 	var ang := _pair(a.get("branch_angle_deg"), Vector2(40, 65))
 	g.angle = Vector2(deg_to_rad(ang.x), deg_to_rad(ang.y))
+	if young:
+		# Young shoots climb more steeply.
+		g.angle *= 0.85
 	g.taper_e = maxf(float(a.get("taper_exponent", 1.5)) - 1.0, 0.0) * 0.5
-	g.spacing = clampf(float(a.get("spacing_m", 1.0)) / g.h_m, 0.015, 0.25)
+	# (A young tree's limbs come closer for its size: at most an eighth of
+	# its height apart, so a sapling is leafy up its whole leader.)
+	g.spacing = clampf(float(a.get("spacing_m", 1.0)) / g.h_m, 0.015, 0.12 if young else 0.25)
 	g.max_order = clampi(int(a.get("orders", 4)), 2, 3)
+	if slot == 2:
+		g.max_order = 2
 	var form := str(sp.canopy.get("form", "rounded"))
 	var rc := 0.36
 	match form:
@@ -197,6 +236,16 @@ static func grow(sp: PlantSpecies, idx: int, layout: int, world_seed: int, fores
 			rc = 0.4
 	if g.habit == "columnar":
 		rc = minf(rc, 0.14)
+	if young:
+		# A young crown is narrow: a whip's narrowest, a cone's broad at the
+		# foot.
+		match g.juv:
+			"cone":
+				rc = clampf(rc, 0.18, 0.3) * (0.95 if slot == 2 else 1.0)
+			"multi_stem":
+				rc *= 0.8
+			_:
+				rc *= 0.5 if slot == 2 else 0.68
 	g.crown_r = g.j(rc) * (0.72 if forest else 1.1)
 	# Slenderness (height over foot diameter) by habit; forest-grown slimmer.
 	# (Height over the foot's diameter: an open-grown oak ~22, a spruce
@@ -212,12 +261,22 @@ static func grow(sp: PlantSpecies, idx: int, layout: int, world_seed: int, fores
 		"multi_stem":
 			slender = 35.0
 	slender *= 1.4 if forest else 1.0
+	if young:
+		# Young trees are whips: tall for their girth.
+		slender = maxf(slender, 30.0) * (2.2 if slot == 2 else 1.5)
 	var r0 := 0.5 / g.j(slender)
-	var flare := bool(a.get("root_flare", true))
-	_fins(g, str(a.get("buttress", "none")), r0)
+	var flare := bool(a.get("root_flare", true)) and not young
+	if not young:
+		_fins(g, str(a.get("buttress", "none")), r0)
 
 	var fork_v = a.get("fork_height_frac")
 	var excurrent := g.habit in ["excurrent", "columnar"] or fork_v == null
+	if young:
+		# A young tree keeps its leader, whatever the adult's habit; a
+		# multi-stemmed one comes up as several stems from the base.
+		excurrent = g.juv != "multi_stem"
+		if not excurrent:
+			fork_v = [0.03, 0.09]
 	var stems: Array[int] = []
 	if excurrent:
 		var leader := g.trunk(Vector3.ZERO, Vector3.UP, 0.97, r0, r0 * 0.08, flare, -1)
@@ -225,7 +284,7 @@ static func grow(sp: PlantSpecies, idx: int, layout: int, world_seed: int, fores
 	else:
 		var fr := _pair(fork_v, Vector2(0.2, 0.4))
 		var f := lerpf(fr.x, fr.y, g.rng.randf_range(0.55, 1.0) if forest else g.rng.randf_range(0.0, 0.5))
-		if g.habit == "multi_stem":
+		if g.habit == "multi_stem" or (young and g.juv == "multi_stem"):
 			f = minf(f, 0.12)
 		var r_f := r0 * pow(1.0 - f, g.taper_e) * 0.85
 		var base := g.trunk(Vector3.ZERO, Vector3.UP, f, r0, r_f, flare, -1)
@@ -272,7 +331,7 @@ static func grow(sp: PlantSpecies, idx: int, layout: int, world_seed: int, fores
 	# Orders 2 and 3, breadth first, within budget.
 	var level := l1
 	for order in range(2, g.max_order + 1):
-		level = _order(g, level, order, MAX_L2 if order == 2 else MAX_TWIGS)
+		level = _order(g, level, order, int((MAX_L2 if order == 2 else MAX_TWIGS) * g.budget))
 	_anchors(g)
 	return g.sk
 
@@ -290,7 +349,7 @@ static func _laterals_on_stem(g: _G, st: int, excurrent: bool) -> Array[int]:
 	var step := g.spacing
 	# Budget: fewer, wider-spaced limbs on a tall crown.
 	var count_est := total * (1.0 - g.crown_base) / step * (4.5 if whorl else 1.0)
-	var cap := MAX_L1_WHORL if whorl else MAX_L1
+	var cap := int((MAX_L1_WHORL if whorl else MAX_L1) * g.budget)
 	if count_est > cap:
 		step *= count_est / cap
 	# A broad crown (not a single leader, not whorls) stands on a few big
@@ -320,6 +379,10 @@ static func _laterals_on_stem(g: _G, st: int, excurrent: bool) -> Array[int]:
 		# its top): a cone for excurrent crowns, a dome for the rest.
 		var u := inverse_lerp(g.crown_base, maxf(y_top, g.crown_base + 0.05), y_rel)
 		var prof := (1.0 - u) * 0.9 + 0.1 if excurrent else sin(PI * clampf(u * 0.85 + 0.15, 0.0, 1.0))
+		if g.slot > 0 and g.juv != "cone" and excurrent:
+			# A young whip: short laterals all the way up, a little longer
+			# in the middle, not the adult's cone.
+			prof = 0.45 + 0.55 * sin(PI * clampf(u * 0.8 + 0.1, 0.0, 1.0))
 		for k in n:
 			var a := az + TAU * k / n + g.rng.randf_range(-0.25, 0.25)
 			var ang := g.rng.randf_range(g.angle.x, g.angle.y)
@@ -555,7 +618,8 @@ static func _place_anchors(g: _G) -> void:
 	for pc in g.sk.pieces:
 		if pc.order == finest and not pc.dead:
 			total += pc.length() * 0.6
-	var step := maxf(g.cluster_r * 1.5, total / MAX_ANCHORS)
+	var max_anchors := int(MAX_ANCHORS * g.budget)
+	var step := maxf(g.cluster_r * 1.5, total / max_anchors)
 	var keep := clampf(1.0 - g.gap * 0.45, 0.3, 1.0)
 	# Twigs in a shuffled order: if the anchors run out, they run out
 	# evenly over the crown.
@@ -603,7 +667,7 @@ static func _place_anchors(g: _G) -> void:
 				var hang := (side * sd + Vector3.UP * (0.45 - g.droop)).normalized()
 				g.sk.anchors.append([p, tan, hang, pi, clampf(outer, 0.0, 1.0), g.cluster_r * g.rng.randf_range(0.85, 1.15)])
 			flip = -flip
-			if g.sk.anchors.size() >= MAX_ANCHORS:
+			if g.sk.anchors.size() >= max_anchors:
 				return
 
 
@@ -633,11 +697,20 @@ static func _palm(g: _G, a: Dictionary) -> void:
 	var fern := g.habit == "tree_fern"
 	var n_stems := g.rng.randi_range(2, 3) if g.model == "tomlinson" and g.habit == "multi_stem" else 1
 	var r0 := 0.5 / g.j(70.0 if not fern else 35.0)
+	# Young (design §AR): a sapling is the stemless rosette of the
+	# establishment years, fronds straight from the ground, fewer and more
+	# upright, the first ones undivided (eophylls) when its juvenile leaves
+	# differ; a young tree a short trunk under a smaller crown.
+	var eophylls := g.slot == 2 and str(g.sp.growth.get("juvenile_leaves", "same")) == "different"
 	for sidx in n_stems:
 		var lean := Vector3.ZERO if n_stems == 1 else Vector3(g.rng.randf_range(-0.25, 0.25), 0.0, g.rng.randf_range(-0.25, 0.25))
 		var top_h := 0.82 if not fern else 0.8
 		if n_stems > 1:
 			top_h *= g.rng.randf_range(0.7, 1.0)
+		if g.slot == 2:
+			top_h = 0.03
+		elif g.slot == 1:
+			top_h *= 0.5
 		var d := (Vector3.UP + lean).normalized()
 		var st := g.trunk(Vector3(lean.x, 0, lean.z) * 0.1, d, top_h, r0 * (1.2 if not fern else 1.0), r0 * 0.85, bool(a.get("root_flare", true)), -1)
 		var pc: TreeLayouts.Piece = g.sk.pieces[st]
@@ -645,10 +718,23 @@ static func _palm(g: _G, a: Dictionary) -> void:
 		var n := g.rng.randi_range(14, 20) if not fern else g.rng.randi_range(10, 15)
 		var frond_l := (0.26 if not fern else 0.36) * g.rng.randf_range(0.85, 1.15)
 		var droop := clampf(g.droop, 0.0, 1.0)
+		var el_hi := 70.0
+		var el_lo := -5.0
+		if g.slot == 2:
+			n = g.rng.randi_range(5, 8)
+			frond_l = 0.9 * g.rng.randf_range(0.85, 1.1)
+			droop *= 0.5
+			el_hi = 80.0
+			el_lo = 32.0
+		elif g.slot == 1:
+			n = g.rng.randi_range(9, 13)
+			frond_l = 0.45 * g.rng.randf_range(0.85, 1.1)
+			el_hi = 75.0
+			el_lo = 8.0
 		for k in n:
 			var az := TAU * k * 0.382 + g.rng.randf_range(-0.2, 0.2)
 			# Young fronds stand up in the middle, old ones splay and hang.
-			var el := lerpf(deg_to_rad(70.0), deg_to_rad(-5.0), float(k) / n)
+			var el := lerpf(deg_to_rad(el_hi), deg_to_rad(el_lo), float(k) / n)
 			var fd := Vector3(cos(az) * cos(el), sin(el), sin(az) * cos(el)).normalized()
 			# (Arching: the older, lower fronds bow more toward their tips.)
 			var arch_k := -(droop * 0.9 + 0.35 * float(k) / n)
@@ -658,6 +744,9 @@ static func _palm(g: _G, a: Dictionary) -> void:
 			var length := fp.length()
 			var s := length * 0.15
 			var step := maxf(g.cluster_r * 1.2, length / 14.0)
+			if eophylls:
+				# An undivided first leaf: a few broad leaflets make a strap.
+				step *= 2.2
 			while s < length * 0.98:
 				var q := fp.at(s)
 				var p: Vector3 = q[0]
@@ -670,10 +759,14 @@ static func _palm(g: _G, a: Dictionary) -> void:
 					g.sk.anchors.append([p, tan, hang, f, 1.0, g.cluster_r * g.rng.randf_range(0.9, 1.1)])
 				s += step
 		# A tree fern's skirt: dead fronds hanging against the trunk.
-		if fern and g.dead_share > 0.0:
+		if fern and g.dead_share > 0.0 and g.slot == 0:
 			for k in int(n * g.dead_share):
 				var az := g.rng.randf() * TAU
 				var fd := Vector3(cos(az) * 0.35, -1.0, sin(az) * 0.35).normalized()
 				g.piece(top - Vector3(0, 0.02, 0), fd, frond_l * 0.7, r0 * 0.25, r0 * 0.1, 0.0, K.TWIG, 1, st, 0, true)
 	g.sk.vines = 0
-	_size_clusters(g, (0.26 if not fern else 0.36), false)
+	var crown := (0.26 if not fern else 0.36) if g.slot == 0 else (0.45 if g.slot == 1 else 0.8)
+	_size_clusters(g, crown, false)
+	if eophylls:
+		for an in g.sk.anchors:
+			an[5] = float(an[5]) * 1.6

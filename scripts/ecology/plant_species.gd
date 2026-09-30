@@ -118,6 +118,26 @@ var clonal := false
 var sport_rate := 0.0
 var sport_codes := PackedInt32Array()
 var sport_cum := PackedFloat32Array()
+## How it grows (design §AR): the entry's researched `growth` block (life,
+## germination, height by age, first seed, lifespan, how much shade its
+## young stand, the young plant's form) and `fruiting` (its flowers and
+## fruit); empty when it has none.
+var growth := {}
+var fruiting := {}
+## Worked out once from `growth` (PlantGrowth.setup()): its height-by-age
+## curve (the share of full height at t years is (1 - exp(-k t))^p), the
+## shade its young stand (0 very intolerant .. 1 very tolerant), its young
+## form ("whip", "cone", "establishment"...), its life ("perennial",
+## "annual", "biennial", "monocarpic"), typical and longest life, first
+## seed and the years before a trunk shows (years).
+var grow_k := 0.1
+var grow_p := 1.5
+var shade_tol := 0.5
+var juvenile := "whip"
+var life := "perennial"
+var lifespan_y := Vector2(100.0, 300.0)
+var first_seed_y := 10.0
+var trunk_y := 0.0
 
 
 ## Smooth band membership: 1 in the middle, easing to 0 at the edges.

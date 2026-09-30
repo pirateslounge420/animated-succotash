@@ -138,7 +138,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low dark evergreen mound, pink flowers"
+    "silhouette": "low dark evergreen mound, pink flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Minute seedlings on moss or raw humus: two tiny cotyledons, then small glossy, dark green, leathery leaves with rusty-brown scaly undersides and rolled edges. For years it is a small, few-stemmed sprig; then it branches densely into a low, rounded evergreen bush, and stems that touch the ground root and spread it into a clonal patch.",
+     "confidence": "documented",
+     "source": "German Wikipedia Rostblaettrige Alpenrose (30-130 cm; stems 1-2 cm thick nearly 100 yr old; leaves live ~2 yr; flowers May-Jul, corolla to 2 cm, deep pink to red; capsules to 7 mm ripen from August; semi-shade light value; 440-2,840 m); germination and first flowering estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 1.8,
+     "flower_colour": "#d6336c",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      6,
+      12
+     ],
+     "pollinators": [
+      "bumblebee",
+      "butterfly",
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.7
+     ],
+     "unripe_colour": "#8a8a4a",
+     "ripe_colour": "#6e4a30",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      60,
+      270
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "German Wikipedia (flowers May-Jul in terminal clusters, funnel-bell corolla to 2 cm, deep pink to red; capsules to 7 mm ripening from August); bumblebee pollination and poisonous grayanotoxins from knowledge; truss size, set and crop estimated"
+    }
    },
    {
     "name": "Dwarf juniper",
@@ -249,7 +321,77 @@
      "spacing_m": 0.1,
      "confidence": "documented"
     },
-    "silhouette": "flat prostrate grey-green mat"
+    "silhouette": "flat prostrate grey-green mat",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      150,
+      730
+     ],
+     "height_years": [
+      15,
+      40
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      120,
+      1600
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: 2 (up to 6) slender cotyledons, then whorls of three sharp, needle-like leaves with a white band above - the same prickly needles the adult keeps all its life (it never makes scale leaves). Seedlings are tiny, slow, prickly sprigs that build over decades into a dense, spreading grey-green shrub, a low mat, or a narrow column.",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Juniperus: J. communis flowers Apr-May, cones take 2-3 seasons, green to bluish-black glaucous, persist; 1-3 seeds; bears from 10-20 yr, heavy crops every 2-5 yr; deep dormancy; 2-6 cotyledons); Wikipedia (ripens in 18 months, cones 4-12 mm, a Lapland plant aged 1,647 yr). Growth rate estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#8fa070",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      1.2
+     ],
+     "unripe_colour": "#6f8f5a",
+     "ripe_colour": "#3c4a6e",
+     "ripen_days": [
+      480,
+      900
+     ],
+     "hang_days": [
+      90,
+      365
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia (dioecious, wind-pollinated; berry-like cones 4-12 mm, green ripening in ~18 months to purple-black with a blue bloom; too bitter raw, dried as spice and for gin); USDA WPSM (2-3 seasons to ripen, cones persist). Set, crop and rot estimated."
+    }
    }
   ],
   "ground": [
@@ -343,7 +485,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "upright stems with red-tipped bracts"
+    "silhouette": "upright stems with red-tipped bracts",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny oval cotyledons, then a short upright stem of narrow lance-shaped leaves; it tastes host roots (grasses, forbs) with haustoria from the first months. It builds a small woody base that sends up several unbranched leafy stems; from the second or third summer the stem tips carry rose-pink to crimson bracts around hidden green tubular flowers.",
+     "confidence": "estimated",
+     "source": "NARGS 'Adventures with Castillejas' (seed needs winter stratification, alpine species longer; some germinate only in the second spring; hemiparasitic but grows without host); Flora of North America (perennial, 10-40 cm, subalpine-alpine meadows); timings estimated from genus"
+    }
    },
    {
     "name": "Alpine wildflowers",
@@ -439,7 +603,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "small clump with yellow buttercups"
+    "silhouette": "small clump with yellow buttercups",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds lie a year in the soil and sprout at the edge of the melting snow: two small oval cotyledons, then a first leaf that is only shallowly lobed; later leaves are cut into narrow, finger-like segments. For several years the plant is a tiny tuft of a few such leaves on a stout root before it bears its glossy yellow flowers right after snowmelt.",
+     "confidence": "estimated",
+     "source": "Wikipedia Ranunculus adoneus (stems 9-25 cm; flowers ~4 cm, 5-10 petals, open within days of snowmelt and last ~10 days; heliotropic; seeds disperse 3-5 weeks after fertilization; 2,500-4,000 m); Galen, Stanton and Scherff snowbed studies (from knowledge); ages estimated"
+    }
    },
    {
     "name": "Edelweiss",
@@ -531,7 +717,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "woolly grey rosette with star flower"
+    "silhouette": "woolly grey rosette with star flower",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings form tiny rosettes of narrow, grey-felted leaves pressed to limestone scree; over one or two short summers they make a small, tight tuft of woolly, silver-white rosettes. Flowering stems then carry the famous star of white-felted bracts around a cluster of small yellowish flower heads.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Leontopodium nivale: flowering stems 3-20 cm, blooms Jul-Sep, 1,800-3,400 m on limestone, full sun, cold stratification improves germination, short-lived perennial in cultivation); timings estimated."
+    }
    },
    {
     "name": "Gentian",
@@ -621,7 +829,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "flat rosette with huge blue trumpet"
+    "silhouette": "flat rosette with huge blue trumpet",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      90
+     ],
+     "height_years": [
+      4,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed needs winter cold and light; epigeal seedlings are minute, with two round cotyledons and then tiny paired glossy leaves. Grows slowly into a flat evergreen rosette of leathery elliptic leaves; creeping stolons then make a dense mat up to 50 cm wide, and the huge upright deep-blue trumpets usually appear from the 2nd-3rd year.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Gentiana acaulis: to 10 cm, mats to 50 cm wide, evergreen basal rosettes of 2-3.5 cm leaves, 800-3000 m, full sun); alpine seed-raising guidance (cold stratification, slow germination). Ages estimated."
+    }
    },
    {
     "name": "Mat grass",
@@ -712,7 +942,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "wiry tight grey-green tussock"
+    "silhouette": "wiry tight grey-green tussock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A seedling tuft of stiff, bristle-like, grey-green leaves. It slowly grows into a dense, tough, wiry tussock whose leaves stick out at wide angles like a bottle brush over a base packed with persistent pale sheaths; slim one-sided purplish flower spikes stand on thin stems in early summer. Grazers avoid it, so it thickens on heavily grazed acid grassland.",
+     "confidence": "estimated",
+     "source": "Chadwick 1960, Biological Flora of the British Isles: Nardus stricta (J. Ecol. 48) for habit, slow seedling growth and grazing avoidance; ages and rates estimated"
+    }
    },
    {
     "name": "Tibetan alpine sedge",
@@ -803,7 +1055,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "very short dense sedge turf"
+    "silhouette": "very short dense sedge turf",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      5,
+      20
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      150
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny tufts of bristle-like leaves; the plant spreads mostly clonally into a dense, golf-green-like turf only 1-4 cm tall, underlain by a tough, felty root mat that thickens over centuries. Tiny brownish flower spikes barely rise above the turf in early summer.",
+     "confidence": "estimated",
+     "source": "Estimated from general knowledge of Tibetan Plateau Kobresia pygmaea pastures (dwarf 1-4 cm turf, mainly clonal, maintained by grazing, thick root mats) and alpine sedge growth; no species-specific source could be read."
+    }
    },
    {
     "name": "Tufted hairgrass",
@@ -892,7 +1166,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "dense tussock with airy flower cloud"
+    "silhouette": "dense tussock with airy flower cloud",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a small tuft of fine, dark-green, ribbed, rough-edged leaves. It tillers into a dense, fountain-like tussock, flowering from its second year: a cloud of tall, airy, silvery-purple to golden panicles held well above the leaf mound; the tussock base grows wider and denser each year.",
+     "confidence": "documented",
+     "source": "USDA FEIS Deschampsia cespitosa (densely cespitose, culms 20-120 cm; 95% germination over 30 d with light after cold storage; no seed in the planting year, seed in the second; flowers May-Sep by region; rarely in dense shade; seed viability 1-80% by year). Tussock lifespan estimated."
+    }
    }
   ],
   "epiphyte": []

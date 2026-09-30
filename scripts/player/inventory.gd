@@ -60,6 +60,15 @@ func _init() -> void:
 		worn[slot] = a
 
 
+## Put on a kit from items.json (`kit`: "starting_kit", the three tools):
+## each of its worn items into its slot, if the slot has room (tools and
+## tests; in play they're the folk's gifts on the ground, main._lay_gifts()).
+static func wear_kit(inv: Inventory, kit: String) -> void:
+	for w in data().get(kit, {}).get("worn", []):
+		if w is Dictionary and w.has("kind"):
+			inv.wear(make(str(w.kind)))
+
+
 ## A new item of `kind`, with `extra` fields.
 static func make(kind: String, extra := {}) -> Dictionary:
 	var it := {"kind": kind}
@@ -107,6 +116,8 @@ static func title(it: Dictionary) -> String:
 			return "Leaf"
 		"berries":
 			return "Berries"
+	if it.has("title"):
+		return str(it.title)
 	return str(kind_info(it.kind).get("name", it.kind))
 
 

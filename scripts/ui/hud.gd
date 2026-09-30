@@ -99,7 +99,7 @@ func _ready() -> void:
 	_hint.offset_bottom -= 104
 	_hint.offset_top -= 104
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_hint.text = "WASD move · W W sprint · Shift crouch (air: drop) · Space jump (tap hop, hold bound)\nright click at a wall: wall jump (hold: cling) · as you land: bounce\nleft click: draw / release · Q bow, spear · E interact · V view · Tab pack\nM map · O settings · F3 debug · H full HUD · Esc frees the mouse: click readouts to pin them"
+	_hint.text = "WASD move · W W sprint · Space jump (at a wall: wall jump · as you land: bounce)\nShift crouch (in the air: drop · as you land: roll) · right click: take, climb, hold on\nleft click: draw / thrust / punch · Q tool · V view · Tab pack\nM map · O settings · F3 debug · H full HUD · Esc frees the mouse: click readouts to pin them"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 47)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -245,7 +245,8 @@ func _process(delta: float) -> void:
 	_apply()
 
 
-## Context prompt near the bottom of the screen ("E: turn over the log").
+## Context prompt near the bottom of the screen ("Right click: turn over
+## the log").
 ## The health meter, crosshair, the bow's draw (or the spear's raise) and
 ## the weapon in hand from the player, every frame (the hits' numbers and
 ## X StatusHud reads for itself, Hits).
@@ -258,7 +259,9 @@ func update_status(player: PlanetPlayer) -> void:
 	_status.overcharge = maxf(player.bow.overcharge(), player.spear.overcharge())
 	_status.show_crosshair = player.first_person or player.aiming()
 	_status.look_name = player.look.text if player.look != null and not player.ui_open else ""
-	if player.weapon == "bow":
+	if player.weapon == "hands":
+		_status.weapon = "Bare hands"
+	elif player.weapon == "bow":
 		_status.weapon = "Bow" if player.wears("ranged", "bow") else "Bare hands"
 	elif not player.wears("melee", "spear"):
 		_status.weapon = "Bare hands"

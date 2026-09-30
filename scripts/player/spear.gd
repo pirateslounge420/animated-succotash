@@ -14,7 +14,7 @@ extends Node3D
 ##                 (_loft()): a visible arc, and a weak throw at something
 ##                 far falls short. It sticks where it hits (ThrownSpear).
 ## There is one spear. Thrown, the hand is empty until you walk up to it
-## and press interact (E) within PICK_M (main: after letting go of a tree,
+## and press interact (right click) within PICK_M (main: after letting go of a tree,
 ## before turning a log): from the ground, a trunk, a carcass or the
 ## water. Taking it back puts it in your hand.
 ##
@@ -60,7 +60,7 @@ var last_closing := 0.0
 var charge := 0.0
 ## Out in the world (flying, stuck or lying there), or null (it's yours).
 var thrown: ThrownSpear = null
-## "E: take the spear back" within reach of it, else "".
+## "Right click: take the spear back" within reach of it, else "".
 var prompt := ""
 
 var _press := -1.0 # seconds `shoot` has been held, -1 when not
@@ -163,7 +163,7 @@ func update_spear(delta: float) -> void:
 	_prompt_t -= delta
 	if _prompt_t <= 0.0:
 		_prompt_t = 0.2
-		prompt = "E: take the spear back" if in_reach() else ""
+		prompt = ("%s: take the spear back" % Controls.interact_word()) if in_reach() else ""
 	_carry()
 
 

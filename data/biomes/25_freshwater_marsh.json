@@ -142,7 +142,79 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "loose rounded thicket of arching stems"
+    "silhouette": "loose rounded thicket of arching stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Small epigeal seedling on wet mud with glossy opposite (sometimes whorled) oval leaves. It branches from the base early, becoming a rounded, many-stemmed shrub with arching stems, often standing in shallow water; cut or burned stems resprout readily.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Cephalanthus occidentalis (to 6 m, flowers Jun-Sep in dense spherical heads of tiny white flowers at branch ends, fruit Sep-Oct as round clusters of nutlets, ~134,000 seeds/lb, low germination without pretreatment, sprouts after fire, increases with light); growth and lifespan estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 3,
+     "flower_colour": "#f5f2e6",
+     "flower_form": "ball",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      7
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "moth"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#7fa04e",
+     "ripe_colour": "#6b472c",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      60,
+      200
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Cephalanthus occidentalis (white pompom heads Jun-Sep visited by bees, butterflies and moths; ripe Sep-Oct as round brown heads of cone-shaped nutlets that break up over winter); heads per shrub estimated"
+    }
    },
    {
     "name": "Grey willow",
@@ -267,7 +339,80 @@
      "spacing_m": 0.2,
      "confidence": "documented"
     },
-    "silhouette": "grey-green rounded bush of many stems"
+    "silhouette": "grey-green rounded bush of many stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within a day on wet mud: two tiny round cotyledons, then a downy shoot with small obovate, dull grey-green leaves (grey-hairy beneath). Branches low into a rounded, dense, many-stemmed bush; twigs downy, with raised ridges under the peeled bark. Fallen or broken stems root where they touch wet ground.",
+     "confidence": "estimated",
+     "source": "Stace, New Flora of the British Isles, and Meikle, Willows and Poplars of GB and Ireland (BSBI) for form, 4-10 (15) m size and phenology; USDA Woody Plant Seed Manual Salix (willow seed has no dormancy and germinates within 12-24 h on wet ground (USDA Woody Plant Seed Manual Salix)); growth rate, first seed and lifespan estimated for a fast, short-lived sallow"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#dcd06a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.6,
+      1.0
+     ],
+     "unripe_colour": "#a9b77a",
+     "ripe_colour": "#c2b28e",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20000,
+      400000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Stace and Meikle (BSBI): catkins before the leaves in Mar-Apr, males 2-3 cm with yellow anthers ('pussy willow'), females grey-green; hairy flask-shaped capsules 7-10 mm shed seed May-June; key early food for bumblebee queens and honeybees; fruit set and crop estimated"
+    }
    },
    {
     "name": "Sweet gale",
@@ -385,7 +530,77 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "low grey-green twiggy bush"
+    "silhouette": "low grey-green twiggy bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling on wet peat or sandy lake shores; leaves narrowly wedge-shaped, toothed near the tip, grey-green and dotted with fragrant resin glands, as in the adult. It branches from the base into an upright, reddish-brown-twigged little bush and spreads by root suckers into dense clonal thickets; nitrogen-fixing root nodules help it on poor bog soils.",
+     "confidence": "estimated",
+     "source": "Wikipedia Myrica gale (deciduous shrub to 2 m; catkins before the leaves, male yellowish to orange-brown, female red to purple; usually dioecious but plants may change sex from year to year; dense clonal colonies from root suckers); USDA Woody Plant Seed Manual Myrica (1-6 ft); ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#b0603a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      8
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "nut",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      0.8,
+      1.5
+     ],
+     "unripe_colour": "#8a9a5a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      110,
+      150
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (catkins in spring before the leaves, several per twig; red-purple female catkins; small waxy fruits). Here one 'flower' is a female catkin and one 'fruit' the small brown cone-like head it becomes, of 2-3 mm resin-dotted winged nutlets that float off in water; ripe late summer, persists into winter; set and crop estimated"
+    }
    }
   ],
   "ground": [
@@ -484,7 +699,29 @@
      "confidence": "documented",
      "note": "round green flower culm inside the leaf fans"
     },
-    "silhouette": "tall upright fans of grey-green blades with brown spikes"
+    "silhouette": "tall upright fans of grey-green blades with brown spikes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      0.3,
+      1.2
+     ],
+     "first_seed_years": 1.1,
+     "lifespan_years": [
+      1,
+      2
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Germinates on wet mud or in shallow water: a hair-like shoot, then 2-4 tiny leaves and 2-6 ribbon leaves floating flat on the water before stiff, erect, flat grey-green leaves rise. By the end of its first summer a seedling is 60-85 cm tall and has sent rhizomes out into a clump up to 3 m across. Each shoot lives about a year; the clone persists for decades.",
+     "confidence": "documented",
+     "source": "USDA FEIS (Typha latifolia): germinates best at 25-30 C in high light; 2-4 small then 2-6 floating leaves before erect ones; seedlings 60-85 cm after 84 d; flowers early in 2nd year; ramets die within a year, rhizomes live about 2 yr; one seedling's rhizomes spread 3 m in a season; shade intolerant."
+    }
    },
    {
     "name": "Common reed",
@@ -581,7 +818,29 @@
      "confidence": "documented",
      "note": "hollow jointed culms turning straw-coloured in winter; internodes ~20 cm"
     },
-    "silhouette": "tall dense stand of plume-topped canes"
+    "silhouette": "tall dense stand of plume-topped canes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      3,
+      8
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small, weak, grass-like tufts of soft green leaves on wet mud. After a season rhizomes and long surface runners spread out; every spring new culms shoot up like thin canes to full height in a few months, with long, broad, grey-green leaves all along the stem and a big, silky, purple-brown plume that fades to grey-buff.",
+     "confidence": "documented",
+     "source": "USDA FEIS Phragmites australis (germination needs light, moisture and warm alternating temperatures after cold stratification; seedling survival very low; 3-4 years to viable seed; maximum height at 5-8 years; no part of a clone lives more than 8 years though clones persist far longer; culms die back yearly)"
+    }
    },
    {
     "name": "Reed sweet-grass",
@@ -680,7 +939,29 @@
      "confidence": "documented",
      "note": "stout hollow culms"
     },
-    "silhouette": "tall bright green leafy stand"
+    "silhouette": "tall bright green leafy stand",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings on wet mud are small tufts of flat, soft, bright-green leaves; from the first year thick white rhizomes creep out and send up leafy shoots at intervals, so one seedling becomes a spreading, dense bed of broad (1-2 cm) keeled leaves; tall shoots with large open plumes appear from year 2.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Glyceria maxima: highly competitive, invasive rhizomatous perennial grass); Biological Flora of the British Isles (Lambert 1947) and weed-risk accounts (vigorous rhizome spread, germination on wet mud). Values estimated."
+    }
    },
    {
     "name": "Soft-stem bulrush",
@@ -766,7 +1047,29 @@
      "confidence": "documented",
      "note": "terete soft grey-green culms 1-3 m, papery straw sheaths at the base"
     },
-    "silhouette": "sparse tall grey-green leafless stems"
+    "silhouette": "sparse tall grey-green leafless stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a tiny tuft of thread-like leaves; a creeping rhizome then sends up round, soft, spongy, leafless stems that are grey-green with a waxy bloom, 1-3 m tall, each tipped with a small cluster of reddish-brown spikelets. Forms dense stands in shallow marshes; each stem lasts a season or two.",
+     "confidence": "estimated",
+     "source": "Flora of N America Schoenoplectus tabernaemontani (glaucous soft-stem bulrush, culms to 3 m, rhizomatous); USDA NRCS plant guide (softstem bulrush: seed needs cold stratification, establishes and flowers fast in wetlands); ages estimated"
+    }
    },
    {
     "name": "Tussock sedge",
@@ -863,7 +1166,29 @@
      "confidence": "documented",
      "note": "tussock pedestal of brown persistent leaf bases"
     },
-    "silhouette": "dome of arching blades on a pedestal"
+    "silhouette": "dome of arching blades on a pedestal",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      3,
+      15
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A small tuft of narrow leaves; the clump thickens each year from short rhizomes, and old leaf bases, roots and trapped sediment build a raised pedestal. Over years to decades this becomes a tall tussock like a pillar standing above seasonal flood water, crowned by a fountain of arching leaves.",
+     "confidence": "estimated",
+     "source": "Illinois Wildflowers (dense tussocks 75-120 cm, blooms ~1 week mid-spring, full sun, short-rhizomatous); Lawrence & Zedler 2011 Ecol. Appl. (tussocks form above flood levels); tussock age estimated from sedge-meadow literature"
+    }
    },
    {
     "name": "Yellow flag iris",
@@ -960,7 +1285,29 @@
      "confidence": "documented",
      "note": "stout flower stems; leaf bases flushed pink-brown"
     },
-    "silhouette": "upright fans of sword-shaped leaves"
+    "silhouette": "upright fans of sword-shaped leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The seedling is a small flat fan of 2-4 narrow, sword-shaped, grey-green leaves rising from a corky floating seed. By the second or third year the rhizome has thickened and branched into several fans of stiff, erect leaves about 1 m tall and the first bright yellow flowers appear; clumps then creep outward on thick rhizomes into dense stands at the water's edge.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Iris pseudacorus: 1-1.5 m, rarely 2 m; flowers 7-10 cm; spreads quickly by rhizome and water-dispersed seed; very wet, even anoxic soils); germination, first flowering and clump ages estimated from rhizomatous iris growth."
+    }
    }
   ],
   "epiphyte": []

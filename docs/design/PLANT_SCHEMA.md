@@ -302,6 +302,54 @@ rare sport (`data/sports.json`, PlantGenetics): the rates by shape, the kinds an
 documented per genus live there, not in the plant entries (a species' own documented
 sports go in `cycle.sports` when it has a cycle).
 
+## 4a4. `growth` (real growth rates) and `fruiting` (flowers and fruit)
+
+Researched per species (design §AR; twelve research passes over silvics manuals, FEIS,
+floras, extension pages and growers' data; `confidence` documented or estimated per
+block). Real-life values: the game plays them on its clock, one game day per real day's
+growth, which runs 10x faster than ours (PlantGrowth). Replaces the older template
+`growth` (stages + final_size); stages are derived from these numbers in code
+(PlantGrowth.stage_of), not stored. Fungi keep their fruiting-body stages; every
+Amorphophallus has a block derived from its `cycle` (first bloom).
+
+```json
+"growth": {
+  "life": "perennial",            // annual | biennial | perennial | monocarpic
+  "season": "spring",             // annuals and biennials: when seed comes up (spring | rains | autumn | any)
+  "germination_days": [7, 21],    // sowing (or the rains) to the seedling showing
+  "height_years": [35, 90],       // years to half and to ~90 % of full height (or size), open-grown
+  "trunk_years": 6,               // optional: years before a stem shows (palms, tree ferns, cycads)
+  "culm_days": 60,                // optional, bamboos: days for a new culm to reach full height
+  "first_seed_years": 25,         // first flowers / cones / spores
+  "lifespan_years": [300, 500],   // typical, exceptional (the stem you see; clones in the note)
+  "shade": "tolerant",            // the young plant: very_intolerant .. very_tolerant
+  "juvenile": "cone",             // whip | cone | multi_stem | grass_stage | establishment | rosette | tuft |
+                                  // shoot | sporeling | globe | sprig | vine | protocorm | mat | none
+  "juvenile_leaves": "same",      // different: heteroblasty (eucalypts, wattles, junipers, palms' eophylls)
+  "juvenile_note": "...",         // what the young plant looks like, for the mesh builders
+  "confidence": "documented", "source": "..."
+}
+"fruiting": {                     // trees, shrubs, palms, cacti, climbers
+  "flower_months": [3, 4], "hemisphere": "north",   // or south / equatorial; months may wrap (11 -> 4)
+  "flower_days": 4, "flower_size_cm": 3.5, "flower_colour": "#f6e8ee",
+  "flower_form": "cup",           // cup | star | bell | tube | pea | brush | ball | catkin | spike | panicle | cone | tiny
+  "flower_position": "twigs",     // twigs | trunk (cauliflory) | crown | stalk | stem_tips
+  "flowers_per_cluster": [4, 6],
+  "pollinators": ["bee", "fly"],  // bee | bumblebee | stingless_bee | wasp | fig_wasp | fly | beetle | moth |
+                                  // butterfly | bird | bat | mammal | wind | water | self
+  "fruit_set": 0.15,              // share of flowers that ripen a fruit
+  "fruit_kind": "pome",           // berry | drupe | pome | citrus | pod | capsule | nut | samara | cone | fig | syncarp | achene | pepo
+  "fruit_shape": "round",         // round | ovoid | elongated | pod | coiled | winged | star | cone
+  "fruit_size_cm": [3, 6], "unripe_colour": "#8aa848", "ripe_colour": "#b83a2a",
+  "ripen_days": [120, 160],       // pollination to ripe
+  "hang_days": [10, 40],          // ripe on the plant before it drops
+  "drop": "falls",                // falls | splits | persists | shatters
+  "rot_days": [14, 40],           // on the ground until gone
+  "crop_per_tree": [50, 400], "edible": "yes",      // yes | cooked | no | toxic
+  "confidence": "documented", "source": "..."
+}
+```
+
 ## 4b. `soil` (spawn gate — co-equal with temperature and moisture)
 
 ```json

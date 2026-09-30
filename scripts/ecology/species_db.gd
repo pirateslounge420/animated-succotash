@@ -142,6 +142,8 @@ static func _load() -> void:
 	_load_atlas(by_name)
 	# Sport chances and kinds per species (data/sports.json).
 	PlantGenetics.setup(_all)
+	# Growth curves, stages and shade tolerance per species (design §AR).
+	PlantGrowth.setup(_all)
 	for i in _all.size():
 		_index[_all[i]] = i
 		var t := _all[i].tier
@@ -392,6 +394,11 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	var rp = e.get("repro", {})
 	if rp is Dictionary:
 		sp.clonal = str(rp.get("clonal", "none")) in ["tuber_offset", "stolon", "bulbil", "sucker", "rhizome"]
+	# How it grows, flowers and fruits (design §AR; PlantGrowth, FruitCrop).
+	var gr = e.get("growth", {})
+	sp.growth = gr if gr is Dictionary else {}
+	var fr = e.get("fruiting", {})
+	sp.fruiting = fr if fr is Dictionary else {}
 	by_name[p_name] = sp
 	_all.append(sp)
 

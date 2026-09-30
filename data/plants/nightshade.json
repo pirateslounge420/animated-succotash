@@ -48,25 +48,27 @@
     "color": "#4E7A3E",
     "accent": "#EFE6F2",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       20
-      ],
-      [
-       "young",
-       60
-      ],
-      [
-       "mature",
-       120
-      ],
-      [
-       "old",
-       300
-      ]
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      7,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.15,
+      0.35
+     ],
+     "first_seed_years": 0.3,
+     "lifespan_years": [
+      0.4,
+      0.7
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds lie dormant in the soil for years and flush after disturbance. Epigeal: two long, strap-like cotyledons, then broad, coarsely toothed, rank-smelling leaves on a single stout stem (green, or purple in var. tatula). By midsummer it forks repeatedly into a flat-topped bush with a white or violet trumpet in each fork.",
+     "confidence": "documented",
+     "source": "Wikipedia Datura stramonium (erect annual 60-150 cm; seeds dormant for years, germinate after soil disturbance; flowers all summer, 6-9 cm, open at night and visited by moths; egg-shaped capsule 3-8 cm, spiny or bald, splitting into 4); Datura genus account"
     },
     "repro": {
      "mode": "seed",
@@ -227,6 +229,56 @@
      "spacing_m": 0.3,
      "confidence": "estimated",
      "note": "forking in twos or threes at every node with a flower in the fork — the Datura branching pattern"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 1,
+     "flower_size_cm": 4,
+     "flower_colour": "#f4f1ea",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "self",
+      "moth",
+      "bee"
+     ],
+     "fruit_set": 0.8,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      6
+     ],
+     "unripe_colour": "#6f9a4a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      30,
+      150
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      10,
+      300
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "Wikipedia (flowers 6-9 cm long, white to violet, opening at night, fragrant, visited by nocturnal moths; capsule egg-shaped, 3-8 cm, spiny, splits into four chambers with dozens of black seeds; all parts toxic). Largely self-pollinating; set, ripening time and husk persistence estimated."
     }
    },
    {
@@ -272,25 +324,26 @@
     "color": "#6A8A70",
     "accent": "#F6F2F8",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       900
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.3,
+      1.5
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two narrow cotyledons, then soft, grey-green, velvety-hairy ovate leaves. The seedling forks early into a low, sprawling, mound-shaped bush that can flower in its first summer; it builds a thick tuberous root that survives winter or drought, resprouting each year into a wider mound with huge white trumpets.",
+     "confidence": "estimated",
+     "source": "Wikipedia Datura wrightii (vigorous herbaceous perennial 0.3-1.5 m tall and wide; fragrant white trumpets to 20 cm, often purple-edged, opening morning and evening; spiny globular capsule 3-4 cm opening when ripe; blooms Apr-Oct). Tuberous rootstock, germination and lifespan from southwestern US native-plant growers."
     },
     "repro": {
      "mode": "seed",
@@ -451,6 +504,55 @@
      "spacing_m": 0.3,
      "confidence": "estimated",
      "note": "forking in twos or threes at every node with a flower in the fork — the Datura branching pattern"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 1,
+     "flower_size_cm": 12,
+     "flower_colour": "#f4eef3",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "moth",
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      3,
+      4
+     ],
+     "unripe_colour": "#6f9549",
+     "ripe_colour": "#7d6242",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      30,
+      150
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      10,
+      100
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "Wikipedia (white trumpets to 20 cm long, five-pointed rim, open evening into morning, closing in midday heat; spiny globular nodding capsule 3-4 cm that opens when ripe; April-October). Hawkmoths (Manduca) at night and bees in the morning are its classic pollinators; set and crop estimated."
     }
    },
    {
@@ -494,25 +596,27 @@
     "color": "#4A7A48",
     "accent": "#E6D8F0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       20
-      ],
-      [
-       "young",
-       60
-      ],
-      [
-       "mature",
-       120
-      ],
-      [
-       "old",
-       300
-      ]
+     "life": "annual",
+     "season": "rains",
+     "germination_days": [
+      7,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.15,
+      0.4
+     ],
+     "first_seed_years": 0.3,
+     "lifespan_years": [
+      0.6,
+      1.5
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two long, narrow, pointed cotyledons, then broad, soft, ovate leaves with wavy or shallowly toothed edges on a single stout green or purple-black stem. Within weeks the stem forks repeatedly into a spreading, bushy herb, with a big upright trumpet flower in each fork. In frost-free climates it can carry on as a short-lived woody-based perennial.",
+     "confidence": "estimated",
+     "source": "Wikipedia Datura metel (annual or short-lived perennial to 1.8 m; hollow green or purple-black stems; flowers 15-20 cm, white, cream, yellow or violet, single or double; warty capsules breaking irregularly; American origin, long naturalised in Asia). Germination and timings from Datura growers."
     },
     "repro": {
      "mode": "seed",
@@ -673,6 +777,56 @@
      "spacing_m": 0.3,
      "confidence": "estimated",
      "note": "forking in twos or threes at every node with a flower in the fork — the Datura branching pattern"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      12
+     ],
+     "hemisphere": "north",
+     "flower_days": 1,
+     "flower_size_cm": 10,
+     "flower_colour": "#f5f1ea",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "moth",
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      3,
+      6
+     ],
+     "unripe_colour": "#6d9448",
+     "ripe_colour": "#8a7248",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      20,
+      90
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      10,
+      150
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Wikipedia Datura metel and Datura (trumpets 15-20 cm long, 4-12 cm across; nodding globose capsules with conical warts or short spines that break irregularly when ripe; all parts toxic). Night opening for one night, hawkmoth and bee visits, set, ripening and crop estimated from Datura biology."
     }
    }
   ],
@@ -717,25 +871,26 @@
     "color": "#4E8A4A",
     "accent": "#F8F4E8",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       900
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
      ],
-     "final_size": 1.0
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      20,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Corky seeds sprout in 2-6 weeks with two narrow cotyledons; the seedling grows as a single straight stem with large, soft, often coarsely toothed leaves until it forks at 0.8-1.5 m; above the fork leaves are smaller, mostly entire and often lopsided at the base, and flowers appear. Fast-growing, it branches into a spreading, soft-stemmed shrub or small tree along streams and forest edges.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Brugmansia: seedlings grow on one stem to a first fork at 80-150 cm and flower only above it; plants 3-11 m; all species Extinct in the Wild, fruits now shrivel on the plant, former dispersers extinct megafauna; all parts toxic); lowland SE Brazil Atlantic Forest species; germination and growth times from growers; lifespan estimated."
     },
     "repro": {
      "mode": "seed",
@@ -897,6 +1052,54 @@
      "spacing_m": 0.5,
      "confidence": "estimated",
      "note": "small tree forking repeatedly above a short trunk; the crown a dome hung with trumpets"
+    },
+    "fruiting": {
+     "flower_months": [
+      11,
+      4
+     ],
+     "hemisphere": "south",
+     "flower_days": 3,
+     "flower_size_cm": 14,
+     "flower_colour": "#f8f5ea",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "moth"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      9,
+      15
+     ],
+     "unripe_colour": "#6f9b4f",
+     "ripe_colour": "#b5a56a",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      5,
+      60
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Wikipedia (evening fragrance for hawkmoths; fruits shrivel on the plant); Hay et al. 2012 (B. suaveolens: white, sometimes pink or yellow, broadly flared flowers 24-32 cm long; spindle-shaped fruit ~9-15 cm); flowering season, timings and counts estimated."
     }
    },
    {
@@ -940,25 +1143,26 @@
     "color": "#4A7A44",
     "accent": "#D83A2A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       900
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      70
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2.5,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Corky seeds sprout slowly in cool conditions with two narrow cotyledons; the seedling grows as a single straight stem with large, soft, often coarsely toothed leaves until it forks at 0.8-1.5 m; above the fork leaves are smaller, mostly entire and often lopsided at the base, and flowers appear. Leaves are soft and downy; it becomes a bushy, upright small tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Brugmansia: seedlings grow on one stem to a first fork at 80-150 cm and flower only above it; plants 3-11 m; all species Extinct in the Wild, fruits now shrivel on the plant, former dispersers extinct megafauna; all parts toxic); B. sanguinea is the cool-montane species (2000-3000 m); germination and growth times from growers; lifespan estimated."
     },
     "repro": {
      "mode": "seed",
@@ -1120,6 +1324,54 @@
      "spacing_m": 0.5,
      "confidence": "estimated",
      "note": "small tree forking repeatedly above a short trunk; the crown a dome hung with trumpets"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 5,
+     "flower_size_cm": 5,
+     "flower_colour": "#e0452c",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bird"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      6,
+      10
+     ],
+     "unripe_colour": "#6d9a52",
+     "ripe_colour": "#b9aa6e",
+     "ripen_days": [
+      120,
+      180
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      5,
+      80
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Wikipedia (scentless red-orange-yellow tubular flowers pollinated by the sword-billed hummingbird; fruits shrivel on the plant); Hay et al. 2012 (flowers 15-25 cm, fruit ovoid 8-10 cm); timings and counts estimated. flower_size_cm is the mouth width."
     }
    },
    {
@@ -1162,25 +1414,26 @@
     "color": "#5A8A50",
     "accent": "#F6F4EC",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       900
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Corky seeds sprout in 2-8 weeks with two narrow cotyledons; the seedling grows as a single straight stem with large, soft, often coarsely toothed leaves until it forks at 0.8-1.5 m; above the fork leaves are smaller, mostly entire and often lopsided at the base, and flowers appear. It then branches into a small, rounded, soft-wooded tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Brugmansia: seedlings grow on one stem to a first fork at 80-150 cm and flower only above it; plants 3-11 m; all species Extinct in the Wild, fruits now shrivel on the plant, former dispersers extinct megafauna; all parts toxic); germination and growth times from growers; lifespan estimated."
     },
     "repro": {
      "mode": "seed",
@@ -1341,6 +1594,54 @@
      "spacing_m": 0.5,
      "confidence": "estimated",
      "note": "small tree forking repeatedly above a short trunk; the crown a dome hung with trumpets"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 8,
+     "flower_colour": "#f6f3e6",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "moth"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      4,
+      6
+     ],
+     "unripe_colour": "#6f9a4e",
+     "ripe_colour": "#b8a86a",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      5,
+      60
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Wikipedia (evening-scented flowers for hawkmoths; fruits shrivel on the plant); Hay et al. 2012 / Lockwood 1973 descriptions (B. arborea: smallest flowers of the genus, white, 12-17 cm long, nodding; fruit ovoid ~5 cm with persistent calyx); timings and counts estimated. flower_size_cm is the mouth width."
     }
    },
    {
@@ -1382,25 +1683,26 @@
     "color": "#4A8A48",
     "accent": "#F8C8A0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       900
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
      ],
-     "final_size": 1.0
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      20,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Corky seeds sprout in 2-6 weeks with two narrow cotyledons; the seedling grows as a single straight stem with large, soft, often coarsely toothed leaves until it forks at 0.8-1.5 m; above the fork leaves are smaller, mostly entire and often lopsided at the base, and flowers appear. It branches into an open, spreading shrub or small tree hung with very long flowers.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Brugmansia: seedlings grow on one stem to a first fork at 80-150 cm and flower only above it; plants 3-11 m; all species Extinct in the Wild, fruits now shrivel on the plant, former dispersers extinct megafauna; all parts toxic); lowland Ecuador (Guayas basin) species; germination and growth times from growers; lifespan estimated."
     },
     "repro": {
      "mode": "seed",
@@ -1562,6 +1864,54 @@
      "spacing_m": 0.5,
      "confidence": "estimated",
      "note": "small tree forking repeatedly above a short trunk; the crown a dome hung with trumpets"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      5
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 15,
+     "flower_colour": "#f7e3cf",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "moth"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      15,
+      30
+     ],
+     "unripe_colour": "#6e9a4d",
+     "ripe_colour": "#b3a468",
+     "ripen_days": [
+      100,
+      160
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      5,
+      50
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Wikipedia (evening-scented moth flowers; fruits shrivel on the plant); Hay et al. 2012 (B. versicolor: longest flowers of the genus, 30-50 cm, white aging to peach or apricot; long slender spindle-shaped fruit); season, timings and counts estimated."
     }
    }
   ]

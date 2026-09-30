@@ -303,10 +303,98 @@ def check_cycle(rep, where, c):
             rep.err(where + ".sports", "kind %r not in %s" % (s.get("kind"), sorted(CY_SPORT)))
 
 
+# --- growth (real growth rates) and fruiting (flowers and fruit): design §AR ---
+GR_LIFE = {"annual", "biennial", "perennial", "monocarpic"}
+GR_SHADE = {"very_intolerant", "intolerant", "intermediate", "tolerant", "very_tolerant"}
+GR_JUVENILE = {"whip", "cone", "multi_stem", "grass_stage", "establishment", "rosette", "tuft", "shoot",
+               "sporeling", "globe", "sprig", "vine", "protocorm", "mat", "none"}
+GR_SEASON = {"spring", "rains", "autumn", "any"}
+FR_HEMI = {"north", "south", "equatorial"}
+FR_FORM = {"cup", "star", "bell", "tube", "pea", "brush", "ball", "catkin", "spike", "panicle", "cone", "tiny"}
+FR_POS = {"twigs", "trunk", "crown", "stalk", "stem_tips"}
+FR_POLL = {"bee", "bumblebee", "stingless_bee", "wasp", "fig_wasp", "fly", "beetle", "moth", "butterfly", "bird",
+           "bat", "mammal", "wind", "water", "self"}
+FR_KIND = {"berry", "drupe", "pome", "citrus", "pod", "capsule", "nut", "samara", "cone", "fig", "syncarp", "achene", "pepo"}
+FR_SHAPE = {"round", "ovoid", "elongated", "pod", "coiled", "winged", "star", "cone"}
+FR_DROP = {"falls", "splits", "persists", "shatters"}
+FR_EDIBLE = {"yes", "cooked", "no", "toxic"}
+
+
+def _pair(rep, where, d, key, lo, hi, required=True):
+    v = d.get(key)
+    if v is None:
+        if required:
+            rep.err(where, "missing '%s'" % key)
+        return
+    if not (isinstance(v, list) and len(v) == 2 and all(isinstance(x, (int, float)) and not isinstance(x, bool) for x in v)
+            and lo <= v[0] <= v[1] <= hi):
+        rep.err(where, "'%s' must be [low, high] within %s..%s (got %r)" % (key, lo, hi, v))
+
+
+def _hex(rep, where, d, key):
+    v = d.get(key)
+    if not (isinstance(v, str) and len(v) == 7 and v[0] == "#" and all(c in "0123456789abcdefABCDEF" for c in v[1:])):
+        rep.err(where, "'%s' must be #rrggbb (got %r)" % (key, v))
+
+
+def check_growth(rep, where, g):
+    if "stages" in g:
+        # The fruiting-body cycle of a fungus (pin, button, cap, spent).
+        return
+    _enum(rep, where, g, "life", GR_LIFE)
+    if g.get("life") in ("annual", "biennial"):
+        _enum(rep, where, g, "season", GR_SEASON)
+    _pair(rep, where, g, "germination_days", 0.01, 3650)
+    hy = g.get("height_years")
+    if not (isinstance(hy, list) and len(hy) == 2 and all(isinstance(x, (int, float)) for x in hy) and 0 < hy[0] < hy[1]):
+        rep.err(where, "'height_years' must be [to half, to ~90%%] with 0 < half < 90%% (got %r)" % (hy,))
+    _num(rep, where, g, "first_seed_years", 0.01, 3000)
+    _pair(rep, where, g, "lifespan_years", 0.05, 200000)
+    _num(rep, where, g, "trunk_years", 0.01, 500, required=False)
+    _num(rep, where, g, "culm_days", 5, 400, required=False)
+    _enum(rep, where, g, "shade", GR_SHADE)
+    _enum(rep, where, g, "juvenile", GR_JUVENILE)
+    _enum(rep, where, g, "juvenile_leaves", {"same", "different"})
+    _enum(rep, where, g, "confidence", CONFIDENCE)
+
+
+def check_fruiting(rep, where, f):
+    fm = f.get("flower_months")
+    if not (isinstance(fm, list) and len(fm) == 2 and all(isinstance(x, int) and 1 <= x <= 12 for x in fm)):
+        rep.err(where, "'flower_months' must be [first, last] months 1-12 (got %r)" % (fm,))
+    _enum(rep, where, f, "hemisphere", FR_HEMI)
+    _num(rep, where, f, "flower_days", 0.01, 120)
+    _num(rep, where, f, "flower_size_cm", 0.01, 300)
+    _hex(rep, where, f, "flower_colour")
+    _enum(rep, where, f, "flower_form", FR_FORM)
+    _enum(rep, where, f, "flower_position", FR_POS)
+    _pair(rep, where, f, "flowers_per_cluster", 1, 100000)
+    po = f.get("pollinators")
+    if not (isinstance(po, list) and po and all(p in FR_POLL for p in po)):
+        rep.err(where, "'pollinators' must be a list from %s (got %r)" % (sorted(FR_POLL), po))
+    _num(rep, where, f, "fruit_set", 0.0001, 1.0)
+    _enum(rep, where, f, "fruit_kind", FR_KIND)
+    _enum(rep, where, f, "fruit_shape", FR_SHAPE)
+    _pair(rep, where, f, "fruit_size_cm", 0.05, 300)
+    _hex(rep, where, f, "unripe_colour")
+    _hex(rep, where, f, "ripe_colour")
+    _pair(rep, where, f, "ripen_days", 1, 1500)
+    _pair(rep, where, f, "hang_days", 0, 1500)
+    _enum(rep, where, f, "drop", FR_DROP)
+    _pair(rep, where, f, "rot_days", 1, 20000)
+    _pair(rep, where, f, "crop_per_tree", 1, 10000000)
+    _enum(rep, where, f, "edible", FR_EDIBLE)
+    _enum(rep, where, f, "confidence", CONFIDENCE)
+
+
 def check_entry(rep, where, e, strict):
     rep.entries += 1
     if "cycle" in e:
         check_cycle(rep, where + ".cycle", e["cycle"])
+    if "growth" in e:
+        check_growth(rep, where + ".growth", e["growth"])
+    if "fruiting" in e:
+        check_fruiting(rep, where + ".fruiting", e["fruiting"])
     if "leaf" in e:
         rep.with_leaf += 1
         check_leaf(rep, where + ".leaf", e["leaf"])

@@ -36,25 +36,26 @@
     "color": "#5A9A4A",
     "accent": "#A08A70",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       365
-      ],
-      [
-       "sapling",
-       5000
-      ],
-      [
-       "mature",
-       40000
-      ],
-      [
-       "old",
-       400000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      90
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      500,
+      2500
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling has broad cotyledons and simple, undivided first leaves; hand-shaped leaves with 3, then 5-7 leaflets come later. Young baobabs look nothing like adults: a slender, straight, tapering grey-green whip over a swollen tuberous taproot, with thin branches; the huge bottle trunk and wide crown form only after decades. Seeds are hard and germinate slowly unless scarified.",
+     "confidence": "documented",
+     "source": "Ethiopian Forestry Dev. baobab study (simple juvenile leaves, 5-7-foliate adult leaves, trees over 1000 yr); Anjarwalla et al. 2021 bioRxiv (seed-grown trees first flower at 8-23 yr; acid-treated seed sprouts in ~5 d); Patrut et al. 2018 Nature Plants (radiocarbon ages to ~2500 yr); height curve estimated"
     },
     "repro": {
      "mode": "seed",
@@ -227,6 +228,56 @@
      "root_flare": true,
      "spacing_m": 3.0,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      12
+     ],
+     "hemisphere": "south",
+     "flower_days": 1,
+     "flower_size_cm": 15,
+     "flower_colour": "#f4f1e6",
+     "flower_form": "brush",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bat",
+      "moth",
+      "mammal"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      12,
+      25
+     ],
+     "unripe_colour": "#6f8a4a",
+     "ripe_colour": "#8f7d5e",
+     "ripen_days": [
+      150,
+      220
+     ],
+     "hang_days": [
+      30,
+      150
+     ],
+     "drop": "falls",
+     "rot_days": [
+      120,
+      540
+     ],
+     "crop_per_tree": [
+      20,
+      250
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Venter & Witkowski 2019 For Ecol Manage (southern Africa: flowering 1-5 months peaking Nov, 290-710 flowers per tree, fruit set ~20%); EFD Ethiopia study (57-157 fruits/tree in Benin, 77 in South Africa); Baum 1995 (pendent white flowers open at dusk for one night, fruit-bat pollination)"
     }
    },
    {
@@ -258,25 +309,26 @@
     "color": "#5A9A4A",
     "accent": "#A08A70",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       365
-      ],
-      [
-       "sapling",
-       5000
-      ],
-      [
-       "mature",
-       40000
-      ],
-      [
-       "old",
-       400000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
      ],
-     "final_size": 1.0
+     "height_years": [
+      15,
+      60
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      400,
+      1200
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings have simple first leaves before digitate leaves with many leaflets. Young trees are straight, slender, fast whips (about 2 m in 2 years) with smooth grey-green bark and thin horizontal branches. The massive, smooth, reddish-grey cylindrical trunk with a flat-topped crown of branches develops only after decades.",
+     "confidence": "estimated",
+     "source": "Useful Tropical Plants (2 m tall within 2 yr from seed; 12-15 m and 60 cm bole at 12 yr in cultivation); worldplants.ca (germination 2-6 weeks); simple juvenile leaves as in other baobabs; first flowering and age estimated from A. digitata and Patrut radiocarbon work on Malagasy baobabs"
     },
     "repro": {
      "mode": "seed",
@@ -449,6 +501,56 @@
      "root_flare": true,
      "spacing_m": 3.0,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      8
+     ],
+     "hemisphere": "south",
+     "flower_days": 1,
+     "flower_size_cm": 10,
+     "flower_colour": "#f3efe2",
+     "flower_form": "brush",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "mammal",
+      "moth",
+      "bat"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      7,
+      12
+     ],
+     "unripe_colour": "#7c8a52",
+     "ripe_colour": "#7a4a2e",
+     "ripen_days": [
+      120,
+      190
+     ],
+     "hang_days": [
+      20,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      120,
+      540
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia/Baum 1995 (dry-season flowering May-Aug before the leaves; erect white flowers open at dusk with a brush of 600-700 filaments; pollinated by fork-marked lemurs and hawkmoths; rounded fruits with a 2-4.5 mm shell and dense reddish-brown hairs, ripe Nov-Dec); worldplants.ca (fuzzy green unripe)"
     }
    },
    {
@@ -480,25 +582,26 @@
     "color": "#5A9A4A",
     "accent": "#A08A70",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       365
-      ],
-      [
-       "sapling",
-       5000
-      ],
-      [
-       "mature",
-       40000
-      ],
-      [
-       "old",
-       400000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      25,
+      100
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      300,
+      1500
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The seedling forms a swollen, carrot-like (edible) tuberous root and simple, entire first leaves; compound leaves with 5-7 leaflets come later. Young boabs are thin, straight whips, often several-stemmed after fire or browsing; the bottle-shaped trunk swells slowly over decades and the tree drops its leaves each dry season.",
+     "confidence": "estimated",
+     "source": "ANPSA (small spreading tree to ~12 m; the Kings Park boab estimated ~750 yr old); seed dormancy study in Seed Sci Res (hard seed); tuberous seedlings and simple juvenile leaves as in other baobabs; growth rate and first flowering estimated from A. digitata"
     },
     "repro": {
      "mode": "seed",
@@ -671,6 +774,56 @@
      "root_flare": true,
      "spacing_m": 2.5,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      11,
+      1
+     ],
+     "hemisphere": "south",
+     "flower_days": 1,
+     "flower_size_cm": 12,
+     "flower_colour": "#f5f2e8",
+     "flower_form": "brush",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "moth",
+      "bee",
+      "bird"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      8,
+      18
+     ],
+     "unripe_colour": "#6f8550",
+     "ripe_colour": "#8b7a5a",
+     "ripen_days": [
+      120,
+      200
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "falls",
+     "rot_days": [
+      120,
+      540
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "ANPSA (large white perfumed flowers mainly in the wet season; oval woody fruit to 180 mm with many seeds in edible pulp); Aust J Bot 64:678, 2016 ('Promiscuous pollination of Australia's baobab': hawkmoths plus diurnal visitors); ripening, fruit set and crop estimated from A. digitata"
     }
    },
    {
@@ -702,25 +855,26 @@
     "color": "#7AB040",
     "accent": "#E8D040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       200
-      ],
-      [
-       "sapling",
-       3000
-      ],
-      [
-       "mature",
-       20000
-      ],
-      [
-       "old",
-       300000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      35,
+      120
+     ],
+     "first_seed_years": 25,
+     "lifespan_years": [
+      500,
+      3000
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal: the cotyledons stay inside the big seed; the shoot comes up with a few fan-shaped leaves that are often deeply notched into two or more lobes. Young trees are gawky, sparsely branched spires with a strong leader and a few long, widely spaced branches; the crown fills out and broadens only after several decades.",
+     "confidence": "documented",
+     "source": "Wikipedia (Ginkgo biloba: 20-35 m, some >40 m; specimens >1600 yr, largest estimated >3500 yr; conical crown when young, broader and irregular with age); Del Tredici (ginkgo ecology). Growth-age curve and first-seed age from horticultural records (females bear at ~20-30 yr)."
     },
     "repro": {
      "mode": "seed",
@@ -890,6 +1044,54 @@
      "root_flare": true,
      "spacing_m": 1.2,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#a8c36a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      6
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#8fae55",
+     "ripe_colour": "#e3b448",
+     "ripen_days": [
+      150,
+      200
+     ],
+     "hang_days": [
+      5,
+      45
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      1000,
+      20000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia (dioecious, wind-pollinated in spring on short shoots; fertilisation by swimming sperm happens just before or after the seeds fall in early autumn; fleshy seeds 1.5-2 cm with a foul butyric-acid coat, shed with the leaves; kernels eaten cooked, ginkgotoxin in quantity). Counts estimated."
     }
    }
   ],

@@ -33,6 +33,8 @@ var player: PlanetPlayer
 var creatures: CreatureSpawner
 ## The Amorphophallus living their cycles round the player (AroidGarden).
 var aroid_garden: AroidGarden
+## Flowers, pollinators and fruit on the trees round the player (FruitCrop).
+var fruit_crop: FruitCrop
 var mythics: Mythics
 ## Dev mode only (data/dev.json): the F7 rig spawner.
 var dev_spawn: DevSpawn
@@ -167,6 +169,7 @@ func _on_planet_ready() -> void:
 	# shoulder so the fire and the two by it are in view.
 	player.spawn_at(camp.player_spot, spawn_dir)
 	player.set_view(-0.42, 0.42)
+	_lay_gifts()
 
 	fx = WeatherFX.new()
 	fx.name = "WeatherFX"
@@ -191,6 +194,10 @@ func _on_planet_ready() -> void:
 	add_child(aroid_garden)
 	aroid_garden.setup(world, chunks, player, creatures)
 	aroid_garden.say = _say_note
+	fruit_crop = FruitCrop.new()
+	fruit_crop.name = "FruitCrop"
+	add_child(fruit_crop)
+	fruit_crop.setup(world, chunks, player)
 	# Mythic creatures before they spawn: biome cues.
 	mythics = Mythics.new()
 	mythics.name = "Mythics"
@@ -309,6 +316,8 @@ func _process(delta: float) -> void:
 	post.set_night(1.0 - sky.daylight)
 	Campfire.night = 1.0 - sky.daylight
 	creatures.update_creatures(delta, sky.daylight)
+	fruit_crop.daylight = sky.daylight
+	fruit_crop.rain_mm_h = float(weather.get("rain_mm_h", 0.0))
 	# After everything that touches the water this frame has moved; round
 	# whichever camera is drawing.
 	var view := get_viewport().get_camera_3d()
@@ -321,14 +330,17 @@ func _process(delta: float) -> void:
 	if player.spear.prompt != "":
 		prompt = player.spear.prompt
 	elif Arrow.stuck_in_reach(player.reach_from(), Arrow.PICK_M) != null:
-		prompt = "E: take the arrow back"
+		prompt = "%s: take the arrow back" % Controls.interact_word()
 	elif PlayerCorpse.in_reach(player.global_position, Tuning.num("combat", "death", "corpse_pick_m")) != null:
-		prompt = "E: take your things back"
+		prompt = "%s: take your things back" % Controls.interact_word()
 	elif WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M) != null:
-		prompt = "E: take the %s back" % Inventory.title(WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M).item).to_lower()
+		var near_item := WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M)
+		prompt = "%s: take the %s%s" % [Controls.interact_word(), Inventory.title(near_item.item).to_lower(), "" if near_item.gift else " back"]
+	elif not _fruit_in_reach().is_empty():
+		prompt = FruitCrop.prompt_for(_fruit_in_reach())
 	elif _sample_in_reach() >= 0:
 		var sp_in_reach := _sample_in_reach()
-		prompt = "E: take %s" % _sample_words(Inventory.plant_sample(sp_in_reach, aroid_garden.sample_extra(sp_in_reach, player.look.point) if aroid_garden else {}))
+		prompt = "%s: take %s" % [Controls.interact_word(), _sample_words(Inventory.plant_sample(sp_in_reach, aroid_garden.sample_extra(sp_in_reach, player.look.point) if aroid_garden else {}))]
 	if _note_t > 0.0:
 		_note_t -= delta
 		prompt = _note
@@ -367,7 +379,8 @@ func _above_clouds(w: Dictionary) -> void:
 ## the nearest camp fire to where you died, the folk who found you
 ## having carried you there (Camps.wake_fire(): a wild or rock-shelter
 ## camp, the opening camp, or a wandering group's fire put down near by),
-## lying by it a moment, full health and nothing on you.
+## lying by it a moment, full health and nothing on you (bare hands: a
+## punch or a shove is all you have till you find your body).
 func _on_player_died() -> void:
 	hud.show_death()
 	var death_dir: Vector3 = player.surface_dir
@@ -390,8 +403,10 @@ func _on_player_died() -> void:
 	# (they'd otherwise come in over the next seconds, a ruin a frame).
 	landmarks.build_ruin_at(fire)
 	player.spawn_at(d, fire)
+	_lay_gifts()
 	camps.refresh_now()
 	player.set_view(-0.3, 0.0)
+	player.weapon = "hands"
 	player.revive()
 	player.wake(float(dt.get("wake_s", 2.5)))
 	hud.hide_death()
@@ -446,11 +461,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		for kind in ["herb_bundle", "fish", "mushroom", "cactus_column"]:
 			player.inventory.add(Inventory.make(kind))
 	elif event.is_action_pressed("interact"):
-		# E works from any state (climbing, swimming, crouched). What's in
-		# reach comes first: the thrown spear (Spear), then a stuck arrow;
-		# climbing, one hand keeps the wood and the other takes it. Else let
-		# go of a tree; else a log within reach; else climb the tree in
-		# front of you.
+		# Interact (right click; Mike, 29 Sept 2026: it was E) works from
+		# any state (climbing, swimming, crouched). What's in reach comes
+		# first: the thrown spear (Spear), then a stuck arrow; climbing, one
+		# hand keeps the wood and the other takes it. Else let go of a tree
+		# or a perch; else a log within reach. What's left is the player's
+		# own (PlanetPlayer: climb the tree in front of you, cling to a wall
+		# or trunk, catch a branch or vine), so a press spent here is marked.
 		if inventory_screen.visible:
 			_wear_chosen()
 			return
@@ -458,6 +475,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var lying := WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M)
 		var body := PlayerCorpse.in_reach(player.global_position, Tuning.num("combat", "death", "corpse_pick_m"))
 		var plant := _sample_in_reach()
+		var spent := true
 		if player.spear.in_reach():
 			player.grab_toward(player.spear.thrown.global_position)
 			player.spear.pick_up()
@@ -471,8 +489,13 @@ func _unhandled_input(event: InputEvent) -> void:
 				_say_note("Your hands are full.")
 		elif lying != null:
 			player.grab_toward(lying.global_position)
-			if player.inventory.add(lying.item):
-				lying.pick_up()
+			_take_lying(lying)
+		elif not _fruit_in_reach().is_empty():
+			var fi := _fruit_in_reach()
+			player.grab_toward(fi.at)
+			if player.inventory.add(FruitCrop.item_for(fi)):
+				fruit_crop.take(fi)
+				_say_note("You pick the %s." % str(FruitCrop.item_for(fi).title).to_lower())
 			else:
 				_say_note("Your hands are full.")
 		elif plant >= 0:
@@ -491,7 +514,88 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif creatures.log_in_reach(player.global_position):
 			creatures.interact(player.global_position)
 		else:
-			player.try_climb()
+			spent = false
+		if spent:
+			player.interact_spent_ms = Time.get_ticks_msec()
+
+
+## The tools a WorldItem of this kind puts in hand.
+const TOOL_OF := {"bow": "bow", "spear": "spear"}
+
+
+## The folk's gifts where you wake (Mike, 29 Sept 2026: you wake empty-
+## handed, a new game or after a death, "there is a bow, spear... on the
+## ground next to you as a gift from those who saved you"; the fishing
+## pole was shelved the same evening, the spear fishes):
+## the starting kit (items.json) laid at your side. A set left untaken at
+## the last fire is gone.
+var _gifts: Array = []
+
+
+func _lay_gifts() -> void:
+	for g in _gifts:
+		if is_instance_valid(g):
+			(g as WorldItem).pick_up()
+	_gifts = []
+	var p: Vector3 = player.global_position
+	var side: Vector3 = player.global_basis.x
+	var fwd: Vector3 = -player.global_basis.z
+	var spots := [side * 0.7 + fwd * 0.3, side * 0.8 - fwd * 0.3]
+	var k := 0
+	for w in Inventory.data().get("starting_kit", {}).get("worn", []):
+		if not w is Dictionary or k >= spots.size():
+			continue
+		var d: Vector3 = world.dir_of(p + spots[k])
+		var gi := WorldItem.drop(Inventory.make(str(w.kind)), world, d, chunks.ground_height(d))
+		gi.gift = true
+		# Laid side by side, pointing the way you face.
+		gi.look_at(gi.global_position + fwd.rotated(d, 0.3 * (k - 1)), d)
+		_gifts.append(gi)
+		k += 1
+
+
+## All the gifts taken at once (tools and tests: what picking each up does).
+func take_gifts() -> void:
+	for g in _gifts:
+		if is_instance_valid(g):
+			_take_lying(g as WorldItem, false)
+	_gifts = []
+	player.weapon = "bow" if player.wears("ranged", "bow") else player.weapon
+
+
+## Take a thing lying on the ground: a tool into its slot (and into your
+## hand if it was empty), anything else into a free carry slot.
+func _take_lying(lying: WorldItem, say := true) -> void:
+	var it: Dictionary = lying.item
+	var kind := str(it.get("kind", ""))
+	if TOOL_OF.has(kind):
+		var slot := str(Inventory.kind_info(kind).get("slot", ""))
+		var worn = player.inventory.worn_in(slot)
+		if worn != null and str(worn.get("kind", "")) == kind:
+			if say:
+				_say_note("You have a %s already." % Inventory.title(it).to_lower())
+			return
+		if player.inventory.wear(it):
+			lying.pick_up()
+			if player.in_hand() == "hands":
+				player.weapon = TOOL_OF[kind]
+			if say:
+				_say_note("You take the %s." % Inventory.title(it).to_lower())
+			return
+	if player.inventory.add(it):
+		lying.pick_up()
+	elif say:
+		_say_note("Your hands are full.")
+
+
+## The fruit under the crosshair within reach of the hands (FruitCrop), or {}.
+func _fruit_in_reach() -> Dictionary:
+	if fruit_crop == null:
+		return {}
+	var cam := player.camera()
+	if cam == null:
+		return {}
+	return fruit_crop.fruit_at(cam.global_position, -cam.global_basis.z, player.reach_from())
 
 
 ## The plant (SpeciesDB index) under the crosshair near enough to take a

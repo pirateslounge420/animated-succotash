@@ -52,25 +52,26 @@
     "color": "#3A6A3A",
     "accent": "#6A5A4A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      250
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a slender woody stem with a few thick, leathery, glossy, spoon-shaped leaves crowded toward the tip. Grows slowly on wet, nutrient-poor tepui peat; exposed plants stay shrubby and gnarled, while sheltered riverside plants become small trees with dense rounded crowns.",
+     "confidence": "estimated",
+     "source": "Pantepui vegetation accounts (riverine tepui forests dominated by Bonnetia roraimae at 1500-2600 m); Kew POWO; growth and ages estimated from slow-growing tepui shrubs."
     },
     "repro": {
      "mode": "seed",
@@ -193,7 +194,56 @@
      "spacing_m": 0.3,
      "confidence": "estimated"
     },
-    "silhouette": "gnarled crooked tree, leaf tufts at twig tips"
+    "silhouette": "gnarled crooked tree, leaf tufts at twig tips",
+    "fruiting": {
+     "flower_months": [
+      9,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 4,
+     "flower_colour": "#f0b8c8",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1,
+      2
+     ],
+     "unripe_colour": "#7d9a5a",
+     "ripe_colour": "#6d4c30",
+     "ripen_days": [
+      90,
+      180
+     ],
+     "hang_days": [
+      30,
+      150
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      540
+     ],
+     "crop_per_tree": [
+      20,
+      500
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from the genus (Bonnetia: showy 5-petalled pink to white flowers with many stamens at branch tips; woody septicidal capsules releasing many small seeds); phenology, timings and counts estimated."
+    }
    }
   ],
   "shrub": [
@@ -226,25 +276,26 @@
     "color": "#5A9A5A",
     "accent": "#E0E080",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      8,
+      20
+     ],
+     "first_seed_years": 18,
+     "lifespan_years": [
+      18,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny winged seeds. The seedling is a small tank rosette of soft, strap-shaped, yellow-green leaves; it grows into a giant rosette of broad, gutter-like leaves holding litres of water, then lifts on a thick stem into a tree-like rosette several metres tall before a huge terminal flower panicle.",
+     "confidence": "estimated",
+     "source": "Wikipedia and Givnish et al. 1997 on Brocchinioideae (B. micrantha a tree-like giant to ~8 m on Guayana Shield sandstone, winged seeds); rosettes of Bromeliaceae are terminated by their inflorescence; timings estimated."
     },
     "repro": {
      "mode": "seed",
@@ -341,7 +392,56 @@
      "confidence": "estimated",
      "note": "tree-like stem clothed in old leaf bases"
     },
-    "silhouette": "giant bromeliad rosette atop a stout leaf-clad stem"
+    "silhouette": "giant bromeliad rosette atop a stout leaf-clad stem",
+    "fruiting": {
+     "flower_months": [
+      9,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#f3f1e4",
+     "flower_form": "panicle",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      500,
+      5000
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.8
+     ],
+     "unripe_colour": "#9aab6a",
+     "ripe_colour": "#8a6a43",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      300,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from Brocchinia descriptions (micrantha = tiny white flowers in a huge branched panicle; small septicidal capsules shedding winged seeds); phenology, timings and counts estimated."
+    }
    },
    {
     "name": "Tepui clusia",
@@ -372,25 +472,26 @@
     "color": "#2A5A38",
     "accent": "#F0C0C0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds wrapped in bright orange-red arils are dropped by birds, often onto branches or rock crevices. The seedling has thick, glossy, paddle-shaped (obovate) leaves in opposite pairs like the adult, and on a host tree sends long aerial roots to the ground before becoming self-supporting. On windy sandstone tepui summits it stays a low, gnarled, many-branched shrub with small thick leaves.",
+     "confidence": "estimated",
+     "source": "Flora of the Venezuelan Guayana (Clusia on tepui summits: dioecious shrubs 1-4 m with thick leathery leaves, resin-producing flowers, capsular fruits with arillate seeds); growth, ages and fruiting details estimated from the genus"
     },
     "repro": {
      "mode": "seed",
@@ -513,7 +614,56 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "candelabra of thick branches with leathery leaf pairs"
+    "silhouette": "candelabra of thick branches with leathery leaf pairs",
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 3,
+     "flower_colour": "#f4e2e6",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      7
+     ],
+     "pollinators": [
+      "bee",
+      "stingless_bee"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "capsule",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#6e8e4a",
+     "ripe_colour": "#8c6a3e",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Flora of the Venezuelan Guayana (tepui Clusia: small cup-shaped white to pink flowers, capsules splitting into valves around seeds with orange arils); Clusia resin-bee pollination (Bittrich & Amaral); timings and counts estimated"
+    }
    },
    {
     "name": "Tepui myrtle",
@@ -544,25 +694,26 @@
     "color": "#3A6A3A",
     "accent": "#6A5A4A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      40,
+      120
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two small cotyledons and a few leathery, dark-green, simple leaves on a thin reddish stem, rooting into wet sandstone crevices and peat. Grows slowly into a stiff, much-branched evergreen shrub with thick, glossy leaves crowded near the twig tips, typical of wind-swept, nutrient-poor tepui summit scrub.",
+     "confidence": "estimated",
+     "source": "Wikipedia/POWO (Tepuianthus, Thymelaeaceae, 6 species of the Guayana Highlands of Venezuela, N Brazil and Colombia; T. auyantepuiensis of Auyan-tepui); Maguire & Steyermark 1981 (Tepuianthaceae: shrubs or small trees with small 5-merous flowers). All growth values estimated from slow tepui summit shrubs."
     },
     "repro": {
      "mode": "seed",
@@ -684,7 +835,56 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "compact glossy-leaved shrub mound"
+    "silhouette": "compact glossy-leaved shrub mound",
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f0e8c8",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      15
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.6,
+      1.2
+     ],
+     "unripe_colour": "#8ea464",
+     "ripe_colour": "#7a5a3c",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated: Tepuianthus has small cream to yellowish 5-merous flowers in axillary clusters and a small dry 3-celled capsule (Maguire & Steyermark 1981; Kubitzki, Families and Genera of Vascular Plants). Aseasonal tepui flowering, small-insect pollination, ripening and crop estimated."
+    }
    },
    {
     "name": "Tepui stegolepis",
@@ -715,25 +915,26 @@
     "color": "#5A8A5A",
     "accent": "#D8C040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a tiny fan of two-ranked, strap-shaped leaves at ground level in wet peat or rock cracks, growing very slowly on nutrient-poor tepui summits. It becomes a stout clump of stiff, leathery, dark-green leaf fans (leaves to 1.5 m in lowland forms) from a thick rhizome wrapped in persistent, mucilage-filled leaf bases.",
+     "confidence": "estimated",
+     "source": "Givnish et al. 2000 Evolution 54 (Stegolepis: massive rhizomes, distichous leaf fans, fire-tolerant, tepui bogs; narrow endemics); botany.cz (leaves to 150 cm, flowering stalks to 2 m); growth timings estimated from slow-growing tepui monocots"
     },
     "repro": {
      "mode": "seed",
@@ -830,7 +1031,56 @@
      "lenticels": "none",
      "confidence": "estimated"
     },
-    "silhouette": "stiff sword-leaf fan, tall flower scapes"
+    "silhouette": "stiff sword-leaf fan, tall flower scapes",
+    "fruiting": {
+     "flower_months": [
+      9,
+      3
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 4.5,
+     "flower_colour": "#f2c12e",
+     "flower_form": "cup",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      2,
+      8
+     ],
+     "pollinators": [
+      "bee",
+      "beetle"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.8,
+      1.5
+     ],
+     "unripe_colour": "#8a9a5b",
+     "ripe_colour": "#7a5230",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      10,
+      80
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Givnish et al. 2000 Evolution 54 (Stegolepis: yellow nectarless flowers with poricidal anthers, buzz-pollinated by halictid bees, weevils also visit; septicidal capsules; seeds without long-distance dispersal); botany.cz (petals 20-22 mm, yellow to pale orange); timings estimated"
+    }
    },
    {
     "name": "Tepui tree fern",
@@ -861,25 +1111,27 @@
     "color": "#3A8A3A",
     "accent": "#5A4A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      60
+     ],
+     "trunk_years": 5,
+     "first_seed_years": 10,
+     "lifespan_years": [
+      80,
+      150
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A flat heart-shaped prothallus on wet soil or rock yields a few small simple fronds, then a trunkless rosette of pinnate fronds whose stalks and rachises bristle with sharp spines (hence 'spiny tree fern'). After some years a slender, spiny trunk rises and carries a modest crown of arching fronds.",
+     "confidence": "estimated",
+     "source": "EOL (Cyathea pungens, spiny tree fern: Roraima, Amazonia and Atlantic forest of Brazil; CITES App. II); growth, fertility age and lifespan estimated from slow montane Cyathea (NZ and Andean tree-fern growth data, Brock et al. 2016)"
     },
     "repro": {
      "mode": "seed",
@@ -1036,25 +1288,26 @@
     "color": "#A0C060",
     "accent": "#E0E080",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      1.5,
+      3
+     ],
+     "first_seed_years": 3.5,
+     "lifespan_years": [
+      4,
+      6
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Winged seeds. Seedlings are small, open rosettes of soft green leaves; in full sun they become tall, narrow, yellow-green tubes of upright, waxy, slippery leaves whose acid tank traps ants. A rosette flowers once and then dies while side pups take over.",
+     "confidence": "documented",
+     "source": "Carnivorous Plant Newsletter 38(1) (rosettes mature within a few years, flower, then die; pups; very high light on tepuis and Gran Sabana); Givnish et al. 1984 Am. Nat. (carnivory, habitat); Wikipedia (winged seeds). lifespan_years is the rosette."
     },
     "repro": {
      "mode": "seed",
@@ -1190,25 +1443,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      8,
+      20
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small rosettes of narrow tubular pitchers like other sun pitchers; after several years the rosette starts climbing on a woody stem that elongates and scrambles up through shrubs, carrying spirals of tall (to 30-50 cm) green-to-red funnel pitchers with a prominent nectar spoon.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Heliamphora tatei: stem-forming sun pitcher of Cerro Duida, Huachamacari and Marahuaca). Growth and ages estimated from Heliamphora cultivation."
     },
     "repro": {
      "mode": "seed",
@@ -1342,25 +1596,26 @@
     "color": "#B0C0A0",
     "accent": "#B0C0A0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
      ],
-     "final_size": 1.0
+     "height_years": [
+      5,
+      12
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling: a new patch starts from a broken-off fragment (trampled or carried by wind and reindeer) or, rarely, from spores that must meet a green alga. It shows first as a small cluster of pale, much-branched hollow stalks a few mm tall, which thicken into a spongy grey-white to straw-yellow cushion of intricately branched tips, like a tiny tangle of antlers.",
+     "confidence": "estimated",
+     "source": "Ahti 2000 Flora Neotropica 78 (Cladonia subgenus Cladina incl. C. confusa: reindeer lichen of southern and tropical highlands, open heath and rock); growth rate of ~3-5 mm/yr and fragment establishment taken from northern reindeer lichens (C. rangiferina, C. stellaris); values estimated"
     },
     "repro": {
      "mode": "seed",
@@ -1477,25 +1732,26 @@
     "color": "#8A3A3A",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      8,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A small flat rosette of reddish, spoon-shaped leaves fringed with sticky glandular tentacles, pressed onto wet sand or moss. With age it slowly lifts on a short stem sheathed in old dead leaves, as tepui sundews do on wet open sandstone, and sends up slender stalks of small white to pink flowers.",
+     "confidence": "estimated",
+     "source": "Wikipedia Drosera roraimae (sundew of the Guiana Highlands tepuis of Venezuela, Guyana and Brazil); ICPS subtropical Drosera notes. Form, growth rate, flowering age and lifespan estimated from tepui sundews in cultivation (slow in cool conditions)."
     },
     "repro": {
      "mode": "seed",
@@ -1628,25 +1884,26 @@
     "color": "#A0B060",
     "accent": "#C08080",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a tiny flat green plate that buds leafy shoots. The young colony is a soft cushion of fat, blunt, wine-red to purplish capitula (greener in shade) with swollen, spoon-shaped leaves, growing 1-3 cm taller a year in wet lawns and spreading into a spongy carpet.",
+     "confidence": "documented",
+     "source": "Springer Wetl. Ecol. Manag. 2019 (Chiloe, Chile: ~5.6 mm growth in 3 months, ~2 cm/yr); Diaz et al. 2012 Rev. Chil. Hist. Nat. (growth higher in lawns than hummocks); Bengtsson et al. 2016 (magellanicum-group 1-7 mm/yr in Sweden); shading aids regeneration (Can. J. Bot. 2025)"
     },
     "repro": {
      "mode": "seed",
@@ -1774,25 +2031,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      4,
+      10
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seeds germinate on wet moss in 3-8 weeks. Seedlings are tiny rosettes of narrow tubular leaves, the first ones simple funnels without the little helmet-like nectar spoon; over several years the pitchers widen into green, red-flushed trumpets 10-20 cm tall with a small spoon, and branching rhizomes make dense clumps.",
+     "confidence": "estimated",
+     "source": "Estimated from Heliamphora cultivation (carnivorous-plant grower notes: light-requiring seed germinates in weeks, seedlings take years to mature) and tepui ecology (Wikipedia: Roraima, Kukenan and neighbouring tepuis)."
     },
     "repro": {
      "mode": "seed",
@@ -1925,25 +2183,26 @@
     "color": "#5A8A5A",
     "accent": "#E06060",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a minute rosette of narrow, stiff, grass-like leaves on wet sandstone or peat. Over years it becomes a dense, low rosette of narrow, glaucous blue-grey leaves with spiny edges, often offsetting into clumps and cushions among rocks and bog on the tepui summit; a short head of small flowers sits in or just above the rosette centre.",
+     "confidence": "estimated",
+     "source": "Estimated from Navia/Navioideae (Bromeliaceae) of the Guiana Highland tepuis (Flora of the Venezuelan Guayana: terrestrial rosettes on open sandstone summits); slow growth and ages inferred from nutrient-poor tepui habitat"
     },
     "repro": {
      "mode": "seed",
@@ -2070,25 +2329,26 @@
     "color": "#7AA070",
     "accent": "#E08080",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a tiny rosette of stiff, narrow, spine-edged leaves on bare wet sandstone or peat. The stem slowly lengthens and branches, clothed in overlapping old leaves, so rosettes pack side by side into a low, dense, dark green to reddish cushion on the open tepui summit; terminal flower spikes rise from the rosette centres.",
+     "confidence": "estimated",
+     "source": "Estimated from genus/habitat: Connellia is a Navioideae bromeliad genus of 5-6 species endemic to Pantepui summits, terrestrial, Puya-like, not in cultivation (bromeliads.info; Wikipedia Connellia; Kew POWO). Slow growth inferred from the cold, wet, nutrient-poor summit of Roraima; no measured growth data found."
     },
     "repro": {
      "mode": "seed",
@@ -2215,25 +2475,26 @@
     "color": "#6A9A5A",
     "accent": "#E0E0A0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a tiny fan-like tuft of narrow, flat, equitant (iris-like, edge-on) leaves in wet sand or peat. It slowly builds a stiff rosette of sword-shaped, often reddish-tipped leaves on open tepui rock and bog; mature plants raise a tall, stout, sceptre-like stalk ending in a cone-like head of overlapping bracts from which yellow flowers emerge.",
+     "confidence": "estimated",
+     "source": "Estimated from Xyridaceae of the Guiana Highlands (Flora of the Venezuelan Guayana: Orectanthe, robust rosette plants of open tepui summits with scapes ending in bracteate heads, yellow flowers); growth and ages inferred from nutrient-poor tepui habitat"
     },
     "repro": {
      "mode": "seed",
@@ -2363,25 +2624,26 @@
     "color": "#5A8A5A",
     "accent": "#8060C0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       30000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A dust-fine seed sprouts on wet peat or in the water held in a Brocchinia bromeliad rosette: a few small round-bladed leaves on thin stalks plus colourless runners carrying minute bladder traps. Each flush of leaves is larger until the plant holds a loose tuft of upright, long-stalked, kidney-shaped to round leaves; runners creep across to neighbouring bromeliads and start new tufts.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Utricularia humboldtii): Guiana Highland tepuis, mostly 1200-2500 m (down to 300 m), living in the water-filled leaf rosettes of Brocchinia bromeliads and on wet ground, flowering in every month, the largest flowers in the genus, stolons that travel between bromeliads. Germination, growth and ages estimated from cultivated terrestrial bladderworts."
     },
     "repro": {
      "mode": "seed",

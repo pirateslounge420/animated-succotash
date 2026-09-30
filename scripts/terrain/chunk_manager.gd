@@ -178,6 +178,10 @@ static func _hero_keys(d: Vector3) -> Dictionary:
 
 
 func update_around(player_dir: Vector3) -> void:
+	# The world clock for the chunk workers: plants are placed at their age
+	# now (PlantGrowth).
+	if world != null:
+		PlantGrowth.now_days = world.days
 	# The rings only change when the player crosses into another chunk
 	# (they're measured from that chunk's center, so they're recomputed only
 	# then) or the render distance setting changes.
@@ -334,8 +338,10 @@ func _compute_base(key: Vector3i) -> void:
 	data["dapple"] = CanopyDapple.bake(data.center, data.plants)
 	TerrainChunk.prepare_meshes(data)
 	data["hosts"] = trees.hosts
-	# The trees' meshes, if this is the first time a species shows up.
+	# The trees' meshes, if this is the first time a species shows up, and
+	# the young layouts its young trees grow (design §AR).
 	PlantMeshes.warm(data.plants.keys())
+	PlantMeshes.warm_layouts(data.plants)
 	_mutex.lock()
 	_done.append(data)
 	_mutex.unlock()
@@ -415,6 +421,8 @@ func _attach_detail(limit: int) -> void:
 ## undergrowth) are loaded, for the loading screen before spawning. The
 ## rest of the view ring then streams in over the next frames.
 func load_blocking(d: Vector3) -> void:
+	if world != null:
+		PlantGrowth.now_days = world.days
 	view_radius_chunks = render_chunks()
 	detail_radius_chunks = mini(detail_radius_chunks, view_radius_chunks)
 	var inner := keys_around(d, detail_radius_chunks)

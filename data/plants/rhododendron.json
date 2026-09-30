@@ -36,25 +36,26 @@
     "color": "#2A5A38",
     "accent": "#D02030",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 12,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Dust-fine seeds sprout on moss or mossy banks: two minute round cotyledons, then tiny hairy leaves. For years it is a small, slow sapling, each year's shoot ending in a tuft of long, leathery, dark green leaves, silvery to rusty-felted beneath; later one or a few stems lead and it becomes a tree with rough, peeling reddish-brown bark.",
+     "confidence": "estimated",
+     "source": "Wikipedia Rhododendron arboreum (usually 12 m, to 20 m; leaves 7-19 cm; trusses of 15-20 bell-shaped flowers 5 cm wide, red, pink or white); growth, ages and seedling habits estimated from Himalayan forest ecology and horticultural experience with tree rhododendrons"
     },
     "repro": {
      "mode": "seed",
@@ -222,6 +223,56 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 5,
+     "flower_colour": "#c81e32",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      15,
+      20
+     ],
+     "pollinators": [
+      "bird",
+      "bee",
+      "bumblebee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1.5,
+      3
+     ],
+     "unripe_colour": "#7a8a4a",
+     "ripe_colour": "#6a4a30",
+     "ripen_days": [
+      200,
+      280
+     ],
+     "hang_days": [
+      60,
+      300
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (trusses of 15-20 bell-shaped red flowers 5 cm wide); Himalayan observations of nectar-feeding birds (sunbirds, bulbuls, white-eyes, yuhinas) and bees at the flowers (knowledge); flowers eaten locally, capsules not; capsule timing, set and crop estimated"
     }
    },
    {
@@ -253,25 +304,26 @@
     "color": "#2A5A38",
     "accent": "#F0E8C0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      100,
+      250
+     ],
+     "shade": "tolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Young plants carry the biggest leaves of any rhododendron (up to 70-90 cm long), glossy dark green above with silvery-buff felt beneath, held in a loose rosette at the top of a stout, sparsely branched stem. Leaves get smaller as the plant ages and starts to flower; seedlings start tiny on moss and need shelter, humidity and part shade.",
+     "confidence": "estimated",
+     "source": "Wikipedia Rhododendron sinogrande (tree to 12 m; leaves up to 70 cm, occasionally 90 x 35 cm; flowers up to 8 cm, late spring; 2,100-3,600 m); larger leaves on young plants, slow flowering (15+ yr from seed) and growth rates from horticultural experience (estimated)"
     },
     "repro": {
      "mode": "seed",
@@ -439,6 +491,56 @@
      "root_flare": true,
      "spacing_m": 0.4,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 6,
+     "flower_colour": "#f1e7a6",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      30
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bird",
+      "bee"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      3,
+      5
+     ],
+     "unripe_colour": "#6f7f45",
+     "ripe_colour": "#6a4a2f",
+     "ripen_days": [
+      180,
+      240
+     ],
+     "hang_days": [
+      60,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      500
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Wikipedia (flowers up to 8 cm, late spring); creamy to pale yellow bells with a crimson basal blotch in big trusses of about 20-30 (horticultural knowledge); pollinators, capsule size and timing estimated from other large-leaved rhododendrons (subsect. Grandia)"
     }
    }
   ],
@@ -472,25 +574,26 @@
     "color": "#2A5A38",
     "accent": "#F0C0D0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      50
+     ],
+     "first_seed_years": 12,
+     "lifespan_years": [
+      60,
+      100
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds sprout on moss, rotting logs or bare wet soil; the seedlings are tiny and grow very slowly for years. The young plant is a thin sprig bearing whorls of long, dark green, leathery leaves at the tip of each year's shoot; it gains 15-20 cm a year in light shade and spreads by layering into dense, tangled 'laurel hell' thickets.",
+     "confidence": "documented",
+     "source": "USDA FEIS Rhododendron maximum (seeds can germinate as soon as shed, need light; 92-97% after 21 days; terminal growth 15-20 cm per season in lighter shade; seedlings grow best in partial shade but survive deep shade; stems may reach 100 yr; up to 12 m); first flowering estimated"
     },
     "repro": {
      "mode": "seed",
@@ -658,6 +761,56 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 4,
+     "flower_colour": "#f3d6e0",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      16,
+      24
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee",
+      "butterfly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.8,
+      1.5
+     ],
+     "unripe_colour": "#7a8a4a",
+     "ripe_colour": "#6b4a2e",
+     "ripen_days": [
+      90,
+      120
+     ],
+     "hang_days": [
+      60,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      2000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "USDA FEIS Rhododendron maximum (flowers late May in the south to Aug in the north; rose to white, 3.5 cm wide, in umbel-like trusses; capsules develop Sep-Oct, seed fall in Nov; ~400 seeds per capsule); NC State Extension (blooms Jun-Aug, flowers to 5 cm, pink to white with green-orange spots; oblong capsules Sep-Oct); truss size, set and crop estimated"
     }
    },
    {
@@ -689,25 +842,26 @@
     "color": "#2A5A38",
     "accent": "#D03050",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Minute seedlings on moss or raw humus: two tiny cotyledons, then small glossy, dark green, leathery leaves with rusty-brown scaly undersides and rolled edges. For years it is a small, few-stemmed sprig; then it branches densely into a low, rounded evergreen bush, and stems that touch the ground root and spread it into a clonal patch.",
+     "confidence": "documented",
+     "source": "German Wikipedia Rostblaettrige Alpenrose (30-130 cm; stems 1-2 cm thick nearly 100 yr old; leaves live ~2 yr; flowers May-Jul, corolla to 2 cm, deep pink to red; capsules to 7 mm ripen from August; semi-shade light value; 440-2,840 m); germination and first flowering estimated"
     },
     "repro": {
      "mode": "seed",
@@ -875,6 +1029,56 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 1.8,
+     "flower_colour": "#d6336c",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      6,
+      12
+     ],
+     "pollinators": [
+      "bumblebee",
+      "butterfly",
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.7
+     ],
+     "unripe_colour": "#8a8a4a",
+     "ripe_colour": "#6e4a30",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      60,
+      270
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "German Wikipedia (flowers May-Jul in terminal clusters, funnel-bell corolla to 2 cm, deep pink to red; capsules to 7 mm ripening from August); bumblebee pollination and poisonous grayanotoxins from knowledge; truss size, set and crop estimated"
     }
    }
   ],
@@ -909,25 +1113,26 @@
     "color": "#2A5A38",
     "accent": "#F09030",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Vireya seeds carry a thread-like tail at each end and lodge in moss on branches or banks. The seedling is a tiny sprig of small, scaly, elliptic leaves; it grows in quick flushes, each ending in a whorl of glossy, leathery leaves, and becomes a loose, straggly, few-stemmed shrub perched on a mossy branch or rooted in the ground.",
+     "confidence": "estimated",
+     "source": "Wikipedia Rhododendron javanicum (evergreen shrub to 5 m, terrestrial or epiphytic; bright orange spring flowers; Indonesia, Malaysia, Philippines); germination, growth and first flowering estimated from vireya growers' experience (seedlings flower in about 2-4 years)"
     },
     "repro": {
      "mode": "seed",

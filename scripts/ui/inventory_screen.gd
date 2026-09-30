@@ -132,7 +132,7 @@ func _draw() -> void:
 		if chosen[0] == "carried":
 			hint = "G: set it down"
 		elif chosen[2] >= int(Inventory.slot_info(chosen[1]).worn):
-			hint = "E: wear it"
+			hint = "%s: wear it" % Controls.interact_word()
 		if hint != "":
 			_text(font, Vector2(foot.end.x - 8.0 - font.get_string_size(hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x, foot.end.y - 4.0), hint, 12, DIM)
 

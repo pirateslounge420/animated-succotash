@@ -101,8 +101,10 @@ hands.
 
 ## Tools and combat — three tools, forever
 
-- **Spear, bow with a quiver of twenty, fishing pole.** You spawn with them; there is
-  nothing else to find or make. Left mouse holds to charge (draw, raise, wind up);
+- **Spear, and a bow with a quiver of twenty.** You wake empty-handed with the two lying
+  beside you, the folk's gift; there is nothing else to find or make. Bare hands can
+  still fight: a jab, or a wound-up haymaker. (The fishing pole is shelved for a separate
+  fishing game; the spear fishes.) Left mouse holds to charge (draw, raise, wind up);
   release to act. **Charging never slows you** — the only difficulty is doing two things
   at once with two buttons at speed.
 - **Momentum is the weapon:** arrows inherit your velocity; a spear thrust at speed is
@@ -112,16 +114,17 @@ hands.
   the shot becomes a **super shot** — a critical, triple damage, faster and farther,
   with a red tracer — and the meter empties. The pole's version is a grapple.
 - Arrows stick in whatever they hit and carry the shooter's cloak colour in the fletching.
-- The spear also spear-fishes. Fishing itself (bites, species by water temperature,
-  cooking) comes with the camp-life phase.
+- **Q cycles the two** (whichever you have) **and bare hands.** The spear spear-fishes. Fishing itself (bites, species
+  by water temperature, cooking) comes with the camp-life phase.
 
 ## Death, camps and the enemy
 
 - **Camps are safe zones.** A lit fire keeps hostile creatures off; you heal by resting
   near it and eating. Camp folk are cloaked figures in their tribe's colours.
 - **Death is diegetic.** You wake by the nearest fire because tribal folk found you and
-  carried you in. Your body — and everything you had — is still where you fell, marker-
-  free; you retrace your route, and scavengers circling it help you find it.
+  carried you in, and they've left you a new bow and spear. Your body —
+  everything you had — is still where you fell, marker-free; you retrace your route,
+  and scavengers circling it help you find it.
 - **The opening is the same scene.** You come to by a fire; **enemy shinobi**, already
   at speed, are leaving through the canopy above you; the folk explain they were coming
   for your body but the village's own shinobi always get there first. No quest text.

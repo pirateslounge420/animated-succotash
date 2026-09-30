@@ -47,25 +47,26 @@
     "color": "#3E7A44",
     "accent": "#C87A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      35,
+      100
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      200,
+      760
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 5-7 cotyledons; in its first year it has single, flat, finely serrated primary needles 2-3 cm long, then short, twisted, blue-green paired needles. Young trees are regular, bushy cones; later the lower branches drop and the crown becomes flat or rounded above a tall trunk whose upper bark is orange and flaky.",
+     "confidence": "documented",
+     "source": "Wikipedia (to 35 m, over 45 m on the best sites; normally lives 150-300 years, over 760 in Lapland; first-year seedlings have single serrated leaves 2-3 cm; seeds released 22-24 months after pollination); growth and first cones from European yield tables"
     },
     "repro": {
      "mode": "seed",
@@ -228,6 +229,54 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#b0305a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      3,
+      7.5
+     ],
+     "unripe_colour": "#6a8a3a",
+     "ripe_colour": "#9a7a4a",
+     "ripen_days": [
+      530,
+      700
+     ],
+     "hang_days": [
+      60,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      700,
+      1800
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (pollen released mid to late spring; first-year conelets globose, 4-8 mm; mature cones 3-7.5 cm, green then grey-green to yellow-brown; seeds released 22-24 months after pollination); crop and decay estimated"
     }
    },
    {
@@ -269,25 +318,26 @@
     "color": "#3E7A44",
     "accent": "#B08A60",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      25,
+      70
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      150,
+      350
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings have 10-13 cotyledons and for 5-10 years carry juvenile foliage: single, soft, silvery blue-green needles 2-4 cm long, making a bushy, rounded, bluish globe rather than a cone. Adult paired, stiff green needles gradually take over by about age 10; the tree then lifts into a flat umbrella crown on a bare trunk.",
+     "confidence": "documented",
+     "source": "Wikipedia (juvenile leaves for 5-10 years, fully adult by ~10; a bushy globe in youth, an umbrella in mid-age; 12-20 m typical, to 25+; cones take 36 months to mature, longest of any pine); first cones and lifespan estimated"
     },
     "repro": {
      "mode": "seed",
@@ -453,6 +503,54 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#7a6a4a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      8,
+      15
+     ],
+     "unripe_colour": "#6a8a3a",
+     "ripe_colour": "#8a4e28",
+     "ripen_days": [
+      850,
+      1000
+     ],
+     "hang_days": [
+      60,
+      365
+     ],
+     "drop": "splits",
+     "rot_days": [
+      1000,
+      3000
+     ],
+     "crop_per_tree": [
+      20,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (broad ovoid cones 8-15 cm that take 36 months to mature, longer than any other pine; edible nuts 2 cm long with a rudimentary wing); about 29-33 months from spring pollination to ripe cone in the third autumn; crop and decay estimated"
     }
    },
    {
@@ -495,25 +593,26 @@
     "color": "#4E8A4A",
     "accent": "#D08A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      300,
+      600
+     ],
+     "shade": "intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 6-12 cotyledons; in its first months it drives a taproot 50 cm deep while the shoot stays short, with single primary needles, then long needles in bundles of three. Saplings ('blackjacks') are narrow cones with dark grey-black bark and long, tufted, yellow-green needles; bark turns to orange puzzle-plates with age.",
+     "confidence": "documented",
+     "source": "USDA Silvics (Oliver & Ryker): first cones at age 7, most seed at 60-160 yrs; taproots reach 50+ cm within months; dominants grow 0.24-0.46 m/yr up to age 60; intolerant of shade; commonly lives 300-600 years"
     },
     "repro": {
      "mode": "seed",
@@ -676,6 +775,54 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#a04a6a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      8,
+      15
+     ],
+     "unripe_colour": "#6a6a40",
+     "ripe_colour": "#8a5a30",
+     "ripen_days": [
+      450,
+      480
+     ],
+     "hang_days": [
+      60,
+      300
+     ],
+     "drop": "splits",
+     "rot_days": [
+      1000,
+      2500
+     ],
+     "crop_per_tree": [
+      50,
+      1500
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (pollen shed May 25-June 15; cones 8-15 cm reach full size late in the second summer, seed ripe Aug 20-Sep 5, cones open Sep 1-13; 31-70 seeds per cone; good crops every 3-5 years); crop and decay estimated"
     }
    },
    {
@@ -719,25 +866,26 @@
     "color": "#3E7A44",
     "accent": "#8A7A60",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      25,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 3-6 cotyledons and a tuft of single primary needles, then short, twisted, paired needles. Young trees are dense, narrow cones with regular whorls. Open-grown shore pines become bushy, crooked and flat-topped; inland trees become slim, straight poles. Serotinous cones stay closed on the branches for decades.",
+     "confidence": "documented",
+     "source": "USDA Silvics (Lotan & Critchfield): viable seed commonly at 5-10 years; ~3.6 m at 20 years on medium sites; germination peaks in the 2 weeks after snowmelt; very intolerant of shade; shore pine small and short-lived; ages commonly 150-200+, old high-elevation trees to 400+"
     },
     "repro": {
      "mode": "seed",
@@ -900,6 +1048,54 @@
      "root_flare": true,
      "spacing_m": 0.6,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#8a2f5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      5
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      6
+     ],
+     "unripe_colour": "#5f6a3a",
+     "ripe_colour": "#b08850",
+     "ripen_days": [
+      450,
+      520
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2500
+     ],
+     "crop_per_tree": [
+      50,
+      1500
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (reddish-purple female strobili in whorls of 2-5, mid-May to mid-July; cones mature Aug-Oct over a year after pollination, purple-green to light brown; Rocky Mountain cones serotinous, sealed until heated to 45-60 C and held for years; 10-24 seeds per cone)"
     }
    },
    {
@@ -941,25 +1137,26 @@
     "color": "#3A7040",
     "accent": "#C0A080",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      120,
+      400
+     ],
+     "first_seed_years": 40,
+     "lifespan_years": [
+      1000,
+      5062
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 5-8 cotyledons, then short needles in dense bundles of five that stay 10-40 years, so even young twigs look like bristly foxtails. On harsh sites a 40-year-old may be only 15 cm tall. Old trees on wind-blasted dolomite are twisted, mostly dead snags of polished wood with a living strip of bark feeding a few branches.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pinus longaeva: oldest living tree 5,062 years; seed immediately germinable; 40-year-olds 15 cm tall on extreme sites, ~2.5 cm of diameter per century at Wheeler Peak, faster on good sites; shade intolerant, cannot establish in dense forest. Age at first cones estimated"
     },
     "repro": {
      "mode": "seed",
@@ -1125,6 +1322,54 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#5a2a5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      5,
+      10
+     ],
+     "unripe_colour": "#4a2a4a",
+     "ripe_colour": "#7a4a2a",
+     "ripen_days": [
+      410,
+      450
+     ],
+     "hang_days": [
+      90,
+      400
+     ],
+     "drop": "splits",
+     "rot_days": [
+      1500,
+      5000
+     ],
+     "crop_per_tree": [
+      10,
+      300
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS (pollen shed mid-July to late August; cones 5-14 cm with incurved bristly prickles, ~90% dark purple; they mature over two years and shed seed late Sep-early Oct of year 2; steady yearly crops, no masting; trees over 3,000 years old still bear viable seed)"
     }
    }
   ],

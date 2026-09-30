@@ -109,7 +109,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "olive-brown forked straps draped over rock at low tide"
+    "silhouette": "olive-brown forked straps draped over rock at low tide",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      21
+     ],
+     "height_years": [
+      1.3,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      3,
+      5
+     ],
+     "shade": "intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No juvenile form to draw: zygotes stick to rock and within weeks become tiny flat germlings anchored by a disc; the young frond is a small, flat, forked olive blade with a midrib that gains paired air bladders as it grows. Mature plants are 30-100 cm leathery forked fronds with paired bladders and swollen, warty fruiting tips.",
+     "confidence": "documented",
+     "source": "MarLIN species account (Fucus vesiculosus: germlings visible in ~2 weeks; growth 0.3-0.8 cm/week in summer; lifespan 2-5 yr; receptacles form in winter, gametes mid-winter to late summer); Wikipedia (fronds to 150 x 2.5 cm with midrib and paired vesicles; sheltered mid-lower shores)."
+    }
    },
    {
     "name": "Eelgrass",
@@ -198,7 +220,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "submerged meadow of long green ribbons streaming with tide"
+    "silhouette": "submerged meadow of long green ribbons streaming with tide",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      0.3,
+      1
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      1,
+      3
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "The seed splits and a white seedling axis anchors in sandy mud; a green cotyledon is followed by 2-3 narrow, flat, bright green ribbon leaves from a sheath. The seedling soon grows a creeping white rhizome with roots at each node and new shoots along it, so a first-year plant is a short row of leafy tufts; leaf length (a few cm to over 1 m) depends on water depth and clarity.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Zostera marina): leaves to 1.2 cm wide and over 1 m long (a few cm in clear shallow water), perennial but may grow as an annual, several thousand seeds per m2, inflorescence about 10 cm, one meadow clone about 3000 years old. Germination, seedling growth, flowering age and shoot life estimated from eelgrass restoration studies."
+    }
    },
    {
     "name": "Sea lettuce",
@@ -277,7 +321,30 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "bright green translucent sheets on rock and mud"
+    "silhouette": "bright green translucent sheets on rock and mud",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.05,
+      0.12
+     ],
+     "first_seed_years": 0.1,
+     "lifespan_years": [
+      0.2,
+      1
+     ],
+     "shade": "intolerant",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Settled swimming spores or zygotes (microscopic) grow into a short green filament, then a tiny tube or cushion that splits open into a flat blade only two cells thick on a minute disc holdfast. It shows as a bright green fleck after 1-2 weeks and expands in a few weeks into a crinkled, translucent, lettuce-like sheet; fertile margins turn olive-yellow, release spores and then fall apart.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Ulva lactuca): sheet to 18 cm or more long and up to 30 cm across, on rocks and other algae in the littoral and sublittoral worldwide; diploid and haploid plants look alike, alternating via zoospores and gametes; eaten in soups and salads. Settlement-to-visible, growth and fertility timings estimated from the genus (fast-growing, fertile within weeks, repeated summer spore releases)."
+    }
    },
    {
     "name": "Sea rocket",
@@ -370,7 +437,30 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "sprawling fleshy mound of lobed leaves, lilac flowers"
+    "silhouette": "sprawling fleshy mound of lobed leaves, lilac flowers",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      0.15,
+      0.3
+     ],
+     "first_seed_years": 0.3,
+     "lifespan_years": [
+      0.4,
+      0.8
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Big seeds in corky, floating pod segments sprout in the drift line (in spring on Atlantic coasts, after autumn rains in the Mediterranean). Two thick, fleshy, kidney-shaped cotyledons, then glossy, succulent, blue-green, deeply lobed leaves; it branches from the base into a sprawling, bushy clump that flowers pale lilac within about two months.",
+     "confidence": "estimated",
+     "source": "Wikipedia (annual, 15-45 cm, flowers Jun-Aug in the UK, white to lilac 4-petalled flowers to 2.5 cm, corky 1-3 cm fruits float); Davy et al. 2006 Biological Flora of the British Isles (spring germination in the north, autumn in the Mediterranean); timings estimated."
+    }
    },
    {
     "name": "Smooth cordgrass",
@@ -467,7 +557,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "tall smooth cordgrass belt fringing the channel edge"
+    "silhouette": "tall smooth cordgrass belt fringing the channel edge",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.4,
+      2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: one soft shoot with flat, tapering, bright-green leaves; it tillers within weeks and sends out rhizomes, reaching ~15 cm in 3-4 months. The same species as Spartina alterniflora (current name). Each culm lives about a year, but the rhizome clone spreads up to 3 m a season and persists for decades.",
+     "confidence": "documented",
+     "source": "USDA FEIS Spartina alterniflora (germinates Apr-Jun, flowers Jun-Oct, 0.4-2.5 m, shoots die back in autumn); USDA NRCS Cape May PMC Plant Guide (most seed germinates in 7-10 d after 1-4 months cold-wet storage; ~15 cm in 3-4 months; 2.5-3 m lateral spread per season; cover in 2-3 seasons)"
+    }
    },
    {
     "name": "Sugar kelp",
@@ -557,7 +669,77 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "single long ruffled brown blade swaying from a stipe"
+    "silhouette": "single long ruffled brown blade swaying from a stipe",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      70
+     ],
+     "height_years": [
+      0.35,
+      0.8
+     ],
+     "first_seed_years": 0.9,
+     "lifespan_years": [
+      2,
+      5
+     ],
+     "shade": "intermediate",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling: spores grow into microscopic threads (gametophytes) and each fertilised egg grows into a tiny flat blade on a short stalk with a small claw-like holdfast. Young blades are thin, smooth and golden-brown; adults are one long undivided blade (1-5 m) with ruffled, wavy edges and a puckered centre, growing from the base while the tip wears away.",
+     "confidence": "estimated",
+     "source": "Luning 1990, Seaweeds (Laminariales life cycle, spring growth peak, sori in autumn-winter); Bartsch et al. 2008 Eur J Phycol (Laminaria s.l. review: sporophytes live 2-4+ yr); kelp farming practice (seeded Oct-Nov, 1-3 m by Apr-May); Wikipedia (to 5 m x 20 cm)"
+    },
+    "fruiting": {
+     "flower_months": [
+      10,
+      3
+     ],
+     "hemisphere": "north",
+     "flower_days": 21,
+     "flower_size_cm": 15.0,
+     "flower_colour": "#4a3a1e",
+     "flower_form": "tiny",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "water"
+     ],
+     "fruit_set": 0.8,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      5,
+      30
+     ],
+     "unripe_colour": "#8a6a2a",
+     "ripe_colour": "#3f2f18",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      7,
+      30
+     ],
+     "crop_per_tree": [
+      1,
+      4
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "A kelp has no flowers or fruit. Mapped: 'flower' = the dark sorus patch that forms on the mid-blade in autumn-winter (Luning 1990; Bartsch et al. 2008); 'pollinator' = water carrying zoospores and sperm; 'fruit' = the ripe sorus, which releases spores and then sloughs off; the blade itself is eaten raw or cooked. Sizes and counts estimated"
+    }
    }
   ],
   "epiphyte": []

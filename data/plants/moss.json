@@ -38,25 +38,26 @@
     "color": "#A0B060",
     "accent": "#C08080",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a tiny flat green plate that buds leafy shoots. The young colony is a soft cushion of fat, blunt, wine-red to purplish capitula (greener in shade) with swollen, spoon-shaped leaves, growing 1-3 cm taller a year in wet lawns and spreading into a spongy carpet.",
+     "confidence": "documented",
+     "source": "Springer Wetl. Ecol. Manag. 2019 (Chiloe, Chile: ~5.6 mm growth in 3 months, ~2 cm/yr); Diaz et al. 2012 Rev. Chil. Hist. Nat. (growth higher in lawns than hummocks); Bengtsson et al. 2016 (magellanicum-group 1-7 mm/yr in Sweden); shading aids regeneration (Can. J. Bot. 2025)"
     },
     "repro": {
      "mode": "both",
@@ -220,25 +221,26 @@
     "color": "#5A8A3A",
     "accent": "#7A5A30",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      60
+     ],
+     "shade": "tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a green, thread-like protonema on humus or rotten wood that buds small leafy shoots. These become loose, glossy yellow-green, once-pinnate feathery shoots on conspicuous red stems with blunt, crowded leaves, adding roughly 1-2 cm a year and weaving into a springy carpet 3-10 cm deep. Most new patches start from broken shoot fragments.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Pleurozium schreberi (stems 6-15 cm; spores shed 9-12 months after fertilization; post-fire cover ~1% at 5 yr, 3% at 20-30 yr, 9% at 50 yr: decades to recover). Annual shoot growth (~1-2 cm/yr), patch size-age and lifespan estimated from feathermoss literature."
     },
     "repro": {
      "mode": "both",
@@ -405,25 +407,26 @@
     "color": "#4A8A3A",
     "accent": "#7A5A30",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      60
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Young plants are small loose wefts of red-stemmed, feathery, olive to golden-green fronds creeping over humus, logs or rock. Each year a new frond arches up from the middle of last year's, so a shoot becomes a staircase of flat, fern-like steps, one per year, the oldest dying brown underneath. A deep carpet rebuilds only slowly after fire, once a canopy has closed.",
+     "confidence": "documented",
+     "source": "Trees for Life (new segment each year from the centre of the previous one, segments live up to ~8 yr, sporophytes uncommon, slow recolonisation after fire, shade-loving); Wikipedia (one step per year used to age shoots). Lifespan is for the patch; spore-to-plant time and first capsule age estimated."
     },
     "repro": {
      "mode": "both",
@@ -590,25 +593,26 @@
     "color": "#8AB080",
     "accent": "#8AB080",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Starts as small pale tufts from spores, broken shoot fragments or even detached leaves that regrow. Shoots grow densely packed and upright, so the colony swells into a firm, rounded, whitish grey-green 'pincushion', pale when dry and bluish-green when wet, gradually merging with neighbours into hummocks on acid woodland floors.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Leucobryum glaucum: cushion moss of acidic temperate forests in Europe and eastern North America, grows by apical growth and fragmentation, cushion size governs its water balance); cushion growth and ages estimated."
     },
     "repro": {
      "mode": "both",
@@ -767,25 +771,26 @@
     "color": "#6A9A4A",
     "accent": "#6A9A4A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout into a green protonemal web in mortar joints and on brick or stone within weeks, soon budding tiny upright shoots. Cushions are small, dense and greyish-green, under 1 cm tall, of tongue-shaped leaves tipped with long silvery hair points that make them look hoary, and are soon topped by many upright cylindrical capsules on 0.6-1.5 cm stalks.",
+     "confidence": "estimated",
+     "source": "Wikipedia Tortula muralis (greyish-green cushions to 1 cm tall, hair-pointed leaves, seta 0.6-1.5 cm, urn 1.5-2.7 mm, autoicous, cosmopolitan on walls, concrete, rocks and soil). Capsules are produced abundantly; spore-to-cushion time, spread and cushion age estimated from moss biology."
     },
     "repro": {
      "mode": "both",
@@ -948,25 +953,26 @@
     "color": "#3A7A3A",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate on bare, damp, acid soil into a green felt of protonema that buds tiny upright shoots. These grow into stiff, unbranched stems clothed in spreading, narrow, dark green leaves, like miniature spruce seedlings (star-shaped from above, folding up when dry), forming loose to dense turfs that get taller and thicker year by year.",
+     "confidence": "estimated",
+     "source": "Wikipedia Polytrichum commune (stems usually 5-10 cm, often over 30 cm, rarely 70 cm; dioicous with splash-cup males; bogs, wet heath, forest streams and recently disturbed, partly open ground). Growth increments, age at first capsules and turf lifespan estimated."
     },
     "repro": {
      "mode": "both",
@@ -1129,25 +1135,26 @@
     "color": "#A0B090",
     "accent": "#A0B090",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      8,
+      30
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      100,
+      500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Mostly starts from broken shoot fragments (sporophytes are rare): a small tuft of wiry shoots whose narrow leaves end in long, toothed, white hair-points, so the patch looks hoary grey when dry and olive-green when wet. Shoots branch and creep outward, piling up into a springy, woolly carpet 5-15 cm deep over lava, boulders and heath; lower parts die brown.",
+     "confidence": "estimated",
+     "source": "Wikipedia Racomitrium lanuginosum (stems to 12 cm; leaves 3-5 mm with toothed white hair-points; sporophytes rarely produced; capsules 1-1.7 mm); growth (roughly 0.5-1.5 cm of shoot a year) and carpet age estimated from bryological knowledge of Icelandic lava fields and upland heaths"
     },
     "repro": {
      "mode": "both",
@@ -1308,25 +1315,26 @@
     "color": "#4A8A4A",
     "accent": "#4A8A4A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.15,
+      0.5
+     ],
+     "first_seed_years": 0.4,
+     "lifespan_years": [
+      2,
+      10
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore grows into a short green filament, then a tiny flat plate; gemmae (lens-shaped buds splashed out of cups on the thallus) grow straight into little two-lobed thalli. The plant is a flat, forking, ribbon-like green thallus up to 10 cm long and 2 cm wide with a dark midline, pale pores and little cup-shaped gemma cups; stalked umbrella-like sex organs rise from mature patches.",
+     "confidence": "documented",
+     "source": "Shimamura 2016 Plant Cell Physiol. 'Marchantia polymorpha: taxonomy, phylogeny and morphology of a model system' (gemma to sexual maturity in ~1-2 months in culture); Wikipedia (thalli to 10 x 2 cm; rapid colonist that can carpet burned ground); field timings and lifespan estimated"
     },
     "repro": {
      "mode": "both",
@@ -1491,25 +1499,26 @@
     "color": "#C8D0C0",
     "accent": "#C8D0C0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
      ],
-     "final_size": 1.0
+     "height_years": [
+      12,
+      25
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling: a new patch starts from a broken-off fragment (trampled or carried by wind and reindeer) or, rarely, from spores that must meet a green alga. The young thallus is a scatter of tiny grey stalks that branch in threes and fours, tips all bending one way; over decades they build a springy ash-grey mat up to ~10 cm deep, dying at the base while growing at the tips.",
+     "confidence": "documented",
+     "source": "Wikipedia Cladonia rangiferina (grows 3-11 mm/yr, 3.9-4.4 mm/yr in Finland; mats to ~10 cm, ~12 cm in humid, 4-6 cm in dry sites; can establish ~2 yr after fire but takes decades to recover; individual lives ~20-30 yr; faster growth in shadier forests)"
     },
     "repro": {
      "mode": "both",
@@ -1658,25 +1667,26 @@
     "color": "#B0C020",
     "accent": "#2A2A2A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1825
      ],
-     "final_size": 1.0
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      500,
+      9500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
+     "confidence": "documented",
+     "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
     },
     "repro": {
      "mode": "both",
@@ -1824,25 +1834,26 @@
     "color": "#4A4A40",
     "accent": "#4A4A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1095
      ],
-     "final_size": 1.0
+     "height_years": [
+      30,
+      70
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      80,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Starts as a tiny grey-brown scale a few mm wide on bare sunny rock, fixed by one central stalk (the umbilicus). It grows outward as a single round, leathery, leaf-like disc, pale grey to olive-grey above and black and granular below; brittle, curled and dull when dry, soft, flat and green-brown when wet. A disc 1 cm across is already years old.",
+     "confidence": "estimated",
+     "source": "Japanese Wikipedia (Umbilicaria esculenta, iwatake): flat discs from a few cm to about 10 cm, at most 30 cm, grow only about 1 mm a year, on sunny quartz-rich cliffs of temperate East Asia; costly food. Size curve derived from that rate; establishment, fertility and lifespan estimated from other slow umbilicate lichens."
     },
     "repro": {
      "mode": "both",
@@ -1992,25 +2003,26 @@
     "color": "#8AA060",
     "accent": "#8AA060",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "tolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores give a green, thread-like protonema on bark; small upright shoots follow as a thin golden-green fuzz on twigs. Shoots then lengthen and droop into slender, pendent, sparsely branched strands with tiny closely pressed leaves, golden-orange to yellow-brown, hanging in curtains from branches in wet forest.",
+     "confidence": "estimated",
+     "source": "Estimated from pendent epiphytic mosses (Meteoriaceae) of humid Australasian forests: spore-to-shoot time and strand growth of a few cm a year inferred from hanging-moss growth studies; no species-specific data found"
     },
     "repro": {
      "mode": "both",
@@ -2169,25 +2181,26 @@
     "color": "#5A8A3A",
     "accent": "#5A8A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a green thread-like protonema on bark or rock, from which small leafy shoots bud. These grow into stiff, erect, frond-like shoots branched like a tiny fir tree ('abietina'), forming patches that spread up oak trunks; when dry each shoot curls downward like a clenched fist, and it uncurls green within minutes of rain.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dendroalsia (sole species; conspicuous, often covering whole oak trunks, also on rock; each stem curls like a clenched fist when dry; oak woodlands from Los Angeles County to Vancouver Island). Spore-to-shoot time, growth and ages estimated from pleurocarpous epiphytic mosses."
     },
     "repro": {
      "mode": "both",
@@ -2346,25 +2359,26 @@
     "color": "#B0C0A0",
     "accent": "#B0C0A0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      365
      ],
-     "final_size": 1.0
+     "height_years": [
+      5,
+      15
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "none",
+     "juvenile_leaves": "same",
+     "juvenile_note": "New plants start mostly as broken-off fragments snagged on conifer twigs in humid, foggy lower canopies. A fragment is one pale grey-green, mostly unbranched thread densely set with short, even side fibrils at right angles, like a fine bottle-brush; it lengthens from the tips and drapes down, sometimes doubling in a year, and breaks into pieces that start new strands. Spore cups are rare.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Dolichousnea longissima): strands usually 15-30 cm, up to 3 m, can double its length each year, reproduces mainly by fragmentation, spore structures rarely seen, in canopies of old-growth conifer forest with high rainfall, humidity and fog. Ages and establishment times estimated."
     },
     "repro": {
      "mode": "both",

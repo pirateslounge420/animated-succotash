@@ -124,7 +124,79 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "grey-green weeping-twigged tree with a spreading crown"
+    "silhouette": "grey-green weeping-twigged tree with a spreading crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      3
+     ],
+     "height_years": [
+      5,
+      18
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny hair-tufted seeds sprout within a day on wet silt; the seedling has two minute cotyledons and thread-thin, jointed grey-green shoots. It soon makes a single fast leader clothed in drooping, apparently leafless jointed twigs (leaves reduced to tiny sheaths), like a young she-oak, then a broad, dense evergreen tree; it also suckers from roots.",
+     "confidence": "estimated",
+     "source": "Wikipedia Tamarix aphylla (tree to 18 m; spreads by seed, suckers and cuttings); ICRAF Agroforestree (to 18 m, 60-80 cm dbh, roots ~10 m deep; fuelwood cut from the 4th year after planting); USDA FEIS Tamarix spp. (germination <24 h, seed viable only weeks). Height-age curve, first flowering and lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      11
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#f1dae2",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.5
+     ],
+     "unripe_colour": "#b7c19a",
+     "ripe_colour": "#c6ad86",
+     "ripen_days": [
+      20,
+      40
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      100000,
+      5000000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree (flowers May-Jul in racemes; capsule ~5 mm; seeds 0.5 mm with a 3 mm hair tuft, 100,000-286,000 seeds/kg); Wikipedia (blooms July-November); USDA FEIS Tamarix spp. (insect cross-pollination, many-seeded capsules). Flower life, fruit set, ripening and crop estimated."
+    }
    },
    {
     "name": "Date palm",
@@ -236,7 +308,78 @@
      "spacing_m": 0.5,
      "confidence": "documented"
     },
-    "silhouette": "tall rough pole, stiff grey-green feather crown, date clusters"
+    "silhouette": "tall rough pole, stiff grey-green feather crown, date clusters",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      25,
+      70
+     ],
+     "trunk_years": 5,
+     "first_seed_years": 6,
+     "lifespan_years": [
+      80,
+      150
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Remote germination: the cotyledon stalk pushes the growing point down into the soil, then grass-like, undivided strap leaves emerge. For several years it is a stemless, spiny fountain of increasingly pinnate, stiff, grey-green fronds, often with suckers (offshoots) at the base, before a rough trunk clad in old leaf bases rises.",
+     "confidence": "documented",
+     "source": "Wikipedia (to 30 m, slow-growing; fruits 4-8 years after planting, commercial yields at 7-10; offshoots fruit 2-3 years earlier than seedlings; lives 100+ years when maintained); FAO date palm manuals (remote germination, undivided first leaves); height-age estimated from trunk growth"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f0e8c8",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1000,
+      8000
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      7
+     ],
+     "unripe_colour": "#7fa83a",
+     "ripe_colour": "#8b4a1f",
+     "ripen_days": [
+      140,
+      210
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      3000,
+      15000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (dioecious and wind-pollinated, today hand-pollinated; fruit 3-7 cm, bright red to yellow before browning; 70-140 kg per tree per season, several pickings); FAO (kimri-khalal-rutab-tamar stages over ~5-7 months); dates ~7-15 g each"
+    }
    },
    {
     "name": "Doum palm",
@@ -348,7 +491,78 @@
      "spacing_m": 3.0,
      "confidence": "documented"
     },
-    "silhouette": "forking trunk, each arm topped by a fan-leaf tuft"
+    "silhouette": "forking trunk, each arm topped by a fan-leaf tuft",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      365
+     ],
+     "height_years": [
+      35,
+      65
+     ],
+     "trunk_years": 15,
+     "first_seed_years": 8,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Remote-tubular germination: the cotyledon stalk drives the growing point 60-80 cm down into the soil, so the first sign is a single strap-shaped, pleated leaf. Stiff grey-green fan leaves follow from year 2-3, forming a stemless tuft for well over a decade (it may start fruiting while still nearly stemless); the trunk then rises and later forks into two, four or more crowns.",
+     "confidence": "documented",
+     "source": "PROTA via Palmpedia and ICRAF Agroforestree (germination 1 month to 1 year, cotyledon stalk buries shoot to 60 cm, first leaf strap-shaped, fan leaves from yr 2-3, stem after 18-20 yr in the wild, first fruit after 6-8 yr, slow growth); hyphaene.org (to 80 cm deep, first fork 2.5-4 m). Lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#cdb46a",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      50,
+      250
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      5,
+      10
+     ],
+     "unripe_colour": "#5f7a3a",
+     "ripe_colour": "#8a4a1e",
+     "ripen_days": [
+      240,
+      365
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      1000
+     ],
+     "crop_per_tree": [
+      100,
+      1000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree and Palmpedia/PROTA (dioecious, wind-pollinated, flowers Feb-Apr in Sudan, fruit 6-10 x 6-8 cm shiny brown, ~120 g, ripens in 6-12 months, ~50 kg per tree, fibrous gingerbread-flavoured pulp eaten raw); hyphaene.org (orange to dark-brown epicarp). Set and rot time estimated."
+    }
    },
    {
     "name": "Euphrates poplar",
@@ -467,7 +681,77 @@
      "spacing_m": 0.8,
      "confidence": "estimated"
     },
-    "silhouette": "open spreading poplar, small grey-green leaves shimmering"
+    "silhouette": "open spreading poplar, small grey-green leaves shimmering",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      3
+     ],
+     "height_years": [
+      10,
+      35
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Short-lived cottony seed must land on freshly wetted, bare riverbank silt and germinates within a day or two. Seedlings, root suckers and young trees bear narrow, willow-like, linear-lanceolate leaves; the broad, grey-green, rhombic to kidney-shaped leaves with a few coarse teeth near the tip appear only in older crowns. Most new stems in a grove are root suckers.",
+     "confidence": "estimated",
+     "source": "Wikipedia en/zh (to 15 m; leaves very variable: lanceolate or linear-lanceolate vs ovate, rhombic or reniform; lives about 100 yr with good water, legend of 1000 yr; catkins 2.5-7 cm; capsules 7-12 mm; desert riparian). Germination, growth rate and age at first flowering estimated from riparian Populus."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 4,
+     "flower_colour": "#8e4a5a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      60
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.7,
+      1.2
+     ],
+     "unripe_colour": "#8aa06a",
+     "ripe_colour": "#b39b6c",
+     "ripen_days": [
+      70,
+      110
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      10000,
+      500000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (male catkins 2.5-5 cm, female 5-7 cm; ovoid-lanceolate capsules 7-12 mm with silky-haired seeds); wind pollinated like all poplars. Seed release in mid to late summer with the river floods (from memory of Tarim studies); timings, crop and colours estimated."
+    }
    }
   ],
   "shrub": [
@@ -583,7 +867,77 @@
      "spacing_m": 0.05,
      "confidence": "estimated"
     },
-    "silhouette": "low spiny green tangle, leafless-looking"
+    "silhouette": "low spiny green tangle, leafless-looking",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two oval cotyledons, then small simple oblong grey-green leaves on a thin green stem while the taproot plunges deep. Young shoots are soft and nearly spineless; from the second season it is a low, much-branched thicket of rigid green stems with long yellow-tipped spines, and new shoots pop up metres away from its spreading rhizomes.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Alhagi maurorum: heavily branched grey-green spiny thicket to 0.9 m; rhizomes over 1.8 m deep, new shoots over 6 m from the parent) and Cal-IPC (spreads ~10 m a year from creeping roots, resprouts after fire and cutting). Hard-seeded; germination, growth and ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 0.9,
+     "flower_colour": "#b83c6e",
+     "flower_form": "pea",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      8
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "pod",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1,
+      2.5
+     ],
+     "unripe_colour": "#7ea05a",
+     "ripe_colour": "#8a4e32",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (bright pink to maroon pea flowers up to 1 cm; brown or reddish pods up to 2.5 cm, constricted between the mottled brown seeds; sweet 'manna' exudate used as a sweetener). Flowering months, bee pollination, few-flowered spiny racemes, pod persistence and crop estimated from floras."
+    }
    },
    {
     "name": "Fig",
@@ -698,7 +1052,77 @@
      "spacing_m": 0.6,
      "confidence": "documented"
     },
-    "silhouette": "low wide spreading crown of big hand leaves, pale trunk"
+    "silhouette": "low wide spreading crown of big hand leaves, pale trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 3.5,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny round cotyledons, then rough, hairy, heart-shaped toothed leaves that become deeply 3-5-lobed within the first season. Grows fast into a low spreading bush of several thick smooth grey stems from the base (it suckers freely), with big lobed leaves on stubby twigs; often roots into walls and rock crevices.",
+     "confidence": "documented",
+     "source": "Purdue NewCROP (Morton, Fruits of Warm Climates: Fig); PFAF (to ~6 m, mature in 3-5 yr, seedlings crop at 3-4 yr and cuttings at 1-2 yr, trees known to live ~200 yr, cannot grow in shade; cited by an earlier research pass); Wikipedia (Common fig)."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 1,
+     "flower_colour": "#8aa84f",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "fig_wasp"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "fig",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      7
+     ],
+     "unripe_colour": "#6f9a3f",
+     "ripe_colour": "#5e3552",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      2,
+      7
+     ],
+     "drop": "falls",
+     "rot_days": [
+      3,
+      14
+     ],
+     "crop_per_tree": [
+      200,
+      3000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Purdue NewCROP (Morton: Fig): syconia in leaf axils, a breba crop on old wood in early summer and a main crop Aug-Oct; wild and Smyrna figs need Blastophaga wasps from caprifigs while common figs set without pollination; ripe figs soften and sour within days. Counts and rot estimated."
+    }
    },
    {
     "name": "Oleander",
@@ -813,7 +1237,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "vase of upright stems, dark narrow leaves, pink flowers"
+    "silhouette": "vase of upright stems, dark narrow leaves, pink flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two oval cotyledons, then narrow, leathery, dark green lance-shaped leaves in pairs or whorls of three, like the adult's. It branches from the base early into a clump of upright grey-green stems that becomes a dense, rounded, evergreen bush; wild plants line the gravel beds of seasonal Mediterranean streams and resprout after floods.",
+     "confidence": "documented",
+     "source": "Wikipedia Nerium (2-6 m; flowers Apr-Oct, peak May-June; wild flowers pink, 2.5-3 cm, in terminal clusters; nectarless deceptive flowers; paired follicles 5-23 cm with downy seeds; cardiac glycosides; sunny sites near stream beds); growth and ages estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 3,
+     "flower_colour": "#e58fb0",
+     "flower_form": "tube",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      40
+     ],
+     "pollinators": [
+      "butterfly",
+      "moth",
+      "bee"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      5,
+      23
+     ],
+     "unripe_colour": "#6f8f4a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      120,
+      180
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      270
+     ],
+     "crop_per_tree": [
+      10,
+      200
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "Wikipedia (Apr-Oct, heaviest May-June; wild pink 2.5-3 cm funnel flowers with fringed lobes in clusters; nectarless, few visitors, so fruit set is very low, cf. Herrera 1991; paired follicles 5-23 cm split to release downy seeds); very toxic cardiac glycosides; ripening and crop estimated"
+    }
    },
    {
     "name": "Saltcedar",
@@ -941,7 +1437,80 @@
      "form": "dense pink plumes 2-5 cm on the twig tips",
      "season": "summer"
     },
-    "silhouette": "feathery see-through plume bush with weeping whip twigs"
+    "silhouette": "feathery see-through plume bush with weeping whip twigs",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within hours on wet sand or silt left by a flood; the seedling is a minute two-leaved sprout that grows 2-5 mm a day, with a ~12 cm shoot over a longer root by 8 weeks. It becomes a dense, multi-stemmed shrub of reddish-brown stems and feathery grey-green scale-leaved twigs, pink-plumed in summer, and resprouts hard after fire or cutting.",
+     "confidence": "documented",
+     "source": "USDA FEIS Tamarix spp. (germination <24 h; seed viable ~24-45 days in summer; seedlings 2-5 mm/day in month 1, 11.7 cm shoot at 8 weeks; may flower in year 1, most from year 3; 4-8 m, usually <6 m; resprouts 3-4 m in one season; shrubs 75-100 yr old show no decline). Height-age curve estimated from these."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#e8a6c2",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      60
+     ],
+     "pollinators": [
+      "bee",
+      "wasp",
+      "fly",
+      "butterfly"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#b0b98e",
+     "ripe_colour": "#c4a67c",
+     "ripen_days": [
+      20,
+      40
+     ],
+     "hang_days": [
+      5,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      200000,
+      10000000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Tamarix spp. (5 sepals and petals, dense racemes of ~20 flowers per 2.5 cm on new growth; insect cross-pollinated, wind unlikely; ~22 ovules, 8-20+ tiny plumed seeds per flower; up to 2.5 x 10^8 seeds per plant per year, shed all season). Flower life, ripening and capsule persistence estimated."
+    }
    }
   ],
   "ground": [
@@ -1031,7 +1600,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "close-cropped creeping turf"
+    "silhouette": "close-cropped creeping turf",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      21
+     ],
+     "height_years": [
+      0.15,
+      0.5
+     ],
+     "first_seed_years": 0.3,
+     "lifespan_years": [
+      5,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a tiny tuft of short, flat, grey-green blades. Within weeks it throws out flattened stolons that creep over the ground and root at every node, plus scaly rhizomes below, knitting into a dense mat; short erect shoots carry 2-6 finger-like spikes. Individual shoots are short-lived but the stolon-rhizome network persists and browns off in winter or drought.",
+     "confidence": "documented",
+     "source": "USDA FEIS Cynodon dactylon (culms 0.1-0.4 m, stolons several feet long rooting at nodes; acid-scarified seed 68% germination in 4 d; emergence at 17 C soil; flowers July-Oct; shade reduces vigour and canopy closure eliminates it); Wikipedia (dense mat, 2-6 spikes 2-5 cm, dormant brown in winter or dry season)"
+    }
    },
    {
     "name": "Common reed",
@@ -1126,7 +1717,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tall even reed wall with feathery plumed tops"
+    "silhouette": "tall even reed wall with feathery plumed tops",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      3,
+      8
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small, weak, grass-like tufts of soft green leaves on wet mud. After a season rhizomes and long surface runners spread out; every spring new culms shoot up like thin canes to full height in a few months, with long, broad, grey-green leaves all along the stem and a big, silky, purple-brown plume that fades to grey-buff.",
+     "confidence": "documented",
+     "source": "USDA FEIS Phragmites australis (germination needs light, moisture and warm alternating temperatures after cold stratification; seedling survival very low; 3-4 years to viable seed; maximum height at 5-8 years; no part of a clone lives more than 8 years though clones persist far longer; culms die back yearly)"
+    }
    },
    {
     "name": "Desert rush",
@@ -1215,7 +1828,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "stiff dark-green rush tussock of vertical needles"
+    "silhouette": "stiff dark-green rush tussock of vertical needles",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are thin, stiff, grey-green spikes in wet saline sand around desert springs, wadis and sabkha edges. They grow into large, dense, hard tussocks of rigid, sharply pointed stems and leaves, with compact brown many-flowered clusters near the tips.",
+     "confidence": "estimated",
+     "source": "Estimated from the ecology of Juncus rigidus (rhizomatous rush of saline wetlands and oases in North Africa and the Middle East) and related salt-marsh Juncus species; no species-specific growth data found."
+    }
    },
    {
     "name": "Halfa grass",
@@ -1303,7 +1938,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "coarse pale-green tussock grass with stiff spikes"
+    "silhouette": "coarse pale-green tussock grass with stiff spikes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a small tuft of narrow, stiff, rough leaves. It quickly builds a stout, scaly creeping rootstock and branches from the base into a tall, leafy, harsh tussock; spreading rhizomes raise new tufts, forming dense stands with long, narrow, spike-like plumes that bristle with small spikelets.",
+     "confidence": "estimated",
+     "source": "Wikipedia Desmostachya bipinnata (tall, tufted, leafy perennial branching from the base, erect from a stout creeping rootstock; N Africa to India and SE Asia; sacred kusha grass; fodder and a weed of wheat). Germination, growth and lifespan estimated from arid rhizomatous grasses."
+    }
    },
    {
     "name": "Smooth flatsedge",
@@ -1398,7 +2055,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "small glossy flatsedge clump on wet sand"
+    "silhouette": "small glossy flatsedge clump on wet sand",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.3,
+      1
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a small tuft of thread-thin green shoots. It soon sends out a creeping horizontal rhizome that raises new tufts at intervals, forming lines and patches of slender, smooth, round-topped stems up to 60 cm, leafless but for basal sheaths, each tipped by a small cluster of green to reddish-brown spikelets set just below the stem tip.",
+     "confidence": "estimated",
+     "source": "Wikipedia Cyperus laevigatus (perennial sedge to 60 cm, clumps on horizontal rhizomes, spikelets green to dark brown; brackish marshes, alkaline soils and hot springs worldwide; makaloa of Hawaii). Growth rate, first flowering and ramet lifespan estimated from rhizomatous Cyperus."
+    }
    }
   ],
   "epiphyte": []

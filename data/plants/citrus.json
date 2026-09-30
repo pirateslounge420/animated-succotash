@@ -36,25 +36,26 @@
     "color": "#3E7A44",
     "accent": "#D8E060",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Large seeds give a vigorous epigeal seedling; the young tree is a single thorny whip with big leathery leaves on broadly winged stalks and downy young shoots. It keeps a leader for some years before forming a dense rounded crown with low drooping branches.",
+     "confidence": "estimated",
+     "source": "Morton 1987 Fruits of Warm Climates, pummelo (tree 5-15 m, winged petioles, monoembryonic seeds giving true-ish seedlings, seed viable ~80 days at 5C); Wikipedia Pomelo; bearing age and lifespan estimated from citrus extension literature"
     },
     "repro": {
      "mode": "seed",
@@ -224,6 +225,54 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 5,
+     "flower_colour": "#f8f3e0",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      10
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "citrus",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      10,
+      30
+     ],
+     "unripe_colour": "#4f8a3a",
+     "ripe_colour": "#d8d474",
+     "ripen_days": [
+      150,
+      240
+     ],
+     "hang_days": [
+      30,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      50,
+      300
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Morton 1987 pummelo (yellowish-white petals 1.5-3.5 cm, flowers single or in clusters of 2-10 in leaf axils or 10-15 in terminal racemes, 2-4 flowerings a year, largely self-incompatible and insect cross-pollinated; fruit 10-30 cm wide, greenish- to pale-yellow peel); ripening period from citrus extension guides"
     }
    }
   ],
@@ -257,25 +306,26 @@
     "color": "#3E7A44",
     "accent": "#E8D040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling (or a rooted cutting, the usual way it is grown) quickly makes a straggly, irregular, thorny shrub with several long stems. Young leaves and shoots are tinged purple, and the large oblong leaves have plain unwinged stalks.",
+     "confidence": "estimated",
+     "source": "Morton 1987 Fruits of Warm Climates, citron (shrub or small tree 2.5-5 m, irregular and thorny, purplish new growth and flower buds, bears within ~3-4 yr, rather short-lived); Kew POWO; values estimated"
     },
     "repro": {
      "mode": "seed",
@@ -445,6 +495,55 @@
      "root_flare": false,
      "spacing_m": 0.2,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 4,
+     "flower_colour": "#f2e2ef",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      12
+     ],
+     "pollinators": [
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "citrus",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      10,
+      25
+     ],
+     "unripe_colour": "#5e8f3c",
+     "ripe_colour": "#e8c93a",
+     "ripen_days": [
+      150,
+      240
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20,
+      150
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "Morton 1987 citron (large fragrant flowers, white inside and purplish outside, in clusters, some male-only; huge oblong knobbly fruit with very thick rind, green to yellow, used mainly candied); timings and crop estimated"
     }
    },
    {
@@ -476,25 +575,26 @@
     "color": "#3E7A44",
     "accent": "#F0A020",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      6,
+      15
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds are polyembryonic, so one seed often sends up two or three seedlings side by side. Each is a slender thorny whip with small glossy lance-shaped leaves on narrowly winged stalks; seedlings are thornier than grown trees and slowly fill out into a dense, rounded, twiggy crown.",
+     "confidence": "estimated",
+     "source": "Morton 1987 mandarin orange (tree 2-8 m, polyembryonic seed, seedlings bear in ~5-7 yr); UF/IFAS citrus extension (flowering in spring, fruit set 1-3% of flowers, fruit matures 6-11 months after bloom, trees productive 50+ yr, old trees 100+ yr in China); values partly estimated"
     },
     "repro": {
      "mode": "seed",
@@ -664,6 +764,55 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 3,
+     "flower_colour": "#faf6ea",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      6
+     ],
+     "pollinators": [
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.03,
+     "fruit_kind": "citrus",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      4,
+      8
+     ],
+     "unripe_colour": "#4f8a3a",
+     "ripe_colour": "#f0892a",
+     "ripen_days": [
+      180,
+      330
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      40
+     ],
+     "crop_per_tree": [
+      300,
+      1500
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Morton 1987 mandarin orange (white fragrant flowers single or in small clusters, spring bloom; oblate loose-skinned orange fruit 4-8 cm; many cultivars parthenocarpic or self-fertile, bees visit); UF/IFAS (1-3% fruit set, 6-11 months to maturity, fruit holds on tree for weeks to months)"
     }
    },
    {
@@ -695,25 +844,26 @@
     "color": "#3E7A44",
     "accent": "#B0C040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      6,
+      18
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      40,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a thin, thorny whip. Its leaves already show the papeda look: a leaf stalk winged so broadly it looks like a second leaf blade below the first, giving 'double' leaves. Grows slowly into a shrubby, spiny small tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia Ichang papeda (C. cavaleriei / C. ichangensis: 3-4.5 m, slow-growing, hardiest citrus after Poncirus, broad winged petiole, lemon-scented flowers, small fruit ripening yellow/orange with many large monoembryonic seeds and little bitter juice); Flora of China; timings estimated"
     },
     "repro": {
      "mode": "seed",
@@ -883,6 +1033,54 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 3,
+     "flower_colour": "#f7f4ea",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "bee"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "citrus",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      5,
+      9
+     ],
+     "unripe_colour": "#5f8a3a",
+     "ripe_colour": "#e6c43a",
+     "ripen_days": [
+      150,
+      210
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      30,
+      300
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "Wikipedia Ichang papeda (lemon-scented white flowers; small oval to flattened fruit ripening yellow-orange, mostly pith and large seeds with scant sour juice, used as flavouring); Flora of China (flowers Apr-May, fruit Oct-Nov); counts estimated"
     }
    },
    {
@@ -914,25 +1112,26 @@
     "color": "#3E7A44",
     "accent": "#A0C060",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
      ],
-     "final_size": 1.0
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "tolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling that quickly becomes a thin, zig-zag, very thorny whip with tiny leaves (1-4 cm, notched tips) and sharp spines at every node. In the rainforest understory it grows into a dense, thorny, twiggy shrub or small tree.",
+     "confidence": "estimated",
+     "source": "Wikipedia Citrus australasica (understory shrub or small tree to ~10 m of lowland subtropical rainforest on the Qld-NSW border; white petals to 9 mm, solitary or paired flowers; fruit ~8 cm; numerous seeds ~7 mm); growth, age at first fruit and lifespan estimated from grower reports"
     },
     "repro": {
      "mode": "seed",
@@ -1102,6 +1301,55 @@
      "root_flare": false,
      "spacing_m": 0.15,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      11
+     ],
+     "hemisphere": "south",
+     "flower_days": 3,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#f6e9ec",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "citrus",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      4,
+      12
+     ],
+     "unripe_colour": "#4f7a3a",
+     "ripe_colour": "#5b3a4e",
+     "ripen_days": [
+      120,
+      200
+     ],
+     "hang_days": [
+      3,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      40
+     ],
+     "crop_per_tree": [
+      50,
+      500
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia Citrus australasica (white to pinkish flowers, solitary or paired; finger-shaped fruit ~4-12 cm, skin green, yellow, pink, purple or black, pulp of separate caviar-like vesicles); ripening period and fruit drop from Australian grower guides; counts estimated"
     }
    }
   ],

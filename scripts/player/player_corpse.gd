@@ -2,8 +2,9 @@ class_name PlayerCorpse
 extends Node3D
 ## Where you died (design reconciliation, "Death and respawn"): your body
 ## stays where it fell, slumped on its face with the cloak over it, holding
-## everything you carried and wore. You wake at a fire with nothing; E by
-## the body takes it all back, and the body is gone. No map pin, no
+## everything you carried and wore. You wake at a fire with nothing but
+## the folk's gifts on the ground by you (main._lay_gifts()); right click
+## by the body takes it all back, and the body is gone. No map pin, no
 ## marker: you find it by going back the way you came.
 ##
 ## The world acts on it: after a while scavengers gather, birds circling
@@ -128,16 +129,24 @@ func _bird() -> Node3D:
 
 
 ## Take your things back into `inv`: worn gear into its slots, carried
-## things into free carry slots. What doesn't fit stays; once it's all
-## taken, the body is gone. True if anything was taken.
+## things into free carry slots. A tool you have again (the folk's gift
+## by the fire) is already yours: the body's is left with it (three tools,
+## never more: design §T). What doesn't fit
+## stays; once it's all taken, the body is gone. True if anything was
+## taken.
 func recover(inv: Inventory) -> bool:
 	var took := false
 	for slot in worn:
 		var a: Array = worn[slot]
 		for i in a.size():
-			if a[i] != null and inv.wear(a[i]):
+			if a[i] == null:
+				continue
+			if inv.wear(a[i]):
 				a[i] = null
 				took = true
+			elif Inventory.slot_info(str(slot)).get("spares", 0) == 0 and inv.worn_in(str(slot)) != null \
+					and str(inv.worn_in(str(slot)).get("kind", "")) == str(a[i].get("kind", "")):
+				a[i] = null
 	for i in carried.size():
 		if carried[i] != null and inv.add(carried[i]):
 			carried[i] = null

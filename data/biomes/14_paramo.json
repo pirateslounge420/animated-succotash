@@ -112,7 +112,82 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "woolly rosette atop skirt of dead leaves"
+    "silhouette": "woolly rosette atop skirt of dead leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      15,
+      90
+     ],
+     "height_years": [
+      20,
+      40
+     ],
+     "trunk_years": 5,
+     "first_seed_years": 8,
+     "lifespan_years": [
+      50,
+      90
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny flat rosettes of woolly, silver-green, strap-shaped leaves on bare ground or moss (~85% die in dry spells). For about 4-5 years a stemless ground rosette widens to 25-30 cm; then the stem begins to rise ~7-8 cm a year, clothed in a skirt of dead leaves, and the plant can first flower at ~20 cm of stem.",
+     "confidence": "documented",
+     "source": "Fagua & Gonzalez 2007 Plant Biology (E. grandiflora: stem growth 7.6 cm/yr, plants >=2 m ~40-45 yr old, first flowering at ~21 cm stem, seedling mortality ~85% in dry season); Exotica Esoterica frailejon cultivation notes (stemless for 4+ yr, 25-30 cm rosette in <2 yr, ~90% germination within 3 months)."
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 14,
+     "flower_size_cm": 5.5,
+     "flower_colour": "#f0c02c",
+     "flower_form": "star",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      5,
+      20
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bird",
+      "fly",
+      "beetle",
+      "moth"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.4
+     ],
+     "unripe_colour": "#a7a44e",
+     "ripe_colour": "#3d3025",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      8000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Fagua & Gonzalez 2007 Plant Biology (flowering peak Oct-Nov, 30-96 days per plant; inflorescence stalks ~85 cm; heads 5.0-6.2 cm, ~86 per plant; Bombus the main pollinators plus hummingbirds, flies, beetles, nocturnal moths; seeds shed Sep-May). Achene size, crop and rot estimated."
+    }
    },
    {
     "name": "Paramo dwarf bamboo",
@@ -225,7 +300,30 @@
      "spacing_m": 0.15,
      "confidence": "documented"
     },
-    "silhouette": "dense low arching bamboo thicket"
+    "silhouette": "dense low arching bamboo thicket",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "culm_days": 70,
+     "first_seed_years": 30,
+     "lifespan_years": [
+      8,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "shoot",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings after a mass flowering look like thin grass. The young clump makes new culms each season, at first thread-thin and short, each generation thicker and taller, and dense bunches of whiskery branchlets grow at every node. In the paramo it forms low, very dense clumps of stiff culms clothed in overlapping straw-coloured sheaths.",
+     "confidence": "estimated",
+     "source": "Clark 1989/1995 Chusquea studies and Paramo vegetation accounts (C. tessellata forms dense 'bamboo paramo' stands at 3000-4000 m in Venezuela, Colombia, Ecuador); Chusquea often gregarious and monocarpic; cycle length, growth and culm life estimated"
+    }
    },
    {
     "name": "Paramo dwarf shrub",
@@ -341,7 +439,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "compact needle-leaved shrub, yellow flowers"
+    "silhouette": "compact needle-leaved shrub, yellow flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      6,
+      18
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedlings with two round cotyledons, then pairs of narrow, needle-like leaves; young plants are wiry little sprigs with crowded, larch-like needles on reddish stems. They branch densely into a rounded, heath-like shrublet dotted with golden-yellow, five-petalled flowers at the branch tips.",
+     "confidence": "estimated",
+     "source": "Hypericum online monograph (N. Robson, illustration of H. laricifolium, Ecuador and Venezuela); Wikipedia; growth, germination and ages estimated from Andean Hypericum sect. Brathys shrubs and paramo shrub growth rates."
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#f5c518",
+     "flower_form": "star",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.8
+     ],
+     "unripe_colour": "#8a9a4a",
+     "ripe_colour": "#6a3a22",
+     "ripen_days": [
+      40,
+      70
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      200
+     ],
+     "crop_per_tree": [
+      50,
+      500
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from Hypericum sect. Brathys (solitary or few golden 5-petalled flowers at branch tips, dry septicidal capsules, tiny seeds) and paramo pollination studies (bumblebees and flies); flowering spread through the year in the equatorial Andes."
+    }
    },
    {
     "name": "Paramo puya",
@@ -431,7 +601,78 @@
      "lenticels": "none",
      "confidence": "estimated"
     },
-    "silhouette": "spiky grey rosette with club flower spike"
+    "silhouette": "spiky grey rosette with club flower spike",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      8,
+      18
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      20,
+      35
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A tiny grass-like tuft among paramo bunchgrass that slowly becomes a stemless rosette of stiff, narrow, channelled grey-green leaves with small hooked spines along the edges and silvery scales beneath. It widens for many years; finally one thick, club-shaped spike densely wrapped in white-buff wool rises from the centre, flowers, and the rosette dies.",
+     "confidence": "estimated",
+     "source": "Kew POWO (perennial of the paramo, SW Colombia to Ecuador); Wikipedia Puya (many species monocarpic); Miller 1986 Oecologia (woolly inflorescences of Ecuadorian paramo Puya keep flowers warmer at night; from knowledge); ages and rates estimated from Puya raimondii and other paramo giant rosettes"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 3,
+     "flower_colour": "#a8bf6a",
+     "flower_form": "tube",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      300,
+      1500
+     ],
+     "pollinators": [
+      "bird",
+      "bumblebee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.5,
+      2.5
+     ],
+     "unripe_colour": "#7f9a5a",
+     "ripe_colour": "#7a5c3c",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      60,
+      300
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      540
+     ],
+     "crop_per_tree": [
+      150,
+      800
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from paramo Puya (P. hamata, P. raimondii): tubular greenish flowers half hidden in the woolly spike, visited by hummingbirds (e.g. Ecuadorian hillstar) and bumblebees; individuals flower at any time of year; capsules split on the dead standing spike, releasing small winged seeds"
+    }
    },
    {
     "name": "Tall frailejon",
@@ -521,7 +762,81 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tall column of dead leaves, woolly rosette on top"
+    "silhouette": "tall column of dead leaves, woolly rosette on top",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      15,
+      90
+     ],
+     "height_years": [
+      40,
+      100
+     ],
+     "trunk_years": 8,
+     "first_seed_years": 15,
+     "lifespan_years": [
+      100,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Like other frailejones: a flat, silvery-woolly rosette of narrow leaves at ground level for several years, then a stem rises very slowly (a few cm a year), wrapped in a thick skirt of dead, hanging grey leaves under a dense crown rosette of felted silver-green leaves; old plants are shaggy columns 2-6 m tall.",
+     "confidence": "estimated",
+     "source": "Estimated from Espeletia: Useful Tropical Plants (E. pycnophylla to ~4 m, slow); Cumbal (Narino) transplant study in Ingeniare (young plants +0.7-0.95 cm per 6 months); Fagua & Gonzalez 2007 (E. grandiflora 7.6 cm/yr); Flora 2018 long-term growth of Coespeletia and E. schultzii (~1.1-1.3 cm/yr)."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      11
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 14,
+     "flower_size_cm": 4.5,
+     "flower_colour": "#f0c030",
+     "flower_form": "star",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      3,
+      15
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bird",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.4
+     ],
+     "unripe_colour": "#a2a24e",
+     "ripe_colour": "#3b2f24",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "splits",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      800,
+      6000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Estimated from E. grandiflora (Fagua & Gonzalez 2007 Plant Biology: yellow heads ~5-6 cm on long stalks, bumblebee/hummingbird/fly/beetle pollination, seed shed over months) and frailejon growers' notes (a stalk flowers ~2 months)."
+    }
    }
   ],
   "ground": [
@@ -609,7 +924,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "reddish spongy moss hummock"
+    "silhouette": "reddish spongy moss hummock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      120
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a tiny flat green plate that buds leafy shoots. The young colony is a soft cushion of fat, blunt, wine-red to purplish capitula (greener in shade) with swollen, spoon-shaped leaves, growing 1-3 cm taller a year in wet lawns and spreading into a spongy carpet.",
+     "confidence": "documented",
+     "source": "Springer Wetl. Ecol. Manag. 2019 (Chiloe, Chile: ~5.6 mm growth in 3 months, ~2 cm/yr); Diaz et al. 2012 Rev. Chil. Hist. Nat. (growth higher in lawns than hummocks); Bengtsson et al. 2016 (magellanicum-group 1-7 mm/yr in Sweden); shading aids regeneration (Can. J. Bot. 2025)"
+    }
    },
    {
     "name": "Cushion plant",
@@ -699,7 +1036,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "hard bright green cushion"
+    "silhouette": "hard bright green cushion",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      50,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny rosettes of narrow, stiff, grey-green leaves; each keeps branching into more tight rosettes packed side by side, building a hard, convex, green cushion as firm as a pillow. Old cushions fuse into mounds and hummocks in wet paramo bogs, with small brownish flower spikes barely raised above the surface.",
+     "confidence": "estimated",
+     "source": "Estimated from Andean paramo cushion-bog ecology (Plantago rigida and Distichia cushions: slow radial growth of millimetres to a few cm a year, cushions persisting for decades to centuries) and Plantago seed biology"
+    }
    },
    {
     "name": "Paramo club moss",
@@ -785,7 +1144,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "creeping scaly green cords"
+    "silhouette": "creeping scaly green cords",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1825,
+      3650
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate underground into a tiny non-green, fungus-fed gametophyte that takes years (often 6-15) to mature, so the value above is capped. The sporeling is one small upright shoot densely clad in tiny needle-like scale leaves; it then sends a creeping runner over the ground that roots and throws up forked, bristly upright shoots. Spore cones on long stalks come ~4-6 yr later.",
+     "confidence": "documented",
+     "source": "USDA Forest Service GTR NC-217 'Lycopodium: growth form, morphology and sustainability' (spore-gametophyte-sporophyte cycle up to 20 yr; gametophytes live weeks to 10+ yr; aerial stems produce spores at 4-6 yr; ramets 1-6 yr old); Bruchmann/Whittier on subterranean mycoheterotrophic gametophytes"
+    }
    },
    {
     "name": "Paramo lupine",
@@ -879,7 +1260,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "woolly silver rosette with blue spike"
+    "silhouette": "woolly silver rosette with blue spike",
+    "growth": {
+     "life": "monocarpic",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      3,
+      7
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      8,
+      15
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings show two thick cotyledons, then small palmate leaves densely clothed in silky silver hairs. For years the plant builds a dense, silvery-woolly rosette of palmately divided leaves hugging the paramo ground, then sends up a single thick, woolly, fox-tail spike packed with blue-violet pea flowers, sets seed and dies.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Lupinus alopecuroides: 2,700-4,500 m on ten isolated peaks in Colombia and Ecuador); giant-rosette, flower-once (monocarpic) life history and timings estimated from paramo rosette lupines such as L. weberbaueri - treat as uncertain."
+    }
    },
    {
     "name": "Tussock grass",
@@ -970,7 +1373,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "yellow-green arching tussock"
+    "silhouette": "yellow-green arching tussock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds sprout on bare, wet paramo soil or among mosses. The seedling is a small tuft of stiff, inrolled, needle-like leaves; over years it builds a dense, knee-high tussock of tough grey-green leaves around a core of dead leaf bases that insulates the growing buds against nightly frost.",
+     "confidence": "estimated",
+     "source": "Estimated from paramo tussock-grass ecology (C. effusa is a dominant bunchgrass of the northern Andean paramos, forming dense tussocks insulated by dead leaves); no species growth data found."
+    }
    }
   ],
   "epiphyte": []

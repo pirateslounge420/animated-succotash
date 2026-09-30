@@ -134,7 +134,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "prostrate woody mat hugging the ground, catkins upright"
+    "silhouette": "prostrate woody mat hugging the ground, catkins upright",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      7
+     ],
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      80,
+      236
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedling with 2 round cotyledons and a few silky-haired leaves. Grows only mm to a few cm a year as thick, knobbly trailing stems pressed to the ground and rooting as they go, with broad oval leaves (silky when young, reddish in autumn). Takes decades to make a flat mat; big upright catkins stand above it.",
+     "confidence": "estimated",
+     "source": "Wikipedia/Flora of N America Salix arctica (usually 15 cm tall, a plant in E Greenland dated 236 yr, extremely slow growth); USDA Woody Plant Seed Manual Salix (flowers July, fruit Aug-Sept; seed germinates within 1-2 days); size-age curve and first seed estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 4.0,
+     "flower_colour": "#b8655a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      100
+     ],
+     "pollinators": [
+      "fly",
+      "bumblebee",
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.5,
+      0.8
+     ],
+     "unripe_colour": "#8e8a55",
+     "ripe_colour": "#a8845c",
+     "ripen_days": [
+      35,
+      60
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      3000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual Salix table (S. arctica flowers July, ripens Aug-Sept); Flora of N America (large erect female catkins 2-6 cm, reddish, hairy capsules); Arctic willows pollinated by flies and bumblebees plus wind; fruit set, crop and rot estimated (slow decay in cold soils)"
+    }
    },
    {
     "name": "Bog bilberry",
@@ -250,7 +322,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low blue-green twiggy mound, knee-high at most"
+    "silhouette": "low blue-green twiggy mound, knee-high at most",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      25,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny epigeal seedling with rounded cotyledons, then small, oval, untoothed, blue-green leaves on a thin brownish stem. Growth is slow: the young plant is a low, stiff, much-branched twiggy tuft of round, rather thick, blue-grey leaves that fall in autumn, later spreading by rhizomes and layering into a low mat.",
+     "confidence": "estimated",
+     "source": "USDA FEIS (Vaccinium uliginosum): usually 20-40 cm, germination improved by 30 days cold at 2 C and poor below 15 C, seed short-lived, rhizomes to 20 cm deep, grows for 50-60 years after fire. Seedling growth, first fruiting and stem ages estimated from arctic shrub studies and the genus."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#f2d6dc",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "bumblebee",
+      "fly",
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.6,
+      1.0
+     ],
+     "unripe_colour": "#9cb070",
+     "ripe_colour": "#3d4f7c",
+     "ripen_days": [
+      50,
+      75
+     ],
+     "hang_days": [
+      10,
+      40
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      25
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS (Vaccinium uliginosum): white to pink flowers singly or in clusters at stem ends, June to early July; blue to black berries ripen late July-Sept and are eaten heavily by bears Jul-Sep. Pollinators (bumblebees, flies), berry size, fruit set, hang and rot times and crop estimated."
+    }
    },
    {
     "name": "Crowberry",
@@ -357,7 +501,80 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "dark heath mat of needle-fine twigs"
+    "silhouette": "dark heath mat of needle-fine twigs",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are rare: the seed needs winter chilling and germinates poorly. The seedling is a few thin, wiry stems clothed in tiny, glossy, needle-like leaves with rolled-under edges, like a miniature heath. Stems creep and root, spreading 7-15 cm a year into a low, dense, dark-green evergreen mat studded with black berries.",
+     "confidence": "documented",
+     "source": "USDA FEIS Empetrum nigrum (flowers from snowmelt through July; drupe dark-blue to black with 6-9 nutlets, ripe Aug-late fall, persists through winter under snow; few viable seeds, high seedling mortality, spreads mostly vegetatively; 20-30 yr to recover after fire); Wikipedia (stems grow 7-15 cm/yr, clonal mats)"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#7a2a4a",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind",
+      "fly",
+      "beetle",
+      "bumblebee"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.4,
+      0.6
+     ],
+     "unripe_colour": "#6a8f3f",
+     "ripe_colour": "#1c1a24",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      120,
+      300
+     ],
+     "drop": "persists",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      100,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (flowers 3-6 mm, greenish-pink sepals turning reddish-purple, May-June; pollinated by generalist insects and wind; fruit 4-6 mm, black, ~7.8 seeds, persists through winter; edible, eaten fresh or in jams); USDA FEIS (ripe Aug-late fall). Fruit set and crop estimated."
+    }
    },
    {
     "name": "Dwarf birch",
@@ -473,7 +690,77 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "low tangled shrub of tiny round leaves"
+    "silhouette": "low tangled shrub of tiny round leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny winged nutlets blow across the snow and sprout in early summer on bare, moist peat or moss. The seedling has two minute oval cotyledons, then small, round, deeply round-toothed leaves on a thin reddish stem; it stays a tiny sprig for years, then branches low and layers into a knee-high spreading mat of wiry brown twigs with coin-sized crinkly leaves that turn red in autumn.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Betula nana (0.15-1 m, slow-growing seedlings, establishment from seed rare, layering and sprouting; 15 d stratification then germination within 14 d at 12 C); Wikipedia (low shade tolerance); growth, first seed and stem ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#a88a55",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.5,
+      1.5
+     ],
+     "unripe_colour": "#7f9a58",
+     "ripe_colour": "#8b6a45",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      20,
+      240
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS (monoecious, wind-pollinated, self-incompatible; female catkins in flower early June; male catkins 10-25 mm, female 6-10 mm; seeds ripen in August and disperse from late summer to the next spring, blowing over snow); Wikipedia (fruiting catkins 5-15 mm); counts are catkins, estimated."
+    }
    }
   ],
   "ground": [
@@ -564,7 +851,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "hairy leaf tuft with nodding yellow cups"
+    "silhouette": "hairy leaf tuft with nodding yellow cups",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings: two tiny cotyledons, then a small tuft of hairy, grey-green, deeply lobed leaves. Over a few years it becomes a dense tuft on a stout taproot, wrapped in old leaf bases, from which leafless, bristly stalks rise carrying single yellow (sometimes white) cup flowers that follow the sun.",
+     "confidence": "estimated",
+     "source": "Estimated from Arctic poppy ecology (short-lived, tufted, taprooted perennial of high-Arctic gravels with heliotropic cup flowers) and alpine Papaver cultivation; a perennial, not an annual, despite the batch's common name"
+    }
    },
    {
     "name": "Arctic cottongrass",
@@ -651,7 +960,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "grassy tuft topped with white cotton puffs"
+    "silhouette": "grassy tuft topped with white cotton puffs",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny grass-like seedling with a thread-like first leaf on wet moss or mud; becomes a small tuft of narrow channelled leaves, then sends out slender rhizomes so single upright shoots pop up around it, forming a loose colony rather than a tussock. Each flowering shoot carries one round white cotton ball.",
+     "confidence": "estimated",
+     "source": "Estimated from Eriophorum biology: USDA FEIS (E. vaginatum: germination within ~20 days in light, first flowering ~3 yr, tillers live 3-15 yr); Arctic seed germination trials (Polar Biology 2013); Flora of the Canadian Arctic Archipelago (rhizomatous, single spikelet)."
+    }
    },
    {
     "name": "Entire-leaf mountain avens",
@@ -737,7 +1068,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "flat evergreen mat spangled with white flowers"
+    "silhouette": "flat evergreen mat spangled with white flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny round cotyledons, then small leathery, narrow, entire (untoothed) leaves, dark green above and white-felted beneath, with rolled edges. The seedling is a single tiny woody stem hugging the gravel that branches horizontally and roots along the ground, slowly spreading into a flat evergreen mat studded with upward-facing white flowers.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dryas integrifolia (prostrate mat 10-17 cm tall, stems branching along the ground; up to 11 white to cream petals; heliotropic flowers that warm insects; achenes with plumed styles to 2.5 cm; pioneer of Arctic tundra, river gravels and scree). Mat growth rate, first flowering and age estimated from Dryas studies."
+    }
    },
    {
     "name": "Reindeer lichen",
@@ -812,7 +1165,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "pale grey-white spongy lichen carpet"
+    "silhouette": "pale grey-white spongy lichen carpet",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      12,
+      25
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling: a new patch starts from a broken-off fragment (trampled or carried by wind and reindeer) or, rarely, from spores that must meet a green alga. The young thallus is a scatter of tiny grey stalks that branch in threes and fours, tips all bending one way; over decades they build a springy ash-grey mat up to ~10 cm deep, dying at the base while growing at the tips.",
+     "confidence": "documented",
+     "source": "Wikipedia Cladonia rangiferina (grows 3-11 mm/yr, 3.9-4.4 mm/yr in Finland; mats to ~10 cm, ~12 cm in humid, 4-6 cm in dry sites; can establish ~2 yr after fire but takes decades to recover; individual lives ~20-30 yr; faster growth in shadier forests)"
+    }
    },
    {
     "name": "Rusty bog-moss",
@@ -898,7 +1273,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "brown-green moss hummock, soft and rounded"
+    "silhouette": "brown-green moss hummock, soft and rounded",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      120
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      300
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A spore germinates into a tiny flat green plate (thalloid protonema) that buds leafy shoots within weeks to months. The young colony is a small, very dense cushion of rusty-brown to reddish, tightly packed capitula that grows 0.7-2 cm taller a year and slowly builds a firm hummock; hummocks can be centuries old.",
+     "confidence": "documented",
+     "source": "Bengtsson et al. 2016 Ecol. Evol. (PMC4833502): S. fuscum length growth 7-20 mm/yr; Heck et al. 2020 bioRxiv (Sphagnum spores form protonemal filaments after 2-20 weeks); hummock-building and sporophyte timing estimated"
+    }
    },
    {
     "name": "Tundra sedge",
@@ -985,7 +1382,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "blue-green sedge sward in wet ground"
+    "silhouette": "blue-green sedge sward in wet ground",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      4,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A tiny grass-like tuft of narrow, keeled, blue-green leaves; in its first season the seedling already makes tillers and short rhizomes. Colonies then spread by long rhizomes into dense stands of upright leafy shoots in shallow water and wet tundra; only a few percent of shoots ever send up a flowering culm.",
+     "confidence": "documented",
+     "source": "USDA FEIS Carex aquatilis (shoots live 4-10 years, only 6-9% of shoots flower, seedlings form rhizomes and tillers in their first season, germination 12-78% after cold storage, culms 50-100 cm, shade intolerant); Carex germination times from Schutz 2000 review"
+    }
    }
   ],
   "epiphyte": []

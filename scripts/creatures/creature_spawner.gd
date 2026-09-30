@@ -51,7 +51,7 @@ var world: Node
 var chunks: ChunkManager
 var player: PlanetPlayer
 var map: PlanetData
-## Text for the on-screen prompt ("E: turn over the log"), or "".
+## Text for the on-screen prompt ("Right click: turn over the log"), or "".
 var prompt := ""
 
 var _root: Node3D
@@ -964,7 +964,7 @@ func _update_prompt(delta: float) -> void:
 	if lg.is_empty():
 		prompt = ""
 	else:
-		prompt = "E: roll the log back" if lg.flipped else "E: turn over the log"
+		prompt = ("%s: roll the log back" if lg.flipped else "%s: turn over the log") % Controls.interact_word()
 
 
 ## A unicorn leaves a faint glowing print every stride it walks.

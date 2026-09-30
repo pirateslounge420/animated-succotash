@@ -125,7 +125,77 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "stunted ragged larch, sparse tiered branches"
+    "silhouette": "stunted ragged larch, sparse tiered branches",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      40,
+      120
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      250,
+      900
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: about six needle-like cotyledons, then soft, bright-green single needles spiralled along the first-year shoot; tufted needles on short spur shoots follow from the second year. Young trees are slender, open, feathery cones with level branches that turn gold and drop every needle in autumn; on permafrost they often stay stunted and sparse for decades.",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual (Larix: L. gmelinii flowers May-Jun, cones ripen Sep, seed from 14-15 yr, good crops every 2-4 yr, 30-day germination tests, empty cones persist); Wikipedia (10-30 m; oldest 919 yr in Yakutia; permafrost; seed ripe 3-5 months after pollination). Growth on permafrost estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#a8406a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1,
+      2.5
+     ],
+     "unripe_colour": "#9a4a4a",
+     "ripe_colour": "#7a5a3a",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2500
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Wikipedia (upright cones 1-2.5 cm, green or red when young, brown when ripe, seed shed 3-5 months after pollination, old cones persist grey-black); USDA WPSM (young cones light to deep purple, ripen Sep, empty cones stay on the tree indefinitely). Set and crop estimated."
+    }
    },
    {
     "name": "Lodgepole pine",
@@ -156,25 +226,26 @@
     "color": "#3E7A44",
     "accent": "#8A7A60",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       120
-      ],
-      [
-       "sapling",
-       1500
-      ],
-      [
-       "mature",
-       8000
-      ],
-      [
-       "old",
-       40000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      25,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 3-6 cotyledons and a tuft of single primary needles, then short, twisted, paired needles. Young trees are dense, narrow cones with regular whorls. Open-grown shore pines become bushy, crooked and flat-topped; inland trees become slim, straight poles. Serotinous cones stay closed on the branches for decades.",
+     "confidence": "documented",
+     "source": "USDA Silvics (Lotan & Critchfield): viable seed commonly at 5-10 years; ~3.6 m at 20 years on medium sites; germination peaks in the 2 weeks after snowmelt; very intolerant of shade; shore pine small and short-lived; ages commonly 150-200+, old high-elevation trees to 400+"
     },
     "repro": {
      "mode": "seed",
@@ -299,7 +370,55 @@
      "spacing_m": 0.4,
      "confidence": "estimated"
     },
-    "silhouette": "wind-flagged dwarf pine, branches downwind only"
+    "silhouette": "wind-flagged dwarf pine, branches downwind only",
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.2,
+     "flower_colour": "#8a2f5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      5
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      6
+     ],
+     "unripe_colour": "#5f6a3a",
+     "ripe_colour": "#b08850",
+     "ripen_days": [
+      450,
+      520
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2500
+     ],
+     "crop_per_tree": [
+      50,
+      1500
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (reddish-purple female strobili in whorls of 2-5, mid-May to mid-July; cones mature Aug-Oct over a year after pollination, purple-green to light brown; Rocky Mountain cones serotinous, sealed until heated to 45-60 C and held for years; 10-24 seeds per cone)"
+    }
    },
    {
     "name": "Mountain birch",
@@ -415,7 +534,77 @@
      "spacing_m": 0.6,
      "confidence": "estimated"
     },
-    "silhouette": "crooked multi-stemmed birch, pale trunks"
+    "silhouette": "crooked multi-stemmed birch, pale trunks",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      10,
+      35
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      70,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny two-winged nutlets sprout in early summer on moss, bare soil or burnt ground. Seedlings have minute round cotyledons, then small, downy, coarsely toothed, rounded leaves on hairy reddish twigs. At the treeline the young tree soon sprouts extra stems from its base, becoming a crooked, multi-stemmed bush with dark reddish-brown bark that whitens and peels only on older stems.",
+     "confidence": "estimated",
+     "source": "Wikipedia (short-lived tree; subarctic mountain birch small, contorted and shrubby); Atkinson 1992 Biological Flora of Betula pendula and B. pubescens (light-demanding pioneer, seed from young age, winged nutlets shed late summer to winter); treeline growth rates and ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 4,
+     "flower_colour": "#b89a55",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      2,
+      3.5
+     ],
+     "unripe_colour": "#89a25b",
+     "ripe_colour": "#8c6d47",
+     "ripen_days": [
+      80,
+      110
+     ],
+     "hang_days": [
+      20,
+      200
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "General Betula pubescens silvics (Atkinson 1992): catkins open with the leaves in spring (May-Jun in the subarctic), wind-pollinated, fruiting catkins 2-3.5 cm break up on the tree from late summer through winter; counts are catkins, estimated."
+    }
    },
    {
     "name": "Wind-stunted conifer",
@@ -523,7 +712,77 @@
      "spacing_m": 0.35,
      "confidence": "estimated"
     },
-    "silhouette": "matted spruce skirt with a few flagged spires"
+    "silhouette": "matted spruce skirt with a few flagged spires",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      60,
+      180
+     ],
+     "first_seed_years": 30,
+     "lifespan_years": [
+      300,
+      600
+     ],
+     "shade": "tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with 6-12 slender cotyledons; after 10 years often only 15-30 cm tall. Saplings are narrow, dense spires of sharp, square, blue-green needles. At treeline wind and snow shear them into flag trees (branches only on the lee side) or low krummholz mats that spread by branches rooting where they touch the ground.",
+     "confidence": "documented",
+     "source": "USDA Silvics (Alexander & Shepperd): seedlings 2.5 cm at 1 yr, 15-30 cm at 10, 1.2-1.5 m at ~20 yrs in sun; cones from 15-40 yrs, heavy crops at 150-250; dominants 250-450 yrs, 500-600 not rare; shade tolerant; dwarf layering form at timberline. Height-age fitted to the stunted 1-8 m form"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 2,
+     "flower_colour": "#8a2a4a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      2.5,
+      6.3
+     ],
+     "unripe_colour": "#7a4a60",
+     "ripe_colour": "#b08a5a",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      120,
+      400
+     ],
+     "drop": "splits",
+     "rot_days": [
+      700,
+      1800
+     ],
+     "crop_per_tree": [
+      20,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (strobili break bud late April-May; pollen late May to early July by elevation; cones 2.5-6.3 cm mature in one season, ripen Aug-early Sep, open and shed seed Sep-Oct with some through winter); crop and decay estimated"
+    }
    }
   ],
   "shrub": [
@@ -556,25 +815,26 @@
     "color": "#2A5A38",
     "accent": "#D03050",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       90
-      ],
-      [
-       "young",
-       900
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       12000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Minute seedlings on moss or raw humus: two tiny cotyledons, then small glossy, dark green, leathery leaves with rusty-brown scaly undersides and rolled edges. For years it is a small, few-stemmed sprig; then it branches densely into a low, rounded evergreen bush, and stems that touch the ground root and spread it into a clonal patch.",
+     "confidence": "documented",
+     "source": "German Wikipedia Rostblaettrige Alpenrose (30-130 cm; stems 1-2 cm thick nearly 100 yr old; leaves live ~2 yr; flowers May-Jul, corolla to 2 cm, deep pink to red; capsules to 7 mm ripen from August; semi-shade light value; 440-2,840 m); germination and first flowering estimated"
     },
     "repro": {
      "mode": "seed",
@@ -701,7 +961,57 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "dense dark-green mound, glossy leaves"
+    "silhouette": "dense dark-green mound, glossy leaves",
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 1.8,
+     "flower_colour": "#d6336c",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      6,
+      12
+     ],
+     "pollinators": [
+      "bumblebee",
+      "butterfly",
+      "bee"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.4,
+      0.7
+     ],
+     "unripe_colour": "#8a8a4a",
+     "ripe_colour": "#6e4a30",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      60,
+      270
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "German Wikipedia (flowers May-Jul in terminal clusters, funnel-bell corolla to 2 cm, deep pink to red; capsules to 7 mm ripening from August); bumblebee pollination and poisonous grayanotoxins from knowledge; truss size, set and crop estimated"
+    }
    },
    {
     "name": "Dwarf birch",
@@ -817,7 +1127,77 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "low tangled shrub of tiny round leaves"
+    "silhouette": "low tangled shrub of tiny round leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny winged nutlets blow across the snow and sprout in early summer on bare, moist peat or moss. The seedling has two minute oval cotyledons, then small, round, deeply round-toothed leaves on a thin reddish stem; it stays a tiny sprig for years, then branches low and layers into a knee-high spreading mat of wiry brown twigs with coin-sized crinkly leaves that turn red in autumn.",
+     "confidence": "estimated",
+     "source": "USDA FEIS Betula nana (0.15-1 m, slow-growing seedlings, establishment from seed rare, layering and sprouting; 15 d stratification then germination within 14 d at 12 C); Wikipedia (low shade tolerance); growth, first seed and stem ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#a88a55",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.5,
+      1.5
+     ],
+     "unripe_colour": "#7f9a58",
+     "ripe_colour": "#8b6a45",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      20,
+      240
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      50,
+      1000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS (monoecious, wind-pollinated, self-incompatible; female catkins in flower early June; male catkins 10-25 mm, female 6-10 mm; seeds ripen in August and disperse from late summer to the next spring, blowing over snow); Wikipedia (fruiting catkins 5-15 mm); counts are catkins, estimated."
+    }
    },
    {
     "name": "Dwarf willow",
@@ -933,7 +1313,80 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "grey-green leafy willow mound"
+    "silhouette": "grey-green leafy willow mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      40,
+      120
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed shed in autumn lies under the snow and germinates right after snowmelt: 2 tiny round cotyledons, then oval grey-green leaves that are whitish (glaucous) underneath and hairy when young. Adds only a few cm a year, building a low, rounded, much-branched bush of stout knobbly twigs; wind-blasted plants stay low and sprawling.",
+     "confidence": "estimated",
+     "source": "USDA Woody Plant Seed Manual Salix (S. glauca flowers Jun-Jul and disperses seed Sep-Nov; fall-shed willow seed overwinters and germinates quickly after snowmelt); Flora of N America (0.3-1.5 m, to 6 m in shelter); growth, first seed and lifespan estimated for a tundra shrub willow"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 3.5,
+     "flower_colour": "#cfc67e",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      80
+     ],
+     "pollinators": [
+      "bumblebee",
+      "fly",
+      "bee",
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.5,
+      0.9
+     ],
+     "unripe_colour": "#9aa46a",
+     "ripe_colour": "#b8a882",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      500,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Woody Plant Seed Manual Salix table (S. glauca: flowers June-July, seed dispersed Sept-Nov); Flora of N America (catkins 2-6 cm with the leaves, hairy capsules 5-9 mm); fruit set, crop and rot estimated"
+    }
    },
    {
     "name": "Heath",
@@ -1049,7 +1502,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low green twiggy carpet"
+    "silhouette": "low green twiggy carpet",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: tiny oval cotyledons, then a thread-thin green stem with small oval, finely toothed, bright green leaves. Seedlings are rare and grow very slowly; after a few years the plant is a low tuft of sharply angled, bright green, broom-like twigs that stay green through winter after the leaves drop, and rhizomes start sending up new shoots around it.",
+     "confidence": "documented",
+     "source": "USDA FEIS (Vaccinium myrtillus): 35-64% germination after cold, seedlings rare and initially very slow, seed production begins at about age 3, aerial shoots live up to about 15 yr, rhizomes 23-28 yr, understory dominant in conifer forests with few berries under a closed canopy; Wikipedia: 10-51 cm, can live up to 30 years."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#e2b0a8",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "bumblebee",
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "berry",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      1.0
+     ],
+     "unripe_colour": "#8fa860",
+     "ripe_colour": "#303452",
+     "ripen_days": [
+      50,
+      70
+     ],
+     "hang_days": [
+      7,
+      25
+     ],
+     "drop": "falls",
+     "rot_days": [
+      5,
+      20
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS (Vaccinium myrtillus): pink, cream or greenish-white urn to bell flowers borne singly in leaf axils, bees the main pollinators, round dark red to blue-black berries 5-8 mm ripening about 50 days after flowering; Wikipedia: blooms Apr-May, blue-black fruit up to 1 cm Jul-Sep, fruit persists on average 16.7 days. Fruit set and crop estimated."
+    }
    },
    {
     "name": "Mountain pine",
@@ -1161,7 +1686,77 @@
      "spacing_m": 0.6,
      "confidence": "estimated"
     },
-    "silhouette": "dark sprawling pine mound, knee to head high"
+    "silhouette": "dark sprawling pine mound, knee to head high",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings have 5-7 cotyledons and a tuft of short primary needles; the young plant soon branches from the base into a low, dense, rounded bush of stiff, dark-green, paired, curved needles. Stems lie downhill under snow and rise at the tips, so old plants form thickets of crooked, interlaced, ground-hugging branches.",
+     "confidence": "estimated",
+     "source": "Wikipedia (subsp. mugo a low, shrubby, often multi-stemmed plant to 3-6 m; cones 2.5-5.5 cm, nut-brown); growth, first cones and lifespan estimated from treeline dwarf-pine studies in the Alps"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#a03a5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2.5,
+      5.5
+     ],
+     "unripe_colour": "#6a4a6a",
+     "ripe_colour": "#8a5a2a",
+     "ripen_days": [
+      460,
+      520
+     ],
+     "hang_days": [
+      365,
+      1200
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2000
+     ],
+     "crop_per_tree": [
+      20,
+      500
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (cones 2.5-5.5 cm, nut-brown, matt and symmetrical in subsp. mugo); two-season pine cone cycle, violet young cones and empty cones lingering on the branches estimated from the genus"
+    }
    }
   ],
   "ground": [
@@ -1249,7 +1844,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "flat evergreen mat with white eight-petal flowers"
+    "silhouette": "flat evergreen mat with white eight-petal flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny round cotyledons, then small oblong leaves with rounded teeth, glossy dark green above and white-woolly beneath, like miniature oak leaves. The seedling's woody stem creeps and branches over limestone gravel, rooting as it goes, and slowly builds a flat evergreen mat that carries eight-petalled white flowers and twisting feathery seed plumes.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dryas octopetala (creamy white flowers with 8, occasionally up to 16, petals on 3-10 cm stalks; persistent feathery styles twisted, then spreading into a ball for wind dispersal; early-melting gravel and rock barrens, mostly on limestone). Mat growth, first flowering and age estimated (Elkington 1971 Biol. Flora, not read)."
+    }
    },
    {
     "name": "Sheep fescue",
@@ -1338,7 +1955,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "small fine blue-green grass tuft"
+    "silhouette": "small fine blue-green grass tuft",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hair-fine first leaf, then a tiny tuft of bristle-like, inrolled grey-green leaves; tillers pack into a dense, low, cushion-like tussock within 2-3 years that flowers from year 2 and can persist for decades, slowly spreading outward.",
+     "confidence": "estimated",
+     "source": "Estimated from Festuca ovina life history (Grime et al., Comparative Plant Ecology: slow-growing stress-tolerant tussock grass; seed germination in 1-3 weeks; flowering from the second year); long-lived tussocks."
+    }
    },
    {
     "name": "Star reindeer lichen",
@@ -1413,7 +2052,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "pale cauliflower-like lichen cushion"
+    "silhouette": "pale cauliflower-like lichen cushion",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      60,
+      365
+     ],
+     "height_years": [
+      15,
+      35
+     ],
+     "first_seed_years": 12,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "No seedling: a new patch starts from a broken-off fragment (trampled or carried by wind and reindeer) or, rarely, from spores that must meet a green alga. Each piece grows into a pale yellow-green, rounded head of dense, fine, star-like branching; heads pack side by side into a smooth cauliflower-like carpet 5-12 cm deep that takes decades to rebuild after fire or grazing.",
+     "confidence": "documented",
+     "source": "Wikipedia Cladonia stellaris (grows on average <5 mm per year under good conditions; key reindeer and caribou winter forage); Kytoviita & Crittenden 2007 and boreal lichen-woodland studies (slow recovery over decades after fire or grazing); lifespan estimated"
+    }
    }
   ],
   "epiphyte": []

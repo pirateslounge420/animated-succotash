@@ -36,25 +36,26 @@
     "color": "#3E9A3E",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       365
-      ],
-      [
-       "old",
-       730
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      5,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: narrow, lance-shaped first leaves rolled into a short soft pseudostem, each new leaf broader until it is a small copy of the adult. It builds a massive green pseudostem (to ~15 m and ~1 m thick) crowned by leaves up to 5 m long, the largest of all herbs; like other bananas each pseudostem flowers once and then dies.",
+     "confidence": "estimated",
+     "source": "Wikipedia Musa ingens (pseudostem to 15 m, 20 m with leaves, ~94 cm dbh; montane New Guinea); growth rate, time to flowering and pseudostem lifespan estimated from wild Musa, slowed for cool highland forest"
     },
     "repro": {
      "mode": "both",
@@ -228,6 +229,55 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 7,
+     "flower_colour": "#6e4a44",
+     "flower_form": "tube",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      16,
+      20
+     ],
+     "pollinators": [
+      "bat",
+      "bird"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      14,
+      18
+     ],
+     "unripe_colour": "#5f8a3c",
+     "ripe_colour": "#d6c24a",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      5,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      21
+     ],
+     "crop_per_tree": [
+      200,
+      400
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "Wikipedia Musa ingens (bunch up to 60 kg of about twenty hands of 16-20 fruits, over 300 fruits; fruit ~18 cm with yellowish pulp and blackish-brown seeds, sweet and good when cooked); bract colour, pollinators (bats, birds) and timings estimated from wild Musa"
     }
    }
   ],
@@ -263,25 +313,27 @@
     "color": "#3E9A3E",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       365
-      ],
-      [
-       "old",
-       730
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "trunk_years": 2,
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: one small heart- to arrow-shaped leaf on a thin stalk from a pea-sized corm, then a low rosette of a few glossy green arrowhead leaves on long fleshy stalks. Within 1-2 years a thick, ringed, above-ground stem forms and suckers sprout at its base; leaves grow to 1-2 m, held nearly upright with the tip pointing up.",
+     "confidence": "estimated",
+     "source": "Useful Tropical Plants (Alocasia macrorrhizos: 2-4 m, occasionally 5; stems to 3 m or more and 20 cm thick; 400-600 days to mature; seed germinates best at 24 C; grows best in some shade, tolerates full sun and deep shade; thermogenic spadix, insect-pollinated). Germination days, first flowering and lifespan estimated."
     },
     "repro": {
      "mode": "both",
@@ -432,6 +484,55 @@
      "color_2": "#A89A7A",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 6,
+     "flower_colour": "#e2dfa8",
+     "flower_form": "spike",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      2,
+      8
+     ],
+     "pollinators": [
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "syncarp",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      5,
+      10
+     ],
+     "unripe_colour": "#6a8a40",
+     "ripe_colour": "#d8402a",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      7,
+      21
+     ],
+     "crop_per_tree": [
+      2,
+      10
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Estimated from Flora of China / PROSEA as recalled (inflorescences several together among the leaf bases, boat-shaped pale yellow-green spathe 13-35 cm; ovoid head of ~1 cm red berries exposed as the spathe tube splits) and Colocasiomyia fly pollination of Alocasia; Wikipedia: tissues full of raphides."
     }
    },
    {
@@ -463,25 +564,27 @@
     "color": "#3E9A3E",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       365
-      ],
-      [
-       "old",
-       730
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      2.5
+     ],
+     "trunk_years": 3,
+     "first_seed_years": 3,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a single small heart-shaped leaf from a tiny corm, then a rosette of a few broad, wavy-edged, light green arrowhead leaves on long stalks whose lower parts clasp the stem. A short, thick, ringed stem rises after a few years and suckers around the base build clumps of big upright leaves in moist ravines and forest edges.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Alocasia odora: 0.5-1.6 m, corms 4-10 cm, petioles 0.3-1 m clasping the stem, ovate cordate light green leaves; night-scented flowers; raw tissue full of raphides) and Useful Tropical Plants (semi-shade, seed best sown fresh, germinates best at 24 C). Rates and ages estimated."
     },
     "repro": {
      "mode": "both",
@@ -632,6 +735,54 @@
      "color_2": "#A89A7A",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 5,
+     "flower_colour": "#dfe0a8",
+     "flower_form": "spike",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      2,
+      4
+     ],
+     "pollinators": [
+      "fly"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "syncarp",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      6
+     ],
+     "unripe_colour": "#6a8a40",
+     "ripe_colour": "#e04a2a",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "splits",
+     "rot_days": [
+      7,
+      21
+     ],
+     "crop_per_tree": [
+      2,
+      8
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Wikipedia (fragrant thermogenic inflorescences, strongest at night) and Yafuso 1993 (Environ. Entomol., as recalled: A. odora pollinated by Colocasiomyia flies in Okinawa); pale green spathe and red berry heads from Flora of China as recalled; timings estimated."
     }
    },
    {
@@ -665,25 +816,26 @@
     "color": "#3E9A3E",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       365
-      ],
-      [
-       "old",
-       730
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.6,
+      1.2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      1.5,
+      2.5
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: the first leaves are small, narrow and lance-shaped, rolled round one another into a short soft pseudostem. Each new leaf is broader until the plant is a small copy of the adult with a green, often dark-blotched pseudostem. Each pseudostem flowers once and dies; narrow-leaved 'sword suckers' rise from the rhizome to replace it, so the clump lives on for decades.",
+     "confidence": "estimated",
+     "source": "ProMusa and Simmonds 'Bananas' (pseudostem fruits ~1-1.5 yr after emergence and then dies; suckers replace it; seeds of wild bananas germinate slowly and erratically over weeks to months); timings from seed estimated"
     },
     "repro": {
      "mode": "both",
@@ -857,6 +1009,55 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 5,
+     "flower_colour": "#6f2648",
+     "flower_form": "tube",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      12,
+      20
+     ],
+     "pollinators": [
+      "bat",
+      "bird"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      7,
+      13
+     ],
+     "unripe_colour": "#5d8a3a",
+     "ripe_colour": "#e2c23a",
+     "ripen_days": [
+      80,
+      120
+     ],
+     "hang_days": [
+      5,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      21
+     ],
+     "crop_per_tree": [
+      40,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "ProMusa/Simmonds (hanging inflorescence from the top of the pseudostem; one purple-red bract lifts each day over a 'hand' of 12-20 tubular flowers, female hands first, then male; wild fruit short, curved, full of hard black seeds, little sweet pulp); nectar bats (Macroglossus, Eonycteris) and sunbirds pollinate; set and crop estimated"
     }
    },
    {
@@ -888,25 +1089,26 @@
     "color": "#3E9A3E",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       365
-      ],
-      [
-       "old",
-       730
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.6,
+      1.3
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      1.5,
+      2.5
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: narrow, lance-shaped first leaves rolled into a short soft pseudostem, broadening leaf by leaf into a small copy of the adult with a plain pale green to yellowish, waxy pseudostem (no dark blotches). Each pseudostem flowers once and dies; narrow-leaved suckers from the rhizome replace it, building a robust clump that tolerates drought and cold better than M. acuminata.",
+     "confidence": "estimated",
+     "source": "Wikipedia (red to maroon inflorescence bracts; seedy fruit considered inedible, parthenocarpic hybrids give saba and other bananas); ProMusa/Simmonds for pseudostem cycle and suckering; seed germination and timings estimated"
     },
     "repro": {
      "mode": "both",
@@ -1080,6 +1282,55 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "north",
+     "flower_days": 1,
+     "flower_size_cm": 6,
+     "flower_colour": "#7a2e3a",
+     "flower_form": "tube",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      12,
+      20
+     ],
+     "pollinators": [
+      "bat",
+      "bird"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      8,
+      13
+     ],
+     "unripe_colour": "#6f9a8a",
+     "ripe_colour": "#d9c24a",
+     "ripen_days": [
+      80,
+      120
+     ],
+     "hang_days": [
+      5,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      7,
+      21
+     ],
+     "crop_per_tree": [
+      80,
+      200
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "Wikipedia (inflorescence bracts red to maroon; fruit blue-green when young, stout and angular, packed with seeds, so eaten mainly unripe/cooked, as is the male bud); nectar bats and sunbirds pollinate; flowers much of the year; timings and crop estimated from wild Musa"
     }
    },
    {
@@ -1111,25 +1362,27 @@
     "color": "#3E9A3E",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       365
-      ],
-      [
-       "old",
-       730
-      ]
+     "life": "monocarpic",
+     "germination_days": [
+      20,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      2.5,
+      6
+     ],
+     "trunk_years": 1.5,
+     "first_seed_years": 6,
+     "lifespan_years": [
+      7,
+      14
+     ],
+     "shade": "intermediate",
+     "juvenile": "establishment",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal germination from a big hard black seed. First leaves small, narrow and rolled; the seedling becomes a vase of erect paddle-shaped bright-green leaves with reddish midribs rising from a swelling underground corm, the leaf sheaths building a short fat pseudostem within 1-2 years. Single-stemmed: wild plants do not sucker. Flowers once (after ~4-8 yr, later in cold highlands), then dies.",
+     "confidence": "documented",
+     "source": "Kew POWO (6-12 m, flowers after ~4-8 yr); Useful Tropical Plants (2-10 yr from germination to flowering, ~6 months flower to fruit, germination within ~3 months); Plant Biology 2022 enset reproductive/germination ecology study (T50 ~35-36 days); Tropical Conservation Science 2019 camera-trap study of enset flower and fruit visitors"
     },
     "repro": {
      "mode": "both",
@@ -1303,6 +1556,56 @@
      "root_flare": false,
      "spacing_m": 0.3,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 1,
+     "flower_size_cm": 3,
+     "flower_colour": "#efe4c8",
+     "flower_form": "tube",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      15,
+      40
+     ],
+     "pollinators": [
+      "bat",
+      "mammal",
+      "bird"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      8,
+      15
+     ],
+     "unripe_colour": "#6f8f3e",
+     "ripe_colour": "#d9862a",
+     "ripen_days": [
+      150,
+      210
+     ],
+     "hang_days": [
+      15,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      45
+     ],
+     "crop_per_tree": [
+      80,
+      400
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "Kew POWO (pendulous 2-3 m inflorescence, maroon bracts each over 30-40 cream flowers 4-8.5 cm long; fruit 8-15 cm, orange, 15-25 hard black seeds in scant pulp); Tropical Conservation Science 2019 (flowers year-round, visited at night by African dormice, Megaloglossus nectar bats, sunbirds); ~6 months to fruit. Fruit set, hang, rot, crop estimated."
     }
    }
   ],
@@ -1336,25 +1639,26 @@
     "color": "#3E9A3E",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       365
-      ],
-      [
-       "old",
-       730
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      8,
+      25
+     ],
+     "shade": "tolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a small arrow-shaped leaf on a thin stalk from a tiny corm; within a year a loose clump of a few upright, narrow, glossy arrowhead leaves on tall pale stalks streaked with dark zebra stripes. Corms bud off offsets that form clumps; in drought or cold it drops its leaves and rests as a corm.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Alocasia zebrina: Philippine endemic ~1.8 m, to 2.9 m; arrow-shaped glossy leaves 45-100 cm on ~1.1 m petioles streaked dark green to brown; easily propagated by corms; paired inflorescences ~16 cm; orange fruits). Germination, growth rate and ages estimated from the genus."
     },
     "repro": {
      "mode": "both",
@@ -1526,25 +1830,26 @@
     "color": "#3E9A3E",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       365
-      ],
-      [
-       "old",
-       730
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.3,
+      0.6
+     ],
+     "first_seed_years": 1,
+     "lifespan_years": [
+      1,
+      4
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Almost always grows from a corm or side cormel (true seed is rare): a pointed shoot unrolls into a small rosette of long-stalked leaves. Blades are heart- to arrow-shaped and peltate (stalk joined inside the blade), velvety and water-repellent; each new leaf is bigger until the clump of 'elephant ear' leaves on 1 m stalks is reached in 5-7 months, with cormels budding around the base.",
+     "confidence": "documented",
+     "source": "Wikipedia Taro (leaves to 40 x 25 cm on 0.8-1.2 m petioles; matures 6-12 months after planting on dry land, 12-15 months in wetland, early cultivars 5-7 months; propagated by corms and cormels; perennial); PROSEA/FAO taro accounts (sprouting in 2-4 weeks, flowering rare, grows in partial shade)"
     },
     "repro": {
      "mode": "both",

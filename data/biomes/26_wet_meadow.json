@@ -136,7 +136,80 @@
      "spacing_m": 0.2,
      "confidence": "documented"
     },
-    "silhouette": "grey-green rounded bush of many stems"
+    "silhouette": "grey-green rounded bush of many stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within a day on wet mud: two tiny round cotyledons, then a downy shoot with small obovate, dull grey-green leaves (grey-hairy beneath). Branches low into a rounded, dense, many-stemmed bush; twigs downy, with raised ridges under the peeled bark. Fallen or broken stems root where they touch wet ground.",
+     "confidence": "estimated",
+     "source": "Stace, New Flora of the British Isles, and Meikle, Willows and Poplars of GB and Ireland (BSBI) for form, 4-10 (15) m size and phenology; USDA Woody Plant Seed Manual Salix (willow seed has no dormancy and germinates within 12-24 h on wet ground (USDA Woody Plant Seed Manual Salix)); growth rate, first seed and lifespan estimated for a fast, short-lived sallow"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#dcd06a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.6,
+      1.0
+     ],
+     "unripe_colour": "#a9b77a",
+     "ripe_colour": "#c2b28e",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20000,
+      400000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Stace and Meikle (BSBI): catkins before the leaves in Mar-Apr, males 2-3 cm with yellow anthers ('pussy willow'), females grey-green; hairy flask-shaped capsules 7-10 mm shed seed May-June; key early food for bumblebee queens and honeybees; fruit set and crop estimated"
+    }
    },
    {
     "name": "Joe-pye weed",
@@ -252,7 +325,80 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "tall straight stems with flat purple tops"
+    "silhouette": "tall straight stems with flat purple tops",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seed needs a winter's cold before sprouting; the seedling has two small round cotyledons, then whorls of 3-5 lance-shaped toothed leaves on a short upright stem. The first year it stays a knee-high leafy shoot; from year 2 the clump sends up several stout purple-spotted stems 1-2 m tall topped by flat domes of mauve flower heads.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Eutrochium maculatum: to 2 m, rose-purple heads of 8-22 disc florets, butterflies and bees, open wetlands); standard native-seed guidance (cold-moist stratification before spring germination). Ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#b5608e",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      300
+     ],
+     "pollinators": [
+      "butterfly",
+      "bee",
+      "bumblebee",
+      "moth"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "achene",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.3,
+      0.45
+     ],
+     "unripe_colour": "#9c8f6a",
+     "ripe_colour": "#b9a27c",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      300
+     ],
+     "crop_per_tree": [
+      2000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (late-summer flat-topped clusters of rose-purple heads with 8-22 disc florets and no rays; butterflies and honeybees; larval host of several moths). Plumed achenes, timings and counts estimated from Eupatorieae."
+    }
    },
    {
     "name": "Meadowsweet",
@@ -372,7 +518,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "erect leafy clump with creamy plumes"
+    "silhouette": "erect leafy clump with creamy plumes",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      1.5,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Small epigeal seedling; the first leaves are simple and 3-lobed, soon followed by a basal rosette of pinnate leaves with a large 3-5-lobed toothed end leaflet, dark green above and whitish beneath. From a creeping rootstock it builds a clump, and from year 2-3 sends up tall, stiff, reddish stems crowned by frothy cream flower plumes.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Filipendula ulmaria: stems 1-2 m, cream flowers early summer to early autumn in irregular cymes, visited mainly by flies; damp meadows, fens, wet woods); Grime et al. Comparative Plant Ecology (wetland perennial, spring germination). Ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f3eed8",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      300
+     ],
+     "pollinators": [
+      "fly",
+      "bee",
+      "beetle"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "achene",
+     "fruit_shape": "coiled",
+     "fruit_size_cm": [
+      0.2,
+      0.3
+     ],
+     "unripe_colour": "#b8c28a",
+     "ripe_colour": "#8a6a45",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      2000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (dense irregular cymes of small cream 5-petalled flowers with 7-20 stamens, strongly scented, visited mainly by flies); floras (each flower gives 5-10 small spirally twisted one-seeded fruits, water-dispersed). Timings and counts estimated."
+    }
    }
   ],
   "ground": [
@@ -466,7 +684,29 @@
      "confidence": "documented",
      "note": "slender culms, bluish at the nodes"
     },
-    "silhouette": "lax blue-green grass stand"
+    "silhouette": "lax blue-green grass stand",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      14
+     ],
+     "height_years": [
+      0.5,
+      1.5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      20
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seeds sprout within a week or two on moist, bare or burned ground. The seedling is a small tuft of flat, soft, bluish-green leaves; from its second season it spreads by creeping rhizomes into a loose sod of leafy stems topped by nodding, purplish, feathery panicles that fade to straw.",
+     "confidence": "documented",
+     "source": "USDA FEIS Calamagrostis canadensis (90% germination at 20 C, moderate seedling vigour, shoots to 2 m within 6 weeks in Alaska, flowers late Jun-mid Jul, extensive rhizomes in one season, stands persist ~100 yr); lifespan_years is a rhizome patch, estimated."
+    }
    },
    {
     "name": "Common sedge",
@@ -556,7 +796,29 @@
      "confidence": "documented",
      "note": "slender triangular culms with blackish-brown basal sheaths"
     },
-    "silhouette": "low fine glaucous sward"
+    "silhouette": "low fine glaucous sward",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      35
+     ],
+     "height_years": [
+      1,
+      2
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      2,
+      6
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A small tuft of narrow grey-green leaves. It soon sends out creeping rhizomes that throw up loose tufts of leafy shoots, knitting into a low lawn-like sward in wet meadows and fens; flowering stems carry slim dark blackish-purple spikes.",
+     "confidence": "estimated",
+     "source": "Schutz 2000 Flora 195 (Carex seed ecology: light and fluctuating temperatures, germination within weeks after winter); BSBI/Stace (rhizomatous, 7-70 cm, fens and wet grassland); ramet lifespan estimated from rhizomatous Carex"
+    }
    },
    {
     "name": "Marsh marigold",
@@ -645,7 +907,29 @@
      "confidence": "documented",
      "note": "hollow succulent stems, brownish at the base"
     },
-    "silhouette": "low mound of glossy round leaves"
+    "silhouette": "low mound of glossy round leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two small oval cotyledons, then long-stalked round to kidney-shaped glossy leaves with scalloped edges, a small version of the adult. It builds a low leafy rosette/clump from a short thick rootstock over 1-2 years and flowers (bright yellow cups) from about the second or third spring; clumps widen slowly by branching of the rootstock.",
+     "confidence": "estimated",
+     "source": "Jelitto seed (germinates in 3-4 weeks at ~20C); SDSU Native Plant propagation (60-day cold-moist treatment or fall sowing; low germination; sun to shade); Wikipedia/MBG (10-80 cm, marshes and wet woodland, dies back in winter); time to flower and lifespan estimated from growers and growth form"
+    }
    },
    {
     "name": "Purple moor-grass",
@@ -737,7 +1021,29 @@
      "confidence": "documented",
      "note": "culms with a single swollen basal internode"
     },
-    "silhouette": "tight tussock of fine arching blades"
+    "silhouette": "tight tussock of fine arching blades",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A slender seedling tuft of flat, soft, mid-green leaves. Over a few years its tillers pack into a firm tussock with swollen, bulb-like leaf bases that store food; the leaves turn straw-buff and die back each autumn, so the tussock is pale all winter. Narrow purple-tinged panicles rise on tall bare stems in late summer; on wet moors old tussocks become raised pedestals.",
+     "confidence": "estimated",
+     "source": "Wikipedia (dense tussocks to 120 cm, flowers Jul-Sept, moist heath, bogs and moorland, pH 3.5-5); Taylor, Rowland & Jones 2001 Biological Flora of the British Isles: Molinia caerulea (J. Ecol. 89) for deciduous habit, storage leaf bases and tussock formation; ages estimated"
+    }
    },
    {
     "name": "Ragged robin",
@@ -827,7 +1133,29 @@
      "confidence": "documented",
      "note": "slender stems sticky below the nodes, reddish"
     },
-    "silhouette": "thin stems with pink ragged flowers"
+    "silhouette": "thin stems with pink ragged flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.5,
+      1.5
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a small rosette of spoon-shaped leaves; in the first year it stays a low rosette with short leafy runners. From the second year it sends up slender, forked, reddish stems with narrow opposite leaves and pink flowers whose petals are torn into 4 ragged, thread-like lobes.",
+     "confidence": "estimated",
+     "source": "Stace, New Flora of the British Isles, and RHS (short-lived perennial of wet meadows and fens, 30-75 cm, flowers May-Aug in its second year; seed germinates in 1-3 weeks without pretreatment); lifespan estimated"
+    }
    },
    {
     "name": "Soft rush",
@@ -904,7 +1232,29 @@
      "confidence": "documented",
      "note": "terete smooth glossy green culms in dense tufts, red-brown sheaths at the base"
     },
-    "silhouette": "dense tuft of glossy green needles"
+    "silhouette": "dense tuft of glossy green needles",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds are dust-fine and need light; they come up in dense green carpets on bare wet mud. Each seedling is a tiny tuft of hair-thin, bright-green, round stems that tillers into a small clump in its first year and over a few years into a dense, rounded tussock of smooth, glossy, leafless-looking stems with brown flower clusters bursting from one side near the top.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Juncus effusus: large clumps to ~1.2 m in wetlands, riparian zones, wet heath and pasture); light-requiring germination and large persistent seed bank are well known in Juncus; timings and ages estimated."
+    }
    },
    {
     "name": "Tufted hair-grass",
@@ -994,7 +1344,29 @@
      "confidence": "documented",
      "note": "dense tussock of old leaf bases"
     },
-    "silhouette": "dense dark tussock under an airy seed haze"
+    "silhouette": "dense dark tussock under an airy seed haze",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a small tuft of fine, dark-green, ribbed, rough-edged leaves. It tillers into a dense, fountain-like tussock, flowering from its second year: a cloud of tall, airy, silvery-purple to golden panicles held well above the leaf mound; the tussock base grows wider and denser each year.",
+     "confidence": "documented",
+     "source": "USDA FEIS Deschampsia cespitosa (densely cespitose, culms 20-120 cm; 95% germination over 30 d with light after cold storage; no seed in the planting year, seed in the second; flowers May-Sep by region; rarely in dense shade; seed viability 1-80% by year). Tussock lifespan estimated."
+    }
    }
   ],
   "epiphyte": []

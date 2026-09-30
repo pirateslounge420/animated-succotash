@@ -138,7 +138,77 @@
      "spacing_m": 0.6,
      "confidence": "estimated"
     },
-    "silhouette": "narrow conical crown on a smooth grey trunk"
+    "silhouette": "narrow conical crown on a smooth grey trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      7,
+      25
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two tiny round cotyledons, then doubly toothed oval leaves, dull matt green above and grey-downy below with pointed tips. It soon branches from the base and throws up root suckers, so young plants form a clump of several straight, smooth, pale grey stems with narrow crowns, growing up to about 1 m a year.",
+     "confidence": "documented",
+     "source": "European Atlas of Forest Tree Species (Alnus incana: lives ~60 yr, to ~24 m; regenerates rapidly from root suckers; flowers late Feb-May; seeds ripen and disperse Sep-Nov) and Wikipedia (15-20 m, often multi-stemmed and shrubby, max age 60-100 yr, light-demanding and fast-growing). Height-age and first seed estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 7,
+     "flower_colour": "#a07a50",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      6
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1,
+      2
+     ],
+     "unripe_colour": "#5f7a3a",
+     "ripe_colour": "#4a3325",
+     "ripen_days": [
+      150,
+      200
+     ],
+     "hang_days": [
+      150,
+      450
+     ],
+     "drop": "persists",
+     "rot_days": [
+      365,
+      1095
+     ],
+     "crop_per_tree": [
+      500,
+      10000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "European Atlas (male catkins 5-10 cm in clusters of 3-4; female catkins 1-2 cm in clusters of 2-6; flowering late Feb-May before the leaves; seeds ripen and disperse Sep-Nov) and Wikipedia (mature female cones ~1.5 x 1 cm in late autumn; seeds 1-2 mm, narrowly winged). Crop and rot times estimated."
+    }
    },
    {
     "name": "Northern white cedar",
@@ -247,7 +317,77 @@
      "spacing_m": 0.15,
      "confidence": "documented"
     },
-    "silhouette": "dense narrow green column"
+    "silhouette": "dense narrow green column",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      30,
+      85
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      200,
+      1650
+     ],
+     "shade": "tolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: 2 cotyledons, then soft, spreading needle-like juvenile leaves for the first season before flat sprays of tiny overlapping scale leaves take over. Seedlings grow only ~8 cm a year, often on rotting logs and moss; the sapling is a dense, narrow cone with branches to the ground, later a buttressed, often leaning trunk with shreddy grey-brown bark.",
+     "confidence": "documented",
+     "source": "USDA FEIS and Silvics of N. America (Johnston): ~8 cm/yr in the first years, 0.9 m at 9 yr, ~12 m at 50 yr on good sites; cones from age 6, abundant from 30, best after 75; seedlings need partial light, species shade tolerant; >400 yr in swamps; Gymnosperm Database (living cliff tree 1,051 yr, a dead one 1,653 yr, Niagara Escarpment)."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#9a5a48",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      6
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.8,
+      1.4
+     ],
+     "unripe_colour": "#a9b86c",
+     "ripe_colour": "#b4895c",
+     "ripen_days": [
+      100,
+      130
+     ],
+     "hang_days": [
+      150,
+      365
+     ],
+     "drop": "persists",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      5000,
+      32000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics and FEIS (pollen late Apr-Jun; cones full grown mid-Aug, ripen Aug-Sep, open 7-10 days later; pale cinnamon brown, 8-13 mm; one tree ~9 L of cones = 60,000-260,000 seeds; good crops every 2-5 yr); Gymnosperm Database (cones 9-14 mm with 8 seeds; pollen cones 1-2 mm, reddish). Empty-cone persistence estimated."
+    }
    },
    {
     "name": "Tamarack",
@@ -358,7 +498,77 @@
      "spacing_m": 0.4,
      "confidence": "documented"
     },
-    "silhouette": "thin open spire, gold in autumn"
+    "silhouette": "thin open spire, gold in autumn",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
+     ],
+     "height_years": [
+      15,
+      45
+     ],
+     "first_seed_years": 15,
+     "lifespan_years": [
+      150,
+      335
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: about six needle-like cotyledons; in full light first-year seedlings reach only 18-23 cm with soft single needles, and 46-64 cm by year three. Young trees are narrow, open, feathery cones of tufted blue-green needles that turn bright gold and drop in autumn; under a canopy they die, so they must stay in the open.",
+     "confidence": "documented",
+     "source": "USDA Silvics of North America vol. 1 (Larix laricina: germination late May-mid June, epigeal; seedlings 18-23 cm yr 1, 46-64 cm yr 3; mature 15-23 m; viable seed at 12-15 yr, large crops from ~40; good crops every 3-6 yr; usually 150-180 yr, max 335; very intolerant of shade)."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 6,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#c04a5a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      1.3,
+      1.9
+     ],
+     "unripe_colour": "#9a5a62",
+     "ripe_colour": "#8a6a48",
+     "ripen_days": [
+      100,
+      140
+     ],
+     "hang_days": [
+      365,
+      1100
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2500
+     ],
+     "crop_per_tree": [
+      500,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics (flowers late Apr-early May; cones ripen Aug-Sep, brown, oblong-ovoid, 13-19 mm; seed shed Sep through spring; vigorous open-grown trees up to 20,000 cones a year). Young-cone colour, set and persistence estimated."
+    }
    }
   ],
   "shrub": [
@@ -478,7 +688,77 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "low rounded twiggy bush"
+    "silhouette": "low rounded twiggy bush",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      30,
+      70
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds sprout on wet peat or sedge hummocks in spring. The seedling shows tiny round cotyledons, then small, round to oval, coarsely toothed leaves, downy at first, on thin twigs dotted with resin glands. It branches low into several upright stems and becomes a dense, rounded, many-stemmed shrub of dark brown twigs.",
+     "confidence": "estimated",
+     "source": "Wikipedia (monoecious shrub 1-4 m of boreal swamps and riparian zones, closely spaced coarsely toothed leaves); Flora of North America (B. pumila: erect cylindric infructescences 1-2.5 cm); growth, first seed and lifespan estimated from shrub birches."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 2,
+     "flower_colour": "#b0925a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1,
+      2.5
+     ],
+     "unripe_colour": "#87a05a",
+     "ripe_colour": "#8a6c47",
+     "ripen_days": [
+      80,
+      110
+     ],
+     "hang_days": [
+      20,
+      200
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Flora of North America (Betula pumila: catkins with the leaves in spring, infructescences 1-2.5 cm); genus pattern of wind pollination and catkins shattering on the twig in autumn and winter; counts are catkins, estimated."
+    }
    },
    {
     "name": "Fen willow",
@@ -596,7 +876,80 @@
      "spacing_m": 0.2,
      "confidence": "documented"
     },
-    "silhouette": "grey-green rounded bush of many stems"
+    "silhouette": "grey-green rounded bush of many stems",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      2
+     ],
+     "height_years": [
+      4,
+      12
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "multi_stem",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within a day on wet mud: two tiny round cotyledons, then a downy shoot with small obovate, dull grey-green leaves (grey-hairy beneath). Branches low into a rounded, dense, many-stemmed bush; twigs downy, with raised ridges under the peeled bark. Fallen or broken stems root where they touch wet ground.",
+     "confidence": "estimated",
+     "source": "Stace, New Flora of the British Isles, and Meikle, Willows and Poplars of GB and Ireland (BSBI) for form, 4-10 (15) m size and phenology; USDA Woody Plant Seed Manual Salix (willow seed has no dormancy and germinates within 12-24 h on wet ground (USDA Woody Plant Seed Manual Salix)); growth rate, first seed and lifespan estimated for a fast, short-lived sallow"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#dcd06a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      30,
+      80
+     ],
+     "pollinators": [
+      "bee",
+      "bumblebee",
+      "fly",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.6,
+      1.0
+     ],
+     "unripe_colour": "#a9b77a",
+     "ripe_colour": "#c2b28e",
+     "ripen_days": [
+      40,
+      60
+     ],
+     "hang_days": [
+      3,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20000,
+      400000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Stace and Meikle (BSBI): catkins before the leaves in Mar-Apr, males 2-3 cm with yellow anthers ('pussy willow'), females grey-green; hairy flask-shaped capsules 7-10 mm shed seed May-June; key early food for bumblebee queens and honeybees; fruit set and crop estimated"
+    }
    },
    {
     "name": "Shrubby cinquefoil",
@@ -718,7 +1071,80 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low dense yellow-flowered mound"
+    "silhouette": "low dense yellow-flowered mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny round cotyledons, then small silky leaves with 3 narrow leaflets, soon pinnate with 5-7 like the adult. The seedling is a few thin, wiry, upright stems with shreddy reddish-brown bark that branch repeatedly into a low, rounded, twiggy bush; some prostrate forms creep over rock or tundra.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dasiphora fruticosa (0.1-1 m, rarely 1.5 m; upright to prostrate; buttercup-like yellow flowers 2-3 cm across, early to late summer; hairy achene clusters; swamps, rocky and high-elevation sites). Growth rate, age at first flowering and longevity estimated from horticultural and rangeland sources."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#f5d33b",
+     "flower_form": "cup",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle",
+      "butterfly"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      0.9
+     ],
+     "unripe_colour": "#9cae6a",
+     "ripe_colour": "#8b6b45",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      30,
+      200
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      100,
+      2000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (flowers 2-3 cm, pale to bright yellow, 5 petals, 15-25 stamens, early-late summer; fruit a cluster of long-haired achenes). Fruit size is the achene head in its persistent calyx; pollinator guilds, timing, set and crop estimated from Potentilla ecology."
+    }
    }
   ],
   "ground": [
@@ -808,7 +1234,29 @@
      "confidence": "documented",
      "note": "wiry culms rising from glossy black-brown basal sheaths"
     },
-    "silhouette": "wiry dark tussock with black bases"
+    "silhouette": "wiry dark tussock with black bases",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a tiny tuft of thread-like leaves. Builds slowly into a dense, hard tussock of wiry, grey-green, rush-like leaves with glossy black-brown leaf bases; stiff flowering stems carry a small, flattened, blackish head with a longer leaf-like bract.",
+     "confidence": "estimated",
+     "source": "Sparling 1968, Biological Flora of the British Isles: Schoenus nigricans (tussock sedge of calcareous fens, dune slacks and bogs; slow establishment, long-lived tussocks); Stace; timings and ages estimated"
+    }
    },
    {
     "name": "Bottle sedge",
@@ -901,7 +1349,29 @@
      "confidence": "documented",
      "note": "bluntly triangular culms with brown basal sheaths"
     },
-    "silhouette": "upright glaucous sedge lawn"
+    "silhouette": "upright glaucous sedge lawn",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      2,
+      5
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A small tuft of narrow, glaucous, spongy-based leaves. Long rhizomes then run through the mud of pond and lake margins sending up upright shoots, forming extensive open swards in shallow water; fertile stems carry fat cylindrical female spikes of bottle-shaped beaked perigynia.",
+     "confidence": "estimated",
+     "source": "Schutz 2000 Flora (Carex germination needs light and fluctuating temperatures); Flora of North America / BSBI (strongly rhizomatous, 30-120 cm, shallow water); shoot lifespan estimated from FEIS Carex utriculata/aquatilis accounts"
+    }
    },
    {
     "name": "Brown moss",
@@ -983,7 +1453,29 @@
      "confidence": "documented",
      "note": "moss, no stem surface"
     },
-    "silhouette": "glossy red-brown carpet"
+    "silhouette": "glossy red-brown carpet",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "From a spore or, far more often, a broken shoot fragment: green protonema threads, then upright shoots. Shoots are thick and turgid, 5-20 cm long in water, with plump, concave leaves whose tips curve over like a scorpion's tail; green when submerged, turning glossy red-brown to purplish-black in sun. Forms loose, sprawling or floating mats in rich-fen pools.",
+     "confidence": "estimated",
+     "source": "Smith, The Moss Flora of Britain and Ireland, and BBS Field Guide (rich-fen brown moss, turgid falcate leaves, reddish-purple to blackish, capsules rare, spreads by fragments); fen moss growth studies (a few cm of shoot a year); spread and ages estimated"
+    }
    },
    {
     "name": "Grass of Parnassus",
@@ -1073,7 +1565,29 @@
      "confidence": "documented",
      "note": "single slender flower stem"
     },
-    "silhouette": "small heart-leaf rosette with one white flower"
+    "silhouette": "small heart-leaf rosette with one white flower",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2.5,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Tiny seedlings with round cotyledons form a small rosette of long-stalked, heart-shaped, hairless, glossy leaves. The adult keeps this low rosette and sends up stiff stems, each with one clasping leaf and a single white cup flower with green veins and a ring of fringed, yellow-knobbed false stamens.",
+     "confidence": "estimated",
+     "source": "Estimated from the species' biology (tiny wind-dispersed seeds needing winter chilling, slow-developing rosettes of fens and wet dune slacks, short-lived perennial) as summarised in British and Nordic floras"
+    }
    },
    {
     "name": "Marsh marigold",
@@ -1162,7 +1676,29 @@
      "confidence": "documented",
      "note": "hollow succulent stems, brownish at the base"
     },
-    "silhouette": "low mound of glossy round leaves"
+    "silhouette": "low mound of glossy round leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two small oval cotyledons, then long-stalked round to kidney-shaped glossy leaves with scalloped edges, a small version of the adult. It builds a low leafy rosette/clump from a short thick rootstock over 1-2 years and flowers (bright yellow cups) from about the second or third spring; clumps widen slowly by branching of the rootstock.",
+     "confidence": "estimated",
+     "source": "Jelitto seed (germinates in 3-4 weeks at ~20C); SDSU Native Plant propagation (60-day cold-moist treatment or fall sowing; low germination; sun to shade); Wikipedia/MBG (10-80 cm, marshes and wet woodland, dies back in winter); time to flower and lifespan estimated from growers and growth form"
+    }
    },
    {
     "name": "Saw sedge",
@@ -1253,7 +1789,29 @@
      "confidence": "documented",
      "note": "stout hollow culms with straw-coloured sheaths"
     },
-    "silhouette": "tall dense grey-green blade stand"
+    "silhouette": "tall dense grey-green blade stand",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      3,
+      5
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are rare: a small tuft of narrow keeled leaves. Established plants spread by stout rhizomes into dense stands of big grey-green leaf fans; the long stiff leaves have saw-toothed edges and keels that can cut skin. Each shoot grows several years, flowers once with a tall branched brown panicle, then dies, leaving a mass of dead leaves.",
+     "confidence": "estimated",
+     "source": "Conway 1942 J. Ecol. (Cladium mariscus biology: shoots grow 2-4 yr then flower once and die, seedlings rare, clonal stands in fens) as summarised in BSBI and Wildlife Trust accounts; germination needs light and fluctuating temperature; values estimated"
+    }
    }
   ],
   "epiphyte": []

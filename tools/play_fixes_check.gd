@@ -42,7 +42,7 @@ func release(a: String) -> void:
 
 func release_all() -> void:
 	await process_frame
-	for a in ["move_forward", "move_back", "jump", "crouch", "shoot", "wall_jump", "sprint"]:
+	for a in ["move_forward", "move_back", "jump", "crouch", "shoot", "interact", "sprint"]:
 		Input.action_release(a)
 
 ## Put the player on open ground here, still.
@@ -200,6 +200,8 @@ func _initialize() -> void:
 	while not main._playing:
 		await process_frame
 	player = main.player
+	# (You wake empty-handed, the folk's gifts by you: taken, as play does.)
+	main.take_gifts()
 	await frames(60)
 	# Dry ground for the slide checks: hold the weather still (it's what
 	# soaks the ground; the wet check soaks it by hand).
@@ -314,17 +316,21 @@ func _initialize() -> void:
 		await frames(1)
 		bound_air += 1
 		bound_peak = maxf(bound_peak, alt())
-		# Just before the touchdown: the tech button.
+		# Just before the touchdown: jump (the bounce).
 		if player.swimming:
 			break
+		# (Jump was held for the bound: let it go once falling, so the
+		# bounce is a fresh press.)
+		if vspeed() < 0.0 and Input.is_action_pressed("jump") and not pressed_tech:
+			await release("jump")
 		if not pressed_tech and vspeed() < -5.0 and alt() < 1.2:
 			fell_v = -vspeed()
 			var h_in := hspeed()
 			var foot0: int = player._foot
 			var b0: int = player.bounces
-			await press("wall_jump")
+			await press("jump")
 			await frames(1)
-			await release("wall_jump")
+			await release("jump")
 			pressed_tech = true
 			var n_b := 0
 			while player.bounces == b0 and n_b < 20:
@@ -334,7 +340,7 @@ func _initialize() -> void:
 			await frames(2)
 			print("sprint bound: %.1f m out, %.1f m up, %.2f s in the air; bounce at %.1f m/s down: %.1f -> %.1f m/s forward, foot %d -> %d, hp %.0f -> %.0f" % [bound_d, bound_peak, bound_air / 60.0, fell_v, h_in, player._move.length(), foot0, player._foot, hp_take, player.hp])
 			ok(bound_d > 5.0 and bound_d < 10.0 and bound_peak < 3.0, "a held sprint bound: about 7 m out (%.1f m), under 3 m up (%.1f m)" % [bound_d, bound_peak])
-			ok(player.bounces == b0 + 1 and player._move.length() > h_in + 5.0, "right click at the touchdown bounces: the fall turned forward")
+			ok(player.bounces == b0 + 1 and player._move.length() > h_in + 5.0, "jump at the touchdown bounces: the fall turned forward")
 			ok(player._foot != foot0, "the bounce plants the other foot")
 			ok(player.hp >= hp_take - 0.01, "your own rise doesn't count as a fall: no damage")
 			break
@@ -504,24 +510,25 @@ func _initialize() -> void:
 				if wn % 4 == 0 or player._wall_f == 0:
 					print("     wj f%d: %.2f m from the trunk axis (r %.2f), alt %.2f, floor %s, wall_f %d, slides %d" % [wn, ax.length(), r0, alt(), player.is_on_floor(), player._wall_f, player.get_slide_collision_count()])
 			var wj0 := player.wall_jumps
-			await press("wall_jump")
+			await press("jump")
 			await frames(1)
-			await release("wall_jump")
+			await release("jump")
 			await frames(2)
 			var kv := player.velocity
 			kicks.append([player.wall_jumps > wj0, (kv - player.up * kv.dot(player.up)).dot(out), kv.dot(player.up)])
 			await frames(6)
 		print("wall jump off a trunk: away %.1f m/s, up %.1f m/s; chained: up %.1f m/s (%.0f%%)" % [kicks[0][1], kicks[0][2], kicks[1][2], 100.0 * kicks[1][2] / maxf(kicks[0][2], 0.01)])
-		ok(kicks[0][0] and kicks[0][1] > 2.0 and kicks[0][2] > 3.0, "right click in the air by a trunk kicks away and up")
+		ok(kicks[0][0] and kicks[0][1] > 2.0 and kicks[0][2] > 3.0, "jump in the air by a trunk kicks away and up")
 		ok(kicks[1][0] and kicks[1][2] >= kicks[0][2] * 0.99, "a chained wall jump keeps or builds the height (gain %.2f)" % PlanetPlayer.WJ_GAIN)
 		# Not off thin air.
 		await settle(camp_d)
 		await press("jump")
 		await frames(10)
-		var wj1 := player.wall_jumps
-		await press("wall_jump")
+		await release("jump")
 		await frames(1)
-		await release("wall_jump")
+		var wj1 := player.wall_jumps
+		await press("jump")
+		await frames(1)
 		await release("jump")
 		ok(player.wall_jumps == wj1, "no wall jump with no wall")
 		await frames(60)
@@ -576,10 +583,10 @@ func _initialize() -> void:
 			await frames(1)
 			n += 1
 		print("   touched the trunk after %d frames in the air (wall_f %d)" % [n, player._wall_f])
-		await press("wall_jump")
+		await press("jump")
 		await frames(1)
-		await release("wall_jump")
-		# (A tap kicks on the frame after it's let go.)
+		await release("jump")
+		# (Jump at the face kicks at once.)
 		await frames(2)
 		var kicked := player.wall_jumps - wj_before
 		await frames(2)

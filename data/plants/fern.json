@@ -37,25 +37,27 @@
     "color": "#3A8A3A",
     "accent": "#5A4A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      45,
+      130
+     ],
+     "trunk_years": 8,
+     "first_seed_years": 12,
+     "lifespan_years": [
+      150,
+      250
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "From a flat heart-shaped prothallus come small simple fronds, then a trunkless rosette of stiff, spreading, 2-3-pinnate fronds whose undersides turn chalky silver-white after 3-4 years (young plants are often green beneath). The slow, dark trunk rises only after several years, clad in the stubs of old frond stalks, often with a skirt of dead fronds.",
+     "confidence": "documented",
+     "source": "Brock et al. 2016 Forest Ecology and Management (NZ tree fern ecology: C. dealbata trunk growth 3.2 cm/yr, 5-11 cm/yr in warmer or plantation sites; to ~10 m, ages to ~250 yr); DOC silver fern fact sheet (silvering at 3-4 yr, drier open forest); University of Auckland NZ plants"
     },
     "repro": {
      "mode": "both",
@@ -250,25 +252,27 @@
     "color": "#3A8A3A",
     "accent": "#5A4A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      150
      ],
-     "final_size": 1.0
+     "height_years": [
+      12,
+      32
+     ],
+     "trunk_years": 2,
+     "first_seed_years": 4,
+     "lifespan_years": [
+      40,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate in about three months into a flat heart-shaped prothallus; some weeks later the first tiny fronds appear. The sporeling is a trunkless rosette of bright green, finely divided fronds whose stalk bases carry long silky straw-coloured scales; one of the fastest tree ferns, it soon lifts a slender trunk marked with oval 'coin spot' leaf scars.",
+     "confidence": "documented",
+     "source": "IUCN GISD Cyathea cooperi (to 12 m, fronds to 5 m, 22-27 fertile fronds/yr, spore germination ~3 months then fronds weeks later; invasive and fast-growing in Hawaii, Durand & Goldstein 2001); Australian Plants Society NSW; Wikipedia Sphaeropteris cooperi (fast-growing, to 15 m)"
     },
     "repro": {
      "mode": "both",
@@ -463,25 +467,27 @@
     "color": "#3A8A3A",
     "accent": "#5A4A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      80,
+      180
+     ],
+     "trunk_years": 10,
+     "first_seed_years": 20,
+     "lifespan_years": [
+      200,
+      500
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores give a flat green heart-shaped prothallus in weeks; the first fronds are tiny and simple, then increasingly divided. For about a decade it is a trunkless rosette of soft, hairy, pale-green, lacy fronds from a crown thick with red-brown hairs at ground level, before the fibrous, root-matted trunk starts to rise.",
+     "confidence": "documented",
+     "source": "Wikipedia Dicksonia antarctica (usually ~5 m, rarely 15 m; fronds to 4 m; survives forest shade and post-fire exposure); Blair et al. 2017 PLoS ONE (non-linear trunk growth of a few cm/yr, faster in taller ferns); Brock et al. 2016 (radiocarbon ages may exceed 500 yr); tree-fern growers"
     },
     "repro": {
      "mode": "both",
@@ -678,25 +684,26 @@
     "color": "#5A9A3A",
     "accent": "#8A6A40",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      42,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      25,
+      72
+     ],
+     "shade": "intolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Young plants appear 6-7 weeks after spores land on burnt or disturbed bare soil: the first fronds are small, simple and lobed, becoming finely divided and adult-like after about 18 weeks. After up to 10 fronds a rhizome starts, which may grow 2 m in the first year; by year two the patch can be about 2 m across, sending up single, triangular, much-divided fronds from underground.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pteridium aquilinum (young plants 6-7 weeks after spores shed; adult-like fronds after 18 weeks; rhizome to 217 cm in year 1; spores usually in the 3rd-4th season; cover under 5% below 25% of full sun); Wikipedia (individual rhizomes live up to 72 yr; colonies 650 to over 1,400 yr old)."
     },
     "repro": {
      "mode": "both",
@@ -863,25 +870,26 @@
     "color": "#2A7A3A",
     "accent": "#5A4A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout on moist humus or rotting logs into heart-shaped prothalli; the first fronds are tiny and simple to few-lobed, then short, once-pinnate fronds with small, eared, bristle-toothed pinnae. A young plant is a small evergreen rosette of a few stiff, dark green fronds from a short upright rhizome, adding fronds each spring until it becomes the big fountain-shaped clump.",
+     "confidence": "documented",
+     "source": "USDA FEIS Polystichum munitum (spores first produced at 1-5 yr; fronds 20-250 cm, sometimes 75-100 per plant, evergreen for several years; optimum under 3% light, grows in up to 40% sun); Wikipedia (fronds 50-180 cm, live 1.5-2.5 yr). Clump growth rate and lifespan estimated."
     },
     "repro": {
      "mode": "both",
@@ -1045,25 +1053,26 @@
     "color": "#4A9A4A",
     "accent": "#6A5A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout in 10-15 days into heart-shaped prothalli on damp soil; about 3 months later the first tiny fronds unroll, simple and fan-lobed, then pinnate. A one-year plant is a loose shuttlecock of soft, lacy, pale-green twice-pinnate fronds 30-45 cm long, often on reddish stalks, from an upright crown; it dies back each autumn.",
+     "confidence": "documented",
+     "source": "Univ. Washington ESRM 412 propagation protocol (spores germinate in 10-15 d, sporophytes ~3 months, 45 cm plant with 7 fronds in 1 yr, spore-bearing fronds 2 yr after germination); NC State Extension; Minnesota Wildflowers; lifespan estimated."
     },
     "repro": {
      "mode": "both",
@@ -1231,25 +1240,26 @@
     "color": "#4A9A3A",
     "accent": "#6A5A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      7
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Green, short-lived spores germinate within days into heart-shaped gametophytes; the sporeling's first fronds are tiny and simple, then small pinnate fronds unroll from a little crown. It builds a stout upright crown that each spring unrolls a shuttlecock (vase) of feathery sterile fronds, with stiff brown fertile fronds in the middle from autumn; underground stolons start new crowns nearby.",
+     "confidence": "estimated",
+     "source": "Wikipedia Matteuccia (sterile fronds 100-170 cm, fertile fronds 40-65 cm develop in autumn, persist over winter and shed spores in early spring; lateral stolons form new crowns and dense colonies on riverbanks); fern sporeling timings and ages estimated"
     },
     "repro": {
      "mode": "both",
@@ -1417,25 +1427,26 @@
     "color": "#5A9A4A",
     "accent": "#8A5A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      45,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      50,
+      100
+     ],
+     "shade": "intermediate",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Short-lived green spores germinate within 1-3 days into heart-shaped prothalli on wet mud; the first fronds are tiny, fan-shaped and lobed, then once-pinnate. Over several years it builds a tufted crown of tall, bipinnate, pale-green fronds with oblong leaflets; new fronds unroll coppery-red and woolly, and fertile tips carry rust-brown, flower-like spore clusters.",
+     "confidence": "estimated",
+     "source": "SANBI PlantZAfrica (green spores germinate within a day; grows in shade or full sun if wet; 1.5 m, to 3.3 m in Europe); Illinois Wildflowers (spreads slowly, crowns live to ~100 years); years to full size and first fertile fronds estimated from Osmundaceae cultivation"
     },
     "repro": {
      "mode": "both",
@@ -1607,25 +1618,26 @@
     "color": "#5AB050",
     "accent": "#2A2A2A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate in about 6 days; heart-shaped green prothalli a few mm across form in 1-2 months on wet rock or soil, then two-leaved fernlets appear: tiny single fan-shaped leaflets on hair-thin black stalks. Later fronds branch into many wedge-shaped, pale-green leaflets and the creeping rhizome spreads a lacy mat over seeps and damp walls.",
+     "confidence": "estimated",
+     "source": "Spore culture study, Not Sci Biol 9(4) 2017 (germination from day 6, heart-shaped gametophytes at 27-60 d, then two-leaved fernlets); clump growth, spore age and rhizome life estimated from growers and genus habit"
     },
     "repro": {
      "mode": "both",
@@ -1789,25 +1801,26 @@
     "color": "#2A7A3A",
     "accent": "#5A4A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "very_tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores give heart-shaped prothalli on damp acid soil or moss; the first fronds are tiny and simple, then comb-like. For the first years the plant is a flat rosette of dark, glossy, evergreen sterile fronds with close-set, ladder-like pinnae; only mature plants add the stiffly upright, skeletal fertile fronds with narrow pinnae in the centre.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Struthiopteris spicant: evergreen, to 0.5 m, dimorphic sterile and fertile fronds, Europe and western North America); shaded acid woodland habitat; spore-to-sporophyte time and ages estimated from temperate fern culture."
     },
     "repro": {
      "mode": "both",
@@ -1973,25 +1986,26 @@
     "color": "#6A9A3A",
     "accent": "#A03030",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.02,
+      0.06
+     ],
+     "first_seed_years": 0.3,
+     "lifespan_years": [
+      0.3,
+      1.5
+     ],
+     "shade": "intermediate",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A tiny floating sporophyte: a pinhead of overlapping two-lobed scale leaves with hair-fine dangling roots, rising from a sunken megaspore or, far more often, a fragment breaking off an older plant. In days it branches into a 1-2 cm feathery triangle of bluish-green scales that blush red in strong sun and cold, soon locking with others into a velvety floating mat.",
+     "confidence": "estimated",
+     "source": "Wikipedia (plants 1-2 cm, branch and fragment freely, cover lakes within months, die back in winter and survive as submerged buds); Azolla literature (Lumpkin & Plucknett 1980) for doubling times of ~2-5 days and late-summer sporocarps; megaspore-to-sporophyte time estimated."
     },
     "repro": {
      "mode": "both",
@@ -2144,25 +2158,26 @@
     "color": "#5AB040",
     "accent": "#6A5A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      100,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate over 2-7 weeks into heart-shaped prothalli on wet bark and moss; 3-6 months after sowing tiny, simple, spoon- to strap-shaped, apple-green fronds appear. The young fern is a small open funnel of undivided glossy fronds with a dark midrib that widens year by year into a nest-like rosette catching leaf litter.",
+     "confidence": "estimated",
+     "source": "Asplenium nidus developmental study (Am. J. Plant Sci., scirp.org): 47% of spores germinated by day 47, 100% by day 60, gametangia at 60-100 days; grower guides (Planet Natural); frond growth, first spores and lifespan estimated."
     },
     "repro": {
      "mode": "both",
@@ -2322,25 +2337,26 @@
     "color": "#6AA050",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      150
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "tolerant",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Spores give green heart-shaped prothalli on bark; the first sporophyte fronds are small, simple, spoon-shaped and felted with white star-hairs. Soon it forms round, flat shield fronds that clasp the branch (green, later brown and papery), from which grey-green, forked 'antler' fronds arch out; pups around it build a ball-shaped colony.",
+     "confidence": "estimated",
+     "source": "Estimated from staghorn fern cultivation from spore (prothalli in weeks, first fronds after a few months, fertile antler fronds after several years) and the species' form as a clumping epiphyte of eastern Australian rainforest margins"
     },
     "repro": {
      "mode": "both",
@@ -2501,25 +2517,26 @@
     "color": "#5A8A4A",
     "accent": "#6A5A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      60
+     ],
+     "shade": "intermediate",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout on moss and bark of oak limbs into tiny heart-shaped prothalli; the first fronds are small, simple to shallowly lobed and leathery, then once-pinnatifid fronds with grey-scaly undersides. A slender creeping rhizome (about 2 mm thick) branches along the bark into a mat. In drought the fronds curl up grey-brown and look dead, turning green again within a day or two of rain.",
+     "confidence": "estimated",
+     "source": "Wikipedia Pleopeltis polypodioides (fronds to 25 x 5 cm; rhizome 2 mm; survives losing up to 97% of its water and rehydrates in 24-48 h; spores summer to autumn; rhizome pieces root). Spore-to-plant time, growth and lifespan estimated from epiphytic Polypodiaceae."
     },
     "repro": {
      "mode": "both",
@@ -2683,25 +2700,26 @@
     "color": "#5A9A4A",
     "accent": "#6A5A3A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      45,
+      90
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intermediate",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Heart-shaped green gametophytes on moist soil; the sporeling's first leaves are tiny fan-shaped or two-lobed blades on hair-thin stalks, not climbing at all. Later fronds have a wiry rachis that twines up shrubs like a vine stem, bearing lacy, triangular, finely lobed pinnae; fertile pinnae with fringed, sporangia-bearing margins come higher up. Frost browns the fronds back to the rhizome.",
+     "confidence": "documented",
+     "source": "USDA FEIS Lygodium spp. review (gametophytes sexually mature within 5 wk of germination, sporophytes produced through week 12; fronds 1-30 m; killed by frost, dead fronds stay draped; fertile June-Sept in the Carolinas); Lott et al. 2003 Am. J. Bot. 90:1144 (reproductive biology); EPPO datasheet"
     },
     "repro": {
      "mode": "both",
@@ -2837,6 +2855,54 @@
      "color_2": "#5A4A3A",
      "lenticels": "none",
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 21,
+     "flower_size_cm": 2,
+     "flower_colour": "#8e7d43",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      4,
+      12
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.9,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1,
+      3
+     ],
+     "unripe_colour": "#7da046",
+     "ripe_colour": "#8a5a2e",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      60,
+      180
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      365
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "A fern has no flowers or fruit: 'flowers/fruit' here are the fertile pinnules, fringed with finger-like lobes of sporangia that split and shed wind-borne spores (no pollination; fertilisation happens later on the gametophyte). Fertile June-Sept (FEIS, Carolinas) into Oct in E Asia; dead fronds hang through winter. Timings estimated."
     }
    },
    {
@@ -2868,25 +2934,26 @@
     "color": "#6AA050",
     "accent": "#6AA050",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      120,
+      540
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores germinate underground into a tiny (under 2 mm), colourless, branching gametophyte fed by mycorrhizal fungi. The young sporophyte pushes up a few thin, green, rootless stems that fork again and again into leafless 'whisks' with ribbed branches and tiny scale-like bumps, from a brown rhizome in rock cracks, tree-fern trunks or palm leaf bases; yellow, 3-lobed spore cases follow.",
+     "confidence": "estimated",
+     "source": "Wikipedia Psilotum and P. nudum (subterranean mycoheterotrophic gametophyte under 2 mm; sporophyte to 30 cm or more, leafless, with a rootless rhizome; three-lobed synangia with yellow-white spores; epiphytic in the tropics, in rock crevices in temperate areas). Timings and lifespan estimated."
     },
     "repro": {
      "mode": "both",

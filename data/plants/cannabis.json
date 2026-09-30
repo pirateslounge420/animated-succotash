@@ -231,7 +231,78 @@
      "confidence": "estimated"
     },
     "origin": "Hindu Kush range, Afghanistan and Pakistan",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Afghani",
@@ -451,7 +522,78 @@
      "confidence": "estimated"
     },
     "origin": "Kandahar and Helmand, Afghanistan",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Mazar-i-Sharif",
@@ -671,7 +813,78 @@
      "confidence": "estimated"
     },
     "origin": "Balkh, northern Afghanistan",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Lashkar Gah",
@@ -891,7 +1104,78 @@
      "confidence": "estimated"
     },
     "origin": "Helmand, Afghanistan",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Chitral",
@@ -1111,7 +1395,78 @@
      "confidence": "estimated"
     },
     "origin": "Chitral, northern Pakistan",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Swat Valley",
@@ -1331,7 +1686,78 @@
      "confidence": "estimated"
     },
     "origin": "Swat, northern Pakistan",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Tirah Valley",
@@ -1551,7 +1977,78 @@
      "confidence": "estimated"
     },
     "origin": "Khyber, Pakistan",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Kashmir",
@@ -1771,7 +2268,78 @@
      "confidence": "estimated"
     },
     "origin": "Kashmir valley",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Uzbek",
@@ -1991,7 +2559,78 @@
      "confidence": "estimated"
     },
     "origin": "Uzbekistan",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Pamir",
@@ -2211,7 +2850,78 @@
      "confidence": "estimated"
     },
     "origin": "Tajikistan / Pamirs",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Manali",
@@ -2431,7 +3141,78 @@
      "confidence": "estimated"
     },
     "origin": "Kullu valley, Himachal Pradesh",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Parvati (Malana)",
@@ -2651,7 +3432,78 @@
      "confidence": "estimated"
     },
     "origin": "Parvati valley, Himachal Pradesh",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Nepalese",
@@ -2871,7 +3723,78 @@
      "confidence": "estimated"
     },
     "origin": "Nepal middle hills",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Kerala",
@@ -3091,7 +4014,78 @@
      "confidence": "estimated"
     },
     "origin": "Western Ghats, Kerala, India",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Mysore",
@@ -3311,7 +4305,78 @@
      "confidence": "estimated"
     },
     "origin": "Karnataka, India",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Manipur",
@@ -3531,7 +4596,78 @@
      "confidence": "estimated"
     },
     "origin": "Manipur, NE India",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Ceylon",
@@ -3751,7 +4887,78 @@
      "confidence": "estimated"
     },
     "origin": "Sri Lanka",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Thai (Isan)",
@@ -3971,7 +5178,78 @@
      "confidence": "estimated"
     },
     "origin": "Northeast Thailand",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Meao Thai",
@@ -4191,7 +5469,78 @@
      "confidence": "estimated"
     },
     "origin": "Hmong hill villages, northern Thailand",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Luang Prabang",
@@ -4411,7 +5760,78 @@
      "confidence": "estimated"
     },
     "origin": "northern Laos",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Cambodian",
@@ -4631,7 +6051,78 @@
      "confidence": "estimated"
     },
     "origin": "Cambodia",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Vietnamese (Vietnam Black)",
@@ -4851,7 +6342,78 @@
      "confidence": "estimated"
     },
     "origin": "Vietnam",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Burmese",
@@ -5071,7 +6633,78 @@
      "confidence": "estimated"
     },
     "origin": "Myanmar",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Aceh",
@@ -5291,7 +6924,78 @@
      "confidence": "estimated"
     },
     "origin": "Aceh, northern Sumatra",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Yunnan",
@@ -5511,7 +7215,78 @@
      "confidence": "estimated"
     },
     "origin": "Yunnan, China",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Papua New Guinea",
@@ -5731,7 +7506,78 @@
      "confidence": "estimated"
     },
     "origin": "PNG highlands",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Durban",
@@ -5951,7 +7797,78 @@
      "confidence": "estimated"
     },
     "origin": "KwaZulu-Natal, South Africa",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Transkei (Rooibaard)",
@@ -6171,7 +8088,78 @@
      "confidence": "estimated"
     },
     "origin": "Eastern Cape, South Africa",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Swazi",
@@ -6391,7 +8379,78 @@
      "confidence": "estimated"
     },
     "origin": "Eswatini highlands",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Malawi",
@@ -6611,7 +8670,78 @@
      "confidence": "estimated"
     },
     "origin": "Nkhotakota and the lake shore, Malawi",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Kilimanjaro",
@@ -6831,7 +8961,78 @@
      "confidence": "estimated"
     },
     "origin": "Kilimanjaro foothills, Tanzania",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Kisumu",
@@ -7051,7 +9252,78 @@
      "confidence": "estimated"
     },
     "origin": "Lake Victoria shore, Kenya",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Ethiopian",
@@ -7271,7 +9543,78 @@
      "confidence": "estimated"
     },
     "origin": "Ethiopian highlands",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Congolese",
@@ -7491,7 +9834,78 @@
      "confidence": "estimated"
     },
     "origin": "Congo basin",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Angolan",
@@ -7711,7 +10125,78 @@
      "confidence": "estimated"
     },
     "origin": "Angola",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Nigerian",
@@ -7931,7 +10416,78 @@
      "confidence": "estimated"
     },
     "origin": "Nigeria",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Ghanaian",
@@ -8151,7 +10707,78 @@
      "confidence": "estimated"
     },
     "origin": "Ghana",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Zamal",
@@ -8371,7 +10998,78 @@
      "confidence": "estimated"
     },
     "origin": "Réunion",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Rif (Ketama)",
@@ -8591,7 +11289,78 @@
      "confidence": "estimated"
     },
     "origin": "Rif mountains, Morocco",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Lebanese (Bekaa)",
@@ -8811,7 +11580,78 @@
      "confidence": "estimated"
     },
     "origin": "Bekaa valley, Lebanon",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Turkish",
@@ -9031,7 +11871,78 @@
      "confidence": "estimated"
     },
     "origin": "Anatolia, Turkey",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Iranian (Mashhad)",
@@ -9251,7 +12162,78 @@
      "confidence": "estimated"
     },
     "origin": "Khorasan, Iran",
-    "silhouette": "short dense dark cone of wide-fingered leaves"
+    "silhouette": "short dense dark cone of wide-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Acapulco Gold",
@@ -9471,7 +12453,78 @@
      "confidence": "estimated"
     },
     "origin": "Guerrero, Mexico",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Oaxacan",
@@ -9691,7 +12744,78 @@
      "confidence": "estimated"
     },
     "origin": "Oaxaca, Mexico",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Michoacán",
@@ -9911,7 +13035,78 @@
      "confidence": "estimated"
     },
     "origin": "Michoacán, Mexico",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Sinaloan",
@@ -10131,7 +13326,78 @@
      "confidence": "estimated"
     },
     "origin": "Sinaloa, Mexico",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Santa Marta Gold",
@@ -10351,7 +13617,78 @@
      "confidence": "estimated"
     },
     "origin": "Sierra Nevada de Santa Marta, Colombia",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Punto Rojo",
@@ -10571,7 +13908,78 @@
      "confidence": "estimated"
     },
     "origin": "Colombia",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Limón Verde",
@@ -10791,7 +14199,78 @@
      "confidence": "estimated"
     },
     "origin": "Colombia",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Panama Red",
@@ -11011,7 +14490,78 @@
      "confidence": "estimated"
     },
     "origin": "Panama",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Lamb's Bread",
@@ -11231,7 +14781,78 @@
      "confidence": "estimated"
     },
     "origin": "Jamaica",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Manga Rosa",
@@ -11451,7 +15072,78 @@
      "confidence": "estimated"
     },
     "origin": "northeast Brazil",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Hawaiian (Kona / Puna)",
@@ -11671,7 +15363,78 @@
      "confidence": "estimated"
     },
     "origin": "Hawai'i",
-    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves"
+    "silhouette": "tall lanky open christmas-tree of thin-fingered leaves",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Russian ruderalis",
@@ -11891,7 +15654,78 @@
      "confidence": "estimated"
     },
     "origin": "Volga and southern Siberia",
-    "silhouette": "small weedy sparse stalk on waste ground"
+    "silhouette": "small weedy sparse stalk on waste ground",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Altai",
@@ -12111,7 +15945,78 @@
      "confidence": "estimated"
     },
     "origin": "Altai mountains",
-    "silhouette": "small weedy sparse stalk on waste ground"
+    "silhouette": "small weedy sparse stalk on waste ground",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Chuy Valley",
@@ -12331,7 +16236,78 @@
      "confidence": "estimated"
     },
     "origin": "Chuy valley, Kazakhstan / Kyrgyzstan",
-    "silhouette": "small weedy sparse stalk on waste ground"
+    "silhouette": "small weedy sparse stalk on waste ground",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Mongolian",
@@ -12551,7 +16527,78 @@
      "confidence": "estimated"
     },
     "origin": "Mongolian steppe",
-    "silhouette": "small weedy sparse stalk on waste ground"
+    "silhouette": "small weedy sparse stalk on waste ground",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Northern Chinese hemp",
@@ -12771,7 +16818,78 @@
      "confidence": "estimated"
     },
     "origin": "Shandong / Hebei, China",
-    "silhouette": "dense stand of thin near-unbranched green poles"
+    "silhouette": "dense stand of thin near-unbranched green poles",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Japanese hemp (asa)",
@@ -12991,7 +17109,78 @@
      "confidence": "estimated"
     },
     "origin": "Tochigi and Nagano, Japan",
-    "silhouette": "dense stand of thin near-unbranched green poles"
+    "silhouette": "dense stand of thin near-unbranched green poles",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Korean hemp (Andong)",
@@ -13211,7 +17400,78 @@
      "confidence": "estimated"
     },
     "origin": "Andong, Korea",
-    "silhouette": "dense stand of thin near-unbranched green poles"
+    "silhouette": "dense stand of thin near-unbranched green poles",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Central Russian hemp",
@@ -13431,7 +17691,78 @@
      "confidence": "estimated"
     },
     "origin": "central Russia / Ukraine",
-    "silhouette": "dense stand of thin near-unbranched green poles"
+    "silhouette": "dense stand of thin near-unbranched green poles",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Carmagnola",
@@ -13651,7 +17982,78 @@
      "confidence": "estimated"
     },
     "origin": "Piedmont, Italy",
-    "silhouette": "dense stand of thin near-unbranched green poles"
+    "silhouette": "dense stand of thin near-unbranched green poles",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Anatolian hemp (Kastamonu)",
@@ -13871,7 +18273,78 @@
      "confidence": "estimated"
     },
     "origin": "northern Turkey",
-    "silhouette": "dense stand of thin near-unbranched green poles"
+    "silhouette": "dense stand of thin near-unbranched green poles",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    },
    {
     "name": "Cannabis - Kentucky feral hemp",
@@ -14091,7 +18564,78 @@
      "confidence": "estimated"
     },
     "origin": "Ohio valley, USA",
-    "silhouette": "dense stand of thin near-unbranched green poles"
+    "silhouette": "dense stand of thin near-unbranched green poles",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      0.17,
+      0.33
+     ],
+     "first_seed_years": 0.42,
+     "lifespan_years": [
+      0.4,
+      0.6
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Epigeal: two small oval cotyledons, then a first pair of simple serrated leaves (one leaflet), then pairs of palmate leaves with 3, 5 and finally 7-9 leaflets. A single upright stem with opposite leaf pairs quickly branches into a dense bushy cone; Hindu Kush (indica) types have broad dark-green leaflets and a short, compact habit.",
+     "confidence": "documented",
+     "source": "CFIA biology document BIO2012-02 (C. sativa life cycle 4-6 months, photoperiodic flowering at 10-12 h dark, heights 0.2-5 m, wind-pollinated, achenes 2-5 mm ripen 3-8 weeks after pollination, wild forms shatter); grower germination guides (3-7 days)"
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#cdd8a2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.45
+     ],
+     "unripe_colour": "#8fae5c",
+     "ripe_colour": "#6b5a45",
+     "ripen_days": [
+      21,
+      56
+     ],
+     "hang_days": [
+      0,
+      20
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      700
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "CFIA biology of Cannabis sativa (dioecious, wind pollen, female flowers in dense compound racemes, achenes 2-5 mm ripen in 3-8 weeks, wild seed shatters, mottled dark perianth); Hindu Kush flowering Aug-Sept; hempseed eaten raw or toasted"
+    }
    }
   ]
  },

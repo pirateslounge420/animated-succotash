@@ -13,6 +13,12 @@
 //                            mesh's UV.x is 1 on the inner surface)
 //   11 berries               the main colour, each berry shaded round
 //   12 pollen                the main colour, a little bright
+//   13 banded                a bee's or wasp's abdomen: the second colour
+//                            in bands down the back half of the body
+//   14 wing                  an insect's wing: the main colour, the
+//                            second along its veins and toward the tip
+// The trees' flowers, fruit and their pollinators (FruitCrop, FruitMeshes)
+// are drawn with it too.
 // Vertex-lit like the creatures and props (Lambert, no specular, Look),
 // cooled toward the night palette after dark, fogged like everything else.
 // The tall parts lean with the wind by their height (plant_wind).
@@ -88,6 +94,12 @@ void fragment() {
 		c = UV.x > 0.5 ? c2 : mix(c, c2, smoothstep(0.72, 0.98, UV.y) * 0.85);
 	} else if (mode > 10.5 && mode < 11.5) {
 		c *= 0.7 + 0.5 * clamp(dot(NORMAL, VIEW), 0.0, 1.0);
+	} else if (mode > 12.5 && mode < 13.5) {
+		float band = fract(v_obj.z * 7.0 + 0.2);
+		c = (v_obj.z < 0.05 && band > 0.55) ? c2 : c;
+	} else if (mode > 13.5 && mode < 14.5) {
+		float vein = smoothstep(0.035, 0.0, abs(fract(v_obj.x * 3.0 + v_obj.z * 1.5) - 0.5) - 0.44);
+		c = mix(c, c2, max(vein * 0.8, smoothstep(0.7, 1.0, v_obj.x)));
 	}
 	c = pal_pull(c, pal_bark_night, 0.45 * look_night);
 	ALBEDO = c;

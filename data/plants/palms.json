@@ -35,25 +35,27 @@
     "color": "#3F8F45",
     "accent": "#8A7A5A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      120,
+      200
+     ],
+     "trunk_years": 50,
+     "first_seed_years": 80,
+     "lifespan_years": [
+      150,
+      250
+     ],
+     "shade": "tolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The first seedling leaves are narrow undivided or two-lobed blades; for decades the young palm is a stemless rosette of stiff pinnate leaves, silvery-white beneath, on the shaded cloud-forest floor while the trunk base thickens underground. Only after roughly half a century does the smooth, wax-coated whitish trunk start to rise.",
+     "confidence": "estimated",
+     "source": "Wikipedia Ceroxylon quindiuense (45 m, rarely 60 m; fruit 1.6-2 cm orange-red; minimum reproductive age ~80 yr); Sanin & Galeano 2011 Phytotaxa (Ceroxylon revision); long stemless phase and growth rate estimated from Andean wax-palm demography studies"
     },
     "repro": {
      "mode": "seed",
@@ -222,6 +224,56 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 3,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#ece2b8",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      2000,
+      20000
+     ],
+     "pollinators": [
+      "beetle",
+      "bee",
+      "fly"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      1.6,
+      2.0
+     ],
+     "unripe_colour": "#6f8a3c",
+     "ripe_colour": "#d9562a",
+     "ripen_days": [
+      240,
+      365
+     ],
+     "hang_days": [
+      20,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      2000,
+      20000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia Ceroxylon quindiuense (dioecious, fruit globose 1.6-2 cm, orange-red when ripe, eaten by yellow-eared parrots and other birds); Sanin & Galeano 2011 (interfoliar branched inflorescences); flowering, pollinators and ripening estimated from Ceroxylon"
     }
    }
   ],
@@ -257,25 +309,27 @@
     "color": "#3F8F45",
     "accent": "#8A7A5A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      50
+     ],
+     "trunk_years": 4,
+     "first_seed_years": 7,
+     "lifespan_years": [
+      60,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The husked nut lies on the sand and after 2-6 months a pointed shoot pushes out of one end while the nut's flesh feeds the seedling. First leaves are entire, stiff, strap-like blades split only at the tip (bifid), in a stemless fan-like rosette; pinnate fronds come later, and a trunk rises after ~3-5 years, widening from a bulbous base ('bole').",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut (tall palms bear at 6-10 yr, live 60-100 yr; ~11 months from female flower opening to harvest; up to 15 inflorescences/yr; ~80 nuts/yr, up to 150; nut ~1.4 kg; largely cross-pollinated, dwarfs selfing); ICRAF Agroforestree (tall selections 24-30 m, flowers after ~6th yr); germination from FAO coconut guides"
     },
     "repro": {
      "mode": "seed",
@@ -446,6 +500,56 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 2,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#efe2a0",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      20,
+      50
+     ],
+     "pollinators": [
+      "bee",
+      "wind",
+      "fly"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      20,
+      30
+     ],
+     "unripe_colour": "#5c8a2c",
+     "ripe_colour": "#7a5230",
+     "ripen_days": [
+      330,
+      400
+     ],
+     "hang_days": [
+      20,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      900
+     ],
+     "crop_per_tree": [
+      50,
+      150
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia Coconut and ICRAF (new inflorescence among the leaves every ~3-4 weeks, up to 15/yr, thousands of small male flowers and ~20-50 large 25 mm female flowers per inflorescence; cross-pollinated by insects and wind; ~11-12 months to a mature brown nut that drops; 50-150 nuts per palm per year)"
     }
    },
    {
@@ -477,25 +581,27 @@
     "color": "#3F8F45",
     "accent": "#8A7A5A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
      ],
-     "final_size": 1.0
+     "height_years": [
+      25,
+      70
+     ],
+     "trunk_years": 5,
+     "first_seed_years": 6,
+     "lifespan_years": [
+      80,
+      150
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Remote germination: the cotyledon stalk pushes the growing point down into the soil, then grass-like, undivided strap leaves emerge. For several years it is a stemless, spiny fountain of increasingly pinnate, stiff, grey-green fronds, often with suckers (offshoots) at the base, before a rough trunk clad in old leaf bases rises.",
+     "confidence": "documented",
+     "source": "Wikipedia (to 30 m, slow-growing; fruits 4-8 years after planting, commercial yields at 7-10; offshoots fruit 2-3 years earlier than seedlings; lives 100+ years when maintained); FAO date palm manuals (remote germination, undivided first leaves); height-age estimated from trunk growth"
     },
     "repro": {
      "mode": "both",
@@ -664,6 +770,54 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.6,
+     "flower_colour": "#f0e8c8",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1000,
+      8000
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      7
+     ],
+     "unripe_colour": "#7fa83a",
+     "ripe_colour": "#8b4a1f",
+     "ripen_days": [
+      140,
+      210
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      3000,
+      15000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "Wikipedia (dioecious and wind-pollinated, today hand-pollinated; fruit 3-7 cm, bright red to yellow before browning; 70-140 kg per tree per season, several pickings); FAO (kimri-khalal-rutab-tamar stages over ~5-7 months); dates ~7-15 g each"
     }
    },
    {
@@ -695,25 +849,27 @@
     "color": "#3F8F45",
     "accent": "#8A7A5A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      365
      ],
-     "final_size": 1.0
+     "height_years": [
+      35,
+      65
+     ],
+     "trunk_years": 15,
+     "first_seed_years": 8,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Remote-tubular germination: the cotyledon stalk drives the growing point 60-80 cm down into the soil, so the first sign is a single strap-shaped, pleated leaf. Stiff grey-green fan leaves follow from year 2-3, forming a stemless tuft for well over a decade (it may start fruiting while still nearly stemless); the trunk then rises and later forks into two, four or more crowns.",
+     "confidence": "documented",
+     "source": "PROTA via Palmpedia and ICRAF Agroforestree (germination 1 month to 1 year, cotyledon stalk buries shoot to 60 cm, first leaf strap-shaped, fan leaves from yr 2-3, stem after 18-20 yr in the wild, first fruit after 6-8 yr, slow growth); hyphaene.org (to 80 cm deep, first fork 2.5-4 m). Lifespan estimated."
     },
     "repro": {
      "mode": "seed",
@@ -886,6 +1042,54 @@
      "root_flare": true,
      "spacing_m": 3.0,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#cdb46a",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      50,
+      250
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      5,
+      10
+     ],
+     "unripe_colour": "#5f7a3a",
+     "ripe_colour": "#8a4a1e",
+     "ripen_days": [
+      240,
+      365
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      180,
+      1000
+     ],
+     "crop_per_tree": [
+      100,
+      1000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "ICRAF Agroforestree and Palmpedia/PROTA (dioecious, wind-pollinated, flowers Feb-Apr in Sudan, fruit 6-10 x 6-8 cm shiny brown, ~120 g, ripens in 6-12 months, ~50 kg per tree, fibrous gingerbread-flavoured pulp eaten raw); hyphaene.org (orange to dark-brown epicarp). Set and rot time estimated."
     }
    },
    {
@@ -919,25 +1123,27 @@
     "color": "#3F8F45",
     "accent": "#8A7A5A",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       180
-      ],
-      [
-       "young",
-       1800
-      ],
-      [
-       "mature",
-       6000
-      ],
-      [
-       "old",
-       15000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      240
      ],
-     "final_size": 1.0
+     "height_years": [
+      20,
+      50
+     ],
+     "trunk_years": 7,
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      150
+     ],
+     "shade": "intermediate",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "The seed sends a germination tube down into the wet soil from which the seedling rises. The first leaves are simple, strap-like pleated blades; later leaves turn into huge rounded costapalmate fans on long stalks. For years it is a stemless tuft of fans in the swamp while the trunk base thickens underground, then a smooth grey column rises and old leaves fall cleanly away.",
+     "confidence": "estimated",
+     "source": "Wikipedia Mauritia flexuosa (to 35 m, flowers Dec-Apr, scaly chestnut fruit with yellow pulp, seeds float and are spread by floods and fish); palm establishment and growth rates estimated from Mauritia/Neotropical fan-palm literature"
     },
     "repro": {
      "mode": "seed",
@@ -1113,6 +1319,56 @@
      "root_flare": true,
      "spacing_m": 0.3,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      4
+     ],
+     "hemisphere": "south",
+     "flower_days": 2,
+     "flower_size_cm": 1,
+     "flower_colour": "#d9b24a",
+     "flower_form": "panicle",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      500,
+      5000
+     ],
+     "pollinators": [
+      "beetle",
+      "stingless_bee",
+      "wind"
+     ],
+     "fruit_set": 0.2,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      4,
+      7
+     ],
+     "unripe_colour": "#6d6a3a",
+     "ripe_colour": "#7a3520",
+     "ripen_days": [
+      240,
+      330
+     ],
+     "hang_days": [
+      7,
+      30
+     ],
+     "drop": "falls",
+     "rot_days": [
+      20,
+      90
+     ],
+     "crop_per_tree": [
+      1000,
+      6000
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (dioecious; yellowish flowers Dec-Apr on huge hanging panicles among the leaves; fruit ovoid, covered in shiny chestnut-red scales over yellow-orange pulp, eaten as aguaje/buriti); bunches of several hundred fruits, several bunches per palm; pollinators, set and ripening estimated"
     }
    }
   ],

@@ -24,6 +24,15 @@ class_name TreeLayouts
 const S := PlantSpecies.Shape
 ## Layouts per branchy species (the spec agreed "about 6").
 const COUNT := 6
+## Young trees (design §AR, PlantGrowth) grow young layouts: slot 1 a young
+## tree (a pole, about half grown), slot 2 a sapling; a slot's layout l is
+## slot x COUNT + l (ALL layouts in all), and a young tree's pick carries
+## its slot as slot x 2 COUNT on top of its mature pick (with_slot()), so
+## layout_of() and is_mirrored() read it back and everything built from the
+## skeleton (the meshes, colliders, branch graphs, dappled shade, cover)
+## follows the young form.
+const SLOTS := 3
+const ALL := COUNT * SLOTS
 
 ## What a piece of wood is. TRUNK, ROOT and SOLID always have colliders;
 ## LIMB and BRANCH get them only while the tree is in branch-graph range,
@@ -174,12 +183,34 @@ static func pick(world_seed: int, chunk_key: Vector3i, dir: Vector3, crowded := 
 
 ## The layout a pick grows (-1: a tree without layouts, pick -1).
 static func layout_of(pick_v: int) -> int:
-	return pick_v % COUNT if pick_v >= 0 else -1
+	if pick_v < 0:
+		return -1
+	return (pick_v % (2 * COUNT)) % COUNT + (pick_v / (2 * COUNT)) * COUNT
 
 
 ## Is a tree with this pick mirrored?
 static func is_mirrored(pick_v: int) -> bool:
-	return pick_v >= COUNT
+	return pick_v >= 0 and pick_v % (2 * COUNT) >= COUNT
+
+
+## A mature pick grown at a young stage's slot (0: as it is). Young trees
+## come in two layouts a slot, open- and forest-grown (layout 0 and
+## COUNT / 2 of the slot; mirrored or not): young wood is simple, and every
+## young layout is a mesh to keep.
+static func with_slot(pick_v: int, slot: int) -> int:
+	if pick_v < 0 or slot <= 0:
+		return pick_v
+	var sub := pick_v % COUNT
+	var young_sub := 0 if sub < COUNT / 2 else COUNT / 2
+	return young_sub + (COUNT if pick_v % (2 * COUNT) >= COUNT else 0) + slot * 2 * COUNT
+
+
+## The slot a growth stage (PlantGrowth.Stage) grows in: 2 a sapling (or a
+## seedling), 1 a young tree, 0 grown.
+static func slot_of(stage: int) -> int:
+	if stage <= PlantGrowth.Stage.SAPLING:
+		return 2
+	return 1 if stage == PlantGrowth.Stage.POLE else 0
 
 
 ## The skeleton of a species' layout (layout -1: its one fixed skeleton,
@@ -194,10 +225,11 @@ static func skeleton(sp_idx: int, layout: int) -> Skeleton:
 		return cached
 	var sp: PlantSpecies = SpeciesDB.all()[sp_idx]
 	var sk: Skeleton
+	var sub := layout % COUNT if layout >= 0 else -1
 	if layout >= 0 and TreeArch.grows(sp):
-		sk = TreeArch.grow(sp, sp_idx, layout, seed_now, layout >= COUNT / 2)
+		sk = TreeArch.grow(sp, sp_idx, sub, seed_now, sub >= COUNT / 2, layout / COUNT)
 	elif layout >= 0 and branchy(sp):
-		sk = _grow(sp, sp_idx, layout, seed_now)
+		sk = _grow(sp, sp_idx, sub, seed_now)
 	else:
 		sk = _fixed(sp)
 	_mutex.lock()

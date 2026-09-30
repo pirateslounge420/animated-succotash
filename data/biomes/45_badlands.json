@@ -125,7 +125,77 @@
      "spacing_m": 0.6,
      "confidence": "documented"
     },
-    "silhouette": "leaning twisted trunk, open irregular pale-green crown"
+    "silhouette": "leaning twisted trunk, open irregular pale-green crown",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      40
+     ],
+     "height_years": [
+      18,
+      60
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      120,
+      250
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "cone",
+     "juvenile_leaves": "same",
+     "juvenile_note": "After autumn rains, epigeal seedlings with 6-9 cotyledons put out soft, single, blue-green primary needles; thin, bright-green paired needles follow in the second year. Young trees grow fast into loose, open, irregular cones of light-green foliage and may already bear cones at 5-10 years; the crown later becomes open and rounded over grey bark.",
+     "confidence": "estimated",
+     "source": "Wikipedia (15-25 m; cones 5-12 cm, green then glossy red-brown at 24 months, opening slowly over years or after fire); very early coning (from about 5-10 years), growth and lifespan estimated from Mediterranean post-fire pine studies"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1,
+     "flower_colour": "#a0506a",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.7,
+     "fruit_kind": "cone",
+     "fruit_shape": "cone",
+     "fruit_size_cm": [
+      5,
+      12
+     ],
+     "unripe_colour": "#6f8a3a",
+     "ripe_colour": "#9a4a2a",
+     "ripen_days": [
+      480,
+      560
+     ],
+     "hang_days": [
+      365,
+      1500
+     ],
+     "drop": "persists",
+     "rot_days": [
+      700,
+      2000
+     ],
+     "crop_per_tree": [
+      50,
+      2000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "Wikipedia (cones 5-12 cm, green, ripening glossy red-brown when 24 months old, then opening slowly over several years or quickly after fire); the small seeds are ground for the Tunisian pudding assida zgougou; crop and decay estimated"
+    }
    },
    {
     "name": "Plains cottonwood",
@@ -244,7 +314,77 @@
      "spacing_m": 0.8,
      "confidence": "documented"
     },
-    "silhouette": "huge broad open crown on a massive furrowed trunk"
+    "silhouette": "huge broad open crown on a massive furrowed trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      1,
+      3
+     ],
+     "height_years": [
+      6,
+      25
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "whip",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Cottony seed germinates within 24-48 h on wet, bare sandbars and mud flats; the seedling has two minute cotyledons and grows slowly for about 3 weeks, then very fast. Dense, even-aged thickets of slender single-stemmed whips form along river bars, with large triangular, coarsely toothed leaves on flattened stalks that flutter; saplings add 1.5-3.5 m a year on good sites.",
+     "confidence": "documented",
+     "source": "USDA Silvics of North America vol. 2 (P. deltoides: germination within 48 h; slow first 3 weeks then very rapid; seed from 5-10 yr, plains ~10 yr; 1.8-3.7 m/yr; very intolerant of shade; short-lived, 80-90 yr); USDA FEIS (eastern 100-200 yr, plains ~90 yr; 3-58 m tall)."
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 8,
+     "flower_colour": "#9a3a3a",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      25,
+      60
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.8,
+      1.5
+     ],
+     "unripe_colour": "#7f9d4c",
+     "ripe_colour": "#b09a62",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      2,
+      21
+     ],
+     "drop": "splits",
+     "rot_days": [
+      20,
+      60
+     ],
+     "crop_per_tree": [
+      20000,
+      1000000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA Silvics vol. 2 (flowers Feb-Apr east, Apr-May plains, before leaves; male catkins 8-13 cm, female 15-30 cm; 3-4-valved capsules with 30-60 seeds ripen in 30-60 days; up to 48 million seeds per tree; wind pollinated); FEIS (capsules 0.8-1.5 cm). Colour is the red male catkins."
+    }
    },
    {
     "name": "Rocky Mountain juniper",
@@ -351,7 +491,77 @@
      "spacing_m": 0.15,
      "confidence": "documented"
     },
-    "silhouette": "narrow blue-green conical juniper, shredding trunk"
+    "silhouette": "narrow blue-green conical juniper, shredding trunk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      240,
+      730
+     ],
+     "height_years": [
+      60,
+      250
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      300,
+      1500
+     ],
+     "shade": "intermediate",
+     "juvenile": "cone",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings carry sharp, needle-like juvenile leaves and grow very slowly in the wild (about 30 cm in 8 years), forming a small, prickly, blue-grey cone that may flush purple in cold. Scale leaves take over at the sapling stage, and the young tree keeps a narrow, pyramidal, often multi-stemmed shape for decades before rounding out.",
+     "confidence": "documented",
+     "source": "USDA Silvics of North America vol. 1 (J. scopulorum: seedlings 30 cm in 8 yr, 4 m at 40 yr, 5 m at 80, ~9 m at 300; seed from ~age 10, heavy crops every 2-5 yr; cones ripen in 2 yr; 300 yr common, one reported 3,000; very intolerant but young relatively tolerant); USDA WPSM (120 d warm + 120 d cold stratification)."
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      6
+     ],
+     "hemisphere": "north",
+     "flower_days": 7,
+     "flower_size_cm": 0.3,
+     "flower_colour": "#8fa070",
+     "flower_form": "cone",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      0.8
+     ],
+     "unripe_colour": "#7f9a7a",
+     "ripe_colour": "#7082a8",
+     "ripen_days": [
+      500,
+      600
+     ],
+     "hang_days": [
+      150,
+      730
+     ],
+     "drop": "persists",
+     "rot_days": [
+      180,
+      730
+     ],
+     "crop_per_tree": [
+      500,
+      20000
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA Silvics (flowers mid-Apr to mid-Jun; cones 5-8 mm, bluish-purple with white bloom, ripen in 2 years mid-Sep to mid-Dec, persist to spring or up to 3 yr; prolific seeder); USDA WPSM (green with bloom before ripening). Set, crop and rot estimated."
+    }
    }
   ],
   "shrub": [
@@ -467,7 +677,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "spiny grey-white shrub with bright green thread leaves"
+    "silhouette": "spiny grey-white shrub with bright green thread leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      10
+     ],
+     "height_years": [
+      12,
+      35
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 long, narrow, fleshy cotyledons and a coiled embryo that uncoils fast; first leaves bright green, fleshy and cylindrical (1-4 cm) like the adult's. Grows slowly into a stiff, rigid, much-branched spiny shrub with pale bark; after 12 years only about 0.7 m tall on dry sites. Resprouts from the root crown.",
+     "confidence": "documented",
+     "source": "USDA FEIS Sarcobatus vermiculatus (transplants 0.73 m tall after 12 yr; to 3 m; vigorous crown sprouting); USDA Woody Plant Seed Manual Sarcobatus (67-91% germination in 2-10 days at 10 C); lifespan estimated from its slow growth"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      8
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 1.5,
+     "flower_colour": "#a9a35a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      1,
+      2
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "samara",
+     "fruit_shape": "winged",
+     "fruit_size_cm": [
+      0.4,
+      1.0
+     ],
+     "unripe_colour": "#9db35f",
+     "ripe_colour": "#c7a57a",
+     "ripen_days": [
+      90,
+      130
+     ],
+     "hang_days": [
+      30,
+      240
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS and Woody Plant Seed Manual Sarcobatus (monoecious, wind-pollinated; male flowers in small cone-like spikes at twig tips, female flowers single in leaf axils; tan winged utricles 4-5 mm, 1 cm across the wing, mature late Sep-Nov, a few hang until next summer)"
+    }
    },
    {
     "name": "Plains prickly pear",
@@ -568,7 +848,78 @@
      "spacing_m": 0.3,
      "confidence": "documented"
     },
-    "silhouette": "low clump of spiny flat pads"
+    "silhouette": "low clump of spiny flat pads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      5,
+      20
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "globe",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two fleshy cotyledons, then a tiny round stem that flattens into a first small pad covered in long, slender spines. It stays low, adding small, flat, very spiny pads that lie on or near the ground and shrivel in drought and winter cold, slowly forming mats up to 2-3 m wide; pads that break off root into new plants.",
+     "confidence": "estimated",
+     "source": "Wikipedia Opuntia polyacantha (10-30 cm tall, mats 2-3 m wide; pads to 27 x 18 cm; very variable spines; flowers yellow, magenta or red; fruit cylindrical, brown, dry and spiny, edible once skin and seeds removed; prairie, sagebrush, pine woodland); ages and establishment rates estimated (USDA FEIS notes slow growth)"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 1.5,
+     "flower_size_cm": 6,
+     "flower_colour": "#f0d24a",
+     "flower_form": "cup",
+     "flower_position": "stem_tips",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "bee",
+      "beetle"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "berry",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      2,
+      4
+     ],
+     "unripe_colour": "#7a9a4a",
+     "ripe_colour": "#b09a6a",
+     "ripen_days": [
+      60,
+      90
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      240
+     ],
+     "crop_per_tree": [
+      5,
+      100
+     ],
+     "edible": "yes",
+     "confidence": "estimated",
+     "source": "Wikipedia (flowers with tepals 2.5-4 cm, yellow, magenta or red, fading pink-orange; fruit cylindrical, brownish, dry and spiny, eaten raw or as candy once skin and seeds are removed); early-summer flowering, bees (Diadasia, Lithurgus) and beetles as in other plains Opuntia; timings and crop estimated"
+    }
    },
    {
     "name": "Rubber rabbitbrush",
@@ -682,7 +1033,80 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "pale rounded broom-like bush, yellow-topped in autumn"
+    "silhouette": "pale rounded broom-like bush, yellow-topped in autumn",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      2,
+      4
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal seedling with two small oval cotyledons, then thread-like grey-green leaves on white-felted stems while the root races down. By year 2 it is a small rounded bush of many erect, flexible, whitish-woolly green stems from the base, already topped with yellow flower clusters; full grown in about 4 years. Resprouts from stem buds after fire.",
+     "confidence": "documented",
+     "source": "USDA FEIS species review (Ericameria nauseosa): germination 5-20 days without stratification (T50 5-96 days by seed source); plants 'full grown' within 4 years (Stanton); post-fire epicormic sprouting. Lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#e6c01f",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      15,
+      60
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      0.3,
+      0.6
+     ],
+     "unripe_colour": "#a3a66a",
+     "ripe_colour": "#d8ccae",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      14,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      300
+     ],
+     "crop_per_tree": [
+      2000,
+      50000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS (flowering Jul-Oct by elevation; seed ripe late Sep-Nov; plumed achenes wind-dispersed up to ~150 m; good crops every 1-2 yr, fruit fill variable; no persistent seed bank). Head size, heads per cluster, crop and rot estimated."
+    }
    },
    {
     "name": "Silver sagebrush",
@@ -794,7 +1218,78 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low silver-grey sage mound"
+    "silhouette": "low silver-grey sage mound",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      5,
+      20
+     ],
+     "height_years": [
+      3,
+      9
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      7,
+      25
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: two small round cotyledons, then narrow, soft, silvery-hairy leaves on a single stem; only seed within 7.5 mm of the surface comes up. It stays a small silver sprig for a year or two, then branches and sprouts from spreading rhizomes, becoming a rounded silver-grey bush of upright stems with straight, narrow, silky leaves 2-9 cm; sprays of tiny yellowish heads in late summer.",
+     "confidence": "documented",
+     "source": "USDA FEIS Artemisia cana: germinates at 5-25 C, best ~10 C after >28 d stratification, 51-97%; none from >7.5 mm deep; 1st-year survival 3.4%; first seed at ~4 yr; mature plants 0.4-1 m; rhizomes ~1.1 m with 1-52 sprouts; mean stem age 3.4 yr, rhizome system 6.0 yr, taproot 6.9 yr; intolerant of all but light shade. Height-age estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#d4c46a",
+     "flower_form": "panicle",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      200
+     ],
+     "pollinators": [
+      "wind",
+      "bee"
+     ],
+     "fruit_set": 0.25,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.2,
+      0.25
+     ],
+     "unripe_colour": "#9aa070",
+     "ripe_colour": "#5a4a35",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      15,
+      75
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      365
+     ],
+     "crop_per_tree": [
+      5000,
+      100000
+     ],
+     "edible": "no",
+     "confidence": "documented",
+     "source": "USDA FEIS Artemisia cana: flowers Aug-Sep in the Great Plains and interior Northwest; seed shatters mostly Sep-Nov; achene ~2.1 x 0.9 mm (680 ug); may build a short-term seed bank. Pollination (mainly wind), fruit set, ripening days and crop estimated."
+    }
    },
    {
     "name": "Skunkbush sumac",
@@ -912,7 +1407,79 @@
      "spacing_m": 0.2,
      "confidence": "estimated"
     },
-    "silhouette": "dense rounded thicket of small three-part leaves"
+    "silhouette": "dense rounded thicket of small three-part leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      20,
+      60
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 oval cotyledons; the first leaves are small and simple or weakly lobed, soon followed by 3-lobed trifoliolate leaves. It makes a few thin brown stems, then a rounded twiggy mound; root and crown sprouts turn it into a thicket up to 9 m across. Resprouts after fire can grow 1 m in one season.",
+     "confidence": "documented",
+     "source": "USDA FEIS Rhus trilobata (height 0.6-3.6 m, sprouts 1 m in a season, underground parts 30+ yr, fruit set 5-15%); USDA Woody Plant Seed Manual Rhus (seed needs scarification plus 1-3 months cold stratification)"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#e3d77e",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      10,
+      30
+     ],
+     "pollinators": [
+      "bee",
+      "fly",
+      "beetle"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "drupe",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.5,
+      0.8
+     ],
+     "unripe_colour": "#9aa65a",
+     "ripe_colour": "#c4442c",
+     "ripen_days": [
+      90,
+      150
+     ],
+     "hang_days": [
+      60,
+      240
+     ],
+     "drop": "persists",
+     "rot_days": [
+      60,
+      200
+     ],
+     "crop_per_tree": [
+      300,
+      5000
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "USDA FEIS Rhus trilobata (flowers 1-3 weeks before leaves in dense yellowish spikes; only 5-15% of flowers set fruit; sticky red hairy drupes ripen Jul-Oct and persist into winter); WPSM Rhus; drupes used for a sour lemonade-like drink"
+    }
    },
    {
     "name": "Soapweed yucca",
@@ -998,7 +1565,77 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "stemless spiky blue-grey rosette with tall flower stalk"
+    "silhouette": "stemless spiky blue-grey rosette with tall flower stalk",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within days in warm moist soil: a long thin cotyledon, then a small rosette of narrow, soft, grass-like leaves. Seedlings grow slower than offsets; over several years the rosette becomes a dense stemless tuft of narrow, stiff, blue-green, sharp-tipped leaves edged in white with fine curling threads, on a deep taproot and rhizomes that sprout new rosettes.",
+     "confidence": "estimated",
+     "source": "USDA FEIS (Yucca glauca): 50% germination in 6 days, 4 days after soaking at 27-32 C, up to 91%; seedlings grow slower than ramets; to 1 m, leaves 20-100 cm, roots over 6 m deep, rhizomes 10-60 cm deep; takes several years to bloom. Size curve (rosette spread), first flowering and rosette lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 5,
+     "flower_colour": "#eef0d6",
+     "flower_form": "bell",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      25,
+      80
+     ],
+     "pollinators": [
+      "moth"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      7
+     ],
+     "unripe_colour": "#7a9a55",
+     "ripe_colour": "#6b5236",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      90,
+      240
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      365
+     ],
+     "crop_per_tree": [
+      3,
+      40
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS (Yucca glauca): flowers May-Jul on racemes 30-200 cm with 25-30 or more drooping flowers; pollinated by the yucca moth, flowers and pollen viable at least 4 days; erect, dehiscent, oblong capsules about 3 cm, ripe Jul-Aug, glossy black seeds shed in Sep; fruits and flower stalks eaten. Fruit set, crop and capsule persistence estimated."
+    }
    }
   ],
   "ground": [
@@ -1088,7 +1725,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "short fine tussock with eyelash seed heads"
+    "silhouette": "short fine tussock with eyelash seed heads",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      3,
+      10
+     ],
+     "height_years": [
+      1,
+      4
+     ],
+     "first_seed_years": 0.3,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds sprout within days after a good rain, but the seedling lives only if a second wet spell lets it grow adventitious roots about two weeks after emergence. It is a tiny tuft of fine, curly, blue-green leaves that tillers into a dense low bunch or sod and can flower within two months, raising one-sided 'eyelash' seed heads.",
+     "confidence": "documented",
+     "source": "USDA FEIS Bouteloua gracilis (adventitious roots ~14 d after emergence, seedlings can flower at 2 months, not shade tolerant, 15-30 cm, flowers Jul-Aug to Oct); germination speed and plant longevity from shortgrass-steppe studies (Lauenroth, Coffin), approximate."
+    }
    },
    {
     "name": "Esparto grass",
@@ -1178,7 +1837,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "big wiry grey-green tussock of thread leaves"
+    "silhouette": "big wiry grey-green tussock of thread leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      8,
+      25
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A single thin tiller of narrow grey-green leaves that roll up into wiry cylinders in drought. It tillers slowly into a dense, erect tussock of tough rush-like leaves with a skirt of dead ones; seedlings mostly survive in the lee of an old tussock or shrub. Old tussocks die in the centre and become rings; in wet springs they send up tall, silvery, feathery-awned flower plumes.",
+     "confidence": "estimated",
+     "source": "Acta Physiologiae Plantarum 2017 'Environmental factors that limit Stipa tenacissima germination' (base temperature <2 C, drought and burial limit establishment); Seed Sci. Res. (seed dormancy/longevity in S. tenacissima); tussock growth, ring formation and ages estimated from Stipa steppe literature"
+    }
    },
    {
     "name": "Gumbo evening primrose",
@@ -1266,7 +1947,29 @@
      "lenticels": "none",
      "confidence": "estimated"
     },
-    "silhouette": "flat grey rosette with big white evening flowers"
+    "silhouette": "flat grey rosette with big white evening flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      0.5,
+      1.5
+     ],
+     "first_seed_years": 1.2,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A flat rosette of greyish, wavy-toothed, lance-shaped leaves on a stout taproot from the start; it stays stemless. Big white four-petalled flowers sit right in the rosette on long floral tubes, open at dusk and fade to pink by the next morning; old plants form woody-crowned clumps on dry, rocky slopes and road cuts.",
+     "confidence": "estimated",
+     "source": "Estimated from Flora of North America Oenothera sect. Pachylophus (stemless, taprooted short-lived perennial; white flowers 4-10 cm on long tubes, vespertine, hawkmoth pollinated, fading pink) and Intermountain native-seed germination notes"
+    }
    },
    {
     "name": "Little bluestem",
@@ -1356,7 +2059,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "upright blue-green tussock turning russet"
+    "silhouette": "upright blue-green tussock turning russet",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling a single thin tiller with narrow, flat, blue-green leaves. Tillers at the base and within 2-3 years makes a tight bunch 10-25 cm across of flattened, bluish, folded leaves; flowering stems 0.5-1 m turn copper-red in autumn, with fluffy silvery seed tufts along them.",
+     "confidence": "documented",
+     "source": "USDA FEIS Schizachyrium scoparium (germination begins in 4 days at 30 C, ~50% within 6 days after stratification; culms 0.5-2 m; bunches 10-25 cm across; flowers Jul-Dec by region; shade intolerant); first seed and bunch lifespan estimated"
+    }
    },
    {
     "name": "Western wheatgrass",
@@ -1446,7 +2171,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "blue-green rhizomatous grass sward"
+    "silhouette": "blue-green rhizomatous grass sward",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      2,
+      3
+     ],
+     "shade": "intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are sparse, upright tufts of narrow, blue-green leaves with strongly ridged upper surfaces and claw-like auricles. Stands fill in slowly: rhizomes send up scattered, stiff, glaucous blue-green shoots forming an open sod, topped in summer by narrow, wheat-like spikes. Each shoot lives 2-3 years; the rhizome sod persists for decades.",
+     "confidence": "documented",
+     "source": "USDA FEIS Pascopyrum smithii (94% germination, mean ~12 days at 15/30 C, slow at constant 19-23 C; stands slow from seed, uniform sod in 2-3 years; flowers June-Aug, seed ripe Aug-Sep; tiller longevity 2-3 years in Saskatchewan); lifespan given per shoot (ramet)"
+    }
    }
   ],
   "epiphyte": []

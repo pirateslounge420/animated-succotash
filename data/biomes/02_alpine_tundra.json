@@ -138,7 +138,80 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "flat glossy heath mat, pink-dotted"
+    "silhouette": "flat glossy heath mat, pink-dotted",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      10,
+      30
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are minute, with tiny, thick, dark-green, rolled-edged leaves in opposite pairs on wiry reddish stems. Very slow, they creep and branch into a dense, flat, trailing evergreen mat a few cm high that hugs wind-swept rock and gravel, dotted with small pink cup-bells in early summer.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Kalmia procumbens, formerly Loiseleuria: rarely over 10 cm, clusters of 2-5 rose-pink bell-shaped flowers late spring and summer, alpine and arctic heaths and bogs); growth and ages estimated from arctic-alpine dwarf-shrub mats."
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#e87aa0",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      2,
+      5
+     ],
+     "pollinators": [
+      "fly",
+      "bumblebee",
+      "bee",
+      "self"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#b0506a",
+     "ripe_colour": "#6a3a2a",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      60,
+      300
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      500
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (2-5 rose-pink bells per cluster); small reddish capsules splitting in late summer and persisting are typical of the species; pollinators (flies, bumblebees, selfing), timings and counts estimated."
+    }
    },
    {
     "name": "Net-leaved willow",
@@ -258,7 +331,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "ground-hugging mat of round net-veined leaves"
+    "silhouette": "ground-hugging mat of round net-veined leaves",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      7
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      50,
+      150
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling minute with two round cotyledons; first leaves small, round and dark green. Stems creep on or just under the ground and root, forming a flat mat; each short shoot carries 2-4 round, leathery leaves with a deeply sunken net of veins (whitish below) and, later, slender long-stalked catkins standing upright above the mat.",
+     "confidence": "estimated",
+     "source": "Wikipedia/Flora of N America Salix reticulata (to 8 cm tall, exposed stems to 20 cm, mats 30 cm+ broad; slender yellow catkins tipped pink in spring); USDA Woody Plant Seed Manual Salix (fast germination); spread rate, first seed and lifespan estimated for an arctic-alpine dwarf shrub"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#c9866e",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      60
+     ],
+     "pollinators": [
+      "fly",
+      "bumblebee",
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#8e9e5c",
+     "ripe_colour": "#a86e56",
+     "ripen_days": [
+      35,
+      55
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      500
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia/Flora of N America Salix reticulata (slender long-stalked catkins after the leaves, yellow tipped pink, females reddish; hairy capsules); insect plus wind pollination as in other arctic willows; ripening, set and crop estimated"
+    }
    },
    {
     "name": "Snow willow",
@@ -378,7 +523,79 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "tiny willow mat lost in the turf"
+    "silhouette": "tiny willow mat lost in the turf",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      2,
+      7
+     ],
+     "height_years": [
+      20,
+      60
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      80,
+      2000
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling minute: 2 round cotyledons and a pair of small, round, glossy leaves on a thread stem. Its woody stems creep just UNDER the soil and send up shoots only 1-6 cm tall, each with 2-3 round, finely toothed, shiny leaves and one tiny catkin; over decades it spreads as an open carpet in snowbeds. Genets in the Apennines are at least 2,000 years old.",
+     "confidence": "estimated",
+     "source": "Wikipedia/Flora of GB Salix herbacea (1-6 cm tall, stems creep underground forming open mats; genets in the N Apennines at least 2,000 yr old; female catkins red when ripe); USDA Woody Plant Seed Manual Salix (fast germination); spread rate and first seed estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      6,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 1.0,
+     "flower_colour": "#c8624f",
+     "flower_form": "catkin",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      3,
+      15
+     ],
+     "pollinators": [
+      "fly",
+      "bumblebee",
+      "wind"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.3,
+      0.5
+     ],
+     "unripe_colour": "#8ea25a",
+     "ripe_colour": "#b34a3c",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      10,
+      60
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      5,
+      200
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia/Stace Salix herbacea (dioecious; tiny terminal catkins of few flowers, female red when ripe, male yellow; flowers soon after snowmelt, Jun-Jul); pollinated by small flies and bumblebees with some wind; counts, ripening and decay estimated"
+    }
    }
   ],
   "ground": [
@@ -471,7 +688,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tight fine-leaved yellow-green turf tuft"
+    "silhouette": "tight fine-leaved yellow-green turf tuft",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      5,
+      20
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      30,
+      100
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are tiny tufts of thread-fine, wiry leaves that grow extremely slowly in the short, windswept alpine season. Tussocks build up over decades into dense, firm, low clumps of fine, curled leaves wrapped at the base in shiny brown old leaf sheaths, with slender 'mouse-tail' spikes held just above in early summer.",
+     "confidence": "estimated",
+     "source": "Wikipedia (now Carex myosuroides, circumboreal mouse-tail bog sedge); timings and ages estimated from alpine sedge demography on snow-free wind-swept ridges (slow tussock growth, long-lived clumps)."
+    }
    },
    {
     "name": "Curved sedge",
@@ -562,7 +801,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "curly yellowish sedge turf, wind-combed"
+    "silhouette": "curly yellowish sedge turf, wind-combed",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
+     ],
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      5,
+      15
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "A tiny tuft of thread-thin, sickle-curved leaves whose tips die back yellow-brown early, giving the curly, straw-tipped look of the adult turf. Seedlings are very rare; clones creep outward by less than 1 mm a year, so a tussock 1 m across can be around 2000 years old.",
+     "confidence": "documented",
+     "source": "Steinger, Korner & Schmid 1996 Oecologia 105:94 (clones of C. curvula up to ~2000 years, >7000 tillers, ~1.2 m diameter; vegetative spread <1 mm/yr); ALPANDINO course notes (seedlings rare, dense raw humus); tiller lifespan and timings estimated"
+    }
    },
    {
     "name": "Map lichen",
@@ -641,7 +902,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "yellow-green crust map painted on bare rock"
+    "silhouette": "yellow-green crust map painted on bare rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1825
+     ],
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      500,
+      9500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
+     "confidence": "documented",
+     "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
+    }
    },
    {
     "name": "Moss campion",
@@ -731,7 +1014,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "tight green cushion studded pink"
+    "silhouette": "tight green cushion studded pink",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      10,
+      40
+     ],
+     "height_years": [
+      25,
+      80
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: 2 tiny cotyledons, then a small rosette of narrow, pointed leaves. It sends down a long taproot and very slowly builds a tight, moss-like hemispherical cushion of densely packed short shoots, adding only a few mm a year; the first pink flowers often come after about 10 years.",
+     "confidence": "documented",
+     "source": "Morris & Doak 1998 Am J Bot (slow-growing, long-lived cushions; Colorado plants 75-100 yr, Alaskan to ~300 yr, record ~350 yr); Wikipedia Silene acaulis (cushions to 30-60 cm, flowers Jun-Aug); US National Park Service notes (about 10 yr to first flowering)"
+    }
    },
    {
     "name": "Mountain avens",
@@ -821,7 +1126,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "flat evergreen mat with white eight-petal flowers"
+    "silhouette": "flat evergreen mat with white eight-petal flowers",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      15,
+      50
+     ],
+     "first_seed_years": 8,
+     "lifespan_years": [
+      80,
+      200
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny round cotyledons, then small oblong leaves with rounded teeth, glossy dark green above and white-woolly beneath, like miniature oak leaves. The seedling's woody stem creeps and branches over limestone gravel, rooting as it goes, and slowly builds a flat evergreen mat that carries eight-petalled white flowers and twisting feathery seed plumes.",
+     "confidence": "estimated",
+     "source": "Wikipedia Dryas octopetala (creamy white flowers with 8, occasionally up to 16, petals on 3-10 cm stalks; persistent feathery styles twisted, then spreading into a ball for wind dispersal; early-melting gravel and rock barrens, mostly on limestone). Mat growth, first flowering and age estimated (Elkington 1971 Biol. Flora, not read)."
+    }
    },
    {
     "name": "Purple saxifrage",
@@ -911,7 +1238,29 @@
      "lenticels": "none",
      "confidence": "estimated"
     },
-    "silhouette": "dense purple-flowered cushion on rock"
+    "silhouette": "dense purple-flowered cushion on rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      5,
+      20
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      80
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 tiny cotyledons, then minute, opposite, blunt, blue-green leaves in 4 rows, often with a white lime-pit at the tip. Trailing stems branch and root to make a loose mat (or a tight cushion on dry ridges), and vivid purple cup-shaped flowers sit right on the shoot tips just after snowmelt.",
+     "confidence": "estimated",
+     "source": "Stace and Flora of N America Saxifraga oppositifolia (prostrate mat- or cushion-forming arctic-alpine, among the earliest flowering plants after snowmelt); arctic seedling studies (cold-stratified seed germinates in 1-4 weeks); size-age and lifespan estimated"
+    }
    }
   ],
   "epiphyte": []

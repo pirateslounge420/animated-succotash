@@ -138,7 +138,81 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "rounded grey-green bush, white-fluffed in autumn"
+    "silhouette": "rounded grey-green bush, white-fluffed in autumn",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Wind-blown achenes sprout on bare, damp ground within 1-3 weeks. The seedling has two small oval cotyledons, then thick, grey-green, coarsely toothed, wedge-shaped leaves on a single stem that branches in its first year; the young plant is an upright, leafy, many-branched bush, often flowering in its second autumn.",
+     "confidence": "estimated",
+     "source": "Wikipedia (to 4 m, dioecious, snowy-white cottony female heads in autumn, nectar for butterflies including monarchs, seeds toxic); weed-management literature (Queensland, CABI) on quick light-dependent germination, flowering from year 2 and seed output; lifespan estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.5,
+     "flower_colour": "#f0ead2",
+     "flower_form": "tiny",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      30
+     ],
+     "pollinators": [
+      "bee",
+      "butterfly",
+      "fly",
+      "wasp",
+      "wind"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "achene",
+     "fruit_shape": "round",
+     "fruit_size_cm": [
+      0.8,
+      1.3
+     ],
+     "unripe_colour": "#c8cfa0",
+     "ripe_colour": "#f4f2ea",
+     "ripen_days": [
+      30,
+      60
+     ],
+     "hang_days": [
+      10,
+      45
+     ],
+     "drop": "splits",
+     "rot_days": [
+      30,
+      180
+     ],
+     "crop_per_tree": [
+      1000,
+      50000
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "Wikipedia (autumn flowering, female heads become snowy-white tufts, seeds toxic); weed literature (a large female bush sheds up to ~1.5 million plumed achenes); heads-per-plant, fruit set and timings estimated. Counts are flower heads."
+    }
    },
    {
     "name": "Marsh elder",
@@ -258,7 +332,77 @@
      "spacing_m": 0.15,
      "confidence": "estimated"
     },
-    "silhouette": "rounded leafy shrub above the marsh grass"
+    "silhouette": "rounded leafy shrub above the marsh grass",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      6
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings come up in spring along the upper marsh edge and wrack line: a slender stem with pairs of thick, fleshy, toothed, lance-shaped leaves. It grows quickly into a many-branched, semi-woody shrub whose upper branches carry leafy spikes of small, nodding, greenish-white flower heads in late summer.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Iva frutescens: shrub to 3.5 m, many small heads with whitish florets, narrow band at the upper salt-marsh margin, growth limited by flooding); wind pollination as in other Iva; timings estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      8,
+      10
+     ],
+     "hemisphere": "north",
+     "flower_days": 5,
+     "flower_size_cm": 0.4,
+     "flower_colour": "#c8cfa8",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      20,
+      100
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.2,
+      0.3
+     ],
+     "unripe_colour": "#9aa070",
+     "ripe_colour": "#4a3a2a",
+     "ripen_days": [
+      30,
+      50
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      1000,
+      50000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (elongated arrays of many small whitish heads); Iva heads are wind-pollinated and set small dark obovoid achenes shed through autumn and winter (timings, set and crop estimated)."
+    }
    },
    {
     "name": "Sea purslane shrub (halimione)",
@@ -374,7 +518,77 @@
      "spacing_m": 0.1,
      "confidence": "estimated"
     },
-    "silhouette": "low silvery-grey sprawling mat"
+    "silhouette": "low silvery-grey sprawling mat",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are scarce in the marsh: two small fleshy cotyledons, then opposite, oval, silvery-grey mealy leaves. The young plant is a few low, rooting stems that spread by layering into a dense, silver-grey, knee-high mat lining creek banks and pool edges.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Halimione portulacoides, shrub to 1 m, flowers Jul-Sep, wind-pollinated); Useful Temperate Plants (to 0.75 m, seed ripe in autumn, germinates from winter on, salt-marsh creek edges); ScienceDirect 2006 on bracteoles and germination; growth and ages estimated."
+    },
+    "fruiting": {
+     "flower_months": [
+      7,
+      9
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 0.2,
+     "flower_colour": "#c9b86a",
+     "flower_form": "spike",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      5,
+      30
+     ],
+     "pollinators": [
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "achene",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      0.25,
+      0.5
+     ],
+     "unripe_colour": "#a9b98c",
+     "ripe_colour": "#b69a6a",
+     "ripen_days": [
+      45,
+      90
+     ],
+     "hang_days": [
+      14,
+      90
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      365
+     ],
+     "crop_per_tree": [
+      200,
+      5000
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia and Useful Temperate Plants (flowers Jul-Sep in short spikes, wind-pollinated, seed ripe in autumn); fruit a utricle in fused 3-lobed bracteoles 2.5-5 mm (standard floras), floats for water dispersal; fruit set and crop estimated."
+    }
    }
   ],
   "ground": [
@@ -466,7 +680,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "dense dark grey-green needle stand"
+    "silhouette": "dense dark grey-green needle stand",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      50
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Light-requiring seeds germinate on open sandy mud; the seedling is a thin, dark-green, needle-sharp tuft that spreads by rhizome into a dense stand of stiff, grey-green to blackish, spine-tipped leaves. Each leaf-shoot lives a year or two, then stands dead and grey for years, giving the marsh its dark 'black rush' colour; the clonal stands themselves persist for decades.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Juncus roemerianus: over 2 m at low salinity, under 30 cm at high; spreads by rhizome; seeds need light and fail under mud; seedlings mainly on open sand; new shoots all year, dead leaves persist). Lifespan is for the clump (each leaf-shoot lives ~1-2 yr); timings estimated."
+    }
    },
    {
     "name": "Common cordgrass",
@@ -563,7 +799,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "stiff upright grass sward"
+    "silhouette": "stiff upright grass sward",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      5,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a stiff single shoot with flat, grey-green, sharply pointed leaves; it tillers and sends short rhizomes so each seedling becomes a round tussock widening up to 30 cm a year, and tussocks merge into a dense sward within one to two decades. Culms live about a year; old swards may die back after decades.",
+     "confidence": "documented",
+     "source": "IUCN GISD and NOBANIS fact sheets (seed viable only one season, 0.6-5% viable; tussock radial growth up to 30 cm/yr; flowers Jul-Oct, seed ripens in ~12 weeks; 0.3-1.3 m); Gray et al. 1991 ITE Spartina anglica research review (germination faster at 20 C, marsh die-back from the 1920s)"
+    }
    },
    {
     "name": "Cordgrass",
@@ -660,7 +918,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "tall smooth bright green grass stand"
+    "silhouette": "tall smooth bright green grass stand",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
+     ],
+     "height_years": [
+      0.4,
+      2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: one soft shoot with flat, tapering, bright-green leaves; it tillers within weeks and sends out rhizomes, reaching ~15 cm in 3-4 months and a small tuft of spongy stems by autumn. Each culm lives about a year (north: dies back in autumn), but the rhizome clone spreads up to 3 m a season and persists for decades.",
+     "confidence": "documented",
+     "source": "USDA FEIS Spartina alterniflora (germinates Apr-Jun, flowers Jun-Oct, 0.4-2.5 m, shoots die back in autumn); USDA NRCS Cape May PMC Plant Guide (most seed germinates in 7-10 d after 1-4 months cold-wet storage; ~15 cm in 3-4 months; 2.5-3 m lateral spread per season; cover in 2-3 seasons)"
+    }
    },
    {
     "name": "Glasswort",
@@ -755,7 +1035,30 @@
      "threshold_h": 13.0,
      "response": "flower"
     },
-    "silhouette": "low jointed succulent stubble"
+    "silhouette": "low jointed succulent stubble",
+    "growth": {
+     "life": "annual",
+     "season": "spring",
+     "germination_days": [
+      3,
+      14
+     ],
+     "height_years": [
+      0.15,
+      0.35
+     ],
+     "first_seed_years": 0.45,
+     "lifespan_years": [
+      0.5,
+      0.75
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "sprig",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling with 2 fleshy, finger-like green cotyledons, then a leafless, jointed, succulent green stem (the tiny leaves are fused into the segments) that branches into a little candelabra 10-30 cm tall. Flowers hide in the joints late in summer; the whole plant turns red or purple in autumn, sheds seed and dies.",
+     "confidence": "documented",
+     "source": "Davy, Bishop & Costa 2001, Biological Flora of the British Isles: Salicornia (spring germination on the marsh after rain lowers salinity, flowering Aug-Sep, seed shed in autumn, strictly annual); Wikipedia S. europaea (shoots harvested Jun-Aug, turns red/purple in autumn, edible)"
+    }
    },
    {
     "name": "Salt hay",
@@ -847,7 +1150,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "fine cowlicked lodged grass mat"
+    "silhouette": "fine cowlicked lodged grass mat",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      28
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      3,
+      10
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "tuft",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a hair-thin shoot with wiry, inrolled leaves, emerging in May; it tillers and sends thin rhizomes into a small dense tuft, with no flowers in year one and only a few in year two. Mature stands are a dense turf of fine, wiry stems that lodge into swirled 'cowlicks'.",
+     "confidence": "documented",
+     "source": "Washington State Noxious Weed Control Board written findings 1999 (seedlings emerge in May, do not flower in first season, few flowers in second; flowers Jun-Sep; spreads mainly by rhizomes); USDA NRCS plant guides (rhizomatous, mostly under 1 m); FEIS Spartina patens"
+    }
    },
    {
     "name": "Sea lavender",
@@ -939,7 +1264,29 @@
     "photoperiod": {
      "mode": "neutral"
     },
-    "silhouette": "flat leaf rosette with a lilac spray"
+    "silhouette": "flat leaf rosette with a lilac spray",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
+     ],
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings are small rosettes of oval, leathery, long-stalked leaves flat on the salt-marsh mud; the woody rootstock slowly branches into a clump of several rosettes. From about the second summer stiff, branched, flat-topped sprays of tiny lavender-purple flowers rise above the rosettes, turning upper marshes purple in July-August.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Limonium vulgare: clumping perennial of salt marshes and other maritime habitats, Atlantic Europe from SW Sweden to SW Iberia); timings and ages estimated."
+    }
    }
   ],
   "epiphyte": []

@@ -40,25 +40,26 @@
     "color": "#2A5A3A",
     "accent": "#8A60A0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds are flicked out of the cup-like lower spathe by raindrops (splash-cup) and lodge in moss or cracks on wet stream rocks. The seedling is a tiny rosette of 2-3 small elliptic leaves gripping the rock with roots; a creeping rhizome then adds leaves and branches into a dense mat over the stone.",
+     "confidence": "estimated",
+     "source": "Wikipedia Bucephalandra (rheophytes forming mats on rocks in Bornean forest streams; splash-cup seed dispersal); Kew POWO; aquarium grower growth rates (2-3 leaves a week in fast forms, 1 per 2 weeks in slow); timings estimated."
     },
     "repro": {
      "mode": "both",
@@ -233,25 +234,26 @@
     "color": "#2A5A3A",
     "accent": "#6060A0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds are flicked out of the cup-like lower spathe by raindrops (splash-cup) and lodge in moss or cracks on wet stream rocks. The seedling is a tiny rosette of 2-3 small elliptic leaves gripping the rock with roots; a creeping rhizome then adds leaves and branches into a dense mat over the stone.",
+     "confidence": "estimated",
+     "source": "Wikipedia Bucephalandra (rheophytes forming mats on rocks in Bornean forest streams; splash-cup seed dispersal); Kew POWO; Boyce, Bogner & Mayo 1995 (species description); aquarium grower growth rates; timings estimated."
     },
     "repro": {
      "mode": "both",
@@ -422,25 +424,26 @@
     "color": "#2A5A3A",
     "accent": "#8A60A0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds (about 1 mm) are splashed out of the cup-like spathe base and lodge in moss on submerged rocks and small waterfalls. The seedling is a tiny rosette of small elliptic leaves; the largest Bucephalandra, it builds an erect stem about 1 cm thick carrying up to 10 leaves with blades 18-25 cm long.",
+     "confidence": "estimated",
+     "source": "Kew POWO B. gigantea (herb c. 40 cm, blades 18-25 cm, rheophytic on rocks and waterfalls at ~700 m, berries 1.5-2 mm); Wikipedia Bucephalandra (splash-cup dispersal); growth estimated from the genus."
     },
     "repro": {
      "mode": "both",
@@ -611,25 +614,26 @@
     "color": "#2A5A3A",
     "accent": "#6060A0",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       30
-      ],
-      [
-       "young",
-       180
-      ],
-      [
-       "mature",
-       730
-      ],
-      [
-       "old",
-       3000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "tolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds are flicked out of the cup-like lower spathe by raindrops (splash-cup) and lodge in moss or cracks on wet stream rocks. The seedling is a tiny rosette of 2-3 small elliptic leaves gripping the rock with roots; a creeping rhizome then adds leaves and branches into a dense mat over the stone.",
+     "confidence": "estimated",
+     "source": "Wikipedia Bucephalandra (rheophytes forming mats on rocks in Bornean forest streams; splash-cup seed dispersal); Kew POWO; aquarium grower data (about 1 leaf per 1-2 weeks; slow rhizome growth); timings estimated."
     },
     "repro": {
      "mode": "both",

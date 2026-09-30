@@ -37,25 +37,27 @@
     "color": "#6A9A6A",
     "accent": "#B8A070",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       200
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       8000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      8,
+      25
+     ],
+     "trunk_years": 4,
+     "first_seed_years": 6,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: a long thin cotyledon, then a small stemless rosette of narrow, soft green leaves that get stiffer with each flush. Within a few years the rosette rises on a short trunk and the leaves become rigid dark green daggers with needle-sharp tips and finely toothed edges; dead leaves hang down the stem, and suckers from the base build a clump of trunks.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Yucca aloifolia): 1.5-6.1 m, trunks 7.6-12.7 cm thick, leaves about 0.6 m, coastal dune sands; NC State Extension plant toolbox: 3-4.5 m, slow-growing, full sun (in shade leaves are small and it rarely blooms). Germination, growth curve, first flowering and lifespan estimated from related yuccas."
     },
     "repro": {
      "mode": "both",
@@ -229,6 +231,54 @@
      "root_flare": false,
      "spacing_m": 0.4,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 6,
+     "flower_colour": "#f4efdf",
+     "flower_form": "bell",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      50,
+      200
+     ],
+     "pollinators": [
+      "moth"
+     ],
+     "fruit_set": 0.1,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      4,
+      8
+     ],
+     "unripe_colour": "#7f9a58",
+     "ripe_colour": "#3a2b3e",
+     "ripen_days": [
+      60,
+      100
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "falls",
+     "rot_days": [
+      14,
+      60
+     ],
+     "crop_per_tree": [
+      5,
+      60
+     ],
+     "edible": "yes",
+     "confidence": "documented",
+     "source": "NC State Extension plant toolbox (Yucca aloifolia): white, fragrant, pendulous flowers about 3 inches wide in erect clusters up to 2 ft, Jun-Jul (spring to late summer), blackish ovoid fleshy fruit 1-3 inches; Wikipedia: purplish-tinged flowers, fleshy purplish fruit up to 5 cm eaten by birds and people. Yucca-moth pollination, fruit set and timings estimated."
     }
    },
    {
@@ -262,25 +312,27 @@
     "color": "#5A8A5A",
     "accent": "#B8A070",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       200
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       8000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      3,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      60,
+      200
+     ],
+     "trunk_years": 8,
+     "first_seed_years": 40,
+     "lifespan_years": [
+      150,
+      500
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedlings nearly always come up in the shade of a nurse shrub such as blackbrush: a thin grassy cotyledon, then about 4 narrow leaves by three weeks, adding roughly one leaf every 2 months. For years it is a small stemless spiky rosette of blue-green daggers; then an unbranched trunk rises a few cm a year, clothed in dead down-turned leaves, until first flowering at 1-3 m makes it branch.",
+     "confidence": "documented",
+     "source": "USDA FEIS (Yucca brevifolia): 100% germination in 1-5 days at 20-25 C, 22-day seedlings have about 4 leaves, one new leaf every 2 months, 7.6 cm/yr for 10 yr then 3.8 cm/yr, established after 3-5 yr, 93% of seedlings under nurse shrubs, unbranched until 0.9-3 m, average life 150 yr, large trees 300 yr. First-flowering age derived from these rates."
     },
     "repro": {
      "mode": "both",
@@ -454,6 +506,54 @@
      "root_flare": true,
      "spacing_m": 0.8,
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      3,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 2.5,
+     "flower_colour": "#e9e6c6",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      50,
+      250
+     ],
+     "pollinators": [
+      "moth"
+     ],
+     "fruit_set": 0.08,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      6,
+      10
+     ],
+     "unripe_colour": "#8ea85c",
+     "ripe_colour": "#9a7a4c",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      10,
+      400
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS (Yucca brevifolia): flowers Mar-May in dense panicles 20-40 cm, flowers 2.5-5 x 1-2 cm, pollinated only by yucca moths (Tegeticula synthetica, T. antithetica); indehiscent capsules 6-10 x 5 cm with 30-50 seeds, spongy and dry with age, hard to detach; crops periodic, best in wet years; rodents cache seeds. Fruit set, crop, hang and rot estimated."
     }
    },
    {
@@ -487,25 +587,27 @@
     "color": "#5A8A5A",
     "accent": "#B8A070",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       200
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       8000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      21
      ],
-     "final_size": 1.0
+     "height_years": [
+      50,
+      150
+     ],
+     "trunk_years": 10,
+     "first_seed_years": 25,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings form a small stemless rosette of soft, flat 'embryonic' leaves that last at least a year; from 4-6 months these start being replaced by stiffer leaves, and from 18 months to 3 years the plant carries only rigid, straight, dark green leaves whose edges peel into curly white threads. The single trunk rises slowly and branches only after flowering, becoming a many-armed tree.",
+     "confidence": "estimated",
+     "source": "Spanish Wikipedia (Yucca filifera): over 10 m and, when old, up to 40 branches; leaves to 55 x 3.6 cm; flowers late April to late May; 60-80% germination (viability about 48%); embryonic leaves last at least a year, replaced from 4-6 months, fully adult leaves from 18 months to 3 years. Growth rate, first flowering and lifespan estimated."
     },
     "repro": {
      "mode": "both",
@@ -679,6 +781,54 @@
      "root_flare": true,
      "spacing_m": 1.0,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      4,
+      5
+     ],
+     "hemisphere": "north",
+     "flower_days": 3,
+     "flower_size_cm": 4,
+     "flower_colour": "#f3eedb",
+     "flower_form": "bell",
+     "flower_position": "twigs",
+     "flowers_per_cluster": [
+      200,
+      1000
+     ],
+     "pollinators": [
+      "moth"
+     ],
+     "fruit_set": 0.05,
+     "fruit_kind": "berry",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      5,
+      8
+     ],
+     "unripe_colour": "#86a05c",
+     "ripe_colour": "#4a3a2e",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      30,
+      120
+     ],
+     "crop_per_tree": [
+      50,
+      1500
+     ],
+     "edible": "cooked",
+     "confidence": "estimated",
+     "source": "Spanish and English Wikipedia (Yucca filifera): white flowers late April-late May in hanging clusters well over 1 m long. Yucca-moth pollination, the fleshy non-splitting fruit of its group, fruit size, timings and crop estimated from related tree yuccas; yucca flowers are eaten cooked in Mexico."
     }
    },
    {
@@ -712,25 +862,26 @@
     "color": "#6A9A6A",
     "accent": "#B8A070",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       200
-      ],
-      [
-       "young",
-       1500
-      ],
-      [
-       "mature",
-       4000
-      ],
-      [
-       "old",
-       8000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      4,
+      14
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      10
+     ],
+     "first_seed_years": 6,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Germinates within days in warm moist soil: a long thin cotyledon, then a small rosette of narrow, soft, grass-like leaves. Seedlings grow slower than offsets; over several years the rosette becomes a dense stemless tuft of narrow, stiff, blue-green, sharp-tipped leaves edged in white with fine curling threads, on a deep taproot and rhizomes that sprout new rosettes.",
+     "confidence": "estimated",
+     "source": "USDA FEIS (Yucca glauca): 50% germination in 6 days, 4 days after soaking at 27-32 C, up to 91%; seedlings grow slower than ramets; to 1 m, leaves 20-100 cm, roots over 6 m deep, rhizomes 10-60 cm deep; takes several years to bloom. Size curve (rosette spread), first flowering and rosette lifespan estimated."
     },
     "repro": {
      "mode": "both",
@@ -870,6 +1021,54 @@
      "color_2": "#5A4A3A",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 4,
+     "flower_size_cm": 5,
+     "flower_colour": "#eef0d6",
+     "flower_form": "bell",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      25,
+      80
+     ],
+     "pollinators": [
+      "moth"
+     ],
+     "fruit_set": 0.15,
+     "fruit_kind": "capsule",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      7
+     ],
+     "unripe_colour": "#7a9a55",
+     "ripe_colour": "#6b5236",
+     "ripen_days": [
+      45,
+      75
+     ],
+     "hang_days": [
+      90,
+      240
+     ],
+     "drop": "splits",
+     "rot_days": [
+      120,
+      365
+     ],
+     "crop_per_tree": [
+      3,
+      40
+     ],
+     "edible": "cooked",
+     "confidence": "documented",
+     "source": "USDA FEIS (Yucca glauca): flowers May-Jul on racemes 30-200 cm with 25-30 or more drooping flowers; pollinated by the yucca moth, flowers and pollen viable at least 4 days; erect, dehiscent, oblong capsules about 3 cm, ripe Jul-Aug, glossy black seeds shed in Sep; fruits and flower stalks eaten. Fruit set, crop and capsule persistence estimated."
     }
    }
   ]

@@ -41,6 +41,13 @@
 // Dead trees (custom data alpha 1, DeadWood) lose every leaf and their
 // bark goes grey; dead bamboo culms go dry straw.
 //
+// Shade leaves (design §AR, PlantGrowth.leaf_scale): the custom data's
+// green carries the plant's leaf size with its vines (vines 0-1 + 2 x a
+// code 1-16: 0.8x .. 1.55x; 0 none): bigger in the shade, smaller in full
+// sun. Leaf clusters and cards grow about their middles by it, the leaf
+// cells on the near cards and the foliage mass are drawn that much
+// larger, and big shade leaves are a little darker.
+//
 // Wet places (per plant, from the MultiMesh's custom data: r = moss,
 // g = vines): moss creeps over the bark, thickest low down and on upward
 // faces, and vines hang from the crown. Each vine strand has a 0-1 key in
@@ -135,6 +142,7 @@ const float SP_NEAR_M = 25.0;
 varying vec4 v_season;
 varying float v_hshift;
 varying float v_leaf;
+varying float v_leafs; // the plant's leaf size (shade leaves bigger)
 varying float sway_w;
 varying float glow_pick;
 varying vec3 world_pos;
@@ -189,6 +197,9 @@ void vertex() {
 	v_sport = floor(INSTANCE_CUSTOM.r * 0.5 + 1e-4);
 	moss = INSTANCE_CUSTOM.r - 2.0 * v_sport;
 	cluster_key = CUSTOM0.w;
+	float lcode = floor(INSTANCE_CUSTOM.g * 0.5 + 1e-4);
+	float vines_v = INSTANCE_CUSTOM.g - 2.0 * lcode;
+	v_leafs = lcode < 0.5 ? 1.0 : 0.8 + 0.05 * (lcode - 1.0);
 	float leaf = (1.0 - INSTANCE_CUSTOM.a) * leaf_season;
 	v_season = vec4(sp_autumn, 0.0, 1.0, 1.0);
 	v_hshift = 0.0;
@@ -227,9 +238,13 @@ void vertex() {
 	}
 	v_leaf = leaf;
 	if (mat_id > 4.5 && mat_id < 5.5) {
-		// A leaf cluster, smaller on a sparse tree.
+		// A leaf cluster, smaller on a sparse tree, bigger in the shade.
 		vec3 c = (MODEL_MATRIX * vec4(CUSTOM0.xyz, 1.0)).xyz;
-		VERTEX = c + (VERTEX - c) * mix(0.6, 1.0, smoothstep(0.1, 0.8, leaf));
+		VERTEX = c + (VERTEX - c) * mix(0.6, 1.0, smoothstep(0.1, 0.8, leaf)) * v_leafs;
+	} else if (mat_id > 1.5 && mat_id < 2.5 && abs(v_leafs - 1.0) > 0.01) {
+		// A leaf card, about its middle.
+		vec3 c = (MODEL_MATRIX * vec4(CUSTOM0.xyz, 1.0)).xyz;
+		VERTEX = c + (VERTEX - c) * v_leafs;
 	}
 	if (draw_range_m > 0.0) {
 		vec3 root = MODEL_MATRIX[3].xyz;
@@ -297,7 +312,7 @@ void vertex() {
 	}
 	world_pos = VERTEX;
 	// Vine strands above this plant's vine amount collapse to a point.
-	if (mat_id > 2.5 && mat_id < 3.5 && UV2.y >= INSTANCE_CUSTOM.g) {
+	if (mat_id > 2.5 && mat_id < 3.5 && UV2.y >= vines_v) {
 		VERTEX = MODEL_MATRIX[3].xyz;
 	}
 	// So do the leaf clusters this tree has shed.
@@ -457,7 +472,7 @@ void fragment() {
 	// leaf_season 0 it is bare. (Branchy trees' clusters thin by their own
 	// keys in vertex().)
 	if (v_leaf < 0.999 && mat_id > 0.5 && mat_id < 2.5) {
-		vec3 cell = floor(obj_pos / max(sp_leaf_m * 2.0, 0.25));
+		vec3 cell = floor(obj_pos / max(sp_leaf_m * v_leafs * 2.0, 0.25));
 		if (sp_hash(cell.xy + cell.z * 17.13) >= v_leaf) {
 			discard;
 		}
@@ -484,7 +499,7 @@ void fragment() {
 		tex = retro_tex(look_tex_leaf_card, UV);
 	} else if (mat_id > 0.5) {
 		vec2 uv = an.y > 0.55 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
-		tex = retro_tex(look_tex_leaves, uv / look_tile_m2.y);
+		tex = retro_tex(look_tex_leaves, uv / (look_tile_m2.y * v_leafs));
 	} else {
 		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
 		tex = retro_tex(look_tex_bark, uv / look_tile_m2.x);
@@ -510,8 +525,8 @@ void fragment() {
 		// The foliage mass takes the autumn colour by the same share as the
 		// leaf cutout (autumn / leaf colour).
 		vec3 autumn_tint = mix(vec3(1.0), clamp(sp_autumn_color / max(sp_leaf_color, vec3(0.01)), 0.0, 4.0), v_season.x);
-		// The mass tile holds a few leaves across.
-		float mass_m = clamp(sp_leaf_m * 2.5, 0.3, 3.0);
+		// The mass tile holds a few leaves across (bigger in the shade).
+		float mass_m = clamp(sp_leaf_m * v_leafs * 2.5, 0.3, 3.0);
 		vec4 t;
 		if (mat_id < 0.5) {
 			// Bark, tiled every sp_bark_tile_m.
@@ -535,7 +550,7 @@ void fragment() {
 			float card_m = (length(dFdx(world_pos)) + length(dFdy(world_pos))) / max(length(dFdx(UV)) + length(dFdy(UV)), 1e-6);
 			card_m = floor(card_m * 10.0 + 0.5) / 10.0;
 			if (distance(world_pos, CAMERA_POSITION_WORLD) < SP_NEAR_M) {
-				vec4 l = sp_leaf_cell(cuv * card_m / sp_leaf_m, inst * 3.1 + cluster_key * 17.0);
+				vec4 l = sp_leaf_cell(cuv * card_m / (sp_leaf_m * v_leafs), inst * 3.1 + cluster_key * 17.0);
 				t = vec4(l.rgb, l.a * edge);
 			} else {
 				vec4 m = retro_tex(sp_leaves, cuv * card_m / mass_m);
@@ -567,6 +582,10 @@ void fragment() {
 		tex.a = t.a;
 	}
 	ALBEDO = sport_tint(ALBEDO, (mat_id > 0.5 && mat_id < 3.5) || mat_id > 4.5);
+	if (v_leafs > 1.01 && ((mat_id > 0.5 && mat_id < 2.5) || mat_id > 4.5)) {
+		// Shade leaves: more chlorophyll to a leaf, a little darker.
+		ALBEDO *= mix(1.0, 0.86, clamp((v_leafs - 1.0) / 0.45, 0.0, 1.0));
+	}
 	if (mat_id < 0.5 && moss > 0.01) {
 		// Moss on the bark: patchy, low down, on faces turned up and to one
 		// side (the damp side).

@@ -37,25 +37,27 @@
     "color": "#2A5A38",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       365
-      ],
-      [
-       "young",
-       5000
-      ],
-      [
-       "mature",
-       20000
-      ],
-      [
-       "old",
-       80000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      50,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      12,
+      50
+     ],
+     "trunk_years": 8,
+     "first_seed_years": 15,
+     "lifespan_years": [
+      100,
+      300
+     ],
+     "shade": "intermediate",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Hypogeal: the orange seed stays at the surface while a taproot and contractile roots pull the stem base down. First fronds are short and soft with few pairs of leaflets; a stemless rosette adds one flush of glossy, stiff, dark-green fronds a year over a bulb-like caudex that emerges as a stubby, shaggy trunk after 5-10 years.",
+     "confidence": "documented",
+     "source": "Monaco Nature Encyclopedia (one flush of leaves a year, to 6-7 m, plants several hundred years old; insect pollination May-July; seeds red-orange 3-5 cm, ripe Sep-Oct; germination 50-100 d); Kono & Tobe 2007 Am. J. Bot. (beetle Carpophilus plus wind); Univ. Hamburg cycad seed guide; coning age from growers"
     },
     "repro": {
      "mode": "both",
@@ -227,6 +229,55 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      5,
+      7
+     ],
+     "hemisphere": "north",
+     "flower_days": 21,
+     "flower_size_cm": 40,
+     "flower_colour": "#c9a45c",
+     "flower_form": "cone",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "beetle",
+      "wind"
+     ],
+     "fruit_set": 0.4,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      5
+     ],
+     "unripe_colour": "#8a9a4a",
+     "ripe_colour": "#d4551f",
+     "ripen_days": [
+      120,
+      200
+     ],
+     "hang_days": [
+      30,
+      180
+     ],
+     "drop": "falls",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      20,
+      300
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "Monaco Nature Encyclopedia (females: a golden, felted dome of leaf-like megasporophylls 14-22 cm; pollination mainly by insects May-July; seeds ovoid 3-5 x 2.5-3.5 cm, red-orange, mature Sep-Oct); Kono & Tobe 2007 (insect and wind pollination). Hang, set and crop estimated; seeds toxic (cycasin)."
     }
    },
    {
@@ -258,25 +309,27 @@
     "color": "#2A5A38",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       365
-      ],
-      [
-       "young",
-       5000
-      ],
-      [
-       "mature",
-       20000
-      ],
-      [
-       "old",
-       80000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      90,
+      365
      ],
-     "final_size": 1.0
+     "height_years": [
+      40,
+      150
+     ],
+     "trunk_years": 10,
+     "first_seed_years": 20,
+     "lifespan_years": [
+      150,
+      400
+     ],
+     "shade": "intermediate",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Germination is hypogeal: the big seed sits on the soil while a taproot goes down. The first fronds are short with only a few pairs of narrow leaflets. For about a decade it is a stemless tuft of a few fronds per yearly flush over a swelling underground stem; then a stubby, fire-blackened trunk rises. Resprouts a whole new crown after dry-season fires.",
+     "confidence": "estimated",
+     "source": "LLIFLE Cycas media (trunk usually 2.7-3.5 m, seldom 6 m; slow; seeds need months of after-ripening; refoliates after fire); Ornduff 1991 Bot. Gaz. 152 (C. media size classes, fire every 2-3 yr, beetles and Trigona bees at cones); Univ. Hamburg cycad seed guide. Growth rates estimated."
     },
     "repro": {
      "mode": "both",
@@ -448,6 +501,56 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      11
+     ],
+     "hemisphere": "south",
+     "flower_days": 21,
+     "flower_size_cm": 30,
+     "flower_colour": "#b89a6a",
+     "flower_form": "cone",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      1
+     ],
+     "pollinators": [
+      "beetle",
+      "stingless_bee",
+      "wind"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "drupe",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      3,
+      4
+     ],
+     "unripe_colour": "#6f8c45",
+     "ripe_colour": "#d08a2e",
+     "ripen_days": [
+      180,
+      300
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "falls",
+     "rot_days": [
+      90,
+      540
+     ],
+     "crop_per_tree": [
+      20,
+      200
+     ],
+     "edible": "toxic",
+     "confidence": "estimated",
+     "source": "LLIFLE (female: loose felted brown-grey megasporophylls with ~200 ovules; seeds 30-40 x 26-32 mm, sarcotesta green turning yellow to orange-brown); Ornduff 1991 Bot. Gaz. (beetles in male cones, Trigona carbonaria collecting pollen; only 14-38% of adults cone per episode). Timing and set estimated; seeds toxic."
     }
    },
    {
@@ -479,25 +582,27 @@
     "color": "#2A5A38",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       365
-      ],
-      [
-       "young",
-       5000
-      ],
-      [
-       "mature",
-       20000
-      ],
-      [
-       "old",
-       80000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      180
      ],
-     "final_size": 1.0
+     "height_years": [
+      60,
+      180
+     ],
+     "trunk_years": 8,
+     "first_seed_years": 18,
+     "lifespan_years": [
+      300,
+      800
+     ],
+     "shade": "intermediate",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Hypogeal germination; first leaves carry only 2-4 pairs of broad, spiny-edged leaflets. Stemless rosette over an underground stem for several years, but among the fastest cycads: leaves 1 m long in 4-5 years, then a thick trunk rises under an arching crown of long, glossy dark-green fronds with toothed leaflets.",
+     "confidence": "documented",
+     "source": "SANBI PlantZAfrica (1 m leaves in 4-5 yr; stem 12-13 m; cones in late summer; full sun or light shade; lives hundreds of years); treesa.org (stem 5-8 m, up to 13 m; relatively quick for a cycad); Univ. Hamburg cycad seed guide (sprouts ~1 month after cone disperses). Height curve and coning age estimated."
     },
     "repro": {
      "mode": "both",
@@ -669,6 +774,54 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      2,
+      4
+     ],
+     "hemisphere": "south",
+     "flower_days": 21,
+     "flower_size_cm": 30,
+     "flower_colour": "#d9b43a",
+     "flower_form": "cone",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      4
+     ],
+     "pollinators": [
+      "beetle"
+     ],
+     "fruit_set": 0.5,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      50,
+      80
+     ],
+     "unripe_colour": "#b9a53a",
+     "ripe_colour": "#d6a23a",
+     "ripen_days": [
+      240,
+      365
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      1,
+      4
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "treesa.org (1-4 stalked golden-yellow female cones to 79 x 30 cm, 36+ kg; seeds ~5 x 2.5 cm with bright orange-red flesh, poisonous; beetle-pollinated); SANBI (cones in late summer; seeds eaten by baboons, monkeys, dassies, birds); Univ. Hamburg (Encephalartos cones disintegrate ~6-12 months after pollination)."
     }
    },
    {
@@ -700,25 +853,26 @@
     "color": "#3E7A44",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       365
-      ],
-      [
-       "young",
-       5000
-      ],
-      [
-       "mature",
-       20000
-      ],
-      [
-       "old",
-       80000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      60,
+      300
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      8
+     ],
+     "first_seed_years": 7,
+     "lifespan_years": [
+      60,
+      200
+     ],
+     "shade": "intermediate",
+     "juvenile": "establishment",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Hypogeal: the orange seed stays on the ground while a single leaf appears bearing just one or two pairs of leaflets; later leaves carry more pairs. For years the plant is a small stemless tuft of stiff, dark green, feather-like leaves over a carrot-like underground stem; the stem usually stays buried, only its leafy crown showing.",
+     "confidence": "estimated",
+     "source": "Wikipedia (Zamia integrifolia): stem 3-25 cm, often subterranean, leaves 20-100 cm with 5-30 pairs of leaflets; NC State Extension: slow-growing, sun to part shade, fleshy seed coat must be removed to germinate, 1-2 seeds can be fatal. Germination, growth, first coning and lifespan estimated from cycad cultivation."
     },
     "repro": {
      "mode": "both",
@@ -882,6 +1036,54 @@
      "root_flare": false,
      "spacing_m": 0.05,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      12,
+      3
+     ],
+     "hemisphere": "north",
+     "flower_days": 10,
+     "flower_size_cm": 3,
+     "flower_colour": "#8a5a3a",
+     "flower_form": "cone",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      5
+     ],
+     "pollinators": [
+      "beetle"
+     ],
+     "fruit_set": 0.6,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      5,
+      19
+     ],
+     "unripe_colour": "#6e4a32",
+     "ripe_colour": "#e0561f",
+     "ripen_days": [
+      240,
+      330
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      60,
+      365
+     ],
+     "crop_per_tree": [
+      1,
+      3
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "Flora of North America via the Gymnosperm Database (Zamia integrifolia): pollen cones 2-5 per plant, 5-16 cm; seed cones cylindric-ellipsoid 5-19 cm; seeds 1.5-2 cm with a bright orange coat; receptivity and seed maturation Dec-Mar; NC State: seeds highly toxic. Beetle and weevil pollination, ripening time, fruit set and crop from cycad literature and estimates."
     }
    },
    {
@@ -913,25 +1115,27 @@
     "color": "#2A5A38",
     "accent": "#8A7A50",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       365
-      ],
-      [
-       "young",
-       5000
-      ],
-      [
-       "mature",
-       20000
-      ],
-      [
-       "old",
-       80000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      180,
+      720
      ],
-     "final_size": 1.0
+     "height_years": [
+      10,
+      30
+     ],
+     "trunk_years": 30,
+     "first_seed_years": 15,
+     "lifespan_years": [
+      80,
+      120
+     ],
+     "shade": "tolerant",
+     "juvenile": "establishment",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Hypogeal: the big red-fleshed seed lies in the litter while a thick taproot and contractile roots pull the growing point down. The first leaf is a short frond with a few pairs of long narrow leaflets; for years it stays a small stemless tuft adding a few fronds a year over a swelling underground stem. The fountain of 50-100 arching 1-2 m fronds comes later; most plants never raise a visible trunk.",
+     "confidence": "documented",
+     "source": "Wikipedia (10-20 yr to maturity, lives to ~120 yr, huge underground tuber); ANBG Growing Native Plants (germination takes 6-24 months; trunk 0.3-2 m; 50-100 fronds to 2 m); ANPSA (very slow; cones after at least 10 yr); trunk emergence estimated"
     },
     "repro": {
      "mode": "both",
@@ -1103,6 +1307,54 @@
      "root_flare": false,
      "spacing_m": 0.1,
      "confidence": "estimated"
+    },
+    "fruiting": {
+     "flower_months": [
+      9,
+      11
+     ],
+     "hemisphere": "south",
+     "flower_days": 14,
+     "flower_size_cm": 15,
+     "flower_colour": "#5e7d3a",
+     "flower_form": "cone",
+     "flower_position": "crown",
+     "flowers_per_cluster": [
+      1,
+      3
+     ],
+     "pollinators": [
+      "beetle"
+     ],
+     "fruit_set": 0.8,
+     "fruit_kind": "cone",
+     "fruit_shape": "ovoid",
+     "fruit_size_cm": [
+      20,
+      45
+     ],
+     "unripe_colour": "#4f6b2e",
+     "ripe_colour": "#d0452a",
+     "ripen_days": [
+      180,
+      270
+     ],
+     "hang_days": [
+      14,
+      60
+     ],
+     "drop": "shatters",
+     "rot_days": [
+      120,
+      720
+     ],
+     "crop_per_tree": [
+      1,
+      3
+     ],
+     "edible": "toxic",
+     "confidence": "documented",
+     "source": "ANBG/ANPSA: barrel-shaped green female cones 20-45 x 10-20 cm, 1-3 per plant (males 1-5), breaking up to shed red/orange seeds 3-5 cm; Terry et al. 2005 (Int. J. Plant Sci.): thrips (Cycadothrips) and Tranes weevils as dual pollinators; seeds poisonous unless leached; coning often mass-triggered by fire; months estimated"
     }
    }
   ],

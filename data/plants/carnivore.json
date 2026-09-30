@@ -38,25 +38,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      7
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      50
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: tiny green tubular pitchers about 1 cm. Adult an evergreen rosette of fat, curved, jug-like pitchers 10-30 cm lying on the moss, green to deep red with purple veins, with a flared, hairy hood and full of rainwater; it adds only a few pitchers a year.",
+     "confidence": "estimated",
+     "source": "Schnell 2002, Carnivorous Plants of the United States and Canada, and ICPS growing guides (seed needs 4-8 weeks of cold, then germinates in 2-6 weeks; seedlings reach flowering size in about 3-5+ yr; long-lived rhizomes; fire-maintained sunny bogs); Wikipedia S. purpurea (seed falls a median 5 cm from the parent, so plants form clusters)"
     },
     "repro": {
      "mode": "both",
@@ -225,25 +226,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      6
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: 2 tiny cotyledons, then minute, hairy, green tubular pitchers about 1 cm tall; each year's pitchers are taller, in a fan from a creeping rhizome. Adults have tall (to 90 cm) yellow-green trumpet pitchers with an upright lid and a red throat blotch, flat sword-like leaves (phyllodes) in late summer, and nodding yellow flowers in early spring.",
+     "confidence": "estimated",
+     "source": "Schnell 2002, Carnivorous Plants of the United States and Canada, and ICPS growing guides (seed needs 4-8 weeks of cold, then germinates in 2-6 weeks; seedlings reach flowering size in about 3-5+ yr; long-lived rhizomes; fire-maintained sunny bogs); Flora of N America S. flava (pitchers to 90 cm)"
     },
     "repro": {
      "mode": "both",
@@ -414,25 +416,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
      ],
-     "final_size": 1.0
+     "height_years": [
+      3,
+      6
+     ],
+     "first_seed_years": 5,
+     "lifespan_years": [
+      20,
+      60
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: 2 tiny cotyledons, then small green tubular pitchers. Adults are clumps of tall, slender trumpets (to 90 cm) whose upper third and wavy lid are white with a net of red or green veins; a second, more colourful flush of pitchers comes in autumn, and nodding maroon-red flowers in spring.",
+     "confidence": "estimated",
+     "source": "Schnell 2002, Carnivorous Plants of the United States and Canada, and ICPS growing guides (seed needs 4-8 weeks of cold, then germinates in 2-6 weeks; seedlings reach flowering size in about 3-5+ yr; long-lived rhizomes; fire-maintained sunny bogs); Flora of N America S. leucophylla (white-topped pitchers to ~1 m, spring and autumn flushes)"
     },
     "repro": {
      "mode": "both",
@@ -603,25 +606,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      4
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seedling: tiny green tubular pitchers. Adult a flat rosette of reclining pitchers 5-20 cm long lying on the ground in a wheel, each ending in a ball-shaped hood like a parrot's beak, speckled with white windows and a small entrance slit; under floodwater they trap tadpoles and small fish.",
+     "confidence": "estimated",
+     "source": "Schnell 2002, Carnivorous Plants of the United States and Canada, and ICPS growing guides (seed needs 4-8 weeks of cold, then germinates in 2-6 weeks; seedlings reach flowering size in about 3-5+ yr; long-lived rhizomes; fire-maintained sunny bogs); Flora of N America S. psittacina (decumbent pitchers 5-30 cm with a globose beaked hood)"
     },
     "repro": {
      "mode": "both",
@@ -790,25 +794,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      6,
+      15
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: a tiny rosette of narrow leaves with minute pitchers. For many years it is a slowly widening rosette of broad, leathery leaves with ever bigger, red-purple, urn-shaped lower pitchers resting on the ground, with a broad ribbed rim and a huge vaulted lid; only old plants send out a thick scrambling stem up to several metres.",
+     "confidence": "estimated",
+     "source": "Wikipedia Nepenthes rajah (Kinabalu, 1500-2650 m, open sunny sites; scrambling stem to 6 m, mostly under 3 m; pitchers to 41 x 20 cm; inflorescence to 80-120 cm, flowers any time of year; slow growing); ages estimated from highland Nepenthes cultivation"
     },
     "repro": {
      "mode": "both",
@@ -987,25 +992,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: tiny round cotyledons, then a flat rosette of narrow leaves whose tips grow into miniature pitchers. The rosette bears squat, winged, green to red-speckled 'lower' pitchers resting on the ground; after a year or two a thin, angular stem climbs through scrub, now with slender, wingless, cylindrical 'upper' pitchers on tendrils that coil round supports.",
+     "confidence": "estimated",
+     "source": "Estimated from lowland Nepenthes (Clarke 1997/2001 'Nepenthes of Borneo/Sumatra & Peninsular Malaysia': rosette then climbing stems to several m, dimorphic lower/upper pitchers, weedy species of open disturbed ground); growers' germination data (2-8 weeks)"
     },
     "repro": {
      "mode": "both",
@@ -1180,25 +1186,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      21,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      2,
+      5
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      15,
+      40
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: round cotyledons, then a flat rosette of narrow, soft leaves tipped with tiny pitchers. The rosette makes plump, winged, green to red-flecked lower pitchers on the ground; soon a stem scrambles 1-6 m through swamp scrub carrying funnel-shaped, wingless upper pitchers with red lids on coiled tendrils.",
+     "confidence": "estimated",
+     "source": "Estimated from lowland Nepenthes: Wikipedia N. mirabilis (the most widespread pitcher plant, in open swampy and disturbed lowland sites, stems to several m, dimorphic pitchers); growers' data for germination and first flowering"
     },
     "repro": {
      "mode": "both",
@@ -1373,25 +1380,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.5,
+      2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      3,
+      8
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds need winter cold, then germinate in spring on wet Sphagnum; the seedling is a tiny flat rosette of round red-haired leaves on long stalks. Each autumn it shrinks to a tight winter bud (hibernaculum) that reopens in April-May; in shade the rosette turns spindly and upright instead of flat.",
+     "confidence": "documented",
+     "source": "USDA FEIS Drosera rotundifolia (short-lived perennial; flowers every summer once established, Jun-Sep, one flower opening per day; hibernaculum forms in fall and opens Apr-May; very shade intolerant; shallow roots <6 cm); Nordbakken et al. 2004 J. Ecol. (demography); seed stratification from growers"
     },
     "repro": {
      "mode": "both",
@@ -1570,25 +1578,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      42
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.4,
+      1
+     ],
+     "first_seed_years": 0.7,
+     "lifespan_years": [
+      4,
+      10
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Seeds germinate readily on wet ground. The seedling is a tiny rosette of short spoon-shaped sticky leaves that grow longer and more strap-like with each new leaf; it reaches flowering size within a year and slowly builds a short stem (4-15 cm) clothed in old dead leaves.",
+     "confidence": "documented",
+     "source": "Wikipedia Drosera capensis (rosette 10-15 cm, up to 30 cm; short stem 4-15 cm; flowers in summer on 1-2 stalks of 15-30 pale purple flowers; seedlings flower within a year; capsules ripe 4-5 weeks after pollination; self-fertile; wet seeps 0-1800 m; prefers full sun). Lifespan estimated."
     },
     "repro": {
      "mode": "both",
@@ -1763,25 +1772,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      14,
+      60
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.7,
+      2
+     ],
+     "first_seed_years": 1.5,
+     "lifespan_years": [
+      10,
+      30
+     ],
+     "shade": "intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedlings form a small rosette of simple, unforked, strap- to spoon-shaped sticky leaves; only as the plant matures do leaves become the tall, forked 'Y' blades (and in some forms many-forked fans) on long wiry stalks. Temperate forms die back to a thick rhizome in winter and resprout.",
+     "confidence": "estimated",
+     "source": "Wikipedia Drosera binata (large perennial sundew; leaves up to 60 cm, forked once in the T-form, up to 8 or 30+ points in other forms; SE Australia and NZ below 1000 m; some populations winter-dormant); ICPS guide (seedlings lack forked leaves). Timings and lifespan estimated."
     },
     "repro": {
      "mode": "both",
@@ -1959,25 +1969,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      7,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      0.1,
+      0.3
+     ],
+     "first_seed_years": 0.5,
+     "lifespan_years": [
+      1.5,
+      4
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Starts from seed or from gemmae (tiny green brood bodies from the rosette centre in late autumn-winter); within weeks a flat rosette 8-18 mm across of minute round sticky leaves forms, centred on a tuft of silvery stipules. Short-lived: some populations behave as annuals or biennials, and it is easily smothered by taller plants.",
+     "confidence": "documented",
+     "source": "Wikipedia Drosera pygmaea (rosette 8-18 mm; biennial or annual in parts of its range; small pale flowers on 2.5-7.5 cm stems; open ground, coastal to subalpine in NZ); NZ Plant Conservation Network (gemmae, flowering Oct-Mar); Lowrie, pygmy sundews (short-lived perennial rosettes)"
     },
     "repro": {
      "mode": "both",
@@ -2154,25 +2165,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      10,
+      30
      ],
-     "final_size": 1.0
+     "height_years": [
+      1.5,
+      4
+     ],
+     "first_seed_years": 4,
+     "lifespan_years": [
+      20,
+      30
+     ],
+     "shade": "very_intolerant",
+     "juvenile": "rosette",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Epigeal: two tiny oval cotyledons, then the very first true leaf is already a miniature trap 1-2 mm across. Seedlings form a flat rosette of tiny traps on short leafy stalks, adding larger leaves each year; mature rosettes carry 4-7 traps and later divide underground into small colonies.",
+     "confidence": "documented",
+     "source": "Wikipedia Venus flytrap (rosette of 4-7 leaves, 3-10 cm; seed germinates without dormancy; 4-5 yr to maturity; lives 20-30 yr in cultivation; full sun, <10% canopy cover, fire every 3-5 yr; winter dormancy); FlytrapCare seed guide (germination 10-30 d)"
     },
     "repro": {
      "mode": "both",
@@ -2351,25 +2363,26 @@
     "color": "#6AA050",
     "accent": "#C03040",
     "growth": {
-     "stages": [
-      [
-       "sprout",
-       60
-      ],
-      [
-       "young",
-       365
-      ],
-      [
-       "mature",
-       1500
-      ],
-      [
-       "old",
-       4000
-      ]
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
      ],
-     "final_size": 1.0
+     "height_years": [
+      6,
+      20
+     ],
+     "first_seed_years": 10,
+     "lifespan_years": [
+      30,
+      80
+     ],
+     "shade": "intermediate",
+     "juvenile": "rosette",
+     "juvenile_leaves": "different",
+     "juvenile_note": "Seedling: a tiny rosette of narrow leaves tipped with miniature pitchers. For years it stays a slow rosette making rounded, winged lower pitchers; then a stem up to 10 m climbs or hangs from mossy trees and makes the famous upper pitchers: hard, glossy, strongly waisted with a wide flared mouth and a lid bristling with white 'nectar' hairs under which tree shrews feed and leave droppings.",
+     "confidence": "estimated",
+     "source": "Wikipedia Nepenthes lowii (1650-2600 m mossy forest, terrestrial or epiphytic; stem >10 m; gets 57-100% of leaf nitrogen from tree shrew droppings; raceme to 45 cm, capsules ~17 x 4 mm); growth and ages estimated from highland Nepenthes cultivation (very slow)"
     },
     "repro": {
      "mode": "both",
@@ -2513,6 +2526,56 @@
      "color_2": "#5A4A3A",
      "lenticels": "none",
      "confidence": "documented"
+    },
+    "fruiting": {
+     "flower_months": [
+      1,
+      12
+     ],
+     "hemisphere": "equatorial",
+     "flower_days": 4,
+     "flower_size_cm": 0.8,
+     "flower_colour": "#7b3b2c",
+     "flower_form": "spike",
+     "flower_position": "stalk",
+     "flowers_per_cluster": [
+      40,
+      100
+     ],
+     "pollinators": [
+      "fly",
+      "bee",
+      "moth"
+     ],
+     "fruit_set": 0.3,
+     "fruit_kind": "capsule",
+     "fruit_shape": "elongated",
+     "fruit_size_cm": [
+      1.5,
+      2.0
+     ],
+     "unripe_colour": "#6f8a3a",
+     "ripe_colour": "#8a6a40",
+     "ripen_days": [
+      60,
+      120
+     ],
+     "hang_days": [
+      30,
+      120
+     ],
+     "drop": "splits",
+     "rot_days": [
+      60,
+      180
+     ],
+     "crop_per_tree": [
+      20,
+      200
+     ],
+     "edible": "no",
+     "confidence": "estimated",
+     "source": "Wikipedia (raceme: peduncle to 20 cm, rachis to 25 cm, two-flowered partial peduncles, sepals to 5 mm; capsules ~17 x 4 mm); Nepenthes are dioecious, flower irregularly through the year, visited by flies, bees, wasps and moths; capsules split to shed tiny wind-borne seeds; timings estimated"
     }
    }
   ]

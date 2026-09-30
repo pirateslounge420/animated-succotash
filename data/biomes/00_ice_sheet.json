@@ -105,7 +105,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "low bright-green cushion on wet gravel"
+    "silhouette": "low bright-green cushion on wet gravel",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      14,
+      45
+     ],
+     "height_years": [
+      4,
+      15
+     ],
+     "first_seed_years": 3,
+     "lifespan_years": [
+      20,
+      100
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores or shoot fragments sprout into green protonema threads on wet gravel or seepage mud; small upright shoots with lance-shaped, red-based leaves and a strong midrib appear within weeks, then crowd into a dense turf, green above and wine-red to brown below, bound together by reddish rhizoid felt.",
+     "confidence": "estimated",
+     "source": "Cosmopolitan moss of fens, seepages and streamsides and one of the commonest Antarctic mosses, where sporophytes are rare and shoots extend only a few mm a year; timings estimated from moss growth studies."
+    }
    },
    {
     "name": "Map lichen",
@@ -180,7 +202,29 @@
      "lenticels": "none",
      "confidence": "documented"
     },
-    "silhouette": "yellow-green crust map painted on bare rock"
+    "silhouette": "yellow-green crust map painted on bare rock",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      365,
+      1825
+     ],
+     "height_years": [
+      50,
+      150
+     ],
+     "first_seed_years": 20,
+     "lifespan_years": [
+      500,
+      9500
+     ],
+     "shade": "intolerant",
+     "juvenile": "mat",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Begins as a thin black stain (prothallus) on bare, sunlit siliceous rock. Tiny angular chartreuse-yellow areoles (0.2-1.8 mm) appear on it like islands and multiply into a flat crust split by black lines, like a map; neighbouring thalli meet along black borders. Small black fruit bodies sit between the areoles. It widens by well under 1 mm a year.",
+     "confidence": "documented",
+     "source": "Wikipedia Rhizocarpon geographicum (patches to ~15 cm; areoles 0.2-1.8 mm; black apothecia under 1.5 mm; age estimates 9,500 yr on Baffin Island and 10,000-11,500 yr in the Brooks Range; used in lichenometry); diameter growth of roughly 0.1-1 mm/yr from lichenometry studies (knowledge)"
+    }
    }
   ],
   "epiphyte": []
