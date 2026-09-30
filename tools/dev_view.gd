@@ -83,6 +83,22 @@ func _run() -> void:
 		# The whole HUD: H's full HUD, every readout pinned or not.
 		main.hud.toggle()
 	var player: PlanetPlayer = main.player
+	# AT=x,y,z: stand at that surface direction instead of the camp (a
+	# waterfall, a road), looking north.
+	if OS.get_environment("AT") != "":
+		var at := OS.get_environment("AT").split(",")
+		var d := Vector3(float(at[0]), float(at[1]), float(at[2])).normalized()
+		var off: Vector3 = main.world.to_scene(d, PlanetConst.RADIUS_M + main.world.surface_elevation(d))
+		main.world.rebase(off)
+		player.global_position -= off
+		main.chunks.load_blocking(d)
+		var look := CreatureSpawner._offset(d, float(OS.get_environment("AT_YAW")) if OS.get_environment("AT_YAW") != "" else 0.0, 30.0)
+		if OS.get_environment("LOOK_AT") != "":
+			var la := OS.get_environment("LOOK_AT").split(",")
+			look = Vector3(float(la[0]), float(la[1]), float(la[2])).normalized()
+		player.spawn_at(d, look)
+		for i in 30:
+			await process_frame
 	player.set_physics_process(false)
 	# HUD=1 keeps the HUD (speedometer, clock); SPEED (m/s) and METER (0-1)
 	# light the readouts up (the player's physics is held still).

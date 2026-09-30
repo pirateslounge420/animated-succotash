@@ -5,7 +5,7 @@ class_name Tuning
 ## reads one number; a key missing from the file is warned about once and
 ## reads as 0, so a typo shows up at once instead of hiding.
 
-const FILES := {"movement": "res://data/movement.json", "combat": "res://data/combat.json", "look": "res://data/look.json", "hud": "res://data/hud.json", "litter": "res://data/litter.json", "stand": "res://data/stand.json", "camps": "res://data/camps.json", "torch": "res://data/torch.json", "fuel": "res://data/fuel.json", "dread": "res://data/dread.json"}
+const FILES := {"movement": "res://data/movement.json", "combat": "res://data/combat.json", "look": "res://data/look.json", "hud": "res://data/hud.json", "litter": "res://data/litter.json", "stand": "res://data/stand.json", "camps": "res://data/camps.json", "torch": "res://data/torch.json", "fuel": "res://data/fuel.json", "dread": "res://data/dread.json", "current": "res://data/water/current.json"}
 
 static var _tables := {}
 static var _warned := {}

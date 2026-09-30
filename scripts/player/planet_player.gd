@@ -450,6 +450,11 @@ var _climb_ease := 1.0
 var _prompt_timer := 0.0
 var _shake := 0.0
 var _knock := Vector3.ZERO
+## The current carrying you this frame (Current.flow_at, design §BE), for
+## the tests and the ripples.
+var current := Vector3.ZERO
+var current_kind := "none"
+static var CUR: Dictionary = Tuning.section("current", "player")
 var _aim_blend := 0.0
 ## The ninja run's trailing arms, 0 .. 1 (_update_camera()).
 var _arm_trail := 0.0
@@ -715,6 +720,27 @@ func _physics_process(delta: float) -> void:
 		speed = minf(speed, AIM_SPEED)
 	if swimming:
 		speed = minf(speed, SWIM_SPEED)
+	# Water has weight (design 30 Sept §BE, data/water/current.json): the
+	# river's flow where you are; wading drags by depth; swimming against
+	# a fast reach is a wall (no headway upstream); the drift is added to
+	# the velocity below.
+	current = Vector3.ZERO
+	current_kind = "none"
+	if depth > 0.25 and chunks.rivers != null:
+		var flow := Current.flow_at(chunks.rivers, world.planet, surface_dir)
+		current_kind = str(flow.kind)
+		var fdir: Vector3 = flow.dir
+		var fspeed := float(flow.speed)
+		if fspeed > 0.0:
+			var drag: Dictionary = CUR.get("wade_drag", {})
+			if not swimming:
+				var band := "knee" if depth < 0.6 else ("waist" if depth < 1.0 else "chest")
+				speed *= float(drag.get(band, 0.5))
+			var share := 1.0 if swimming else clampf(depth / 1.2, 0.0, 1.0) * 0.6
+			current = fdir * fspeed * float(CUR.get("drift", 1.0)) * share
+			if swimming and fspeed >= float(CUR.get("upstream_wall_ratio", 0.9)) * float(CUR.get("swim_mps", SWIM_SPEED)):
+				var against := minf(wish.dot(fdir), 0.0)
+				wish -= fdir * against
 	speed *= burden_speed()
 	if on_floor:
 		_traction_t -= delta
@@ -874,7 +900,7 @@ func _physics_process(delta: float) -> void:
 			_update_squat(delta)
 			return
 	_was_on_floor = on_floor
-	velocity = horizontal + up * vy + _knock
+	velocity = horizontal + up * vy + _knock + current
 	_knock = _knock.move_toward(Vector3.ZERO, delta * 12.0)
 	var before := horizontal
 	var before_v := velocity

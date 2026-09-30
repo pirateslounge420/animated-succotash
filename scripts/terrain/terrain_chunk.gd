@@ -1340,6 +1340,17 @@ func _build_falls(falls: Array, world: Node, anchor: Vector3) -> void:
 	mi.material_override = _fall_mat
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(mi)
+	# Each fall's roar, at its plunge pool: a source you can walk to
+	# (design 30 Sept §BG, audio.json "waterfall"), louder for a taller,
+	# wider fall.
+	for f in falls:
+		var mid: Vector3 = ((f[0] as Vector3) + (f[1] as Vector3)).normalized()
+		var roar := Audio3D.make("waterfall", self, "Roar")
+		roar.stream = SoundSynth.stream("waterfall_loop", posmod(hash(mid), SoundSynth.VARIANTS))
+		roar.position = world.to_scene_relative(mid, float(f[3]) + 0.5, anchor)
+		var size := clampf((float(f[2]) - float(f[3])) / 20.0 + float(f[4]) / RiverNetwork.MAX_WIDTH_M, 0.3, 1.5)
+		roar.volume_db = linear_to_db(size)
+		roar.play(randf() * 2.0)
 
 
 ## Spray drifting up (along `up`, the local vertical) from a plunge pool.
