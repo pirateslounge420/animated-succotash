@@ -7,7 +7,8 @@
   "max_db": "Loudest boost (dB) when you are closer than unit_size (0: never louder than set).",
   "muffle": "[near m, far m] or null: from near to far the sound loses its high end (down to muffle_far.cutoff_hz) and most of its direction (panning down to muffle_far.pan), as a far howl does. null: always clear.",
   "muffle_far": "Where a muffled sound ends up at its far distance: cutoff_hz (its brightest frequency) and pan (0-1, how much of its left-right direction is left).",
-  "cloak_flurry": "Design §Z: the whip-and-rustle of heavy cloth on every roll, slide start, wall-jump kick and swing release (synthesized in sound_synth, no sample). pitch_by_speed: how much faster movement sharpens the snap (0 = same every time). noise_m: how far creatures hear it. volume_db: loudness."
+  "cloak_flurry": "Design \u00a7Z: the whip-and-rustle of heavy cloth on every roll, slide start, wall-jump kick and swing release (synthesized in sound_synth, no sample). pitch_by_speed: how much faster movement sharpens the snap (0 = same every time). noise_m: how far creatures hear it. volume_db: loudness.",
+  "class": "Design 30 Sept \u00a7BG: every kind is a SOURCE (a 3D player at a place you can walk to; muffle: the far and near distances between which terrain and foliage dull it) or lives in the BED below (no position). Both lists together file every sound in the game."
  },
  "muffle_far": {
   "cutoff_hz": 700,
@@ -19,70 +20,83 @@
    "max_distance": 35,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "player_voice": {
    "unit_size": 4,
    "max_distance": 40,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "bow": {
    "unit_size": 4,
    "max_distance": 40,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "arrow": {
    "unit_size": 6,
    "max_distance": 60,
    "model": "inverse",
    "max_db": 3,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "spear": {
    "unit_size": 4,
    "max_distance": 40,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "spear_impact": {
    "unit_size": 6,
    "max_distance": 70,
    "model": "inverse",
    "max_db": 3,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "rustle": {
    "unit_size": 6,
    "max_distance": 60,
    "model": "inverse",
    "max_db": 3,
-   "muffle": null
+   "muffle": [
+    20,
+    60
+   ],
+   "class": "source"
   },
   "climb_hand": {
    "unit_size": 2.5,
    "max_distance": 30,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "climb_breath": {
    "unit_size": 2,
    "max_distance": 20,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "rain": {
    "unit_size": 6,
    "max_distance": 60,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "wildlife_call": {
    "unit_size": 8,
@@ -92,7 +106,8 @@
    "muffle": [
     25,
     60
-   ]
+   ],
+   "class": "source"
   },
   "howl": {
    "unit_size": 40,
@@ -102,7 +117,8 @@
    "muffle": [
     60,
     760
-   ]
+   ],
+   "class": "source"
   },
   "rider_hooves": {
    "unit_size": 5,
@@ -112,7 +128,8 @@
    "muffle": [
     40,
     110
-   ]
+   ],
+   "class": "source"
   },
   "crawler_hands": {
    "unit_size": 5,
@@ -122,7 +139,8 @@
    "muffle": [
     20,
     50
-   ]
+   ],
+   "class": "source"
   },
   "gibbon_hoot": {
    "unit_size": 12,
@@ -132,7 +150,8 @@
    "muffle": [
     40,
     160
-   ]
+   ],
+   "class": "source"
   },
   "mythic_call": {
    "unit_size": 30,
@@ -142,7 +161,8 @@
    "muffle": [
     60,
     760
-   ]
+   ],
+   "class": "source"
   },
   "hoofbeats_far": {
    "unit_size": 45,
@@ -152,7 +172,8 @@
    "muffle": [
     30,
     500
-   ]
+   ],
+   "class": "source"
   },
   "camp_chatter": {
    "unit_size": 3,
@@ -162,7 +183,8 @@
    "muffle": [
     6,
     25
-   ]
+   ],
+   "class": "source"
   },
   "thunder": {
    "unit_size": 1000,
@@ -172,63 +194,84 @@
    "muffle": [
     400,
     8000
-   ]
+   ],
+   "class": "source"
   },
   "meteor": {
    "unit_size": 400,
    "max_distance": 3000,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "torch": {
    "unit_size": 3,
    "max_distance": 25,
    "model": "inverse",
    "max_db": -6,
-   "muffle": null
+   "muffle": [
+    8,
+    25
+   ],
+   "class": "source"
   },
   "torch_light": {
    "unit_size": 3,
    "max_distance": 20,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "fire": {
    "unit_size": 5,
    "max_distance": 60,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": [
+    15,
+    60
+   ],
+   "class": "source"
   },
   "water_flow": {
    "unit_size": 8,
    "max_distance": 90,
    "model": "inverse",
    "max_db": 3,
-   "muffle": null
+   "muffle": [
+    30,
+    90
+   ],
+   "class": "source"
   },
   "waterfall": {
    "unit_size": 12,
    "max_distance": 180,
    "model": "inverse",
    "max_db": 6,
-   "muffle": null
+   "muffle": [
+    60,
+    180
+   ],
+   "class": "source"
   },
   "dread_follow": {
    "unit_size": 6,
    "max_distance": 40,
    "model": "inverse",
    "max_db": 0,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   },
   "dread_close": {
    "unit_size": 6,
    "max_distance": 30,
    "model": "inverse",
    "max_db": 3,
-   "muffle": null
+   "muffle": null,
+   "class": "source"
   }
  },
  "cloak_flurry": {
@@ -237,5 +280,176 @@
   "volume_db": -6.0,
   "length_s": 0.35
  },
- "_help_bed": "Design 30 Sept §BG: sounds are either the ambient BED (no position; wind, insects, distant birds, frogs; per biome and hour; it thins at dread stage 1) or a point SOURCE you can walk to (the kinds above, muffled by terrain and foliage). File every existing sound as one or the other."
+ "_help_bed": "Design 30 Sept \u00a7BG: sounds are either the ambient BED (\"bed\" below, SoundBed: no position; wind, insects, distant birds, frogs; per biome group, hour and season; it thins at dread stage 1) or a point SOURCE (every row in \"kinds\": a 3D player at a place you can walk to, muffled by terrain and foliage where muffle is set). Filed 30 Sept: bed = wind, insects, birds_far, frogs. Sources = every kinds row: the player's own (footstep, player_voice, bow, arrow, spear, spear_impact, climb_hand, climb_breath, torch, torch_light), the world's (rustle: the litter and the trees you brush; rain: the rain FX round the camera; fire: every campfire's crackle; water_flow and waterfall: the rivers and their falls; camp_chatter; thunder; meteor), the creatures' (wildlife_call: one animal calling from where it is; howl; gibbon_hoot; rider_hooves; crawler_hands; mythic_call; hoofbeats_far) and the dark's (dread_follow, dread_close). The HUD's hit tick is UI, neither.",
+ "bed": {
+  "_help": "The ambient bed (SoundBed): four loops with no position (wind, insects, distant birds, frogs), mixed by biome group x hour x season x weather; frogs only near water (frogs_near_water_km); insects and frogs silent below cold_c_silence C; the wind loop by the wind's own speed (gain_per_mps) and closed under canopy (canopy: gain and low-pass cutoff by how much sky the place sees). Levels are linear gains 0-1; layers.db trims each loop. It thins at dread stage 1 (Dread.bed_gain). Added by Claude Code as a feel call on 30 Sept (the designer owns it from here).",
+  "layers": {
+   "wind": {
+    "db": -10.0
+   },
+   "insects": {
+    "db": -16.0
+   },
+   "birds_far": {
+    "db": -14.0
+   },
+   "frogs": {
+    "db": -12.0
+   }
+  },
+  "biome_groups": {
+   "forest": [
+    "TROPICAL_RAINFOREST",
+    "JUNGLE",
+    "TROPICAL_DRY_FOREST",
+    "CLOUD_FOREST",
+    "TEMPERATE_DECIDUOUS",
+    "TEMPERATE_RAINFOREST",
+    "FLOODPLAIN_FOREST",
+    "MARITIME_FOREST",
+    "TAIGA",
+    "KRUMMHOLZ",
+    "MANGROVE"
+   ],
+   "open": [
+    "TALLGRASS_PRAIRIE",
+    "SHORTGRASS_PRAIRIE",
+    "STEPPE",
+    "SAGEBRUSH",
+    "MEDITERRANEAN_SCRUB",
+    "THORN_SCRUB",
+    "SAVANNA",
+    "ALPINE_MEADOW",
+    "PARAMO",
+    "PUNA",
+    "WET_MEADOW",
+    "OASIS",
+    "HOT_SPRING",
+    "CANYON",
+    "TEPUI"
+   ],
+   "wetland": [
+    "SWAMP",
+    "FRESHWATER_MARSH",
+    "SALT_MARSH",
+    "BOG",
+    "FEN",
+    "ESTUARY",
+    "LAGOON",
+    "FRESHWATER"
+   ],
+   "desert": [
+    "HOT_DESERT",
+    "COLD_DESERT",
+    "BADLANDS",
+    "SALT_FLAT",
+    "VOLCANIC_FIELD"
+   ],
+   "cold": [
+    "TUNDRA",
+    "ALPINE_TUNDRA",
+    "ICE_SHEET",
+    "GLACIER",
+    "SEA_ICE"
+   ],
+   "coast": [
+    "BEACH",
+    "DUNES",
+    "ROCKY_SHORE",
+    "SHELF_SEA",
+    "CORAL_REEF",
+    "KELP_FOREST",
+    "DEEP_OCEAN"
+   ]
+  },
+  "by_group": {
+   "forest": {
+    "wind": 0.5,
+    "insects": 0.9,
+    "birds_far": 1.0,
+    "frogs": 0.5
+   },
+   "open": {
+    "wind": 1.0,
+    "insects": 0.8,
+    "birds_far": 0.6,
+    "frogs": 0.3
+   },
+   "wetland": {
+    "wind": 0.6,
+    "insects": 1.0,
+    "birds_far": 0.7,
+    "frogs": 1.0
+   },
+   "desert": {
+    "wind": 1.0,
+    "insects": 0.35,
+    "birds_far": 0.15,
+    "frogs": 0.0
+   },
+   "cold": {
+    "wind": 1.0,
+    "insects": 0.0,
+    "birds_far": 0.1,
+    "frogs": 0.0
+   },
+   "coast": {
+    "wind": 1.0,
+    "insects": 0.2,
+    "birds_far": 0.6,
+    "frogs": 0.1
+   }
+  },
+  "by_hour": {
+   "insects": {
+    "dawn": 0.5,
+    "day": 0.45,
+    "dusk": 1.0,
+    "night": 1.0
+   },
+   "birds_far": {
+    "dawn": 1.0,
+    "day": 0.6,
+    "dusk": 0.35,
+    "night": 0.0
+   },
+   "frogs": {
+    "dawn": 0.4,
+    "day": 0.15,
+    "dusk": 1.0,
+    "night": 1.0
+   }
+  },
+  "by_season": {
+   "insects": {
+    "winter": 0.0,
+    "spring": 0.5,
+    "summer": 1.0,
+    "autumn": 0.6
+   },
+   "birds_far": {
+    "winter": 0.25,
+    "spring": 1.0,
+    "summer": 0.8,
+    "autumn": 0.5
+   },
+   "frogs": {
+    "winter": 0.0,
+    "spring": 1.0,
+    "summer": 0.8,
+    "autumn": 0.3
+   }
+  },
+  "frogs_near_water_km": 0.06,
+  "cold_c_silence": 4.0,
+  "wind": {
+   "gain_per_mps": 0.08,
+   "max_gain": 1.0
+  },
+  "canopy": {
+   "wind_gain": 0.45,
+   "cutoff_hz_open": 20000.0,
+   "cutoff_hz_canopy": 1800.0
+  }
+ }
 }

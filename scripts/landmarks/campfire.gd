@@ -83,6 +83,12 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 		flames.add_child(card)
 	for part in _ground_glow():
 		root.add_child(part)
+	# Its crackle: a source you can walk to (design 30 Sept §BG).
+	var crackle := Audio3D.make("fire", root, "Crackle")
+	crackle.stream = SoundSynth.stream("fire_loop", posmod(hash(d), SoundSynth.VARIANTS))
+	crackle.volume_db = -8.0
+	crackle.position = Vector3(0, 0.4, 0)
+	crackle.play(randf() * 2.0)
 	var light := OmniLight3D.new()
 	light.name = "Light"
 	light.light_color = LIGHT
@@ -165,3 +171,10 @@ static func flicker(camp: Node3D, time: float) -> void:
 	var burn := float(camp.get_meta("burn", 1.0))
 	(camp.get_node("Flames") as Node3D).scale = Vector3(lerpf(0.7, 1.0, burn), k * lerpf(0.5, 1.0, burn), lerpf(0.7, 1.0, burn))
 	(camp.get_node("Light") as OmniLight3D).light_energy = LIGHT_ENERGY * lerpf(DAY_SHARE, 1.0, night) * k * burn
+	var crackle := camp.get_node_or_null("Crackle") as AudioStreamPlayer3D
+	if crackle:
+		crackle.volume_db = -8.0 + linear_to_db(maxf(burn, 0.001)) * 0.7
+		if burn <= 0.0 and crackle.playing:
+			crackle.stop()
+		elif burn > 0.0 and not crackle.playing:
+			crackle.play()

@@ -37,6 +37,7 @@ var aroid_garden: AroidGarden
 var fruit_crop: FruitCrop
 var fuel_field: FuelField
 var dread: Dread
+var sound_bed: SoundBed
 var mythics: Mythics
 ## Dev mode only (data/dev.json): the F7 rig spawner.
 var dev_spawn: DevSpawn
@@ -220,6 +221,10 @@ func _on_planet_ready() -> void:
 	dread.name = "Dread"
 	add_child(dread)
 	dread.setup(world, chunks, player, sky)
+	sound_bed = SoundBed.new()
+	sound_bed.name = "SoundBed"
+	add_child(sound_bed)
+	sound_bed.setup(world, chunks, player, sky)
 	fruit_crop.setup(world, chunks, player)
 	# Mythic creatures before they spawn: biome cues.
 	mythics = Mythics.new()
@@ -402,6 +407,7 @@ func _process(delta: float) -> void:
 	# the local clock.
 	var clock_h := fposmod(Astro.time_of_day(world.days) + CubeSphere.longitude(d) / TAU, 1.0) * 24.0
 	GameLog.now_text = "Day %d · %02d:%02d" % [int(floor(world.days)) + 1, int(clock_h), int(fmod(clock_h, 1.0) * 60.0)]
+	sound_bed.update_bed(delta, weather, clock_h)
 	_log_events()
 	hud.readouts.feed(player.velocity.length(), player.meter.value, clock_h, world.dev_mode, delta)
 	map_overlay.update_map(d, delta)

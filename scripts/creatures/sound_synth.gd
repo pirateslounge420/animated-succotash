@@ -91,10 +91,24 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _hitmarker(rng)
 		"murmur", "murmur_one":
 			samples = _murmur(rng, rng.randi_range(3, 4) if kind == "murmur" else 1)
+		"wind_loop":
+			samples = _wind_loop(rng)
+		"insects_loop":
+			samples = _insects_loop(rng)
+		"frogs_loop":
+			samples = _frogs_loop(rng)
+		"birds_far_loop":
+			samples = _birds_far_loop(rng)
+		"water_loop":
+			samples = _water_loop(rng, false)
+		"waterfall_loop":
+			samples = _water_loop(rng, true)
+		"fire_loop":
+			samples = _fire_loop(rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
-	if kind == "rain_loop":
+	if kind.ends_with("_loop"):
 		wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
 		wav.loop_begin = 0
 		wav.loop_end = samples.size()
@@ -392,6 +406,157 @@ static func _rain_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
 		var w := float(i) / fade
 		s[i] = lerpf(raw[n + i], raw[i], w)
 	return s
+
+
+## A seamless loop out of `raw` (n samples plus a `fade` tail that is
+## crossfaded over the start).
+static func _loopify(raw: PackedFloat32Array, n: int, fade: int) -> PackedFloat32Array:
+	var s := PackedFloat32Array()
+	s.resize(n)
+	for i in n:
+		s[i] = raw[i]
+	for i in fade:
+		var w := float(i) / fade
+		s[i] = lerpf(raw[n + i], raw[i], w)
+	return s
+
+
+# --- The bed (design 30 Sept §BG): loops with no position ------------------
+
+## Wind: low, band-passed noise with slow gusts (6 s loop).
+static func _wind_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var n := int(6.0 * RATE)
+	var fade := int(0.6 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var lp := 0.0
+	var lp2 := 0.0
+	var gust := 0.5
+	var gust_t := 0.0
+	var gp := rng.randf() * TAU
+	for i in raw.size():
+		var x := rng.randf_range(-1, 1)
+		lp = lerpf(lp, x, 0.02)
+		lp2 = lerpf(lp2, lp, 0.08)
+		gust_t += 1.0 / RATE
+		gust = 0.55 + 0.45 * sin(gp + gust_t * 0.9) * sin(gp * 0.7 + gust_t * 0.37)
+		raw[i] = (lp - lp2) * 6.0 * (0.4 + gust) + lp2 * 0.8 * gust
+	return _loopify(raw, n, fade)
+
+
+## Insects: a chorus of high, dry chirrs at a few rates (5 s loop).
+static func _insects_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var n := int(5.0 * RATE)
+	var fade := int(0.4 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var voices := []
+	for v in 4:
+		voices.append([rng.randf_range(2600.0, 5200.0), rng.randf_range(9.0, 26.0), rng.randf() * TAU, rng.randf_range(0.5, 1.0)])
+	for i in raw.size():
+		var t := float(i) / RATE
+		var acc := 0.0
+		for v in voices:
+			var tr := 0.5 + 0.5 * sin(TAU * float(v[1]) * t + float(v[2]))
+			tr = pow(tr, 6.0)
+			acc += sin(TAU * float(v[0]) * t) * tr * float(v[3]) * (0.7 + 0.3 * sin(t * 0.8 + float(v[2])))
+		raw[i] = acc * 0.25 + rng.randf_range(-1, 1) * 0.02
+	return _loopify(raw, n, fade)
+
+
+## Frogs: a slow chorus of croaks at two or three pitches (6 s loop).
+static func _frogs_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var n := int(6.0 * RATE)
+	var fade := int(0.5 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var croaks := []
+	for c in 9:
+		croaks.append([rng.randf_range(0.0, 6.0), rng.randf_range(90.0, 220.0), rng.randf_range(0.12, 0.3)])
+	for i in raw.size():
+		var t := float(i) / RATE
+		var acc := 0.0
+		for c in croaks:
+			var dt := fposmod(t - float(c[0]), 6.0)
+			if dt < float(c[2]):
+				var e := sin(PI * dt / float(c[2]))
+				acc += sin(TAU * float(c[1]) * dt) * (0.5 + 0.5 * sin(TAU * 28.0 * dt)) * e
+		raw[i] = acc * 0.6
+	return _loopify(raw, n, fade)
+
+
+## Distant birds: sparse, soft two-note calls far off (8 s loop).
+static func _birds_far_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var n := int(8.0 * RATE)
+	var fade := int(0.5 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var calls := []
+	for c in 6:
+		calls.append([rng.randf_range(0.0, 8.0), rng.randf_range(1400.0, 3000.0), rng.randf_range(0.9, 1.25), rng.randf_range(0.18, 0.4)])
+	var lp := 0.0
+	for i in raw.size():
+		var t := float(i) / RATE
+		var acc := 0.0
+		for c in calls:
+			var dt := fposmod(t - float(c[0]), 8.0)
+			var len := float(c[3])
+			if dt < len * 2.2:
+				var k := 0 if dt < len else 1
+				var d2 := dt - k * len * 1.2
+				if d2 >= 0.0 and d2 < len:
+					var f := float(c[1]) * (float(c[2]) if k == 1 else 1.0) * (1.0 + 0.15 * d2 / len)
+					acc += sin(TAU * f * d2) * sin(PI * d2 / len)
+		lp = lerpf(lp, acc, 0.5)
+		raw[i] = lp * 0.5
+	return _loopify(raw, n, fade)
+
+
+# --- Sources ---------------------------------------------------------------
+
+## Running water: brown noise with a bubbling top; a waterfall is
+## heavier and steadier (4 s loop).
+static func _water_loop(rng: RandomNumberGenerator, fall: bool) -> PackedFloat32Array:
+	var n := int(4.0 * RATE)
+	var fade := int(0.4 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var lp := 0.0
+	var lp2 := 0.0
+	var bub := 0.0
+	var bf := 600.0
+	var bp := 0.0
+	for i in raw.size():
+		var x := rng.randf_range(-1, 1)
+		lp = lerpf(lp, x, 0.12 if fall else 0.3)
+		lp2 = lerpf(lp2, x, 0.03)
+		if rng.randf() < (0.004 if fall else 0.01):
+			bub = rng.randf_range(0.3, 1.0)
+			bf = rng.randf_range(500.0, 1600.0)
+		bub *= 0.985
+		bp += TAU * bf / RATE
+		raw[i] = lp2 * (1.4 if fall else 0.7) + lp * 0.5 + sin(bp) * bub * (0.15 if fall else 0.35)
+	return _loopify(raw, n, fade)
+
+
+## A fire: a low soft rumble with random pops and crackles (4 s loop).
+static func _fire_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var n := int(4.0 * RATE)
+	var fade := int(0.4 * RATE)
+	var raw := PackedFloat32Array()
+	raw.resize(n + fade)
+	var lp := 0.0
+	var pop := 0.0
+	var hiss := 0.0
+	for i in raw.size():
+		var x := rng.randf_range(-1, 1)
+		lp = lerpf(lp, x, 0.015)
+		hiss = lerpf(hiss, x, 0.6)
+		if rng.randf() < 0.0025:
+			pop = rng.randf_range(0.5, 1.0)
+		pop *= 0.9
+		raw[i] = lp * 3.0 + hiss * 0.08 + pop * rng.randf_range(-1, 1)
+	return _loopify(raw, n, fade)
 
 
 ## Thunder: near, a sharp crack then a heavy rolling rumble; far, only

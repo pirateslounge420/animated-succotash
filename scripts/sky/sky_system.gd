@@ -140,6 +140,12 @@ var sky_visibility := 1.0
 var post_floor := Vector3.ZERO
 var night_desat := 0.0
 var _enclosed := 0.0
+
+
+## How enclosed the player's place is (0 open, 1 inside a ruin or cave;
+## _update_floor), for the sound bed's canopy pressure.
+func enclosure() -> float:
+	return _enclosed
 static var DAY := Tuning.section("look", "day")
 static var NIGHT := Tuning.section("look", "night")
 ## Night fog density (per meter) added to the day's haze: about 40% at
