@@ -180,5 +180,32 @@
  },
  "dapple": {
   "mode": "stamped"
+ },
+ "ambient_floor": {
+  "_help": "Design 30 Sept §BD. Ambient at a point = the hour's sky ambient x that point's sky visibility (0-1, from the dapple stamp plus enclosure), never below the floor while any sky is visible. Applied AFTER the darkening stack (shadow map x dapple x canopy_dark x ambient). Night is mesopic: a blue-grey lift with colour drained below desaturate_below_luma. enclosed (ruin interiors, caves): sky visibility 0, so black unless a torch.",
+  "mode": "sky_visibility",
+  "day": {
+   "floor_color": "#080C4A",
+   "floor_energy": 0.16,
+   "sky_energy": 0.42
+  },
+  "night": {
+   "floor_color": "#0A1240",
+   "floor_energy": 0.1,
+   "sky_energy": 0.32,
+   "moon_add": 0.12,
+   "desaturate": 0.75,
+   "desaturate_below_luma": 0.22
+  },
+  "enclosed": {
+   "floor_energy": 0.0
+  },
+  "sky_visibility": {
+   "source": "dapple_stamp",
+   "min_outdoors": 0.06,
+   "feather_m": 3.0,
+   "canopy_dark_reads_same": true
+  },
+  "apply_order": "shadow*dapple*canopy_dark*ambient, then max(floor*visibility)"
  }
 }

@@ -1,0 +1,315 @@
+{
+ "_help": {
+  "about": "Fire is fuel (design 30 Sept §AX). Every campfire has a store that burns down: flames -> low -> embers -> out. Fuel is gathered from the world (dead wood, brush, reeds, dung, peat, driftwood) and dropped on the fire. What a biome offers decides whether a camp there can live. Restart after editing.",
+  "fire": "store_max_units: the most a fire holds. burn_scale: units burnt per real minute at full flame is 1/kind.burn_min, times this. low_share: below this share of store the fire reads 'low'. embers_min: real minutes the embers stay relightable after the store hits zero. tended_burn_scale: burn rate while folk are alive at the fire (until §BJ builds real tending). relight: how a dead fire comes back. light_radius_m: the safe / dread-draining radius (§BA).",
+  "wet": "Fuel gathered in rain or from soaked ground: burn-time multiplier and the chance it lights at all.",
+  "kinds": "burn_min: real minutes one unit burns at full flame. heat: warmth/light scale (brush burns hot and fast). smoke: visual smoke scale. carry_items: burden slots one unit takes.",
+  "biomes": "Per biome key (BiomeTemplates names): fuel kinds on offer with an abundance 0-1 that scales how much the gather pass places. An empty block means nothing burns there: a camp there dies."
+ },
+ "fire": {
+  "store_max_units": 12,
+  "burn_scale": 1.0,
+  "low_share": 0.25,
+  "embers_min": 20.0,
+  "tended_burn_scale": 0.35,
+  "relight": {
+   "from_torch": true,
+   "from_dry_fuel_on_embers": true,
+   "friction": false
+  },
+  "light_radius_m": 14.0,
+  "starts_with_units": 8
+ },
+ "wet": {
+  "burn_scale": 0.4,
+  "light_chance": 0.3,
+  "dry_h_game": 6
+ },
+ "kinds": {
+  "hardwood_log": {
+   "burn_min": 18.0,
+   "heat": 1.0,
+   "smoke": 0.3,
+   "carry_items": 2,
+   "from": "dead wood, broadleaf trunks and big limbs"
+  },
+  "softwood_log": {
+   "burn_min": 12.0,
+   "heat": 1.0,
+   "smoke": 0.5,
+   "carry_items": 2,
+   "from": "dead wood, conifer trunks and limbs"
+  },
+  "branch": {
+   "burn_min": 6.0,
+   "heat": 0.9,
+   "smoke": 0.4,
+   "carry_items": 1,
+   "from": "fallen branches, the litter field"
+  },
+  "brush": {
+   "burn_min": 3.0,
+   "heat": 1.4,
+   "smoke": 0.6,
+   "carry_items": 1,
+   "from": "dead scrub, thorn, sagebrush"
+  },
+  "reeds": {
+   "burn_min": 1.5,
+   "heat": 1.2,
+   "smoke": 0.8,
+   "carry_items": 1,
+   "from": "dry reeds and rushes"
+  },
+  "grass_bundle": {
+   "burn_min": 1.0,
+   "heat": 1.1,
+   "smoke": 0.9,
+   "carry_items": 1,
+   "from": "dry grass, gathered by the armful"
+  },
+  "dung": {
+   "burn_min": 8.0,
+   "heat": 0.7,
+   "smoke": 1.5,
+   "carry_items": 1,
+   "from": "dried dung of the herbivores present"
+  },
+  "peat": {
+   "burn_min": 14.0,
+   "heat": 0.6,
+   "smoke": 1.6,
+   "carry_items": 2,
+   "from": "cut and dried bog peat"
+  },
+  "driftwood": {
+   "burn_min": 8.0,
+   "heat": 0.9,
+   "smoke": 0.7,
+   "carry_items": 1,
+   "from": "the tide line"
+  },
+  "bamboo": {
+   "burn_min": 4.0,
+   "heat": 1.3,
+   "smoke": 0.7,
+   "carry_items": 1,
+   "from": "dead culms (dead_wood.json bamboo_share)"
+  },
+  "palm_frond": {
+   "burn_min": 2.0,
+   "heat": 1.1,
+   "smoke": 0.9,
+   "carry_items": 1,
+   "from": "fallen fronds"
+  },
+  "cactus_rib": {
+   "burn_min": 5.0,
+   "heat": 1.0,
+   "smoke": 0.5,
+   "carry_items": 1,
+   "from": "dead cactus skeletons"
+  }
+ },
+ "biomes": {
+  "ICE_SHEET": {},
+  "TUNDRA": {
+   "dung": 0.5,
+   "brush": 0.2
+  },
+  "ALPINE_TUNDRA": {
+   "dung": 0.3,
+   "brush": 0.15
+  },
+  "KRUMMHOLZ": {
+   "softwood_log": 0.3,
+   "branch": 0.7
+  },
+  "TAIGA": {
+   "softwood_log": 0.8,
+   "branch": 1.0
+  },
+  "TEMPERATE_DECIDUOUS": {
+   "hardwood_log": 0.8,
+   "branch": 1.0
+  },
+  "TEMPERATE_RAINFOREST": {
+   "softwood_log": 0.9,
+   "hardwood_log": 0.4,
+   "branch": 1.0
+  },
+  "CLOUD_FOREST": {
+   "hardwood_log": 0.6,
+   "branch": 1.0,
+   "bamboo": 0.3
+  },
+  "TALLGRASS_PRAIRIE": {
+   "grass_bundle": 1.0,
+   "dung": 0.6,
+   "brush": 0.15
+  },
+  "SHORTGRASS_PRAIRIE": {
+   "grass_bundle": 1.0,
+   "dung": 0.6,
+   "brush": 0.15
+  },
+  "STEPPE": {
+   "grass_bundle": 1.0,
+   "dung": 0.6,
+   "brush": 0.15
+  },
+  "SAGEBRUSH": {
+   "brush": 0.9,
+   "branch": 0.3,
+   "dung": 0.4
+  },
+  "MEDITERRANEAN_SCRUB": {
+   "brush": 0.9,
+   "branch": 0.3,
+   "dung": 0.4
+  },
+  "THORN_SCRUB": {
+   "brush": 0.9,
+   "branch": 0.3,
+   "dung": 0.4
+  },
+  "PARAMO": {
+   "grass_bundle": 0.7,
+   "dung": 0.3
+  },
+  "PUNA": {
+   "grass_bundle": 0.7,
+   "dung": 0.5
+  },
+  "ALPINE_MEADOW": {
+   "grass_bundle": 0.6,
+   "dung": 0.3,
+   "branch": 0.2
+  },
+  "COLD_DESERT": {
+   "brush": 0.3,
+   "dung": 0.3
+  },
+  "HOT_DESERT": {
+   "brush": 0.25,
+   "dung": 0.2,
+   "cactus_rib": 0.2
+  },
+  "TROPICAL_RAINFOREST": {
+   "hardwood_log": 0.7,
+   "branch": 1.0,
+   "bamboo": 0.4,
+   "palm_frond": 0.5
+  },
+  "JUNGLE": {
+   "hardwood_log": 0.7,
+   "branch": 1.0,
+   "bamboo": 0.4,
+   "palm_frond": 0.5
+  },
+  "TROPICAL_DRY_FOREST": {
+   "hardwood_log": 0.6,
+   "branch": 0.9,
+   "brush": 0.5
+  },
+  "SAVANNA": {
+   "branch": 0.5,
+   "brush": 0.6,
+   "dung": 0.9,
+   "grass_bundle": 0.8
+  },
+  "SWAMP": {
+   "hardwood_log": 0.5,
+   "branch": 0.8,
+   "reeds": 0.6
+  },
+  "FLOODPLAIN_FOREST": {
+   "hardwood_log": 0.8,
+   "branch": 1.0
+  },
+  "FRESHWATER_MARSH": {
+   "reeds": 1.0,
+   "peat": 0.6,
+   "branch": 0.2
+  },
+  "WET_MEADOW": {
+   "grass_bundle": 0.9,
+   "reeds": 0.5,
+   "dung": 0.3
+  },
+  "SALT_MARSH": {
+   "reeds": 0.8,
+   "driftwood": 0.3
+  },
+  "BOG": {
+   "peat": 1.0,
+   "reeds": 0.5,
+   "branch": 0.15
+  },
+  "FEN": {
+   "peat": 0.8,
+   "reeds": 0.8
+  },
+  "BEACH": {
+   "driftwood": 0.7,
+   "grass_bundle": 0.4
+  },
+  "DUNES": {
+   "driftwood": 0.7,
+   "grass_bundle": 0.4
+  },
+  "ROCKY_SHORE": {
+   "driftwood": 0.5
+  },
+  "MARITIME_FOREST": {
+   "hardwood_log": 0.8,
+   "branch": 1.0
+  },
+  "MANGROVE": {
+   "branch": 0.6,
+   "palm_frond": 0.4,
+   "driftwood": 0.4
+  },
+  "ESTUARY": {
+   "reeds": 0.7,
+   "driftwood": 0.5
+  },
+  "LAGOON": {
+   "driftwood": 0.4,
+   "palm_frond": 0.4
+  },
+  "FRESHWATER": {},
+  "OASIS": {
+   "palm_frond": 0.9,
+   "brush": 0.4
+  },
+  "SHELF_SEA": {},
+  "CORAL_REEF": {},
+  "KELP_FOREST": {},
+  "DEEP_OCEAN": {},
+  "SEA_ICE": {},
+  "VOLCANIC_FIELD": {
+   "brush": 0.15
+  },
+  "BADLANDS": {
+   "brush": 0.2,
+   "dung": 0.15
+  },
+  "CANYON": {
+   "brush": 0.3,
+   "branch": 0.2,
+   "driftwood": 0.2
+  },
+  "SALT_FLAT": {},
+  "HOT_SPRING": {
+   "branch": 0.4,
+   "brush": 0.3
+  },
+  "GLACIER": {},
+  "CAVES": {},
+  "TEPUI": {
+   "brush": 0.3,
+   "branch": 0.2
+  }
+ }
+}

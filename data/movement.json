@@ -5,7 +5,7 @@
   "ground": "accel: how fast you reach speed. friction: how fast you stop (lower = longer slide). turnaround_keep: pushing the other way at speed keeps this much of your old speed for a brief skid, then you go. turnaround_min_mps: below this there's no skid.",
   "overspeed": "Faster than your run speed on the ground (out of a roll, a wall-jump chain, a swing) while pushing the same way, you slow by only decay_mps2, so momentum carries.",
   "traction": "Multiplies ground accel and friction by what's underfoot: lower = slidier (a longer slide on stop). wet is shallow water and rain-soaked ground.",
-  "air": "Asymmetric gravity (design §J): gravity_up_mps2 is the pull while you rise, gravity_down_mps2 while you fall. 2026-09-29, from play (the designer): the jump was far too high and floaty, gravity should be consistent and snappy, so the rise now pulls nearly as hard as the fall (26 up, 28 down; before, 1.9 up gave a 15 m standing jump): a held jump peaks about 1.8 m up, a sprint jump about 2.3 m, a tap about 0.3 m, about 0.75 s in the air. This replaces the \u00a7J lazy rise. gravity_mps2 is kept only as the old single value for code that hasn't split yet; the down value is the one to match it. jump_mps: take-off speed. jump_release_cut: letting go of jump while still rising cuts your rise speed to this share (tap = a hop, hold = the full bound). sprint_jump: take-off speed multiplied by this at a sprint. fast_fall_mps: press crouch after the apex to drop at once at this speed. max_fall_mps: terminal speed (a real body's, about 50). NO AIR STEERING (design §R): air_accel and air_steer_mps are 0; your velocity is fixed from take-off to the next contact. The body still turns freely with the look direction (body_turns_free).",
+  "air": "Asymmetric gravity (design §J): gravity_up_mps2 is the pull while you rise, gravity_down_mps2 while you fall. 2026-09-29, from play (the designer): the jump was far too high and floaty, gravity should be consistent and snappy, so the rise now pulls nearly as hard as the fall (26 up, 28 down; before, 1.9 up gave a 15 m standing jump): a held jump peaks about 1.8 m up, a sprint jump about 2.3 m, a tap about 0.3 m, about 0.75 s in the air. This replaces the §J lazy rise. gravity_mps2 is kept only as the old single value for code that hasn't split yet; the down value is the one to match it. jump_mps: take-off speed. jump_release_cut: letting go of jump while still rising cuts your rise speed to this share (tap = a hop, hold = the full bound). sprint_jump: take-off speed multiplied by this at a sprint. fast_fall_mps: press crouch after the apex to drop at once at this speed. max_fall_mps: terminal speed (a real body's, about 50). NO AIR STEERING (design §R): air_accel and air_steer_mps are 0; your velocity is fixed from take-off to the next contact. The body still turns freely with the look direction (body_turns_free).",
   "landing": "squat_s: the frames of landing squat (no jump, no steering). heavy_squat_s: after a fall higher than heavy_fall_m (about a body length). dip_m: how far the view dips in the squat. min_drop_m: running off a bump lower than this (without jumping) is no landing at all.",
   "redirect": "Every contact re-aims your momentum to where you are looking (design §R): landing, bounce, wall jump, cling or swing release. keep_by_angle: how much speed survives, by the angle (degrees) between your incoming velocity and the new direction, as [angle, share] points, interpolated: a small correction is nearly free, a right angle keeps about half, a full turnaround almost nothing. A perfect tech multiplies the kept share by perfect_gain (and may exceed 1 for small angles); a missed tech by miss_scale. No tech beats the geometry. ceiling_mps: where a perfect chain tops out in practice (120 km/h; the risk, not a wall); sanity_mps: the hard physics limit just above it, used wherever a max is needed.",
   "bounce": "The branch bounce (design §J): land on TOP of a branch, ledge or trunk top (a surface you can stand on, not a face) after a fall of at least min_fall_m and press jump (Space) within window_frames, and the landing is a perfect one that turns your downward speed into forward speed toward where you look: carry of the fall speed, times gain. Missed: an ordinary landing with the usual roll rules. A bounce is a chain link (it counts toward wall_jump.chain_cap and it alternates feet). up_scale: the bound off it, as a share of air.jump_mps (added by Claude Code with the build).",
@@ -25,7 +25,64 @@
   "wet_ground": "soaked_rain_mm_h: rain this heavy (mm per hour) soaks the ground fully (traction falls to 'wet'); lighter rain soaks it partly. dry_s: after the rain stops, how long soaked ground takes to dry.",
   "unstick": "Stuck is touching something and going nowhere: wedged between two walls (a trunk and a shrub's stem), held off the ground (under a root, in a fork), or caught on a crease of the ground. After stall_s moving slower than stall_mps, you're nudged nudge_m out along the free direction nearest to where you push. ground_jam_s: caught on the ground alone, you're freed after only this long (a hitch you barely feel).",
   "super_meter": "The super meter (design §S): PERFECT techs (wall jump, bounce, roll, hop landing, swing release inside their windows) fill it, and so does LANDING A HIT on an opponent (fill_per_hit, and fill_per_critical for a critical); a missed or late tech only stops the run, it doesn't drain. fill_per_perfect: how much one perfect adds (0-1); chain_bonus_per_link: extra per link of the current chain, so long clean chains fill fastest. Spending: with any meter, hold a tool's charge past its normal full window and it overcharges (data/combat.json overcharge), which empties the meter on release. It never decays; only spending or dying (reset_on_death) clears it. NPC shinobi keep the same meter.",
-  "camera": "mouse and stick sensitivity. first_person_body: in first person, see your own hands, cloak edges and boots when you look down (false: nothing of your body shows; it still casts its shadow)."
+  "camera": "mouse and stick sensitivity. first_person_body: in first person, see your own hands, cloak edges and boots when you look down (false: nothing of your body shows; it still casts its shadow).",
+  "profile": "Which movement profile PlanetPlayer plays (design 30 Sept §AU): 'ambient' (this game: slow, grounded, first person) or 'shinobi' (the momentum kit, kept whole for the ninja game). At load, profiles[profile] is deep-merged over the base table below; the base table IS the shinobi table and stays untouched. A block with enabled:false is switched off entirely (wall_jump, bounce, swing, redirect, roll, slide, super_meter)."
+ },
+ "profile": "ambient",
+ "profiles": {
+  "shinobi": {},
+  "ambient": {
+   "speed": {
+    "walk_mps": 4.3,
+    "sprint_mps": 5.6,
+    "aim_mps": 5.6
+   },
+   "air": {
+    "gravity_mps2": 20.0,
+    "gravity_up_mps2": 20.0,
+    "gravity_down_mps2": 20.0,
+    "jump_mps": 6.3,
+    "sprint_jump": 1.0,
+    "fast_fall_mps": 0.0,
+    "max_fall_mps": 50.0,
+    "air_accel_mps2": 0.0,
+    "air_steer_mps": 0.0,
+    "body_turns_free": false
+   },
+   "overspeed": {
+    "decay_mps2": 12.0
+   },
+   "wall_jump": {
+    "enabled": false
+   },
+   "bounce": {
+    "enabled": false
+   },
+   "swing": {
+    "enabled": false
+   },
+   "redirect": {
+    "enabled": false
+   },
+   "roll": {
+    "enabled": false
+   },
+   "slide": {
+    "enabled": false
+   },
+   "super_meter": {
+    "enabled": false
+   },
+   "run_pose": {
+    "lean_walk_deg": 2.0,
+    "lean_sprint_deg": 6.0,
+    "lean_accel_deg": 3.0
+   },
+   "camera": {
+    "third_person": false,
+    "first_person_body": false
+   }
+  }
  },
  "speed": {
   "walk_mps": 5.5,

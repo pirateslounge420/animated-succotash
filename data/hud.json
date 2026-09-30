@@ -10,7 +10,9 @@
   "text": "Every HUD and UI font: an early-computer / typewriter face — monospaced, slightly uneven, like a teletype or an 8-bit console font — never a clean modern sans. font: the font file under assets/fonts (a free monospaced typewriter-style TTF; fallback: the engine monospace). Design §Y: the HUD is drawn INSIDE the 480-line internal frame and upscaled with it, so every px size in this file is at the 480 reference and text is automatically chunky and the right size at any window; scale_by_height is off (the upscale does the scaling). base_px: the body size at 480 lines (2026-09-28: raised from 9 to 11 — 9 was hard to read once upscaled; the prompt line and the crosshair name are larger still). 2026-09-29 (from play: still hard to read): font is now VT323 (a DEC terminal face, SIL OFL), drawn without antialiasing on its own 10 px grid, and every size snaps to crisp_px (20 body, 40 headings) so no glyph falls between pixels; base_px 20. 2026-09-30 (Mike: bigger, more legible): base_px 30, the prompt and names 30, the small readouts 20; VT323 is crisp at multiples of 10. The typewriter face stays in assets/fonts.",
   "layout": "Where the readouts sit: corner (top_left, top_right, bottom_left, bottom_right), margin_px from the edges. The health meter keeps its own place (data/combat.json feedback.meter).",
   "reticle": "The crosshair (first person, or while aiming): size_px at the 480 reference (design §Y), thickness_px, gap_px, color. A bit larger than before, per §W.",
-  "plant_name": "The genus/species readout for the plant under the reticle: shown only within reach_m of it (about a metre, design §W); nothing beyond that. Two lines: the binomial at name_px, then the common name and where on Earth it comes from (the entry's `origin`, or the first clause of its research note) at origin_px. Sizes are at the 480-line reference like everything else here."
+  "plant_name": "The genus/species readout for the plant under the reticle: shown only within reach_m of it (about a metre, design §W); nothing beyond that. Two lines: the binomial at name_px, then the common name and where on Earth it comes from (the entry's `origin`, or the first clause of its research note) at origin_px. Sizes are at the 480-line reference like everything else here.",
+  "log": "Design 30 Sept §AZ: Enter opens the log (Minecraft-chat style, in the 480-line frame), newest at the bottom, every line stamped from the clock in game time. events lists what gets a line; the text box takes a note (note_max_chars). Esc closes. Persists per world.",
+  "pins_ambient": "Design 30 Sept §AU: the pins that start pinned in the ambient movement profile (walking never lights the speedometer)."
  },
  "speedometer": {
   "on_by_default": true,
@@ -55,7 +57,11 @@
  "text": {
   "font": "assets/fonts/vt323.ttf",
   "base_px": 30,
-  "crisp_px": [20, 30, 40],
+  "crisp_px": [
+   20,
+   30,
+   40
+  ],
   "scale_by_height": false,
   "ref_height_px": 480,
   "min_scale": 1.0,
@@ -82,5 +88,38 @@
   "hover_alpha": 0.85,
   "preview_alpha": 0.45,
   "mark_color": "#FFD23A"
- }
+ },
+ "log": {
+  "key": "enter",
+  "close": "escape",
+  "lines_visible": 8,
+  "font_px": 20,
+  "stamp": "clock",
+  "persist": true,
+  "note_max_chars": 120,
+  "events": [
+   "death_cause",
+   "torch_lit",
+   "torch_gutter",
+   "torch_out",
+   "fire_lit",
+   "fire_embers",
+   "fire_out",
+   "hearth_set",
+   "camp_found",
+   "biome_entered",
+   "dawn",
+   "dusk"
+  ],
+  "death_lines": {
+   "dark": "Taken by the dark",
+   "fall": "Fell",
+   "drown": "Drowned",
+   "creature": "Killed by a {creature}",
+   "cold": "Froze"
+  }
+ },
+ "pins_ambient": [
+  "clock"
+ ]
 }

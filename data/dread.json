@@ -1,0 +1,206 @@
+{
+ "_help": {
+  "about": "The dark closes in (design 30 Sept §BA). Between camps at night, exposure accumulates in a hidden meter; light holds it off; stages are heard before they are seen; at the top it takes you. Never a health-bar fight. Restart after editing.",
+  "meter": "Fill per real minute in full dark / under a moon / with a lit torch in hand or planted within torch range; drain per minute inside a lit fire's radius; dawn empties it. dusk_grace_min: minutes after dusk before it starts filling.",
+  "stages": "In order; 'at' is the meter level that starts the stage. Each names its cue. Stage 5 only takes you if there is no light on you or you are farther than far_from_fire_m from a lit fire.",
+  "patterns": "How a hunter approaches. pacer: parallel at a distance, faster than you (you cannot outrun it, only out-light it). circler: circles before it closes, heard from changing bearings. stalker: moves only while you move, freezes when you stop. waiter: sits still on the road ahead; you walk into it.",
+  "hunters": "biome keys -> the creature (name in data/creatures/creatures.json, role mythical) and its pattern. creature null = the dark itself: a cloaked shape with no species, the fallback everywhere. 'first' marks the one to build first.",
+  "rules": "never_within_fire_m: no hunter inside a lit fire's radius. ignore_travellers: road travellers (§BF) walk unharmed. no_bestiary: nothing in the HUD names them."
+ },
+ "meter": {
+  "fill_per_min_dark": 0.2,
+  "fill_per_min_moon": 0.14,
+  "fill_per_min_torch": 0.07,
+  "drain_per_min_fire": 1.0,
+  "drain_at_dawn": true,
+  "fire_radius_m": 14.0,
+  "dusk_grace_min": 6.0
+ },
+ "stages": [
+  {
+   "level": 0,
+   "at": 0.0,
+   "name": "quiet"
+  },
+  {
+   "level": 1,
+   "at": 0.2,
+   "name": "the bed thins",
+   "cue": "bed_fade",
+   "bed_fade_s": 20.0
+  },
+  {
+   "level": 2,
+   "at": 0.4,
+   "name": "behind you",
+   "cue": "follow_sound",
+   "stops_when_you_stop": true,
+   "bearing_deg": [
+    140,
+    220
+   ],
+   "distance_m": [
+    12,
+    25
+   ],
+   "every_s": [
+    15,
+    40
+   ]
+  },
+  {
+   "level": 3,
+   "at": 0.6,
+   "name": "at the edge of the light",
+   "cue": "glimpse",
+   "distance_m": [
+    10,
+    16
+   ],
+   "vanish_on_look_s": 0.4,
+   "every_s": [
+    20,
+    50
+   ]
+  },
+  {
+   "level": 4,
+   "at": 0.8,
+   "name": "followed",
+   "cue": "follow_visible",
+   "distance_m": [
+    20,
+    40
+   ]
+  },
+  {
+   "level": 5,
+   "at": 1.0,
+   "name": "taken",
+   "cue": "close",
+   "requires": "no_light_or_far_from_fire",
+   "far_from_fire_m": 120.0,
+   "log_line": "Taken by the dark"
+  }
+ ],
+ "patterns": {
+  "pacer": {
+   "speed_scale": 1.3,
+   "keep_m": [
+    20,
+    40
+   ],
+   "parallel": true
+  },
+  "circler": {
+   "speed_scale": 1.1,
+   "orbit_m": [
+    15,
+    30
+   ],
+   "orbit_period_s": 25.0,
+   "closes_after_orbits": 2
+  },
+  "stalker": {
+   "speed_scale": 1.0,
+   "moves_only_with_player": true,
+   "freeze_s": 1.5
+  },
+  "waiter": {
+   "speed_scale": 0.0,
+   "ahead_m": [
+    30,
+    60
+   ],
+   "on_road": true,
+   "strike_m": 3.0
+  }
+ },
+ "hunters": [
+  {
+   "biomes": [
+    "TEMPERATE_DECIDUOUS",
+    "TEMPERATE_RAINFOREST",
+    "MARITIME_FOREST",
+    "FLOODPLAIN_FOREST"
+   ],
+   "creature": "Werewolf",
+   "pattern": "pacer",
+   "speed_mps": 6.5,
+   "full_moon_speed_scale": 1.3,
+   "first": true
+  },
+  {
+   "biomes": [
+    "TAIGA",
+    "KRUMMHOLZ"
+   ],
+   "creature": "Night rider",
+   "pattern": "waiter",
+   "speed_mps": 1.1
+  },
+  {
+   "biomes": [
+    "SWAMP",
+    "BOG",
+    "FEN",
+    "FRESHWATER_MARSH"
+   ],
+   "creature": "Pond Crawler",
+   "pattern": "stalker",
+   "speed_mps": 2.2,
+   "water_bound": true
+  },
+  {
+   "biomes": [
+    "HOT_DESERT",
+    "COLD_DESERT",
+    "BADLANDS",
+    "CANYON",
+    "SALT_FLAT",
+    "THORN_SCRUB",
+    "SAGEBRUSH"
+   ],
+   "creature": "Desert skinwalker",
+   "pattern": "stalker",
+   "speed_mps": 5.5
+  },
+  {
+   "biomes": [
+    "ALPINE_TUNDRA",
+    "TUNDRA",
+    "GLACIER",
+    "ICE_SHEET",
+    "PARAMO",
+    "PUNA"
+   ],
+   "creature": "Mountain yeti",
+   "pattern": "pacer",
+   "speed_mps": 6.0,
+   "note": "creatures.json has it neutral; as a hunter it is hostile at night"
+  },
+  {
+   "biomes": [
+    "*"
+   ],
+   "creature": null,
+   "pattern": "pacer",
+   "speed_mps": 5.8,
+   "note": "the dark itself: the fallback where no biome hunter is designed (grasslands, tropical forests, coasts)"
+  }
+ ],
+ "not_hunters": [
+  "Marsh witch",
+  "Forest troll",
+  "Small folk",
+  "Unicorn",
+  "Bog wisp"
+ ],
+ "rules": {
+  "never_within_fire_m": 14.0,
+  "ignore_travellers": true,
+  "no_bestiary": true,
+  "one_hunter_at_a_time": true,
+  "sound_before_sight": true
+ }
+}

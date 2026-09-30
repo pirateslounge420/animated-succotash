@@ -1,0 +1,44 @@
+{
+ "_help": {
+  "about": "The torch (design 30 Sept §AW): a burning brand carried in one hand, the first tool. Unlit until held to a flame (a lit fire, a planted torch, another torch); burns about one night; a point light with Minecraft-style falloff; can be planted in the ground. Restart after editing.",
+  "burn_min": "Real minutes a torch burns at full flame (the equatorial night is 48).",
+  "gutter_share": "The last share of its life it spends guttering: dimmer, harder flicker, the warning to head for a fire.",
+  "rain_burn_scale": "Burn-time multiplier in rain (storm: storm_burn_scale). douse_depth_m: water this deep puts it out.",
+  "light": "range_m / energy / attenuation: the falloff. gutter_energy: energy while guttering. flicker_hz / flicker_amount: the slow flicker; sprinting and wind scale it. shadows false: no shadow map from a torch (§AG).",
+  "planted": "Right click the ground with a lit torch to stand it up; take it back within pickup_reach_m.",
+  "lighting_reach_m": "How close to a flame the torch must be held to light.",
+  "bundle": "Unlit torches by a camp's fire (§AW): how many, and how many game hours until the folk have made more.",
+  "climb": "Starting a climb with a lit torch plants it if there is ground to plant it in, otherwise it goes out (stowing puts it out; relight at a flame)."
+ },
+ "burn_min": 50.0,
+ "gutter_share": 0.12,
+ "rain_burn_scale": 0.6,
+ "storm_burn_scale": 0.35,
+ "douse_depth_m": 0.6,
+ "light": {
+  "range_m": 14.0,
+  "energy": 2.2,
+  "color": "#ffb347",
+  "attenuation": 1.6,
+  "gutter_energy": 0.9,
+  "flicker_hz": 9.0,
+  "flicker_amount": 0.18,
+  "sprint_flicker_scale": 2.0,
+  "wind_flicker_scale": 1.5,
+  "shadows": false
+ },
+ "planted": {
+  "stand_height_m": 0.9,
+  "pickup_reach_m": 2.0
+ },
+ "lighting_reach_m": 2.2,
+ "bundle": {
+  "count_at_camp": 3,
+  "remake_h_game": 24
+ },
+ "climb": {
+  "plant_if_ground": true,
+  "else": "out"
+ },
+ "burnt_out": "stick"
+}

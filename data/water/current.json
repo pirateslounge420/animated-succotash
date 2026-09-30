@@ -1,0 +1,52 @@
+{
+ "_help": {
+  "about": "Water has weight (design 30 Sept §BE): rivers carry a flow vector from the hydrology pass; the player drifts with it, cannot swim up a fast reach, is dragged wading, goes over falls. Rivers are one-way corridors. Restart after editing.",
+  "flow": "Speed bands per water kind in m/s; slope_gain and volume_gain shape the speed from the pass's slope and discharge.",
+  "player": "drift 1.0 = carried at the full current. upstream_wall_ratio: a current this share of swim speed or more is a wall (no headway). wade_drag: speed multiplier by depth. over_fall: what happens at a waterfall lip.",
+  "waterfalls": "check_first: Mike reports they may be broken; confirm they generate and render before touching the rest."
+ },
+ "flow": {
+  "from": "hydrology_pass",
+  "speed_mps": {
+   "stream": [
+    0.8,
+    1.8
+   ],
+   "river": [
+    0.5,
+    1.2
+   ],
+   "rapid": [
+    2.5,
+    4.0
+   ],
+   "pool": [
+    0.0,
+    0.2
+   ],
+   "lake": 0.0,
+   "fall_pool_churn": 1.5
+  },
+  "slope_gain": 2.0,
+  "volume_gain": 0.3
+ },
+ "player": {
+  "drift": 1.0,
+  "swim_mps": 1.6,
+  "upstream_wall_ratio": 0.9,
+  "wade_drag": {
+   "knee": 0.75,
+   "waist": 0.5,
+   "chest": 0.25
+  },
+  "over_fall": "fall_damage"
+ },
+ "torch": {
+  "douse_depth_m": 0.6
+ },
+ "waterfalls": {
+  "check_first": true,
+  "min_drop_m": 3.0,
+  "sound_reach_m": 180.0
+ }
+}

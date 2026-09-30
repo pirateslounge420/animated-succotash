@@ -1,0 +1,79 @@
+{
+ "_help": {
+  "about": "Outdoor rooms (design 30 Sept §BB): corridor -> threshold -> reveal. Rooms hang off the road network where it widens; the understory at eye level makes the walls; one feature per room; the sky through a gap. Restart after editing.",
+  "walls": "Understory height band that counts as a wall; the band along a room's edge and a corridor's sides where understory density is scaled up; the room floor's density scale-down.",
+  "reveal": "After this much corridor a reveal is due, at these places; past vista_impostors_from_m the view is pictures and far shell only.",
+  "test": "tools/look/measure_look.py sky-share: inside a room most directions read under sky_share_room_max and the door reads over sky_share_door_min."
+ },
+ "room": {
+  "size_m": [
+   30,
+   120
+  ],
+  "at": [
+   "ford",
+   "clearing",
+   "spring",
+   "ruin",
+   "road_bend",
+   "confluence"
+  ],
+  "one_feature": true,
+  "floor_open": true
+ },
+ "walls": {
+  "understory_height_m": [
+   1.0,
+   2.5
+  ],
+  "edge_band_m": 6.0,
+  "edge_density_scale": 2.5,
+  "floor_density_scale": 0.3,
+  "corridor_side_scale": 2.0
+ },
+ "ceiling": {
+  "prefer_canopy_over_corridors": true
+ },
+ "threshold": {
+  "kinds": [
+   "gate",
+   "arch",
+   "bridge",
+   "trunk_gap",
+   "stairs",
+   "boulder_gap"
+  ],
+  "width_m": [
+   1.5,
+   4.0
+  ]
+ },
+ "reveal": {
+  "after_corridor_m": [
+   60,
+   200
+  ],
+  "at": [
+   "ridge",
+   "valley_edge",
+   "lake_shore",
+   "clifftop"
+  ],
+  "vista_impostors_from_m": 260
+ },
+ "test": {
+  "sky_share_room_max": 0.25,
+  "sky_share_door_min": 0.5,
+  "tool": "tools/look/measure_look.py"
+ },
+ "light": {
+  "warm_only_from": [
+   "fire",
+   "torch",
+   "window"
+  ]
+ },
+ "figures": {
+  "one_creature_per_scene": true
+ }
+}

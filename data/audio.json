@@ -180,6 +180,55 @@
    "model": "inverse",
    "max_db": 0,
    "muffle": null
+  },
+  "torch": {
+   "unit_size": 3,
+   "max_distance": 25,
+   "model": "inverse",
+   "max_db": -6,
+   "muffle": null
+  },
+  "torch_light": {
+   "unit_size": 3,
+   "max_distance": 20,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  },
+  "fire": {
+   "unit_size": 5,
+   "max_distance": 60,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  },
+  "water_flow": {
+   "unit_size": 8,
+   "max_distance": 90,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": null
+  },
+  "waterfall": {
+   "unit_size": 12,
+   "max_distance": 180,
+   "model": "inverse",
+   "max_db": 6,
+   "muffle": null
+  },
+  "dread_follow": {
+   "unit_size": 6,
+   "max_distance": 40,
+   "model": "inverse",
+   "max_db": 0,
+   "muffle": null
+  },
+  "dread_close": {
+   "unit_size": 6,
+   "max_distance": 30,
+   "model": "inverse",
+   "max_db": 3,
+   "muffle": null
   }
  },
  "cloak_flurry": {
@@ -187,5 +236,6 @@
   "noise_m": 9.0,
   "volume_db": -6.0,
   "length_s": 0.35
- }
+ },
+ "_help_bed": "Design 30 Sept §BG: sounds are either the ambient BED (no position; wind, insects, distant birds, frogs; per biome and hour; it thins at dread stage 1) or a point SOURCE you can walk to (the kinds above, muffled by terrain and foliage). File every existing sound as one or the other."
 }

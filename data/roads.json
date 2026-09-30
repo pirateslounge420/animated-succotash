@@ -1,0 +1,77 @@
+{
+ "_help": {
+  "about": "Roads (design 30 Sept §BC): a trail network laid before plants, built by whoever left the ruins and maintained by nobody. Links ruins, camps, springs, fords and passes; follows rivers and contours; rivers are the other road type. Restart after editing.",
+  "network": "Node kinds the roads connect, the least spacing between nodes, the longest single link, and grade limits (roads switchback above max_grade).",
+  "trail": "Width band; the ground material; wear 0-1 (how bare the tread is); overgrown 0-1 (how much the understory has taken it back); understory kept clear this far either side; a tree planted within tree_at_bend_m of each bend (§AG 7).",
+  "decay": "Share of bridges that are out (both abutments always stand); share of trails that end at a collapse; waymark spacing, the share fallen, and their kinds.",
+  "landmarks": "Off-road finds: how far off the trail (must be out of sight of it), and what kinds.",
+  "forks": "A fork must be readable this far before it: you can see the other road across the gorge. One-way gates a fork can commit you through."
+ },
+ "layer": "before_plants",
+ "network": {
+  "nodes": [
+   "ruin",
+   "camp",
+   "spring",
+   "ford",
+   "pass",
+   "hot_spring",
+   "standing_stone"
+  ],
+  "min_spacing_km": 3.0,
+  "link_max_km": 15.0,
+  "follow_rivers": true,
+  "follow_contours": true,
+  "max_grade": 0.18
+ },
+ "trail": {
+  "width_m": [
+   1.2,
+   2.6
+  ],
+  "ground": "path",
+  "wear": 0.6,
+  "overgrown": 0.55,
+  "ruts": true,
+  "understory_clear_m": 1.0,
+  "tree_at_bend_m": 3.0
+ },
+ "decay": {
+  "bridge_out_share": 0.5,
+  "abutments_stay": true,
+  "collapse_end_share": 0.15,
+  "waymark_every_m": [
+   150,
+   400
+  ],
+  "waymark_fallen_share": 0.4,
+  "waymarks": [
+   "cairn",
+   "standing_stone",
+   "post"
+  ]
+ },
+ "landmarks": {
+  "off_road_m": [
+   40,
+   120
+  ],
+  "out_of_sight": true,
+  "kinds": [
+   "ruin",
+   "hot_spring",
+   "standing_stone",
+   "old_tree",
+   "spring"
+  ]
+ },
+ "forks": {
+  "legible_before_commit_m": 60.0,
+  "one_way_gates": [
+   "ravine",
+   "cliff",
+   "river_fast"
+  ]
+ },
+ "rivers_are_roads": true
+}

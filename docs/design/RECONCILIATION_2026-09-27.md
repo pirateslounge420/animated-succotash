@@ -1,5 +1,10 @@
 # Design reconciliation — 27 Sept 2026
 
+> **30 Sept 2026: superseded in part by `RECONCILIATION_2026-09-30.md` (§AT–§BK, "the
+> ambient cut").** The momentum kit, momentum combat, the shinobi and the starting kit now
+> belong to a separate ninja game; this repo is the slow, first-person, empty-handed
+> ambient world. Where the two docs disagree, the 30 Sept doc wins.
+
 Decisions made in design chat, checked against what the repo actually contains.
 Purpose: stop new work duplicating existing systems. Read this before adding anything
 from the "Ambient Sandbox RPG" blueprint.

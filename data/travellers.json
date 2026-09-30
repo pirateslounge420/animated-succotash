@@ -1,0 +1,26 @@
+{
+ "_help": {
+  "about": "Travellers on the road (design 30 Sept §BF): rare cloaked figures walking the roads, day and night. They never speak and never stop; the hood tracks you and holds a beat too long; the body never breaks stride. Restart after editing.",
+  "per_km_of_road": "Expected travellers per km of road at any moment.",
+  "head_look": "The §B rig capped at the hood: torso_max_deg 0. watch_m: they start tracking you this close. hold_s: how long the look holds after you pass before it returns to the road.",
+  "immune_to_dread": "§BA ignores them: they walk unharmed through the dark."
+ },
+ "on_road_only": true,
+ "per_km_of_road": 0.08,
+ "hours": "any",
+ "speed_mps": 1.4,
+ "never_stop": true,
+ "never_speak": true,
+ "head_look": {
+  "hood_only": true,
+  "head_max_deg": 70.0,
+  "torso_max_deg": 0.0,
+  "watch_m": 18.0,
+  "hold_s": 1.5,
+  "rate": 6.0
+ },
+ "immune_to_dread": true,
+ "rig": "cloaked_figure",
+ "palette": "tribe_or_ash",
+ "destination": "none_yet"
+}
