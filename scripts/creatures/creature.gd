@@ -484,6 +484,16 @@ func _shy_m(ctx: Dictionary, to_player := INF) -> float:
 	var noise: float = ctx.get("player_noise", 0.4)
 	var sight := sight_toward(ctx.player_dir) if ctx.has("player_dir") else 1.0
 	var seen := 1.0
+	# Torchlight (design 30 Sept §AW; creature_species light_response):
+	# "flee" / "avoid" / "shy": a light on it reads as a presence come
+	# close; "drawn": it hides you less. "none" or unset: nothing.
+	var torchlight := Torch.light_at(global_position) if species.light_response != "" and species.light_response != "none" else 0.0
+	if torchlight > 0.0:
+		match species.light_response:
+			"flee", "avoid", "shy":
+				noise = maxf(noise, torchlight)
+			"drawn":
+				seen *= 1.0 - 0.5 * torchlight
 	var cover: Array = ctx.get("cover", [])
 	if not cover.is_empty() and to_player < species.shy_m * 4.0 * (1.0 + suspicion):
 		var eye := global_position + global_basis.y * maxf(species.size_m * 0.6, 0.2)

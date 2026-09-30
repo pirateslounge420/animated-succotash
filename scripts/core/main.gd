@@ -167,6 +167,8 @@ func _on_planet_ready() -> void:
 	camp = Encampment.new()
 	root.add_child(camp)
 	camp.build(world, chunks, spawn_dir)
+	if Tuning.profile() == "ambient":
+		Torch.lay_bundle(world, chunks, camp.fire())
 	# Waking on the mat, facing the fire; the camera looks down over a
 	# shoulder so the fire and the two by it are in view.
 	player.spawn_at(camp.player_spot, spawn_dir)
@@ -321,6 +323,8 @@ func _process(delta: float) -> void:
 	creatures.update_creatures(delta, sky.daylight)
 	fruit_crop.daylight = sky.daylight
 	fruit_crop.rain_mm_h = float(weather.get("rain_mm_h", 0.0))
+	Torch.weather = weather
+	Torch.remake_bundles(world, chunks, world.days)
 	# After everything that touches the water this frame has moved; round
 	# whichever camera is drawing.
 	var view := get_viewport().get_camera_3d()
@@ -336,14 +340,21 @@ func _process(delta: float) -> void:
 		prompt = "%s: take the arrow back" % Controls.interact_word()
 	elif PlayerCorpse.in_reach(player.global_position, Tuning.num("combat", "death", "corpse_pick_m")) != null:
 		prompt = "%s: take your things back" % Controls.interact_word()
+	elif player.torch.can_light():
+		prompt = "%s: light the torch" % Controls.interact_word()
 	elif WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M) != null:
 		var near_item := WorldItem.in_reach(player.reach_from(), WorldItem.PICK_M)
-		prompt = "%s: take the %s%s" % [Controls.interact_word(), Inventory.title(near_item.item).to_lower(), "" if near_item.gift else " back"]
+		var count := int(near_item.item.get("count", 1))
+		prompt = "%s: take a torch" % Controls.interact_word() if str(near_item.item.get("kind", "")) == "torch" and count > 1 else "%s: take the %s%s" % [Controls.interact_word(), Inventory.title(near_item.item).to_lower(), "" if near_item.gift else " back"]
+	elif PlantedTorch.in_reach(player.reach_from(), float(Tuning.section("torch", "planted").get("pickup_reach_m", 2.0))) != null:
+		prompt = "%s: take the torch back" % Controls.interact_word()
 	elif not _fruit_in_reach().is_empty():
 		prompt = FruitCrop.prompt_for(_fruit_in_reach())
 	elif _sample_in_reach() >= 0:
 		var sp_in_reach := _sample_in_reach()
 		prompt = "%s: take %s" % [Controls.interact_word(), _sample_words(Inventory.plant_sample(sp_in_reach, aroid_garden.sample_extra(sp_in_reach, player.look.point) if aroid_garden else {}))]
+	if prompt == "" and player.torch.can_plant():
+		prompt = "%s: plant the torch" % Controls.interact_word()
 	if _note_t > 0.0:
 		_note_t -= delta
 		prompt = _note
@@ -358,6 +369,7 @@ func _process(delta: float) -> void:
 	# The speedometer and the clock face (design §L, §AQ): speed, meter and
 	# the local clock.
 	var clock_h := fposmod(Astro.time_of_day(world.days) + CubeSphere.longitude(d) / TAU, 1.0) * 24.0
+	GameLog.now_text = "Day %d · %02d:%02d" % [int(floor(world.days)) + 1, int(clock_h), int(fmod(clock_h, 1.0) * 60.0)]
 	hud.readouts.feed(player.velocity.length(), player.meter.value, clock_h, world.dev_mode, delta)
 	map_overlay.update_map(d, delta)
 
@@ -479,7 +491,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		var body := PlayerCorpse.in_reach(player.global_position, Tuning.num("combat", "death", "corpse_pick_m"))
 		var plant := _sample_in_reach()
 		var spent := true
-		if player.spear.in_reach():
+		var planted := PlantedTorch.in_reach(player.reach_from(), float(Tuning.section("torch", "planted").get("pickup_reach_m", 2.0)))
+		if player.torch.can_light():
+			# The lighting ritual (§AW): the torch in hand held to the flame.
+			player.torch.light()
+			_say_note("You light the torch.")
+		elif player.spear.in_reach():
 			player.grab_toward(player.spear.thrown.global_position)
 			player.spear.pick_up()
 		elif arrow != null:
@@ -493,6 +510,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif lying != null:
 			player.grab_toward(lying.global_position)
 			_take_lying(lying)
+		elif planted != null:
+			# A planted torch, taken back as it is (still burning, or a stick).
+			if player.inventory.count() >= Inventory.carry_slots():
+				_say_note("Your hands are full.")
+			else:
+				player.grab_toward(planted.global_position)
+				var back := planted.take()
+				player.inventory.add(back)
+				if player.in_hand() == "hands":
+					player.weapon = "torch"
+				_say_note("You take the torch back.")
 		elif not _fruit_in_reach().is_empty():
 			var fi := _fruit_in_reach()
 			player.grab_toward(fi.at)
@@ -516,6 +544,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			player.stop_perch()
 		elif creatures.log_in_reach(player.global_position):
 			creatures.interact(player.global_position)
+		elif player.torch.can_plant():
+			# Right click the ground with a lit torch: stand it there.
+			player.torch.plant()
+			_say_note("You plant the torch.")
 		else:
 			spent = false
 		if spent:
@@ -540,6 +572,11 @@ func _lay_gifts() -> void:
 		if is_instance_valid(g):
 			(g as WorldItem).pick_up()
 	_gifts = []
+	# The ambient profile (design 30 Sept §AW): you wake with nothing and
+	# nothing is laid beside you; the camp keeps a bundle of unlit torches
+	# by its fire (Torch.lay_bundle, at every camp's fire).
+	if Tuning.profile() == "ambient":
+		return
 	var p: Vector3 = player.global_position
 	var side: Vector3 = player.global_basis.x
 	var fwd: Vector3 = -player.global_basis.z
@@ -571,6 +608,20 @@ func take_gifts() -> void:
 func _take_lying(lying: WorldItem, say := true) -> void:
 	var it: Dictionary = lying.item
 	var kind := str(it.get("kind", ""))
+	if kind == "torch":
+		# One torch from the bundle (or the one torch lying there); into
+		# your hand if it was empty (§AW).
+		if player.inventory.count() >= Inventory.carry_slots():
+			if say:
+				_say_note("Your hands are full.")
+			return
+		var one := Torch.take_from_bundle(lying, world.days) if int(it.get("count", 1)) > 1 or Torch.bundles.any(func(b): return b[0] == lying) else lying.pick_up()
+		player.inventory.add(one)
+		if player.in_hand() == "hands":
+			player.weapon = "torch"
+		if say:
+			_say_note("You take a torch." if not bool(one.get("lit", false)) else "You take the torch.")
+		return
 	if TOOL_OF.has(kind):
 		var slot := str(Inventory.kind_info(kind).get("slot", ""))
 		var worn = player.inventory.worn_in(slot)
@@ -668,6 +719,12 @@ func _drop_chosen() -> void:
 		return
 	var at := player.global_position + player.global_basis.z * -0.7
 	var d: Vector3 = world.dir_of(at)
+	if str(it.get("kind", "")) == "torch" and bool(it.get("lit", false)):
+		# A lit torch dropped lies there burning (§AW).
+		PlantedTorch.plant(it, world, world.to_scene(d, PlanetConst.RADIUS_M + chunks.ground_height(d) + 0.06), d, true)
+		if player.weapon == "torch" and not player.inventory.has_kind("torch"):
+			player.weapon = "hands"
+		return
 	WorldItem.drop(it, world, d, chunks.ground_height(d))
 
 

@@ -107,6 +107,8 @@ static func plant_sample(sp_idx: int, extra := {}) -> Dictionary:
 
 ## The item's name on the screen ("Cutting", "Seed head", "Bow", ...).
 static func title(it: Dictionary) -> String:
+	if int(it.get("count", 1)) > 1:
+		return "%d %ss" % [int(it.count), str(kind_info(str(it.get("kind", ""))).get("name", str(it.get("kind", "")))).to_lower()]
 	match str(it.get("part", "")):
 		"cutting":
 			return "Cutting"
@@ -144,6 +146,14 @@ func take(i: int):
 	var it = carried[i]
 	carried[i] = null
 	return it
+
+
+## Do you carry a thing of this kind?
+func has_kind(kind: String) -> bool:
+	for it in carried:
+		if it is Dictionary and str(it.get("kind", "")) == kind:
+			return true
+	return false
 
 
 ## How many things you carry.

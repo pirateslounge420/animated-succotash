@@ -47,6 +47,11 @@ static var fixed_side := NAN
 ## 0 ochres for the elder, 1 madder reds for the hunter).
 const OPENING_FAMILIES := [0, 1]
 var _fire: Node3D
+
+
+## The camp's fire.
+func fire() -> Node3D:
+	return _fire
 var _npcs: Array[Node3D] = []
 var _time := 0.0
 var _hitboxes_on := true

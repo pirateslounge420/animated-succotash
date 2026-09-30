@@ -354,6 +354,10 @@ func _build(at: Vector3, folk: String, seed_value: int) -> Node3D:
 	var fire := Campfire.build(root, world, chunks, d, false)
 	fire.global_position = at
 	root.set_meta("fire", fire)
+	# What a camp has (design 30 Sept §AW): a bundle of unlit torches by
+	# the fire, in the ambient profile.
+	if Tuning.profile() == "ambient":
+		Torch.lay_bundle(world, chunks, fire)
 	root.set_meta("folk", folk)
 	root.set_meta("talked", false)
 	var count := rng.randi_range(2, 4)
