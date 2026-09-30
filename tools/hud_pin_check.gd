@@ -81,16 +81,20 @@ func _initialize() -> void:
 	get_root().add_child(probe)
 	await frames(30)
 
-	# Defaults: the two dials pinned, nothing else.
+	# Defaults: the two dials pinned, nothing else (the ambient profile
+	# pins hud.json pins_ambient: the clock alone, design 30 Sept §AU).
+	var dials: Array = ["speedometer", "clock"]
+	if Tuning.profile() == "ambient":
+		dials = Array(Tuning.table("hud").get("pins_ambient", ["clock"]))
 	var pinned := Array(Hud.PARTS).filter(func(id): return Hud.is_pinned(id))
 	print("pinned by default: %s" % [pinned])
-	ok(pinned == ["speedometer", "clock"], "a new game pins exactly the speedometer and the clock")
+	ok(pinned == dials, "a new game pins exactly the profile's dials %s" % [dials])
 	ok(Hud.pin_key("wind") == "hud.pin.wind" and Hud.pin_key("clock") == "hud.clock", "pin keys: hud.pin.<part>, the dials' own hud.speedometer / hud.clock")
 
 	# Normal play: the pinned parts only.
 	ok(not hud.full and not hud.pinning, "normal play (not the full HUD, not pinning)")
 	ok(not hud.is_shown("wind"), "normal play: wind (not pinned) is hidden")
-	ok(shown_parts() == ["speedometer", "clock"], "normal play shows just the pinned dials: %s" % [shown_parts()])
+	ok(shown_parts() == dials, "normal play shows just the pinned dials: %s" % [shown_parts()])
 	ok(hud.readouts.top_right_below == 0.0 and hud.readouts.clock_rect().position.y < 20.0, "the right column is empty, so the clock sits in the corner (y %.0f)" % hud.readouts.clock_rect().position.y)
 
 	# H: the full HUD.
@@ -167,7 +171,7 @@ func _initialize() -> void:
 	ok(probe.clicks == clicks0 + 1, "a click elsewhere goes on to _unhandled_input")
 	await frames(3)
 	ok(not hud.pinning and not hud._caption.visible, "and pinning ends")
-	ok(shown_parts() == ["wind", "speedometer", "clock"], "normal play again: the pinned parts (%s)" % [shown_parts()])
+	ok(shown_parts() == ["wind"] + dials, "normal play again: the pinned parts (%s)" % [shown_parts()])
 	click(wind_r.get_center())
 	ok(Hud.is_pinned("wind") and probe.clicks == clicks0 + 2, "out of pinning a click on a part doesn't touch its pin (it goes to the player)")
 

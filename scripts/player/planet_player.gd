@@ -81,6 +81,15 @@ static var JUMP_CUT := Tuning.num("movement", "air", "jump_release_cut")
 ## In flight the body turns with the look (design §R): no air steering,
 ## the facing never touches the velocity.
 static var BODY_TURNS_FREE := bool(Tuning.num("movement", "air", "body_turns_free"))
+## The techs the movement profile leaves on (design 30 Sept §AU; the
+## ambient profile turns them all off: Space jumps, right click interacts
+## and climbs, nothing else on those buttons). The wall jump and the cling
+## share the wall_jump block.
+static var WALL_JUMP_ON := Tuning.enabled("wall_jump")
+static var BOUNCE_ON := Tuning.enabled("bounce")
+static var SWING_ON := Tuning.enabled("swing")
+static var REDIRECT_ON := Tuning.enabled("redirect")
+static var ROLL_ON := Tuning.enabled("roll")
 ## Every contact re-aims momentum to the look (design §R): the kept share
 ## by turn angle, the tech's factor, the physics limit.
 static var REDIRECT := Tuning.section("movement", "redirect")
@@ -334,7 +343,10 @@ var aim_arc: AimArc
 var weapon := "hands"
 ## The order Q brings them to hand, and the slot and kind each needs
 ## (hands: none).
-const TOOLS := [["bow", "ranged", "bow"], ["spear", "melee", "spear"], ["hands", "", ""]]
+## The Q order: worn tools by their slot; the torch ("carry": while you
+## carry one, design 30 Sept §AW); bare hands always.
+const TOOLS := [["bow", "ranged", "bow"], ["spear", "melee", "spear"], ["torch", "carry", "torch"], ["hands", "", ""]]
+var torch: Torch
 var _since_hit := 99.0
 ## Resting at a fire (_update_health()): a lit campfire within reach, and
 ## healing now; health healed so far by each source (tests, heal()).
@@ -495,6 +507,10 @@ func _ready() -> void:
 	fists.name = "Fists"
 	add_child(fists)
 	fists.setup(self)
+	torch = Torch.new()
+	torch.name = "Torch"
+	add_child(torch)
+	torch.setup(self)
 	aim_arc = AimArc.new()
 	aim_arc.name = "AimArc"
 	aim_arc.player = self
@@ -613,6 +629,7 @@ func _physics_process(delta: float) -> void:
 	bow.update_bow(delta)
 	spear.update_spear(delta)
 	fists.update_fists(delta)
+	torch.update_torch(delta)
 	aim_arc.update_arc()
 	_update_camera(delta)
 	_update_climb_legs()
@@ -747,10 +764,10 @@ func _physics_process(delta: float) -> void:
 		var bounced := false
 		if not _was_on_floor:
 			var fell_gross := maxf(_fall_top - radius, 0.0) if _fall_top > -INF else 0.0
-			if fell_gross >= float(BOUNCE.get("min_fall_m", 1.0)) and Engine.get_physics_frames() - _tech_press_f <= int(BOUNCE.get("window_frames", 14)):
+			if BOUNCE_ON and fell_gross >= float(BOUNCE.get("min_fall_m", 1.0)) and Engine.get_physics_frames() - _tech_press_f <= int(BOUNCE.get("window_frames", 14)):
 				bounced = _bounce(_fall_speed)
 			else:
-				if fell_gross >= float(BOUNCE.get("min_fall_m", 1.0)):
+				if BOUNCE_ON and fell_gross >= float(BOUNCE.get("min_fall_m", 1.0)):
 					_bounce_wait_f = int(BOUNCE.get("window_frames", 14))
 					_bounce_fall_v = _fall_speed
 				_land()
@@ -785,7 +802,8 @@ func _physics_process(delta: float) -> void:
 					# A heavy landing without the roll: the series is over,
 					# and the landing costs its miss (design §R miss_scale).
 					meter.broke()
-					_move *= float(REDIRECT.get("miss_scale", 0.5))
+					if REDIRECT_ON:
+						_move *= float(REDIRECT.get("miss_scale", 0.5))
 					_fall_damage(_pending_fell)
 		# Held jump keeps jumping each time you land (after the squat).
 		if Input.is_action_pressed("jump") and not crouching and _squat_t <= 0.0 and _rolling <= 0.0:
@@ -806,7 +824,7 @@ func _physics_process(delta: float) -> void:
 			_rising_jump = false
 		vy -= (GRAVITY_UP if vy > 0.0 else GRAVITY_DOWN) * delta
 		# Fast-fall: crouch (down) after the apex drops you at once.
-		if Input.is_action_pressed("crouch") and vy < 0.5:
+		if FAST_FALL_MPS > 0.0 and Input.is_action_pressed("crouch") and vy < 0.5:
 			vy = minf(vy, -FAST_FALL_MPS)
 		vy = maxf(vy, -MAX_FALL_MPS)
 		_fall_speed = maxf(_fall_speed, -vy)
@@ -981,6 +999,8 @@ func try_climb() -> bool:
 	var rel := global_position - base
 	_climb_y = maxf(rel.dot(tup), 0.3)
 	_climb_out = (rel - tup * rel.dot(tup)).normalized()
+	if torch != null:
+		torch.hands_needed()
 	climbing = true
 	crouching = false
 	_set_crouch(false)
@@ -1149,6 +1169,8 @@ func stop_perch(jump := false, climb := false) -> void:
 		_climb_from = global_position
 		_climb_ease = 0.0
 		_climb_graph = true
+		if torch != null:
+			torch.hands_needed()
 		climbing = true
 		velocity = Vector3.ZERO
 		_move = Vector3.ZERO
@@ -1506,11 +1528,14 @@ func _land() -> void:
 	# falls off with the turn.
 	var h := _move - up * _move.dot(up)
 	var look_h := _look - up * _look.dot(up)
-	if h.length() > 0.5 and look_h.length() > 0.1:
+	if REDIRECT_ON and h.length() > 0.5 and look_h.length() > 0.1:
 		_move = look_h.normalized() * minf(h.length() * _keep(h, look_h, 0), SANITY_MPS)
 		redirects += 1
 	_plant_foot()
-	if fell > HEAVY_FALL_M:
+	if fell > HEAVY_FALL_M and not ROLL_ON:
+		# No roll in this profile (Shift is sneak only): the fall hurts now.
+		_fall_damage(fell)
+	elif fell > HEAVY_FALL_M:
 		# A heavy landing: crouch pressed just before touchdown rolls now;
 		# else wait a few frames for a late one before the fall hurts.
 		if Engine.get_physics_frames() - _crouch_press_f <= ROLL_WINDOW_F:
@@ -1541,6 +1566,8 @@ func _land() -> void:
 ## (bounce.up_scale of a jump). A chain link, a perfect for the super
 ## meter; a fall that would hurt is softened like a roll's.
 func _bounce(fall_v: float) -> bool:
+	if not BOUNCE_ON:
+		return false
 	var h := _move - up * _move.dot(up)
 	var look_h := _look - up * _look.dot(up)
 	var dir := look_h.normalized() if look_h.length() > 0.1 else (h.normalized() if h.length() > 0.5 else -global_basis.z)
@@ -1654,7 +1681,7 @@ func _face_in_window() -> bool:
 ## Jump in the air by a face: the wall jump, a perfect kick that chains.
 ## True if it kicked.
 func _wall_kick() -> bool:
-	if not _face_in_window():
+	if not WALL_JUMP_ON or not _face_in_window():
 		return false
 	clings += 1
 	_wall_speed = maxf(_wall_in.length(), (velocity - up * velocity.dot(up)).length())
@@ -1671,8 +1698,10 @@ func _wall_kick() -> bool:
 ## cling), else catch a branch or vine in reach and swing. True if
 ## something took.
 func _grab(cam_forward: Vector3) -> bool:
-	if _face_in_window():
+	if WALL_JUMP_ON and _face_in_window():
 		clinging = true
+		if torch != null:
+			torch.hands_needed()
 		clings += 1
 		# Past the planting frames at once: a grab, not a kick.
 		_cling_f = WJ_TAP_F + 1
@@ -1695,6 +1724,8 @@ const CLING_REACH_M := 0.9
 
 
 func _ground_cling(cam_forward: Vector3) -> bool:
+	if not WALL_JUMP_ON:
+		return false
 	var fwd := (cam_forward - up * cam_forward.dot(up)).normalized()
 	# A fan of rays (knee to head, a little either side): a leaning trunk
 	# or a fork isn't where one ray at the chest would look. Of the faces
@@ -1890,7 +1921,7 @@ func _cling_step(delta: float) -> void:
 ## SWING_MAX_R thick (or a vine), ahead of you and not below, toward where
 ## you look. A vine swings from where it hangs. True if caught.
 func _try_catch(cam_forward: Vector3) -> bool:
-	if velocity.length() < SWING_MIN_MPS or climbing:
+	if not SWING_ON or velocity.length() < SWING_MIN_MPS or climbing:
 		return false
 	var hands := global_position + up * 1.6
 	var travel := velocity.normalized()
@@ -2384,6 +2415,8 @@ func aim_power() -> float:
 ## line comes in. Holding `shoot` through a swap does nothing until it's
 ## let go.
 func swap_weapon() -> void:
+	if weapon == "torch" and torch != null:
+		torch.stow()
 	bow.drawing = false
 	bow.charge = 0.0
 	spear.cancel()
@@ -2402,7 +2435,7 @@ func next_tool(from: String) -> String:
 			at = i
 	for k in range(1, TOOLS.size() + 1):
 		var t: Array = TOOLS[(at + k) % TOOLS.size()]
-		if str(t[1]) == "" or wears(t[1], t[2]):
+		if str(t[1]) == "" or (str(t[1]) == "carry" and inventory.has_kind(str(t[2]))) or (str(t[1]) != "carry" and wears(t[1], t[2])):
 			return t[0]
 	return "hands"
 
@@ -2415,6 +2448,8 @@ func in_hand() -> String:
 			return "bow" if wears("ranged", "bow") else "hands"
 		"spear":
 			return "spear" if wears("melee", "spear") and spear.thrown == null else "hands"
+		"torch":
+			return "torch" if inventory.has_kind("torch") else "hands"
 	return "hands"
 
 

@@ -103,6 +103,10 @@ func _ready() -> void:
 	_hint.offset_top -= 104
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_hint.text = "WASD move · W W sprint · Space jump (at a wall: wall jump · as you land: bounce)\nShift crouch (in the air: drop · as you land: roll) · right click: take, climb, hold on\nleft click: draw / thrust / punch · Q tool · V view · Tab pack\nM map · O settings · F3 debug · H full HUD · Esc frees the mouse: click readouts to pin them"
+	if Tuning.profile() == "ambient":
+		# The ambient profile (design 30 Sept §AU, §AV): a walk, first
+		# person, right click to take and climb; nothing else on the keys.
+		_hint.text = "WASD move · W W sprint · Space jump · Shift crouch\nright click: take things, climb the tree in front of you · left click: use what's in hand\nQ tool · Tab pack · Enter log · M map · O settings · F3 debug · H full HUD\nEsc frees the mouse: click readouts to pin them"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
 	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 47)
 	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -325,6 +329,12 @@ static func pin_key(id: String) -> String:
 ## Pinned in a new game: the two dials (hud.json on_by_default, design
 ## §L's always-on readouts), nothing else.
 static func pin_default(id: String) -> bool:
+	# The ambient movement profile has its own list (hud.json pins_ambient,
+	# design 30 Sept §AU: walking never lights the speedometer).
+	if Tuning.profile() == "ambient":
+		var pins = Tuning.table("hud").get("pins_ambient", null)
+		if pins is Array:
+			return id in pins
 	if id in ["speedometer", "clock"]:
 		return bool(Tuning.section("hud", id).get("on_by_default", true))
 	return false

@@ -20,6 +20,9 @@ extends RefCounted
 ## never decays; dying empties it (reset_on_death).
 
 static var NUMS := Tuning.section("movement", "super_meter")
+## Off in the ambient movement profile (design 30 Sept §AU): it never
+## fills, so no overcharge ever comes.
+static var ENABLED := Tuning.enabled("super_meter")
 
 ## 0-1.
 var value := 0.0
@@ -36,6 +39,8 @@ func has() -> bool:
 
 ## A perfect tech (`kind` for the log: "wall_jump", "roll", "swing").
 func perfect(_kind: String) -> void:
+	if not ENABLED:
+		return
 	value = minf(value + float(NUMS.get("fill_per_perfect", 0.04)) + float(NUMS.get("chain_bonus_per_link", 0.01)) * series, 1.0)
 	series += 1
 	perfects += 1
@@ -48,6 +53,8 @@ func broke() -> void:
 
 ## A landed hit on a creature.
 func hit(critical: bool) -> void:
+	if not ENABLED:
+		return
 	value = minf(value + float(NUMS.get("fill_per_critical" if critical else "fill_per_hit", 0.06)), 1.0)
 
 
