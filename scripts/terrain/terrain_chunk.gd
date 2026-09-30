@@ -747,6 +747,7 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 	position = anchor
 
 	var dapple: Image = data.get("dapple")
+	dapple_img = dapple
 	var ground_mat := _terrain_mat
 	if dapple != null:
 		# This chunk's own copy of the ground material, with its dappled
@@ -872,6 +873,35 @@ func _swap_plants(parent: Node) -> void:
 			mmi.multimesh.mesh = PlantMeshes.young_mesh(sp, int(ch.get_meta("young")), PlantMeshes.LOD_NEAR)
 		else:
 			mmi.multimesh.mesh = PlantMeshes.mesh_for(sp, lod)
+
+
+## The canopy shade stamp (CanopyDapple: 1 open sky, 0 full shade), kept
+## to read the sky's share at a point (sky_visibility_at).
+var dapple_img: Image = null
+
+
+## How much sky a point sees through the canopy here (0-1; design 30 Sept
+## §BD): the stamp texel over `scene_pos`, averaged with four a `feather_m`
+## step round it. 1 with no stamp (no architecture trees on the chunk).
+func sky_visibility_at(scene_pos: Vector3, feather_m := 3.0) -> float:
+	if dapple_img == null:
+		return 1.0
+	var east := CubeSphere.east(center_dir)
+	var north := CubeSphere.north(center_dir)
+	var rel := scene_pos - global_position
+	var uv := Vector2(rel.dot(east), rel.dot(north))
+	var span := CanopyDapple.span_m()
+	var w := dapple_img.get_width()
+	var h := dapple_img.get_height()
+	var sum := 0.0
+	var n := 0
+	for off: Vector2 in [Vector2.ZERO, Vector2(feather_m, 0), Vector2(-feather_m, 0), Vector2(0, feather_m), Vector2(0, -feather_m)]:
+		var q := (uv + off) / span + Vector2(0.5, 0.5)
+		if q.x < 0.0 or q.y < 0.0 or q.x >= 1.0 or q.y >= 1.0:
+			continue
+		sum += dapple_img.get_pixel(int(q.x * w), int(q.y * h)).r
+		n += 1
+	return sum / n if n > 0 else 1.0
 
 
 ## Only plants in the hero chunks (ChunkManager.HERO_M, 120 m) cast

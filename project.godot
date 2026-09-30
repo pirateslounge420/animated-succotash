@@ -158,6 +158,14 @@ look_night={
 "type": "float",
 "value": 0.0
 }
+look_floor={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+look_floor_min={
+"type": "float",
+"value": 0.0
+}
 look_glow={
 "type": "float",
 "value": 0.0

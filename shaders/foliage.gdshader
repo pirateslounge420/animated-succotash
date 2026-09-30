@@ -604,7 +604,8 @@ void fragment() {
 	ROUGHNESS = 1.0;
 	SPECULAR = 0.0;
 	float glow = look_site_glow(world_pos, 0.25) * glow_pick * smoothstep(0.3, 0.9, sway_w);
-	EMISSION = look_glow_emission(world_pos, glow * 1.0);
+	// The ambient floor (§BD): leaves see the sky the player does.
+	EMISSION = look_glow_emission(world_pos, glow * 1.0) + ALBEDO * look_floor;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 	}
 }

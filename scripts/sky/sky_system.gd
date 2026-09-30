@@ -128,6 +128,18 @@ const MAGIC_DARKEN := 0.6
 ## sun does all the work; ambient is low and deep blue, which is all a
 ## shadow gets, so shadows read blue. Shadows are hard-edged shadow maps.
 static var LIGHT := Tuning.section("look", "light")
+## The ambient floor (design 30 Sept §BD, look.json ambient_floor).
+static var FLOOR := Tuning.section("look", "ambient_floor")
+## Where the player stands, for the sky's share there (main sets both).
+var vis_player: Node3D = null
+var vis_chunks: ChunkManager = null
+## The sky's share where the player stands this frame (0-1: the canopy
+## stamp, and 0 enclosed under a roof), eased; the post grade's floor
+## colour (display space) and the night's desaturation for this frame.
+var sky_visibility := 1.0
+var post_floor := Vector3.ZERO
+var night_desat := 0.0
+var _enclosed := 0.0
 static var DAY := Tuning.section("look", "day")
 static var NIGHT := Tuning.section("look", "night")
 ## Night fog density (per meter) added to the day's haze: about 40% at
@@ -249,7 +261,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var phase := Astro.moon_elongation(days)
 
 	var rise := PlanetConst.SUNRISE_ELEVATION_DEG
-	var sun_up := smoothstep(rise, 6.0, sun_elevation_deg)
+	# (Full strength only from 9 degrees up: at dusk it used to read like
+	# the noon sun, 30 Sept §BD.)
+	var sun_up := smoothstep(rise, 9.0, sun_elevation_deg)
 	var moon_up := smoothstep(-3.0, 8.0, moon_elevation_deg)
 	daylight = smoothstep(-6.0, 10.0, sun_elevation_deg)
 	# Steep, like the real moon (opposition surge): a half moon gives about
@@ -380,6 +394,7 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var e_night := float(NIGHT.get("ambient_energy", 0.2)) * (1.0 + 0.4 * lift)
 	environment.ambient_light_color = amb_night.lerp(amb_day, daylight)
 	environment.ambient_light_energy = lerpf(e_night, e_day, daylight) * (1.0 - MAGIC_DARKEN * dark_magic)
+	_update_floor(delta, daylight, lift, dark_magic)
 
 	# Fog and mist (drawn by the world shaders, see Look): a light haze
 	# that gives depth to long daytime views; thicker at night and in cloud
@@ -410,6 +425,70 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 		"look_glow": 1.0 - smoothstep(0.08, 0.55, daylight),
 	})
 	sky_material.set_shader_parameter("fog_color", fog_color)
+
+
+## The ambient floor (design 30 Sept §BD): ambient at a point is the
+## hour's sky ambient times that point's share of the sky, never under a
+## floor while any sky shows. The environment's ambient (the sky's share,
+## look.json ambient_floor day/night sky_energy) follows the sky's share
+## where the player stands: the canopy stamp there (ChunkManager) and
+## enclosure (rays up from the head meeting a roof: a tomb, a cave). The
+## floor itself goes to the world shaders as look_floor (colour x energy
+## x that share; 0 enclosed) and to the post grade as its shadow floor,
+## and the night's colour drains below its luma (mesopic).
+func _update_floor(delta: float, daylight_now: float, lift: float, dark_magic: float) -> void:
+	if FLOOR.is_empty():
+		return
+	var day: Dictionary = FLOOR.get("day", {})
+	var night_f: Dictionary = FLOOR.get("night", {})
+	var vis_d: Dictionary = FLOOR.get("sky_visibility", {})
+	var min_out := float(vis_d.get("min_outdoors", 0.06))
+	# Where the player stands.
+	var vis_raw := 1.0
+	if vis_player != null and is_instance_valid(vis_player):
+		var pos := vis_player.global_position
+		if vis_chunks != null:
+			vis_raw = vis_chunks.sky_visibility_at(pos)
+		# Enclosure: five rays up from the head (straight, and leaning four
+		# ways); a roof over most of them is inside.
+		var space := vis_player.get_world_3d().direct_space_state
+		var upv := vis_player.global_basis.y.normalized()
+		var hits := 0
+		var dirs := [upv]
+		var e := upv.cross(Vector3.RIGHT if absf(upv.dot(Vector3.RIGHT)) < 0.9 else Vector3.FORWARD).normalized()
+		var n2 := upv.cross(e).normalized()
+		for k in 4:
+			var side := e.rotated(upv, TAU * k / 4.0)
+			dirs.append((upv + side * 0.7).normalized())
+		for dv: Vector3 in dirs:
+			var q := PhysicsRayQueryParameters3D.create(pos + upv * 1.5, pos + upv * 1.5 + dv * 40.0)
+			q.exclude = [vis_player.get_rid()] if vis_player is CollisionObject3D else []
+			var h := space.intersect_ray(q)
+			if not h.is_empty():
+				var cb: Object = h.collider
+				var tree := cb is CollisionObject3D and ((cb as CollisionObject3D).collision_layer & TerrainChunk.TREE_LAYER) != 0
+				if not tree:
+					hits += 1
+		var enclosed_now := 1.0 if hits >= 3 else 0.0
+		_enclosed = lerpf(_enclosed, enclosed_now, clampf(delta * 4.0, 0.0, 1.0))
+	var vis := clampf(vis_raw, 0.0, 1.0) * (1.0 - _enclosed)
+	sky_visibility = lerpf(sky_visibility, vis, clampf(delta * 4.0, 0.0, 1.0))
+	# The sky's ambient, by the sky's share here (this replaces the flat
+	# ambient set above when the block is present).
+	var e_day := float(day.get("sky_energy", 0.42))
+	var e_night := float(night_f.get("sky_energy", 0.32)) + float(night_f.get("moon_add", 0.12)) * lift
+	environment.ambient_light_energy = lerpf(e_night, e_day, daylight_now) * maxf(sky_visibility, 0.0) * (1.0 - MAGIC_DARKEN * dark_magic)
+	# The floor: colour x energy, by the share (0 enclosed), to the shaders
+	# (linear) and the post grade (display), the night's below its luma.
+	var fc_day := Color(str(day.get("floor_color", "#080C4A")))
+	var fc_night := Color(str(night_f.get("floor_color", "#0A1240")))
+	var fe := lerpf(float(night_f.get("floor_energy", 0.1)), float(day.get("floor_energy", 0.16)), daylight_now)
+	var fc := fc_night.lerp(fc_day, daylight_now)
+	var open_k := smoothstep(0.0, min_out, sky_visibility)
+	var lin := fc.srgb_to_linear()
+	Look.apply({"look_floor": Vector3(lin.r, lin.g, lin.b) * fe * open_k * (1.0 - MAGIC_DARKEN * dark_magic), "look_floor_min": min_out})
+	post_floor = Vector3(fc.r, fc.g, fc.b) * open_k
+	night_desat = (1.0 - daylight_now) * float(night_f.get("desaturate", 0.75))
 
 
 ## The scene color that comes out on screen as `c` (sRGB): undoes the

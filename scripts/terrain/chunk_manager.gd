@@ -24,6 +24,7 @@ signal chunk_unloaded(chunk: TerrainChunk)
 
 @export var view_radius_chunks := 3
 @export var detail_radius_chunks := 1
+const DEFAULT_DETAIL_CHUNKS := 1
 ## The render distance setting (settings panel, "display.render_chunks";
 ## from play, like Minecraft's): how many chunks out the view ring goes,
 ## RENDER_MIN .. RENDER_MAX, DEFAULT_RENDER the one the look was tuned at.
@@ -188,7 +189,17 @@ func update_around(player_dir: Vector3) -> void:
 	var want_view := render_chunks()
 	var rings_stale := want_view != view_radius_chunks
 	view_radius_chunks = want_view
-	detail_radius_chunks = mini(detail_radius_chunks, view_radius_chunks)
+	# At walking pace (the ambient profile, design 30 Sept §AU) the
+	# streaming has time: the detail ring (leaf cards, shadows, the
+	# undergrowth) reaches two chunks, so the far pictures start ~520 m
+	# out, not ~260. DETAIL_CHUNKS= in the environment overrides (tools).
+	var want_detail := DEFAULT_DETAIL_CHUNKS
+	if OS.get_environment("DETAIL_CHUNKS") != "":
+		want_detail = int(OS.get_environment("DETAIL_CHUNKS"))
+	elif Tuning.profile() == "ambient":
+		want_detail = 2
+	rings_stale = rings_stale or want_detail != detail_radius_chunks
+	detail_radius_chunks = mini(want_detail, view_radius_chunks)
 	var here := TerrainChunk.key_at(player_dir)
 	if here != _rings_key or rings_stale:
 		_rings_key = here
@@ -466,6 +477,13 @@ func load_blocking(d: Vector3) -> void:
 ## Chunk containing a surface direction, if loaded.
 func chunk_at(d: Vector3) -> TerrainChunk:
 	return chunks.get(TerrainChunk.key_at(d))
+
+
+## The sky's share at a scene point through the canopy (§BD; 1 with no
+## chunk or stamp there): TerrainChunk.sky_visibility_at.
+func sky_visibility_at(scene_pos: Vector3) -> float:
+	var c := chunk_at(world.dir_of(scene_pos))
+	return c.sky_visibility_at(scene_pos) if c else 1.0
 
 
 ## Ground height at a surface direction if its chunk is loaded, else the

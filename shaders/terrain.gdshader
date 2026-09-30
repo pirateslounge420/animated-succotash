@@ -106,27 +106,37 @@ void fragment() {
 		vec2 wob = vec2(sin(TIME * 1.3 + UV.y * 0.9), cos(TIME * 1.1 + UV.x * 0.8)) * 0.18 * gust;
 		dap = 1.0 - texture(dapple_tex, (UV + wob) / dapple_span + 0.5).r;
 	}
+	// This point's share of the sky (design 30 Sept §BD): the stamp's
+	// open sky, less the baked crown disc; what the ambient floor scales by.
+	float sky_vis = clamp((1.0 - dap) * (1.0 - 0.8 * canopy), 0.0, 1.0);
+	// The darkening stack (audited 30 Sept §BD): the shadow map (the
+	// renderer's), then within the shadow map's reach nothing else (it
+	// already shows the shade; the dapple and the crown flecks used to
+	// multiply in on top, and the ground under a tree went black with the
+	// ambient cut), beyond it the dapple and the flecks stand in for it.
+	float beyond = smoothstep(look_leaf_shadow_m * 0.8, look_leaf_shadow_m, dist);
 	if (look_canopy_dark > 0.0) {
 		float shade = 1.0 - (1.0 - canopy) * (1.0 - dap);
 		ALBEDO *= 1.0 - look_canopy_dark * shade * (1.0 - 0.6 * look_night);
 	} else if (canopy > 0.002 || dap > 0.002) {
-		// (With the shadow map on, the near clusters cast their own
-		// shadows; the dapple stands in for them beyond that.)
-		dap *= smoothstep(look_leaf_shadow_m * 0.8, look_leaf_shadow_m, dist);
-		ALBEDO *= 1.0 - 0.34 * dap * (1.0 - 0.75 * nk);
+		ALBEDO *= 1.0 - 0.34 * dap * beyond * (1.0 - 0.75 * nk);
 	}
 	if (look_canopy_dark <= 0.0 && canopy > 0.002) {
 		float fn = texture(look_grain_soft, UV * 0.37 + vec2(0.13, 0.71)).r * 0.65
 			+ texture(look_grain_soft, UV * 0.9 + vec2(0.52, 0.27)).r * 0.35;
 		float fleck = smoothstep(0.54, 0.6, fn);
 		float sun = 1.0 - 0.75 * nk;
-		ALBEDO *= mix(1.0, mix(0.66, 0.66 + 0.5 * sun, fleck), canopy);
+		ALBEDO *= mix(1.0, mix(0.66, 0.66 + 0.5 * sun, fleck), canopy * beyond);
 	}
 	ROUGHNESS = 1.0;
+	// The ambient floor, after the stack: what this ground keeps of the
+	// hour's floor, by its own sky (never under look_floor_min in the open;
+	// look_floor is already 0 where the player stands enclosed).
+	vec3 floor_light = ALBEDO * look_floor * max(sky_vis, look_floor_min);
 	// Glowing moss creeps over the ground at magical places, in patches a
 	// few meters across.
 	float patch = texture(look_grain_soft, UV * 0.03).r;
 	float glow = look_site_glow(world_pos, 0.3) * smoothstep(0.6, 0.75, patch);
-	EMISSION = look_glow_emission(world_pos, glow * 0.55);
+	EMISSION = look_glow_emission(world_pos, glow * 0.55) + floor_light;
 	FOG = look_fog(world_pos, CAMERA_POSITION_WORLD);
 }

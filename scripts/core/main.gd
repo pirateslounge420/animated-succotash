@@ -152,6 +152,7 @@ func _on_planet_ready() -> void:
 	sky = SkySystem.new()
 	sky.name = "Sky"
 	add_child(sky)
+	sky.vis_chunks = chunks
 	sky_events = SkyEvents.new()
 	sky_events.name = "SkyEvents"
 	add_child(sky_events)
@@ -161,6 +162,7 @@ func _on_planet_ready() -> void:
 	player.name = "Player"
 	player.world = world
 	player.chunks = chunks
+	sky.vis_player = player
 	add_child(player)
 	camp = Encampment.new()
 	root.add_child(camp)
@@ -314,6 +316,7 @@ func _process(delta: float) -> void:
 	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position)
 	fx.update_fx(cam.global_position, d, weather, sheltered)
 	post.set_night(1.0 - sky.daylight)
+	post.set_floor(sky.post_floor, sky.night_desat, float((SkySystem.FLOOR.get("night", {}) as Dictionary).get("desaturate_below_luma", 0.22)))
 	Campfire.night = 1.0 - sky.daylight
 	creatures.update_creatures(delta, sky.daylight)
 	fruit_crop.daylight = sky.daylight

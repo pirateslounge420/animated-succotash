@@ -48,6 +48,14 @@ global uniform float look_max_mips;
 // (§AG 6, retro.canopy_dark; 0 while it does: SkySystem.day_shadows()).
 global uniform float look_canopy_dark;
 global uniform float look_night;
+// The ambient floor (design 30 Sept §BD, look.json ambient_floor): the
+// hour's floor colour times its energy times the sky visibility where the
+// player stands (0 inside a tomb or cave), linear, added under everything
+// as ambient after the darkening stack, so day shade is navy and night is
+// a blue-grey lift, never black while any sky shows. look_floor_min: the
+// least share a point in the open keeps under its own canopy shade.
+global uniform vec3 look_floor;
+global uniform float look_floor_min;
 // Teal and cobalt (sRGB (0.05, 1.0, 0.85) and (0.15, 0.35, 1.0)), linear.
 const vec3 look_glow_color = vec3(0.00394, 1.0, 0.69207);
 const vec3 look_glow_color_b = vec3(0.01961, 0.10048, 1.0);

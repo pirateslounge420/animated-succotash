@@ -32,7 +32,11 @@ uniform float bleed = 0.6; // 0-1: how much color spreads sideways
 uniform float grain = 0.025; // film grain amplitude
 uniform float dither = 0.25; // 0-1 ordered dither strength; 0 = off
 uniform float levels = 31.0; // steps per channel: 2^bits - 1
-uniform vec3 shadow_floor = vec3(0.031, 0.047, 0.29); // display space
+uniform vec3 shadow_floor = vec3(0.031, 0.047, 0.29); // display space; driven per frame (§BD: the hour's floor, 0 enclosed)
+// Night is mesopic (§BD): below desat_luma the colour drains toward grey
+// by night_desat (night x look.json ambient_floor.night.desaturate).
+uniform float night_desat = 0.0;
+uniform float desat_luma = 0.22;
 // The presets: x day, y night.
 uniform vec2 exposure = vec2(1.0, 1.0);
 uniform vec2 mids = vec2(1.3, 1.35);
@@ -100,6 +104,10 @@ void fragment() {
 	vec3 night_c = grade(col, exposure.y, mids.y, saturation.y, teal.y, shadow_tint_night, shadow_tint_amount.y, contrast.y, vignette.y, SCREEN_UV);
 	col = mix(day_c, night_c, night);
 	col = (col - 0.4) * (1.0 + 0.15 * magic * night) + 0.4;
+	// Mesopic night: the darks lose their colour (the eye's rods), the
+	// lit things (a fire, the moon on water) keep theirs.
+	float yd = luma_of(col);
+	col = mix(col, vec3(yd), night_desat * (1.0 - smoothstep(desat_luma * 0.6, desat_luma * 1.6, yd)));
 	// Shadow floor: the darks come up to navy (each channel at least the
 	// floor's, easing off above the floor's own brightness).
 	float fl = luma_of(shadow_floor);
