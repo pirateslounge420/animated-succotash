@@ -1,0 +1,48 @@
+{
+ "_help": {
+  "about": "The biome gate (design 1 Oct §CA, Mike: a species belongs in its natural environment; a savanna is acacias, grass and shrubs). VegetationPlacer placed by climate bands alone, so a floodplain-forest magnolia grew on a savanna riverbank. Now a species grows only in a biome whose file lists it (plants, or an association's dominant / companion / ground / catalogue) and, for a data/plants catalogue entry, only in the biomes its own `biomes` list names. Climate, soil, altitude, needs and the realm gate (§AA) still apply inside those biomes. Restart after editing.",
+  "biome_gate": "true: the gate is on. false: the old rule (bands only) — for A/B only.",
+  "catalogue_needs_biomes": "true: a data/plants entry with no `biomes` list does not grow (like an untagged realm) until the fill tags it. false: untagged catalogue entries grow wherever a biome file copies them.",
+  "ecotone_m": "A neighbouring biome's species may cross the border this far into a biome that does not list them, when their own bands fit. 0: hard borders (Mike, 1 Oct: a gallery forest is a floodplain-forest cell, not a bleed). Open it later if the borders look fake.",
+  "association_lists_count": "Which lists in a biome's associations count as 'listed' for the gate.",
+  "walkabout": "tools/walkabout.gd, the end-of-pass check (§CA): seeds, sites per seed, hours, first-person eye height, how far it looks, and that any species in an unlisted biome fails it. Frames and the species list are the report; the dev frame is for grade measurements only."
+ },
+ "biome_gate": true,
+ "catalogue_needs_biomes": true,
+ "ecotone_m": 0.0,
+ "association_lists_count": [
+  "dominant",
+  "companion",
+  "ground",
+  "catalogue"
+ ],
+ "walkabout": {
+  "seeds": 4,
+  "sites_per_seed": [
+   "opening_camp",
+   "first_road_1km",
+   "random_biome",
+   "random_biome",
+   "random_biome"
+  ],
+  "eye_m": 1.6,
+  "facings": 4,
+  "hours": [
+   {
+    "solar_h": 14.0,
+    "weather": "overcast"
+   },
+   {
+    "solar_h": 17.5,
+    "weather": "clear"
+   },
+   {
+    "solar_h": 22.0,
+    "weather": "clear"
+   }
+  ],
+  "list_within_m": 30.0,
+  "unlisted_species_allowed": 0,
+  "use_play_preset": true
+ }
+}

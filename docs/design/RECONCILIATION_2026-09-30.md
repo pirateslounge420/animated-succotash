@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`.
+fire`. Added 1 Oct afternoon with §CA: `data/habitat.json`.
 
 ---
 
@@ -733,7 +733,61 @@ unloaded camps keep ticking as numbers (§BL) and nothing here changes a tick.
   dying hearth reads from across the clearing (§BL: a thin pile means trouble tonight — now
   the flame says it too).
 
-## BR. Order of work — prompt C (after A and B are played; §BR sits after §BZ on purpose — it is the to-do)
+## CA. A species grows only where it belongs — the biome gate — LOCKED (1 Oct, Mike)
+
+Mike, after playing the 1 Oct build: *Magnolia grandiflora should not be in a savanna.
+A species belongs in its natural environment; a savanna is acacias, grass and shrubs.*
+And: *every time I get a screenshot from the code it looks good, but when I load in it
+looks broken.*
+
+**What was wrong.** `vegetation_placer.gd` places by climate bands alone ("climate, never
+biome names"): a biome file was a list of species to load, never a gate. So the Southern
+magnolia of `24_floodplain_forest.json` (15–22 °C, rich soil, moist ≥ 0.5) grew on a
+savanna riverbank at 18.9 °C on alluvium, and an *Alocasia* from `giant_herbs.json` stood
+beside it drawn as a smooth hull. The dev frame (`tools/dev_view.gd`: seed 42, the first
+camp, a third-person camera 9 m south of the fire, clear weather, noon and midnight) never
+looks at any of this, so it never fails.
+
+**The rule.** `data/habitat.json`:
+- **A species grows only in a biome whose file lists it** — in `plants`, or in an
+  association's `dominant` / `companion` / `ground` / `catalogue`. The climate, soil,
+  altitude and needs gates still apply **inside** those biomes; the biome is a gate on top,
+  co-equal with soil (§4b of `PLANT_SCHEMA.md`). A riverbank inside a savanna is still a
+  savanna: it grows the savanna file's waterside species (fever tree, doum palm, reeds —
+  add them there), not another biome's.
+- **A catalogue species (`data/plants/`) grows only in the biomes its `biomes` list names**
+  (its native habitats, filled from `origin` / `native_range` by parallel agents, one per
+  file, with `plant_schema_check --strict` requiring the list). Until it is tagged it does
+  not grow — the same rule the realm gate already applies to an untagged `realm`. The
+  realm gate (§AA) stays as the second filter: the biome says *could it live here*, the
+  realm says *does it live on this continent*.
+- **Borders.** `ecotone_m` lets a neighbouring biome's species cross the line that far
+  when their own bands fit; **0 for now** (hard borders are honest; a gallery forest is a
+  floodplain-forest cell, not a bleed). The designer can open it later.
+- **The planet is procedural, not Earth** (Mike): a species may well grow on a continent
+  it never saw on Earth — the realm map hands continents out by seed. What it may not do
+  is grow in the wrong *kind of place*. That is what the biome gate holds.
+
+**No blobs, any plant.** §AJ's see-through test was written for trees; it applies to every
+plant. The `umbrella` placeholder for aroids and giant herbs, and any `lobe` hull on a
+shrub or herb, is replaced by leaf cards on a stalk: a flat card with the species' tile,
+margin and venation drawn, back-lit from behind, no smooth hull, no untextured face.
+
+**What "done" means from now on — the walkabout** (`tools/walkabout.gd`): the end of
+every visual pass, once, not per step (Mike: screenshots per step burn usage). Four seeds;
+in each, the opening camp at the spawn hour, the first road 1 km out, and three random
+sites in three different biomes; **first person at the player's eye** (1.6 m), facing four
+ways; at 14:00 overcast, 17:30 and 22:00 clear; at the play preset (`render.preset`). It
+lists every species within 30 m and **fails if any grows in a biome that does not list
+it** (0 allowed); the frames go in the report in place of the dev frame. The dev frame
+stays for grade measurements only.
+
+**Two 1 Oct fixes that ride with this:** the held torch's flame is anchored to the stick's
+head, computed from the stick's transform, not a hand-tuned offset (the §BZ card is
+base-anchored and floated above the stick); and the §BX afternoon spawn is built
+(`main.gd` still starts the clock at dusk — data was in, code was not).
+
+## BR. Order of work — prompt C (after A and B are played; §BR sits after §CA on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
 `peoples_check --strict` 0 errors), `techniques.json`, `camps.json → sim`. Then the engine:
@@ -751,3 +805,9 @@ in `camps.gd` grows a destination and a load, `refresh_woodpile` becomes add/rem
 opening road and the afternoon clock (§BX; the start-of-dusk spawn in `main.gd` goes; the
 first landmark is a camp at a ruin) → desire lines and the lost-and-found stretches (§BY).
 Data is in; all first guesses.
+
+**Added 1 Oct, afternoon (§CA), and it goes BEFORE the rest of the above:** the biome gate
+and the walkabout check, the `biomes` fill of the catalogues (parallel agents), the aroid
+and giant-herb hulls to leaf cards, the torch flame on the stick, the afternoon spawn. A
+world where the wrong plants grow is not a world yet; nothing visual is "done" until the
+walkabout passes.
