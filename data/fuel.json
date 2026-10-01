@@ -1,7 +1,7 @@
 {
  "_help": {
   "about": "Fire is fuel (design 30 Sept §AX). Every campfire has a store that burns down: flames -> low -> embers -> out. Fuel is gathered from the world (dead wood, brush, reeds, dung, peat, driftwood) and dropped on the fire. What a biome offers decides whether a camp there can live. Restart after editing.",
-  "fire": "store_max_units: the most a fire holds. burn_scale: units burnt per real minute at full flame is 1/kind.burn_min, times this. low_share: below this share of store the fire reads 'low'. embers_min: real minutes the embers stay relightable after the store hits zero. tended_burn_scale: burn rate while folk are alive at the fire. 0.0 for now (30 Sept, Mike's play: by day 14 every camp fire had burnt out and no flame was left in the world to light a torch at) — until §BL's gather loop restocks the store, a folk-tended fire does not burn down. The player's own fires burn at full rate. relight: how a dead fire comes back. light_radius_m: the safe / dread-draining radius (§BA).",
+  "fire": "store_max_units: the most a fire holds. burn_scale: units burnt per real minute at full flame is 1/kind.burn_min, times this. low_share: below this share of store the fire reads 'low'. embers_min: real minutes the embers stay relightable after the store hits zero. tended_burn_scale: burn rate while folk are alive at the fire; the camp loop (§BL, CampSim) feeds it from the woodpile. Note from Mike's play on 30 Sept: before the loop existed every camp fire was out by day 14 and no flame was left in the world to light a torch at — a save from before the loop stays dark; start a new world. A dead tended fire is relit by its folk at dawn from the woodpile (they keep an ember). relight: how a dead fire comes back. light_radius_m: the safe / dread-draining radius (§BA).",
   "wet": "Fuel gathered in rain or from soaked ground: burn-time multiplier and the chance it lights at all.",
   "kinds": "burn_min: real minutes one unit burns at full flame. heat: warmth/light scale (brush burns hot and fast). smoke: visual smoke scale. carry_items: burden slots one unit takes.",
   "biomes": "Per biome key (BiomeTemplates names): fuel kinds on offer with an abundance 0-1 that scales how much the gather pass places. An empty block means nothing burns there: a camp there dies."
@@ -11,7 +11,7 @@
   "burn_scale": 1.0,
   "low_share": 0.25,
   "embers_min": 20.0,
-  "tended_burn_scale": 0.0,
+  "tended_burn_scale": 0.35,
   "relight": {
    "from_torch": true,
    "from_dry_fuel_on_embers": true,
