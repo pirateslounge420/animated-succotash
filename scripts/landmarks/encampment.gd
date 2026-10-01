@@ -37,6 +37,12 @@ static var clearings: Array = []
 var world: Node
 var chunks: ChunkManager
 var site := Vector3.UP
+## The way of life the opening camp lives (Peoples.pick), and its store
+## props (CampSim state "opening").
+var people_id := ""
+var woodpile: Node3D
+var food_store: Node3D
+var _store_t := 0.0
 ## Where the player wakes (surface direction).
 var player_spot := Vector3.UP
 ## Dev: which side of the fire the player wakes on (radians; NAN = a
@@ -143,6 +149,42 @@ func build(p_world: Node, p_chunks: ChunkManager, p_site: Vector3) -> void:
 	name = "Encampment"
 	_fire = Campfire.build(self, world, chunks, site, false)
 	_fire.set_meta("hearth_ok", true)
+	# The people who found you (design 30 Sept §BO): the life this site
+	# lives, its shelter and props round the fire (CampProps).
+	people_id = Peoples.pick(world.planet, chunks.rivers, site, "opening")
+	var people := Peoples.get_people(people_id)
+	var biome_key := FireStore.biome_key(world, site)
+	var ppal := Peoples.palette(people, biome_key)
+	var drng := RandomNumberGenerator.new()
+	drng.seed = hash([site, "dress"])
+	var dress := Node3D.new()
+	dress.name = "Dressing"
+	add_child(dress)
+	dress.global_transform = Transform3D(Basis.looking_at(CubeSphere.north(site), site), _fire.global_position)
+	var dbody := PropCollision.body(dress)
+	var shelter := CampProps.shelter(dress, people, ppal, drng, dbody)
+	var sa := drng.randf() * TAU
+	shelter.position = Vector3(cos(sa), 0, sin(sa)) * 9.0
+	shelter.basis = Basis.looking_at(-shelter.position.normalized(), Vector3.UP)
+	if CampSim.instance != null:
+		var st := CampSim.instance.ensure("opening", site, people_id, biome_key, hash([site, "opening"]))
+		var wp := CampProps.woodpile(dress, float(st.wood), dbody)
+		wp.position = Vector3(cos(sa + 1.3), 0, sin(sa + 1.3)) * 4.0
+		wp.basis = Basis.looking_at(-wp.position.normalized(), Vector3.UP)
+		var fs := CampProps.food_store(dress, float(st.food), ppal, dbody)
+		fs.position = Vector3(cos(sa - 1.3), 0, sin(sa - 1.3)) * 4.2
+		fs.basis = Basis.looking_at(-fs.position.normalized(), Vector3.UP)
+		woodpile = wp
+		food_store = fs
+	var props: Array = (people.get("aesthetic", {}) as Dictionary).get("props", [])
+	for i in mini(3, props.size()):
+		var s := str(props[i]).to_lower()
+		if s.find("ladder") >= 0 or s.find("bridge") >= 0 or s.find("hearth box") >= 0:
+			continue
+		var n := CampProps.prop(dress, str(props[i]), ppal, drng, dbody)
+		var a := sa + TAU * (i + 1) / 4.0
+		n.position = Vector3(cos(a), 0, sin(a)) * drng.randf_range(5.0, 6.5)
+		n.basis = Basis.looking_at(-n.position.normalized(), Vector3.UP)
 	# The player's side of the fire, and the two NPCs across it.
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
@@ -204,6 +246,15 @@ func talk(who: int, delay: float) -> void:
 ## Per frame: the fire flickers; the NPCs breathe and turn to face the
 ## player when they're near, else the fire.
 func update_camp(delta: float, player_pos: Vector3) -> void:
+	_store_t -= delta
+	if _store_t <= 0.0 and CampSim.instance != null and woodpile != null:
+		_store_t = 1.5
+		var st := CampSim.instance.state_of("opening")
+		if not st.is_empty():
+			if absf(float(woodpile.get_meta("units", -1.0)) - float(st.wood)) >= 0.5:
+				CampProps.refresh_woodpile(woodpile, float(st.wood))
+			if absf(float(food_store.get_meta("units", -1.0)) - float(st.food)) >= 1.0:
+				CampProps.refresh_food_store(food_store, float(st.food))
 	_time += delta
 	Campfire.flicker(_fire, _time)
 	var player_dir: Vector3 = world.dir_of(player_pos)
