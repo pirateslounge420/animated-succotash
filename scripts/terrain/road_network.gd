@@ -1,8 +1,11 @@
 class_name RoadNetwork
 ## Roads (design 30 Sept §BC, data/roads.json): a trail network laid
 ## before plants, built by whoever left the ruins and maintained by
-## nobody. Nodes are the ruins, the mythic folk's camps, the hot springs
-## and standing stones; links join each node to its nearest neighbours
+## nobody. Nodes are the ruins and the people's camps (the inhabited ruins
+## and the opening camp; the mythic folk belong to the dark, §BA, not to
+## the roads), springs (where a river rises), fords (a narrow, crossable
+## stream), passes (a saddle between ridges), hot springs and standing
+## stones; links join each node to its nearest neighbours
 ## (a relative-neighbourhood graph within link_max_km, none closer than
 ## min_spacing_km); each link is routed over a lattice of the terrain
 ## (A*, 200 m steps) that costs grade above max_grade (the road
@@ -29,9 +32,20 @@ static var MARGIN_M := minf(9000.0, PlanetConst.CIRCUMFERENCE_M / 12.0)
 ## The routing lattice's step: fine enough that a 1/10-height planet's
 ## ravines show between samples (the grade limit is judged on it).
 const STEP_M := 120.0
+## Ground this close above the sea is strand: a road may cross it, at half
+## again the cost.
+const STRAND_M := 0.5
 const HASH_M := 2000.0
 
 static var instance: RoadNetwork = null
+## The opening camp (design 30 Sept §BX, World.pick_spawn_site): {"node":
+## the road node beside its fire, "ruin": the people's camp the first road
+## leads to, "alts": the next ones to try} — a node whatever the spacing,
+## and a link to its camp whatever the neighbour pruning. {} = none.
+static var opening := {}
+## How many people's camps a region linked only by its fallback, and
+## which stayed unreached (an island, a cliff-bound basin): logged.
+var unreached: Array = []
 static var D := Tuning.table("roads")
 ## ROAD_DEBUG=1: a line per region built (nodes, links, seconds).
 static var DEBUG := OS.get_environment("ROAD_DEBUG") == "1"
@@ -84,12 +98,27 @@ func ensure(d: Vector3, radius: float) -> void:
 				want[k] = true
 	for k in want:
 		_mutex.lock()
-		var done := _regions.has(k)
-		if not done:
+		var started := _regions.has(k)
+		if not started:
 			_regions[k] = false
 		_mutex.unlock()
-		if not done:
+		if not started:
 			_build_region(k)
+			_mutex.lock()
+			_regions[k] = true
+			_mutex.unlock()
+	# A region another thread is still building: wait for it (a chunk
+	# that read it half-built kept no tread, and the checks counted roads
+	# short). No thread waits while it holds a region unbuilt, so this
+	# cannot deadlock.
+	for k in want:
+		while true:
+			_mutex.lock()
+			var built: bool = _regions.get(k, false)
+			_mutex.unlock()
+			if built:
+				break
+			OS.delay_msec(5)
 
 
 func _build_region(k: Vector3i) -> void:
@@ -147,40 +176,184 @@ func _build_region(k: Vector3i) -> void:
 				pairs[key] = true
 				kept += 1
 	var new_links: Array = []
+	var linked := {}
 	for key in pairs:
 		var t1 := Time.get_ticks_msec()
 		var link := _route(key.x, key.y, centre, reach)
 		if not link.is_empty():
 			new_links.append(link)
+			linked[key.x] = true
+			linked[key.y] = true
 		if DEBUG:
 			print("[roads]   link %d-%d: %s, %.1f s" % [key.x, key.y, "%.0f m" % link.len_m if not link.is_empty() else "no way", (Time.get_ticks_msec() - t1) / 1000.0])
+	# The opening road (§BX): the opening camp's node to its people's camp,
+	# whatever the pruning said (then the alternatives, nearest-to-hint
+	# first, if the first will not route).
+	for i in own:
+		if not bool(nodes[i].get("opening", false)):
+			continue
+		var targets: Array = [opening.get("ruin", Vector3.ZERO)]
+		targets.append_array(opening.get("alts", []))
+		var done := false
+		for t in targets:
+			if done or t == Vector3.ZERO:
+				continue
+			var j := _node_at(all, t)
+			if j < 0:
+				continue
+			var key := Vector2i(mini(i, j), maxi(i, j))
+			if pairs.has(key):
+				# The pruning kept this pair already: that link is the
+				# opening road.
+				for l in new_links:
+					if (int(l.a) == i and int(l.b) == j) or (int(l.a) == j and int(l.b) == i):
+						l.opening = true
+						done = true
+						break
+				if done:
+					continue
+			var link := _route(i, j, centre, reach)
+			if not link.is_empty():
+				link.opening = true
+				new_links.append(link)
+				linked[i] = true
+				linked[j] = true
+				done = true
+		if not done:
+			push_warning("RoadNetwork: the opening camp's road to its people's camp would not route")
+	# Every people's camp and ruin on the network (§BC): one whose pruned
+	# neighbours are gone or would not route tries the next nearest, up to
+	# six, before it is given up (and logged, for a camp).
+	for i in own:
+		var kind := str(nodes[i].kind)
+		if kind != "camp" and kind != "ruin":
+			continue
+		if linked.has(i) or _linked_elsewhere(i):
+			continue
+		var di: Vector3 = nodes[i].dir
+		var cand: Array = []
+		for j in all:
+			if j == i:
+				continue
+			var dm := CubeSphere.surface_distance_m(di, nodes[j].dir)
+			if dm <= max_m:
+				cand.append([dm, j])
+		cand.sort_custom(func(x, y): return x[0] < y[0])
+		var ok := false
+		for c in cand.slice(0, 6):
+			var j: int = c[1]
+			if pairs.has(Vector2i(mini(i, j), maxi(i, j))):
+				continue
+			var link := _route(i, j, centre, reach)
+			if not link.is_empty():
+				new_links.append(link)
+				linked[i] = true
+				linked[j] = true
+				ok = true
+				break
+		if not ok and kind == "camp":
+			_mutex.lock()
+			unreached.append(di)
+			_mutex.unlock()
+			push_warning("RoadNetwork: a people's camp at %s has no road (no neighbour within %.0f km would route: an island or a cliff-bound basin)" % [str(di), max_m / 1000.0])
+	# The forks are cut and the lost-and-found stretches laid before the
+	# links are published: a chunk on another thread may read them at once.
+	_legible_forks(new_links)
+	for link in new_links:
+		_lost_and_found(link)
 	_mutex.lock()
 	for link in new_links:
 		link.id = links.size()
 		links.append(link)
 		_index(link)
 	_mutex.unlock()
-	_legible_forks(new_links)
 	if DEBUG:
 		print("[roads] region %s: %d own nodes, %d pairs, %d links, %.1f s" % [k, own.size(), pairs.size(), new_links.size(), (Time.get_ticks_msec() - t0) / 1000.0])
 
 
-## The nodes within `reach` m of `centre`: ruins, the mythic camps, hot
-## springs (the biome), standing stones (their own hash).
+## The index (into `nodes`) among `idx` of the node at `d` (within 5 m), or -1.
+func _node_at(idx: Array, d: Vector3) -> int:
+	for j in idx:
+		if CubeSphere.surface_distance_m(nodes[j].dir, d) < 5.0:
+			return j
+	return -1
+
+
+## Does a link built by another region already end at node `i`?
+func _linked_elsewhere(i: int) -> bool:
+	_mutex.lock()
+	var found := false
+	for l in links:
+		if int(l.a) == i or int(l.b) == i:
+			found = true
+			break
+	_mutex.unlock()
+	return found
+
+
+## The nodes within `reach` m of `centre` (design 30 Sept §BC, roads.json
+## network.nodes): ruins, and the people's camps — the inhabited ruins and
+## the opening camp ("camp"); springs, where a river rises; fords, a
+## narrow stream's crossing; passes, a saddle between ridges; hot springs
+## (the biome); standing stones (their own hash). The mythic folk's
+## territories are not road nodes: the roads were built by the people who
+## left the ruins.
 func _find_nodes(centre: Vector3, reach: float) -> Array:
 	var out: Array = []
 	var min_m := float((D.get("network", {}) as Dictionary).get("min_spacing_km", 3.0)) * 1000.0
 	var kinds: Array = (D.get("network", {}) as Dictionary).get("nodes", ["ruin", "camp", "hot_spring", "standing_stone"])
-	if kinds.has("ruin"):
+	if kinds.has("ruin") or kinds.has("camp"):
 		for c in CreatureSpawner._cells_around(centre, reach, Ruins.CELL_M):
 			var site := Ruins.find(map, c)
-			if not site.is_empty():
-				out.append({"dir": site.dir, "kind": "ruin", "key": "ruin:%s" % str(c)})
-	if kinds.has("camp"):
-		for c in CreatureSpawner._cells_around(centre, reach, Territories.CELL_M):
-			var t := Territories.find(map, c)
-			if not t.is_empty():
-				out.append({"dir": t.dir, "kind": "camp", "key": "camp:%s" % str(c)})
+			if site.is_empty():
+				continue
+			var lived := kinds.has("camp") and Ruins.inhabited(site)
+			if lived or kinds.has("ruin"):
+				out.append({"dir": site.dir, "kind": "camp" if lived else "ruin", "key": "ruin:%s" % str(c)})
+	if kinds.has("camp") and not opening.is_empty():
+		var od: Vector3 = opening.get("node", Vector3.ZERO)
+		if od != Vector3.ZERO and CubeSphere.surface_distance_m(od, centre) <= reach:
+			out.append({"dir": od, "kind": "camp", "key": "opening", "opening": true})
+	if (kinds.has("spring") or kinds.has("ford")) and rivers != null and not map.biome.is_empty():
+		var seen := {}
+		for c in CreatureSpawner._cells_around(centre, reach, map.cell_m()):
+			var cell := map.cell_at(CreatureSpawner._cell_point(c, map.res, 31))
+			for sgi in rivers.segments_near(map, cell):
+				if seen.has(sgi):
+					continue
+				seen[sgi] = true
+				var a: Vector3 = rivers.a[sgi]
+				var b: Vector3 = rivers.b[sgi]
+				# A spring: where a river rises (no segment flows in).
+				if kinds.has("spring") and rivers.up_seg[sgi] < 0 and CubeSphere.surface_distance_m(a, centre) <= reach:
+					var wa := map.water[map.cell_at(a)]
+					if wa != PlanetData.Water.OCEAN and wa != PlanetData.Water.LAKE:
+						out.append({"dir": a, "kind": "spring", "key": "spring:%d" % sgi})
+				# A ford: where the roads on both banks come down to cross —
+				# the middle of a reach whose banks are low (no gorge), so
+				# links meet at one crossing rather than each its own. (The
+				# full planet's blueprint rivers are 25-55 m wide; the
+				# crossing itself is a ford or a bridge by width, _decay.)
+				if kinds.has("ford"):
+					var mid := a.slerp(b, 0.5)
+					if CubeSphere.surface_distance_m(mid, centre) > reach:
+						continue
+					var e := map.terrain.elevation(mid, false)
+					var tan := (b - a).normalized()
+					var side := tan.cross(mid).normalized()
+					var bank := rivers.width[sgi] * 0.5 + 120.0
+					var e1 := map.terrain.elevation((mid + side * bank / PlanetConst.RADIUS_M).normalized(), false)
+					var e2 := map.terrain.elevation((mid - side * bank / PlanetConst.RADIUS_M).normalized(), false)
+					if e1 - e < 20.0 and e2 - e < 20.0:
+						out.append({"dir": mid, "kind": "ford", "key": "ford:%d" % sgi})
+	if kinds.has("pass") and not map.biome.is_empty():
+		for c in CreatureSpawner._cells_around(centre, reach, 4000.0):
+			var p := CreatureSpawner._cell_point(c, CreatureSpawner._cells_per_face(4000.0), 977)
+			if CubeSphere.surface_distance_m(p, centre) > reach:
+				continue
+			var sd := _saddle_near(p)
+			if sd != Vector3.ZERO:
+				out.append({"dir": sd, "kind": "pass", "key": "pass:%s" % str(c)})
 	if kinds.has("hot_spring") and not map.biome.is_empty():
 		for c in CreatureSpawner._cells_around(centre, reach, map.cell_m()):
 			var p := CreatureSpawner._cell_point(c, map.res, 31)
@@ -195,19 +368,72 @@ func _find_nodes(centre: Vector3, reach: float) -> Array:
 				var p := CreatureSpawner._cell_point(c, CreatureSpawner._cells_per_face(9000.0), 313)
 				if map.water[map.cell_at(p)] == PlanetData.Water.NONE and map.terrain.elevation(p, false) > 2.0:
 					out.append({"dir": p, "kind": "standing_stone", "key": "stone:%s" % str(c)})
-	# Spacing: ruins first, then the rest; anything within min_spacing of
-	# a kept node is dropped.
-	out.sort_custom(func(x, y): return (x.kind == "ruin") and not (y.kind == "ruin"))
+	# Spacing: the people's camps and the ruins are never dropped (the
+	# roads were built to reach them). The places on the land (springs,
+	# fords, passes, hot springs, stones) keep min_spacing from each other
+	# but only a third of it from a ruin: ruins stand every ~3 km on the
+	# full planet, and a ford by a ruin is still a ford.
 	var kept: Array = []
 	for n in out:
+		if n.kind == "camp" or n.kind == "ruin":
+			kept.append(n)
+	var built := kept.size()
+	for n in out:
+		if n.kind == "camp" or n.kind == "ruin":
+			continue
 		var near := false
-		for m in kept:
-			if CubeSphere.surface_distance_m(n.dir, m.dir) < min_m:
+		for mi in kept.size():
+			var gap := min_m / 3.0 if mi < built else min_m
+			if CubeSphere.surface_distance_m(n.dir, kept[mi].dir) < gap:
 				near = true
 				break
 		if not near:
 			kept.append(n)
 	return kept
+
+
+## A pass near `p`: a saddle — the ground rises both ways along one axis
+## (the ridges) and falls both ways across it (the valleys either side),
+## by at least SADDLE_RELIEF_M at PASS_PROBE_M. Vector3.ZERO when none.
+const PASS_PROBE_M := 1500.0
+const SADDLE_RELIEF_M := 5.0
+
+func _saddle_near(p: Vector3) -> Vector3:
+	# A 5 x 5 search over the 4 km cell, 800 m apart: saddles are small
+	# on a 1/10-height planet and a single sample rarely falls on one.
+	var ea := CubeSphere.east(p)
+	var na := CubeSphere.north(p)
+	for k in 25:
+		var gx := (k % 5) - 2
+		var gy := (k / 5) - 2
+		var q := (p + (ea * gx + na * gy) * 800.0 / PlanetConst.RADIUS_M).normalized()
+		if map.water[map.cell_at(q)] != PlanetData.Water.NONE:
+			continue
+		var e := map.terrain.elevation(q, true)
+		if e < PlanetConst.SEA_LEVEL_M + 20.0:
+			continue
+		for axis in 2:
+			var a0 := axis * PI * 0.25
+			var up1 := map.terrain.elevation(CreatureSpawner._offset(q, a0, PASS_PROBE_M), true) - e
+			var up2 := map.terrain.elevation(CreatureSpawner._offset(q, a0 + PI, PASS_PROBE_M), true) - e
+			var dn1 := e - map.terrain.elevation(CreatureSpawner._offset(q, a0 + PI * 0.5, PASS_PROBE_M), true)
+			var dn2 := e - map.terrain.elevation(CreatureSpawner._offset(q, a0 + PI * 1.5, PASS_PROBE_M), true)
+			if minf(up1, up2) > SADDLE_RELIEF_M and minf(dn1, dn2) > SADDLE_RELIEF_M:
+				return q
+	return Vector3.ZERO
+
+
+## Can a road run from `a` to `b` (World.pick_spawn_site checks the opening
+## road before it settles the first camp): the same A* the network uses,
+## on a lattice round the pair.
+static func can_route(p_map: PlanetData, p_rivers: RiverNetwork, a: Vector3, b: Vector3) -> bool:
+	var keep := instance
+	var net := RoadNetwork.new(p_map, p_rivers)
+	instance = keep
+	net.nodes = [{"dir": a, "kind": "camp", "key": "probe:a"}, {"dir": b, "kind": "camp", "key": "probe:b"}]
+	var centre := (a + b).normalized()
+	var reach := CubeSphere.surface_distance_m(a, b) * 0.6 + 2500.0
+	return not net._route(0, 1, centre, reach).is_empty()
 
 
 # --- Routing ----------------------------------------------------------------------
@@ -243,10 +469,20 @@ class _Lattice:
 		var e := map.terrain.elevation(d, false)
 		var c := map.cell_at(d)
 		var w := map.water[c]
+		# Water only where the ground is under it: a coastal flat a few
+		# tenths of a metre up is land, and its ruins are people's camps
+		# (with a 0.5 m margin here, every road out of the flats on seed
+		# 90210 was "no way"). The strand costs more below (STRAND_M).
+		# Near sea level the smooth height and the drawn (detailed) ground
+		# disagree by a few tenths of a metre: judge the sea by the ground
+		# the game draws (ruins stand on it at -0.2..-0.5 m smooth).
+		var e_wet := e
+		if e < PlanetConst.SEA_LEVEL_M + 2.0:
+			e_wet = map.terrain.elevation(d, true)
 		var kind := 0
-		if w == PlanetData.Water.OCEAN or e < PlanetConst.SEA_LEVEL_M + 0.5:
+		if w == PlanetData.Water.OCEAN or e_wet < PlanetConst.SEA_LEVEL_M:
 			kind = 1
-		elif w == PlanetData.Water.LAKE and e < map.water_level[c] + 0.5:
+		elif w == PlanetData.Water.LAKE and e_wet < map.water_level[c]:
 			kind = 1
 		var rw := 0.0
 		var bank := 0
@@ -261,7 +497,7 @@ class _Lattice:
 				kind = 2
 			elif best < rw * 0.5 + 80.0:
 				bank = 1
-		var out := [e, kind, rw, bank]
+		var out := [maxf(e, e_wet) if kind == 0 and e < PlanetConst.SEA_LEVEL_M + STRAND_M else e, kind, rw, bank]
 		cells[idx] = out
 		return out
 
@@ -269,8 +505,13 @@ class _Lattice:
 var _lattices := {}
 
 
+## Cached by its own centre and reach: a region's centre, pushed out onto
+## the sphere, can fall in the next region's cube, so keying by the cube
+## lent one region's lattice to its neighbour (its nodes off the grid, every
+## route "no way" — found 1 Oct on seed 90210, and only when the neighbour
+## happened to build first).
 func _lattice(centre: Vector3, reach: float) -> _Lattice:
-	var key := _region_of(centre)
+	var key := Vector4(centre.x, centre.y, centre.z, reach)
 	_mutex.lock()
 	if _lattices.has(key):
 		var l: _Lattice = _lattices[key]
@@ -299,6 +540,8 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 	var goal := lat.index_of(nodes[ib].dir)
 	var n := lat.n
 	if start.x < 0 or start.y < 0 or start.x >= n or start.y >= n or goal.x < 0 or goal.y < 0 or goal.x >= n or goal.y >= n:
+		if DEBUG:
+			print("[roads]     no way %d-%d: off the lattice (start %s, goal %s, n %d)" % [ia, ib, start, goal, n])
 		return {}
 	var net: Dictionary = D.get("network", {})
 	var max_grade := float(net.get("max_grade", 0.18))
@@ -338,7 +581,7 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 					continue
 				var nc := lat.cell(ni)
 				var wk: int = nc[1]
-				if wk == 1:
+				if wk == 1 and ni != g_idx:
 					continue
 				var dist := STEP_M * (1.4142 if dx != 0 and dy != 0 else 1.0)
 				var grade := absf(float(nc[0]) - float(cur_cell[0])) / dist
@@ -349,6 +592,8 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 				var cost := dist
 				if grade > max_grade:
 					cost *= 1.0 + 8.0 * (grade - max_grade) / max_grade
+				if float(nc[0]) < PlanetConst.SEA_LEVEL_M + STRAND_M:
+					cost *= 1.5
 				if wk == 2:
 					cost *= 3.0 + float(nc[2]) / 6.0
 				elif follow_rivers and int(nc[3]) == 1:
@@ -360,6 +605,10 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 					var h := Vector2(nx - goal.x, ny - goal.y).length() * STEP_M
 					_heap_push(heap, [ng + h, ni])
 	if not found:
+		if DEBUG:
+			var sc := lat.cell(s_idx)
+			var gc := lat.cell(g_idx)
+			print("[roads]     no way %d-%d: start %s elev %.1f water %d, goal %s elev %.1f water %d, %d steps, %d closed" % [ia, ib, start, sc[0], sc[1], goal, gc[0], gc[1], steps, closed.size()])
 		return {}
 	var cells: Array = []
 	var at := g_idx
@@ -608,6 +857,53 @@ func _legible_forks(new_links: Array) -> void:
 				l2.forked = true
 
 
+## The lost-and-found stretches (design 30 Sept night §BY, roads.json
+## lost_and_found): about vanish_share of the link, in stretches
+## vanish_len_m long where the trail all but vanishes under the
+## understory, between clear stretches clear_len_m long; the first and the
+## last clear stretch are kept so the trail always leaves a node plainly.
+## Each place the trail resumes gets a tell (pickup_tells, standing)
+## within tell_within_m. Sets link.cum (metres along at each point) and
+## link.vanish ([from, to] metres).
+func _lost_and_found(link: Dictionary) -> void:
+	var pts: PackedVector3Array = link.pts
+	var cum := PackedFloat32Array()
+	cum.resize(pts.size())
+	var acc := 0.0
+	for i in pts.size():
+		if i > 0:
+			acc += CubeSphere.surface_distance_m(pts[i - 1], pts[i])
+		cum[i] = acc
+	link.cum = cum
+	link.len_m = acc
+	var lf: Dictionary = D.get("lost_and_found", {})
+	var vanish: Array = []
+	link.vanish = vanish
+	var share := float(lf.get("vanish_share", 0.3))
+	if share <= 0.0:
+		return
+	var vb = lf.get("vanish_len_m", [25, 90])
+	var cb = lf.get("clear_len_m", [120, 500])
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([nodes[link.a].key, nodes[link.b].key, "lost"])
+	# Clear stretches scaled so the vanished ones come to about the share.
+	var mean_v := (float(vb[0]) + float(vb[1])) * 0.5
+	var mean_c := (float(cb[0]) + float(cb[1])) * 0.5
+	var scale := clampf(mean_v * (1.0 - share) / maxf(share * mean_c, 1.0), 0.05, 4.0)
+	var tells: Array = lf.get("pickup_tells", ["cairn"])
+	var within := float(lf.get("tell_within_m", 12.0))
+	var m := rng.randf_range(float(cb[0]), float(cb[1])) * scale
+	m = maxf(m, 80.0)
+	while true:
+		var vl := rng.randf_range(float(vb[0]), float(vb[1]))
+		if m + vl > acc - 80.0:
+			break
+		vanish.append([m, m + vl])
+		var tell := str(tells[rng.randi() % tells.size()])
+		link.waymarks.append([point_at(pts, minf(m + vl + rng.randf_range(0.0, within), acc)), tell, false, "tell"])
+		m += vl + rng.randf_range(float(cb[0]), float(cb[1])) * scale
+
+
 func _index(link: Dictionary) -> void:
 	for p in link.pts:
 		var k := _hash_key(p)
@@ -669,7 +965,8 @@ static func nearest_in(near: Array, d: Vector3, radius: float) -> Dictionary:
 
 
 ## The polyline segments of `near` (links_near) within `radius` m of
-## `centre`: [pa, pb, link], for the per-vertex and per-site tests.
+## `centre`: [pa, pb, link, segment index], for the per-vertex and
+## per-site tests.
 static func segments_in(near: Array, centre: Vector3, radius: float) -> Array:
 	var out: Array = []
 	var limit := cos(minf(radius / PlanetConst.RADIUS_M, PI))
@@ -678,7 +975,7 @@ static func segments_in(near: Array, centre: Vector3, radius: float) -> Array:
 		for i in pts.size() - 1:
 			var mid := (pts[i] + pts[i + 1]).normalized()
 			if mid.dot(centre) >= limit:
-				out.append([pts[i], pts[i + 1], link])
+				out.append([pts[i], pts[i + 1], link, i])
 	return out
 
 
@@ -699,19 +996,91 @@ static func nearest_seg(segs: Array, d: Vector3, radius: float) -> Dictionary:
 	return best
 
 
-## The tread at `d` (0 bare ground to 1 full path colour) from the
-## segments near: the road's width, worn by trail.wear and taken back by
-## trail.overgrown, feathered over the terrain's vertex spacing.
-static func tread_at(segs: Array, d: Vector3) -> float:
+## The tread under `d` for the terrain shader (design 30 Sept §BC, §BY):
+## Vector4(signed distance to the nearest road's centreline (m; FAR_M
+## when none is near), the road's half-width (m), trail.wear, how
+## overgrown it is here (trail.overgrown, raised to lost_and_found
+## overgrown_in_vanish in a vanished stretch)). The distance is signed by
+## the side of the road so it interpolates linearly across a terrain quad
+## wider than the road; past a link's ends it is unsigned (no phantom
+## centreline runs on beyond a node).
+const FAR_M := 40.0
+const NO_TREAD := Vector4(FAR_M, 1.0, 0.0, 0.0)
+
+static func tread_info(segs: Array, d: Vector3) -> Vector4:
 	if segs.is_empty():
-		return 0.0
-	var r := nearest_seg(segs, d, 8.0)
-	if r.is_empty():
-		return 0.0
+		return NO_TREAD
+	var best_m := FAR_M
+	var best: Array = []
+	var best_t := 0.0
+	for s in segs:
+		var pa: Vector3 = s[0]
+		var ab: Vector3 = (s[1] as Vector3) - pa
+		var t := clampf((d - pa).dot(ab) / maxf(ab.length_squared(), 1e-14), 0.0, 1.0)
+		var p := (pa + ab * t).normalized()
+		var dm := CubeSphere.surface_distance_m(p, d)
+		if dm < best_m:
+			best_m = dm
+			best = s
+			best_t = t
+	if best.is_empty():
+		return NO_TREAD
+	var link: Dictionary = best[2]
+	var i: int = best[3] if best.size() > 3 else 0
+	var pts: PackedVector3Array = link.pts
+	var pa: Vector3 = best[0]
+	var ab: Vector3 = (best[1] as Vector3) - pa
+	var p := (pa + ab * best_t).normalized()
+	var sd := best_m
+	var at_end := (i == 0 and best_t <= 0.0) or (i == pts.size() - 2 and best_t >= 1.0)
+	if not at_end and (d - p).dot(ab.cross(p)) < 0.0:
+		sd = -best_m
 	var trail: Dictionary = D.get("trail", {})
-	var w := float((r.link as Dictionary).get("width_m", 2.0))
-	var k := 1.0 - smoothstep(w * 0.5, w * 0.5 + 4.0, float(r.dist_m))
-	return k * float(trail.get("wear", 0.6)) * (1.0 - 0.6 * float(trail.get("overgrown", 0.55)))
+	var og := float(trail.get("overgrown", 0.55))
+	var cum: PackedFloat32Array = link.get("cum", PackedFloat32Array())
+	var vanish: Array = link.get("vanish", [])
+	if not vanish.is_empty() and i + 1 < cum.size():
+		var m := lerpf(cum[i], cum[i + 1], best_t)
+		og = maxf(og, vanish_overgrown(vanish, m))
+	return Vector4(sd, float(link.get("width_m", 2.0)) * 0.5, float(trail.get("wear", 0.6)), og)
+
+
+## How overgrown the trail is `m` metres along a link with lost-and-found
+## stretches `vanish` ([from, to] metres): lost_and_found
+## overgrown_in_vanish inside one, ramped over VANISH_RAMP_M at each end;
+## 0 elsewhere (the trail's own overgrown applies).
+const VANISH_RAMP_M := 10.0
+
+static func vanish_overgrown(vanish: Array, m: float) -> float:
+	var top := float((D.get("lost_and_found", {}) as Dictionary).get("overgrown_in_vanish", 0.95))
+	for v in vanish:
+		var a := float(v[0])
+		var b := float(v[1])
+		if m > a - VANISH_RAMP_M and m < b + VANISH_RAMP_M:
+			return top * minf(smoothstep(a - VANISH_RAMP_M, a + VANISH_RAMP_M, m), 1.0 - smoothstep(b - VANISH_RAMP_M, b + VANISH_RAMP_M, m))
+	return 0.0
+
+
+## How much bare tread shows at `info` (tread_info), 0-1, averaged over the
+## shader's noisy patches (terrain.gdshader does the same per pixel): the
+## worn core down the centre (trail.wear), grass taking it back toward the
+## edges and across it (overgrown), all but gone in a vanished stretch.
+static func tread_share(info: Vector4) -> float:
+	if info.z <= 0.0:
+		return 0.0
+	var hw := maxf(info.y, 0.3)
+	var ad := absf(info.x)
+	var core := 1.0 - smoothstep(hw * 0.5, hw + 0.4, ad)
+	var edge := smoothstep(0.0, hw, ad)
+	var reclaim := clampf(info.w * (0.55 + 0.6 * edge), 0.0, 1.0)
+	var fade := 1.0 - 0.85 * smoothstep(0.8, 0.95, info.w)
+	return core * clampf(info.z / 0.6, 0.0, 1.0) * (1.0 - reclaim) * fade
+
+
+## The tread at `d` (0 bare ground to 1 full worn path), from the segments
+## near: tread_share of tread_info.
+static func tread_at(segs: Array, d: Vector3) -> float:
+	return tread_share(tread_info(segs, d))
 
 
 # --- Rooms (design 30 Sept §BB, data/rooms.json) ------------------------------------

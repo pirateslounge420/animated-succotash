@@ -23,6 +23,11 @@
 // look_canopy_dark, the way the reference darkens ground under trees.
 //
 // Near magical sites, patches of moss glow at night.
+//
+// A road's tread (design 30 Sept §BC, §BY) comes in CUSTOM0, its own
+// weight beside the colour: down the road the texture switches to the
+// worn path tile, grass taking it back in noisy patches by how overgrown
+// it is, the near grass flecks off the bare tread.
 shader_type spatial;
 render_mode cull_back, vertex_lighting, diffuse_lambert, specular_disabled;
 
@@ -44,9 +49,38 @@ global uniform vec3 plant_wind;
 global uniform float look_leaf_shadow_m;
 
 varying vec3 world_pos;
+// A road's tread (TerrainChunk._tread, RoadNetwork.tread_info): signed
+// distance to the centreline (m), half-width (m), trail.wear, overgrown.
+varying vec4 tread_v;
 
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	tread_v = CUSTOM0;
+}
+
+// The bare tread here, 0-1 (design 30 Sept §BC, §BY): a worn core down
+// the centre (wear), grass taking it back in noisy patches, more toward
+// the edges and across it the more overgrown it is; in a lost-and-found
+// stretch (overgrown near 1) all but gone. RoadNetwork.tread_share is the
+// same without the noise.
+float road_tread(vec2 uv) {
+	if (tread_v.z <= 0.001) {
+		return 0.0;
+	}
+	float hw = max(tread_v.y, 0.3);
+	float ad = abs(tread_v.x);
+	float core = 1.0 - smoothstep(hw * 0.5, hw + 0.4, ad);
+	if (core <= 0.0) {
+		return 0.0;
+	}
+	float edge = smoothstep(0.0, hw, ad);
+	// Patches about a metre across, broken by finer tufts.
+	float n = texture(look_grain_soft, uv * 0.55 + vec2(0.61, 0.17)).r * 0.7
+		+ texture(look_grain_soft, uv * 1.9 + vec2(0.23, 0.83)).r * 0.3;
+	float thr = 1.0 - clamp(tread_v.w * (0.55 + 0.6 * edge), 0.0, 1.0);
+	float bare = 1.0 - smoothstep(thr - 0.1, thr + 0.1, 1.0 - n);
+	float fade = 1.0 - 0.85 * smoothstep(0.8, 0.95, tread_v.w);
+	return core * clamp(tread_v.z / 0.6, 0.0, 1.0) * bare * fade;
 }
 
 void fragment() {
@@ -61,6 +95,12 @@ void fragment() {
 	float rocky = (1.0 - smoothstep(0.03, 0.09, sat)) * (1.0 - smoothstep(0.72, 0.88, hi));
 	float snow = (1.0 - smoothstep(0.03, 0.09, sat)) * smoothstep(0.72, 0.88, hi);
 	float sandy = smoothstep(0.05, 0.14, c.r - c.b) * smoothstep(0.45, 0.62, hi) * (1.0 - green);
+	// The road's tread switches grass (and sand) to the worn path tile and
+	// colour; rock and snow stay what they are.
+	float tread = road_tread(UV) * (1.0 - rocky) * (1.0 - snow);
+	green *= 1.0 - tread;
+	sandy *= 1.0 - tread;
+	c = mix(c, vec3(0.52, 0.42, 0.29), tread * 0.85);
 	// UV is in meters: each tile repeats every look_tile_m.
 	vec3 t = mix(retro_tile(look_tex_dirt, UV / look_tile_m.y).rgb, retro_tile(look_tex_sand, UV / look_tile_m.z).rgb, sandy);
 	vec3 grass_t = retro_tile(look_tex_grass, UV / look_tile_m.x).rgb;
@@ -68,6 +108,7 @@ void fragment() {
 	// tinted by the ground's own (biome) colour through COLOR below, fading
 	// to the plain tile.
 	float near_g = 1.0 - smoothstep(look_grass_m * 0.45, look_grass_m, distance(world_pos, CAMERA_POSITION_WORLD));
+	near_g *= 1.0 - tread;
 	vec3 blades = retro_tile(look_tex_grass, UV / (look_tile_m.x * 0.3) + vec2(0.37, 0.11)).rgb;
 	grass_t = mix(grass_t, grass_t * (0.55 + 0.9 * blades), near_g * 0.8);
 	t = mix(t, grass_t, green);

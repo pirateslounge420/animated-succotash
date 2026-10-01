@@ -220,6 +220,10 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 	for jj in n:
 		for ii in n:
 			normals[jj * n + ii] = fine_n[(jj * 2) * nf + ii * 2]
+	var road_segs: Array = []
+	if RoadNetwork.instance != null:
+		var rr := CHUNK_M * 0.8 + RoadNetwork.FAR_M
+		road_segs = RoadNetwork.segments_in(RoadNetwork.instance.links_near(center, rr), center, rr)
 	return {
 		"key": key,
 		"center": center,
@@ -232,7 +236,8 @@ static func compute(key: Vector3i, map: PlanetData, rivers: RiverNetwork) -> Dic
 		"river_dist": river_dist,
 		"water_level": level,
 		"salt": salt,
-		"colors": _vertex_colors(map, dirs_out, h, normals, RoadNetwork.segments_in(RoadNetwork.instance.links_near(center, CHUNK_M * 0.8 + 20.0), center, CHUNK_M * 0.8 + 20.0) if RoadNetwork.instance != null else []),
+		"colors": _vertex_colors(map, dirs_out, h, normals),
+		"tread": _tread(dirs_out, road_segs),
 		"water": _water_quads(key, dirs_out, fine_h, level, salt, in_river),
 		"rivers": _river_ribbons(key, center, rivers, segs, falls),
 		"falls": falls,
@@ -289,6 +294,31 @@ static func mesh_arrays(data: Dictionary, fine: bool, anchor_r: float) -> Array:
 				var b := colors[(j0 + 1) * cn + i0].lerp(colors[(j0 + 1) * cn + i0 + 1], tx)
 				fc[jj * n + ii] = a.lerp(b, ty)
 		colors = fc
+	var tread: PackedFloat32Array = data.get("tread", PackedFloat32Array())
+	if tread.is_empty():
+		tread.resize(n * n * 4)
+		for i in n * n:
+			tread[i * 4] = RoadNetwork.FAR_M
+	elif fine:
+		# The coarse tread, interpolated: the signed distance runs linearly
+		# across the road, so the shader finds the centreline between
+		# vertices wider apart than the road.
+		var cn := QUADS + 1
+		var ft := PackedFloat32Array()
+		ft.resize(n * n * 4)
+		for jj in n:
+			for ii in n:
+				var i0 := mini(ii / 2, QUADS - 1)
+				var j0 := mini(jj / 2, QUADS - 1)
+				var tx := ii * 0.5 - i0
+				var ty := jj * 0.5 - j0
+				var c00 := (j0 * cn + i0) * 4
+				var c10 := c00 + 4
+				var c01 := c00 + cn * 4
+				var c11 := c01 + 4
+				for k in 4:
+					ft[(jj * n + ii) * 4 + k] = lerpf(lerpf(tread[c00 + k], tread[c10 + k], tx), lerpf(tread[c01 + k], tread[c11 + k], tx), ty)
+		tread = ft
 	var indices := PackedInt32Array()
 	indices.resize(q * q * 6)
 	var k := 0
@@ -309,8 +339,13 @@ static func mesh_arrays(data: Dictionary, fine: bool, anchor_r: float) -> Array:
 	arrays[Mesh.ARRAY_NORMAL] = nrm
 	arrays[Mesh.ARRAY_COLOR] = colors
 	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_CUSTOM0] = tread
 	arrays[Mesh.ARRAY_INDEX] = indices
 	return arrays
+
+
+## The ground mesh's format: CUSTOM0 carries the tread as four floats.
+const GROUND_FORMAT := Mesh.ARRAY_CUSTOM_RGBA_FLOAT << Mesh.ARRAY_FORMAT_CUSTOM0_SHIFT
 
 
 ## Both meshes' arrays and the (fine) collision faces, computed on the
@@ -384,7 +419,7 @@ const WETLANDS := [
 ]
 
 
-static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloat32Array, normals: PackedVector3Array, road_segs: Array = []) -> PackedColorArray:
+static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloat32Array, normals: PackedVector3Array) -> PackedColorArray:
 	var out := PackedColorArray()
 	out.resize(d.size())
 	for i in d.size():
@@ -402,12 +437,6 @@ static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloa
 		# Bare rock on steep ground (not under snow).
 		var steep := 1.0 - normals[i].dot(dir)
 		col = col.lerp(ROCK, smoothstep(0.3, 0.5, steep) * (1.0 - smoothstep(0.85, 0.95, col.b)))
-		# The road's tread (design 30 Sept §BC, roads.json trail): bare
-		# path along the trail, worn and half taken back.
-		if not road_segs.is_empty():
-			var tread := RoadNetwork.tread_at(road_segs, dir)
-			if tread > 0.0:
-				col = col.lerp(PATH, tread)
 		# A burn scar (CampSim.scars): ash and char, fading as it heals.
 		if not CampSim.scars.is_empty():
 			var scar := CampSim.scar_at(dir, VegetationPlacer.NOW_DAYS)
@@ -415,6 +444,23 @@ static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloa
 				col = col.lerp(Color(0.16, 0.14, 0.12), 0.7 * scar)
 		out[i] = col
 	_bake_hollow_ao(h, out)
+	return out
+
+
+## The road's tread per vertex (design 30 Sept §BC, §BY; roads.json
+## trail, lost_and_found), four floats a vertex for the terrain shader's
+## CUSTOM0: RoadNetwork.tread_info (signed distance to the centreline,
+## half-width, wear, overgrown). Its own weight, not through the colour:
+## the shader switches the texture to the worn path tile with it.
+static func _tread(d: PackedVector3Array, road_segs: Array) -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	out.resize(d.size() * 4)
+	for i in d.size():
+		var v := RoadNetwork.tread_info(road_segs, d[i]) if not road_segs.is_empty() else RoadNetwork.NO_TREAD
+		out[i * 4] = v.x
+		out[i * 4 + 1] = v.y
+		out[i * 4 + 2] = v.z
+		out[i * 4 + 3] = v.w
 	return out
 
 
@@ -820,7 +866,7 @@ func build_collision_part() -> void:
 
 func _ground_mesh(arrays: Array, node_name: String, mat: ShaderMaterial) -> MeshInstance3D:
 	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays, [], {}, GROUND_FORMAT)
 	var mi := MeshInstance3D.new()
 	mi.name = node_name
 	mi.mesh = mesh
@@ -1447,7 +1493,7 @@ func _water_mesh(data: Dictionary, mat: ShaderMaterial, node_name: String) -> vo
 	arrays[Mesh.ARRAY_TEX_UV] = data.uv
 	arrays[Mesh.ARRAY_TEX_UV2] = data.uv2
 	var mesh := ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays, [], {}, GROUND_FORMAT)
 	var mi := MeshInstance3D.new()
 	mi.name = node_name
 	mi.mesh = mesh
@@ -1494,14 +1540,30 @@ func water_at(d: Vector3) -> float:
 
 
 ## The ground's color at a surface direction inside this chunk (the
-## nearest coarse vertex: biome blend, sand, rock, snow; footsteps read
-## what's underfoot from it).
+## nearest coarse vertex: biome blend, sand, rock, snow, and a road's worn
+## tread; footsteps read what's underfoot from it).
 func ground_color_at(d: Vector3) -> Color:
 	var cols: PackedColorArray = data.get("colors", PackedColorArray())
 	if cols.is_empty():
 		return Color(0.4, 0.5, 0.3)
 	var g := _grid(d)
-	return cols[roundi(g.y) * (QUADS + 1) + roundi(g.x)]
+	var col := cols[roundi(g.y) * (QUADS + 1) + roundi(g.x)]
+	# On a road's worn tread the ground underfoot is the path (it is no
+	# longer in the colour: the shader draws it from the tread weight).
+	var tr: PackedFloat32Array = data.get("tread", PackedFloat32Array())
+	if not tr.is_empty():
+		var n := QUADS + 1
+		var i0 := mini(int(g.x), QUADS - 1)
+		var j0 := mini(int(g.y), QUADS - 1)
+		var tx := g.x - i0
+		var ty := g.y - j0
+		var info := Vector4()
+		for k in 4:
+			var a := lerpf(tr[(j0 * n + i0) * 4 + k], tr[(j0 * n + i0 + 1) * 4 + k], tx)
+			var b := lerpf(tr[((j0 + 1) * n + i0) * 4 + k], tr[((j0 + 1) * n + i0 + 1) * 4 + k], tx)
+			info[k] = lerpf(a, b, ty)
+		col = col.lerp(PATH, smoothstep(0.15, 0.35, RoadNetwork.tread_share(info)))
+	return col
 
 
 ## Chunk grid coordinates (0..QUADS) of a surface direction.

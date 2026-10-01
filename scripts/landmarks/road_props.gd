@@ -110,8 +110,10 @@ func _build(kind: String, item, link, key: String) -> Node3D:
 	return null
 
 
-## A cairn (stacked stones), a standing stone or a post; fallen: tipped
-## over, its stones spilled.
+## A cairn (stacked stones), a standing stone, a stone step, an abutment
+## block, a notched tree or a post; fallen: tipped over, its stones
+## spilled. The lost-and-found tells (design 30 Sept night §BY) are
+## waymarks too, always standing.
 func _waymark(m: Array, rng: RandomNumberGenerator) -> Node3D:
 	var n := _place(m[0])
 	var fallen: bool = m[2]
@@ -136,6 +138,24 @@ func _waymark(m: Array, rng: RandomNumberGenerator) -> Node3D:
 			else:
 				b.rotation = Vector3(deg_to_rad(rng.randf_range(-6.0, 6.0)), rng.randf() * TAU, deg_to_rad(rng.randf_range(-4.0, 4.0)))
 			PropCollision.capsule(body, b.transform, 0.3, 1.6)
+		"stone_step":
+			# A flat step set into the slope, a second one half a stride on.
+			for i in 2:
+				var s := Vector3(rng.randf_range(0.8, 1.1), 0.18, rng.randf_range(0.45, 0.6))
+				var b := CreatureBodies.box(n, s, Vector3(rng.randf_range(-0.15, 0.15), 0.06 + i * 0.16, -i * 0.55), STONE.darkened(0.1 + rng.randf() * 0.15))
+				b.rotation.y = rng.randf_range(-0.2, 0.2)
+			PropCollision.capsule(body, Transform3D(Basis(Vector3(1, 0, 0), PI * 0.5), Vector3(0, 0.15, -0.3)), 0.3, 1.2)
+		"abutment":
+			# A lone dressed block, what is left of a wall or a bridge foot.
+			var b := CreatureBodies.box(n, Vector3(1.5, 1.0, 1.1), Vector3(0, 0.45, 0), STONE.darkened(rng.randf() * 0.15))
+			b.rotation = Vector3(0, rng.randf() * TAU, deg_to_rad(rng.randf_range(-5.0, 5.0)))
+			PropCollision.capsule(body, Transform3D(Basis.IDENTITY, b.position), 0.6, 1.3)
+		"notched_tree":
+			# A dead stem with a pale blaze cut at eye height.
+			var stem := CreatureBodies.cone(n, 0.24, 0.16, 2.8, Vector3(0, 1.4, 0), WOOD.darkened(0.15), 0.0, 7)
+			stem.rotation.z = deg_to_rad(rng.randf_range(-4.0, 4.0))
+			CreatureBodies.box(n, Vector3(0.22, 0.34, 0.06), Vector3(0, 1.5, -0.21), Color(0.78, 0.7, 0.52))
+			PropCollision.capsule(body, Transform3D(Basis.IDENTITY, Vector3(0, 1.4, 0)), 0.24, 2.8)
 		_:
 			var post := CreatureBodies.cone(n, 0.07, 0.05, 1.7, Vector3(0, 0.85, 0), WOOD, 0.0, 6)
 			if fallen:

@@ -336,33 +336,49 @@ func surface_elevation(dir: Vector3) -> float:
 var spawn_choice := -1
 
 
-func pick_spawn_dir() -> Vector3:
-	var pool := Encampment.candidates(planet)
-	if pool.is_empty():
-		return Vector3.UP
+## The opening camp (design 30 Sept §BX, 1 Oct §CB and the roads pass):
+## {"site": the fire, "node": the road node beside it, "ruin": the
+## people's camp the first road leads to, "alts": the next ones}, or {}
+## (dev spawn_choice / the old list).
+var opening := {}
+
+
+## Where a new game's fire goes (main.gd builds the camp there). Dev
+## (spawn_choice >= 0, or roll_kind off): the old list's cell, then
+## Encampment.site_near. Play: this world's own first camp, rolled from
+## its seed so a world always wakes at the same fire — a KIND by weight
+## among the kinds with candidates (camps.json first_camp; FIRST_CAMP
+## forces one), then, among that kind's candidate cells, the fire site
+## (Encampment.fire_site: inside the kind's biomes, within within_m of its
+## real water) whose people's camp (an inhabited ruin) lies nearest
+## opening_road.length_km_hint away by a road that routes. A kind with no
+## fire site anywhere is dropped and another rolled; play never falls back
+## to the old list unless no kind has one at all.
+func pick_spawn_site() -> Vector3:
+	opening = {}
+	RoadNetwork.opening = {}
 	first_camp_kind = ""
-	if spawn_choice >= 0:
-		return pool[mini(spawn_choice, pool.size() - 1)]
-	# This world's own first camp, rolled from its seed (design 1 Oct §CB),
-	# so a world always wakes at the same fire: a KIND by weight among the
-	# kinds with candidates on this planet (camps.json first_camp; the
-	# FIRST_CAMP env forces one), then a random cell of that kind.
+	var pool := Encampment.candidates(planet)
+	if spawn_choice >= 0 or not bool(Encampment.FC.get("roll_kind", false)):
+		if pool.is_empty():
+			return Vector3.UP
+		return Encampment.site_near(planet, pool[mini(maxi(spawn_choice, 0), pool.size() - 1)])
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([world_seed, "first_camp"])
-	if bool(Encampment.FC.get("roll_kind", false)):
-		var by_kind := Encampment.candidates_by_kind(planet)
-		var kinds: Dictionary = Encampment.FC.get("kinds", {})
-		var names: Array[String] = []
-		var weights: Array[float] = []
-		for k in kinds:
-			if (by_kind.get(k, PackedVector3Array()) as PackedVector3Array).size() > 0:
-				names.append(str(k))
-				weights.append(float((kinds[k] as Dictionary).get("weight", 1)))
-		var forced := OS.get_environment("FIRST_CAMP")
+	var by_kind := Encampment.candidates_by_kind(planet)
+	var kinds: Dictionary = Encampment.FC.get("kinds", {})
+	var names: Array[String] = []
+	var weights: Array[float] = []
+	for k in kinds:
+		if (by_kind.get(k, PackedVector3Array()) as PackedVector3Array).size() > 0:
+			names.append(str(k))
+			weights.append(float((kinds[k] as Dictionary).get("weight", 1)))
+	var forced := OS.get_environment("FIRST_CAMP")
+	while not names.is_empty():
 		var kind := ""
 		if forced != "" and names.has(forced):
 			kind = forced
-		elif not names.is_empty():
+		else:
 			var total := 0.0
 			for w in weights:
 				total += w
@@ -373,9 +389,82 @@ func pick_spawn_dir() -> Vector3:
 				if r <= 0.0:
 					kind = names[j]
 					break
-		if kind != "":
-			var cells: PackedVector3Array = by_kind[kind]
+		var pick := _first_camp_of(kind, by_kind[kind], rng)
+		if not pick.is_empty():
 			first_camp_kind = kind
-			return cells[rng.randi() % cells.size()]
-		push_warning("World: no first-camp kind has candidates on seed %d; the old list" % world_seed)
-	return pool[rng.randi() % pool.size()]
+			opening = pick
+			RoadNetwork.opening = pick
+			return pick.site
+		push_warning("World: no %s first camp has a fire site by its water on seed %d; rolling another kind" % [kind, world_seed])
+		var at := names.find(kind)
+		names.remove_at(at)
+		weights.remove_at(at)
+		forced = ""
+	push_error("World: no first-camp kind has a fire site on seed %d; the old list" % world_seed)
+	if pool.is_empty():
+		return Vector3.UP
+	return Encampment.site_near(planet, pool[rng.randi() % pool.size()])
+
+
+## The first camp of `kind` among its candidate `cells`: {} when none has
+## a fire site. Each cell's fire site is scored by how near its nearest
+## people's camp lies to the opening road's straight-line target (the
+## road's length_km_hint over a winding factor); the best whose road
+## routes wins, else the best site with no camp to lead to.
+## Measured 1 Oct on four full-planet seeds: the routed road runs about
+## 1.05-1.1 times the straight line (it was 1.3, and the roads came out
+## 5-6 km against the 7.2 km hint).
+const ROAD_WINDING := 1.08
+
+func _first_camp_of(kind: String, cells: PackedVector3Array, rng: RandomNumberGenerator) -> Dictionary:
+	var rivers := Encampment.rivers_for(planet)
+	var hint_m := float(Tuning.section("roads", "opening_road").get("length_km_hint", 7.2)) * 1000.0
+	var target := hint_m / ROAD_WINDING
+	var order := Array(cells)
+	for i in range(order.size() - 1, 0, -1):
+		var j := rng.randi_range(0, i)
+		var t = order[i]
+		order[i] = order[j]
+		order[j] = t
+	var options: Array = []
+	for d in order:
+		var site := Encampment.fire_site(planet, rivers, d, kind)
+		if site == Vector3.ZERO:
+			continue
+		var camps: Array = []
+		for r in Ruins.near(planet, site, hint_m * 1.6):
+			if not Ruins.inhabited(r):
+				continue
+			var dm := CubeSphere.surface_distance_m(site, r.dir)
+			if dm < 1500.0:
+				continue
+			camps.append([absf(dm - target), r.dir, dm])
+		camps.sort_custom(func(x, y): return x[0] < y[0])
+		options.append([camps[0][0] if not camps.is_empty() else INF, site, camps])
+	if options.is_empty():
+		return {}
+	options.sort_custom(func(x, y): return x[0] < y[0])
+	for o in options:
+		var camps: Array = o[2]
+		for ci in mini(camps.size(), 3):
+			var ruin: Vector3 = camps[ci][1]
+			var node := _road_node_by(o[1], ruin)
+			if RoadNetwork.can_route(planet, rivers, node, ruin):
+				var alts: Array = []
+				for k in range(ci + 1, mini(camps.size(), ci + 4)):
+					alts.append(camps[k][1])
+				return {"site": o[1], "node": node, "ruin": ruin, "alts": alts, "camp_m": camps[ci][2]}
+	push_warning("World: no %s first camp's people's camp could be reached by road on seed %d; the camp stands on the network alone" % [kind, world_seed])
+	var best: Vector3 = options[0][1]
+	return {"site": best, "node": best, "ruin": Vector3.ZERO, "alts": [], "camp_m": INF}
+
+
+## The opening camp's road node: beside its fire, ROAD_OFF_M toward the
+## people's camp, so the tread passes the fire's clearing, not through it.
+const ROAD_OFF_M := 18.0
+
+func _road_node_by(site: Vector3, toward: Vector3) -> Vector3:
+	var dm := CubeSphere.surface_distance_m(site, toward)
+	if dm < 1.0:
+		return site
+	return site.slerp(toward, ROAD_OFF_M / dm).normalized()

@@ -179,14 +179,20 @@ static func _offers_fuel(fuel: Dictionary, key: String) -> bool:
 ## Real metres from cell `c` to the kind's water: "river" (the river
 ## network's segments round the cell), "sea" (the coast distance), "lake"
 ## (the nearest lake cell, to its edge), "water" (the nearest of them).
+##
+## Judged from the cell's NEAREST point, not its centre (design 1 Oct, the
+## roads pass): on the full planet a cell is ~10 km across, so a centre
+## 4 km from a river may still hold a fire 300 m from it. The fire itself
+## is placed within within_m of real water by fire_site() afterwards.
 static func water_m(map: PlanetData, rivers: RiverNetwork, c: int, near: String) -> float:
 	var d: Vector3 = map.dir[c]
+	var half := half_diag_m(map)
 	var best := INF
 	if near == "river" or near == "water":
 		for s in rivers.segments_near(map, c):
-			best = minf(best, rivers.closest_dt(s, d).x)
+			best = minf(best, maxf(0.0, rivers.closest_dt(s, d).x - half))
 	if near == "sea" or near == "water":
-		best = minf(best, map.coast_dist_km[c] * 1000.0 * PlanetConst.GEO_SCALE)
+		best = minf(best, maxf(0.0, map.coast_dist_km[c] * 1000.0 * PlanetConst.GEO_SCALE - half))
 	if near == "lake" or near == "water":
 		var cell_m := PlanetConst.CIRCUMFERENCE_M / (4.0 * map.res)
 		var ring := [c]
@@ -201,9 +207,115 @@ static func water_m(map: PlanetData, rivers: RiverNetwork, c: int, near: String)
 					seen[n] = true
 					next.append(n)
 					if map.water[n] == PlanetData.Water.LAKE:
-						best = minf(best, maxf(0.0, CubeSphere.surface_distance_m(d, map.dir[n]) - 0.5 * cell_m))
+						best = minf(best, maxf(0.0, CubeSphere.surface_distance_m(d, map.dir[n]) - 0.5 * cell_m - half))
 			ring = next
 	return best
+
+
+## Half a blueprint cell's diagonal (real m): how far a cell's nearest
+## point can lie from its centre.
+static func half_diag_m(map: PlanetData) -> float:
+	return map.cell_m() * 0.7072
+
+
+## Where the fire goes for a first camp of `kind` near cell direction `d`
+## (design 1 Oct, the roads pass): a level, dry spot inside one of the
+## kind's biomes, within within_m of the kind's real water — a point on a
+## river near the cell (its polyline), or the shore of the sea or a lake
+## found by walking the terrain out from the cell — never in the water.
+## Vector3.ZERO when the cell has no such spot (the kind tries its next
+## candidate, then the roll another kind).
+static func fire_site(map: PlanetData, rivers: RiverNetwork, d: Vector3, kind: String) -> Vector3:
+	var rule: Dictionary = (FC.get("kinds", {}) as Dictionary).get(kind, {})
+	var near := str(rule.get("near", "water"))
+	var within := float(rule.get("within_m", 1500.0))
+	var ids := PackedInt32Array()
+	for key in rule.get("biomes", []):
+		var bid := BiomeTemplates.id_of_key(str(key))
+		if bid >= 0:
+			ids.append(bid)
+	var reach := half_diag_m(map) + within
+	# The water points: [dir, keep-off m] (a river's half width; a shore 0).
+	var wet: Array = []
+	var c0 := map.cell_at(d)
+	if near == "river" or near == "water":
+		for s in rivers.segments_near(map, c0):
+			var a: Vector3 = rivers.a[s]
+			var b: Vector3 = rivers.b[s]
+			var seg_m := CubeSphere.surface_distance_m(a, b)
+			var steps := maxi(1, int(seg_m / 250.0))
+			for k in steps + 1:
+				var w := a.slerp(b, float(k) / steps)
+				if CubeSphere.surface_distance_m(w, d) <= reach:
+					wet.append([w, rivers.width[s] * 0.5])
+	if near == "sea" or near == "lake" or near == "water":
+		var step := maxf(60.0, reach / 60.0)
+		for k in 24:
+			var a := k * TAU / 24.0
+			var prev := d
+			var m := step
+			while m <= reach:
+				var q := CreatureSpawner._offset(d, a, m)
+				if _standing_water(map, q, near):
+					wet.append([prev, 0.0])
+					break
+				prev = q
+				m += step
+	if wet.is_empty():
+		return Vector3.ZERO
+	# Thin the water points to a few dozen, evenly.
+	var stride := maxi(1, wet.size() / 40)
+	var best := Vector3.ZERO
+	var best_score := INF
+	var tried := 0
+	for i in range(0, wet.size(), stride):
+		var w: Vector3 = wet[i][0]
+		var keep_off: float = wet[i][1] + 25.0
+		for ring in [0.15, 0.4, 0.75]:
+			var r := maxf(keep_off, within * ring)
+			for j in 6:
+				var p := CreatureSpawner._offset(w, j * TAU / 6.0 + i * 0.7, r)
+				tried += 1
+				var cell := map.cell_at(p)
+				if map.water[cell] != PlanetData.Water.NONE or map.biome[cell] in TerrainChunk.WETLANDS:
+					continue
+				if not ids.has(map.biome[cell]):
+					continue
+				if _standing_water(map, p, "water"):
+					continue
+				var e := map.terrain.elevation(p, true)
+				if e < 2.5:
+					continue
+				if near == "river" or near == "water":
+					var too_close := false
+					for s in rivers.segments_near(map, cell):
+						if rivers.closest_dt(s, p).x < rivers.width[s] * 0.5 + 20.0:
+							too_close = true
+							break
+					if too_close:
+						continue
+				var bump := 0.0
+				for jj in 8:
+					var q := CreatureSpawner._offset(p, jj * TAU / 8.0, PLAYER_M + 1.5)
+					bump = maxf(bump, absf(map.terrain.elevation(q, true) - e))
+				# Level first; then nearer the water's comfortable middle.
+				var score := bump + absf(r - within * 0.4) / within * 0.3
+				if score < best_score:
+					best_score = score
+					best = p
+	return best if best_score < 1.5 else Vector3.ZERO
+
+
+## Standing water at `p`: the sea (below sea level on an ocean cell or the
+## coast) or a lake (below its level); `near` "sea", "lake" or "water".
+static func _standing_water(map: PlanetData, p: Vector3, near: String) -> bool:
+	var cell := map.cell_at(p)
+	var e := map.terrain.elevation(p, false)
+	if (near == "sea" or near == "water") and (map.water[cell] == PlanetData.Water.OCEAN or e < PlanetConst.SEA_LEVEL_M + 0.5):
+		return true
+	if (near == "lake" or near == "water") and map.water[cell] == PlanetData.Water.LAKE and e < map.water_level[cell] + 0.5:
+		return true
+	return false
 
 
 ## The best first-camp cells of the planet, spread apart (directions): the

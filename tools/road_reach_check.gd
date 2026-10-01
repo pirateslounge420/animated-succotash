@@ -4,9 +4,12 @@ extends SceneTree
 ## full planet with the play rules (a seed and a rolled first camp, not the
 ## dev stamp), from the camp you wake at: how far the nearest road is, the
 ## road nodes and links within REACH_M, which ruins (and the inhabited ones,
-## the camps) a road actually reaches, how faint the tread is, and what the
-## first road from the camp leads to. Prints numbers; FAILs are the design's
-## promises (§BC, §BX): a road near the spawn, ruins and camps on the network.
+## the camps) a road actually reaches, how much bare tread shows (a clear
+## stretch's centre and edge, a lost stretch, 30 m off), the lost-and-found
+## share and its tells, and the opening road to its people's camp. Prints
+## numbers; FAILs are the design's promises (§BC, §BX, §BY, §CB): the kind
+## rolled, a road beside the spawn, ruins and camps on the network, the
+## tread legible on the road and gone off it and in a lost stretch.
 var main
 var world
 var fails := 0
@@ -102,11 +105,76 @@ func _initialize() -> void:
 	print("[reach] ruins within %.0f km: %d, a road within 400 m of %d; inhabited (camps) %d, on a road %d; the worst-served ruin is %s from a road" % [REACH_M / 1000.0, ruins, ruins_on, camps, camps_on, "%.0f m" % far_ruin_m if far_ruin_m < INF else "out of reach"])
 	ok(ruins == 0 or ruins_on * 10 >= ruins * 8, "at least 80 %% of ruins are on the network (%d of %d)" % [ruins_on, ruins])
 	ok(camps == 0 or camps_on == camps, "every inhabited ruin (camp) is on the network (%d of %d)" % [camps_on, camps])
-	# The tread: how strongly the path colour shows at a road's centre.
+	# The tread (§BC, §BY): the bare share at a clear stretch's centre, at
+	# its edge, in a vanished stretch, and 30 m off; the lost-and-found
+	# stretches against vanish_share, each with its tell.
 	if not near.is_empty() and spawn_road_m < INF:
-		var segs := RoadNetwork.segments_in(near, nearest.pt, 300.0)
-		var tread := RoadNetwork.tread_at(segs, nearest.pt)
-		print("[reach] the tread at the nearest road's centre: %.2f (0 bare, 1 full path colour; trail.wear x (1 - 0.6 x trail.overgrown))" % tread)
+		var lf: Dictionary = Tuning.section("roads", "lost_and_found")
+		var on_c := []
+		var on_e := []
+		var lost := []
+		var off := []
+		var vanished_m := 0.0
+		var road_m := 0.0
+		var stretches := 0
+		var told := 0
+		for l in near:
+			var pts: PackedVector3Array = l.pts
+			var cum: PackedFloat32Array = l.get("cum", PackedFloat32Array())
+			var van: Array = l.get("vanish", [])
+			road_m += float(l.len_m)
+			for v in van:
+				vanished_m += float(v[1]) - float(v[0])
+				stretches += 1
+				var resume := RoadNetwork.point_at(pts, float(v[1]))
+				for w in l.waymarks:
+					if (w as Array).size() > 3 and CubeSphere.surface_distance_m(w[0], resume) <= float(lf.get("tell_within_m", 12.0)) + 1.0:
+						told += 1
+						break
+			# Sample the middle of the link every 50 m.
+			var m := 100.0
+			while m < float(l.len_m) - 100.0 and on_c.size() < 4000:
+				var p := RoadNetwork.point_at(pts, m)
+				var q := RoadNetwork.point_at(pts, m + 2.0)
+				var right := (q - p).cross(p).normalized()
+				var segs := RoadNetwork.segments_in([l], p, 60.0)
+				var hw := float(l.width_m) * 0.5
+				var in_vanish := RoadNetwork.vanish_overgrown(van, m) > 0.9
+				var c := RoadNetwork.tread_at(segs, p)
+				if in_vanish:
+					lost.append(c)
+				else:
+					on_c.append(c)
+					on_e.append(RoadNetwork.tread_at(segs, (p + right * hw * 0.9 / PlanetConst.RADIUS_M).normalized()))
+				off.append(RoadNetwork.tread_at(RoadNetwork.segments_in(near, p, 80.0), (p + right * 30.0 / PlanetConst.RADIUS_M).normalized()))
+				m += 50.0
+		var mean := func(a: Array) -> float:
+			var t := 0.0
+			for x in a:
+				t += float(x)
+			return t / maxf(1.0, a.size())
+		var off_max := 0.0
+		var off_n := 0
+		for x in off:
+			off_max = maxf(off_max, float(x))
+			if float(x) > 0.05:
+				off_n += 1
+		print("[reach] the tread (bare share): clear stretch centre %.2f, edge %.2f; vanished stretch %.2f; 30 m off, worst %.2f (%d samples)" % [mean.call(on_c), mean.call(on_e), mean.call(lost), off_max, on_c.size() + lost.size()])
+		print("[reach] lost and found: %.0f %% of %.0f km vanished (vanish_share %.2f) in %d stretches, %d with a tell where the trail resumes" % [vanished_m / maxf(road_m, 1.0) * 100.0, road_m / 1000.0, float(lf.get("vanish_share", 0.3)), stretches, told])
+		ok(mean.call(on_c) >= 0.4, "the tread reads down a clear stretch's centre (%.2f)" % mean.call(on_c))
+		ok(lost.is_empty() or mean.call(lost) < 0.2, "the tread all but vanishes in a lost stretch (%.2f)" % mean.call(lost))
+		# 30 m off one road can be on another (a fork, a junction).
+		ok(off_n * 50 <= off.size(), "no tread 30 m off a road, bar junctions (%d of %d samples)" % [off_n, off.size()])
+		ok(stretches == told, "every lost stretch has a tell where the trail resumes (%d of %d)" % [told, stretches])
+	# The opening road (§BX): the forced link from the opening camp to its
+	# people's camp, its length against opening_road.length_km_hint.
+	var hint_km := float(Tuning.section("roads", "opening_road").get("length_km_hint", 7.2))
+	var opening_m := -1.0
+	for l in near:
+		if bool(l.get("opening", false)):
+			opening_m = float(l.len_m)
+	print("[reach] the opening road: %s (hint %.1f km)" % ["%.1f km to its people's camp" % (opening_m / 1000.0) if opening_m >= 0.0 else "none", hint_km])
+	ok(opening_m >= 0.0, "an opening road leads from the camp to a people's camp")
 	# Where the nearest road goes: its two ends' kinds and lengths.
 	if spawn_road_m < INF:
 		var link: Dictionary = nearest.link

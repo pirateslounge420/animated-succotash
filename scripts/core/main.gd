@@ -135,7 +135,7 @@ func _on_planet_ready() -> void:
 	# camps (a different one each game); plants keep clear of it.
 	# The world's save first: it remembers where this world's first camp is.
 	WorldSave.open(world.world_seed)
-	var spawn_dir := Encampment.site_near(world.planet, world.pick_spawn_dir())
+	var spawn_dir: Vector3 = world.pick_spawn_site()
 	Encampment.set_active(spawn_dir)
 	# Start in the afternoon (design 30 Sept night §BX, roads.json
 	# opening_road.spawn): real_min_before_dusk real minutes before dusk
@@ -213,10 +213,17 @@ func _on_planet_ready() -> void:
 	GameLog.add_once("people:opening", "The %s live here." % Peoples.name_of(Peoples.get_people(camp.people_id)).to_lower(), "camp_found")
 	if Tuning.profile() == "ambient":
 		Torch.lay_bundle(world, chunks, camp.fire())
-	# Waking on the mat, facing the fire; the camera looks down over a
+	# Waking on the mat. On a rolled first camp (§BX) facing along the
+	# opening road toward the people's camp it leads to; otherwise (the dev
+	# frame's old list) facing the fire, the camera looking down over a
 	# shoulder so the fire and the two by it are in view.
-	player.spawn_at(camp.player_spot, spawn_dir)
-	player.set_view(-0.42, 0.42)
+	var road_ahead := _opening_road_ahead(spawn_dir)
+	if road_ahead != Vector3.ZERO:
+		player.spawn_at(camp.player_spot, road_ahead)
+		player.set_view(-0.12, 0.0)
+	else:
+		player.spawn_at(camp.player_spot, spawn_dir)
+		player.set_view(-0.42, 0.42)
 	_lay_gifts()
 
 	fx = WeatherFX.new()
@@ -781,6 +788,26 @@ const TOOL_OF := {"bow": "bow", "spear": "spear"}
 ## the starting kit (items.json) laid at your side. A set left untaken at
 ## the last fire is gone.
 var _gifts: Array = []
+
+
+## A point OPENING_LOOK_M along the opening road from the camp, toward
+## the people's camp it leads to (RoadNetwork.opening), or Vector3.ZERO
+## when this world has none (the dev frame) or the road would not route.
+const OPENING_LOOK_M := 60.0
+
+func _opening_road_ahead(site: Vector3) -> Vector3:
+	if world.opening.is_empty() or chunks.roads == null:
+		return Vector3.ZERO
+	var roads: RoadNetwork = chunks.roads
+	for link in roads.links_near(site, 400.0):
+		if not bool(link.get("opening", false)):
+			continue
+		var pts: PackedVector3Array = link.pts
+		if str(roads.nodes[link.a].key) != "opening":
+			pts = pts.duplicate()
+			pts.reverse()
+		return RoadNetwork.point_at(pts, minf(OPENING_LOOK_M, RoadNetwork.length_m(pts)))
+	return Vector3.ZERO
 
 
 func _lay_gifts() -> void:
