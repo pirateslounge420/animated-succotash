@@ -533,10 +533,20 @@ void fragment() {
 			vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
 			t = retro_tex(sp_bark, uv / sp_bark_tile_m);
 		} else if (mat_id < 1.5) {
-			// A crown's surface: the foliage mass over its own shade.
+			// A crown's surface (the hull of a tree with no branch layout:
+			// the understory tiers, palms, herbs): the foliage mass over
+			// its own shade, CUT like the cards (1 Oct, bug 1: a solid hull
+			// read as a flat dark shard at dusk): near, the leaf cutout at
+			// the leaf's own size; far, the mass tile's holes, so the hull
+			// is a ragged leafy shell with sky through it.
 			vec2 uv = an.y > 0.55 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
 			vec4 m = retro_tex(sp_leaves, uv / mass_m);
-			t = vec4(mix(sp_leaf_color * 0.45, m.rgb, m.a) * autumn_tint, 1.0);
+			if (distance(world_pos, CAMERA_POSITION_WORLD) < SP_NEAR_M) {
+				vec4 l = sp_leaf_cell(uv / (sp_leaf_m * v_leafs), inst * 3.1 + floor(uv.x / mass_m) * 7.0);
+				t = vec4(l.rgb, l.a);
+			} else {
+				t = vec4(mix(sp_leaf_color * 0.45, m.rgb, m.a) * autumn_tint, step(0.5, m.a));
+			}
 		} else {
 			// Cards: the ragged cluster outline; inside it, near, the leaf
 			// cutout at the leaf's own size; for clumps and far cards, the
@@ -595,7 +605,8 @@ void fragment() {
 		vec3 moss_col = pal_pull(pal_moss, pal_grass_night, 0.7 * nk) * retro_tex(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3).rgb * 2.0;
 		ALBEDO = mix(ALBEDO, moss_col, m * moss);
 	}
-	ALPHA = ((mat_id > 1.5 && mat_id < 2.5) || mat_id > 4.5) ? tex.a : 1.0;
+	// Cards, cluster cards and a tiled crown hull cut by their alpha.
+	ALPHA = ((mat_id > 1.5 && mat_id < 2.5) || mat_id > 4.5 || (sp_tiled && mat_id > 0.5 && mat_id < 1.5)) ? tex.a : 1.0;
 	ALPHA_SCISSOR_THRESHOLD = 0.5;
 	// Leaves are translucent: light shining through from behind lights
 	// them too, so crowns seen from below stay green instead of black.
