@@ -561,6 +561,17 @@ current, fire risk, a dry spell, a burn scar and its fire-followers — never th
 itself. No live erosion, no terrain deformation from rain, no rivers cutting new beds.
 (Scope guard as much as realism.)
 
+## BU. The look in one line — LOCKED (30 Sept, late, Mike)
+
+**"Almost like Minecraft, except not in boxes, and everything flows better."** Minecraft's
+texture logic — a tiny nearest-filtered tile on every surface, crisp at any distance, the
+brain filling in the rest — on real shapes: curved ground, trunks that lean, leaf cards
+with holes, water that moves. Mike likes the pixelation; it does the work in the distance
+and it is cheaper. Measured against the reference frames (day luma 0.31 / sat 0.64 / texel
+0.016 / darkest-5 % navy 0.078; night 0.20 / 0.73 / 0.014 / 0.022): ours (dusk) was 0.15 /
+0.53 / 0.009 / 0.000. The gap is texture, the floor and saturation — not darkness. Night is
+one colour (collapse toward the floor's blue, never grey); water is the brightest thing.
+
 ## BT. Canopy folk — the seventeenth life — LOCKED
 
 Mike: a village that lives in the trees in really old growth, never comes down, harvests
