@@ -7,6 +7,13 @@
 // the scroll moves in whole texel rows), so the card is crunchy at any
 // distance; the 480p frame does the rest. With `low` the bands collapse to
 // reds and the mask shrinks raggedly: a low fire is a red flicker.
+//
+// The bands arrive as scene colours (linear), set by Campfire.emissive from
+// look.json fire.flame.bands, which are ON-SCREEN colours (yellow core
+// #FEFC54 ... orange #E6552A): the environment's exposure is undone, and the
+// core's and the gold's full channels are pushed past 1.0 (fire.flame.hdr)
+// so they bloom (retro.bloom, threshold ~1.0) while the screen still shows
+// the same clipped colour; the grade leaves oranges and golds alone.
 shader_type spatial;
 render_mode unshaded, blend_mix, depth_draw_opaque, cull_disabled, shadows_disabled, fog_disabled;
 
@@ -14,13 +21,14 @@ uniform sampler2D look_grain_soft : filter_nearest, repeat_enable; // Look.grain
 uniform vec2 texels = vec2(32.0, 48.0);   // the card's texel grid (look.json fire.flame.texels)
 uniform float scroll = 1.6;               // noise scroll, card heights per second (noise_scroll_per_s, x torch scroll_scale)
 uniform float phase = 0.0;                // per-fire offset so fires don't move together
-uniform vec3 band0 : source_color = vec3(1.0, 0.914, 0.627); // core  #FFE9A0
-uniform vec3 band1 : source_color = vec3(1.0, 0.69, 0.125);  // #FFB020
-uniform vec3 band2 : source_color = vec3(1.0, 0.29, 0.0);    // #FF4A00
-uniform vec3 band3 : source_color = vec3(0.353, 0.039, 0.0); // edge #5A0A00
-uniform vec3 low0 : source_color = vec3(1.0, 0.29, 0.0);     // the collapsed (low fire) bands: #FF4A00
-uniform vec3 low1 : source_color = vec3(0.541, 0.102, 0.0);  // #8A1A00
-uniform vec3 low2 : source_color = vec3(0.227, 0.031, 0.0);  // #3A0800
+// Linear scene colours, past 1.0 where they bloom (see above).
+uniform vec3 band0 = vec3(1.97, 1.93, 0.099); // core, #FEFC54 on screen
+uniform vec3 band1 = vec3(1.5, 0.435, 0.028); // gold, #FCA82C
+uniform vec3 band2 = vec3(0.879, 0.101, 0.026); // orange, #E6552A
+uniform vec3 band3 = vec3(0.113, 0.004, 0.0); // edge, #5A0A00
+uniform vec3 low0 = vec3(1.11, 0.074, 0.0);    // the collapsed (low fire) bands: #FF4A00
+uniform vec3 low1 = vec3(0.282, 0.011, 0.0);   // #8A1A00
+uniform vec3 low2 = vec3(0.046, 0.003, 0.0);   // #3A0800
 uniform float low = 0.0;                  // 0 = full fire, 1 = collapsed to a red flicker
 
 void vertex() {

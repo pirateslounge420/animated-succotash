@@ -30,15 +30,13 @@ class_name Campfire
 ##   camp before you see its glow.
 
 ## R1a fire (docs/WORLD_SYSTEMS_SPEC.md): coals #FF4A00 (the flame's bands
-## are in look.json fire.flame) and the light (look.json fire.light.color,
-## #FFA050), strong enough to paint the folk and props round the fire warm
-## orange against the blue night without turning skin red. The pool on
-## the ground stays the deeper #FF7A2A (shaders/fire_glow.gdshader).
+## are in look.json fire.flame) and the light (look.json fire.light.color),
+## the one warm accent against all the blue (look pass, 1 Oct: orange
+## ~#E6552A on screen, short range, high energy): a saturated orange that
+## puts lit stone and cloth near #E6552A at about 2 m and blows them to
+## orange-yellow within 1 m, falling off fast. The pool on the ground
+## stays the deeper #FF7A2A (shaders/fire_glow.gdshader).
 const COALS := Color("#ff4a00")
-## The light at full flame, full night, before the night swell.
-const LIGHT_ENERGY := 7.0
-## The light's base range (m); the night swell multiplies it.
-const RANGE_M := 14.0
 ## Radius (m) of the firelight pooled on the ground (shaders/fire_glow).
 const GLOW_M := 5.5
 const RING_STONE := Color(0.4, 0.45, 0.52) # R1a blue-grey stone
@@ -53,6 +51,14 @@ const GROUP := "campfires"
 static var FIRE: Dictionary = Tuning.section("look", "fire")
 static var L: Dictionary = FIRE.get("light", {})
 static var FL: Dictionary = FIRE.get("flame", {})
+## The light at full flame, full night, before the night swell (look.json
+## fire.light.energy).
+static var LIGHT_ENERGY := float(L.get("energy", 7.0))
+## The light's base range (m; fire.light.range_m); the night swell
+## multiplies it.
+static var RANGE_M := float(L.get("range_m", 14.0))
+## How fast it falls off (fire.light.attenuation, the omni's exponent).
+static var ATTENUATION := float(L.get("attenuation", 1.1))
 ## audio.json → fire: hiss, pops, low_fire.
 static var A: Dictionary = Tuning.section("audio", "fire")
 
@@ -110,10 +116,10 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 	pops.position = Vector3(0, 0.4, 0)
 	var light := OmniLight3D.new()
 	light.name = "Light"
-	light.light_color = Color(str(L.get("color", "#ffa050")))
+	light.light_color = Color(str(L.get("color", "#FF6E24")))
 	light.light_energy = LIGHT_ENERGY
 	light.omni_range = RANGE_M
-	light.omni_attenuation = 1.1
+	light.omni_attenuation = ATTENUATION
 	light.position = Vector3(0, 1.0, 0)
 	root.add_child(light)
 	root.set_meta("flick_seed", phase)
@@ -182,8 +188,23 @@ static func _card_mesh() -> QuadMesh:
 	return _card
 
 
-## The flame card's material: the bands, the texel grid and the scroll
-## from look.json fire.flame; `low` (0-1) is driven by flicker().
+## A look.json on-screen colour as the scene colour (linear) that lands on
+## it through the environment's exposure (SkySystem.tonemap_exposure; the
+## grade leaves oranges and golds alone), with its full channels (those at
+## 90 %+ on screen) pushed `gain` times past 1.0 so it blooms (look.json
+## retro.bloom) while the screen still shows the same, clipped, colour.
+static func emissive(hex: Variant, gain := 1.0) -> Vector3:
+	var c := Color(str(hex))
+	var lin := c.srgb_to_linear()
+	var out := Vector3(lin.r, lin.g, lin.b) / SkySystem.tonemap_exposure()
+	for i in 3:
+		out[i] *= 1.0 + (gain - 1.0) * smoothstep(0.9, 1.0, c[i])
+	return out
+
+
+## The flame card's material: the bands (on-screen colours, the hot ones
+## pushed past 1 by fire.flame.hdr so they bloom), the texel grid and the
+## scroll from look.json fire.flame; `low` (0-1) is driven by flicker().
 static func _flame_material(phase: float, scroll_scale: float) -> ShaderMaterial:
 	var m := ShaderMaterial.new()
 	m.shader = preload("res://shaders/flame.gdshader")
@@ -192,12 +213,15 @@ static func _flame_material(phase: float, scroll_scale: float) -> ShaderMaterial
 	var tx: Array = FL.get("texels", [32, 48])
 	m.set_shader_parameter("texels", Vector2(float(tx[0]), float(tx[1])))
 	m.set_shader_parameter("scroll", float(FL.get("noise_scroll_per_s", 1.6)) * scroll_scale)
-	var bands: Array = FL.get("bands", ["#FFE9A0", "#FFB020", "#FF4A00", "#5A0A00"])
+	var bands: Array = FL.get("bands", ["#FEFC54", "#FCA82C", "#E6552A", "#5A0A00"])
+	var hdr: Array = FL.get("hdr", [1.0, 1.0, 1.0, 1.0])
 	for i in 4:
-		m.set_shader_parameter("band%d" % i, Color(str(bands[mini(i, bands.size() - 1)])))
+		m.set_shader_parameter("band%d" % i, emissive(bands[mini(i, bands.size() - 1)], float(hdr[i]) if i < hdr.size() else 1.0))
+	# The collapsed (low fire) bands don't bloom: a dying fire is a red
+	# flicker, not a glow.
 	var low: Array = (FL.get("low", {}) as Dictionary).get("bands_low", ["#FF4A00", "#8A1A00", "#3A0800"])
 	for i in 3:
-		m.set_shader_parameter("low%d" % i, Color(str(low[mini(i, low.size() - 1)])))
+		m.set_shader_parameter("low%d" % i, emissive(low[mini(i, low.size() - 1)]))
 	m.set_shader_parameter("low", 0.0)
 	return m
 
@@ -226,7 +250,7 @@ static func _ember_node(count: int, size: float, phase: float) -> MultiMeshInsta
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var m := ShaderMaterial.new()
 	m.shader = preload("res://shaders/ember.gdshader")
-	m.set_shader_parameter("color", Color(str(E.get("color", "#FFB020"))))
+	m.set_shader_parameter("color", emissive(E.get("color", "#FFB020"), float(E.get("hdr", 1.0))))
 	m.set_shader_parameter("px", float(E.get("px", 1)))
 	m.set_shader_parameter("rise_mps", float(E.get("rise_mps", 0.6)) * size)
 	var life: Array = E.get("life_s", [1.0, 2.5])

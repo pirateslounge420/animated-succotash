@@ -3,14 +3,14 @@
   "about": "The light and the grade (design reconciliation, Session 2 addendum section C: dark and moody at every hour; bright where the sun hits, deep everywhere else). SkySystem and PostGrade read it at start; restart the game after editing. Colors are sRGB hex.",
   "ranges": "How far detail is drawn (design §W: spend detail only near the eye; added by Claude Code with the performance pass). grass_m: grasses, tussocks and reeds; ground_m: the rest of the ground cover and the epiphytes; shrub_m: shrubs. rig_m: creatures' rigs (legs, heads, tails, cloaks) animate only within this of you; farther ones still travel but hold their pose. Each fades out over its last tenth. Trees by distance, per tree (1 Oct, Mike's Mac: the jungle's 157 M triangles): the full leaf cards within tree_full_m (casting the sun's shadow only within tree_shadow_m, the hard shadow map's reach), a light tree (trunk, main limbs, a few big clusters, ~300 triangles) out to tree_light_m, the one-quad picture beyond; a chunk re-sorts its trees after you move tree_reband_m.",
   "light": "The sun is the one directional light doing the work by day (the moon by night). sun_energy / moon_energy: full strength. Shadows are real shadow maps, hard-edged (no blur, no soft filtering): shadow_max_m is how far they reach, shadow_bias / shadow_normal_bias keep surfaces from shadowing themselves (too low: a fine crosshatch over trunks and bushes, shadow acne; too high: shadows lift off their casters). blob_shadows: the old dark discs under characters from before there were real shadows (false: off). rake_max_deg: the light never climbs higher than this (the sun's elevation is squeezed smoothly under it), so it rakes across the ground even at noon; rake_bias leans it toward the equator side when the sun is near overhead, where its bearing would otherwise swing (0 = straight from the sun's bearing). The sun disc in the sky stays where the astronomy puts it. shadow_splits: the cascades (1, 2 or 4) and leaf_shadow_m: leaves and leaf cards cast only within this of the eye, beyond it they only receive (design §W; both added by Claude Code with the performance pass, shadow_max_m cut from 90 with it).",
-  "day": "The day preset. ambient_color / ambient_energy: the flat fill every surface gets, which is all that lights a shadow, so it is low and deep blue (blue-tinted shadows). The grade, applied to the finished frame: exposure (multiplies), mids (above 1 pulls the midtones down, keeping black and white), saturation (1 = unchanged; 1.3-1.4 is +30-40 %), teal (0-1: greens toward forest/teal, away from mint and lime), shadow_tint (RGB multiplier over the darks) and shadow_tint_amount (0-1), contrast (about 0.4), vignette (0-1 darkening toward the corners).",
+  "day": "The day preset. ambient_color / ambient_energy: the flat fill every surface gets, which is all that lights a shadow, so it is low and deep blue (blue-tinted shadows). The grade, applied to the finished frame: exposure (multiplies), mids (above 1 pulls the midtones down, keeping black and white), saturation (1 = unchanged; 1.3-1.4 is +30-40 %), teal (0-1: greens toward forest/teal, away from mint and lime), shadow_color (the hue the darks are toned toward, navy) by shadow_tint_amount (0-1), highlight_color / highlight_amount (the lights drawn toward a cyan-white), olive_amount (0-1: green darks toned dark olive instead of navy; day 1, night 0 so the night stays one blue), contrast (about 0.4), vignette (0-1 darkening toward the corners). Look pass, 1 Oct: mids, saturation and contrast keep each pixel's hue (they work on its brightest channel, not per channel); shadow_color replaced the shadow_tint RGB multiplier; the ambient is a saturated navy (#1838C8 by day) and its live energy is ambient_floor.<preset>.sky_energy (x the sky's share), ambient_energy here only applies without an ambient_floor block. Shared settings in 'grade'.",
   "night": "The night preset: the same fields as day. Day and night are two presets, never one curve through the middle; in between (dusk and dawn) the two finished grades crossfade by daylight.",
   "head_look": "Cloaked figures (the player in third person, folk) look around with the hood first (Session 2 section B). head_max_deg: how far the hood turns alone (its shoulders shift shoulder_share of that with it); past it the torso turns too, up to torso_max_deg more. pitch_max_deg: how far the hood tips up or down (the hood alone). head_rate / torso_rate: how quickly each catches up (per second; the torso lags). Folk look at the player within watch_m (scaled by their size) when the player is in front of them; otherwise they glance about up to idle_deg now and then. Not drawn in first person (the body isn't).",
   "render": "Design §Y: the game renders at a FIXED internal height (internal_lines, 480 by default; max_internal_lines is the most a setting may allow, 720) and is upscaled to the window with nearest-neighbour; integer_scale snaps to whole multiples when the window allows. aspect: '16:9' (854x480) or '4:3' (640x480, letterboxed). hud_in_internal: the HUD is drawn inside the low-res frame and upscaled with it. Post-grade and dither run at the internal size. This replaces scaling_3d/scale in project.godot.",
   "retro": "The reference-clip look: tiny nearest-filtered tiles, hard 5-bit dither, pushed blue/green, close sky-coloured fog, no shadow maps by day. tile_m: metres per texture repeat per material (nearest_mipmap, max 2 mips, no anisotropy). dither/bleed override post_grade's defaults. colors: locked daylight colours (§AG 3), shadow_floor is the darkest daylight pixel after the grade. sun_disc_deg: the soft sun's diameter in the sky shader. clouds: two painted layers (scale, turns per game-minute). fog: day exponential density per metre + valley height fog. canopy_dark: ground vertex darkening under canopy (with blob shadows, light.shadows off). fov_deg: camera field of view. colors are MEASURED from the batch3 frames (grass is darker than a first guess: base #224A18, lit #3F6E2C). targets: frame statistics to hit. tiles_dir: the pre-made §AG tiles (tools/look/make_retro_tiles.py), same mid-grey modulation convention as LookTextures, drop-in for Look.texture().",
   "dapple": "Ground shade under trees. mode 'stamped' (§AJ 3): each skeleton tree's leaf clusters are stamped from above into a 512² shade map per chunk, so the shade is a patchwork that matches the crown (about 52 ms per chunk on the worker, next to ~1,500 ms of plant placement). mode 'disc' (the designer, 29 Sept 2026: the shade needn't be mapped to exactly where the light comes through — 'the shade goes here, with some dappling in it'): every tree, skeleton or not, casts the cheap baked crown disc, feathered at the edge, with the terrain shader's noise flecks of sun inside it; no shade map is built. Restart after editing.",
   "look_1_oct": "Claude Code, 1 Oct (design §BU, the look measured): retro.targets split into day and night bands; retro.tile_contrast now wired (look_tile_contrast); ambient_floor.night floor_color darkened to #03061F so the darkest 5 % at night lands near 0.02 and floor_energy raised to 0.3 to keep the world shaders' night lift where it was; desaturate -> pull_to_floor / pull_below_luma; night grade saturation 1.5 (day 1.5 is Mike's). All tuned to the measure, retune by play. ambient_floor.night.sky_gain lifts the night sky's colours (§BU step 5). data/night_accents.json is new (step 6). Tuned against the 14:00 / 02:00 dev-spot frames: night floor #04082A, sky_gain 2.2, night saturation 1.25, day saturation 1.4 (from Mike's 1.5: 0.71 measured against 0.58-0.70). Second tune from the 02:00 frame: pull_to_floor 0.6 (0.85 saturated every dark pixel to 0.91 against the band's 0.80), night exposure 1.2, night saturation 1.1. Third tune: night saturation 0.95 and shadow_tint_amount 0.4 (the 02:00 frame still measured 0.90 saturation with the pull at 0.6: the grade's own blue tint did it).",
-  "fire": "Design 30 Sept night §BZ (pushed 1 Oct). light: a fire does not get brighter at night, the world gets darker around it — by day the light is day_share of full (Campfire.DAY_SHARE); as daylight goes, the omni range and energy swell by night_range_scale / night_energy_scale, warm colour against the blue; flicker is NOISE on the energy (amount, hz) plus position_jitter_m on the light itself so shadows dance (not the sine stack in Campfire.flicker); ground_glow_night_scale swells the pooled glow (fire_glow). The safe/dread radius (fuel.json light_radius_m) is separate and does not swell. flame: ONE camera-facing card per fire (cards 1, billboard up_axis_only; supersedes the four tongues), its animation generated from noise scrolling up through a teardrop mask and posterised to bands (flat colours, core to edge), drawn at texels with nearest filtering so it is crunchy at any distance (Mike: generated from noise and crunched to pixels). embers: single-pixel billboards drifting up. torch: the same shader scaled down for the held/planted torch. low: when the fire's store is below below_share it collapses toward a red flicker (bands_low) at height_scale, so a dying hearth reads across the clearing. First guesses; the designer owns them."
+  "fire": "Design 30 Sept night §BZ (pushed 1 Oct). light: a fire does not get brighter at night, the world gets darker around it — by day the light is day_share of full (Campfire.DAY_SHARE); as daylight goes, the omni range and energy swell by night_range_scale / night_energy_scale, warm colour against the blue; flicker is NOISE on the energy (amount, hz) plus position_jitter_m on the light itself so shadows dance (not the sine stack in Campfire.flicker); ground_glow_night_scale swells the pooled glow (fire_glow). The safe/dread radius (fuel.json light_radius_m) is separate and does not swell. flame: ONE camera-facing card per fire (cards 1, billboard up_axis_only; supersedes the four tongues), its animation generated from noise scrolling up through a teardrop mask and posterised to bands (flat colours, core to edge), drawn at texels with nearest filtering so it is crunchy at any distance (Mike: generated from noise and crunched to pixels). embers: single-pixel billboards drifting up. torch: the same shader scaled down for the held/planted torch. low: when the fire's store is below below_share it collapses toward a red flicker (bands_low) at height_scale, so a dying hearth reads across the clearing. First guesses; the designer owns them. Look pass, 1 Oct (colour and glow; Mike: the fire is the one warm accent, orange ~#E6552A, yellow core ~#FEFC54, short range, high energy): light.energy / range_m / attenuation are the omni's full-night base (were Campfire.LIGHT_ENERGY 7, RANGE_M 14, attenuation 1.1 in code), the colour a saturated orange so lit stone and cloth land near #E6552A at about 2 m and blow to orange-yellow within 1 m; flame.bands are now ON-SCREEN colours (Campfire undoes grade.tonemap_exposure, and the grade leaves oranges and golds alone), and flame.hdr / embers.hdr push each band's full channels (those already at 90 %+ on screen) by that factor past 1.0 so the core and the gold bloom (retro.bloom) while their on-screen colour stays put."
  },
  "ranges": {
   "grass_m": 40.0,
@@ -42,36 +42,58 @@
   }
  },
  "day": {
-  "ambient_color": "#2448D0",
-  "ambient_energy": 0.42,
-  "exposure": 1.0,
+  "ambient_color": "#1838C8",
+  "ambient_energy": 0.9,
+  "exposure": 1.1,
   "mids": 1.22,
-  "saturation": 1.4,
+  "saturation": 1.5,
   "teal": 0.6,
-  "shadow_tint": [
-   0.55,
-   1.0,
-   1.6
-  ],
+  "shadow_color": "#06186C",
   "shadow_tint_amount": 0.55,
+  "highlight_color": "#D8F8FF",
+  "highlight_amount": 0.3,
+  "olive_amount": 1.0,
   "contrast": 1.12,
   "vignette": 0.12
  },
  "night": {
-  "ambient_color": "#1C2A8C",
+  "ambient_color": "#0C1C8C",
   "ambient_energy": 0.2,
   "exposure": 1.2,
   "mids": 1.35,
   "saturation": 0.95,
   "teal": 0.5,
-  "shadow_tint": [
-   0.55,
-   0.7,
-   1.6
-  ],
+  "shadow_color": "#06186C",
   "shadow_tint_amount": 0.4,
+  "highlight_color": "#C8F0FF",
+  "highlight_amount": 0.25,
+  "olive_amount": 0.0,
   "contrast": 1.1,
   "vignette": 0.4
+ },
+ "grade": {
+  "_help": "1 Oct look pass (colour and glow; Mike: vivid from saturation, not brightness; shade never grey; fire the one warm accent). Read by SkySystem, PostGrade and Campfire at start; restart after editing. tonemap: the environment's tonemapper, 'linear' (filmic and ACES wash saturated colours out, ACES pushes strong blue toward purple). tonemap_exposure: the environment's exposure (scene colour x this, clipped at 1). The day and night presets' saturation is hue-preserving (each pixel's distance below its own brightest channel is scaled, so a blue never drifts to purple). shadow_color: the darks (luma under shadow_range) are pulled toward this hue at their own brightness by shadow_tint_amount, navy, so deep shade lands near #020A39 and shade near #06186C; green darks go toward olive_color instead by the preset's olive_amount (green scenes: dark olive shade; greenness = (G - max(R,B)) / G over olive_greenness), and the shadow floor follows them. highlight_color / highlight_amount: the lights (luma from highlight_from to 1) drawn toward a cyan-white. protect_*: oranges and golds (hue between protect_hue_deg, feathered by protect_feather_deg, chroma, brightest minus darkest channel, over protect_chroma: firelight and the flame, not a dim moonlit path) skip the grade, the night pull and the tints entirely, so firelight lands on screen as the flame and the light make it.",
+  "tonemap": "linear",
+  "tonemap_exposure": 0.9,
+  "shadow_range": [
+   0.02,
+   0.3
+  ],
+  "olive_color": "#1E300A",
+  "olive_greenness": [
+   0.05,
+   0.3
+  ],
+  "highlight_from": 0.5,
+  "protect_hue_deg": [
+   -20.0,
+   62.0
+  ],
+  "protect_feather_deg": 10.0,
+  "protect_chroma": [
+   0.12,
+   0.25
+  ]
  },
  "head_look": {
   "enabled": true,
@@ -186,7 +208,26 @@
   "fov_deg": 78,
   "eye_m": 1.4,
   "sharpen": false,
-  "bloom": false,
+  "bloom": {
+   "_help": "Look pass, 1 Oct (Mike: glow on, only emissive things bloom: water glints, waterfalls, fire, candles, the moon). The environment's glow (SkySystem), on the HDR scene before the tonemap: hdr_threshold is the scene brightness (after grade.tonemap_exposure, brightest channel) where bloom starts, ramping to full over hdr_scale above it, so lit surfaces (at most about 1.0 on screen) do not bloom and anything written past it does (the flame's hdr bands, the moon's lit disc, emission over 1.1). intensity / strength: how much is added; blend: screen, additive, softlight or replace (screen keeps the halo inside white over the dark blue); levels: the seven blur sizes' weights, small first (the halo is a few internal pixels wide and is then dithered with everything else); luminance_cap: the brightest any pixel feeds the halo. enabled false switches it off.",
+   "enabled": true,
+   "hdr_threshold": 1.0,
+   "hdr_scale": 1.0,
+   "intensity": 0.25,
+   "strength": 1.0,
+   "bloom": 0.0,
+   "blend": "screen",
+   "levels": [
+    1.0,
+    0.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "luminance_cap": 8.0
+  },
   "targets": {
    "_about": "Whole-frame statistics of the reference frames (design §BU, measured with tools/look/measure_look.py over the twelve 1 Oct frames): day and night bands. mean_luma, mean_saturation, texel_detail (the mean luma step between neighbouring pixels), darkest_5pct_luma (the darkest 5 % of the frame: navy, never black) and its blue/red ratio, the grass share of the lower half. Aim a 14:00 and a 02:00 frame from the dev spot at these. texel_detail is a floor (0.014+): the internal frame's dither and nearest tiles read above the references' 0.016, which is the point; a window capture at 2x reads half.",
    "day": {
@@ -214,6 +255,14 @@
      0.3,
      0.85
     ]
+   },
+   "colours": {
+    "_help": "Look pass, 1 Oct: on-screen colours measured from Mike's reference images, the targets the grade and the fire are tuned toward (by reasoning the math, not plugged in as light colours): shade_deep and shade are a blue scene's deep shade and shade (navy, never grey; a green scene's are dark olive, grade.olive_color), fire_orange the lit orange round a fire and the flame's body, fire_core the flame's yellow heart; typical_saturation is a typical pixel's (dark but very saturated: vivid from saturation, not brightness).",
+    "shade_deep": "#020A39",
+    "shade": "#06186C",
+    "fire_orange": "#E6552A",
+    "fire_core": "#FEFC54",
+    "typical_saturation": 0.7
    },
    "night": {
     "mean_luma": [
@@ -248,12 +297,12 @@
   "mode": "stamped"
  },
  "ambient_floor": {
-  "_help": "Design 30 Sept §BD. Ambient at a point = the hour's sky ambient x that point's sky visibility (0-1, from the dapple stamp plus enclosure), never below the floor while any sky is visible. Applied AFTER the darkening stack (shadow map x dapple x canopy_dark x ambient). Night is one colour (§BU, 1 Oct): the post grade pulls every dark pixel's hue to the floor's blue at its own brightness (pull_to_floor, below pull_below_luma), saturation kept; the floor itself is applied after the grade's contrast and before the dither wherever the player is not enclosed, so nothing outdoors quantises to black (the darkest 5 % of a frame lands near the floor's luma: day ~0.07, night ~0.02). enclosed (ruin interiors, caves): sky visibility 0, so black unless a torch.",
+  "_help": "Design 30 Sept §BD. Ambient at a point = the hour's sky ambient x that point's sky visibility (0-1, from the dapple stamp plus enclosure), never below the floor while any sky is visible. Applied AFTER the darkening stack (shadow map x dapple x canopy_dark x ambient). Night is one colour (§BU, 1 Oct): the post grade pulls every dark pixel's hue to the floor's blue at its own brightness (pull_to_floor, below pull_below_luma), saturation kept; the floor itself is applied after the grade's contrast and before the dither wherever the player is not enclosed, so nothing outdoors quantises to black (the darkest 5 % of a frame lands near the floor's luma: day ~0.05, the look pass's #020A39 deep shade, night ~0.02). enclosed (ruin interiors, caves): sky visibility 0, so black unless a torch.",
   "mode": "sky_visibility",
   "day": {
-   "floor_color": "#080C4A",
+   "floor_color": "#020A39",
    "floor_energy": 0.16,
-   "sky_energy": 0.42
+   "sky_energy": 0.9
   },
   "night": {
    "floor_color": "#04082A",
@@ -394,17 +443,20 @@
  "_help_day_vivid": "30 Sept §BU: days are vivid where the sun hits (target luma ~0.31, saturation ~0.64 measured on the frames); shade stays deep navy. day.saturation raised 1.35 -> 1.5; the floor rule (§BD) keeps shade from going black.",
  "fire": {
   "light": {
-   "day_share": 0.45,
-   "night_range_scale": 1.6,
-   "night_energy_scale": 1.3,
-   "color": "#FFA050",
+   "day_share": 0.1,
+   "night_range_scale": 1.3,
+   "night_energy_scale": 1.4,
+   "color": "#FF6E24",
+   "energy": 9.0,
+   "range_m": 7.0,
+   "attenuation": 2.0,
    "flicker": {
     "noise": true,
     "hz": 9.0,
     "amount": 0.18,
     "position_jitter_m": 0.06
    },
-   "ground_glow_night_scale": 1.4
+   "ground_glow_night_scale": 1.2
   },
   "flame": {
    "cards": 1,
@@ -417,10 +469,16 @@
    "mask": "teardrop",
    "noise_scroll_per_s": 1.6,
    "bands": [
-    "#FFE9A0",
-    "#FFB020",
-    "#FF4A00",
+    "#FEFC54",
+    "#FCA82C",
+    "#E6552A",
     "#5A0A00"
+   ],
+   "hdr": [
+    1.8,
+    1.4,
+    1.0,
+    1.0
    ],
    "width_m": 0.62,
    "height_m": 1.0,
@@ -433,6 +491,7 @@
      2.5
     ],
     "color": "#FFB020",
+    "hdr": 2.0,
     "spread_m": 0.25,
     "wobble_m": 0.08,
     "_help": "spread_m and wobble_m added by code (1 Oct, Campfire._ember_node): the radius round the coals the embers start in and their sideways drift as they climb, in metres; both scale with the flame (the torch gets a third). The designer owns them."

@@ -7,10 +7,13 @@
 // coals, climbs, wobbles, and is drawn as a camera-facing square exactly
 // `px` internal pixels across whatever the distance. The fragment is a
 // flat colour, on for most of the life, off at the end, with one blink.
+// The colour is a linear scene colour (Campfire.emissive: look.json
+// fire.flame.embers.color on screen, its full channels pushed past 1.0 by
+// embers.hdr so a spark glints in the bloom).
 shader_type spatial;
 render_mode unshaded, blend_mix, depth_draw_opaque, cull_disabled, shadows_disabled, fog_disabled;
 
-uniform vec3 color : source_color = vec3(1.0, 0.69, 0.125); // #FFB020
+uniform vec3 color = vec3(2.22, 0.48, 0.016); // #FFB020 on screen, red pushed x2
 uniform float px = 1.0;          // size in internal screen pixels
 uniform float rise_mps = 0.6;    // climb speed
 uniform float life_min = 1.0;    // seconds alive, per ember from its seed

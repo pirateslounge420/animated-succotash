@@ -8,13 +8,15 @@ extends Node3D
 ## they stand), the world clock in days, and the local weather.
 ##
 ## * Sun and moon are real lights casting hard shadow maps (no blur), and
-##   by day the sun is the only one doing any work: ambient is low and deep
-##   blue, sky light and reflections are off (data/look.json; design
-##   reconciliation Session 2 section C). Each light's brightness and color
-##   follow its own elevation: dim and warm when low, full strength high
-##   up, nothing once it's a few degrees below. Its direction is raked: the
-##   elevation squeezed under look "light" rake_max_deg, so shadows run
-##   long even at noon (the disc in the sky stays true).
+##   by day the sun is the only one doing any work: ambient is a fixed
+##   saturated navy, sky light and reflections are off (data/look.json;
+##   design reconciliation Session 2 section C); a linear tonemap, and
+##   glow on the HDR scene over ~1.0 only (look.json grade, retro.bloom).
+##   Each light's brightness and color follow its own elevation: dim and
+##   warm when low, full strength high up, nothing once it's a few degrees
+##   below. Its direction is raked: the elevation squeezed under look
+##   "light" rake_max_deg, so shadows run long even at noon (the disc in
+##   the sky stays true).
 ## * The moon moves like Earth's (Astro.MoonMode.ORBITAL), so sun and moon
 ##   genuinely share the dawn/dusk sky on most days, each lighting the
 ##   world from its own side.
@@ -149,6 +151,8 @@ func enclosure() -> float:
 	return _enclosed
 static var DAY := Tuning.section("look", "day")
 static var NIGHT := Tuning.section("look", "night")
+## The tonemapper and its exposure (look pass, 1 Oct; look.json grade).
+static var GRADE := Tuning.section("look", "grade")
 ## Night fog density (per meter) added to the day's haze: about 40% at
 ## 200 m, so the middle distance goes blue and the far distance dissolves.
 const FOG_NIGHT := 0.0017
@@ -209,22 +213,30 @@ func _ready() -> void:
 	environment = Environment.new()
 	environment.background_mode = Environment.BG_SKY
 	environment.sky = sky
+	# Ambient is a fixed saturated navy (look.json day / night
+	# ambient_color, the energy ambient_floor's), never the sky's: the sky
+	# lights nothing, no sky ambient, no sky reflections, so shade is navy
+	# (dark olive on green, by the grade), never grey.
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	# The sky lights nothing: no sky ambient, no sky reflections.
 	environment.ambient_light_sky_contribution = 0.0
 	environment.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
-	# Linear: keep colors as saturated as authored (filmic curves wash them
-	# toward realism).
-	environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR
-	environment.tonemap_exposure = 0.9 # a touch under, so nothing reads washed out
+	# Linear (look.json grade.tonemap): colours as saturated as authored;
+	# filmic and ACES wash saturated colours out, and ACES pushes strong
+	# blue toward purple. The exposure a touch under, so nothing reads
+	# washed out; Campfire undoes it for the flame's on-screen colours.
+	environment.tonemap_mode = tonemapper()
+	environment.tonemap_exposure = tonemap_exposure()
 	environment.fog_enabled = true
 	environment.fog_sky_affect = 0.0 # the sky shader draws its own banded haze
 	# The grade is PostGrade's two presets, not the environment's.
 	environment.adjustment_enabled = false
-	# Lambert under one hard sun over a low blue ambient, and nothing
-	# screen-space on top: no glow halos, no ambient occlusion, no
-	# screen-space reflections or indirect light.
-	environment.glow_enabled = false
+	# Lambert under one hard sun over a low blue ambient. Glow on the HDR
+	# scene (look.json retro.bloom): over a threshold of about 1.0 only,
+	# so lit surfaces don't bloom and emissive things do (the flame's
+	# cores, the moon, water glints and falls written past 1). Nothing
+	# else screen-space: no ambient occlusion, no screen-space
+	# reflections or indirect light.
+	_apply_glow()
 	environment.ssao_enabled = false
 	environment.ssil_enabled = false
 	environment.ssr_enabled = false
@@ -409,10 +421,10 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	else:
 		cloud_light_dir = _turn(up, sun_dir, (to_sun - split) / maxf(1.0 - split, 1e-4))
 
-	# Ambient: low and deep blue, day and night (data/look.json): it's all
+	# Ambient: a saturated navy, day and night (data/look.json): it's all
 	# a shadow gets, so shadows are deep and blue, never grey. The moon
 	# lifts the night's a little.
-	var amb_day := Color(str(DAY.get("ambient_color", "#2C4AA8")))
+	var amb_day := Color(str(DAY.get("ambient_color", "#1838C8")))
 	var amb_night := Color(str(NIGHT.get("ambient_color", "#1C2A8C"))).lerp(FILL_MOON, lift * 0.3)
 	var e_day := float(DAY.get("ambient_energy", 0.16))
 	var e_night := float(NIGHT.get("ambient_energy", 0.2)) * (1.0 + 0.4 * lift)
@@ -449,6 +461,44 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 		"look_glow": 1.0 - smoothstep(0.08, 0.55, daylight),
 	})
 	sky_material.set_shader_parameter("fog_color", fog_color)
+
+
+## The environment's tonemapper (look.json grade.tonemap: linear, the
+## default; filmic, aces or reinhard to compare).
+static func tonemapper() -> Environment.ToneMapper:
+	match str(GRADE.get("tonemap", "linear")).to_lower():
+		"filmic":
+			return Environment.TONE_MAPPER_FILMIC
+		"aces":
+			return Environment.TONE_MAPPER_ACES
+		"reinhard", "reinhardt":
+			return Environment.TONE_MAPPER_REINHARDT
+	return Environment.TONE_MAPPER_LINEAR
+
+
+## The environment's exposure (look.json grade.tonemap_exposure).
+static func tonemap_exposure() -> float:
+	return float(GRADE.get("tonemap_exposure", 0.9))
+
+
+## Glow from look.json retro.bloom: HDR threshold and ramp, how much, the
+## blend and the blur sizes (levels 1-7, small first).
+func _apply_glow() -> void:
+	var b: Variant = RETRO.get("bloom", {})
+	var bloom: Dictionary = b if b is Dictionary else {"enabled": bool(b)}
+	environment.glow_enabled = bool(bloom.get("enabled", false))
+	environment.glow_hdr_threshold = float(bloom.get("hdr_threshold", 1.0))
+	environment.glow_hdr_scale = float(bloom.get("hdr_scale", 1.0))
+	environment.glow_hdr_luminance_cap = float(bloom.get("luminance_cap", 8.0))
+	environment.glow_intensity = float(bloom.get("intensity", 0.25))
+	environment.glow_strength = float(bloom.get("strength", 1.0))
+	environment.glow_bloom = float(bloom.get("bloom", 0.0))
+	environment.glow_normalized = false
+	var modes := {"additive": Environment.GLOW_BLEND_MODE_ADDITIVE, "screen": Environment.GLOW_BLEND_MODE_SCREEN, "softlight": Environment.GLOW_BLEND_MODE_SOFTLIGHT, "replace": Environment.GLOW_BLEND_MODE_REPLACE}
+	environment.glow_blend_mode = modes.get(str(bloom.get("blend", "screen")).to_lower(), Environment.GLOW_BLEND_MODE_SCREEN)
+	var levels: Array = bloom.get("levels", [1.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0])
+	for i in 7:
+		environment.set_glow_level(i, float(levels[i]) if i < levels.size() else 0.0)
 
 
 ## The ambient floor (design 30 Sept §BD): ambient at a point is the
