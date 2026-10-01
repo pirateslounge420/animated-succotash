@@ -425,7 +425,18 @@ void fragment() {
 		float t = (UV.y - cb) / max(1.0 - cb, 1e-3);
 		float n = retro_tex(look_tex_leaves, UV * vec2(3.0, 5.0)).g;
 		float r = imp_profile(clamp(t, 0.0, 1.0), v_imp);
-		bool crown = t > 0.0 && x < r * (0.78 + 0.44 * n);
+		float rim = r * (0.78 + 0.44 * n);
+		bool crown = t > 0.0 && x < rim;
+		// A ragged rim with sky through it (1 Oct, bug 1: a smooth-edged
+		// picture read as a flat dark shard at dusk): the outer half of the
+		// crown keeps only what the leaf-card cutout keeps, in cells that
+		// turn with the tree so neighbours differ.
+		if (crown && x > rim * 0.45) {
+			float holes = retro_tex(look_tex_leaf_card, UV * vec2(2.0, 3.0) + vec2(fract(inst * 0.37), fract(inst * 0.61))).a;
+			if (holes < 0.5) {
+				crown = false;
+			}
+		}
 		bool trunk = UV.y < cb + 0.08 && x < max(v_imp2.y, 0.04);
 		bool twigs = false;
 		if (crown && (v_leaf < 0.999 || dead_v > 0.5)) {
