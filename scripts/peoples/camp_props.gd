@@ -21,40 +21,44 @@ static func _has(s: String, words: Array) -> bool:
 
 ## One prop from its phrase, at the origin of a new node under `parent`
 ## (the caller places it). `pal`: the people's palette colours.
-static func prop(parent: Node3D, phrase: String, pal: Array, rng: RandomNumberGenerator, body: StaticBody3D) -> Node3D:
+static func prop(parent: Node3D, phrase: String, pal: Array, rng: RandomNumberGenerator, _body: StaticBody3D) -> Node3D:
 	var s := phrase.to_lower()
 	var n := Node3D.new()
 	n.name = "Prop"
 	parent.add_child(n)
+	# Its own collision cb: the shapes ride with the prop wherever the
+	# caller puts it (on the camp's cb they sat at the camp's origin,
+	# the fire).
+	var cb := PropCollision.body(n)
 	var c0: Color = pal[0] if not pal.is_empty() else STONE
 	var c1: Color = pal[1 % pal.size()] if not pal.is_empty() else POLE
 	if _has(s, ["rack", "racks", "loom", "hide stretched", "cheeses", "corn under", "dung cakes", "potatoes spread", "salt cakes"]):
-		_rack(n, rng, c1, body)
+		_rack(n, rng, c1, cb)
 	elif _has(s, ["boat", "canoe", "kayak", "dugout"]):
-		_hull(n, rng, c0, body)
+		_hull(n, rng, c0, cb)
 	elif _has(s, ["midden", "mound", "heap", "pile", "stack", "slag", "peat stack"]):
 		var col := Color(0.82, 0.78, 0.66) if s.find("shell") >= 0 or s.find("midden") >= 0 else (Color(0.16, 0.14, 0.12) if _has(s, ["charcoal", "peat", "slag", "soot"]) else Color(0.4, 0.32, 0.2))
-		_mound(n, rng.randf_range(1.2, 2.2), rng.randf_range(0.4, 0.9), col, body)
+		_mound(n, rng.randf_range(1.2, 2.2), rng.randf_range(0.4, 0.9), col, cb)
 	elif _has(s, ["pans", "floor", "griddle", "slab", "grinding", "mortar", "chuño ground"]):
-		_flats(n, rng, body)
+		_flats(n, rng, cb)
 	elif _has(s, ["fence", "wall", "corral", "fold", "ring", "hurdle", "terrace"]):
-		_ring(n, rng, STONE if _has(s, ["stone", "wall", "corral", "terrace"]) else POLE, s.find("stone") >= 0 or s.find("wall") >= 0, body)
+		_ring(n, rng, STONE if _has(s, ["stone", "wall", "corral", "terrace"]) else POLE, s.find("stone") >= 0 or s.find("wall") >= 0, cb)
 	elif _has(s, ["kiln", "bloomery", "chimney", "cistern", "tar pit", "tar pot", "parching"]):
-		_hump(n, rng, Color(0.55, 0.4, 0.3), body)
+		_hump(n, rng, Color(0.55, 0.4, 0.3), cb)
 	elif _has(s, ["jars", "pots", "gourds", "baskets", "boxes", "cache", "granary", "storehouse", "store on a post"]):
-		_jars(n, rng, c0, body)
+		_jars(n, rng, c0, cb)
 	elif _has(s, ["trap", "hive", "press", "net poles", "eel"]):
-		_frame(n, rng, POLE, body)
+		_frame(n, rng, POLE, cb)
 	elif _has(s, ["spring", "waterhole", "channel", "pond", "pit", "cenote"]):
-		_spring(n, rng, body)
+		_spring(n, rng, cb)
 	elif _has(s, ["stone figure", "cairn"]):
-		_cairn(n, rng, body)
+		_cairn(n, rng, cb)
 	elif _has(s, ["travois", "tent poles", "poles", "stakes", "climbing pole", "torch pole", "post"]):
-		_poles(n, rng, POLE, body)
+		_poles(n, rng, POLE, cb)
 	elif _has(s, ["lamp"]):
 		_lamp(n)
 	elif _has(s, ["ladder", "bridge", "hearth box", "blowpipe"]):
-		_poles(n, rng, ROPE, body)
+		_poles(n, rng, ROPE, cb)
 	else:
 		_bundle(n, rng, c1)
 	return n
@@ -196,7 +200,7 @@ static func _bundle(n: Node3D, rng: RandomNumberGenerator, col: Color) -> void:
 
 ## The shelter (a people's shelter.form and materials): a hut in the
 ## form the words name, coloured by the materials, its door to the fire.
-static func shelter(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNumberGenerator, body: StaticBody3D) -> Node3D:
+static func shelter(parent: Node3D, people: Dictionary, pal: Array, rng: RandomNumberGenerator, _body: StaticBody3D) -> Node3D:
 	var sh: Dictionary = people.get("shelter", {})
 	var form := str(sh.get("form", "")).to_lower()
 	var mats := " ".join(PackedStringArray(sh.get("materials", []))).to_lower()
@@ -222,17 +226,21 @@ static func shelter(parent: Node3D, people: Dictionary, pal: Array, rng: RandomN
 	var n := Node3D.new()
 	n.name = "Shelter"
 	parent.add_child(n)
+	# Its own collision cb: the shapes ride with the prop wherever the
+	# caller puts it (on the camp's cb they sat at the camp's origin,
+	# the fire).
+	var cb := PropCollision.body(n)
 	if _has(form, ["platform lashed", "never come"]):
 		return n # the canopy folk build up in the giants (CanopyVillage)
 	if _has(form, ["nothing built", "overhang is the roof"]):
 		# A hide screen or a low stacked wall along the drip line.
 		for i in 5:
 			var b := CreatureBodies.box(n, Vector3(0.8, 0.6, 0.3), Vector3(-1.6 + i * 0.8, 0.3, 0), STONE.darkened(rng.randf() * 0.1))
-			PropCollision.capsule(body, Transform3D(Basis.IDENTITY, b.position), 0.3, 0.6)
+			PropCollision.capsule(cb, Transform3D(Basis.IDENTITY, b.position), 0.3, 0.6)
 		return n
 	if _has(form, ["cone of poles", "pole tent", "tent"]):
 		var tent := CreatureBodies.cone(n, 2.1, 0.05, 3.4, Vector3(0, 1.7, 0), roof.darkened(0.1), 0.0, 10)
-		PropCollision.capsule(body, Transform3D(Basis.IDENTITY, Vector3(0, 1.4, 0)), 1.6, 2.4)
+		PropCollision.capsule(cb, Transform3D(Basis.IDENTITY, Vector3(0, 1.4, 0)), 1.6, 2.4)
 		for i in 5:
 			var p := CreatureBodies.cone(n, 0.04, 0.03, 4.0, Vector3(0, 2.0, 0), POLE, 0.0, 5)
 			var a := i * TAU / 5.0
@@ -240,16 +248,16 @@ static func shelter(parent: Node3D, people: Dictionary, pal: Array, rng: RandomN
 		return n
 	if _has(form, ["dome of snow", "snow block", "beehive", "corbelled", "round"]):
 		var dome := CreatureBodies.ball(n, Vector3(2.2, 1.9, 2.2), Vector3(0, 0.2, 0), wall)
-		PropCollision.capsule(body, Transform3D(Basis.IDENTITY, Vector3(0, 0.9, 0)), 1.9, 1.6)
+		PropCollision.capsule(cb, Transform3D(Basis.IDENTITY, Vector3(0, 0.9, 0)), 1.9, 1.6)
 		CreatureBodies.box(n, Vector3(0.9, 1.1, 0.6), Vector3(0, 0.55, 2.0), Color(0.1, 0.09, 0.08))
 		return n
 	if _has(form, ["on legs", "on poles", "stilt", "over the shallows", "above the highest tide"]):
 		for x in [-1.4, 1.4]:
 			for z in [-1.2, 1.2]:
 				var p := CreatureBodies.cone(n, 0.09, 0.08, 2.4, Vector3(x, 1.2, z), POLE, 0.0, 6)
-				PropCollision.capsule(body, p.transform, 0.09, 2.4)
+				PropCollision.capsule(cb, p.transform, 0.09, 2.4)
 		var deck := CreatureBodies.box(n, Vector3(3.6, 0.18, 3.0), Vector3(0, 2.3, 0), WOOD)
-		PropCollision.capsule(body, Transform3D(Basis(Vector3(0, 0, 1), PI * 0.5), deck.position), 1.5, 3.6)
+		PropCollision.capsule(cb, Transform3D(Basis(Vector3(0, 0, 1), PI * 0.5), deck.position), 1.5, 3.6)
 		CreatureBodies.box(n, Vector3(3.2, 1.6, 2.6), Vector3(0, 3.2, 0), wall)
 		var r := CreatureBodies.cone(n, 2.6, 0.1, 1.4, Vector3(0, 4.7, 0), roof, 0.0, 4)
 		r.rotation.y = PI * 0.25
@@ -258,7 +266,7 @@ static func shelter(parent: Node3D, people: Dictionary, pal: Array, rng: RandomN
 		var w := 4.0
 		var l := 9.0
 		var box := CreatureBodies.box(n, Vector3(w, 1.9, l), Vector3(0, 0.95, 0), wall)
-		PropCollision.capsule(body, Transform3D(Basis(Vector3(1, 0, 0), PI * 0.5), Vector3(0, 1.0, 0)), w * 0.5, l)
+		PropCollision.capsule(cb, Transform3D(Basis(Vector3(1, 0, 0), PI * 0.5), Vector3(0, 1.0, 0)), w * 0.5, l)
 		var r := CreatureBodies.box(n, Vector3(w * 0.75, 1.6, l + 0.4), Vector3(0, 2.6, 0), roof)
 		r.rotation.z = PI * 0.25
 		CreatureBodies.box(n, Vector3(1.0, 1.5, 0.3), Vector3(0, 0.75, l * 0.5 + 0.05), Color(0.1, 0.09, 0.08))
@@ -267,19 +275,19 @@ static func shelter(parent: Node3D, people: Dictionary, pal: Array, rng: RandomN
 		for i in 2:
 			var s := Vector3(rng.randf_range(3.0, 4.0), rng.randf_range(2.2, 2.8), rng.randf_range(2.6, 3.4))
 			var b := CreatureBodies.box(n, s, Vector3(i * 3.6 - 1.8, s.y * 0.5, 0), wall)
-			PropCollision.capsule(body, Transform3D(Basis(Vector3(1, 0, 0), PI * 0.5), b.position), s.x * 0.5, s.z)
+			PropCollision.capsule(cb, Transform3D(Basis(Vector3(1, 0, 0), PI * 0.5), b.position), s.x * 0.5, s.z)
 			var ladder := CreatureBodies.cone(n, 0.04, 0.04, s.y + 0.6, Vector3(i * 3.6 - 1.8 + s.x * 0.5 + 0.3, s.y * 0.5 + 0.2, 0.6), POLE, 0.0, 5)
 			ladder.rotation.x = 0.25
 		return n
 	if _has(form, ["arched reed", "reed house", "reed island"]):
 		var barrel := CreatureBodies.ball(n, Vector3(2.0, 1.8, 3.4), Vector3(0, 0.3, 0), roof)
-		PropCollision.capsule(body, Transform3D(Basis(Vector3(1, 0, 0), PI * 0.5), Vector3(0, 0.9, 0)), 1.6, 5.0)
+		PropCollision.capsule(cb, Transform3D(Basis(Vector3(1, 0, 0), PI * 0.5), Vector3(0, 0.9, 0)), 1.6, 5.0)
 		CreatureBodies.box(n, Vector3(1.0, 1.3, 0.3), Vector3(0, 0.65, 3.2), Color(0.1, 0.09, 0.08))
 		return n
 	# Low houses of stone, turf, wattle, driftwood: a box under a roof.
 	var s := Vector3(rng.randf_range(3.2, 4.2), rng.randf_range(1.4, 1.8), rng.randf_range(2.6, 3.4))
 	var b := CreatureBodies.box(n, s, Vector3(0, s.y * 0.5, 0), wall)
-	PropCollision.capsule(body, Transform3D(Basis(Vector3(1, 0, 0), PI * 0.5), b.position), s.x * 0.5, s.z)
+	PropCollision.capsule(cb, Transform3D(Basis(Vector3(1, 0, 0), PI * 0.5), b.position), s.x * 0.5, s.z)
 	var r := CreatureBodies.box(n, Vector3(s.x * 0.72, 1.2, s.z + 0.4), Vector3(0, s.y + 0.55, 0), roof)
 	r.rotation.z = PI * 0.25
 	CreatureBodies.box(n, Vector3(0.9, 1.2, 0.3), Vector3(0, 0.6, s.z * 0.5 + 0.05), Color(0.1, 0.09, 0.08))
@@ -290,11 +298,15 @@ static func shelter(parent: Node3D, people: Dictionary, pal: Array, rng: RandomN
 
 ## A woodpile that shows what is banked: rows of logs, more as `units`
 ## grow (refresh_woodpile).
-static func woodpile(parent: Node3D, units: float, body: StaticBody3D) -> Node3D:
+static func woodpile(parent: Node3D, units: float, _body: StaticBody3D) -> Node3D:
 	var n := Node3D.new()
 	n.name = "Woodpile"
 	parent.add_child(n)
-	PropCollision.capsule(body, Transform3D(Basis(Vector3(0, 0, 1), PI * 0.5), Vector3(0, 0.3, 0)), 0.35, 1.6)
+	# Its own collision cb: the shapes ride with the prop wherever the
+	# caller puts it (on the camp's cb they sat at the camp's origin,
+	# the fire).
+	var cb := PropCollision.body(n)
+	PropCollision.capsule(cb, Transform3D(Basis(Vector3(0, 0, 1), PI * 0.5), Vector3(0, 0.3, 0)), 0.35, 1.6)
 	refresh_woodpile(n, units)
 	return n
 
@@ -314,13 +326,17 @@ static func refresh_woodpile(n: Node3D, units: float) -> void:
 
 ## A food store: a rack with strips hanging, baskets under it, more as
 ## `units` grow.
-static func food_store(parent: Node3D, units: float, pal: Array, body: StaticBody3D) -> Node3D:
+static func food_store(parent: Node3D, units: float, pal: Array, _body: StaticBody3D) -> Node3D:
 	var n := Node3D.new()
 	n.name = "FoodStore"
 	parent.add_child(n)
+	# Its own collision cb: the shapes ride with the prop wherever the
+	# caller puts it (on the camp's cb they sat at the camp's origin,
+	# the fire).
+	var cb := PropCollision.body(n)
 	for x in [-0.7, 0.7]:
 		var p := CreatureBodies.cone(n, 0.05, 0.04, 1.8, Vector3(x, 0.9, 0), POLE, 0.0, 6)
-		PropCollision.capsule(body, p.transform, 0.05, 1.8)
+		PropCollision.capsule(cb, p.transform, 0.05, 1.8)
 	var bar := CreatureBodies.cone(n, 0.03, 0.03, 1.5, Vector3(0, 1.6, 0), POLE, 0.0, 5)
 	bar.rotation.z = PI * 0.5
 	var stock := Node3D.new()

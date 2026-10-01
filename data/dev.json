@@ -72,5 +72,9 @@
     "water:LAKE"
    ]
   }
+ },
+ "stall_log": false,
+ "_help": {
+  "stall_log": "true: when the unstick rule frees you, print what was in the way (the blocking colliders' node paths and shape sizes). STALL_LOG=1 in the environment does the same."
  }
 }

@@ -1327,6 +1327,49 @@ func _reach_arms(hands: Array[Vector3]) -> void:
 ## capsule is nudged UNSTICK_M out along the nearest free direction to the
 ## one you're pushing (of 16 round you, tested with test_move), or up if
 ## none is free. Never while swimming or climbing.
+## Dev readout (data/dev.json stall_log, or STALL_LOG=1 in the
+## environment): when the unstick rule fires, print what was in the way:
+## each blocking collider's owner node path and its shape's size, so an
+## invisible wall names itself.
+func _stall_log() -> bool:
+	return OS.get_environment("STALL_LOG") == "1" or (world != null and bool(world.dev.get("stall_log", false)))
+
+
+func _log_blockers(kind: String) -> void:
+	var lines: PackedStringArray = []
+	for k in get_slide_collision_count():
+		var col := get_slide_collision(k)
+		var n := col.get_normal()
+		if n.dot(up) >= 0.7:
+			continue
+		var owner := col.get_collider() as Node
+		var shape_node := col.get_collider_shape() as Node
+		var desc := "?"
+		if shape_node is CollisionShape3D:
+			var sh: Shape3D = (shape_node as CollisionShape3D).shape
+			if sh is BoxShape3D:
+				desc = "box %s" % (sh as BoxShape3D).size
+			elif sh is CapsuleShape3D:
+				desc = "capsule r %.2f h %.2f" % [(sh as CapsuleShape3D).radius, (sh as CapsuleShape3D).height]
+			elif sh is SphereShape3D:
+				desc = "sphere r %.2f" % (sh as SphereShape3D).radius
+			elif sh is ConvexPolygonShape3D:
+				var pts := (sh as ConvexPolygonShape3D).points
+				var lo := Vector3.INF
+				var hi := -Vector3.INF
+				for p in pts:
+					lo = lo.min(p)
+					hi = hi.max(p)
+				desc = "hull %s" % (hi - lo)
+			elif sh is ConcavePolygonShape3D:
+				desc = "trimesh"
+			elif sh != null:
+				desc = sh.get_class()
+			desc += " at %s" % (shape_node as Node3D).global_position
+		lines.append("%s (%s) %s" % [str(owner.get_path()) if owner else "?", shape_node.name if shape_node else "?", desc])
+	print("[stall] %s at %s; blocked by: %s" % [kind, global_position, "; ".join(lines) if not lines.is_empty() else "(nothing but the ground)"])
+
+
 func _unstick(delta: float, wish: Vector3, moved: Vector3) -> void:
 	# Stuck is: touching something and going nowhere, either
 	#  - wedged between two or more walls (a trunk and a shrub's stem),
@@ -1365,6 +1408,8 @@ func _unstick(delta: float, wish: Vector3, moved: Vector3) -> void:
 	if _stuck_t < (JAM_S if kind == "crease" else STUCK_S):
 		return
 	_stuck_t = 0.0
+	if _stall_log():
+		_log_blockers(kind)
 	# Which way out: where you're pushing, else away from what holds you.
 	var want := wish - up * wish.dot(up)
 	if want.length() < 0.1:
