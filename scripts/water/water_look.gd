@@ -59,10 +59,11 @@ static func body_color(name: String, calm: bool) -> Color:
 
 ## The far sea's albedo (FarShell, lit only): the near sea's day body as
 ## it reads under the noon sun (glow, and the self-lit share over a lit
-## blue of about 0.87), so no band shows where the chunks' water ends.
+## blue of about 1.13: the noon sun over the day ambient), so no band
+## shows where the chunks' water ends.
 static func far_sea_color() -> Color:
 	var s := float(W.get("self_lit", 0.6))
-	var k := float(W.get("glow", 1.35)) * (1.0 - s + s / 0.87)
+	var k := float(W.get("glow", 1.35)) * (1.0 - s + s / 1.13)
 	var l := body_color("sea", false).srgb_to_linear()
 	return Color(minf(l.r * k, 1.0), minf(l.g * k, 1.0), minf(l.b * k, 1.0)).linear_to_srgb()
 
