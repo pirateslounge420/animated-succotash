@@ -38,6 +38,11 @@ func _initialize() -> void:
 		if main.chunks.chunks.size() >= 9 and _detail_ready():
 			break
 	var pp: Vector3 = main.player.global_position
+	# FROM=camp lists from the camp's fire (the dev-view frame's subject);
+	# N=<count> lists more than five.
+	if OS.get_environment("FROM") == "camp":
+		pp = main.camp._fire.global_position
+	var count := int(OS.get_environment("N")) if OS.get_environment("N") != "" else 5
 	print("[lod] profile %s, detail ring %d chunks (view %d), DETAIL_CHUNKS env '%s'" % [Tuning.profile(), main.chunks.detail_radius_chunks, main.chunks.view_radius_chunks, OS.get_environment("DETAIL_CHUNKS")])
 	ok(Tuning.profile() != "ambient" or OS.get_environment("DETAIL_CHUNKS") != "" or main.chunks.detail_radius_chunks == mini(2, main.chunks.view_radius_chunks), "the ambient profile runs a 2-chunk detail ring (%d)" % main.chunks.detail_radius_chunks)
 	# The nearest five trees.
@@ -52,7 +57,7 @@ func _initialize() -> void:
 	var card_alpha := card_tex != null and card_tex.get_image().detect_alpha() != Image.ALPHA_NONE
 	ok(card_alpha, "the leaf-card texture carries alpha (the cutout edge)")
 	var cut_all := true
-	for k in mini(5, near.size()):
+	for k in mini(count, near.size()):
 		var d: float = near[k][0]
 		var chunk: TerrainChunk = near[k][1]
 		var i: int = near[k][2]
