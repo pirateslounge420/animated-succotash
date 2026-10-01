@@ -1,43 +1,65 @@
 class_name Campfire
-## A campfire: a stone ring, crossed logs on a bed of glowing coals,
-## flames, a warm light, firelight pooled on the ground and a log to sit
-## on (DESIGN.md: the warm "pop" against the blue night). Used by the camps
-## (Camps), the mythical creatures' fires and the opening encampment.
+## A campfire: a stone ring, crossed logs on a bed of glowing coals, one
+## flame card, embers, a warm light that swells at night, firelight pooled
+## on the ground and a log to sit on (DESIGN.md: the warm "pop" against
+## the blue night). Used by the camps (Camps), the mythical creatures'
+## fires, the player's own fires (PlayerFires) and the opening encampment.
 ## The stones and logs collide (PropCollision): low capsules you bump into
 ## at the ring's edge, and the seat log.
 ##
-## The flames are tongues of shaders/flame.gdshader: cards that turn to
-## the camera, drawn additively, so they read as fire from any side and
-## build a hot core. Each tongue has its own phase; all campfires share the
-## tongue materials.
+## Design 30 Sept night §BZ (data/look.json → fire, data/audio.json →
+## fire; every number comes from there):
+## - The flame is ONE camera-facing card per fire (shaders/flame.gdshader)
+##   that turns only about its own up axis, noise scrolled up through a
+##   teardrop mask, posterised to flat bands on a 32x48 texel grid, so it
+##   is crunchy at any distance; from straight above it thins to a line.
+##   Embers are single-pixel billboards drifting up from the coals
+##   (shaders/ember.gdshader, a MultiMesh). When the store burns low the
+##   card collapses toward a red flicker; at embers, coals only.
+## - The light does not get brighter at night, the world gets darker round
+##   it: by day it is `day_share` of full; as the sky goes cobalt the
+##   energy and the range swell (`night_energy_scale`, `night_range_scale`),
+##   with value noise on the brightness and a small jitter on the light's
+##   position so the lit edges dance on the trunks. The §AX burn-down
+##   scales it all. The safe/dread radius (fuel.json light_radius_m,
+##   lit_near) is a separate number and does not swell.
+## - The sound is two point sources (kinds.fire): a steady hiss bed on a
+##   loop and pops on a random clock, never a cycle the ear can learn;
+##   fewer and quieter pops as the fire burns low, hiss only at embers,
+##   silence when out. kinds.fire reaches 90 m, so on the road you hear a
+##   camp before you see its glow.
 
-## R1a fire (docs/WORLD_SYSTEMS_SPEC.md): coals #FF4A00 (the flames' core
-## #FFB020 is in the flame shader) and the light #FFA050, strong enough to
-## paint the folk and props round the fire warm orange against the blue
-## night without turning skin red. The pool on the ground stays the deeper
-## #FF7A2A (shaders/fire_glow.gdshader).
+## R1a fire (docs/WORLD_SYSTEMS_SPEC.md): coals #FF4A00 (the flame's bands
+## are in look.json fire.flame) and the light (look.json fire.light.color,
+## #FFA050), strong enough to paint the folk and props round the fire warm
+## orange against the blue night without turning skin red. The pool on
+## the ground stays the deeper #FF7A2A (shaders/fire_glow.gdshader).
 const COALS := Color("#ff4a00")
-const LIGHT := Color("#ffa050")
+## The light at full flame, full night, before the night swell.
 const LIGHT_ENERGY := 7.0
-## By day the sun drowns the fire: its light falls to this share of
-## LIGHT_ENERGY in full daylight.
-const DAY_SHARE := 0.45
+## The light's base range (m); the night swell multiplies it.
+const RANGE_M := 14.0
 ## Radius (m) of the firelight pooled on the ground (shaders/fire_glow).
 const GLOW_M := 5.5
 const RING_STONE := Color(0.4, 0.45, 0.52) # R1a blue-grey stone
-
-## [width, height, x, z, phase] of each tongue: a tall one in the middle,
-## smaller ones around it.
-const TONGUES := [[0.62, 1.0, 0.0, 0.0, 0.0], [0.42, 0.66, 0.13, 0.06, 1.7],
-	[0.4, 0.6, -0.11, 0.08, 3.1], [0.36, 0.52, 0.02, -0.13, 4.6]]
+## The fire draws no flame card below this burn level (FireStore.apply
+## hides the Flames node there too): embers and out.
+const CARD_BELOW := 0.2
 
 ## Every campfire in the scene is in this group (lit_near()).
 const GROUP := "campfires"
 
+## look.json → fire: light and flame.
+static var FIRE: Dictionary = Tuning.section("look", "fire")
+static var L: Dictionary = FIRE.get("light", {})
+static var FL: Dictionary = FIRE.get("flame", {})
+## audio.json → fire: hiss, pops, low_fire.
+static var A: Dictionary = Tuning.section("audio", "fire")
+
 ## 0 by day, 1 at night (Main sets it each frame from the sky).
 static var night := 1.0
-static var _flame_mats: Array[ShaderMaterial] = []
 static var _card: QuadMesh
+static var _ember_quad: QuadMesh
 static var _glow_mesh: PlaneMesh
 static var _glow_mat: ShaderMaterial
 static var _warm_mat: ShaderMaterial
@@ -68,35 +90,32 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 		PropCollision.capsule(body, l.transform, 0.06, 0.9)
 	var coals := CreatureBodies.ball(root, Vector3(0.3, 0.06, 0.3), Vector3(0, 0.08, 0), COALS, 1.0)
 	coals.name = "Coals"
-	var flames := Node3D.new()
+	# Its own phase, so fires don't flicker or pop together.
+	var phase := float(posmod(hash(d), 1000)) * 0.37
+	var flames := flame_node(1.0, 1.0, int(FL.get("embers", {}).get("count", 6)), phase)
 	flames.name = "Flames"
 	flames.position = Vector3(0, 0.1, 0)
 	root.add_child(flames)
-	for i in TONGUES.size():
-		var tg: Array = TONGUES[i]
-		var card := MeshInstance3D.new()
-		card.mesh = _card_mesh()
-		card.material_override = _flame_material(i)
-		card.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		card.position = Vector3(tg[2], 0.0, tg[3])
-		card.scale = Vector3(tg[0], tg[1], 1.0)
-		flames.add_child(card)
 	for part in _ground_glow():
 		root.add_child(part)
-	# Its crackle: a source you can walk to (design 30 Sept §BG).
-	var crackle := Audio3D.make("fire", root, "Crackle")
-	crackle.stream = SoundSynth.stream("fire_loop", posmod(hash(d), SoundSynth.VARIANTS))
-	crackle.volume_db = -8.0
-	crackle.position = Vector3(0, 0.4, 0)
-	crackle.play(randf() * 2.0)
+	# Its voice: a hiss bed on a loop and pops on a random clock, both
+	# sources you can walk to (design 30 Sept §BG, §BZ).
+	var hiss := Audio3D.make("fire", root, "Hiss")
+	hiss.stream = SoundSynth.stream("fire_hiss_loop", posmod(hash(d), SoundSynth.VARIANTS))
+	hiss.volume_db = float(A.get("hiss", {}).get("volume_db", -14.0))
+	hiss.position = Vector3(0, 0.4, 0)
+	Audio3D.play(hiss, randf() * 2.0)
+	var pops := Audio3D.make("fire", root, "Pops")
+	pops.position = Vector3(0, 0.4, 0)
 	var light := OmniLight3D.new()
 	light.name = "Light"
-	light.light_color = LIGHT
+	light.light_color = Color(str(L.get("color", "#ffa050")))
 	light.light_energy = LIGHT_ENERGY
-	light.omni_range = 14.0
+	light.omni_range = RANGE_M
 	light.omni_attenuation = 1.1
 	light.position = Vector3(0, 1.0, 0)
 	root.add_child(light)
+	root.set_meta("flick_seed", phase)
 	if seat:
 		var log_seat := CreatureBodies.cone(root, 0.18, 0.18, 1.5, Vector3(0, 0.18, 2.0), Color(0.36, 0.25, 0.16))
 		log_seat.rotation.z = PI * 0.5
@@ -105,6 +124,26 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 	# far is a folk's fire, tended.
 	FireStore.register(root, world, d, true)
 	return root
+
+
+## One flame: the card (`Card`) at `size` times the campfire's
+## width_m x height_m, its noise scrolling at `scroll_scale` of the
+## campfire's, and `embers` single-pixel embers rising from its foot. The
+## campfire uses it at 1.0; the torch (Torch.flame_node) small and slow.
+## Each flame has its own materials (its phase and its low-fire blend).
+static func flame_node(size: float, scroll_scale: float, embers: int, phase := 0.0) -> Node3D:
+	var n := Node3D.new()
+	n.name = "Flame"
+	var card := MeshInstance3D.new()
+	card.name = "Card"
+	card.mesh = _card_mesh()
+	card.material_override = _flame_material(phase, scroll_scale)
+	card.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	card.scale = Vector3(float(FL.get("width_m", 0.62)) * size, float(FL.get("height_m", 1.0)) * size, 1.0)
+	n.add_child(card)
+	if embers > 0:
+		n.add_child(_ember_node(embers, size, phase))
+	return n
 
 
 ## Firelight pooled on the ground round the fire, after dark only: a disc
@@ -142,14 +181,66 @@ static func _card_mesh() -> QuadMesh:
 	return _card
 
 
-static func _flame_material(i: int) -> ShaderMaterial:
-	while _flame_mats.size() < TONGUES.size():
-		var m := ShaderMaterial.new()
-		m.shader = preload("res://shaders/flame.gdshader")
-		m.set_shader_parameter("look_grain_soft", Look.grain())
-		m.set_shader_parameter("phase", TONGUES[_flame_mats.size()][4])
-		_flame_mats.append(m)
-	return _flame_mats[i]
+## The flame card's material: the bands, the texel grid and the scroll
+## from look.json fire.flame; `low` (0-1) is driven by flicker().
+static func _flame_material(phase: float, scroll_scale: float) -> ShaderMaterial:
+	var m := ShaderMaterial.new()
+	m.shader = preload("res://shaders/flame.gdshader")
+	m.set_shader_parameter("look_grain_soft", Look.grain())
+	m.set_shader_parameter("phase", phase)
+	var tx: Array = FL.get("texels", [32, 48])
+	m.set_shader_parameter("texels", Vector2(float(tx[0]), float(tx[1])))
+	m.set_shader_parameter("scroll", float(FL.get("noise_scroll_per_s", 1.6)) * scroll_scale)
+	var bands: Array = FL.get("bands", ["#FFE9A0", "#FFB020", "#FF4A00", "#5A0A00"])
+	for i in 4:
+		m.set_shader_parameter("band%d" % i, Color(str(bands[mini(i, bands.size() - 1)])))
+	var low: Array = (FL.get("low", {}) as Dictionary).get("bands_low", ["#FF4A00", "#8A1A00", "#3A0800"])
+	for i in 3:
+		m.set_shader_parameter("low%d" % i, Color(str(low[mini(i, low.size() - 1)])))
+	m.set_shader_parameter("low", 0.0)
+	return m
+
+
+## `count` single-pixel embers drifting up from the foot of a flame of
+## `size` (shaders/ember.gdshader animates them from TIME and each
+## instance's seeds; nothing per frame on the CPU).
+static func _ember_node(count: int, size: float, phase: float) -> MultiMeshInstance3D:
+	var E: Dictionary = FL.get("embers", {})
+	if _ember_quad == null:
+		_ember_quad = QuadMesh.new()
+		_ember_quad.size = Vector2(1.0, 1.0)
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.use_custom_data = true
+	mm.mesh = _ember_quad
+	mm.instance_count = count
+	var rng := RandomNumberGenerator.new()
+	rng.seed = int(phase * 1000.0)
+	for i in count:
+		mm.set_instance_transform(i, Transform3D.IDENTITY)
+		mm.set_instance_custom_data(i, Color(rng.randf(), rng.randf(), rng.randf(), rng.randf()))
+	var mi := MultiMeshInstance3D.new()
+	mi.name = "Embers"
+	mi.multimesh = mm
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var m := ShaderMaterial.new()
+	m.shader = preload("res://shaders/ember.gdshader")
+	m.set_shader_parameter("color", Color(str(E.get("color", "#FFB020"))))
+	m.set_shader_parameter("px", float(E.get("px", 1)))
+	m.set_shader_parameter("rise_mps", float(E.get("rise_mps", 0.6)) * size)
+	var life: Array = E.get("life_s", [1.0, 2.5])
+	m.set_shader_parameter("life_min", float(life[0]))
+	m.set_shader_parameter("life_max", float(life[1]))
+	m.set_shader_parameter("spread_m", float(E.get("spread_m", 0.25)) * size)
+	m.set_shader_parameter("wobble_m", float(E.get("wobble_m", 0.08)) * size)
+	m.set_shader_parameter("phase", phase)
+	mi.material_override = m
+	# The instances all sit at the origin; the shader moves them, so tell
+	# the culler how far they climb.
+	var reach := float(E.get("rise_mps", 0.6)) * float(life[1]) * size + 0.3
+	var wide := float(E.get("spread_m", 0.25)) * size + 0.3
+	mi.custom_aabb = AABB(Vector3(-wide, -0.1, -wide), Vector3(wide * 2.0, reach, wide * 2.0))
+	return mi
 
 
 ## Is a lit campfire within `radius` m of scene position `pos` (resting
@@ -162,19 +253,101 @@ static func lit_near(tree: SceneTree, pos: Vector3, radius: float) -> bool:
 	return false
 
 
-## Flicker the flames and light (call every frame with a running time).
+## How far the fire has collapsed toward a red flicker (0 full flame, 1
+## at flame.low.below_share and under): the burn-down from FireStore.apply
+## (flames 1, low 0.55, embers 0.12, out 0) read against the data.
+static func lowness(burn: float) -> float:
+	var below := float((FL.get("low", {}) as Dictionary).get("below_share", 0.25))
+	return clampf((1.0 - burn) / maxf(1.0 - below, 0.01), 0.0, 1.0)
+
+
+## Flicker the flame, the light and the sound (call every frame with a
+## running time, in seconds).
 static func flicker(camp: Node3D, time: float) -> void:
-	var f := time * 9.0
-	var k := 0.85 + 0.1 * sin(f) + 0.07 * sin(f * 2.3 + 1.0) + 0.05 * sin(f * 5.1)
 	# How far the store has burnt down (FireStore.apply): low flames are
 	# smaller and dimmer, embers give a little light, a dead fire none.
 	var burn := float(camp.get_meta("burn", 1.0))
-	(camp.get_node("Flames") as Node3D).scale = Vector3(lerpf(0.7, 1.0, burn), k * lerpf(0.5, 1.0, burn), lerpf(0.7, 1.0, burn))
-	(camp.get_node("Light") as OmniLight3D).light_energy = LIGHT_ENERGY * lerpf(DAY_SHARE, 1.0, night) * k * burn
-	var crackle := camp.get_node_or_null("Crackle") as AudioStreamPlayer3D
-	if crackle:
-		crackle.volume_db = -8.0 + linear_to_db(maxf(burn, 0.001)) * 0.7
-		if burn <= 0.0 and crackle.playing:
-			crackle.stop()
-		elif burn > 0.0 and not crackle.playing:
-			crackle.play()
+	var sd := float(camp.get_meta("flick_seed", 0.0))
+	var fk: Dictionary = L.get("flicker", {})
+	var hz := float(fk.get("hz", 9.0))
+	var amount := float(fk.get("amount", 0.18))
+	# Value noise on the brightness: two layers, the fast one smaller.
+	var k := 1.0 + amount * (0.7 * (_vnoise(time * hz, sd) * 2.0 - 1.0) + 0.3 * (_vnoise(time * hz * 2.7, sd + 11.0) * 2.0 - 1.0))
+	var low := lowness(burn)
+	var lowdata: Dictionary = FL.get("low", {})
+	# The flame: one card, collapsing toward the low bands and height.
+	var flames := camp.get_node_or_null("Flames") as Node3D
+	if flames:
+		flames.scale = Vector3(1.0, lerpf(1.0, float(lowdata.get("height_scale", 0.45)), low), 1.0)
+		var card := flames.get_node_or_null("Card") as MeshInstance3D
+		if card:
+			card.visible = burn > CARD_BELOW
+			(card.material_override as ShaderMaterial).set_shader_parameter("low", low)
+		var embers := flames.get_node_or_null("Embers") as MultiMeshInstance3D
+		if embers:
+			# Fewer embers as the fire dies; a few still rise from the coals.
+			embers.visible = burn > 0.0
+			embers.multimesh.visible_instance_count = ceili(embers.multimesh.instance_count * burn) if burn > 0.0 else 0
+	# The light: swells at night, flickers with the noise, jitters so the
+	# lit edges move on the trunks; the burn-down scales it all.
+	var light := camp.get_node_or_null("Light") as OmniLight3D
+	if light:
+		light.light_energy = LIGHT_ENERGY * lerpf(float(L.get("day_share", 0.45)), float(L.get("night_energy_scale", 1.3)), night) * k * burn
+		light.omni_range = RANGE_M * lerpf(1.0, float(L.get("night_range_scale", 1.6)), night)
+		var jm := float(fk.get("position_jitter_m", 0.06))
+		light.position = Vector3(0, 1.0, 0) + Vector3(_vnoise(time * hz, sd + 3.0) - 0.5, _vnoise(time * hz, sd + 5.0) - 0.5, _vnoise(time * hz, sd + 7.0) - 0.5) * (2.0 * jm)
+	# The pool on the ground swells with the light.
+	var gs := GLOW_M * lerpf(1.0, float(L.get("ground_glow_night_scale", 1.4)), night)
+	for n in ["GroundWarm", "GroundGlow"]:
+		var g := camp.get_node_or_null(n) as Node3D
+		if g:
+			g.scale = Vector3(gs, 1.0, gs)
+	_voice(camp, time, burn, low)
+
+
+## The hiss bed and the pops: pops on a random clock (the next one
+## pops.every_s away), each at a random loudness and pitch, a snaps_share
+## of them sharp; fewer and quieter as the fire burns low; hiss only at
+## embers; silence when out.
+static func _voice(camp: Node3D, time: float, burn: float, low: float) -> void:
+	var hiss := camp.get_node_or_null("Hiss") as AudioStreamPlayer3D
+	var lowf: Dictionary = A.get("low_fire", {})
+	var offset := float(lowf.get("volume_db_offset", -6.0)) * low
+	if hiss:
+		hiss.volume_db = float(A.get("hiss", {}).get("volume_db", -14.0)) + offset
+		if burn <= 0.0 and hiss.playing:
+			hiss.stop()
+		elif burn > 0.0 and not hiss.playing:
+			Audio3D.play(hiss, randf() * 2.0)
+	var pops := camp.get_node_or_null("Pops") as AudioStreamPlayer3D
+	if pops == null:
+		return
+	if burn <= CARD_BELOW:
+		return # embers: hiss only
+	var P: Dictionary = A.get("pops", {})
+	if not camp.has_meta("pop_at"):
+		camp.set_meta("pop_at", time + _rand_in(P.get("every_s", [0.3, 2.8])))
+	if time < float(camp.get_meta("pop_at")):
+		return
+	var sharp := randf() < float(P.get("snaps_share", 0.3))
+	pops.stream = SoundSynth.stream("fire_snap" if sharp else "fire_crackle", randi() % SoundSynth.VARIANTS)
+	pops.pitch_scale = _rand_in(P.get("pitch", [0.8, 1.4]))
+	pops.volume_db = _rand_in(P.get("volume_db", [-10.0, -3.0])) + offset
+	Audio3D.play(pops)
+	camp.set_meta("pop_at", time + _rand_in(P.get("every_s", [0.3, 2.8])) * lerpf(1.0, float(lowf.get("pops_every_scale", 2.5)), low))
+
+
+static func _rand_in(span: Array) -> float:
+	return randf_range(float(span[0]), float(span[1]))
+
+
+## Smooth value noise in 0..1 at `x`, one lattice point per unit.
+static func _vnoise(x: float, sd: float) -> float:
+	var i := floorf(x)
+	var f := x - i
+	f = f * f * (3.0 - 2.0 * f)
+	return lerpf(_hash(i + sd), _hash(i + 1.0 + sd), f)
+
+
+static func _hash(i: float) -> float:
+	return fposmod(sin(i * 12.9898 + 78.233) * 43758.5453, 1.0)

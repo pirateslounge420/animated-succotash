@@ -68,6 +68,19 @@ float tri(sampler2D t, float scale, float stretch) {
 	return a * w.x + b * w.y + c * w.z;
 }
 
+// The same for the soft grain (its sampler is linear; one function may
+// not take samplers of differing filters).
+float tri_soft(sampler2D t, float scale, float stretch) {
+	vec3 w = abs(normalize(rest_nrm));
+	w = w * w * w;
+	w /= (w.x + w.y + w.z);
+	vec3 p = rest_pos * scale;
+	float a = texture(t, vec2(p.z, p.y / stretch)).r;
+	float b = texture(t, p.xz).r;
+	float c = texture(t, vec2(p.x, p.y / stretch)).r;
+	return a * w.x + b * w.y + c * w.z;
+}
+
 // 0-1 inside an almond `grow` times the slit's size (height times
 // `open`), on the front of the face only; `soft` m edge.
 float almond(float grow_x, float grow_y, float open, float soft) {
@@ -91,7 +104,7 @@ void fragment() {
 		float stretch = kind == 1 ? 3.0 : 1.0;
 		n = (tri(look_tex_stone, 1.9, stretch) - 0.5) * 1.6
 			+ (tri(look_tex_dirt, 3.6, 1.0) - 0.5) * 1.5
-			+ (tri(look_grain_soft, 0.9, stretch) - 0.5) * 1.1;
+			+ (tri_soft(look_grain_soft, 0.9, stretch) - 0.5) * 1.1;
 	}
 	vec3 albedo = base * clamp(1.0 + n * crunch, 0.3, 2.0);
 	// The eye: a dark lid, the slit, a hot core.

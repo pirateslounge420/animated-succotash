@@ -221,9 +221,11 @@ static func apply(fire: Node3D) -> void:
 			burn = 0.0
 	fire.set_meta("burn", burn)
 	fire.set_meta("lit", state in ["flames", "low"])
-	var flames := fire.get_node_or_null("Flames") as Node3D
-	if flames:
-		flames.visible = burn > 0.2
+	# The flame card goes at embers; the embers themselves keep rising
+	# from the coals while anything glows (Campfire.flicker).
+	var card := fire.get_node_or_null("Flames/Card") as Node3D
+	if card:
+		card.visible = burn > Campfire.CARD_BELOW
 	for n in ["GroundWarm", "GroundGlow"]:
 		var g := fire.get_node_or_null(n) as Node3D
 		if g:

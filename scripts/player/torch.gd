@@ -70,23 +70,17 @@ func setup(p: PlanetPlayer) -> void:
 	_apply(false)
 
 
-## A flame: one of the campfire's flame cards, small.
-static func flame_node(size: float) -> Node3D:
-	var n := Node3D.new()
+## A flame: the campfire's one flame card (Campfire.flame_node, design
+## §BZ: one shader, every fire), at `size` times the campfire's card
+## (look.json fire.flame.torch.scale when not given), its noise scrolling
+## slower (torch.scroll_scale) with torch.embers embers. The held torch,
+## the planted torch (PlantedTorch) and the fat lamp (PlayerFires) all
+## use it.
+static func flame_node(size := -1.0) -> Node3D:
+	var t: Dictionary = Campfire.FL.get("torch", {})
+	var s := size if size > 0.0 else float(t.get("scale", 0.32))
+	var n := Campfire.flame_node(s, float(t.get("scroll_scale", 0.7)), int(t.get("embers", 2)), randf() * 100.0)
 	n.name = "Flame"
-	var card := MeshInstance3D.new()
-	card.mesh = Campfire._card_mesh()
-	card.material_override = Campfire._flame_material(0)
-	card.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	card.scale = Vector3(size, size * 1.6, 1.0)
-	n.add_child(card)
-	var card2 := MeshInstance3D.new()
-	card2.mesh = Campfire._card_mesh()
-	card2.material_override = Campfire._flame_material(1)
-	card2.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	card2.scale = Vector3(size * 0.8, size * 1.3, 1.0)
-	card2.rotation.y = PI * 0.5
-	n.add_child(card2)
 	return n
 
 

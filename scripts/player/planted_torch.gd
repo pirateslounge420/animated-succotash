@@ -47,7 +47,7 @@ func _ready() -> void:
 	stick.position = Vector3(0, h * 0.5 - (0.15 if not lying else 0.0), 0)
 	stick.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(stick)
-	_flame = Torch.flame_node(0.32)
+	_flame = Torch.flame_node()
 	_flame.position = Vector3(0, h - 0.1, 0)
 	add_child(_flame)
 	_light = Torch.light_node()

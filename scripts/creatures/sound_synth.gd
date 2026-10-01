@@ -31,6 +31,12 @@ class_name SoundSynth
 ##   murmur       camp talk from a little way off: three or four soft
 ##                voices overlapping, no words (Camps); murmur_one, one
 ##                voice alone (Encampment: one of the two speaking)
+##   fire_hiss_loop  a fire's steady soft hiss, seamless 4 s loop, no pops
+##                (Campfire; the bed under the pops below)
+##   fire_snap    a sharp snap: a noise burst gone in a few ms and a short
+##                ring (Campfire, on its own random clock)
+##   fire_crackle a softer crackle: a cluster of small pops with a low
+##                thump under the first (Campfire, the same clock)
 ##
 ## Every one of them plays on a 3D player tuned by the falloff table,
 ## data/audio.json (Audio3D), except the hitmarker, a UI sound.
@@ -103,8 +109,12 @@ static func stream(kind: String, variant: int = 0) -> AudioStreamWAV:
 			samples = _water_loop(rng, false)
 		"waterfall_loop":
 			samples = _water_loop(rng, true)
-		"fire_loop":
-			samples = _fire_loop(rng)
+		"fire_hiss_loop":
+			samples = _fire_hiss_loop(rng)
+		"fire_snap":
+			samples = _fire_snap(rng)
+		"fire_crackle":
+			samples = _fire_crackle(rng)
 		_:
 			return null
 	var wav := _to_wav(samples)
@@ -539,24 +549,88 @@ static func _water_loop(rng: RandomNumberGenerator, fall: bool) -> PackedFloat32
 	return _loopify(raw, n, fade)
 
 
-## A fire: a low soft rumble with random pops and crackles (4 s loop).
-static func _fire_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
+## data/audio.json -> fire (the hiss cutoff; the campfire reads the rest).
+static func _fire_data() -> Dictionary:
+	return Tuning.section("audio", "fire")
+
+
+## A fire's hiss bed: white noise through a one-pole low-pass (the cutoff
+## is fire.hiss.cutoff_hz), breathing slowly by a few sines so it is not a
+## flat tone, with a faint low rumble under it. No pops at all: those are
+## fire_snap and fire_crackle, one-shots the campfire fires on its own
+## clock (4 s loop).
+static func _fire_hiss_loop(rng: RandomNumberGenerator) -> PackedFloat32Array:
 	var n := int(4.0 * RATE)
 	var fade := int(0.4 * RATE)
 	var raw := PackedFloat32Array()
 	raw.resize(n + fade)
-	var lp := 0.0
-	var pop := 0.0
+	var fire := _fire_data()
+	var hiss_data: Dictionary = fire.get("hiss") if fire.get("hiss") is Dictionary else {}
+	var cutoff: float = float(hiss_data.get("cutoff_hz", 2600.0))
+	var k: float = 1.0 - exp(-TAU * cutoff / RATE)
+	# Breathing: two slow sines whose periods divide the 4 s loop, so the
+	# swell comes round with it.
+	var r1: float = rng.randi_range(1, 2) * 0.25
+	var r2: float = rng.randi_range(3, 5) * 0.25
+	var p1 := rng.randf() * TAU
+	var p2 := rng.randf() * TAU
 	var hiss := 0.0
+	var lp := 0.0
 	for i in raw.size():
+		var t := float(i) / RATE
 		var x := rng.randf_range(-1, 1)
+		hiss = lerpf(hiss, x, k)
 		lp = lerpf(lp, x, 0.015)
-		hiss = lerpf(hiss, x, 0.6)
-		if rng.randf() < 0.0025:
-			pop = rng.randf_range(0.5, 1.0)
-		pop *= 0.9
-		raw[i] = lp * 3.0 + hiss * 0.08 + pop * rng.randf_range(-1, 1)
+		var breath := 1.0 + 0.15 * (0.6 * sin(TAU * r1 * t + p1) + 0.4 * sin(TAU * r2 * t + p2))
+		raw[i] = hiss * 0.6 * breath + lp * 1.2
 	return _loopify(raw, n, fade)
+
+
+## A sharp snap: a burst of noise dying in a few milliseconds and a short
+## ring at a pitch picked per variant, with an attack under a millisecond
+## so it clicks (20-45 ms).
+static func _fire_snap(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var s := _buffer(rng.randf_range(0.02, 0.045))
+	var burst_tau := rng.randf_range(0.003, 0.008)
+	var ring_hz := rng.randf_range(1500.0, 4000.0)
+	var ring_tau := rng.randf_range(0.01, 0.025)
+	var ring_amp := rng.randf_range(0.3, 0.6)
+	for i in s.size():
+		var t := float(i) / RATE
+		var burst := rng.randf_range(-1, 1) * exp(-t / burst_tau)
+		var ring := sin(TAU * ring_hz * t) * exp(-t / ring_tau) * ring_amp
+		s[i] = (burst + ring) * _env(i, s.size(), 0.0006, 0.004)
+	return s
+
+
+## A softer crackle: two to five small pops at random spacing, each a
+## short noise burst with its own decay, level and mild low-pass, with a
+## soft low thump under the first (80-220 ms).
+static func _fire_crackle(rng: RandomNumberGenerator) -> PackedFloat32Array:
+	var length := rng.randf_range(0.08, 0.22)
+	var s := _buffer(length)
+	var count := rng.randi_range(2, 5)
+	# [start s, length s, level, low-pass coefficient, decay s, filter state]
+	var pops := []
+	var at := 0.003
+	for p in count:
+		var cutoff := rng.randf_range(3000.0, 6000.0)
+		pops.append([at, rng.randf_range(0.005, 0.015), rng.randf_range(0.4, 1.0), 1.0 - exp(-TAU * cutoff / RATE), rng.randf_range(0.002, 0.005), 0.0])
+		at += rng.randf_range(0.012, maxf(0.012, (length - 0.03) / count))
+	var thump_hz := rng.randf_range(60.0, 120.0)
+	for i in s.size():
+		var t := float(i) / RATE
+		var acc := 0.0
+		for p in pops:
+			var dt: float = t - float(p[0])
+			if dt < 0.0 or dt > float(p[1]):
+				continue
+			var x := rng.randf_range(-1, 1) * exp(-dt / float(p[4])) * minf(dt / 0.001, 1.0)
+			p[5] = lerpf(float(p[5]), x, float(p[3]))
+			acc += float(p[5]) * float(p[2])
+		var thump := sin(TAU * thump_hz * t) * exp(-t / 0.03) * 0.3
+		s[i] = (acc + thump) * _env(i, s.size(), 0.001, 0.01)
+	return s
 
 
 ## Thunder: near, a sharp crack then a heavy rolling rumble; far, only

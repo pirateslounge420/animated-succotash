@@ -428,7 +428,10 @@
      1.0,
      2.5
     ],
-    "color": "#FFB020"
+    "color": "#FFB020",
+    "spread_m": 0.25,
+    "wobble_m": 0.08,
+    "_help": "spread_m and wobble_m added by code (1 Oct, Campfire._ember_node): the radius round the coals the embers start in and their sideways drift as they climb, in metres; both scale with the flame (the torch gets a third). The designer owns them."
    },
    "torch": {
     "scale": 0.32,
@@ -442,7 +445,8 @@
      "#FF4A00",
      "#8A1A00",
      "#3A0800"
-    ]
+    ],
+    "_help": "Code note (1 Oct, Campfire.lowness): FireStore draws a fire at burn 1 (flames), 0.55 (low), 0.12 (embers), 0. The collapse toward bands_low and height_scale ramps as burn leaves 1 and is complete at below_share, so a low fire (0.55) is 60 % collapsed and reads across the clearing; at embers (under 0.2) there is no card, coals and a few embers only. The designer owns the numbers."
    }
   }
  }
