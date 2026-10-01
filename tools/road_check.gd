@@ -176,13 +176,15 @@ func _initialize() -> void:
 		m_at += CubeSphere.surface_distance_m(lpts[i], lpts[i + 1])
 	m_at += float(nearest.t) * CubeSphere.surface_distance_m(lpts[int(nearest.seg)], lpts[int(nearest.seg) + 1])
 	tv._make(link, clampf(m_at + 20.0, 30.0, maxf(float(link.len_m) - 30.0, 30.0)), 1.0)
+	# Follow the one put there (others may walk the network of their own
+	# accord: the road net round the stamp's spawn is denser since 1 Oct).
+	var w: Dictionary = tv._walkers[tv._walkers.size() - 1]
 	await frames(5)
-	ok(tv._walkers.size() == 1, "a traveller walks the road (%d walking; put at %.0f m of %.0f)" % [tv._walkers.size(), m_at, link.len_m])
-	if tv._walkers.is_empty():
+	ok(tv._walkers.has(w) and is_instance_valid(w.node), "a traveller walks the road (%d walking in all; put at %.0f m of %.0f)" % [tv._walkers.size(), m_at, link.len_m])
+	if not tv._walkers.has(w):
 		print("RESULT fails: %d" % (fails + 4))
 		quit(1)
 		return
-	var w: Dictionary = tv._walkers[0]
 	var m0 := float(w.m)
 	await frames(120)
 	ok(absf(float(w.m) - m0) > 1.5, "it keeps walking (%.1f m in 2 s)" % absf(float(w.m) - m0))

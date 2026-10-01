@@ -35,6 +35,10 @@ const STEP_M := 120.0
 ## Ground this close above the sea is strand: a road may cross it, at half
 ## again the cost.
 const STRAND_M := 0.5
+## Standing water shallower than this can be waded (at WADE_COST times the
+## cost, and marked as a ford): only deeper water makes a camp an island.
+const WADE_M := 1.0
+const WADE_COST := 6.0
 const HASH_M := 2000.0
 
 static var instance: RoadNetwork = null
@@ -46,6 +50,9 @@ static var opening := {}
 ## How many people's camps a region linked only by its fallback, and
 ## which stayed unreached (an island, a cliff-bound basin): logged.
 var unreached: Array = []
+## Why a route failed (Vector2i(a, b) -> a short reason), for the
+## unreached camp's log line.
+var _why := {}
 static var D := Tuning.table("roads")
 ## ROAD_DEBUG=1: a line per region built (nodes, links, seconds).
 static var DEBUG := OS.get_environment("ROAD_DEBUG") == "1"
@@ -255,7 +262,13 @@ func _build_region(k: Vector3i) -> void:
 			_mutex.lock()
 			unreached.append(di)
 			_mutex.unlock()
-			push_warning("RoadNetwork: a people's camp at %s has no road (no neighbour within %.0f km would route: an island or a cliff-bound basin)" % [str(di), max_m / 1000.0])
+			var whys: Array = []
+			_mutex.lock()
+			for c in cand.slice(0, 6):
+				var j: int = c[1]
+				whys.append("%s %.1f km: %s" % [nodes[j].kind, float(c[0]) / 1000.0, _why.get(Vector2i(mini(i, j), maxi(i, j)), "paired, failed earlier")])
+			_mutex.unlock()
+			push_warning("RoadNetwork: a people's camp at %s has no road (%d neighbours within %.0f km; %s)" % [str(di), cand.size(), max_m / 1000.0, "; ".join(whys) if not whys.is_empty() else "none"])
 	# The forks are cut and the lost-and-found stretches laid before the
 	# links are published: a chunk on another thread may read them at once.
 	_legible_forks(new_links)
@@ -269,6 +282,12 @@ func _build_region(k: Vector3i) -> void:
 	_mutex.unlock()
 	if DEBUG:
 		print("[roads] region %s: %d own nodes, %d pairs, %d links, %.1f s" % [k, own.size(), pairs.size(), new_links.size(), (Time.get_ticks_msec() - t0) / 1000.0])
+
+
+func _note_why(a: int, b: int, why: String) -> void:
+	_mutex.lock()
+	_why[Vector2i(mini(a, b), maxi(a, b))] = why
+	_mutex.unlock()
 
 
 ## The index (into `nodes`) among `idx` of the node at `d` (within 5 m), or -1.
@@ -476,14 +495,19 @@ class _Lattice:
 		# Near sea level the smooth height and the drawn (detailed) ground
 		# disagree by a few tenths of a metre: judge the sea by the ground
 		# the game draws (ruins stand on it at -0.2..-0.5 m smooth).
+		var lake := w == PlanetData.Water.LAKE
+		var surface: float = map.water_level[c] if lake else PlanetConst.SEA_LEVEL_M
 		var e_wet := e
-		if e < PlanetConst.SEA_LEVEL_M + 2.0:
+		if e < surface + 2.0:
 			e_wet = map.terrain.elevation(d, true)
 		var kind := 0
+		var depth := 0.0
 		if w == PlanetData.Water.OCEAN or e_wet < PlanetConst.SEA_LEVEL_M:
 			kind = 1
-		elif w == PlanetData.Water.LAKE and e_wet < map.water_level[c]:
+			depth = maxf(0.0, PlanetConst.SEA_LEVEL_M - e_wet)
+		elif lake and e_wet < surface:
 			kind = 1
+			depth = surface - e_wet
 		var rw := 0.0
 		var bank := 0
 		if rivers != null:
@@ -497,7 +521,7 @@ class _Lattice:
 				kind = 2
 			elif best < rw * 0.5 + 80.0:
 				bank = 1
-		var out := [maxf(e, e_wet) if kind == 0 and e < PlanetConst.SEA_LEVEL_M + STRAND_M else e, kind, rw, bank]
+		var out := [maxf(e, e_wet) if kind == 0 and e < PlanetConst.SEA_LEVEL_M + STRAND_M else e, kind, rw, bank, depth]
 		cells[idx] = out
 		return out
 
@@ -540,6 +564,7 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 	var goal := lat.index_of(nodes[ib].dir)
 	var n := lat.n
 	if start.x < 0 or start.y < 0 or start.x >= n or start.y >= n or goal.x < 0 or goal.y < 0 or goal.x >= n or goal.y >= n:
+		_note_why(ia, ib, "off the grid")
 		if DEBUG:
 			print("[roads]     no way %d-%d: off the lattice (start %s, goal %s, n %d)" % [ia, ib, start, goal, n])
 		return {}
@@ -581,7 +606,10 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 					continue
 				var nc := lat.cell(ni)
 				var wk: int = nc[1]
-				if wk == 1 and ni != g_idx:
+				# Open water bars the way, but the shallows (under WADE_M)
+				# can be waded at a heavy cost: a camp on a spit or an islet
+				# a stride off the shore still gets its road, by a ford.
+				if wk == 1 and ni != g_idx and float(nc[4]) > WADE_M:
 					continue
 				var dist := STEP_M * (1.4142 if dx != 0 and dy != 0 else 1.0)
 				var grade := absf(float(nc[0]) - float(cur_cell[0])) / dist
@@ -594,7 +622,9 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 					cost *= 1.0 + 8.0 * (grade - max_grade) / max_grade
 				if float(nc[0]) < PlanetConst.SEA_LEVEL_M + STRAND_M:
 					cost *= 1.5
-				if wk == 2:
+				if wk == 1:
+					cost *= WADE_COST
+				elif wk == 2:
 					cost *= 3.0 + float(nc[2]) / 6.0
 				elif follow_rivers and int(nc[3]) == 1:
 					cost *= 0.8
@@ -605,6 +635,8 @@ func _route(ia: int, ib: int, centre: Vector3, reach: float) -> Dictionary:
 					var h := Vector2(nx - goal.x, ny - goal.y).length() * STEP_M
 					_heap_push(heap, [ng + h, ni])
 	if not found:
+		var sc0 := lat.cell(s_idx)
+		_note_why(ia, ib, "start in water" if int(sc0[1]) == 1 and closed.size() <= 1 else ("search cap" if steps >= 60000 else "walled in (%d cells)" % closed.size()))
 		if DEBUG:
 			var sc := lat.cell(s_idx)
 			var gc := lat.cell(g_idx)
@@ -739,8 +771,8 @@ func _decay(link: Dictionary, lat: _Lattice) -> void:
 		var rw := 0.0
 		if idx.x >= 0 and idx.y >= 0 and idx.x < lat.n and idx.y < lat.n:
 			var lc := lat.cell(idx.y * lat.n + idx.x)
-			wet = int(lc[1]) == 2
-			rw = float(lc[2])
+			wet = int(lc[1]) == 2 or int(lc[1]) == 1
+			rw = float(lc[2]) if int(lc[1]) == 2 else 6.0
 		if wet and not in_water:
 			var kind := "bridge" if rw >= 9.0 else "ford"
 			var out := kind == "bridge" and rng.randf() < float(decay.get("bridge_out_share", 0.5))

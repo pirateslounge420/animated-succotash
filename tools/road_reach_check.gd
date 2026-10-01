@@ -13,7 +13,8 @@ extends SceneTree
 var main
 var world
 var fails := 0
-const REACH_M := 15000.0
+## How far round the spawn to look (REACH_KM overrides, default 15 km).
+static var REACH_M := float(OS.get_environment("REACH_KM")) * 1000.0 if OS.get_environment("REACH_KM") != "" else 15000.0
 
 
 func ok(cond: bool, what: String) -> void:
