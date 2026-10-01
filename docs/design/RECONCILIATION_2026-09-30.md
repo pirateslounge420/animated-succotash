@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block. With §CE: `habitat.json → always_present, trim.always_keep, vine`, `data/vines.json`.
 
 ---
 
@@ -873,7 +873,47 @@ real life** (`desiccation` block, `PLANT_SCHEMA.md` §4a5):
   minutes of wetting), some lichens and *Selaginella lepidophylla* behave the same way
   in life and can take it later.
 
-## BR. Order of work — prompt C (after A and B are played; §BR sits after §CD on purpose — it is the to-do)
+## CE. The named plants are always in the game; vines climb and cover — LOCKED (1 Oct, 14:04, Mike)
+
+Mike: *make sure the following plants are in the game: Musa, Amorphophallus, Cannabis,
+Trichocereus, Acacia, bamboo, vines* — and *vines should also grow over surfaces.*
+
+**Checked in the running game first** (`tools/plant_presence_check.gd`, full planet, seed
+7731, three sites per group): bananas, *Amorphophallus*, bamboo and vines (ivy) grew;
+**cannabis, *Trichocereus* and the acacias did not** — each in the data and legal under the
+§CA gate, kept out by something else:
+- **Acacias:** the umbrella thorn, the savanna's "Acacia" and mulga used the `sand` soil
+  preset, a hard gate to sand and sandstone only — on alluvium or granite they could not
+  spawn at all (Mike's savanna, alluvium soil, had magnolias and no acacias). Fixed in the
+  data: the soils they really grow on.
+- ***Trichocereus*:** tagged to the `andes` realm, which the realm gate only allows in a
+  biome hosting it, and no dry biome did (only cold puna and páramo, outside its 8–20 °C):
+  it could not grow on any planet. Fixed in the data: an inter-Andean dry-valley community
+  (`andes`) in steppe and Mediterranean scrub, the biomes that match San Pedro country.
+- **Cannabis — and the deeper rule:** the stand rule (§BH) gives a stand one dominant, 1–3
+  associates and a 3 % accent pool shared by everything else, and the 64 landraces each
+  roll as their own species: none ever wins. Only the salad biomes (rainforest, jungle,
+  cloud forest) let everything in, which is why bananas and *Amorphophallus* showed there.
+
+**The rule** (`habitat.json → always_present`, `trim.always_keep`):
+- These groups are **never trimmed** (§CC), whole, whatever the per-category cap.
+- **Wherever a member fits the site** (climate, soil, biome gate, realm gate) it is an
+  **associate in the stand roll, never an accent**, and the group gets at least a small
+  share (`min_share`) of its tier there. A walk through the right country meets them.
+- **Entries sharing a binomial roll as one species**: the 64 landraces are one plant,
+  *Cannabis sativa*; the landrace you meet is the one nearest in climate and realm.
+- **Vine is the tenth trim category** (climbers and creepers).
+
+**Vines climb and cover** (`data/vines.json`): the biome's vine species grow over the
+world's surfaces, not only as plants of their own — up trunks, over **ruin walls and
+heaps**, draped over boulders and cliff faces, as mats on fallen logs, creeping over open
+ground. Cover follows moisture, warmth and shade; **ruins wear vines by age**, and a camp
+restoring a ruin (§BQ) **cuts them back** as it clears the heap — bare stone and
+legibility return together, and an abandoned camp is taken back the same way. Drawn as
+leaf cards on strands with the species' own tile (no blobs, §CA), following the surface,
+never floating; at distance the surface's own texture greens by its cover.
+
+## BR. Order of work — prompt C (after A and B are played; §BR sits after §CE on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
 `peoples_check --strict` 0 errors), `techniques.json`, `camps.json → sim`. Then the engine:

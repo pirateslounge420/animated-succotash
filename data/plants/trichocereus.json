@@ -29,7 +29,9 @@
     ],
     "biomes": [
      "THORN_SCRUB",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -325,7 +327,9 @@
     "biomes": [
      "THORN_SCRUB",
      "CANYON",
-     "HOT_DESERT"
+     "HOT_DESERT",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -621,7 +625,9 @@
     "biomes": [
      "THORN_SCRUB",
      "CANYON",
-     "PUNA"
+     "PUNA",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      2.0,
@@ -916,7 +922,9 @@
     ],
     "biomes": [
      "THORN_SCRUB",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -1211,7 +1219,9 @@
     ],
     "biomes": [
      "THORN_SCRUB",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -1506,7 +1516,9 @@
     "biomes": [
      "THORN_SCRUB",
      "CANYON",
-     "PUNA"
+     "PUNA",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -1802,7 +1814,9 @@
     "biomes": [
      "THORN_SCRUB",
      "HOT_DESERT",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      6.0,
@@ -2096,7 +2110,9 @@
     ],
     "biomes": [
      "THORN_SCRUB",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -2390,7 +2406,9 @@
     ],
     "biomes": [
      "THORN_SCRUB",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -2684,7 +2702,9 @@
     ],
     "biomes": [
      "THORN_SCRUB",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -2979,7 +2999,9 @@
     "biomes": [
      "THORN_SCRUB",
      "CANYON",
-     "PUNA"
+     "PUNA",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -3273,7 +3295,9 @@
     ],
     "biomes": [
      "THORN_SCRUB",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -3567,7 +3591,9 @@
     ],
     "biomes": [
      "THORN_SCRUB",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      2.0,
@@ -3861,7 +3887,9 @@
     ],
     "biomes": [
      "THORN_SCRUB",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -4155,7 +4183,9 @@
     ],
     "biomes": [
      "THORN_SCRUB",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      4.0,
@@ -4450,7 +4480,9 @@
     "biomes": [
      "THORN_SCRUB",
      "TROPICAL_DRY_FOREST",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -4744,7 +4776,9 @@
     ],
     "biomes": [
      "HOT_DESERT",
-     "CANYON"
+     "CANYON",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      3.0,
@@ -5037,7 +5071,9 @@
      1200
     ],
     "biomes": [
-     "HOT_DESERT"
+     "HOT_DESERT",
+     "STEPPE",
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      2.0,

@@ -4153,6 +4153,45 @@
    "catalogue": [],
    "cover": 0.4,
    "source": "Cowling 1992 The Ecology of Fynbos; Mucina & Rutherford 2006 Vegetation of South Africa"
+  },
+  {
+   "name": "Andean dry montane scrub",
+   "realm": "andes",
+   "where": "warmer dry inter-Andean valleys and canyon sides, about 1,500-2,800 m",
+   "dominant": [
+    "Trichocereus pachanoi",
+    "Trichocereus peruvianus"
+   ],
+   "companion": [
+    "Trichocereus bridgesii",
+    "Trichocereus scopulicola",
+    "Trichocereus macrogonus",
+    "Trichocereus cuzcoensis"
+   ],
+   "ground": [],
+   "catalogue": [
+    "Trichocereus pachanoi",
+    "Trichocereus peruvianus",
+    "Trichocereus bridgesii",
+    "Trichocereus scopulicola",
+    "Trichocereus macrogonus",
+    "Trichocereus cuzcoensis",
+    "Trichocereus terscheckii",
+    "Trichocereus tacaquirensis",
+    "Trichocereus taquimbalensis",
+    "Trichocereus santaensis",
+    "Trichocereus puquiensis",
+    "Trichocereus huanucoensis",
+    "Trichocereus riomizquensis",
+    "Trichocereus werdermannianus",
+    "Trichocereus validus",
+    "Trichocereus knuthianus",
+    "Trichocereus glaucus",
+    "Trichocereus chalaensis"
+   ],
+   "cover": 0.3,
+   "source": "Inter-Andean dry valleys and rocky slopes of Ecuador, Peru and Bolivia (about 1,500-3,400 m): columnar cacti — Trichocereus (Echinopsis), with Browningia and Armatocereus lower down — among Puya, Agave, Opuntia, Dodonaea and Schinus molle; seasonally dry montane scrub (Weberbauer 1945; Ostolaza 2014 Cactaceae of Peru; Josse et al. 2009, NatureServe ecological systems of the Andes).",
+   "_note": "1 Oct (Mike: Trichocereus must be in the game): the realm gate only lets an 'andes' species grow in a biome that hosts the andes realm, and no dry biome did (only cold puna and paramo), so no Trichocereus could grow on any planet. The trim fills the companions and ground with real inter-Andean species."
   }
  ],
  "hero_species": [

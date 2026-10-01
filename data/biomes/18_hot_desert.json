@@ -1914,11 +1914,14 @@
      "classes": [
       "sand",
       "sandstone",
+      "granite",
+      "alluvium",
+      "basalt",
       "till"
      ],
      "drainage": "moderate",
-     "ph": "acid",
-     "fertility_min": 0.5,
+     "ph": "any",
+     "fertility_min": 0.0,
      "salinity": "none"
     },
     "needs": [],
@@ -2162,7 +2165,8 @@
      "edible": "cooked",
      "confidence": "estimated",
      "source": "Wikipedia/Flora of Australia (bright yellow spikes 15-25 mm, Mar-May or Aug, after rain; flat winged pods 2-4 cm); ICRAF (pods light brown 2-5 cm; seeds ground and cooked by Aboriginal people); ripening time, fruit set and crop estimated from related arid wattles"
-    }
+    },
+    "soil_note": "1 Oct: was the 'sand' preset (sand and sandstone only). Mulga grows on red earths, sandplains and stony ranges."
    },
    {
     "name": "Ocotillo",

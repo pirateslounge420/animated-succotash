@@ -1,0 +1,77 @@
+{
+ "_help": {
+  "about": "Design 1 Oct §CE (Mike: vines should also grow over surfaces). Vines are not only plants standing on their own: the biome's vine species (trim category 'vine') climb and drape over the surfaces of the world — trunks, ruin walls and heaps, boulders, cliff faces, fallen logs — and creep over open ground. Restart after editing.",
+  "surfaces": "Per surface: base cover share (0-1, before climate), how cover is drawn (strands hanging from the top edge, a mat climbing from the ground, or a creeping carpet), and the height it climbs to (share of the surface's height, metres for the ground).",
+  "climate": "Cover scales with moisture between moisture[0] (none) and moisture[1] (full), fades outside temp_c, and is denser in shade (shade_boost) than in full sun.",
+  "ruins": "Ruins wear vines by age: cover reaches its full share after full_after_years of abandonment. A camp restoring a ruin (§BQ) cuts its vines back as it clears the heap (restored_clears), so legibility and bare stone come back together; an abandoned camp (§BL) is taken back over forest_takes_game_days (camps.json abandon).",
+  "species": "Which vine: the biome's vine-category species that fit the site (ivy in temperate forest, rattan and pothos in the tropics, grape and Virginia creeper on floodplains, morning glory on the beach). Where the biome has none, no surface vines.",
+  "draw": "Leaf cards on thin strands with the vine species' own leaf tile and cutout (§AJ, §CA: no blobs, no untextured face); the existing tree vine strands (mat 3) take the same species tile. Cards follow the surface (wrap a trunk, lie on a wall's face, drape over a boulder's top), never float.",
+  "near_m": "Drawn within near_m of the player; beyond it the surface's own texture darkens and greens by its cover share (cheap, reads at distance)."
+ },
+ "surfaces": {
+  "trunk": {
+   "cover": 0.35,
+   "form": "climb",
+   "climb_share": [
+    0.2,
+    0.8
+   ]
+  },
+  "ruin": {
+   "cover": 0.7,
+   "form": "drape_and_climb",
+   "climb_share": [
+    0.4,
+    1.0
+   ]
+  },
+  "boulder": {
+   "cover": 0.3,
+   "form": "drape",
+   "climb_share": [
+    0.5,
+    1.0
+   ]
+  },
+  "cliff": {
+   "cover": 0.25,
+   "form": "drape",
+   "climb_share": [
+    0.1,
+    0.4
+   ]
+  },
+  "log": {
+   "cover": 0.5,
+   "form": "mat",
+   "climb_share": [
+    1.0,
+    1.0
+   ]
+  },
+  "ground": {
+   "cover": 0.15,
+   "form": "creep",
+   "patch_m": [
+    1.5,
+    6.0
+   ]
+  }
+ },
+ "climate": {
+  "moisture": [
+   0.35,
+   0.85
+  ],
+  "temp_c": [
+   2,
+   34
+  ],
+  "shade_boost": 1.6
+ },
+ "ruins": {
+  "full_after_years": 40,
+  "restored_clears": true
+ },
+ "near_m": 60.0
+}

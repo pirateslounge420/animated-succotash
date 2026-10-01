@@ -39,13 +39,16 @@
     "soil": {
      "classes": [
       "sand",
+      "sandstone",
       "alluvium",
+      "granite",
       "basalt",
-      "karst"
+      "karst",
+      "till"
      ],
-     "drainage": "sharp",
+     "drainage": "moderate",
      "ph": "any",
-     "fertility_min": 0.5,
+     "fertility_min": 0.0,
      "salinity": "tolerant"
     },
     "needs": [],
@@ -295,7 +298,8 @@
      "edible": "cooked",
      "confidence": "documented",
      "source": "ICRAF Agroforestree (Acacia tortilis): white or pale yellowish-white heads 0.5-1.1 cm, pods 7-10 cm by 6-10 mm, spirally twisted, 10-12 kg pods per 10-yr tree; the Turkana make porridge from the pods, the Maasai eat immature seeds; Wikipedia: aromatic flowers, springlike coiled pods. Flowering at the onset of the rains, ripening, pod fall and rot times estimated."
-    }
+    },
+    "soil_note": "1 Oct (Mike: acacias must be in the game): was the 'sand' preset, a hard gate to sand and sandstone only, so on alluvium or granite the savanna's acacia could not spawn at all. Vachellia tortilis grows on sandy, loamy, rocky and alluvial soils and tolerates salt; it avoids waterlogging (no clay_peat)."
    },
    {
     "name": "Fever tree",
@@ -906,11 +910,14 @@
      "classes": [
       "sand",
       "sandstone",
+      "granite",
+      "alluvium",
+      "basalt",
       "till"
      ],
      "drainage": "moderate",
-     "ph": "acid",
-     "fertility_min": 0.5,
+     "ph": "any",
+     "fertility_min": 0.0,
      "salinity": "none"
     },
     "needs": [],
@@ -1154,7 +1161,8 @@
      "edible": "cooked",
      "confidence": "estimated",
      "source": "Wikipedia/Flora of Australia (bright yellow spikes 15-25 mm, Mar-May or Aug, after rain; flat winged pods 2-4 cm); ICRAF (pods light brown 2-5 cm; seeds ground and cooked by Aboriginal people); ripening time, fruit set and crop estimated from related arid wattles"
-    }
+    },
+    "soil_note": "1 Oct: was the 'sand' preset (sand and sandstone only). Mulga grows on red earths, sandplains and stony ranges."
    }
   ],
   "shrub": [
