@@ -104,7 +104,8 @@ static func build(parent: Node3D, world: Node, chunks: ChunkManager, d: Vector3,
 	hiss.stream = SoundSynth.stream("fire_hiss_loop", posmod(hash(d), SoundSynth.VARIANTS))
 	hiss.volume_db = float(A.get("hiss", {}).get("volume_db", -14.0))
 	hiss.position = Vector3(0, 0.4, 0)
-	Audio3D.play(hiss, randf() * 2.0)
+	# flicker() starts it once the fire is in the tree (a camp's root may
+	# not be yet) and keeps it to the burn.
 	var pops := Audio3D.make("fire", root, "Pops")
 	pops.position = Vector3(0, 0.4, 0)
 	var light := OmniLight3D.new()
@@ -317,7 +318,7 @@ static func _voice(camp: Node3D, time: float, burn: float, low: float) -> void:
 		hiss.volume_db = float(A.get("hiss", {}).get("volume_db", -14.0)) + offset
 		if burn <= 0.0 and hiss.playing:
 			hiss.stop()
-		elif burn > 0.0 and not hiss.playing:
+		elif burn > 0.0 and not hiss.playing and hiss.is_inside_tree():
 			Audio3D.play(hiss, randf() * 2.0)
 	var pops := camp.get_node_or_null("Pops") as AudioStreamPlayer3D
 	if pops == null:
