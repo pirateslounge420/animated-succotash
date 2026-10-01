@@ -6,7 +6,7 @@
   "ecotone_m": "A neighbouring biome's species may cross the border this far into a biome that does not list them, when their own bands fit. 0: hard borders (Mike, 1 Oct: a gallery forest is a floodplain-forest cell, not a bleed). Open it later if the borders look fake.",
   "association_lists_count": "Which lists in a biome's associations count as 'listed' for the gate.",
   "walkabout": "tools/walkabout.gd, the end-of-pass check (§CA): seeds, sites per seed, hours, first-person eye height, how far it looks, and that any species in an unlisted biome fails it. Frames and the species list are the report; the dev frame is for grade measurements only.",
-  "trim": "Design 1 Oct §CC (Mike): the catalogue is trimmed to archetypes. Nine categories (cacti added 12:04); each biome keeps at most per_biome_per_category species per category, and only where the biome has that category at all (a hot desert has no moss; the open ocean has no tree). The most archetypal of what the biome file already lists (the dominant, the companion, the one a flora names first), never a new species. The special catalogues in keep_whole stay as they are. Every other data/plants catalogue file is folded into the biome lists it serves or archived to docs/plant_archive. category_of maps the schema's shape / tier vocabulary onto the eight categories; an entry that fits none (a vine, kelp, a cushion plant, a lichen) is archived unless it is the biome's hero_species. A hero species always survives."
+  "trim": "Design 1 Oct §CC (Mike): the catalogue is trimmed to archetypes. Nine categories (tree, shrub, grass, moss, orchid, aroid, fern, cacti, fungi; cacti added 12:04); each biome keeps at most per_biome_per_category species per category, and only where the biome has that category at all (a hot desert has no moss; the open ocean has no tree); nothing is invented to fill a slot. The four are chosen from seed_list first (Mike's list, 12:08: a name is kept if it is a real accepted binomial, native to that kind of place and drawable at the player's eye, and is ADDED with the full PLANT_SCHEMA blocks if the catalogue lacks it), then the biome file's dominants and companions, then what a flora of that place names first. never_drawable: kinds of organism that are never kept. The special catalogues in keep_whole stay as they are. Every other data/plants catalogue file is folded into the biome lists it serves or archived to archive_dir. category_of maps the schema's shape / tier vocabulary onto the nine categories; an entry that fits none (a vine, kelp, a cushion plant, a lichen) is archived unless it is the biome's hero_species. A hero species always survives."
  },
  "biome_gate": true,
  "catalogue_needs_biomes": true,
@@ -77,6 +77,23 @@
    "orchid": "orchids, terrestrial and epiphytic",
    "cacti": "cacti and the other stem succulents a desert flora groups with them: saguaro, cardon, prickly pear, barrel, cholla, Madagascar ocotillo, euphorbia candelabra; Trichocereus stays its own catalogue"
   },
+  "seed_list": "docs/plant_archive/TRIM_SEED_LIST_2026-10-01.md",
+  "never_drawable": [
+   "yeast",
+   "mold",
+   "rust",
+   "smut",
+   "slime mold",
+   "bacteria",
+   "archaea",
+   "algae",
+   "diatom",
+   "dinoflagellate",
+   "cyanobacteria",
+   "plankton",
+   "chytrid",
+   "endophyte"
+  ],
   "archive_dir": "docs/plant_archive"
  }
 }

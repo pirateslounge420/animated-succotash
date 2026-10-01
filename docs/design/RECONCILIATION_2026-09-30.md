@@ -827,8 +827,18 @@ ones growing, and every one of them needs a card, a tile and a biome). Mike's tr
   added 12:04). Fungi is its own category because it is not a plant.
 - **Four species per category per biome, where applicable** — a biome that has no moss or
   no orchid simply has none; nothing is invented to fill a slot. The four are the most
-  archetypal of what the biome file already lists: its dominants and companions, the
-  species a flora of that place names first. A biome's `hero_species` always survives.
+  archetypal species of that kind of place. **Mike's seed list comes first**
+  (`docs/plant_archive/TRIM_SEED_LIST_2026-10-01.md`, 12:08: four each of tree, shrub,
+  grass, moss and fungi per biome): a name on it that is a real accepted binomial (Kew
+  POWO), native to that kind of place and drawable at the player's eye is kept, **and is
+  added with the full schema if the catalogue lacks it** (sugar maple, marula, sausage
+  tree, hen of the woods…). After the seed list: the biome file's dominants and
+  companions, then the species a flora of that place names first. The seed list is
+  sorted into the nine categories as it goes in (its ferns, cacti, lichens and kelp
+  leave the rows they were written in); orchid, aroid, fern and cacti are filled from the
+  biome files and the agents' knowledge. Not drawable, so never kept: yeasts, molds,
+  rusts, smuts, slime molds, bacteria, algae, diatoms, plankton. A biome's
+  `hero_species` always survives.
 - **Three catalogues stay whole, untouched:** `cannabis.json` (64 landraces of one
   species), `trichocereus.json` (the 18 ceremonially active, psychoactive species), and
   `amorphophallus.json` (all 246 — Mike's own plants). Their `biomes` lists (§CA) still
@@ -865,3 +875,8 @@ and the walkabout check, the `biomes` fill of the catalogues (parallel agents), 
 and giant-herb hulls to leaf cards, the torch flame on the stick, the afternoon spawn. A
 world where the wrong plants grow is not a world yet; nothing visual is "done" until the
 walkabout passes. **§CC (the trim) runs with the §CA gate — tag only what survives — and §CB (a new world is a new world) goes first of all** — it is small and it changes what the designer sees on the next boot.
+
+**Status 1 Oct, 12:30 (Chicago):** §BZ the fire — built (`1286ac6`, `affbfbf`). §CB a new
+world, the first camp's kind, and §BX's afternoon clock — built (`466e2c8`). Next: §CC
+the trim (with the seed list), then §CA the gate, no blobs, the torch flame on the stick,
+and the walkabout. Then §BV–§BW the working camp, §BX the opening road, §BY the roads.
