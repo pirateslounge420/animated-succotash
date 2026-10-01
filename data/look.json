@@ -9,7 +9,7 @@
   "render": "Design §Y: the game renders at a FIXED internal height (internal_lines, 480 by default; max_internal_lines is the most a setting may allow, 720) and is upscaled to the window with nearest-neighbour; integer_scale snaps to whole multiples when the window allows. aspect: '16:9' (854x480) or '4:3' (640x480, letterboxed). hud_in_internal: the HUD is drawn inside the low-res frame and upscaled with it. Post-grade and dither run at the internal size. This replaces scaling_3d/scale in project.godot.",
   "retro": "The reference-clip look: tiny nearest-filtered tiles, hard 5-bit dither, pushed blue/green, close sky-coloured fog, no shadow maps by day. tile_m: metres per texture repeat per material (nearest_mipmap, max 2 mips, no anisotropy). dither/bleed override post_grade's defaults. colors: locked daylight colours (§AG 3), shadow_floor is the darkest daylight pixel after the grade. sun_disc_deg: the soft sun's diameter in the sky shader. clouds: two painted layers (scale, turns per game-minute). fog: day exponential density per metre + valley height fog. canopy_dark: ground vertex darkening under canopy (with blob shadows, light.shadows off). fov_deg: camera field of view. colors are MEASURED from the batch3 frames (grass is darker than a first guess: base #224A18, lit #3F6E2C). targets: frame statistics to hit. tiles_dir: the pre-made §AG tiles (tools/look/make_retro_tiles.py), same mid-grey modulation convention as LookTextures, drop-in for Look.texture().",
   "dapple": "Ground shade under trees. mode 'stamped' (§AJ 3): each skeleton tree's leaf clusters are stamped from above into a 512² shade map per chunk, so the shade is a patchwork that matches the crown (about 52 ms per chunk on the worker, next to ~1,500 ms of plant placement). mode 'disc' (the designer, 29 Sept 2026: the shade needn't be mapped to exactly where the light comes through — 'the shade goes here, with some dappling in it'): every tree, skeleton or not, casts the cheap baked crown disc, feathered at the edge, with the terrain shader's noise flecks of sun inside it; no shade map is built. Restart after editing.",
-  "look_1_oct": "Claude Code, 1 Oct (design §BU, the look measured): retro.targets split into day and night bands; retro.tile_contrast now wired (look_tile_contrast); ambient_floor.night floor_color darkened to #03061F so the darkest 5 % at night lands near 0.02 and floor_energy raised to 0.3 to keep the world shaders' night lift where it was; desaturate -> pull_to_floor / pull_below_luma; night grade saturation 1.5 (day 1.5 is Mike's). All tuned to the measure, retune by play. ambient_floor.night.sky_gain lifts the night sky's colours (§BU step 5). data/night_accents.json is new (step 6). Tuned against the 14:00 / 02:00 dev-spot frames: night floor #04082A, sky_gain 2.2, night saturation 1.25, day saturation 1.4 (from Mike's 1.5: 0.71 measured against 0.58-0.70)."
+  "look_1_oct": "Claude Code, 1 Oct (design §BU, the look measured): retro.targets split into day and night bands; retro.tile_contrast now wired (look_tile_contrast); ambient_floor.night floor_color darkened to #03061F so the darkest 5 % at night lands near 0.02 and floor_energy raised to 0.3 to keep the world shaders' night lift where it was; desaturate -> pull_to_floor / pull_below_luma; night grade saturation 1.5 (day 1.5 is Mike's). All tuned to the measure, retune by play. ambient_floor.night.sky_gain lifts the night sky's colours (§BU step 5). data/night_accents.json is new (step 6). Tuned against the 14:00 / 02:00 dev-spot frames: night floor #04082A, sky_gain 2.2, night saturation 1.25, day saturation 1.4 (from Mike's 1.5: 0.71 measured against 0.58-0.70). Second tune from the 02:00 frame: pull_to_floor 0.6 (0.85 saturated every dark pixel to 0.91 against the band's 0.80), night exposure 1.2, night saturation 1.1."
  },
  "ranges": {
   "grass_m": 40.0,
@@ -55,9 +55,9 @@
  "night": {
   "ambient_color": "#1C2A8C",
   "ambient_energy": 0.2,
-  "exposure": 1.0,
+  "exposure": 1.2,
   "mids": 1.35,
-  "saturation": 1.25,
+  "saturation": 1.1,
   "teal": 0.5,
   "shadow_tint": [
    0.55,
@@ -255,7 +255,7 @@
    "floor_energy": 0.3,
    "sky_energy": 0.32,
    "moon_add": 0.12,
-   "pull_to_floor": 0.85,
+   "pull_to_floor": 0.6,
    "pull_below_luma": 0.35,
    "sky_gain": 2.2
   },
