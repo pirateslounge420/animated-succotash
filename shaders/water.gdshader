@@ -64,19 +64,25 @@ uniform vec3 night_color : source_color = vec3(0.106, 0.235, 1.0); // #1B3CFF
 uniform vec3 night_highlight : source_color = vec3(0.498, 0.69, 1.0); // #7FB0FF
 // Glow gain: 0.6 lands on #1B3CFF on screen through the grade.
 uniform float night_glow = 0.6;
+// §BU step 4 (look.json water): how much brighter than the scene the
+// water reads by day and at night, and the scrolling caustic tile.
+uniform float glow_day = 1.35;
+uniform float glow_night = 1.6;
+uniform float caustic_tile_m = 1.5;
+uniform float caustic_scroll = 0.25;
 // Storms (StormFX): how soaked the land is (0-1; unused here now: a
 // changing speed would make the scrolling lurch) and rain falling on the
 // surface now (0-1: drops pock it).
 uniform float storm_flow = 0.0;
 uniform float rain_drops = 0.0;
-uniform sampler2D look_tex_water : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D look_tex_water : filter_nearest_mipmap, repeat_enable; // §AG: a nearest tile, 2 mips, no anisotropy
 
 // Ripples (RippleSim sets these): the buffer (ripple_view.gdshader: R
 // where each ring is in its swing, 1 crest .. 0 trough; G B slope along
 // the window's axes; A how big the ripples are, eased), the window's
 // center and axes in the scene; window x: 1 / window size (m), y: on
 // (0-1), z-w: fade out between these distances from the camera (m).
-global uniform sampler2D ripple_tex : filter_linear, repeat_disable;
+global uniform sampler2D ripple_tex : filter_nearest, repeat_disable;
 global uniform vec3 ripple_center;
 global uniform vec3 ripple_axis_u;
 global uniform vec3 ripple_axis_v;
@@ -111,8 +117,8 @@ void fragment() {
 	// repeats, for the hourly TIME rollover.)
 	vec2 drift_a = mix(vec2(1.0, 0.5) / 60.0, vec2(0.0, 0.5), river);
 	vec2 drift_b = mix(vec2(-66.0, 12.0) / 3600.0, vec2(0.0, 0.75), river);
-	vec2 la = texture(look_tex_water, (UV - drift_a * TIME) / TILE_A).rg;
-	vec2 lb = texture(look_tex_water, mat2(vec2(0.6, -0.8), vec2(0.8, 0.6)) * (UV - drift_b * TIME) / TILE_B).rg;
+	vec2 la = retro_tile(look_tex_water, (UV - drift_a * TIME) / TILE_A).rg;
+	vec2 lb = retro_tile(look_tex_water, mat2(vec2(0.6, -0.8), vec2(0.8, 0.6)) * (UV - drift_b * TIME) / TILE_B).rg;
 	// Mottled body: -1..1, darker and lighter blue, never grey.
 	float body = (la.r + lb.r) - 1.0;
 	// Soft highlights: strongest where both layers' blobs meet.
@@ -164,6 +170,11 @@ void fragment() {
 
 	ALBEDO = water_color * (1.0 + 0.28 * body);
 	ALBEDO = mix(ALBEDO, highlight_color, hl * 0.5);
+	// The caustic net: the tile's bright lines scrolling slowly, crisp.
+	float caus = retro_tile(look_tex_water, (UV - vec2(caustic_scroll * 0.6, caustic_scroll) * TIME) / caustic_tile_m).g;
+	ALBEDO = mix(ALBEDO, highlight_color, smoothstep(0.55, 0.8, caus) * 0.45);
+	// Glowier than its surroundings (the brightest thing in the frame).
+	ALBEDO *= glow_day;
 	vec3 glow = night_color * (1.0 + 0.22 * body);
 	glow = mix(glow, night_highlight * 1.45, hl); // lands near #7FB0FF at the peaks
 
@@ -220,7 +231,7 @@ void fragment() {
 	ROUGHNESS = 1.0;
 	METALLIC = 0.0;
 	SPECULAR = 0.0;
-	EMISSION = glow * look_night * night_glow;
+	EMISSION = glow * look_night * night_glow * glow_night;
 	float site = look_site_glow(world_pos, 1.0);
 	// Lit from within at magical sites, rippling with the texture.
 	EMISSION += look_glow_emission(world_pos, site * (1.0 + 0.4 * body));

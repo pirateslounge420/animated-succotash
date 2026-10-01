@@ -708,7 +708,7 @@ static var _fresh_mat: ShaderMaterial
 ## Day water: the reference's deep navy (data/look.json retro.colors.water,
 ## design §AG). Sea and fresh water share it: two blues met in a hard 16 m
 ## staircase at every river mouth.
-static var WATER := Color(str((Tuning.section("look", "retro").get("colors", {}) as Dictionary).get("water", "#3B78FF")))
+static var WATER := WaterLook.base_color("sea") # the far sea (§BU: water by family, WaterLook)
 
 
 static func materials() -> void:
@@ -725,6 +725,7 @@ static func materials() -> void:
 	_fresh_mat.set_shader_parameter("water_color", WATER)
 	_fall_mat = ShaderMaterial.new()
 	_fall_mat.shader = preload("res://shaders/waterfall.gdshader")
+	WaterLook.set_waterfall(_fall_mat)
 	Look.register(_terrain_mat)
 	Look.register(_fall_mat)
 	Look.register(_salt_mat)
@@ -1307,8 +1308,11 @@ func _build_water(quads: Array, ribbons: Array, world: Node, anchor: Vector3) ->
 				target.v.append(quad[idx])
 				target.uv.append(uvs[idx])
 				target.uv2.append(uv2s[idx])
-	_water_mesh(salt, _salt_mat, "SaltWater")
-	_water_mesh(fresh, _fresh_mat, "FreshWater")
+	# The water's colours by the family of the biome at the chunk's middle
+	# (§BU step 4, WaterLook): the sea its own, fresh water its biome's.
+	var bk := FireStore.biome_key(world, center_of(key()))
+	_water_mesh(salt, WaterLook.material(bk, true), "SaltWater")
+	_water_mesh(fresh, WaterLook.material(bk, false), "FreshWater")
 
 
 ## Waterfalls: a sheet of water arcing off the lip and falling to the
