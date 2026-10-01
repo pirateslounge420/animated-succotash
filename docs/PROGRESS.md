@@ -15,7 +15,7 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 - **Before / after at the dev spot** (`dev_view.gd`, `WAIT_DETAIL=1`, 14:00 and 02:00; luma / saturation / texel / darkest-5 % luma, blue:red):
   | frame | before | after (first) | after (tuned) | target |
   |---|---|---|---|---|
-  | 14:00 | 0.29 / 0.71 / 0.047 / 0.070, 9.8 | 0.28 / 0.71 / 0.050 / 0.070, 9.8 | [[A14]] | 0.26–0.36 / 0.58–0.70 / 0.014+ / 0.05–0.10, ≥2 |
+  | 14:00 | 0.29 / 0.71 / 0.047 / 0.070, 9.8 | 0.28 / 0.71 / 0.050 / 0.070, 9.8 | 0.29 / 0.68 / 0.053 / 0.070, 9.9 (all PASS; at chunky 640×360, the preset Mike set) | 0.26–0.36 / 0.58–0.70 / 0.014+ / 0.05–0.10, ≥2 |
   | 02:00 | 0.13 / 0.72 / 0.025 / 0.072, 7.2 | 0.12 / 0.92 / 0.030 / 0.014, 31 | [[A02]] | 0.15–0.25 / 0.67–0.80 / 0.011+ / 0.015–0.035, ≥2 |
 
   The before frames already sat near the day band because the dev spot is open ground under a clear noon; the gap Mike measured was a dusk frame under a closed crown with the floor zeroed (step 2) and a greyed night (step 3). After the first pass the night went fully blue (darkest 0.014, blue:red 31, saturation 0.92, over the band) and the day stayed put, so the night floor came up a step (#04082A), the night sky gain to 2.2, night saturation 1.25 and day saturation 1.4 (from Mike's 1.5, which measured 0.71 against 0.58–0.70); the tuned column is that re-render. Texel detail: the references read 0.015–0.024 under this metric and our internal frame 0.047–0.050 (the dither and nearest tiles, which is the point), so the band is a floor (0.014+); a window capture at 2× reads half, which is where Mike's 0.009 came from.
