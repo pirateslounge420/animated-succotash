@@ -212,6 +212,17 @@ func _initialize() -> void:
 	world.days = abandoned_day + float(CampSim.SIM.abandon.ruin_after_game_days) + 1.0
 	sim.catch_up(c_st)
 	ok(str(c_st.state) == "ruin", "an empty camp is a ruin after ruin_after_game_days (%s)" % c_st.state)
+	# A dead fire the folk still tend comes back at dawn from the woodpile
+	# (an ember kept; a save from before the loop recovers on load).
+	var r_st := sim.ensure("ruin:relight_test", CreatureSpawner._offset(main.camp.site, 1.5, 2500.0), "coast", st.biome, 96)
+	var rf: Dictionary = FireStore.stores[r_st.fire_key]
+	rf.units = []
+	rf.state = "out"
+	rf.embers_min = 0.0
+	r_st.wood = 6.0
+	world.days += 1.0
+	sim.catch_up(r_st)
+	ok(str(rf.state) in ["flames", "low"] and float(r_st.wood) < 6.0, "a dead tended fire is lit again at dawn from the woodpile (%s, pile %.1f)" % [rf.state, r_st.wood])
 	# Starvation moves them, no blood.
 	var s_st := sim.ensure("ruin:starve_test", CreatureSpawner._offset(main.camp.site, 2.5, 2500.0), "steppe", st.biome, 98)
 	s_st.food = 0.0
