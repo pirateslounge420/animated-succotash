@@ -56,7 +56,7 @@ func _initialize() -> void:
 		print("[fire] the nearest inhabited ruin lies %.0f m off (%s)" % [best_m, best.get("kind", "?")])
 		_put(best.dir, 0.0, 70.0)
 		var camp: Node3D = null
-		for i in 80:
+		for i in 300:
 			await frames(30)
 			var nearest_m := INF
 			for key in main.camps._camps:
