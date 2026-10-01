@@ -375,10 +375,12 @@ techniques from before modern culture, simplified, discovered by walking.
 - **Population is gated by food.** A camp starts at 3–5 folk. Foraging feeds a handful;
   a fundamental (§BM) or a crop that takes in that soil raises the ceiling; the tribal
   ceiling is a number in data (`sim.population`). **Births need a man and a woman at the
-  camp, a food surplus, and a slow clock** (`sim.births`); an isolated camp can grow. A
-  child is a small figure by the fire who does not gather and grows up in ~40 game days
-  (Mike to confirm vs "an adult after a delay"). Folk are men and women; the rig reads it
-  at silhouette distance (build, height, voice).
+  camp, a food surplus, and a slow clock** (`sim.births`); an isolated camp can grow. **Folk
+  have three life stages — child, teen, adult** (Mike, locked): a child is a small figure
+  by the fire who does not gather; a teen gathers at half rate and cannot be a specialist;
+  an adult does both (`sim.births.stages`, ~40 game days a stage). Folk are men and women;
+  the rig reads it at silhouette distance (build, height, voice). **Ceiling ~24 for now**
+  (Mike, `sim.population.village_cap`).
 - **The player nudges, never manages:** gather for them; **bring seeds, tubers, cuttings**
   (a species the wild spawner would allow on that soil and climate gets planted by a folk
   within days — wrong soil, the seeds just sit in the store); bring a material the maker

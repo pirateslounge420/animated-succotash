@@ -5,7 +5,7 @@
   "wake_random": "true: after a death you wake at a RANDOM inhabited ruin's fire within wake_radius_m of where you died, a different one each time; false: the nearest.",
   "wake_radius_m": "How far from where you died the fire can be. If no inhabited ruin lies within it the search widens (x2, up to widen_steps times); failing that you wake at the opening camp.",
   "wake_at_home": "Design 30 Sept §AY: true (ambient profile) - after a death you wake at your HEARTH: the opening camp until you make another camp's fire your hearth (right click it). Overrides wake_random. false: the 29 Sept rule.",
-  "sim": "Design 30 Sept §BL–§BN, the camp simulation. Every number here is a first guess unless the note says 'Mike'; tune by play. tick_game_h: the sim steps once per game hour and catches up missed ticks on load (camps grow while unloaded). store: what a camp banks (wood and food, both VISIBLE as a woodpile and a food store; no HUD) and how many days' worth the folk try to keep. loop: the folk's safe daytime gather loop. population: start 3-5 (Mike), forage_cap, what a fundamental or a crop adds, the tribal ceiling (~24, Mike to confirm). births: need a man and a woman, a surplus, a slow clock; a child grows up in ~40 game days (Mike to confirm vs an adult after a delay). collapse: what takes a camp — fuel reach stripped, the fire low, the dark walks in; survivors walk to the nearest fire (some got on the way); starvation moves them instead. embers_game_h: a camp fire's embers linger this long so it can be saved. abandon: an empty camp is a ruin after ruin_after_game_days and the forest takes it back over forest_takes_game_days. restraint: take vs regrow. ladder: fire -> food -> storage -> specialist -> exchange; specialists appear at the storage rung (headman, plantkeeper) and where the site allows (maker). wildfire: rare; needs all three."
+  "sim": "Design 30 Sept §BL–§BN, the camp simulation. Every number here is a first guess unless the note says 'Mike'; tune by play. tick_game_h: the sim steps once per game hour and catches up missed ticks on load (camps grow while unloaded). store: what a camp banks (wood and food, both VISIBLE as a woodpile and a food store; no HUD) and how many days' worth the folk try to keep. loop: the folk's safe daytime gather loop. population: start 3-5 (Mike), forage_cap, what a fundamental or a crop adds, the tribal ceiling (~24 for now, Mike). births: need a man and a woman, a surplus, a slow clock; folk have three life stages, child -> teen -> adult (Mike): a child does not gather, a teen gathers at half rate and cannot be a specialist, an adult does both; stage lengths in game days. collapse: what takes a camp — fuel reach stripped, the fire low, the dark walks in; survivors walk to the nearest fire (some got on the way); starvation moves them instead. embers_game_h: a camp fire's embers linger this long so it can be saved. abandon: an empty camp is a ruin after ruin_after_game_days and the forest takes it back over forest_takes_game_days. restraint: take vs regrow. ladder: fire -> food -> storage -> specialist -> exchange; specialists appear at the storage rung (headman, plantkeeper) and where the site allows (maker). wildfire: rare; needs all three."
  },
  "only_at_ruins": true,
  "wake_random": true,
@@ -48,8 +48,27 @@
     20,
     40
    ],
-   "child_grows_game_days": 40,
-   "child_gathers": false
+   "stages": {
+    "child": {
+     "game_days": 40,
+     "gathers": false,
+     "rig_scale": 0.6,
+     "note": "a small figure by the fire; plays, follows the plantkeeper"
+    },
+    "teen": {
+     "game_days": 40,
+     "gathers": true,
+     "gather_rate": 0.5,
+     "can_be_specialist": false,
+     "rig_scale": 0.85
+    },
+    "adult": {
+     "gathers": true,
+     "gather_rate": 1.0,
+     "can_be_specialist": true,
+     "rig_scale": 1.0
+    }
+   }
   },
   "collapse": {
    "fire_low_nights_to_taken": 2,
