@@ -339,22 +339,6 @@ func _tick(st: Dictionary, days: float) -> void:
 			fst.state = "low"
 		if str(fst.state) in ["flames", "low"]:
 			fst.state = "low" if FireStore.share(fst) < float(FireStore.F.get("low_share", 0.25)) else "flames"
-	# A dead fire the folk still tend relights at dawn from the woodpile:
-	# they keep an ember (no fire is made, §BL); a save from before the
-	# loop, every fire out by day 14, comes back this way at its first
-	# caught-up dawn.
-	if str(fst.state) == "out" and float(st.wood) > 0.0 and bool(fst.get("tended", true)) and h >= 6.0 and h < 6.0 + th:
-		var kind := _fuel_kind(st)
-		var feed := minf(float(store.get("feed_units_per_tick", 2.0)), float(st.wood))
-		var minutes := feed * FireStore.burn_min("branch")
-		var per := maxf(FireStore.burn_min(kind), 0.5)
-		while minutes > 0.0:
-			(fst.units as Array).append([kind, minf(per, minutes)])
-			minutes -= per
-		st.wood = maxf(float(st.wood) - feed, 0.0)
-		fst.embers_min = 0.0
-		fst.state = "low" if FireStore.share(fst) < float(FireStore.F.get("low_share", 0.25)) else "flames"
-		_note(st, "They have lit the fire again from an ember.", days)
 	# A camp fire's embers linger sim.embers_game_h (longer than the
 	# player's own), so a camp can be saved with an armful of fuel.
 	if str(fst.state) == "embers" and float(fst.embers_min) > 0.0 and not bool(fst.get("camp_embers", false)):
@@ -374,7 +358,33 @@ func _tick(st: Dictionary, days: float) -> void:
 			st.fire_low_nights = 0
 		st.low_tonight = false
 		_dawn(st, days)
+		if str(st.state) == "living":
+			_relight_from_ember(st, days, th)
 	_ladder(st, days)
+
+
+## A dead fire the folk still tend relights at dawn from the woodpile:
+## they keep an ember (no fire is made, §BL); a save from before the loop,
+## every fire out by day 14, comes back this way at its first caught-up
+## dawn. After the night is counted, so a camp the dark took in the night
+## does not light its fire first (the relit-fire return would bring folk
+## back to it).
+func _relight_from_ember(st: Dictionary, days: float, _th: float) -> void:
+	var fst: Dictionary = FireStore.stores.get(str(st.fire_key), {})
+	var store: Dictionary = SIM.get("store", {})
+	if fst.is_empty() or str(fst.state) != "out" or float(st.wood) <= 0.0 or not bool(fst.get("tended", true)):
+		return
+	var kind := _fuel_kind(st)
+	var feed := minf(float(store.get("feed_units_per_tick", 2.0)), float(st.wood))
+	var minutes := feed * FireStore.burn_min("branch")
+	var per := maxf(FireStore.burn_min(kind), 0.5)
+	while minutes > 0.0:
+		(fst.units as Array).append([kind, minf(per, minutes)])
+		minutes -= per
+	st.wood = maxf(float(st.wood) - feed, 0.0)
+	fst.embers_min = 0.0
+	fst.state = "low" if FireStore.share(fst) < float(FireStore.F.get("low_share", 0.25)) else "flames"
+	_note(st, "They have lit the fire again from an ember.", days)
 
 
 ## Once a day at dawn: the surplus counted, the stages advancing, a
