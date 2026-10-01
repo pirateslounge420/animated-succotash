@@ -52,6 +52,8 @@ const DEFAULTS := {
 	"dev_howl": [KEY_F8],
 	# Dev: one of each carried kind into the pack (to look at the screen).
 	"dev_items": [KEY_F9],
+	# Dev: a new world (asked once; design 1 Oct §CB).
+	"dev_new_world": [KEY_F12],
 	# Dev: the frame-time readout (design §W, PerfReadout).
 	"dev_perf": [KEY_F2],
 	# F11 cycles the pixel-size presets live (design §BU).

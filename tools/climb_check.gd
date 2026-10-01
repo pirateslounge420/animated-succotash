@@ -112,7 +112,7 @@ func _describe() -> String:
 
 func _initialize() -> void:
 	world = get_root().get_node("World")
-	world.spawn_choice = 0
+	world.pin(42, 0)
 	Bow.need_capture = false
 	main = load("res://scenes/main.tscn").instantiate()
 	get_root().add_child(main)

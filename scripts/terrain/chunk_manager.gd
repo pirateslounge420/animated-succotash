@@ -99,7 +99,7 @@ func setup(p_world: Node) -> void:
 	instance = self
 	world = p_world
 	map = world.planet
-	rivers = RiverNetwork.new(map)
+	rivers = Encampment.rivers_for(map)
 	roads = RoadNetwork.new(map, rivers)
 	SpeciesDB.all() # load plant data on the main thread before workers need it
 	BiomeTemplates.color_of(0) # same for the biome color table

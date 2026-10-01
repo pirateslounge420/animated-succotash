@@ -132,7 +132,7 @@ func _initialize() -> void:
 	DirAccess.make_dir_recursive_absolute(out_dir)
 	args = OS.get_cmdline_user_args()
 	world = get_root().get_node("World")
-	world.spawn_choice = 0
+	world.pin(42, 0)
 	main = load("res://scenes/main.tscn").instantiate()
 	get_root().add_child(main)
 	_started_ms = Time.get_ticks_msec()

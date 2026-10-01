@@ -72,6 +72,8 @@ var settings_panel: SettingsPanel
 var _note := ""
 var _note_t := 0.0
 var _playing := false
+## The dev key's "New world" confirmation window (seconds left).
+var _new_world_armed := 0.0
 ## The latest local weather sample (a few times a second), and the eased
 ## copy everything on screen follows (WeatherSim.ease_toward), so a new
 ## sample or a weather step never makes the light or clouds jump.
@@ -106,6 +108,9 @@ func _ready() -> void:
 	Look.prepare()
 	SculptedBodies.prewarm_folk()
 	world = get_node("/root/World")
+	# A world's static state comes from its own save (design 1 Oct §CB):
+	# nothing of the last world carries over a "New world".
+	world.reset_world_state()
 	hud = Hud.new()
 	add_child(hud)
 	hud.show_loading("Starting", 0.0)
@@ -128,14 +133,19 @@ func _on_planet_ready() -> void:
 
 	# The opening encampment: a campfire at one of the planet's best first
 	# camps (a different one each game); plants keep clear of it.
+	# The world's save first: it remembers where this world's first camp is.
+	WorldSave.open(world.world_seed)
 	var spawn_dir := Encampment.site_near(world.planet, world.pick_spawn_dir())
 	Encampment.set_active(spawn_dir)
-	# Start at the very beginning of dusk wherever that is (the designer:
-	# "the spawn in time is right at the beginning of dusk"), so the first
-	# session opens on sunset and then the night.
-	# (Dusk's hour depends on the latitude and the day of the year.)
+	# Start in the afternoon (design 30 Sept night §BX, roads.json
+	# opening_road.spawn): real_min_before_dusk real minutes before dusk
+	# begins here, so a half-hour walk reaches the first camp as the light
+	# goes. (Dusk's hour depends on the latitude and the day of the year.)
 	var spawn_lat := CubeSphere.latitude(spawn_dir)
-	var local_start_h := DayCycle.phase_start_hour("dusk", spawn_lat, Astro.declination(world.days))
+	var dusk_h := DayCycle.phase_start_hour("dusk", spawn_lat, Astro.declination(world.days))
+	var spawn_rule: Dictionary = Tuning.section("roads", "opening_road").get("spawn", {})
+	var before_min := float(spawn_rule.get("real_min_before_dusk", 22.0))
+	var local_start_h := fposmod(dusk_h - before_min / (world.day_length_s / 60.0) * 24.0, 24.0)
 	world.days = Astro.days_at_solar_hour(world.days, local_start_h, CubeSphere.longitude(spawn_dir), spawn_lat)
 	world.center_on(spawn_dir, PlanetConst.RADIUS_M + world.surface_elevation(spawn_dir))
 
@@ -181,7 +191,6 @@ func _on_planet_ready() -> void:
 	camp_sim = CampSim.new()
 	camp_sim.name = "CampSim"
 	add_child(camp_sim)
-	WorldSave.open(world.world_seed)
 	camp_sim.setup(world, chunks)
 	Coppice.load_saved()
 	player_fires = PlayerFires.new()
@@ -195,6 +204,12 @@ func _on_planet_ready() -> void:
 	# first hearth: the opening camp (design 30 Sept §AY).
 	Hearth.setup(camp.site)
 	GameLog.load_saved()
+	if GameLog.entries.is_empty():
+		# The world's name is its seed (design 1 Oct §CB): the log opens
+		# with it, and the kind of first camp when the roll says one.
+		GameLog.now_text = _now_text(spawn_dir)
+		var kind_text := " — a %s camp" % str(world.first_camp_kind).replace("_", " ") if world.first_camp_kind != "" else ""
+		GameLog.add("World %d — day 1%s" % [world.world_seed, kind_text], "world")
 	GameLog.add_once("people:opening", "The %s live here." % Peoples.name_of(Peoples.get_people(camp.people_id)).to_lower(), "camp_found")
 	if Tuning.profile() == "ambient":
 		Torch.lay_bundle(world, chunks, camp.fire())
@@ -315,7 +330,29 @@ func _on_planet_ready() -> void:
 	camp.talk(1, 4.6)
 
 
+## The log's clock stamp at `d` ("Day 15 · 03:40").
+func _now_text(d: Vector3) -> String:
+	var clock_h := fposmod(Astro.time_of_day(world.days) + CubeSphere.longitude(d) / TAU, 1.0) * 24.0
+	return "Day %d · %02d:%02d" % [int(floor(world.days)) + 1, int(clock_h), int(fmod(clock_h, 1.0) * 60.0)]
+
+
+## Start a new world (design 1 Oct §CB; the settings panel's "New world"
+## and the dev key, after their confirmation line): this one is saved and
+## stays; the next boot of the scene rolls a fresh seed and first camp.
+## "Continue" is just booting.
+func start_new_world() -> void:
+	WorldSave.flush(0.0, true)
+	world.new_world_requested = true
+	if get_tree().current_scene == self:
+		get_tree().reload_current_scene()
+	else:
+		# A tool holds the scene itself (new_world_check): it rebuilds one.
+		queue_free()
+
+
 func _process(delta: float) -> void:
+	if _new_world_armed > 0.0:
+		_new_world_armed -= delta
 	if not _playing:
 		return
 	var d := player.surface_dir
@@ -583,6 +620,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		_drop_chosen()
 	elif inventory_screen.visible and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		inventory_screen.click(event.position)
+	elif event.is_action_pressed("dev_new_world") and world.dev_mode:
+		# Dev: a new world, asked once (design 1 Oct §CB).
+		if _new_world_armed > 0.0:
+			_new_world_armed = 0.0
+			start_new_world()
+		else:
+			_new_world_armed = 5.0
+			hud.say("", "Start a new world? Press F12 again. This one stays saved.", 0.0, 5.0)
 	elif event.is_action_pressed("dev_items") and world.dev_mode:
 		# Dev: one of each carried kind, for looking at the screen.
 		for kind in ["herb_bundle", "fish", "mushroom", "cactus_column"]:

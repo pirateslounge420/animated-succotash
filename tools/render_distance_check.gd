@@ -27,7 +27,7 @@ func frames(n: int) -> void:
 
 func _initialize() -> void:
 	world = get_root().get_node("World")
-	world.spawn_choice = 0
+	world.pin(42, 0)
 	main = load("res://scenes/main.tscn").instantiate()
 	get_root().add_child(main)
 	while not main._playing:

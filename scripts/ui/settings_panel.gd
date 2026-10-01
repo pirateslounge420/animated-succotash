@@ -28,6 +28,8 @@ const ITEMS := [
 	["hud.damage", "Damage numbers", "bool"],
 	["hud.prompts", "Prompts (Right click: ...)", "bool"],
 	["hud.subtitles", "Subtitles", "bool"],
+	["", "World", "head"],
+	["world.new", "New world", "action"],
 	["", "Display", "head"],
 	["display.render_chunks", "Render distance", "chunks"],
 	["display.preset", "Pixel size", "preset"],
@@ -52,6 +54,8 @@ const BAR_W := 120.0
 var _rows: Array = [] # [Rect2, item]
 ## The slider being dragged (its item), while the button is held.
 var _dragging: Array = []
+## An "action" line clicked once, waiting for its second click.
+var _armed := ""
 
 
 func _ready() -> void:
@@ -67,6 +71,7 @@ func open() -> void:
 
 func close() -> void:
 	visible = false
+	_armed = ""
 
 
 ## A click: switch the line under it (or set the slider). True if it hit
@@ -116,6 +121,18 @@ func _slide(item: Array, row: Rect2, x: float, clicked: bool) -> void:
 
 func _switch(item: Array, left := false) -> void:
 	var key: String = item[0]
+	if str(item[2]) == "action":
+		# Asked once (design 1 Oct §CB): the first click arms the line,
+		# the second does it.
+		if _armed == key:
+			_armed = ""
+			var scene := get_tree().current_scene
+			if key == "world.new" and scene != null and scene.has_method("start_new_world"):
+				scene.call("start_new_world")
+		else:
+			_armed = key
+		return
+	_armed = ""
 	match str(item[2]):
 		"chunks":
 			var n := ChunkManager.render_chunks() + (-1 if left else 1)
@@ -143,6 +160,10 @@ func _on(item: Array) -> bool:
 
 func _shown(item: Array) -> String:
 	match str(item[2]):
+		"action":
+			if _armed == item[0]:
+				return "Start a new world? This one stays saved. (click again)"
+			return "> %s" % item[1]
 		"preset":
 			return "< %s: %s >" % [item[1], Display.preset_label()]
 		"aspect":

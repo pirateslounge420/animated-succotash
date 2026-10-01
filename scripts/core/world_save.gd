@@ -9,6 +9,10 @@ static var path := ""
 static var data := {}
 static var _dirty := false
 static var _timer := 0.0
+## The tools never write a save or the last-world pointer (World).
+static var read_only := false
+## The last world played (design 1 Oct §CB): Continue boots into it.
+const LAST_PATH := "user://worlds/last.json"
 
 
 static func open(seed_value: int) -> void:
@@ -30,9 +34,32 @@ static func mark_dirty() -> void:
 	_dirty = true
 
 
+## The seed of the last world played (0: none).
+static func last_seed() -> int:
+	if not FileAccess.file_exists(LAST_PATH):
+		return 0
+	var parsed = JSON.parse_string(FileAccess.get_file_as_string(LAST_PATH))
+	return int(parsed.get("seed", 0)) if parsed is Dictionary else 0
+
+
+## Point "last" at `seed_value`.
+static func set_last(seed_value: int) -> void:
+	if read_only:
+		return
+	DirAccess.make_dir_recursive_absolute("user://worlds")
+	var f := FileAccess.open(LAST_PATH, FileAccess.WRITE)
+	if f:
+		f.store_string(JSON.stringify({"seed": seed_value}))
+
+
+## Does a save for this world exist?
+static func exists(seed_value: int) -> bool:
+	return FileAccess.file_exists("user://worlds/%d.json" % seed_value)
+
+
 ## Write if anything changed and `delta` seconds have added up to a few.
 static func flush(delta: float, now := false) -> void:
-	if not _dirty or path == "":
+	if not _dirty or path == "" or read_only:
 		return
 	_timer += delta
 	if _timer < 4.0 and not now:

@@ -8,8 +8,13 @@ extends Node
 ## * Clock: `days` advances at `day_length_s` real seconds per in-game
 ##   day (120 minutes, data/sky/day_cycle.json), always in real time.
 ## * Dev settings: data/dev.json (spec A4). When its "dev_mode" is true,
-##   its "day_length_min" (144, the real cycle), "seed" (42) and "spawn_choice" (0: always
-##   the same first camp) replace the game's, so before/after views match.
+##   its "day_length_min" (144, the real cycle) replaces the game's, and
+##   its "seed" (42) and "spawn_choice" (0: the same first camp) are the
+##   DEV TOOLS' pins (design 1 Oct §CB): a tool pins itself (pin()), and
+##   they hold in play only with dev.json "pin_in_play" true or DEV_PIN=1
+##   in the environment (DEV_PIN=0 forces play's rule even in a tool).
+##   Otherwise every new world rolls its own seed and first camp, and the
+##   game boots into the last world played (WorldSave.last_seed).
 ##   A missing file, or dev_mode false, means the game's own settings.
 ## * Dev postage stamp (spec A4): in dev mode, "postage_stamp": true builds
 ##   a small scale model of the planet instead of the full 4,000 km one:
@@ -64,7 +69,17 @@ var ripples: Object = null
 ## longitude 0). Starts near full moon; main.gd then sets the clock to late
 ## afternoon at the spawn so a first session opens on sunset, then the
 ## night the spec treats as the showpiece.
-var days := 13.62
+var days := START_DAYS
+## The clock a fresh world starts at (near full moon); generate() resets it.
+const START_DAYS := 13.62
+## A tool pinned the seed and spawn itself (pin()).
+var _pinned := false
+## Set by "New world" (settings panel, the dev key): the next startup_seed
+## rolls a fresh world instead of continuing the last one.
+var new_world_requested := false
+## The kind of first camp this world rolled (camps.json first_camp; "" for
+## the old single list), for the log's first line.
+var first_camp_kind := ""
 
 ## Scene node whose direct children get shifted on rebase (terrain chunks,
 ## creatures, the far planet shell, ...). Set by the playable scene.
@@ -99,10 +114,16 @@ func _load_dev_settings() -> void:
 		return
 	if dev.has("day_length_min"):
 		day_length_s = maxf(float(dev.day_length_min), 0.1) * 60.0
-	if dev.has("seed"):
-		world_seed = int(dev.seed)
-	if dev.has("spawn_choice"):
-		spawn_choice = int(dev.spawn_choice)
+	# The seed and spawn pins (design 1 Oct §CB): the tools', not play's.
+	if pins_apply() and not _pinned:
+		if dev.has("seed"):
+			world_seed = int(dev.seed)
+		if dev.has("spawn_choice"):
+			spawn_choice = int(dev.spawn_choice)
+	# A tool never writes a world's save or the last-world pointer (unless
+	# DEV_PIN=0 asks for play's rule: new_world_check).
+	if _script_run() and OS.get_environment("DEV_PIN") != "0":
+		WorldSave.read_only = true
 	# STAMP=1 / STAMP=0 in the environment overrides dev.json (the dev
 	# checks run on the stamp, where every biome is within reach).
 	var stamp_env := OS.get_environment("STAMP")
@@ -125,15 +146,79 @@ func use_postage_stamp(on: bool) -> void:
 		planet_res = PlanetGenerator.DEFAULT_RES
 
 
-## The seed a new game uses: the dev seed in dev mode, else `default_seed`.
+## A tool pins its own seed and first camp (dev_view, the checks: seed 42,
+## spawn 0, or their SEED / SPAWN env), instead of relying on dev.json.
+func pin(p_seed: int, p_spawn: int) -> void:
+	_load_dev_settings()
+	_pinned = true
+	world_seed = p_seed
+	spawn_choice = p_spawn
+
+
+## Do the dev pins (seed, spawn_choice) apply: a tool that pinned itself,
+## a --script / -s run (a tool that forgot: never a new world from a
+## tool), DEV_PIN=1, or dev.json pin_in_play. DEV_PIN=0 says no, even in
+## a tool (new_world_check).
+func pins_apply() -> bool:
+	var env := OS.get_environment("DEV_PIN")
+	if env == "0":
+		return false
+	if env == "1" or _pinned:
+		return true
+	if bool(dev.get("pin_in_play", false)):
+		return true
+	return _script_run()
+
+
+static func _script_run() -> bool:
+	var args := OS.get_cmdline_args()
+	return args.has("--script") or args.has("-s")
+
+
+## The seed a game uses (design 1 Oct §CB): the pinned one for the tools;
+## else Continue (the last world played, when its save exists), or a fresh
+## random seed for a new world, written as the last-world pointer. The
+## seed is the world's name ("World 7731").
 func startup_seed(default_seed: int) -> int:
 	_load_dev_settings()
-	return world_seed if dev_mode and dev.has("seed") else default_seed
+	if pins_apply():
+		return world_seed if _pinned or (dev_mode and dev.has("seed")) else default_seed
+	var last := WorldSave.last_seed()
+	if last > 0 and WorldSave.exists(last) and not new_world_requested:
+		return last
+	new_world_requested = false
+	var fresh := roll_seed()
+	WorldSave.set_last(fresh)
+	return fresh
+
+
+## A fresh positive seed.
+static func roll_seed() -> int:
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+	return int(rng.randi() % 2147483646) + 1
+
+
+## Forget the last world's state held in static tables before a new (or
+## the next) world builds: everything per world comes from its save.
+func reset_world_state() -> void:
+	FireStore.stores.clear()
+	FireStore._logged.clear()
+	Encampment.clearings.clear()
+	Torch.bundles.clear()
+	SoilMarks.marks.clear()
+	Coppice.stools.clear()
+	Hearth.dir = Vector3.ZERO
+	Hearth.key = ""
+	GameLog.entries.clear()
+	GameLog._once.clear()
+	ready_to_play = false
 
 
 func generate(p_seed: int) -> void:
 	_load_dev_settings()
 	world_seed = p_seed
+	days = START_DAYS
 	ready_to_play = false
 	_thread = Thread.new()
 	_thread.start(_generate_threaded.bind(p_seed, planet_res))
@@ -164,6 +249,7 @@ func _finish_generation() -> void:
 func generate_now(p_seed: int) -> void:
 	_load_dev_settings()
 	world_seed = p_seed
+	days = START_DAYS
 	var gen := PlanetGenerator.new()
 	gen.generate(p_seed, planet_res)
 	planet = gen.planet
@@ -245,8 +331,8 @@ func surface_elevation(dir: Vector3) -> float:
 
 ## Where a new game starts: one of the planet's few best first-camp spots
 ## (Encampment.candidates: low coastal land, mild and green), picked at
-## random each game, or the `spawn_choice`-th one if that's set (>= 0;
-## data/dev.json sets it in dev mode).
+## rolled from the seed each world, or the `spawn_choice`-th one if that's
+## set (>= 0; the tools' pin, data/dev.json).
 var spawn_choice := -1
 
 
@@ -254,9 +340,42 @@ func pick_spawn_dir() -> Vector3:
 	var pool := Encampment.candidates(planet)
 	if pool.is_empty():
 		return Vector3.UP
-	var i := spawn_choice
-	if i < 0:
-		var rng := RandomNumberGenerator.new()
-		rng.randomize()
-		i = rng.randi() % pool.size()
-	return pool[mini(i, pool.size() - 1)]
+	first_camp_kind = ""
+	if spawn_choice >= 0:
+		return pool[mini(spawn_choice, pool.size() - 1)]
+	# This world's own first camp, rolled from its seed (design 1 Oct §CB),
+	# so a world always wakes at the same fire: a KIND by weight among the
+	# kinds with candidates on this planet (camps.json first_camp; the
+	# FIRST_CAMP env forces one), then a random cell of that kind.
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash([world_seed, "first_camp"])
+	if bool(Encampment.FC.get("roll_kind", false)):
+		var by_kind := Encampment.candidates_by_kind(planet)
+		var kinds: Dictionary = Encampment.FC.get("kinds", {})
+		var names: Array[String] = []
+		var weights: Array[float] = []
+		for k in kinds:
+			if (by_kind.get(k, PackedVector3Array()) as PackedVector3Array).size() > 0:
+				names.append(str(k))
+				weights.append(float((kinds[k] as Dictionary).get("weight", 1)))
+		var forced := OS.get_environment("FIRST_CAMP")
+		var kind := ""
+		if forced != "" and names.has(forced):
+			kind = forced
+		elif not names.is_empty():
+			var total := 0.0
+			for w in weights:
+				total += w
+			var r := rng.randf() * total
+			kind = names[names.size() - 1]
+			for j in names.size():
+				r -= weights[j]
+				if r <= 0.0:
+					kind = names[j]
+					break
+		if kind != "":
+			var cells: PackedVector3Array = by_kind[kind]
+			first_camp_kind = kind
+			return cells[rng.randi() % cells.size()]
+		push_warning("World: no first-camp kind has candidates on seed %d; the old list" % world_seed)
+	return pool[rng.randi() % pool.size()]

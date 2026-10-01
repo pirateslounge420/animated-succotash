@@ -66,7 +66,148 @@ var _hitboxes_on := true
 var _voice: AudioStreamPlayer3D
 
 
-## The best first-camp cells of the planet, spread apart (directions).
+## camps.json first_camp (design 1 Oct §CB): the first camp's kind rolls
+## too. kinds: a set of biome keys and a water rule each; the common
+## gates (fuel, temperature, slope, elevation, never); the roll's weights.
+static var FC: Dictionary = Tuning.section("camps", "first_camp")
+static var _kind_cache := {}
+static var _rivers_cache := {}
+
+
+## The planet's river network, built once per planet (the chunk manager
+## shares it).
+static func rivers_for(map: PlanetData) -> RiverNetwork:
+	var id := map.get_instance_id()
+	if not _rivers_cache.has(id):
+		_rivers_cache.clear()
+		_rivers_cache[id] = RiverNetwork.new(map)
+	return _rivers_cache[id]
+
+
+## The best first-camp cells per kind (first_camp.kinds): kind ->
+## directions, best first, at least min_separation_m apart, at most
+## candidates_per_kind. A cell qualifies for a kind when its biome is in
+## the kind's biomes and it lies within within_m of the kind's water
+## (river / sea / lake / water: any), and it passes the common gates:
+## the biome offers fuel (fuel.json), a mean inside temp_c, slope under
+## slope_max, elevation inside elevation_m, no water on the cell, not in
+## never. Within a kind the score is the old one minus the latitude term:
+## closeness to its water, moisture, a mild mean, level ground.
+static func candidates_by_kind(map: PlanetData) -> Dictionary:
+	var id := map.get_instance_id()
+	if _kind_cache.has(id):
+		return _kind_cache[id]
+	_kind_cache.clear()
+	var kinds: Dictionary = FC.get("kinds", {})
+	var never := PackedStringArray(FC.get("never", []))
+	var temp: Array = FC.get("temp_c", [-4, 31])
+	var elev: Array = FC.get("elevation_m", [5, 400])
+	var slope_max := float(FC.get("slope_max", 0.15))
+	var needs_fuel := bool(FC.get("needs_fuel", true))
+	var fuel: Dictionary = Tuning.section("fuel", "biomes")
+	var rivers := rivers_for(map)
+	var per := int(FC.get("candidates_per_kind", 6))
+	var sep := float(FC.get("min_separation_m", MIN_SEPARATION_M))
+	var kind_biomes := {}
+	var scored := {}
+	for k in kinds:
+		var ids := PackedInt32Array()
+		for key in (kinds[k] as Dictionary).get("biomes", []):
+			var bid := BiomeTemplates.id_of_key(str(key))
+			if bid >= 0:
+				ids.append(bid)
+		kind_biomes[k] = ids
+		scored[k] = []
+	for c in map.cell_count:
+		if map.water[c] != PlanetData.Water.NONE:
+			continue
+		var bid: int = map.biome[c]
+		var key: String = BiomeTemplates.KEYS[bid] if bid >= 0 and bid < BiomeTemplates.KEYS.size() else ""
+		if never.has(key):
+			continue
+		var e := map.elevation[c]
+		if e < float(elev[0]) * PlanetConst.HEIGHT_SCALE or e > float(elev[1]) * PlanetConst.HEIGHT_SCALE:
+			continue
+		if map.temp_c[c] < float(temp[0]) or map.temp_c[c] > float(temp[1]):
+			continue
+		if map.slope[c] > slope_max:
+			continue
+		if needs_fuel and not _offers_fuel(fuel, key):
+			continue
+		for k in kinds:
+			if not (kind_biomes[k] as PackedInt32Array).has(bid):
+				continue
+			var rule: Dictionary = kinds[k]
+			var within := float(rule.get("within_m", 1500.0))
+			var wd := water_m(map, rivers, c, str(rule.get("near", "water")))
+			if wd > within:
+				continue
+			var score := -wd / within * 2.0 + map.moisture[c] * 3.0 - absf(map.temp_c[c] - 19.0) * 0.25 - map.slope[c] * 20.0
+			(scored[k] as Array).append([score, c])
+	var out := {}
+	for k in kinds:
+		var list: Array = scored[k]
+		list.sort_custom(func(a, b): return a[0] > b[0])
+		var cells := PackedVector3Array()
+		for sc in list:
+			var d: Vector3 = map.dir[sc[1]]
+			var ok := true
+			for o in cells:
+				if CubeSphere.geo_distance_m(o, d) < sep:
+					ok = false
+					break
+			if ok:
+				cells.append(d)
+				if cells.size() >= per:
+					break
+		out[k] = cells
+	_kind_cache[id] = out
+	return out
+
+
+## Does the fuel table give this biome anything to burn?
+static func _offers_fuel(fuel: Dictionary, key: String) -> bool:
+	var b = fuel.get(key, {})
+	if not b is Dictionary:
+		return false
+	for kind in b:
+		if float(b[kind]) > 0.0:
+			return true
+	return false
+
+
+## Real metres from cell `c` to the kind's water: "river" (the river
+## network's segments round the cell), "sea" (the coast distance), "lake"
+## (the nearest lake cell, to its edge), "water" (the nearest of them).
+static func water_m(map: PlanetData, rivers: RiverNetwork, c: int, near: String) -> float:
+	var d: Vector3 = map.dir[c]
+	var best := INF
+	if near == "river" or near == "water":
+		for s in rivers.segments_near(map, c):
+			best = minf(best, rivers.closest_dt(s, d).x)
+	if near == "sea" or near == "water":
+		best = minf(best, map.coast_dist_km[c] * 1000.0 * PlanetConst.GEO_SCALE)
+	if near == "lake" or near == "water":
+		var cell_m := PlanetConst.CIRCUMFERENCE_M / (4.0 * map.res)
+		var ring := [c]
+		var seen := {c: true}
+		for depth in 2:
+			var next := []
+			for cc in ring:
+				for k in 8:
+					var n := map.neighbors[cc * 8 + k]
+					if n < 0 or seen.has(n):
+						continue
+					seen[n] = true
+					next.append(n)
+					if map.water[n] == PlanetData.Water.LAKE:
+						best = minf(best, maxf(0.0, CubeSphere.surface_distance_m(d, map.dir[n]) - 0.5 * cell_m))
+			ring = next
+	return best
+
+
+## The best first-camp cells of the planet, spread apart (directions): the
+## old single list (the dev frame's seed 42 / spawn 0, and spawn_choice).
 static func candidates(map: PlanetData) -> PackedVector3Array:
 	var scored: Array = []
 	for c in map.cell_count:
@@ -105,10 +246,14 @@ static func candidates(map: PlanetData) -> PackedVector3Array:
 static func site_near(map: PlanetData, d: Vector3) -> Vector3:
 	var best := d
 	var best_score := INF
+	var home: int = map.biome[map.cell_at(d)]
 	for k in 160:
 		var p := d if k == 0 else CreatureSpawner._offset(d, k * 2.399963, sqrt(float(k) / 160.0) * SEARCH_M)
 		var cell := map.cell_at(p)
 		if map.water[cell] != PlanetData.Water.NONE or map.biome[cell] in TerrainChunk.WETLANDS:
+			continue
+		# The camp stays in the biome its kind rolled (design §CB).
+		if map.biome[cell] != home:
 			continue
 		if map.sample(map.water_dist_km, p) < 0.3 * map.cell_scale():
 			continue

@@ -98,9 +98,12 @@ func _ready() -> void:
 	_hint.add_theme_font_size_override("font_size", HudText.px(20))
 	# (Up above the subtitle, the prompt and the weapon line: at the start
 	# it sat on the Elder's first words and the bow.)
-	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 9)
-	_hint.offset_bottom -= 104
-	_hint.offset_top -= 104
+	# Across the frame, wrapping (Mike, 1 Oct: at 30 px a line ran off
+	# both edges of the 854 px frame).
+	_hint.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE, Control.PRESET_MODE_MINSIZE, MARGIN)
+	_hint.offset_bottom = -104
+	_hint.offset_top = -104
+	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hint.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_hint.text = "WASD move · W W sprint · Space jump (at a wall: wall jump · as you land: bounce)\nShift crouch (in the air: drop · as you land: roll) · right click: take, climb, hold on\nleft click: draw / thrust / punch · Q tool · V view · Tab pack\nM map · O settings · F3 debug · H full HUD · Esc frees the mouse: click readouts to pin them"
 	if Tuning.profile() == "ambient":
@@ -108,8 +111,10 @@ func _ready() -> void:
 		# person, right click to take and climb; nothing else on the keys.
 		_hint.text = "WASD move · W W sprint · Space jump · Shift crouch\nright click: take things, climb the tree in front of you · left click: use what's in hand\nQ tool · Tab pack · Enter log · M map · O settings · F3 debug · H full HUD\nEsc frees the mouse: click readouts to pin them"
 	_prompt = _label(HORIZONTAL_ALIGNMENT_CENTER)
-	_prompt.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 47)
-	_prompt.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_prompt.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE, Control.PRESET_MODE_MINSIZE, MARGIN)
+	_prompt.offset_bottom = -47
+	_prompt.offset_top = -47
+	_prompt.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_prompt.add_theme_font_size_override("font_size", HudText.px(30))
 	_subtitle = _label(HORIZONTAL_ALIGNMENT_CENTER)
@@ -188,6 +193,27 @@ func _add_part(id: String, box: VBoxContainer) -> void:
 	m.add_theme_color_override("font_color", Color(str(PINS.get("mark_color", "#FFD23A"))))
 	m.visible = false
 	_marks[id] = m
+
+
+## A column line no wider than its half of the frame (Mike, 1 Oct: at
+## 30 px the season line ran into the temperature line): the last " · "
+## part is dropped until it fits, then characters.
+func _fit(l: Label, text: String) -> String:
+	var cap := get_viewport().get_visible_rect().size.x * 0.5 - MARGIN - 6.0
+	var font := l.get_theme_font("font")
+	var px := l.get_theme_font_size("font_size")
+	var t := text
+	while font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, px).x > cap:
+		var cut := t.rfind(" · ")
+		if cut > 0:
+			t = t.substr(0, cut)
+		elif t.length() > 4:
+			t = t.substr(0, t.length() - 2).strip_edges() + "…"
+			if t.length() <= 4:
+				break
+		else:
+			break
+	return t
 
 
 ## The gap between lines in one Label (the theme's line_spacing).
@@ -429,7 +455,7 @@ func _apply() -> void:
 		if _parts.has(id):
 			var l: Label = _parts[id]
 			l.visible = shown
-			l.text = pad + str(_part_text[id])
+			l.text = _fit(l, pad + str(_part_text[id]))
 			l.self_modulate.a = look.x
 			var m: Label = _marks[id]
 			m.visible = look.y > 0.0
@@ -564,7 +590,7 @@ static func debug_text(world: Node, player_dir: Vector3, weather: Dictionary) ->
 	var moon_el := rad_to_deg(Astro.elevation(Astro.moon_dir(days), player_dir))
 	var mansion := Astro.mansion_index(days)
 	return "DEBUG (F3)%s\nClock %s · solar %s · %.0f-min day\n%s %.1f / %.1f min · sky speed x%.2f\nSun %+.1f° · Moon %+.1f°\nMoon day %.1f of %.1f · %s · %d%% lit\nMansion %d %s · cloud %.2f\nLat %.1f° · year day %d of %d · sun decl %+.1f°\nDaylight %.1f h · day %.0f · dusk %.0f · night %.0f · dawn %.0f min" % [
-		" · dev mode" if world.dev_mode else "",
+		" · World %d%s" % [world.world_seed, " · dev mode" if world.dev_mode else ""],
 		_hhmm(clock * 24.0), _hhmm(solar_h), day_min,
 		String(ph.name).capitalize(), float(ph.into) * day_min, float(ph.length) * day_min, DayCycle.turn_rate(clock, lat, decl),
 		sun_el, moon_el,

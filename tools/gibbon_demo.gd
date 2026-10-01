@@ -148,7 +148,7 @@ func _initialize() -> void:
 	DirAccess.make_dir_recursive_absolute(out_dir)
 	var mode := OS.get_environment("MODE") if OS.get_environment("MODE") != "" else "stills"
 	world = get_root().get_node("World")
-	world.spawn_choice = 0
+	world.pin(42, 0)
 	main = load("res://scenes/main.tscn").instantiate()
 	get_root().add_child(main)
 	while not main._playing:

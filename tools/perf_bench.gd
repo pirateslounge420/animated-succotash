@@ -29,7 +29,7 @@ func _initialize() -> void:
 
 func _run() -> void:
 	var world = get_root().get_node("World")
-	world.spawn_choice = 0
+	world.pin(42, 0)
 	seed(42)
 	Encampment.fixed_side = 0.0
 	var main = load("res://scenes/main.tscn").instantiate()

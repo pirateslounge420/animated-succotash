@@ -54,7 +54,9 @@ func _run() -> void:
 		get_root().mode = Window.MODE_FULLSCREEN
 	var integer_env := OS.get_environment("INTEGER")
 	var world = get_root().get_node("World")
-	world.spawn_choice = int(OS.get_environment("SPAWN")) if OS.get_environment("SPAWN") != "" else 0
+	# The dev frame's pins, set here (design 1 Oct §CB): SEED / SPAWN env,
+	# else seed 42 and the first camp.
+	world.pin(int(OS.get_environment("SEED")) if OS.get_environment("SEED") != "" else 42, int(OS.get_environment("SPAWN")) if OS.get_environment("SPAWN") != "" else 0)
 	seed(42)
 	Encampment.fixed_side = 0.0
 	var main = load("res://scenes/main.tscn").instantiate()
