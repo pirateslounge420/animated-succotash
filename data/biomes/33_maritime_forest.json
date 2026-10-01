@@ -2999,15 +2999,19 @@
     "name": "Resurrection fern",
     "genus": "Pleopeltis",
     "species": "polypodioides",
-    "origin": "Southeastern US and Neotropics",
+    "origin": "SE USA to tropical America",
     "shape": "epiphyte_clump",
     "temp_c": [
      14,
-     22
+     26
     ],
     "moisture": [
-     0.5,
-     1
+     0.45,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1500
     ],
     "height_m": [
      0.05,
@@ -3105,7 +3109,9 @@
      "juvenile_note": "Spores sprout on moss and bark of oak limbs into tiny heart-shaped prothalli; the first fronds are small, simple to shallowly lobed and leathery, then once-pinnatifid fronds with grey-scaly undersides. A slender creeping rhizome (about 2 mm thick) branches along the bark into a mat. In drought the fronds curl up grey-brown and look dead, turning green again within a day or two of rain.",
      "confidence": "estimated",
      "source": "Wikipedia Pleopeltis polypodioides (fronds to 25 x 5 cm; rhizome 2 mm; survives losing up to 97% of its water and rehydrates in 24-48 h; spores summer to autumn; rhizome pieces root). Spore-to-plant time, growth and lifespan estimated from epiphytic Polypodiaceae."
-    }
+    },
+    "needs": [],
+    "note_habit": "1 Oct (Mike's play): an EPIPHYTE — a creeping mat of small leathery fronds on the upper side of big limbs, classically live oak, also cypress, other hardwoods and rock; never ground cover. 'Resurrection': in a dry spell the fronds curl and go grey-brown and can lose most of their water, then green and unfurl within hours of rain. The tropical dry forest copy had it in the ground tier, and as the first file loaded it set the tier for the whole game; all four copies now agree."
    },
    {
     "name": "Spanish moss",

@@ -2561,20 +2561,27 @@
     "name": "Resurrection fern",
     "genus": "Pleopeltis",
     "species": "polypodioides",
-    "origin": "Southeastern US and tropical America",
+    "origin": "SE USA to tropical America",
     "family": "Polypodiaceae",
     "shape": "epiphyte_clump",
     "temp_c": [
-     12,
-     24
+     14,
+     26
     ],
     "moisture": [
-     0.5,
-     0.9
+     0.45,
+     0.95
     ],
     "altitude_m": [
      0,
-     800
+     1500
+    ],
+    "biomes": [
+     "MARITIME_FOREST",
+     "SWAMP",
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_DECIDUOUS",
+     "TROPICAL_DRY_FOREST"
     ],
     "biomes": [
      "MARITIME_FOREST",
@@ -2745,7 +2752,8 @@
      "color_2": "#8A7A60",
      "lenticels": "none",
      "confidence": "estimated"
-    }
+    },
+    "note_habit": "1 Oct (Mike's play): an EPIPHYTE — a creeping mat of small leathery fronds on the upper side of big limbs, classically live oak, also cypress, other hardwoods and rock; never ground cover. 'Resurrection': in a dry spell the fronds curl and go grey-brown and can lose most of their water, then green and unfurl within hours of rain. The tropical dry forest copy had it in the ground tier, and as the first file loaded it set the tier for the whole game; all four copies now agree."
    },
    {
     "name": "Climbing fern",

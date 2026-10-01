@@ -2731,118 +2731,6 @@
     "silhouette": "big spiny ground rosette, red centre"
    },
    {
-    "name": "Resurrection fern",
-    "genus": "Pleopeltis",
-    "species": "polypodioides",
-    "origin": "SE USA to South America",
-    "shape": "fern",
-    "temp_c": [
-     16,
-     28
-    ],
-    "moisture": [
-     0.35,
-     0.7
-    ],
-    "height_m": [
-     0.1,
-     0.3
-    ],
-    "density": 0.3,
-    "soil": "thin",
-    "color": "#5AA040",
-    "accent": "#7A6A50",
-    "source": "Pleopeltis polypodioides, resurrection fern, drought-curling fern on rocks and trunks of Americas dry forest — Wikipedia",
-    "traits": {
-     "genus": "Pleopeltis",
-     "species": "polypodioides",
-     "native_range": "Pleopeltis polypodioides, resurrection fern, drought-curling fern on rocks and trunks of Americas dry forest — Wikipedia",
-     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
-     "trunk": "short rhizome",
-     "petiole": "stipe (frond stalk)",
-     "height_m": [
-      0.1,
-      0.3
-     ],
-     "growth_rate": "medium",
-     "reproduction": "",
-     "pollinator": "insect",
-     "disperser": [],
-     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
-    },
-    "bark_type": "green_stem",
-    "leaf_type": "frond",
-    "leaf": {
-     "type": "frond",
-     "venation": "pinnate",
-     "arrangement": "alternate",
-     "size_cm": [
-      5,
-      25
-     ],
-     "compound": {
-      "form": "pinnate",
-      "leaflets": [
-       16,
-       40
-      ],
-      "leaflet_outline": "oblong",
-      "leaflet_aspect": 4.0,
-      "leaflet_margin": "entire"
-     },
-     "texture": "matte",
-     "confidence": "documented"
-    },
-    "canopy": {
-     "form": "mat",
-     "gap": 0.35,
-     "layering": "clumped",
-     "droop": 0.1
-    },
-    "tint": {
-     "hue_shift": 2,
-     "sat": 0.8,
-     "val": 0.95,
-     "underside": 0.3
-    },
-    "photoperiod": {
-     "mode": "neutral"
-    },
-    "bark": {
-     "pattern": "none",
-     "orientation": "none",
-     "depth": 0.0,
-     "scale_cm": 1,
-     "color": "#6E7A5A",
-     "color_2": "#6E7A5A",
-     "lenticels": "none",
-     "confidence": "documented"
-    },
-    "silhouette": "small curled fronds hugging bark",
-    "growth": {
-     "life": "perennial",
-     "germination_days": [
-      30,
-      120
-     ],
-     "height_years": [
-      1,
-      3
-     ],
-     "first_seed_years": 2,
-     "lifespan_years": [
-      15,
-      60
-     ],
-     "shade": "intermediate",
-     "juvenile": "sporeling",
-     "juvenile_leaves": "same",
-     "juvenile_note": "Spores sprout on moss and bark of oak limbs into tiny heart-shaped prothalli; the first fronds are small, simple to shallowly lobed and leathery, then once-pinnatifid fronds with grey-scaly undersides. A slender creeping rhizome (about 2 mm thick) branches along the bark into a mat. In drought the fronds curl up grey-brown and look dead, turning green again within a day or two of rain.",
-     "confidence": "estimated",
-     "source": "Wikipedia Pleopeltis polypodioides (fronds to 25 x 5 cm; rhizome 2 mm; survives losing up to 97% of its water and rehydrates in 24-48 h; spores summer to autumn; rhizome pieces root). Spore-to-plant time, growth and lifespan estimated from epiphytic Polypodiaceae."
-    }
-   },
-   {
     "name": "Wild pineapple",
     "genus": "Bromelia",
     "species": "pinguin",
@@ -3275,6 +3163,124 @@
      "confidence": "estimated",
      "source": "Wikipedia Spanish moss (leaves 2-6 cm x 1 mm; hanging festoons to 6 m, rarely 8 m; spreads by seed and by fragments carried by wind and nesting birds; small flowers with spreading petals). Seed germination, strand growth rate, first flowering and festoon age estimated."
     }
+   },
+   {
+    "name": "Resurrection fern",
+    "genus": "Pleopeltis",
+    "species": "polypodioides",
+    "origin": "SE USA to tropical America",
+    "shape": "epiphyte_clump",
+    "temp_c": [
+     14,
+     26
+    ],
+    "moisture": [
+     0.45,
+     0.95
+    ],
+    "altitude_m": [
+     0,
+     1500
+    ],
+    "height_m": [
+     0.05,
+     0.2
+    ],
+    "density": 0.3,
+    "soil": "thin",
+    "color": "#5AA040",
+    "accent": "#7A6A50",
+    "source": "Pleopeltis polypodioides, resurrection fern, drought-curling fern on rocks and trunks of Americas dry forest — Wikipedia",
+    "traits": {
+     "genus": "Pleopeltis",
+     "species": "polypodioides",
+     "native_range": "Pleopeltis polypodioides, resurrection fern, drought-curling fern on rocks and trunks of Americas dry forest — Wikipedia",
+     "leaf_shape": "pinnate fronds unrolling from fiddleheads",
+     "trunk": "short rhizome",
+     "petiole": "stipe (frond stalk)",
+     "height_m": [
+      0.1,
+      0.3
+     ],
+     "growth_rate": "medium",
+     "reproduction": "",
+     "pollinator": "insect",
+     "disperser": [],
+     "note": "leaf/trunk/petiole derived from the plant's shape class; per-species detail where the entry carries it (aroids, cannabis)"
+    },
+    "bark_type": "green_stem",
+    "leaf_type": "frond",
+    "leaf": {
+     "type": "frond",
+     "venation": "pinnate",
+     "arrangement": "alternate",
+     "size_cm": [
+      5,
+      25
+     ],
+     "compound": {
+      "form": "pinnate",
+      "leaflets": [
+       16,
+       40
+      ],
+      "leaflet_outline": "oblong",
+      "leaflet_aspect": 4.0,
+      "leaflet_margin": "entire"
+     },
+     "texture": "matte",
+     "confidence": "documented"
+    },
+    "canopy": {
+     "form": "mat",
+     "gap": 0.35,
+     "layering": "clumped",
+     "droop": 0.1
+    },
+    "tint": {
+     "hue_shift": 2,
+     "sat": 0.8,
+     "val": 0.95,
+     "underside": 0.3
+    },
+    "photoperiod": {
+     "mode": "neutral"
+    },
+    "bark": {
+     "pattern": "none",
+     "orientation": "none",
+     "depth": 0.0,
+     "scale_cm": 1,
+     "color": "#6E7A5A",
+     "color_2": "#6E7A5A",
+     "lenticels": "none",
+     "confidence": "documented"
+    },
+    "silhouette": "small curled fronds hugging bark",
+    "growth": {
+     "life": "perennial",
+     "germination_days": [
+      30,
+      120
+     ],
+     "height_years": [
+      1,
+      3
+     ],
+     "first_seed_years": 2,
+     "lifespan_years": [
+      15,
+      60
+     ],
+     "shade": "intermediate",
+     "juvenile": "sporeling",
+     "juvenile_leaves": "same",
+     "juvenile_note": "Spores sprout on moss and bark of oak limbs into tiny heart-shaped prothalli; the first fronds are small, simple to shallowly lobed and leathery, then once-pinnatifid fronds with grey-scaly undersides. A slender creeping rhizome (about 2 mm thick) branches along the bark into a mat. In drought the fronds curl up grey-brown and look dead, turning green again within a day or two of rain.",
+     "confidence": "estimated",
+     "source": "Wikipedia Pleopeltis polypodioides (fronds to 25 x 5 cm; rhizome 2 mm; survives losing up to 97% of its water and rehydrates in 24-48 h; spores summer to autumn; rhizome pieces root). Spore-to-plant time, growth and lifespan estimated from epiphytic Polypodiaceae."
+    },
+    "needs": [],
+    "note_habit": "1 Oct (Mike's play): an EPIPHYTE — a creeping mat of small leathery fronds on the upper side of big limbs, classically live oak, also cypress, other hardwoods and rock; never ground cover. 'Resurrection': in a dry spell the fronds curl and go grey-brown and can lose most of their water, then green and unfurl within hours of rain. The tropical dry forest copy had it in the ground tier, and as the first file loaded it set the tier for the whole game; all four copies now agree."
    }
   ]
  },
@@ -3293,12 +3299,12 @@
     "Jatropha",
     "Spanish moss",
     "Air plant",
-    "Dry-forest orchid"
+    "Dry-forest orchid",
+    "Resurrection fern"
    ],
    "ground": [
     "Bluestem",
-    "Wild pineapple",
-    "Resurrection fern"
+    "Wild pineapple"
    ],
    "catalogue": [],
    "cover": 0.7,
