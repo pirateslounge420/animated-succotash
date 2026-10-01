@@ -818,7 +818,30 @@ spawn (§P, §AO: "a different one each game") was built and never allowed to ru
   and so what it burns, eats and stacks (§BO, §BW). A cold-shore or taiga first camp is a
   harder night one on purpose. Weights are first guesses; the designer owns them.
 
-## BR. Order of work — prompt C (after A and B are played; §BR sits after §CB on purpose — it is the to-do)
+## CC. The catalogue is trimmed to archetypes — LOCKED (1 Oct, 12:01, Mike)
+
+1,224 entries, 951 species, 470 genera is too many to make right (§CA found the wrong
+ones growing, and every one of them needs a card, a tile and a biome). Mike's trim
+(`data/habitat.json → trim`):
+- **Eight categories: tree, shrub, grass, moss, fungi, fern, aroid, orchid.** Fungi is its
+  own category because it is not a plant.
+- **Four species per category per biome, where applicable** — a biome that has no moss or
+  no orchid simply has none; nothing is invented to fill a slot. The four are the most
+  archetypal of what the biome file already lists: its dominants and companions, the
+  species a flora of that place names first. A biome's `hero_species` always survives.
+- **Three catalogues stay whole, untouched:** `cannabis.json` (64 landraces of one
+  species), `trichocereus.json` (the 18 ceremonially active, psychoactive species), and
+  `amorphophallus.json` (all 246 — Mike's own plants). Their `biomes` lists (§CA) still
+  gate where they grow.
+- Everything else in `data/plants/` is folded into the biome lists it serves or archived
+  to `docs/plant_archive/` (the archive already exists: nothing is lost, it is just not
+  loaded). Vines, cacti, kelp, cushion plants and lichens have no category and are
+  archived unless they are a hero.
+- Fewer species, each one right: every survivor gets its `biomes` tag, its leaf card
+  checked at the player's eye in the walkabout (§CA), and its place in a stand (§BH). The
+  §BH dominance rule now has an easy job — four trees is a stand.
+
+## BR. Order of work — prompt C (after A and B are played; §BR sits after §CC on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
 `peoples_check --strict` 0 errors), `techniques.json`, `camps.json → sim`. Then the engine:
@@ -841,4 +864,4 @@ Data is in; all first guesses.
 and the walkabout check, the `biomes` fill of the catalogues (parallel agents), the aroid
 and giant-herb hulls to leaf cards, the torch flame on the stick, the afternoon spawn. A
 world where the wrong plants grow is not a world yet; nothing visual is "done" until the
-walkabout passes. **§CB (a new world is a new world) goes first of all** — it is small and it changes what the designer sees on the next boot.
+walkabout passes. **§CC (the trim) runs with the §CA gate — tag only what survives — and §CB (a new world is a new world) goes first of all** — it is small and it changes what the designer sees on the next boot.

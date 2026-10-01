@@ -5,7 +5,8 @@
   "catalogue_needs_biomes": "true: a data/plants entry with no `biomes` list does not grow (like an untagged realm) until the fill tags it. false: untagged catalogue entries grow wherever a biome file copies them.",
   "ecotone_m": "A neighbouring biome's species may cross the border this far into a biome that does not list them, when their own bands fit. 0: hard borders (Mike, 1 Oct: a gallery forest is a floodplain-forest cell, not a bleed). Open it later if the borders look fake.",
   "association_lists_count": "Which lists in a biome's associations count as 'listed' for the gate.",
-  "walkabout": "tools/walkabout.gd, the end-of-pass check (§CA): seeds, sites per seed, hours, first-person eye height, how far it looks, and that any species in an unlisted biome fails it. Frames and the species list are the report; the dev frame is for grade measurements only."
+  "walkabout": "tools/walkabout.gd, the end-of-pass check (§CA): seeds, sites per seed, hours, first-person eye height, how far it looks, and that any species in an unlisted biome fails it. Frames and the species list are the report; the dev frame is for grade measurements only.",
+  "trim": "Design 1 Oct §CC (Mike): the catalogue is trimmed to archetypes. Eight categories; each biome keeps at most per_biome_per_category species per category, and only where the biome has that category at all (a hot desert has no moss; the open ocean has no tree). The most archetypal of what the biome file already lists (the dominant, the companion, the one a flora names first), never a new species. The special catalogues in keep_whole stay as they are. Every other data/plants catalogue file is folded into the biome lists it serves or archived to docs/plant_archive. category_of maps the schema's shape / tier vocabulary onto the eight categories; an entry that fits none (a vine, a cactus, kelp, a cushion plant, a lichen) is archived unless it is the biome's hero_species. A hero species always survives."
  },
  "biome_gate": true,
  "catalogue_needs_biomes": true,
@@ -44,5 +45,36 @@
   "list_within_m": 30.0,
   "unlisted_species_allowed": 0,
   "use_play_preset": true
+ },
+ "trim": {
+  "enabled": true,
+  "per_biome_per_category": 4,
+  "categories": [
+   "tree",
+   "shrub",
+   "grass",
+   "moss",
+   "fungi",
+   "fern",
+   "aroid",
+   "orchid"
+  ],
+  "keep_whole": [
+   "cannabis.json",
+   "trichocereus.json",
+   "amorphophallus.json"
+  ],
+  "hero_always_survives": true,
+  "category_of": {
+   "tree": "canopy or emergent tier; shapes broadleaf, conifer, cypress, palm, umbrella (woody); tree ferns go to fern",
+   "shrub": "shrub tier, woody; sagebrush, heath, mangrove seedling, bamboo thicket",
+   "grass": "grasses, sedges, rushes, reeds, cattail, bamboo grasses; the ground tier's graminoids",
+   "moss": "mosses, liverworts, sphagnum, club mosses",
+   "fungi": "fungi.json and any ground entry that is a mushroom, bracket, puffball or lichen-as-fungus",
+   "fern": "ferns, tree ferns, whisk ferns, selaginella",
+   "aroid": "aroids: Alocasia, Colocasia, Philodendron, Monstera, Bucephalandra, skunk cabbage, taro; Amorphophallus stays its own catalogue",
+   "orchid": "orchids, terrestrial and epiphytic"
+  },
+  "archive_dir": "docs/plant_archive"
  }
 }
