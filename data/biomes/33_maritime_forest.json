@@ -3111,7 +3111,23 @@
      "source": "Wikipedia Pleopeltis polypodioides (fronds to 25 x 5 cm; rhizome 2 mm; survives losing up to 97% of its water and rehydrates in 24-48 h; spores summer to autumn; rhizome pieces root). Spore-to-plant time, growth and lifespan estimated from epiphytic Polypodiaceae."
     },
     "needs": [],
-    "note_habit": "1 Oct (Mike's play): an EPIPHYTE — a creeping mat of small leathery fronds on the upper side of big limbs, classically live oak, also cypress, other hardwoods and rock; never ground cover. 'Resurrection': in a dry spell the fronds curl and go grey-brown and can lose most of their water, then green and unfurl within hours of rain. The tropical dry forest copy had it in the ground tier, and as the first file loaded it set the tier for the whole game; all four copies now agree."
+    "note_habit": "1 Oct (Mike's play): an EPIPHYTE — a creeping mat of small leathery fronds on the upper side of big limbs, classically live oak, also cypress, other hardwoods and rock; never ground cover. 'Resurrection': in a dry spell the fronds curl and go grey-brown and can lose most of their water, then green and unfurl within hours of rain. The tropical dry forest copy had it in the ground tier, and as the first file loaded it set the tier for the whole game; all four copies now agree.",
+    "desiccation": {
+     "tolerant": true,
+     "wet_rain_mm_h": 0.2,
+     "curl_starts_game_h": 24,
+     "dry_after_game_days": 3.0,
+     "unfurl_starts_game_h": 1.0,
+     "green_after_game_h": 24,
+     "humidity_slows": true,
+     "dry_curl": 0.85,
+     "dry_color": "#8C7B63",
+     "dry_underside_shows": true,
+     "dormant_when_dry": true,
+     "confidence": "documented",
+     "source": "Pleopeltis polypodioides: poikilohydric, desiccation-tolerant; in drought the fronds roll inward and show the grey-brown, densely scaled underside, and can lose up to ~97 % of their water; rehydrated by rain they flatten and turn green within hours, fully within about a day (USDA Forest Service / university extension accounts; Stuart 1968; Muslin & Homann 1992)",
+     "_note": "Design 1 Oct §CD (Mike: it behaves as it does in real life). wet_rain_mm_h: local rain (WeatherSim.local_weather) at or above this counts as wetting. Dry: after curl_starts_game_h without rain the fronds begin to roll; by dry_after_game_days they are fully rolled (dry_curl 0-1) and dry_color with the scaly underside showing (dry_underside_shows). Rain: unfurling starts within unfurl_starts_game_h and the plant is flat and green by green_after_game_h. humidity_slows: fog and high humidity stretch the drying. dormant_when_dry: no growth while dry. First guesses on real timings; the designer tunes."
+    }
    },
    {
     "name": "Spanish moss",

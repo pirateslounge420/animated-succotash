@@ -14,7 +14,7 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
 `data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
 desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
-fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`.
+fire`. Added 1 Oct afternoon with §CA–§CB: `data/habitat.json` · `data/dev.json → pin_in_play, spawn_choice -1` · `data/camps.json → first_camp`. With §CD: the resurrection fern's `desiccation` block.
 
 ---
 
@@ -851,7 +851,29 @@ ones growing, and every one of them needs a card, a tile and a biome). Mike's tr
   checked at the player's eye in the walkabout (§CA), and its place in a stand (§BH). The
   §BH dominance rule now has an easy job — four trees is a stand.
 
-## BR. Order of work — prompt C (after A and B are played; §BR sits after §CC on purpose — it is the to-do)
+## CD. The resurrection fern behaves as it does in life — LOCKED (1 Oct, 13:08, Mike)
+
+Mike found a resurrection fern (*Pleopeltis polypodioides*) on the ground in a jungle,
+drawn as a flower. Where it grows is fixed in the data (an epiphyte everywhere, its
+native kinds of place; commits `b8a20a0`, `afe30cc`); epiphytes on real branches with a
+shape per kind is the epiphyte pass. And it earns its name: **it behaves as it does in
+real life** (`desiccation` block, `PLANT_SCHEMA.md` §4a5):
+- **In a dry spell it dies back without dying:** after about a day without rain the
+  fronds begin to roll inward; over a few dry days they are rolled tight and grey-brown
+  — the densely scaled underside is what shows — and it looks dead. (In life it can lose
+  most of its water, up to ~97 %, and survive.)
+- **Rain brings it back:** it starts to open within an hour or so of rain and is flat and
+  green within about a day. Fog and humidity slow the drying. No growth while dry.
+- Driven by the **live weather at that place** (`WeatherSim.local_weather`, the same rain
+  the camps' wildfire clock counts), per chunk, hour by hour; a whole oak's mat turns
+  together, and the next valley over, still under the storm, stays green. Quietly
+  educational, like everything else here: a player who sees a grey oak limb go green
+  after a shower has learned something true.
+- The block is generic on purpose: mosses (many dry brown and green again within
+  minutes of wetting), some lichens and *Selaginella lepidophylla* behave the same way
+  in life and can take it later.
+
+## BR. Order of work — prompt C (after A and B are played; §BR sits after §CD on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
 `peoples_check --strict` 0 errors), `techniques.json`, `camps.json → sim`. Then the engine:
@@ -880,3 +902,5 @@ walkabout passes. **§CC (the trim) runs with the §CA gate — tag only what su
 world, the first camp's kind, and §BX's afternoon clock — built (`466e2c8`). Next: §CC
 the trim (with the seed list), then §CA the gate, no blobs, the torch flame on the stick,
 and the walkabout. Then §BV–§BW the working camp, §BX the opening road, §BY the roads.
+
+**Status 1 Oct, 13:10:** §CA's gate, the catalogue tags, no lobe hulls and the torch flame — built (`9dd1c23`; its walkabout waits for §CC). Queue: the Mac-GPU pass (Day 1, the F9 foliage views, derivative and null-texture fixes) → §CC the trim → the epiphyte pass (real branches, a shape per kind, §CD the resurrection).

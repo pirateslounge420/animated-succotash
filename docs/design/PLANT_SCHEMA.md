@@ -350,6 +350,32 @@ Amorphophallus has a block derived from its `cycle` (first bloom).
 }
 ```
 
+## 4a5. `desiccation` (resurrection plants — optional)
+
+Design 1 Oct §CD. For species that dry out and come back as they do in life
+(poikilohydric: the resurrection fern now; mosses, some lichens and Selaginella
+lepidophylla are the same kind of organism and may take the block later). Read
+against the live weather at the plant's place (`WeatherSim.local_weather`, the same
+rain the camps' wildfire clock counts), per chunk, hour by hour.
+
+```json
+"desiccation": {
+  "tolerant": true,
+  "wet_rain_mm_h": 0.2,          // local rain at or above this wets the plant
+  "curl_starts_game_h": 24,      // dry this long before the fronds begin to roll
+  "dry_after_game_days": 3.0,    // fully rolled and brown by then
+  "unfurl_starts_game_h": 1.0,   // after rain, the opening begins within this
+  "green_after_game_h": 24,      // flat and green by this
+  "humidity_slows": true,        // fog and high humidity stretch the drying
+  "dry_curl": 0.85,              // 0 flat .. 1 rolled tight (the frond rolls toward its underside)
+  "dry_color": "#8C7B63",        // the scaly underside's grey-brown
+  "dry_underside_shows": true,
+  "dormant_when_dry": true,      // no growth while dry
+  "confidence": "documented",
+  "source": "..."
+}
+```
+
 ## 4b. `soil` (spawn gate — co-equal with temperature and moisture)
 
 ```json
