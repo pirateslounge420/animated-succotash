@@ -138,7 +138,8 @@ var vis_chunks: ChunkManager = null
 ## colour (display space) and the night's desaturation for this frame.
 var sky_visibility := 1.0
 var post_floor := Vector3.ZERO
-var night_desat := 0.0
+## Night is one colour (§BU): how far the darks are pulled to the floor's hue.
+var night_pull := 0.0
 var _enclosed := 0.0
 
 
@@ -162,7 +163,8 @@ static func day_shadows() -> bool:
 	var env := OS.get_environment("DAY_SHADOWS")
 	if env != "":
 		return env == "1"
-	return Settings.get_bool("display.day_shadows", bool(LIGHT.get("shadows", true)))
+	var near: Dictionary = LIGHT.get("day_shadows_near", {})
+	return Settings.get_bool("display.day_shadows", bool(near.get("enabled", bool(LIGHT.get("shadows", true)))))
 
 
 var _day_shadows_set := -1
@@ -283,6 +285,15 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	if ds != _day_shadows_set:
 		_day_shadows_set = ds
 		sun.shadow_enabled = ds == 1 and bool(LIGHT.get("shadows", true))
+		# §BU: the near hard cast shadow (light.day_shadows_near): within
+		# max_m only, no blur, no soft filter, two splits; the pixel frame
+		# edges it.
+		var near: Dictionary = LIGHT.get("day_shadows_near", {})
+		if ds == 1 and not near.is_empty():
+			sun.directional_shadow_max_distance = float(near.get("max_m", 35.0))
+			sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+			sun.shadow_blur = 0.0
+			sun.light_angular_distance = 0.0
 		BlobShadow.set_enabled(ds == 0)
 		Look.apply({"look_canopy_dark": 0.0 if ds == 1 else float(RETRO.get("canopy_dark", 0.45))})
 
@@ -311,6 +322,13 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	var horizon := _horizon.sample(t)
 	var night := 1.0 - daylight
 	var lift := moonlight * night
+	# The night sky glows (§BU step 5): indigo, never black, lifted by
+	# ambient_floor.night.sky_gain so the sky reads as the second brightest
+	# thing after the water.
+	var sky_gain := lerpf(1.0, float((FLOOR.get("night", {}) as Dictionary).get("sky_gain", 1.8)), night)
+	zenith *= sky_gain
+	mid *= sky_gain
+	horizon *= sky_gain
 	zenith += Color(0.01, 0.02, 0.06) * lift
 	mid += Color(0.01, 0.02, 0.055) * lift
 	horizon += Color(0.01, 0.02, 0.05) * lift
@@ -493,8 +511,12 @@ func _update_floor(delta: float, daylight_now: float, lift: float, dark_magic: f
 	var open_k := smoothstep(0.0, min_out, sky_visibility)
 	var lin := fc.srgb_to_linear()
 	Look.apply({"look_floor": Vector3(lin.r, lin.g, lin.b) * fe * open_k * (1.0 - MAGIC_DARKEN * dark_magic), "look_floor_min": min_out})
-	post_floor = Vector3(fc.r, fc.g, fc.b) * open_k
-	night_desat = (1.0 - daylight_now) * float(night_f.get("desaturate", 0.75))
+	# The post grade's floor (§BU, 1 Oct): wherever the player is not
+	# enclosed, whatever the canopy over them, so nothing outdoors
+	# quantises to black; the dapple stamp only shapes the world shaders'
+	# lift above.
+	post_floor = Vector3(fc.r, fc.g, fc.b) * (1.0 - _enclosed) * (1.0 - MAGIC_DARKEN * dark_magic)
+	night_pull = (1.0 - daylight_now) * float(night_f.get("pull_to_floor", 0.85))
 
 
 ## The scene color that comes out on screen as `c` (sRGB): undoes the

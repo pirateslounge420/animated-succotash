@@ -49,6 +49,8 @@ var dev_spawn: DevSpawn
 var landmarks: Landmarks
 var camps: Camps
 var post: PostGrade
+var rain_overlay: RainOverlay
+var night_accents: NightAccents
 ## The local ground mean (m above the planet radius) for the valley fog.
 var _ground_mean := INF
 var _ground_t := 0.0
@@ -268,11 +270,18 @@ func _on_planet_ready() -> void:
 
 	post = PostGrade.new()
 	add_child(post)
+	rain_overlay = RainOverlay.new()
+	rain_overlay.name = "RainOverlay"
+	add_child(rain_overlay)
 
 	landmarks = Landmarks.new()
 	landmarks.name = "Landmarks"
 	add_child(landmarks)
 	landmarks.setup(world, chunks, player, sky, post)
+	night_accents = NightAccents.new()
+	night_accents.name = "NightAccents"
+	add_child(night_accents)
+	night_accents.setup(world, chunks, landmarks, sky, player)
 	camps = Camps.new()
 	camps.name = "Camps"
 	add_child(camps)
@@ -371,8 +380,9 @@ func _process(delta: float) -> void:
 	# Sheltered from the rain: under a tree's crown or in a camp shelter.
 	var sheltered := player.trees.under_canopy or landmarks.sheltered_at(player.global_position)
 	fx.update_fx(cam.global_position, d, weather, sheltered)
+	rain_overlay.update_rain(weather, sheltered, cam.global_basis.x)
 	post.set_night(1.0 - sky.daylight)
-	post.set_floor(sky.post_floor, sky.night_desat, float((SkySystem.FLOOR.get("night", {}) as Dictionary).get("desaturate_below_luma", 0.22)))
+	post.set_floor(sky.post_floor, sky.night_pull, float((SkySystem.FLOOR.get("night", {}) as Dictionary).get("pull_below_luma", 0.35)))
 	Campfire.night = 1.0 - sky.daylight
 	creatures.update_creatures(delta, sky.daylight)
 	fruit_crop.daylight = sky.daylight
@@ -540,6 +550,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		hud.toggle()
 	elif event.is_action_pressed("toggle_debug"):
 		hud.toggle_debug()
+	elif event.is_action_pressed("dev_pixel"):
+		var pname := Display.cycle_preset()
+		_say_note("Pixel size: %s" % Display.preset_label())
+		print("[display] preset %s" % pname)
 	elif event.is_action_pressed("dev_perf") and world.dev_mode:
 		hud.perf.sun = sky.sun
 		hud.perf.toggle()

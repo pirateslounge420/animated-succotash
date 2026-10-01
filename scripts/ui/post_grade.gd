@@ -40,12 +40,13 @@ func set_night(v: float) -> void:
 
 
 ## The shadow floor for this frame (§BD: the hour's floor colour, black
-## where the player stands enclosed) and the night's desaturation.
-func set_floor(floor_rgb: Vector3, desat: float, desat_luma: float) -> void:
+## where the player stands enclosed) and the night's pull of the darks to
+## the floor's hue (§BU).
+func set_floor(floor_rgb: Vector3, pull: float, pull_luma: float) -> void:
 	var m := _rect.material as ShaderMaterial
 	m.set_shader_parameter("shadow_floor", floor_rgb)
-	m.set_shader_parameter("night_desat", desat)
-	m.set_shader_parameter("desat_luma", desat_luma)
+	m.set_shader_parameter("night_pull", pull)
+	m.set_shader_parameter("pull_luma", pull_luma)
 
 
 func set_magic(v: float) -> void:
