@@ -107,11 +107,15 @@ void fragment() {
 	col = mix(day_c, night_c, night);
 	col = (col - 0.4) * (1.0 + 0.15 * magic * night) + 0.4;
 	// Night is one colour: the darks take the floor's hue at their own
-	// brightness, fully saturated; the lit things (a fire, the moon on
-	// water) keep theirs. Warm pixels keep their warmth.
+	// brightness and their own saturation (the hue collapses, the chroma
+	// does not, so the preset's saturation knob still sets how blue the
+	// night is); the lit things (a fire, the moon on water) keep theirs.
+	// Warm pixels keep their warmth.
 	float yd = luma_of(col);
 	vec3 fdir = max(shadow_floor, vec3(0.002, 0.004, 0.02));
-	vec3 one = fdir * (yd / max(luma_of(fdir), 1e-4));
+	float s_px = (max(col.r, max(col.g, col.b)) - min(col.r, min(col.g, col.b))) / max(max(col.r, max(col.g, col.b)), 1e-4);
+	float s_fl = (max(fdir.r, max(fdir.g, fdir.b)) - min(fdir.r, min(fdir.g, fdir.b))) / max(max(fdir.r, max(fdir.g, fdir.b)), 1e-4);
+	vec3 one = mix(vec3(yd), fdir * (yd / max(luma_of(fdir), 1e-4)), clamp(s_px / max(s_fl, 1e-3), 0.0, 1.0));
 	float warm_px = smoothstep(0.06, 0.25, col.r - col.b);
 	col = mix(col, one, night_pull * (1.0 - warm_px) * (1.0 - smoothstep(pull_luma * 0.6, pull_luma * 1.6, yd)));
 	// Shadow floor: the darks come up to navy (each channel at least the
