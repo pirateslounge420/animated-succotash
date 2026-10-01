@@ -1,6 +1,11 @@
 class_name VegetationPlacer
-## Places plants on one terrain chunk (DESIGN.md "Vegetation"). Plants read
-## climate, never biome names; each species grows wherever its bands fit.
+## Places plants on one terrain chunk (DESIGN.md "Vegetation"). A species
+## grows only in a biome that lists it (design 1 Oct §CA, data/habitat.json:
+## a biome file's plants and associations, or a catalogue entry's own
+## `biomes`), and within those biomes wherever its climate, soil, altitude,
+## needs and realm fit: the biome is a gate on top, co-equal with soil.
+## (Until 1 Oct plants read climate alone, never biome names, so a
+## floodplain-forest magnolia grew on a savanna riverbank.)
 ##
 ## Spawning is split so only what's near the player exists:
 ##   compute_base()   - emergent + canopy trees, for every loaded chunk
@@ -23,6 +28,10 @@ class_name VegetationPlacer
 ##                 (standing water, river bank, salt, hot ground, dry
 ##                 ground: never in a wetland biome or by the water; forest
 ##                 floor: only in a forest biome).
+##   biome gate  - the cell's biome must list the species (sp.biomes;
+##                 habitat.json biome_gate; ecotone_m lets a neighbouring
+##                 biome's species cross the line that far, 0: hard
+##                 borders).
 ##   realm       - a catalogue species tagged with realms grows only where
 ##                 the site's realm (RealmMap) is one of them and the site's
 ##                 biome has an association for it (design §AA).
@@ -58,15 +67,21 @@ static var FORESTS := PackedInt32Array(["TROPICAL_RAINFOREST", "JUNGLE", "TROPIC
 ## Species of one catalogue genus a chunk can hold at once (the local
 ## assemblage, _Context._local_assemblage).
 const GENUS_LOCAL := 4
+## The biome gate's knobs (data/habitat.json, design §CA).
+static var HAB: Dictionary = Tuning.table("habitat")
+static var BIOME_GATE: bool = bool(HAB.get("biome_gate", true))
+static var ECOTONE_M: float = float(HAB.get("ecotone_m", 0.0))
 ## How far ground cover is drawn (data/look.json "ranges", design §W).
 static var RANGES := Tuning.section("look", "ranges")
 const T := PlantSpecies.Tier
-## Plants grow larger than their species' listed heights, for epic,
-## towering woods: emergent giants most (and now and then a true giant),
-## then canopy trees, then shrubs, ground cover and epiphytes. Spacing
-## widens to match (about with the square root), so the bigger crowns
-## don't merge into a wall or cost more instances.
-const SIZE_SCALE := {0: 1.45, 1: 1.3, 2: 1.2, 3: 1.2, 4: 1.2}
+## How much larger than their species' listed heights plants grow, per
+## tier (emergent, canopy, shrub, ground, epiphyte): stand.json size_scale.
+## Trees are 1.0 since 1 Oct (Mike: a species at its natural size; the
+## 1.3x of the "epic woods" pass put 45 m she-oaks at the first camp);
+## the old-growth roll (stand.json) still puts most near the top of their
+## band and the giant roll makes the odd true giant. Spacing widens with
+## the scale (about with the square root).
+static var SIZE_SCALE: Dictionary = _size_scale()
 ## Herbs whose leaves are the plant: they spread them wider in the shade
 ## (prepare(); PlantGrowth.leaf_scale).
 const HERB_SPREAD := [PlantSpecies.Shape.FERN, PlantSpecies.Shape.ROSETTE, PlantSpecies.Shape.EPIPHYTE_CLUMP,
@@ -77,6 +92,15 @@ const GIANT_SCALE := 1.25
 ## trees roll near the top of their species' band, with giants and a thin
 ## young cohort in the gaps (_roll_height()).
 static var STAND := Tuning.table("stand")
+
+
+static func _size_scale() -> Dictionary:
+	var d: Dictionary = STAND.get("size_scale", {})
+	var out := {0: 1.0, 1: 1.0, 2: 1.2, 3: 1.2, 4: 1.2}
+	for k in ["emergent", "canopy", "shrub", "ground", "epiphyte"]:
+		if d.has(k):
+			out[["emergent", "canopy", "shrub", "ground", "epiphyte"].find(k)] = float(d[k])
+	return out
 ## Stand dominance (design 30 Sept §BH, stand.json "dominance"): each
 ## stand (a cell stand_m across) picks one dominant species per tier and
 ## weights it hard, 1-3 associates, a rare accent; the species salad only
@@ -428,6 +452,13 @@ static func _dominant_of(ctx: _Context, list: Array[PlantSpecies]) -> PlantSpeci
 
 ## In a stand: at least two other trees within 9 m (design §AK 2: forest-
 ## grown), else a lone, open-grown tree.
+static func _any_biome(wanted: PackedInt32Array, here: PackedInt32Array) -> bool:
+	for b in here:
+		if wanted.has(b):
+			return true
+	return false
+
+
 static func _crowded(d: Vector3, hosts: Array) -> bool:
 	var near := 0
 	var lim := 9.0 / PlanetConst.RADIUS_M
@@ -1053,6 +1084,11 @@ class _Context:
 		# The chunk's middle: its realm and biome decide which realm-tagged
 		# species are candidates at all (each site still checks its own).
 		var mid := site(TerrainChunk.QUADS * 0.5, TerrainChunk.QUADS * 0.5)
+		var biomes_here := PackedInt32Array([mid.biome])
+		for corner in [Vector2(1, 1), Vector2(TerrainChunk.QUADS - 1, 1), Vector2(1, TerrainChunk.QUADS - 1), Vector2(TerrainChunk.QUADS - 1, TerrainChunk.QUADS - 1)]:
+			var cb := site(corner.x, corner.y).biome
+			if not biomes_here.has(cb):
+				biomes_here.append(cb)
 		for tier in [T.EMERGENT, T.CANOPY, T.SHRUB, T.GROUND, T.EPIPHYTE]:
 			var list: Array[PlantSpecies] = []
 			for sp in SpeciesDB.by_tier(tier):
@@ -1061,6 +1097,11 @@ class _Context:
 				if sp.altitude_m.y < hmin or sp.altitude_m.x > hmax:
 					continue
 				if not sp.realms.is_empty() and (not sp.realms.has(mid.realm) or not SpeciesDB.biome_hosts(mid.biome, mid.realm)):
+					continue
+				# The biome gate (design §CA): the species must be listed
+				# by one of the biomes sampled here (with an ecotone the
+				# per-site test decides).
+				if VegetationPlacer.BIOME_GATE and VegetationPlacer.ECOTONE_M <= 0.0 and not VegetationPlacer._any_biome(sp.biomes, biomes_here):
 					continue
 				list.append(sp)
 				var v := VegetationPlacer._dominance_noise[SpeciesDB.index_of(sp)].get_noise_3dv(center * PlanetConst.RADIUS_M)
@@ -1277,6 +1318,15 @@ class _Context:
 	## Species weight at a site: climate bands x soil x needs x dominance.
 	## The site checks that rule a species out come first (they're cheap and
 	## most failures are these); the product is the same.
+	## Within ECOTONE_M of a cell whose biome lists the species (four
+	## bearings, that far out), when its own bands fit here.
+	func _ecotone_ok(sp: PlantSpecies, s: _Site) -> bool:
+		for k in 4:
+			var q := CreatureSpawner._offset(s.dir, k * TAU / 4.0, VegetationPlacer.ECOTONE_M)
+			if sp.biomes.has(map.biome[map.cell_at(q)]):
+				return true
+		return false
+
 	func weight(sp: PlantSpecies, s: _Site) -> float:
 		var bits := sp.need_bits()
 		var standing := bits & (1 << PlantSpecies.Needs.STANDING_WATER) != 0
@@ -1306,6 +1356,11 @@ class _Context:
 		# The realm gate (design §AA).
 		if not sp.realms.is_empty() and (not sp.realms.has(s.realm) or not SpeciesDB.biome_hosts(s.biome, s.realm)):
 			return 0.0
+		# The biome gate (design §CA): only where a biome lists it; with
+		# an ecotone, a neighbouring cell's biome that lists it will do.
+		if VegetationPlacer.BIOME_GATE and not sp.biomes.has(s.biome):
+			if VegetationPlacer.ECOTONE_M <= 0.0 or not _ecotone_ok(sp, s):
+				return 0.0
 		var w := sp.suitability(s.t, s.m, s.h, s.rock)
 		if w <= 0.0:
 			return 0.0

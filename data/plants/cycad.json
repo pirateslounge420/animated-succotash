@@ -27,6 +27,10 @@
      0,
      500
     ],
+    "biomes": [
+     "ROCKY_SHORE",
+     "MARITIME_FOREST"
+    ],
     "height_m": [
      1.0,
      3.0
@@ -298,6 +302,10 @@
     "altitude_m": [
      0,
      600
+    ],
+    "biomes": [
+     "SAVANNA",
+     "TROPICAL_DRY_FOREST"
     ],
     "height_m": [
      2.0,
@@ -572,6 +580,10 @@
      600,
      1500
     ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "SAVANNA"
+    ],
     "height_m": [
      8.0,
      13.0
@@ -843,6 +855,11 @@
      0,
      50
     ],
+    "biomes": [
+     "MARITIME_FOREST",
+     "TROPICAL_DRY_FOREST",
+     "DUNES"
+    ],
     "height_m": [
      0.3,
      1.0
@@ -1104,6 +1121,10 @@
     "altitude_m": [
      0,
      600
+    ],
+    "biomes": [
+     "MARITIME_FOREST",
+     "TEMPERATE_RAINFOREST"
     ],
     "height_m": [
      1.0,

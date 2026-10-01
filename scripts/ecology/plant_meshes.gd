@@ -652,6 +652,12 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 	b.rng.seed = idx * 7919 + 11
 	if sp.shape == S.CACTUS:
 		b.wood = leaf # ribbed: the bark streaks read as cactus ribs
+	if sp.shape == S.UMBRELLA and not TreeArch.grows(sp):
+		# The "umbrella until the aroid shape exists" placeholder of the
+		# giant herbs (Alocasia, Colocasia, the taros): leaf cards on
+		# stalks, never the umbrella tree's crown (design 1 Oct §CA).
+		b.herb_leaves(3 if far else b.rng.randi_range(3, 6), 0.62, 0.24, 0.3, 0.22, leaf, wood, 0.8)
+		return b.commit_arrays()
 	if not sp.aroid.is_empty():
 		# An Amorphophallus leaf (from reference photos of the titan arum):
 		# one mottled petiole, a tree in itself, forking at its top into
@@ -662,10 +668,10 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 	match sp.shape:
 		S.CONIFER:
 			b.trunk(0.04, 0.3, 0.0, 0.0)
-			var cs := 6 if far else (12 if b.hero else 8)
-			b.cone(Vector3(0, 0.15, 0), 0.3, 0.45, cs, leaf.darkened(0.1), 0.2, 0.6)
-			b.cone(Vector3(0, 0.4, 0), 0.23, 0.4, cs, leaf, 0.5, 0.85)
-			b.cone(Vector3(0, 0.65, 0), 0.15, 0.35, cs, leaf.lightened(0.08), 0.8, 1.0)
+			# Three tiers of cluster cards where the cones were (§CA).
+			b.cluster_shell(Vector3(0, 0.3, 0), Vector3(0.26, 0.2, 0.26), leaf.darkened(0.1), 0.4)
+			b.cluster_shell(Vector3(0, 0.55, 0), Vector3(0.2, 0.18, 0.2), leaf, 0.65)
+			b.cluster_shell(Vector3(0, 0.78, 0), Vector3(0.12, 0.16, 0.12), leaf.lightened(0.08), 0.9)
 			# Old-man's-beard lichen in wet conifer forest.
 			b.vines(5, Color(0.55, 0.6, 0.45))
 		S.BROADLEAF:
@@ -688,6 +694,11 @@ static func _build(sp: PlantSpecies, idx: int, lod: int) -> Array:
 			b.branches(3, 0.55, 0.3, 0.8, 0.3)
 			b.crown(Vector3(0.04, 0.82, 0), Vector3(0.6, 0.1, 0.55), 5, leaf, 1.0)
 			b.vines(5, leaf.darkened(0.3))
+		S.PALM when sp.genus in ["Musa", "Ensete"]:
+			# A banana: a soft pseudostem and five or six paddle cards
+			# (design §CA), not palm fronds.
+			b.cylinder(Vector3.ZERO, 0.05, 0.55, 6, wood, 0.0, 0.0)
+			b.herb_leaves(4 if far else 6, 0.55, 0.11, 0.32, 0.12, leaf, wood, 0.9)
 		S.PALM:
 			# The stem holds still (it can be climbed); the fronds sway from
 			# where they leave it.
@@ -823,6 +834,46 @@ class _Builder:
 		var w := twig_phase if mat < 0.5 else -1.0
 		cu.append_array([0.0, 0.0, 0.0, w, 0.0, 0.0, 0.0, w, 0.0, 0.0, 0.0, w])
 
+	## One leaf as a card (design §CA, no blobs): a cluster card standing on
+	## a stalk's `tip`, its tile upright along `up` (the leaf's base at the
+	## tip, its point `2 * h` up), facing `normal`, half `w` wide; the
+	## shader draws the species' leaf cutout at the leaf's size, back-lit.
+	func leaf_card(tip: Vector3, up: Vector3, normal: Vector3, w: float, h: float, col: Color, sway: float, key: float) -> void:
+		var u := up.normalized()
+		var side := u.cross(normal)
+		if side.length() < 1e-4:
+			side = u.cross(Vector3.RIGHT)
+		side = side.normalized()
+		var nrm := side.cross(u).normalized()
+		var center := tip + u * h
+		var a1 := side * w
+		var a2 := u * h
+		var p := [center - a1 - a2, center + a1 - a2, center + a1 + a2, center - a1 + a2]
+		var q := [Vector2(0, 1), Vector2(1, 1), Vector2(1, 0), Vector2(0, 0)]
+		for idx in [[0, 1, 2], [0, 2, 3]]:
+			for jj in idx:
+				v.append(p[jj])
+				n.append(nrm)
+				c.append(Color(col, sway))
+				uv.append(q[jj])
+				uv2.append(Vector2(5.0, twig_phase))
+				parts.append(-1)
+				cu.append_array([center.x, center.y, center.z, key])
+
+	## A giant herb (design §CA: an Alocasia is two to six big heart cards
+	## on stalks, a banana its paddles): `count` petioles from the crown of
+	## the plant, a thin drawn stem each, one upright leaf card at the tip,
+	## leaning out and a little down; no hull.
+	func herb_leaves(count: int, stem_h: float, w: float, h: float, lean: float, leaf: Color, stem: Color, sway: float) -> void:
+		for k in count:
+			var a := TAU * k / count + rng.randf_range(-0.35, 0.35)
+			var out := Vector3(cos(a), 0.0, sin(a))
+			var tip := out * lean + Vector3(0, stem_h * rng.randf_range(0.75, 1.0), 0)
+			strut(Vector3(0, 0.02, 0), tip, 0.014, stem)
+			var up := (Vector3.UP + out * rng.randf_range(0.3, 0.7)).normalized()
+			var nrm := (out - up * out.dot(up)).normalized()
+			leaf_card(tip, up, nrm, w, h, leaf.lightened(rng.randf_range(-0.04, 0.06)), sway, 0.05 + 0.1 * k)
+
 	## A leaf-cluster card (alpha cutout), square with half-size `s`, facing
 	## `facing`, spun randomly.
 	func card(center: Vector3, facing: Vector3, s: float, col: Color, sway: float) -> void:
@@ -900,27 +951,16 @@ class _Builder:
 
 	## A smooth ellipsoid: an icosphere, subdivided like crown lobes (just
 	## an icosahedron when it's small: seed heads, buds).
+	## A rounded mass of leaves: never a sphere (design 1 Oct §CA, no blobs
+	## on any plant): a small one is a single cutout card, a bigger one a
+	## shell of leaf-cluster cards with air between them.
 	func blob(center: Vector3, radii: Vector3, col: Color, sway: float) -> void:
 		part += 1
-		var small := (radii.x + radii.y + radii.z) / 3.0 < 0.12
-		var sphere: Array = PlantMeshes.geosphere(1 if small else freq)
-		var verts: PackedVector3Array = sphere[0]
-		var faces: PackedInt32Array = sphere[1]
-		for f in range(0, faces.size(), 3):
-			var u0 := verts[faces[f]]
-			var u1 := verts[faces[f + 1]]
-			var u2 := verts[faces[f + 2]]
-			# Lighter toward the top, per vertex (a smooth gradient).
-			tri3(center + u0 * radii, center + u1 * radii, center + u2 * radii,
-				col * (0.85 + 0.15 * u0.y), col * (0.85 + 0.15 * u1.y), col * (0.85 + 0.15 * u2.y), sway, sway, sway)
-		# Leaf-cluster cards around the crown break up the round silhouette.
 		var mean_r := (radii.x + radii.y + radii.z) / 3.0
-		if mean_r >= 0.12:
-			var count := 10 if mean_r < 0.3 else 16
-			for i in count:
-				var d := Vector3(rng.randfn(), rng.randfn() * 0.8 + 0.25, rng.randfn()).normalized()
-				var lit := 0.85 + 0.15 * d.y
-				card(center + d * radii * 0.92, d, mean_r * 0.55, col * lit, sway)
+		if mean_r < 0.12:
+			card(center, Vector3(rng.randf_range(-0.4, 0.4), 1.0, rng.randf_range(-0.4, 0.4)), mean_r, col, sway)
+			return
+		cluster_shell(center, radii, col, sway)
 
 	var trunk_top := Vector3.ZERO
 	var trunk_h := 0.5
@@ -1341,10 +1381,19 @@ class _Builder:
 			specs.append([center + dir * radii * 0.62, radii * rng.randf_range(0.5, 0.7), tone])
 		for sp in specs:
 			hang_from.append([sp[0], sp[1]])
+		# No hull on any plant (design 1 Oct §CA): each lobe is a shell of
+		# leaf-cluster cards, open between them, never a smooth ball.
 		for i in specs.size():
-			var others: Array = specs.duplicate()
-			others.remove_at(i)
-			lobe(specs[i][0], specs[i][1], specs[i][2], sway, freq, others)
+			cluster_shell(specs[i][0], specs[i][1], specs[i][2], sway)
+
+	## A lobe's worth of leaf-cluster cards scattered over the shell of an
+	## ellipsoid (centre, radii): the §AJ cards where a hull used to be.
+	func cluster_shell(center: Vector3, radii: Vector3, col: Color, sway: float) -> void:
+		var mean := (radii.x + radii.y + radii.z) / 3.0
+		var count := clampi(int(mean * 16.0), 3, 10) * (1 if far else 2)
+		for i in count:
+			var d := Vector3(rng.randfn(), rng.randfn() * 0.8 + 0.3, rng.randfn()).normalized()
+			cluster(center + d * radii * 0.75, maxf(mean * 0.55, 0.05), 0.8, col * (0.85 + 0.15 * d.y), sway, rng.randf())
 
 	## One icosphere lobe with a lumpy surface and top-lit vertex shading;
 	## faces inside any of `others` ([center, radii, ...]) are skipped.

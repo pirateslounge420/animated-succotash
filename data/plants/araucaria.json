@@ -25,6 +25,9 @@
      0,
      600
     ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST"
+    ],
     "height_m": [
      40.0,
      50.0
@@ -288,6 +291,12 @@
      600,
      1800
     ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST",
+     "TEMPERATE_DECIDUOUS",
+     "VOLCANIC_FIELD",
+     "KRUMMHOLZ"
+    ],
     "height_m": [
      30.0,
      40.0
@@ -545,6 +554,10 @@
     "altitude_m": [
      500,
      1800
+    ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST",
+     "CLOUD_FOREST"
     ],
     "height_m": [
      30.0,
@@ -804,6 +817,11 @@
      0,
      1000
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "CLOUD_FOREST"
+    ],
     "height_m": [
      30.0,
      45.0
@@ -1061,6 +1079,10 @@
     "altitude_m": [
      0,
      300
+    ],
+    "biomes": [
+     "MARITIME_FOREST",
+     "ROCKY_SHORE"
     ],
     "height_m": [
      50.0,

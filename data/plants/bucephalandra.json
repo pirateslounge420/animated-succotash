@@ -28,6 +28,10 @@
      0,
      600
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "FRESHWATER"
+    ],
     "height_m": [
      0.05,
      0.15
@@ -222,6 +226,10 @@
      0,
      500
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "FRESHWATER"
+    ],
     "height_m": [
      0.03,
      0.1
@@ -412,6 +420,10 @@
      0,
      500
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "FRESHWATER"
+    ],
     "height_m": [
      0.1,
      0.3
@@ -601,6 +613,10 @@
     "altitude_m": [
      0,
      500
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "FRESHWATER"
     ],
     "height_m": [
      0.02,

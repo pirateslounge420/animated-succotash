@@ -27,6 +27,10 @@
      1500,
      3200
     ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
+    ],
     "height_m": [
      3.0,
      6.0
@@ -317,6 +321,11 @@
     "altitude_m": [
      1200,
      3000
+    ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON",
+     "HOT_DESERT"
     ],
     "height_m": [
      3.0,
@@ -609,6 +618,11 @@
      1800,
      3400
     ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON",
+     "PUNA"
+    ],
     "height_m": [
      2.0,
      5.0
@@ -899,6 +913,10 @@
     "altitude_m": [
      1000,
      2600
+    ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
     ],
     "height_m": [
      3.0,
@@ -1191,6 +1209,10 @@
      1200,
      3000
     ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
+    ],
     "height_m": [
      3.0,
      6.0
@@ -1480,6 +1502,11 @@
     "altitude_m": [
      2200,
      3400
+    ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON",
+     "PUNA"
     ],
     "height_m": [
      3.0,
@@ -1772,6 +1799,11 @@
      500,
      2600
     ],
+    "biomes": [
+     "THORN_SCRUB",
+     "HOT_DESERT",
+     "CANYON"
+    ],
     "height_m": [
      6.0,
      12.0
@@ -2061,6 +2093,10 @@
     "altitude_m": [
      1500,
      2800
+    ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
     ],
     "height_m": [
      3.0,
@@ -2352,6 +2388,10 @@
      1800,
      2900
     ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
+    ],
     "height_m": [
      3.0,
      5.0
@@ -2641,6 +2681,10 @@
     "altitude_m": [
      1500,
      2800
+    ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
     ],
     "height_m": [
      3.0,
@@ -2932,6 +2976,11 @@
      2500,
      3300
     ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON",
+     "PUNA"
+    ],
     "height_m": [
      3.0,
      5.0
@@ -3221,6 +3270,10 @@
     "altitude_m": [
      1800,
      2800
+    ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
     ],
     "height_m": [
      3.0,
@@ -3512,6 +3565,10 @@
      1500,
      2600
     ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
+    ],
     "height_m": [
      2.0,
      4.0
@@ -3801,6 +3858,10 @@
     "altitude_m": [
      1500,
      2700
+    ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
     ],
     "height_m": [
      3.0,
@@ -4092,6 +4153,10 @@
      1200,
      2800
     ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
+    ],
     "height_m": [
      4.0,
      8.0
@@ -4381,6 +4446,11 @@
     "altitude_m": [
      1200,
      2500
+    ],
+    "biomes": [
+     "THORN_SCRUB",
+     "TROPICAL_DRY_FOREST",
+     "CANYON"
     ],
     "height_m": [
      3.0,
@@ -4672,6 +4742,10 @@
      1200,
      2600
     ],
+    "biomes": [
+     "HOT_DESERT",
+     "CANYON"
+    ],
     "height_m": [
      3.0,
      5.0
@@ -4961,6 +5035,9 @@
     "altitude_m": [
      100,
      1200
+    ],
+    "biomes": [
+     "HOT_DESERT"
     ],
     "height_m": [
      2.0,

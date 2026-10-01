@@ -26,6 +26,10 @@
      1500,
      3600
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "CLOUD_FOREST"
+    ],
     "height_m": [
      10.0,
      20.0
@@ -293,6 +297,9 @@
     "altitude_m": [
      2100,
      3600
+    ],
+    "biomes": [
+     "CLOUD_FOREST"
     ],
     "height_m": [
      8.0,
@@ -564,6 +571,10 @@
      200,
      1800
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FRESHWATER"
+    ],
     "height_m": [
      3.0,
      8.0
@@ -831,6 +842,10 @@
     "altitude_m": [
      1500,
      2800
+    ],
+    "biomes": [
+     "KRUMMHOLZ",
+     "ALPINE_MEADOW"
     ],
     "height_m": [
      0.3,
@@ -1102,6 +1117,10 @@
     "altitude_m": [
      800,
      2400
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "TROPICAL_RAINFOREST"
     ],
     "height_m": [
      1.0,

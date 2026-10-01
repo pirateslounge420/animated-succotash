@@ -10,6 +10,10 @@ Checks the optional new blocks (`leaf`, `bark`, `canopy`, `tint`, `photoperiod`,
 every plant entry: allowed values, types and ranges, exactly as the schema lists them.
 Entries without a block pass unless --strict (the fill is incremental). Exit code 1 on
 any error. Data-fill agents run this before they finish a file.
+
+The biome gate (design 1 Oct §CA): a catalogue entry's `biomes` must name real biome keys
+and is required under --strict. With no file arguments the run ends with the per-biome
+count of species the gate allows and the thin spots (under 3 canopy or 3 ground species).
 """
 import glob
 import json
@@ -17,6 +21,12 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import habitat_lists  # noqa: E402
+
+## The biome gate (design 1 Oct §CA): every catalogue entry's `biomes` must
+## name real biome keys, and is required under --strict.
+BIOME_KEYS = set(habitat_lists.biome_keys())
 
 LEAF_TYPE = {"simple", "compound", "needle", "scale", "strap", "frond", "none"}
 OUTLINE = {"ovate", "elliptic", "oblong", "obovate", "orbicular", "cordate", "sagittate", "hastate",
@@ -387,8 +397,24 @@ def check_fruiting(rep, where, f):
     _enum(rep, where, f, "confidence", CONFIDENCE)
 
 
-def check_entry(rep, where, e, strict):
+def check_biomes(rep, where, e, strict, catalogue):
+    if "biomes" in e:
+        b = e["biomes"]
+        if not (isinstance(b, list) and b and all(isinstance(x, str) for x in b)):
+            rep.err(where, "'biomes' must be a non-empty list of biome keys")
+            return
+        for x in b:
+            if x not in BIOME_KEYS:
+                rep.err(where, "'biomes' names unknown biome '%s'" % x)
+        if len(set(b)) != len(b):
+            rep.err(where, "'biomes' repeats a key")
+    elif strict and catalogue:
+        rep.err(where, "missing 'biomes' (design §CA: a catalogue entry grows nowhere until it is tagged)")
+
+
+def check_entry(rep, where, e, strict, catalogue=False):
     rep.entries += 1
+    check_biomes(rep, where, e, strict, catalogue)
     if "cycle" in e:
         check_cycle(rep, where + ".cycle", e["cycle"])
     if "growth" in e:
@@ -438,8 +464,35 @@ def check_file(path, rep, strict):
         doc = json.load(open(path))
     except Exception as ex:
         rep.err(path, "not valid JSON: %s" % ex); return
+    catalogue = os.path.basename(os.path.dirname(path)) == "plants"
     for where, e in iter_entries(doc):
-        check_entry(rep, "%s :: %s" % (os.path.relpath(path, ROOT), where), e, strict)
+        check_entry(rep, "%s :: %s" % (os.path.relpath(path, ROOT), where), e, strict, catalogue)
+
+
+def report_biomes():
+    """Per biome, how many species the gate allows (by tier), and the thin
+    spots: fewer than 3 canopy or 3 ground species (design §CA: shown to
+    the designer, never filled by loosening tags)."""
+    allowed = habitat_lists.allowed_by_biome()
+    _, unlisted = habitat_lists.listings()
+    print("Species the biome gate allows, per biome (emergent/canopy/shrub/ground/epiphyte):")
+    thin = []
+    for key in habitat_lists.biome_keys():
+        rows = allowed.get(key, [])
+        counts = {t: 0 for t in habitat_lists.TIERS}
+        for _, tier, _ in rows:
+            if tier in counts:
+                counts[tier] += 1
+        print("  %-22s %3d  (%d/%d/%d/%d/%d)" % (key, len(rows), counts["emergent"], counts["canopy"], counts["shrub"], counts["ground"], counts["epiphyte"]))
+        if counts["canopy"] < 3 or counts["ground"] < 3:
+            thin.append("%s (canopy %d, ground %d)" % (key, counts["canopy"], counts["ground"]))
+    print("Thin spots (under 3 canopy or 3 ground species): %d" % len(thin))
+    for t in thin:
+        print("  " + t)
+    if unlisted:
+        print("Catalogue entries with no biomes list (they grow nowhere): %d" % len(unlisted))
+        for n in unlisted[:40]:
+            print("  " + n)
 
 
 def main(argv):
@@ -454,6 +507,8 @@ def main(argv):
     for e in rep.errors:
         print("ERROR", e)
     print("%d entries checked, %d with a leaf block, %d with a bark block, %d errors" % (rep.entries, rep.with_leaf, rep.with_bark, len(rep.errors)))
+    if not [a for a in argv if not a.startswith("--")]:
+        report_biomes()
     return 1 if rep.errors else 0
 
 

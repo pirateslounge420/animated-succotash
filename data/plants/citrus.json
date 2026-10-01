@@ -26,6 +26,11 @@
      0,
      600
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "FLOODPLAIN_FOREST"
+    ],
     "height_m": [
      8.0,
      15.0
@@ -296,6 +301,10 @@
      100,
      1200
     ],
+    "biomes": [
+     "JUNGLE",
+     "TROPICAL_DRY_FOREST"
+    ],
     "height_m": [
      3.0,
      5.0
@@ -564,6 +573,10 @@
     "altitude_m": [
      100,
      1500
+    ],
+    "biomes": [
+     "JUNGLE",
+     "CLOUD_FOREST"
     ],
     "height_m": [
      3.0,
@@ -834,6 +847,10 @@
      500,
      2500
     ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "TEMPERATE_DECIDUOUS"
+    ],
     "height_m": [
      3.0,
      6.0
@@ -1101,6 +1118,10 @@
     "altitude_m": [
      0,
      600
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE"
     ],
     "height_m": [
      2.0,

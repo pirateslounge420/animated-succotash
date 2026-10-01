@@ -25,6 +25,9 @@
      1800,
      3000
     ],
+    "biomes": [
+     "CLOUD_FOREST"
+    ],
     "height_m": [
      40.0,
      60.0
@@ -296,6 +299,11 @@
     "altitude_m": [
      0,
      300
+    ],
+    "biomes": [
+     "BEACH",
+     "CORAL_REEF",
+     "LAGOON"
     ],
     "height_m": [
      15.0,
@@ -571,6 +579,9 @@
      0,
      1200
     ],
+    "biomes": [
+     "OASIS"
+    ],
     "height_m": [
      15.0,
      25.0
@@ -838,6 +849,12 @@
     "altitude_m": [
      0,
      1200
+    ],
+    "biomes": [
+     "SAVANNA",
+     "THORN_SCRUB",
+     "OASIS",
+     "FRESHWATER"
     ],
     "height_m": [
      8.0,
@@ -1110,6 +1127,12 @@
     "altitude_m": [
      0,
      500
+    ],
+    "biomes": [
+     "SWAMP",
+     "FLOODPLAIN_FOREST",
+     "TROPICAL_RAINFOREST",
+     "SAVANNA"
     ],
     "height_m": [
      20.0,

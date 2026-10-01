@@ -66,6 +66,16 @@ var handhold := {}
 ## entries without a `realm`). Tagged, it grows only where the place's
 ## realm is one of these and the place's biome has an association for it.
 var realms := PackedStringArray()
+## The biome gate (design 1 Oct §CA, data/habitat.json): the biomes
+## (BiomeTemplates ids) that list this species: a biome file's plants
+## tiers, its associations' dominant / companion / ground / catalogue
+## lists, and a catalogue entry's own `biomes` list, the union over files.
+## It grows only in them. SpeciesDB.UNLISTED (-1) marks a catalogue entry
+## with no list yet: it grows nowhere until it is tagged (like an untagged
+## realm). Empty only with the gate off.
+var biomes := PackedInt32Array()
+## The data files that list this species (basenames; the walkabout's report).
+var files := PackedStringArray()
 ## Loaded from a catalogue (data/plants/), not a biome file.
 var from_catalogue := false
 ## Its own tiles (design §AH, assets/textures/plants/species/
@@ -106,6 +116,10 @@ var cycle := {}
 ## `appearance.flower` block (spadix colour...), for the bloom's parts.
 var aroid := {}
 var flower := {}
+## A fungus's `fungus` block (substrate, fruit_season...): LitterField
+## fruits the "litter" ones. Read from whichever file lists it (design
+## §CC folded the fungi catalogue into the biome files).
+var fungus := {}
 ## Its species gene ranges (the catalogue's `genes`: size, pattern,
 ## scent, allocation...), 0-1 each, for PlantGenetics' genomes.
 var gene_ranges := {}

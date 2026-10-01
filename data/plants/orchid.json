@@ -28,6 +28,11 @@
      0,
      1200
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA",
+     "BOG"
+    ],
     "height_m": [
      0.15,
      0.4
@@ -212,6 +217,11 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "MEDITERRANEAN_SCRUB",
+     "TEMPERATE_DECIDUOUS",
+     "DUNES"
     ],
     "height_m": [
      0.1,
@@ -398,6 +408,10 @@
      0,
      600
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE"
+    ],
     "height_m": [
      0.2,
      0.5
@@ -581,6 +595,9 @@
      0,
      50
     ],
+    "biomes": [
+     "SWAMP"
+    ],
     "height_m": [
      0.1,
      0.3
@@ -752,6 +769,11 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "SAVANNA",
+     "TROPICAL_DRY_FOREST",
+     "FLOODPLAIN_FOREST"
     ],
     "height_m": [
      0.5,

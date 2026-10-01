@@ -27,6 +27,9 @@
      3200,
      4800
     ],
+    "biomes": [
+     "PUNA"
+    ],
     "height_m": [
      3.0,
      12.0
@@ -274,6 +277,10 @@
      0,
      800
     ],
+    "biomes": [
+     "TROPICAL_DRY_FOREST",
+     "THORN_SCRUB"
+    ],
     "height_m": [
      1.0,
      2.0
@@ -463,6 +470,12 @@
      0,
      1500
     ],
+    "biomes": [
+     "SWAMP",
+     "FLOODPLAIN_FOREST",
+     "MARITIME_FOREST",
+     "TROPICAL_DRY_FOREST"
+    ],
     "height_m": [
      1.0,
      6.0
@@ -645,6 +658,11 @@
     "altitude_m": [
      0,
      2500
+    ],
+    "biomes": [
+     "THORN_SCRUB",
+     "TROPICAL_DRY_FOREST",
+     "SAVANNA"
     ],
     "height_m": [
      0.05,
@@ -829,6 +847,10 @@
      300,
      1500
     ],
+    "biomes": [
+     "TROPICAL_DRY_FOREST",
+     "THORN_SCRUB"
+    ],
     "height_m": [
      0.05,
      0.1
@@ -1011,6 +1033,10 @@
     "altitude_m": [
      1000,
      3000
+    ],
+    "biomes": [
+     "THORN_SCRUB",
+     "CANYON"
     ],
     "height_m": [
      0.1,
@@ -1195,6 +1221,10 @@
      0,
      1000
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE"
+    ],
     "height_m": [
      0.3,
      0.6
@@ -1377,6 +1407,11 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "CLOUD_FOREST"
     ],
     "height_m": [
      0.3,

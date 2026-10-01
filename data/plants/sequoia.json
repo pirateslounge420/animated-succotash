@@ -25,6 +25,10 @@
      0,
      900
     ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST",
+     "FLOODPLAIN_FOREST"
+    ],
     "height_m": [
      70.0,
      115.0
@@ -277,6 +281,9 @@
     "altitude_m": [
      1400,
      2400
+    ],
+    "biomes": [
+     "TAIGA"
     ],
     "height_m": [
      60.0,
@@ -532,6 +539,11 @@
     "altitude_m": [
      700,
      1500
+    ],
+    "biomes": [
+     "FLOODPLAIN_FOREST",
+     "FRESHWATER",
+     "TEMPERATE_DECIDUOUS"
     ],
     "height_m": [
      35.0,

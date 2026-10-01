@@ -15,6 +15,13 @@ class_name SpeciesDB
 ## Each biome file's associations carry a `realm` (or a list, or "any"):
 ## realms_of_biome() is which realms that biome hosts.
 ##
+## The biome gate (design 1 Oct §CA, data/habitat.json): every species
+## records the biomes that list it (`biomes`: a biome file's plants tiers,
+## its associations' dominant / companion / ground / catalogue lists, a
+## catalogue entry's own `biomes` list; the union over files), and
+## VegetationPlacer lets it grow only in those. A catalogue entry with no
+## list is UNLISTED and grows nowhere until the fill tags it.
+##
 ## Temperatures are °C (mean annual; the planet has no seasons). Moisture
 ## is ClimatePass's 0-1 effective moisture.
 ##
@@ -26,6 +33,14 @@ const CATALOGUE_DIR := "res://data/plants"
 const ATLAS_PATH := "res://assets/textures/plants/species/atlas_species.json"
 ## The realm of a catalogue entry that has none yet: no place has it.
 const UNASSIGNED := "unassigned"
+## A catalogue entry with no `biomes` list (design §CA): listed nowhere.
+const UNLISTED := -1
+## data/habitat.json (the biome gate's knobs).
+static var HAB: Dictionary = Tuning.table("habitat")
+## Association listings by species name, applied once every file is
+## loaded (an association's `catalogue` list may name a catalogue species
+## loaded after the biome file).
+static var _assoc_listings := {}
 
 const TIER_NAMES := {"emergent": 0, "canopy": 1, "shrub": 2, "ground": 3, "epiphyte": 4}
 const SOILS := {
@@ -139,6 +154,13 @@ static func _load() -> void:
 		for f in cfiles:
 			if f.ends_with(".json"):
 				_load_catalogue(CATALOGUE_DIR + "/" + f, by_name)
+	# The associations' listings (design §CA), now that every file is in;
+	# a catalogue entry an association names is listed by that biome.
+	for n in _assoc_listings:
+		if by_name.has(n):
+			for bid in (_assoc_listings[n] as PackedInt32Array):
+				_list_in(by_name[n], bid)
+	_assoc_listings.clear()
 	_load_atlas(by_name)
 	# Sport chances and kinds per species (data/sports.json).
 	PlantGenetics.setup(_all)
@@ -175,14 +197,34 @@ static func _load_file(path: String, by_name: Dictionary) -> void:
 				push_warning("SpeciesDB: %s: a %s entry has no name, skipped" % [path, tier_name])
 				continue
 			_add_entry(entry, TIER_NAMES[tier_name], climate, path, by_name)
+			# The biome gate (design §CA): this file lists the species.
+			_list_in(by_name[entry.name], BiomeTemplates.id_of_key(key))
+			# A researched entry copied in from a catalogue (design §CC)
+			# keeps its realm here too: an African acacia listed by the hot
+			# desert still grows only in the hot deserts of its realm.
+			for r in _realm_list(entry.get("realm", "")):
+				var bsp: PlantSpecies = by_name[entry.name]
+				if r != "any" and not bsp.realms.has(r):
+					bsp.realms.append(r)
 			count += 1
 	biome_status[key] = {"status": doc.get("status", ""), "plants": count, "file": path}
 	var realms := PackedStringArray()
+	var roles: Array = HAB.get("association_lists_count", ["dominant", "companion", "ground", "catalogue"])
 	for a in doc.get("associations", []):
 		if a is Dictionary:
 			for r in _realm_list(a.get("realm", "")):
 				if not realms.has(r):
 					realms.append(r)
+			# An association's lists count as listings too (habitat.json
+			# association_lists_count), applied after every file is in.
+			for role in roles:
+				for n in a.get(role, []):
+					if not _assoc_listings.has(str(n)):
+						_assoc_listings[str(n)] = PackedInt32Array()
+					var ids: PackedInt32Array = _assoc_listings[str(n)]
+					var bid := BiomeTemplates.id_of_key(key)
+					if bid >= 0 and not ids.has(bid):
+						ids.append(bid)
 	var id := BiomeTemplates.id_of_key(key)
 	if id >= 0:
 		_biome_realms[id] = realms
@@ -213,6 +255,8 @@ static func _load_catalogue(path: String, by_name: Dictionary) -> void:
 			# (the copies stay authoritative until the designer removes
 			# them, design §AA 1); it only takes the catalogue's realm.
 			var sp: PlantSpecies = by_name[entry.name]
+			if not sp.files.has(path.get_file()):
+				sp.files.append(path.get_file())
 			sp.from_catalogue = sp.from_catalogue or not had
 			var realms := _realm_list(entry.get("realm", ""))
 			for r in realms:
@@ -223,6 +267,19 @@ static func _load_catalogue(path: String, by_name: Dictionary) -> void:
 				# waits for its tag (an old biome copy keeps growing as
 				# its biome file says).
 				sp.realms.append(UNASSIGNED)
+			# The biome gate (design §CA): the entry's own `biomes` list
+			# (its native habitats); the biome files' copies count too.
+			# Untagged and catalogue-only: listed nowhere until the fill
+			# (habitat.json catalogue_needs_biomes).
+			var listed: Array = entry.get("biomes", []) if entry.get("biomes") is Array else []
+			for b in listed:
+				var bid := BiomeTemplates.id_of_key(str(b))
+				if bid < 0:
+					push_warning("SpeciesDB: %s: '%s' names unknown biome '%s'" % [path, entry.name, str(b)])
+				else:
+					_list_in(sp, bid)
+			if listed.is_empty() and not had and bool(HAB.get("catalogue_needs_biomes", true)) and not sp.biomes.has(UNLISTED):
+				sp.biomes.append(UNLISTED)
 			# The catalogue's shared needs (its own came with _add_entry).
 			for need in (shared_needs if not had else []):
 				if NEEDS.has(need) and not sp.needs.has(NEEDS[need]):
@@ -275,6 +332,27 @@ static func realms_of_biome(id: int) -> PackedStringArray:
 	return _biome_realms.get(id, PackedStringArray())
 
 
+## Biome `bid` lists `sp` (design §CA): add it to its biome set; a real
+## listing clears the UNLISTED mark.
+static func _list_in(sp: PlantSpecies, bid: int) -> void:
+	if bid < 0:
+		return
+	var at := sp.biomes.find(UNLISTED)
+	if at >= 0:
+		sp.biomes.remove_at(at)
+	if not sp.biomes.has(bid):
+		sp.biomes.append(bid)
+
+
+## The biomes (keys) that list `sp` (tools and the walkabout).
+static func biome_keys_of(sp: PlantSpecies) -> PackedStringArray:
+	var out := PackedStringArray()
+	for bid in sp.biomes:
+		if bid >= 0 and bid < BiomeTemplates.KEYS.size():
+			out.append(BiomeTemplates.KEYS[bid])
+	return out
+
+
 ## Does biome `id` host realm `realm` (an association tagged with it, or
 ## with "any")?
 static func biome_hosts(id: int, realm: String) -> bool:
@@ -298,6 +376,8 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	if by_name.has(p_name):
 		# Seen in another biome file: widen its range to cover this one too.
 		var sp: PlantSpecies = by_name[p_name]
+		if not sp.files.has(path.get_file()):
+			sp.files.append(path.get_file())
 		sp.temp_c = Vector2(minf(sp.temp_c.x, t.x), maxf(sp.temp_c.y, t.y))
 		sp.moisture = Vector2(minf(sp.moisture.x, m.x), maxf(sp.moisture.y, m.y))
 		sp.altitude_m = Vector2(minf(sp.altitude_m.x, alt.x), maxf(sp.altitude_m.y, alt.y))
@@ -306,6 +386,7 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	var d: Dictionary = TIER_DEFAULTS[tier]
 	var sp := PlantSpecies.new()
 	sp.name = p_name
+	sp.files.append(path.get_file())
 	sp.tier = tier
 	sp.temp_c = t
 	sp.moisture = m
@@ -399,6 +480,8 @@ static func _add_entry(e: Dictionary, tier: int, climate: Dictionary, path: Stri
 	sp.growth = gr if gr is Dictionary else {}
 	var fr = e.get("fruiting", {})
 	sp.fruiting = fr if fr is Dictionary else {}
+	var fu = e.get("fungus", {})
+	sp.fungus = fu if fu is Dictionary else {}
 	by_name[p_name] = sp
 	_all.append(sp)
 

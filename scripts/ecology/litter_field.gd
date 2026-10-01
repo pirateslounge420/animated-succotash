@@ -31,7 +31,7 @@ extends Node3D
 ## slower...). Dry litter turns wet-dark only after rain. What leaves the
 ## humus stage goes into the soil: flora_litter_kg (the flora.litter
 ## ledger; per cell, humus_at()), which soil fertility will read (Phase 7).
-## Litter fungi (data/plants/fungi.json, fungus.substrate "litter") fruit
+## Litter fungi (any species whose `fungus.substrate` is "litter") fruit
 ## on cells in the wet-dark and skeleton stages fungus.fruit_after_rain_days
 ## after rain, in their season and temperature band, for a few days.
 ##
@@ -387,19 +387,17 @@ static var _litter_sp: Array = []
 static var _fungus := {}
 
 
-## The catalogue's fungi with fungus.substrate "litter".
+## The fungi with fungus.substrate "litter", from every loaded file (the
+## biome files carry them since the §CC trim archived the fungi catalogue).
 static func _litter_species() -> Array:
 	if not _litter_sp.is_empty():
 		return _litter_sp
-	var doc = JSON.parse_string(FileAccess.get_file_as_string("res://data/plants/fungi.json"))
-	if doc is Dictionary:
-		for tier in doc.get("plants", {}):
-			for e in doc.plants[tier]:
-				if e is Dictionary and (e.get("fungus", {}) as Dictionary).get("substrate", "") == "litter":
-					var sp := SpeciesDB.find(str(e.name))
-					if sp:
-						_fungus[SpeciesDB.index_of(sp)] = e.fungus
-						_litter_sp.append(SpeciesDB.index_of(sp))
+	var all := SpeciesDB.all()
+	for i in all.size():
+		var sp: PlantSpecies = all[i]
+		if str(sp.fungus.get("substrate", "")) == "litter":
+			_fungus[i] = sp.fungus
+			_litter_sp.append(i)
 	return _litter_sp
 
 

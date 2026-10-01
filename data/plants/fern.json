@@ -27,6 +27,9 @@
      0,
      600
     ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST"
+    ],
     "height_m": [
      6.0,
      10.0
@@ -242,6 +245,11 @@
      0,
      1200
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "CLOUD_FOREST"
+    ],
     "height_m": [
      6.0,
      12.0
@@ -456,6 +464,10 @@
     "altitude_m": [
      0,
      1000
+    ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST",
+     "CLOUD_FOREST"
     ],
     "height_m": [
      4.0,
@@ -674,6 +686,15 @@
      0,
      3000
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA",
+     "TEMPERATE_RAINFOREST",
+     "MEDITERRANEAN_SCRUB",
+     "CLOUD_FOREST",
+     "DUNES",
+     "VOLCANIC_FIELD"
+    ],
     "height_m": [
      0.5,
      2.0
@@ -860,6 +881,9 @@
      0,
      1500
     ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST"
+    ],
     "height_m": [
      0.5,
      1.5
@@ -1042,6 +1066,13 @@
     "altitude_m": [
      0,
      2500
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TEMPERATE_RAINFOREST",
+     "TAIGA",
+     "FLOODPLAIN_FOREST",
+     "FEN"
     ],
     "height_m": [
      0.4,
@@ -1227,6 +1258,12 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA",
+     "FRESHWATER"
     ],
     "height_m": [
      1.0,
@@ -1414,6 +1451,12 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "BOG",
+     "FEN",
+     "SWAMP",
+     "FRESHWATER"
     ],
     "height_m": [
      1.0,
@@ -1606,6 +1649,13 @@
      0,
      2500
     ],
+    "biomes": [
+     "CANYON",
+     "OASIS",
+     "HOT_SPRING",
+     "CAVES",
+     "MEDITERRANEAN_SCRUB"
+    ],
     "height_m": [
      0.1,
      0.4
@@ -1791,6 +1841,11 @@
      0,
      2000
     ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST",
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA"
+    ],
     "height_m": [
      0.2,
      0.6
@@ -1974,6 +2029,11 @@
      0,
      2000
     ],
+    "biomes": [
+     "FRESHWATER",
+     "FRESHWATER_MARSH",
+     "SWAMP"
+    ],
     "height_m": [
      0.01,
      0.02
@@ -2147,6 +2207,11 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "CLOUD_FOREST"
     ],
     "height_m": [
      0.5,
@@ -2327,6 +2392,10 @@
      0,
      1200
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE"
+    ],
     "height_m": [
      0.5,
      1.0
@@ -2506,6 +2575,13 @@
     "altitude_m": [
      0,
      800
+    ],
+    "biomes": [
+     "MARITIME_FOREST",
+     "SWAMP",
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_DECIDUOUS",
+     "TROPICAL_DRY_FOREST"
     ],
     "height_m": [
      0.05,
@@ -2689,6 +2765,11 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "JUNGLE",
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST"
     ],
     "height_m": [
      2.0,
@@ -2923,6 +3004,13 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "TROPICAL_DRY_FOREST",
+     "VOLCANIC_FIELD",
+     "MARITIME_FOREST"
     ],
     "height_m": [
      0.1,

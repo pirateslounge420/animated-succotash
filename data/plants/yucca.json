@@ -25,6 +25,11 @@
      0,
      300
     ],
+    "biomes": [
+     "DUNES",
+     "BEACH",
+     "MARITIME_FOREST"
+    ],
     "height_m": [
      1.5,
      5.0
@@ -299,6 +304,9 @@
     "altitude_m": [
      600,
      1800
+    ],
+    "biomes": [
+     "HOT_DESERT"
     ],
     "height_m": [
      4.0,
@@ -575,6 +583,10 @@
      1200,
      2500
     ],
+    "biomes": [
+     "HOT_DESERT",
+     "THORN_SCRUB"
+    ],
     "height_m": [
      4.0,
      10.0
@@ -849,6 +861,11 @@
     "altitude_m": [
      300,
      2000
+    ],
+    "biomes": [
+     "SHORTGRASS_PRAIRIE",
+     "BADLANDS",
+     "DUNES"
     ],
     "height_m": [
      0.4,

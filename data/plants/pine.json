@@ -26,6 +26,13 @@
      0,
      2600
     ],
+    "biomes": [
+     "TAIGA",
+     "BOG",
+     "TEMPERATE_DECIDUOUS",
+     "KRUMMHOLZ",
+     "DUNES"
+    ],
     "height_m": [
      20.0,
      35.0
@@ -297,6 +304,11 @@
     "altitude_m": [
      0,
      600
+    ],
+    "biomes": [
+     "MEDITERRANEAN_SCRUB",
+     "DUNES",
+     "MARITIME_FOREST"
     ],
     "height_m": [
      15.0,
@@ -572,6 +584,11 @@
      300,
      2700
     ],
+    "biomes": [
+     "TAIGA",
+     "CANYON",
+     "MEDITERRANEAN_SCRUB"
+    ],
     "height_m": [
      30.0,
      50.0
@@ -843,6 +860,12 @@
     "altitude_m": [
      0,
      3500
+    ],
+    "biomes": [
+     "TAIGA",
+     "KRUMMHOLZ",
+     "BOG",
+     "DUNES"
     ],
     "height_m": [
      20.0,
@@ -1116,6 +1139,9 @@
     "altitude_m": [
      2600,
      3600
+    ],
+    "biomes": [
+     "KRUMMHOLZ"
     ],
     "height_m": [
      5.0,

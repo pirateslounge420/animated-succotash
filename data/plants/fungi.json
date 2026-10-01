@@ -22,6 +22,13 @@
      0.45,
      0.95
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TEMPERATE_RAINFOREST",
+     "FLOODPLAIN_FOREST",
+     "MARITIME_FOREST",
+     "TAIGA"
+    ],
     "height_m": [
      0.03,
      0.1
@@ -200,6 +207,11 @@
     "moisture": [
      0.45,
      0.95
+    ],
+    "biomes": [
+     "TAIGA",
+     "TEMPERATE_DECIDUOUS",
+     "KRUMMHOLZ"
     ],
     "height_m": [
      0.1,
@@ -380,6 +392,11 @@
      0.5,
      0.95
     ],
+    "biomes": [
+     "TAIGA",
+     "TEMPERATE_DECIDUOUS",
+     "KRUMMHOLZ"
+    ],
     "height_m": [
      0.08,
      0.25
@@ -559,6 +576,11 @@
      0.45,
      0.9
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "MARITIME_FOREST"
+    ],
     "height_m": [
      0.1,
      0.4
@@ -737,6 +759,12 @@
     "moisture": [
      0.5,
      0.95
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_RAINFOREST",
+     "MARITIME_FOREST"
     ],
     "height_m": [
      0.05,
@@ -921,6 +949,12 @@
      0.5,
      0.95
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_RAINFOREST",
+     "TAIGA"
+    ],
     "height_m": [
      0.05,
      0.2
@@ -1099,6 +1133,10 @@
     "moisture": [
      0.55,
      0.95
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "CLOUD_FOREST"
     ],
     "height_m": [
      0.05,
@@ -1279,6 +1317,12 @@
      0.5,
      0.95
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA",
+     "TEMPERATE_RAINFOREST",
+     "FLOODPLAIN_FOREST"
+    ],
     "height_m": [
      0.02,
      0.06
@@ -1457,6 +1501,11 @@
     "moisture": [
      0.5,
      0.95
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "TAIGA"
     ],
     "height_m": [
      0.02,
@@ -1637,6 +1686,12 @@
      0.45,
      0.95
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_RAINFOREST",
+     "TAIGA"
+    ],
     "height_m": [
      0.15,
      0.5
@@ -1815,6 +1870,11 @@
     "moisture": [
      0.55,
      0.95
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "JUNGLE"
     ],
     "height_m": [
      0.05,
@@ -1995,6 +2055,10 @@
      0.5,
      0.95
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST"
+    ],
     "height_m": [
      0.1,
      0.4
@@ -2173,6 +2237,12 @@
     "moisture": [
      0.45,
      0.95
+    ],
+    "biomes": [
+     "TAIGA",
+     "TEMPERATE_RAINFOREST",
+     "KRUMMHOLZ",
+     "TEMPERATE_DECIDUOUS"
     ],
     "height_m": [
      0.1,
@@ -2353,6 +2423,10 @@
      0.5,
      0.9
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "MEDITERRANEAN_SCRUB"
+    ],
     "height_m": [
      0.1,
      0.25
@@ -2531,6 +2605,10 @@
     "moisture": [
      0.5,
      0.95
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST"
     ],
     "height_m": [
      0.1,
@@ -2711,6 +2789,10 @@
      0.55,
      0.95
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA"
+    ],
     "height_m": [
      0.1,
      0.3
@@ -2889,6 +2971,17 @@
     "moisture": [
      0.3,
      0.95
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "MEDITERRANEAN_SCRUB",
+     "TROPICAL_DRY_FOREST",
+     "SAVANNA",
+     "THORN_SCRUB",
+     "JUNGLE",
+     "TROPICAL_RAINFOREST",
+     "TAIGA"
     ],
     "height_m": [
      0.01,
@@ -3069,6 +3162,11 @@
      0.6,
      1.0
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "TROPICAL_DRY_FOREST"
+    ],
     "height_m": [
      0.03,
      0.12
@@ -3247,6 +3345,10 @@
     "moisture": [
      0.45,
      0.9
+    ],
+    "biomes": [
+     "MEDITERRANEAN_SCRUB",
+     "TEMPERATE_RAINFOREST"
     ],
     "height_m": [
      0.05,
@@ -3431,6 +3533,10 @@
      0.5,
      0.9
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "MARITIME_FOREST"
+    ],
     "height_m": [
      0.05,
      0.15
@@ -3614,6 +3720,12 @@
      0.4,
      0.9
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "MEDITERRANEAN_SCRUB",
+     "TROPICAL_DRY_FOREST"
+    ],
     "height_m": [
      0.03,
      0.1
@@ -3792,6 +3904,12 @@
     "moisture": [
      0.4,
      0.8
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "SHORTGRASS_PRAIRIE",
+     "STEPPE",
+     "DUNES"
     ],
     "height_m": [
      0.02,
@@ -3972,6 +4090,11 @@
      0.5,
      0.95
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_RAINFOREST"
+    ],
     "height_m": [
      0.005,
      0.015
@@ -4150,6 +4273,12 @@
     "moisture": [
      0.4,
      0.85
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "STEPPE",
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST"
     ],
     "height_m": [
      0.05,
@@ -4330,6 +4459,11 @@
      0.5,
      0.9
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST",
+     "TEMPERATE_RAINFOREST"
+    ],
     "height_m": [
      0.04,
      0.1
@@ -4508,6 +4642,12 @@
     "moisture": [
      0.35,
      0.75
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "TEMPERATE_DECIDUOUS",
+     "MEDITERRANEAN_SCRUB",
+     "DUNES"
     ],
     "height_m": [
      0.1,
@@ -4688,6 +4828,12 @@
      0.45,
      0.9
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA",
+     "TEMPERATE_RAINFOREST",
+     "FLOODPLAIN_FOREST"
+    ],
     "height_m": [
      0.02,
      0.06
@@ -4866,6 +5012,11 @@
     "moisture": [
      0.45,
      0.8
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "WET_MEADOW",
+     "FLOODPLAIN_FOREST"
     ],
     "height_m": [
      0.2,
@@ -5046,6 +5197,10 @@
      0.5,
      0.9
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "MEDITERRANEAN_SCRUB"
+    ],
     "height_m": [
      0.05,
      0.12
@@ -5224,6 +5379,12 @@
     "moisture": [
      0.5,
      0.95
+    ],
+    "biomes": [
+     "TAIGA",
+     "TEMPERATE_DECIDUOUS",
+     "KRUMMHOLZ",
+     "TEMPERATE_RAINFOREST"
     ],
     "height_m": [
      0.05,
@@ -5404,6 +5565,12 @@
      0.5,
      0.9
     ],
+    "biomes": [
+     "TAIGA",
+     "TEMPERATE_DECIDUOUS",
+     "TEMPERATE_RAINFOREST",
+     "KRUMMHOLZ"
+    ],
     "height_m": [
      0.06,
      0.25
@@ -5582,6 +5749,11 @@
     "moisture": [
      0.55,
      0.95
+    ],
+    "biomes": [
+     "TAIGA",
+     "TEMPERATE_DECIDUOUS",
+     "TEMPERATE_RAINFOREST"
     ],
     "height_m": [
      0.03,
@@ -5762,6 +5934,11 @@
      0.5,
      0.9
     ],
+    "biomes": [
+     "TAIGA",
+     "MEDITERRANEAN_SCRUB",
+     "TEMPERATE_DECIDUOUS"
+    ],
     "height_m": [
      0.04,
      0.12
@@ -5940,6 +6117,10 @@
     "moisture": [
      0.5,
      0.9
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA"
     ],
     "height_m": [
      0.05,
@@ -6120,6 +6301,10 @@
      0.4,
      0.7
     ],
+    "biomes": [
+     "MEDITERRANEAN_SCRUB",
+     "TEMPERATE_DECIDUOUS"
+    ],
     "height_m": [
      0.02,
      0.08
@@ -6298,6 +6483,10 @@
     "moisture": [
      0.45,
      0.85
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST"
     ],
     "height_m": [
      0.04,
@@ -6478,6 +6667,10 @@
      0.4,
      0.85
     ],
+    "biomes": [
+     "TAIGA",
+     "KRUMMHOLZ"
+    ],
     "height_m": [
      0.04,
      0.12
@@ -6656,6 +6849,14 @@
     "moisture": [
      0.4,
      0.9
+    ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "SHORTGRASS_PRAIRIE",
+     "STEPPE",
+     "SAVANNA",
+     "WET_MEADOW",
+     "ALPINE_MEADOW"
     ],
     "height_m": [
      0.01,
@@ -6836,6 +7037,13 @@
      0.5,
      0.95
     ],
+    "biomes": [
+     "TALLGRASS_PRAIRIE",
+     "STEPPE",
+     "WET_MEADOW",
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST"
+    ],
     "height_m": [
      0.02,
      0.08
@@ -7015,6 +7223,12 @@
      0.5,
      0.95
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA",
+     "TEMPERATE_RAINFOREST",
+     "FLOODPLAIN_FOREST"
+    ],
     "height_m": [
      0.01,
      0.03
@@ -7193,6 +7407,10 @@
     "moisture": [
      0.7,
      1.0
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE"
     ],
     "height_m": [
      0.01,
@@ -7377,6 +7595,10 @@
      0.7,
      1.0
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "CLOUD_FOREST"
+    ],
     "height_m": [
      0.005,
      0.02
@@ -7559,6 +7781,10 @@
     "moisture": [
      0.7,
      1.0
+    ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE"
     ],
     "height_m": [
      0.01,

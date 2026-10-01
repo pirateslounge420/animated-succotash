@@ -26,6 +26,11 @@
      0,
      1800
     ],
+    "biomes": [
+     "SAVANNA",
+     "THORN_SCRUB",
+     "HOT_DESERT"
+    ],
     "height_m": [
      5.0,
      15.0
@@ -311,6 +316,12 @@
      0,
      1800
     ],
+    "biomes": [
+     "SAVANNA",
+     "FLOODPLAIN_FOREST",
+     "FRESHWATER",
+     "SWAMP"
+    ],
     "height_m": [
      10.0,
      25.0
@@ -593,6 +604,11 @@
     "altitude_m": [
      700,
      1500
+    ],
+    "biomes": [
+     "SAVANNA",
+     "THORN_SCRUB",
+     "HOT_DESERT"
     ],
     "height_m": [
      8.0,
@@ -877,6 +893,10 @@
      100,
      900
     ],
+    "biomes": [
+     "THORN_SCRUB",
+     "HOT_DESERT"
+    ],
     "height_m": [
      4.0,
      10.0
@@ -1156,6 +1176,9 @@
     "altitude_m": [
      600,
      2000
+    ],
+    "biomes": [
+     "SAVANNA"
     ],
     "height_m": [
      2.0,

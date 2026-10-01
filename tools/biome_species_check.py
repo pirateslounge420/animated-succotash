@@ -9,7 +9,9 @@ For each data/biomes/*.json:
   - association members must resolve to a plant in the same file;
   - deciduous species (tint.drop) in biomes with no cold or dry season (tropical
     rainforest, cloud forest, mangrove, coral...) are flagged for a botanical look.
-Prints a report; exit 1 on hard mismatches.
+Prints a report; exit 1 on hard mismatches. Then, per biome (or the biome keys given as
+arguments), the full list of species the biome gate (design §CA) allows there, with tier
+and file.
 """
 import glob, json, os, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -70,4 +72,36 @@ for f in sorted(glob.glob(os.path.join(ROOT, "data", "biomes", "*.json"))):
 print("HARD (%d):" % len(hard)); [print("  " + h) for h in hard]
 print("SOFT (%d):" % len(soft)); [print("  " + s) for s in soft[:80]]
 if len(soft) > 80: print("  ... %d more" % (len(soft) - 80))
+
+# The biome gate (design 1 Oct §CA): per biome, every species the gate now
+# allows there (file + tier), the way SpeciesDB reads the data.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import habitat_lists  # noqa: E402
+allowed = habitat_lists.allowed_by_biome()
+only = [a for a in sys.argv[1:] if not a.startswith("-")]
+import plant_trim  # noqa: E402
+entries_by_name = {}
+for fname, key, tier, e, d in plant_trim.load_all():
+    entries_by_name.setdefault(e.get("name"), (fname, tier, e))
+print("\nSPECIES THE BIOME GATE ALLOWS, PER BIOME, BY CATEGORY (design §CA, §CC; name [tier, file]):")
+grand_species = set()
+grand_entries = 0
+for key in habitat_lists.biome_keys():
+    rows = allowed.get(key, [])
+    grand_species.update(n for n, _, _ in rows)
+    if only and key not in only:
+        continue
+    by_cat = {}
+    for name, tier, files in rows:
+        fname, etier, e = entries_by_name.get(name, (files.split("+")[0], tier, {}))
+        cat, _ = plant_trim.category_of(e, etier, fname)
+        by_cat.setdefault(cat, []).append("%s [%s, %s]" % (name, tier, files))
+    counts = ", ".join("%s %d" % (c, len(by_cat[c])) for c in plant_trim.CATS + ["none"] if by_cat.get(c))
+    print("%s (%d species: %s):" % (key, len(rows), counts))
+    for c in plant_trim.CATS + ["none"]:
+        for line in by_cat.get(c, []):
+            print("  %-7s %s" % (c, line))
+for fname, key, tier, e, d in plant_trim.load_all():
+    grand_entries += 1
+print("GRAND TOTAL: %d entries in data/biomes and data/plants, %d species the gate allows somewhere" % (grand_entries, len(grand_species)))
 sys.exit(1 if hard else 0)

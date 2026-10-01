@@ -81,7 +81,8 @@ func _build_lamp(rec: Dictionary) -> Node3D:
 	l.position = Vector3(0, 0.12, 0)
 	n.add_child(l)
 	var flame := Torch.flame_node(0.12)
-	flame.position = Vector3(0, 0.1, 0)
+	# Its base in the dish's fat (the dish is 0.06 tall at y 0.05; §CA).
+	flame.position = Vector3(0, 0.07, 0)
 	n.add_child(flame)
 	n.set_meta("rec", rec)
 	_built[_key(rec, "lamp")] = n

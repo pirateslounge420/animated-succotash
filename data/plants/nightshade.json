@@ -27,6 +27,13 @@
      0,
      2000
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TALLGRASS_PRAIRIE",
+     "MEDITERRANEAN_SCRUB",
+     "TROPICAL_DRY_FOREST",
+     "FLOODPLAIN_FOREST"
+    ],
     "height_m": [
      0.6,
      1.5
@@ -301,6 +308,11 @@
      0,
      2200
     ],
+    "biomes": [
+     "HOT_DESERT",
+     "CANYON",
+     "MEDITERRANEAN_SCRUB"
+    ],
     "height_m": [
      0.5,
      1.2
@@ -574,6 +586,11 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "TROPICAL_DRY_FOREST",
+     "JUNGLE",
+     "THORN_SCRUB"
     ],
     "height_m": [
      0.8,
@@ -851,6 +868,12 @@
      0,
      1800
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "CLOUD_FOREST",
+     "FLOODPLAIN_FOREST"
+    ],
     "height_m": [
      3.0,
      5.0
@@ -1121,6 +1144,10 @@
     "altitude_m": [
      1800,
      3200
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "PARAMO"
     ],
     "height_m": [
      2.5,
@@ -1394,6 +1421,10 @@
      2000,
      3000
     ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "PUNA"
+    ],
     "height_m": [
      3.0,
      7.0
@@ -1663,6 +1694,11 @@
     "altitude_m": [
      0,
      1000
+    ],
+    "biomes": [
+     "FLOODPLAIN_FOREST",
+     "JUNGLE",
+     "TROPICAL_RAINFOREST"
     ],
     "height_m": [
      3.0,

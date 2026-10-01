@@ -98,17 +98,30 @@ func _run() -> void:
 					continue
 				sites.append({"name": "random_%s" % pick.key.to_lower(), "dir": pick.dir})
 	# Walk them.
+	# walkabout.txt grows a site at a time, so a run cut short keeps
+	# what it saw.
+	if OS.get_environment("RESET") == "1":
+		var f0 := FileAccess.open(ProjectSettings.globalize_path(OUT_DIR.path_join("walkabout.txt")), FileAccess.WRITE)
+		f0 = null
+	_flush()
 	for site in sites:
 		await _visit(site, hours, facings, spawn_days)
+		_flush()
 	lines.append("RESULT seed %d fails: %d" % [sd, fails])
+	_flush()
+	print("RESULT fails: %d" % fails)
+	quit(1 if fails > 0 else 0)
+
+
+## Append the lines gathered so far to walkabout.txt and clear them.
+func _flush() -> void:
 	var path := ProjectSettings.globalize_path(OUT_DIR.path_join("walkabout.txt"))
-	var f := FileAccess.open(path, FileAccess.READ_WRITE if FileAccess.file_exists(path) and OS.get_environment("RESET") != "1" else FileAccess.WRITE)
+	var f := FileAccess.open(path, FileAccess.READ_WRITE if FileAccess.file_exists(path) else FileAccess.WRITE)
 	if f:
 		f.seek_end()
 		for l in lines:
 			f.store_line(l)
-	print("RESULT fails: %d" % fails)
-	quit(1 if fails > 0 else 0)
+	lines.clear()
 
 
 ## A savanna, a forest and a wetland, rotated by seed so every run has
@@ -170,7 +183,24 @@ func _down_the_road(d: Vector3, m: float) -> Dictionary:
 	if total < m:
 		note += " (a short link, %.0f m long: its end)" % total
 		target = total if at < total * 0.5 else 0.0
-	return {"dir": RoadNetwork.point_at(pts, target), "note": note}
+	# A road can run to a shore or a ford: a frame under water shows no
+	# plants, so step back along the road toward the camp, 50 m at a time,
+	# to the first dry ground.
+	var p := RoadNetwork.point_at(pts, target)
+	var back := 0
+	while not _dry(p) and absf(target - at) > 50.0:
+		target += -50.0 if target > at else 50.0
+		back += 1
+		p = RoadNetwork.point_at(pts, target)
+	if back > 0:
+		note += " (water there: %d m back toward the camp)" % (back * 50)
+	return {"dir": p, "note": note}
+
+
+## Dry land: a cell with no water on it and ground above the sea.
+func _dry(d: Vector3) -> bool:
+	var map: PlanetData = world.planet
+	return map.water[map.cell_at(d)] == PlanetData.Water.NONE and world.surface_elevation(d) > PlanetConst.SEA_LEVEL_M + 0.5
 
 
 func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> void:
@@ -188,12 +218,19 @@ func _visit(site: Dictionary, hours: Array, facings: int, spawn_days: float) -> 
 	await _frames(20)
 	# Wait for the chunk's near plants (the leaf cards, not the far
 	# pictures), as play has them within seconds on a GPU.
+	# Bounded by the clock, not frames: the software renderer draws about
+	# a frame a second, so a frame count would wait an hour.
 	var ck: Vector3i = TerrainChunk.key_at(d)
-	for i in 3000:
+	var t0 := Time.get_ticks_msec()
+	var detail := false
+	while Time.get_ticks_msec() - t0 < int(W.get("detail_wait_s", 240.0) * 1000.0):
 		var c: TerrainChunk = main.chunks.chunks.get(ck, null)
 		if c != null and c.plant_lod(c) != PlantMeshes.LOD_FAR and c.detail_node != null:
+			detail = true
 			break
 		await process_frame
+	if not detail:
+		site["note"] = (str(site.note) + " · " if site.has("note") else "") + "near plants not in after %d s" % ((Time.get_ticks_msec() - t0) / 1000)
 	await _frames(10)
 	lines.append("-- %s: %s · %s soil · %.2f°%s %.2f°%s%s" % [site.name, biome_key, soil, absf(rad_to_deg(map.lat[cell])), "N" if map.lat[cell] >= 0.0 else "S", absf(rad_to_deg(CubeSphere.longitude(d))), "E" if CubeSphere.longitude(d) >= 0.0 else "W", (" · " + str(site.note)) if site.has("note") else ""])
 	# The species within reach, and the gate's verdict on each.

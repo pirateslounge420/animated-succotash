@@ -28,6 +28,10 @@
      0,
      1500
     ],
+    "biomes": [
+     "BOG",
+     "FEN"
+    ],
     "height_m": [
      0.1,
      0.3
@@ -215,6 +219,10 @@
     "altitude_m": [
      0,
      200
+    ],
+    "biomes": [
+     "BOG",
+     "WET_MEADOW"
     ],
     "height_m": [
      0.4,
@@ -406,6 +414,10 @@
      0,
      100
     ],
+    "biomes": [
+     "BOG",
+     "WET_MEADOW"
+    ],
     "height_m": [
      0.4,
      0.9
@@ -596,6 +608,10 @@
      0,
      100
     ],
+    "biomes": [
+     "BOG",
+     "WET_MEADOW"
+    ],
     "height_m": [
      0.05,
      0.2
@@ -783,6 +799,9 @@
     "altitude_m": [
      1500,
      2650
+    ],
+    "biomes": [
+     "CLOUD_FOREST"
     ],
     "height_m": [
      0.3,
@@ -982,6 +1001,11 @@
      0,
      1100
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "SWAMP"
+    ],
     "height_m": [
      1.0,
      5.0
@@ -1176,6 +1200,12 @@
      0,
      1500
     ],
+    "biomes": [
+     "TROPICAL_RAINFOREST",
+     "JUNGLE",
+     "SWAMP",
+     "FRESHWATER_MARSH"
+    ],
     "height_m": [
      1.0,
      6.0
@@ -1369,6 +1399,10 @@
     "altitude_m": [
      0,
      2000
+    ],
+    "biomes": [
+     "BOG",
+     "FEN"
     ],
     "height_m": [
      0.02,
@@ -1568,6 +1602,10 @@
      0,
      1200
     ],
+    "biomes": [
+     "MEDITERRANEAN_SCRUB",
+     "FRESHWATER"
+    ],
     "height_m": [
      0.1,
      0.3
@@ -1761,6 +1799,11 @@
     "altitude_m": [
      0,
      1200
+    ],
+    "biomes": [
+     "BOG",
+     "FRESHWATER_MARSH",
+     "FRESHWATER"
     ],
     "height_m": [
      0.2,
@@ -1959,6 +2002,11 @@
      0,
      500
     ],
+    "biomes": [
+     "BOG",
+     "MEDITERRANEAN_SCRUB",
+     "DUNES"
+    ],
     "height_m": [
      0.005,
      0.02
@@ -2154,6 +2202,10 @@
     "altitude_m": [
      0,
      60
+    ],
+    "biomes": [
+     "BOG",
+     "WET_MEADOW"
     ],
     "height_m": [
      0.05,
@@ -2352,6 +2404,9 @@
     "altitude_m": [
      1600,
      2600
+    ],
+    "biomes": [
+     "CLOUD_FOREST"
     ],
     "height_m": [
      0.3,

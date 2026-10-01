@@ -26,6 +26,11 @@
      0,
      300
     ],
+    "biomes": [
+     "FLOODPLAIN_FOREST",
+     "MARITIME_FOREST",
+     "TEMPERATE_DECIDUOUS"
+    ],
     "height_m": [
      20.0,
      30.0
@@ -292,6 +297,9 @@
     "altitude_m": [
      300,
      1200
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS"
     ],
     "height_m": [
      10.0,
@@ -562,6 +570,9 @@
      1800,
      3000
     ],
+    "biomes": [
+     "CLOUD_FOREST"
+    ],
     "height_m": [
      20.0,
      30.0
@@ -830,6 +841,10 @@
     "altitude_m": [
      0,
      1000
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "FLOODPLAIN_FOREST"
     ],
     "height_m": [
      35.0,

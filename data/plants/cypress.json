@@ -26,6 +26,11 @@
      0,
      200
     ],
+    "biomes": [
+     "SWAMP",
+     "FLOODPLAIN_FOREST",
+     "FRESHWATER"
+    ],
     "height_m": [
      25.0,
      40.0
@@ -289,6 +294,10 @@
     "altitude_m": [
      300,
      2500
+    ],
+    "biomes": [
+     "FRESHWATER",
+     "FLOODPLAIN_FOREST"
     ],
     "height_m": [
      25.0,
@@ -554,6 +563,9 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "MEDITERRANEAN_SCRUB"
     ],
     "height_m": [
      20.0,
@@ -822,6 +834,10 @@
      0,
      100
     ],
+    "biomes": [
+     "ROCKY_SHORE",
+     "MARITIME_FOREST"
+    ],
     "height_m": [
      15.0,
      25.0
@@ -1086,6 +1102,10 @@
     "altitude_m": [
      0,
      1500
+    ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST",
+     "FRESHWATER"
     ],
     "height_m": [
      40.0,

@@ -7,7 +7,8 @@
   "giant_chance": "Chance an emergent tree is a giant, taller than its band (x giant_scale). Old growth: about one in four emergents.",
   "growth_floor": "Trees are placed at least this far through their life (0-1, PlantMeshes.stand_in_growth): full crowns everywhere, thinning a little on the oldest.",
   "shrub_pow": "Shrubs and ground plants: exponent on the roll across their band (1 = even; below 1 favours big).",
-  "dominance": "Design 30 Sept §BH: each stand picks one dominant species and weights it hard; 1-3 associates; a rare accent. The species salad only in salad_biomes (tropical rainforest, jungle, cloud forest), where salad_dominant_share applies instead. Stand size on the room scale. Does not cut the catalogue; changes how it is drawn from."
+  "dominance": "Design 30 Sept §BH: each stand picks one dominant species and weights it hard; 1-3 associates; a rare accent. The species salad only in salad_biomes (tropical rainforest, jungle, cloud forest), where salad_dominant_share applies instead. Stand size on the room scale. Does not cut the catalogue; changes how it is drawn from.",
+  "size_scale": "Added by code (1 Oct, VegetationPlacer.SIZE_SCALE): how much larger than its species band a plant grows, per tier. Trees 1.0 since Mike found 45 m she-oaks at the first camp (the old 1.45 / 1.3 of the epic-woods pass); shrubs, ground cover and epiphytes keep 1.2. The designer owns these."
  },
  "mode": "old_growth",
  "old_share": 0.82,
@@ -42,5 +43,12 @@
   ],
   "salad_dominant_share": 0.25,
   "understory_follows_dominant": true
+ },
+ "size_scale": {
+  "emergent": 1.0,
+  "canopy": 1.0,
+  "shrub": 1.2,
+  "ground": 1.2,
+  "epiphyte": 1.2
  }
 }

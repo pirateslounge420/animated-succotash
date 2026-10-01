@@ -57,7 +57,9 @@ func setup(p: PlanetPlayer) -> void:
 	stick.rotation = Vector3(0.35, 0.0, -0.25)
 	_view.add_child(stick)
 	_view_flame = flame_node(0.2)
-	_view_flame.position = Vector3(0.05, 0.22, -0.07)
+	# At the stick's head: its top end, the card's foot a little into the
+	# wood so the flame grows out of it (Mike, 1 Oct: it floated beside it).
+	_view_flame.position = stick.transform * Vector3(0, cm.height * 0.5 - 0.02, 0)
 	_view.add_child(_view_flame)
 	_view.position = Vector3(0.34, -0.3, -0.56)
 	Bow._no_shadow(_view)

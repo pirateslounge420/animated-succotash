@@ -26,6 +26,11 @@
      0,
      1500
     ],
+    "biomes": [
+     "SAVANNA",
+     "THORN_SCRUB",
+     "TROPICAL_DRY_FOREST"
+    ],
     "height_m": [
      15.0,
      25.0
@@ -298,6 +303,9 @@
     "altitude_m": [
      0,
      300
+    ],
+    "biomes": [
+     "TROPICAL_DRY_FOREST"
     ],
     "height_m": [
      25.0,
@@ -572,6 +580,10 @@
      0,
      300
     ],
+    "biomes": [
+     "SAVANNA",
+     "TROPICAL_DRY_FOREST"
+    ],
     "height_m": [
      5.0,
      15.0
@@ -844,6 +856,9 @@
     "altitude_m": [
      300,
      1200
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS"
     ],
     "height_m": [
      20.0,

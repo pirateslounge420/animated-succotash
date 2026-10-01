@@ -48,7 +48,8 @@ func _ready() -> void:
 	stick.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(stick)
 	_flame = Torch.flame_node()
-	_flame.position = Vector3(0, h - 0.1, 0)
+	# The card's base a centimetre into the stick's head (design §CA).
+	_flame.position = Vector3(0, stick.position.y + h * 0.5 - 0.01, 0)
 	add_child(_flame)
 	_light = Torch.light_node()
 	_light.position = Vector3(0, h + 0.05, 0)

@@ -28,6 +28,14 @@
      0,
      3000
     ],
+    "biomes": [
+     "BOG",
+     "TAIGA",
+     "TUNDRA",
+     "TEMPERATE_RAINFOREST",
+     "PARAMO",
+     "TEPUI"
+    ],
     "height_m": [
      0.02,
      0.15
@@ -210,6 +218,12 @@
     "altitude_m": [
      0,
      2500
+    ],
+    "biomes": [
+     "TAIGA",
+     "KRUMMHOLZ",
+     "TUNDRA",
+     "BOG"
     ],
     "height_m": [
      0.03,
@@ -397,6 +411,12 @@
      0,
      2500
     ],
+    "biomes": [
+     "TAIGA",
+     "TEMPERATE_RAINFOREST",
+     "KRUMMHOLZ",
+     "TUNDRA"
+    ],
     "height_m": [
      0.05,
      0.15
@@ -583,6 +603,11 @@
      0,
      2000
     ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA",
+     "BOG"
+    ],
     "height_m": [
      0.03,
      0.1
@@ -760,6 +785,11 @@
     "altitude_m": [
      0,
      2500
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "MEDITERRANEAN_SCRUB",
+     "CANYON"
     ],
     "height_m": [
      0.005,
@@ -943,6 +973,13 @@
      0,
      3500
     ],
+    "biomes": [
+     "TUNDRA",
+     "KRUMMHOLZ",
+     "TAIGA",
+     "BOG",
+     "WET_MEADOW"
+    ],
     "height_m": [
      0.05,
      0.3
@@ -1125,6 +1162,12 @@
      0,
      3000
     ],
+    "biomes": [
+     "VOLCANIC_FIELD",
+     "TUNDRA",
+     "ALPINE_TUNDRA",
+     "BOG"
+    ],
     "height_m": [
      0.02,
      0.1
@@ -1302,6 +1345,13 @@
     "altitude_m": [
      0,
      3000
+    ],
+    "biomes": [
+     "FRESHWATER",
+     "FEN",
+     "WET_MEADOW",
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA"
     ],
     "height_m": [
      0.005,
@@ -1489,6 +1539,12 @@
      0,
      3000
     ],
+    "biomes": [
+     "TUNDRA",
+     "KRUMMHOLZ",
+     "TAIGA",
+     "BOG"
+    ],
     "height_m": [
      0.03,
      0.1
@@ -1657,6 +1713,13 @@
      0,
      6000
     ],
+    "biomes": [
+     "ALPINE_TUNDRA",
+     "TUNDRA",
+     "ICE_SHEET",
+     "GLACIER",
+     "VOLCANIC_FIELD"
+    ],
     "height_m": [
      0.001,
      0.005
@@ -1823,6 +1886,10 @@
     "altitude_m": [
      300,
      3000
+    ],
+    "biomes": [
+     "TEMPERATE_DECIDUOUS",
+     "TAIGA"
     ],
     "height_m": [
      0.02,
@@ -1992,6 +2059,10 @@
     "altitude_m": [
      600,
      3000
+    ],
+    "biomes": [
+     "CLOUD_FOREST",
+     "TEMPERATE_RAINFOREST"
     ],
     "height_m": [
      0.2,
@@ -2171,6 +2242,11 @@
      0,
      800
     ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST",
+     "MEDITERRANEAN_SCRUB",
+     "TEMPERATE_DECIDUOUS"
+    ],
     "height_m": [
      0.03,
      0.1
@@ -2348,6 +2424,11 @@
     "altitude_m": [
      0,
      2000
+    ],
+    "biomes": [
+     "TEMPERATE_RAINFOREST",
+     "TAIGA",
+     "CLOUD_FOREST"
     ],
     "height_m": [
      0.3,
