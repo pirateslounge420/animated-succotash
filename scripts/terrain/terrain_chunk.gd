@@ -546,6 +546,69 @@ static func bake_canopy_shade(data: Dictionary, hosts: Array) -> void:
 			var k := 1.0 - 0.12 * shade[i]
 			var c := cols[i]
 			cols[i] = Color(c.r * k, c.g * k, c.b * k, 1.0 - shade[i])
+	_bake_tree_feet(data, hosts)
+
+
+## Contact shade at the trees' feet (look pass, 1 Oct; data/look.json
+## cavity): the ground darkens in a small ring round each trunk where it
+## meets the ground. The ground's vertices are ~8 m apart, far too coarse
+## for a ring a metre or two wide, so the trunks go in a small map across
+## the chunk instead (FEET_CELLS square, a cell ~4 m; data.feet): each cell
+## holds the biggest trunk standing in it (its place in the cell, its
+## foot's radius and how far past that the ring reaches), and the terrain
+## shader measures each fragment's distance to the trunks of the 5 x 5
+## cells round it (tree_feet()), so the ring is round and clean at any
+## distance.
+## Rings stop at the chunk's edge (a neighbour's trees aren't here).
+const FEET_CELLS := 64
+## Largest foot radius and ring the map's bytes hold, m.
+const FEET_MAX_M := 4.0
+static var CAVITY := Tuning.section("look", "cavity")
+
+
+## The span of the feet map, m (a little more than the chunk).
+static func feet_span_m() -> float:
+	return PlanetConst.CIRCUMFERENCE_M / 4.0 / CHUNKS_PER_FACE * 1.04
+
+
+static func _bake_tree_feet(data: Dictionary, hosts: Array) -> void:
+	if hosts.is_empty() or float(CAVITY.get("tree_dark", 0.0)) <= 0.0:
+		return
+	var center: Vector3 = data.center
+	var east := CubeSphere.east(center)
+	var north := CubeSphere.north(center)
+	var anchor_r: float = data.get("anchor_r", PlanetConst.RADIUS_M)
+	var span := feet_span_m()
+	var cell := span / FEET_CELLS
+	var ring := clampf(float(CAVITY.get("tree_ring_m", 1.5)), 0.0, FEET_MAX_M)
+	var per_m := float(CAVITY.get("tree_foot_per_m", 0.08))
+	var best := PackedFloat32Array()
+	best.resize(FEET_CELLS * FEET_CELLS)
+	var img: Image = null
+	for host in hosts:
+		var d: Vector3 = host[0]
+		# Ground uv as the mesh has it (metres on the chunk's tangent plane,
+		# mesh_arrays()), at the tree's distance from the planet's centre
+		# where the host has it, else the chunk's anchor's.
+		var r: float = host[1] if float(host[1]) > PlanetConst.RADIUS_M * 0.5 else anchor_r
+		var q := (Vector2(d.dot(east), d.dot(north)) * r + Vector2(span, span) * 0.5) / cell
+		var ix := int(floor(q.x))
+		var iy := int(floor(q.y))
+		if ix < 0 or iy < 0 or ix >= FEET_CELLS or iy >= FEET_CELLS:
+			continue
+		# The foot: the trunk's radius at the ground, flare and all (a
+		# layout's trunk radius is ~5 % of the tree's height, ~1.6x that
+		# at its flared base).
+		var foot := clampf(float(host[2]) * per_m, 0.15, FEET_MAX_M)
+		var i := iy * FEET_CELLS + ix
+		if foot <= best[i]:
+			continue
+		best[i] = foot
+		if img == null:
+			img = Image.create(FEET_CELLS, FEET_CELLS, false, Image.FORMAT_RGBA8)
+		img.set_pixel(ix, iy, Color(q.x - ix, q.y - iy, foot / FEET_MAX_M, maxf(ring / FEET_MAX_M, 1.0 / 255.0)))
+	if img != null:
+		data["feet"] = img
 
 
 ## Bilinear blend of the four nearest blueprint cells' biome colors, so
@@ -817,13 +880,21 @@ func build_nodes(data: Dictionary, world: Node) -> void:
 	var dapple: Image = data.get("dapple")
 	dapple_img = dapple
 	var ground_mat := _terrain_mat
-	if dapple != null:
+	var feet: Image = data.get("feet")
+	if dapple != null or feet != null:
 		# This chunk's own copy of the ground material, with its dappled
-		# canopy shade (CanopyDapple).
+		# canopy shade (CanopyDapple) and its trees' feet (_bake_tree_feet).
 		ground_mat = _terrain_mat.duplicate()
+	if dapple != null:
 		ground_mat.set_shader_parameter("dapple_tex", ImageTexture.create_from_image(dapple))
 		ground_mat.set_shader_parameter("dapple_span", CanopyDapple.span_m())
 		ground_mat.set_shader_parameter("dapple_on", true)
+	if feet != null:
+		ground_mat.set_shader_parameter("feet_tex", ImageTexture.create_from_image(feet))
+		ground_mat.set_shader_parameter("feet_span", feet_span_m())
+		ground_mat.set_shader_parameter("feet_dark", float(CAVITY.get("tree_dark", 0.5)))
+		ground_mat.set_shader_parameter("feet_on", true)
+		data.erase("feet")
 	_coarse_mesh = _ground_mesh(data.mesh_coarse, "Ground", ground_mat)
 	_fine_mesh = _ground_mesh(data.mesh_fine, "GroundFine", ground_mat)
 	_fine_mesh.visible = false

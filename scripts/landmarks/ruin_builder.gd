@@ -96,6 +96,26 @@ var solid := true
 ## passage, the pyramid's corridor and chamber): the flat ambient light
 ## reaches in regardless, so the shade is baked into the stone.
 var shade := 0.0
+## Contact shade, baked into the vertex colours where things meet (look
+## pass, 1 Oct; data/look.json cavity, CAVITY): `foot_y` is the ground
+## under the part being added (local y; NAN: not standing on the ground),
+## and box() and boulder() darken each corner by how near it is, so walls,
+## piers, rubble and rocks are dark at their feet. Faces looking toward
+## `inside_at` (local, y ignored) are inside a tower or keep and darkened
+## by `inside`; `jamb` darkens a block's end faces (local x), the sides of
+## a doorway. Every box's underside (local -y: the joint under each block,
+## lintels, arch soffits, deck and plank undersides, the inside of an
+## igloo's dome) and any face looking down are darkened by ruin_under.
+var foot_y := NAN
+var inside_at := Vector3.INF
+var inside := 0.0
+var jamb := 0.0
+static var CAVITY := Tuning.section("look", "cavity")
+static var FOOT := float(CAVITY.get("ruin_foot", 0.5))
+static var FOOT_M := maxf(float(CAVITY.get("ruin_foot_m", 1.2)), 0.05)
+static var UNDER := float(CAVITY.get("ruin_under", 0.5))
+static var INSIDE := float(CAVITY.get("ruin_inside", 0.35))
+static var JAMB := float(CAVITY.get("ruin_jamb", 0.4))
 ## Lights inside tombs: [local position, color, range m, energy]
 ## (make_node() adds an OmniLight3D for each).
 var _lights: Array = []
@@ -186,6 +206,9 @@ static func rock_mesh(size: Vector3, p_seed: int, col: Color, block := false) ->
 	if block:
 		b.box(Transform3D(), size, col, 0.2, 0.14, 0.08)
 	else:
+		# Callers set a stone about a third of its height into the ground
+		# (Camps, CreatureSpawner's dens): its foot shade starts there.
+		b.foot_y = -size.y * 0.35
 		b.boulder(Vector3.ZERO, size * 0.5, Basis(), col, 0.35)
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
@@ -366,7 +389,7 @@ func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09,
 	top.a = moss
 	var side := col.lerp(MOSS, moss * 0.3)
 	side.a = moss * 0.4
-	var bottom := col.darkened(0.3)
+	var bottom := col.darkened(UNDER)
 	bottom.a = 0.0
 	var o := xf.origin
 	var jit: Array[Vector3] = []
@@ -396,6 +419,7 @@ func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09,
 			var nv := Vector3.ZERO
 			nv[a] = 1.0 if sgn == 1 else -1.0
 			ns[a * 2 + sgn] = (xf.basis * nv).normalized()
+	var lod_k := _contact(vs, cs, ns, o)
 	# Faces: each face's 4 corners, in order round it.
 	for a in 3:
 		var u := (a + 1) % 3
@@ -427,7 +451,38 @@ func box(xf: Transform3D, size: Vector3, col: Color, moss: float, bevel := 0.09,
 			cs[i * 3], cs[i * 3 + 1], cs[i * 3 + 2], o)
 	if solid:
 		_collision_box(xf, h)
-	_lod_box(xf, h, top, side, bottom)
+	if lod_k > 0.0:
+		_lod_box(xf, h, top.darkened(lod_k), side.darkened(lod_k), bottom.darkened(lod_k))
+	else:
+		_lod_box(xf, h, top, side, bottom)
+
+
+## The contact shade for one box's corners (vertex (corner i, face axis a)
+## at vs[i * 3 + a], its color cs[...], face normals ns[a * 2 + side]),
+## darkened in place: the foot (foot_y), faces inside (inside_at), the
+## doorway's jambs (jamb) and faces looking down. Returns the foot's
+## darkening at the box's middle, for its far-LOD box.
+func _contact(vs: PackedVector3Array, cs: PackedColorArray, ns: PackedVector3Array, o: Vector3) -> float:
+	var grounded := not is_nan(foot_y) and FOOT > 0.0
+	var inward := Vector3.ZERO
+	if inside > 0.0 and inside_at != Vector3.INF:
+		inward = Vector3(inside_at.x - o.x, 0.0, inside_at.z - o.z).normalized()
+	for i in 8:
+		for a in 3:
+			var sgn := (i >> a) & 1
+			var n := ns[a * 2 + sgn]
+			var keep := 1.0
+			if grounded:
+				keep *= 1.0 - FOOT * exp(-maxf(vs[i * 3 + a].y - foot_y, 0.0) / FOOT_M)
+			if inward != Vector3.ZERO and n.dot(inward) > 0.6:
+				keep *= 1.0 - inside
+			if jamb > 0.0 and a == 0:
+				keep *= 1.0 - jamb
+			if not (a == 1 and sgn == 0):
+				keep *= 1.0 - UNDER * smoothstep(0.3, 0.8, -n.y)
+			if keep < 1.0:
+				cs[i * 3 + a] = cs[i * 3 + a].darkened(1.0 - keep)
+	return FOOT * exp(-maxf(o.y - foot_y, 0.0) / FOOT_M) if grounded else 0.0
 
 
 ## _quad_n without the arrays: corners p0..p3 in order round the quad.
@@ -612,6 +667,11 @@ func boulder(center: Vector3, radii: Vector3, basis: Basis, col: Color, moss: fl
 		nrm[i] = nrm[i].normalized()
 		var m := moss * smoothstep(0.1, 0.7, nrm[i].y)
 		var c := col.lerp(MOSS, m)
+		# Contact shade (_contact()): dark at its foot and underneath.
+		var keep := 1.0 - UNDER * smoothstep(0.3, 0.8, -nrm[i].y)
+		if not is_nan(foot_y):
+			keep *= 1.0 - FOOT * exp(-maxf(pos[i].y - foot_y, 0.0) / FOOT_M)
+		c = c.darkened(1.0 - keep)
 		c.a = m
 		cols.append(c)
 	for f in range(0, faces.size(), 3):
@@ -669,12 +729,16 @@ func block(center: Vector3, dir: Vector3, size: Vector3, moss: float, wobble := 
 	basis = basis.rotated(Vector3.UP, rng.randf_range(-wobble, wobble)).rotated(x, rng.randf_range(-wobble, wobble) * 0.5)
 	var col: Color = palette[rng.randi() % palette.size()]
 	col = col.lightened(rng.randf_range(-0.06, 0.06))
-	col = col.darkened(0.4 * exp(-maxf(above, 0.0) / 1.3))
+	# Its foot's shade per corner (box(), foot_y), from the ground under it.
+	var was := foot_y
+	if above < 50.0:
+		foot_y = center.y - size.y * 0.5 - above
 	# Irregular masonry: blocks a little longer or shorter, shallower or
 	# lower than the course, and nudged along it, so joints don't line up.
 	var sz := size * Vector3(rng.randf_range(0.82, 1.1), rng.randf_range(0.9, 1.0), rng.randf_range(0.92, 1.04))
 	var c := center + x * rng.randf_range(-0.12, 0.12) * size.x
 	box(Transform3D(basis, c), sz, col, _growth(moss), rng.randf_range(0.06, 0.13), rng.randf_range(0.02, 0.07))
+	foot_y = was
 
 
 ## Moss amount for this site: sparse where it's dry, thick where it's wet.
@@ -730,11 +794,14 @@ func rubble(center: Vector3, spread: float, count: int) -> void:
 		var basis := Basis.from_euler(Vector3(rng.randf_range(-0.5, 0.5), rng.randf() * TAU, rng.randf_range(-0.5, 0.5)))
 		var col: Color = palette[rng.randi() % palette.size()]
 		var p := Vector3(x, ground(x, z) + size.y * 0.3, z)
+		var was := foot_y
+		foot_y = p.y - size.y * 0.3
 		if rng.randf() < 0.55:
 			# A tumbled block, edges knocked round.
 			box(Transform3D(basis, p), size, col, _growth(rng.randf_range(0.3, 0.9)), 0.16, 0.1)
 		else:
 			boulder(p, size * 0.55, basis, col.darkened(0.05), _growth(rng.randf_range(0.3, 0.9)))
+		foot_y = was
 
 
 # --- Walls and towers ------------------------------------------------------------
@@ -789,6 +856,9 @@ func round_tower(center: Vector2, radius: float, height: float, door_angle: floa
 	var slump_a := rng.randf() * TAU
 	var slump := rng.randf_range(0.2, 0.5)
 	var fallen := 0
+	# Inside the tower is in shade, the doorway's sides too (_contact()).
+	inside_at = Vector3(center.x, 0.0, center.y)
+	inside = INSIDE
 	for i in segs:
 		var a := TAU * i / segs
 		var p := center + Vector2(cos(a), sin(a)) * radius
@@ -802,16 +872,22 @@ func round_tower(center: Vector2, radius: float, height: float, door_angle: floa
 		block(Vector3(p.x, g - 1.2, p.y), tangent, Vector3(bw * 1.05, 1.6, 1.5), 0.0, 0.0)
 		var y := g - 0.4
 		var door := absf(angle_difference(a, door_angle)) < 0.35
+		# Beside the doorway: this column's blocks frame it.
+		var beside := not door and (absf(angle_difference(a - TAU / segs, door_angle)) < 0.35 or absf(angle_difference(a + TAU / segs, door_angle)) < 0.35)
 		var window_row := rng.randi_range(6, 10)
 		while y + COURSE_M * 0.5 < g + h:
 			var course := int((y - g) / COURSE_M)
 			var gap := (door and y < g + 2.4) or (course % window_row == 0 and course > 3 and rng.randf() < 0.35)
 			if not gap:
 				var moss := 0.12 + 0.5 * exp(-(y - g) / 1.5) + rng.randf_range(0.0, 0.2)
+				jamb = JAMB if beside and y < g + 2.4 else 0.0
 				block(Vector3(p.x, y + COURSE_M * 0.5, p.y), tangent, Vector3(bw * 1.02, COURSE_M * 0.96, 1.3), moss, 0.04, y - g)
 			y += COURSE_M
+		jamb = 0.0
 		if h > 2.0 and rng.randf() < 0.35:
 			ivy(Vector3(p.x, g + h, p.y) + out * 0.65, out, rng.randf_range(2.0, minf(7.0, h)))
+	inside = 0.0
+	inside_at = Vector3.INF
 	rubble(Vector3(center.x + cos(slump_a) * (radius + 2.0), 0, center.y + sin(slump_a) * (radius + 2.0)), 3.5, mini(fallen / 6, 16))
 
 
@@ -879,6 +955,9 @@ func _castle() -> void:
 	var keep_h := rng.randf_range(15.0, 19.0)
 	var corners := [k + Vector2(-hs, -hs), k + Vector2(hs, -hs), k + Vector2(hs, hs), k + Vector2(-hs, hs)]
 	var broken := rng.randi() % 4
+	# The keep's inside is in shade (_contact()).
+	inside_at = Vector3(k.x, 0.0, k.y)
+	inside = INSIDE
 	for i in 4:
 		var br: Array = []
 		if i == broken:
@@ -886,6 +965,8 @@ func _castle() -> void:
 		elif i == (broken + 3) % 4:
 			br = [[-0.05, 0.35]]
 		wall(corners[i], corners[(i + 1) % 4], keep_h, 1.3, br, 0.45)
+	inside = 0.0
+	inside_at = Vector3.INF
 	var fall_corner: Vector2 = corners[(broken + 1) % 4]
 	rubble(Vector3(fall_corner.x * 1.3, 0, fall_corner.y * 1.3), 5.0, 22)
 	rubble(Vector3.ZERO, 14.0, mini(fallen / 4, 30))
@@ -1272,6 +1353,9 @@ func igloo(center: Vector2, r: float, door_a: float, fallen: bool) -> void:
 	mat = SNOW_M
 	var g := ground(center.x, center.y) - 0.15
 	var c3 := Vector3(center.x, g, center.y)
+	# The dome and tunnel darken at their foot (_contact()); the dome's
+	# inside is its blocks' undersides.
+	foot_y = g + 0.15
 	var rings := 6
 	var arc := r * PI * 0.5 / rings
 	var cap_a := rng.randf() * TAU
@@ -1309,6 +1393,7 @@ func igloo(center: Vector2, r: float, door_a: float, fallen: bool) -> void:
 			var p := c3 + outd * dist + radial * 1.1 + Vector3(0, 0.15, 0)
 			var basis := Basis(outd, radial, outd.cross(radial)).orthonormalized()
 			box(Transform3D(basis, p), Vector3(0.5, 0.3, 0.5), SNOW.darkened(rng.randf_range(0.0, 0.06)), 0.0, 0.05, 0.03)
+	foot_y = NAN
 	# Fallen blocks inside and round the foot.
 	for i in mini(tumbled, 10):
 		var a := cap_a + rng.randf_range(-1.0, 1.0)

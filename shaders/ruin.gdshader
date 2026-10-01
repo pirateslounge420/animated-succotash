@@ -5,7 +5,10 @@
 // glowing sites (every ruin is one), the moss patches shine teal/cobalt.
 // Stone colors come from RuinBuilder's palettes (R1a: blue-grey #6F7A8A);
 // after dark stone, timber and moss cool toward their R1a night targets
-// (palette.gdshaderinc).
+// (palette.gdshaderinc). The vertex colours carry the contact shade
+// (RuinBuilder._contact, look.json cavity: dark at the feet of walls and
+// stones, under every block, inside towers and doorways); the stone is
+// Look's cracked-slab tile at 16 texels a metre.
 shader_type spatial;
 render_mode cull_disabled, vertex_lighting, diffuse_lambert, specular_disabled;
 

@@ -137,17 +137,17 @@
    "grass": 64,
    "dirt": 64,
    "sand": 64,
-   "stone": 128,
+   "stone": 64,
    "bark": 64,
    "leaves": 32
   },
   "tile_m": {
-   "grass": 1.5,
-   "dirt": 2.0,
-   "sand": 2.0,
-   "stone": 3.0,
-   "bark": 1.0,
-   "leaves": 0.5
+   "grass": 4.0,
+   "dirt": 4.0,
+   "sand": 4.0,
+   "stone": 4.0,
+   "bark": 4.0,
+   "leaves": 2.0
   },
   "tile_contrast": 0.3,
   "filter": "nearest_mipmap",
@@ -306,6 +306,27 @@
    }
   },
   "tiles_dir": "assets/textures/retro"
+ },
+ "cavity": {
+  "_help": {
+   "about": "Look pass, 1 Oct: contact shade, darker where things meet, baked (no screen-space AO). 0 turns a term off; restart after editing. Textures: retro.tile_px / retro.tile_m is texels a metre (16 on the ground, stone, bark and leaves), retro.tile_contrast pushes the tiles' darks and flecks apart live (tools/look/make_retro_tiles.py --stats prints both).",
+   "tree_dark": "0-1, how much darker the ground is right at a tree's foot (a ring round each canopy and emergent trunk, drawn per fragment within 140 m: TerrainChunk._bake_tree_feet, terrain.gdshader tree_feet).",
+   "tree_ring_m": "how far past the trunk's foot the ring fades out, m (at most 4).",
+   "tree_foot_per_m": "the trunk's foot radius per metre of tree height (flare included); inside it the ground is fully darkened.",
+   "ruin_foot": "0-1, ruin walls, piers, rubble, igloos and lone rocks darkened at their foot, per vertex (RuinBuilder._contact).",
+   "ruin_foot_m": "how high above the ground the foot shade fades over, m (it falls to a third at this height).",
+   "ruin_under": "0-1, the underside of every block and plank (the joint under each block, lintels, arch soffits, deck undersides, the inside of an igloo) and any face looking down.",
+   "ruin_inside": "0-1, faces looking into a tower or keep.",
+   "ruin_jamb": "0-1, the sides of a tower's doorway."
+  },
+  "tree_dark": 0.5,
+  "tree_ring_m": 1.5,
+  "tree_foot_per_m": 0.08,
+  "ruin_foot": 0.5,
+  "ruin_foot_m": 1.2,
+  "ruin_under": 0.5,
+  "ruin_inside": 0.35,
+  "ruin_jamb": 0.4
  },
  "dapple": {
   "mode": "stamped"

@@ -4,13 +4,18 @@
 Writes assets/textures/retro/<name>.png — tiny, tileable, meant to be drawn
 NEAREST-filtered and repeated every retro.tile_m metres:
 
-  grass 64, dirt 64, sand 64, bark 64, water 64, stone 128, leaves 32,
-  leaf_card 32 (RGBA cutout), and cloud_pano 512x128.
+  grass, dirt, sand, stone, bark (retro.tile_px: 64 each) and leaves (32),
+  water 64, leaf_card 32 (RGBA cutout), and cloud_pano 512x128.
 
 Every ground/bark/leaf tile follows the LookTextures convention: a greyscale
 MODULATION centred on mid-grey (0.5 = no change), stored in RGB with alpha 255,
 so the shaders can multiply it by the vertex colour exactly as they do with
-the painted 256 px textures today. Fleck contrast = retro.tile_contrast.
+the painted 256 px textures today. Since the look pass (1 Oct) the ground,
+stone, bark and leaf tiles are drawn at ~16 texels a metre (tile_px /
+tile_m) with their own hard darks and flecks (DARK..FLECK below); the shaders
+push them apart further by retro.tile_contrast at run time. The water and
+leaf_card tiles still take their fleck contrast from retro.tile_contrast.
+Every run prints each tile's texels a metre and contrast numbers (stats()).
 
 cloud_pano keeps sky.gdshader's channel layout: R = cloud bank density,
 G = lit (1) vs shaded (0), B = streak density. Periodic in x (azimuth),
@@ -19,7 +24,8 @@ row 0 = horizon, last row = zenith.
 Deterministic: every tile is seeded by its name, so re-running changes nothing
 unless a parameter changes. Re-run with --seed N for a different roll.
 
-Usage: python3 tools/look/make_retro_tiles.py [--seed N] [--preview]
+Usage: python3 tools/look/make_retro_tiles.py [--seed N] [--preview] [--stats]
+  --stats only prints the numbers for the tiles on disk.
   --preview also writes docs/references/batch3/retro_tiles_preview.png
   (each tile shown 4x nearest, tiled 3x3, next to its name).
 """
@@ -97,74 +103,174 @@ def rng_for(name, seed):
     return np.random.default_rng(zlib.crc32(name.encode()) + seed * 7919)
 
 
-def stamp_disc(v, cx, cy, r, lit, shade):
-    """A pebble/clod: lit top-left, dark bottom-right, wrapping at edges."""
-    h, w = v.shape
-    ys, xs = np.mgrid[-r - 1:r + 2, -r - 1:r + 2]
-    d = np.sqrt(xs ** 2 + ys ** 2)
-    inside = d <= r + 0.5
-    tone = np.where((xs + ys) < 0, lit, shade)
-    for oy, ox, t, ins in zip(ys.ravel(), xs.ravel(), tone.ravel(), inside.ravel()):
-        if ins:
-            v[(cy + oy) % h, (cx + ox) % w] = t
+# ---------------------------------------------------------------- tiles
+#
+# Look pass, 1 Oct (Mike: early-2000s, chunky low-res textures, big texels,
+# high contrast inside: dark cracks and mortar, bright flecks). The ground,
+# stone, bark and leaf tiles are drawn at about 16 texels a metre
+# (retro.tile_px / retro.tile_m), so a texel is ~6 cm and every feature is
+# a few whole texels: a blade 2-4, a pebble 3-7, a crack 1 with a lit lip
+# below it and a shaded one above. Tones sit on a 1/16 grid (LEVELS) and
+# each tile is centred on mid grey (0.5 = no change). The shaders push the
+# tones apart again by retro.tile_contrast (look_tile_contrast, live: no
+# regenerating), so at 0.3 DARK ends near 0.19x of the vertex colour and
+# FLECK near 1.8x. leaf_card, water and cloud_pano are as they were.
+DARK = 0.1875    # cracks, mortar, grooves, the gaps between blades and leaves
+SHADE = 0.3125   # the shaded side of a pebble, plate, slab or leaf
+LIT = 0.6875     # lit lips, ridges and blade tips
+FLECK = 0.8125   # bright flecks: grit, mica, lichen, sunlit tips
+LEVELS = 17
+
+
+def centre(v, keep):
+    """Shift the free tones (not `keep`, the drawn darks and flecks) so the
+    tile averages mid grey."""
+    free = ~keep
+    if free.any():
+        v[free] += (0.5 - v.mean()) * v.size / free.sum()
     return v
 
 
-# ---------------------------------------------------------------- tiles
+def finish(v, keep):
+    return quantise(np.clip(centre(v, keep), 0.0, 1.0), LEVELS)
+
+
+def flecks(v, keep, rng, share, tone):
+    """Single-texel flecks of `tone` on a `share` of the free texels."""
+    m = (rng.random(v.shape) < share) & ~keep
+    v[m] = tone
+    keep |= m
+
+
+def walk(v, keep, rng, x, y, steps, tone, dx=(-1, 2), dy=(0, 2)):
+    """A crack: a random walk of `steps` texels set to `tone` (wrapping)."""
+    h, w = v.shape
+    for _ in range(steps):
+        v[y % h, x % w] = tone
+        keep[y % h, x % w] = True
+        x += int(rng.integers(*dx))
+        y += int(rng.integers(*dy))
+
+
+def pebble(v, keep, cx, cy, r, body):
+    """A pebble or clod of radius `r` texels: lit rim top-left, shaded rim
+    bottom-right, a one-texel shadow cast down-right (wrapping)."""
+    h, w = v.shape
+    rr = (r + 0.35) ** 2
+    for oy in range(-r - 1, r + 3):
+        for ox in range(-r - 1, r + 3):
+            y, x = (cy + oy) % h, (cx + ox) % w
+            if ox * ox + oy * oy <= rr:
+                t = body
+                if ox * ox + oy * oy > (r - 0.65) ** 2:
+                    t = LIT if ox + oy < 0 else (SHADE if ox + oy > 0 else body)
+                v[y, x] = t
+                keep[y, x] = True
+            elif (ox - 1) ** 2 + (oy - 1) ** 2 <= rr:
+                v[y, x] = min(v[y, x], SHADE)
+                keep[y, x] = True
+
 
 def grass(n, rng):
-    c = CONTRAST
-    v = 0.5 + 0.35 * c * fbm(n, n, 4, 4, rng, 3)
-    v += 0.45 * c * speckle(n, n, rng, 0.14, 0.09)
-    # short blades: dark base, lit tip
-    for _ in range(n * n // 40):
-        x, y0 = rng.integers(n), rng.integers(n)
-        ln = rng.integers(3, 7)
+    """Blades and tufts: short strokes with a shaded root and a lit tip over
+    clumps about a metre across, soil showing dark between them."""
+    v = 0.5 + 0.06 * fbm(n, n, 4, 4, rng, 3) + 0.04 * fbm(n, n, 16, 16, rng, 1)
+    keep = np.zeros((n, n), bool)
+    for _ in range(n * n // 12):
+        x, y = int(rng.integers(n)), int(rng.integers(n))
+        ln = int(rng.integers(2, 5))
+        lean = int(rng.integers(-1, 2))
         for k in range(ln):
-            v[(y0 - k) % n, x] = 0.5 - 0.6 * c if k < ln // 2 else 0.5 + 0.7 * c
-    return quantise(v, 8)
+            yy, xx = (y - k) % n, (x + (lean * k) // 2) % n
+            v[yy, xx] = SHADE if k == 0 else (LIT if k == ln - 1 else 0.5625)
+            keep[yy, xx] = True
+    flecks(v, keep, rng, 0.07, DARK)
+    flecks(v, keep, rng, 0.03, FLECK)
+    return finish(v, keep)
 
 
 def dirt(n, rng):
-    c = CONTRAST
-    v = 0.5 + 0.25 * c * fbm(n, n, 4, 4, rng, 3)
-    v += 0.2 * c * speckle(n, n, rng, 0.08, 0.04)
-    for _ in range(n * n // 170):
-        r = int(rng.integers(1, 4))
-        stamp_disc(v, int(rng.integers(n)), int(rng.integers(n)), r, 0.5 + 0.55 * c, 0.5 - 0.6 * c)
-    return quantise(v, 8)
+    """Packed soil: pebbles and clods with lit tops and cast shadows, a few
+    dry cracks, dark pits and bright grit."""
+    v = 0.5 + 0.06 * fbm(n, n, 4, 4, rng, 3)
+    keep = np.zeros((n, n), bool)
+    for _ in range(4):
+        walk(v, keep, rng, int(rng.integers(n)), int(rng.integers(n)), int(rng.integers(6, 15)), DARK, (-1, 2), (-1, 2))
+    for _ in range(n * n // 85):
+        r = int(rng.choice([1, 1, 1, 2, 2, 3]))
+        body = 0.5 + float(rng.choice([-1, 0, 1, 1])) * 0.0625
+        pebble(v, keep, int(rng.integers(n)), int(rng.integers(n)), r, body)
+    flecks(v, keep, rng, 0.05, DARK)
+    flecks(v, keep, rng, 0.03, FLECK)
+    return finish(v, keep)
 
 
 def sand(n, rng):
-    c = CONTRAST
+    """Wind ripples about a metre apart (a lit crest, a shaded lee under it)
+    and coarse grains, light and dark: quieter than dirt, never flat."""
     warp = fbm(n, n, 2, 2, rng, 2)
-    y = np.arange(n)[:, None] / n
-    ripple = np.sin(2 * np.pi * (4 * y + 0.45 * warp))
-    v = 0.5 + 0.12 * c * ripple + 0.16 * c * fbm(n, n, 8, 8, rng, 2)
-    v += 0.12 * c * speckle(n, n, rng, 0.06, 0.06)
-    return quantise(v, 8)
+    y = (np.arange(n)[:, None] + 0.5) / n
+    saw = np.mod(4 * y + 0.45 * warp, 1.0)
+    v = 0.5 + 0.04 * fbm(n, n, 8, 8, rng, 2)
+    keep = np.zeros((n, n), bool)
+    crest = saw < 0.07
+    lee = (saw >= 0.07) & (saw < 0.2)
+    v[crest] = LIT - 0.0625
+    v[lee] = SHADE + 0.0625
+    keep |= crest | lee
+    flecks(v, keep, rng, 0.05, SHADE)
+    flecks(v, keep, rng, 0.05, LIT)
+    return finish(v, keep)
 
 
 def bark(n, rng):
-    c = CONTRAST
-    v = 0.5 + 0.7 * c * fbm(n, n, 10, 1, rng, 3, 0.6) + 0.15 * c * fbm(n, n, 4, 6, rng, 2)
-    v += 0.2 * c * speckle(n, n, rng, 0.05, 0.03)
-    # grooves: dark wobbling vertical lines at jittered spacing, a lit ridge beside each
-    gxs = np.sort(rng.uniform(0, n, 6))
+    """Bark plates between deep grooves: each groove a dark texel line that
+    wobbles down the tile with a lit ridge on its left and a shaded edge on
+    its right, broken now and then by a plate bridging it; short cross
+    cracks, pits and pale lichen flecks."""
+    v = 0.5 + 0.07 * fbm(n, n, 8, 2, rng, 3, 0.6)
+    keep = np.zeros((n, n), bool)
+    count = max(4, n // 7)
+    gxs = (np.arange(count) + rng.uniform(-0.4, 0.4, count)) * n / count
     for gx in gxs:
-        wob = fbm(1, n, 1, 3, rng, 2)[:, 0] * 3.0
+        wob = fbm(1, n, 1, 2, rng, 3, 0.6)[:, 0] * 4.0
+        gap = fbm(1, n, 1, 4, rng, 2)[:, 0]
         for y in range(n):
+            if gap[y] > 0.28:
+                continue  # a plate bridges the groove here
             x = int(round(gx + wob[y])) % n
-            v[y, x] = 0.5 - 0.85 * c
-            v[y, (x - 1) % n] = 0.5 + 0.35 * c
-    return quantise(v, 8)
+            v[y, x] = DARK
+            v[y, (x - 1) % n] = LIT
+            if not keep[y, (x + 1) % n]:
+                v[y, (x + 1) % n] = SHADE
+            keep[y, x] = keep[y, (x - 1) % n] = keep[y, (x + 1) % n] = True
+    for _ in range(n // 4):
+        x, y = int(rng.integers(n)), int(rng.integers(n))
+        for k in range(int(rng.integers(2, 4))):
+            if not keep[y, (x + k) % n]:
+                v[y, (x + k) % n] = DARK + 0.0625
+                keep[y, (x + k) % n] = True
+    flecks(v, keep, rng, 0.03, DARK)
+    flecks(v, keep, rng, 0.025, FLECK)
+    return finish(v, keep)
 
 
 def leaves(n, rng):
-    c = CONTRAST
-    v = 0.5 + 0.6 * c * fbm(n, n, 4, 4, rng, 3, 0.7)
-    v += 0.7 * c * speckle(n, n, rng, 0.22, 0.16)
-    return quantise(v, 6)
+    """A leafy surface: small leaves (2-3 texels, lit top-left, shaded
+    bottom-right) packed over deep gaps, with a few sunlit tips."""
+    v = SHADE + 0.06 * fbm(n, n, 4, 4, rng, 2)
+    keep = np.zeros((n, n), bool)
+    flecks(v, keep, rng, 0.3, DARK)
+    for _ in range(n * n // 6):
+        x, y = int(rng.integers(n)), int(rng.integers(n))
+        body = 0.5 + float(rng.choice([-1, 0, 0, 1])) * 0.0625
+        shape = [(0, 0), (1, 0), (0, 1), (1, 1)] if rng.random() < 0.6 else [(0, 0), (1, 0), (2, 0), (1, 1)]
+        for (ox, oy) in shape:
+            yy, xx = (y + oy) % n, (x + ox) % n
+            v[yy, xx] = LIT if (ox, oy) == (0, 0) else (SHADE if (ox, oy) == shape[-1] else body)
+            keep[yy, xx] = True
+    flecks(v, keep, rng, 0.03, FLECK)
+    return finish(v, keep)
 
 
 def leaf_card(n, rng):
@@ -184,33 +290,41 @@ def leaf_card(n, rng):
 
 
 def stone(n, rng):
-    c = CONTRAST
-    v = 0.5 + 0.25 * c * fbm(n, n, 6, 6, rng, 3)
-    rows, mortar = 4, 2
-    bh = n // rows
-    for r in range(rows):
-        cols = 3 if r % 2 == 0 else 4
-        bw = n / cols
-        off = 0 if r % 2 == 0 else bw / 2
-        y0 = r * bh
-        v[y0:y0 + mortar, :] = 0.5 - 0.7 * c            # horizontal mortar
-        tone = rng.uniform(-0.25, 0.25) * c
-        for k in range(cols):
-            x0 = int(round(off + k * bw)) % n
-            for m in range(mortar):
-                v[y0:y0 + bh, (x0 + m) % n] = 0.5 - 0.7 * c    # vertical mortar
-            # block face: slight per-block tone, lit top edge, dark bottom edge
-            xs = [(x0 + mortar + i) % n for i in range(int(bw) - mortar)]
-            v[y0 + mortar:y0 + bh, xs] += rng.uniform(-0.45, 0.45) * c
-            v[y0 + mortar, xs] += 0.35 * c
-            v[y0 + bh - 1, xs] -= 0.35 * c
-    # cracks: dark random walks
-    for _ in range(3):
-        x, y = int(rng.integers(n)), int(rng.integers(n))
-        for _ in range(int(rng.integers(8, 20))):
-            v[y % n, x % n] = 0.5 - 0.6 * c
-            x += int(rng.integers(-1, 2)); y += int(rng.integers(0, 2))
-    return quantise(v, 8)
+    """Cracked stone: slabs about a metre and a half wide and one high
+    (periodic Voronoi cells, squashed so they lie like courses or strata),
+    each its own tone, parted by one-texel dark cracks with a lit lip below
+    and right of them and a shaded one above and left; hairline cracks in
+    the slabs, dark pits and bright mica flecks. Serves the ruins' blocks
+    (their geometry makes the courses; this is the stone's face) and the
+    ground's rock faces."""
+    cells = max(6, (n * n) // 420)
+    pts = rng.random((cells, 2)) * n
+    tones = rng.choice([-2, -1, -1, 0, 0, 1, 1, 2], cells) * 0.03125
+    ys, xs = np.mgrid[0:n, 0:n] + 0.5
+    d1 = np.full((n, n), 1e9)
+    d2 = np.full((n, n), 1e9)
+    idx = np.zeros((n, n), int)
+    for k, (px, py) in enumerate(pts):
+        for oy in (-n, 0, n):
+            for ox in (-n, 0, n):
+                d = np.hypot(xs - px - ox, (ys - py - oy) * 1.6)
+                closer = d < d1
+                d2 = np.where(closer, d1, np.minimum(d2, d))
+                idx = np.where(closer, k, idx)
+                d1 = np.where(closer, d, d1)
+    v = 0.5 + tones[idx] + 0.05 * fbm(n, n, 8, 8, rng, 2)
+    crack = (d2 - d1) < 1.1
+    lit = (np.roll(crack, 1, axis=0) | np.roll(crack, 1, axis=1)) & ~crack
+    shade = (np.roll(crack, -1, axis=0) | np.roll(crack, -1, axis=1)) & ~crack & ~lit
+    v[lit] = LIT - 0.0625
+    v[shade] = SHADE
+    v[crack] = DARK
+    keep = crack | lit | shade
+    for _ in range(max(2, n // 20)):
+        walk(v, keep, rng, int(rng.integers(n)), int(rng.integers(n)), int(rng.integers(4, 9)), SHADE, (-1, 2), (0, 2))
+    flecks(v, keep, rng, 0.03, DARK)
+    flecks(v, keep, rng, 0.03, FLECK)
+    return finish(v, keep)
 
 
 def water(n, rng):
@@ -247,11 +361,41 @@ def cloud_pano(w, h, rng):
     return bank
 
 
+def stats():
+    """Per-tile numbers to tune by (no pictures): texels a metre (tile_px /
+    tile_m), the tones (5th / 50th / 95th percentile, spread), the share of
+    dark (<= SHADE) and bright (>= LIT) texels, the mean step between
+    neighbouring texels, the grey levels used, and what the shaders make of
+    it: the factor on the vertex colour, 2 * (0.5 + (v - 0.5) * (1 +
+    tile_contrast)), at the 5th and 95th percentile, and the spread left at
+    the first mip (2x2 average, from ~25 m on the ground)."""
+    tm = LOOK.get("tile_m", {})
+    k = 1.0 + CONTRAST
+    print("tile      px  tile_m texel/m |  p5   p50  p95   std  dark% brite% step lvls | x p5  x p95 | mip1 std")
+    for name in ["grass", "dirt", "sand", "stone", "bark", "leaves", "water"]:
+        v = np.asarray(Image.open(os.path.join(OUT, name + ".png")).convert("L"), float) / 255.0
+        n = v.shape[0]
+        m = float(tm.get(name, 0.0))
+        step = 0.5 * (np.abs(np.diff(v, axis=0)).mean() + np.abs(np.diff(v, axis=1)).mean())
+        f = np.clip(2.0 * (0.5 + (v - 0.5) * k), 0.0, 2.0)
+        mip = v.reshape(n // 2, 2, n // 2, 2).mean(axis=(1, 3))
+        print("%-7s %4d  %6s %7s | %.2f %.2f %.2f %.3f %5.1f %5.1f %.3f %3d | %.2f  %.2f | %.3f" % (
+            name, n, ("%.1f" % m) if m else "-", ("%.1f" % (n / m)) if m else "-",
+            np.percentile(v, 5), np.percentile(v, 50), np.percentile(v, 95), v.std(),
+            100.0 * (v <= SHADE + 0.01).mean(), 100.0 * (v >= LIT - 0.01).mean(), step, len(np.unique(v)),
+            np.percentile(f, 5), np.percentile(f, 95), mip.std()))
+    print("(tile_contrast %.2f; x = factor on the vertex colour after the shader's push)" % CONTRAST)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--preview", action="store_true")
+    ap.add_argument("--stats", action="store_true", help="only print the stats of the tiles on disk")
     a = ap.parse_args()
+    if a.stats:
+        stats()
+        return
     os.makedirs(OUT, exist_ok=True)
     px = LOOK["tile_px"]
     made = {}
@@ -267,6 +411,7 @@ def main():
     made["leaf_card"] = (v, al)
     pano = cloud_pano(*LOOK["clouds"]["pano_px"], rng_for("cloud_pano", a.seed))
     print("wrote %d tiles + cloud_pano to %s" % (len(made), os.path.relpath(OUT, ROOT)))
+    stats()
 
     if a.preview:
         cell, gap = 3 * 64 * 2, 24   # 3x3 tiles at 2x (64 px tiles) -> 384

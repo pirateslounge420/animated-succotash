@@ -1,10 +1,11 @@
 // Ground. Low-poly faces colored per vertex (TerrainChunk), vertex-lit:
 // Lambert diffuse and no specular, like GameCube-era terrain. The
 // surface is texture-led, like the hand-painted ground of GameCube-era
-// games (§AG): tiny detail tiles (Look: 64 px, stone 128) drawn
-// nearest-filtered with at most two mip levels (retro_tex) and tiled hard
-// every look_tile_m metres (grass 1.5, dirt 2, sand 2, stone 3), so the
-// ground is a busy speckle of texels right to the fog. Picked by the vertex
+// games (§AG): tiny detail tiles (Look: 64 px) drawn nearest-filtered with
+// at most two mip levels (retro_tex) and tiled hard every look_tile_m
+// metres (4 m each: 16 texels a metre, every tile on the same texel grid,
+// look pass 1 Oct), so the ground is chunky texels up close and a busy
+// speckle of them right to the fog. Picked by the vertex
 // color: grass on green ground, sand on bright warm ground, dirt on soil,
 // stone on grey rock faces, just a faint grain on snow. Smooth, painterly
 // light and dark patches plus a slight hue drift run over meters to tens
@@ -21,6 +22,11 @@
 // meter or two across; faint by night. When the sun casts no shadow map
 // by day (§AG 6, look_canopy_dark > 0) it is instead simply darker, by
 // look_canopy_dark, the way the reference darkens ground under trees.
+//
+// Round each tree's foot the ground darkens in a small ring, where the
+// trunk meets it (look pass, 1 Oct: TerrainChunk._bake_tree_feet, look.json
+// cavity): the chunk's trunks in a coarse map, the ring measured per
+// fragment (tree_feet), so it is round and clean at 480 lines.
 //
 // Near magical sites, patches of moss glow at night.
 //
@@ -45,6 +51,18 @@ uniform sampler2D look_tex_stone : filter_nearest_mipmap, repeat_enable;
 uniform sampler2D dapple_tex : filter_nearest, repeat_disable, hint_default_white;
 uniform float dapple_span = 270.0;
 uniform bool dapple_on = false;
+// The trees' feet (TerrainChunk._bake_tree_feet): per ~4 m cell, the
+// biggest trunk standing in it: rg its place in the cell, b its foot's
+// radius and a how far the ring reaches past it (both / FEET_MAX_M),
+// across feet_span meters of UV centred on the chunk. feet_dark: the
+// darkening at the foot (look.json cavity.tree_dark).
+uniform sampler2D feet_tex : filter_nearest, repeat_disable, hint_default_transparent;
+uniform float feet_span = 270.0;
+uniform float feet_dark = 0.5;
+uniform bool feet_on = false;
+const float FEET_MAX_M = 4.0;
+// Past this the rings are a pixel or two and aren't drawn.
+const float FEET_DRAW_M = 140.0;
 global uniform vec3 plant_wind;
 global uniform float look_leaf_shadow_m;
 
@@ -83,6 +101,34 @@ float road_tread(vec2 uv) {
 	return core * clamp(tread_v.z / 0.6, 0.0, 1.0) * bare * fade;
 }
 
+// 0-1 how far into a tree's foot ring this ground is: full under the
+// trunk's foot, fading out across the ring past it. The trunks of the
+// 5 x 5 feet cells round the fragment (a cell keeps only its biggest; a
+// giant's foot and ring reach ~5 m, more than a cell).
+float tree_feet(vec2 uv) {
+	ivec2 n = textureSize(feet_tex, 0);
+	float cell = feet_span / float(n.x);
+	vec2 q = uv / cell + vec2(n) * 0.5;
+	ivec2 c = ivec2(floor(q));
+	float f = 0.0;
+	for (int j = -2; j <= 2; j++) {
+		for (int i = -2; i <= 2; i++) {
+			ivec2 k = c + ivec2(i, j);
+			if (k.x < 0 || k.y < 0 || k.x >= n.x || k.y >= n.y) {
+				continue;
+			}
+			vec4 t = texelFetch(feet_tex, k, 0);
+			if (t.a <= 0.0) {
+				continue;
+			}
+			float foot = t.b * FEET_MAX_M;
+			float d = length(vec2(k) + t.rg - q) * cell;
+			f = max(f, 1.0 - smoothstep(foot, foot + t.a * FEET_MAX_M, d));
+		}
+	}
+	return f;
+}
+
 void fragment() {
 	// Slow, smooth noise: big soft patches of light and dark (a few meters
 	// and a few tens of meters).
@@ -104,12 +150,14 @@ void fragment() {
 	// UV is in meters: each tile repeats every look_tile_m.
 	vec3 t = mix(retro_tile(look_tex_dirt, UV / look_tile_m.y).rgb, retro_tile(look_tex_sand, UV / look_tile_m.z).rgb, sandy);
 	vec3 grass_t = retro_tile(look_tex_grass, UV / look_tile_m.x).rgb;
-	// Near grass (§BU 5b): denser, finer blade flecks within look_grass_m,
-	// tinted by the ground's own (biome) colour through COLOR below, fading
-	// to the plain tile.
+	// Near grass (§BU 5b): denser blade flecks within look_grass_m, tinted
+	// by the ground's own (biome) colour through COLOR below, fading to the
+	// plain tile. The same tile turned a quarter and shifted by whole
+	// texels (look pass, 1 Oct: it was three times finer), so the flecks
+	// land on the same big texels and break up the tile's repeat.
 	float near_g = 1.0 - smoothstep(look_grass_m * 0.45, look_grass_m, distance(world_pos, CAMERA_POSITION_WORLD));
 	near_g *= 1.0 - tread;
-	vec3 blades = retro_tile(look_tex_grass, UV / (look_tile_m.x * 0.3) + vec2(0.37, 0.11)).rgb;
+	vec3 blades = retro_tile(look_tex_grass, vec2(UV.y, -UV.x) / look_tile_m.x + vec2(0.5, 0.25)).rgb;
 	grass_t = mix(grass_t, grass_t * (0.55 + 0.9 * blades), near_g * 0.8);
 	t = mix(t, grass_t, green);
 	t = mix(t, retro_tile(look_tex_stone, UV / look_tile_m.w).rgb, rocky);
@@ -175,6 +223,12 @@ void fragment() {
 		float fleck = smoothstep(0.54, 0.6, fn);
 		float sun = 1.0 - 0.75 * nk;
 		ALBEDO *= mix(1.0, mix(0.66, 0.66 + 0.5 * sun, fleck), canopy * beyond);
+	}
+	// The trees' feet: darker in a ring where each trunk meets the ground
+	// (after the palette pulls, so it isn't washed back toward the
+	// targets); a little less at night, when the floor carries the shade.
+	if (feet_on && dist < FEET_DRAW_M) {
+		ALBEDO *= 1.0 - feet_dark * tree_feet(UV) * (1.0 - 0.4 * nk) * (1.0 - smoothstep(FEET_DRAW_M * 0.7, FEET_DRAW_M, dist));
 	}
 	ROUGHNESS = 1.0;
 	// The ambient floor, after the stack: what this ground keeps of the
