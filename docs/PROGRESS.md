@@ -4,6 +4,23 @@ Claude Code prepends 3–6 lines every session. The designer signs off phases he
 
 ---
 
+## 2026-10-01 — Mac play fix 3: trees drawn by their own distance, 157 M triangles down to 15–23 M; no road region on the main thread (Mike's 15:30 play; `look.json` `ranges`)
+- **Leaf cards by distance, per tree** (`TerrainChunk.setup_bands` / `band_trees`, `ChunkManager._band_some`): every branchy tree is drawn by its own distance from you, not its chunk's ring. Within `ranges.tree_full_m` (120 m) its full leaf cards (the hero mesh, as before); of those, only the ones within `tree_shadow_m` (35 m, the hard shadow map's reach) cast the sun's shadow; out to `tree_light_m` (350 m) the new light tree (`PlantMeshes.LOD_LIGHT`: the trunk, at most 8 main limbs, 16 big leaf clusters; 187–464 triangles, mean 257 over all 840 layouts, against ~17,000 for the full tree); beyond, the one-quad picture. Each layout's trees are split into three copies (shadow, full, light), the species' picture keeps only the far ones, and a chunk re-sorts after you move `tree_reband_m` (15 m), nearest chunks first within 2 ms a frame. Young trees (saplings and seedlings, leaf cards too) draw only the plants within their reach, not the whole chunk's. Tree shaking (`tree_instance`) follows a tree into whichever copy draws it.
+- **Triangles loaded round a site** (`tools/scene_load_check.gd`, now asserting at most 25 M and printing the split by drawing):
+
+  | Seed | Biome | Before | After |
+  |---|---|---|---|
+  | 7731 | jungle | 161.7 M | 15.3 M |
+  | 7731 | temperate deciduous | 19.3 M | 2.2 M |
+  | 7731 | savanna | 63.9 M | 9.6 M |
+  | 467606063 | jungle | — | 16.8 M |
+  | 467606063 | temperate deciduous | — | 18.9 M |
+  | 467606063 | savanna | — | 10.2 M |
+
+  (Before on 7731: Mike's entry, and a run of the previous commit for the jungle. After: the jungle is ~6 M full trees, ~3 M light trees, ~6 M other plants.) `leaf_lod_check`: every branchy tree within 120 m is on its full mesh, only those within 35 m cast, the light trees between — 0 fails. "Parameter m is null" lines in the headless checks come from the check counting meshes the dummy renderer never made; the previous commit prints them too, and the game's own boot prints none.
+- **Road regions off the main thread** (`RoadNetwork.ensure` / `links_near`): a worker still builds what it needs and waits for a region another thread is building; the main thread (travellers, road props, rooms, main) never builds or waits — it queues the missing regions on a worker and uses what is built. The checks ask with `block` to get the whole network.
+- **Checks that never write a save never restore a kept camp** (`main._opening_site`): a pinned check run picks its camp fresh, so a check gives the same answer whatever worlds the machine has played (seed 1378252316 had an old save here and rolled no kind).
+
 ## 2026-10-01 — Mac play fixes 1–2: the pixel font always, and a world keeps its camp (Mike's 15:30 play; `hud.json` `text`, `WorldSave`)
 - **The font** (`HudText.install`): VT323 through its import when the imported data is on disk; else the TTF read straight from the file (`FontFile.load_dynamic_font`), with the same no-antialiasing, no-hinting settings; else the other face in `assets/fonts` (typewriter) with one `push_error` naming why. Never a system font. `HudText.loaded_from` says which ("import" here; "disk" with the import data hidden — tested, same VT323, the same 144 px for "Wind 3 m/s from NW" at 20 px, and no engine load errors since the import is checked before it is loaded).
 - **The HUD never runs off the frame** (`Hud.fit_lines`): a column line too wide for its half of the frame wraps onto the next line at a " · " break, else at a space; never inside a word, never an ellipsis (the old fit dropped parts and cut letters: "Wind 3 m/s from…"). `hud_pin_check` asserts every part's every line fits, every word of the readout is shown and nothing is off the frame at each preset: chunky 640, default 854, half_hd 960, fine 1280 — all PASS, and the face is VT323.

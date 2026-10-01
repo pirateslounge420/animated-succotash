@@ -38,7 +38,7 @@ func _initialize() -> void:
 	var chunks: ChunkManager = main.chunks
 	var roads: RoadNetwork = chunks.roads
 	var t0 := Time.get_ticks_msec()
-	var near := roads.links_near(player.surface_dir, 12000.0)
+	var near := roads.links_near(player.surface_dir, 12000.0, true)
 	print("[road] %d nodes, %d links within 12 km of the camp (%.1f s to build)" % [roads.nodes.size(), near.size(), (Time.get_ticks_msec() - t0) / 1000.0])
 	ok(roads.nodes.size() >= 2, "the network has nodes (%d)" % roads.nodes.size())
 	ok(not near.is_empty(), "and links near the camp (%d)" % near.size())

@@ -919,6 +919,9 @@ func _swap_plants(parent: Node) -> void:
 	for ch in parent.get_children():
 		if not (ch is MultiMeshInstance3D and ch.has_meta("species")):
 			continue
+		if ch.has_meta("band"):
+			# Drawn by distance (band_trees), not by the chunk's level.
+			continue
 		var mmi := ch as MultiMeshInstance3D
 		var sp: PlantSpecies = all[ch.get_meta("species")]
 		plant_shadow(mmi, sp, lod)
@@ -1301,12 +1304,227 @@ func tree_frame(i: int) -> Transform3D:
 func tree_instance(i: int) -> Array:
 	var t: Array = trees[i]
 	var pick: int = t[4]
+	if pick >= 0 and not _bands.is_empty():
+		# Banded (by distance, band_trees): the copy that draws it now.
+		var lk := Vector2i(t[2], TreeLayouts.layout_of(pick))
+		if _bands.has(lk):
+			var e: Dictionary = _bands[lk]
+			var w: PackedInt32Array = e.where
+			var j: int = t[5]
+			if j * 2 + 1 < w.size() and w[j * 2] >= 0:
+				return [((e.mmis as Array)[w[j * 2]] as MultiMeshInstance3D).multimesh, w[j * 2 + 1]]
+		if _bands.has(int(t[2])):
+			var f: Dictionary = _bands[int(t[2])]
+			var fw: PackedInt32Array = f.where
+			var fj: int = t[3]
+			if fj * 2 + 1 < fw.size() and fw[fj * 2] >= 0:
+				return [(f.mmi as MultiMeshInstance3D).multimesh, fw[fj * 2 + 1]]
+		return []
 	if pick >= 0 and _plant_lod != PlantMeshes.LOD_FAR:
 		var lmm: MultiMesh = layout_mm.get(Vector2i(t[2], TreeLayouts.layout_of(pick)))
 		if lmm != null:
 			return [lmm, t[5]]
 	var mm: MultiMesh = tree_mm.get(t[2])
 	return [mm, t[3]] if mm != null else []
+
+
+# --- Trees by distance (1 Oct, Mike's Mac: the jungle's 157 M triangles) ----
+
+## Each branchy tree drawn by its own distance from you, not its chunk's
+## ring (look.json ranges): its full leaf cards within tree_full_m (casting
+## the sun's shadow only within tree_shadow_m), the light tree
+## (PlantMeshes.LOD_LIGHT) out to tree_light_m, the one-quad picture
+## beyond. A layout's trees are split into three copies (shadow, full,
+## light) and the species' picture keeps only the far ones; band_trees()
+## re-sorts them as you move (ChunkManager, a chunk at a time).
+static var RANGES: Dictionary = Tuning.table("look").get("ranges", {})
+static var SHADOW_M := float(RANGES.get("tree_shadow_m", 35.0))
+static var FULL_M := float(RANGES.get("tree_full_m", 120.0))
+static var LIGHT_M := float(RANGES.get("tree_light_m", 350.0))
+static var REBAND_M := float(RANGES.get("tree_reband_m", 15.0))
+const STRIDE_F := 20 # floats per instance: transform 12, colour 4, custom 4
+
+## Vector2i(species, layout) -> {"buf", "n", "mmis": [shadow, full, light],
+## "where": (group, index) per tree}; int species -> {"buf", "n", "mmi",
+## "where"} for its far pictures.
+var _bands := {}
+## Where band_trees() last sorted from (chunk-local), and how far the
+## farthest tree stands from the chunk's middle.
+var band_at := Vector3(INF, INF, INF)
+var _band_reach := 0.0
+var _all_far := false
+
+
+## Split this chunk's branchy trees into their distance copies (after
+## VegetationPlacer.build_nodes; main thread); `parent` the chunk itself,
+## or its undergrowth node, whose young trees (saplings and seedlings, leaf
+## cards too) draw only the plants within their reach (shrub_m / ground_m),
+## not the whole chunk's.
+func setup_bands(parent: Node = null) -> void:
+	if parent == null:
+		parent = self
+	var all := SpeciesDB.all()
+	for ch in parent.get_children():
+		if not (ch is MultiMeshInstance3D and ch.has_meta("species")):
+			continue
+		var mmi := ch as MultiMeshInstance3D
+		var sp_idx: int = ch.get_meta("species")
+		var sp: PlantSpecies = all[sp_idx]
+		if ch.has_meta("young"):
+			var ymm := mmi.multimesh
+			# Its node's visibility range is the reach plus the chunk's
+			# reach (VegetationPlacer._instance); per plant, the reach.
+			var reach := mmi.visibility_range_end - CHUNK_M * 0.75 if mmi.visibility_range_end > 0.0 else float(RANGES.get("shrub_m", 150.0))
+			_bands[mmi] = {"buf": ymm.buffer, "n": ymm.instance_count, "mmi": mmi, "reach": reach, "where": PackedInt32Array()}
+			mmi.set_meta("band", true)
+			_band_reach = maxf(_band_reach, _reach_of(ymm.buffer, ymm.instance_count))
+			continue
+		if parent != self:
+			continue
+		if ch.has_meta("far_only"):
+			var mm := mmi.multimesh
+			_bands[sp_idx] = {"buf": mm.buffer, "n": mm.instance_count, "mmi": mmi, "where": PackedInt32Array()}
+			mmi.set_meta("band", true)
+			mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			_band_reach = maxf(_band_reach, _reach_of(mm.buffer, mm.instance_count))
+		elif ch.has_meta("layout"):
+			var l: int = ch.get_meta("layout")
+			var src := mmi.multimesh
+			var mmis: Array = []
+			for g in 3:
+				var m: MultiMeshInstance3D = mmi if g == 1 else (mmi.duplicate() as MultiMeshInstance3D)
+				if g != 1:
+					var mm := MultiMesh.new()
+					mm.transform_format = MultiMesh.TRANSFORM_3D
+					mm.use_custom_data = true
+					mm.use_colors = true
+					m.multimesh = mm
+					m.name = "%s_%s" % [mmi.name, "shadow" if g == 0 else "light"]
+					add_child(m)
+				m.set_meta("band", true)
+				m.set_meta("band_group", g)
+				m.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if g == 0 else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+				m.multimesh.mesh = PlantMeshes.mesh_for(sp, PlantMeshes.LOD_LIGHT if g == 2 else PlantMeshes.LOD_HERO, l)
+				mmis.append(m)
+			_bands[Vector2i(sp_idx, l)] = {"buf": src.buffer, "n": src.instance_count, "mmis": mmis, "where": PackedInt32Array()}
+	band_at = Vector3(INF, INF, INF)
+
+
+static func _reach_of(buf: PackedFloat32Array, n: int) -> float:
+	var r := 0.0
+	for i in n:
+		var k := i * STRIDE_F
+		r = maxf(r, Vector3(buf[k + 3], buf[k + 7], buf[k + 11]).length())
+	return r
+
+
+## The camera's spot in this chunk's frame for a surface direction and
+## height above the sea (the mesh's own double-precision difference).
+func local_of(d: Vector3, r: float) -> Vector3:
+	return Vector3(d.x * r - center_dir.x * anchor_radius, d.y * r - center_dir.y * anchor_radius, d.z * r - center_dir.z * anchor_radius)
+
+
+## Does this chunk want re-sorting for the camera at `cam` (chunk-local)?
+func wants_band(cam: Vector3) -> bool:
+	if _bands.is_empty():
+		return false
+	if band_at.x == INF:
+		return true
+	if _all_far and cam.length() - _band_reach > LIGHT_M + REBAND_M:
+		return false
+	return band_at.distance_to(cam) > REBAND_M
+
+
+## Sort the trees into their copies for the camera at `cam` (chunk-local).
+func band_trees(cam: Vector3) -> void:
+	band_at = cam
+	var s2 := SHADOW_M * SHADOW_M
+	var f2 := FULL_M * FULL_M
+	var l2 := LIGHT_M * LIGHT_M
+	var all_far := cam.length() - _band_reach > LIGHT_M
+	_all_far = all_far
+	# Young trees' entries whose undergrowth was freed (the chunk left the
+	# detail ring) go.
+	var gone: Array = []
+	for key in _bands:
+		var e: Dictionary = _bands[key]
+		var buf: PackedFloat32Array = e.buf
+		var n: int = e.n
+		if e.has("reach"):
+			# Young trees: those within their reach, the rest not drawn.
+			if not is_instance_valid(e.mmi):
+				gone.append(key)
+				continue
+			var mmi_y: MultiMeshInstance3D = e.mmi
+			var r2: float = float(e.reach) * float(e.reach)
+			var ybuf := PackedFloat32Array()
+			var yn := 0
+			if not all_far:
+				for i in n:
+					var k := i * STRIDE_F
+					var ex := buf[k + 3] - cam.x
+					var ey := buf[k + 7] - cam.y
+					var ez := buf[k + 11] - cam.z
+					if ex * ex + ey * ey + ez * ez < r2:
+						ybuf.append_array(buf.slice(k, k + STRIDE_F))
+						yn += 1
+			_set_band(mmi_y, ybuf, yn)
+			continue
+		var far := key is int
+		var where := PackedInt32Array()
+		where.resize(n * 2)
+		var outs: Array = [PackedFloat32Array(), PackedFloat32Array(), PackedFloat32Array()]
+		var counts := [0, 0, 0]
+		if far and all_far:
+			# The whole species' pictures, as built.
+			for i in n:
+				where[i * 2] = 0
+				where[i * 2 + 1] = i
+			_set_band(e.mmi, buf, n)
+			e.where = where
+			continue
+		for i in n:
+			var k := i * STRIDE_F
+			var dx := buf[k + 3] - cam.x
+			var dy := buf[k + 7] - cam.y
+			var dz := buf[k + 11] - cam.z
+			var d2 := dx * dx + dy * dy + dz * dz
+			var g := -1
+			if far:
+				g = 0 if d2 >= l2 else -1
+			elif not all_far:
+				if d2 < s2:
+					g = 0
+				elif d2 < f2:
+					g = 1
+				elif d2 < l2:
+					g = 2
+			where[i * 2] = g
+			if g >= 0:
+				where[i * 2 + 1] = counts[g]
+				(outs[g] as PackedFloat32Array).append_array(buf.slice(k, k + STRIDE_F))
+				counts[g] += 1
+		e.where = where
+		if far:
+			_set_band(e.mmi, outs[0], counts[0])
+		else:
+			for g in 3:
+				_set_band((e.mmis as Array)[g], outs[g], counts[g])
+	_drop_bands(gone)
+
+
+func _drop_bands(keys: Array) -> void:
+	for k in keys:
+		_bands.erase(k)
+
+
+static func _set_band(mmi: MultiMeshInstance3D, buf: PackedFloat32Array, n: int) -> void:
+	var mm := mmi.multimesh
+	if mm.instance_count != n:
+		mm.instance_count = n
+	if n > 0:
+		mm.buffer = buf
+	mmi.visible = n > 0
 
 
 func tree_species(i: int) -> PlantSpecies:

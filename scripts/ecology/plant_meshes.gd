@@ -116,6 +116,17 @@ static func tile(path: String) -> ImageTexture:
 const LOD_HERO := 0
 const LOD_NEAR := 1
 const LOD_FAR := 2
+## A branchy tree's light level (1 Oct, Mike's Mac: the jungle's 157 M
+## triangles): between the full leaf cards (within look.json
+## ranges.tree_full_m) and the far picture (past ranges.tree_light_m), the
+## trunk and its main limbs and a few big leaf clusters, about 300
+## triangles. Layouts only; anything else falls back to the near level.
+const LOD_LIGHT := 3
+## Leaf clusters a light tree keeps (spread over the crown, scaled up so
+## they cover about the same).
+const LIGHT_CLUSTERS := 16
+## Main limbs a light tree keeps (a conifer's many whorls thinned evenly).
+const LIGHT_LIMBS := 8
 ## Far trees as 2D (from play: "the distant things as 2D", for speed):
 ## each species' far level is one quad, turned to face the camera round
 ## the tree's own up in the foliage shader (UV2.x 6), its outline the far
@@ -123,7 +134,7 @@ const LOD_FAR := 2
 ## IMPOSTORS=0 in the environment keeps the far models (renders, A/B).
 static var IMPOSTORS := OS.get_environment("IMPOSTORS") != "0"
 ## Crown lobe detail at each level (geosphere() frequency).
-const CROWN_FREQ := [3, 2, 2]
+const CROWN_FREQ := [3, 2, 2, 2]
 
 static var _ico := {}
 
@@ -276,8 +287,9 @@ static func mesh_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> ArrayMe
 	if lod == LOD_FAR or not TreeLayouts.branchy(sp):
 		layout = -1
 	# Young layouts (TreeLayouts slots) have the near level only: slim
-	# young wood gains nothing from more.
-	if layout >= TreeLayouts.COUNT:
+	# young wood gains nothing from more; nor has anything but a layout a
+	# light level.
+	if layout >= TreeLayouts.COUNT or (lod == LOD_LIGHT and layout < 0):
 		lod = LOD_NEAR
 	var key := Vector3i(idx, lod, layout)
 	if _cache.has(key):
@@ -317,9 +329,10 @@ static func warm(species_indices: Array) -> void:
 		if code > 0:
 			young_arrays(all[idx], code, LOD_NEAR)
 			continue
-		for lod in 3:
+		for lod in 4:
 			if lod == LOD_FAR or not TreeLayouts.branchy(all[idx]):
-				arrays_for(all[idx], lod)
+				if lod != LOD_LIGHT:
+					arrays_for(all[idx], lod)
 			else:
 				for layout in TreeLayouts.COUNT:
 					arrays_for(all[idx], lod, layout)
@@ -330,7 +343,7 @@ static func arrays_for(sp: PlantSpecies, lod := LOD_NEAR, layout := -1) -> Array
 	var idx := SpeciesDB.index_of(sp)
 	if lod == LOD_FAR or not TreeLayouts.branchy(sp):
 		layout = -1
-	if layout >= TreeLayouts.COUNT:
+	if layout >= TreeLayouts.COUNT or (lod == LOD_LIGHT and layout < 0):
 		lod = LOD_NEAR
 	var key := Vector3i(idx, lod, layout)
 	_mutex.lock()
@@ -504,6 +517,7 @@ static func leaf_amount(growth: float, moisture: float) -> float:
 static func _build_layout(sp: PlantSpecies, idx: int, lod: int, layout: int) -> Array:
 	var b := _Builder.new()
 	b.hero = lod == LOD_HERO
+	b.light = lod == LOD_LIGHT
 	b.freq = CROWN_FREQ[lod]
 	b.wood = sp.accent
 	b.rng.seed = hash([idx, layout, 7919])
@@ -808,6 +822,8 @@ class _Builder:
 	var part := 0
 	var far := false
 	var hero := false
+	## The light level (LOD_LIGHT): trunk, main limbs, a few big clusters.
+	var light := false
 	var freq := 2 # crown lobe detail (PlantMeshes.geosphere())
 	## Vine strands: UV2.y holds each strand's 0-1 key; the foliage shader
 	## shows the strands whose key is under the plant's vine amount.
@@ -1040,11 +1056,14 @@ class _Builder:
 	func skeleton(sk: TreeLayouts.Skeleton, col: Color, vine_col: Color, density: float) -> void:
 		if sk.arch:
 			arch_tree(sk, col)
-			vines(sk.vines, vine_col)
+			if not light:
+				vines(sk.vines, vine_col)
 			return
 		if sk.buttress != Vector2.ZERO:
-			cone(Vector3.ZERO, sk.buttress.x, sk.buttress.y, 8, wood, 0.0, 0.0)
+			cone(Vector3.ZERO, sk.buttress.x, sk.buttress.y, 6 if light else 8, wood, 0.0, 0.0)
 		for pc in sk.pieces:
+			if light and pc.kind == TreeLayouts.Kind.BRANCH:
+				continue
 			var n := pc.pts.size()
 			var pts := PackedVector3Array()
 			var rad := PackedFloat32Array()
@@ -1055,14 +1074,18 @@ class _Builder:
 			var ring := 0
 			match pc.kind:
 				TreeLayouts.Kind.TRUNK:
-					ring = 12 if hero else 8
+					ring = 12 if hero else (5 if light else 8)
 				TreeLayouts.Kind.LIMB:
-					ring = 9 if hero else 6
+					ring = 9 if hero else (4 if light else 6)
 				_:
 					ring = 6 if hero else 5
+			if light and pts.size() > 3:
+				pts = PackedVector3Array([pts[0], pts[pts.size() / 2], pts[pts.size() - 1]])
+				rad = PackedFloat32Array([rad[0], rad[rad.size() / 2], rad[rad.size() - 1]])
 			wood_tube(pts, rad, ring, pc.kind != TreeLayouts.Kind.BRANCH)
 		leaf_clusters(sk, col, density)
-		vines(sk.vines, vine_col)
+		if not light:
+			vines(sk.vines, vine_col)
 
 	## A tree grown from its architecture (TreeArch, design §AK/§AJ/§AL):
 	## its wood order by order, every piece a bark tube (the trunk and
@@ -1083,17 +1106,32 @@ class _Builder:
 	func arch_tree(sk: TreeLayouts.Skeleton, col: Color) -> void:
 		for f in sk.fins:
 			fin(f[0], f[1], f[2])
+		# The light level: the trunk and at most LIGHT_LIMBS main limbs.
+		var limb_step := 1
+		if light:
+			var limbs := 0
+			for pc in sk.pieces:
+				if pc.order == 1 and not pc.frond:
+					limbs += 1
+			limb_step = maxi(1, ceili(float(limbs) / LIGHT_LIMBS))
+		var limb_i := 0
 		for pc in sk.pieces:
 			var order := pc.order
 			if far and order >= 3 and not pc.frond:
 				continue
+			if light and (order >= 2 or pc.frond):
+				continue
+			if light and order == 1:
+				limb_i += 1
+				if (limb_i - 1) % limb_step != 0:
+					continue
 			var n := pc.pts.size()
 			var pts := PackedVector3Array()
 			var rad := PackedFloat32Array()
 			var sw := PackedFloat32Array()
 			for i in n:
 				if hero or i % 2 == 0 or i == n - 1:
-					if far and order >= 1 and i != 0 and i != n - 1 and i != n / 2:
+					if (far or light) and order >= 1 and i != 0 and i != n - 1 and i != n / 2:
 						continue
 					pts.append(pc.pts[i])
 					var r := pc.rad[i]
@@ -1105,9 +1143,9 @@ class _Builder:
 			var ring := 3
 			match order:
 				0:
-					ring = 12 if hero else (8 if not far else 6)
+					ring = 12 if hero else (5 if light else (8 if not far else 6))
 				1:
-					ring = 8 if hero else (6 if not far else 4)
+					ring = 8 if hero else (3 if light else (6 if not far else 4))
 				2:
 					ring = 5 if hero else (4 if not far else 3)
 			if pc.frond:
@@ -1119,11 +1157,15 @@ class _Builder:
 			twig_phase = -1.0
 		# The leaf clusters at the anchors.
 		var list: Array = sk.anchors
-		if far:
+		if far or light:
+			# Every k-th anchor, its cluster grown to cover the ones it
+			# stands for (area: k times, so sqrt(k) across).
+			var k := 3 if far else maxi(2, ceili(float(sk.anchors.size()) / LIGHT_CLUSTERS))
+			var grow := 1.9 if far else sqrt(float(k)) * 0.95
 			list = []
-			for i in range(0, sk.anchors.size(), 3):
+			for i in range(0, sk.anchors.size(), k):
 				var a2: Array = (sk.anchors[i] as Array).duplicate()
-				a2[5] = float(a2[5]) * 1.9
+				a2[5] = float(a2[5]) * grow
 				list.append(a2)
 		var order_keys: Array[int] = []
 		for i in list.size():
@@ -1249,7 +1291,7 @@ class _Builder:
 				var at := p + Vector3.UP * r * flat * rng.randf_range(0.35, 0.6) + side * off
 				if fits.call(at):
 					centers.append(at)
-				if tip and pc.kind == TreeLayouts.Kind.BRANCH:
+				if tip and pc.kind == TreeLayouts.Kind.BRANCH and not light:
 					for k in twigs:
 						# A twig out from the tip, forward and up, fanned.
 						var fan := rng.randf_range(0.6, 1.2) * (1.0 if k % 2 == 0 else -1.0)
@@ -1272,16 +1314,21 @@ class _Builder:
 			var t := order[i]
 			order[i] = order[j]
 			order[j] = t
-		for rank in order.size():
+		var keep := order.size()
+		var grow := 1.0
+		if light and order.size() > LIGHT_CLUSTERS:
+			keep = LIGHT_CLUSTERS
+			grow = sqrt(float(order.size()) / LIGHT_CLUSTERS) * 0.95
+		for rank in keep:
 			var i := order[rank]
-			var key := (rank + 0.5) / order.size()
+			var key := (rank + 0.5) / keep
 			var tone := col
 			match i % 3:
 				1:
 					tone = col.lightened(0.08)
 				2:
 					tone = col.darkened(0.08)
-			var size := r * rng.randf_range(0.85, 1.15)
+			var size := r * rng.randf_range(0.85, 1.15) * grow
 			cluster(centers[i], size, flat, tone, sk.sway, key)
 			hang_from.append([centers[i], Vector3(size, size * flat, size)])
 

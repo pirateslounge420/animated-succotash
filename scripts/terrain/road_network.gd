@@ -89,8 +89,13 @@ static func _region_of(d: Vector3) -> Vector3i:
 	return Vector3i(int(floor(p.x)), int(floor(p.y)), int(floor(p.z)))
 
 
-## Make sure every region within `radius` m of `d` is built.
-func ensure(d: Vector3, radius: float) -> void:
+## Make sure every region within `radius` m of `d` is built. A worker
+## builds what is missing and waits for what another thread is building.
+## The main thread never builds or waits (1 Oct, Mike's Mac: a region took
+## 0.1-0.7 s, a hitch when the main thread asked first): it queues the
+## missing regions on a worker and goes on with what is built, unless
+## `block` (the checks, which want the whole network now).
+func ensure(d: Vector3, radius: float, block := false) -> void:
 	var want := {}
 	var r := int(ceil((radius + 1.0) / REGION_M))
 	var c := _region_of(d)
@@ -108,6 +113,7 @@ func ensure(d: Vector3, radius: float) -> void:
 				if centre.length() > PlanetConst.RADIUS_M + REGION_M or centre.length() < PlanetConst.RADIUS_M - REGION_M:
 					continue
 				want[k] = true
+	var queue_only := not block and OS.get_thread_caller_id() == OS.get_main_thread_id()
 	for k in want:
 		_mutex.lock()
 		var started := _regions.has(k)
@@ -115,10 +121,12 @@ func ensure(d: Vector3, radius: float) -> void:
 			_regions[k] = false
 		_mutex.unlock()
 		if not started:
-			_build_region(k)
-			_mutex.lock()
-			_regions[k] = true
-			_mutex.unlock()
+			if queue_only:
+				WorkerThreadPool.add_task(_build_marked.bind(k))
+			else:
+				_build_marked(k)
+	if queue_only:
+		return
 	# A region another thread is still building: wait for it (a chunk
 	# that read it half-built kept no tread, and the checks counted roads
 	# short). No thread waits while it holds a region unbuilt, so this
@@ -131,6 +139,13 @@ func ensure(d: Vector3, radius: float) -> void:
 			if built:
 				break
 			OS.delay_msec(5)
+
+
+func _build_marked(k: Vector3i) -> void:
+	_build_region(k)
+	_mutex.lock()
+	_regions[k] = true
+	_mutex.unlock()
 
 
 func _build_region(k: Vector3i) -> void:
@@ -961,10 +976,11 @@ static func _hash_key(d: Vector3) -> Vector3i:
 
 # --- Queries -------------------------------------------------------------------------
 
-## The links with any point within about `radius` m of `d` (built first
-## if the region isn't yet).
-func links_near(d: Vector3, radius: float) -> Array:
-	ensure(d, radius)
+## The links with any point within about `radius` m of `d`: on a worker
+## (or with `block`) the regions are built first; on the main thread what
+## is built now, the rest queued (ensure()).
+func links_near(d: Vector3, radius: float, block := false) -> Array:
+	ensure(d, radius, block)
 	var out: Array = []
 	var seen := {}
 	var r := int(ceil(radius / HASH_M)) + 1

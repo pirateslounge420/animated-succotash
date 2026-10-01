@@ -133,7 +133,7 @@ func _run() -> void:
 	var op: Dictionary = RoadNetwork.opening
 	var node: Vector3 = op.get("node", Vector3.ZERO)
 	var road_on := false
-	for l in main.chunks.roads.links_near(node, 400.0):
+	for l in main.chunks.roads.links_near(node, 400.0, true):
 		if bool(l.get("opening", false)):
 			road_on = true
 	ok(node != Vector3.ZERO and CubeSphere.surface_distance_m(node, old_site) < 40.0 and road_on, "and its opening road starts there (node %.0f m from the fire, road %s to a people's camp %.1f km off)" % [CubeSphere.surface_distance_m(node, old_site), "routed" if road_on else "missing", float(op.get("camp_m", INF)) / 1000.0])

@@ -243,8 +243,11 @@ func update_around(player_dir: Vector3) -> void:
 			# reload them) but not drawn: the render distance is what's drawn.
 			c.visible = _wanted.has(key)
 
+	_band_dir = player_dir
+	_band_r = PlanetConst.RADIUS_M + maxf(world.surface_elevation(player_dir), PlanetConst.SEA_LEVEL_M) + 1.6
 	_attach_base(max_attach_per_frame)
 	_attach_detail(max_attach_per_frame)
+	_band_some(band_budget_ms)
 	_build_collision(1)
 	_build_tree_colliders(tree_colliders_per_frame)
 	_update_graphs(player_dir, graph_budget_ms)
@@ -400,6 +403,9 @@ func _attach_base(limit: int) -> void:
 		chunk.data = data
 		chunk.hosts = data.hosts
 		VegetationPlacer.build_nodes(chunk, chunk, data.plants)
+		chunk.setup_bands()
+		if _band_dir != Vector3.ZERO:
+			chunk.band_trees(chunk.local_of(_band_dir, _band_r))
 		world.world_root.add_child(chunk)
 		Coppice.apply(chunk, world)
 		chunk.set_fine(_wanted_detail.has(key), _hero.has(key))
@@ -433,7 +439,36 @@ func _attach_detail(limit: int) -> void:
 		chunk.detail_node.name = "Undergrowth"
 		chunk.add_child(chunk.detail_node)
 		VegetationPlacer.build_nodes(chunk.detail_node, chunk, item[1])
+		chunk.setup_bands(chunk.detail_node)
+		if _band_dir != Vector3.ZERO:
+			chunk.band_trees(chunk.local_of(_band_dir, _band_r))
 		attached += 1
+
+
+## Trees by distance (TerrainChunk.band_trees; 1 Oct, Mike's Mac): where
+## the camera was last told, and the time per frame for re-sorting the
+## chunks whose trees moved band, nearest first (at least one a frame).
+var _band_dir := Vector3.ZERO
+var _band_r := 0.0
+@export var band_budget_ms := 2.0
+
+func _band_some(budget_ms: float) -> void:
+	if _band_dir == Vector3.ZERO:
+		return
+	var due: Array = []
+	for key in chunks:
+		var c: TerrainChunk = chunks[key]
+		var cam := c.local_of(_band_dir, _band_r)
+		if c.wants_band(cam):
+			due.append([cam.length(), c, cam])
+	if due.is_empty():
+		return
+	due.sort_custom(func(a, b): return a[0] < b[0])
+	var t0 := Time.get_ticks_usec()
+	for item in due:
+		(item[1] as TerrainChunk).band_trees(item[2])
+		if (Time.get_ticks_usec() - t0) / 1000.0 > budget_ms:
+			break
 
 
 ## Blocks until the chunks right around `d` (the detail ring, with
@@ -449,6 +484,8 @@ func load_blocking(d: Vector3) -> void:
 	_wanted_detail = inner
 	_hero_at = d
 	_hero = _hero_keys(d)
+	_band_dir = d
+	_band_r = PlanetConst.RADIUS_M + maxf(world.surface_elevation(d), PlanetConst.SEA_LEVEL_M) + 1.6
 	_rings_key = Vector3i(-1, -1, -1) # the next update rebuilds the rings
 	# Work still queued for where the player was is abandoned (those tasks
 	# skip it), and the chunks needed now jump the queue.
@@ -468,6 +505,7 @@ func load_blocking(d: Vector3) -> void:
 			WorkerThreadPool.wait_for_task_completion(_pending[key])
 			_pending.erase(key)
 	_attach_base(1000)
+	_band_some(1e9)
 	for key in inner:
 		var c: TerrainChunk = chunks.get(key)
 		if c and c.detail_node == null:

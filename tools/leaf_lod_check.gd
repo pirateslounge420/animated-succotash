@@ -79,6 +79,49 @@ func _initialize() -> void:
 			k, sp.name, PlantSpecies.Shape.keys()[sp.shape] if sp.shape < PlantSpecies.Shape.keys().size() else str(sp.shape), float(t[1]), d, _lod_name(lod), _lod_name(mesh_lod), TreeLayouts.layout_of(pick) if pick >= 0 else -1, cards, tiled,
 			("alpha" if tile_alpha else ("opaque" if leaf_tile != null else "missing")), ("set" if card_set != null else "MISSING"), cut])
 	ok(near.size() >= 5, "five trees stand within the loaded chunks (%d)" % near.size())
+	# Trees by distance (1 Oct, Mike's Mac): every branchy tree within
+	# ranges.tree_full_m is drawn with its full (hero) mesh, as before the
+	# bands; within tree_shadow_m its copy casts the sun's shadow; past it,
+	# within tree_light_m, the light tree; beyond, the picture.
+	var full_ok := 0
+	var full_n := 0
+	var shadow_bad := 0
+	var light_n := 0
+	var light_bad := 0
+	for item in near:
+		var d: float = item[0]
+		if d > TerrainChunk.LIGHT_M + 20.0:
+			break
+		var chunk: TerrainChunk = item[1]
+		var i: int = item[2]
+		var t: Array = chunk.trees[i]
+		var pick: int = t[4]
+		if pick < 0:
+			continue
+		var sp := chunk.tree_species(i)
+		var inst := chunk.tree_instance(i)
+		if inst.is_empty():
+			continue
+		var drawn: Mesh = (inst[0] as MultiMesh).mesh
+		var dc := chunk.to_local(main.player.global_position).distance_to(t[0])
+		if dc < TerrainChunk.FULL_M - 2.0:
+			full_n += 1
+			if drawn == PlantMeshes.mesh_for(sp, PlantMeshes.LOD_HERO, TreeLayouts.layout_of(pick)):
+				full_ok += 1
+			var casts := false
+			for ch in chunk.get_children():
+				if ch is MultiMeshInstance3D and (ch as MultiMeshInstance3D).multimesh == inst[0]:
+					casts = (ch as MultiMeshInstance3D).cast_shadow != GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			if casts != (dc < TerrainChunk.SHADOW_M):
+				shadow_bad += 1
+		elif dc > TerrainChunk.FULL_M + 2.0 and dc < TerrainChunk.LIGHT_M - 2.0:
+			light_n += 1
+			if drawn != PlantMeshes.mesh_for(sp, PlantMeshes.LOD_LIGHT, TreeLayouts.layout_of(pick)):
+				light_bad += 1
+	print("[bands] within %.0f m: %d of %d branchy trees on their full mesh; %d casting wrongly; %d light trees out to %.0f m, %d wrong" % [TerrainChunk.FULL_M, full_ok, full_n, shadow_bad, light_n, TerrainChunk.LIGHT_M, light_bad])
+	ok(full_n > 0 and full_ok == full_n, "every branchy tree within tree_full_m keeps its full leaf cards (%d of %d)" % [full_ok, full_n])
+	ok(shadow_bad == 0, "only the trees within tree_shadow_m cast the sun's shadow (%d wrong)" % shadow_bad)
+	ok(light_bad == 0, "between tree_full_m and tree_light_m the light tree (%d of %d wrong)" % [light_bad, light_n])
 	ok(cut_all, "every near tree's leaf cards cut out (texture set, alpha present)")
 	print("RESULT fails: %d" % fails)
 	quit(1 if fails > 0 else 0)

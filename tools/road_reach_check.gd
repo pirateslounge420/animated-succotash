@@ -50,7 +50,7 @@ func _initialize() -> void:
 	ok(world.first_camp_kind != "", "the first camp's kind rolled (§CB), not the old list: '%s'" % world.first_camp_kind)
 	ok(kind_biomes.has(fire_key) and not (fc.get("never", []) as Array).has(fire_key), "the fire stands in one of its kind's biomes (%s)" % fire_key)
 	var t0 := Time.get_ticks_msec()
-	var near := roads.links_near(spawn, REACH_M)
+	var near := roads.links_near(spawn, REACH_M, true)
 	print("[reach] built the roads within %.0f km in %.1f s" % [REACH_M / 1000.0, (Time.get_ticks_msec() - t0) / 1000.0])
 	# Nodes within reach, by kind, and which of them a link ends at.
 	var ends: Array = []

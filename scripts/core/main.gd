@@ -807,9 +807,12 @@ const OPENING_LOOK_M := 60.0
 ## only a brand-new world picks one (World.pick_spawn_site), and keeps it.
 ## A save from before 1 Oct has no opening_site: its saved hearth, when it
 ## is not a ruin camp's fire, was the opening camp, and is kept as it.
-## The dev frame (spawn_choice >= 0) always picks, and never keeps.
+## The dev frame (spawn_choice >= 0) and the checks always pick, and never
+## keep.
 func _opening_site() -> Vector3:
-	if world.spawn_choice >= 0:
+	# The dev frame and the checks (which never write a save) pick fresh:
+	# a check is the same on every machine, whatever worlds it has played.
+	if world.spawn_choice >= 0 or WorldSave.read_only:
 		return world.pick_spawn_site()
 	var kept := _vec(WorldSave.data.get("opening_site", null))
 	if kept == Vector3.ZERO:

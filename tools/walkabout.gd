@@ -168,7 +168,7 @@ func _random_cell_of(key: String, rng: RandomNumberGenerator) -> Dictionary:
 ## 1 km north with a note when no road lies within 3 km.
 func _down_the_road(d: Vector3, m: float) -> Dictionary:
 	var roads: RoadNetwork = main.chunks.roads
-	var near: Array = roads.links_near(d, 3000.0)
+	var near: Array = roads.links_near(d, 3000.0, true)
 	var hit := RoadNetwork.nearest_in(near, d, 3000.0)
 	if hit.is_empty():
 		return {"dir": CreatureSpawner._offset(d, 0.0, m), "note": "no road within 3 km of the camp: 1 km north instead"}
