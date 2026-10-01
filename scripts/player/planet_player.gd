@@ -356,8 +356,9 @@ var weapon := "hands"
 ## (hands: none).
 ## The Q order: worn tools by their slot; the torch ("carry": while you
 ## carry one, design 30 Sept §AW); bare hands always.
-const TOOLS := [["bow", "ranged", "bow"], ["spear", "melee", "spear"], ["torch", "carry", "torch"], ["hands", "", ""]]
+const TOOLS := [["bow", "ranged", "bow"], ["spear", "melee", "spear"], ["torch", "carry", "torch"], ["pole", "carry", "pole"], ["hands", "", ""]]
 var torch: Torch
+var fishing_line: FishingLine
 var _since_hit := 99.0
 ## Resting at a fire (_update_health()): a lit campfire within reach, and
 ## healing now; health healed so far by each source (tests, heal()).
@@ -379,6 +380,11 @@ var swimming := false
 var sprinting := false
 var crouching := false
 var climbing := false
+## On a rope ladder (§BT, Main.start_ladder): a scripted climb from one
+## end to the other, hands busy, no steering.
+var _ladder_t := -1.0
+var _ladder_a := Vector3.ZERO
+var _ladder_b := Vector3.ZERO
 ## Perched (design §V): sitting on top of a limb or on the crown of a
 ## tree, hands free: look, shoot the bow, throw the spear or cast the
 ## bare hands from there (each tool gates on `not climbing`, which a
@@ -527,6 +533,10 @@ func _ready() -> void:
 	torch.name = "Torch"
 	add_child(torch)
 	torch.setup(self)
+	fishing_line = FishingLine.new()
+	fishing_line.name = "FishingLine"
+	add_child(fishing_line)
+	fishing_line.setup(self)
 	aim_arc = AimArc.new()
 	aim_arc.name = "AimArc"
 	aim_arc.player = self
@@ -650,12 +660,25 @@ func _physics_process(delta: float) -> void:
 	spear.update_spear(delta)
 	fists.update_fists(delta)
 	torch.update_torch(delta)
+	fishing_line.update_line(delta)
 	aim_arc.update_arc()
 	_update_camera(delta)
 	_update_climb_legs()
 	if dead:
 		_dead_step(delta)
 		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
+		return
+	if _ladder_t >= 0.0:
+		_ladder_t += delta
+		var l := maxf(_ladder_a.distance_to(_ladder_b), 0.1)
+		var k := clampf(_ladder_t * 1.1 / l, 0.0, 1.0)
+		global_position = _ladder_a.lerp(_ladder_b, k)
+		velocity = Vector3.ZERO
+		_move = Vector3.ZERO
+		_orient()
+		_spring.rotation = Vector3(_pitch, _yaw_relative_to_body(cam_forward), 0.0)
+		if k >= 1.0:
+			_ladder_t = -1.0
 		return
 	if _wake_t > 0.0:
 		# Lying by the fire, then getting up.
@@ -1049,6 +1072,28 @@ func try_climb() -> bool:
 	_move = Vector3.ZERO
 	trees.rustle(_climb_chunk, _climb_tree, 0.6)
 	return true
+
+
+## Up or down a rope ladder (design 30 Sept §BT): a scripted climb from
+## `from` to `to` (scene points) at a walker's pace, hands busy.
+func start_ladder(from: Vector3, to: Vector3) -> void:
+	if dead or _ladder_t >= 0.0:
+		return
+	if climbing:
+		stop_climb()
+	if perched:
+		stop_perch()
+	_ladder_a = from
+	_ladder_b = to
+	_ladder_t = 0.0
+	velocity = Vector3.ZERO
+	_move = Vector3.ZERO
+	if torch != null:
+		torch.hands_needed()
+
+
+func on_ladder() -> bool:
+	return _ladder_t >= 0.0
 
 
 ## Let go: drop straight down, or push off the trunk (jump).
@@ -2495,6 +2540,8 @@ func in_hand() -> String:
 			return "spear" if wears("melee", "spear") and spear.thrown == null else "hands"
 		"torch":
 			return "torch" if inventory.has_kind("torch") else "hands"
+		"pole":
+			return "pole" if inventory.has_kind("pole") else "hands"
 	return "hands"
 
 

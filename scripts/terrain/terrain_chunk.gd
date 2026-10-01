@@ -408,6 +408,11 @@ static func _vertex_colors(map: PlanetData, d: PackedVector3Array, h: PackedFloa
 			var tread := RoadNetwork.tread_at(road_segs, dir)
 			if tread > 0.0:
 				col = col.lerp(PATH, tread)
+		# A burn scar (CampSim.scars): ash and char, fading as it heals.
+		if not CampSim.scars.is_empty():
+			var scar := CampSim.scar_at(dir, VegetationPlacer.NOW_DAYS)
+			if scar > 0.0:
+				col = col.lerp(Color(0.16, 0.14, 0.12), 0.7 * scar)
 		out[i] = col
 	_bake_hollow_ao(h, out)
 	return out
@@ -1146,6 +1151,22 @@ func is_limb_shape(body: Object, shape_idx: int) -> bool:
 		if owner in (_twig_owners[i] as PackedInt32Array):
 			return true
 	return false
+
+
+## This chunk's key (face, i, j).
+func key() -> Vector3i:
+	return Vector3i(face, ci, cj)
+
+
+## Drop every wood collider of tree `i` that is left (its trunk; the
+## limbs and twigs go with remove_graph): a tree cut to the stool.
+func remove_trunk_shapes(i: int) -> void:
+	if _tree_body == null:
+		return
+	for owner in _owner_tree.keys():
+		if int(_owner_tree[owner]) == i:
+			_tree_body.remove_shape_owner(owner)
+			_owner_tree.erase(owner)
 
 
 ## Drop tree `i`'s branch graph and limb colliders.

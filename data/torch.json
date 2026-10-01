@@ -1,14 +1,15 @@
 {
  "_help": {
-  "about": "The torch (design 30 Sept §AW): a burning brand carried in one hand, the first tool. Unlit until held to a flame (a lit fire, a planted torch, another torch); burns about one night; a point light with Minecraft-style falloff; can be planted in the ground. Restart after editing.",
+  "about": "The torch (design 30 Sept \u00a7AW): a burning brand carried in one hand, the first tool. Unlit until held to a flame (a lit fire, a planted torch, another torch); burns about one night; a point light with Minecraft-style falloff; can be planted in the ground. Restart after editing.",
   "burn_min": "Real minutes a torch burns at full flame (the equatorial night is 48).",
   "gutter_share": "The last share of its life it spends guttering: dimmer, harder flicker, the warning to head for a fire.",
   "rain_burn_scale": "Burn-time multiplier in rain (storm: storm_burn_scale). douse_depth_m: water this deep puts it out.",
-  "light": "range_m / energy / attenuation: the falloff. gutter_energy: energy while guttering. flicker_hz / flicker_amount: the slow flicker; sprinting and wind scale it. shadows false: no shadow map from a torch (§AG).",
+  "light": "range_m / energy / attenuation: the falloff. gutter_energy: energy while guttering. flicker_hz / flicker_amount: the slow flicker; sprinting and wind scale it. shadows false: no shadow map from a torch (\u00a7AG).",
   "planted": "Right click the ground with a lit torch to stand it up; take it back within pickup_reach_m.",
   "lighting_reach_m": "How close to a flame the torch must be held to light.",
-  "bundle": "Unlit torches by a camp's fire (§AW): how many, and how many game hours until the folk have made more.",
-  "climb": "Starting a climb with a lit torch plants it if there is ground to plant it in, otherwise it goes out (stowing puts it out; relight at a flame)."
+  "bundle": "Unlit torches by a camp's fire (\u00a7AW): how many, and how many game hours until the folk have made more.",
+  "climb": "Starting a climb with a lit torch plants it if there is ground to plant it in, otherwise it goes out (stowing puts it out; relight at a flame).",
+  "resin": "The resin torch's block (technique resin_torch): see resin._note."
  },
  "burn_min": 50.0,
  "gutter_share": 0.12,
@@ -40,5 +41,12 @@
   "plant_if_ground": true,
   "else": "out"
  },
- "burnt_out": "stick"
+ "burnt_out": "stick",
+ "resin": {
+  "burn_scale": 1.8,
+  "energy_scale": 1.25,
+  "rain_immune": true,
+  "storm_burn_scale": 0.7,
+  "_note": "Design 30 Sept \u00a7BP resin torch (technique resin_torch): dipped in pine pitch it burns burn_scale times as long, energy_scale as bright, shrugs off drizzle (rain_immune) and only a storm shortens it. First guesses by Claude Code 1 Oct; the designer owns them."
+ }
 }

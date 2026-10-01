@@ -3,12 +3,12 @@
   "about": "What the player can carry and wear (Inventory; the inventory screen on Tab, or I). Restart the game after editing. Spec Appendix R4: a handful of items, weight felt in movement (movement table 'burden'), never read in a menu.",
   "sample_reach_m": "How near a plant must be (from your hands) for E to take a sample of it.",
   "carry_slots": "How many things you can carry. Each slot holds one thing: a bundle of herbs, a plant sample, a cut cactus column, a fish, a mushroom.",
-  "starting_kit": "The two tools of the whole game (design §M, §T; the fishing pole shelved 29 Sept 2026 for a separate fishing game, the spear fishes), plus a quiver of arrows (data/combat.json quiver.start). You wake empty-handed (a new game and after a death alike: Mike, 29 Sept 2026) and the folk who saved you have laid these on the ground by you, a gift: right click takes each into its slot. There are no other tools, ever: no axes, picks, shovels, knives or stone tools, and no tool crafting.",
-  "equipment": "The slots you wear things in: how many are worn and how many spares each keeps. The two tools (bow, spear) are one each with NO spares (design §T: three tools, never more); amulet one worn and two spares; rings two worn and two spares. Spares don't count as carried.",
+  "starting_kit": "The two tools of the whole game (design \u00a7M, \u00a7T; the fishing pole shelved 29 Sept 2026 for a separate fishing game, the spear fishes), plus a quiver of arrows (data/combat.json quiver.start). You wake empty-handed (a new game and after a death alike: Mike, 29 Sept 2026) and the folk who saved you have laid these on the ground by you, a gift: right click takes each into its slot. There are no other tools, ever: no axes, picks, shovels, knives or stone tools, and no tool crafting.",
+  "equipment": "The slots you wear things in: how many are worn and how many spares each keeps. The two tools (bow, spear) are one each with NO spares (design \u00a7T: three tools, never more); amulet one worn and two spares; rings two worn and two spares. Spares don't count as carried.",
   "kinds": "Every kind of item: its name on the screen, the little picture drawn for it (icon), and which equipment slot it's worn in (slot; none = it's carried). color is the picture's main color where the item doesn't bring its own (a plant sample takes its species' colors).",
   "sample_part": "What E on a plant takes, by the plant's shape: a cutting, a seed head, a leaf, or a cut column (a cactus: its own kind of item). Shapes not listed give a cutting.",
   "bundle_genera": "Plants of these genera give a bundle of herbs (cut stems, tied) instead of a sample. It still carries the species.",
-  "starting_kit_ambient": "Design 30 Sept §AW: what you wake with in the ambient movement profile - nothing worn, nothing laid beside you; by_the_fire is what the camp keeps (a bundle of unlit torches). starting_kit is the shinobi profile's."
+  "starting_kit_ambient": "Design 30 Sept \u00a7AW: what you wake with in the ambient movement profile - nothing worn, nothing laid beside you; by_the_fire is what the camp keeps (a bundle of unlit torches). starting_kit is the shinobi profile's."
  },
  "carry_slots": 10,
  "sample_reach_m": 2.2,
@@ -111,6 +111,24 @@
    "name": "Fuel",
    "icon": "branch",
    "color": "#6b4a2a"
+  },
+  "pole": {
+   "name": "Pole and line",
+   "icon": "pole",
+   "color": "#b99c5c",
+   "_note": "technique fishing_line (Claude Code 1 Oct)"
+  },
+  "ember": {
+   "name": "Ember carrier",
+   "icon": "ember",
+   "color": "#8a4a22",
+   "_note": "technique ember_carrier: a live coal wrapped in bark; cold when its hours run out"
+  },
+  "fat_lamp": {
+   "name": "Fat lamp",
+   "icon": "lamp",
+   "color": "#8a8a8a",
+   "_note": "technique fat_lamp: a stone bowl of rendered fat with a moss wick"
   }
  },
  "sample_part": {

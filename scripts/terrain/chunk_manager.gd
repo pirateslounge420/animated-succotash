@@ -397,6 +397,7 @@ func _attach_base(limit: int) -> void:
 		chunk.hosts = data.hosts
 		VegetationPlacer.build_nodes(chunk, chunk, data.plants)
 		world.world_root.add_child(chunk)
+		Coppice.apply(chunk, world)
 		chunk.set_fine(_wanted_detail.has(key), _hero.has(key))
 		chunks[key] = chunk
 		chunk_loaded.emit(chunk)

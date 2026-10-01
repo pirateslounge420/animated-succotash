@@ -1,7 +1,8 @@
 {
  "_help": {
-  "about": "Techniques (design 30 Sept §BO–§BP): verbs learned from peoples, permanent and weightless. taught_by lists people ids (data/peoples). player_can: the player performs it in the world; otherwise it is a camp thing that raises the camp's ceilings. first_to_build marks the one to implement first. Restart after editing.",
-  "category": "light | fire | fuel | food | water | materials | shelter | marks | travel"
+  "about": "Techniques (design 30 Sept \u00a7BO\u2013\u00a7BP): verbs learned from peoples, permanent and weightless. taught_by lists people ids (data/peoples). player_can: the player performs it in the world; otherwise it is a camp thing that raises the camp's ceilings. first_to_build marks the one to implement first. Restart after editing.",
+  "category": "light | fire | fuel | food | water | materials | shelter | marks | travel",
+  "params": "Numbers the engine reads for the techniques built as verbs (fishing_line, coppice, resin_torch, ember_carrier, fat_lamp): first guesses by Claude Code 1 Oct, the designer owns them. ember_game_h: a live coal lasts this many game hours in the carrier before it goes cold. fat_lamp burn_game_h: the lamp burns this long once lit."
  },
  "techniques": [
   {
@@ -14,7 +15,20 @@
    ],
    "verb": "dip a cattail head or bark twist in pine pitch",
    "unlocks": "a torch that burns longer and brighter and shrugs off drizzle (torch.json resin block)",
-   "player_can": true
+   "player_can": true,
+   "params": {
+    "conifer_genera": [
+     "Pinus",
+     "Picea",
+     "Abies",
+     "Larix",
+     "Tsuga",
+     "Shorea",
+     "Araucaria",
+     "Cedrus"
+    ],
+    "needle_leaf": true
+   }
   },
   {
    "id": "fatwood",
@@ -39,7 +53,11 @@
    ],
    "verb": "wrap a live coal in tinder fungus or punk wood and bark",
    "unlocks": "carry fire for a day or more with no light; lay a new fire from it; it goes cold if neglected (fire is never made, only carried)",
-   "player_can": true
+   "player_can": true,
+   "params": {
+    "ember_game_h": 26.0,
+    "fire_units": 2
+   }
   },
   {
    "id": "fat_lamp",
@@ -52,7 +70,13 @@
    ],
    "verb": "a stone bowl, rendered fat, a moss wick",
    "unlocks": "a dim light that burns for hours and won't blow out; set it down inside a shelter",
-   "player_can": true
+   "player_can": true,
+   "params": {
+    "burn_game_h": 8.0,
+    "range_m": 6.0,
+    "energy": 0.8,
+    "costs_food_units": 1.0
+   }
   },
   {
    "id": "candlenut",
@@ -112,7 +136,21 @@
    ],
    "verb": "cut hazel or ash to the stump; it throws straight poles again in seven years",
    "unlocks": "a woodlot that is a fuel crop, no clearing; the fix for the restraint rule",
-   "player_can": true
+   "player_can": true,
+   "params": {
+    "poles_per_cut": 3,
+    "regrow": "plant_growth",
+    "pole_fraction": 0.3,
+    "genera": [
+     "Corylus",
+     "Fraxinus",
+     "Salix",
+     "Alnus",
+     "Tilia",
+     "Castanea"
+    ],
+    "fallback_max_height_m": 25.0
+   }
   },
   {
    "id": "pitch",
@@ -149,7 +187,19 @@
    "verb": "twist a line, carve a hook of bone or shell, cut a pole",
    "unlocks": "fish with a pole and line, the patient way; the spear stays the fast way",
    "player_can": true,
-   "first_to_build": true
+   "first_to_build": true,
+   "params": {
+    "cast_m": 12.0,
+    "bite_s": [
+     8.0,
+     30.0
+    ],
+    "hook_window_s": 2.0,
+    "needs": [
+     "branch",
+     "grass_bundle|reeds"
+    ]
+   }
   },
   {
    "id": "clam_garden",
@@ -273,7 +323,7 @@
   },
   {
    "id": "chuno",
-   "name": "Chuño",
+   "name": "Chu\u00f1o",
    "category": "food",
    "taught_by": [
     "highland"
@@ -582,7 +632,7 @@
     "*"
    ],
    "verb": "every flame is borrowed from a hearth; the only new fire is lightning",
-   "unlocks": "the hearth economy's law (§AW–§AX); no fire drill exists",
+   "unlocks": "the hearth economy's law (\u00a7AW\u2013\u00a7AX); no fire drill exists",
    "player_can": false
   },
   {
@@ -834,7 +884,7 @@
    "taught_by": [
     "canopy"
    ],
-   "verb": "pick a giant with a crotch 8–15 m up, lash a frame of poles into it with rattan, prop it from below with four to ten poles, floor it with bark or split bamboo, roof it with leaf",
+   "verb": "pick a giant with a crotch 8\u201315 m up, lash a frame of poles into it with rattan, prop it from below with four to ten poles, floor it with bark or split bamboo, roof it with leaf",
    "unlocks": "the camp's shelter: one family per giant, the village the size of the stand",
    "player_can": false
   },

@@ -233,10 +233,15 @@ static func burn_step(it: Dictionary, delta: float, wx: Dictionary, _held: bool)
 	if not bool(it.get("lit", false)):
 		return ""
 	var scale := 1.0
+	var resin: Dictionary = D.get("resin", {})
+	var is_resin := bool(it.get("resin", false))
 	if float(wx.get("storm", 0.0)) > 0.5:
-		scale = 1.0 / maxf(float(D.get("storm_burn_scale", 0.35)), 0.05)
-	elif float(wx.get("rain_mm_h", 0.0)) > 0.1:
+		scale = 1.0 / maxf(float(resin.get("storm_burn_scale", 0.7) if is_resin else D.get("storm_burn_scale", 0.35)), 0.05)
+	elif float(wx.get("rain_mm_h", 0.0)) > 0.1 and not (is_resin and bool(resin.get("rain_immune", true))):
 		scale = 1.0 / maxf(float(D.get("rain_burn_scale", 0.6)), 0.05)
+	# A resin torch (design §BP) burns burn_scale times as long.
+	if is_resin:
+		scale /= maxf(float(resin.get("burn_scale", 1.8)), 0.1)
 	var before := float(it.get("burn_left_min", float(D.get("burn_min", 50.0))))
 	var after := before - delta / 60.0 * scale
 	it["burn_left_min"] = after
@@ -268,6 +273,8 @@ static func energy_now(it: Dictionary, t: float, motion: float) -> float:
 	var wind_v: Vector3 = weather.get("wind", Vector3.ZERO) if weather.get("wind") is Vector3 else Vector3.ZERO
 	amount *= 1.0 + float(L.get("wind_flicker_scale", 1.5)) * clampf(wind_v.length() * 0.08, 0.0, 1.0)
 	var e := float(L.get("energy", 2.2))
+	if bool(it.get("resin", false)):
+		e *= float((D.get("resin", {}) as Dictionary).get("energy_scale", 1.25))
 	if guttering(it):
 		e = float(L.get("gutter_energy", 0.9))
 		amount *= 2.0
