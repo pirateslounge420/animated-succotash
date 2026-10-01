@@ -40,7 +40,7 @@ static func register(mat: ShaderMaterial) -> ShaderMaterial:
 	if not _retro_set:
 		_retro_set = true
 		var tm: Dictionary = RETRO.get("tile_m", {})
-		apply({"look_max_mips": float(RETRO.get("max_mips", 2)),
+		apply({"look_max_mips": float(RETRO.get("max_mips", 2)), "look_tile_contrast": float(RETRO.get("tile_contrast", 0.3)), "look_grass_m": float(Tuning.section("look", "ranges").get("grass_m", 40.0)),
 			"look_tile_m": Vector4(tm.get("grass", 1.5), tm.get("dirt", 2.0), tm.get("sand", 2.0), tm.get("stone", 3.0)),
 			"look_tile_m2": Vector2(tm.get("bark", 1.0), tm.get("leaves", 0.5))})
 	if not _materials.has(mat):

@@ -39,20 +39,20 @@ void fragment() {
 	vec3 surface;
 	if (kind == 1) {
 		// Timber: grain runs along the face's longer way.
-		surface = retro_tex(look_tex_bark, uv / look_tile_m2.x).rgb;
+		surface = retro_tile(look_tex_bark, uv / look_tile_m2.x).rgb;
 	} else if (kind == 2) {
 		// Packed snow: a faint grain, cool and bright.
-		surface = mix(vec3(0.5), retro_tex(look_tex_stone, uv / look_tile_m.w).rgb, 0.3) * vec3(0.97, 1.0, 1.04);
+		surface = mix(vec3(0.5), retro_tile(look_tex_stone, uv / look_tile_m.w).rgb, 0.3) * vec3(0.97, 1.0, 1.04);
 	} else if (kind == 3) {
-		surface = retro_tex(look_tex_grass, uv / look_tile_m.x).rgb;
+		surface = retro_tile(look_tex_grass, uv / look_tile_m.x).rgb;
 	} else if (kind == 4) {
-		surface = retro_tex(look_tex_leaves, uv / look_tile_m2.y).rgb;
+		surface = retro_tile(look_tex_leaves, uv / look_tile_m2.y).rgb;
 	} else if (kind == 5) {
 		surface = vec3(0.45 + 0.1 * texture(look_grain_soft, uv * 1.5).r);
 	} else {
-		surface = retro_tex(look_tex_stone, uv / look_tile_m.w).rgb;
+		surface = retro_tile(look_tex_stone, uv / look_tile_m.w).rgb;
 	}
-	vec3 moss = retro_tex(look_tex_leaves, uv / look_tile_m2.y).rgb;
+	vec3 moss = retro_tile(look_tex_leaves, uv / look_tile_m2.y).rgb;
 	float weather = texture(look_grain_soft, uv * 0.12 + 0.5).r - 0.5;
 	// R1a: greens toward moss; at night stone to slate, timber to deep blue,
 	// moss to teal.

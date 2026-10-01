@@ -22,7 +22,7 @@ uniform bool is_sea = false;
 uniform vec3 sea_color : source_color = vec3(0.02, 0.3, 0.62);
 uniform sampler2D look_grain : filter_linear_mipmap, repeat_enable;
 uniform sampler2D look_grain_soft : filter_linear_mipmap, repeat_enable;
-uniform sampler2D look_tex_stone : filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D look_tex_stone : filter_nearest_mipmap, repeat_enable; // §AG: a nearest tile, 2 mips, no anisotropy
 
 varying vec3 world_pos;
 varying vec3 planet_pos;
@@ -38,8 +38,8 @@ void vertex() {
 vec3 crag(float scale) {
 	vec3 n = abs(planet_normal);
 	vec3 p = planet_pos * scale;
-	vec3 a = texture(look_tex_stone, p.yz).rgb;
-	vec3 b = texture(look_tex_stone, p.xz).rgb;
+	vec3 a = retro_tile(look_tex_stone, p.yz).rgb;
+	vec3 b = retro_tile(look_tex_stone, p.xz).rgb;
 	vec3 c = texture(look_tex_stone, p.xy).rgb;
 	return (a * n.x + b * n.y + c * n.z) / (n.x + n.y + n.z);
 }

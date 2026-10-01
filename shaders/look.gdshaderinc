@@ -48,6 +48,12 @@ global uniform float look_max_mips;
 // (§AG 6, retro.canopy_dark; 0 while it does: SkySystem.day_shadows()).
 global uniform float look_canopy_dark;
 global uniform float look_night;
+// §AG tile contrast (data/look.json retro.tile_contrast): the detail tiles'
+// light and dark pushed apart about their mid grey (0 = as painted).
+global uniform float look_tile_contrast;
+// §BU step 5b: within this of the eye the grass tile gains finer blade
+// flecks (look.json ranges.grass_m), fading to the plain tile beyond.
+global uniform float look_grass_m;
 // The ambient floor (design 30 Sept §BD, look.json ambient_floor): the
 // hour's floor colour times its energy times the sky visibility where the
 // player stands (0 inside a tomb or cave), linear, added under everything
@@ -135,4 +141,13 @@ vec4 retro_tex(sampler2D tex, vec2 uv) {
 	vec2 dy = dFdy(st);
 	float lod = 0.5 * log2(max(max(dot(dx, dx), dot(dy, dy)), 1e-8));
 	return textureLod(tex, uv, clamp(lod, 0.0, look_max_mips));
+}
+
+// One of Look's mid-grey modulation tiles (grass, dirt, sand, stone, bark,
+// leaves, water: 0.5 = unchanged), nearest-filtered with at most
+// look_max_mips mips, its contrast pushed by look_tile_contrast (§AG 1).
+vec4 retro_tile(sampler2D tex, vec2 uv) {
+	vec4 c = retro_tex(tex, uv);
+	c.rgb = 0.5 + (c.rgb - 0.5) * (1.0 + look_tile_contrast);
+	return c;
 }

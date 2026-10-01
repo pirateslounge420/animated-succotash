@@ -62,12 +62,19 @@ void fragment() {
 	float snow = (1.0 - smoothstep(0.03, 0.09, sat)) * smoothstep(0.72, 0.88, hi);
 	float sandy = smoothstep(0.05, 0.14, c.r - c.b) * smoothstep(0.45, 0.62, hi) * (1.0 - green);
 	// UV is in meters: each tile repeats every look_tile_m.
-	vec3 t = mix(retro_tex(look_tex_dirt, UV / look_tile_m.y).rgb, retro_tex(look_tex_sand, UV / look_tile_m.z).rgb, sandy);
-	t = mix(t, retro_tex(look_tex_grass, UV / look_tile_m.x).rgb, green);
-	t = mix(t, retro_tex(look_tex_stone, UV / look_tile_m.w).rgb, rocky);
+	vec3 t = mix(retro_tile(look_tex_dirt, UV / look_tile_m.y).rgb, retro_tile(look_tex_sand, UV / look_tile_m.z).rgb, sandy);
+	vec3 grass_t = retro_tile(look_tex_grass, UV / look_tile_m.x).rgb;
+	// Near grass (§BU 5b): denser, finer blade flecks within look_grass_m,
+	// tinted by the ground's own (biome) colour through COLOR below, fading
+	// to the plain tile.
+	float near_g = 1.0 - smoothstep(look_grass_m * 0.45, look_grass_m, distance(world_pos, CAMERA_POSITION_WORLD));
+	vec3 blades = retro_tile(look_tex_grass, UV / (look_tile_m.x * 0.3) + vec2(0.37, 0.11)).rgb;
+	grass_t = mix(grass_t, grass_t * (0.55 + 0.9 * blades), near_g * 0.8);
+	t = mix(t, grass_t, green);
+	t = mix(t, retro_tile(look_tex_stone, UV / look_tile_m.w).rgb, rocky);
 	// Snow: just under white, with a faint crag grain so it reads as snow
 	// on rock, not blank white.
-	vec3 snow_t = mix(vec3(0.4), retro_tex(look_tex_stone, UV / (look_tile_m.w * 2.0)).rgb * 0.8, 0.35);
+	vec3 snow_t = mix(vec3(0.4), retro_tile(look_tex_stone, UV / (look_tile_m.w * 2.0)).rgb * 0.8, 0.35);
 	t = mix(t, snow_t, snow * 0.85);
 	// Texture contrast eases off only a little far away: the far ground
 	// is meant to sparkle (§AG), and the fog has it by ~400 m.
@@ -76,7 +83,7 @@ void fragment() {
 	t = mix(t, vec3(0.5), far * 0.2);
 	// Far off, rock turns to crags meters across (as on the far shell), so
 	// distant cliffs read crunchy instead of flat.
-	vec3 crags = retro_tex(look_tex_stone, UV / 90.0).rgb * 0.65 + retro_tex(look_tex_stone, UV / 380.0 + 0.3).rgb * 0.35;
+	vec3 crags = retro_tile(look_tex_stone, UV / 90.0).rgb * 0.65 + retro_tile(look_tex_stone, UV / 380.0 + 0.3).rgb * 0.35;
 	t = mix(t, crags, rocky * smoothstep(200.0, 900.0, dist) * 0.9);
 	// Painterly light and dark: grass drifts a little warmer in the light
 	// patches and cooler in the dark ones.

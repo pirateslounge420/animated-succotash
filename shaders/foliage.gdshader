@@ -390,8 +390,8 @@ vec3 sport_tint(vec3 c, bool leafy) {
 		if (!leafy) {
 			return c;
 		}
-		float n = retro_tex(look_tex_leaves, obj_pos.xz * 1.7 + obj_pos.y * 0.6).g;
-		float edge = retro_tex(look_tex_leaves, obj_pos.zy * 3.1).r;
+		float n = retro_tile(look_tex_leaves, obj_pos.xz * 1.7 + obj_pos.y * 0.6).g;
+		float edge = retro_tile(look_tex_leaves, obj_pos.zy * 3.1).r;
 		float white = smoothstep(0.52, 0.6, n * 0.8 + edge * 0.35);
 		return mix(c, vec3(0.93, 0.9, 0.74) * (0.55 + lum * 1.2), white);
 	} else if (v_sport < 3.5) {
@@ -423,7 +423,7 @@ void fragment() {
 		float x = abs(UV.x - 0.5) * 2.0 * 1.08;
 		float cb = v_imp2.x;
 		float t = (UV.y - cb) / max(1.0 - cb, 1e-3);
-		float n = retro_tex(look_tex_leaves, UV * vec2(3.0, 5.0)).g;
+		float n = retro_tile(look_tex_leaves, UV * vec2(3.0, 5.0)).g;
 		float r = imp_profile(clamp(t, 0.0, 1.0), v_imp);
 		float rim = r * (0.78 + 0.44 * n);
 		bool crown = t > 0.0 && x < rim;
@@ -500,20 +500,20 @@ void fragment() {
 		// Bamboo culm: smooth, faintly streaked, ringed with a node every
 		// ~35 cm (a dark ridge with a pale band under it).
 		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
-		tex = retro_tex(look_tex_bark, vec2(uv.x * 3.0, uv.y * 0.15)) * 0.35 + 0.33;
+		tex = retro_tile(look_tex_bark, vec2(uv.x * 3.0, uv.y * 0.15)) * 0.35 + 0.33;
 		float node = fract(obj_pos.y / 0.35);
 		tex.rgb *= 1.0 - 0.45 * step(0.94, node) + 0.18 * step(0.86, node) * step(node, 0.94);
 	} else if (mat_id > 2.5) {
 		// Vines: the leafy texture running down the strand.
-		tex = retro_tex(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) / look_tile_m2.y);
+		tex = retro_tile(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) / look_tile_m2.y);
 	} else if (mat_id > 1.5) {
 		tex = retro_tex(look_tex_leaf_card, UV);
 	} else if (mat_id > 0.5) {
 		vec2 uv = an.y > 0.55 ? obj_pos.xz : (an.x > an.z ? obj_pos.zy : obj_pos.xy);
-		tex = retro_tex(look_tex_leaves, uv / (look_tile_m2.y * v_leafs));
+		tex = retro_tile(look_tex_leaves, uv / (look_tile_m2.y * v_leafs));
 	} else {
 		vec2 uv = an.x > an.z ? obj_pos.zy : obj_pos.xy;
-		tex = retro_tex(look_tex_bark, uv / look_tile_m2.x);
+		tex = retro_tile(look_tex_bark, uv / look_tile_m2.x);
 	}
 	// Palette: leaves toward the canopy green (§AG), bark toward the warm
 	// brown.
@@ -610,10 +610,10 @@ void fragment() {
 	if (mat_id < 0.5 && moss > 0.01) {
 		// Moss on the bark: patchy, low down, on faces turned up and to one
 		// side (the damp side).
-		float n = retro_tex(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 0.7).g;
+		float n = retro_tile(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 0.7).g;
 		float lowness = 1.0 - clamp(obj_pos.y / 5.0, 0.0, 1.0);
 		float m = smoothstep(0.45, 0.7, n * 0.9 + 0.3 * lowness + 0.25 * obj_normal.y + 0.15 * obj_normal.z + 0.4 * moss - 0.25);
-		vec3 moss_col = pal_pull(pal_moss, pal_grass_night, 0.7 * nk) * retro_tex(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3).rgb * 2.0;
+		vec3 moss_col = pal_pull(pal_moss, pal_grass_night, 0.7 * nk) * retro_tile(look_tex_leaves, vec2(obj_pos.x + obj_pos.z, obj_pos.y) * 1.3).rgb * 2.0;
 		ALBEDO = mix(ALBEDO, moss_col, m * moss);
 	}
 	// Cards, cluster cards and a tiled crown hull cut by their alpha.
