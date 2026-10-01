@@ -3,9 +3,12 @@
   "about": "Roads (design 30 Sept §BC): a trail network laid before plants, built by whoever left the ruins and maintained by nobody. Links ruins, camps, springs, fords and passes; follows rivers and contours; rivers are the other road type. Restart after editing.",
   "network": "Node kinds the roads connect, the least spacing between nodes, the longest single link, and grade limits (roads switchback above max_grade).",
   "trail": "Width band; the ground material; wear 0-1 (how bare the tread is); overgrown 0-1 (how much the understory has taken it back); understory kept clear this far either side; a tree planted within tree_at_bend_m of each bend (§AG 7).",
-  "decay": "Share of bridges that are out (both abutments always stand); share of trails that end at a collapse; waymark spacing, the share fallen, and their kinds.",
+  "decay": "Share of bridges that are out (both abutments always stand); share of trails that end at a collapse; waymark spacing, the share fallen, and their kinds. Added 1 Oct (§BY): notched_tree and stone_step as waymark kinds.",
   "landmarks": "Off-road finds: how far off the trail (must be out of sight of it), and what kinds.",
-  "forks": "A fork must be readable this far before it: you can see the other road across the gorge. One-way gates a fork can commit you through."
+  "forks": "A fork must be readable this far before it: you can see the other road across the gorge. One-way gates a fork can commit you through.",
+  "desire_lines": "Design 30 Sept night §BY (pushed 1 Oct): the LIVE road layer. Every folk trip (camps.json sim.jobs) and every pass of the player stamps wear_per_pass on the ground along a width_m strip; it shows once wear passes show_at_wear (grass thins, dirt through) and fades by fade_per_game_day when the walking stops. Paths appear where people actually walk; a camp's gather trails are the first sign it is alive.",
+  "lost_and_found": "Design 30 Sept night §BY: the old roads are half-forgotten and LONG (Mike). A share of each road (vanish_share) is stretches vanish_len_m long where the trail all but disappears under the understory (overgrown_in_vanish), between clear stretches clear_len_m long; the pickup is marked by a tell within tell_within_m of where the trail resumes (pickup_tells). Losing and refinding the path is the ambient game.",
+  "opening_road": "Design 30 Sept night §BX (pushed 1 Oct): the first road. spawn_beside_road: the opening camp sits on the road, never in trackless woods. spawn.real_min_before_dusk: the clock starts this many real minutes before dusk begins at the spawn's latitude and date — an afternoon spawn (supersedes main.gd's start-of-dusk clock and 27 Sept §P beat 1). first_landmark camp_at_ruin: the road leads to a camp restoring a ruin, its hearth glow the beacon. walk_real_min: the road's length is this many minutes at walk_speed_mps (the ambient walk, movement.json) — about half an hour, Mike; detour_allowance_min: a walk that lost the trail twice still arrives by arrive_by (dusk is 18 real min). Only the opening road is tuned; the rest is network/trail/decay above."
  },
  "layer": "before_plants",
  "network": {
@@ -48,7 +51,9 @@
   "waymarks": [
    "cairn",
    "standing_stone",
-   "post"
+   "post",
+   "notched_tree",
+   "stone_step"
   ]
  },
  "landmarks": {
@@ -73,5 +78,49 @@
    "river_fast"
   ]
  },
- "rivers_are_roads": true
+ "rivers_are_roads": true,
+ "desire_lines": {
+  "enabled": true,
+  "sources": [
+   "folk_trips",
+   "player"
+  ],
+  "wear_per_pass": 0.03,
+  "width_m": 0.6,
+  "show_at_wear": 0.15,
+  "max_wear": 1.0,
+  "fade_per_game_day": 0.01
+ },
+ "lost_and_found": {
+  "vanish_share": 0.3,
+  "vanish_len_m": [
+   25,
+   90
+  ],
+  "clear_len_m": [
+   120,
+   500
+  ],
+  "overgrown_in_vanish": 0.95,
+  "pickup_tells": [
+   "cairn",
+   "notched_tree",
+   "stone_step",
+   "abutment"
+  ],
+  "tell_within_m": 12.0
+ },
+ "opening_road": {
+  "spawn_beside_road": true,
+  "spawn": {
+   "phase": "afternoon",
+   "real_min_before_dusk": 22.0
+  },
+  "first_landmark": "camp_at_ruin",
+  "walk_real_min": 28.0,
+  "walk_speed_mps": 4.3,
+  "detour_allowance_min": 8.0,
+  "arrive_by": "dusk_end",
+  "length_km_hint": 7.2
+ }
 }

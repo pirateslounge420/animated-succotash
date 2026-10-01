@@ -8,7 +8,8 @@
   "muffle": "[near m, far m] or null: from near to far the sound loses its high end (down to muffle_far.cutoff_hz) and most of its direction (panning down to muffle_far.pan), as a far howl does. null: always clear.",
   "muffle_far": "Where a muffled sound ends up at its far distance: cutoff_hz (its brightest frequency) and pan (0-1, how much of its left-right direction is left).",
   "cloak_flurry": "Design \u00a7Z: the whip-and-rustle of heavy cloth on every roll, slide start, wall-jump kick and swing release (synthesized in sound_synth, no sample). pitch_by_speed: how much faster movement sharpens the snap (0 = same every time). noise_m: how far creatures hear it. volume_db: loudness.",
-  "class": "Design 30 Sept \u00a7BG: every kind is a SOURCE (a 3D player at a place you can walk to; muffle: the far and near distances between which terrain and foliage dull it) or lives in the BED below (no position). Both lists together file every sound in the game."
+  "class": "Design 30 Sept \u00a7BG: every kind is a SOURCE (a 3D player at a place you can walk to; muffle: the far and near distances between which terrain and foliage dull it) or lives in the BED below (no position). Both lists together file every sound in the game.",
+  "fire_block": "Design 30 Sept night \u00a7BZ (pushed 1 Oct): two layers at every fire, both SOURCES (kinds.fire): hiss, a steady soft bed (volume_db, cutoff_hz), and pops \u2014 snaps and crackles as ONE-SHOTS on a random clock (every_s between pops, a loudness band, a pitch band, snaps_share the sharp ones), never the 4 s fire_loop cycle the ear learns. low_fire: fewer, quieter pops as the store burns down; embers only hiss. hear_before_seen: kinds.fire.max_distance raised so on the first road you hear the camp before you see its glow. First guesses; the designer owns them."
  },
  "muffle_far": {
   "cutoff_hz": 700,
@@ -226,12 +227,12 @@
   },
   "fire": {
    "unit_size": 5,
-   "max_distance": 60,
+   "max_distance": 90,
    "model": "inverse",
    "max_db": 0,
    "muffle": [
-    15,
-    60
+    20,
+    90
    ],
    "class": "source"
   },
@@ -451,5 +452,32 @@
    "cutoff_hz_open": 20000.0,
    "cutoff_hz_canopy": 1800.0
   }
+ },
+ "fire": {
+  "hiss": {
+   "volume_db": -14.0,
+   "cutoff_hz": 2600
+  },
+  "pops": {
+   "every_s": [
+    0.3,
+    2.8
+   ],
+   "volume_db": [
+    -10.0,
+    -3.0
+   ],
+   "pitch": [
+    0.8,
+    1.4
+   ],
+   "snaps_share": 0.3
+  },
+  "low_fire": {
+   "pops_every_scale": 2.5,
+   "volume_db_offset": -6.0
+  },
+  "embers": "hiss_only",
+  "hear_before_seen": true
  }
 }

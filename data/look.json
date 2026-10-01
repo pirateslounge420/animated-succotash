@@ -9,7 +9,8 @@
   "render": "Design §Y: the game renders at a FIXED internal height (internal_lines, 480 by default; max_internal_lines is the most a setting may allow, 720) and is upscaled to the window with nearest-neighbour; integer_scale snaps to whole multiples when the window allows. aspect: '16:9' (854x480) or '4:3' (640x480, letterboxed). hud_in_internal: the HUD is drawn inside the low-res frame and upscaled with it. Post-grade and dither run at the internal size. This replaces scaling_3d/scale in project.godot.",
   "retro": "The reference-clip look: tiny nearest-filtered tiles, hard 5-bit dither, pushed blue/green, close sky-coloured fog, no shadow maps by day. tile_m: metres per texture repeat per material (nearest_mipmap, max 2 mips, no anisotropy). dither/bleed override post_grade's defaults. colors: locked daylight colours (§AG 3), shadow_floor is the darkest daylight pixel after the grade. sun_disc_deg: the soft sun's diameter in the sky shader. clouds: two painted layers (scale, turns per game-minute). fog: day exponential density per metre + valley height fog. canopy_dark: ground vertex darkening under canopy (with blob shadows, light.shadows off). fov_deg: camera field of view. colors are MEASURED from the batch3 frames (grass is darker than a first guess: base #224A18, lit #3F6E2C). targets: frame statistics to hit. tiles_dir: the pre-made §AG tiles (tools/look/make_retro_tiles.py), same mid-grey modulation convention as LookTextures, drop-in for Look.texture().",
   "dapple": "Ground shade under trees. mode 'stamped' (§AJ 3): each skeleton tree's leaf clusters are stamped from above into a 512² shade map per chunk, so the shade is a patchwork that matches the crown (about 52 ms per chunk on the worker, next to ~1,500 ms of plant placement). mode 'disc' (the designer, 29 Sept 2026: the shade needn't be mapped to exactly where the light comes through — 'the shade goes here, with some dappling in it'): every tree, skeleton or not, casts the cheap baked crown disc, feathered at the edge, with the terrain shader's noise flecks of sun inside it; no shade map is built. Restart after editing.",
-  "look_1_oct": "Claude Code, 1 Oct (design §BU, the look measured): retro.targets split into day and night bands; retro.tile_contrast now wired (look_tile_contrast); ambient_floor.night floor_color darkened to #03061F so the darkest 5 % at night lands near 0.02 and floor_energy raised to 0.3 to keep the world shaders' night lift where it was; desaturate -> pull_to_floor / pull_below_luma; night grade saturation 1.5 (day 1.5 is Mike's). All tuned to the measure, retune by play. ambient_floor.night.sky_gain lifts the night sky's colours (§BU step 5). data/night_accents.json is new (step 6). Tuned against the 14:00 / 02:00 dev-spot frames: night floor #04082A, sky_gain 2.2, night saturation 1.25, day saturation 1.4 (from Mike's 1.5: 0.71 measured against 0.58-0.70). Second tune from the 02:00 frame: pull_to_floor 0.6 (0.85 saturated every dark pixel to 0.91 against the band's 0.80), night exposure 1.2, night saturation 1.1. Third tune: night saturation 0.95 and shadow_tint_amount 0.4 (the 02:00 frame still measured 0.90 saturation with the pull at 0.6: the grade's own blue tint did it)."
+  "look_1_oct": "Claude Code, 1 Oct (design §BU, the look measured): retro.targets split into day and night bands; retro.tile_contrast now wired (look_tile_contrast); ambient_floor.night floor_color darkened to #03061F so the darkest 5 % at night lands near 0.02 and floor_energy raised to 0.3 to keep the world shaders' night lift where it was; desaturate -> pull_to_floor / pull_below_luma; night grade saturation 1.5 (day 1.5 is Mike's). All tuned to the measure, retune by play. ambient_floor.night.sky_gain lifts the night sky's colours (§BU step 5). data/night_accents.json is new (step 6). Tuned against the 14:00 / 02:00 dev-spot frames: night floor #04082A, sky_gain 2.2, night saturation 1.25, day saturation 1.4 (from Mike's 1.5: 0.71 measured against 0.58-0.70). Second tune from the 02:00 frame: pull_to_floor 0.6 (0.85 saturated every dark pixel to 0.91 against the band's 0.80), night exposure 1.2, night saturation 1.1. Third tune: night saturation 0.95 and shadow_tint_amount 0.4 (the 02:00 frame still measured 0.90 saturation with the pull at 0.6: the grade's own blue tint did it).",
+  "fire": "Design 30 Sept night §BZ (pushed 1 Oct). light: a fire does not get brighter at night, the world gets darker around it — by day the light is day_share of full (Campfire.DAY_SHARE); as daylight goes, the omni range and energy swell by night_range_scale / night_energy_scale, warm colour against the blue; flicker is NOISE on the energy (amount, hz) plus position_jitter_m on the light itself so shadows dance (not the sine stack in Campfire.flicker); ground_glow_night_scale swells the pooled glow (fire_glow). The safe/dread radius (fuel.json light_radius_m) is separate and does not swell. flame: ONE camera-facing card per fire (cards 1, billboard up_axis_only; supersedes the four tongues), its animation generated from noise scrolling up through a teardrop mask and posterised to bands (flat colours, core to edge), drawn at texels with nearest filtering so it is crunchy at any distance (Mike: generated from noise and crunched to pixels). embers: single-pixel billboards drifting up. torch: the same shader scaled down for the held/planted torch. low: when the fire's store is below below_share it collapses toward a red flicker (bands_low) at height_scale, so a dying hearth reads across the clearing. First guesses; the designer owns them."
  },
  "ranges": {
   "grass_m": 40.0,
@@ -386,5 +387,63 @@
    "note": "at night water is the most saturated surface in the frame"
   }
  },
- "_help_day_vivid": "30 Sept §BU: days are vivid where the sun hits (target luma ~0.31, saturation ~0.64 measured on the frames); shade stays deep navy. day.saturation raised 1.35 -> 1.5; the floor rule (§BD) keeps shade from going black."
+ "_help_day_vivid": "30 Sept §BU: days are vivid where the sun hits (target luma ~0.31, saturation ~0.64 measured on the frames); shade stays deep navy. day.saturation raised 1.35 -> 1.5; the floor rule (§BD) keeps shade from going black.",
+ "fire": {
+  "light": {
+   "day_share": 0.45,
+   "night_range_scale": 1.6,
+   "night_energy_scale": 1.3,
+   "color": "#FFA050",
+   "flicker": {
+    "noise": true,
+    "hz": 9.0,
+    "amount": 0.18,
+    "position_jitter_m": 0.06
+   },
+   "ground_glow_night_scale": 1.4
+  },
+  "flame": {
+   "cards": 1,
+   "billboard": "up_axis_only",
+   "texels": [
+    32,
+    48
+   ],
+   "filter": "nearest",
+   "mask": "teardrop",
+   "noise_scroll_per_s": 1.6,
+   "bands": [
+    "#FFE9A0",
+    "#FFB020",
+    "#FF4A00",
+    "#5A0A00"
+   ],
+   "width_m": 0.62,
+   "height_m": 1.0,
+   "embers": {
+    "count": 6,
+    "px": 1,
+    "rise_mps": 0.6,
+    "life_s": [
+     1.0,
+     2.5
+    ],
+    "color": "#FFB020"
+   },
+   "torch": {
+    "scale": 0.32,
+    "scroll_scale": 0.7,
+    "embers": 2
+   },
+   "low": {
+    "below_share": 0.25,
+    "height_scale": 0.45,
+    "bands_low": [
+     "#FF4A00",
+     "#8A1A00",
+     "#3A0800"
+    ]
+   }
+  }
+ }
 }

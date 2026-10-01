@@ -11,7 +11,10 @@ Data added with this doc (all additive — the game runs unchanged until the cod
 `data/dread.json` · `data/look.json → ambient_floor` · `data/roads.json` · `data/rooms.json`
 · `data/water/current.json` · `data/travellers.json` · `data/stand.json → dominance` ·
 `data/hud.json → log` · `data/camps.json → wake_at_home` · `data/items.json → torch kind,
-starting_kit_ambient` · `data/audio.json → new kinds`.
+starting_kit_ambient` · `data/audio.json → new kinds`. Added 1 Oct with §BV–§BZ:
+`data/camps.json → sim.opening, sim.jobs, sim.store.pieces` · `data/roads.json →
+desire_lines, lost_and_found, opening_road` · `data/look.json → fire` · `data/audio.json →
+fire`.
 
 ---
 
@@ -605,7 +608,132 @@ The fae people of our folklore, if any is. Real analogues in the file: the Korow
 Kombai tree houses, the Khasi–Jaintia root bridges, the Iya Valley kazurabashi,
 Q'eswachaka, the honey-climbers of the Congo basin.
 
-## BR. Order of work — prompt C (after A and B are played; §BR sits after §BT on purpose — it is the to-do)
+---
+
+# Night session — 30 Sept 2026: the camp works; the first road; the fire
+
+Decided by voice late on the 30th (22:00–23:00), written up and pushed on 1 Oct. Confirmed
+by Mike. Builds on §BL (the camp sim), §BC (roads) and §AX (the hearth); where it
+contradicts §P beat 1 (27 Sept), `main.gd`'s start-of-dusk clock or `campfire.gd`'s four
+tongues, this wins. Every number in the data is a first guess; the designer tunes by play.
+
+## BV. The spawn camp is a working camp — LOCKED (30 Sept, night, Mike)
+
+Mike: more than two people at the spawn, and they should be doing tasks. **The opening camp
+starts with four or five folk** (`camps.json → sim.opening.start_folk`; supersedes the
+elder-and-hunter pair in `encampment.gd` — those two stay, as two of the four or five), and
+**every one of them is in a job loop you can watch complete** (`sim.jobs`):
+- **the fire-feeder** — walks to the woodpile, takes a piece, drops it on the fire when the
+  store runs low: the §AX feed, now a body doing it;
+- **the gatherer** — walks out of the clearing to a **real source** (a tree with deadfall,
+  a food plant the plantkeeper would name, the water) and **comes back carrying something
+  you can see**, which lands on the store (§BW);
+- **the hearth-worker** — sits by the fire mending, shaping, scraping: a potter's lump, a
+  net, a hide — the §BN maker's job at silhouette distance, before there is a maker;
+- **the children** — orbit the whole thing: follow a gatherer to the clearing's edge, sit by
+  the plantkeeper, run between the huts; never gather (§BL);
+- **at a ruin camp, the restorer** — hauls stone off the heap and sets it: the §BQ reveal
+  done by a visible pair of hands, one stone a trip.
+
+The sim already does the accounting (`CampSim`); **the jobs are the accounting made
+visible.** The walker in `camps.gd` becomes the gatherer, with a real destination and a
+load; **several folk work at once** (`sim.jobs.max_at_once`), not one walker per camp. The
+loop still runs only by day (`loop.gather_hours`) and only within sight of the player;
+unloaded camps keep ticking as numbers (§BL) and nothing here changes a tick.
+
+## BW. Every trip is a piece — LOCKED (30 Sept, night, Mike)
+
+- **Each gatherer's trip adds one visible piece to the store** (`camps.json →
+  sim.store.pieces`): a log onto the woodpile, a fish onto the rack, a tuber into the pit.
+  The pile grows one armful at a time while you watch, and the fire-feeder takes pieces off
+  it. **No scaling blob:** `refresh_woodpile` stops redrawing the pile from a number and
+  adds or removes pieces instead. The number stays the sim's truth; the pieces are its
+  ledger, and what you see is what there is.
+- **The wood on the pile is the wood of the place** (Mike): a piece takes the **bark and
+  wood tint of the species it was gathered from** (the catalogue's per-species tint, §AI /
+  `PLANT_SCHEMA.md`). A birch camp stacks pale wood, a pine camp dark resinous wood, a scrub
+  camp a grey heap of brush, a treeless camp a stack of dung cakes (§AX). The pile is a
+  portrait of the stand the camp sits in (§BH), and the gatherer's walk is the proof.
+- **The food store reads as what the camp eats** (§BO: the way of life is the verb): fish on
+  a drying rack for coast, lake, marsh, mangrove, taiga and tundra folk; meat strips on the
+  rack for the herders, the burners, the rock shelter and the desert; tubers in a lined pit
+  for the highland and the tropical forest; maize hung by the husk in the karst and the old
+  growth; grain in lidded jars on the river; nuts in bark boxes in the canopy. Each life's
+  `food.preserve` already says so; `sim.store.pieces.food_by_life` maps it to a piece.
+- Pieces are capped for draw (`max_pieces_shown`, 24 today); past the cap the pile reads
+  as full and rich — that is the ceiling showing, not a bug.
+
+## BX. The first road — afternoon spawn, the hearth at dusk — LOCKED (30 Sept, night, Mike)
+
+- **You spawn in the afternoon, beside the road, never in trackless woods** (`roads.json →
+  opening_road`). Supersedes §P beat 1's "early dawn or dusk light is preferred" and the
+  start-of-dusk clock in `main.gd`. The opening camp (§BV) sits on the road; the first thing
+  you see past the fire is the way. Mike: right now it feels like spawning in the middle of
+  the woods with no beaten path.
+- **The first landmark is a camp outside a ruin, restoring it** (§BQ) — so the end of the
+  first road is always a **hearth glow through the trees**, with the dark shape of the ruin
+  behind it to be curious about by morning. Never a dark ruin alone: you do not have to have
+  understood the torch (§AW) to survive night one — but you will have walked into a dusk.
+- **You reach it around dusk, right before it goes dark** (Mike). The opening road is tuned
+  to **about half an hour's walk** at the ambient walk (§AU: 4.3 m/s, so ≈7 km), and the
+  clock is set so that a clean walk arrives early in dusk and a walk that lost the trail
+  twice still arrives before full dark (`opening_road.walk_real_min`,
+  `spawn.real_min_before_dusk`, `detour_allowance_min`; dusk is 18 real minutes, §0). The
+  first session in one line: golden afternoon → the trail → cobalt → the glow.
+- Only the opening road is tuned; every road after it is §BC and §BY.
+
+## BY. Roads are old and long — two layers, lost and found — LOCKED (30 Sept, night, Mike)
+
+- **Two layers.** The **old layer is baked at world-gen** (§BC): a least-cost path between
+  neighbouring landmarks (camps, ruins, springs, fords, passes, the giants of §BT) that
+  hugs contours, follows riverbanks and threads passes, so it bends the way a real trail
+  does; trees and understory **thickened along both edges** so it reads as a hallway (the
+  §BB walls), opening into a clearing — the room — at each landmark. The **live layer is
+  desire lines** (`roads.json → desire_lines`): every folk trip (§BV) and every pass of the
+  player stamps a little wear on the ground; grass thins, dirt shows, and the line fades
+  when the walking stops. Paths appear where people actually walk. A camp's gather trails
+  are the first thing that says it is alive from a distance.
+- **Half-forgotten, overgrown, and long** (Mike). The old roads run for kilometres with a
+  rhythm: stretches where the trail **nearly vanishes under fern** and you have to find
+  where it picks up again, then a **tell** — a mossy cairn, a notched tree, a worn stone
+  step, the two abutments of a bridge that is out — then the next room. `roads.json →
+  lost_and_found`: how often a stretch vanishes, how long, and what marks the pickup.
+  **Losing and refinding the path is the ambient game**; the slow walk (§AU) is for exactly
+  this. Overgrown, never illegible (§BC stands). Waymarks gain `notched_tree` and
+  `stone_step` (`decay.waymarks`).
+
+## BZ. The fire — light that swells, a crackle you can walk to, one pixel flame — LOCKED (30 Sept, night, Mike)
+
+- **Light.** A fire does not get brighter at night; the world gets darker around it. By day
+  the light stays modest (the sun drowns it, `Campfire.DAY_SHARE`); as the sky goes cobalt
+  **both the radius and the energy swell** (`look.json → fire.light`: `night_range_scale`,
+  `night_energy_scale`) in a warm orange that fights the blue moonlight (§BB: the only warm
+  light is fire), with **noise on the brightness and a small jitter on the light's
+  position** (`flicker`) so the shadows dance on the trunks — not the sine stack in
+  `Campfire.flicker()`. The §AX burn-down still scales it all: low is smaller and dimmer,
+  embers a red glow, out is nothing. The safe radius (§BA, `fuel.json light_radius_m`) is a
+  separate number and does not swell.
+- **Sound.** Two layers, both point sources (§BG): a **steady soft hiss bed** and **random
+  pops and snaps at uneven intervals**, never on a loop the ear can learn (`audio.json →
+  fire`: the pops are one-shots on a random clock, not the 4 s `fire_loop`). Spatialised,
+  muffled by terrain and foliage, and heard from **farther than the glow is seen**
+  (`kinds.fire.max_distance` raised): on the first road you hear the camp before you see it
+  (§BX).
+- **Flame.** **One camera-facing card per fire** that turns only about its own up axis
+  (supersedes the four overlapping tongues in `campfire.gd`; Mike does not want crossed
+  cards — from straight above it thins to a line, which reads fine). The animation is
+  **generated from noise and crunched to pixels**: scroll a noise field upward through a
+  teardrop mask, **posterise to three or four flat bands** (pale yellow core, orange, red
+  fringe, dark edge), drawn to a tiny card — **about 32 × 48 texels**, nearest-filtered
+  (`look.json → fire.flame`) — so it stays crunchy at any distance; the 480p frame (§Y)
+  does the rest. Nearer it is simply bigger: the same card, like Ocarina's. **Embers are
+  single-pixel billboards** drifting up, the same material.
+- **One shader, every fire:** shrink the mask and slow the scroll for the held and planted
+  torch (§AW); let it **collapse to a red flicker when a camp's woodpile runs low** so a
+  dying hearth reads from across the clearing (§BL: a thin pile means trouble tonight — now
+  the flame says it too).
+
+## BR. Order of work — prompt C (after A and B are played; §BR sits after §BZ on purpose — it is the to-do)
 
 Data first: the seventeen people files (parallel research agents against `coast.json`,
 `peoples_check --strict` 0 errors), `techniques.json`, `camps.json → sim`. Then the engine:
@@ -614,3 +742,12 @@ Data first: the seventeen people files (parallel research agents against `coast.
 technique flag) → §BP the fishing line, coppice, resin torch, ember carrier, fat lamp → §BQ
 signature heaps at ruins, restoration as legibility, inheritance → §BL collapse (the dark
 takes a camp, survivors walk), wildfire. Herd and managed burn last.
+
+**Added 1 Oct (§BV–§BZ, the 30 Sept night session), in this order:** the fire first (§BZ:
+the one-card posterised flame, the night swell, the two-layer crackle — one shader for the
+campfire and the torch; the cheapest change and the most seen) → the opening camp at four
+or five with the jobs (§BV) and a piece per trip in the wood of the place (§BW): the walker
+in `camps.gd` grows a destination and a load, `refresh_woodpile` becomes add/remove → the
+opening road and the afternoon clock (§BX; the start-of-dusk spawn in `main.gd` goes; the
+first landmark is a camp at a ruin) → desire lines and the lost-and-found stretches (§BY).
+Data is in; all first guesses.
