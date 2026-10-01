@@ -88,10 +88,20 @@
   "presets": {
    "chunky": 360,
    "default": 480,
+   "half_hd": 540,
    "fine": 720
   },
-  "preset": "default",
-  "_help_presets": "30 Sept §BU (Mike: 'let's move to this pixel style and see how it looks'): three internal heights to compare in play — Settings > Display > Pixel size, and a dev key cycles them. Everything (fog, grade, water, HUD) renders at the internal height before the nearest upscale; nothing bilinear anywhere."
+  "preset": "auto",
+  "_help_presets": "30 Sept §BU: pixel size. Internal heights to compare in play (Settings > Display > Pixel size; a dev key cycles). 'auto' honours integer scaling: 360 lines fit 1080p x3, 1440p x4, 2160p x6; 540 fit 1080p x2 and 2160p x4; 480 fit 1440p x3 and 960 x2 only. Non-integer upscales crawl when you move, so auto picks the tallest preset that divides the window exactly, preferring default (480), then 540, 360, 720. HUD text sizes scale with the preset (VT323 crisp at multiples of 10). Everything (fog, grade, water, HUD) renders at the internal height before the nearest upscale; nothing bilinear anywhere.",
+  "auto": {
+   "rule": "the tallest preset at or under max_internal_lines whose height divides the window height exactly (an integer upscale); none divides -> default (480) with integer_scale and letterbox",
+   "prefer": [
+    "default",
+    "half_hd",
+    "chunky",
+    "fine"
+   ]
+  }
  },
  "retro": {
   "tile_px": {
