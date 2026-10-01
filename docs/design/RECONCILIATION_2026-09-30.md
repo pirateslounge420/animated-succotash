@@ -823,8 +823,8 @@ spawn (§P, §AO: "a different one each game") was built and never allowed to ru
 1,224 entries, 951 species, 470 genera is too many to make right (§CA found the wrong
 ones growing, and every one of them needs a card, a tile and a biome). Mike's trim
 (`data/habitat.json → trim`):
-- **Eight categories: tree, shrub, grass, moss, fungi, fern, aroid, orchid.** Fungi is its
-  own category because it is not a plant.
+- **Nine categories: tree, shrub, grass, moss, orchid, aroid, fern, cacti, fungi** (cacti
+  added 12:04). Fungi is its own category because it is not a plant.
 - **Four species per category per biome, where applicable** — a biome that has no moss or
   no orchid simply has none; nothing is invented to fill a slot. The four are the most
   archetypal of what the biome file already lists: its dominants and companions, the
@@ -835,7 +835,7 @@ ones growing, and every one of them needs a card, a tile and a biome). Mike's tr
   gate where they grow.
 - Everything else in `data/plants/` is folded into the biome lists it serves or archived
   to `docs/plant_archive/` (the archive already exists: nothing is lost, it is just not
-  loaded). Vines, cacti, kelp, cushion plants and lichens have no category and are
+  loaded). Vines, kelp, cushion plants and lichens have no category and are
   archived unless they are a hero.
 - Fewer species, each one right: every survivor gets its `biomes` tag, its leaf card
   checked at the player's eye in the walkabout (§CA), and its place in a stand (§BH). The
