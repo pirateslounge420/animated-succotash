@@ -88,21 +88,21 @@ var _glyph_fade := 1.0 # 0-1, dips to 0 while the glyph changes mansion
 ## luminous blue).
 static var RETRO := Tuning.section("look", "retro")
 static var RC: Dictionary = RETRO.get("colors", {})
-static var DAY_ZENITH := Color(str(RC.get("sky_zenith", "#00087A")))
-static var DAY_MID := Color(str(RC.get("sky_mid", "#1A2888")))
-static var DAY_HORIZON := Color(str(RC.get("sky_horizon", "#4966C1")))
-static var FAR_HILLS := Color(str(RC.get("far_hills", "#76A2D4")))
+static var DAY_ZENITH := Color(str(RC.get("sky_zenith", "#1400A8")))
+static var DAY_MID := Color(str(RC.get("sky_mid", "#493BB8")))
+static var DAY_HORIZON := Color(str(RC.get("sky_horizon", "#5872CD")))
+static var FAR_HILLS := Color(str(RC.get("far_hills", "#739CCE")))
 static var SUNSET_SUN := Color(str(RC.get("sunset_sun", "#FBF486")))
 static var BANDS: Array = (RC.get("sunset_bands", ["#E68534", "#A24C1C", "#523726"]) as Array).map(func(h): return Color(str(h)))
 ## The night sky with no moon and under a full moon high up (before
 ## ambient_floor.night.sky_gain), and the night's fog and mist.
-static var NIGHT_SKY_ZENITH := Color(str(RC.get("night_zenith", "#020E24")))
-static var NIGHT_SKY_MID := Color(str(RC.get("night_mid", "#0A1122")))
-static var NIGHT_SKY_HORIZON := Color(str(RC.get("night_horizon", "#0F1A29")))
-static var MOON_SKY_ZENITH := Color(str(RC.get("moon_zenith", "#000061")))
-static var MOON_SKY_MID := Color(str(RC.get("moon_mid", "#050A62")))
-static var MOON_SKY_HORIZON := Color(str(RC.get("moon_horizon", "#162144")))
-static var NIGHT_FOG := Color(str(RC.get("night_fog", "#2A5068")))
+static var NIGHT_SKY_ZENITH := Color(str(RC.get("night_zenith", "#00002B")))
+static var NIGHT_SKY_MID := Color(str(RC.get("night_mid", "#00002F")))
+static var NIGHT_SKY_HORIZON := Color(str(RC.get("night_horizon", "#04102A")))
+static var MOON_SKY_ZENITH := Color(str(RC.get("moon_zenith", "#050053")))
+static var MOON_SKY_MID := Color(str(RC.get("moon_mid", "#050053")))
+static var MOON_SKY_HORIZON := Color(str(RC.get("moon_horizon", "#091345")))
+static var NIGHT_FOG := Color(str(RC.get("night_fog", "#124E60")))
 ## R1a's night zenith, kept for the night rider's floor colour
 ## (NightRiderBody); the sky's own is NIGHT_SKY_ZENITH.
 const NIGHT_ZENITH := Color("#0A14A0")
@@ -137,10 +137,10 @@ static var CLOUDS: Dictionary = Tuning.section("look", "retro").get("clouds", {}
 ## Their tones before the grade (retro.clouds lit/shade by day, night_lit
 ## under a full moon, night_shade with none): a cool off-white by day
 ## (~#A8B4E6 on screen), the night palette's blues by night.
-static var CLOUD_LIT := Color(str(CLOUDS.get("lit", "#B8BFD9")))
-static var CLOUD_SHADE := Color(str(CLOUDS.get("shade", "#9FA7C9")))
-static var CLOUD_NIGHT_LIT := Color(str(CLOUDS.get("night_lit", "#425267")))
-static var CLOUD_NIGHT_SHADE := Color(str(CLOUDS.get("night_shade", "#24344A")))
+static var CLOUD_LIT := Color(str(CLOUDS.get("lit", "#A5AAC8")))
+static var CLOUD_SHADE := Color(str(CLOUDS.get("shade", "#929ABE")))
+static var CLOUD_NIGHT_LIT := Color(str(CLOUDS.get("night_lit", "#2F426A")))
+static var CLOUD_NIGHT_SHADE := Color(str(CLOUDS.get("night_shade", "#0E214B")))
 const CLOUD_WIND := 0.00006
 ## The sky gradient's curve by day and night (sky.gdshader
 ## horizon_sharpness; dusk raises it so the warm band hugs the horizon):
@@ -480,12 +480,9 @@ func update_sky(up: Vector3, east: Vector3, north: Vector3, days: float, weather
 	environment.fog_density = density
 	Look.apply({
 		"look_leaf_shadow_m": float(LIGHT.get("leaf_shadow_m", 1e6)),
-		# (The globals keep their old names: look_height_density /
-		# look_height_m were the valley fog's, look_mist the 0-1 ground
-		# mist; see look.gdshaderinc.)
-		"look_height_density": mist,
-		"look_height_m": float(MIST.get("scale_m", 6.0)),
-		"look_mist": float(RETRO_FOG.get("start_m", 200.0)),
+		"look_mist_density": mist,
+		"look_mist_scale_m": float(MIST.get("scale_m", 6.0)),
+		"look_fog_start_m": float(RETRO_FOG.get("start_m", 200.0)),
 		"look_fog_color": fog_color,
 		"look_fog_density": density,
 		"look_up": up,

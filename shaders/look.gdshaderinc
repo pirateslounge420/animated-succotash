@@ -35,18 +35,18 @@ global uniform vec3 look_planet_center;
 global uniform float look_planet_radius;
 const float look_haze_height = 150.0; // 1.5 km times PlanetConst.HEIGHT_SCALE
 // The haze's clear zone, metres (look.json retro.fog.start_m): the haze
-// eases in over about this distance. (The global keeps its old name, the
-// 0-1 ground mist it used to be; renaming it means project.godot.)
-global uniform float look_mist;
-// Low mist (look.json "mist"): look_height_density per metre at and below
+// eases in over about this distance.
+global uniform float look_fog_start_m;
+// Low mist (look.json "mist"): look_mist_density per metre at and below
 // the local ground mean (look_ground_m, its height above the planet
 // radius: main samples a 250 m ring round the player), thinning above it
-// with scale height look_height_m. Valleys sit below the mean, so they
-// fill; flat forest floor sits at it, so the trunks stand in a low layer;
-// hills and peaks rise out of it.
+// with scale height look_mist_scale_m. Valleys sit below the mean, so
+// they fill; flat forest floor sits at it, so the trunks stand in a low
+// layer; hills and peaks rise out of it. (The old look_mist,
+// look_height_density and look_height_m globals are unused now.)
 global uniform float look_ground_m;
-global uniform float look_height_density;
-global uniform float look_height_m;
+global uniform float look_mist_density;
+global uniform float look_mist_scale_m;
 // Detail tiles (§AG, look.json retro): the tiny tiles are drawn nearest,
 // tiled hard every look_tile_m metres (x grass, y dirt, z sand, w stone;
 // look_tile_m2 x bark, y leaves), and use at most look_max_mips mip levels
@@ -123,11 +123,11 @@ vec4 look_fog(vec3 world_pos, vec3 cam_pos) {
 	float thin = exp(-hc / look_haze_height) * (abs(k) < 1e-3 ? 1.0 : (1.0 - exp(-k)) / k);
 	// The clear zone: the haze's depth grows as dist^2 / (2 s) near the eye
 	// and as dist - s far off, smoothly (no ring where it starts).
-	float s = max(look_mist, 1.0);
+	float s = max(look_fog_start_m, 1.0);
 	float haze_d = dist - s * (1.0 - exp(-dist / s));
 	// Low mist: full at and below the ground mean, thinning above it.
-	float mist = look_mist_share(hc - look_ground_m, hp - look_ground_m, look_height_m);
-	float tau = haze_d * look_fog_density * min(thin, 1.5) + dist * look_height_density * mist;
+	float mist = look_mist_share(hc - look_ground_m, hp - look_ground_m, look_mist_scale_m);
+	float tau = haze_d * look_fog_density * min(thin, 1.5) + dist * look_mist_density * mist;
 	float f = min(look_band(1.0 - exp(-tau)), look_fog_max);
 	return vec4(look_fog_color, f);
 }

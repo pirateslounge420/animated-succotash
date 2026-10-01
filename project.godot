@@ -162,6 +162,18 @@ look_mist={
 "type": "float",
 "value": 0.0
 }
+look_fog_start_m={
+"type": "float",
+"value": 0.0
+}
+look_mist_density={
+"type": "float",
+"value": 0.0
+}
+look_mist_scale_m={
+"type": "float",
+"value": 6.0
+}
 look_night={
 "type": "float",
 "value": 0.0
