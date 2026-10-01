@@ -26,7 +26,8 @@
   "unstick": "Stuck is touching something and going nowhere: wedged between two walls (a trunk and a shrub's stem), held off the ground (under a root, in a fork), or caught on a crease of the ground. After stall_s moving slower than stall_mps, you're nudged nudge_m out along the free direction nearest to where you push. ground_jam_s: caught on the ground alone, you're freed after only this long (a hitch you barely feel).",
   "super_meter": "The super meter (design §S): PERFECT techs (wall jump, bounce, roll, hop landing, swing release inside their windows) fill it, and so does LANDING A HIT on an opponent (fill_per_hit, and fill_per_critical for a critical); a missed or late tech only stops the run, it doesn't drain. fill_per_perfect: how much one perfect adds (0-1); chain_bonus_per_link: extra per link of the current chain, so long clean chains fill fastest. Spending: with any meter, hold a tool's charge past its normal full window and it overcharges (data/combat.json overcharge), which empties the meter on release. It never decays; only spending or dying (reset_on_death) clears it. NPC shinobi keep the same meter.",
   "camera": "mouse and stick sensitivity. first_person_body: in first person, see your own hands, cloak edges and boots when you look down (false: nothing of your body shows; it still casts its shadow).",
-  "profile": "Which movement profile PlanetPlayer plays (design 30 Sept §AU): 'ambient' (this game: slow, grounded, first person) or 'shinobi' (the momentum kit, kept whole for the ninja game). At load, profiles[profile] is deep-merged over the base table below; the base table IS the shinobi table and stays untouched. A block with enabled:false is switched off entirely (wall_jump, bounce, swing, redirect, roll, slide, super_meter)."
+  "profile": "Which movement profile PlanetPlayer plays (design 30 Sept §AU): 'ambient' (this game: slow, grounded, first person) or 'shinobi' (the momentum kit, kept whole for the ninja game). At load, profiles[profile] is deep-merged over the base table below; the base table IS the shinobi table and stays untouched. A block with enabled:false is switched off entirely (wall_jump, bounce, swing, redirect, roll, slide, super_meter).",
+  "sprint_momentum": "Mike, 1 Oct (ambient): a jump from a sprint carries full ground speed and the sprint survives the landing. landing.sprint_keeps_speed: true = no landing squat and no friction reset while the sprint is held. air.sprint_jump in the ambient profile scales the HORIZONTAL carry of a sprint jump (1.05: a running hop gains a little); in the shinobi profile it still scales the jump's height. air.hop_cap: chained hops never carry more than this times the sprint speed (1.1), so bunny-hopping never beats running; 0 = no cap."
  },
  "profile": "ambient",
  "profiles": {
@@ -42,12 +43,13 @@
     "gravity_up_mps2": 20.0,
     "gravity_down_mps2": 20.0,
     "jump_mps": 6.3,
-    "sprint_jump": 1.0,
+    "sprint_jump": 1.05,
     "fast_fall_mps": 0.0,
     "max_fall_mps": 50.0,
     "air_accel_mps2": 0.0,
     "air_steer_mps": 0.0,
-    "body_turns_free": false
+    "body_turns_free": false,
+    "hop_cap": 1.1
    },
    "overspeed": {
     "decay_mps2": 12.0
@@ -81,6 +83,9 @@
    "camera": {
     "third_person": false,
     "first_person_body": false
+   },
+   "landing": {
+    "sprint_keeps_speed": true
    }
   }
  },
@@ -125,14 +130,16 @@
   "max_fall_mps": 50.0,
   "air_accel_mps2": 0.0,
   "air_steer_mps": 0.0,
-  "body_turns_free": true
+  "body_turns_free": true,
+  "hop_cap": 0.0
  },
  "landing": {
   "squat_s": 0.05,
   "heavy_squat_s": 0.16,
   "heavy_fall_m": 1.7,
   "dip_m": 0.12,
-  "min_drop_m": 0.3
+  "min_drop_m": 0.3,
+  "sprint_keeps_speed": false
  },
  "brake": {
   "min_mps": 4.0,

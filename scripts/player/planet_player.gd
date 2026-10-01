@@ -107,6 +107,9 @@ static var AIM_SPEED := Tuning.num("movement", "speed", "aim_mps")
 static var SWIM_SPEED := Tuning.num("movement", "speed", "swim_mps")
 static var JUMP_SPEED := Tuning.num("movement", "air", "jump_mps")
 static var SPRINT_JUMP := Tuning.num("movement", "air", "sprint_jump")
+## Ambient (Mike, 1 Oct): the sprint survives the jump and the landing.
+static var SPRINT_KEEPS_SPEED := bool(Tuning.section("movement", "landing").get("sprint_keeps_speed", false))
+static var HOP_CAP := float(Tuning.section("movement", "air").get("hop_cap", 0.0))
 static var FAST_FALL_MPS := Tuning.num("movement", "air", "fast_fall_mps")
 static var MAX_FALL_MPS := Tuning.num("movement", "air", "max_fall_mps")
 static var ACCEL_MPS2 := Tuning.num("movement", "ground", "accel_mps2")
@@ -871,8 +874,19 @@ func _physics_process(delta: float) -> void:
 					_fall_damage(_pending_fell)
 		# Held jump keeps jumping each time you land (after the squat).
 		if Input.is_action_pressed("jump") and not crouching and _squat_t <= 0.0 and _rolling <= 0.0:
-			vy = JUMP_SPEED * (SPRINT_JUMP if sprinting else 1.0)
-			_takeoff = _move
+			if SPRINT_KEEPS_SPEED:
+				# Ambient (Mike, 1 Oct): the jump keeps the run's speed and a
+				# sprint hop gains a little (sprint_jump on the carry, not
+				# the height), never past hop_cap times the sprint.
+				vy = JUMP_SPEED
+				_takeoff = _move
+				if sprinting and _move.length() > 0.5:
+					var cap := SPRINT_SPEED * burden_speed() * (HOP_CAP if HOP_CAP > 0.0 else 1e9)
+					_takeoff = _move.normalized() * minf(_move.length() * SPRINT_JUMP, maxf(cap, _move.length()))
+				_move = _takeoff
+			else:
+				vy = JUMP_SPEED * (SPRINT_JUMP if sprinting else 1.0)
+				_takeoff = _move
 			_jumped = true
 			_rising_jump = true
 			_takeoff_r = radius
@@ -1686,6 +1700,11 @@ func _land() -> void:
 		_squat_t = HEAVY_SQUAT_S if fell > HEAVY_FALL_M else SQUAT_S
 		_squat_len = _squat_t
 		landings += 1
+		# A sprint held through a light landing keeps its feet: no squat,
+		# so no frame of braking (landing.sprint_keeps_speed).
+		if SPRINT_KEEPS_SPEED and sprinting and fell <= HEAVY_FALL_M:
+			_squat_t = 0.0
+			_squat_len = 0.0
 	_fall_speed = 0.0
 	_fall_top = -INF
 
